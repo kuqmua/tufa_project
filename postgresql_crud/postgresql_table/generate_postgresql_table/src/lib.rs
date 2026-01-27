@@ -855,20 +855,20 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }
         };
-    let generate_select_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream =
+    let generate_select_postgresql_crud_not_empty_unique_vec_ident_select_token_stream =
         |should_add_borrow: &ShouldAddBorrow| {
-            quote::quote! {#select_snake_case: #should_add_borrow postgresql_crud::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>}
+            quote::quote! {#select_snake_case: #should_add_borrow postgresql_crud::NotEmptyUniqueVec<#ident_select_upper_camel_case>}
         };
-    let select_borrow_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream =
-        generate_select_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream(
+    let select_borrow_postgresql_crud_not_empty_unique_vec_ident_select_token_stream =
+        generate_select_postgresql_crud_not_empty_unique_vec_ident_select_token_stream(
             &ShouldAddBorrow::True,
         );
-    let select_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream =
-        generate_select_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream(
+    let select_postgresql_crud_not_empty_unique_vec_ident_select_token_stream =
+        generate_select_postgresql_crud_not_empty_unique_vec_ident_select_token_stream(
             &ShouldAddBorrow::False,
         );
-    let pub_select_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream = {
-        quote::quote! {pub #select_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream}
+    let pub_select_postgresql_crud_not_empty_unique_vec_ident_select_token_stream = {
+        quote::quote! {pub #select_postgresql_crud_not_empty_unique_vec_ident_select_token_stream}
     };
     let generate_fields_named_with_comma_token_stream = |function: &dyn Fn(&macros_helpers::SynFieldWrapper) -> proc_macro2::TokenStream| -> proc_macro2::TokenStream {
         let fields_token_stream = fields.iter().map(function);
@@ -1057,7 +1057,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             );
             let std_option_option_std_primitive_char_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&token_patterns::StdPrimitiveChar);
             quote::quote! {
-                fn #generate_select_query_part_snake_case(#select_borrow_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream) -> Result<#string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {
+                fn #generate_select_query_part_snake_case(#select_borrow_postgresql_crud_not_empty_unique_vec_ident_select_token_stream) -> Result<#string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {
                     let mut acc_37c883c3 = #string_token_stream::default();
                     for element_78d2ec39 in #select_snake_case.to_vec() {
                         acc_37c883c3.push_str(&match element_78d2ec39 {
@@ -1704,7 +1704,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }
         };
-    let try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_snake_case = naming::parameter::TryFromSqlxPostgresPgRowWithNotEmptyUniqueEnumVecSelfSelectSnakeCase::from_display(&ident);
+    let try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_snake_case = naming::parameter::TryFromSqlxPostgresPgRowWithNotEmptyUniqueVecSelfSelectSnakeCase::from_display(&ident);
     let sqlx_error_syn_punctuated_punctuated =
         macros_helpers::generate_simple_syn_punctuated_punctuated(&["sqlx", "Error"]);
     let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string =
@@ -1718,7 +1718,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             sqlx_error_syn_punctuated_punctuated.clone(),
         )],
     );
-    let generate_match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream =
+    let generate_match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_token_stream =
         |read_many_or_read_one: &ReadManyOrReadOne| {
             let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream =
                 generate_operation_error_initialization_eprintln_response_creation_token_stream(
@@ -1729,7 +1729,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     column!(),
                 );
             quote::quote! {
-                match #ident_read_upper_camel_case::#try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_snake_case(
+                match #ident_read_upper_camel_case::#try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_snake_case(
                     value_b27d7d79,
                     &#parameters_snake_case.#payload_snake_case.#select_snake_case
                 ) {
@@ -1830,7 +1830,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             );
         let impl_ident_read_token_stream = {
-            let fn_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream = {
+            let fn_try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_token_stream = {
                 let declaration_primary_key_token_stream = {
                     let std_option_option_value_primary_key_field_type_as_primary_key_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&generate_value_declaration_token_stream(&primary_key_field_type_as_postgresql_type_read_upper_camel_case));
                     quote::quote! {
@@ -1897,9 +1897,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     .map(|element_2bfe6afc| &element_2bfe6afc.field_ident)
                     .collect::<Vec<&syn::Ident>>();
                 quote::quote! {
-                    fn #try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_snake_case(
+                    fn #try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_snake_case(
                         #value_snake_case: sqlx::postgres::PgRow,
-                        #select_borrow_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream
+                        #select_borrow_postgresql_crud_not_empty_unique_vec_ident_select_token_stream
                     ) -> Result<Self, sqlx::Error> {
                         #declaration_primary_key_token_stream
                         #declaration_without_primary_key_token_stream
@@ -1915,7 +1915,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             };
             quote::quote! {
                 impl #ident_read_upper_camel_case {
-                    #fn_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream
+                    #fn_try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_token_stream
                 }
             }
         };
@@ -3753,7 +3753,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &operation,
                 &quote::quote! {{
                     #pub_where_many_std_option_option_ident_where_many_token_stream,
-                    #pub_select_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream,
+                    #pub_select_postgresql_crud_not_empty_unique_vec_ident_select_token_stream,
                     pub #order_by_snake_case: #postgresql_crud_order_by_token_stream<#ident_select_upper_camel_case>,
                     pub #pagination_snake_case: postgresql_crud::PaginationStartsWithZero,
                 }},
@@ -3875,8 +3875,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let fetch_token_stream = generate_fetch_token_stream(
                         &executor_acquire_snake_case,
                         &{
-                            let match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream = generate_match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream(&ReadManyOrReadOne::ReadMany);
-                            quote::quote! {Some(#match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream)}
+                            let match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_token_stream = generate_match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_token_stream(&ReadManyOrReadOne::ReadMany);
+                            quote::quote! {Some(#match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_token_stream)}
                         },
                         &generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &postgresql_syn_variant_wrapper, file!(), line!(), column!()),
                         &ShouldWrapIntoValue::False,
@@ -3969,7 +3969,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream = generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream(&naming::parameter::SelfReadUpperCamelCase::from_type_last_segment(primary_key_field_type));
                     quote::quote! {{
                         #pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream,
-                        #pub_select_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream,
+                        #pub_select_postgresql_crud_not_empty_unique_vec_ident_select_token_stream,
                     }}
                 },
                 &quote::quote! {{
@@ -4027,7 +4027,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 };
                 let postgresql_logic_token_stream = generate_fetch_one_token_stream(
                     &executor_acquire_snake_case,
-                    &generate_match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream(&ReadManyOrReadOne::ReadOne),
+                    &generate_match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_token_stream(&ReadManyOrReadOne::ReadOne),
                     &generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &postgresql_syn_variant_wrapper, file!(), line!(), column!()),
                 );
                 impl_ident_vec_token_stream.push(generate_operation_token_stream(
@@ -5132,7 +5132,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 },
             );
         //todo instead of first dropping table - check if its not exists. if exists test must fail
-        let select_default_all_with_max_page_size_not_empty_unique_enum_vec_token_stream = {
+        let select_default_all_with_max_page_size_not_empty_unique_vec_token_stream = {
             let content_token_stream = generate_fields_named_with_comma_token_stream(
                 &|element: &macros_helpers::SynFieldWrapper| {
                     let field_ident = &element.field_ident;
@@ -5157,7 +5157,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 },
             );
             quote::quote! {
-                let select_default_all_with_max_page_size = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
+                let select_default_all_with_max_page_size = postgresql_crud::NotEmptyUniqueVec::try_new(vec![
                     #content_token_stream
                 ]).expect("5e82ac66-c7d7-4e1c-8800-b2bb75b0d0cc");
             }
@@ -5500,7 +5500,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 async fn generate_read_only_ids_current_elements(
                     url: &str,
                     current_table: &str,
-                    select_default_all_with_max_page_size: postgresql_crud::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
+                    select_default_all_with_max_page_size: postgresql_crud::NotEmptyUniqueVec<#ident_select_upper_camel_case>,
                     read_only_ids_to_two_dimensional_vec_read_inner_acc: Vec<#ident_create_upper_camel_case>
                 ) -> Vec<#ident_read_only_ids_upper_camel_case> {
                     let read_only_ids_current_elements = futures::StreamExt::collect::<Vec<Vec<#ident_read_only_ids_upper_camel_case>>>(
@@ -7139,7 +7139,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     async fn generate_try_read_many_order_by_primary_key_with_big_pagination(
                         endpoint_location: &str,
                         current_ident_where_many: #ident_where_many_upper_camel_case,
-                        select: #import_path::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
+                        select: #import_path::NotEmptyUniqueVec<#ident_select_upper_camel_case>,
                         table: &str
                     ) -> Result<Vec<#ident_read_upper_camel_case>, #ident_try_read_many_error_named_upper_camel_case> {
                         #ident::try_read_many_handle(
@@ -7166,7 +7166,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     async fn generate_ident_try_read_one_handle_primary_key(
                         url: &str,
                         primary_key_column: #primary_key_field_type_as_postgresql_type_read_token_stream,
-                        select: #import_path::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
+                        select: #import_path::NotEmptyUniqueVec<#ident_select_upper_camel_case>,
                         table: &str,
                     ) -> Result<#ident_read_upper_camel_case, #ident_try_read_one_error_named_upper_camel_case> {
                         #ident::try_read_one_handle(
@@ -7184,7 +7184,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     async fn generate_check_no_rows_returned_from_ident_try_read_one_handle_primary_key(
                         url: &str,
                         primary_key_column: #primary_key_field_type_as_postgresql_type_read_token_stream,
-                        select: #import_path::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
+                        select: #import_path::NotEmptyUniqueVec<#ident_select_upper_camel_case>,
                         table: &str,
                     ) {
                         if let Err(#error_snake_case) = generate_ident_try_read_one_handle_primary_key(
@@ -7390,14 +7390,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             .expect("71c1bc30-2f27-4fb4-8545-bc1bf21bc1ea");
                         });
                         started_rx.await.expect("87003141-43a4-4975-8ddf-273148add50f");
-                        let #select_primary_key_snake_case = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
+                        let #select_primary_key_snake_case = postgresql_crud::NotEmptyUniqueVec::try_new(vec![
                             #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
                                 #primary_key_field_type_as_postgresql_type_select_token_stream::default(),
                             )
                         ])
                         .expect("0776170e-4dd6-4c14-a412-ce10b0c746f1");
                         let #ident_create_default_snake_case = ident_create_default();
-                        #select_default_all_with_max_page_size_not_empty_unique_enum_vec_token_stream
+                        #select_default_all_with_max_page_size_not_empty_unique_vec_token_stream
                         #common_read_only_ids_returned_from_create_one_token_stream
                         #read_only_ids_to_two_dimensional_vec_read_inner_acc_fields_token_stream
                         futures::StreamExt::for_each_concurrent(

@@ -38,7 +38,7 @@ impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOne
     }
 }
 
-//difference between NotEmptyUniqueEnumVec and PostgresqlJsonTypeNotEmptyUniqueVec only in postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement impl with different generic requirement and PostgresqlTypeWhereFilter
+//difference between NotEmptyUniqueVec and PostgresqlJsonTypeNotEmptyUniqueVec only in postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement impl with different generic requirement and PostgresqlTypeWhereFilter
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct PostgresqlJsonTypeNotEmptyUniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {

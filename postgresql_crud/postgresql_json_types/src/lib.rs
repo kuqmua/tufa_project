@@ -3,11 +3,11 @@ generate_postgresql_json_types::generate_postgresql_json_types!({
     "whole_content_write_into_generate_postgresql_json_types": "False",
     "variant":
     // "WithoutDimensions"
-    // "WithDimensionOne"
+    "WithDimensionOne"
     // "WithDimensionTwo"
     // "WithDimensionThree"
     // "WithDimensionFour"
-    "All"
+    // "All"
     //
     // {
     //   "Concrete": [

@@ -238,16 +238,16 @@ pub trait PostgresqlTypeTestCases {
     fn read_only_ids_merged_with_create_into_vec_where_equal_using_fields(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> NotEmptyUniqueEnumVec<<Self::PostgresqlType as PostgresqlType>::Where>;
+    ) -> NotEmptyUniqueVec<<Self::PostgresqlType as PostgresqlType>::Where>;
     fn read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    ) -> Option<NotEmptyUniqueVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
     fn create_into_postgresql_type_option_vec_where_dimension_one_equal(
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    ) -> Option<NotEmptyUniqueVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
     fn postgresql_type_option_vec_where_greater_than_test()
-    -> Option<NotEmptyUniqueEnumVec<PostgresqlTypeGreaterThanTest<Self::PostgresqlType>>>;
+    -> Option<NotEmptyUniqueVec<PostgresqlTypeGreaterThanTest<Self::PostgresqlType>>>;
     fn read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than(
         greater_than_variant: PostgresqlTypeGreaterThanVariant,
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
@@ -256,62 +256,50 @@ pub trait PostgresqlTypeTestCases {
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    ) -> Option<NotEmptyUniqueVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    ) -> Option<NotEmptyUniqueVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    ) -> Option<NotEmptyUniqueVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    ) -> Option<NotEmptyUniqueVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
 
     fn create_into_postgresql_json_type_option_vec_where_length_equal(
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    ) -> Option<NotEmptyUniqueVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
     fn create_into_postgresql_json_type_option_vec_where_length_greater_than(
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    ) -> Option<NotEmptyUniqueVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> Option<
-        NotEmptyUniqueEnumVec<SingleOrMultiple<<Self::PostgresqlType as PostgresqlType>::Where>>,
-    >;
+    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PostgresqlType as PostgresqlType>::Where>>>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> Option<
-        NotEmptyUniqueEnumVec<SingleOrMultiple<<Self::PostgresqlType as PostgresqlType>::Where>>,
-    >;
+    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PostgresqlType as PostgresqlType>::Where>>>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_in(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> Option<
-        NotEmptyUniqueEnumVec<SingleOrMultiple<<Self::PostgresqlType as PostgresqlType>::Where>>,
-    >;
+    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PostgresqlType as PostgresqlType>::Where>>>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_regular_expression(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> Option<
-        NotEmptyUniqueEnumVec<SingleOrMultiple<<Self::PostgresqlType as PostgresqlType>::Where>>,
-    >;
+    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PostgresqlType as PostgresqlType>::Where>>>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_element_greater_than(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> Option<
-        NotEmptyUniqueEnumVec<SingleOrMultiple<<Self::PostgresqlType as PostgresqlType>::Where>>,
-    >;
+    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PostgresqlType as PostgresqlType>::Where>>>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_element_regular_expression(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> Option<
-        NotEmptyUniqueEnumVec<SingleOrMultiple<<Self::PostgresqlType as PostgresqlType>::Where>>,
-    >;
+    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PostgresqlType as PostgresqlType>::Where>>>;
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -383,38 +371,38 @@ pub trait PostgresqlJsonTypeTestCases {
     fn read_only_ids_merged_with_create_into_vec_where_equal_using_fields(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
-    ) -> NotEmptyUniqueEnumVec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>;
+    ) -> NotEmptyUniqueVec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>;
     fn read_only_ids_merged_with_create_into_vec_where_equal_to_json_field(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
-    ) -> NotEmptyUniqueEnumVec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>;
+    ) -> NotEmptyUniqueVec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
-    ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    ) -> Option<NotEmptyUniqueVec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
-    ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    ) -> Option<NotEmptyUniqueVec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
-    ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    ) -> Option<NotEmptyUniqueVec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
-    ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    ) -> Option<NotEmptyUniqueVec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
     fn create_into_postgresql_json_type_option_vec_where_length_equal(
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
-    ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    ) -> Option<NotEmptyUniqueVec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
     fn create_into_postgresql_json_type_option_vec_where_length_greater_than(
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
-    ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    ) -> Option<NotEmptyUniqueVec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
     ) -> Option<
-        NotEmptyUniqueEnumVec<
+        NotEmptyUniqueVec<
             SingleOrMultiple<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>,
         >,
     >;
@@ -422,7 +410,7 @@ pub trait PostgresqlJsonTypeTestCases {
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
     ) -> Option<
-        NotEmptyUniqueEnumVec<
+        NotEmptyUniqueVec<
             SingleOrMultiple<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>,
         >,
     >;
@@ -430,7 +418,7 @@ pub trait PostgresqlJsonTypeTestCases {
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
     ) -> Option<
-        NotEmptyUniqueEnumVec<
+        NotEmptyUniqueVec<
             SingleOrMultiple<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>,
         >,
     >;
@@ -438,7 +426,7 @@ pub trait PostgresqlJsonTypeTestCases {
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
     ) -> Option<
-        NotEmptyUniqueEnumVec<
+        NotEmptyUniqueVec<
             SingleOrMultiple<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>,
         >,
     >;
@@ -446,7 +434,7 @@ pub trait PostgresqlJsonTypeTestCases {
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
     ) -> Option<
-        NotEmptyUniqueEnumVec<
+        NotEmptyUniqueVec<
             SingleOrMultiple<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>,
         >,
     >;
@@ -454,7 +442,7 @@ pub trait PostgresqlJsonTypeTestCases {
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
     ) -> Option<
-        NotEmptyUniqueEnumVec<
+        NotEmptyUniqueVec<
             SingleOrMultiple<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>,
         >,
     >;
@@ -492,7 +480,7 @@ pub struct NullableJsonObjectPostgresqlTypeWhereFilter<
         + Clone
         + for<'lifetime> PostgresqlTypeWhereFilter<'lifetime>
         + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
->(pub Option<NotEmptyUniqueEnumVec<T>>);
+>(pub Option<NotEmptyUniqueVec<T>>);
 impl<'query_lifetime, T> PostgresqlTypeWhereFilter<'query_lifetime>
     for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
@@ -581,14 +569,14 @@ pub enum QueryPartErrorNamed {
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct PostgresqlTypeWhere<T> {
     logical_operator: LogicalOperator,
-    value: NotEmptyUniqueEnumVec<T>,
+    value: NotEmptyUniqueVec<T>,
 }
 impl<T: PartialEq + Clone> PostgresqlTypeWhere<T> {
     pub fn try_new(
         logical_operator: LogicalOperator,
         value: Vec<T>,
     ) -> Result<Self, NotEmptyUniqueVecTryNewErrorNamed<T>> {
-        match NotEmptyUniqueEnumVec::try_new(value) {
+        match NotEmptyUniqueVec::try_new(value) {
             Ok(value_56f976af) => Ok(Self {
                 logical_operator,
                 value: value_56f976af,
@@ -596,7 +584,7 @@ impl<T: PartialEq + Clone> PostgresqlTypeWhere<T> {
             Err(error) => Err(error),
         }
     }
-    pub const fn new(logical_operator: LogicalOperator, value: NotEmptyUniqueEnumVec<T>) -> Self {
+    pub const fn new(logical_operator: LogicalOperator, value: NotEmptyUniqueVec<T>) -> Self {
         Self {
             logical_operator,
             value,
@@ -851,7 +839,7 @@ impl<
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self {
             logical_operator: DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-            value: NotEmptyUniqueEnumVec::try_new(
+            value: NotEmptyUniqueVec::try_new(
                 AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
             ).expect("a918b427-2d74-4096-915c-2f97314cc05f"),
         }
@@ -1289,8 +1277,8 @@ pub enum NotEmptyUniqueVecTryNewErrorNamed<T> {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct NotEmptyUniqueEnumVec<T>(Vec<T>);
-impl<T: PartialEq + Clone> NotEmptyUniqueEnumVec<T> {
+pub struct NotEmptyUniqueVec<T>(Vec<T>);
+impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
     pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewErrorNamed<T>> {
         if value.is_empty() {
             return Err(NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {
@@ -1323,7 +1311,7 @@ const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
-        _serde::Deserialize<'de> for NotEmptyUniqueEnumVec<T>
+        _serde::Deserialize<'de> for NotEmptyUniqueVec<T>
     {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
@@ -1334,21 +1322,21 @@ const _: () = {
             where
                 T: _serde::Deserialize<'de>,
             {
-                marker: _serde::__private228::PhantomData<NotEmptyUniqueEnumVec<T>>,
+                marker: _serde::__private228::PhantomData<NotEmptyUniqueVec<T>>,
                 lifetime: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
                 _serde::de::Visitor<'de> for __Visitor<'de, T>
             {
-                type Value = NotEmptyUniqueEnumVec<T>;
+                type Value = NotEmptyUniqueVec<T>;
                 fn expecting(
                     &self,
                     __f: &mut _serde::__private228::Formatter<'_>,
                 ) -> _serde::__private228::fmt::Result {
                     _serde::__private228::Formatter::write_str(
                         __f,
-                        "tuple struct NotEmptyUniqueEnumVec",
+                        "tuple struct NotEmptyUniqueVec",
                     )
                 }
                 #[inline]
@@ -1357,7 +1345,7 @@ const _: () = {
                     __E: _serde::Deserializer<'de>,
                 {
                     let __field0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
-                    Ok(NotEmptyUniqueEnumVec(__field0))
+                    Ok(NotEmptyUniqueVec(__field0))
                 }
                 #[inline]
                 fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
@@ -1368,10 +1356,10 @@ const _: () = {
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
-                            &"tuple struct NotEmptyUniqueEnumVec with 1 element",
+                            &"tuple struct NotEmptyUniqueVec with 1 element",
                         ));
                     };
-                    match NotEmptyUniqueEnumVec::try_new(__field0) {
+                    match NotEmptyUniqueVec::try_new(__field0) {
                         Ok(value) => Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -1379,7 +1367,7 @@ const _: () = {
             }
             _serde::Deserializer::deserialize_newtype_struct(
                 __deserializer,
-                "NotEmptyUniqueEnumVec",
+                "NotEmptyUniqueVec",
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<Self>,
                     lifetime: _serde::__private228::PhantomData,
@@ -1389,7 +1377,7 @@ const _: () = {
     }
 };
 impl<T: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>
-    DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NotEmptyUniqueEnumVec<T>
+    DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NotEmptyUniqueVec<T>
 {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self(AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
@@ -1398,30 +1386,30 @@ impl<T: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneE
 impl<
     T: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
 > DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize
-    for NotEmptyUniqueEnumVec<T>
+    for NotEmptyUniqueVec<T>
 {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size()
     -> Self {
         Self(AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size())
     }
 }
-impl<T> Default for NotEmptyUniqueEnumVec<T> {
+impl<T> Default for NotEmptyUniqueVec<T> {
     fn default() -> Self {
         Self(Vec::default())
     }
 }
-impl<T> From<NotEmptyUniqueEnumVec<T>> for Vec<T> {
-    fn from(value: NotEmptyUniqueEnumVec<T>) -> Self {
+impl<T> From<NotEmptyUniqueVec<T>> for Vec<T> {
+    fn from(value: NotEmptyUniqueVec<T>) -> Self {
         value.0
     }
 }
-impl<T1> NotEmptyUniqueEnumVec<T1> {
-    pub fn from_t1_impl_from_t2<T2: From<T1>>(value: Self) -> NotEmptyUniqueEnumVec<T2> {
-        NotEmptyUniqueEnumVec(value.0.into_iter().map(T2::from).collect::<Vec<T2>>())
+impl<T1> NotEmptyUniqueVec<T1> {
+    pub fn from_t1_impl_from_t2<T2: From<T1>>(value: Self) -> NotEmptyUniqueVec<T2> {
+        NotEmptyUniqueVec(value.0.into_iter().map(T2::from).collect::<Vec<T2>>())
     }
 }
 
-impl<'query_lifetime, T> PostgresqlTypeWhereFilter<'query_lifetime> for NotEmptyUniqueEnumVec<T>
+impl<'query_lifetime, T> PostgresqlTypeWhereFilter<'query_lifetime> for NotEmptyUniqueVec<T>
 where
     T: std::fmt::Debug
         + PartialEq
@@ -1924,5 +1912,5 @@ impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
 )]
 pub enum SingleOrMultiple<T: std::fmt::Debug + PartialEq + Clone> {
     Single(T),
-    Multiple(NotEmptyUniqueEnumVec<T>),
+    Multiple(NotEmptyUniqueVec<T>),
 }

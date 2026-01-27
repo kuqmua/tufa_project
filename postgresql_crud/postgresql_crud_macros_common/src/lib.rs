@@ -1368,7 +1368,7 @@ pub fn generate_read_only_ids_merged_with_create_into_vec_where_equal_using_fiel
         fn #read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case(
             #read_only_ids_snake_case: #read_only_ids_token_stream,
             #create_snake_case: #create_token_stream
-        ) -> #import_path::NotEmptyUniqueEnumVec<#where_token_stream> {
+        ) -> #import_path::NotEmptyUniqueVec<#where_token_stream> {
             #content_token_stream
         }
     }
@@ -1386,7 +1386,7 @@ fn generate_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_
     let create_snake_case = naming::CreateSnakeCase;
     let return_type_token_stream = {
         let return_type_handle_token_stream =
-            quote::quote! {#import_path::NotEmptyUniqueEnumVec<#where_token_stream>};
+            quote::quote! {#import_path::NotEmptyUniqueVec<#where_token_stream>};
         match &postgresql_type_or_postgresql_json_type {
             PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => {
                 generate_std_option_option_tokens_declaration_token_stream(
@@ -1446,7 +1446,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
         fn #name_token_stream(
             #read_only_ids_snake_case: #path_token_stream::#read_only_ids_upper_camel_case,
             #create_snake_case: #path_token_stream::#create_upper_camel_case
-        ) -> Option<#import_path::NotEmptyUniqueEnumVec<#path_token_stream::#where_upper_camel_case>> {
+        ) -> Option<#import_path::NotEmptyUniqueVec<#path_token_stream::#where_upper_camel_case>> {
             #content_token_stream
         }
     }
@@ -1513,7 +1513,7 @@ fn generate_create_into_postgresql_json_type_option_vec_where_length_equal_token
     quote::quote! {
         fn #create_into_postgresql_json_type_option_vec_where_length_equal_snake_case(
             #create_snake_case: #path_token_stream::#create_upper_camel_case
-        ) -> Option<#import_path::NotEmptyUniqueEnumVec<#path_token_stream::#where_upper_camel_case>> {
+        ) -> Option<#import_path::NotEmptyUniqueVec<#path_token_stream::#where_upper_camel_case>> {
             #content_token_stream
         }
     }
@@ -1532,13 +1532,13 @@ fn generate_create_into_postgresql_json_type_option_vec_where_length_greater_tha
     quote::quote! {
         fn #create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case(
             #create_snake_case: #path_token_stream::#create_upper_camel_case
-        ) -> Option<#import_path::NotEmptyUniqueEnumVec<#path_token_stream::#where_upper_camel_case>> {
+        ) -> Option<#import_path::NotEmptyUniqueVec<#path_token_stream::#where_upper_camel_case>> {
             #content_token_stream
         }
     }
 }
 
-fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_enum_vec_single_or_multiple_where_token_stream(
+fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_vec_single_or_multiple_where_token_stream(
     method_name_token_stream: &dyn quote::ToTokens,
     import_path: ImportPath,
     path_token_stream: &dyn quote::ToTokens,
@@ -1553,7 +1553,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_no
         fn #method_name_token_stream(
             #read_only_ids_snake_case: #path_token_stream::#read_only_ids_upper_camel_case,
             #create_snake_case: #path_token_stream::#create_upper_camel_case
-        ) -> Option<#import_path::NotEmptyUniqueEnumVec<#import_path::SingleOrMultiple<#path_token_stream::#where_upper_camel_case>>> {
+        ) -> Option<#import_path::NotEmptyUniqueVec<#import_path::SingleOrMultiple<#path_token_stream::#where_upper_camel_case>>> {
             #content_token_stream
         }
     }
@@ -1564,7 +1564,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     path_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_enum_vec_single_or_multiple_where_token_stream(
+    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_vec_single_or_multiple_where_token_stream(
         &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereGreaterThanSnakeCase,
         import_path,
         path_token_stream,
@@ -1577,7 +1577,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     path_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_enum_vec_single_or_multiple_where_token_stream(
+    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_vec_single_or_multiple_where_token_stream(
         &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereBetweenSnakeCase,
         import_path,
         path_token_stream,
@@ -1590,7 +1590,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     path_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_enum_vec_single_or_multiple_where_token_stream(
+    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_vec_single_or_multiple_where_token_stream(
         &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereInSnakeCase,
         import_path,
         path_token_stream,
@@ -1603,7 +1603,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     path_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_enum_vec_single_or_multiple_where_token_stream(
+    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_vec_single_or_multiple_where_token_stream(
         &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereRegularExpressionSnakeCase,
         import_path,
         path_token_stream,
@@ -1616,7 +1616,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     path_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_enum_vec_single_or_multiple_where_token_stream(
+    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_vec_single_or_multiple_where_token_stream(
         &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElementGreaterThanSnakeCase,
         import_path,
         path_token_stream,
@@ -1629,7 +1629,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     path_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_enum_vec_single_or_multiple_where_token_stream(
+    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_vec_single_or_multiple_where_token_stream(
         &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElementRegularExpressionSnakeCase,
         import_path,
         path_token_stream,
@@ -1853,11 +1853,11 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
             #read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_content_token_stream
             fn #create_into_postgresql_type_option_vec_where_dimension_one_equal_snake_case(
                 #create_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#create_upper_camel_case
-            ) -> Option<#import_path::NotEmptyUniqueEnumVec<#self_postgresql_type_as_postgresql_type_token_stream::#where_upper_camel_case>> {
+            ) -> Option<#import_path::NotEmptyUniqueVec<#self_postgresql_type_as_postgresql_type_token_stream::#where_upper_camel_case>> {
                 #create_into_postgresql_type_option_vec_where_dimension_one_equal_token_stream
             }
             fn #postgresql_type_option_vec_where_greater_than_test_snake_case() -> Option<
-                #import_path::NotEmptyUniqueEnumVec<
+                #import_path::NotEmptyUniqueVec<
                     #import_path::PostgresqlTypeGreaterThanTest<
                         #self_upper_camel_case::#postgresql_type_upper_camel_case
                     >

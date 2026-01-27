@@ -2617,7 +2617,7 @@ pub fn generate_postgresql_json_types(
                             match not_null_or_nullable {
                                 NotNullOrNullable::NotNull => quote::quote! {acc_049ff0b3.push(#content_token_stream_f1ffd3b2);},
                                 NotNullOrNullable::Nullable => quote::quote! {
-                                    match #import_path::NotEmptyUniqueEnumVec::try_new(vec![#content_token_stream_f1ffd3b2]) {
+                                    match #import_path::NotEmptyUniqueVec::try_new(vec![#content_token_stream_f1ffd3b2]) {
                                         Ok(value_9328b66f) => {
                                             acc_049ff0b3.push(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(value_9328b66f)));
                                         },
@@ -2694,7 +2694,7 @@ pub fn generate_postgresql_json_types(
                         }
                     };
                     quote::quote! {
-                        Some(#import_path::NotEmptyUniqueEnumVec::try_new({
+                        Some(#import_path::NotEmptyUniqueVec::try_new({
                             let mut acc_049ff0b3 = Vec::new();
                             #content_token_stream_c85923bd
                             acc_049ff0b3
@@ -3174,7 +3174,7 @@ pub fn generate_postgresql_json_types(
                         let equal_token_stream = generate_equal_token_stream(&quote::quote! {#current_ident_table_type_declaration_upper_camel_case::new(value_18544acf.into())});
                         quote::quote! {
                             #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
-                                #create_snake_case.0.0.map(|value_18544acf| postgresql_crud_common::NotEmptyUniqueEnumVec::try_new(
+                                #create_snake_case.0.0.map(|value_18544acf| postgresql_crud_common::NotEmptyUniqueVec::try_new(
                                     vec![#current_ident_where_upper_camel_case::#equal_upper_camel_case(#equal_token_stream)]
                                 ).expect("88bfa095-a3ab-4d0c-be71-af63c3acd50f"))
                             )
@@ -3183,7 +3183,7 @@ pub fn generate_postgresql_json_types(
                 }
             };
             let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream = quote::quote! {
-                #import_path::NotEmptyUniqueEnumVec::try_new(vec![
+                #import_path::NotEmptyUniqueVec::try_new(vec![
                     <Self as #import_path::PostgresqlJsonTypeTestCases>::#read_only_ids_merged_with_create_into_where_equal_snake_case(
                         #read_only_ids_snake_case,
                         #create_snake_case
@@ -3226,7 +3226,7 @@ pub fn generate_postgresql_json_types(
                                 quote::quote! {
                                     #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
                                         match #create_dot_zero_dot_zero {
-                                            Some(value_1bbf74bc) => match #import_path::NotEmptyUniqueEnumVec::try_new(
+                                            Some(value_1bbf74bc) => match #import_path::NotEmptyUniqueVec::try_new(
                                                 vec![#current_ident_where_upper_camel_case #content_token_stream]
                                             ) {
                                                 Ok(value_d82bbdbe) => Some(value_d82bbdbe),
@@ -3245,7 +3245,7 @@ pub fn generate_postgresql_json_types(
                         }
                     };
                     quote::quote! {
-                        match #import_path::NotEmptyUniqueEnumVec::try_new(vec![
+                        match #import_path::NotEmptyUniqueVec::try_new(vec![
                             #content_token_stream
                         ]) {
                             Ok(value_e196e86d) => Some(value_e196e86d),
@@ -3305,7 +3305,7 @@ pub fn generate_postgresql_json_types(
                                 let current_ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&ident_not_null_token_stream);
                                 quote::quote! {
                                     #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(match #create_dot_zero_dot_zero {
-                                        Some(value_68880991) => match #import_path::NotEmptyUniqueEnumVec::try_new(
+                                        Some(value_68880991) => match #import_path::NotEmptyUniqueVec::try_new(
                                             vec![#current_ident_where_upper_camel_case #content_token_stream]
                                         ) {
                                             Ok(value_cdc120a8) => Some(value_cdc120a8),
@@ -3323,7 +3323,7 @@ pub fn generate_postgresql_json_types(
                         }
                     };
                     quote::quote! {
-                        match #import_path::NotEmptyUniqueEnumVec::try_new(vec![#content_token_stream]) {
+                        match #import_path::NotEmptyUniqueVec::try_new(vec![#content_token_stream]) {
                             Ok(value_cee8d0ab) => Some(value_cee8d0ab),
                             Err(error) => match error {
                                 #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
@@ -3372,7 +3372,7 @@ pub fn generate_postgresql_json_types(
                 ) = {
                     let generate_greater_than_one_less_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{
                         let value_7aa498e8 = #content_token_stream?;
-                        match #import_path::NotEmptyUniqueEnumVec::try_new(
+                        match #import_path::NotEmptyUniqueVec::try_new(
                             vec![
                                 #import_path::SingleOrMultiple::Single(#ident_where_upper_camel_case::GreaterThan(
                                     where_filters::PostgresqlJsonTypeWhereGreaterThan {
@@ -3441,7 +3441,7 @@ pub fn generate_postgresql_json_types(
                                 #ident_table_type_declaration_upper_camel_case::new(start),
                                 #ident_table_type_declaration_upper_camel_case::new(end)
                             ) {
-                                Ok(value_cdde02cc) => match postgresql_crud_common::NotEmptyUniqueEnumVec::try_new(vec![
+                                Ok(value_cdde02cc) => match postgresql_crud_common::NotEmptyUniqueVec::try_new(vec![
                                     #import_path::SingleOrMultiple::Single(
                                         #ident_where_upper_camel_case::Between(
                                             where_filters::PostgresqlJsonTypeWhereBetween {
@@ -3519,7 +3519,7 @@ pub fn generate_postgresql_json_types(
                     PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => {
                         //todo additional variants to test
                         quote::quote!{
-                            match #import_path::NotEmptyUniqueEnumVec::try_new(vec![
+                            match #import_path::NotEmptyUniqueVec::try_new(vec![
                                 #import_path::SingleOrMultiple::Single(
                                     #ident_where_upper_camel_case::In(
                                         where_filters::PostgresqlJsonTypeWhereIn {
@@ -3564,7 +3564,7 @@ pub fn generate_postgresql_json_types(
                     PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean |
                     PostgresqlJsonType::UuidUuidAsJsonbString => none_token_stream.clone(),
                     PostgresqlJsonType::StdStringStringAsJsonbString => quote::quote!{
-                        match #import_path::NotEmptyUniqueEnumVec::try_new(vec![
+                        match #import_path::NotEmptyUniqueVec::try_new(vec![
                             #import_path::SingleOrMultiple::Single(
                                 #ident_where_upper_camel_case::RegularExpression(
                                     where_filters::PostgresqlJsonTypeWhereRegularExpression {
@@ -3600,7 +3600,7 @@ pub fn generate_postgresql_json_types(
                             float_64_greater_than_one_less_token_stream,
                         ) = {
                             let generate_greater_than_one_less_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{
-                                match #import_path::NotEmptyUniqueEnumVec::try_new({
+                                match #import_path::NotEmptyUniqueVec::try_new({
                                     let mut acc_f95ec4f2 = vec![];
                                     for element_ba78af60 in create.0.0 {
                                         let value_027d0d3a = #content_token_stream;
@@ -3694,7 +3694,7 @@ pub fn generate_postgresql_json_types(
                             PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean |
                             PostgresqlJsonType::UuidUuidAsJsonbString => none_token_stream.clone(),
                             PostgresqlJsonType::StdStringStringAsJsonbString => quote::quote!{
-                                match #import_path::NotEmptyUniqueEnumVec::try_new(create.0.0.into_iter().map(|element_590fca71| {
+                                match #import_path::NotEmptyUniqueVec::try_new(create.0.0.into_iter().map(|element_590fca71| {
                                     #import_path::SingleOrMultiple::Single(
                                         #ident_where_upper_camel_case::ContainsElementRegularExpression(
                                             where_filters::PostgresqlJsonTypeWhereContainsElementRegularExpression {
