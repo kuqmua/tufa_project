@@ -1420,7 +1420,6 @@ pub fn generate_postgresql_json_object_type(
                             .make_pub()
                             .derive_debug()
                             .derive_clone()
-                            .derive_copy()
                             .derive_partial_eq()
                             .derive_serde_serialize()
                             .derive_serde_deserialize()
