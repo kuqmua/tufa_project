@@ -1300,10 +1300,14 @@ pub fn generate_postgresql_json_object_type(
                                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"case when jsonb_typeof({column}) = 'null' then 'null'::jsonb else ({value_c2ca032e}) end");
                                     let default_but_option_is_always_some_call_token_stream = generate_default_but_option_is_always_some_call_token_stream(&ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream);
                                     quote::quote! {
-                                        let #value_snake_case = match &self.0 {
-                                            Some(value_e0a30b1e) => value_e0a30b1e,
-                                            None => &#default_but_option_is_always_some_call_token_stream,
-                                        };
+                                        let #value_snake_case = self.0.as_ref().map_or_else(
+                                            <
+                                                #ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream
+                                                as
+                                                postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                                            >::default_but_option_is_always_some_and_vec_always_contains_one_element,//todo maybe reuse
+                                            Clone::clone
+                                        );
                                         match #value_snake_case.#select_query_part_postgresql_type_snake_case(column) {
                                             Ok(value_c2ca032e) => Ok(format!(#format_handle_token_stream)),
                                             Err(#error_snake_case) => Err(#error_snake_case)
@@ -5755,7 +5759,7 @@ pub fn generate_postgresql_json_object_type(
                                             let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
                                             quote::quote! {
                                                 #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_option_value_read_snake_case(
-                                                    #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
+                                                    read_only_ids_225e2b76.0.#value_snake_case.#field_ident,
                                                     #content_token_stream,
                                                 )
                                             }
@@ -5770,14 +5774,14 @@ pub fn generate_postgresql_json_object_type(
                                             generate_parameter_token_stream(
                                                 &element_2a1148f0.field_type,
                                                 &field_ident,
-                                                &quote::quote! {#create_snake_case.#field_ident}
+                                                &quote::quote! {create_3c660445.#field_ident}
                                             )
                                         });
                                         quote::quote! {
                                             #ident_read_upper_camel_case::new({
                                                 assert_eq!(#read_only_ids_snake_case.0.#value_snake_case.len(), #create_snake_case.0.len(), "90d33ddd-e08d-488c-8577-c75febe97301");
                                                 let mut acc_37909420 = Vec::new();
-                                                for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()) {
+                                                for (read_only_ids_225e2b76, create_3c660445) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()) {
                                                     acc_37909420.push(#ident_with_id_standart_not_null_read_upper_camel_case::try_new(
                                                         #id_parameter_token_stream,
                                                         #(#parameters_token_stream),*
@@ -5854,7 +5858,7 @@ pub fn generate_postgresql_json_object_type(
                                             let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
                                             quote::quote! {
                                                 #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
-                                                    #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
+                                                    read_only_ids_94b49496.0.#value_snake_case.#field_ident,
                                                     #content_token_stream,
                                                 )
                                             }
@@ -5869,14 +5873,14 @@ pub fn generate_postgresql_json_object_type(
                                             generate_parameter_token_stream(
                                                 &element_d5acef17.field_type,
                                                 &field_ident,
-                                                &quote::quote! {#create_snake_case.#field_ident}
+                                                &quote::quote! {create_24629087.#field_ident}
                                             )
                                         });
                                         quote::quote! {
                                             #ident_table_type_declaration_upper_camel_case::new({
                                                 assert_eq!(#read_only_ids_snake_case.0.#value_snake_case.len(), #create_snake_case.0.len(), "7776a146-06a8-4972-8e16-371d41ee164c");
                                                 let mut acc_319e1fb1 = Vec::new();
-                                                for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()) {
+                                                for (read_only_ids_94b49496, create_24629087) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()) {
                                                     acc_319e1fb1.push(#ident_with_id_standart_not_null_table_type_declaration_upper_camel_case::new(
                                                         #id_parameter_token_stream,
                                                         #(#parameters_token_stream),*
@@ -5926,7 +5930,7 @@ pub fn generate_postgresql_json_object_type(
                                         let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
                                         quote::quote!{
                                             #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
-                                                #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
+                                                read_only_ids_ea32954c.0.#value_snake_case.#field_ident,
                                                 #content_token_stream
                                             )
                                         }
@@ -5941,7 +5945,7 @@ pub fn generate_postgresql_json_object_type(
                                         generate_read_only_ids_merged_with_create_into_table_type_declaration_token_stream(
                                             &field_ident,
                                             &element_fc74a022.field_type,
-                                            &quote::quote!{#create_snake_case.#field_ident}
+                                            &quote::quote!{create_3cbe8967.#field_ident}
                                         )
                                     });
                                     quote::quote! {
@@ -5950,7 +5954,7 @@ pub fn generate_postgresql_json_object_type(
                                                 logical_operator: #import_path::LogicalOperator::And,
                                                 #value_snake_case: #ident_table_type_declaration_upper_camel_case::new({
                                                     let mut acc_321b3fcd = Vec::new();
-                                                    for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()) {
+                                                    for (read_only_ids_ea32954c, create_3cbe8967) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()) {
                                                         acc_321b3fcd.push(
                                                             #ident_with_id_standart_not_null_table_type_declaration_upper_camel_case::new(
                                                                 #current_ident_token_stream,
@@ -6029,7 +6033,7 @@ pub fn generate_postgresql_json_object_type(
                                             let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
                                             quote::quote!{
                                                 #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
-                                                    #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
+                                                    read_only_ids_319c9e78.0.#value_snake_case.#field_ident,
                                                     #content_token_stream
                                                 )
                                             }
@@ -6044,7 +6048,7 @@ pub fn generate_postgresql_json_object_type(
                                             generate_read_only_ids_merged_with_create_into_table_type_declaration_token_stream(
                                                 &field_ident,
                                                 &element_a8f4df4f.field_type,
-                                                &quote::quote!{#create_snake_case.#field_ident}
+                                                &quote::quote!{create_00ae06d2.#field_ident}
                                             )
                                         });
                                         quote::quote! {
@@ -6053,7 +6057,7 @@ pub fn generate_postgresql_json_object_type(
                                                     logical_operator: #import_path::LogicalOperator::And,
                                                     #value_snake_case: #ident_table_type_declaration_upper_camel_case::new({
                                                         let mut acc_97ebf7d6 = Vec::new();
-                                                        for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()) {
+                                                        for (read_only_ids_319c9e78, create_00ae06d2) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()) {
                                                             acc_97ebf7d6.push(
                                                                 #ident_with_id_standart_not_null_table_type_declaration_upper_camel_case::new(
                                                                     #current_ident_token_stream,
@@ -6568,8 +6572,8 @@ pub fn generate_postgresql_json_object_type(
                                             let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
                                             quote::quote! {
                                                 let #field_ident = #field_type_as_postgresql_json_type_test_cases_token_stream::#method_name_token_stream(
-                                                    #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
-                                                    #create_snake_case.#field_ident
+                                                    read_only_ids_629675e2.0.#value_snake_case.#field_ident,
+                                                    create_82796400.#field_ident
                                                 );
                                             }
                                         });
@@ -6654,7 +6658,7 @@ pub fn generate_postgresql_json_object_type(
                                         quote::quote! {
                                             match #import_path::NotEmptyUniqueEnumVec::try_new({
                                                 let mut acc_359c0b3f = Vec::new();
-                                                for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()) {
+                                                for (read_only_ids_629675e2, create_82796400) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()) {
                                                     let and = #import_path::LogicalOperator::And;
                                                     let #id_snake_case = #ident_where_upper_camel_case::ElementId(
                                                         #import_path::PostgresqlTypeWhere::try_new(
@@ -6663,7 +6667,7 @@ pub fn generate_postgresql_json_object_type(
                                                                 #uuid_uuid_as_not_null_jsonb_string_where_upper_camel_case::Equal(#import_path::PostgresqlJsonTypeWhereEqual {
                                                                     logical_operator: #import_path::LogicalOperator::Or,
                                                                     #value_snake_case: #uuid_uuid_as_not_null_jsonb_string_table_type_declaration_upper_camel_case::new(
-                                                                        #read_only_ids_snake_case.0.#value_snake_case.#id_snake_case.0.#value_snake_case
+                                                                        read_only_ids_629675e2.0.#value_snake_case.#id_snake_case.0.#value_snake_case
                                                                     ),
                                                                 })
                                                             ],
