@@ -763,7 +763,7 @@ pub fn generate_postgresql_json_object_type(
                             }
                         },
                     };
-                    if let PostgresqlJsonObjectTypePattern::Array = &postgresql_json_object_type_pattern && let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &not_null_or_nullable {
+                    if matches!(&postgresql_json_object_type_pattern, PostgresqlJsonObjectTypePattern::Array) && matches!(&not_null_or_nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) {
                         macros_helpers::generate_impl_pub_new_for_ident_token_stream(
                             &ident_table_type_declaration_or_ident_create_upper_camel_case,
                             &parameters_token_stream,
@@ -1212,7 +1212,7 @@ pub fn generate_postgresql_json_object_type(
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => self_value_token_stream.clone(),
                             },
                         };
-                        if let PostgresqlJsonObjectTypePattern::Standart = &postgresql_json_object_type_pattern && let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &not_null_or_nullable {
+                        if matches!(&postgresql_json_object_type_pattern, PostgresqlJsonObjectTypePattern::Standart) && matches!(&not_null_or_nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) {
                             macros_helpers::generate_pub_new_token_stream(
                                 &parameters_token_stream,
                                 &content_token_stream
@@ -1225,8 +1225,8 @@ pub fn generate_postgresql_json_object_type(
                             )
                         }
                     };
-                    let maybe_select_query_part_token_stream = if let PostgresqlJsonObjectTypePattern::Standart = &postgresql_json_object_type_pattern &&
-                    let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable {
+                    let maybe_select_query_part_token_stream = if matches!(&postgresql_json_object_type_pattern, PostgresqlJsonObjectTypePattern::Standart) &&
+                    matches!(&not_null_or_nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) {
                         let acc_ac57d097_token_stream = quote::quote!{acc_ac57d097};
                         let select_query_part_for_loop_token_stream = generate_select_query_part_for_loop_token_stream(
                             &acc_ac57d097_token_stream,
@@ -1824,7 +1824,7 @@ pub fn generate_postgresql_json_object_type(
                             ),
                         }
                     };
-                    let maybe_impl_error_occurence_lib_to_std_string_string_for_ident_where_token_stream = if let (PostgresqlJsonObjectTypePattern::Standart, NotNullOrNullable::Nullable) = (&postgresql_json_object_type_pattern, &not_null_or_nullable) {
+                    let maybe_impl_error_occurence_lib_to_std_string_string_for_ident_where_token_stream = if matches!((&postgresql_json_object_type_pattern, &not_null_or_nullable), (PostgresqlJsonObjectTypePattern::Standart, NotNullOrNullable::Nullable)) {
                         proc_macro2::TokenStream::new()
                     } else {
                         generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(&ident_where_upper_camel_case)

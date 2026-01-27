@@ -626,7 +626,7 @@ pub fn generate_postgresql_types(
                     }
                 },
                 CanBeNullable::False => {
-                    if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &value.1 {
+                    if matches!(&value.1, postgresql_crud_macros_common::NotNullOrNullable::Nullable) {
                         return Err(format!(
                             "{cant_support_nullable_variants_message}{value:#?}"
                         ));
@@ -851,7 +851,7 @@ pub fn generate_postgresql_types(
                                     });
                                 }),
                                 CanBeNullable::False => {
-                                    if let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &dimension1_not_null_or_nullable {
+                                    if matches!(&dimension1_not_null_or_nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) {
                                         for element_8b51bcb4 in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
                                             acc_4351207e.push(PostgresqlTypeRecord {
                                                 postgresql_type: element_a897c529.clone(),
@@ -1078,8 +1078,8 @@ pub fn generate_postgresql_types(
         let import_path_non_primary_key_postgresql_type_read_only_ids_token_stream = quote::quote! {#import_path::NonPrimaryKeyPostgresqlTypeReadOnlyIds};
         let none_token_stream = quote::quote!{None};
         let dot_clone_token_stream = quote::quote!{.clone()};
-        let maybe_dot_clone_token_stream: &dyn quote::ToTokens = if let PostgresqlTypePattern::Standart = &postgresql_type_pattern &&
-            let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
+        let maybe_dot_clone_token_stream: &dyn quote::ToTokens = if matches!(&postgresql_type_pattern, PostgresqlTypePattern::Standart) &&
+            matches!(&not_null_or_nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull)
         {
             match &postgresql_type {
                 PostgresqlType::StdPrimitiveI16AsInt2 |
@@ -1322,12 +1322,12 @@ pub fn generate_postgresql_types(
             | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBePrimaryKey::False,
             PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql | PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql | PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql | PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => CanBePrimaryKey::True,
         };
-        let is_standart_not_null = if let (PostgresqlTypePattern::Standart, postgresql_crud_macros_common::NotNullOrNullable::NotNull) = (&postgresql_type_pattern, &not_null_or_nullable) {
+        let is_standart_not_null = if matches!((&postgresql_type_pattern, &not_null_or_nullable), (PostgresqlTypePattern::Standart, postgresql_crud_macros_common::NotNullOrNullable::NotNull)) {
             IsStandartNotNull::True
         } else {
             IsStandartNotNull::False
         };
-        let is_not_null_standart_can_be_primary_key = if let (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart, CanBePrimaryKey::True) = (&not_null_or_nullable, &postgresql_type_pattern, &can_be_primary_key) {
+        let is_not_null_standart_can_be_primary_key = if matches!((&not_null_or_nullable, &postgresql_type_pattern, &can_be_primary_key), (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart, CanBePrimaryKey::True)) {
             IsNotNullStandartCanBePrimaryKey::True
         } else {
             IsNotNullStandartCanBePrimaryKey::False
@@ -1344,7 +1344,7 @@ pub fn generate_postgresql_types(
                 StartOrEnd::End => &end_snake_case,
             }
         };
-        let (serde_serialize_derive_or_impl, serde_deserialize_derive_or_impl) = if let IsStandartNotNull::True = &is_standart_not_null {
+        let (serde_serialize_derive_or_impl, serde_deserialize_derive_or_impl) = if matches!(&is_standart_not_null, IsStandartNotNull::True) {
             enum ParameterNumber {
                 One,
                 Two,
@@ -2524,8 +2524,8 @@ pub fn generate_postgresql_types(
             } else {
                 &{
                     let self_ident_origin_new_value_token_stream = quote::quote! {Self(#ident_origin_upper_camel_case::#new_snake_case(#value_snake_case))};
-                    if let PostgresqlTypePattern::Standart = &postgresql_type_pattern
-                        && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
+                    if matches!(&postgresql_type_pattern, PostgresqlTypePattern::Standart)
+                        && matches!(&not_null_or_nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull)
                     {
                         macros_helpers::generate_pub_const_new_token_stream(&value_ident_inner_type_token_stream, &self_ident_origin_new_value_token_stream)
                     } else {
@@ -2597,8 +2597,8 @@ pub fn generate_postgresql_types(
                     &quote::quote!{;},
                 );
             // println!("@@@{}", ident_inner_type_token_stream);
-            let maybe_impl_ident_token_stream = if let PostgresqlTypePattern::Standart = &postgresql_type_pattern &&
-                let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
+            let maybe_impl_ident_token_stream = if matches!(&postgresql_type_pattern, PostgresqlTypePattern::Standart) &&
+                matches!(&not_null_or_nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull)
             {
                 enum IsConst {
                     True,
@@ -3197,7 +3197,7 @@ pub fn generate_postgresql_types(
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
             };
-            let maybe_pub_enum_ident_standart_not_null_origin_try_new_error_named_token_stream = if let IsStandartNotNull::True = &is_standart_not_null
+            let maybe_pub_enum_ident_standart_not_null_origin_try_new_error_named_token_stream = if matches!(&is_standart_not_null, IsStandartNotNull::True)
                 && let Ok(postgresql_type_initialization_try_new) = &postgresql_type_initialization_try_new_try_from_postgresql_type
             {
                 macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
@@ -3275,7 +3275,7 @@ pub fn generate_postgresql_types(
             } else {
                 proc_macro2::TokenStream::new()
             };
-            let maybe_pub_enum_ident_standart_not_null_origin_try_new_for_deserialize_error_named_token_stream = if let IsStandartNotNull::True = &is_standart_not_null
+            let maybe_pub_enum_ident_standart_not_null_origin_try_new_for_deserialize_error_named_token_stream = if matches!(&is_standart_not_null, IsStandartNotNull::True)
                 && let postgresql_crud_macros_common::DeriveOrImpl::Impl(_) = &serde_deserialize_derive_or_impl
             {
                 match &postgresql_type_deserialize {
@@ -3987,7 +3987,7 @@ pub fn generate_postgresql_types(
                     }
                 }
             };
-            let maybe_impl_is_string_empty_for_ident_origin_token_stream = if let IsStandartNotNull::True = &is_standart_not_null {
+            let maybe_impl_is_string_empty_for_ident_origin_token_stream = if matches!(&is_standart_not_null, IsStandartNotNull::True) {
                 match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
                         PostgresqlType::StdPrimitiveI16AsInt2
@@ -4795,7 +4795,7 @@ pub fn generate_postgresql_types(
                 &quote::quote! {Ok(Self(value_147c3532))}
             );
             let impl_sqlx_type_sqlx_postgres_for_ident_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_read_upper_camel_case, &ident_origin_upper_camel_case);
-            let maybe_impl_postgresql_type_where_filter_for_ident_read_if_can_be_primary_key_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
+            let maybe_impl_postgresql_type_where_filter_for_ident_read_if_can_be_primary_key_token_stream = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
                 postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
                     &quote::quote! {<'lifetime>},
                     &ident_standart_not_null_read_upper_camel_case,
@@ -4828,7 +4828,7 @@ pub fn generate_postgresql_types(
             }
         };
         let ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
-        let ident_read_only_ids_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
+        let ident_read_only_ids_token_stream = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
             let ident_read_only_ids_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
@@ -4966,7 +4966,7 @@ pub fn generate_postgresql_types(
             let select_only_ids_and_select_only_updated_ids_query_common_token_stream = {
                 let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&{
                     let column_comma = "{column},";
-                    if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key { column_comma.to_owned() } else { format!("'{{{{\\\"value\\\": null}}}}'::jsonb as {column_comma}") }
+                    if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) { column_comma.to_owned() } else { format!("'{{{{\\\"value\\\": null}}}}'::jsonb as {column_comma}") }
                 });
                 quote::quote! {Ok(format!(#format_handle_token_stream))}
             };
@@ -5331,7 +5331,7 @@ pub fn generate_postgresql_types(
                         },
                     }
                 },
-                &if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
+                &if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
                     quote::quote! {#ident_read_only_ids_upper_camel_case}
                 } else {
                     quote::quote! {#import_path_non_primary_key_postgresql_type_read_only_ids_token_stream}
@@ -6163,7 +6163,7 @@ pub fn generate_postgresql_types(
             };
             let read_inner_into_read_with_new_or_try_new_unwraped_token_stream = generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read);
             let read_inner_into_update_with_new_or_try_new_unwraped_token_stream = generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Update);
-            let update_to_read_only_ids_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
+            let update_to_read_only_ids_token_stream = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
                 quote::quote! {
                     #ident_read_only_ids_upper_camel_case(#ident_read_upper_camel_case(#value_snake_case.0 #maybe_dot_clone_token_stream))//todo its not correct. must be only for primary key but it for all types what van be primary key
                 }
@@ -6176,7 +6176,7 @@ pub fn generate_postgresql_types(
             let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = {
                 //todo that is not correct for array of generated by postgresql primary keys but maybe just need to remove this variants and thats it?
                 let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&{
-                    let content_token_stream: &dyn quote::ToTokens = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
+                    let content_token_stream: &dyn quote::ToTokens = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
                         &quote::quote! {#value_snake_case.0 #maybe_dot_clone_token_stream}
                     } else {
                         &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
@@ -6189,7 +6189,7 @@ pub fn generate_postgresql_types(
                 #option_update_snake_case.map_or(#read_snake_case, |#value_snake_case| #ident_read_upper_camel_case(#value_snake_case.0))
             };
             let read_only_ids_merged_with_create_into_read_token_stream = {
-                let content_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
+                let content_token_stream = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
                     quote::quote! {#read_only_ids_snake_case.0}
                 } else {
                     quote::quote! {#ident_read_upper_camel_case(#create_snake_case.0)}
@@ -6208,7 +6208,7 @@ pub fn generate_postgresql_types(
                 quote::quote! {Some(#value_initialization_token_stream)}
             };
             let read_only_ids_merged_with_create_into_table_type_declaration_token_stream = {
-                let content_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
+                let content_token_stream = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
                     quote::quote! {#read_only_ids_snake_case.0.0}
                 } else {
                     quote::quote! {#create_snake_case.0}
@@ -6217,9 +6217,9 @@ pub fn generate_postgresql_types(
             };
             //todo maybe it into function (not in proc macro)
             let read_only_ids_merged_with_create_into_where_equal_token_stream = {
-                let content_token_stream = if let PostgresqlTypePattern::Standart = &postgresql_type_pattern
-                    && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
-                    && let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key
+                let content_token_stream = if matches!(&postgresql_type_pattern, PostgresqlTypePattern::Standart)
+                    && matches!(&not_null_or_nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull)
+                    && matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True)
                 {
                     quote::quote! {#read_only_ids_snake_case.0.0}
                 } else {
@@ -6637,7 +6637,7 @@ pub fn generate_postgresql_types(
                 &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_element_regular_expression_token_stream,
             )
         };
-        let maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
+        let maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
             let postgresql_type_primary_key_upper_camel_case = naming::PostgresqlTypePrimaryKeyUpperCamelCase;
             let value_as_read_only_ids_token_stream = quote::quote! {#value_snake_case: #self_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case};
             quote::quote! {
@@ -6663,7 +6663,7 @@ pub fn generate_postgresql_types(
         } else {
             proc_macro2::TokenStream::new()
         };
-        let maybe_impl_postgresql_type_not_primary_key_for_ident_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
+        let maybe_impl_postgresql_type_not_primary_key_for_ident_token_stream = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
             proc_macro2::TokenStream::new()
         } else {
             postgresql_crud_macros_common::generate_impl_postgresql_type_not_primary_key_for_ident_token_stream(&import_path, &ident)

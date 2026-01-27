@@ -14,7 +14,7 @@ pub fn maybe_write_token_stream_into_file(
     token_stream: &proc_macro2::TokenStream,
     format_with_cargofmt: &FormatWithCargofmt,
 ) {
-    if let ShouldWriteTokenStreamIntoFile::True = should_write_token_stream_into_file {
+    if matches!(should_write_token_stream_into_file, ShouldWriteTokenStreamIntoFile::True) {
         let path_string = format!("{file_name}.rs");
         let path = std::path::Path::new(&path_string);
         {
@@ -24,7 +24,7 @@ pub fn maybe_write_token_stream_into_file(
                 .expect("a503bf88-06d7-4b34-a764-c8074607ddf8");
         };
         //no other way to format only one file. it formats all files in project
-        if let FormatWithCargofmt::True = format_with_cargofmt {
+        if matches!(format_with_cargofmt, FormatWithCargofmt::True) {
             let status = std::process::Command::new("cargo")
                 .arg("fmt")
                 .arg("--")
