@@ -6379,11 +6379,6 @@ pub fn generate_postgresql_types(
                                 &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                                 &PostgresqlTypePattern::Standart
                             );
-                            let sqlx_types_time_time_as_time_standart_not_null_token_stream = &generate_ident_token_stream(
-                                &PostgresqlType::SqlxTypesTimeTimeAsTime,
-                                &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                &PostgresqlTypePattern::Standart
-                            );
                             let sqlx_types_chrono_naive_date_as_date_standart_not_null_token_stream = &generate_ident_token_stream(
                                 &PostgresqlType::SqlxTypesChronoNaiveDateAsDate,
                                 &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
