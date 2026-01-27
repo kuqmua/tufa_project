@@ -291,13 +291,23 @@ pub fn generate_postgresql_json_object_type(
             let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
             let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream = token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSizeCall;
             let vec_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = quote::quote!{vec![#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]};
-            let import_path_default_but_option_is_always_some_call_token_stream = quote::quote!{
-                #import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()
+            let import_path_default_but_option_is_always_some_token_stream = quote::quote!{
+                #import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case
             };
-            let generate_default_but_option_is_always_some_call_token_stream = |ident_token_stream: &dyn quote::ToTokens, |{
+            let import_path_default_but_option_is_always_some_call_token_stream = quote::quote!{
+                #import_path_default_but_option_is_always_some_token_stream()
+            };
+            let generate_ident_as_default_but_option_is_always_some_call_token_stream = |ident_token_stream: &dyn quote::ToTokens, |{
                 quote::quote!{
                     <#ident_token_stream as #import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case>::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()
                 }
+            };
+            let generate_ident_as_default_but_option_is_always_some_token_stream = |ident_token_stream_2e6aba01: &dyn quote::ToTokens|quote::quote!{
+                <
+                    #ident_token_stream_2e6aba01
+                    as
+                    #import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
+                >::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case
             };
             let import_path_value_token_stream = quote::quote!{#import_path::#value_upper_camel_case};
             let wrap_into_value_declaration_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
@@ -1296,13 +1306,12 @@ pub fn generate_postgresql_json_object_type(
                                 }
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"case when jsonb_typeof({column}) = 'null' then 'null'::jsonb else ({value_c2ca032e}) end");
+                                    let ident_with_id_array_not_null_as_postgresql_json_type_select_as_default_but_option_is_always_some_token_stream = generate_ident_as_default_but_option_is_always_some_token_stream(
+                                        &ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream
+                                    );
                                     quote::quote! {
                                         let #value_snake_case = self.0.as_ref().map_or_else(
-                                            <
-                                                #ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream
-                                                as
-                                                postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-                                            >::default_but_option_is_always_some_and_vec_always_contains_one_element,//todo maybe reuse
+                                            #ident_with_id_array_not_null_as_postgresql_json_type_select_as_default_but_option_is_always_some_token_stream,
                                             Clone::clone
                                         );
                                         match #value_snake_case.#select_query_part_postgresql_type_snake_case(column) {
@@ -2352,7 +2361,7 @@ pub fn generate_postgresql_json_object_type(
                     let field_type_as_postgresql_json_type_read_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(&field_type, &PostgresqlJsonTypeSubtype::Read);
                     let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
                     let value_content_token_stream = wrap_into_value_initialization_token_stream(&{
-                        let default_but_option_is_always_some_call_token_stream = generate_default_but_option_is_always_some_call_token_stream(
+                        let default_but_option_is_always_some_call_token_stream = generate_ident_as_default_but_option_is_always_some_call_token_stream(
                             &field_type_as_postgresql_json_type_read_token_stream
                         );
                         quote::quote!{#field_type_as_postgresql_json_type_token_stream::into_inner(#default_but_option_is_always_some_call_token_stream)}
@@ -3737,10 +3746,13 @@ pub fn generate_postgresql_json_object_type(
                                 }
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                let ident_standart_not_null_as_postgresql_json_type_select_as_default_but_option_is_always_some_token_stream = generate_ident_as_default_but_option_is_always_some_token_stream(
+                                    &ident_standart_not_null_as_postgresql_json_type_select_token_stream
+                                );
                                 quote::quote! {
                                     let column_name_and_maybe_field_getter_field_ident = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
                                     let value_46039f0e = value.0.as_ref().map_or_else(
-                                        <#ident_standart_not_null_as_postgresql_json_type_select_token_stream as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element,//todo maybe reuse
+                                        #ident_standart_not_null_as_postgresql_json_type_select_as_default_but_option_is_always_some_token_stream,
                                         Clone::clone
                                     );
                                     match #ident_standart_not_null_as_postgresql_json_type_token_stream::#select_query_part_snake_case(
@@ -3791,13 +3803,12 @@ pub fn generate_postgresql_json_object_type(
                                 let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                                     &"case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value','null'::jsonb)) else ({value_d7bbd03c}) end"
                                 );
+                                let ident_with_id_array_not_null_as_postgresql_json_type_select_as_default_but_option_is_always_some_token_stream = generate_ident_as_default_but_option_is_always_some_token_stream(
+                                    &ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream
+                                );
                                 quote::quote! {
                                     let value_174d33cd = #value_snake_case.0.as_ref().map_or_else(
-                                        <
-                                            #ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream
-                                            as
-                                            postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-                                        >::default_but_option_is_always_some_and_vec_always_contains_one_element,//todo maybe reuse?
+                                        #ident_with_id_array_not_null_as_postgresql_json_type_select_as_default_but_option_is_always_some_token_stream,
                                         Clone::clone
                                     );
                                     match #ident_with_id_array_not_null_as_postgresql_json_type_token_stream::#select_query_part_snake_case(
@@ -5339,7 +5350,7 @@ pub fn generate_postgresql_json_object_type(
                                             let field_type_as_postgresql_json_type_read_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(&field_type, &PostgresqlJsonTypeSubtype::Read);
                                             let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
                                             let value_content_token_stream = wrap_into_value_initialization_token_stream(&{
-                                                let default_but_option_is_always_some_call_token_stream = generate_default_but_option_is_always_some_call_token_stream(
+                                                let default_but_option_is_always_some_call_token_stream = generate_ident_as_default_but_option_is_always_some_call_token_stream(
                                                     &field_type_as_postgresql_json_type_read_token_stream
                                                 );
                                                 quote::quote!{#field_type_as_postgresql_json_type_token_stream::into_inner(#default_but_option_is_always_some_call_token_stream)}
@@ -5606,7 +5617,7 @@ pub fn generate_postgresql_json_object_type(
                                             match value_fca601b5.0 {
                                                 Some(value_8d7747f1) => Some(
                                                     #current_ident_as_postgresql_json_type_test_cases_token_stream::previous_read_merged_with_option_update_into_read(
-                                                        #read_snake_case.0.unwrap_or_else(#import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element),//todo maybe reuse
+                                                        #read_snake_case.0.unwrap_or_else(#import_path_default_but_option_is_always_some_token_stream),
                                                         Some(value_8d7747f1),
                                                     )
                                                 ),
