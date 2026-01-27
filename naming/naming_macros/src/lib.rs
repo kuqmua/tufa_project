@@ -5,75 +5,140 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(
     input_token_stream: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let implementations_token_stream = serde_json::from_str::<Vec<Vec<String>>>(&input_token_stream.to_string())
-    .expect("90e5793b-d813-44aa-a124-c738772030c2")
-    .into_iter().map(|element_020a8657| {
-        {
-            let regex = regex::Regex::new(REGEX_VALUE).expect("20948d87-2c38-4896-96b6-239d9c9a0a38");
-            for element_d68254e8 in &element_020a8657 {
-                assert!(regex.is_match(element_d68254e8), "faadba8a-ff38-40f9-af05-e4f95bba896a");
-            }
-        }
-        let phrase_part_upper_camel_case_stringified = element_020a8657.iter().fold(String::new(), |mut acc_3d60efa0, element_132cd6b1| {
-            acc_3d60efa0.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(element_132cd6b1));
-            acc_3d60efa0
-        });
-        let phrase_part_snake_case_stringified = element_020a8657.iter().enumerate().fold(String::new(), |mut acc_7a8bd950, (index, element_b9981760)| {
-            let element_snake_case_stringified = naming_common::AsRefStrToSnakeCaseStringified::case(element_b9981760);
-            if index == 0 {
-                acc_7a8bd950.push_str(&element_snake_case_stringified);
-            } else {
-                use std::fmt::Write as _;
-                assert!(write!(acc_7a8bd950, "_{element_snake_case_stringified}").is_ok(), "ef718915-7a99-45a6-b3c5-496262804976");
-            }
-            acc_7a8bd950
-        });
-        let phrase_part_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&phrase_part_upper_camel_case_stringified);
-        let phrase_part_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&phrase_part_snake_case_stringified);
-        let phrase_part_upper_camel_case_token_stream = phrase_part_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>().expect("7cf3ffc0-e9c9-4d91-b42f-beb77350d743");
-        let phrase_part_snake_case_token_stream = phrase_part_snake_case_stringified.parse::<proc_macro2::TokenStream>().expect("114a573a-3df3-4e4a-96c4-043eed3a358c");
-        let phrase_part_upper_camel_case_upper_camel_case_token_stream = {
-            let value = format!("{phrase_part_upper_camel_case_stringified}UpperCamelCase");
-            value.parse::<proc_macro2::TokenStream>().expect("4ab6a54c-892b-4f8f-a6b6-aead9c3671fe")
-        };
-        let phrase_part_snake_case_upper_camel_case_token_stream = {
-            let value = format!("{phrase_part_upper_camel_case_stringified}SnakeCase");
-            value.parse::<proc_macro2::TokenStream>().expect("0cc47b2e-03e2-48b8-8df3-7bbbe09de244")
-        };
-        let generate_struct_declaration = |struct_name_token_stream: &dyn quote::ToTokens| quote::quote! {pub struct #struct_name_token_stream;};
-        let upper_camel_case_struct_declaration_token_stream = generate_struct_declaration(&phrase_part_upper_camel_case_upper_camel_case_token_stream);
-        let snake_case_struct_declaration_token_stream = generate_struct_declaration(&phrase_part_snake_case_upper_camel_case_token_stream);
-        let generate_display_implementation_token_stream = |struct_name_token_stream: &dyn quote::ToTokens, write_content_token_stream: &dyn quote::ToTokens| {
-            quote::quote! {
-                impl std::fmt::Display for #struct_name_token_stream {
-                    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(f, #write_content_token_stream)
+    let implementations_token_stream =
+        serde_json::from_str::<Vec<Vec<String>>>(&input_token_stream.to_string())
+            .expect("90e5793b-d813-44aa-a124-c738772030c2")
+            .into_iter()
+            .map(|element_020a8657| {
+                {
+                    let regex = regex::Regex::new(REGEX_VALUE)
+                        .expect("20948d87-2c38-4896-96b6-239d9c9a0a38");
+                    for element_d68254e8 in &element_020a8657 {
+                        assert!(
+                            regex.is_match(element_d68254e8),
+                            "faadba8a-ff38-40f9-af05-e4f95bba896a"
+                        );
                     }
                 }
-            }
-        };
-        let upper_camel_case_display_implementation_token_stream = generate_display_implementation_token_stream(&phrase_part_upper_camel_case_upper_camel_case_token_stream, &phrase_part_upper_camel_case_double_quotes_token_stream);
-        let snake_case_display_implementation_token_stream = generate_display_implementation_token_stream(&phrase_part_snake_case_upper_camel_case_token_stream, &phrase_part_snake_case_double_quotes_token_stream);
-        let generate_to_tokens_implementation_token_stream = |struct_name_token_stream: &dyn quote::ToTokens, quote_content_token_stream: &dyn quote::ToTokens| {
-            quote::quote! {
-                impl quote::ToTokens for #struct_name_token_stream {
-                    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-                        quote::quote!{#quote_content_token_stream}.to_tokens(tokens)
-                    }
+                let phrase_part_upper_camel_case_stringified = element_020a8657.iter().fold(
+                    String::new(),
+                    |mut acc_3d60efa0, element_132cd6b1| {
+                        acc_3d60efa0.push_str(
+                            &naming_common::AsRefStrToUpperCamelCaseStringified::case(
+                                element_132cd6b1,
+                            ),
+                        );
+                        acc_3d60efa0
+                    },
+                );
+                let phrase_part_snake_case_stringified = element_020a8657.iter().enumerate().fold(
+                    String::new(),
+                    |mut acc_7a8bd950, (index, element_b9981760)| {
+                        let element_snake_case_stringified =
+                            naming_common::AsRefStrToSnakeCaseStringified::case(element_b9981760);
+                        if index == 0 {
+                            acc_7a8bd950.push_str(&element_snake_case_stringified);
+                        } else {
+                            use std::fmt::Write as _;
+                            assert!(
+                                write!(acc_7a8bd950, "_{element_snake_case_stringified}").is_ok(),
+                                "ef718915-7a99-45a6-b3c5-496262804976"
+                            );
+                        }
+                        acc_7a8bd950
+                    },
+                );
+                let phrase_part_upper_camel_case_double_quotes_token_stream =
+                    generate_quotes::double_quotes_token_stream(
+                        &phrase_part_upper_camel_case_stringified,
+                    );
+                let phrase_part_snake_case_double_quotes_token_stream =
+                    generate_quotes::double_quotes_token_stream(
+                        &phrase_part_snake_case_stringified,
+                    );
+                let phrase_part_upper_camel_case_token_stream =
+                    phrase_part_upper_camel_case_stringified
+                        .parse::<proc_macro2::TokenStream>()
+                        .expect("7cf3ffc0-e9c9-4d91-b42f-beb77350d743");
+                let phrase_part_snake_case_token_stream = phrase_part_snake_case_stringified
+                    .parse::<proc_macro2::TokenStream>()
+                    .expect("114a573a-3df3-4e4a-96c4-043eed3a358c");
+                let phrase_part_upper_camel_case_upper_camel_case_token_stream = {
+                    let value = format!("{phrase_part_upper_camel_case_stringified}UpperCamelCase");
+                    value
+                        .parse::<proc_macro2::TokenStream>()
+                        .expect("4ab6a54c-892b-4f8f-a6b6-aead9c3671fe")
+                };
+                let phrase_part_snake_case_upper_camel_case_token_stream = {
+                    let value = format!("{phrase_part_upper_camel_case_stringified}SnakeCase");
+                    value
+                        .parse::<proc_macro2::TokenStream>()
+                        .expect("0cc47b2e-03e2-48b8-8df3-7bbbe09de244")
+                };
+                let generate_struct_declaration =
+                    |struct_name_token_stream: &dyn quote::ToTokens| {
+                        quote::quote! {
+                            #[derive(Debug)]
+                            pub struct #struct_name_token_stream;
+                        }
+                    };
+                let upper_camel_case_struct_declaration_token_stream = generate_struct_declaration(
+                    &phrase_part_upper_camel_case_upper_camel_case_token_stream,
+                );
+                let snake_case_struct_declaration_token_stream = generate_struct_declaration(
+                    &phrase_part_snake_case_upper_camel_case_token_stream,
+                );
+                let generate_display_implementation_token_stream =
+                    |struct_name_token_stream: &dyn quote::ToTokens,
+                     write_content_token_stream: &dyn quote::ToTokens| {
+                        quote::quote! {
+                            impl std::fmt::Display for #struct_name_token_stream {
+                                fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                                    write!(f, #write_content_token_stream)
+                                }
+                            }
+                        }
+                    };
+                let upper_camel_case_display_implementation_token_stream =
+                    generate_display_implementation_token_stream(
+                        &phrase_part_upper_camel_case_upper_camel_case_token_stream,
+                        &phrase_part_upper_camel_case_double_quotes_token_stream,
+                    );
+                let snake_case_display_implementation_token_stream =
+                    generate_display_implementation_token_stream(
+                        &phrase_part_snake_case_upper_camel_case_token_stream,
+                        &phrase_part_snake_case_double_quotes_token_stream,
+                    );
+                let generate_to_tokens_implementation_token_stream =
+                    |struct_name_token_stream: &dyn quote::ToTokens,
+                     quote_content_token_stream: &dyn quote::ToTokens| {
+                        quote::quote! {
+                            impl quote::ToTokens for #struct_name_token_stream {
+                                fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+                                    quote::quote!{#quote_content_token_stream}.to_tokens(tokens);
+                                }
+                            }
+                        }
+                    };
+                let upper_camel_case_to_tokens_implementation_token_stream =
+                    generate_to_tokens_implementation_token_stream(
+                        &phrase_part_upper_camel_case_upper_camel_case_token_stream,
+                        &phrase_part_upper_camel_case_token_stream,
+                    );
+                let snake_to_tokens_implementation_token_stream =
+                    generate_to_tokens_implementation_token_stream(
+                        &phrase_part_snake_case_upper_camel_case_token_stream,
+                        &phrase_part_snake_case_token_stream,
+                    );
+                quote::quote! {
+                    #upper_camel_case_struct_declaration_token_stream
+                    #upper_camel_case_display_implementation_token_stream
+                    #upper_camel_case_to_tokens_implementation_token_stream
+                    #snake_case_struct_declaration_token_stream
+                    #snake_case_display_implementation_token_stream
+                    #snake_to_tokens_implementation_token_stream
                 }
-            }
-        };
-        let upper_camel_case_to_tokens_implementation_token_stream = generate_to_tokens_implementation_token_stream(&phrase_part_upper_camel_case_upper_camel_case_token_stream, &phrase_part_upper_camel_case_token_stream);
-        let snake_to_tokens_implementation_token_stream = generate_to_tokens_implementation_token_stream(&phrase_part_snake_case_upper_camel_case_token_stream, &phrase_part_snake_case_token_stream);
-        quote::quote! {
-            #upper_camel_case_struct_declaration_token_stream
-            #upper_camel_case_display_implementation_token_stream
-            #upper_camel_case_to_tokens_implementation_token_stream
-            #snake_case_struct_declaration_token_stream
-            #snake_case_display_implementation_token_stream
-            #snake_to_tokens_implementation_token_stream
-        }
-    });
+            });
     let generated = quote::quote! {#(#implementations_token_stream)*};
     // println!("{generated}");
     generated.into()
@@ -234,6 +299,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(
         }
     });
     let generated = quote::quote! {#(#implementations_token_stream)*};
+    // println!("{generated}");
     generated.into()
 }
 
