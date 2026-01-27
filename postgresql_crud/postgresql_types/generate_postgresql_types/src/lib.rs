@@ -626,7 +626,10 @@ pub fn generate_postgresql_types(
                     }
                 },
                 CanBeNullable::False => {
-                    if matches!(&value.1, postgresql_crud_macros_common::NotNullOrNullable::Nullable) {
+                    if matches!(
+                        &value.1,
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable
+                    ) {
                         return Err(format!(
                             "{cant_support_nullable_variants_message}{value:#?}"
                         ));

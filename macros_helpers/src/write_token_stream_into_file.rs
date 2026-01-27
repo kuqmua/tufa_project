@@ -14,7 +14,10 @@ pub fn maybe_write_token_stream_into_file(
     token_stream: &proc_macro2::TokenStream,
     format_with_cargofmt: &FormatWithCargofmt,
 ) {
-    if matches!(should_write_token_stream_into_file, ShouldWriteTokenStreamIntoFile::True) {
+    if matches!(
+        should_write_token_stream_into_file,
+        ShouldWriteTokenStreamIntoFile::True
+    ) {
         let path_string = format!("{file_name}.rs");
         let path = std::path::Path::new(&path_string);
         {
