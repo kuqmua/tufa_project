@@ -3276,7 +3276,7 @@ pub fn generate_postgresql_json_object_type(
                                                 let _: Option<char> = acc_f7537df2.pop();
                                                 format!("jsonb_build_object('value',{acc_f7537df2})")
                                             },
-                                            None => "'null'::jsonb".to_string()
+                                            None => "'null'::jsonb".to_owned()//todo maybe reuse
                                         })
                                     }
                                 },
@@ -3432,7 +3432,7 @@ pub fn generate_postgresql_json_object_type(
                                                 }
                                             }
                                         ),
-                                        None => "'null'::jsonb".to_string(),
+                                        None => "'null'::jsonb".to_owned(),
                                     })
                                 },
                             },
@@ -3612,7 +3612,7 @@ pub fn generate_postgresql_json_object_type(
                         &return_err_query_part_error_named_write_into_buffer_token_stream
                     );
                     let if_write_is_err_curly_braces_0_token_stream = macros_helpers::generate_if_write_is_err_curly_braces_token_stream(
-                        &quote::quote!{acc_5b4cd920, "{maybe_space_and_space}elem->>'id' <> ${increment}"},
+                        &quote::quote!{acc_5b4cd920, "{maybe_space_and_space}elem->>'id' <> ${increment_cb6ba4a7}"},
                         &return_err_query_part_error_named_write_into_buffer_token_stream
                     );
                     let if_write_is_err_curly_braces_1_token_stream = macros_helpers::generate_if_write_is_err_curly_braces_token_stream(
@@ -3621,11 +3621,11 @@ pub fn generate_postgresql_json_object_type(
                     );
                     quote::quote! {
                         let update_query_part_acc = {
-                            if #value_snake_case.#update_snake_case.is_empty() {
+                            if value_58d685d3.#update_snake_case.is_empty() {
                                 #std_string_string_token_stream::from("elem")
                             } else {
                                 let mut acc_2e2ad041 = #std_string_string_token_stream::default();
-                                for element_a0a61823 in #value_snake_case.#update_snake_case.to_vec() {
+                                for element_a0a61823 in value_58d685d3.#update_snake_case.to_vec() {
                                     let ident_with_id_handle = {
                                         let id_increment = match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::increment_checked_add_one(#increment_snake_case) {
                                             Ok(value_15b44b54) => value_15b44b54,
@@ -3659,8 +3659,8 @@ pub fn generate_postgresql_json_object_type(
                         };
                         let delete_query_part_acc = {
                             let mut acc_5b4cd920 = #std_string_string_token_stream::default();
-                            for _ in &#value_snake_case.#delete_snake_case {
-                                let #increment_snake_case = match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::increment_checked_add_one(#increment_snake_case) {
+                            for _ in &value_58d685d3.#delete_snake_case {
+                                let increment_cb6ba4a7 = match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::increment_checked_add_one(#increment_snake_case) {
                                     Ok(value_110650cc) => value_110650cc,
                                     Err(#error_snake_case) => {
                                         return Err(#error_snake_case);
@@ -3673,7 +3673,7 @@ pub fn generate_postgresql_json_object_type(
                         };
                         let create_query_part_acc = {
                             let mut acc_8554f572 = #std_string_string_token_stream::default();
-                            for _ in &#value_snake_case.#create_snake_case {
+                            for _ in &value_58d685d3.#create_snake_case {
                                 let increment_5bbc4961 = match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::increment_checked_add_one(#increment_snake_case) {
                                     Ok(value_27487842) => value_27487842,
                                     Err(#error_snake_case) => {
@@ -3685,12 +3685,12 @@ pub fn generate_postgresql_json_object_type(
                             let _: Option<char> = acc_8554f572.pop();
                             acc_8554f572
                         };
-                        let maybe_where = if #value_snake_case.#delete_snake_case.is_empty() {
+                        let maybe_where = if value_58d685d3.#delete_snake_case.is_empty() {
                             #std_string_string_token_stream::default()
                         } else {
                             format!(" where {delete_query_part_acc}")
                         };
-                        let maybe_jsonb_build_array = if #value_snake_case.#create_snake_case.is_empty() {
+                        let maybe_jsonb_build_array = if value_58d685d3.#create_snake_case.is_empty() {
                             #std_string_string_token_stream::default()
                         } else {
                             format!(" || jsonb_build_array({create_query_part_acc})")
@@ -3699,10 +3699,14 @@ pub fn generate_postgresql_json_object_type(
                     }
                 };
                 let generate_update_query_part_array_not_null_token_stream = |postgresql_type_or_postgresql_json_type: &postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType|{
-                    generate_update_delete_create_array_token_stream(&generate_quotes::double_quotes_token_stream(&match &postgresql_type_or_postgresql_json_type {
+                    let content_token_stream_c75c3cd1 = generate_update_delete_create_array_token_stream(&generate_quotes::double_quotes_token_stream(&match &postgresql_type_or_postgresql_json_type {
                         postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => "jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',case when jsonb_typeof({jsonb_set_target}) = 'null' then '[]'::jsonb else (select coalesce((select jsonb_agg({update_query_part_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {maybe_where}),'[]'::jsonb)) end {maybe_jsonb_build_array})",
                         postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => "((select coalesce((select jsonb_agg({update_query_part_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {maybe_where}),'[]'::jsonb)) {maybe_jsonb_build_array})",
-                    }))
+                    }));
+                    quote::quote!{
+                        let value_58d685d3 = #value_snake_case;
+                        #content_token_stream_c75c3cd1
+                    }
                 };
                 let impl_postgresql_crud_postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_json_type_token_stream(
                     &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
@@ -3797,12 +3801,16 @@ pub fn generate_postgresql_json_object_type(
                                     &ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream
                                 );
                                 quote::quote! {
-                                    let #value_snake_case = match &#value_snake_case.0 {
-                                        Some(value_671d4df5) => value_671d4df5,
-                                        None => &#default_but_option_is_always_some_call_token_stream,
-                                    };
+                                    let value_174d33cd = #value_snake_case.0.as_ref().map_or_else(
+                                        <
+                                            #ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream
+                                            as
+                                            postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                                        >::default_but_option_is_always_some_and_vec_always_contains_one_element,//todo maybe reuse?
+                                        Clone::clone
+                                    );
                                     match #ident_with_id_array_not_null_as_postgresql_json_type_token_stream::#select_query_part_snake_case(
-                                        #value_snake_case,
+                                        &value_174d33cd,
                                         field_ident,
                                         column_name_and_maybe_field_getter,
                                         column_name_and_maybe_field_getter_for_error_message,
@@ -4307,7 +4315,7 @@ pub fn generate_postgresql_json_object_type(
                                                     acc_0e9170a3
                                                 }
                                             ),
-                                            None => "'null'::jsonb".to_string(),
+                                            None => "'null'::jsonb".to_owned(),
                                         }
                                     ))
                                 }
@@ -4381,7 +4389,7 @@ pub fn generate_postgresql_json_object_type(
                                     let field_type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&element_76f33159.field_type);
                                     let field_ident_double_quotes_token_stream = &generate_quotes::double_quotes_token_stream(&field_ident);
                                     let if_write_is_err_curly_braces_token_stream = macros_helpers::generate_if_write_is_err_curly_braces_token_stream(
-                                        &quote::quote!{acc_1a91bdc7, "jsonb_build_object({value})||"},
+                                        &quote::quote!{acc_1a91bdc7, "jsonb_build_object({value_d49fe9d8})||"},
                                         &return_err_query_part_error_named_write_into_buffer_token_stream
                                     );
                                     quote::quote! {
@@ -4391,8 +4399,8 @@ pub fn generate_postgresql_json_object_type(
                                             "elem",
                                             #increment_snake_case
                                         ) {
-                                            Ok(mut #value_snake_case) => {
-                                                let _: Option<char> = #value_snake_case.pop();
+                                            Ok(mut value_d49fe9d8) => {
+                                                let _: Option<char> = value_d49fe9d8.pop();
                                                 #if_write_is_err_curly_braces_token_stream
                                             }
                                             Err(#error_snake_case) => {
@@ -4437,7 +4445,7 @@ pub fn generate_postgresql_json_object_type(
                                                     acc_857ce631
                                                 }
                                             ),
-                                            None => "'null'::jsonb".to_string(),
+                                            None => "'null'::jsonb".to_owned(),
                                         }
                                     ))
                                 }
@@ -4622,7 +4630,7 @@ pub fn generate_postgresql_json_object_type(
                                 });
                                 quote::quote! {
                                     match &#value_snake_case.0 {
-                                        Some(#value_snake_case) => {
+                                        Some(value_58d685d3) => {
                                             #content_token_stream
                                         },
                                         None => match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
