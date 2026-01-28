@@ -4775,84 +4775,98 @@ pub fn generate_postgresql_json_object_type(
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                let content_token_stream = vec_syn_field.iter().map(|element_18682ae5| {
-                                    let field_ident = &element_18682ae5.field_ident;
-                                    let element_field_ident_upper_camel_case = naming::parameter::ElementSelfUpperCamelCase::from_tokens(&field_ident);
-                                    let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element_18682ae5.field_type);
-                                    quote::quote! {
-                                        if let Some(value_bf84026e) = #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_snake_case(
-                                            read_only_ids_420d38ca.0.#value_snake_case.#field_ident.clone(),
-                                            create_76f032c1.#field_ident.clone()
-                                        ) {
-                                            for element_f6be06df in value_bf84026e.clone().into_vec() {
-                                                let value_592e6b5f = #ident_where_upper_camel_case::#element_field_ident_upper_camel_case(
-                                                    #import_path::PostgresqlTypeWhere::try_new(
+                                let content_token_stream_f0710cd9 = {
+                                    let content_token_stream_57d244f8 = vec_syn_field.iter().map(|element_18682ae5| {
+                                        let field_ident = &element_18682ae5.field_ident;
+                                        let element_field_ident_upper_camel_case = naming::parameter::ElementSelfUpperCamelCase::from_tokens(&field_ident);
+                                        let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element_18682ae5.field_type);
+                                        quote::quote! {
+                                            if let Some(value_bf84026e) = #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_snake_case(
+                                                read_only_ids_420d38ca.0.#value_snake_case.#field_ident.clone(),
+                                                create_76f032c1.#field_ident.clone()
+                                            ) {
+                                                for element_f6be06df in value_bf84026e.clone().into_vec() {
+                                                    let value_592e6b5f = #ident_where_upper_camel_case::#element_field_ident_upper_camel_case(
+                                                        #import_path::PostgresqlTypeWhere::try_new(
+                                                            #import_path::LogicalOperator::And,
+                                                            vec![element_f6be06df]
+                                                        ).expect("1f7ae335-461f-4215-8fb5-ee7cf2f32881")
+                                                    );
+                                                    if !acc_dd377eb1.contains(&value_592e6b5f) {
+                                                        acc_dd377eb1.push(value_592e6b5f);
+                                                    }
+                                                }
+                                                let value_03205172 = #ident_where_upper_camel_case::#element_field_ident_upper_camel_case(
+                                                    #import_path::PostgresqlTypeWhere::new(
                                                         #import_path::LogicalOperator::And,
-                                                        vec![element_f6be06df]
-                                                    ).expect("1f7ae335-461f-4215-8fb5-ee7cf2f32881")
+                                                        value_bf84026e
+                                                    )
                                                 );
-                                                if !acc_dd377eb1.contains(&value_592e6b5f) {
-                                                    acc_dd377eb1.push(value_592e6b5f);
+                                                if !acc_dd377eb1.contains(&value_03205172) {
+                                                    acc_dd377eb1.push(value_03205172);
                                                 }
                                             }
-                                            let value_03205172 = #ident_where_upper_camel_case::#element_field_ident_upper_camel_case(
-                                                #import_path::PostgresqlTypeWhere::new(
-                                                    #import_path::LogicalOperator::And,
-                                                    value_bf84026e
-                                                )
-                                            );
-                                            if !acc_dd377eb1.contains(&value_03205172) {
-                                                acc_dd377eb1.push(value_03205172);
-                                            }
                                         }
-                                    }
-                                });
-                                let maybe_dimension_one_token_stream = match &dimension {
+                                    });
+                                    quote::quote!{#(#content_token_stream_57d244f8)*}
+                                };
+                                let content_token_stream_2cc4a40e = match &dimension {
                                     postgresql_crud_macros_common::Dimension::One => {
-                                        let current_content_token_stream = vec_syn_field.iter().map(|element_a83927c8| {
-                                            let field_ident = &element_a83927c8.field_ident;
-                                            let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element_a83927c8.field_type);
-                                            quote::quote! {
-                                                #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
-                                                    read_only_ids_420d38ca.0.#value_snake_case.#field_ident,
-                                                    create_76f032c1.#field_ident
-                                                )
-                                            }
-                                        });
-                                        quote::quote!{
-                                            acc_dd377eb1.push(#ident_where_upper_camel_case::DimensionOneEqual(#import_path::PostgresqlJsonTypeWhereDimensionOneEqual {
-                                                logical_operator: #import_path::LogicalOperator::And,
-                                                dimensions: #import_path::BoundedStdVecVec::try_from(
-                                                    vec![
-                                                        #import_path::UnsignedPartOfStdPrimitiveI32::try_from(
-                                                            i32::try_from(index_47620dcf).expect("5341936f-ce9e-4e14-ae30-765f04c12e14")
-                                                        ).expect("76906f3c-4472-4ac0-a605-1b02f02fd680")
-                                                    ]
-                                                ).expect("8a624c70-3701-4907-b361-5637c5361e1f"),
-                                                #value_snake_case: #ident_with_id_standart_not_null_table_type_declaration_upper_camel_case::new(
-                                                    <#uuid_uuid_as_not_null_jsonb_string_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
-                                                        read_only_ids_420d38ca.0.#value_snake_case.#id_snake_case,
-                                                        #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                                        let dimension_one_token_stream = {
+                                            let content_token_stream_91a09fe2 = vec_syn_field.iter().map(|element_a83927c8| {
+                                                let field_ident = &element_a83927c8.field_ident;
+                                                let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element_a83927c8.field_type);
+                                                quote::quote! {
+                                                    #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
+                                                        read_only_ids_420d38ca.0.#value_snake_case.#field_ident,
+                                                        create_76f032c1.#field_ident
+                                                    )
+                                                }
+                                            });
+                                            quote::quote!{
+                                                acc_dd377eb1.push(#ident_where_upper_camel_case::DimensionOneEqual(#import_path::PostgresqlJsonTypeWhereDimensionOneEqual {
+                                                    logical_operator: #import_path::LogicalOperator::And,
+                                                    dimensions: #import_path::BoundedStdVecVec::try_from(
+                                                        vec![
+                                                            #import_path::UnsignedPartOfStdPrimitiveI32::try_from(
+                                                                i32::try_from(index_47620dcf).expect("5341936f-ce9e-4e14-ae30-765f04c12e14")
+                                                            ).expect("76906f3c-4472-4ac0-a605-1b02f02fd680")
+                                                        ]
+                                                    ).expect("8a624c70-3701-4907-b361-5637c5361e1f"),
+                                                    #value_snake_case: #ident_with_id_standart_not_null_table_type_declaration_upper_camel_case::new(
+                                                        <#uuid_uuid_as_not_null_jsonb_string_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
+                                                            read_only_ids_420d38ca.0.#value_snake_case.#id_snake_case,
+                                                            #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                                                        ),
+                                                        #(#content_token_stream_91a09fe2),*
                                                     ),
-                                                    #(#current_content_token_stream),*
-                                                ),
-                                            }));
+                                                }));
+                                            }
+                                        };
+                                        quote::quote!{
+                                            for (index_47620dcf, (read_only_ids_420d38ca, create_76f032c1)) in #read_only_ids_snake_case.0.#value_snake_case.into_iter()
+                                                .zip(#create_snake_case.0.into_iter())
+                                                .enumerate()
+                                            {
+                                                #content_token_stream_f0710cd9
+                                                #dimension_one_token_stream
+                                            }
                                         }
                                     },
                                     postgresql_crud_macros_common::Dimension::Two |
                                     postgresql_crud_macros_common::Dimension::Three |
-                                    postgresql_crud_macros_common::Dimension::Four => proc_macro2::TokenStream::new(),
+                                    postgresql_crud_macros_common::Dimension::Four => quote::quote!{
+                                        for (read_only_ids_420d38ca, create_76f032c1) in #read_only_ids_snake_case.0.#value_snake_case.into_iter()
+                                            .zip(#create_snake_case.0.into_iter())
+                                        {
+                                            #content_token_stream_f0710cd9
+                                        }
+                                    },
                                 };
                                 quote::quote! {
                                     match #import_path::NotEmptyUniqueVec::try_new({
                                         let mut acc_dd377eb1 = Vec::new();
-                                        for (index_47620dcf, (read_only_ids_420d38ca, create_76f032c1)) in #read_only_ids_snake_case.0.#value_snake_case.into_iter()
-                                            .zip(#create_snake_case.0.into_iter())
-                                            .enumerate()
-                                        {
-                                            #(#content_token_stream)*
-                                            #maybe_dimension_one_token_stream
-                                        }
+                                        #content_token_stream_2cc4a40e
                                         acc_dd377eb1
                                     }) {
                                         Ok(value_dfac36e4) => Some(value_dfac36e4),
