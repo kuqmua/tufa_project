@@ -2093,17 +2093,17 @@ pub fn generate_postgresql_json_object_type(
                                     content_token_stream,
                                     current_vec_syn_field_len > 1
                                 );
-                                let left_token_stream = maybe_wrap_into_braces_handle_token_stream(&{
+                                let left_token_stream = maybe_wrap_into_braces_handle_token_stream(&fields_reference_token_stream);
+                                let right_token_stream = maybe_wrap_into_braces_handle_token_stream(&{
                                     let nones_token_stream = std::iter::repeat_with(||quote::quote!{None}).take(current_vec_syn_field_len);
                                     quote::quote! {#(#nones_token_stream),*}
                                 });
-                                let right_token_stream = maybe_wrap_into_braces_handle_token_stream(&fields_reference_token_stream);
                                 let content_token_stream = if current_vec_syn_field_len == 1 {
                                     let content_token_stream = maybe_wrap_into_braces_handle_token_stream(&fields_token_stream);
                                     quote::quote! {#content_token_stream.is_none()}
                                 }
                                 else {
-                                    quote::quote! {let #left_token_stream = #right_token_stream}
+                                    quote::quote! {matches!(#left_token_stream, #right_token_stream)}
                                 };
                                 quote::quote! {
                                     if #content_token_stream {
