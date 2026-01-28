@@ -1497,7 +1497,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let fields_inialization_token_stream =
                         generate_fields_token_stream(ShouldAddBorrow::False);
                     quote::quote! {
-                        if let (#fields_named_with_comma_none_token_stream) = (#fields_token_stream) {
+                        if matches!((#fields_token_stream), (#fields_named_with_comma_none_token_stream)) {
                             return Err(#ident_where_many_try_new_error_named_upper_camel_case::#no_fields_provided_upper_camel_case {
                                 code_occurence: error_occurence_lib::code_occurence!(),
                             });
@@ -2155,15 +2155,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             };
                         (
                             maybe_wrap_into_braces_handle_token_stream(
-                                &fields_named_without_primary_key_with_comma_none_token_stream,
-                            ),
-                            maybe_wrap_into_braces_handle_token_stream(
                                 &generate_fields_named_without_primary_key_with_comma_token_stream(
                                     &|element: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream {
                                         let field_ident = &element.field_ident;
                                         quote::quote! {&#field_ident}
                                     },
                                 ),
+                            ),
+                            maybe_wrap_into_braces_handle_token_stream(
+                                &fields_named_without_primary_key_with_comma_none_token_stream,
                             ),
                         )
                     };
@@ -2175,7 +2175,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             },
                         );
                     quote::quote! {
-                        if let #left_token_stream = #right_token_stream {
+                        if matches!(#left_token_stream, #right_token_stream) {
                             return Err(#ident_update_try_new_error_named_upper_camel_case::#no_fields_provided_upper_camel_case {
                                 code_occurence: error_occurence_lib::code_occurence!(),
                             });
@@ -7261,7 +7261,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     ) -> Vec<#ident_read_upper_camel_case> {
                         let mut acc_1debe8fb = Vec::new();
                         assert_eq!(read_only_ids_from_try_create_many.len(), ident_vec_create.len(), "88fb286c-a440-441f-9e36-83454d0c9f75");
-                        for (read_only_ids, create) in read_only_ids_from_try_create_many.clone().into_iter().zip(ident_vec_create.into_iter()) {
+                        for (read_only_ids, create) in read_only_ids_from_try_create_many.into_iter().zip(ident_vec_create.into_iter()) {
                             acc_1debe8fb.push(#ident_read_upper_camel_case {
                                 #primary_key_field_ident: <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
                                     &read_only_ids.#primary_key_field_ident
