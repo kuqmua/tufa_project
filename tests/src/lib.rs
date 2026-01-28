@@ -295,13 +295,7 @@ mod tests {
             rust_or_clippy,
             lints_vec_from_cargo_toml,
             clippy_lints_from_docs,
-            //todo on commit momment seems like this lints still not added to clippy, but in the list in clippy site
-            vec![
-                String::from("same_length_and_capacity"),
-                String::from("duration_suboptimal_units"),
-                String::from("manual_take"),
-                String::from("manual_checked_ops"),
-            ],
+            vec![],
         );
     }
     #[test]
