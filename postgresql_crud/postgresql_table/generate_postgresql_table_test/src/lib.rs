@@ -4,6 +4,8 @@ mod clippy;
 mod tests {
     #[test]
     fn clippy() {
+        // let path = "src/clippy.rs";
+        // std::fs::write(path, "").expect("404ab180-10f0-4b82-95ef-5635488fe436");
         // let mut file = std::fs::File::create("src/clippy.rs").expect("failed to create file");
         // std::io::Write::write_all(
         //     &mut file,
@@ -70,7 +72,7 @@ mod tests {
         // )
         // .expect("37c3fa31-2603-496c-bb76-3d8019886352");
         // let status = std::process::Command::new("cargo")
-        //     .args(["fmt"])
+        //     .args(["fmt", "--", path])
         //     .status()
         //     .expect("a681e0ea-4c3f-4ce8-9ba8-4c2e357ad0ea");
         // assert!(status.success(), "35cc9fc3-e941-4369-a658-d7f67d0ab728");
@@ -89,5 +91,6 @@ mod tests {
         //     clippy_status.success(),
         //     "2c037283-420c-4076-8042-1eac09ba1a23"
         // );
+        // std::fs::write(path, "").expect("79231418-b44a-4dac-8a88-3d8403024827");
     }
 }
