@@ -16,9 +16,10 @@ license = "license"
 keywords = ["keyword"]
 categories = ["category"]"#
         );
+        let lib_rs_content = "\n";
         let path_lib_rs = format!("{path}src/lib.rs");
         let path_cargo_toml = format!("{path}Cargo.toml");
-        std::fs::write(&path_lib_rs, "").expect("404ab180-10f0-4b82-95ef-5635488fe436");
+        std::fs::write(&path_lib_rs, lib_rs_content).expect("404ab180-10f0-4b82-95ef-5635488fe436");
         std::fs::write(&path_cargo_toml, {
             let additional_content = r#"[dependencies]
 axum.workspace = true
@@ -133,7 +134,8 @@ server_config = {path = "../../../server_config"}"#;
             .to_string()
         ).expect("55124f90-c7c2-40b5-8b66-695635ea6afd");
         let return_to_previous = || {
-            std::fs::write(&path_lib_rs, "").expect("79231418-b44a-4dac-8a88-3d8403024827");
+            std::fs::write(&path_lib_rs, lib_rs_content)
+                .expect("79231418-b44a-4dac-8a88-3d8403024827");
             std::fs::write(&path_cargo_toml, cargo_toml_content)
                 .expect("ec801a87-2c48-4c64-9c6a-7e686db91094");
         };
