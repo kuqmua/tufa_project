@@ -1,5 +1,10 @@
 #[cfg(feature = "test-utils")]
-pub fn clippy_check(crate_name: &str, additional_content: &str, content_to_generate: &str) {
+pub fn clippy_check(
+    crate_name: &str,
+    command_path: &str,
+    additional_content: &str,
+    content_to_generate: &str,
+) {
     let path = format!("../{crate_name}/");
     let cargo_toml_content = format!(
         r#"[package]
@@ -32,8 +37,12 @@ workspace = true"#
         std::fs::write(&path_cargo_toml, cargo_toml_content)
             .expect("ec801a87-2c48-4c64-9c6a-7e686db91094");
     };
+    let manifest_dir = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    let target_crate_dir = manifest_dir
+        .join(format!("{command_path}{crate_name}"));
     if let Ok(value_90318089) = std::process::Command::new("cargo")
-        .args(["fmt", "--", &path_lib_rs])
+        .current_dir(&target_crate_dir)
+        .args(["fmt"])
         .status()
     {
         assert!(
@@ -45,6 +54,7 @@ workspace = true"#
         panic!("8dc4f045-93a0-46a3-a6f6-0eab002dbb0c");
     }
     if let Ok(value_f263835c) = std::process::Command::new("cargo")
+        .current_dir(&target_crate_dir)
         .args(["clippy", "--all-targets", "--all-features"])
         .status()
     {

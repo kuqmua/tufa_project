@@ -4,6 +4,7 @@ mod tests {
     fn clippy() {
         macro_clippy_check_common::clippy_check(
             "generate_postgresql_table_test_content",
+            "../postgresql_crud/postgresql_table/",
             r#"[dependencies]
 axum.workspace = true
 http.workspace = true
@@ -18,8 +19,6 @@ error_occurence_lib = {path = "../../../error_occurence_lib"}
 postgresql_crud = {path = "../../../postgresql_crud", features = ["test-utils"]}
 
 [dev-dependencies]
-quote.workspace = true
-proc-macro2.workspace = true
 num_cpus.workspace = true
 futures.workspace = true
 secrecy.workspace = true
@@ -27,7 +26,6 @@ tokio.workspace = true
 tracing-subscriber.workspace = true
 uuid.workspace = true
 itertools.workspace = true
-server_types = {path = "../../../server_types"}
 app_state = {path = "../../../app_state"}
 config_lib = {path = "../../../config_lib"}
 server_app_state = {path = "../../../server_app_state"}
