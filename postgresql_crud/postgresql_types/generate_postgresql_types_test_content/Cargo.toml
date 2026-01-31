@@ -1,0 +1,43 @@
+[package]
+name = "generate_postgresql_types_test_content"
+version = "0.1.0"
+edition = "2024"
+description = "description"
+repository = "repository"
+readme = "readme"
+license = "license"
+keywords = ["keyword"]
+categories = ["category"]
+
+[lints]
+workspace = true
+[dependencies]
+axum.workspace = true
+http.workspace = true
+sqlx.workspace = true
+reqwest.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+utoipa.workspace = true
+git_info = {path = "../../../git_info"}
+error_occurence_lib = {path = "../../../error_occurence_lib"}
+postgresql_crud = {path = "../../../postgresql_crud", features = ["test-utils"]}
+postgresql_crud_common = {path = "../../postgresql_crud_common"}
+where_filters = {path = "../../where_filters"}
+
+[dev-dependencies]
+quote.workspace = true
+proc-macro2.workspace = true
+num_cpus.workspace = true
+futures.workspace = true
+secrecy.workspace = true
+tokio.workspace = true
+tracing-subscriber.workspace = true
+uuid.workspace = true
+itertools.workspace = true
+server_types = {path = "../../../server_types"}
+app_state = {path = "../../../app_state"}
+config_lib = {path = "../../../config_lib"}
+server_app_state = {path = "../../../server_app_state"}
+server_config = {path = "../../../server_config"}

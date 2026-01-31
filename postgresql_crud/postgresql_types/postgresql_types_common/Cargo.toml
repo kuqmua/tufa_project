@@ -1,0 +1,22 @@
+[package]
+name = "postgresql_types_common"
+version = "0.1.0"
+edition = "2024"
+description = "description"
+repository = "repository"
+readme = "readme"
+license = "license"
+keywords = ["keyword"]
+categories = ["category"]
+
+[dependencies]
+sqlx.workspace = true
+serde.workspace = true
+utoipa.workspace = true
+thiserror.workspace = true
+schemars.workspace = true
+postgresql_crud_common = {path = "../../postgresql_crud_common", features = ["test-utils"]}
+error_occurence_lib = {path = "../../../error_occurence_lib"}
+
+[lints]
+workspace = true
