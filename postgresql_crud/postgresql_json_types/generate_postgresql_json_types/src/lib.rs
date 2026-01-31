@@ -2040,7 +2040,7 @@ pub fn generate_postgresql_json_types(
                     }
                 }
             } else {
-                quote::quote! {Ok(field_ident_jsonb_build_object_value(field_ident))}
+                quote::quote! {Ok(generate_postgresql_json_types_common::field_ident_jsonb_build_object_value(field_ident))}
             };
             let select_only_created_or_updated_ids_query_bind_token_stream = if matches!(&postgresql_json_type, PostgresqlJsonType::UuidUuidAsJsonbString) {
                 quote::quote! {

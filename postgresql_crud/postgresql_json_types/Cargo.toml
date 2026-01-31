@@ -20,6 +20,7 @@ generate_postgresql_json_types = {path = "./generate_postgresql_json_types"}
 error_occurence_lib = {path = "../../error_occurence_lib"}
 postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}
 where_filters = {path = "../where_filters"}
+generate_postgresql_json_types_common = {path = "./generate_postgresql_json_types_common"}
 
 [lints]
 workspace = true
