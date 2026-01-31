@@ -14,7 +14,10 @@ repository = "repository"
 readme = "readme"
 license = "license"
 keywords = ["keyword"]
-categories = ["category"]"#
+categories = ["category"]
+
+[lints]
+workspace = true"#
         );
         let lib_rs_content = "\n";
         let path_lib_rs = format!("{path}src/lib.rs");
