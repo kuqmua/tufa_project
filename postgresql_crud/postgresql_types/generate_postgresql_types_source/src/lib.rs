@@ -1219,7 +1219,7 @@ pub fn generate_postgresql_types(
                 let sqlx_postgres_types_pg_interval_stringified = "sqlx::postgres::types::PgInterval".to_owned();
                 let sqlx_types_chrono_naive_date_time_stringified = "sqlx::types::chrono::NaiveDateTime".to_owned();
                 let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified = "sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>".to_owned();
-                let sqlx_types_uuid_uuid_stringified = "sqlx::types::uuid::Uuid".to_owned();
+                let uuid_uuid_stringified = "uuid::Uuid".to_owned();
                 let sqlx_types_ipnetwork_ip_network_stringified = "sqlx::types::ipnetwork::IpNetwork".to_owned();
                 let sqlx_types_mac_address_mac_address_stringified = "sqlx::types::mac_address::MacAddress".to_owned();
                 match &postgresql_type {
@@ -1238,7 +1238,7 @@ pub fn generate_postgresql_types(
                     PostgresqlType::SqlxTypesChronoNaiveDateAsDate => sqlx_types_chrono_naive_date_stringified,
                     PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => sqlx_types_chrono_naive_date_time_stringified,
                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified,
-                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => sqlx_types_uuid_uuid_stringified,
+                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => uuid_uuid_stringified,
                     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => sqlx_types_ipnetwork_ip_network_stringified,
                     PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => sqlx_types_mac_address_mac_address_stringified,
                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => wrap_into_sqlx_postgres_types_pg_range_stringified(&std_primitive_i32_stringified),
@@ -1433,7 +1433,7 @@ pub fn generate_postgresql_types(
                     }
                 };
                 let impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream = generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream);
-                let impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream = generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote! {.to_string()}));
+                let impl_serde_serialize_for_uuid_uuid_token_stream = generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote! {.to_string()}));
                 let generate_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens = |current_ident_token_stream: &dyn quote::ToTokens| {
                     let generate_serialize_field_match_std_ops_bound_token_stream = |start_or_end: &StartOrEnd| {
                         let start_or_end_token_stream = generate_start_or_end_snake_case(start_or_end);
@@ -1583,7 +1583,7 @@ pub fn generate_postgresql_types(
                             #serde_ser_serialize_struct_end_token_stream
                         }
                     })),
-                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream),
+                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_uuid_uuid_token_stream),
                     PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote! {.bytes()}))),
                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range | PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream),
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case)),
@@ -1687,7 +1687,7 @@ pub fn generate_postgresql_types(
                     quote::quote! {Ok(#content_token_stream)}
                 };
                 let generate_serde_private_ok_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens| generate_serde_private_ok_token_stream(&quote::quote! {#ident_standart_not_null_origin_upper_camel_case(#content_token_stream)});
-                let match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream = quote::quote! {match #inner_type_standart_not_null_token_stream::try_parse(&#field_0_value_token_stream) {
+                let match_uuid_uuid_field_type_try_parse_token_stream = quote::quote! {match #inner_type_standart_not_null_token_stream::try_parse(&#field_0_value_token_stream) {
                     Ok(value_3c0b34fb) => value_3c0b34fb,
                     Err(error) => {
                         return Err(serde::de::Error::custom(error));
@@ -1740,7 +1740,7 @@ pub fn generate_postgresql_types(
                     };
                     (
                         generate_fn_visit_newtype_struct_token_stream(&std_primitive_i64_token_stream, &generate_serde_private_ok_postgresql_type_token_stream(&quote::quote! {#inner_type_standart_not_null_token_stream(#field_0_value_token_stream)})),
-                        generate_fn_visit_newtype_struct_token_stream(&std_string_string_token_stream, &generate_serde_private_ok_postgresql_type_token_stream(&match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream)),
+                        generate_fn_visit_newtype_struct_token_stream(&std_string_string_token_stream, &generate_serde_private_ok_postgresql_type_token_stream(&match_uuid_uuid_field_type_try_parse_token_stream)),
                         generate_fn_visit_newtype_struct_token_stream(&array_std_primitive_u8_6_token_stream, &generate_serde_private_ok_postgresql_type_token_stream(&sqlx_types_mac_address_mac_address_field_type_new_field_0_value_token_stream)),
                         generate_fn_visit_newtype_struct_token_stream(&std_string_string_token_stream, &match_origin_try_new_for_deserialize_one_token_stream),
                         generate_fn_visit_newtype_struct_token_stream(&inner_type_standart_not_null_token_stream, &match_origin_try_new_for_deserialize_one_token_stream),
@@ -1762,7 +1762,7 @@ pub fn generate_postgresql_types(
                 let (
                     fn_visit_seq_pg_money_token_stream,
                     fn_visit_seq_sqlx_types_chrono_naive_time_token_stream,
-                    fn_visit_seq_sqlx_types_uuid_uuid_token_stream,
+                    fn_visit_seq_uuid_uuid_token_stream,
                     fn_visit_seq_sqlx_types_mac_address_mac_address_token_stream,
                     fn_visit_seq_std_string_string_token_stream,
                     fn_visit_seq_sqlx_types_time_time_token_stream,
@@ -1805,7 +1805,7 @@ pub fn generate_postgresql_types(
                         }),
                         generate_fn_visit_seq_token_stream(&{
                             let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&std_string_string_token_stream]);
-                            let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream);
+                            let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&match_uuid_uuid_field_type_try_parse_token_stream);
                             quote::quote! {
                                 #fields_initialization_token_stream
                                 #serde_private_ok_postgresql_type_token_stream
@@ -2267,7 +2267,7 @@ pub fn generate_postgresql_types(
                     (
                         generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_expecting_struct_ident_double_quotes_token_stream, &fn_visit_seq_sqlx_types_chrono_naive_time_token_stream, &fn_visit_map_sqlx_types_chrono_naive_time_token_stream),
                         generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_expecting_tuple_struct_ident_double_quotes_token_stream, &fn_visit_newtype_struct_pg_money_token_stream, &fn_visit_seq_pg_money_token_stream),
-                        generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_expecting_tuple_struct_ident_double_quotes_token_stream, &fn_visit_newtype_struct_uuid_token_stream, &fn_visit_seq_sqlx_types_uuid_uuid_token_stream),
+                        generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_expecting_tuple_struct_ident_double_quotes_token_stream, &fn_visit_newtype_struct_uuid_token_stream, &fn_visit_seq_uuid_uuid_token_stream),
                         generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_expecting_tuple_struct_ident_double_quotes_token_stream, &fn_visit_newtype_struct_mac_address_token_stream, &fn_visit_seq_sqlx_types_mac_address_mac_address_token_stream),
                         generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_expecting_tuple_struct_ident_double_quotes_token_stream, &fn_visit_newtype_struct_text_token_stream, &fn_visit_seq_std_string_string_token_stream),
                         generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_expecting_struct_ident_double_quotes_token_stream, &fn_visit_seq_sqlx_types_time_time_token_stream, &fn_visit_map_sqlx_types_time_time_token_stream),
@@ -2353,7 +2353,7 @@ pub fn generate_postgresql_types(
                         }),
                     )
                 };
-                let impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                let impl_serde_deserialize_for_uuid_uuid_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                     quote::quote! {
                         #struct_visitor_token_stream
                         #impl_serde_de_visitor_for_visitor_uuid_uuid_token_stream
@@ -2423,7 +2423,7 @@ pub fn generate_postgresql_types(
                         #const_fields_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
                         #serde_deserializer_deserialize_struct_visitor_token_stream
                     })),
-                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream),
+                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_deserialize_for_uuid_uuid_token_stream),
                     PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote! {
                         #struct_visitor_token_stream
                         #impl_serde_de_visitor_for_visitor_mac_address_mac_address_token_stream
@@ -5095,7 +5095,7 @@ pub fn generate_postgresql_types(
                             )}
                         }
                     };
-                    quote::quote! {return Ok(#content_token_stream);}
+                    quote::quote! {Ok(#content_token_stream)}
                 },
                 &ident_where_upper_camel_case,
                 &ident_read_upper_camel_case,
@@ -5993,11 +5993,11 @@ pub fn generate_postgresql_types(
                             quote::quote! {vec![{#content_token_stream}]}
                         }
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                            return #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case)
+                            #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case)
                             .into_iter()
                             .flat_map(|element0| element0.into_iter().map(|element1| vec![Some(element1)]))
                             .chain(std::iter::once(vec![None]))
-                            .collect();
+                            .collect()
                         },
                     },
                     PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &not_null_or_nullable {
@@ -6044,7 +6044,7 @@ pub fn generate_postgresql_types(
                                         if has_len_greater_than_one {
                                             acc_abf96c9f.push(value_e22f9ad2.0);
                                         }
-                                        if !has_len_greater_than_one {
+                                        else {
                                             acc_abf96c9f.push(value_e22f9ad2.1);
                                         }
                                     }
@@ -6087,7 +6087,7 @@ pub fn generate_postgresql_types(
                                         if has_len_greater_than_one {
                                             acc_68eba82f.push(value_a0f0f172.0);
                                         }
-                                        if !has_len_greater_than_one {
+                                        else {
                                             acc_68eba82f.push(value_a0f0f172.1);
                                         }
                                     }
@@ -6153,7 +6153,7 @@ pub fn generate_postgresql_types(
                                     if has_len_greater_than_one {
                                         acc_5f7f59ac.push(value_3530786a.0);
                                     }
-                                    if !has_len_greater_than_one {
+                                    else {
                                         acc_5f7f59ac.push(value_3530786a.1);
                                     }
                                 }
