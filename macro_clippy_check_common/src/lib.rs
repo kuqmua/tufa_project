@@ -38,8 +38,7 @@ workspace = true"#
             .expect("ec801a87-2c48-4c64-9c6a-7e686db91094");
     };
     let manifest_dir = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    let target_crate_dir = manifest_dir
-        .join(format!("{command_path}{crate_name}"));
+    let target_crate_dir = manifest_dir.join(format!("{command_path}{crate_name}"));
     if let Ok(value_90318089) = std::process::Command::new("cargo")
         .current_dir(&target_crate_dir)
         .args(["fmt"])
