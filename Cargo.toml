@@ -52,6 +52,7 @@ members = [
   "route_validators",
   "tests",
   "impl_display_as_debug",
+  "macro_clippy_check_common",
   "error_occurence_test",
   "file_system",
   "token_patterns",

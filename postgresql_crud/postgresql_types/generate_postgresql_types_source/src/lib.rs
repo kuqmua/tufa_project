@@ -6737,5 +6737,5 @@ pub fn generate_postgresql_types(
         &generated,
         &macros_helpers::FormatWithCargofmt::True,
     );
-    generated.into()
+    generated
 }
