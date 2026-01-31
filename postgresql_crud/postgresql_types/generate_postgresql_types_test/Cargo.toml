@@ -10,12 +10,12 @@ keywords = ["keyword"]
 categories = ["category"]
 
 [dev-dependencies]
-quote.workspace = true
-macro_clippy_check_common = {path = "../../../macro_clippy_check_common"}
-generate_postgresql_types_source = {path = "../generate_postgresql_types_source"}
+# quote.workspace = true
+# macro_clippy_check_common = {path = "../../../macro_clippy_check_common"}
+# generate_postgresql_types_source = {path = "../generate_postgresql_types_source"}
 
 [lints]
 workspace = true
 
-[features]
-test-utils = ["macro_clippy_check_common/test-utils"]
+# [features]
+# test-utils = ["macro_clippy_check_common/test-utils"]
