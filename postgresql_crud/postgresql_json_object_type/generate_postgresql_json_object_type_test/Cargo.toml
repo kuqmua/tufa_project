@@ -1,5 +1,5 @@
 [package]
-name = "generate_postgresql_json_object_type"
+name = "generate_postgresql_json_object_type_test"
 version = "0.1.0"
 edition = "2024"
 description = "description"
@@ -9,12 +9,13 @@ license = "license"
 keywords = ["keyword"]
 categories = ["category"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-[lib]
-proc-macro = true
-
-[dependencies]
+[dev-dependencies]
+quote.workspace = true
 generate_postgresql_json_object_type_source = {path = "../generate_postgresql_json_object_type_source"}
+macro_clippy_check_common = {path = "../../../macro_clippy_check_common"}
 
 [lints]
 workspace = true
+
+[features]
+test-utils = ["macro_clippy_check_common/test-utils"]

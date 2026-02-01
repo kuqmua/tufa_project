@@ -30,7 +30,6 @@ workspace = true
 test-utils = [
     "postgresql_crud_common/test-utils",
     "postgresql_table/test-utils",
-    "postgresql_json_object_type/test-utils",
     "postgresql_json_types/test-utils",
     "postgresql_types/test-utils",
     "where_filters/test-utils"

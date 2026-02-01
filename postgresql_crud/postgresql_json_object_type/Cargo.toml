@@ -11,15 +11,11 @@ categories = ["category"]
 
 [dependencies]
 generate_postgresql_json_object_type = {path = "./generate_postgresql_json_object_type"}
-postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}
-utoipa.workspace = true
-serde.workspace = true
-thiserror.workspace = true
-schemars.workspace = true
-error_occurence_lib = {path = "../../error_occurence_lib"}
+postgresql_json_object_type_common = {path = "./postgresql_json_object_type_common"}
+#postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}
 
 [lints]
 workspace = true
 
-[features]
-test-utils = ["postgresql_crud_common/test-utils"]
+#[features]
+#test-utils = ["postgresql_crud_common/test-utils"]
