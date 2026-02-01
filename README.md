@@ -1,100 +1,152 @@
-### test common
+# Tufa Project
 
-* cargo test --features test-utils -- --nocapture
-* RUST_LOG=sqlx=debug cargo test --features test-utils -- --nocapture
-* RUSTFLAGS="-Awarnings" RUST_LOG=sqlx=debug cargo test --features test-utils -- --nocapture
-* RUSTFLAGS="-Awarnings" cargo clippy --all-targets --all-features
+A comprehensive Rust-based project for building web applications with PostgreSQL integration.
 
-### MOVE IT todo tomorrow and merge with notes
-* fix proc macro submodules, rename them
-* make refactoring for module-like implementation (no external dependencies from different modules)
-* remove type_path.path.segments.len() check in proc_macros. use .get(index) instead of [index]
-* format!("{}, ", e)) for error refactor in format server/src/preparation/check_availability.rs:91:29 error_string
-* proc macreo input parameter crate or common
-* some logic around location() file!() line!() column!() - maybe generate all other functions -github link and others on compiletime instead of runtime?
-* for all function with git_info input parameters - use get_git_info instead 
-* clippy settings token stream  - cannot do what. if u use this macro - will be an error "error: an inner attribute is not permitted in this context"
-* remove CONFIG usage from common
-* must use vec of parallel execution vectors vec;
-* rust can compile resursive function and get stackoverflow
-* todos with github links on place to do
-* implements two different methods for code_ocurence with github and just project source. display only for simple impl
+## Table of Contents
+- [Project Overview](#project-overview)
+- [Key Features](#key-features)
+- [Project Structure](#project-structure)
+- [Setup and Installation](#setup-and-installation)
+- [Usage](#usage)
+- [Modules](#modules)
+- [Contributing](#contributing)
+- [License](#license)
 
-### check warning/errors(not the same)
-1. cargo check
-2. cargo clippy
-3. rust-analyzer from vscode extension
+## Project Overview
 
-#### Location instead of file!() line!() column!()
-```
-use core::panic::Location;
+Tufa Project is a Rust workspace containing multiple crates designed to facilitate the development of web applications with PostgreSQL database integration. The project includes various utilities, macros, and libraries to streamline common development tasks.
 
-#[track_caller]
-fn location() -> Location<'static> {
-    *Location::caller()
-}
+## Key Features
 
-fn main() {
-    println!("{:?}", location());
-    println!("{:?}", location());
-}
+- PostgreSQL CRUD operations with code generation
+- Advanced error handling with detailed context
+- Configuration management
+- Git information integration
+- Type-safe database interactions
+- Extensible macro system
+- JSON schema validation for PostgreSQL
+
+## Project Structure
+
+This is a Rust workspace project with the following main components:
+
+- `postgresql_crud`: Core crate for PostgreSQL CRUD operations
+- `config_lib`: Configuration management utilities
+- `git_info`: Git repository information tools
+- `error_occurence_lib`: Advanced error handling with context
+- `from_sqlx_postgres_error`: SQLx PostgreSQL error conversion
+- `from_str`: String parsing utilities
+- `generate_quotes`: Quote generation utilities
+- `macros_helpers`: Helper macros for code generation
+- And many more utility crates...
+
+## Setup and Installation
+
+### Prerequisites
+
+- Rust (latest stable version)
+- PostgreSQL database
+- Docker (for containerized deployments)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd tufa_project
+   ```
+
+2. Initialize submodules:
+   ```bash
+   git submodule update --init --recursive --checkout
+   ```
+
+3. Build the project:
+   ```bash
+   cargo build
+   ```
+
+### Database Setup
+
+1. Start the database:
+   ```bash
+   cd server && sudo docker-compose up -d && cd ..
+   ```
+
+2. Run migrations:
+   ```bash
+   cd server && sqlx migrate run && cd ..
+   ```
+
+## Usage
+
+### Running Tests
+
+```bash
+# Run all tests
+cargo test
+
+# Run tests with features
+cargo test --features test-utils -- --nocapture
+
+# Run with debug logging
+RUST_LOG=sqlx=debug cargo test --features test-utils -- --nocapture
 ```
 
-### alternative init submodules command
-```
-git submodule update --init --recursive --checkout
+### Code Quality
+
+```bash
+# Check for errors
+cargo check
+
+# Run clippy lints
+cargo clippy
+
+# Check with specific flags
+RUSTFLAGS="-Awarnings" cargo clippy --all-targets --all-features
 ```
 
-### another alternative init submodules command
-```
-cd scripts && git submodule init git_sync_command && git submodule update git_sync_command && cd git_sync_command/ && cargo run && cd .. && cd ..
-```
-### thoughts about error handling
-variants for vec and hashmap, wrapper and origin must be differenet
-then hashmap occurse - get_source somehow must different, without printing time
-get_source must return parallel prints for hashmap and vec?
-but what need to do if inside hashmap - another hashmap? add some space increment?
-and if its a vec or hashmap -  code occurence must not propagate to parents
+### Development
 
-time [key] error1
- common/src/server/mongo/something1.rs:70:37 
- server/src/preparation/something1.rs:92:29
-time [key] error2
- common/src/server/mongo/something2.rs:70:37 
- server/src/preparation/something2.rs:92:29
-server/src/preparation/parent.rs:92:29
-server/src/preparation/parent.rs:45:29
+```bash
+# Start development with file watching
+cargo watch -x check -x test -x "run"
+```
 
-```
-### install cmake for grpc
-```
-sudo apt install cmake
-```
-### build submodules dependency cache
-```
-cargo build
-```
-### up databases
-```
-cd server && sudo docker-compose up -d && cd ..
-```
-### run postgres migrations
-```  
-cd server && sqlx migrate run && cd ..
-```
-### repo tracker example
-```
-https://github-stats.com/kuqmua/tufa_project
-```
-### cargo expand issue (works here only with --lib flag)
-```
-cargo expand your::path::to::module --lib
-```
-### [all algorithms written in rust](https://github.com/TheAlgorithms/Rust)
+## Modules
 
-### [use AI in with rust](https://youtu.be/StMP7g-0wK4)
+### postgresql_crud
+Core functionality for PostgreSQL CRUD operations with automatic code generation for tables, types, and JSON objects.
 
-### do not compile program if there is no explecit version of dependencies. proc macro open cargo toml files
+### config_lib
+Configuration management with environment variable parsing and type-safe accessors.
 
-# install cargo-pgrx
+### git_info
+Compile-time and runtime Git repository information retrieval.
 
+### error_occurence_lib
+Advanced error handling system with detailed context and source tracking.
+
+### from_sqlx_postgres_error
+Utilities for converting SQLx PostgreSQL errors to application-specific errors.
+
+### from_str
+Safe string parsing with detailed error context.
+
+### generate_quotes
+Utilities for generating quotes and text content.
+
+### macros_helpers
+Collection of helper macros for code generation and boilerplate reduction.
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a pull request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
