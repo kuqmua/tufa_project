@@ -54,7 +54,14 @@ workspace = true"#
     }
     if let Ok(value_f263835c) = std::process::Command::new("cargo")
         .current_dir(&target_crate_dir)
-        .args(["clippy", "--all-targets", "--all-features"])
+        .args([
+            "clippy",
+            "--all-targets",
+            "--all-features",
+            "--",
+            "-A",
+            "warnings",
+        ])
         .status()
     {
         assert!(

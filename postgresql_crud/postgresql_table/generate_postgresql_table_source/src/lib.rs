@@ -3176,19 +3176,38 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             }
         }
     };
+    let generate_match_ident_read_only_ids_as_from_row_from_row_token_stream =
+        |content_token_stream: &dyn quote::ToTokens| {
+            quote::quote! {
+                match <#ident_read_only_ids_upper_camel_case as sqlx::FromRow<'_, sqlx::postgres::PgRow>>::from_row(&value_b27d7d79) {
+                    Ok(value_33759463) => value_33759463,
+                    Err(#error_0_token_stream) => #content_token_stream
+                }
+            }
+        };
     let generate_create_update_delete_many_fetch_token_stream =
         |create_or_update_or_delete_many: &CreateOrUpdateOrDeleteMany| {
             let current_operation = Operation::from(create_or_update_or_delete_many);
             generate_fetch_token_stream(
-            &executor_snake_case,
-            &generate_sqlx_row_try_get_primary_key_token_stream(
-                &primary_key_field_type_as_postgresql_type_read_upper_camel_case,
-                &quote::quote! {Some(value_69ecb6a9)},
+                &executor_snake_case,
+                &match &create_or_update_or_delete_many {
+                    CreateOrUpdateOrDeleteMany::Create |
+                    CreateOrUpdateOrDeleteMany::Update => {
+                        let content_token_stream = generate_match_ident_read_only_ids_as_from_row_from_row_token_stream(&{
+                            let content_token_stream = generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!());
+                            quote::quote! {{#content_token_stream}}
+                        });
+                        quote::quote! {Some(#content_token_stream)}
+                    },
+                    CreateOrUpdateOrDeleteMany::Delete => generate_sqlx_row_try_get_primary_key_token_stream(
+                        &primary_key_field_type_as_postgresql_type_read_upper_camel_case,
+                        &quote::quote! {Some(value_69ecb6a9)},
+                        &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
+                    ),
+                },
                 &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
-            ),
-            &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
-            &ShouldWrapIntoValue::True,
-        )
+                &ShouldWrapIntoValue::True,
+            )
         };
     let generate_create_update_delete_one_fetch_token_stream =
         |create_or_update_or_delete_one: &CreateOrUpdateOrDeleteOne| {
@@ -3297,15 +3316,6 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
             }
         };
-    let generate_match_ident_read_only_ids_as_from_row_from_row_token_stream =
-        |content_token_stream: &dyn quote::ToTokens| {
-            quote::quote! {
-                match <#ident_read_only_ids_upper_camel_case as sqlx::FromRow<'_, sqlx::postgres::PgRow>>::from_row(&value_b27d7d79) {
-                    Ok(value_33759463) => value_33759463,
-                    Err(#error_0_token_stream) => #content_token_stream
-                }
-            }
-        };
     let create_many_token_stream = {
         let operation = Operation::CreateMany;
         let type_variants_from_request_response_syn_variants =
@@ -3397,26 +3407,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 let postgresql_logic_token_stream =
                     wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
                         &operation,
-                        // &generate_create_update_delete_many_fetch_token_stream(
-                        //     &CreateOrUpdateOrDeleteMany::Create
-                        // )
-                        //todo reuse
-                        &{
-                            let current_operation =
-                                Operation::from(&CreateOrUpdateOrDeleteMany::Create);
-                            generate_fetch_token_stream(
-                            &executor_snake_case,
-                            &{
-                                let content_token_stream = generate_match_ident_read_only_ids_as_from_row_from_row_token_stream(&{
-                                    let content_token_stream = generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!());
-                                    quote::quote! {{#content_token_stream}}
-                                });
-                                quote::quote! {Some(#content_token_stream)}
-                            },
-                            &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
-                            &ShouldWrapIntoValue::True,
-                        )
-                        },
+                        &generate_create_update_delete_many_fetch_token_stream(
+                            &CreateOrUpdateOrDeleteMany::Create,
+                        ),
                     );
                 impl_ident_vec_token_stream.push(generate_operation_token_stream(
                     &operation,
@@ -4330,36 +4323,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 let postgresql_logic_token_stream =
                     wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
                         &operation,
-                        // &generate_create_update_delete_many_fetch_token_stream(&CreateOrUpdateOrDeleteMany::UpdateMany)
-                        // &{
-                        //     let current_operation = Operation::from(&CreateOrUpdateOrDeleteMany::Update);
-                        //     generate_fetch_token_stream(
-                        //         &executor_snake_case,
-                        //         &generate_sqlx_row_try_get_primary_key_token_stream(
-                        //             &ident_read_only_ids_upper_camel_case,
-                        //             &quote::quote! {Some(value_69ecb6a9)},
-                        //             &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
-                        //         ),
-                        //         &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
-                        //         &ShouldWrapIntoValue::True,
-                        //     )
-                        // }
-                        &{
-                            let current_operation =
-                                Operation::from(&CreateOrUpdateOrDeleteMany::Update);
-                            generate_fetch_token_stream(
-                            &executor_snake_case,
-                            &{
-                                let content_token_stream = generate_match_ident_read_only_ids_as_from_row_from_row_token_stream(&{
-                                    let content_token_stream = generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!());
-                                    quote::quote! {{#content_token_stream}}
-                                });
-                                quote::quote! {Some(#content_token_stream)}
-                            },
-                            &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
-                            &ShouldWrapIntoValue::True,
-                        )
-                        },
+                        &generate_create_update_delete_many_fetch_token_stream(
+                            &CreateOrUpdateOrDeleteMany::Update,
+                        ),
                     );
                 impl_ident_vec_token_stream.push(generate_operation_token_stream(
                     &operation,
