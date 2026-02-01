@@ -1121,7 +1121,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     );
     let generate_select_query_part_parameters_payload_select_token_stream =
         |operation: &Operation| {
-            let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream =
+            let content_token_stream_59c8df3f =
                 generate_operation_error_initialization_eprintln_response_creation_token_stream(
                     operation,
                     &query_part_syn_variant_wrapper,
@@ -1133,7 +1133,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 match Self::#generate_select_query_part_snake_case(&#parameters_snake_case.#payload_snake_case.#select_snake_case) {
                     Ok(value_357219fb) => value_357219fb,
                     Err(#error_0_token_stream) => {
-                        #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                        #content_token_stream_59c8df3f
                     }
                 }
             }
@@ -1512,7 +1512,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     };
     let generate_read_or_delete_many_additional_paramaters_initialization_token_stream =
         |read_many_or_delete_many: &ReadManyOrDeleteMany| {
-            let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream =
+            let content_token_stream_b34ec240 =
                 generate_operation_error_initialization_eprintln_response_creation_token_stream(
                     &Operation::from(read_many_or_delete_many),
                     &query_part_syn_variant_wrapper,
@@ -1524,12 +1524,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 match postgresql_crud::PostgresqlTypeWhereFilter::query_part(
                     &#parameters_snake_case.#payload_snake_case.#where_many_snake_case,
                     &mut #increment_snake_case,
-                    &"",//useless
+                    &"",//useless //todo check if can be optimized
                     false//useless
                 ) {
                     Ok(value_d1627695) => value_d1627695,
                     Err(#error_0_token_stream) => {
-                        #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                        #content_token_stream_b34ec240
                     }
                 }
             }
@@ -1545,7 +1545,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     );
     let generate_query_postgresql_type_where_filter_query_bind_parameters_payload_where_many_query_token_stream =
         |operation: &Operation| {
-            let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream =
+            let content_token_stream_818208f4 =
                 generate_operation_error_initialization_eprintln_response_creation_token_stream(
                     operation,
                     &try_bind_syn_variant_wrapper,
@@ -1559,7 +1559,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         #query_snake_case = value_03a58371;
                     },
                     Err(#error_0_token_stream) => {
-                        #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                        #content_token_stream_818208f4
                     },
                 }
             }
@@ -1580,7 +1580,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     );
     let generate_match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_token_stream =
         |read_many_or_read_one: &ReadManyOrReadOne| {
-            let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream =
+            let content_token_stream_995d3d1d =
                 generate_operation_error_initialization_eprintln_response_creation_token_stream(
                     &Operation::from(read_many_or_read_one),
                     &postgresql_syn_variant_wrapper,
@@ -1595,7 +1595,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 ) {
                     Ok(value_90535a1d) => value_90535a1d,
                     Err(#error_0_token_stream) => {
-                        #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                        #content_token_stream_995d3d1d
                     }
                 }
             }
@@ -2259,7 +2259,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     };
     let generate_match_update_query_part_primary_key_token_stream =
         |operation: &Operation, content_token_stream: &dyn quote::ToTokens| {
-            let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream =
+            let content_token_stream_75b4019b =
                 generate_operation_error_initialization_eprintln_response_creation_token_stream(
                     operation,
                     &query_part_syn_variant_wrapper,
@@ -2271,7 +2271,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 match #content_token_stream.#update_query_part_primary_key_snake_case(&mut #increment_snake_case) {
                     Ok(value_f269a3b2) => value_f269a3b2,
                     Err(#error_0_token_stream) => {
-                        #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                        #content_token_stream_75b4019b
                     }
                 }
             }
@@ -2469,7 +2469,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
          row_and_rollback_file: &'static str,
          row_and_rollback_line: u32,
          row_and_rollback_column: u32| {
-            let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream =
+            let content_token_stream_91f19090 =
                 generate_operation_error_initialization_eprintln_response_creation_token_stream(
                     operation,
                     &postgresql_syn_variant_wrapper,
@@ -2489,7 +2489,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 if let Err(#error_1_token_stream) = #executor_snake_case.#rollback_snake_case().await {
                     #row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
                 }
-                #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                #content_token_stream_91f19090
             }}
         };
     let generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream =
@@ -2583,7 +2583,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let wrap_content_into_postgresql_transaction_begin_commit_value_token_stream =
         |operation: &Operation, content_token_stream: &dyn quote::ToTokens| {
             let postgres_transaction_begin_token_stream = {
-                let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream =
+                let content_token_stream_efebc55b =
                     generate_operation_error_initialization_eprintln_response_creation_token_stream(
                         operation,
                         &postgresql_syn_variant_wrapper,
@@ -2595,7 +2595,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     let mut #executor_snake_case = match #sqlx_acquire::#begin_snake_case(#executor_acquire_snake_case).await {
                         Ok(value_1aaca28f) => value_1aaca28f,
                         Err(#error_0_token_stream) => {
-                            #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                            #content_token_stream_efebc55b
                         }
                     };
                 }
@@ -3279,14 +3279,14 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             let field_ident = &element.field_ident;
             let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
             let field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&element.field_type);
-            let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
+            let content_token_stream_00878df8 = generate_operation_error_initialization_eprintln_response_creation_token_stream(operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
             quote::quote! {
                 match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #select_only_ids_query_part_snake_case(#field_ident_double_quotes_token_stream) {
                     Ok(value_aa341baf) => {
                         acc_a35168d8.push_str(&value_aa341baf);
                     },
                     Err(#error_0_token_stream) => {
-                        #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                        #content_token_stream_00878df8
                     }
                 }
             }
@@ -3303,7 +3303,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let generate_write_into_buffer_query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream =
         |operation: &Operation| {
             let query_part_error_named_write_into_buffer_token_stream = postgresql_crud_macros_common::generate_query_part_error_named_write_into_buffer_token_stream(import_path);
-            let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream =
+            let content_token_stream_fa8795ea =
                 generate_operation_error_initialization_eprintln_response_creation_token_stream(
                     operation,
                     &query_part_syn_variant_wrapper,
@@ -3313,7 +3313,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 );
             quote::quote! {
                 let #error_0_token_stream = #query_part_error_named_write_into_buffer_token_stream;
-                #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                #content_token_stream_fa8795ea
             }
         };
     let create_many_token_stream = {
@@ -3362,7 +3362,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             &operation
                         )
                     );
-                    let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
+                    let content_token_stream_4b2a4911 = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     let select_only_ids_query_part_token_stream =
                         generate_select_only_ids_query_part_token_stream(&operation);
                     quote::quote! {#postgresql_crud_snake_case::generate_create_many_query_string(
@@ -3377,7 +3377,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                         #if_write_is_err_token_stream
                                     },
                                     Err(#error_0_token_stream) => {
-                                        #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                        #content_token_stream_4b2a4911
                                     }
                                 }
                             }
@@ -3484,7 +3484,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 let parameters_logic_token_stream =
                     generate_parameters_logic_token_stream(&operation);
                 let query_string_token_stream = {
-                    let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
+                    let content_token_stream_cfcf1c2a = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     let select_only_ids_query_part_token_stream =
                         generate_select_only_ids_query_part_token_stream(&operation);
                     quote::quote! {
@@ -3494,7 +3494,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             &match #parameters_snake_case.#payload_snake_case.#create_query_part_snake_case(&mut 0) {
                                 Ok(value_3267d57d) => value_3267d57d,
                                 Err(#error_0_token_stream) => {
-                                    #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                    #content_token_stream_cfcf1c2a
                                 }
                             },
                             &#select_only_ids_query_part_token_stream
@@ -3638,7 +3638,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         generate_quotes::double_quotes_token_stream(&format!(
                             "{{}}{order_snake_case} {by_snake_case} {{}} {{}}"
                         ));
-                    let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
+                    let content_token_stream_0ec756e2 = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     let order_by_column_match_token_stream =
                         generate_fields_named_with_comma_token_stream(
                             &|element: &macros_helpers::SynFieldWrapper| {
@@ -3682,7 +3682,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             ) {
                                 Ok(value_742be6cf) => value_742be6cf,
                                 Err(#error_0_token_stream) => {
-                                    #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                    #content_token_stream_0ec756e2
                                 },
                             }
                         },
@@ -3838,7 +3838,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         generate_select_query_part_parameters_payload_select_token_stream(
                             &operation,
                         );
-                    let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
+                    let content_token_stream_1ead7cf9 = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     quote::quote! {#postgresql_crud_snake_case::generate_read_one_query_string(
                         #table_snake_case,
                         &#select_query_part_parameters_payload_select_token_stream,
@@ -3850,7 +3850,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         ) {
                             Ok(value_be9e7b7d) => value_be9e7b7d,
                             Err(#error_0_token_stream) => {
-                                #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                #content_token_stream_1ead7cf9
                             }
                         }
                     )}
@@ -4118,7 +4118,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     }
                 };
                 let query_string_token_stream = {
-                    let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
+                    let content_token_stream_1b64e228 = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     let generate_match_update_query_part_primary_key_operation_token_stream =
                         |content_token_stream: &dyn quote::ToTokens| {
                             generate_match_update_query_part_primary_key_token_stream(
@@ -4163,13 +4163,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                                                     &match element_defbc401.#update_query_part_primary_key_snake_case(&mut #increment_snake_case) {
                                                                         Ok(value_00890100) => value_00890100,
                                                                         Err(#error_0_token_stream) => {
-                                                                            #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                                                            #content_token_stream_1b64e228
                                                                         }
                                                                     },
                                                                     &match #ident_update_for_query_upper_camel_case::#update_query_part_field_ident_snake_case(value_3ea04126, &mut #increment_snake_case) {
                                                                         Ok(value_8797585c) => value_8797585c,
                                                                         Err(#error_0_token_stream) => {
-                                                                            #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                                                            #content_token_stream_1b64e228
                                                                         }
                                                                     },
                                                                 ));
@@ -4225,7 +4225,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                             acc_fd44b0aa.push_str(&value_4f536654);
                                         },
                                         Err(#error_0_token_stream) => {
-                                            #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                            #content_token_stream_1b64e228
                                         }
                                     }
                                 }
@@ -4412,7 +4412,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 let field_ident = &element.field_ident;
                                 let field_ident_double_quotes_token_stream =
                                     generate_quotes::double_quotes_token_stream(&field_ident);
-                                let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
+                                let content_token_stream_9ec6b359 = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                                 let generate_column_queals_value_comma_update_one_query_part_snake_case = naming::GenerateColumnQuealsValueCommaUpdateOneQueryPartSnakeCase;
                                 let update_query_part_field_ident_snake_case =
                                     naming::parameter::UpdateQueryPartSelfSnakeCase::from_tokens(
@@ -4425,7 +4425,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                             &match #ident_update_for_query_upper_camel_case::#update_query_part_field_ident_snake_case(value_2d144436, &mut #increment_snake_case) {
                                                 Ok(value_1ec12051) => value_1ec12051,
                                                 Err(#error_0_token_stream) => {
-                                                    #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                                    #content_token_stream_9ec6b359
                                                 }
                                             }
                                         ));
@@ -4440,7 +4440,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             &quote::quote! {#update_for_query_snake_case},
                         );
                     //todo refactor
-                    let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
+                    let content_token_stream_255ad2f1 = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     quote::quote! {
                         {
                             #increment_initialization_token_stream
@@ -4455,7 +4455,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             let return_columns = match #update_for_query_snake_case.select_only_updated_ids_query_part(&mut #increment_snake_case) {
                                 Ok(value_7f0d86a1) => value_7f0d86a1,
                                 Err(#error_0_token_stream) => {
-                                    #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                    #content_token_stream_255ad2f1
                                 }
                             };
                             #postgresql_crud_snake_case::generate_update_one_query_string(
@@ -4469,8 +4469,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     }
                 };
                 let binded_query_token_stream = {
-                    //todo rename and all copies too (must be named try_bind instead of postgresql)
-                    let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &try_bind_syn_variant_wrapper, file!(), line!(), column!());
+                    let content_token_stream_1bdf01cd = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &try_bind_syn_variant_wrapper, file!(), line!(), column!());
                     let binded_query_modifications_token_stream =
                         generate_fields_named_without_primary_key_without_comma_token_stream(
                             &|element: &macros_helpers::SynFieldWrapper| {
@@ -4487,7 +4486,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                                 #query_snake_case = value_c3c1b857;
                                             }
                                             Err(#error_0_token_stream) => {
-                                                #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                                #content_token_stream_1bdf01cd
                                             }
                                         }
                                     }
@@ -4503,7 +4502,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 #query_snake_case = value_d64bac39;
                             },
                             Err(#error_0_token_stream) => {
-                                #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                #content_token_stream_1bdf01cd
                             }
                         }
                     };
@@ -4523,7 +4522,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                                 #query_snake_case = value_cc6145f8;
                                             },
                                             Err(#error_0_token_stream) => {
-                                                #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                                #content_token_stream_1bdf01cd
                                             }
                                         }
                                     }
@@ -4749,7 +4748,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     Self::#primary_key_snake_case(),
                 )};
                 let binded_query_token_stream = {
-                    let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &try_bind_syn_variant_wrapper, file!(), line!(), column!());
+                    let content_token_stream_1319f705 = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &try_bind_syn_variant_wrapper, file!(), line!(), column!());
                     quote::quote! {
                         let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
                         match postgresql_crud::PostgresqlTypeWhereFilter::query_bind(
@@ -4760,7 +4759,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 #query_snake_case = value_3099ea0f;
                             },
                             Err(#error_0_token_stream) => {
-                                #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                #content_token_stream_1319f705
                             }
                         }
                         #query_snake_case
