@@ -1911,23 +1911,6 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         };
     let postgresql_crud_order_by_token_stream =
         quote::quote! {#postgresql_crud_snake_case::#order_by_upper_camel_case};
-    //todo
-    // let ident_column_read_permission_token_stream = {
-    //     let ident_column_read_permission_upper_camel_case = naming::parameter::SelfColumnReadPermissionUpperCamelCase::from_display(&ident);
-    //     let fields_permission_token_stream = generate_fields_named_with_comma_token_stream(&|element: &macros_helpers::SynFieldWrapper| {
-    //         let field_ident = &element.field_ident;
-    //         //todo permissions for json
-    //         quote::quote! {
-    //             #field_ident: bool
-    //         }
-    //     });
-    //     quote::quote! {
-    //         #derive_debug_clone_copy
-    //         pub struct #ident_column_read_permission_upper_camel_case {
-    //             #fields_permission_token_stream
-    //         }
-    //     }
-    // };
     let ident_update_upper_camel_case =
         naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
     let ident_update_many_parameters_upper_camel_case =
@@ -4216,7 +4199,6 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 let _: Option<char> = acc_a95eb175.pop();
                                 acc_a95eb175
                             };
-                            //todo refactor\reuse
                             let return_columns = {
                                 let mut acc_fd44b0aa = String::new();
                                 for element_bcf0dde4 in &#update_for_query_vec_snake_case {
@@ -4439,7 +4421,6 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             &operation,
                             &quote::quote! {#update_for_query_snake_case},
                         );
-                    //todo refactor
                     let content_token_stream_255ad2f1 = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     quote::quote! {
                         {
@@ -4451,7 +4432,6 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 acc_683e37b8
                             };
                             let #primary_key_query_part_snake_case = #additional_parameters_primary_key_modification_token_stream;
-                            //todo refactor\reuse
                             let return_columns = match #update_for_query_snake_case.select_only_updated_ids_query_part(&mut #increment_snake_case) {
                                 Ok(value_7f0d86a1) => value_7f0d86a1,
                                 Err(#error_0_token_stream) => {
