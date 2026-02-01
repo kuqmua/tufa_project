@@ -1,127 +1,9 @@
-### test common
+### common dev commands
 
 * cargo test --features test-utils -- --nocapture
 * RUST_LOG=sqlx=debug cargo test --features test-utils -- --nocapture
 * RUSTFLAGS="-Awarnings" RUST_LOG=sqlx=debug cargo test --features test-utils -- --nocapture
 * RUSTFLAGS="-Awarnings" cargo clippy --all-targets --all-features
-
-## git_sync_command <a name="heading1"/>
-
-## enum_extension <a name="heading3"/>
-
-## macros_helpers <a name="heading18"/>
-
-## generate_quotes <a name="heading35"/>
-
-## postgresql_crud <a name="heading37"/>
-
-## error_occurence_lib <a name="heading38"/>
-
-## config <a name="heading39"/>
-
-```
-cargo install --locked trunk
-```
-```
-rustup target add wasm32-unknown-unknown
-```
-#### usage
-```
-trunk serve
-```
-#### fonts source
-[link](https://fonts.google.com/)
-#### yew highlighting
-https://github.com/Alexandre-Borghi/yew-highlighting
-
-
-## error_occurence <a name="heading29"/> 
-
-## type_variants_from_reqwest_response <a name="heading35"/> 
-
-## common <a name="heading24"/> 
-
-## tufa_grpc_client <a name="heading25"/> 
-#### install dependencies
-```
-sudo apt install cmake
-```
-
-## tufa_grpc_server <a name="heading26"/> 
-#### install dependencies
-```
-sudo apt install cmake
-```
-
-## server <a name="heading27"/> 
-#### server setup content
-1. [simple route request](#heading271)
-2. [get_providers_posts route request](#heading272)
-3. [change project config](#heading273)
-4. [change tests constants](#heading274)
-5. [start docker daemon](#heading275)
-6. [build docker container (maybe some steps can be ignored)](#heading276)
-7. [run docker container](#heading277)
-8. [stop docker container](#heading278)
-9. [remove docker container](#heading279)
-10. [remove all unused right now docker containers and images](#heading2710)
-11. [run containers with docker-compose](#heading2711)
-12. [stop containers with docker-compose](#heading2712)
-13. [default docker volumes folder on linux](#heading2713)
-14. [pull and run mongodb docker container](#heading2714)
-15. [start mongodb docker container](#heading2715)
-16. [create new rust library](#heading2716)
-17. [pull and run postgres docker container](#heading2717)
-18. [start postres docker container](#heading2718)
-19. [shutdown wsl(if db clients cannot connect to db in wsl2)](#heading2719)
-20. [give priviligies to volumes folder](#heading2720)
-21. [start command](#heading2721)
-22. [run ci tests](#heading2722)
-23. [run local tests](#heading2723)
-24. [show tree visualization of a dependency graph](#heading2724)
-25. [how to tune rustfmt](#heading2725)
-26. [check vulnerabilities in project](#heading2726)
-27. [fix Error: I/O error: Permission denied (os error 13) error](#heading2727)
-28. [cargo watch](#heading2728)
-29. [install custom linker dependencies](#heading2729)
-30. [start deleopment](#heading2730)
-31. [pull redis image](#heading2731)
-32. [launch Postgres](#heading2732)
-33. [install sqlx-cli](#heading2733)
-34. [example add sqlx migration](#heading2734) 
-35. [how to use logger](#heading2735)
-36. [subscribe route test (change email and name)](#heading2736))
-37. [how to install remove unused dependencies tool](#heading2737)
-38. [how to install logs formatter?](#heading2738)
-39. [docker build](#heading2739)
-40. [Generate query metadata to support offline compile-time verification](#heading2740)
-41. [run docker container](#heading2741)
-42. [smaller rust docker builds](#heading2742)
-43. [ignore Digital Ocean for now](#heading2743)
-44. [ignore How to get started with postmark](#heading2744)
-45. [property-based testing](#heading2745)
-46. [if tests will be more than 1024](#heading2746)
-47. [Error: I/O error: Permission denied (os error 13) fix](#heading2747)
-48. [The script needs to be marked as executable and then launched](#heading2748)
-49. [see logs with cargo test](#heading2749)
-50. [run integration tests](#heading2750)
-51. [run unit tests](#heading2751)
-52. [run continious integration tests](#heading2752)
-53. [links](#heading2753)
-
-#### simple route request <a name="heading271"></a>
-```
-curl http://127.0.0.1:8080/kekw/index.html
-```
-#### get_providers_posts route request <a name="heading272"></a>
-```
-curl http://127.0.0.1:8080/get_providers_posts/
-```
-#### change project config <a name="heading273"></a>
-./env <br/>
-
-#### change tests constants <a name="heading274"></a>
-.libs/config_lib/src/get_project_information/project_constans.rs <br/>
 
 #### start docker daemon <a name="heading275"></a>
 ```
@@ -167,20 +49,6 @@ sudo docker-compose down
 #### default docker volumes folder on linux <a name="heading2713"></a>
 /var/lib/docker/volumes
 
-#### pull and run mongodb docker container <a name="heading2714"></a>
-(need to write path to your project directory)
-```
-sudo docker run -p 27017:27017 --name mongo-tufa-wsl2 -v ~/projects/server/mongodb_volume:/data/db -d mongo:latest
-```
-#### start mongodb docker container <a name="heading2715"></a>
-with docker: <br/>
-```
-sudo docker start mongo-tufa-wsl2
-```
-with docker-compose(other services too): <br/>
-```
-sudo docker-compose -f docker-compose.yml up -d 
-```
 #### create new rust library <a name="heading2716"></a>
 ```
 cargo new example_lib --lib
