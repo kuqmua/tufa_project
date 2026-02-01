@@ -491,68 +491,6 @@ impl StatusCode {
             .expect("48ab5b45-d715-4872-a5e3-aa17c1012898")
     }
 }
-// impl TryFrom<&syn::Variant> for StatusCode {
-//     type Error = String;
-//     fn try_from(value: &syn::Variant) -> Result<Self, Self::Error> {
-//         let mut option_self: Option<Self> = None;
-//         for element_6b899be4 in &value.attrs {
-//             if element_6b899be4.path().segments.len() == 1 {
-//                 match element_6b899be4.path().segments.first() {
-//                     Some(segment) => {
-//                         println!("1{}", &segment.ident.to_string());
-//                         if let Ok(value) = Self::try_from(&segment.ident.to_string()) {
-//                             match option_self {
-//                                 Some(value) => {
-//                                     return Err(format!("duplicated status_code attributes {value} are not supported"));
-//                                 }
-//                                 None => {
-//                                     option_self = Some(value);
-//                                 }
-//                             }
-//                         }
-//                     }
-//                     None => {
-//                         return Err(String::from(
-//                             "element_6b899be4.path().segments.first() is None",
-//                         ));
-//                     }
-//                 }
-//             }
-//         }
-//         option_self.map_or_else(|| Err(String::from("status_code attribute not found")), |value_7c48284a| Ok(value_7c48284a))
-//     }
-// }
-// impl TryFrom<&&syn::Variant> for StatusCode {
-//     type Error = String;
-//     fn try_from(value: &&syn::Variant) -> Result<Self, Self::Error> {
-//         let mut option_self: Option<Self> = None;
-//         for element_6b899be4 in &value.attrs {
-//             if element_6b899be4.path().segments.len() == 1 {
-//                 match element_6b899be4.path().segments.first() {
-//                     Some(segment) => {
-//                         println!("2{}", &segment.ident.to_string());
-//                         if let Ok(value) = Self::try_from(&segment.ident.to_string()) {
-//                             match option_self {
-//                                 Some(value) => {
-//                                     return Err(format!("duplicated status_code attributes {value} are not supported"));
-//                                 }
-//                                 None => {
-//                                     option_self = Some(value);
-//                                 }
-//                             }
-//                         }
-//                     }
-//                     None => {
-//                         return Err(String::from(
-//                             "element_6b899be4.path().segments.first() is None",
-//                         ));
-//                     }
-//                 }
-//             }
-//         }
-//         option_self.map_or_else(|| Err(String::from("status_code attribute not found")), |value_eb6dbec3| Ok(value_eb6dbec3))
-//     }
-// }
 impl TryFrom<&String> for StatusCode {
     type Error = ();
     fn try_from(value: &String) -> Result<Self, Self::Error> {

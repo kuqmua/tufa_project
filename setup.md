@@ -1,23 +1,9 @@
-# Table of content
-1. [git_sync_command](#heading1)
-2. [compile_time_git_info](#heading2)
-3. [enum_extension](#heading3)
-18. [macros_helpers](#heading18)
-24. [common](#heading24) 
-25. [tufa_grpc_client](#heading25)
-26. [tufa_grpc_server](#heading26)
-27. [server](#heading27) 
-28. [telegram_bot](#heading28)
-29. [error_occurence](#heading29)
-32. [from_sqlx_postgres_error](#heading32)
-33. [from_str](#heading32)
-34. [type_variants_from_reqwest_response](#heading35)
-35. [generate_quotes](#heading35)
-36. [postgresql_crud](#heading37)
-37. [error_occurence_lib](#heading38)
-38. [config](#heading39)
+### test common
 
-<!-- its better to add elements only to the end -->
+* cargo test --features test-utils -- --nocapture
+* RUST_LOG=sqlx=debug cargo test --features test-utils -- --nocapture
+* RUSTFLAGS="-Awarnings" RUST_LOG=sqlx=debug cargo test --features test-utils -- --nocapture
+* RUSTFLAGS="-Awarnings" cargo clippy --all-targets --all-features
 
 ## git_sync_command <a name="heading1"/>
 
@@ -398,4 +384,12 @@ cargo run -q | bunyan
 #### compilation cache
 ```
 cargo install sccache --locked
+```
+### up databases
+```
+cd server && sudo docker-compose up -d && cd ..
+```
+### run postgres migrations
+```  
+cd server && sqlx migrate run && cd ..
 ```

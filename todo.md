@@ -1015,3 +1015,7 @@ https://youtu.be/JkSa-qA2jnY
 //end server thoughts
 
 * use rust lints declarations in Cargo.toml https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-lints-section https://doc.rust-lang.org/stable/cargo/reference/workspaces.html#the-lints-table
+
+* some logic around location() file!() line!() column!() - maybe generate all other functions - github link and others on compile time instead of runtime?
+
+* .iter() and .into_iter() -> rayon par_iter
