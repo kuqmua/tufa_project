@@ -391,43 +391,9 @@ sudo chown -R $(whoami) session_based_authentication/
 ```
 cargo test -- --nocapture
 ```
-#### run integration tests <a name="heading2750"></a>
-```
-cargo test integration
-```
-(integration tests will fail if they run with unit tests)
-
-#### run unit tests <a name="heading2751"></a>
-```
-cargo test unit
-```
-#### run continious integration tests <a name="heading2752"></a>
-```
-cargo test ci
-```
-#### links <a name="heading2753"></a>
-* [How to connect Robo 3T (Robomongo) to MongoDB Atlas (cloud mongoDB database)](https://www.youtube.com/watch?v=t_X7qFMmWhI) </br>
-* [pgadmin create table](https://www.youtube.com/watch?v=h5wgbJiSy7Q) </br>
-
 #### run server with modified like js tracing
 ```
 cargo run -q | bunyan
-```
-
-## telegram_bot <a name="heading28"/>
-#### run
-```
-RUST_LOG=info TELOXIDE_TOKEN="" cargo run
-```
-
-#### prepare run scripts like with npm
-```
-cargo install cargo-run-script
-```
-
-#### run custom cargo package.metadata.script
-```
-cargo run-script *script name*
 ```
 #### compilation cache
 ```

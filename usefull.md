@@ -187,7 +187,6 @@ fn main() {
 }
 ```
 
-* -- create or update operation i think is irrelevant coz i think its not working properly with GENERATED ALWAYS AS IDENTITY PRIMARY KEY
 * few interesting ideas from grpc implementation api https://www.youtube.com/watch?v=zPbaKUIcFx0&t=2889s
 * postgresql memory limits https://vremont-e.ru/ogranicenie-razmera-xranimyx-dannyx-v-postgresql/
 * found a problem. is it possible to make reexport serde from module, from which we do ProcMacroDeriveExample reexport? serde in serde::Serialize proc macro doing import from serde, 
@@ -204,4 +203,13 @@ pub fn proc_macro_derive_example(input: proc_macro::TokenStream) -> proc_macro::
     };
     generated.into()
 }
+```
+#### prepare run scripts like with npm
+```
+cargo install cargo-run-script
+```
+
+#### run custom cargo package.metadata.script
+```
+cargo run-script *script name*
 ```
