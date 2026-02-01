@@ -9,7 +9,5 @@ license = "license"
 keywords = ["keyword"]
 categories = ["category"]
 
-[dependencies]
-
 [lints]
 workspace = true

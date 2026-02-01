@@ -15,21 +15,7 @@ categories = ["category"]
 proc-macro = true
 
 [dependencies]
-proc-macro2.workspace = true
-quote.workspace = true
-strum.workspace = true
-strum_macros.workspace = true
-# schemars.workspace = true
-serde.workspace = true
-serde_json.workspace = true
-rayon.workspace = true
-postgresql_crud_macros_common = {path = "../../postgresql_crud_macros_common"}
-enum_extension_lib = {path = "../../../enum_extension_lib"}
-generate_quotes = {path = "../../../generate_quotes"}
-panic_location = {path = "../../../panic_location"}
-macros_helpers = {path = "../../../macros_helpers"}
-naming = {path = "../../../naming"}
-token_patterns = {path = "../../../token_patterns"}
+generate_postgresql_json_types_source = {path = "../generate_postgresql_json_types_source"}
 
 [lints]
 workspace = true
