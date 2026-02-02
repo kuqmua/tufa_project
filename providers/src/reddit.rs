@@ -1,47 +1,19 @@
-#[derive(
-    Default,
-    Debug,
-    Clone,
-    PartialEq,
-    serde_derive::Serialize,
-    serde_derive::Deserialize,
-)]
+#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct Data {
     pub data: DataChildren,
 }
 
-#[derive(
-    Default,
-    Debug,
-    Clone,
-    PartialEq,
-    serde_derive::Serialize,
-    serde_derive::Deserialize,
-)]
+#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct DataChildren {
     pub children: Vec<DataChildrenElement>,
 }
 
-#[derive(
-    Default,
-    Debug,
-    Clone,
-    PartialEq,
-    serde_derive::Serialize,
-    serde_derive::Deserialize,
-)]
+#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct DataChildrenElement {
     pub data: DataChildrenElementData,
 }
 
-#[derive(
-    Default,
-    Debug,
-    Clone,
-    PartialEq,
-    serde_derive::Serialize,
-    serde_derive::Deserialize,
-)]
+#[derive(Default, Debug, Clone, PartialEq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct DataChildrenElementData {
     // media_embed ???
     // user_reports ???
