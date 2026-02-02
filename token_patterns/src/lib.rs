@@ -739,3 +739,10 @@ impl quote::ToTokens for PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptio
         .to_tokens(tokens);
     }
 }
+#[derive(Debug, Clone, Copy)]
+pub struct MustUse;
+impl quote::ToTokens for MustUse {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {#[must_use]}.to_tokens(tokens);
+    }
+}

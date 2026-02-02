@@ -639,6 +639,7 @@ pub fn generate_postgresql_json_types(
         // let schemars_json_schema_token_stream = token_patterns::SchemarsJsonSchema;
 
         let none_token_stream = quote::quote! {None};
+        let must_use_token_stream = token_patterns::MustUse;
 
         let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
         let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
@@ -745,8 +746,16 @@ pub fn generate_postgresql_json_types(
         };
         let ident_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident);
         let value_ident_read_inner_token_stream = quote::quote! {#value_snake_case: #ident_read_inner_upper_camel_case};
-        let generate_pub_fn_new_value_ident_read_inner_content_token_stream = |content_token_stream: &dyn quote::ToTokens| macros_helpers::generate_pub_new_token_stream(&value_ident_read_inner_token_stream, &content_token_stream);
-        let generate_pub_const_fn_new_value_ident_read_inner_content_token_stream = |content_token_stream: &dyn quote::ToTokens| macros_helpers::generate_pub_const_new_token_stream(&value_ident_read_inner_token_stream, &content_token_stream);
+        let generate_pub_fn_new_value_ident_read_inner_content_token_stream = |content_token_stream: &dyn quote::ToTokens| macros_helpers::generate_pub_new_token_stream(
+            &must_use_token_stream,
+            &value_ident_read_inner_token_stream,
+            &content_token_stream
+        );
+        let generate_pub_const_fn_new_value_ident_read_inner_content_token_stream = |content_token_stream: &dyn quote::ToTokens| macros_helpers::generate_pub_const_new_token_stream(
+            &must_use_token_stream,
+            &value_ident_read_inner_token_stream,
+            &content_token_stream
+        );
         let self_ident_origin_new_value_token_stream = quote::quote! {Self(#ident_origin_upper_camel_case::new(#value_snake_case))};
         let maybe_const_fn = match &postgresql_json_type_pattern {
             PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {

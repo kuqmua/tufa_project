@@ -1076,6 +1076,7 @@ pub fn generate_postgresql_types(
         let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
         let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
         let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSizeCall;
+        let must_use_token_stream = token_patterns::MustUse;
 
         let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
         let import_path_non_primary_key_postgresql_type_read_only_ids_token_stream = quote::quote! {#import_path::NonPrimaryKeyPostgresqlTypeReadOnlyIds};
@@ -2530,9 +2531,17 @@ pub fn generate_postgresql_types(
                     if matches!(&postgresql_type_pattern, PostgresqlTypePattern::Standart)
                         && matches!(&not_null_or_nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull)
                     {
-                        macros_helpers::generate_pub_const_new_token_stream(&value_ident_inner_type_token_stream, &self_ident_origin_new_value_token_stream)
+                        macros_helpers::generate_pub_const_new_token_stream(
+                            &must_use_token_stream,
+                            &value_ident_inner_type_token_stream,
+                            &self_ident_origin_new_value_token_stream
+                        )
                     } else {
-                        macros_helpers::generate_pub_new_token_stream(&value_ident_inner_type_token_stream, &self_ident_origin_new_value_token_stream)
+                        macros_helpers::generate_pub_new_token_stream(
+                            &must_use_token_stream,
+                            &value_ident_inner_type_token_stream,
+                            &self_ident_origin_new_value_token_stream
+                        )
                     }
                 }
             };
@@ -3380,10 +3389,22 @@ pub fn generate_postgresql_types(
                     };
                     match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_const_new_token_stream(&value_ident_inner_type_token_stream, &content_token_stream),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_new_token_stream(&value_ident_inner_type_token_stream, &content_token_stream),
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_const_new_token_stream(
+                                &must_use_token_stream,
+                                &value_ident_inner_type_token_stream,
+                                &content_token_stream
+                            ),
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_new_token_stream(
+                                &must_use_token_stream,
+                                &value_ident_inner_type_token_stream,
+                                &content_token_stream
+                            ),
                         },
-                        PostgresqlTypePattern::ArrayDimension1 { .. } => macros_helpers::generate_new_token_stream(&value_ident_inner_type_token_stream, &content_token_stream),
+                        PostgresqlTypePattern::ArrayDimension1 { .. } => macros_helpers::generate_new_token_stream(
+                            &must_use_token_stream,
+                            &value_ident_inner_type_token_stream,
+                            &content_token_stream
+                        ),
                     }
                 },
                 |postgresql_type_initialization_try_new| {

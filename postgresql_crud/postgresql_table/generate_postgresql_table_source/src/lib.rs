@@ -510,6 +510,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
         token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
     let string_token_stream = token_patterns::StdStringString;
+    let must_use_token_stream = token_patterns::MustUse;
     let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrud;
     let return_err_query_part_error_named_write_into_buffer_token_stream = postgresql_crud_macros_common::generate_return_err_query_part_error_named_write_into_buffer_token_stream(import_path);
 
@@ -788,6 +789,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     }},
                 );
         let pub_fn_table_token_stream = quote::quote! {
+            #must_use_token_stream
             pub const fn #table_name_snake_case() -> &'static str {
                 #ident_snake_case_double_quotes_token_stream
             }
@@ -880,6 +882,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         let pub_fn_allow_methods_token_stream = {
             let http_method_token_stream = quote::quote! {http::Method};
             quote::quote! {
+                #must_use_token_stream
                 pub const fn allow_methods() -> [#http_method_token_stream;4] {[
                     #http_method_token_stream::GET,
                     #http_method_token_stream::POST,
@@ -3233,6 +3236,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             &ShouldAddReturn::False,
         );
         quote::quote! {
+            #must_use_token_stream
             pub fn #operation_payload_example_snake_case() -> axum::response::Response {
                 #wraped_into_axum_response_token_stream
             }

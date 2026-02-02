@@ -269,6 +269,7 @@ pub fn generate_postgresql_json_object_type(
             let cfg_feature_test_utils = quote::quote! {#[cfg(feature = "test-utils")]};
             let return_err_query_part_error_named_write_into_buffer_token_stream = postgresql_crud_macros_common::generate_return_err_query_part_error_named_write_into_buffer_token_stream(import_path);
             let none_token_stream = quote::quote!{None};
+            let must_use_token_stream = token_patterns::MustUse;
 
             let generate_import_path_value_initialization_token_stream = |content_token_stream: &dyn quote::ToTokens|{
                 postgresql_crud_macros_common::generate_value_initialization_token_stream(
@@ -759,6 +760,7 @@ pub fn generate_postgresql_json_object_type(
                     if matches!(&postgresql_json_object_type_pattern, PostgresqlJsonObjectTypePattern::Array) && matches!(&not_null_or_nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) {
                         macros_helpers::generate_impl_pub_new_for_ident_token_stream(
                             &ident_table_type_declaration_or_ident_create_upper_camel_case,
+                            &must_use_token_stream,
                             &parameters_token_stream,
                             &content_token_stream,
                         )
@@ -766,6 +768,7 @@ pub fn generate_postgresql_json_object_type(
                     else {
                         macros_helpers::generate_impl_pub_const_new_for_ident_token_stream(
                             &ident_table_type_declaration_or_ident_create_upper_camel_case,
+                            &must_use_token_stream,
                             &parameters_token_stream,
                             &content_token_stream,
                         )
@@ -826,6 +829,7 @@ pub fn generate_postgresql_json_object_type(
                     );
                     let impl_pub_const_new_for_ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_token_stream = macros_helpers::generate_impl_pub_const_new_for_ident_token_stream(
                         &ident_with_id_table_type_declaration_or_ident_with_id_standart_not_null_create_upper_camel_case,
+                        &must_use_token_stream,
                         &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(current_is_standart_with_id, postgresql_json_type_subtype_table_type_declaration_or_create, &struct_declaration_or_new_type_new_type),
                         &generate_self_content_for_ident_or_ident_with_id_table_type_declaration_or_create_token_stream(current_is_standart_with_id),
                     );
@@ -1041,6 +1045,7 @@ pub fn generate_postgresql_json_object_type(
                 quote::quote! {#value_snake_case: #type_token_stream}
             };
             let generate_pub_const_new_value_type_content_self_value_token_stream = |content_token_stream: &dyn quote::ToTokens|macros_helpers::generate_pub_const_new_token_stream(
+                &must_use_token_stream,
                 &generate_value_type_token_stream(&content_token_stream),
                 &self_value_token_stream
             );
@@ -1207,12 +1212,14 @@ pub fn generate_postgresql_json_object_type(
                         };
                         if matches!(&postgresql_json_object_type_pattern, PostgresqlJsonObjectTypePattern::Standart) && matches!(&not_null_or_nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) {
                             macros_helpers::generate_pub_new_token_stream(
+                                &must_use_token_stream,
                                 &parameters_token_stream,
                                 &content_token_stream
                             )
                         }
                         else {
                              macros_helpers::generate_pub_const_new_token_stream(
+                                &must_use_token_stream,
                                 &parameters_token_stream,
                                 &content_token_stream
                             )
@@ -2120,6 +2127,7 @@ pub fn generate_postgresql_json_object_type(
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_pub_try_new_for_ident_read_or_ident_with_id_standart_not_null_read_token_stream(&is_standart_with_id_false),
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_pub_const_new_token_stream(
+                                    &must_use_token_stream,
                                     &generate_value_type_token_stream(
                                         &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
                                             &ident_standart_not_null_as_postgresql_json_type_read_token_stream
@@ -2130,12 +2138,14 @@ pub fn generate_postgresql_json_object_type(
                             },
                             PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_pub_const_new_token_stream(
+                                    &must_use_token_stream,
                                     &generate_value_type_token_stream(
                                         &std_vec_vec_ident_with_id_standart_not_null_read_token_stream
                                     ),
                                     &self_value_token_stream
                                 ),
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_pub_new_token_stream(
+                                    &must_use_token_stream,
                                     &generate_value_type_token_stream(
                                         &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
                                             &std_vec_vec_ident_with_id_standart_not_null_read_token_stream
@@ -2683,6 +2693,7 @@ pub fn generate_postgresql_json_object_type(
                 let impl_ident_update_token_stream = {
                     let maybe_pub_new_or_try_new_for_ident_update_token_stream = match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => macros_helpers::generate_pub_const_new_token_stream(
+                            &must_use_token_stream,
                             &generate_value_type_token_stream(&match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_unique_vec_wrapper_token_stream(&ident_standart_not_null_update_element_upper_camel_case),
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_standart_not_null_as_postgresql_json_type_update_token_stream)
@@ -3093,6 +3104,7 @@ pub fn generate_postgresql_json_object_type(
                         );
                     let impl_pub_new_for_ident_with_id_standart_not_null_update_element_token_stream = macros_helpers::generate_impl_pub_const_new_for_ident_token_stream(
                         &ident_with_id_standart_not_null_update_element_upper_camel_case,
+                        &must_use_token_stream,
                         &ident_with_id_standart_not_null_update_element_fields_declaration_token_stream,
                         &quote::quote! {Self {
                             #id_snake_case,
@@ -3546,6 +3558,7 @@ pub fn generate_postgresql_json_object_type(
                     );
                     let impl_pub_const_new_for_ident_with_id_standart_not_null_update_for_query_element_token_stream = macros_helpers::generate_impl_pub_const_new_for_ident_token_stream(
                         &ident_with_id_standart_not_null_update_for_query_element_upper_camel_case,
+                        &must_use_token_stream,
                         &ident_with_id_standart_not_null_update_for_query_element_fields_declaration_token_stream,
                         &quote::quote! {Self {
                             #id_snake_case,
