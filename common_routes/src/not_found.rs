@@ -1,5 +1,5 @@
-type DynArcNotFoundRouteParametersSendSync = std::sync::Arc<dyn NotFoundRouteParameters>;
-pub trait NotFoundRouteParameters: git_info::GetGitCommitLink + Send + Sync {}
+type DynArcRouteParametersSendSync = std::sync::Arc<dyn RouteParameters>;
+pub trait RouteParameters: git_info::GetGitCommitLink + Send + Sync {}
 #[derive(Debug, serde::Serialize)]
 struct NotFoundHandle {
     message: String,
@@ -7,12 +7,12 @@ struct NotFoundHandle {
     open_api_specification: &'static str,
 }
 //todo maybe use swagger instead
-pub fn not_found_route(app_state: DynArcNotFoundRouteParametersSendSync) -> axum::Router {
+pub fn route(app_state: DynArcRouteParametersSendSync) -> axum::Router {
     axum::Router::new()
         .fallback(
             async |uri: axum::http::Uri,
                    axum::extract::State(state_value): axum::extract::State<
-                DynArcNotFoundRouteParametersSendSync,
+                DynArcRouteParametersSendSync,
             >| {
                 (
                     axum::http::StatusCode::NOT_FOUND,

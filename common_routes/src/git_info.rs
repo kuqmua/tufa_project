@@ -1,5 +1,5 @@
-type DynArcGitInfoRouteParametersSendSync = std::sync::Arc<dyn GitInfoRouteParameters>;
-pub trait GitInfoRouteParameters: git_info::GetGitCommitLink + Send + Sync {}
+type DynArcRouteParametersSendSync = std::sync::Arc<dyn RouteParameters>;
+pub trait RouteParameters: git_info::GetGitCommitLink + Send + Sync {}
 #[derive(Debug, serde::Serialize, utoipa::ToSchema)]
 pub struct GitInfo {
     #[schema(
@@ -15,7 +15,7 @@ pub struct GitInfo {
     )
 )]
 pub async fn git_info(
-    axum::extract::State(app_state): axum::extract::State<DynArcGitInfoRouteParametersSendSync>,
+    axum::extract::State(app_state): axum::extract::State<DynArcRouteParametersSendSync>,
 ) -> impl axum::response::IntoResponse {
     (
         axum::http::StatusCode::OK,
@@ -24,7 +24,7 @@ pub async fn git_info(
         }),
     )
 }
-pub(crate) fn git_info_route(app_state: DynArcGitInfoRouteParametersSendSync) -> axum::Router {
+pub(crate) fn git_info_route(app_state: DynArcRouteParametersSendSync) -> axum::Router {
     axum::Router::new()
         .route("/git_info", axum::routing::get(git_info))
         .with_state(app_state)

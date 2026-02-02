@@ -4,10 +4,10 @@
     Clone,
     PartialEq,
     serde_derive::Serialize,
-    serde_derive::Deserialize, //Eq,
+    serde_derive::Deserialize,
 )]
-pub struct RedditStructForParsing {
-    pub data: RedditStructForParsingVector,
+pub struct Data {
+    pub data: DataChildren,
 }
 
 #[derive(
@@ -16,10 +16,10 @@ pub struct RedditStructForParsing {
     Clone,
     PartialEq,
     serde_derive::Serialize,
-    serde_derive::Deserialize, //Eq,
+    serde_derive::Deserialize,
 )]
-pub struct RedditStructForParsingVector {
-    pub children: Vec<RedditStructForParsingVectorChild>,
+pub struct DataChildren {
+    pub children: Vec<DataChildrenElement>,
 }
 
 #[derive(
@@ -28,10 +28,10 @@ pub struct RedditStructForParsingVector {
     Clone,
     PartialEq,
     serde_derive::Serialize,
-    serde_derive::Deserialize, //Eq,
+    serde_derive::Deserialize,
 )]
-pub struct RedditStructForParsingVectorChild {
-    pub data: RedditStructForParsingVectorChildData,
+pub struct DataChildrenElement {
+    pub data: DataChildrenElementData,
 }
 
 #[derive(
@@ -40,9 +40,9 @@ pub struct RedditStructForParsingVectorChild {
     Clone,
     PartialEq,
     serde_derive::Serialize,
-    serde_derive::Deserialize, //Eq,
+    serde_derive::Deserialize,
 )]
-pub struct RedditStructForParsingVectorChildData {
+pub struct DataChildrenElementData {
     // media_embed ???
     // user_reports ???
     // category ???

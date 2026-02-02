@@ -1,21 +1,20 @@
 #[derive(
     Default, Debug, Clone, PartialEq, Eq, serde_derive::Serialize, serde_derive::Deserialize,
 )]
-pub struct BiorxivStructForParsing {
+pub struct Data {
     #[serde(rename = "item", default)]
-    pub items: Vec<BiorxivStructForParsingItem>,
+    pub items: Vec<DataElement>,
 }
 #[derive(
     Default, Debug, Clone, PartialEq, Eq, serde_derive::Serialize, serde_derive::Deserialize,
 )]
-pub struct BiorxivStructForParsingItem {
+pub struct DataElement {
     pub title: Option<String>,
+    pub guid: Option<String>,
     pub link: Option<String>,
     pub description: Option<String>,
-    pub date: Option<String>,
+    #[serde(rename = "pubDate", default)]
+    pub pub_date: Option<String>,
     pub creator: Option<String>,
-    pub identifier: Option<String>,
-    pub publisher: Option<String>,
-    #[serde(rename = "publicationDate", default)]
-    pub publication_date: Option<String>,
+    pub category: Option<Vec<String>>,
 }

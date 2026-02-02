@@ -4,7 +4,7 @@ pub mod not_found;
 
 type DynArcCommonRoutesParametersSendSync = std::sync::Arc<dyn CommonRoutesParameters>;
 pub trait CommonRoutesParameters:
-    git_info::GitInfoRouteParameters + not_found::NotFoundRouteParameters + Send + Sync
+    git_info::RouteParameters + not_found::RouteParameters + Send + Sync
 {
 }
 pub fn common_routes(app_state: DynArcCommonRoutesParametersSendSync) -> axum::Router {
@@ -13,5 +13,5 @@ pub fn common_routes(app_state: DynArcCommonRoutesParametersSendSync) -> axum::R
         .merge(git_info::git_info_route(std::sync::Arc::<
             dyn CommonRoutesParameters,
         >::clone(&app_state)))
-        .merge(not_found::not_found_route(app_state))
+        .merge(not_found::route(app_state))
 }

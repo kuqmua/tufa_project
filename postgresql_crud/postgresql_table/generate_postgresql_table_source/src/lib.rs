@@ -2347,7 +2347,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             macros_helpers::generate_simple_syn_punctuated_punctuated(&[
                 &postgresql_crud_snake_case.to_string(),
                 "check_body_size",
-                &naming::CheckBodySizeErrorNamedUpperCamelCase.to_string(),
+                &naming::ErrorNamedUpperCamelCase.to_string(),
             ]),
         )],
     );

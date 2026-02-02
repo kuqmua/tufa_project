@@ -69,7 +69,7 @@ server_config = {path = "../../../server_config"}"#,
                             enum CommonAdditionalErrorVariants {
                                 CheckCommit {
                                     #[eo_error_occurence]
-                                    check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
+                                    check_commit: postgresql_crud::check_commit::ErrorNamed,
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             }
