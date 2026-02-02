@@ -1,6 +1,8 @@
+#[must_use]
 pub fn single_quotes_stringified(inner_content: &str) -> String {
     format!("\'{inner_content}\'")
 }
+#[must_use]
 pub fn single_quotes_token_stream(inner_content: &str) -> proc_macro2::TokenStream {
     let value = single_quotes_stringified(inner_content);
     value
@@ -19,18 +21,22 @@ pub fn double_quotes_token_stream(
         .expect("0391ac99-9d0e-4182-ba3d-91445b775aaa")
 }
 
+#[must_use]
 pub fn binary_single_quotes_stringified(inner_content: &str) -> String {
     format!("b\'{inner_content}\'")
 }
+#[must_use]
 pub fn binary_single_quotes_token_stream(inner_content: &str) -> proc_macro2::TokenStream {
     let value = binary_single_quotes_stringified(inner_content);
     value
         .parse::<proc_macro2::TokenStream>()
         .expect("8bce26e7-50d9-47cf-9572-f3756ebc1617")
 }
+#[must_use]
 pub fn binary_double_quotes_stringified(inner_content: &dyn std::fmt::Display) -> String {
     format!("b\"{inner_content}\"")
 }
+#[must_use]
 pub fn binary_double_quotes_token_stream(
     inner_content: &dyn std::fmt::Display,
 ) -> proc_macro2::TokenStream {

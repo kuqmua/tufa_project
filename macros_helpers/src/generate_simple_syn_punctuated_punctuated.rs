@@ -1,3 +1,4 @@
+#[must_use]
 pub fn generate_simple_syn_punctuated_punctuated(
     parts_vec: &[&str],
 ) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep> {
@@ -29,6 +30,7 @@ pub fn generate_simple_syn_punctuated_punctuated(
     }
 }
 
+#[must_use]
 pub fn std_string_string_syn_punctuated_punctuated()
 -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep> {
     generate_simple_syn_punctuated_punctuated(&["std", "string", "String"])

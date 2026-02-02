@@ -68,9 +68,11 @@ impl<T: PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
         }
         Ok(Self(value))
     }
+    #[must_use]
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
+    #[must_use]
     pub fn into_vec(self) -> Vec<T> {
         self.0
     }
@@ -382,6 +384,7 @@ impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOne
     }
 }
 impl RegularExpressionCase {
+    #[must_use]
     pub const fn postgreql_syntax(&self) -> &'static str {
         match &self {
             Self::Sensitive => "~",
@@ -700,9 +703,11 @@ impl<T: PartialEq + Clone> PostgresqlTypeNotEmptyUniqueVec<T> {
         }
         Ok(Self(value))
     }
+    #[must_use]
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
+    #[must_use]
     pub fn into_vec(self) -> Vec<T> {
         self.0
     }
@@ -834,9 +839,11 @@ impl<
     const LENGTH: usize,
 > BoundedStdVecVec<T, LENGTH>
 {
+    #[must_use]
     pub const fn to_inner(&self) -> &Vec<T> {
         &self.0
     }
+    #[must_use]
     pub fn into_inner(self) -> Vec<T> {
         self.0
     }

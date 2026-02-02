@@ -692,10 +692,10 @@ module_name_repetitions = { level = "deny", priority = 0 }
 modulo_arithmetic = { level = "deny", priority = 0 }
 modulo_one = { level = "deny", priority = 0 }
 multi_assignments = { level = "deny", priority = 0 }
-multiple_crate_versions = { level = "allow", priority = 0 } #dont know how to fix it #here
+multiple_crate_versions = { level = "allow", priority = 0 } #dont know how to fix it
 multiple_inherent_impl = { level = "deny", priority = 0 }
 multiple_unsafe_ops_per_block = { level = "deny", priority = 0 }
-must_use_candidate = { level = "allow", priority = 0 }
+must_use_candidate = { level = "deny", priority = 0 }
 must_use_unit = { level = "deny", priority = 0 }
 mut_from_ref = { level = "deny", priority = 0 }
 mut_mut = { level = "deny", priority = 0 }

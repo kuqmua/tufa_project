@@ -37,6 +37,7 @@ pub enum LogicalOperator {
     OrNot,
 }
 impl LogicalOperator {
+    #[must_use]
     pub fn to_query_part(&self, is_need_to_add_logical_operator: bool) -> String {
         let not_space = format!("{} ", naming::NotSnakeCase);
         if is_need_to_add_logical_operator {
@@ -85,6 +86,7 @@ pub enum PostgresqlTypeGreaterThanVariant {
     EqualNotGreaterThan,
 }
 impl PostgresqlTypeGreaterThanVariant {
+    #[must_use]
     pub const fn logical_operator(&self) -> LogicalOperator {
         match &self {
             Self::GreaterThan => LogicalOperator::Or,
@@ -110,6 +112,7 @@ pub enum PostgresqlJsonTypeLengthGreaterThanVariant {
     EqualNotLengthGreaterThan,
 }
 impl PostgresqlJsonTypeLengthGreaterThanVariant {
+    #[must_use]
     pub const fn logical_operator(&self) -> LogicalOperator {
         match &self {
             Self::LengthGreaterThan => LogicalOperator::Or,

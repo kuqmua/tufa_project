@@ -28,12 +28,14 @@ pub enum NotNullOrNullable {
     Nullable,
 }
 impl NotNullOrNullable {
+    #[must_use]
     pub fn rust(&self) -> &'static dyn std::fmt::Display {
         match &self {
             Self::NotNull => &"",
             Self::Nullable => &naming::OptionUpperCamelCase,
         }
     }
+    #[must_use]
     pub fn maybe_option_wrap(
         &self,
         content_token_stream: proc_macro2::TokenStream,
@@ -43,6 +45,7 @@ impl NotNullOrNullable {
             Self::Nullable => quote::quote! {Option<#content_token_stream>},
         }
     }
+    #[must_use]
     pub fn maybe_some_wrap(
         &self,
         content_token_stream: proc_macro2::TokenStream,
@@ -53,6 +56,7 @@ impl NotNullOrNullable {
         }
     }
     //json
+    #[must_use]
     pub fn prefix_stringified(&self) -> String {
         match &self {
             Self::NotNull => String::default(),
@@ -159,6 +163,7 @@ pub fn generate_postgresql_type_where_token_stream(
     }
 }
 
+#[must_use]
 pub fn postgresql_crud_common_query_part_error_named_token_stream() -> proc_macro2::TokenStream {
     let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
     quote::quote! {postgresql_crud_common::#query_part_error_named_upper_camel_case}
@@ -656,6 +661,7 @@ pub enum ImportPath {
     PostgresqlCrudCommon,
 }
 impl ImportPath {
+    #[must_use]
     pub const fn snake_case_std_primitive_str(&self) -> &'static str {
         match &self {
             Self::Crate => "crate",
@@ -699,6 +705,7 @@ impl ImportPath {
             Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
         }
     }
+    #[must_use]
     pub const fn to_path(&self) -> &'static str {
         match &self {
             Self::Crate => "crate",
@@ -2125,6 +2132,7 @@ pub enum ReadOrUpdate {
     Update,
 }
 impl ReadOrUpdate {
+    #[must_use]
     pub fn upper_camel_case(&self) -> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
         match &self {
             Self::Read => &naming::ReadUpperCamelCase,
@@ -2147,6 +2155,7 @@ impl quote::ToTokens for IsPrimaryKeyUnderscore {
     }
 }
 
+#[must_use]
 pub fn postgresql_crud_common_query_part_error_named_checked_add_initialization_token_stream()
 -> proc_macro2::TokenStream {
     quote::quote! {postgresql_crud_common::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }}
@@ -2550,6 +2559,7 @@ pub enum EqualOperatorHandle {
     IsNull,
 }
 impl EqualOperatorHandle {
+    #[must_use]
     pub fn to_tokens_path(&self, import_path: &ImportPath) -> proc_macro2::TokenStream {
         let equal_operator_upper_camel_case = naming::EqualOperatorUpperCamelCase;
         let content_token_stream = match &self {
@@ -2584,6 +2594,7 @@ pub enum Dimension {
     Four,
 }
 impl Dimension {
+    #[must_use]
     pub fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_snake_case(
         &self,
     ) -> Box<dyn naming::StdFmtDisplayPlusQuoteToTokens> {
@@ -2613,6 +2624,7 @@ impl From<&Dimension> for DimensionIndexNumber {
     }
 }
 
+#[must_use]
 pub fn generate_query_part_error_named_write_into_buffer_token_stream(
     import_path: ImportPath,
 ) -> proc_macro2::TokenStream {
@@ -2622,6 +2634,7 @@ pub fn generate_query_part_error_named_write_into_buffer_token_stream(
         }
     }
 }
+#[must_use]
 pub fn generate_return_err_query_part_error_named_write_into_buffer_token_stream(
     import_path: ImportPath,
 ) -> proc_macro2::TokenStream {

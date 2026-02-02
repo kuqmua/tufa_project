@@ -1,3 +1,4 @@
+#[must_use]
 pub fn maybe_primary_key(is_primary_key: bool) -> impl std::fmt::Display {
     if is_primary_key { "primary key" } else { "" }
 }
@@ -75,9 +76,11 @@ impl PaginationStartsWithOne {
             )
         }
     }
+    #[must_use]
     pub const fn start(&self) -> i64 {
         self.0.start()
     }
+    #[must_use]
     pub const fn end(&self) -> i64 {
         self.0.end()
     }

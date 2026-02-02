@@ -72,6 +72,7 @@ pub enum StatusCode {
     NetworkAuthenticationRequired511,
 }
 impl StatusCode {
+    #[must_use]
     pub fn to_axum_http_status_code_token_stream(&self) -> proc_macro2::TokenStream {
         match self {
             Self::Continue100 => quote::quote! {http::StatusCode::CONTINUE},
@@ -212,6 +213,7 @@ impl StatusCode {
             }
         }
     }
+    #[must_use]
     pub fn to_http_status_code_token_stream(&self) -> proc_macro2::TokenStream {
         match self {
             Self::Continue100 => quote::quote! {http::StatusCode::CONTINUE},
@@ -344,6 +346,7 @@ impl StatusCode {
             }
         }
     }
+    #[must_use]
     pub fn to_status_code_token_stream(&self) -> proc_macro2::TokenStream {
         match self {
             Self::Continue100 => quote::quote! {100},
@@ -408,6 +411,7 @@ impl StatusCode {
             Self::NetworkAuthenticationRequired511 => quote::quote! {511},
         }
     }
+    #[must_use]
     pub fn to_status_code_description_token_stream(&self) -> proc_macro2::TokenStream {
         match self {
             Self::Continue100 => quote::quote! {"continue"},
@@ -484,6 +488,7 @@ impl StatusCode {
             }
         }
     }
+    #[must_use]
     pub fn to_proc_macro_attribute_view_token_stream(&self) -> proc_macro2::TokenStream {
         let value = format!("#[{self}]");
         value
@@ -620,6 +625,7 @@ impl TryFrom<&String> for StatusCode {
     }
 }
 
+#[must_use]
 pub fn get_only_one(variant: &syn::Variant) -> StatusCode {
     let mut option_self = None;
     variant.attrs.iter().for_each(|attr| {

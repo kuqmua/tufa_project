@@ -25,7 +25,7 @@
 //todo postgresql json:
 //* write json schema in postgresql
 //* validate insert json field with json schema
-
+#[must_use]
 pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream {
     #[derive(Debug)]
     struct SynVariantWrapper {

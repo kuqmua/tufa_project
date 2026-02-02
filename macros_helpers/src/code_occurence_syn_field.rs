@@ -1,3 +1,4 @@
+#[must_use]
 pub fn code_occurence_syn_field() -> syn::Field {
     syn::Field {
         attrs: Vec::new(),

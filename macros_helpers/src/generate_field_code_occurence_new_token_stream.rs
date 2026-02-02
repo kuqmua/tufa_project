@@ -1,3 +1,4 @@
+#[must_use]
 pub fn generate_field_code_occurence_new_token_stream(
     file: &'static str,
     line: u32,

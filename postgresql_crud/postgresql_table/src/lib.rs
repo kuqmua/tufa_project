@@ -11,6 +11,7 @@ pub trait CombinationOfAppStateLogicTraits:
 {
 }
 
+#[must_use]
 pub fn generate_create_many_query_string(
     table: &str,
     columns: &str,
@@ -19,6 +20,7 @@ pub fn generate_create_many_query_string(
 ) -> String {
     format!("insert into {table} ({columns}) values {values} returning {columns_to_return}")
 }
+#[must_use]
 pub fn generate_create_one_query_string(
     table: &str,
     columns: &str,
@@ -27,6 +29,7 @@ pub fn generate_create_one_query_string(
 ) -> String {
     format!("insert into {table} ({columns}) values ({values}) returning {columns_to_return}")
 }
+#[must_use]
 pub fn generate_read_many_query_string(
     table: &str,
     select_string: &str,
@@ -34,6 +37,7 @@ pub fn generate_read_many_query_string(
 ) -> String {
     format!("select {select_string} from {table} {where_string}")
 }
+#[must_use]
 pub fn generate_read_one_query_string(
     table: &str,
     select_string: &str,
@@ -41,12 +45,14 @@ pub fn generate_read_one_query_string(
 ) -> String {
     format!("select {select_string} from {table} where {where_string}")
 }
+#[must_use]
 pub fn generate_column_queals_value_comma_update_one_query_part(
     column: &str,
     value: &str,
 ) -> String {
     format!("{column} = {value},")
 }
+#[must_use]
 pub fn generate_when_column_id_then_value_update_many_query_part(
     column: &str,
     id: &str,
@@ -54,6 +60,7 @@ pub fn generate_when_column_id_then_value_update_many_query_part(
 ) -> String {
     format!("when {column} = {id} then {value} ")
 }
+#[must_use]
 pub fn generate_column_equals_case_acc_else_column_end_comma_update_many_query_part(
     column: &str,
     acc: &str,
@@ -61,6 +68,7 @@ pub fn generate_column_equals_case_acc_else_column_end_comma_update_many_query_p
     format!("{column} = case {acc}else {column} end,")
 }
 //todo additional parameter for columns_to_return instead of primary_key_field_name in "returning {primary_key_field_name}""
+#[must_use]
 pub fn generate_update_many_query_string(
     table: &str,
     elements: &str,
@@ -73,6 +81,7 @@ pub fn generate_update_many_query_string(
     )
 }
 //todo additional parameter for columns_to_return instead of primary_key_field_name in "returning {primary_key_field_name}""
+#[must_use]
 pub fn generate_update_one_query_string(
     table: &str,
     columns: &str,
@@ -84,6 +93,7 @@ pub fn generate_update_one_query_string(
         "update {table} set {columns} where {primary_key_field_name} = {primary_key_query_part} returning {columns_to_return}"
     )
 }
+#[must_use]
 pub fn generate_delete_many_query_string(
     table: &str,
     where_string: &str,
@@ -91,6 +101,7 @@ pub fn generate_delete_many_query_string(
 ) -> String {
     format!("delete from {table} {where_string} returning {primary_key_field_name}")
 }
+#[must_use]
 pub fn generate_delete_one_query_string(table: &str, primary_key_field_name: &str) -> String {
     format!(
         "delete from {table} where {primary_key_field_name} = $1 returning {primary_key_field_name}"

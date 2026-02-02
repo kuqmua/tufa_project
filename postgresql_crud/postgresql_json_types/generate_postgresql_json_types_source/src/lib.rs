@@ -1,3 +1,4 @@
+#[must_use]
 pub fn generate_postgresql_json_types(
     input_token_stream: proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {

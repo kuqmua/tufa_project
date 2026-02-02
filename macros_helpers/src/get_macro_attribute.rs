@@ -1,3 +1,4 @@
+#[must_use]
 pub fn get_macro_attribute<'attributes_litime>(
     attributes: &'attributes_litime [syn::Attribute],
     attribute_path: &String,
@@ -12,6 +13,7 @@ pub fn get_macro_attribute<'attributes_litime>(
     option_attribute.expect("68acaa15-abdc-4ede-b38a-4cf744512136")
 }
 
+#[must_use]
 pub fn get_macro_attribute_meta_list_token_stream<'attributes_lifetime>(
     attributes: &'attributes_lifetime [syn::Attribute],
     attribute_path: &String,

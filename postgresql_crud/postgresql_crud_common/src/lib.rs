@@ -543,6 +543,7 @@ where
     }
 }
 
+#[must_use]
 pub fn wrap_into_jsonb_build_object(field: &str, value: &str) -> String {
     format!("jsonb_build_object('{field}',{value})||")
 }
@@ -584,12 +585,14 @@ impl<T: PartialEq + Clone> PostgresqlTypeWhere<T> {
             Err(error) => Err(error),
         }
     }
+    #[must_use]
     pub const fn new(logical_operator: LogicalOperator, value: NotEmptyUniqueVec<T>) -> Self {
         Self {
             logical_operator,
             value,
         }
     }
+    #[must_use]
     pub const fn get_logical_operator(&self) -> &LogicalOperator {
         &self.logical_operator
     }
@@ -878,9 +881,11 @@ impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Order {
     }
 }
 impl Order {
+    #[must_use]
     pub fn to_upper_camel_case_stringified(&self) -> String {
         naming::DisplayToUpperCamelCaseStringified::case(&self)
     }
+    #[must_use]
     pub fn to_snake_case_stringified(&self) -> String {
         naming::DisplayToSnakeCaseStringified::case(&self)
     }
@@ -908,12 +913,15 @@ pub struct PaginationBase {
     offset: i64,
 }
 impl PaginationBase {
+    #[must_use]
     pub const fn new_unchecked(limit: i64, offset: i64) -> Self {
         Self { limit, offset }
     }
+    #[must_use]
     pub const fn start(&self) -> i64 {
         self.offset
     }
+    #[must_use]
     pub const fn end(&self) -> i64 {
         self.offset
             .checked_add(self.limit)
@@ -1038,9 +1046,11 @@ impl PaginationStartsWithZero {
             )
         }
     }
+    #[must_use]
     pub const fn start(&self) -> i64 {
         self.0.start()
     }
+    #[must_use]
     pub const fn end(&self) -> i64 {
         self.0.end()
     }
@@ -1299,9 +1309,11 @@ impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
         }
         Ok(Self(value))
     }
+    #[must_use]
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
+    #[must_use]
     pub fn into_vec(self) -> Vec<T> {
         self.0
     }
@@ -1472,30 +1484,39 @@ pub struct JsonFieldRights {
     can_update: bool,
 }
 
+#[must_use]
 pub const fn std_primitive_i8_test_cases_vec() -> [i8; 3] {
     [i8::MIN, 0, i8::MAX]
 }
+#[must_use]
 pub const fn std_primitive_i16_test_cases_vec() -> [i16; 3] {
     [i16::MIN, 0, i16::MAX]
 }
+#[must_use]
 pub const fn std_primitive_i32_test_cases_vec() -> [i32; 3] {
     [i32::MIN, 0, i32::MAX]
 }
+#[must_use]
 pub const fn std_primitive_i64_test_cases_vec() -> [i64; 3] {
     [i64::MIN, 0, i64::MAX]
 }
+#[must_use]
 pub const fn std_primitive_u8_test_cases_vec() -> [u8; 3] {
     [u8::MIN, 0, u8::MAX]
 }
+#[must_use]
 pub const fn std_primitive_u16_test_cases_vec() -> [u16; 3] {
     [u16::MIN, 0, u16::MAX]
 }
+#[must_use]
 pub const fn std_primitive_u32_test_cases_vec() -> [u32; 3] {
     [u32::MIN, 0, u32::MAX]
 }
+#[must_use]
 pub const fn std_primitive_u64_test_cases_vec() -> [u64; 3] {
     [u64::MIN, 0, u64::MAX]
 }
+#[must_use]
 pub const fn std_primitive_f32_test_cases_vec() -> [f32; 18] {
     [
         f32::EPSILON,
@@ -1518,6 +1539,7 @@ pub const fn std_primitive_f32_test_cases_vec() -> [f32; 18] {
         1e30,
     ]
 }
+#[must_use]
 pub const fn std_primitive_f64_test_cases_vec() -> [f64; 18] {
     [
         f64::EPSILON,
@@ -1540,9 +1562,11 @@ pub const fn std_primitive_f64_test_cases_vec() -> [f64; 18] {
         1e300,
     ]
 }
+#[must_use]
 pub const fn std_primitive_bool_test_cases_vec() -> [bool; 2] {
     [true, false]
 }
+#[must_use]
 pub fn std_string_string_test_cases_vec() -> [String; 12] {
     [
         String::new(),
@@ -1559,6 +1583,7 @@ pub fn std_string_string_test_cases_vec() -> [String; 12] {
         String::from_utf8_lossy(&[0xF0, 0x9F, 0x92, 0x96]).to_string(),
     ]
 }
+#[must_use]
 pub fn uuid_uuid_test_cases_vec() -> [uuid::Uuid; 1] {
     [uuid::Uuid::new_v4()]
 }
@@ -1608,6 +1633,7 @@ pub enum EqualOperator {
     IsNull,
 }
 impl EqualOperator {
+    #[must_use]
     pub const fn to_query_str(&self) -> &'static str {
         match &self {
             Self::Equal => "=",
@@ -1741,6 +1767,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for UnsignedPartOfStdPrimitiveI32 {
     }
 }
 impl UnsignedPartOfStdPrimitiveI32 {
+    #[must_use]
     pub const fn get(&self) -> i32 {
         self.0
     }
@@ -1888,6 +1915,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
     }
 }
 impl NotZeroUnsignedPartOfStdPrimitiveI32 {
+    #[must_use]
     pub const fn get(&self) -> i32 {
         self.0.get()
     }

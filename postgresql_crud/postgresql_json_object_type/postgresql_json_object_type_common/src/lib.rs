@@ -28,12 +28,15 @@ impl<T: PartialEq + Clone> UniqueVec<T> {
         }
         Ok(Self(value))
     }
+    #[must_use]
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
+    #[must_use]
     pub fn into_vec(self) -> Vec<T> {
         self.0
     }
+    #[must_use]
     pub const fn is_empty(&self) -> bool {
         self.0.is_empty()
     }

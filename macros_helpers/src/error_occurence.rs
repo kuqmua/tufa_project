@@ -89,6 +89,7 @@ impl crate::attribute_ident_stringified::AttributeIdentStringified
     }
 }
 impl ErrorOccurenceFieldAttribute {
+    #[must_use]
     pub fn to_attribute_view_token_stream(&self) -> proc_macro2::TokenStream {
         let value = format!("#[{}]", crate::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(self));
         value
@@ -97,6 +98,7 @@ impl ErrorOccurenceFieldAttribute {
     }
 }
 
+#[must_use]
 pub fn generate_serialize_deserialize_version_of_named_syn_variant(
     value: &syn::Variant,
 ) -> proc_macro2::TokenStream {
