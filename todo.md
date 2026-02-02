@@ -115,8 +115,6 @@
 * Thread pool with this let cpus = num_cpus::get()
 
 ## Async Programming
-* let _ = join_all(vec_of_write_into_files_futures).await; //todo: add state of success/unsuccess
-* If let Ok(something) = something.lock() {} instead of something.lock().expect();
 * In cases across await points use tokio::sync::Mutex instead of std Mutex
 
 # Configuration
