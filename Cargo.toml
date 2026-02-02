@@ -674,19 +674,19 @@ misrefactored_assign_op = { level = "deny", priority = 0 }
 missing_assert_message = { level = "deny", priority = 0 }
 missing_asserts_for_indexing = { level = "deny", priority = 0 }
 missing_const_for_fn = { level = "deny", priority = 0 }
-missing_docs_in_private_items = { level = "allow", priority = 0 }
+missing_docs_in_private_items = { level = "allow", priority = 0 } #too lazy to do it on dev stage
 missing_enforced_import_renames = { level = "deny", priority = 0 }
-missing_errors_doc = { level = "allow", priority = 0 }
+missing_errors_doc = { level = "allow", priority = 0 } #too lazy to do it on dev stage
 missing_fields_in_debug = { level = "deny", priority = 0 }
-missing_inline_in_public_items = { level = "allow", priority = 0 }
-missing_panics_doc = { level = "allow", priority = 0 }
+missing_inline_in_public_items = { level = "allow", priority = 0 } #its not so clear where to add #[inline] and where not
+missing_panics_doc = { level = "allow", priority = 0 } #too lazy to do it on dev stage
 missing_safety_doc = { level = "deny", priority = 0 }
 missing_spin_loop = { level = "deny", priority = 0 }
-missing_trait_methods = { level = "allow", priority = 0 }
+missing_trait_methods = { level = "allow", priority = 0 } #serde and other crates do not implement this feature. too much time to refactor that
 mistyped_literal_suffixes = { level = "deny", priority = 0 }
 mixed_case_hex_literals = { level = "deny", priority = 0 }
 mixed_read_write_in_expression = { level = "deny", priority = 0 }
-mod_module_files = { level = "allow", priority = 0 }
+mod_module_files = { level = "deny", priority = 0 }
 module_inception = { level = "deny", priority = 0 }
 module_name_repetitions = { level = "allow", priority = 0 }
 modulo_arithmetic = { level = "deny", priority = 0 }
@@ -849,7 +849,7 @@ seek_from_current = { level = "deny", priority = 0 }
 seek_to_start_instead_of_rewind = { level = "deny", priority = 0 }
 self_assignment = { level = "deny", priority = 0 }
 self_named_constructors = { level = "deny", priority = 0 }
-self_named_module_files = { level = "deny", priority = 0 }
+self_named_module_files = { level = "allow", priority = 0 } #old rust style guide. conflicts with mod_module_files (which is Rust 2018+ style guide)
 semicolon_if_nothing_returned = { level = "deny", priority = 0 }
 semicolon_inside_block = { level = "deny", priority = 0 }
 semicolon_outside_block = { level = "deny", priority = 0 }
