@@ -2949,18 +2949,31 @@ pub fn generate_postgresql_types(
                         }
                     };
                     match &postgresql_type {
-                        PostgresqlType::StdPrimitiveI16AsInt2 => None,
-                        PostgresqlType::StdPrimitiveI32AsInt4 => None,
-                        PostgresqlType::StdPrimitiveI64AsInt8 => None,
-                        PostgresqlType::StdPrimitiveF32AsFloat4 => None,
-                        PostgresqlType::StdPrimitiveF64AsFloat8 => None,
-                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => None,
-                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => None,
-                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => None,
-                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => None,
-                        PostgresqlType::StdPrimitiveBoolAsBool => None,
-                        PostgresqlType::StdStringStringAsText => None,
-                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => None,
+                        PostgresqlType::StdPrimitiveI16AsInt2 |
+                        PostgresqlType::StdPrimitiveI32AsInt4 |
+                        PostgresqlType::StdPrimitiveI64AsInt8 |
+                        PostgresqlType::StdPrimitiveF32AsFloat4 |
+                        PostgresqlType::StdPrimitiveF64AsFloat8 |
+                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql |
+                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql |
+                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql |
+                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney |
+                        PostgresqlType::StdPrimitiveBoolAsBool |
+                        PostgresqlType::StdStringStringAsText |
+                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea |
+                        PostgresqlType::SqlxTypesTimeTimeAsTime |
+                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval |
+                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
+                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
+                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql |
+                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient |
+                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet |
+                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr |
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range |
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range |
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => None,
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Some({
                             let content_token_stream_80e0683c = [
                                 (&sqlx_types_chrono_naive_time_min_function_token_stream, &quote::quote!{0,0,0,0}),
@@ -2974,8 +2987,6 @@ pub fn generate_postgresql_types(
                             }).collect::<Vec<proc_macro2::TokenStream>>();
                             quote::quote!{#(#content_token_stream_80e0683c)*}
                         }),
-                        PostgresqlType::SqlxTypesTimeTimeAsTime => None,
-                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => None,
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Some({
                             let content_token_stream_80e0683c = {
                                 let generate_function_ident_inner_type_token_stream = |
@@ -3019,17 +3030,6 @@ pub fn generate_postgresql_types(
                             };
                             quote::quote!{#(#content_token_stream_80e0683c)*}
                         }),
-                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => None,
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => None,
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => None,
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => None,
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => None,
-                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => None,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => None,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => None,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => None,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => None,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => None,
                     }
                 };
                 if maybe_min_inner_type_token_stream.is_some() ||

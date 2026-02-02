@@ -5445,24 +5445,45 @@ pub fn generate_postgresql_json_object_type(
                                         });
                                         let for_loop_token_stream = vec_syn_field.iter().map(|element_cf4923ce| {
                                             let field_ident = &element_cf4923ce.field_ident;
-                                            let match_content_token_stream = vec_syn_field.iter().map(|element_145090a4| {
-                                                let current_field_ident = &element_145090a4.field_ident;
-                                                let current_field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&current_field_ident);
-                                                if field_ident == current_field_ident {
-                                                    quote::quote!{
-                                                        #ident_standart_not_null_update_element_upper_camel_case::#current_field_ident_upper_camel_case_token_stream(value_d2a6daf8) => {
-                                                            #field_ident = Some(value_d2a6daf8.#value_snake_case.clone());
-                                                        }
+                                            let field_ident_token_stream = {
+                                                let current_field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                                quote::quote!{
+                                                    #ident_standart_not_null_update_element_upper_camel_case::#current_field_ident_upper_camel_case_token_stream(value_d2a6daf8) => {
+                                                        #field_ident = Some(value_d2a6daf8.#value_snake_case.clone());
+                                                    },
+                                                }
+                                            };
+                                            let fields_without_current_ident_token_stream = if vec_syn_field.is_empty() {
+                                                proc_macro2::TokenStream::new()
+                                            }
+                                            else {
+                                                let content_token_stream_e0bf4e67 = vec_syn_field
+                                                .iter()
+                                                .filter(|element_a1502880| element_a1502880.field_ident != *field_ident)
+                                                .map(|element_2908bd7a| {
+                                                    let current_field_ident = &element_2908bd7a.field_ident;
+                                                    let current_field_ident_upper_camel_case_token_stream =
+                                                        naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(
+                                                            &current_field_ident,
+                                                        );
+                                                    quote::quote! {
+                                                        #ident_standart_not_null_update_element_upper_camel_case::#current_field_ident_upper_camel_case_token_stream(_)
                                                     }
-                                                }
-                                                else {
-                                                    quote::quote!{#ident_standart_not_null_update_element_upper_camel_case::#current_field_ident_upper_camel_case_token_stream(_) => ()}
-                                                }
-                                            });
+                                                })
+                                                .fold(None, |acc_bbf653f7, element_2be3f4ee| Some(match acc_bbf653f7 {
+                                                    None => element_2be3f4ee,
+                                                    Some(value_5b375af0) => quote::quote! { #value_5b375af0 | #element_2be3f4ee },
+                                                }));
+                                                content_token_stream_e0bf4e67.map_or_else(
+                                                    proc_macro2::TokenStream::new,
+                                                    |value_5c826b8c| quote::quote!{#value_5c826b8c => (),}
+                                                )
+                                            };
                                             quote::quote! {
                                                 for element_da177c5a in element_4634bb8a.fields.0.to_vec() {
                                                     match &element_da177c5a {
-                                                        #(#match_content_token_stream),*
+                                                        #field_ident_token_stream
+                                                        #fields_without_current_ident_token_stream
                                                     }
                                                 }
                                             }
