@@ -344,8 +344,8 @@ ambiguous_glob_imported_traits = { level = "deny", priority = 0 }
 absolute_paths = { level = "allow", priority = 0 } # im against this lint
 absurd_extreme_comparisons = { level = "deny", priority = 0 }
 alloc_instead_of_core = { level = "deny", priority = 0 }
-allow_attributes = { level = "allow", priority = 0 }#todo deny after migrating to the latest serde version
-allow_attributes_without_reason = { level = "allow", priority = 0 }#todo deny after migrating to the latest serde version
+allow_attributes = { level = "allow", priority = 0 } #serde used too much allow_attributes.
+allow_attributes_without_reason = { level = "allow", priority = 0 } #serde used too much allow_attributes.
 almost_complete_range = { level = "deny", priority = 0 }
 almost_swapped = { level = "deny", priority = 0 }
 approx_constant = { level = "deny", priority = 0 }
@@ -590,7 +590,7 @@ large_enum_variant = { level = "deny", priority = 0 }
 large_futures = { level = "deny", priority = 0 }
 large_include_file = { level = "deny", priority = 0 }
 large_stack_arrays = { level = "deny", priority = 0 }
-large_stack_frames = { level = "allow", priority = 0 }#for test crud. dont actually know to to optimize it now
+large_stack_frames = { level = "deny", priority = 0 }
 large_types_passed_by_value = { level = "deny", priority = 0 }
 len_without_is_empty = { level = "deny", priority = 0 }
 len_zero = { level = "deny", priority = 0 }
