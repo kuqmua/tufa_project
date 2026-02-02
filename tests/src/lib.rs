@@ -48,13 +48,13 @@ mod tests {
     }
     fn compare_lints_vecs(
         rust_or_clippy: RustOrClippy,
-        lints_vec_from_cargo_toml: Vec<String>,
-        lints_to_check: Vec<String>,
-        lints_not_in_cargo_toml_vec_exceptions: Vec<String>,
+        lints_vec_from_cargo_toml: &[String],
+        lints_to_check: &[String],
+        lints_not_in_cargo_toml_vec_exceptions: &[String],
     ) {
         let rust_or_clippy_name = rust_or_clippy.name();
         let mut lints_not_in_cargo_toml = Vec::new();
-        for element_31af38d6 in &lints_to_check {
+        for element_31af38d6 in lints_to_check {
             if !lints_vec_from_cargo_toml.contains(element_31af38d6) {
                 if lints_not_in_cargo_toml_vec_exceptions.contains(element_31af38d6) {
                     println!(
@@ -70,7 +70,7 @@ mod tests {
             "d2b7ba9f-d133-496c-a29d-67503c3d9e8a"
         );
         let mut outdated_lints_in_file = Vec::new();
-        for element_d3c0c904 in &lints_vec_from_cargo_toml {
+        for element_d3c0c904 in lints_vec_from_cargo_toml {
             if !lints_to_check.contains(element_d3c0c904) {
                 outdated_lints_in_file.push(element_d3c0c904);
             }
@@ -206,10 +206,10 @@ mod tests {
         };
         compare_lints_vecs(
             rust_or_clippy,
-            lints_vec_from_cargo_toml,
-            lints_from_command,
+            &lints_vec_from_cargo_toml,
+            &lints_from_command,
             //todo on commit momment seems like this lints still not added to rustc, but in the list of rustc -W help
-            vec![
+            &vec![
                 String::from("fuzzy_provenance_casts"),
                 String::from("lossy_provenance_casts"),
                 String::from("multiple_supertrait_upcastable"),
@@ -293,9 +293,9 @@ mod tests {
         };
         compare_lints_vecs(
             rust_or_clippy,
-            lints_vec_from_cargo_toml,
-            clippy_lints_from_docs,
-            vec![],
+            &lints_vec_from_cargo_toml,
+            &clippy_lints_from_docs,
+            &[],
         );
     }
     #[test]

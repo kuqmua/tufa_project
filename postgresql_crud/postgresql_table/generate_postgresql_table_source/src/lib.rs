@@ -1593,7 +1593,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 );
             quote::quote! {
                 match #ident_read_upper_camel_case::#try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_snake_case(
-                    value_b27d7d79,
+                    &value_b27d7d79,
                     &#parameters_snake_case.#payload_snake_case.#select_snake_case
                 ) {
                     Ok(value_90535a1d) => value_90535a1d,
@@ -1710,6 +1710,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             }
                         },
                     );
+                //todo reuse code?
                 let assignment_variant_primary_key_token_stream = {
                     let primary_key_field_ident_string_double_quotes_token_stream =
                         generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
@@ -1718,7 +1719,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             #primary_key_field_type_as_postgresql_type_read_upper_camel_case,
                             #ref_std_primitive_str
                         >(
-                            &value,
+                            value,
                             #primary_key_field_ident_string_double_quotes_token_stream
                         ) {
                             Ok(value_dccdf117) => {
@@ -1742,7 +1743,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 #element_syn_field_ty_as_postgresql_type_read_token_stream,
                                 #ref_std_primitive_str
                             >(
-                                &value,
+                                value,
                                 #field_ident_string_double_quotes_token_stream
                             ) {
                                 Ok(value_09b0fc09) => {
@@ -1761,7 +1762,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     .collect::<Vec<&syn::Ident>>();
                 quote::quote! {
                     fn #try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_snake_case(
-                        #value_snake_case: sqlx::postgres::PgRow,
+                        #value_snake_case: &sqlx::postgres::PgRow,
                         #select_borrow_postgresql_crud_not_empty_unique_vec_ident_select_token_stream
                     ) -> Result<Self, sqlx::Error> {
                         #declaration_primary_key_token_stream
