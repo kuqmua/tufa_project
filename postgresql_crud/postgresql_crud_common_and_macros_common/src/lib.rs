@@ -43,14 +43,14 @@ impl LogicalOperator {
         if is_need_to_add_logical_operator {
             let and_space = format!("{} ", naming::AndSnakeCase);
             let or_space = format!("{} ", naming::OrSnakeCase);
-            match &self {
+            match *self {
                 Self::And => and_space,
                 Self::Or => or_space,
                 Self::AndNot => format!("{and_space}{not_space}"),
                 Self::OrNot => format!("{or_space}{not_space}"),
             }
         } else {
-            match &self {
+            match *self {
                 Self::And | Self::Or => String::default(),
                 Self::AndNot | Self::OrNot => not_space,
             }
@@ -69,7 +69,7 @@ impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for LogicalOpera
 }
 impl quote::ToTokens for LogicalOperator {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
+        match *self {
             Self::And => quote::quote! {And},
             Self::Or => quote::quote! {Or},
             Self::AndNot => quote::quote! {AndNot},
@@ -88,7 +88,7 @@ pub enum PostgresqlTypeGreaterThanVariant {
 impl PostgresqlTypeGreaterThanVariant {
     #[must_use]
     pub const fn logical_operator(&self) -> LogicalOperator {
-        match &self {
+        match *self {
             Self::GreaterThan => LogicalOperator::Or,
             Self::NotGreaterThan | Self::EqualNotGreaterThan => LogicalOperator::OrNot,
         }
@@ -96,7 +96,7 @@ impl PostgresqlTypeGreaterThanVariant {
 }
 impl quote::ToTokens for PostgresqlTypeGreaterThanVariant {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
+        match *self {
             Self::GreaterThan => quote::quote! {GreaterThan},
             Self::NotGreaterThan => quote::quote! {NotGreaterThan},
             Self::EqualNotGreaterThan => quote::quote! {EqualNotGreaterThan},
@@ -114,7 +114,7 @@ pub enum PostgresqlJsonTypeLengthGreaterThanVariant {
 impl PostgresqlJsonTypeLengthGreaterThanVariant {
     #[must_use]
     pub const fn logical_operator(&self) -> LogicalOperator {
-        match &self {
+        match *self {
             Self::LengthGreaterThan => LogicalOperator::Or,
             Self::NotLengthGreaterThan | Self::EqualNotLengthGreaterThan => LogicalOperator::OrNot,
         }
@@ -122,7 +122,7 @@ impl PostgresqlJsonTypeLengthGreaterThanVariant {
 }
 impl quote::ToTokens for PostgresqlJsonTypeLengthGreaterThanVariant {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
+        match *self {
             Self::LengthGreaterThan => quote::quote! {LengthGreaterThan},
             Self::NotLengthGreaterThan => quote::quote! {NotLengthGreaterThan},
             Self::EqualNotLengthGreaterThan => quote::quote! {EqualNotLengthGreaterThan},

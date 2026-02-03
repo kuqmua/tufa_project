@@ -74,7 +74,7 @@ pub enum StatusCode {
 impl StatusCode {
     #[must_use]
     pub fn to_axum_http_status_code_token_stream(&self) -> proc_macro2::TokenStream {
-        match self {
+        match *self {
             Self::Continue100 => quote::quote! {http::StatusCode::CONTINUE},
             Self::SwitchingProtocols101 => {
                 quote::quote! {http::StatusCode::SWITCHING_PROTOCOLS}
@@ -215,7 +215,7 @@ impl StatusCode {
     }
     #[must_use]
     pub fn to_http_status_code_token_stream(&self) -> proc_macro2::TokenStream {
-        match self {
+        match *self {
             Self::Continue100 => quote::quote! {http::StatusCode::CONTINUE},
             Self::SwitchingProtocols101 => {
                 quote::quote! {http::StatusCode::SWITCHING_PROTOCOLS}
@@ -348,7 +348,7 @@ impl StatusCode {
     }
     #[must_use]
     pub fn to_status_code_token_stream(&self) -> proc_macro2::TokenStream {
-        match self {
+        match *self {
             Self::Continue100 => quote::quote! {100},
             Self::SwitchingProtocols101 => quote::quote! {101},
             Self::Processing102 => quote::quote! {102},
@@ -413,7 +413,7 @@ impl StatusCode {
     }
     #[must_use]
     pub fn to_status_code_description_token_stream(&self) -> proc_macro2::TokenStream {
-        match self {
+        match *self {
             Self::Continue100 => quote::quote! {"continue"},
             Self::SwitchingProtocols101 => quote::quote! {"switching protocols"},
             Self::Processing102 => quote::quote! {"processing"},

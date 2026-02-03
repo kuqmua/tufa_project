@@ -321,14 +321,14 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_camel_case_stringified(
     let syn_derive_input: syn::DeriveInput =
         syn::parse(input_token_stream).expect("a8f22481-4162-4372-97ef-91a012d80a8c");
     let ident = &syn_derive_input.ident;
-    let syn::Data::Enum(data_enum) = &syn_derive_input.data else {
+    let syn::Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("d26bf85e-20cf-4ee1-97bc-d61f59eb11bc")
     };
     let std_string_string_token_stream = token_patterns::StdStringString;
     let variants_matching_values_token_stream = data_enum
         .variants
         .iter()
-        .map(|variant| match &variant.fields {
+        .map(|variant| match variant.fields {
             syn::Fields::Unit => {
                 let variant_ident = &variant.ident;
                 let variant_ident_upper_camel_case_stringified = naming_common::ToTokensToUpperCamelCaseStringified::case(&variant_ident);
@@ -369,14 +369,14 @@ pub fn as_ref_str_enum_with_unit_fields_to_snake_case_stringified(
     let syn_derive_input: syn::DeriveInput =
         syn::parse(input_token_stream).expect("dea5cbcf-77f9-4861-9993-6ea53e01020b");
     let ident = &syn_derive_input.ident;
-    let syn::Data::Enum(data_enum) = &syn_derive_input.data else {
+    let syn::Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("ed6efe2e-ded2-4b61-807d-7b14ba0e2031");
     };
     let std_string_string = token_patterns::StdStringString;
     let variants_matching_values_token_stream = data_enum
         .variants
         .iter()
-        .map(|variant| match &variant.fields {
+        .map(|variant| match variant.fields {
             syn::Fields::Unit => {
                 let variant_ident = &variant.ident;
                 let variant_ident_snake_case_stringified = naming_common::ToTokensToSnakeCaseStringified::case(&variant_ident);
@@ -416,14 +416,14 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_snake_case_stringified(
     let syn_derive_input: syn::DeriveInput =
         syn::parse(input_token_stream).expect("edabbc24-fdff-40d6-a83e-5b6a108689f6");
     let ident = &syn_derive_input.ident;
-    let syn::Data::Enum(data_enum) = &syn_derive_input.data else {
+    let syn::Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("b2263e7e-0e5e-48ef-8d91-32864281d4aa");
     };
     let std_string_string = token_patterns::StdStringString;
     let variants_matching_values_token_stream = data_enum
         .variants
         .iter()
-        .map(|variant| match &variant.fields {
+        .map(|variant| match variant.fields {
             syn::Fields::Unit => {
                 let variant_ident = &variant.ident;
                 let variant_ident_snake_case_stringified = naming_common::ToTokensToUpperSnakeCaseStringified::case(&variant_ident);
