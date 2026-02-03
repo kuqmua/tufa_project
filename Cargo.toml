@@ -779,14 +779,14 @@ partialeq_ne_impl = { level = "deny", priority = 0 }
 partialeq_to_none = { level = "deny", priority = 0 }
 path_buf_push_overwrite = { level = "deny", priority = 0 }
 path_ends_with_ext = { level = "deny", priority = 0 }
-pattern_type_mismatch = { level = "allow", priority = 0 }#here
+pattern_type_mismatch = { level = "allow", priority = 0 } #dont know how to refactor that. forces to use ref pattern or (.clone with conflict with other lints)
 permissions_set_readonly_false = { level = "deny", priority = 0 }
 possible_missing_comma = { level = "deny", priority = 0 }
 precedence = { level = "deny", priority = 0 }
 print_in_format_impl = { level = "deny", priority = 0 }
 print_literal = { level = "deny", priority = 0 }
-print_stderr = { level = "allow", priority = 0 }
-print_stdout = { level = "allow", priority = 0 }
+print_stderr = { level = "allow", priority = 0 } #need for dev
+print_stdout = { level = "allow", priority = 0 } #need for dev
 print_with_newline = { level = "deny", priority = 0 }
 println_empty_string = { level = "deny", priority = 0 }
 ptr_arg = { level = "deny", priority = 0 }
@@ -794,11 +794,11 @@ ptr_as_ptr = { level = "deny", priority = 0 }
 ptr_cast_constness = { level = "deny", priority = 0 }
 ptr_eq = { level = "deny", priority = 0 }
 ptr_offset_with_cast = { level = "deny", priority = 0 }
-pub_use = { level = "allow", priority = 0 }
-pub_with_shorthand = { level = "allow", priority = 0 }
+pub_use = { level = "allow", priority = 0 } #its limitation, not a rule. annoying but not so usefull
+pub_with_shorthand = { level = "allow", priority = 0 } #conflicts with pub_without_shorthand
 pub_without_shorthand = { level = "deny", priority = 0 }
 question_mark = { level = "deny", priority = 0 }
-question_mark_used = { level = "allow", priority = 0 }
+question_mark_used = { level = "allow", priority = 0 } #not against it
 range_minus_one = { level = "deny", priority = 0 }
 range_plus_one = { level = "deny", priority = 0 }
 range_zip_with_len = { level = "deny", priority = 0 }
@@ -835,7 +835,7 @@ ref_patterns = { level = "deny", priority = 0 }
 repeat_once = { level = "deny", priority = 0 }
 reserve_after_initialization = { level = "deny", priority = 0 }
 rest_pat_in_fully_bound_structs = { level = "deny", priority = 0 }
-result_large_err = { level = "allow", priority = 0 }
+result_large_err = { level = "allow", priority = 0 } #not sure how to fix it
 result_map_or_into_option = { level = "deny", priority = 0 }
 result_map_unit_fn = { level = "deny", priority = 0 }
 result_unit_err = { level = "deny", priority = 0 }
@@ -863,8 +863,8 @@ should_implement_trait = { level = "deny", priority = 0 }
 should_panic_without_expect = { level = "deny", priority = 0 }
 significant_drop_in_scrutinee = { level = "deny", priority = 0 }
 significant_drop_tightening = { level = "deny", priority = 0 }
-similar_names = { level = "allow", priority = 0 }
-single_call_fn = { level = "allow", priority = 0 } # utoipa function code gen problems with that lint
+similar_names = { level = "allow", priority = 0 } # not so usefull. too much to refactor.
+single_call_fn = { level = "deny", priority = 0 } # utoipa function code gen problems with that lint
 single_char_add_str = { level = "deny", priority = 0 }
 single_char_lifetime_names = { level = "deny", priority = 0 }
 single_char_pattern = { level = "deny", priority = 0 }

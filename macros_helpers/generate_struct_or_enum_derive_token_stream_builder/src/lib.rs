@@ -98,30 +98,19 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(
         )
     };
     let (make_pub_derive_and_derive_if_token_stream, derive_and_derive_if_vec_token_stream) = {
-        fn generate_derive_and_derive_if_token_stream(
-            ident_snake_case: &dyn quote::ToTokens,
-            ident_if_snake_case: &dyn quote::ToTokens,
-            ident_upper_camel_case: &dyn quote::ToTokens,
-        ) -> proc_macro2::TokenStream {
+        (
             quote::quote! {
-                pub const fn #ident_snake_case(mut self) -> Self {
-                    self.#ident_snake_case = true;
+                pub const fn #make_pub_snake_case_token_stream(mut self) -> Self {
+                    self.#make_pub_snake_case_token_stream = true;
                     self
                 }
-                pub const fn #ident_if_snake_case(mut self, condition: #ident_upper_camel_case) -> Self {
-                    if let #ident_upper_camel_case::True = condition {
-                        self.#ident_snake_case = true;
+                pub const fn #make_pub_if_snake_case_token_stream(mut self, condition: #make_pub_upper_camel_case_token_stream) -> Self {
+                    if let #make_pub_upper_camel_case_token_stream::True = condition {
+                        self.#make_pub_snake_case_token_stream = true;
                     }
                     self
                 }
-            }
-        }
-        (
-            generate_derive_and_derive_if_token_stream(
-                &make_pub_snake_case_token_stream,
-                &make_pub_if_snake_case_token_stream,
-                &make_pub_upper_camel_case_token_stream
-            ),
+            },
             element_vec.iter().map(|element_09fab389|{
                 let derive_trait_name_upper_camel_case = &element_09fab389.derive_trait_name_upper_camel_case;
                 let derive_trait_name_snake_case = &element_09fab389.derive_trait_name_snake_case;

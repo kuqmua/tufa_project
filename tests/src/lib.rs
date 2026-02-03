@@ -103,7 +103,11 @@ mod tests {
                         if let syn::Expr::Lit(syn::ExprLit {
                             lit: syn::Lit::Str(lit_str),
                             ..
-                        }) = i.args.get(0).expect("d5ad7bff-2125-4fe2-a132-d7f6446a1710").clone()
+                        }) = i
+                            .args
+                            .get(0)
+                            .expect("d5ad7bff-2125-4fe2-a132-d7f6446a1710")
+                            .clone()
                         {
                             let value = lit_str.value();
                             match uuid::Uuid::parse_str(&value) {
@@ -303,7 +307,8 @@ mod tests {
     fn check_workspace_dependencies_having_exact_version() {
         for (_, value_5c36cb98) in match toml_value_from_from_cargo_toml_workspace()
             .get("dependencies")
-            .expect("2376f58e-394d-4759-96c1-e5379fdbb0b1").clone()
+            .expect("2376f58e-394d-4759-96c1-e5379fdbb0b1")
+            .clone()
         {
             toml::Value::Table(value_270f9bd5) => value_270f9bd5,
             toml::Value::String(_)

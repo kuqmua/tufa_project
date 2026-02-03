@@ -1,5 +1,4 @@
 pub mod git_info;
-mod health_check;
 pub mod not_found;
 
 type DynArcCommonRoutesParametersSendSync = std::sync::Arc<dyn CommonRoutesParameters>;
@@ -9,7 +8,13 @@ pub trait CommonRoutesParameters:
 }
 pub fn common_routes(app_state: DynArcCommonRoutesParametersSendSync) -> axum::Router {
     axum::Router::new()
-        .merge(health_check::health_check_route())
+        .merge(axum::Router::new().route(
+            "/health_check",
+            axum::routing::get(async || {
+                println!("health_check");
+                axum::http::StatusCode::OK
+            }),
+        ))
         .merge(git_info::git_info_route(std::sync::Arc::<
             dyn CommonRoutesParameters,
         >::clone(&app_state)))
