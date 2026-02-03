@@ -744,7 +744,7 @@ no_effect = { level = "deny", priority = 0 }
 no_effect_replace = { level = "deny", priority = 0 }
 no_effect_underscore_binding = { level = "deny", priority = 0 }
 no_mangle_with_rust_abi = { level = "deny", priority = 0 }
-non_ascii_literal = { level = "allow", priority = 0 }
+non_ascii_literal = { level = "deny", priority = 0 }
 non_canonical_clone_impl = { level = "deny", priority = 0 }
 non_canonical_partial_ord_impl = { level = "deny", priority = 0 }
 non_minimal_cfg = { level = "deny", priority = 0 }

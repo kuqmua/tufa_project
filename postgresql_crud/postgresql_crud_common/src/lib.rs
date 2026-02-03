@@ -1568,6 +1568,7 @@ pub const fn std_primitive_bool_test_cases_vec() -> [bool; 2] {
 }
 #[must_use]
 pub fn std_string_string_test_cases_vec() -> [String; 12] {
+    #[allow(clippy::non_ascii_literal)]
     [
         String::new(),
         "a".to_owned(),
