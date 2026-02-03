@@ -14,7 +14,7 @@ pub enum CreateDirsAndWritePrettyJsonSyncErrorNamed {
 
 pub fn create_dirs_and_write_pretty_json_sync(
     path: &std::path::Path,
-    serde_json_value: serde_json::Value,
+    serde_json_value: &serde_json::Value,
 ) -> Result<(), CreateDirsAndWritePrettyJsonSyncErrorNamed> {
     match serde_json::to_string_pretty(&serde_json_value) {
         Ok(value) => {
