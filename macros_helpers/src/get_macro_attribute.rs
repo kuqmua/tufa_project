@@ -24,7 +24,7 @@ pub fn get_macro_attribute_meta_list_token_stream<'attributes_lifetime>(
             stringified_path.retain(|value_e5eda357| !value_e5eda357.is_whitespace());
             stringified_path
         }
-    });
+    }).clone();
     let attribute = option_attribute.expect("9d057161-4c8e-4cf5-bee3-12c0020d5b95");
     if let syn::Meta::List(value) = &attribute.meta {
         &value.tokens

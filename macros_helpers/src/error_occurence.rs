@@ -44,7 +44,7 @@ impl TryFrom<&syn::Field> for ErrorOccurenceFieldAttribute {
         let mut option_attribute = None;
         for element_adfb232c in &syn_field.attrs {
             if element_adfb232c.path().segments.len() == 1 {
-                let first_segment_ident = match &element_adfb232c.path().segments.first() {
+                let first_segment_ident = match element_adfb232c.path().segments.first() {
                     Some(value) => &value.ident,
                     None => {
                         return Err("no first value in punctuated".to_owned());
@@ -65,7 +65,7 @@ impl crate::attribute_ident_stringified::AttributeIdentStringified
     for ErrorOccurenceFieldAttribute
 {
     fn attribute_ident_stringified(&self) -> &str {
-        match self {
+        match *self {
             Self::EoToStdStringString => "eo_to_std_string_string",
             Self::EoToStdStringStringSerializeDeserialize => {
                 "eo_to_std_string_string_serialize_deserialize"

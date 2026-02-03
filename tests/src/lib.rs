@@ -7,7 +7,7 @@ mod tests {
     }
     impl RustOrClippy {
         fn name(&self) -> &str {
-            match self {
+            match *self {
                 Self::Rust => "rust",
                 Self::Clippy => "clippy",
             }
@@ -35,6 +35,7 @@ mod tests {
         let toml_value_table = match lints
             .get(rust_or_clippy.name())
             .expect("dbd02f72-2647-4e41-a26f-a04cef447957")
+            .clone()
         {
             toml::Value::Table(value) => value,
             toml::Value::String(_)
@@ -102,7 +103,7 @@ mod tests {
                         if let syn::Expr::Lit(syn::ExprLit {
                             lit: syn::Lit::Str(lit_str),
                             ..
-                        }) = &i.args.get(0).expect("d5ad7bff-2125-4fe2-a132-d7f6446a1710")
+                        }) = i.args.get(0).expect("d5ad7bff-2125-4fe2-a132-d7f6446a1710").clone()
                         {
                             let value = lit_str.value();
                             match uuid::Uuid::parse_str(&value) {
@@ -302,7 +303,7 @@ mod tests {
     fn check_workspace_dependencies_having_exact_version() {
         for (_, value_5c36cb98) in match toml_value_from_from_cargo_toml_workspace()
             .get("dependencies")
-            .expect("2376f58e-394d-4759-96c1-e5379fdbb0b1")
+            .expect("2376f58e-394d-4759-96c1-e5379fdbb0b1").clone()
         {
             toml::Value::Table(value_270f9bd5) => value_270f9bd5,
             toml::Value::String(_)
@@ -325,6 +326,7 @@ mod tests {
             let check_version = |value_df993c3d: &toml::value::Table| match value_df993c3d
                 .get("version")
                 .expect("d5b2b269-d832-4c94-887b-ec44a7e2045f")
+                .clone()
             {
                 toml::Value::String(version_string) => {
                     fn check_version_string(value: &str) -> Option<()> {
@@ -338,7 +340,7 @@ mod tests {
                         }
                         Some(())
                     }
-                    check_version_string(version_string)
+                    check_version_string(&version_string)
                         .expect("6640b9bf-8fd4-4a00-8c88-72087ba83f60");
                 }
                 toml::Value::Table(_)
@@ -352,35 +354,35 @@ mod tests {
                 .get("features")
                 .expect("473577d5-0482-4460-b211-60131d9b7c2a")
             {
-                toml::Value::Array(_) => (),
-                toml::Value::String(_)
-                | toml::Value::Table(_)
-                | toml::Value::Integer(_)
-                | toml::Value::Float(_)
-                | toml::Value::Boolean(_)
-                | toml::Value::Datetime(_) => {
+                &toml::Value::Array(_) => (),
+                &toml::Value::String(_)
+                | &toml::Value::Table(_)
+                | &toml::Value::Integer(_)
+                | &toml::Value::Float(_)
+                | &toml::Value::Boolean(_)
+                | &toml::Value::Datetime(_) => {
                     panic!("38ba32e9-fe34-4628-8505-414b937c645f")
                 }
             };
             if value_table_len == 1 {
-                check_version(value_table);
+                check_version(&value_table);
             } else if value_table_len == 2 {
-                check_version(value_table);
-                check_features(value_table);
+                check_version(&value_table);
+                check_features(&value_table);
             } else if value_table_len == 3 {
-                check_version(value_table);
-                check_features(value_table);
+                check_version(&value_table);
+                check_features(&value_table);
                 match value_table
                     .get("default-features")
                     .expect("847a138f-421b-47e5-a658-3789a8281b5c")
                 {
-                    toml::Value::Boolean(_) => (),
-                    toml::Value::String(_)
-                    | toml::Value::Table(_)
-                    | toml::Value::Integer(_)
-                    | toml::Value::Float(_)
-                    | toml::Value::Datetime(_)
-                    | toml::Value::Array(_) => panic!("b320164b-7082-45f0-9f89-1f5f28f6b779"),
+                    &toml::Value::Boolean(_) => (),
+                    &toml::Value::String(_)
+                    | &toml::Value::Table(_)
+                    | &toml::Value::Integer(_)
+                    | &toml::Value::Float(_)
+                    | &toml::Value::Datetime(_)
+                    | &toml::Value::Array(_) => panic!("b320164b-7082-45f0-9f89-1f5f28f6b779"),
                 }
             } else {
                 panic!("f1139378-0a18-4195-9b90-f3248a63253e {value_table:#?}")
@@ -508,6 +510,7 @@ mod tests {
             for element_3c618c8f in ["dependencies", "dev-dependencies", "build-dependencies"] {
                 if let Some(deps) = parsed
                     .get(element_3c618c8f)
+                    .clone()
                     .and_then(|value_5e0a4d6a| value_5e0a4d6a.as_table())
                 {
                     for (key_794900d4, value_07583f81) in deps {
@@ -520,7 +523,7 @@ mod tests {
                                 element_3c618c8f
                             )
                         };
-                        match value_07583f81 {
+                        match value_07583f81.clone() {
                             toml::Value::Table(value_bba39a72) => {
                                 if !(value_bba39a72.contains_key("path")
                                     || (value_bba39a72.get("workspace")

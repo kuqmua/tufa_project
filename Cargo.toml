@@ -779,7 +779,7 @@ partialeq_ne_impl = { level = "deny", priority = 0 }
 partialeq_to_none = { level = "deny", priority = 0 }
 path_buf_push_overwrite = { level = "deny", priority = 0 }
 path_ends_with_ext = { level = "deny", priority = 0 }
-pattern_type_mismatch = { level = "allow", priority = 0 }
+pattern_type_mismatch = { level = "allow", priority = 0 }#here
 permissions_set_readonly_false = { level = "deny", priority = 0 }
 possible_missing_comma = { level = "deny", priority = 0 }
 precedence = { level = "deny", priority = 0 }
