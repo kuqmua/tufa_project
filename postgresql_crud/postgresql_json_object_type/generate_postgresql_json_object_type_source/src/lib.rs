@@ -1979,7 +1979,6 @@ pub fn generate_postgresql_json_object_type(
                 quote::quote! {#(#content_token_stream),*}
             };
             let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
-            let ident_array_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_array_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident);
             let ident_with_id_standart_not_null_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
@@ -3537,7 +3536,6 @@ pub fn generate_postgresql_json_object_type(
                     #maybe_ident_with_id_standart_not_null_update_for_query_element_token_stream
                 }
             };
-            let value_into_inner_token_stream = quote::quote! {#value_snake_case.into_inner()};
             let (impl_postgresql_crud_postgresql_json_type_for_ident_token_stream, maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream) = {
                 let postgresql_type_or_postgresql_json_type_postgresql_type = postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType;
                 let postgresql_type_or_postgresql_json_type_postgresql_json_type = postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType;

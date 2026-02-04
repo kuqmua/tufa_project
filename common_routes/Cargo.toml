@@ -12,8 +12,6 @@ categories = ["category"]
 [dependencies]
 axum.workspace = true
 serde.workspace = true
-serde_json.workspace = true
-utoipa.workspace = true
 constants = {path = "../constants"}
 git_info = {path = "../git_info"}
 

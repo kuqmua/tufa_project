@@ -5,8 +5,6 @@ pub struct ServerAppState<'lifetime> {
     pub project_git_info: &'lifetime git_info::ProjectGitInfo<'lifetime>,
 }
 impl common_routes::CommonRoutesParameters for ServerAppState<'_> {}
-impl common_routes::git_info::RouteParameters for ServerAppState<'_> {}
-impl common_routes::not_found::RouteParameters for ServerAppState<'_> {}
 impl postgresql_crud::CombinationOfAppStateLogicTraits for ServerAppState<'_> {}
 impl app_state::GetEnableApiGitCommitCheck for ServerAppState<'_> {
     fn get_enable_api_git_commit_check(&self) -> &bool {
