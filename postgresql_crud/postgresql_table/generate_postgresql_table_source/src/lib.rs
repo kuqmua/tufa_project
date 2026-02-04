@@ -2960,6 +2960,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &ShouldAddReturn::False,
             );
             quote::quote! {
+                #[allow(clippy::single_call_fn)]
                 async fn #operation_handle_snake_case_token_stream(
                     #app_state_snake_case: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_token_stream>,
                     #request_snake_case: axum::extract::Request,
@@ -2980,6 +2981,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     };
                     #wraped_into_axum_response_token_stream
                 }
+                #[allow(clippy::single_call_fn)]
                 pub async fn #operation_snake_case_token_stream(
                     #app_state_snake_case: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_token_stream>,
                     #request_snake_case: axum::extract::Request,
@@ -3135,6 +3137,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             }
         };
         quote::quote! {
+            #[allow(clippy::single_call_fn)]
             async fn #try_operation_handle_snake_case_token_stream(
                 #endpoint_location_snake_case: #ref_std_primitive_str,
                 #parameters_snake_case: #ident_operation_parameters_upper_camel_case,
@@ -4851,6 +4854,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 }
             });
             quote::quote!{
+                #[allow(clippy::single_call_fn)]
                 fn #routes_handle_snake_case(#app_state_snake_case: #std_sync_arc_combination_of_app_state_logic_traits_token_stream, #table_snake_case: &str) -> axum::Router {
                     axum::Router::new().nest(
                         &format!("/{table}"),
