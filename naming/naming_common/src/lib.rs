@@ -1,28 +1,3 @@
-fn to_upper_camel_case_stringified<T: AsRef<str>>(value: &T) -> String
-where
-    String: PartialEq<T>,
-{
-    convert_case::Casing::to_case(value, convert_case::Case::UpperCamel)
-}
-fn to_snake_case_stringified<T: AsRef<str>>(value: &T) -> String
-where
-    String: PartialEq<T>,
-{
-    convert_case::Casing::to_case(value, convert_case::Case::Snake)
-}
-fn to_upper_snake_case_stringified<T: AsRef<str>>(value: &T) -> String
-where
-    String: PartialEq<T>,
-{
-    convert_case::Casing::to_case(value, convert_case::Case::UpperSnake)
-}
-fn to_token_stream_or_panic(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
-    value
-        .to_string()
-        .parse::<proc_macro2::TokenStream>()
-        .expect("753ce6dd-aa0f-4836-8e74-20a7c4f88f60")
-}
-
 //todo maybe add another generic - trait casing. and ToUpperCamelCaseString and others would implement it like .to_case::<UpperCamel>()
 pub trait AsRefStrToUpperCamelCaseStringified {
     fn case(&self) -> String;
@@ -36,7 +11,6 @@ where
         to_upper_camel_case_stringified(self)
     }
 }
-
 pub trait AsRefStrToUpperCamelCaseTokenStream {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
@@ -48,7 +22,6 @@ where
         to_token_stream_or_panic(&AsRefStrToUpperCamelCaseStringified::case(self))
     }
 }
-
 pub trait AsRefStrToSnakeCaseStringified {
     fn case(&self) -> String;
 }
@@ -61,7 +34,6 @@ where
         to_snake_case_stringified(self)
     }
 }
-
 pub trait AsRefStrToSnakeCaseTokenStream {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
@@ -73,7 +45,6 @@ where
         to_token_stream_or_panic(&AsRefStrToSnakeCaseStringified::case(self))
     }
 }
-
 pub trait AsRefStrToUpperSnakeCaseStringified {
     fn case(&self) -> String;
 }
@@ -86,7 +57,6 @@ where
         to_upper_snake_case_stringified(self)
     }
 }
-
 pub trait AsRefStrToUpperSnakeCaseTokenStream {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
@@ -97,6 +67,32 @@ where
     fn case_or_panic(&self) -> proc_macro2::TokenStream {
         to_token_stream_or_panic(&AsRefStrToUpperSnakeCaseStringified::case(self))
     }
+}
+fn to_upper_camel_case_stringified<T: AsRef<str>>(value: &T) -> String
+where
+    String: PartialEq<T>,
+{
+    convert_case::Casing::to_case(value, convert_case::Case::UpperCamel)
+}
+
+fn to_snake_case_stringified<T: AsRef<str>>(value: &T) -> String
+where
+    String: PartialEq<T>,
+{
+    convert_case::Casing::to_case(value, convert_case::Case::Snake)
+}
+
+fn to_upper_snake_case_stringified<T: AsRef<str>>(value: &T) -> String
+where
+    String: PartialEq<T>,
+{
+    convert_case::Casing::to_case(value, convert_case::Case::UpperSnake)
+}
+fn to_token_stream_or_panic(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
+    value
+        .to_string()
+        .parse::<proc_macro2::TokenStream>()
+        .expect("753ce6dd-aa0f-4836-8e74-20a7c4f88f60")
 }
 
 ////////////

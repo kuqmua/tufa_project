@@ -2,8 +2,8 @@
 mod tests {
     #[derive(Debug, Clone, Copy)]
     enum RustOrClippy {
-        Rust,
         Clippy,
+        Rust,
     }
     impl RustOrClippy {
         fn name(&self) -> &str {
@@ -83,14 +83,14 @@ mod tests {
     }
     #[derive(Debug, Clone, Copy)]
     enum ExpectOrPanic {
-        Expect,
         Panic,
+        Expect,
     }
     fn check_expect_or_panic_contains_only_unique_uuid_v4(expect_or_panic: ExpectOrPanic) {
         struct ExpectVisitor {
+            errors: Vec<String>,
             expect_or_panic: ExpectOrPanic,
             uuids: Vec<String>,
-            errors: Vec<String>,
         }
         impl<'ast> syn::visit::Visit<'ast> for ExpectVisitor {
             fn visit_expr_method_call(&mut self, i: &'ast syn::ExprMethodCall) {

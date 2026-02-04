@@ -9,10 +9,10 @@ impl std::fmt::Display for ServerPort {
 }
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct ServerPortErrorNamed {
-    server_port_min_value: u16,
-    server_port_max_value: u16,
-    value: u16,
     message: String,
+    server_port_max_value: u16,
+    server_port_min_value: u16,
+    value: u16,
 }
 impl std::fmt::Display for ServerPortErrorNamed {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

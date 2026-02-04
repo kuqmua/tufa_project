@@ -987,7 +987,7 @@ unwrap_in_result = { level = "deny", priority = 0 }
 unwrap_or_default = { level = "deny", priority = 0 }
 unwrap_used = { level = "deny", priority = 0 }
 upper_case_acronyms = { level = "deny", priority = 0 }
-use_debug = { level = "allow", priority = 0 }
+use_debug = { level = "allow", priority = 0 } #too much code to refactor, maybe for size of binary and longer compile times
 use_self = { level = "deny", priority = 0 }
 used_underscore_binding = { level = "deny", priority = 0 }
 useless_asref = { level = "deny", priority = 0 }
@@ -1055,7 +1055,7 @@ needless_character_iteration = { level = "deny", priority = 0 }
 needless_maybe_sized = { level = "deny", priority = 0 }
 renamed_function_params = { level = "deny", priority = 0 }
 while_float = { level = "deny", priority = 0 }
-arbitrary_source_item_ordering = { level = "allow", priority = 0 }
+arbitrary_source_item_ordering = { level = "deny", priority = 0 }
 as_pointer_underscore = { level = "deny", priority = 0 }
 byte_char_slices = { level = "deny", priority = 0 }
 cfg_not_test = { level = "deny", priority = 0 }

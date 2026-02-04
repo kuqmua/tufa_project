@@ -4,14 +4,14 @@
     description = "These commands are supported:"
 )]
 enum Command {
+    #[command(description = "show bot source code info ")]
+    GitInfo,
     #[command(description = "display this text.")]
     Help,
     #[command(description = "handle a username.")]
     Username(String),
     #[command(description = "handle a username and an age.", parse_with = "split")]
     UsernameAndAge { username: String, age: u8 },
-    #[command(description = "show bot source code info ")]
-    GitInfo,
 }
 
 #[tokio::main]
