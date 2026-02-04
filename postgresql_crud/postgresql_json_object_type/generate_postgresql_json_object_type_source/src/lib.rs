@@ -3394,6 +3394,7 @@ pub fn generate_postgresql_json_object_type(
                             },
                         };
                         quote::quote!{
+                            #[allow(clippy::single_call_fn)]//for some reason lint ignoring this function call in other struct trait methonds(array not null)
                             fn #select_only_updated_ids_query_part_snake_case(
                                 &self,
                                 column_name_and_maybe_field_getter: &str,
