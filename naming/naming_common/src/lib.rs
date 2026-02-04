@@ -68,34 +68,6 @@ where
         to_token_stream_or_panic(&AsRefStrToUpperSnakeCaseStringified::case(self))
     }
 }
-fn to_upper_camel_case_stringified<T: AsRef<str>>(value: &T) -> String
-where
-    String: PartialEq<T>,
-{
-    convert_case::Casing::to_case(value, convert_case::Case::UpperCamel)
-}
-
-fn to_snake_case_stringified<T: AsRef<str>>(value: &T) -> String
-where
-    String: PartialEq<T>,
-{
-    convert_case::Casing::to_case(value, convert_case::Case::Snake)
-}
-
-fn to_upper_snake_case_stringified<T: AsRef<str>>(value: &T) -> String
-where
-    String: PartialEq<T>,
-{
-    convert_case::Casing::to_case(value, convert_case::Case::UpperSnake)
-}
-fn to_token_stream_or_panic(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
-    value
-        .to_string()
-        .parse::<proc_macro2::TokenStream>()
-        .expect("753ce6dd-aa0f-4836-8e74-20a7c4f88f60")
-}
-
-////////////
 pub trait DisplayToUpperCamelCaseStringified {
     fn case(&self) -> String;
 }
@@ -107,7 +79,6 @@ where
         to_upper_camel_case_stringified(&self.to_string())
     }
 }
-
 pub trait DisplayToUpperCamelCaseTokenStream {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
@@ -119,7 +90,6 @@ where
         to_token_stream_or_panic(&DisplayToUpperCamelCaseStringified::case(self))
     }
 }
-
 pub trait DisplayToSnakeCaseStringified {
     fn case(&self) -> String;
 }
@@ -131,7 +101,6 @@ where
         to_snake_case_stringified(&self.to_string())
     }
 }
-
 pub trait DisplayToSnakeCaseTokenStream {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
@@ -143,7 +112,6 @@ where
         to_token_stream_or_panic(&DisplayToSnakeCaseStringified::case(self))
     }
 }
-
 pub trait DisplayToUpperSnakeCaseStringified {
     fn case(&self) -> String;
 }
@@ -155,7 +123,6 @@ where
         to_upper_snake_case_stringified(&self.to_string())
     }
 }
-
 pub trait DisplayToUpperSnakeCaseTokenStream {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
@@ -167,8 +134,6 @@ where
         to_token_stream_or_panic(&DisplayToUpperSnakeCaseStringified::case(self))
     }
 }
-////////////
-
 pub trait ToTokensToUpperCamelCaseStringified {
     fn case(&self) -> String;
 }
@@ -180,7 +145,6 @@ where
         to_upper_camel_case_stringified(&quote::quote! {#self}.to_string())
     }
 }
-
 pub trait ToTokensToUpperCamelCaseTokenStream {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
@@ -192,7 +156,6 @@ where
         to_token_stream_or_panic(&ToTokensToUpperCamelCaseStringified::case(self))
     }
 }
-
 pub trait ToTokensToSnakeCaseStringified {
     fn case(&self) -> String;
 }
@@ -204,7 +167,6 @@ where
         to_snake_case_stringified(&quote::quote! {#self}.to_string())
     }
 }
-
 pub trait ToTokensToSnakeCaseTokenStream {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
@@ -216,7 +178,6 @@ where
         to_token_stream_or_panic(&ToTokensToSnakeCaseStringified::case(self))
     }
 }
-
 pub trait ToTokensToUpperSnakeCaseStringified {
     fn case(&self) -> String;
 }
@@ -228,7 +189,6 @@ where
         to_upper_snake_case_stringified(&quote::quote! {#self}.to_string())
     }
 }
-
 pub trait ToTokensToUpperSnakeCaseTokenStream {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
@@ -239,4 +199,28 @@ where
     fn case_or_panic(&self) -> proc_macro2::TokenStream {
         to_token_stream_or_panic(&ToTokensToUpperSnakeCaseStringified::case(self))
     }
+}
+fn to_token_stream_or_panic(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
+    value
+        .to_string()
+        .parse::<proc_macro2::TokenStream>()
+        .expect("753ce6dd-aa0f-4836-8e74-20a7c4f88f60")
+}
+fn to_upper_camel_case_stringified<T: AsRef<str>>(value: &T) -> String
+where
+    String: PartialEq<T>,
+{
+    convert_case::Casing::to_case(value, convert_case::Case::UpperCamel)
+}
+fn to_snake_case_stringified<T: AsRef<str>>(value: &T) -> String
+where
+    String: PartialEq<T>,
+{
+    convert_case::Casing::to_case(value, convert_case::Case::Snake)
+}
+fn to_upper_snake_case_stringified<T: AsRef<str>>(value: &T) -> String
+where
+    String: PartialEq<T>,
+{
+    convert_case::Casing::to_case(value, convert_case::Case::UpperSnake)
 }
