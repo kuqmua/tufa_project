@@ -1,12 +1,12 @@
+pub mod types;
+
 pub use generate_getter_traits_for_struct_fields::GenerateGetterTraitsForStructFields;
 pub use try_from_env::TryFromEnv;
-pub mod types;
 
 pub trait TryFromStdEnvVarOk: Sized {
     type Error;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error>;
 }
-
 #[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct ServiceSocketAddress(pub std::net::SocketAddr);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
@@ -25,16 +25,15 @@ impl TryFromStdEnvVarOk for ServiceSocketAddress {
             })
     }
 }
-
 #[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct Timezone(pub chrono::FixedOffset);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkTimezoneErrorNamed {
-    StdPrimitiveI32Parsing {
-        std_primitive_i32_parsing: std::num::ParseIntError,
-    },
     ChronoFixedOffset {
         chrono_fixed_offset: String,
+    },
+    StdPrimitiveI32Parsing {
+        std_primitive_i32_parsing: std::num::ParseIntError,
     },
 }
 impl TryFromStdEnvVarOk for Timezone {
@@ -55,7 +54,6 @@ impl TryFromStdEnvVarOk for Timezone {
         Ok(Self(fixed_offset))
     }
 }
-
 #[derive(Debug, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct RedisUrl(pub secrecy::SecretBox<String>);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
@@ -74,7 +72,6 @@ impl TryFromStdEnvVarOk for RedisUrl {
         }))
     }
 }
-
 #[derive(Debug, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct MongoUrl(pub secrecy::SecretBox<String>);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
@@ -93,7 +90,6 @@ impl TryFromStdEnvVarOk for MongoUrl {
         }))
     }
 }
-
 #[derive(Debug, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct DatabaseUrl(pub secrecy::SecretBox<String>);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
@@ -112,7 +108,6 @@ impl TryFromStdEnvVarOk for DatabaseUrl {
         }))
     }
 }
-
 #[derive(Debug, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct StartingCheckLink(pub String);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]

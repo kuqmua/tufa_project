@@ -13,6 +13,11 @@ mod tests {
             }
         }
     }
+    #[derive(Debug, Clone, Copy)]
+    enum ExpectOrPanic {
+        Expect,
+        Panic,
+    }
     fn toml_value_from_from_cargo_toml_workspace() -> toml::Value {
         let mut file =
             std::fs::File::open("../Cargo.toml").expect("39a0d238-d776-4b4e-ac2a-62f76a60f527");
@@ -80,11 +85,6 @@ mod tests {
             outdated_lints_in_file.is_empty(),
             "93787d2d-47b8-4f26-ba5a-341d3c60ca15"
         );
-    }
-    #[derive(Debug, Clone, Copy)]
-    enum ExpectOrPanic {
-        Panic,
-        Expect,
     }
     fn check_expect_or_panic_contains_only_unique_uuid_v4(expect_or_panic: ExpectOrPanic) {
         struct ExpectVisitor {

@@ -1,3 +1,4 @@
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
     Debug,
     strum_macros::Display,
@@ -347,69 +348,11 @@ impl StatusCode {
         }
     }
     #[must_use]
-    pub fn to_status_code_token_stream(&self) -> proc_macro2::TokenStream {
-        match *self {
-            Self::Continue100 => quote::quote! {100},
-            Self::SwitchingProtocols101 => quote::quote! {101},
-            Self::Processing102 => quote::quote! {102},
-            Self::Ok200 => quote::quote! {200},
-            Self::Created201 => quote::quote! {201},
-            Self::Accepted202 => quote::quote! {202},
-            Self::NonAuthoritativeInformation203 => quote::quote! {203},
-            Self::NoContent204 => quote::quote! {204},
-            Self::ResetContent205 => quote::quote! {205},
-            Self::PartialContent206 => quote::quote! {206},
-            Self::MultiStatus207 => quote::quote! {207},
-            Self::AlreadyReported208 => quote::quote! {208},
-            Self::ImUsed226 => quote::quote! {226},
-            Self::MultipleChoices300 => quote::quote! {300},
-            Self::MovedPermanently301 => quote::quote! {301},
-            Self::Found302 => quote::quote! {302},
-            Self::SeeOther303 => quote::quote! {303},
-            Self::NotModified304 => quote::quote! {304},
-            Self::UseProxy305 => quote::quote! {305},
-            Self::TemporaryRedirect307 => quote::quote! {307},
-            Self::PermanentRedirect308 => quote::quote! {308},
-            Self::BadRequest400 => quote::quote! {400},
-            Self::Unauthorized401 => quote::quote! {401},
-            Self::PaymentRequired402 => quote::quote! {402},
-            Self::Forbidden403 => quote::quote! {403},
-            Self::NotFound404 => quote::quote! {404},
-            Self::MethodNotAllowed405 => quote::quote! {405},
-            Self::NotAcceptable406 => quote::quote! {406},
-            Self::ProxyAuthenticationRequired407 => quote::quote! {407},
-            Self::RequestTimeout408 => quote::quote! {408},
-            Self::Conflict409 => quote::quote! {409},
-            Self::Gone410 => quote::quote! {410},
-            Self::LengthRequired411 => quote::quote! {411},
-            Self::PreconditionFailed412 => quote::quote! {412},
-            Self::PayloadTooLarge413 => quote::quote! {413},
-            Self::UriTooLong414 => quote::quote! {414},
-            Self::UnsupportedMediaType415 => quote::quote! {415},
-            Self::RangeNotSatisfiable416 => quote::quote! {416},
-            Self::ExpectationFailed417 => quote::quote! {417},
-            Self::ImATeapot418 => quote::quote! {418},
-            Self::MisdirectedRequest421 => quote::quote! {421},
-            Self::UnprocessableEntity422 => quote::quote! {422},
-            Self::Locked423 => quote::quote! {423},
-            Self::FailedDependency424 => quote::quote! {424},
-            Self::UpgradeRequired426 => quote::quote! {426},
-            Self::PreconditionRequired428 => quote::quote! {428},
-            Self::TooManyRequests429 => quote::quote! {429},
-            Self::RequestHeaderFieldsTooLarge431 => quote::quote! {431},
-            Self::UnavailableForLegalReasons451 => quote::quote! {451},
-            Self::InternalServerError500 => quote::quote! {500},
-            Self::NotImplemented501 => quote::quote! {501},
-            Self::BadGateway502 => quote::quote! {502},
-            Self::ServiceUnavailable503 => quote::quote! {503},
-            Self::GatewayTimeout504 => quote::quote! {504},
-            Self::HttpVersionNotSupported505 => quote::quote! {505},
-            Self::VariantAlsoNegotiates506 => quote::quote! {506},
-            Self::InsufficientStorage507 => quote::quote! {507},
-            Self::LoopDetected508 => quote::quote! {508},
-            Self::NotExtended510 => quote::quote! {510},
-            Self::NetworkAuthenticationRequired511 => quote::quote! {511},
-        }
+    pub fn to_proc_macro_attribute_view_token_stream(&self) -> proc_macro2::TokenStream {
+        let value = format!("#[{self}]");
+        value
+            .parse::<proc_macro2::TokenStream>()
+            .expect("48ab5b45-d715-4872-a5e3-aa17c1012898")
     }
     #[must_use]
     pub fn to_status_code_description_token_stream(&self) -> proc_macro2::TokenStream {
@@ -489,11 +432,69 @@ impl StatusCode {
         }
     }
     #[must_use]
-    pub fn to_proc_macro_attribute_view_token_stream(&self) -> proc_macro2::TokenStream {
-        let value = format!("#[{self}]");
-        value
-            .parse::<proc_macro2::TokenStream>()
-            .expect("48ab5b45-d715-4872-a5e3-aa17c1012898")
+    pub fn to_status_code_token_stream(&self) -> proc_macro2::TokenStream {
+        match *self {
+            Self::Continue100 => quote::quote! {100},
+            Self::SwitchingProtocols101 => quote::quote! {101},
+            Self::Processing102 => quote::quote! {102},
+            Self::Ok200 => quote::quote! {200},
+            Self::Created201 => quote::quote! {201},
+            Self::Accepted202 => quote::quote! {202},
+            Self::NonAuthoritativeInformation203 => quote::quote! {203},
+            Self::NoContent204 => quote::quote! {204},
+            Self::ResetContent205 => quote::quote! {205},
+            Self::PartialContent206 => quote::quote! {206},
+            Self::MultiStatus207 => quote::quote! {207},
+            Self::AlreadyReported208 => quote::quote! {208},
+            Self::ImUsed226 => quote::quote! {226},
+            Self::MultipleChoices300 => quote::quote! {300},
+            Self::MovedPermanently301 => quote::quote! {301},
+            Self::Found302 => quote::quote! {302},
+            Self::SeeOther303 => quote::quote! {303},
+            Self::NotModified304 => quote::quote! {304},
+            Self::UseProxy305 => quote::quote! {305},
+            Self::TemporaryRedirect307 => quote::quote! {307},
+            Self::PermanentRedirect308 => quote::quote! {308},
+            Self::BadRequest400 => quote::quote! {400},
+            Self::Unauthorized401 => quote::quote! {401},
+            Self::PaymentRequired402 => quote::quote! {402},
+            Self::Forbidden403 => quote::quote! {403},
+            Self::NotFound404 => quote::quote! {404},
+            Self::MethodNotAllowed405 => quote::quote! {405},
+            Self::NotAcceptable406 => quote::quote! {406},
+            Self::ProxyAuthenticationRequired407 => quote::quote! {407},
+            Self::RequestTimeout408 => quote::quote! {408},
+            Self::Conflict409 => quote::quote! {409},
+            Self::Gone410 => quote::quote! {410},
+            Self::LengthRequired411 => quote::quote! {411},
+            Self::PreconditionFailed412 => quote::quote! {412},
+            Self::PayloadTooLarge413 => quote::quote! {413},
+            Self::UriTooLong414 => quote::quote! {414},
+            Self::UnsupportedMediaType415 => quote::quote! {415},
+            Self::RangeNotSatisfiable416 => quote::quote! {416},
+            Self::ExpectationFailed417 => quote::quote! {417},
+            Self::ImATeapot418 => quote::quote! {418},
+            Self::MisdirectedRequest421 => quote::quote! {421},
+            Self::UnprocessableEntity422 => quote::quote! {422},
+            Self::Locked423 => quote::quote! {423},
+            Self::FailedDependency424 => quote::quote! {424},
+            Self::UpgradeRequired426 => quote::quote! {426},
+            Self::PreconditionRequired428 => quote::quote! {428},
+            Self::TooManyRequests429 => quote::quote! {429},
+            Self::RequestHeaderFieldsTooLarge431 => quote::quote! {431},
+            Self::UnavailableForLegalReasons451 => quote::quote! {451},
+            Self::InternalServerError500 => quote::quote! {500},
+            Self::NotImplemented501 => quote::quote! {501},
+            Self::BadGateway502 => quote::quote! {502},
+            Self::ServiceUnavailable503 => quote::quote! {503},
+            Self::GatewayTimeout504 => quote::quote! {504},
+            Self::HttpVersionNotSupported505 => quote::quote! {505},
+            Self::VariantAlsoNegotiates506 => quote::quote! {506},
+            Self::InsufficientStorage507 => quote::quote! {507},
+            Self::LoopDetected508 => quote::quote! {508},
+            Self::NotExtended510 => quote::quote! {510},
+            Self::NetworkAuthenticationRequired511 => quote::quote! {511},
+        }
     }
 }
 impl TryFrom<&String> for StatusCode {

@@ -448,12 +448,6 @@ impl quote::ToTokens
 }
 #[derive(Debug, Clone, Copy)]
 pub struct CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-fn path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size_call()
--> proc_macro2::TokenStream {
-    quote::quote! {::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size()}
-}
-#[derive(Debug, Clone, Copy)]
-pub struct CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
 impl quote::ToTokens
     for CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
 {
@@ -463,6 +457,22 @@ impl quote::ToTokens
         quote::quote! {
             #crate_path_token_stream
             #all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
+        }
+        .to_tokens(tokens);
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+impl quote::ToTokens
+    for CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall
+{
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        let crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element =
+            CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+        let path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call = path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call();
+        quote::quote! {
+            #crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element
+            #path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call
         }
         .to_tokens(tokens);
     }
@@ -695,6 +705,10 @@ impl quote::ToTokens for MustUse {
         quote::quote! {#[must_use]}.to_tokens(tokens);
     }
 }
+fn path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size_call()
+-> proc_macro2::TokenStream {
+    quote::quote! {::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size()}
+}
 fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_upper_camel_case()
 -> proc_macro2::TokenStream {
     quote::quote! {DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize}
@@ -727,20 +741,6 @@ fn path_default_but_option_is_always_some_and_vec_always_contains_one_element_wi
 fn all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_upper_camel_case()
 -> proc_macro2::TokenStream {
     quote::quote! {AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize}
-}
-impl quote::ToTokens
-    for CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall
-{
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element =
-            CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-        let path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call = path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call();
-        quote::quote! {
-            #crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element
-            #path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call
-        }
-        .to_tokens(tokens);
-    }
 }
 fn path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call()
 -> proc_macro2::TokenStream {

@@ -24,6 +24,7 @@ pub struct MacroOccurence {
     schemars::JsonSchema,
 )]
 pub struct CodeOccurence {
+    #[allow(clippy::arbitrary_source_item_ordering)]
     file: String,
     line: u32,
     column: u32,

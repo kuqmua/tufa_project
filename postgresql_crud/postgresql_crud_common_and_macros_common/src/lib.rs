@@ -31,9 +31,9 @@ pub trait AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOn
 )]
 pub enum LogicalOperator {
     And,
+    AndNot,
     #[default]
     Or,
-    AndNot,
     OrNot,
 }
 impl LogicalOperator {
@@ -81,9 +81,9 @@ impl quote::ToTokens for LogicalOperator {
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum PostgresqlTypeGreaterThanVariant {
+    EqualNotGreaterThan,
     GreaterThan,
     NotGreaterThan,
-    EqualNotGreaterThan,
 }
 impl PostgresqlTypeGreaterThanVariant {
     #[must_use]
@@ -97,9 +97,9 @@ impl PostgresqlTypeGreaterThanVariant {
 impl quote::ToTokens for PostgresqlTypeGreaterThanVariant {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match *self {
+            Self::EqualNotGreaterThan => quote::quote! {EqualNotGreaterThan},
             Self::GreaterThan => quote::quote! {GreaterThan},
             Self::NotGreaterThan => quote::quote! {NotGreaterThan},
-            Self::EqualNotGreaterThan => quote::quote! {EqualNotGreaterThan},
         }
         .to_tokens(tokens);
     }
@@ -107,9 +107,9 @@ impl quote::ToTokens for PostgresqlTypeGreaterThanVariant {
 
 #[derive(Debug, Clone, Copy)]
 pub enum PostgresqlJsonTypeLengthGreaterThanVariant {
+    EqualNotLengthGreaterThan,
     LengthGreaterThan,
     NotLengthGreaterThan,
-    EqualNotLengthGreaterThan,
 }
 impl PostgresqlJsonTypeLengthGreaterThanVariant {
     #[must_use]
@@ -123,9 +123,9 @@ impl PostgresqlJsonTypeLengthGreaterThanVariant {
 impl quote::ToTokens for PostgresqlJsonTypeLengthGreaterThanVariant {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match *self {
+            Self::EqualNotLengthGreaterThan => quote::quote! {EqualNotLengthGreaterThan},
             Self::LengthGreaterThan => quote::quote! {LengthGreaterThan},
             Self::NotLengthGreaterThan => quote::quote! {NotLengthGreaterThan},
-            Self::EqualNotLengthGreaterThan => quote::quote! {EqualNotLengthGreaterThan},
         }
         .to_tokens(tokens);
     }

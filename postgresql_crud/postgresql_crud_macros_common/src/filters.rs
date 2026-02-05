@@ -1,3 +1,4 @@
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
     Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension,
 )]
@@ -215,6 +216,7 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
     }
 }
 
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
     Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension,
 )]

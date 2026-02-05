@@ -1,3 +1,4 @@
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
     Debug,
     Default,
@@ -38,9 +39,9 @@ impl std::fmt::Display for TracingLevel {
     from_str::FromStr,
 )]
 pub enum SourcePlaceType {
-    Source,
     #[default]
     Github,
+    Source,
 }
 impl SourcePlaceType {
     #[must_use]

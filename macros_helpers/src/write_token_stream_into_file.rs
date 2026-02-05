@@ -1,8 +1,10 @@
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum FormatWithCargofmt {
     True,
     False,
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Copy, Clone, serde::Deserialize)]
 pub enum ShouldWriteTokenStreamIntoFile {
     True,

@@ -7,7 +7,6 @@ pub enum DeriveOrImpl {
     Derive,
     Impl(proc_macro2::TokenStream),
 }
-
 #[derive(
     Debug,
     Default,
@@ -64,7 +63,328 @@ impl NotNullOrNullable {
         }
     }
 }
-
+#[derive(Debug, Clone, Copy)]
+pub enum ImportPath {
+    Crate,
+    PostgresqlCrud,
+    PostgresqlCrudCommon,
+}
+impl ImportPath {
+    #[must_use]
+    pub const fn snake_case_std_primitive_str(&self) -> &'static str {
+        match &self {
+            Self::Crate => "crate",
+            Self::PostgresqlCrud => "postgresql_crud",
+            Self::PostgresqlCrudCommon => "postgresql_crud_common",
+        }
+    }
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element(
+        &self,
+    ) -> &dyn quote::ToTokens {
+        match &self {
+            Self::Crate => &token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+            Self::PostgresqlCrud => &token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+            Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+        }
+    }
+    fn all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element(
+        &self,
+    ) -> &dyn quote::ToTokens {
+        match &self {
+            Self::Crate => &token_patterns::CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+            Self::PostgresqlCrud => &token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+            Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+        }
+    }
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size(
+        &self,
+    ) -> &dyn quote::ToTokens {
+        match &self {
+            Self::Crate => &token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
+            Self::PostgresqlCrud => &token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
+            Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
+        }
+    }
+    fn all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size(
+        &self,
+    ) -> &dyn quote::ToTokens {
+        match &self {
+            Self::Crate => &token_patterns::CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
+            Self::PostgresqlCrud => &token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
+            Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
+        }
+    }
+    #[must_use]
+    pub const fn to_path(&self) -> &'static str {
+        match &self {
+            Self::Crate => "crate",
+            Self::PostgresqlCrud => "postgresql_crud",
+            Self::PostgresqlCrudCommon => "postgresql_crud_common",
+        }
+    }
+}
+impl quote::ToTokens for ImportPath {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        self.snake_case_std_primitive_str()
+            .parse::<proc_macro2::TokenStream>()
+            .expect("d8636ee5-942b-472d-a025-c6e0700e1b59")
+            .to_tokens(tokens);
+    }
+}
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[derive(Debug, Clone, Copy)]
+pub enum ShouldDeriveSchemarsJsonSchema {
+    True,
+    False,
+}
+impl quote::ToTokens for ShouldDeriveSchemarsJsonSchema {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => quote::quote! {, schemars::JsonSchema}.to_tokens(tokens),
+            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+        }
+    }
+}
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[derive(Debug, Clone, Copy)]
+pub enum ShouldDeriveUtoipaToSchema {
+    True,
+    False,
+}
+impl quote::ToTokens for ShouldDeriveUtoipaToSchema {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => quote::quote! {, utoipa::ToSchema}.to_tokens(tokens),
+            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+        }
+    }
+}
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[derive(Debug, Clone, Copy)]
+pub enum IsCreateQueryPartSelfCreateUsed {
+    True,
+    False,
+}
+impl quote::ToTokens for IsCreateQueryPartSelfCreateUsed {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => naming::ValueSnakeCase.to_tokens(tokens),
+            Self::False => quote::quote! {_}.to_tokens(tokens),
+        }
+    }
+}
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[derive(Debug, Clone, Copy)]
+pub enum IsCreateQueryBindMutable {
+    True,
+    False,
+}
+impl quote::ToTokens for IsCreateQueryBindMutable {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => naming::MutSnakeCase.to_tokens(tokens),
+            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+        }
+    }
+}
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[derive(Debug, Clone, Copy)]
+pub enum IsSelectQueryPartSelfSelectUsed {
+    True,
+    False,
+}
+impl quote::ToTokens for IsSelectQueryPartSelfSelectUsed {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => naming::ValueSnakeCase.to_tokens(tokens),
+            Self::False => quote::quote! {_}.to_tokens(tokens),
+        }
+    }
+}
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[derive(Debug, Clone, Copy)]
+pub enum IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed {
+    True,
+    False,
+}
+impl quote::ToTokens for IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => {
+                naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase.to_tokens(tokens);
+            }
+            Self::False => quote::quote! {_}.to_tokens(tokens),
+        }
+    }
+}
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[derive(Debug, Clone, Copy)]
+pub enum IsSelectQueryPartIsPostgresqlTypeUsed {
+    True,
+    False,
+}
+impl quote::ToTokens for IsSelectQueryPartIsPostgresqlTypeUsed {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => quote::quote! {is_postgresql_type}.to_tokens(tokens),
+            Self::False => quote::quote! {_}.to_tokens(tokens),
+        }
+    }
+}
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[derive(Debug, Clone, Copy)]
+pub enum IsUpdateQueryPartSelfUpdateUsed {
+    True,
+    False,
+}
+impl quote::ToTokens for IsUpdateQueryPartSelfUpdateUsed {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => naming::ValueSnakeCase.to_tokens(tokens),
+            Self::False => quote::quote! {_}.to_tokens(tokens),
+        }
+    }
+}
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[derive(Debug, Clone, Copy)]
+pub enum IsUpdateQueryPartJsonbSetTargetUsed {
+    True,
+    False,
+}
+impl quote::ToTokens for IsUpdateQueryPartJsonbSetTargetUsed {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => naming::JsonbSetTargetSnakeCase.to_tokens(tokens),
+            Self::False => quote::quote! {_}.to_tokens(tokens),
+        }
+    }
+}
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[derive(Debug, Clone, Copy)]
+pub enum IsUpdateQueryBindMutable {
+    True,
+    False,
+}
+impl quote::ToTokens for IsUpdateQueryBindMutable {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => naming::MutSnakeCase.to_tokens(tokens),
+            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+        }
+    }
+}
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[derive(Debug, Clone, Copy)]
+pub enum IsSelectOnlyUpdatedIdsQueryBindMutable {
+    True,
+    False,
+}
+impl quote::ToTokens for IsSelectOnlyUpdatedIdsQueryBindMutable {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => naming::MutSnakeCase.to_tokens(tokens),
+            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+        }
+    }
+}
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[derive(Debug, Clone, Copy)]
+pub enum IsSelectOnlyCreatedIdsQueryBindMutable {
+    True,
+    False,
+}
+impl quote::ToTokens for IsSelectOnlyCreatedIdsQueryBindMutable {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => naming::MutSnakeCase.to_tokens(tokens),
+            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+        }
+    }
+}
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[derive(Debug, Clone, Copy)]
+pub enum IsQueryBindMutable {
+    True,
+    False,
+}
+impl quote::ToTokens for IsQueryBindMutable {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => naming::MutSnakeCase.to_tokens(tokens),
+            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+        }
+    }
+}
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[derive(Debug, Clone, Copy)]
+pub enum IncrementParameterUnderscore {
+    True,
+    False,
+}
+impl quote::ToTokens for IncrementParameterUnderscore {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => quote::quote! {_}.to_tokens(tokens),
+            Self::False => naming::IncrementSnakeCase.to_tokens(tokens),
+        }
+    }
+}
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[derive(Debug, Clone, Copy)]
+pub enum ColumnParameterUnderscore {
+    True,
+    False,
+}
+impl quote::ToTokens for ColumnParameterUnderscore {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => quote::quote! {_}.to_tokens(tokens),
+            Self::False => naming::ColumnSnakeCase.to_tokens(tokens),
+        }
+    }
+}
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[derive(Debug, Clone, Copy)]
+pub enum IsNeedToAddLogicalOperatorUnderscore {
+    True,
+    False,
+}
+impl quote::ToTokens for IsNeedToAddLogicalOperatorUnderscore {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => quote::quote! {_}.to_tokens(tokens),
+            Self::False => naming::IsNeedToAddLogicalOperatorSnakeCase.to_tokens(tokens),
+        }
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub enum ReadOrUpdate {
+    Read,
+    Update,
+}
+impl ReadOrUpdate {
+    #[must_use]
+    pub fn upper_camel_case(&self) -> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
+        match &self {
+            Self::Read => &naming::ReadUpperCamelCase,
+            Self::Update => &naming::UpdateUpperCamelCase,
+        }
+    }
+}
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[derive(Debug, Clone, Copy)]
+pub enum IsPrimaryKeyUnderscore {
+    True,
+    False,
+}
+impl quote::ToTokens for IsPrimaryKeyUnderscore {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => quote::quote! {_}.to_tokens(tokens),
+            Self::False => naming::IsPrimaryKeySnakeCase.to_tokens(tokens),
+        }
+    }
+}
 pub fn generate_postgresql_type_where_token_stream(
     variants: &Vec<&dyn PostgresqlFilter>,
     prefix: &dyn quote::ToTokens,
@@ -162,13 +482,11 @@ pub fn generate_postgresql_type_where_token_stream(
         #impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_token_stream
     }
 }
-
 #[must_use]
 pub fn postgresql_crud_common_query_part_error_named_token_stream() -> proc_macro2::TokenStream {
     let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
     quote::quote! {postgresql_crud_common::#query_part_error_named_upper_camel_case}
 }
-
 pub fn generate_struct_ident_double_quotes_token_stream(
     value: &dyn std::fmt::Display,
 ) -> proc_macro2::TokenStream {
@@ -185,7 +503,6 @@ pub fn generate_tuple_struct_ident_double_quotes_token_stream(
 ) -> proc_macro2::TokenStream {
     generate_quotes::double_quotes_token_stream(&format!("tuple struct {value}"))
 }
-
 pub fn generate_sqlx_types_json_type_declaration_token_stream(
     type_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
@@ -221,170 +538,6 @@ pub fn generate_serde_deserialize_double_quotes_token_stream(
         struct_postgresql_type_ident_where_tokens_with_number_elements_double_quotes_token_stream,
         postgresql_type_ident_where_tokens_double_quotes_token_stream,
     )
-}
-
-#[derive(Debug, Clone, Copy)]
-pub enum ShouldDeriveSchemarsJsonSchema {
-    True,
-    False,
-}
-impl quote::ToTokens for ShouldDeriveSchemarsJsonSchema {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => quote::quote! {, schemars::JsonSchema}.to_tokens(tokens),
-            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
-        }
-    }
-}
-
-#[derive(Debug, Clone, Copy)]
-pub enum ShouldDeriveUtoipaToSchema {
-    True,
-    False,
-}
-impl quote::ToTokens for ShouldDeriveUtoipaToSchema {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => quote::quote! {, utoipa::ToSchema}.to_tokens(tokens),
-            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
-        }
-    }
-}
-
-#[derive(Debug, Clone, Copy)]
-pub enum IsCreateQueryPartSelfCreateUsed {
-    True,
-    False,
-}
-impl quote::ToTokens for IsCreateQueryPartSelfCreateUsed {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => naming::ValueSnakeCase.to_tokens(tokens),
-            Self::False => quote::quote! {_}.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy)]
-pub enum IsCreateQueryBindMutable {
-    True,
-    False,
-}
-impl quote::ToTokens for IsCreateQueryBindMutable {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => naming::MutSnakeCase.to_tokens(tokens),
-            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy)]
-pub enum IsSelectQueryPartSelfSelectUsed {
-    True,
-    False,
-}
-impl quote::ToTokens for IsSelectQueryPartSelfSelectUsed {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => naming::ValueSnakeCase.to_tokens(tokens),
-            Self::False => quote::quote! {_}.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy)]
-pub enum IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed {
-    True,
-    False,
-}
-impl quote::ToTokens for IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => {
-                naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase.to_tokens(tokens);
-            }
-            Self::False => quote::quote! {_}.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy)]
-pub enum IsSelectQueryPartIsPostgresqlTypeUsed {
-    True,
-    False,
-}
-impl quote::ToTokens for IsSelectQueryPartIsPostgresqlTypeUsed {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => quote::quote! {is_postgresql_type}.to_tokens(tokens),
-            Self::False => quote::quote! {_}.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy)]
-pub enum IsUpdateQueryPartSelfUpdateUsed {
-    True,
-    False,
-}
-impl quote::ToTokens for IsUpdateQueryPartSelfUpdateUsed {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => naming::ValueSnakeCase.to_tokens(tokens),
-            Self::False => quote::quote! {_}.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy)]
-pub enum IsUpdateQueryPartJsonbSetTargetUsed {
-    True,
-    False,
-}
-impl quote::ToTokens for IsUpdateQueryPartJsonbSetTargetUsed {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => naming::JsonbSetTargetSnakeCase.to_tokens(tokens),
-            Self::False => quote::quote! {_}.to_tokens(tokens),
-        }
-    }
-}
-
-#[derive(Debug, Clone, Copy)]
-pub enum IsUpdateQueryBindMutable {
-    True,
-    False,
-}
-impl quote::ToTokens for IsUpdateQueryBindMutable {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => naming::MutSnakeCase.to_tokens(tokens),
-            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
-        }
-    }
-}
-
-#[derive(Debug, Clone, Copy)]
-pub enum IsSelectOnlyUpdatedIdsQueryBindMutable {
-    True,
-    False,
-}
-impl quote::ToTokens for IsSelectOnlyUpdatedIdsQueryBindMutable {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => naming::MutSnakeCase.to_tokens(tokens),
-            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
-        }
-    }
-}
-
-#[derive(Debug, Clone, Copy)]
-pub enum IsSelectOnlyCreatedIdsQueryBindMutable {
-    True,
-    False,
-}
-impl quote::ToTokens for IsSelectOnlyCreatedIdsQueryBindMutable {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => naming::MutSnakeCase.to_tokens(tokens),
-            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
-        }
-    }
 }
 pub fn generate_impl_postgresql_json_type_token_stream(
     import_path: &ImportPath,
@@ -539,7 +692,6 @@ pub fn generate_impl_postgresql_json_type_token_stream(
         }
     }
 }
-
 pub fn generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
     impl_generic_token_stream: &dyn quote::ToTokens,
     import_path: &ImportPath,
@@ -633,7 +785,6 @@ pub fn generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_
 ) -> proc_macro2::TokenStream {
     generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ImportPath::PostgresqlCrud, ident, content_token_stream)
 }
-
 pub fn generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_tokens_token_stream(
     ident: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
@@ -652,127 +803,6 @@ pub fn generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_tokens_token_stream(&ImportPath::PostgresqlCrud, ident, content_token_stream)
-}
-
-#[derive(Debug, Clone, Copy)]
-pub enum ImportPath {
-    Crate,
-    PostgresqlCrud,
-    PostgresqlCrudCommon,
-}
-impl ImportPath {
-    #[must_use]
-    pub const fn snake_case_std_primitive_str(&self) -> &'static str {
-        match &self {
-            Self::Crate => "crate",
-            Self::PostgresqlCrud => "postgresql_crud",
-            Self::PostgresqlCrudCommon => "postgresql_crud_common",
-        }
-    }
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element(
-        &self,
-    ) -> &dyn quote::ToTokens {
-        match &self {
-            Self::Crate => &token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
-            Self::PostgresqlCrud => &token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
-            Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
-        }
-    }
-    fn all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element(
-        &self,
-    ) -> &dyn quote::ToTokens {
-        match &self {
-            Self::Crate => &token_patterns::CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
-            Self::PostgresqlCrud => &token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
-            Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
-        }
-    }
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size(
-        &self,
-    ) -> &dyn quote::ToTokens {
-        match &self {
-            Self::Crate => &token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
-            Self::PostgresqlCrud => &token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
-            Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
-        }
-    }
-    fn all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size(
-        &self,
-    ) -> &dyn quote::ToTokens {
-        match &self {
-            Self::Crate => &token_patterns::CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
-            Self::PostgresqlCrud => &token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
-            Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
-        }
-    }
-    #[must_use]
-    pub const fn to_path(&self) -> &'static str {
-        match &self {
-            Self::Crate => "crate",
-            Self::PostgresqlCrud => "postgresql_crud",
-            Self::PostgresqlCrudCommon => "postgresql_crud_common",
-        }
-    }
-}
-impl quote::ToTokens for ImportPath {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        self.snake_case_std_primitive_str()
-            .parse::<proc_macro2::TokenStream>()
-            .expect("d8636ee5-942b-472d-a025-c6e0700e1b59")
-            .to_tokens(tokens);
-    }
-}
-#[derive(Debug, Clone, Copy)]
-pub enum IsQueryBindMutable {
-    True,
-    False,
-}
-impl quote::ToTokens for IsQueryBindMutable {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => naming::MutSnakeCase.to_tokens(tokens),
-            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy)]
-pub enum IncrementParameterUnderscore {
-    True,
-    False,
-}
-impl quote::ToTokens for IncrementParameterUnderscore {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => quote::quote! {_}.to_tokens(tokens),
-            Self::False => naming::IncrementSnakeCase.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy)]
-pub enum ColumnParameterUnderscore {
-    True,
-    False,
-}
-impl quote::ToTokens for ColumnParameterUnderscore {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => quote::quote! {_}.to_tokens(tokens),
-            Self::False => naming::ColumnSnakeCase.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy)]
-pub enum IsNeedToAddLogicalOperatorUnderscore {
-    True,
-    False,
-}
-impl quote::ToTokens for IsNeedToAddLogicalOperatorUnderscore {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => quote::quote! {_}.to_tokens(tokens),
-            Self::False => naming::IsNeedToAddLogicalOperatorSnakeCase.to_tokens(tokens),
-        }
-    }
 }
 pub fn impl_postgresql_type_where_filter_for_ident_token_stream(
     impl_generic_token_stream: &dyn quote::ToTokens,
@@ -859,7 +889,7 @@ pub fn generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
         }
     }
 }
-
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum CreateQueryPartValueUnderscore {
     True,
@@ -873,6 +903,7 @@ impl quote::ToTokens for CreateQueryPartValueUnderscore {
         }
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum CreateQueryPartIncrementUnderscore {
     True,
@@ -886,6 +917,7 @@ impl quote::ToTokens for CreateQueryPartIncrementUnderscore {
         }
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum CreateQueryBindValueUnderscore {
     True,
@@ -899,6 +931,7 @@ impl quote::ToTokens for CreateQueryBindValueUnderscore {
         }
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum SelectQueryPartValueUnderscore {
     True,
@@ -912,6 +945,7 @@ impl quote::ToTokens for SelectQueryPartValueUnderscore {
         }
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum UpdateQueryPartValueUnderscore {
     True,
@@ -925,6 +959,7 @@ impl quote::ToTokens for UpdateQueryPartValueUnderscore {
         }
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum UpdateQueryPartJsonbSetAccumulatorUnderscore {
     True,
@@ -938,6 +973,7 @@ impl quote::ToTokens for UpdateQueryPartJsonbSetAccumulatorUnderscore {
         }
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum UpdateQueryPartJsonbSetTargetUnderscore {
     True,
@@ -951,6 +987,7 @@ impl quote::ToTokens for UpdateQueryPartJsonbSetTargetUnderscore {
         }
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum UpdateQueryPartJsonbSetPathUnderscore {
     True,
@@ -1506,7 +1543,6 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
         &content_token_stream
     )
 }
-
 fn generate_create_into_postgresql_json_type_option_vec_where_length_equal_token_stream(
     import_path: ImportPath,
     path_token_stream: &dyn quote::ToTokens,
@@ -1525,7 +1561,6 @@ fn generate_create_into_postgresql_json_type_option_vec_where_length_equal_token
         }
     }
 }
-
 fn generate_create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream(
     import_path: ImportPath,
     path_token_stream: &dyn quote::ToTokens,
@@ -1544,7 +1579,6 @@ fn generate_create_into_postgresql_json_type_option_vec_where_length_greater_tha
         }
     }
 }
-
 fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_vec_single_or_multiple_where_token_stream(
     method_name_token_stream: &dyn quote::ToTokens,
     import_path: ImportPath,
@@ -1565,7 +1599,6 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_no
         }
     }
 }
-
 fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream(
     import_path: ImportPath,
     path_token_stream: &dyn quote::ToTokens,
@@ -1578,7 +1611,6 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
         content_token_stream,
     )
 }
-
 fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_token_stream(
     import_path: ImportPath,
     path_token_stream: &dyn quote::ToTokens,
@@ -1591,7 +1623,6 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
         content_token_stream,
     )
 }
-
 fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_in_token_stream(
     import_path: ImportPath,
     path_token_stream: &dyn quote::ToTokens,
@@ -1604,7 +1635,6 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
         content_token_stream,
     )
 }
-
 fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_regular_expression_token_stream(
     import_path: ImportPath,
     path_token_stream: &dyn quote::ToTokens,
@@ -1617,7 +1647,6 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
         content_token_stream,
     )
 }
-
 fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_element_greater_than_token_stream(
     import_path: ImportPath,
     path_token_stream: &dyn quote::ToTokens,
@@ -1630,7 +1659,6 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
         content_token_stream,
     )
 }
-
 fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_element_regular_expression_token_stream(
     import_path: ImportPath,
     path_token_stream: &dyn quote::ToTokens,
@@ -1643,7 +1671,6 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
         content_token_stream,
     )
 }
-
 pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     cfg_token_stream: &dyn quote::ToTokens,
     import_path: &ImportPath,
@@ -1894,7 +1921,6 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
         }
     }
 }
-
 pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
     cfg_token_stream: &dyn quote::ToTokens,
     import_path: &ImportPath,
@@ -2125,42 +2151,11 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
         }
     }
 }
-
-#[derive(Debug, Clone, Copy)]
-pub enum ReadOrUpdate {
-    Read,
-    Update,
-}
-impl ReadOrUpdate {
-    #[must_use]
-    pub fn upper_camel_case(&self) -> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
-        match &self {
-            Self::Read => &naming::ReadUpperCamelCase,
-            Self::Update => &naming::UpdateUpperCamelCase,
-        }
-    }
-}
-
-#[derive(Debug, Clone, Copy)]
-pub enum IsPrimaryKeyUnderscore {
-    True,
-    False,
-}
-impl quote::ToTokens for IsPrimaryKeyUnderscore {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => quote::quote! {_}.to_tokens(tokens),
-            Self::False => naming::IsPrimaryKeySnakeCase.to_tokens(tokens),
-        }
-    }
-}
-
 #[must_use]
 pub fn postgresql_crud_common_query_part_error_named_checked_add_initialization_token_stream()
 -> proc_macro2::TokenStream {
     quote::quote! {postgresql_crud_common::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }}
 }
-
 pub fn generate_impl_crate_is_string_empty_for_ident_content_token_stream(
     ident: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
@@ -2173,7 +2168,6 @@ pub fn generate_impl_crate_is_string_empty_for_ident_content_token_stream(
         }
     }
 }
-
 pub fn generate_match_try_new_in_deserialize_token_stream(
     ident: &dyn quote::ToTokens,
     initialization_token_stream: &dyn quote::ToTokens,
@@ -2529,8 +2523,8 @@ pub fn maybe_wrap_into_braces_token_stream(
 
 #[derive(Debug, Clone, Copy)]
 pub enum PostgresqlTypeOrPostgresqlJsonType {
-    PostgresqlType,
     PostgresqlJsonType,
+    PostgresqlType,
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -2585,7 +2579,8 @@ pub fn impl_postgresql_type_equal_operator_for_ident_token_stream(
         }
     }
 }
-
+//todo maybe reuse with other structs
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum Dimension {
     One,
@@ -2606,6 +2601,7 @@ impl Dimension {
         }
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum DimensionIndexNumber {
     Zero,

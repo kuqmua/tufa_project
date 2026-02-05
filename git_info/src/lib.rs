@@ -1,12 +1,12 @@
+pub const PROJECT_GIT_INFO: ProjectGitInfo<'_> =
+    compile_time_git_info::compile_time_project_git_info!();
+
 #[derive(
     Debug, serde_derive::Serialize, serde_derive::Deserialize, Clone, Hash, PartialEq, Eq, Default,
 )]
 pub struct ProjectGitInfo<'commit_lifetime> {
     pub commit: &'commit_lifetime str,
 }
-
-pub const PROJECT_GIT_INFO: ProjectGitInfo<'_> =
-    compile_time_git_info::compile_time_project_git_info!();
 
 // pub const PROJECT_GIT_INFO: crate::common::git::project_git_info::ProjectGitInfo =
 //     crate::common::git::project_git_info::ProjectGitInfo {

@@ -4,9 +4,9 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(
 ) -> proc_macro::TokenStream {
     #[derive(Clone)]
     struct Element {
-        derive_trait_name_upper_camel_case: proc_macro2::TokenStream,
-        derive_trait_name_snake_case: proc_macro2::TokenStream,
         derive_trait_name_if_snake_case: proc_macro2::TokenStream,
+        derive_trait_name_snake_case: proc_macro2::TokenStream,
+        derive_trait_name_upper_camel_case: proc_macro2::TokenStream,
         trait_type: proc_macro2::TokenStream,
     }
     let make_pub_snake_case_token_stream = quote::quote! {make_pub};

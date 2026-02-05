@@ -9,13 +9,13 @@ pub struct Data {
     Default, Debug, Clone, PartialEq, Eq, serde_derive::Serialize, serde_derive::Deserialize,
 )]
 pub struct DataElement {
-    pub title: Option<String>,
-    pub link: Option<String>,
-    pub description: Option<String>,
-    pub date: Option<String>,
     pub creator: Option<String>,
+    pub date: Option<String>,
+    pub description: Option<String>,
     pub identifier: Option<String>,
-    pub publisher: Option<String>,
+    pub link: Option<String>,
     #[serde(rename = "publicationDate", default)]
     pub publication_date: Option<String>,
+    pub publisher: Option<String>,
+    pub title: Option<String>,
 }

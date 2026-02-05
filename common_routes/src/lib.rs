@@ -36,8 +36,8 @@ pub fn common_routes(app_state_b9fc2d94: DynArcCommonRoutesParametersSendSync) -
             >| {
                 #[derive(Debug, serde::Serialize)]
                 struct NotFoundHandle {
-                    message: String,
                     commit: String,
+                    message: String,
                     open_api_specification: &'static str,
                 }
                 (
