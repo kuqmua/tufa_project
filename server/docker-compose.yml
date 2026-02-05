@@ -8,13 +8,13 @@ services:
     ports:
       - 8080:8080
     environment:
-      SERVICE_SOCKET_ADDRESS: "127.0.0.1:8080"
-      DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:5432/dev?connect_timeout=10"
-      TIMEZONE: "10800"
-      TRACING_LEVEL: "error" # trace|debug|info|warn|error
-      SOURCE_PLACE_TYPE: "source" # source|github
+      DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:5432/postgres"
       ENABLE_API_GIT_COMMIT_CHECK: "true"
-      MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES: "1048576000" # 100 megabyte in bytes
+      MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES: "1048576000"
+      SERVICE_SOCKET_ADDRESS: "127.0.0.1:8080"
+      SOURCE_PLACE_TYPE: "source"
+      TIMEZONE: "10800"
+      TRACING_LEVEL: "debug"
   postgresql_16_with_pg_jsonschema_service:
     container_name: postgresql_16_with_pg_jsonschema
     image: ghcr.io/kuqmua/postgresql_16_with_pg_jsonschema
