@@ -12,10 +12,9 @@ pub struct DataElement {
     pub category: Option<Vec<String>>,
     pub creator: Option<String>,
     pub description: Option<String>,
-    pub title: Option<String>,
     pub guid: Option<String>,
     pub link: Option<String>,
     #[serde(rename = "pubDate", default)]
     pub pub_date: Option<String>,
-
+    pub title: Option<String>,
 }

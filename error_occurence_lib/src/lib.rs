@@ -1,6 +1,7 @@
+pub mod code_occurence;
+
 pub use ::to_std_string_string::ToStdStringString;
 pub use error_occurence::ErrorOccurence;
-pub mod code_occurence;
 
 #[macro_export]
 macro_rules! code_occurence {

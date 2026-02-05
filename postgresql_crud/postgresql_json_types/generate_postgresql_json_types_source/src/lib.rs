@@ -2,6 +2,7 @@
 pub fn generate_postgresql_json_types(
     input_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, strum_macros::Display)]
     enum RustTypeName {
         StdPrimitiveI8,
@@ -39,8 +40,8 @@ pub fn generate_postgresql_json_types(
     }
     #[derive(Debug)]
     enum PostgresqlJsonTypeName {
-        Number,
         Boolean,
+        Number,
         String,
     }
     impl std::fmt::Display for PostgresqlJsonTypeName {
@@ -75,6 +76,7 @@ pub fn generate_postgresql_json_types(
             }
         }
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(
         Debug,
         Clone,
@@ -110,6 +112,7 @@ pub fn generate_postgresql_json_types(
                 .to_tokens(tokens);
         }
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(
         Debug,
         Clone,
@@ -276,12 +279,14 @@ pub fn generate_postgresql_json_types(
             }
         }
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
     struct PostgresqlJsonTypeRecord {
         postgresql_json_type: PostgresqlJsonType,
         not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         postgresql_json_type_pattern: PostgresqlJsonTypePattern,
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, serde::Deserialize)]
     enum GeneratePostgresqlJsonTypesConfigVariant {
         All,
@@ -292,6 +297,7 @@ pub fn generate_postgresql_json_types(
         WithDimensionFour,
         Concrete(Vec<PostgresqlJsonTypeRecord>),
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, serde::Deserialize)]
     struct GeneratePostgresqlJsonTypesConfig {
         postgresql_table_columns_content_write_into_postgresql_table_columns_using_postgresql_json_types:
@@ -553,14 +559,17 @@ pub fn generate_postgresql_json_types(
     .par_iter()
     // .into_iter() //just for console prints ordering
     .map(|(index, element_1d376874)| {
+        #[allow(clippy::arbitrary_source_item_ordering)]
         enum IsStandartNotNull {
             True,
             False,
         }
+        #[allow(clippy::arbitrary_source_item_ordering)]
         enum IsStandartNotNullUuid {
             True,
             False,
         }
+        #[allow(clippy::arbitrary_source_item_ordering)]
         enum ConstFn {
             True,
             False
@@ -1048,6 +1057,7 @@ pub fn generate_postgresql_json_types(
                             &format!("tests::{ident_standart_not_null_origin_upper_camel_case}")
                         );
                         quote::quote!{
+                            #[allow(clippy::arbitrary_source_item_ordering)]
                             const _: () = {
                                 #[automatically_derived]
                                 #[allow(unused_braces)]
@@ -1368,8 +1378,8 @@ pub fn generate_postgresql_json_types(
                 &{
                     #[derive(Debug, Clone)]
                     enum PostgresqlJsonTypeSpecific {
-                        Number,
                         Bool,
+                        Number,
                         String,
                     }
                     impl From<&PostgresqlJsonType> for PostgresqlJsonTypeSpecific {

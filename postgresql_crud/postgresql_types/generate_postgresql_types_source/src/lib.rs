@@ -2,6 +2,7 @@
 pub fn generate_postgresql_types(
     input_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, strum_macros::Display)]
     enum RustTypeName {
         StdPrimitiveI16,
@@ -57,6 +58,7 @@ pub fn generate_postgresql_types(
             }
         }
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, strum_macros::Display)]
     enum PostgresqlTypeName {
         Int2,
@@ -118,6 +120,7 @@ pub fn generate_postgresql_types(
             }
         }
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(
         Debug,
         Clone,
@@ -161,43 +164,17 @@ pub fn generate_postgresql_types(
     fn wrap_into_sqlx_postgres_types_pg_range_stringified(value: &dyn std::fmt::Display) -> String {
         format!("sqlx::postgres::types::PgRange<{value}>")
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     enum CanBeNullable {
         True,
         False,
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     enum CanBeAnArrayElement {
         True,
         False,
     }
     impl PostgresqlType {
-        const fn can_be_nullable(&self) -> CanBeNullable {
-            match &self {
-                Self::StdPrimitiveI16AsInt2
-                | Self::StdPrimitiveI32AsInt4
-                | Self::StdPrimitiveI64AsInt8
-                | Self::StdPrimitiveF32AsFloat4
-                | Self::StdPrimitiveF64AsFloat8
-                | Self::SqlxPostgresTypesPgMoneyAsMoney
-                | Self::StdPrimitiveBoolAsBool
-                | Self::StdStringStringAsText
-                | Self::StdVecVecStdPrimitiveU8AsBytea
-                | Self::SqlxTypesChronoNaiveTimeAsTime
-                | Self::SqlxTypesTimeTimeAsTime
-                | Self::SqlxPostgresTypesPgIntervalAsInterval
-                | Self::SqlxTypesChronoNaiveDateAsDate
-                | Self::SqlxTypesChronoNaiveDateTimeAsTimestamp
-                | Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz
-                | Self::SqlxTypesUuidUuidAsUuidInitializedByClient
-                | Self::SqlxTypesIpnetworkIpNetworkAsInet
-                | Self::SqlxTypesMacAddressMacAddressAsMacAddr
-                | Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range
-                | Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range
-                | Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
-                | Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
-                | Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBeNullable::True,
-                Self::StdPrimitiveI16AsSmallSerialInitializedByPostgresql | Self::StdPrimitiveI32AsSerialInitializedByPostgresql | Self::StdPrimitiveI64AsBigSerialInitializedByPostgresql | Self::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => CanBeNullable::False,
-            }
-        }
         const fn can_be_an_array_element(&self) -> CanBeAnArrayElement {
             match &self {
                 Self::StdPrimitiveI16AsInt2
@@ -226,6 +203,34 @@ pub fn generate_postgresql_types(
                 Self::StdPrimitiveI16AsSmallSerialInitializedByPostgresql | Self::StdPrimitiveI32AsSerialInitializedByPostgresql | Self::StdPrimitiveI64AsBigSerialInitializedByPostgresql | Self::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => CanBeAnArrayElement::False,
             }
         }
+        const fn can_be_nullable(&self) -> CanBeNullable {
+            match &self {
+                Self::StdPrimitiveI16AsInt2
+                | Self::StdPrimitiveI32AsInt4
+                | Self::StdPrimitiveI64AsInt8
+                | Self::StdPrimitiveF32AsFloat4
+                | Self::StdPrimitiveF64AsFloat8
+                | Self::SqlxPostgresTypesPgMoneyAsMoney
+                | Self::StdPrimitiveBoolAsBool
+                | Self::StdStringStringAsText
+                | Self::StdVecVecStdPrimitiveU8AsBytea
+                | Self::SqlxTypesChronoNaiveTimeAsTime
+                | Self::SqlxTypesTimeTimeAsTime
+                | Self::SqlxPostgresTypesPgIntervalAsInterval
+                | Self::SqlxTypesChronoNaiveDateAsDate
+                | Self::SqlxTypesChronoNaiveDateTimeAsTimestamp
+                | Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz
+                | Self::SqlxTypesUuidUuidAsUuidInitializedByClient
+                | Self::SqlxTypesIpnetworkIpNetworkAsInet
+                | Self::SqlxTypesMacAddressMacAddressAsMacAddr
+                | Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range
+                | Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range
+                | Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
+                | Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
+                | Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBeNullable::True,
+                Self::StdPrimitiveI16AsSmallSerialInitializedByPostgresql | Self::StdPrimitiveI32AsSerialInitializedByPostgresql | Self::StdPrimitiveI64AsBigSerialInitializedByPostgresql | Self::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => CanBeNullable::False,
+            }
+        }
     }
     impl quote::ToTokens for PostgresqlType {
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
@@ -252,6 +257,7 @@ pub fn generate_postgresql_types(
             }
         }
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     enum PostgresqlTypeRange {
         StdPrimitiveI32AsInt4,
         StdPrimitiveI64AsInt8,
@@ -313,6 +319,7 @@ pub fn generate_postgresql_types(
         }
     }
     // todo reuse it(move to postgresql_macros_common) if sqlx devs will add nested array support
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(
         Debug,
         Clone,
@@ -353,14 +360,16 @@ pub fn generate_postgresql_types(
             }
         }
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, PartialEq, serde::Serialize)]
     struct PostgresqlTypeRecord {
         postgresql_type: PostgresqlType,
         not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         postgresql_type_pattern: PostgresqlTypePattern,
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     const _: () = {
-        #[allow(unused_extern_crates, clippy::useless_attribute)]
+        #[allow(unused_extern_crates, clippy::useless_attribute, clippy::arbitrary_source_item_ordering)]
         extern crate serde as _serde;
         #[automatically_derived]
         impl<'de> _serde::Deserialize<'de> for PostgresqlTypeRecord {
@@ -669,6 +678,7 @@ pub fn generate_postgresql_types(
         All,
         Concrete(Vec<PostgresqlTypeRecord>),
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, serde::Deserialize)]
     struct GeneratePostgresqlJsonTypesConfig {
         postgresql_table_columns_content_write_into_postgresql_table_columns_using_postgresql_types:
@@ -677,6 +687,7 @@ pub fn generate_postgresql_types(
             macros_helpers::ShouldWriteTokenStreamIntoFile,
         variant: GeneratePostgresqlTypesConfigVariant,
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug)]
     enum PostgresqlTypeInitializationTryNew {
         StdStringStringAsText,
@@ -742,6 +753,7 @@ pub fn generate_postgresql_types(
             }
         }
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug)]
     enum PostgresqlTypeImplNewForDeserialize {
         SsqlxPostgresTypesPgIntervalAsInterval, //Ssqlx instead of Sqlx - just to fix clippy lint
@@ -751,6 +763,7 @@ pub fn generate_postgresql_types(
         SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange,
         SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange,
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug)]
     enum PostgresqlTypeImplTryNewForDeserialize {
         StdStringStringAsText,
@@ -965,18 +978,22 @@ pub fn generate_postgresql_types(
             PostgresqlType,
             PostgresqlTypeTestCases,
         }
+        #[allow(clippy::arbitrary_source_item_ordering)]
         enum CanBePrimaryKey {
             True,
             False,
         }
+        #[allow(clippy::arbitrary_source_item_ordering)]
         enum IsStandartNotNull {
             True,
             False,
         }
+        #[allow(clippy::arbitrary_source_item_ordering)]
         enum IsNotNullStandartCanBePrimaryKey {
             True,
             False,
         }
+        #[allow(clippy::arbitrary_source_item_ordering)]
         enum StartOrEnd {
             Start,
             End,
@@ -1349,6 +1366,7 @@ pub fn generate_postgresql_types(
             }
         };
         let (serde_serialize_derive_or_impl, serde_deserialize_derive_or_impl) = if matches!(&is_standart_not_null, IsStandartNotNull::True) {
+            #[allow(clippy::arbitrary_source_item_ordering)]
             enum ParameterNumber {
                 One,
                 Two,
@@ -1386,6 +1404,7 @@ pub fn generate_postgresql_types(
             let serde_serialize_derive_or_impl = {
                 let generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens = |content_token_stream: &dyn quote::ToTokens| {
                     quote::quote! {
+                        #[allow(clippy::arbitrary_source_item_ordering)]
                         const _: () = {
                             #[allow(unused_extern_crates, clippy::useless_attribute)]
                             extern crate serde as _serde;
@@ -1594,6 +1613,7 @@ pub fn generate_postgresql_types(
                 }
             };
             let serde_deserialize_derive_or_impl = {
+                #[allow(clippy::arbitrary_source_item_ordering)]
                 enum ShouldAddDeLifetime {
                     True,
                     False
@@ -1638,6 +1658,7 @@ pub fn generate_postgresql_types(
                 };
                 let generate_impl_serde_deserialize_for_tokens_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                     quote::quote! {
+                        #[allow(clippy::arbitrary_source_item_ordering)]
                         const _: () = {
                             #[allow(unused_extern_crates, clippy::useless_attribute)]
                             extern crate serde as _serde;
@@ -2612,6 +2633,7 @@ pub fn generate_postgresql_types(
             let maybe_impl_ident_token_stream = if matches!(&postgresql_type_pattern, PostgresqlTypePattern::Standart) &&
                 matches!(&not_null_or_nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull)
             {
+                #[allow(clippy::arbitrary_source_item_ordering)]
                 enum IsConst {
                     True,
                     False
@@ -5455,6 +5477,7 @@ pub fn generate_postgresql_types(
             )
         };
         let impl_postgresql_type_test_cases_for_ident_token_stream = {
+            #[allow(clippy::arbitrary_source_item_ordering)]
             enum IsNeedToUseInto {
                 True,
                 False,
@@ -6542,14 +6565,15 @@ pub fn generate_postgresql_types(
             };
             let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_token_stream = match &postgresql_type_pattern {
                 PostgresqlTypePattern::Standart => {
+                    #[allow(clippy::arbitrary_source_item_ordering)]
                     enum IsNeedToImplPostgresqlTypeGreaterThanTest {
                         TrueFromReadOnlyIds,
                         TrueFromCreate,
                         False,
                     }
-                    enum ReadOnlyIdsCreate {
-                        ReadOnlyIds,
+                    enum CreateReadOnlyIds {
                         Create,
+                        ReadOnlyIds,
                     }
                     let is_need_to_impl_greater_than_test = match &postgresql_type {
                         PostgresqlType::StdPrimitiveI16AsInt2 |
@@ -6580,11 +6604,11 @@ pub fn generate_postgresql_types(
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
                     };
-                    let generate_some_token_stream = |read_only_ids_create: &ReadOnlyIdsCreate| match &not_null_or_nullable {
+                    let generate_some_token_stream = |value_476d047b: &CreateReadOnlyIds| match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                            let content_token_stream = match &read_only_ids_create {
-                                ReadOnlyIdsCreate::ReadOnlyIds => quote::quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case(#read_only_ids_snake_case.0.0)},
-                                ReadOnlyIdsCreate::Create => quote::quote! {table_type_declaration},
+                            let content_token_stream = match &value_476d047b {
+                                CreateReadOnlyIds::ReadOnlyIds => quote::quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case(#read_only_ids_snake_case.0.0)},
+                                CreateReadOnlyIds::Create => quote::quote! {table_type_declaration},
                             };
                             quote::quote! {Some(#ident_where_upper_camel_case::GreaterThan(
                                 where_filters::PostgresqlTypeWhereGreaterThan {
@@ -6594,9 +6618,9 @@ pub fn generate_postgresql_types(
                             ))}
                         }
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                            let content_token_stream = match &read_only_ids_create {
-                                ReadOnlyIdsCreate::ReadOnlyIds => quote::quote! {#read_only_ids_snake_case.0},
-                                ReadOnlyIdsCreate::Create => quote::quote! {#table_type_declaration_snake_case.0.0},
+                            let content_token_stream = match &value_476d047b {
+                                CreateReadOnlyIds::ReadOnlyIds => quote::quote! {#read_only_ids_snake_case.0},
+                                CreateReadOnlyIds::Create => quote::quote! {#table_type_declaration_snake_case.0.0},
                             };
                             quote::quote! {
                                 #content_token_stream.map(|element_886032ca| #ident_where_upper_camel_case::GreaterThan(where_filters::PostgresqlTypeWhereGreaterThan {
@@ -6607,8 +6631,8 @@ pub fn generate_postgresql_types(
                         }
                     };
                     match &is_need_to_impl_greater_than_test {
-                        IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromReadOnlyIds => generate_some_token_stream(&ReadOnlyIdsCreate::ReadOnlyIds),
-                        IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate => generate_some_token_stream(&ReadOnlyIdsCreate::Create),
+                        IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromReadOnlyIds => generate_some_token_stream(&CreateReadOnlyIds::ReadOnlyIds),
+                        IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate => generate_some_token_stream(&CreateReadOnlyIds::Create),
                         IsNeedToImplPostgresqlTypeGreaterThanTest::False => none_token_stream.clone(),
                     }
                 }

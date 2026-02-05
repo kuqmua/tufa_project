@@ -2,6 +2,7 @@
 pub fn generate_where_filters(
     input_token_stream: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Clone)]
     enum ShouldAddDeclarationOfStructIdentGeneric {
         True {
@@ -10,9 +11,10 @@ pub fn generate_where_filters(
         False,
     }
     enum FilterType {
-        PostgresqlType,
         PostgresqlJsonType,
+        PostgresqlType,
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Clone)]
     enum PostgresqlTypePatternHandle {
         Standart,
@@ -33,6 +35,7 @@ pub fn generate_where_filters(
             }
         }
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Clone)]
     enum DimensionNumber {
         One,
@@ -70,6 +73,7 @@ pub fn generate_where_filters(
             }
         }
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     enum PostgresqlTypeKind {
         Standart,
         ArrayDimension,
@@ -82,6 +86,7 @@ pub fn generate_where_filters(
             }
         }
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, serde::Deserialize)]
     struct GenerateWhereFiltersConfig {
         postgresql_types_content_write_into_generate_where_filters_postgresql_types:

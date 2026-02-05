@@ -123,6 +123,7 @@ impl<T: PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVe
         Ok(query)
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
@@ -250,6 +251,7 @@ impl ::core::cmp::PartialEq for RegexRegex {
         self.0.to_string() == other.0.to_string()
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[doc(hidden)]
 const _: () = {
     extern crate serde as _serde;
@@ -267,6 +269,7 @@ const _: () = {
         }
     }
 };
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[doc(hidden)]
 const _: () = {
     extern crate serde as _serde;
@@ -338,6 +341,7 @@ const _: () = {
     }
 };
 //todo add some logic? for regex validation?
+#[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     #[automatically_derived]
     #[allow(unused_braces)]
@@ -433,6 +437,7 @@ impl<T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> 
         }
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
@@ -712,6 +717,7 @@ impl<T: PartialEq + Clone> PostgresqlTypeNotEmptyUniqueVec<T> {
         self.0
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
@@ -975,6 +981,7 @@ impl<T, const LENGTH: usize> TryFrom<Vec<T>> for BoundedStdVecVec<T, LENGTH> {
         }
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]

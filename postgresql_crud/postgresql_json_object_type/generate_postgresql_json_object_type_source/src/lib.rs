@@ -9,6 +9,7 @@ pub fn generate_postgresql_json_object_type(
         PostgresqlJsonType,
         PostgresqlTypeAndPostgresqlJsonType,
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(
         Debug,
         Clone,
@@ -33,9 +34,9 @@ pub fn generate_postgresql_json_object_type(
     struct GeneratePostgresqlJsonTypesConfig {
         postgresql_table_columns_content_write_into_postgresql_table_columns_using_postgresql_json_object_types:
             macros_helpers::ShouldWriteTokenStreamIntoFile,
+        variant: PostgresqlJsonObjectTypeRecord,
         whole_content_write_into_generate_postgresql_json_object_type:
             macros_helpers::ShouldWriteTokenStreamIntoFile,
-        variant: PostgresqlJsonObjectTypeRecord,
     }
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput =
@@ -130,11 +131,13 @@ pub fn generate_postgresql_json_object_type(
         .into_iter()
         .enumerate()
         .map(|(index, element)| {
+            #[allow(clippy::arbitrary_source_item_ordering)]
             #[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
             enum IsStandartWithId {
                 False,
                 True,
             }
+            #[allow(clippy::arbitrary_source_item_ordering)]
             enum IdentPattern {
                 StandartNotNullWithoutId,
                 StandartNotNullWithId,
@@ -142,6 +145,7 @@ pub fn generate_postgresql_json_object_type(
                 ArrayNotNullWithId,
                 ArrayNullableWithIdentifier,//Identifier instead of Id - just to fix clippy lint
             }
+            #[allow(clippy::arbitrary_source_item_ordering)]
             #[derive(Debug, Clone, strum_macros::Display)]
             enum PostgresqlJsonTypeSubtype {
                 TableTypeDeclaration,
@@ -176,6 +180,7 @@ pub fn generate_postgresql_json_object_type(
                     self.to_string().parse::<proc_macro2::TokenStream>().expect("5825d4b7-dd55-41e4-b54e-7b31557181b6").to_tokens(tokens);
                 }
             }
+            #[allow(clippy::arbitrary_source_item_ordering)]
             enum PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate {
                 TableTypeDeclaration,
                 Create,
@@ -189,17 +194,18 @@ pub fn generate_postgresql_json_object_type(
                 }
             }
             enum ReadWithOrWithoutAnnotationOrInner {
+                Inner,
                 WithSerdeOptionIsNoneAnnotation,
                 WithoutSerdeOptionIsNoneAnnotation,
-                Inner,
             }
+            #[allow(clippy::arbitrary_source_item_ordering)]
             enum ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation {
                 True,
                 False,
             }
-            enum StructDeclarationOrNewType {
-                StructDeclaration,
+            enum NewTypeOrStructDeclaration {
                 NewType,
+                StructDeclaration,
             }
             let not_null_or_nullable = &element.not_null_or_nullable;
             let postgresql_json_object_type_pattern = &element.postgresql_json_object_type_pattern;
@@ -680,12 +686,12 @@ pub fn generate_postgresql_json_object_type(
                         &current_ident_token_stream,
                         &content_token_stream
                     );
-                let struct_declaration_or_new_type_struct_declaration = StructDeclarationOrNewType::StructDeclaration;
-                let struct_declaration_or_new_type_new_type = StructDeclarationOrNewType::NewType;
+                let new_type_or_struct_declaration_struct_declaration = NewTypeOrStructDeclaration::StructDeclaration;
+                let new_type_or_struct_declaration_new_type = NewTypeOrStructDeclaration::NewType;
                 let generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream = |
                     is_standart_with_id: &IsStandartWithId,
                     current_postgresql_json_type_subtype_table_type_declaration_or_create: &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate,
-                    struct_declaration_or_new_type: &StructDeclarationOrNewType
+                    new_type_or_struct_declaration: &NewTypeOrStructDeclaration
                 | {
                     let content_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element_42f25108| {
                         let field_ident = &element_42f25108.field_ident;
@@ -696,9 +702,9 @@ pub fn generate_postgresql_json_object_type(
                         quote::quote! {#field_ident: #type_as_postgresql_json_type_subtype_table_type_declaration_token_stream}
                     });
                     let fields_content_token_stream = quote::quote! {#(#content_token_stream),*};
-                    match &struct_declaration_or_new_type {
-                        StructDeclarationOrNewType::StructDeclaration => quote::quote! {{#fields_content_token_stream}},
-                        StructDeclarationOrNewType::NewType => fields_content_token_stream,
+                    match &new_type_or_struct_declaration {
+                        NewTypeOrStructDeclaration::StructDeclaration => quote::quote! {{#fields_content_token_stream}},
+                        NewTypeOrStructDeclaration::NewType => fields_content_token_stream,
                     }
                 };
                 let generate_tokens_table_type_declaration_or_create_token_stream = |tokens: &dyn quote::ToTokens| {
@@ -711,7 +717,7 @@ pub fn generate_postgresql_json_object_type(
                 let ident_table_type_declaration_or_ident_create_token_stream = generate_ident_table_type_declaration_or_create_token_stream(&ident_table_type_declaration_or_ident_create_upper_camel_case, &{
                     match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(&is_standart_with_id_false, postgresql_json_type_subtype_table_type_declaration_or_create, &struct_declaration_or_new_type_struct_declaration),
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(&is_standart_with_id_false, postgresql_json_type_subtype_table_type_declaration_or_create, &new_type_or_struct_declaration_struct_declaration),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => wrap_into_scopes_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&generate_tokens_table_type_declaration_or_create_token_stream(ident_standart_not_null_upper_camel_case))),
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
@@ -733,7 +739,7 @@ pub fn generate_postgresql_json_object_type(
                         };
                         match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(&is_standart_with_id_false, postgresql_json_type_subtype_table_type_declaration_or_create, &struct_declaration_or_new_type_new_type),
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(&is_standart_with_id_false, postgresql_json_type_subtype_table_type_declaration_or_create, &new_type_or_struct_declaration_new_type),
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_wrap_into_value_parameter_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&generate_tokens_table_type_declaration_or_create_token_stream(ident_standart_not_null_upper_camel_case))),
                             },
                             PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
@@ -825,12 +831,12 @@ pub fn generate_postgresql_json_object_type(
                     };
                     let ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_token_stream = generate_ident_table_type_declaration_or_create_token_stream(
                         &ident_with_id_table_type_declaration_or_ident_with_id_standart_not_null_create_upper_camel_case,
-                        &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(current_is_standart_with_id, postgresql_json_type_subtype_table_type_declaration_or_create, &struct_declaration_or_new_type_struct_declaration),
+                        &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(current_is_standart_with_id, postgresql_json_type_subtype_table_type_declaration_or_create, &new_type_or_struct_declaration_struct_declaration),
                     );
                     let impl_pub_const_new_for_ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_token_stream = macros_helpers::generate_impl_pub_const_new_for_ident_token_stream(
                         &ident_with_id_table_type_declaration_or_ident_with_id_standart_not_null_create_upper_camel_case,
                         &must_use_token_stream,
-                        &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(current_is_standart_with_id, postgresql_json_type_subtype_table_type_declaration_or_create, &struct_declaration_or_new_type_new_type),
+                        &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(current_is_standart_with_id, postgresql_json_type_subtype_table_type_declaration_or_create, &new_type_or_struct_declaration_new_type),
                         &generate_self_content_for_ident_or_ident_with_id_table_type_declaration_or_create_token_stream(current_is_standart_with_id),
                     );
                     let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_token_stream(
@@ -1960,11 +1966,11 @@ pub fn generate_postgresql_json_object_type(
                     };
                     let field_ident = &element_274293a0.field_ident;
                     let field_type_as_json_type_read_token_stream = match &read_with_or_without_annotation_or_inner {
-                        ReadWithOrWithoutAnnotationOrInner::WithSerdeOptionIsNoneAnnotation |
-                        ReadWithOrWithoutAnnotationOrInner::WithoutSerdeOptionIsNoneAnnotation => generate_type_as_postgresql_json_type_read_token_stream(
+                        ReadWithOrWithoutAnnotationOrInner::Inner => generate_type_as_postgresql_json_type_read_inner_token_stream(
                             &element_274293a0.field_type
                         ),
-                        ReadWithOrWithoutAnnotationOrInner::Inner => generate_type_as_postgresql_json_type_read_inner_token_stream(
+                        ReadWithOrWithoutAnnotationOrInner::WithSerdeOptionIsNoneAnnotation |
+                        ReadWithOrWithoutAnnotationOrInner::WithoutSerdeOptionIsNoneAnnotation => generate_type_as_postgresql_json_type_read_token_stream(
                             &element_274293a0.field_type
                         ),
                     };
@@ -2067,6 +2073,7 @@ pub fn generate_postgresql_json_object_type(
                         &{
                             let current_vec_syn_field = get_vec_syn_field(is_standart_with_id);
                             let (fields_reference_token_stream, fields_token_stream) = {
+                                #[allow(clippy::arbitrary_source_item_ordering)]
                                 enum WithReference {
                                     True,
                                     False,
@@ -2663,6 +2670,7 @@ pub fn generate_postgresql_json_object_type(
                                             uuid_as_postgresql_json_type_update_to_std_string_string_element_id_token_stream,
                                             uuid_as_postgresql_json_type_update_to_std_string_string_element_token_stream,
                                         ) = {
+                                            #[allow(clippy::arbitrary_source_item_ordering)]
                                             enum UpdateOrDelete {
                                                 Update,
                                                 Delete
@@ -2806,6 +2814,7 @@ pub fn generate_postgresql_json_object_type(
                                 &quote::quote! {__field0_value, __field1_value, __field2_value}
                             );
                             quote::quote! {
+                                #[allow(clippy::arbitrary_source_item_ordering)]
                                 impl<'de> serde::Deserialize<'de> for #ident_update_upper_camel_case {
                                     fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
                                     where
@@ -4915,6 +4924,7 @@ pub fn generate_postgresql_json_object_type(
                                                 option_additional_parameters_token_stream,
                                                 parameters_token_stream
                                             ) = {
+                                                #[allow(clippy::arbitrary_source_item_ordering)]
                                                 #[derive(Clone)]
                                                 enum ShouldAddDotClone {
                                                     True,

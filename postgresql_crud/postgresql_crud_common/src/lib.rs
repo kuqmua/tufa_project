@@ -573,6 +573,17 @@ pub struct PostgresqlTypeWhere<T> {
     value: NotEmptyUniqueVec<T>,
 }
 impl<T: PartialEq + Clone> PostgresqlTypeWhere<T> {
+    #[must_use]
+    pub const fn get_logical_operator(&self) -> &LogicalOperator {
+        &self.logical_operator
+    }
+    #[must_use]
+    pub const fn new(logical_operator: LogicalOperator, value: NotEmptyUniqueVec<T>) -> Self {
+        Self {
+            logical_operator,
+            value,
+        }
+    }
     pub fn try_new(
         logical_operator: LogicalOperator,
         value: Vec<T>,
@@ -585,18 +596,8 @@ impl<T: PartialEq + Clone> PostgresqlTypeWhere<T> {
             Err(error) => Err(error),
         }
     }
-    #[must_use]
-    pub const fn new(logical_operator: LogicalOperator, value: NotEmptyUniqueVec<T>) -> Self {
-        Self {
-            logical_operator,
-            value,
-        }
-    }
-    #[must_use]
-    pub const fn get_logical_operator(&self) -> &LogicalOperator {
-        &self.logical_operator
-    }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
@@ -772,6 +773,7 @@ const _: () = {
         }
     }
 };
+#[allow(clippy::arbitrary_source_item_ordering)]
 impl<'query_lifetime, T: PostgresqlTypeWhereFilter<'query_lifetime>>
     PostgresqlTypeWhereFilter<'query_lifetime> for PostgresqlTypeWhere<T>
 {
@@ -882,12 +884,12 @@ impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Order {
 }
 impl Order {
     #[must_use]
-    pub fn to_upper_camel_case_stringified(&self) -> String {
-        naming::DisplayToUpperCamelCaseStringified::case(&self)
-    }
-    #[must_use]
     pub fn to_snake_case_stringified(&self) -> String {
         naming::DisplayToSnakeCaseStringified::case(&self)
+    }
+    #[must_use]
+    pub fn to_upper_camel_case_stringified(&self) -> String {
+        naming::DisplayToUpperCamelCaseStringified::case(&self)
     }
 }
 
@@ -912,6 +914,7 @@ pub struct PaginationBase {
     limit: i64,
     offset: i64,
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 impl PaginationBase {
     #[must_use]
     pub const fn new_unchecked(limit: i64, offset: i64) -> Self {
@@ -928,6 +931,7 @@ impl PaginationBase {
             .expect("8a297b66-4f42-4b48-8e18-cc1f35302e0a")
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 impl<'query_lifetime> PostgresqlTypeWhereFilter<'query_lifetime> for PaginationBase {
     fn query_part(
         &self,
@@ -995,13 +999,6 @@ pub struct PaginationStartsWithZero(PaginationBase);
     error_occurence_lib::ErrorOccurence,
 )]
 pub enum PaginationStartsWithZeroTryNewErrorNamed {
-    OffsetPlusLimitIsIntOverflow {
-        #[eo_to_std_string_string_serialize_deserialize]
-        limit: i64,
-        #[eo_to_std_string_string_serialize_deserialize]
-        offset: i64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
     LimitIsLessThanOrEqualToZero {
         #[eo_to_std_string_string_serialize_deserialize]
         limit: i64,
@@ -1012,7 +1009,15 @@ pub enum PaginationStartsWithZeroTryNewErrorNamed {
         offset: i64,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+    OffsetPlusLimitIsIntOverflow {
+        #[eo_to_std_string_string_serialize_deserialize]
+        limit: i64,
+        #[eo_to_std_string_string_serialize_deserialize]
+        offset: i64,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 impl PaginationStartsWithZero {
     pub fn try_new(
         limit: i64,
@@ -1055,6 +1060,7 @@ impl PaginationStartsWithZero {
         self.0.end()
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
     fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
     where
@@ -1212,6 +1218,7 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
         )
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 impl<'query_lifetime> PostgresqlTypeWhereFilter<'query_lifetime> for PaginationStartsWithZero {
     fn query_part(
         &self,
@@ -1289,6 +1296,14 @@ pub enum NotEmptyUniqueVecTryNewErrorNamed<T> {
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct NotEmptyUniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
+    #[must_use]
+    pub fn into_vec(self) -> Vec<T> {
+        self.0
+    }
+    #[must_use]
+    pub const fn to_vec(&self) -> &Vec<T> {
+        &self.0
+    }
     pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewErrorNamed<T>> {
         if value.is_empty() {
             return Err(NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {
@@ -1309,15 +1324,8 @@ impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
         }
         Ok(Self(value))
     }
-    #[must_use]
-    pub const fn to_vec(&self) -> &Vec<T> {
-        &self.0
-    }
-    #[must_use]
-    pub fn into_vec(self) -> Vec<T> {
-        self.0
-    }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
@@ -1420,7 +1428,7 @@ impl<T1> NotEmptyUniqueVec<T1> {
         NotEmptyUniqueVec(value.0.into_iter().map(T2::from).collect::<Vec<T2>>())
     }
 }
-
+#[allow(clippy::arbitrary_source_item_ordering)]
 impl<'query_lifetime, T> PostgresqlTypeWhereFilter<'query_lifetime> for NotEmptyUniqueVec<T>
 where
     T: std::fmt::Debug
@@ -1600,11 +1608,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for NonPrimaryKeyPostgresqlTypeReadOnlyIds
     }
 }
 impl sqlx::Type<sqlx::Postgres> for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
         <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
     }
 }
 impl Default for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
@@ -1681,6 +1689,7 @@ impl TryFrom<i32> for UnsignedPartOfStdPrimitiveI32 {
         }
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
@@ -1752,11 +1761,11 @@ impl error_occurence_lib::ToStdStringString for UnsignedPartOfStdPrimitiveI32 {
     }
 }
 impl sqlx::Type<sqlx::Postgres> for UnsignedPartOfStdPrimitiveI32 {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <i32 as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
         <i32 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <i32 as sqlx::Type<sqlx::Postgres>>::type_info()
     }
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for UnsignedPartOfStdPrimitiveI32 {
@@ -1795,12 +1804,12 @@ pub struct NotZeroUnsignedPartOfStdPrimitiveI32(UnsignedPartOfStdPrimitiveI32);
     schemars::JsonSchema,
 )]
 pub enum NotZeroUnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
+    IsZero {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
     UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
         #[eo_error_occurence]
         value: UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    IsZero {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -1829,6 +1838,7 @@ impl TryFrom<i32> for NotZeroUnsignedPartOfStdPrimitiveI32 {
         }
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
@@ -1900,11 +1910,11 @@ impl error_occurence_lib::ToStdStringString for NotZeroUnsignedPartOfStdPrimitiv
     }
 }
 impl sqlx::Type<sqlx::Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <UnsignedPartOfStdPrimitiveI32 as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
         <UnsignedPartOfStdPrimitiveI32 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <UnsignedPartOfStdPrimitiveI32 as sqlx::Type<sqlx::Postgres>>::type_info()
     }
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
@@ -1928,7 +1938,7 @@ impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
         Self(DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
     }
 }
-
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
     Debug,
     Clone,

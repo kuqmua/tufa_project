@@ -85,6 +85,7 @@ impl PaginationStartsWithOne {
         self.0.end()
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
     fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
     where

@@ -1,3 +1,6 @@
+static SOURCE_PLACE_TYPE: std::sync::OnceLock<app_state::SourcePlaceType> =
+    std::sync::OnceLock::new();
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
     Debug,
     PartialEq,
@@ -13,6 +16,7 @@ pub struct MacroOccurence {
     pub line: u32,
     pub column: u32,
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
     Debug,
     PartialEq,
@@ -53,13 +57,12 @@ impl CodeOccurence {
         }
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy, utoipa::ToSchema)] //todo check somehow what its equal to std::time::Duration
 pub struct StdTimeDuration {
     pub secs: u64,
     pub nanos: u32,
 }
-static SOURCE_PLACE_TYPE: std::sync::OnceLock<app_state::SourcePlaceType> =
-    std::sync::OnceLock::new();
 impl std::fmt::Display for CodeOccurence {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(

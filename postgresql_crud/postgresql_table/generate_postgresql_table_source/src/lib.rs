@@ -29,17 +29,18 @@
 pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream {
     #[derive(Debug)]
     struct SynVariantWrapper {
-        variant: syn::Variant,
         status_code: Option<macros_helpers::StatusCode>,
+        variant: syn::Variant,
     }
     impl SynVariantWrapper {
-        const fn get_syn_variant(&self) -> &syn::Variant {
-            &self.variant
-        }
         const fn get_option_status_code(&self) -> Option<&macros_helpers::StatusCode> {
             self.status_code.as_ref()
         }
+        const fn get_syn_variant(&self) -> &syn::Variant {
+            &self.variant
+        }
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     enum ShouldAddBorrow {
         True,
         False,
@@ -52,10 +53,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             }
         }
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     enum ShouldAddReturn {
         True,
         False,
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(
         Debug,
         Clone,
@@ -74,13 +77,24 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         DeleteOne,
     }
     impl Operation {
-        const fn http_method(self) -> OperationHttpMethod {
+        const fn derive_clone_and_copy(
+            self,
+        ) -> (macros_helpers::DeriveClone, macros_helpers::DeriveCopy) {
             match self {
-                Self::CreateMany | Self::CreateOne | Self::ReadMany | Self::ReadOne => {
-                    OperationHttpMethod::Post
-                }
-                Self::UpdateMany | Self::UpdateOne => OperationHttpMethod::Patch,
-                Self::DeleteMany | Self::DeleteOne => OperationHttpMethod::Delete,
+                Self::CreateMany
+                | Self::CreateOne
+                | Self::ReadMany
+                | Self::ReadOne
+                | Self::UpdateMany
+                | Self::UpdateOne
+                | Self::DeleteMany => (
+                    macros_helpers::DeriveClone::False,
+                    macros_helpers::DeriveCopy::False,
+                ),
+                Self::DeleteOne => (
+                    macros_helpers::DeriveClone::True,
+                    macros_helpers::DeriveCopy::True,
+                ),
             }
         }
         const fn desirable_status_code(self) -> macros_helpers::StatusCode {
@@ -134,10 +148,30 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 Self::DeleteOne => GeneratePostgresqlTableAttribute::DeleteOneAdditionalLogic,
             }
         }
+        const fn http_method(self) -> OperationHttpMethod {
+            match self {
+                Self::CreateMany | Self::CreateOne | Self::ReadMany | Self::ReadOne => {
+                    OperationHttpMethod::Post
+                }
+                Self::UpdateMany | Self::UpdateOne => OperationHttpMethod::Patch,
+                Self::DeleteMany | Self::DeleteOne => OperationHttpMethod::Delete,
+            }
+        }
         fn operation_error_named_with_serialize_deserialize_snake_case(
             self,
         ) -> naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase {
             naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase::from_display(&self)
+        }
+        fn operation_payload_example_snake_case(
+            self,
+        ) -> impl naming::StdFmtDisplayPlusQuoteToTokens {
+            naming::parameter::SelfPayloadExampleSnakeCase::from_display(&self)
+        }
+        fn self_handle_snake_case_token_stream(self) -> proc_macro2::TokenStream {
+            let value = naming::parameter::SelfHandleSnakeCase::from_tokens(
+                &self.self_snake_case_token_stream(),
+            );
+            quote::quote! {#value}
         }
         fn self_snake_case_stringified(self) -> String {
             naming::AsRefStrToSnakeCaseStringified::case(&self.to_string())
@@ -145,8 +179,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         fn self_snake_case_token_stream(self) -> proc_macro2::TokenStream {
             naming::AsRefStrToSnakeCaseTokenStream::case_or_panic(&self.to_string())
         }
-        fn self_handle_snake_case_token_stream(self) -> proc_macro2::TokenStream {
-            let value = naming::parameter::SelfHandleSnakeCase::from_tokens(
+        fn try_self_handle_snake_case_token_stream(self) -> proc_macro2::TokenStream {
+            let value = naming::parameter::TrySelfHandleSnakeCase::from_tokens(
                 &self.self_snake_case_token_stream(),
             );
             quote::quote! {#value}
@@ -156,37 +190,6 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &self.self_snake_case_token_stream(),
             );
             quote::quote! {#value}
-        }
-        fn try_self_handle_snake_case_token_stream(self) -> proc_macro2::TokenStream {
-            let value = naming::parameter::TrySelfHandleSnakeCase::from_tokens(
-                &self.self_snake_case_token_stream(),
-            );
-            quote::quote! {#value}
-        }
-        fn operation_payload_example_snake_case(
-            self,
-        ) -> impl naming::StdFmtDisplayPlusQuoteToTokens {
-            naming::parameter::SelfPayloadExampleSnakeCase::from_display(&self)
-        }
-        const fn derive_clone_and_copy(
-            self,
-        ) -> (macros_helpers::DeriveClone, macros_helpers::DeriveCopy) {
-            match self {
-                Self::CreateMany
-                | Self::CreateOne
-                | Self::ReadMany
-                | Self::ReadOne
-                | Self::UpdateMany
-                | Self::UpdateOne
-                | Self::DeleteMany => (
-                    macros_helpers::DeriveClone::False,
-                    macros_helpers::DeriveCopy::False,
-                ),
-                Self::DeleteOne => (
-                    macros_helpers::DeriveClone::True,
-                    macros_helpers::DeriveCopy::True,
-                ),
-            }
         }
     }
     impl std::fmt::Display for Operation {
@@ -237,12 +240,14 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             }
         }
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(naming::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
     enum OperationHttpMethod {
         Post,
         Patch,
         Delete,
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     enum ReadManyOrDeleteMany {
         ReadMany,
         DeleteMany,
@@ -251,6 +256,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         ReadMany,
         ReadOne,
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, strum_macros::Display)]
     enum GeneratePostgresqlTableAttribute {
         CreateManyAdditionalErrorVariants,
@@ -329,20 +335,24 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             format!("{}::{value}", naming::PostgresqlCrudSnakeCase)
         }
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     enum ShouldWrapIntoValue {
         True,
         False,
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     enum CreateOrUpdateOrDeleteMany {
         Create,
         Update,
         Delete,
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     enum CreateOrUpdateOrDeleteOne {
         Create,
         Update,
         Delete,
     }
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, serde::Deserialize)]
     struct GeneratePostgresqlTableConfig {
         create_many_content_write_into_generate_postgresql_table_create_many:
@@ -1799,6 +1809,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             .build_struct(
                 &ident_read_only_ids_upper_camel_case,
                 &{
+                    #[allow(clippy::arbitrary_source_item_ordering)]
                     enum WrapIntoOption {
                         True,
                         False,
@@ -4015,7 +4026,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     );
                 quote::quote! {
                     const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute)]
+                        #[allow(unused_extern_crates, clippy::useless_attribute, clippy::arbitrary_source_item_ordering)]
                         extern crate serde as _serde;
                         #[automatically_derived]
                         impl<'de> _serde::Deserialize<'de> for #ident_operation_payload_upper_camel_case {
@@ -5048,6 +5059,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             field_ident_read_only_ids_merged_with_create_into_option_value_read_read_only_ids_returned_from_create_one_create_token_stream,
             field_ident_read_only_ids_merged_with_create_into_option_value_read_read_only_ids_returned_from_create_one_clone_ident_create_clone_token_stream,
         ) = {
+            #[allow(clippy::arbitrary_source_item_ordering)]
             enum ShouldAddDotClone {
                 True,
                 False,
