@@ -1143,24 +1143,32 @@ pub fn generate_postgresql_json_object_type(
             };
             let ident_select_token_stream = {
                 let generate_pub_struct_ident_select_token_stream = |
+                    attributes_token_stream: &dyn quote::ToTokens, 
                     current_ident_token_stream: &dyn quote::ToTokens,
-                    content_token_stream: &dyn quote::ToTokens
-                | macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
-                .make_pub()
-                .derive_debug()
-                .derive_clone()
-                .derive_partial_eq()
-                .derive_serde_serialize()
-                .derive_serde_deserialize()
-                .derive_utoipa_to_schema()
-                .derive_schemars_json_schema()
-                .build_struct(
-                    &current_ident_token_stream,
-                    &content_token_stream
-                );
+                    content_token_stream_fc7ad384: &dyn quote::ToTokens
+                | {
+                    let content_token_stream_83d3ad18 = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                    .make_pub()
+                    .derive_debug()
+                    .derive_clone()
+                    .derive_partial_eq()
+                    .derive_serde_serialize()
+                    .derive_serde_deserialize()
+                    .derive_utoipa_to_schema()
+                    .derive_schemars_json_schema()
+                    .build_struct(
+                        &current_ident_token_stream,
+                        &content_token_stream_fc7ad384
+                    );
+                    quote::quote!{
+                        #attributes_token_stream
+                        #content_token_stream_83d3ad18
+                    }
+                };
                 let generate_ident_select_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId| {
                     let ident_standart_not_null_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
                     generate_pub_struct_ident_select_token_stream(
+                        &allow_clippy_arbitrary_source_item_ordering_token_stream,
                         match &is_standart_with_id {
                             IsStandartWithId::False => &ident_standart_not_null_select_upper_camel_case,
                             IsStandartWithId::True => &ident_with_id_standart_not_null_select_upper_camel_case,
@@ -1176,6 +1184,7 @@ pub fn generate_postgresql_json_object_type(
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => generate_ident_select_standart_not_null_token_stream(&is_standart_with_id_false),
                         PostgresqlJsonObjectTypePattern::Array => generate_pub_struct_ident_select_token_stream(
+                            &allow_clippy_arbitrary_source_item_ordering_token_stream,
                             &ident_select_upper_camel_case,
                             &quote::quote! {{
                                 #ident_with_id_standart_not_null_select_snake_case: #ident_with_id_standart_not_null_select_upper_camel_case,
@@ -1184,6 +1193,7 @@ pub fn generate_postgresql_json_object_type(
                         ),
                     },
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_pub_struct_ident_select_token_stream(
+                        &allow_clippy_arbitrary_source_item_ordering_token_stream,
                         &ident_select_upper_camel_case,
                         &wrap_content_into_scopes_dot_comma_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => &ident_standart_not_null_as_postgresql_json_type_select_token_stream,
@@ -3010,7 +3020,8 @@ pub fn generate_postgresql_json_object_type(
                     quote::quote! {Self #value}
                 });
                 let maybe_ident_update_element_token_stream = if is_standart_not_null {
-                    let ident_update_element_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                    let ident_update_element_token_stream = {
+                        let content_token_stream_b258e2eb = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                         .make_pub()
                         .derive_debug()
                         .derive_clone()
@@ -3037,6 +3048,11 @@ pub fn generate_postgresql_json_object_type(
                                 quote::quote!{{#(#variants_token_stream),*}}
                             }
                         );
+                        quote::quote!{
+                            #allow_clippy_arbitrary_source_item_ordering_token_stream
+                            #content_token_stream_b258e2eb
+                        }
+                    };
                     let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_element_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_standart_not_null_update_element_upper_camel_case, &{
                         let elements_token_stream = vec_syn_field.iter().map(|element_2080bd7e| {
                             let field_ident = &element_2080bd7e.field_ident;
