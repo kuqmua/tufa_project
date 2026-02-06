@@ -18,15 +18,15 @@ generate_where_filters::generate_where_filters!({
 pub enum EncodeFormat {
     #[default]
     Base64,
-    Hex,
     Escape,
+    Hex,
 }
 impl std::fmt::Display for EncodeFormat {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match &self {
             Self::Base64 => write!(f, "base64"),
-            Self::Hex => write!(f, "hex"),
             Self::Escape => write!(f, "escape"),
+            Self::Hex => write!(f, "hex"),
         }
     }
 }
@@ -41,6 +41,7 @@ impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOne
 //difference between NotEmptyUniqueVec and PostgresqlJsonTypeNotEmptyUniqueVec only in postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement impl with different generic requirement and PostgresqlTypeWhereFilter
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct PostgresqlJsonTypeNotEmptyUniqueVec<T>(Vec<T>);
+#[allow(clippy::arbitrary_source_item_ordering)]
 impl<T: PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
     pub fn try_new(
         value: Vec<T>,
@@ -77,6 +78,7 @@ impl<T: PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
         self.0
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 impl<T: PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
     pub fn query_part_one_by_one(
         &self,
@@ -212,6 +214,7 @@ impl<T> From<PostgresqlJsonTypeNotEmptyUniqueVec<T>> for Vec<T> {
         value.0
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 impl<'lifetime, T> postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime>
     for PostgresqlJsonTypeNotEmptyUniqueVec<T>
 where
@@ -377,8 +380,8 @@ impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOne
     Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, schemars::JsonSchema,
 )]
 pub enum RegularExpressionCase {
-    Sensitive,
     Insensitive,
+    Sensitive,
 }
 impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
     for RegularExpressionCase
@@ -391,12 +394,12 @@ impl RegularExpressionCase {
     #[must_use]
     pub const fn postgreql_syntax(&self) -> &'static str {
         match &self {
-            Self::Sensitive => "~",
             Self::Insensitive => "~*",
+            Self::Sensitive => "~",
         }
     }
 }
-
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, schemars::JsonSchema)]
 pub struct Between<T>
 where
@@ -637,6 +640,7 @@ impl<
         }
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 impl<
     'lifetime,
     T: Send + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'lifetime,
@@ -681,6 +685,7 @@ impl<
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct PostgresqlTypeNotEmptyUniqueVec<T>(Vec<T>);
+#[allow(clippy::arbitrary_source_item_ordering)]
 impl<T: PartialEq + Clone> PostgresqlTypeNotEmptyUniqueVec<T> {
     pub fn try_new(
         value: Vec<T>,
@@ -832,13 +837,14 @@ pub enum BoundedStdVecVecTryNewErrorNamed {
     },
 }
 enum PostgresqlTypeOrPostgresqlJsonType {
-    PostgresqlType,
     PostgresqlJsonType,
+    PostgresqlType,
 }
 enum Variant {
-    Normal,
     MinusOne,
+    Normal,
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 impl<
     'lifetime,
     T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'lifetime,
@@ -852,50 +858,6 @@ impl<
     #[must_use]
     pub fn into_inner(self) -> Vec<T> {
         self.0
-    }
-    fn query_part(
-        &self,
-        increment: &mut u64,
-        _: &dyn std::fmt::Display,
-        _is_need_to_add_logical_operator: bool,
-        postgresql_type_or_postgresql_json_type: &PostgresqlTypeOrPostgresqlJsonType,
-        variant: &Variant,
-    ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
-        let mut acc_24eb25aa = String::new();
-        let current_len = match &variant {
-            Variant::Normal => self.0.len(),
-            Variant::MinusOne => self.0.len().saturating_sub(1),
-        };
-        for _ in 0..current_len {
-            match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
-                Ok(value) => {
-                    use std::fmt::Write as _;
-                    if write!(
-                        acc_24eb25aa,
-                        "{}",
-                        &match &postgresql_type_or_postgresql_json_type {
-                            PostgresqlTypeOrPostgresqlJsonType::PostgresqlType =>
-                                format!("[${value}]"),
-                            PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => {
-                                format!("->${value}")
-                            }
-                        }
-                    )
-                    .is_err()
-                    {
-                        return Err(
-                            postgresql_crud_common::QueryPartErrorNamed::WriteIntoBuffer {
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            },
-                        );
-                    }
-                }
-                Err(error) => {
-                    return Err(error);
-                }
-            }
-        }
-        Ok(acc_24eb25aa)
     }
     pub fn postgresql_type_query_part(
         &self,
@@ -952,6 +914,50 @@ impl<
             &PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType,
             &Variant::MinusOne,
         )
+    }
+    fn query_part(
+        &self,
+        increment: &mut u64,
+        _: &dyn std::fmt::Display,
+        _is_need_to_add_logical_operator: bool,
+        postgresql_type_or_postgresql_json_type: &PostgresqlTypeOrPostgresqlJsonType,
+        variant: &Variant,
+    ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
+        let mut acc_24eb25aa = String::new();
+        let current_len = match &variant {
+            Variant::MinusOne => self.0.len().saturating_sub(1),
+            Variant::Normal => self.0.len(),
+        };
+        for _ in 0..current_len {
+            match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
+                Ok(value) => {
+                    use std::fmt::Write as _;
+                    if write!(
+                        acc_24eb25aa,
+                        "{}",
+                        &match &postgresql_type_or_postgresql_json_type {
+                            PostgresqlTypeOrPostgresqlJsonType::PostgresqlType =>
+                                format!("[${value}]"),
+                            PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => {
+                                format!("->${value}")
+                            }
+                        }
+                    )
+                    .is_err()
+                    {
+                        return Err(
+                            postgresql_crud_common::QueryPartErrorNamed::WriteIntoBuffer {
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            },
+                        );
+                    }
+                }
+                Err(error) => {
+                    return Err(error);
+                }
+            }
+        }
+        Ok(acc_24eb25aa)
     }
     pub fn query_bind(
         self,

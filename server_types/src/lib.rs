@@ -1,3 +1,4 @@
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy, postgresql_crud::GeneratePostgresqlJsonObjectType)]
 #[postgresql_crud::postgresql_json_object_type_config{
     {

@@ -31,6 +31,7 @@ config_lib = {path = "../../../config_lib"}
 server_app_state = {path = "../../../server_app_state"}
 server_config = {path = "../../../server_config"}"#,
             &{
+                #[allow(clippy::arbitrary_source_item_ordering)]
                 enum ShouldAddGeneratePostgresqlTablePrimaryKey {
                     True,
                     False

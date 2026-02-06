@@ -37,14 +37,14 @@ pub enum ErrorNamedOne {
 }
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum ErrorNamedTwo {
-    Variant {
-        #[eo_to_std_string_string_serialize_deserialize]
-        eo_display_with_serialize_deserialize_field: String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
     Another {
         #[eo_to_std_string_string_serialize_deserialize]
         sdasdasd: String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Variant {
+        #[eo_to_std_string_string_serialize_deserialize]
+        eo_display_with_serialize_deserialize_field: String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -66,7 +66,7 @@ impl error_occurence_lib::ToStdStringString for DisplayStruct {
         format!("{self:?}")
     }
 }
-
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct SerializeDeserializeStruct {
     pub one: String,

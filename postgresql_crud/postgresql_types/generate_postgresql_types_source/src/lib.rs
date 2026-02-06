@@ -369,7 +369,11 @@ pub fn generate_postgresql_types(
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     const _: () = {
-        #[allow(unused_extern_crates, clippy::useless_attribute, clippy::arbitrary_source_item_ordering)]
+        #[allow(
+            unused_extern_crates,
+            clippy::useless_attribute,
+            clippy::arbitrary_source_item_ordering
+        )]
         extern crate serde as _serde;
         #[automatically_derived]
         impl<'de> _serde::Deserialize<'de> for PostgresqlTypeRecord {

@@ -1,8 +1,3 @@
-#[must_use]
-pub fn maybe_primary_key(is_primary_key: bool) -> impl std::fmt::Display {
-    if is_primary_key { "primary key" } else { "" }
-}
-
 #[derive(
     Debug,
     Clone,
@@ -23,13 +18,6 @@ pub struct PaginationStartsWithOne(postgresql_crud_common::PaginationBase);
     error_occurence_lib::ErrorOccurence,
 )]
 pub enum PaginationStartsWithOneTryNewErrorNamed {
-    OffsetPlusLimitIsIntOverflow {
-        #[eo_to_std_string_string_serialize_deserialize]
-        limit: i64,
-        #[eo_to_std_string_string_serialize_deserialize]
-        offset: i64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
     LimitIsLessThanOrEqualToZero {
         #[eo_to_std_string_string_serialize_deserialize]
         limit: i64,
@@ -40,7 +28,15 @@ pub enum PaginationStartsWithOneTryNewErrorNamed {
         offset: i64,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+    OffsetPlusLimitIsIntOverflow {
+        #[eo_to_std_string_string_serialize_deserialize]
+        limit: i64,
+        #[eo_to_std_string_string_serialize_deserialize]
+        offset: i64,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 impl PaginationStartsWithOne {
     pub fn try_new(
         limit: i64,
@@ -243,6 +239,7 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
         )
     }
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 impl<'lifetime> postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime>
     for PaginationStartsWithOne
 {
@@ -280,4 +277,8 @@ impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOne
         let one: i32 = 1;
         Self(postgresql_crud_common::PaginationBase::new_unchecked(i32::MAX.checked_sub(one).expect("c0f03c51-d565-4377-ad4e-f38ee636909b").into(), one.into()))
     }
+}
+#[must_use]
+pub fn maybe_primary_key(is_primary_key: bool) -> impl std::fmt::Display {
+    if is_primary_key { "primary key" } else { "" }
 }
