@@ -802,6 +802,7 @@ pub fn generate_impl_postgresql_json_type_token_stream(
         quote::quote! {sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>};
     //todo maybe reexport sqlx?
     quote::quote! {
+        #[allow(clippy::arbitrary_source_item_ordering)]
         impl #path_token_stream #postgresql_json_type_upper_camel_case for #ident {
             type #table_type_declaration_upper_camel_case = #table_type_declaration_type_token_stream;
             type #create_upper_camel_case = #create_type_token_stream;
@@ -1145,6 +1146,7 @@ pub fn generate_impl_postgresql_type_token_stream(
     let std_fmt_display_token_stream = token_patterns::StdFmtDisplay;
     let std_primitive_bool_token_stream = token_patterns::StdPrimitiveBool;
     quote::quote! {
+        #[allow(clippy::arbitrary_source_item_ordering)]
         impl #import_path :: #postgresql_type_upper_camel_case for #ident {
             type #table_type_declaration_upper_camel_case = #ident_table_type_declaration_upper_camel_case;
             fn #create_table_column_query_part_snake_case(#column_snake_case: &dyn #std_fmt_display_token_stream, #is_primary_key_underscore: #std_primitive_bool_token_stream) -> impl #std_fmt_display_token_stream {
@@ -1236,6 +1238,7 @@ pub fn generate_impl_postgresql_type_not_primary_key_for_ident_token_stream(
     let ident_create_upper_camel_case =
         naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
     quote::quote! {
+        #[allow(clippy::arbitrary_source_item_ordering)]
         impl #import_path::#postgresql_type_not_primary_key_upper_camel_case for #ident {
             type #postgresql_type_upper_camel_case = Self;
             type #create_upper_camel_case = #ident_create_upper_camel_case;
@@ -1941,6 +1944,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
             &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_element_regular_expression_token_stream,
         );
     quote::quote! {
+        #[allow(clippy::arbitrary_source_item_ordering)]
         #cfg_token_stream
         impl #import_path::#postgresql_type_test_cases_upper_camel_case for #ident {
             type #postgresql_type_upper_camel_case = #self_upper_camel_case;
@@ -2187,6 +2191,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
             &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_element_regular_expression_token_stream,
         );
     quote::quote! {
+        #[allow(clippy::arbitrary_source_item_ordering)]
         #cfg_token_stream
         impl #import_path::#postgresql_json_type_test_cases_upper_camel_case for #ident {
             type #postgresql_json_type_upper_camel_case = #self_upper_camel_case;
