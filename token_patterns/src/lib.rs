@@ -705,6 +705,13 @@ impl quote::ToTokens for MustUse {
         quote::quote! {#[must_use]}.to_tokens(tokens);
     }
 }
+#[derive(Debug, Clone, Copy)]
+pub struct AllowClippyArbitrarySourceItemOrdering;
+impl quote::ToTokens for AllowClippyArbitrarySourceItemOrdering {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {#[allow(clippy::arbitrary_source_item_ordering)]}.to_tokens(tokens);
+    }
+}
 fn path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size_call()
 -> proc_macro2::TokenStream {
     quote::quote! {::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size()}

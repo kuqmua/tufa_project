@@ -276,6 +276,7 @@ pub fn generate_postgresql_json_object_type(
             let return_err_query_part_error_named_write_into_buffer_token_stream = postgresql_crud_macros_common::generate_return_err_query_part_error_named_write_into_buffer_token_stream(import_path);
             let none_token_stream = quote::quote!{None};
             let must_use_token_stream = token_patterns::MustUse;
+            let allow_clippy_arbitrary_source_item_ordering_token_stream = token_patterns::AllowClippyArbitrarySourceItemOrdering;
 
             let generate_import_path_value_initialization_token_stream = |content_token_stream: &dyn quote::ToTokens|{
                 postgresql_crud_macros_common::generate_value_initialization_token_stream(
@@ -907,9 +908,9 @@ pub fn generate_postgresql_json_object_type(
             let generate_debug_clone_partialeq_serialize_pub_struct_token_stream = |
                 attributes_token_stream: &dyn quote::ToTokens,
                 current_ident_token_stream: &dyn quote::ToTokens,
-                content_token_stream: &dyn quote::ToTokens
+                content_token_stream_153ac202: &dyn quote::ToTokens
             | {
-                let content_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                let content_token_stream_6ea2da58 = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
@@ -917,11 +918,11 @@ pub fn generate_postgresql_json_object_type(
                     .derive_serde_serialize()
                     .build_struct(
                         &current_ident_token_stream,
-                        &content_token_stream
+                        &content_token_stream_153ac202
                     );
                 quote::quote!{
                     #attributes_token_stream
-                    #content_token_stream
+                    #content_token_stream_6ea2da58
                 }
             };
             let ident_create_for_query_token_stream = {
@@ -1564,9 +1565,11 @@ pub fn generate_postgresql_json_object_type(
                         quote::quote! {#(#variants_token_stream),*}
                     };
                     let generate_ident_where_token_stream = |
+                        attributes_token_stream: &dyn quote::ToTokens,
                         current_ident_token_stream: &dyn quote::ToTokens,
-                        content_token_stream: &dyn quote::ToTokens
-                    | macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                        content_token_stream_e1af2d89: &dyn quote::ToTokens
+                    | {
+                        let content_token_stream_60d5d187 = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                         .make_pub()
                         .derive_debug()
                         .derive_clone()
@@ -1577,8 +1580,13 @@ pub fn generate_postgresql_json_object_type(
                         .derive_schemars_json_schema()
                         .build_enum(
                             &current_ident_token_stream,
-                            &quote::quote!{{#content_token_stream}}
+                            &quote::quote!{{#content_token_stream_e1af2d89}}
                         );
+                        quote::quote!{
+                            #attributes_token_stream
+                            #content_token_stream_60d5d187
+                        }
+                    };
                     let equal_variant_ident_token_stream = quote::quote! {#equal_upper_camel_case(#import_path::PostgresqlJsonTypeWhereEqual<#ident_as_postgresql_json_type_table_type_declaration_token_stream>)};
                     let equal_variant_query_part_token_stream = quote::quote!{
                         #self_upper_camel_case::#equal_upper_camel_case(#value_snake_case) => #import_path::PostgresqlTypeWhereFilter::query_part(
@@ -1593,6 +1601,7 @@ pub fn generate_postgresql_json_object_type(
                     };
                     let maybe_ident_where_token_stream = {
                         let generate_ident_where_wrapper_token_stream = |content_token_stream: &dyn quote::ToTokens| generate_ident_where_token_stream(
+                            &allow_clippy_arbitrary_source_item_ordering_token_stream,
                             &ident_where_upper_camel_case,
                             &content_token_stream
                         );
@@ -1885,6 +1894,7 @@ pub fn generate_postgresql_json_object_type(
                     };
                     let maybe_ident_with_id_standart_not_null_where_token_stream = if is_standart_not_null {
                         let ident_with_id_standart_not_null_where_token_stream = generate_ident_where_token_stream(
+                            &allow_clippy_arbitrary_source_item_ordering_token_stream,
                             &ident_with_id_standart_not_null_where_upper_camel_case,
                             &{
                                 let ident_where_field_variants_token_stream = generate_ident_where_field_variants_token_stream(&is_standart_with_id_true);
@@ -2573,51 +2583,55 @@ pub fn generate_postgresql_json_object_type(
                     )
                 };
                 let ident_update_token_stream = {
-                    let generate_ident_update_token_stream = |
-                        derive_serde_deserialize: macros_helpers::DeriveSerdeDeserialize,
-                        content_token_stream: &dyn quote::ToTokens
-                    |macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
-                        .make_pub()
-                        .derive_debug()
-                        .derive_clone()
-                        .derive_partial_eq()
-                        .derive_serde_serialize()
-                        .derive_serde_deserialize_if(derive_serde_deserialize)
-                        .derive_utoipa_to_schema()
-                        .derive_schemars_json_schema()
-                        .build_struct(
-                            &ident_update_upper_camel_case,
-                            &content_token_stream
-                        );
                     let generate_std_option_option_ident_type_token_stream = |current_ident_token_stream: &dyn quote::ToTokens| wrap_content_into_scopes_dot_comma_token_stream(
                         &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&current_ident_token_stream)
                     );
-                    match &postgresql_json_object_type_pattern {
+                    let (
+                        derive_serde_deserialize,
+                        content_token_stream_975df5c5
+                    ) = match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_update_token_stream(
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
                                 macros_helpers::DeriveSerdeDeserialize::True,
                                 &wrap_content_into_scopes_dot_comma_token_stream(
                                     &generate_ident_update_standart_not_null_content_token_stream(&is_standart_with_id_false)
                                 )
                             ),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_update_token_stream(
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => (
                                 macros_helpers::DeriveSerdeDeserialize::True,
                                 &generate_std_option_option_ident_type_token_stream(&ident_standart_not_null_as_postgresql_json_type_update_token_stream)
                             ),
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_update_token_stream(
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
                                 macros_helpers::DeriveSerdeDeserialize::False,
                                 &{
                                     let fields_token_stream = generate_create_update_delete_fields_token_stream_ffcbdaf0(&ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::True);
                                     quote::quote! {{#fields_token_stream}}
                                 }
                             ),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_update_token_stream(
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => (
                                 macros_helpers::DeriveSerdeDeserialize::True,
                                 &generate_std_option_option_ident_type_token_stream(&ident_with_id_array_not_null_as_postgresql_json_type_update_token_stream)
                             ),
                         },
+                    };
+                    let content_token_stream_c9a843aa = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                    .make_pub()
+                    .derive_debug()
+                    .derive_clone()
+                    .derive_partial_eq()
+                    .derive_serde_serialize()
+                    .derive_serde_deserialize_if(derive_serde_deserialize)
+                    .derive_utoipa_to_schema()
+                    .derive_schemars_json_schema()
+                    .build_struct(
+                        &ident_update_upper_camel_case,
+                        &content_token_stream_975df5c5
+                    );
+                    quote::quote!{
+                        #allow_clippy_arbitrary_source_item_ordering_token_stream
+                        #content_token_stream_c9a843aa
                     }
                 };
                 let not_unique_id_in_json_delete_array_upper_camel_case = naming::NotUniqueIdInJsonDeleteArrayUpperCamelCase;
@@ -3115,7 +3129,7 @@ pub fn generate_postgresql_json_object_type(
                 let ident_update_for_query_token_stream = {
                     let generate_ident_update_for_query_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                         generate_debug_clone_partialeq_serialize_pub_struct_token_stream(
-                            &proc_macro2::TokenStream::new(),
+                            &allow_clippy_arbitrary_source_item_ordering_token_stream,
                             &ident_update_for_query_upper_camel_case,
                             &content_token_stream
                         )
@@ -3520,7 +3534,7 @@ pub fn generate_postgresql_json_object_type(
                         #fields_snake_case: #ident_standart_not_null_as_postgresql_json_type_update_for_query_token_stream
                     };
                     let ident_with_id_standart_not_null_update_for_query_element_token_stream = generate_debug_clone_partialeq_serialize_pub_struct_token_stream(
-                        &quote::quote!{#[allow(clippy::arbitrary_source_item_ordering)]},
+                        &allow_clippy_arbitrary_source_item_ordering_token_stream,
                         &ident_with_id_standart_not_null_update_for_query_element_upper_camel_case,
                         &quote::quote!{{#ident_with_id_standart_not_null_update_for_query_element_fields_declaration_token_stream}}
                     );

@@ -1012,6 +1012,7 @@ pub fn impl_postgresql_type_where_filter_for_ident_token_stream(
     let postgresql_type_where_filter_upper_camel_case =
         naming::PostgresqlTypeWhereFilterUpperCamelCase;
     quote::quote! {
+        #[allow(clippy::arbitrary_source_item_ordering)]
         impl #impl_generic_token_stream #import_path ::#postgresql_type_where_filter_upper_camel_case<'lifetime> for #ident_token_stream #ident_generic_token_stream {
             fn #query_part_snake_case(
                 &self,
