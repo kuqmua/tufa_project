@@ -2469,6 +2469,7 @@ pub fn generate_postgresql_json_types(
                 (generate_query_bind_string_as_postgresql_text_token_stream(&CreateForQueryOrUpdateForQuery::CreateForQuery), generate_query_bind_string_as_postgresql_text_token_stream(&CreateForQueryOrUpdateForQuery::UpdateForQuery))
             };
             quote::quote! {
+                #allow_clippy_arbitrary_source_item_ordering_token_stream
                 impl #import_path::PostgresqlJsonTypeObjectVecElementId for #ident {
                     type PostgresqlJsonType = Self;
                     type #create_for_query_upper_camel_case = #ident_create_for_query_upper_camel_case;
