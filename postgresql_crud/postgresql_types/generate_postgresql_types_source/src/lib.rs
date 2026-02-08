@@ -1098,6 +1098,7 @@ pub fn generate_postgresql_types(
         let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
         let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSizeCall;
         let must_use_token_stream = token_patterns::MustUse;
+        let allow_clippy_arbitrary_source_item_ordering_token_stream = token_patterns::AllowClippyArbitrarySourceItemOrdering;
 
         let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
         let import_path_non_primary_key_postgresql_type_read_only_ids_token_stream = quote::quote! {#import_path::NonPrimaryKeyPostgresqlTypeReadOnlyIds};
@@ -4468,6 +4469,7 @@ pub fn generate_postgresql_types(
         let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
         let ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&ident);
         let ident_where_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_token_stream(
+            &allow_clippy_arbitrary_source_item_ordering_token_stream,
             &{
                 let common_postgresql_type_filters = vec![postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: quote::quote! {#ident_table_type_declaration_upper_camel_case} }];
                 match &postgresql_type_pattern {

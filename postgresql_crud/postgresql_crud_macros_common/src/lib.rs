@@ -571,6 +571,7 @@ impl quote::ToTokens for UpdateQueryPartJsonbSetPathUnderscore {
     }
 }
 pub fn generate_postgresql_type_where_token_stream(
+    attributes_token_stream: &dyn quote::ToTokens,
     variants: &Vec<&dyn PostgresqlFilter>,
     prefix: &dyn quote::ToTokens,
     should_derive_utoipa_to_schema: &ShouldDeriveUtoipaToSchema,
@@ -592,6 +593,7 @@ pub fn generate_postgresql_type_where_token_stream(
             quote::quote! {#element_upper_camel_case(where_filters::#prefix_where_self_upper_camel_case #type_token_stream)}
         });
         quote::quote! {
+            #attributes_token_stream
             #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize #should_derive_utoipa_to_schema #should_derive_schemars_json_schema)]
             pub enum #ident {
                 #(#variants_token_stream),*

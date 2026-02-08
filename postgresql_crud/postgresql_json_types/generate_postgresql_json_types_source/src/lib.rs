@@ -649,6 +649,7 @@ pub fn generate_postgresql_json_types(
 
         let none_token_stream = quote::quote! {None};
         let must_use_token_stream = token_patterns::MustUse;
+        let allow_clippy_arbitrary_source_item_ordering_token_stream = token_patterns::AllowClippyArbitrarySourceItemOrdering;
 
         let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
         let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
@@ -1375,6 +1376,7 @@ pub fn generate_postgresql_json_types(
         let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
         let ident_where_token_stream = match &not_null_or_nullable {
             postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_postgresql_type_where_token_stream(
+                &allow_clippy_arbitrary_source_item_ordering_token_stream,
                 &{
                     #[derive(Debug, Clone)]
                     enum PostgresqlJsonTypeSpecific {
