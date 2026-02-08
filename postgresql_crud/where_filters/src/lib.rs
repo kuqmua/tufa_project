@@ -41,8 +41,15 @@ impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOne
 //difference between NotEmptyUniqueVec and PostgresqlJsonTypeNotEmptyUniqueVec only in postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement impl with different generic requirement and PostgresqlTypeWhereFilter
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct PostgresqlJsonTypeNotEmptyUniqueVec<T>(Vec<T>);
-#[allow(clippy::arbitrary_source_item_ordering)]
 impl<T: PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
+    #[must_use]
+    pub fn into_vec(self) -> Vec<T> {
+        self.0
+    }
+    #[must_use]
+    pub const fn to_vec(&self) -> &Vec<T> {
+        &self.0
+    }
     pub fn try_new(
         value: Vec<T>,
     ) -> Result<Self, postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed<T>> {
@@ -69,17 +76,25 @@ impl<T: PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
         }
         Ok(Self(value))
     }
-    #[must_use]
-    pub const fn to_vec(&self) -> &Vec<T> {
-        &self.0
-    }
-    #[must_use]
-    pub fn into_vec(self) -> Vec<T> {
-        self.0
-    }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 impl<T: PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
+    pub fn query_bind_one_by_one<'query_lifetime>(
+        self,
+        mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> Result<
+        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        String,
+    >
+    where
+        T: 'query_lifetime,
+    {
+        for element_cc499cbc in self.0 {
+            if let Err(error) = query.try_bind(sqlx::types::Json(element_cc499cbc)) {
+                return Err(error.to_string());
+            }
+        }
+        Ok(query)
+    }
     pub fn query_part_one_by_one(
         &self,
         increment: &mut u64,
@@ -106,23 +121,6 @@ impl<T: PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVe
         }
         let _: Option<char> = acc_ecd78d3a.pop();
         Ok(acc_ecd78d3a)
-    }
-    pub fn query_bind_one_by_one<'query_lifetime>(
-        self,
-        mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> Result<
-        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String,
-    >
-    where
-        T: 'query_lifetime,
-    {
-        for element_cc499cbc in self.0 {
-            if let Err(error) = query.try_bind(sqlx::types::Json(element_cc499cbc)) {
-                return Err(error.to_string());
-            }
-        }
-        Ok(query)
     }
 }
 #[allow(clippy::arbitrary_source_item_ordering)]

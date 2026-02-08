@@ -14,8 +14,19 @@ pub enum UniqueVecTryNewErrorNamed<T> {
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct UniqueVec<T>(Vec<T>);
-#[allow(clippy::arbitrary_source_item_ordering)]
 impl<T: PartialEq + Clone> UniqueVec<T> {
+    #[must_use]
+    pub fn into_vec(self) -> Vec<T> {
+        self.0
+    }
+    #[must_use]
+    pub const fn is_empty(&self) -> bool {
+        self.0.is_empty()
+    }
+    #[must_use]
+    pub const fn to_vec(&self) -> &Vec<T> {
+        &self.0
+    }
     pub fn try_new(value: Vec<T>) -> Result<Self, UniqueVecTryNewErrorNamed<T>> {
         let mut acc_4855bea7 = Vec::new();
         for element_4dddc7c0 in &value {
@@ -28,18 +39,6 @@ impl<T: PartialEq + Clone> UniqueVec<T> {
             acc_4855bea7.push(element_4dddc7c0);
         }
         Ok(Self(value))
-    }
-    #[must_use]
-    pub const fn to_vec(&self) -> &Vec<T> {
-        &self.0
-    }
-    #[must_use]
-    pub fn into_vec(self) -> Vec<T> {
-        self.0
-    }
-    #[must_use]
-    pub const fn is_empty(&self) -> bool {
-        self.0.is_empty()
     }
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
