@@ -258,20 +258,18 @@ impl<'lifetime> postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime>
             .query_part(increment, column, is_need_to_add_logical_operator)
     }
 }
-impl postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl for PaginationStartsWithOne {
+impl postgresql_crud_common::DefaultOptionSomeVecOneEl for PaginationStartsWithOne {
     #[inline]
-    fn default_but_option_is_some_and_vec_contains_one_el() -> Self {
+    fn default_option_some_vec_one_el() -> Self {
         Self(postgresql_crud_common::PaginationBase::new_unchecked(
             postgresql_crud_common::DEFAULT_PAGINATION_LIMIT,
             1,
         ))
     }
 }
-impl postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize
-    for PaginationStartsWithOne
-{
+impl postgresql_crud_common::DefaultOptionSomeVecOneElMaxPageSize for PaginationStartsWithOne {
     #[inline]
-    fn default_but_option_is_some_and_vec_contains_one_el_with_max_page_size() -> Self {
+    fn default_option_some_vec_one_el_max_page_size() -> Self {
         let one: i32 = 1;
         Self(postgresql_crud_common::PaginationBase::new_unchecked(
             i32::MAX

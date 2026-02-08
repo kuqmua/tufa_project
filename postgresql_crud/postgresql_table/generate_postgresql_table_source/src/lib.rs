@@ -465,10 +465,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let create_into_postgresql_type_option_vec_where_dimension_one_equal_snake_case =
         naming::CreateIntoPostgresqlTypeOptionVecWhereDimensionOneEqualSnakeCase;
     let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_snake_case = naming::ReadOnlyIdsMergedWithTableTypeDeclarationIntoPostgresqlTypeOptionWhereGreaterThanSnakeCase;
-    let default_but_option_is_some_and_vec_contains_one_el_upper_camel_case =
-        naming::DefaultButOptionIsSomeAndVecContainsOneElUpperCamelCase;
-    let default_but_option_is_some_and_vec_contains_one_el_snake_case =
-        naming::DefaultButOptionIsSomeAndVecContainsOneElSnakeCase;
+    let default_option_some_vec_one_el_upper_camel_case =
+        naming::DefaultOptionSomeVecOneElUpperCamelCase;
+    let default_option_some_vec_one_el_snake_case = naming::DefaultOptionSomeVecOneElSnakeCase;
     let read_only_ids_into_table_type_declaration_snake_case =
         naming::ReadOnlyIdsIntoTableTypeDeclarationSnakeCase;
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_snake_case =
@@ -511,8 +510,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let field_attribute_serde_skip_serializing_if_option_is_none_ts =
         token_patterns::FieldAttributeSerdeSkipSerializingIfOptionIsNone;
     let sqlx_row = token_patterns::SqlxRow;
-    let postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts =
-        token_patterns::PostgresqlCrudDefaultButOptionIsSomeAndVecContainsOneElCall;
+    let postgresql_crud_default_option_some_vec_one_el_call_ts =
+        token_patterns::PostgresqlCrudDefaultOptionSomeVecOneElCall;
     let string_ts = token_patterns::StdStringString;
     let must_use_ts = token_patterns::MustUse;
     let allow_clippy_arbitrary_source_item_ordering_ts =
@@ -520,7 +519,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrud;
     let return_err_query_part_error_named_write_into_buffer_ts = postgresql_crud_macros_common::generate_return_err_query_part_error_named_write_into_buffer_ts(import_path);
 
-    // let postgresql_crud_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_call_ts = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElCall;
+    // let postgresql_crud_all_variants_default_option_some_vec_one_el_call_ts = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElCall;
     let syn_derive_input: syn::DeriveInput =
         syn::parse2(input).expect("991c614f-5cf9-4a53-873a-5280b62e2dfa");
     let generate_postgresql_table_config = serde_json::from_str::<GeneratePostgresqlTableConfig>(
@@ -1148,9 +1147,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let generate_import_path_value_initialization_ts = |content_ts: &dyn quote::ToTokens| {
         postgresql_crud_macros_common::generate_value_initialization_ts(&import_path, &content_ts)
     };
-    let generate_impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_tokens_no_lifetime_ts =
+    let generate_impl_postgresql_crud_default_option_some_vec_one_el_for_tokens_no_lifetime_ts =
         |current_ident: &dyn quote::ToTokens, content_ts: &dyn quote::ToTokens| {
-            postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(
+            postgresql_crud_macros_common::generate_impl_postgresql_crud_default_option_some_vec_one_el_ts(
         &current_ident,
         &proc_macro2::TokenStream::new(),
         &content_ts
@@ -1180,13 +1179,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 quote::quote! {{#content_ts}}
             });
         let impl_ident_create_ts = {
-            let primary_key_field_type_as_default_but_option_is_some_and_vec_contains_one_el_call_ts = {
+            let primary_key_field_type_as_default_option_some_vec_one_el_call_ts = {
                 let primary_key_field_type_as_postgresql_type_create_ts =
                     generate_as_postgresql_type_create_ts(&primary_key_field_type);
                 quote::quote! {
                     <
-                        #primary_key_field_type_as_postgresql_type_create_ts as #postgresql_crud_snake_case::#default_but_option_is_some_and_vec_contains_one_el_upper_camel_case
-                    >::#default_but_option_is_some_and_vec_contains_one_el_snake_case()
+                        #primary_key_field_type_as_postgresql_type_create_ts as #postgresql_crud_snake_case::#default_option_some_vec_one_el_upper_camel_case
+                    >::#default_option_some_vec_one_el_snake_case()
                 }
             };
             let fn_create_query_part_ts = {
@@ -1212,7 +1211,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             }
                         }
                     };
-                let primary_key_content_ts = generate_match_as_postgresql_crud_postgresql_type_postgresql_type_create_query_part_ts(primary_key_field_type, &primary_key_field_type_as_default_but_option_is_some_and_vec_contains_one_el_call_ts);
+                let primary_key_content_ts = generate_match_as_postgresql_crud_postgresql_type_postgresql_type_create_query_part_ts(primary_key_field_type, &primary_key_field_type_as_default_option_some_vec_one_el_call_ts);
                 let column_increments_ts =
                     generate_fields_named_without_primary_key_without_comma_ts(
                         &|element: &macros_helpers::SynFieldWrapper| {
@@ -1251,7 +1250,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             }
                         }
                     };
-                let primary_key_content_ts = generate_query_as_postgresql_crud_postgresql_type_postgresql_type_create_query_bind_ts(primary_key_field_type, &primary_key_field_type_as_default_but_option_is_some_and_vec_contains_one_el_call_ts);
+                let primary_key_content_ts = generate_query_as_postgresql_crud_postgresql_type_postgresql_type_create_query_bind_ts(primary_key_field_type, &primary_key_field_type_as_default_option_some_vec_one_el_call_ts);
                 let binded_query_modifications_ts =
                     generate_fields_named_without_primary_key_without_comma_ts(
                         &|element: &macros_helpers::SynFieldWrapper| {
@@ -1280,19 +1279,26 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 }
             }
         };
-        let impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_ident_create_ts = generate_impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_tokens_no_lifetime_ts(&ident_create_upper_camel_case, &{
-            let fields_initialiation_without_primary_key_with_default_but_option_is_some_and_vec_contains_one_el_ts = generate_fields_named_without_primary_key_with_comma_ts(&|element: &macros_helpers::SynFieldWrapper| {
-                let field_ident = &element.field_ident;
-                quote::quote! {#field_ident: #postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts}
-            });
-            quote::quote! {
-                Self{#fields_initialiation_without_primary_key_with_default_but_option_is_some_and_vec_contains_one_el_ts}
-            }
-        });
+        let impl_postgresql_crud_default_option_some_vec_one_el_for_ident_create_ts =
+            generate_impl_postgresql_crud_default_option_some_vec_one_el_for_tokens_no_lifetime_ts(
+                &ident_create_upper_camel_case,
+                &{
+                    let fields_initialiation_without_primary_key_with_default_option_some_vec_one_el_ts =
+                        generate_fields_named_without_primary_key_with_comma_ts(
+                            &|element: &macros_helpers::SynFieldWrapper| {
+                                let field_ident = &element.field_ident;
+                                quote::quote! {#field_ident: #postgresql_crud_default_option_some_vec_one_el_call_ts}
+                            },
+                        );
+                    quote::quote! {
+                        Self{#fields_initialiation_without_primary_key_with_default_option_some_vec_one_el_ts}
+                    }
+                },
+            );
         quote::quote! {
             #ident_create_ts
             #impl_ident_create_ts
-            #impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_ident_create_ts
+            #impl_postgresql_crud_default_option_some_vec_one_el_for_ident_create_ts
         }
     };
     let ident_where_many_upper_camel_case =
@@ -1387,23 +1393,29 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     )
                 },
             );
-        let impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_ident_where_many_ts = generate_impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_tokens_no_lifetime_ts(&ident_where_many_upper_camel_case, &{
-            let fields_ts = generate_fields_named_without_comma_ts(&|el_0fd667f6: &macros_helpers::SynFieldWrapper| {
-                let field_ident = &el_0fd667f6.field_ident;
-                quote::quote! {
-                    #field_ident: Some(
-                        #postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts
-                    ),
-                }
-            });
-            quote::quote! {Self{#fields_ts}}
-        });
+        let impl_postgresql_crud_default_option_some_vec_one_el_for_ident_where_many_ts =
+            generate_impl_postgresql_crud_default_option_some_vec_one_el_for_tokens_no_lifetime_ts(
+                &ident_where_many_upper_camel_case,
+                &{
+                    let fields_ts = generate_fields_named_without_comma_ts(
+                        &|el_0fd667f6: &macros_helpers::SynFieldWrapper| {
+                            let field_ident = &el_0fd667f6.field_ident;
+                            quote::quote! {
+                                #field_ident: Some(
+                                    #postgresql_crud_default_option_some_vec_one_el_call_ts
+                                ),
+                            }
+                        },
+                    );
+                    quote::quote! {Self{#fields_ts}}
+                },
+            );
         quote::quote! {
             #ident_where_many_ts
             #ident_where_many_try_new_error_named_ts
             #impl_pub_try_new_for_ident_where_many_ts
             #impl_serde_deserialize_for_ident_where_many_ts
-            #impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_ident_where_many_ts
+            #impl_postgresql_crud_default_option_some_vec_one_el_for_ident_where_many_ts
         }
     };
 
@@ -1502,17 +1514,20 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 },
                 &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
             );
-        let impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_std_option_option_ident_where_many_ts =
-            generate_impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_tokens_no_lifetime_ts(&std_option_option_ident_where_many_upper_camel_case, &quote::quote! {Self(Some(#postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts))});
+        let impl_postgresql_crud_default_option_some_vec_one_el_for_std_option_option_ident_where_many_ts =
+            generate_impl_postgresql_crud_default_option_some_vec_one_el_for_tokens_no_lifetime_ts(
+                &std_option_option_ident_where_many_upper_camel_case,
+                &quote::quote! {Self(Some(#postgresql_crud_default_option_some_vec_one_el_call_ts))},
+            );
         quote::quote! {
             #std_option_option_ident_where_many_ts
             #impl_postgresql_type_where_filter_for_std_option_option_ident_where_many_ts
-            #impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_std_option_option_ident_where_many_ts
+            #impl_postgresql_crud_default_option_some_vec_one_el_for_std_option_option_ident_where_many_ts
         }
     };
     let pub_where_many_std_option_option_ident_where_many_ts = quote::quote! {pub #where_many_snake_case: #std_option_option_ident_where_many_upper_camel_case};
-    let where_many_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts = quote::quote! {
-        #where_many_snake_case: #postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts
+    let where_many_postgresql_crud_default_option_some_vec_one_el_call_ts = quote::quote! {
+        #where_many_snake_case: #postgresql_crud_default_option_some_vec_one_el_call_ts
     };
     let generate_read_or_delete_many_additional_paramaters_initialization_ts =
         |read_many_or_delete_many: &ReadManyOrDeleteMany| {
@@ -1647,11 +1662,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &proc_macro2::TokenStream::new(),
                 &quote::quote! {format!("{self}")},
             );
-        let impl_postgresql_crud_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_for_ident_select_ts = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(&ident_select_upper_camel_case, &{
+        let impl_postgresql_crud_all_variants_default_option_some_vec_one_el_for_ident_select_ts = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_variants_default_option_some_vec_one_el_ts(&ident_select_upper_camel_case, &{
             let elements_ts = generate_fields_named_with_comma_ts(&|el_5282570d: &macros_helpers::SynFieldWrapper| {
                 let field_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_5282570d.field_ident);
                 quote::quote! {
-                    Self::#field_ident_upper_camel_case_ts(#postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts)
+                    Self::#field_ident_upper_camel_case_ts(#postgresql_crud_default_option_some_vec_one_el_call_ts)
                 }
             });
             quote::quote! {vec![#elements_ts]}
@@ -1660,11 +1675,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             #ident_select_ts
             #impl_std_fmt_display_for_ident_select_ts
             #impl_error_occurence_lib_to_std_string_string_for_ident_select_ts
-            #impl_postgresql_crud_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_for_ident_select_ts
+            #impl_postgresql_crud_all_variants_default_option_some_vec_one_el_for_ident_select_ts
         }
     };
-    let select_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts = quote::quote! {
-        #select_snake_case: #postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts
+    let select_postgresql_crud_default_option_some_vec_one_el_call_ts = quote::quote! {
+        #select_snake_case: #postgresql_crud_default_option_some_vec_one_el_call_ts
     };
     let ident_read_ts = {
         let ident_read_ts = {
@@ -2070,31 +2085,38 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     }
                 },
             );
-        let impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_ident_update_ts = generate_impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_tokens_no_lifetime_ts(&ident_update_upper_camel_case, &{
-            let primary_key_field_with_default_but_option_is_some_and_vec_contains_one_el_ts = {
-                quote::quote! {
-                    #primary_key_field_ident: #postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts
-                }
-            };
-            let fields_without_primary_key_with_default_but_option_is_some_and_vec_contains_one_el_ts = generate_fields_named_without_primary_key_with_comma_ts(&|element: &macros_helpers::SynFieldWrapper| {
-                let field_ident = &element.field_ident;
-                quote::quote! {
-                    #field_ident: Some(postgresql_crud::Value{
-                        #value_snake_case: #postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts
-                    })
-                }
-            });
-            quote::quote! {Self{
-                #primary_key_field_with_default_but_option_is_some_and_vec_contains_one_el_ts,
-                #fields_without_primary_key_with_default_but_option_is_some_and_vec_contains_one_el_ts
-            }}
-        });
+        let impl_postgresql_crud_default_option_some_vec_one_el_for_ident_update_ts =
+            generate_impl_postgresql_crud_default_option_some_vec_one_el_for_tokens_no_lifetime_ts(
+                &ident_update_upper_camel_case,
+                &{
+                    let primary_key_field_with_default_option_some_vec_one_el_ts = {
+                        quote::quote! {
+                            #primary_key_field_ident: #postgresql_crud_default_option_some_vec_one_el_call_ts
+                        }
+                    };
+                    let fields_without_primary_key_with_default_option_some_vec_one_el_ts =
+                        generate_fields_named_without_primary_key_with_comma_ts(
+                            &|element: &macros_helpers::SynFieldWrapper| {
+                                let field_ident = &element.field_ident;
+                                quote::quote! {
+                                    #field_ident: Some(postgresql_crud::Value{
+                                        #value_snake_case: #postgresql_crud_default_option_some_vec_one_el_call_ts
+                                    })
+                                }
+                            },
+                        );
+                    quote::quote! {Self{
+                        #primary_key_field_with_default_option_some_vec_one_el_ts,
+                        #fields_without_primary_key_with_default_option_some_vec_one_el_ts
+                    }}
+                },
+            );
         quote::quote! {
             #ident_update_ts
             #ident_update_try_new_error_named_ts
             #impl_pub_try_new_for_ident_update_ts
             #impl_serde_deserialize_for_ident_update_ts
-            #impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_ident_update_ts
+            #impl_postgresql_crud_default_option_some_vec_one_el_for_ident_update_ts
         }
     };
     let ident_update_for_query_ts = {
@@ -2818,10 +2840,10 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     #content_ts_ec5b096c
                 }
             };
-            let impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_operation_payload_ts = generate_impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_tokens_no_lifetime_ts(&ident_operation_payload_upper_camel_case, &quote::quote! {Self #default_init_content_ts});
+            let impl_postgresql_crud_default_option_some_vec_one_el_for_operation_payload_ts = generate_impl_postgresql_crud_default_option_some_vec_one_el_for_tokens_no_lifetime_ts(&ident_operation_payload_upper_camel_case, &quote::quote! {Self #default_init_content_ts});
             quote::quote! {
                 #ident_operation_payload_ts
-                #impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_operation_payload_ts
+                #impl_postgresql_crud_default_option_some_vec_one_el_for_operation_payload_ts
             }
         };
     let generate_type_variants_from_request_response_syn_variants =
@@ -3273,7 +3295,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             &{
                 let ident_operation_payload_upper_camel_case =
                     generate_ident_operation_payload_upper_camel_case(operation);
-                quote::quote! {<#ident_operation_payload_upper_camel_case as postgresql_crud::#default_but_option_is_some_and_vec_contains_one_el_upper_camel_case>::#default_but_option_is_some_and_vec_contains_one_el_snake_case()}
+                quote::quote! {<#ident_operation_payload_upper_camel_case as postgresql_crud::#default_option_some_vec_one_el_upper_camel_case>::#default_option_some_vec_one_el_snake_case()}
             },
             &quote::quote! {http::StatusCode::OK},
             &ShouldAddReturn::False,
@@ -3377,7 +3399,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         );
                     quote::quote! {(pub #std_vec_vec_ident_create_ts);}
                 },
-                &quote::quote! {(vec![#postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts])},
+                &quote::quote! {(vec![#postgresql_crud_default_option_some_vec_one_el_call_ts])},
             ),
         );
         let operation_ts = {
@@ -3681,17 +3703,17 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     pub #pagination_snake_case: postgresql_crud::PaginationStartsWithZero,
                 }},
                 &quote::quote! {{
-                    #where_many_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts,
-                    #select_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts,
+                    #where_many_postgresql_crud_default_option_some_vec_one_el_call_ts,
+                    #select_postgresql_crud_default_option_some_vec_one_el_call_ts,
                     #order_by_snake_case: postgresql_crud::OrderBy {
                         #column_snake_case: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_ts(
-                            #postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts
+                            #postgresql_crud_default_option_some_vec_one_el_call_ts
                         ),
                         #order_snake_case: Some(
-                            #postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts
+                            #postgresql_crud_default_option_some_vec_one_el_call_ts
                         ),
                     },
-                    #pagination_snake_case: #postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts,
+                    #pagination_snake_case: #postgresql_crud_default_option_some_vec_one_el_call_ts,
                 }},
             ),
         );
@@ -3912,8 +3934,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     }}
                 },
                 &quote::quote! {{
-                    #primary_key_field_ident: #postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts,
-                    #select_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts
+                    #primary_key_field_ident: #postgresql_crud_default_option_some_vec_one_el_call_ts,
+                    #select_postgresql_crud_default_option_some_vec_one_el_call_ts
                 }},
             ),
         );
@@ -4191,10 +4213,10 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     };
                 }
             };
-            let impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_operation_payload_ts = generate_impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_tokens_no_lifetime_ts(
+            let impl_postgresql_crud_default_option_some_vec_one_el_for_operation_payload_ts = generate_impl_postgresql_crud_default_option_some_vec_one_el_for_tokens_no_lifetime_ts(
                 &ident_operation_payload_upper_camel_case,
                 &quote::quote! {
-                    Self(vec![#postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts])
+                    Self(vec![#postgresql_crud_default_option_some_vec_one_el_call_ts])
                 },
             );
             quote::quote! {
@@ -4202,7 +4224,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 #ident_operation_payload_try_new_error_named_ts
                 #impl_pub_try_new_for_ident_operation_payload_ts
                 #impl_serde_deserialize_for_ident_update_many_payload_ts
-                #impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_operation_payload_ts
+                #impl_postgresql_crud_default_option_some_vec_one_el_for_operation_payload_ts
             }
         });
         let operation_ts = {
@@ -4757,7 +4779,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             generate_parameters_payload_and_default_ts(
                 &operation,
                 &quote::quote! {{#pub_where_many_std_option_option_ident_where_many_ts}},
-                &quote::quote! {{#where_many_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts}},
+                &quote::quote! {{#where_many_postgresql_crud_default_option_some_vec_one_el_call_ts}},
             ),
         );
         let operation_ts = {
@@ -4862,12 +4884,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     quote::quote! {{#content_ts}}
                 },
                 &{
-                    let primary_key_field_with_default_but_option_is_some_and_vec_contains_one_el_ts = {
+                    let primary_key_field_with_default_option_some_vec_one_el_ts = {
                         quote::quote! {
-                            #primary_key_field_ident: #postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts
+                            #primary_key_field_ident: #postgresql_crud_default_option_some_vec_one_el_call_ts
                         }
                     };
-                    quote::quote! {{#primary_key_field_with_default_but_option_is_some_and_vec_contains_one_el_ts}}
+                    quote::quote! {{#primary_key_field_with_default_option_some_vec_one_el_ts}}
                 },
             ),
         );
@@ -5079,7 +5101,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     let field_type_as_postgresql_type_create_ts =
                         generate_as_postgresql_type_create_ts(&element.field_type);
                     quote::quote! {
-                        #field_ident: <#field_type_as_postgresql_type_create_ts as postgresql_crud::DefaultButOptionIsSomeAndVecContainsOneEl>::default_but_option_is_some_and_vec_contains_one_el()
+                        #field_ident: <#field_type_as_postgresql_type_create_ts as postgresql_crud::DefaultOptionSomeVecOneEl>::default_option_some_vec_one_el()
                     }
                 },
             );
@@ -5097,9 +5119,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     let field_type = &element.field_type;
                     let field_ident_upper_camel_case =
                         naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
-                    let upper_camel_case = naming::DefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSizeUpperCamelCase;
-                    let snake_case =
-                        naming::DefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSizeSnakeCase;
+                    let upper_camel_case =
+                        naming::DefaultOptionSomeVecOneElMaxPageSizeUpperCamelCase;
+                    let snake_case = naming::DefaultOptionSomeVecOneElMaxPageSizeSnakeCase;
                     quote::quote! {
                         #ident_select_upper_camel_case::#field_ident_upper_camel_case(
                             <
@@ -5317,8 +5339,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         } else {
                             quote::quote! {
                                 #current_field_ident: <
-                                    <#current_field_type as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsSomeAndVecContainsOneEl
-                                >::default_but_option_is_some_and_vec_contains_one_el()
+                                    <#current_field_type as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultOptionSomeVecOneEl
+                                >::default_option_some_vec_one_el()
                             }
                         }
                     },
@@ -5464,11 +5486,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     &|syn_field_wrapper: &macros_helpers::SynFieldWrapper| {
                         let current_field_ident = &syn_field_wrapper.field_ident;
                         let current_field_type = &syn_field_wrapper.field_type;
-                        let value_initialization_ts = generate_import_path_value_initialization_ts(&postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts);
+                        let value_initialization_ts = generate_import_path_value_initialization_ts(
+                            &postgresql_crud_default_option_some_vec_one_el_call_ts,
+                        );
                         quote::quote! {
                             #current_field_ident: el_f108da5a.#current_field_ident.as_ref().map_or_else(
                                 || Some(#value_initialization_ts),
-                                <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el
+                                <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_option_some_vec_one_el
                             )
                         }
                     },
@@ -5507,7 +5531,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 #ident_read_upper_camel_case {
                                     #primary_key_field_ident: <
                                         #primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases
-                                    >::read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el(
+                                    >::read_only_ids_to_option_value_read_default_option_some_vec_one_el(
                                         &el_f108da5a.#primary_key_field_ident
                                     ),
                                     #ident_read_fields_initialization_without_primary_key_ts
@@ -5948,7 +5972,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                         #primary_key_field_type
                                         as
                                         postgresql_crud::PostgresqlTypeTestCases
-                                    >::read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el(
+                                    >::read_only_ids_to_option_value_read_default_option_some_vec_one_el(
                                         &read_only_ids_returned_from_create_one.#primary_key_field_ident
                                     ),
                                     #field_ident_read_only_ids_merged_with_create_into_option_value_read_read_only_ids_returned_from_create_one_clone_ident_create_clone_ts
@@ -6099,7 +6123,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         vec![
                             <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_where_equal(
                                 read_only_ids_returned_from_create_one.#primary_key_field_ident,
-                                #postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_call_ts
+                                #postgresql_crud_default_option_some_vec_one_el_call_ts
                             )
                         ]
                     )
@@ -6555,7 +6579,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                                     &syn_field_wrapper.field_type;
                                                 quote::quote! {
                                                     <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::previous_read_merged_with_option_update_into_read(
-                                                        <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el(
+                                                        <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_option_some_vec_one_el(
                                                             &read_only_ids_current_element.#current_field_ident.clone().expect("96213542-59eb-4767-b120-d9ba575087c8")
                                                         ).expect("bf0d6f55-7457-4ec1-8b79-50efad297ccb").#value_snake_case,
                                                         Some(#update_snake_case.clone())
@@ -6763,7 +6787,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                                             #current_field_type
                                                             as
                                                             postgresql_crud::PostgresqlTypeTestCases
-                                                        >::read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el(
+                                                        >::read_only_ids_to_option_value_read_default_option_some_vec_one_el(
                                                             &read_only_ids_current_element.#current_field_ident.clone().expect("4f19d0d2-a23f-4b77-a2bc-c7b04db7a129")
                                                         ).expect("c7685b19-9bca-47bc-a3a5-8fc543b174a5").#value_snake_case,
                                                         Some(#update_snake_case.clone())
@@ -6946,7 +6970,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             read_only_ids_from_try_delete_many,
                             {
                                 read_only_ids_from_try_create_many.iter().map(|el_ba0f6b1c|
-                                    <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el(
+                                    <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_option_some_vec_one_el(
                                         &el_ba0f6b1c.#primary_key_field_ident
                                     ).expect("3ee5ee86-05dc-4dc8-9262-8ffa1855d5e4").#value_snake_case
                                 ).collect::<Vec<#primary_key_field_type_as_postgresql_type_read_ts>>()
@@ -7229,7 +7253,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         assert_eq!(read_only_ids_from_try_create_many.len(), ident_vec_create.len(), "88fb286c-a440-441f-9e36-83454d0c9f75");
                         for (read_only_ids, create) in read_only_ids_from_try_create_many.into_iter().zip(ident_vec_create.into_iter()) {
                             acc_1debe8fb.push(#ident_read_upper_camel_case {
-                                #primary_key_field_ident: <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el(
+                                #primary_key_field_ident: <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_option_some_vec_one_el(
                                     &read_only_ids.#primary_key_field_ident
                                 ),
                                 #field_ident_read_only_ids_merged_with_create_into_option_value_read_read_only_ids_and_create_ts
