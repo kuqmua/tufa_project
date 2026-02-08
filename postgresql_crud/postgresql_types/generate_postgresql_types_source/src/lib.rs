@@ -3078,6 +3078,7 @@ pub fn generate_postgresql_types(
                     maybe_read_inner_initializations_token_stream.is_some()
                 {
                     quote::quote!{
+                        #allow_clippy_arbitrary_source_item_ordering_token_stream
                         impl #ident {
                             #maybe_min_inner_type_token_stream
                             #maybe_slightly_more_than_min_inner_type_token_stream
@@ -3239,7 +3240,7 @@ pub fn generate_postgresql_types(
             let maybe_pub_enum_ident_standart_not_null_origin_try_new_error_named_token_stream = if matches!(&is_standart_not_null, IsStandartNotNull::True)
                 && let Ok(postgresql_type_initialization_try_new) = &postgresql_type_initialization_try_new_try_from_postgresql_type
             {
-                macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                let content_token_stream_d57d5de2 = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_serde_serialize()
@@ -3310,7 +3311,11 @@ pub fn generate_postgresql_types(
                             };
                             quote::quote!{{#content_token_stream}}
                         }
-                    )
+                    );
+                quote::quote!{
+                    #allow_clippy_arbitrary_source_item_ordering_token_stream
+                    #content_token_stream_d57d5de2
+                }
             } else {
                 proc_macro2::TokenStream::new()
             };
@@ -3321,7 +3326,8 @@ pub fn generate_postgresql_types(
                     PostgresqlTypeDeserialize::Derive => proc_macro2::TokenStream::new(),
                     PostgresqlTypeDeserialize::ImplNewForDeserializeOrTryNewForDeserialize(postgresql_type_impl_new_for_deserialize_or_try_new_for_deserialize) => match &postgresql_type_impl_new_for_deserialize_or_try_new_for_deserialize {
                         PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(_) => proc_macro2::TokenStream::new(),
-                        PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(postgresql_type_impl_try_new_for_deserialize) => macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                        PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(postgresql_type_impl_try_new_for_deserialize) => {
+                            let content_token_stream_026f2a24 = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                             .make_pub()
                             .derive_debug()
                             .derive_serde_serialize()
@@ -3369,7 +3375,12 @@ pub fn generate_postgresql_types(
                                     };
                                     quote::quote!{{#content_token_stream}}
                                 }
-                            )
+                            );
+                            quote::quote!{
+                                #allow_clippy_arbitrary_source_item_ordering_token_stream
+                                #content_token_stream_026f2a24
+                            }
+                        }
                     },
                 }
             } else {
@@ -3981,6 +3992,7 @@ pub fn generate_postgresql_types(
                     PostgresqlTypePattern::ArrayDimension1 { .. } => proc_macro2::TokenStream::new(),
                 };
                 quote::quote! {
+                    #allow_clippy_arbitrary_source_item_ordering_token_stream
                     impl #ident_origin_upper_camel_case {
                         #fn_new_or_try_new_token_stream
                         #maybe_fn_new_or_try_new_for_deserialize_token
@@ -6695,6 +6707,7 @@ pub fn generate_postgresql_types(
             let postgresql_type_primary_key_upper_camel_case = naming::PostgresqlTypePrimaryKeyUpperCamelCase;
             let value_as_read_only_ids_token_stream = quote::quote! {#value_snake_case: #self_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case};
             quote::quote! {
+                #allow_clippy_arbitrary_source_item_ordering_token_stream
                 impl #import_path::#postgresql_type_primary_key_upper_camel_case for #ident_standart_not_null_upper_camel_case {
                     type #postgresql_type_upper_camel_case = Self;
                     type #table_type_declaration_upper_camel_case = #ident_standart_not_null_table_type_declaration_upper_camel_case;
