@@ -214,12 +214,21 @@ impl<T> From<PostgresqlJsonTypeNotEmptyUniqueVec<T>> for Vec<T> {
         value.0
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 impl<'lifetime, T> postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime>
     for PostgresqlJsonTypeNotEmptyUniqueVec<T>
 where
     T: serde::Serialize + 'lifetime,
 {
+    fn query_bind(
+        self,
+        mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
+    {
+        if let Err(error) = query.try_bind(sqlx::types::Json(self.0)) {
+            return Err(error.to_string());
+        }
+        Ok(query)
+    }
     fn query_part(
         &self,
         increment: &mut u64,
@@ -230,16 +239,6 @@ where
             Ok(value) => Ok(format!("${value}")),
             Err(error) => Err(error),
         }
-    }
-    fn query_bind(
-        self,
-        mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
-    {
-        if let Err(error) = query.try_bind(sqlx::types::Json(self.0)) {
-            return Err(error.to_string());
-        }
-        Ok(query)
     }
 }
 
@@ -640,12 +639,24 @@ impl<
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 impl<
     'lifetime,
     T: Send + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'lifetime,
 > postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime> for Between<T>
 {
+    fn query_bind(
+        self,
+        mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
+    {
+        if let Err(error) = query.try_bind(self.start) {
+            return Err(error.to_string());
+        }
+        if let Err(error) = query.try_bind(self.end) {
+            return Err(error.to_string());
+        }
+        Ok(query)
+    }
     fn query_part(
         &self,
         increment: &mut u64,
@@ -667,19 +678,6 @@ impl<
                 }
             };
         Ok(format!("between ${start_increment} and ${end_increment}"))
-    }
-    fn query_bind(
-        self,
-        mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
-    {
-        if let Err(error) = query.try_bind(self.start) {
-            return Err(error.to_string());
-        }
-        if let Err(error) = query.try_bind(self.end) {
-            return Err(error.to_string());
-        }
-        Ok(query)
     }
 }
 

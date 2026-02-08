@@ -450,14 +450,7 @@ pub trait PostgresqlJsonTypeTestCases {
         >,
     >;
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 pub trait PostgresqlTypeWhereFilter<'query_lifetime> {
-    fn query_part(
-        &self,
-        increment: &mut u64,
-        column: &dyn std::fmt::Display,
-        is_need_to_add_logical_operator: bool,
-    ) -> Result<String, QueryPartErrorNamed>;
     fn query_bind(
         self,
         query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
@@ -465,6 +458,12 @@ pub trait PostgresqlTypeWhereFilter<'query_lifetime> {
         sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String,
     >;
+    fn query_part(
+        &self,
+        increment: &mut u64,
+        column: &dyn std::fmt::Display,
+        is_need_to_add_logical_operator: bool,
+    ) -> Result<String, QueryPartErrorNamed>;
 }
 //todo custom deserialization - must not contain more than one element
 #[derive(
@@ -484,7 +483,6 @@ pub struct NullableJsonObjectPostgresqlTypeWhereFilter<
         + for<'lifetime> PostgresqlTypeWhereFilter<'lifetime>
         + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 >(pub Option<NotEmptyUniqueVec<T>>);
-#[allow(clippy::arbitrary_source_item_ordering)]
 impl<'query_lifetime, T> PostgresqlTypeWhereFilter<'query_lifetime>
     for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
@@ -494,6 +492,18 @@ where
         + for<'t_lifetime> PostgresqlTypeWhereFilter<'t_lifetime>
         + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
+    fn query_bind(
+        self,
+        query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> Result<
+        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        String,
+    > {
+        match self.0 {
+            Some(value) => value.query_bind(query),
+            None => Ok(query), //todo maybe wrong
+        }
+    }
     fn query_part(
         &self,
         increment: &mut u64,
@@ -506,18 +516,6 @@ where
                 value_b4a9fcfb.query_part(increment, column, is_need_to_add_logical_operator)
             },
         )
-    }
-    fn query_bind(
-        self,
-        query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> Result<
-        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String,
-    > {
-        match self.0 {
-            Some(value) => value.query_bind(query),
-            None => Ok(query), //todo maybe wrong
-        }
     }
 }
 impl<T> error_occurence_lib::ToStdStringString for NullableJsonObjectPostgresqlTypeWhereFilter<T>
@@ -772,10 +770,28 @@ const _: () = {
         }
     }
 };
-#[allow(clippy::arbitrary_source_item_ordering)]
 impl<'query_lifetime, T: PostgresqlTypeWhereFilter<'query_lifetime>>
     PostgresqlTypeWhereFilter<'query_lifetime> for PostgresqlTypeWhere<T>
 {
+    fn query_bind(
+        self,
+        mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> Result<
+        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        String,
+    > {
+        for element_4e314a75 in self.value.0 {
+            match PostgresqlTypeWhereFilter::query_bind(element_4e314a75, query) {
+                Ok(value) => {
+                    query = value;
+                }
+                Err(error) => {
+                    return Err(error);
+                }
+            }
+        }
+        Ok(query)
+    }
     fn query_part(
         &self,
         increment: &mut u64,
@@ -812,25 +828,6 @@ impl<'query_lifetime, T: PostgresqlTypeWhereFilter<'query_lifetime>>
                 .logical_operator
                 .to_query_part(is_need_to_add_logical_operator)
         ))
-    }
-    fn query_bind(
-        self,
-        mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> Result<
-        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String,
-    > {
-        for element_4e314a75 in self.value.0 {
-            match PostgresqlTypeWhereFilter::query_bind(element_4e314a75, query) {
-                Ok(value) => {
-                    query = value;
-                }
-                Err(error) => {
-                    return Err(error);
-                }
-            }
-        }
-        Ok(query)
     }
 }
 impl<
@@ -930,8 +927,22 @@ impl PaginationBase {
             .expect("8a297b66-4f42-4b48-8e18-cc1f35302e0a")
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 impl<'query_lifetime> PostgresqlTypeWhereFilter<'query_lifetime> for PaginationBase {
+    fn query_bind(
+        self,
+        mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> Result<
+        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        String,
+    > {
+        if let Err(error) = query.try_bind(self.limit) {
+            return Err(error.to_string());
+        }
+        if let Err(error) = query.try_bind(self.offset) {
+            return Err(error.to_string());
+        }
+        Ok(query)
+    }
     fn query_part(
         &self,
         increment: &mut u64,
@@ -953,21 +964,6 @@ impl<'query_lifetime> PostgresqlTypeWhereFilter<'query_lifetime> for PaginationB
         Ok(format!(
             "limit ${limit_increment} offset ${offset_increment}"
         ))
-    }
-    fn query_bind(
-        self,
-        mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> Result<
-        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String,
-    > {
-        if let Err(error) = query.try_bind(self.limit) {
-            return Err(error.to_string());
-        }
-        if let Err(error) = query.try_bind(self.offset) {
-            return Err(error.to_string());
-        }
-        Ok(query)
     }
 }
 impl Default for PaginationBase {
@@ -1214,17 +1210,7 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
         )
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 impl<'query_lifetime> PostgresqlTypeWhereFilter<'query_lifetime> for PaginationStartsWithZero {
-    fn query_part(
-        &self,
-        increment: &mut u64,
-        column: &dyn std::fmt::Display,
-        is_need_to_add_logical_operator: bool,
-    ) -> Result<String, QueryPartErrorNamed> {
-        self.0
-            .query_part(increment, column, is_need_to_add_logical_operator)
-    }
     fn query_bind(
         self,
         query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
@@ -1233,6 +1219,15 @@ impl<'query_lifetime> PostgresqlTypeWhereFilter<'query_lifetime> for PaginationS
         String,
     > {
         self.0.query_bind(query)
+    }
+    fn query_part(
+        &self,
+        increment: &mut u64,
+        column: &dyn std::fmt::Display,
+        is_need_to_add_logical_operator: bool,
+    ) -> Result<String, QueryPartErrorNamed> {
+        self.0
+            .query_part(increment, column, is_need_to_add_logical_operator)
     }
 }
 impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PaginationStartsWithZero {
@@ -1424,7 +1419,6 @@ impl<T1> NotEmptyUniqueVec<T1> {
         NotEmptyUniqueVec(value.0.into_iter().map(T2::from).collect::<Vec<T2>>())
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 impl<'query_lifetime, T> PostgresqlTypeWhereFilter<'query_lifetime> for NotEmptyUniqueVec<T>
 where
     T: std::fmt::Debug
@@ -1433,6 +1427,25 @@ where
         + for<'t_lifetime> PostgresqlTypeWhereFilter<'t_lifetime>
         + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
+    fn query_bind(
+        self,
+        mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> Result<
+        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        String,
+    > {
+        for element_7f5ffb83 in self.0 {
+            match element_7f5ffb83.query_bind(query) {
+                Ok(value) => {
+                    query = value;
+                }
+                Err(error) => {
+                    return Err(error);
+                }
+            }
+        }
+        Ok(query)
+    }
     fn query_part(
         &self,
         increment: &mut u64,
@@ -1459,25 +1472,6 @@ where
             }
         }
         Ok(acc_57b31116)
-    }
-    fn query_bind(
-        self,
-        mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> Result<
-        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String,
-    > {
-        for element_7f5ffb83 in self.0 {
-            match element_7f5ffb83.query_bind(query) {
-                Ok(value) => {
-                    query = value;
-                }
-                Err(error) => {
-                    return Err(error);
-                }
-            }
-        }
-        Ok(query)
     }
 }
 
