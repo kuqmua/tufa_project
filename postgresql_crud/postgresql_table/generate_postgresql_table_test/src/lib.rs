@@ -31,18 +31,17 @@ config_lib = {path = "../../../config_lib"}
 server_app_state = {path = "../../../server_app_state"}
 server_config = {path = "../../../server_config"}"#,
             &{
-                #[allow(clippy::arbitrary_source_item_ordering)]
                 enum ShouldAddGeneratePostgresqlTablePrimaryKey {
+                    False,
                     True,
-                    False
                 }
                 let generate_table_example_token_stream = |
                     should_add_generate_postgresql_table_primary_key: ShouldAddGeneratePostgresqlTablePrimaryKey
                 |{
                     let allow_clippy_arbitrary_source_item_ordering_token_stream = token_patterns::AllowClippyArbitrarySourceItemOrdering;
                     let maybe_generate_postgresql_table_primary_key_token_stream = match should_add_generate_postgresql_table_primary_key {
+                        ShouldAddGeneratePostgresqlTablePrimaryKey::False => proc_macro2::TokenStream::new(),
                         ShouldAddGeneratePostgresqlTablePrimaryKey::True => quote::quote!{#[generate_postgresql_table_primary_key]},
-                        ShouldAddGeneratePostgresqlTablePrimaryKey::False => proc_macro2::TokenStream::new()
                     };
                     quote::quote!{
                         #allow_clippy_arbitrary_source_item_ordering_token_stream

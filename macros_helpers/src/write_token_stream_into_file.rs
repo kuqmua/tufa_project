@@ -1,14 +1,12 @@
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum FormatWithCargofmt {
-    True,
     False,
+    True,
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Copy, Clone, serde::Deserialize)]
 pub enum ShouldWriteTokenStreamIntoFile {
-    True,
     False,
+    True,
 }
 pub fn maybe_write_token_stream_into_file(
     should_write_token_stream_into_file: ShouldWriteTokenStreamIntoFile,

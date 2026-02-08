@@ -559,15 +559,13 @@ pub fn generate_postgresql_json_types(
     .par_iter()
     // .into_iter() //just for console prints ordering
     .map(|(index, element_1d376874)| {
-        #[allow(clippy::arbitrary_source_item_ordering)]
         enum IsStandartNotNullUuid {
-            True,
             False,
-        }
-        #[allow(clippy::arbitrary_source_item_ordering)]
-        enum ConstFn {
             True,
-            False
+        }
+        enum ConstFn {
+            False,
+            True,
         }
         // struct SchemaObjectTokenStream<'lifetime> {
         //     metadata: &'lifetime dyn quote::ToTokens,
@@ -773,11 +771,11 @@ pub fn generate_postgresql_json_types(
             PostgresqlJsonTypePattern::ArrayDimension4 { .. } => ConstFn::False,
         };
         let generate_pub_new_or_fn_new_token_stream = |const_new_token_stream: &dyn quote::ToTokens, new_token_stream: &dyn quote::ToTokens|match maybe_const_fn {
-            ConstFn::True => generate_pub_const_fn_new_value_ident_read_inner_content_token_stream(
-                &const_new_token_stream
-            ),
             ConstFn::False => generate_pub_fn_new_value_ident_read_inner_content_token_stream(
                 &new_token_stream
+            ),
+            ConstFn::True => generate_pub_const_fn_new_value_ident_read_inner_content_token_stream(
+                &const_new_token_stream
             ),
         };
         let pub_new_or_const_new_self_ident_origin_new_value_token_stream = generate_pub_new_or_fn_new_token_stream(

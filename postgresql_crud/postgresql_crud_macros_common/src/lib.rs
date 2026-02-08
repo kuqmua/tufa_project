@@ -135,229 +135,200 @@ impl quote::ToTokens for ImportPath {
             .to_tokens(tokens);
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum ShouldDeriveSchemarsJsonSchema {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for ShouldDeriveSchemarsJsonSchema {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => quote::quote! {, schemars::JsonSchema}.to_tokens(tokens),
             Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+            Self::True => quote::quote! {, schemars::JsonSchema}.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum ShouldDeriveUtoipaToSchema {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for ShouldDeriveUtoipaToSchema {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => quote::quote! {, utoipa::ToSchema}.to_tokens(tokens),
             Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+            Self::True => quote::quote! {, utoipa::ToSchema}.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy)]
-pub enum IsCreateQueryPartSelfCreateUsed {
-    True,
-    False,
-}
-impl quote::ToTokens for IsCreateQueryPartSelfCreateUsed {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => naming::ValueSnakeCase.to_tokens(tokens),
-            Self::False => quote::quote! {_}.to_tokens(tokens),
-        }
-    }
-}
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum IsCreateQueryBindMutable {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for IsCreateQueryBindMutable {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => naming::MutSnakeCase.to_tokens(tokens),
             Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+            Self::True => naming::MutSnakeCase.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum IsSelectQueryPartSelfSelectUsed {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for IsSelectQueryPartSelfSelectUsed {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => naming::ValueSnakeCase.to_tokens(tokens),
             Self::False => quote::quote! {_}.to_tokens(tokens),
+            Self::True => naming::ValueSnakeCase.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
+            Self::False => quote::quote! {_}.to_tokens(tokens),
             Self::True => {
                 naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase.to_tokens(tokens);
             }
-            Self::False => quote::quote! {_}.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum IsSelectQueryPartIsPostgresqlTypeUsed {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for IsSelectQueryPartIsPostgresqlTypeUsed {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => quote::quote! {is_postgresql_type}.to_tokens(tokens),
             Self::False => quote::quote! {_}.to_tokens(tokens),
+            Self::True => quote::quote! {is_postgresql_type}.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum IsUpdateQueryPartSelfUpdateUsed {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for IsUpdateQueryPartSelfUpdateUsed {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => naming::ValueSnakeCase.to_tokens(tokens),
             Self::False => quote::quote! {_}.to_tokens(tokens),
+            Self::True => naming::ValueSnakeCase.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum IsUpdateQueryPartJsonbSetTargetUsed {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for IsUpdateQueryPartJsonbSetTargetUsed {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => naming::JsonbSetTargetSnakeCase.to_tokens(tokens),
             Self::False => quote::quote! {_}.to_tokens(tokens),
+            Self::True => naming::JsonbSetTargetSnakeCase.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum IsUpdateQueryBindMutable {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for IsUpdateQueryBindMutable {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => naming::MutSnakeCase.to_tokens(tokens),
             Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+            Self::True => naming::MutSnakeCase.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum IsSelectOnlyUpdatedIdsQueryBindMutable {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for IsSelectOnlyUpdatedIdsQueryBindMutable {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => naming::MutSnakeCase.to_tokens(tokens),
             Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+            Self::True => naming::MutSnakeCase.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum IsSelectOnlyCreatedIdsQueryBindMutable {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for IsSelectOnlyCreatedIdsQueryBindMutable {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => naming::MutSnakeCase.to_tokens(tokens),
             Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+            Self::True => naming::MutSnakeCase.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum IsQueryBindMutable {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for IsQueryBindMutable {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => naming::MutSnakeCase.to_tokens(tokens),
             Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+            Self::True => naming::MutSnakeCase.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum IncrementParameterUnderscore {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for IncrementParameterUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => quote::quote! {_}.to_tokens(tokens),
             Self::False => naming::IncrementSnakeCase.to_tokens(tokens),
+            Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum ColumnParameterUnderscore {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for ColumnParameterUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => quote::quote! {_}.to_tokens(tokens),
             Self::False => naming::ColumnSnakeCase.to_tokens(tokens),
+            Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum IsNeedToAddLogicalOperatorUnderscore {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for IsNeedToAddLogicalOperatorUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => quote::quote! {_}.to_tokens(tokens),
             Self::False => naming::IsNeedToAddLogicalOperatorSnakeCase.to_tokens(tokens),
+            Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
 }
@@ -375,17 +346,16 @@ impl ReadOrUpdate {
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum IsPrimaryKeyUnderscore {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for IsPrimaryKeyUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => quote::quote! {_}.to_tokens(tokens),
             Self::False => naming::IsPrimaryKeySnakeCase.to_tokens(tokens),
+            Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
 }
@@ -463,115 +433,107 @@ impl From<&Dimension> for DimensionIndexNumber {
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum CreateQueryPartValueUnderscore {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for CreateQueryPartValueUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => quote::quote! {_}.to_tokens(tokens),
             Self::False => naming::ValueSnakeCase.to_tokens(tokens),
+            Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum CreateQueryPartIncrementUnderscore {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for CreateQueryPartIncrementUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => quote::quote! {_}.to_tokens(tokens),
             Self::False => naming::IncrementSnakeCase.to_tokens(tokens),
+            Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum CreateQueryBindValueUnderscore {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for CreateQueryBindValueUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => quote::quote! {_}.to_tokens(tokens),
             Self::False => naming::ValueSnakeCase.to_tokens(tokens),
+            Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum SelectQueryPartValueUnderscore {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for SelectQueryPartValueUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => quote::quote! {_}.to_tokens(tokens),
             Self::False => naming::ValueSnakeCase.to_tokens(tokens),
+            Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum UpdateQueryPartValueUnderscore {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for UpdateQueryPartValueUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => quote::quote! {_}.to_tokens(tokens),
             Self::False => naming::ValueSnakeCase.to_tokens(tokens),
+            Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum UpdateQueryPartJsonbSetAccumulatorUnderscore {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for UpdateQueryPartJsonbSetAccumulatorUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => quote::quote! {_}.to_tokens(tokens),
             Self::False => quote::quote! {jsonb_set_accumulator}.to_tokens(tokens),
+            Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum UpdateQueryPartJsonbSetTargetUnderscore {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for UpdateQueryPartJsonbSetTargetUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => quote::quote! {_}.to_tokens(tokens),
             Self::False => quote::quote! {jsonb_set_target}.to_tokens(tokens),
+            Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum UpdateQueryPartJsonbSetPathUnderscore {
-    True,
     False,
+    True,
 }
 impl quote::ToTokens for UpdateQueryPartJsonbSetPathUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::True => quote::quote! {_}.to_tokens(tokens),
             Self::False => quote::quote! {jsonb_set_path}.to_tokens(tokens),
+            Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
 }

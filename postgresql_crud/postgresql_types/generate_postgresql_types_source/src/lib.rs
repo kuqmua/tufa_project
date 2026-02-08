@@ -164,15 +164,13 @@ pub fn generate_postgresql_types(
     fn wrap_into_sqlx_postgres_types_pg_range_stringified(value: &dyn std::fmt::Display) -> String {
         format!("sqlx::postgres::types::PgRange<{value}>")
     }
-    #[allow(clippy::arbitrary_source_item_ordering)]
     enum CanBeNullable {
-        True,
         False,
+        True,
     }
-    #[allow(clippy::arbitrary_source_item_ordering)]
     enum CanBeAnArrayElement {
-        True,
         False,
+        True,
     }
     impl PostgresqlType {
         const fn can_be_an_array_element(&self) -> CanBeAnArrayElement {
@@ -619,25 +617,6 @@ pub fn generate_postgresql_types(
             let cant_support_nullable_variants_message = "cant support nullable variants: ";
             let cant_support_array_version_message = "cant support array_version: ";
             match &value.0.can_be_nullable() {
-                CanBeNullable::True => match &value.2 {
-                    PostgresqlTypePattern::Standart => Ok(Self {
-                        postgresql_type: value.0,
-                        not_null_or_nullable: value.1,
-                        postgresql_type_pattern: value.2,
-                    }),
-                    PostgresqlTypePattern::ArrayDimension1 { .. } => {
-                        match &value.0.can_be_an_array_element() {
-                            CanBeAnArrayElement::True => Ok(Self {
-                                postgresql_type: value.0,
-                                not_null_or_nullable: value.1,
-                                postgresql_type_pattern: value.2,
-                            }),
-                            CanBeAnArrayElement::False => {
-                                Err(format!("{cant_support_array_version_message}{value:#?}"))
-                            }
-                        }
-                    }
-                },
                 CanBeNullable::False => {
                     if matches!(
                         &value.1,
@@ -656,6 +635,9 @@ pub fn generate_postgresql_types(
                         PostgresqlTypePattern::ArrayDimension1 {
                             dimension1_not_null_or_nullable,
                         } => match &value.0.can_be_an_array_element() {
+                            CanBeAnArrayElement::False => {
+                                Err(format!("{cant_support_array_version_message}{value:#?}"))
+                            },
                             CanBeAnArrayElement::True => match &dimension1_not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                     Ok(Self {
@@ -668,12 +650,28 @@ pub fn generate_postgresql_types(
                                     format!("{cant_support_nullable_variants_message}{value:#?}"),
                                 ),
                             },
-                            CanBeAnArrayElement::False => {
-                                Err(format!("{cant_support_array_version_message}{value:#?}"))
-                            }
                         },
                     }
-                }
+                },
+                CanBeNullable::True => match &value.2 {
+                    PostgresqlTypePattern::Standart => Ok(Self {
+                        postgresql_type: value.0,
+                        not_null_or_nullable: value.1,
+                        postgresql_type_pattern: value.2,
+                    }),
+                    PostgresqlTypePattern::ArrayDimension1 { .. } => {
+                        match &value.0.can_be_an_array_element() {
+                            CanBeAnArrayElement::False => {
+                                Err(format!("{cant_support_array_version_message}{value:#?}"))
+                            },
+                            CanBeAnArrayElement::True => Ok(Self {
+                                postgresql_type: value.0,
+                                not_null_or_nullable: value.1,
+                                postgresql_type_pattern: value.2,
+                            }),
+                        }
+                    }
+                },
             }
         }
     }
@@ -846,6 +844,13 @@ pub fn generate_postgresql_types(
                 }) {
                     match &element_a7126978 {
                         PostgresqlTypePattern::Standart => match &element_a897c529.can_be_nullable() {
+                            CanBeNullable::False => {
+                                acc_4351207e.push(PostgresqlTypeRecord {
+                                    postgresql_type: element_a897c529.clone(),
+                                    not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                    postgresql_type_pattern: element_a7126978,
+                                });
+                            },
                             CanBeNullable::True => postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|element_a8753f2d| {
                                 acc_4351207e.push(PostgresqlTypeRecord {
                                     postgresql_type: element_a897c529.clone(),
@@ -853,23 +858,10 @@ pub fn generate_postgresql_types(
                                     postgresql_type_pattern: element_a7126978.clone(),
                                 });
                             }),
-                            CanBeNullable::False => {
-                                acc_4351207e.push(PostgresqlTypeRecord {
-                                    postgresql_type: element_a897c529.clone(),
-                                    not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                    postgresql_type_pattern: element_a7126978,
-                                });
-                            }
                         },
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &element_a897c529.can_be_an_array_element() {
+                            CanBeAnArrayElement::False => (),
                             CanBeAnArrayElement::True => match &element_a897c529.can_be_nullable() {
-                                CanBeNullable::True => postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
-                                    acc_4351207e.push(PostgresqlTypeRecord {
-                                        postgresql_type: element_a897c529.clone(),
-                                        not_null_or_nullable,
-                                        postgresql_type_pattern: element_a7126978.clone(),
-                                    });
-                                }),
                                 CanBeNullable::False => {
                                     if matches!(&dimension1_not_null_or_nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) {
                                         for element_8b51bcb4 in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
@@ -880,9 +872,15 @@ pub fn generate_postgresql_types(
                                             });
                                         }
                                     }
-                                }
+                                },
+                                CanBeNullable::True => postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
+                                    acc_4351207e.push(PostgresqlTypeRecord {
+                                        postgresql_type: element_a897c529.clone(),
+                                        not_null_or_nullable,
+                                        postgresql_type_pattern: element_a7126978.clone(),
+                                    });
+                                }),
                             },
-                            CanBeAnArrayElement::False => (),
                         },
                     }
                 }
@@ -4618,11 +4616,11 @@ pub fn generate_postgresql_types(
                     PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                         let ident_standart_not_null_or_nullable_if_can_be_nullable_table_type_declaration_upper_camel_case = {
                             let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&match &postgresql_type.can_be_nullable() {
+                                CanBeNullable::False => quote::quote! {#ident_standart_not_null_upper_camel_case},
                                 CanBeNullable::True => {
                                     let value = generate_ident_token_stream(postgresql_type, not_null_or_nullable, &PostgresqlTypePattern::Standart);
                                     quote::quote! {#value}
                                 }
-                                CanBeNullable::False => quote::quote! {#ident_standart_not_null_upper_camel_case},
                             });
                             quote::quote! {#value}
                         };

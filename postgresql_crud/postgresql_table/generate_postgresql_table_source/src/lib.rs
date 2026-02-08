@@ -40,23 +40,21 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             &self.variant
         }
     }
-    #[allow(clippy::arbitrary_source_item_ordering)]
     enum ShouldAddBorrow {
-        True,
         False,
+        True,
     }
     impl quote::ToTokens for ShouldAddBorrow {
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
             match &self {
-                Self::True => quote::quote! {&}.to_tokens(tokens),
                 Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+                Self::True => quote::quote! {&}.to_tokens(tokens),
             }
         }
     }
-    #[allow(clippy::arbitrary_source_item_ordering)]
     enum ShouldAddReturn {
-        True,
         False,
+        True,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(
@@ -335,10 +333,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             format!("{}::{value}", naming::PostgresqlCrudSnakeCase)
         }
     }
-    #[allow(clippy::arbitrary_source_item_ordering)]
     enum ShouldWrapIntoValue {
-        True,
         False,
+        True,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     enum CreateOrUpdateOrDeleteMany {
@@ -963,8 +960,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
          status_code_token_stream: &dyn quote::ToTokens,
          should_add_return: &ShouldAddReturn| {
             let return_content_token_stream = match should_add_return {
-                ShouldAddReturn::True => quote::quote! {return response;},
                 ShouldAddReturn::False => quote::quote! {response},
+                ShouldAddReturn::True => quote::quote! {return response;},
             };
             quote::quote! {
                 let mut response = axum::response::IntoResponse::into_response(
@@ -1830,15 +1827,14 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             .build_struct(
                 &ident_read_only_ids_upper_camel_case,
                 &{
-                    #[allow(clippy::arbitrary_source_item_ordering)]
                     enum WrapIntoOption {
-                        True,
                         False,
+                        True,
                     }
                     let generate_field_token_stream = |field_ident: &dyn quote::ToTokens, field_type: &dyn quote::ToTokens, wrap_into_option: &WrapIntoOption| {
                         let field_type_token_stream = match &wrap_into_option {
-                            WrapIntoOption::True => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&generate_as_postgresql_type_read_only_ids_token_stream(&field_type)),
                             WrapIntoOption::False => generate_as_postgresql_type_read_only_ids_token_stream(&field_type),
+                            WrapIntoOption::True => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&generate_as_postgresql_type_read_only_ids_token_stream(&field_type)),
                         };
                         quote::quote! {
                             pub #field_ident: #field_type_token_stream
@@ -2583,8 +2579,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 acc_d16ac269
             };
             match should_wrap_into_value {
-                ShouldWrapIntoValue::True => wrap_into_value_token_stream(&content_token_stream),
                 ShouldWrapIntoValue::False => content_token_stream,
+                ShouldWrapIntoValue::True => wrap_into_value_token_stream(&content_token_stream),
             }
         };
     let generate_fetch_one_token_stream =
@@ -5112,10 +5108,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             field_ident_read_only_ids_merged_with_create_into_option_value_read_read_only_ids_returned_from_create_one_create_token_stream,
             field_ident_read_only_ids_merged_with_create_into_option_value_read_read_only_ids_returned_from_create_one_clone_ident_create_clone_token_stream,
         ) = {
-            #[allow(clippy::arbitrary_source_item_ordering)]
             enum ShouldAddDotClone {
-                True,
                 False,
+                True,
             }
             let generate_field_ident_read_only_ids_merged_with_create_into_option_value_read_token_stream =
                 |read_only_ids_content_token_stream: &dyn quote::ToTokens,
@@ -5126,8 +5121,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             let current_field_ident = &element.field_ident;
                             let current_field_type = &element.field_type;
                             let maybe_dot_clone_token_stream = match &should_add_dot_clone {
-                                ShouldAddDotClone::True => quote::quote! {.clone()},
                                 ShouldAddDotClone::False => proc_macro2::TokenStream::new(),
+                                ShouldAddDotClone::True => quote::quote! {.clone()},
                             };
                             quote::quote! {
                                 #current_field_ident: <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(

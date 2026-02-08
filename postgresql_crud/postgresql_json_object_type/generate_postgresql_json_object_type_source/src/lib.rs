@@ -131,7 +131,6 @@ pub fn generate_postgresql_json_object_type(
         .into_iter()
         .enumerate()
         .map(|(index, element)| {
-            #[allow(clippy::arbitrary_source_item_ordering)]
             #[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
             enum IsStandartWithId {
                 False,
@@ -198,10 +197,9 @@ pub fn generate_postgresql_json_object_type(
                 WithSerdeOptionIsNoneAnnotation,
                 WithoutSerdeOptionIsNoneAnnotation,
             }
-            #[allow(clippy::arbitrary_source_item_ordering)]
             enum ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation {
-                True,
                 False,
+                True,
             }
             enum NewTypeOrStructDeclaration {
                 NewType,
@@ -1121,8 +1119,8 @@ pub fn generate_postgresql_json_object_type(
                     let field_ident_double_quotes_token_stream: &dyn quote::ToTokens = &generate_quotes::double_quotes_token_stream(&field_ident_stringified);
                     let field_type_as_crud_postgresql_json_type_from_field_token_stream = generate_type_as_postgresql_json_type_token_stream(&element_f3a1af0f.field_type);
                     let ident_or_ident_with_id_standart_not_null_select_element_upper_camel_case: &dyn quote::ToTokens = match &is_standart_with_id {
+                        IsStandartWithId::False => &ident_standart_not_null_select_element_upper_camel_case,
                         IsStandartWithId::True => &ident_with_id_standart_not_null_select_element_upper_camel_case,
-                        IsStandartWithId::False => &ident_standart_not_null_select_element_upper_camel_case
                     };
                     quote::quote! {
                         #ident_or_ident_with_id_standart_not_null_select_element_upper_camel_case::#variant_name_token_stream(value_3c8acf6a) => match #field_type_as_crud_postgresql_json_type_from_field_token_stream::#select_query_part_snake_case(
@@ -2128,15 +2126,14 @@ pub fn generate_postgresql_json_object_type(
                         &{
                             let current_vec_syn_field = get_vec_syn_field(is_standart_with_id);
                             let (fields_reference_token_stream, fields_token_stream) = {
-                                #[allow(clippy::arbitrary_source_item_ordering)]
                                 enum WithReference {
-                                    True,
                                     False,
+                                    True,
                                 }
                                 let generate_fields_token_stream = |with_reference: &WithReference| {
                                     let maybe_reference_symbol_token_stream = match &with_reference {
-                                        WithReference::True => quote::quote! {&},
                                         WithReference::False => proc_macro2::TokenStream::new(),
+                                        WithReference::True => quote::quote! {&},
                                     };
                                     let fields_token_stream = current_vec_syn_field.iter().map(|element_a6b6e788| {
                                         let field_ident = &element_a6b6e788.field_ident;
@@ -2359,8 +2356,8 @@ pub fn generate_postgresql_json_object_type(
             };
             let generate_fields_read_only_ids_into_option_value_read_inner_token_stream = |is_standart_with_id: &IsStandartWithId, parameters_token_stream: &dyn quote::ToTokens|{
                 let current_ident_token_stream: &dyn quote::ToTokens = match &is_standart_with_id {
+                    IsStandartWithId::False => &ident_standart_not_null_read_inner_upper_camel_case,
                     IsStandartWithId::True => &ident_with_id_standart_not_null_read_inner_upper_camel_case,
-                    IsStandartWithId::False => &ident_standart_not_null_read_inner_upper_camel_case
                 };
                 let content_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element_278a1e1d| {
                     let field_ident = &element_278a1e1d.field_ident;
@@ -2602,8 +2599,8 @@ pub fn generate_postgresql_json_object_type(
                 delete_token_stream: &dyn quote::ToTokens
             | {
                 let maybe_serde_skip_serializing_if_vec_is_empty_token_stream = match &should_add_serde_skip_serializing_if_vec_is_empty_annotation {
-                    ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::True => quote::quote! {#[serde(skip_serializing_if = "Vec::is_empty")]},
                     ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::False => proc_macro2::TokenStream::new(),
+                    ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::True => quote::quote! {#[serde(skip_serializing_if = "Vec::is_empty")]},
                 };
                 quote::quote! {
                     #maybe_serde_skip_serializing_if_vec_is_empty_token_stream
@@ -5017,11 +5014,10 @@ pub fn generate_postgresql_json_object_type(
                                                 option_additional_parameters_token_stream,
                                                 parameters_token_stream
                                             ) = {
-                                                #[allow(clippy::arbitrary_source_item_ordering)]
                                                 #[derive(Clone)]
                                                 enum ShouldAddDotClone {
+                                                    False,
                                                     True,
-                                                    False
                                                 }
                                                 let generate_parameters_token_stream = |
                                                     should_add_dot_clone: ShouldAddDotClone,
@@ -5031,8 +5027,8 @@ pub fn generate_postgresql_json_object_type(
                                                         let current_field_ident = &element_value.field_ident;
                                                         if field_ident == current_field_ident {
                                                             let maybe_dot_clone_token_stream = match should_add_dot_clone.clone() {
-                                                                ShouldAddDotClone::True => quote::quote! { .clone() },
                                                                 ShouldAddDotClone::False => proc_macro2::TokenStream::new(),
+                                                                ShouldAddDotClone::True => quote::quote! { .clone() },
                                                             };
                                                             quote::quote! {#element_token_stream #maybe_dot_clone_token_stream}
                                                         } else {
