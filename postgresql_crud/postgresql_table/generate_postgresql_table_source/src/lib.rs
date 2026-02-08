@@ -6277,8 +6277,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 }
                                 else if current_field_ident == field_ident {
                                     generate_some_postgresql_type_where_try_new_and_token_stream(&quote::quote!{match element_feacc53b {
-                                        #import_path::SingleOrMultiple::Single(single) => std::iter::once(single).collect(),
                                         #import_path::SingleOrMultiple::Multiple(multiple) => multiple.into_vec().into_iter().collect(),
+                                        #import_path::SingleOrMultiple::Single(single) => std::iter::once(single).collect(),
                                     }})
                                 } else {
                                     none_token_stream.clone()

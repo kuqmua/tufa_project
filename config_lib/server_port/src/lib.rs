@@ -50,7 +50,6 @@ impl TryFrom<u16> for ServerPort {
         }
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 impl<'de> serde::Deserialize<'de> for ServerPort {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where

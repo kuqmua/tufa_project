@@ -910,8 +910,13 @@ pub struct PaginationBase {
     limit: i64,
     offset: i64,
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 impl PaginationBase {
+    #[must_use]
+    pub const fn end(&self) -> i64 {
+        self.offset
+            .checked_add(self.limit)
+            .expect("8a297b66-4f42-4b48-8e18-cc1f35302e0a")
+    }
     #[must_use]
     pub const fn new_unchecked(limit: i64, offset: i64) -> Self {
         Self { limit, offset }
@@ -919,12 +924,6 @@ impl PaginationBase {
     #[must_use]
     pub const fn start(&self) -> i64 {
         self.offset
-    }
-    #[must_use]
-    pub const fn end(&self) -> i64 {
-        self.offset
-            .checked_add(self.limit)
-            .expect("8a297b66-4f42-4b48-8e18-cc1f35302e0a")
     }
 }
 impl<'query_lifetime> PostgresqlTypeWhereFilter<'query_lifetime> for PaginationBase {
@@ -1009,8 +1008,15 @@ pub enum PaginationStartsWithZeroTryNewErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 impl PaginationStartsWithZero {
+    #[must_use]
+    pub const fn end(&self) -> i64 {
+        self.0.end()
+    }
+    #[must_use]
+    pub const fn start(&self) -> i64 {
+        self.0.start()
+    }
     pub fn try_new(
         limit: i64,
         offset: i64,
@@ -1042,14 +1048,6 @@ impl PaginationStartsWithZero {
                 },
             )
         }
-    }
-    #[must_use]
-    pub const fn start(&self) -> i64 {
-        self.0.start()
-    }
-    #[must_use]
-    pub const fn end(&self) -> i64 {
-        self.0.end()
     }
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
@@ -1803,7 +1801,6 @@ impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
         Self(DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
     Debug,
     Clone,
@@ -1815,8 +1812,8 @@ impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
     schemars::JsonSchema,
 )]
 pub enum SingleOrMultiple<T: std::fmt::Debug + PartialEq + Clone> {
-    Single(T),
     Multiple(NotEmptyUniqueVec<T>),
+    Single(T),
 }
 pub fn increment_checked_add_one_returning_increment(
     increment: &mut u64,

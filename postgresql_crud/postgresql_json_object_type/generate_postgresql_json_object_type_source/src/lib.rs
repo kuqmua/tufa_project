@@ -6623,6 +6623,16 @@ pub fn generate_postgresql_json_object_type(
                                                     let and = #import_path::LogicalOperator::And;
                                                     for element_3e86d33d in value_a2900ac9.clone().into_vec() {
                                                         match element_3e86d33d {
+                                                            #import_path::SingleOrMultiple::Multiple(multiple) => {
+                                                                acc_a94bd7fb.push(
+                                                                    #import_path::SingleOrMultiple::Single(
+                                                                        #ident_where_upper_camel_case::#field_ident_upper_camel_case(#import_path::PostgresqlTypeWhere::new(
+                                                                            and,
+                                                                            multiple
+                                                                        ))
+                                                                    )
+                                                                );
+                                                            },
                                                             #import_path::SingleOrMultiple::Single(single) => {
                                                                 acc_a94bd7fb.push(
                                                                     #import_path::SingleOrMultiple::Single(
@@ -6633,26 +6643,16 @@ pub fn generate_postgresql_json_object_type(
                                                                     )
                                                                 );
                                                             },
-                                                            #import_path::SingleOrMultiple::Multiple(multiple) => {
-                                                                acc_a94bd7fb.push(
-                                                                    #import_path::SingleOrMultiple::Single(
-                                                                        #ident_where_upper_camel_case::#field_ident_upper_camel_case(#import_path::PostgresqlTypeWhere::new(
-                                                                            and,
-                                                                            multiple
-                                                                        ))
-                                                                    )
-                                                                );
-                                                            }
                                                         }
                                                     }
                                                     let value_3e75a2f2 = #import_path::SingleOrMultiple::Single(
                                                         #ident_where_upper_camel_case::#field_ident_upper_camel_case(#import_path::PostgresqlTypeWhere::try_new(
                                                             and,
                                                             value_a2900ac9.into_vec().into_iter().flat_map(|element_9efefcdc| match element_9efefcdc {
+                                                                #import_path::SingleOrMultiple::Multiple(multiple) => multiple.into_vec(),
                                                                 #import_path::SingleOrMultiple::Single(single) => {
                                                                     std::iter::once(single).collect()
                                                                 }
-                                                                #import_path::SingleOrMultiple::Multiple(multiple) => multiple.into_vec(),
                                                             })
                                                             .fold(Vec::new(), |mut acc_be2a6606, element_7ae146ee| {
                                                                 if !acc_be2a6606.contains(&element_7ae146ee) {
@@ -6712,14 +6712,14 @@ pub fn generate_postgresql_json_object_type(
                                                     for element_22ac4087 in value_f190793e.clone().into_vec() {
                                                         let current_where = #ident_where_upper_camel_case::#element_field_ident_upper_camel_case(
                                                             match element_22ac4087 {
+                                                                #import_path::SingleOrMultiple::Multiple(multiple) => #import_path::PostgresqlTypeWhere::new(
+                                                                    and,
+                                                                    multiple.clone()
+                                                                ),
                                                                 #import_path::SingleOrMultiple::Single(single) => #import_path::PostgresqlTypeWhere::try_new(
                                                                     and,
                                                                     vec![single]
                                                                 ).expect("2ed4dc5e-b893-4bd9-b05c-ffd3bab797cd"),
-                                                                #import_path::SingleOrMultiple::Multiple(multiple) => #import_path::PostgresqlTypeWhere::new(
-                                                                    and,
-                                                                    multiple.clone()
-                                                                )
                                                             }
                                                         );
                                                         all_fields_acc.push(current_where.clone());
@@ -6741,10 +6741,10 @@ pub fn generate_postgresql_json_object_type(
                                                     }
                                                     match #import_path::NotEmptyUniqueVec::try_new(
                                                         value_f190793e.into_vec().into_iter().flat_map(|element_6df4f0be| match element_6df4f0be {
+                                                            #import_path::SingleOrMultiple::Multiple(multiple) => multiple.into_vec(),
                                                             #import_path::SingleOrMultiple::Single(single) => {
                                                                 std::iter::once(single).collect()
                                                             }
-                                                            #import_path::SingleOrMultiple::Multiple(multiple) => multiple.into_vec(),
                                                         })
                                                         .fold(Vec::new(), |mut acc_01265629, element_9a7c960d| {
                                                             if !acc_01265629.contains(&element_9a7c960d) {
@@ -6834,6 +6834,9 @@ pub fn generate_postgresql_json_object_type(
                                                 let mut acc_e0d72451 = vec![];
                                                 for element_4632f100 in value_35662b3a.into_vec() {
                                                     match element_4632f100 {
+                                                        #import_path::SingleOrMultiple::Multiple(multiple) => {
+                                                            acc_e0d72451.push(#import_path::SingleOrMultiple::Single(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(multiple))));
+                                                        },
                                                         #import_path::SingleOrMultiple::Single(single) => match #import_path::NotEmptyUniqueVec::try_new(vec![single]) {
                                                             Ok(value_4ce6ecd3) => {
                                                                 acc_e0d72451.push(#import_path::SingleOrMultiple::Single(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(value_4ce6ecd3))));
@@ -6843,9 +6846,6 @@ pub fn generate_postgresql_json_object_type(
                                                                 #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique { .. } => panic!("626ffa77-f81a-46ce-b5a0-44663fe1f182"),
                                                             },
                                                         },
-                                                        #import_path::SingleOrMultiple::Multiple(multiple) => {
-                                                            acc_e0d72451.push(#import_path::SingleOrMultiple::Single(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(multiple))));
-                                                        }
                                                     }
                                                 }
                                                 acc_e0d72451
