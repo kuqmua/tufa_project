@@ -30,15 +30,13 @@ impl std::fmt::Display for EncodeFormat {
         }
     }
 }
-impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl
-    for EncodeFormat
-{
-    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
+impl postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl for EncodeFormat {
+    fn default_but_option_is_some_and_vec_contains_one_el() -> Self {
         Self::default()
     }
 }
 
-//difference between NotEmptyUniqueVec and PostgresqlJsonTypeNotEmptyUniqueVec only in postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl impl with different generic requirement and PostgresqlTypeWhereFilter
+//difference between NotEmptyUniqueVec and PostgresqlJsonTypeNotEmptyUniqueVec only in postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl impl with different generic requirement and PostgresqlTypeWhereFilter
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct PostgresqlJsonTypeNotEmptyUniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
@@ -194,12 +192,12 @@ const _: () = {
         }
     }
 };
-impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl>
-    postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl
+impl<T: postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl>
+    postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl
     for PostgresqlJsonTypeNotEmptyUniqueVec<T>
 {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
-        Self(vec![postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::default_but_option_is_always_some_and_vec_always_contains_one_el()])
+    fn default_but_option_is_some_and_vec_contains_one_el() -> Self {
+        Self(vec![postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl::default_but_option_is_some_and_vec_contains_one_el()])
     }
 }
 impl<T> Default for PostgresqlJsonTypeNotEmptyUniqueVec<T> {
@@ -365,8 +363,8 @@ impl std::fmt::Display for RegexRegex {
         write!(f, "{}", self.0)
     }
 }
-impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl for RegexRegex {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
+impl postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl for RegexRegex {
+    fn default_but_option_is_some_and_vec_contains_one_el() -> Self {
         Self(regex::Regex::new("[a-z]+").expect("22a9eda5-7898-41d7-8176-8acb97786e1e"))
     }
 }
@@ -378,10 +376,8 @@ pub enum RegularExpressionCase {
     Insensitive,
     Sensitive,
 }
-impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl
-    for RegularExpressionCase
-{
-    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
+impl postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl for RegularExpressionCase {
+    fn default_but_option_is_some_and_vec_contains_one_el() -> Self {
         Self::Sensitive
     }
 }
@@ -622,15 +618,15 @@ const _: () = {
     }
 };
 impl<
-    T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl
+    T: postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl
         + sqlx::Type<sqlx::Postgres>
         + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
-> postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl for Between<T>
+> postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl for Between<T>
 {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
+    fn default_but_option_is_some_and_vec_contains_one_el() -> Self {
         Self {
-            start: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::default_but_option_is_always_some_and_vec_always_contains_one_el(),
-            end: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::default_but_option_is_always_some_and_vec_always_contains_one_el(),
+            start: postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl::default_but_option_is_some_and_vec_contains_one_el(),
+            end: postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl::default_but_option_is_some_and_vec_contains_one_el(),
         }
     }
 }
@@ -786,12 +782,12 @@ const _: () = {
         }
     }
 };
-impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl>
-    postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl
+impl<T: postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl>
+    postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl
     for PostgresqlTypeNotEmptyUniqueVec<T>
 {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
-        Self(vec![postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::default_but_option_is_always_some_and_vec_always_contains_one_el()])
+    fn default_but_option_is_some_and_vec_contains_one_el() -> Self {
+        Self(vec![postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl::default_but_option_is_some_and_vec_contains_one_el()])
     }
 }
 impl<T> Default for PostgresqlTypeNotEmptyUniqueVec<T> {
@@ -1055,13 +1051,13 @@ const _: () = {
     }
 };
 impl<
-    T: Clone + postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl,
+    T: Clone + postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl,
     const LENGTH: usize,
-> postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl
+> postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl
     for BoundedStdVecVec<T, LENGTH>
 {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
-        Self(vec![<T as postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl>::default_but_option_is_always_some_and_vec_always_contains_one_el(); LENGTH])
+    fn default_but_option_is_some_and_vec_contains_one_el() -> Self {
+        Self(vec![<T as postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl>::default_but_option_is_some_and_vec_contains_one_el(); LENGTH])
     }
 }
 ////////////////

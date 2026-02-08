@@ -546,8 +546,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
     ["table", "name"],
     ["generate", "postgresql", "crud", "primary", "key"],
     [
-        "default", "but", "option", "is", "always", "some", "and", "vec", "always", "contains",
-        "one", "el"
+        "default", "but", "option", "is", "some", "and", "vec", "contains", "one", "el"
     ],
     [
         "all", "variants", "array", "default", "but", "option", "is", "some", "and", "vec",
@@ -1110,7 +1109,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
     ],
     [
         "read", "only", "ids", "to", "option", "value", "read", "default", "but", "option", "is",
-        "always", "some", "and", "vec", "always", "contains", "one", "el"
+        "some", "and", "vec", "contains", "one", "el"
     ],
     [
         "read", "from", "previous", "read", "unwraped", "merged", "with", "update"
@@ -1126,8 +1125,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
         "read", "only", "ids", "merged", "with", "create", "into", "option", "value", "read"
     ],
     [
-        "default", "but", "option", "is", "always", "some", "and", "vec", "always", "contains",
-        "one", "el", "with", "max", "page", "size"
+        "default", "but", "option", "is", "some", "and", "vec", "contains", "one", "el", "with",
+        "max", "page", "size"
     ],
     [
         "all", "variants", "array", "default", "but", "option", "is", "some", "and", "vec",

@@ -644,9 +644,9 @@ pub fn generate_postgresql_json_types(
         let must_use_ts = token_patterns::MustUse;
         let allow_clippy_arbitrary_source_item_ordering_ts = token_patterns::AllowClippyArbitrarySourceItemOrdering;
 
-        let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_ts = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl;
-        let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCall;
-        let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_call_ts = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSizeCall;
+        let postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_ts = token_patterns::PostgresqlCrudCommonDefaultButOptionIsSomeAndVecContainsOneEl;
+        let postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_call_ts = token_patterns::PostgresqlCrudCommonDefaultButOptionIsSomeAndVecContainsOneElCall;
+        let postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_call_ts = token_patterns::PostgresqlCrudCommonDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSizeCall;
 
         let generate_import_path_value_initialization_ts = |content_ts: &dyn quote::ToTokens| postgresql_crud_macros_common::generate_value_initialization_ts(&import_path, &content_ts);
         let generate_ident_ts = |current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern| {
@@ -1160,7 +1160,7 @@ pub fn generate_postgresql_json_types(
             };
             let impl_std_fmt_display_for_ident_origin_ts = macros_helpers::generate_impl_std_fmt_display_ts(&proc_macro2::TokenStream::new(), &ident_origin_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {write!(f, "{self:?}")});
             let impl_error_occurence_lib_to_std_string_string_for_ident_origin_ts = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_ts(&proc_macro2::TokenStream::new(), &ident_origin_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {format!("{self:#?}")});
-            let impl_default_but_option_is_always_some_and_vec_always_contains_one_el_for_ident_origin_ts = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_for_tokens_ts(&ident_origin_upper_camel_case, &{
+            let impl_default_but_option_is_some_and_vec_contains_one_el_for_ident_origin_ts = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(&ident_origin_upper_camel_case, &{
                 let content_ts = match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_type {
@@ -1178,11 +1178,11 @@ pub fn generate_postgresql_json_types(
                             PostgresqlJsonType::StdStringStringAsJsonbString => quote::quote! {String::default()},
                             PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote! {uuid::Uuid::new_v4()},
                         },
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {Some(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts)},
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {Some(#postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_call_ts)},
                     },
                     PostgresqlJsonTypePattern::ArrayDimension1 { .. } | PostgresqlJsonTypePattern::ArrayDimension2 { .. } | PostgresqlJsonTypePattern::ArrayDimension3 { .. } | PostgresqlJsonTypePattern::ArrayDimension4 { .. } => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {vec![#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts]},
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {Some(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts)},
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {vec![#postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_call_ts]},
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {Some(#postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_call_ts)},
                     },
                 };
                 quote::quote! {Self(#content_ts)}
@@ -1198,7 +1198,7 @@ pub fn generate_postgresql_json_types(
                 #maybe_impl_is_string_empty_for_ident_origin_ts
                 #impl_std_fmt_display_for_ident_origin_ts
                 #impl_error_occurence_lib_to_std_string_string_for_ident_origin_ts
-                #impl_default_but_option_is_always_some_and_vec_always_contains_one_el_for_ident_origin_ts
+                #impl_default_but_option_is_some_and_vec_contains_one_el_for_ident_origin_ts
                 #impl_sqlx_type_sqlx_postgres_for_ident_origin_ts
                 #impl_sqlx_encode_sqlx_postgres_for_ident_origin_ts
             }
@@ -1227,8 +1227,8 @@ pub fn generate_postgresql_json_types(
                     }
                 }
             };
-            let impl_default_but_option_is_always_some_and_vec_always_contains_one_el_for_ident_table_type_declaration_ts =
-                postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_for_tokens_ts(&ident_table_type_declaration_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts)});
+            let impl_default_but_option_is_some_and_vec_contains_one_el_for_ident_table_type_declaration_ts =
+                postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(&ident_table_type_declaration_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_call_ts)});
             //todo maybe add to trait?
             let impl_sqlx_encode_sqlx_postgres_for_ident_table_type_declaration_ts = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_ts(&ident_table_type_declaration_upper_camel_case, &quote::quote! {&#self_snake_case.0});
             //todo maybe add to trait?
@@ -1236,7 +1236,7 @@ pub fn generate_postgresql_json_types(
             quote::quote! {
                 #ident_table_type_declaration_ts
                 #impl_ident_table_type_declaration_ts
-                #impl_default_but_option_is_always_some_and_vec_always_contains_one_el_for_ident_table_type_declaration_ts
+                #impl_default_but_option_is_some_and_vec_contains_one_el_for_ident_table_type_declaration_ts
                 #impl_sqlx_encode_sqlx_postgres_for_ident_table_type_declaration_ts
                 #impl_sqlx_type_sqlx_postgres_for_ident_table_type_declaration_ts
             }
@@ -1263,12 +1263,12 @@ pub fn generate_postgresql_json_types(
                     }
                 }
             };
-            let impl_default_but_option_is_always_some_and_vec_always_contains_one_el_for_ident_create_ts =
-                postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_for_tokens_ts(&ident_create_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts)});
+            let impl_default_but_option_is_some_and_vec_contains_one_el_for_ident_create_ts =
+                postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(&ident_create_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_call_ts)});
             quote::quote! {
                 #ident_create_ts
                 #impl_ident_create_ts
-                #impl_default_but_option_is_always_some_and_vec_always_contains_one_el_for_ident_create_ts
+                #impl_default_but_option_is_some_and_vec_contains_one_el_for_ident_create_ts
             }
         };
         let ident_create_for_query_ts = {
@@ -1341,8 +1341,8 @@ pub fn generate_postgresql_json_types(
                     |()| proc_macro2::TokenStream::new(),
                     |array_dimension| {
                         let content_ts: &dyn quote::ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
-                            postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts,
-                            postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_call_ts,
+                            postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_call_ts,
+                            postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_call_ts,
                         };
                         let mut arguments_ts = Vec::new();
                         for el_d56aec99 in 1..=array_dimension.to_usize() {
@@ -1356,14 +1356,14 @@ pub fn generate_postgresql_json_types(
                 );
                 quote::quote! {Self{#content_ts}}
             };
-            let impl_default_but_option_is_always_some_and_vec_always_contains_one_el_for_postgresql_json_type_ident_select_ts =
-                postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_for_tokens_ts(&ident_select_upper_camel_case, &generate_default_some_one_content_ts(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne));
-            let impl_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_for_postgresql_json_type_ident_select_ts =
-                postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_for_tokens_ts(&ident_select_upper_camel_case, &generate_default_some_one_content_ts(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize));
+            let impl_default_but_option_is_some_and_vec_contains_one_el_for_postgresql_json_type_ident_select_ts =
+                postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(&ident_select_upper_camel_case, &generate_default_some_one_content_ts(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne));
+            let impl_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_for_postgresql_json_type_ident_select_ts =
+                postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_for_tokens_ts(&ident_select_upper_camel_case, &generate_default_some_one_content_ts(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize));
             quote::quote! {
                 #ident_select_ts
-                #impl_default_but_option_is_always_some_and_vec_always_contains_one_el_for_postgresql_json_type_ident_select_ts
-                #impl_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_for_postgresql_json_type_ident_select_ts
+                #impl_default_but_option_is_some_and_vec_contains_one_el_for_postgresql_json_type_ident_select_ts
+                #impl_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_for_postgresql_json_type_ident_select_ts
             }
         };
         let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
@@ -1787,14 +1787,14 @@ pub fn generate_postgresql_json_types(
                     }
                 }
             };
-            let impl_default_but_option_is_always_some_and_vec_always_contains_one_el_for_ident_read_ts =
-                postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_for_tokens_ts(&ident_read_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts)});
+            let impl_default_but_option_is_some_and_vec_contains_one_el_for_ident_read_ts =
+                postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(&ident_read_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_call_ts)});
             let impl_sqlx_encode_sqlx_postgres_for_ident_read_ts = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_ts(&ident_read_upper_camel_case, &quote::quote! {&#self_snake_case.0});
             let impl_sqlx_type_sqlx_postgres_for_ident_read_ts = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_ts(&ident_read_upper_camel_case, &postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_ts(&ident_read_inner_upper_camel_case));
             quote::quote! {
                 #ident_read_ts
                 #impl_ident_read_ts
-                #impl_default_but_option_is_always_some_and_vec_always_contains_one_el_for_ident_read_ts
+                #impl_default_but_option_is_some_and_vec_contains_one_el_for_ident_read_ts
                 #impl_sqlx_encode_sqlx_postgres_for_ident_read_ts
                 #impl_sqlx_type_sqlx_postgres_for_ident_read_ts
             }
@@ -2001,13 +2001,13 @@ pub fn generate_postgresql_json_types(
             } else {
                 proc_macro2::TokenStream::new()
             };
-            let impl_default_but_option_is_always_some_and_vec_always_contains_one_el_for_ident_update_ts =
-                postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_for_tokens_ts(&ident_update_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts)});
+            let impl_default_but_option_is_some_and_vec_contains_one_el_for_ident_update_ts =
+                postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(&ident_update_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_call_ts)});
             quote::quote! {
                 #ident_update_ts
                 #impl_ident_update_ts
                 #impl_error_occurence_lib_to_std_string_string_for_ident_update_ts
-                #impl_default_but_option_is_always_some_and_vec_always_contains_one_el_for_ident_update_ts
+                #impl_default_but_option_is_some_and_vec_contains_one_el_for_ident_update_ts
             }
         };
         let ident_update_for_query_ts = {
@@ -3047,8 +3047,8 @@ pub fn generate_postgresql_json_types(
                             <
                                 <Self as #import_path::PostgresqlJsonType>::Read
                                 as
-                                #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_ts
-                            >::default_but_option_is_always_some_and_vec_always_contains_one_el()
+                                #postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_ts
+                            >::default_but_option_is_some_and_vec_contains_one_el()
                         )
                     }
                 });
@@ -3159,11 +3159,11 @@ pub fn generate_postgresql_json_types(
                 });
                 quote::quote! {#ident_read_only_ids_upper_camel_case(#value_initialization_ts)}
             };
-            let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_el_ts = {
+            let read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el_ts = {
                 let value_initialization_ts = generate_import_path_value_initialization_ts(&if matches!(&postgresql_json_type, PostgresqlJsonType::UuidUuidAsJsonbString) {
                     quote::quote! {#ident_read_upper_camel_case::new(#value_snake_case.0.#value_snake_case.clone())}
                 } else {
-                    quote::quote! {#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts}
+                    quote::quote! {#postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_call_ts}
                 });
                 quote::quote! {Some(#value_initialization_ts)}
             };
@@ -3783,7 +3783,7 @@ pub fn generate_postgresql_json_types(
                 &read_inner_into_update_with_new_or_try_new_unwraped_ts,
                 &read_only_ids_into_option_value_read_inner_ts,
                 &update_to_read_only_ids_ts,
-                &read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_el_ts,
+                &read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el_ts,
                 &previous_read_merged_with_option_update_into_read_ts,
                 &read_only_ids_merged_with_create_into_read_ts,
                 &read_only_ids_merged_with_create_into_option_value_read_ts,

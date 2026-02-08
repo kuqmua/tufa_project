@@ -352,101 +352,97 @@ impl quote::ToTokens for StdFmtDisplay {
 }
 
 #[derive(Debug, Clone, Copy)]
-pub struct CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl;
-impl quote::ToTokens for CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl {
+pub struct CrateDefaultButOptionIsSomeAndVecContainsOneEl;
+impl quote::ToTokens for CrateDefaultButOptionIsSomeAndVecContainsOneEl {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let crate_path_ts = crate_path_ts();
-        let default_but_option_is_always_some_and_vec_always_contains_one_el_upper_camel_case =
-            default_but_option_is_always_some_and_vec_always_contains_one_el_upper_camel_case();
+        let default_but_option_is_some_and_vec_contains_one_el_upper_camel_case =
+            default_but_option_is_some_and_vec_contains_one_el_upper_camel_case();
         quote::quote! {
             #crate_path_ts
-            #default_but_option_is_always_some_and_vec_always_contains_one_el_upper_camel_case
+            #default_but_option_is_some_and_vec_contains_one_el_upper_camel_case
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCall;
-impl quote::ToTokens for CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCall {
+pub struct CrateDefaultButOptionIsSomeAndVecContainsOneElCall;
+impl quote::ToTokens for CrateDefaultButOptionIsSomeAndVecContainsOneElCall {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let crate_path_ts = crate_path_ts();
-        let default_but_option_is_always_some_and_vec_always_contains_one_el_upper_camel_case =
-            default_but_option_is_always_some_and_vec_always_contains_one_el_upper_camel_case();
-        let path_default_but_option_is_always_some_and_vec_always_contains_one_el_call =
-            path_default_but_option_is_always_some_and_vec_always_contains_one_el_call();
+        let default_but_option_is_some_and_vec_contains_one_el_upper_camel_case =
+            default_but_option_is_some_and_vec_contains_one_el_upper_camel_case();
+        let path_default_but_option_is_some_and_vec_contains_one_el_call =
+            path_default_but_option_is_some_and_vec_contains_one_el_call();
         quote::quote! {
             #crate_path_ts
-            #default_but_option_is_always_some_and_vec_always_contains_one_el_upper_camel_case
-            #path_default_but_option_is_always_some_and_vec_always_contains_one_el_call
+            #default_but_option_is_some_and_vec_contains_one_el_upper_camel_case
+            #path_default_but_option_is_some_and_vec_contains_one_el_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl;
-impl quote::ToTokens for PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl {
+pub struct PostgresqlCrudDefaultButOptionIsSomeAndVecContainsOneEl;
+impl quote::ToTokens for PostgresqlCrudDefaultButOptionIsSomeAndVecContainsOneEl {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let postgresql_crud = postgresql_crud();
-        let default_but_option_is_always_some_and_vec_always_contains_one_el_upper_camel_case =
-            default_but_option_is_always_some_and_vec_always_contains_one_el_upper_camel_case();
+        let default_but_option_is_some_and_vec_contains_one_el_upper_camel_case =
+            default_but_option_is_some_and_vec_contains_one_el_upper_camel_case();
         quote::quote! {
             #postgresql_crud
-            #default_but_option_is_always_some_and_vec_always_contains_one_el_upper_camel_case
+            #default_but_option_is_some_and_vec_contains_one_el_upper_camel_case
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCall;
-impl quote::ToTokens for PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCall {
+pub struct PostgresqlCrudDefaultButOptionIsSomeAndVecContainsOneElCall;
+impl quote::ToTokens for PostgresqlCrudDefaultButOptionIsSomeAndVecContainsOneElCall {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_el =
-            PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl;
-        let path_default_but_option_is_always_some_and_vec_always_contains_one_el_call =
-            path_default_but_option_is_always_some_and_vec_always_contains_one_el_call();
+        let postgresql_crud_default_but_option_is_some_and_vec_contains_one_el =
+            PostgresqlCrudDefaultButOptionIsSomeAndVecContainsOneEl;
+        let path_default_but_option_is_some_and_vec_contains_one_el_call =
+            path_default_but_option_is_some_and_vec_contains_one_el_call();
         quote::quote! {
-            #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_el
-            #path_default_but_option_is_always_some_and_vec_always_contains_one_el_call
+            #postgresql_crud_default_but_option_is_some_and_vec_contains_one_el
+            #path_default_but_option_is_some_and_vec_contains_one_el_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl;
-impl quote::ToTokens for PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl {
+pub struct PostgresqlCrudCommonDefaultButOptionIsSomeAndVecContainsOneEl;
+impl quote::ToTokens for PostgresqlCrudCommonDefaultButOptionIsSomeAndVecContainsOneEl {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let postgresql_crud_common = postgresql_crud_common();
-        let default_but_option_is_always_some_and_vec_always_contains_one_el_upper_camel_case =
-            default_but_option_is_always_some_and_vec_always_contains_one_el_upper_camel_case();
+        let default_but_option_is_some_and_vec_contains_one_el_upper_camel_case =
+            default_but_option_is_some_and_vec_contains_one_el_upper_camel_case();
         quote::quote! {
             #postgresql_crud_common
-            #default_but_option_is_always_some_and_vec_always_contains_one_el_upper_camel_case
+            #default_but_option_is_some_and_vec_contains_one_el_upper_camel_case
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCall;
-impl quote::ToTokens
-    for PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCall
-{
+pub struct PostgresqlCrudCommonDefaultButOptionIsSomeAndVecContainsOneElCall;
+impl quote::ToTokens for PostgresqlCrudCommonDefaultButOptionIsSomeAndVecContainsOneElCall {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el =
-            PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl;
-        let path_default_but_option_is_always_some_and_vec_always_contains_one_el_call =
-            path_default_but_option_is_always_some_and_vec_always_contains_one_el_call();
+        let postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el =
+            PostgresqlCrudCommonDefaultButOptionIsSomeAndVecContainsOneEl;
+        let path_default_but_option_is_some_and_vec_contains_one_el_call =
+            path_default_but_option_is_some_and_vec_contains_one_el_call();
         quote::quote! {
-            #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el
-            #path_default_but_option_is_always_some_and_vec_always_contains_one_el_call
+            #postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el
+            #path_default_but_option_is_some_and_vec_contains_one_el_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl;
-impl quote::ToTokens
-    for CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl
-{
+pub struct CrateAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneEl;
+impl quote::ToTokens for CrateAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneEl {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let crate_path_ts = crate_path_ts();
         let all_variants_array_default_but_option_is_some_and_vec_contains_one_el_upper_camel_case =
@@ -459,13 +455,11 @@ impl quote::ToTokens
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCall;
-impl quote::ToTokens
-    for CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCall
-{
+pub struct CrateAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElCall;
+impl quote::ToTokens for CrateAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElCall {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let crate_all_variants_array_default_but_option_is_some_and_vec_contains_one_el =
-            CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl;
+            CrateAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneEl;
         let path_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_call =
             path_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_call();
         quote::quote! {
@@ -476,9 +470,9 @@ impl quote::ToTokens
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl;
+pub struct PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneEl;
 impl quote::ToTokens
-    for PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl
+    for PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneEl
 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let postgresql_crud = postgresql_crud();
@@ -492,13 +486,13 @@ impl quote::ToTokens
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCall;
+pub struct PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElCall;
 impl quote::ToTokens
-    for PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCall
+    for PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElCall
 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let postgresql_crud_all_variants_array_default_but_option_is_some_and_vec_contains_one_el =
-            PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl;
+            PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneEl;
         let path_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_call =
             path_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_call();
         quote::quote! {
@@ -509,11 +503,14 @@ impl quote::ToTokens
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl;
-impl quote::ToTokens for PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl {
+pub struct PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneEl;
+impl quote::ToTokens
+    for PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneEl
+{
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let postgresql_crud_common = postgresql_crud_common();
-        let all_variants_array_default_but_option_is_some_and_vec_contains_one_el_upper_camel_case = all_variants_array_default_but_option_is_some_and_vec_contains_one_el_upper_camel_case();
+        let all_variants_array_default_but_option_is_some_and_vec_contains_one_el_upper_camel_case =
+            all_variants_array_default_but_option_is_some_and_vec_contains_one_el_upper_camel_case();
         quote::quote! {
             #postgresql_crud_common
             #all_variants_array_default_but_option_is_some_and_vec_contains_one_el_upper_camel_case
@@ -522,11 +519,15 @@ impl quote::ToTokens for PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptio
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCall;
-impl quote::ToTokens for PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCall {
+pub struct PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElCall;
+impl quote::ToTokens
+    for PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElCall
+{
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let postgresql_crud_common_all_variants_array_default_but_option_is_some_and_vec_contains_one_el = PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl;
-        let path_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_call = path_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_call();
+        let postgresql_crud_common_all_variants_array_default_but_option_is_some_and_vec_contains_one_el =
+            PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneEl;
+        let path_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_call =
+            path_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_call();
         quote::quote! {
             #postgresql_crud_common_all_variants_array_default_but_option_is_some_and_vec_contains_one_el
             #path_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_call
@@ -535,100 +536,105 @@ impl quote::ToTokens for PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptio
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize;
-impl quote::ToTokens for CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize {
+pub struct CrateDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize;
+impl quote::ToTokens for CrateDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let crate_path_ts = crate_path_ts();
-        let default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_upper_camel_case = default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_upper_camel_case();
+        let default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case =
+            default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case();
         quote::quote! {
             #crate_path_ts
-            #default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_upper_camel_case
+            #default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSizeCall;
-impl quote::ToTokens
-    for CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSizeCall
-{
+pub struct CrateDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSizeCall;
+impl quote::ToTokens for CrateDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSizeCall {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let crate_path_ts = crate_path_ts();
-        let default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_upper_camel_case = default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_upper_camel_case();
-        let path_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_call = path_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_call();
+        let default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case =
+            default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case();
+        let path_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_call =
+            path_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_call();
         quote::quote! {
             #crate_path_ts
-            #default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_upper_camel_case
-            #path_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_call
+            #default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case
+            #path_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize;
-impl quote::ToTokens
-    for PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize
-{
+pub struct PostgresqlCrudDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize;
+impl quote::ToTokens for PostgresqlCrudDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let postgresql_crud = postgresql_crud();
-        let default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_upper_camel_case = default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_upper_camel_case();
+        let default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case =
+            default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case();
         quote::quote! {
             #postgresql_crud
-            #default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_upper_camel_case
+            #default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSizeCall;
+pub struct PostgresqlCrudDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSizeCall;
 impl quote::ToTokens
-    for PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSizeCall
+    for PostgresqlCrudDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSizeCall
 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size =
-            PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize;
-        let path_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_call = path_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_call();
+        let postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size =
+            PostgresqlCrudDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize;
+        let path_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_call =
+            path_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_call();
         quote::quote! {
-            #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size
-            #path_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_call
+            #postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size
+            #path_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize;
+pub struct PostgresqlCrudCommonDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize;
 impl quote::ToTokens
-    for PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize
+    for PostgresqlCrudCommonDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize
 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let postgresql_crud_common = postgresql_crud_common();
-        let default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_upper_camel_case = default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_upper_camel_case();
+        let default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case =
+            default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case();
         quote::quote! {
             #postgresql_crud_common
-            #default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_upper_camel_case
+            #default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSizeCall;
+pub struct PostgresqlCrudCommonDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSizeCall;
 impl quote::ToTokens
-    for PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSizeCall
+    for PostgresqlCrudCommonDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSizeCall
 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size =
-            PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize;
-        let path_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_call = path_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_call();
+        let postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size =
+            PostgresqlCrudCommonDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize;
+        let path_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_call =
+            path_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_call();
         quote::quote! {
-            #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size
-            #path_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_call
+            #postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size
+            #path_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize;
-impl quote::ToTokens for CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize {
+pub struct CrateAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize;
+impl quote::ToTokens
+    for CrateAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize
+{
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let crate_path_ts = crate_path_ts();
         let all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case = all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case();
@@ -640,10 +646,13 @@ impl quote::ToTokens for CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAn
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCallWithMaxPageSize;
-impl quote::ToTokens for CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCallWithMaxPageSize {
+pub struct CrateAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElCallWithMaxPageSize;
+impl quote::ToTokens
+    for CrateAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElCallWithMaxPageSize
+{
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let crate_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size = CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize;
+        let crate_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size =
+            CrateAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize;
         let path_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_call = path_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_call();
         quote::quote! {
             #crate_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size
@@ -653,8 +662,10 @@ impl quote::ToTokens for CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAn
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize;
-impl quote::ToTokens for PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize {
+pub struct PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize;
+impl quote::ToTokens
+    for PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize
+{
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let postgresql_crud = postgresql_crud();
         let all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case = all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case();
@@ -666,10 +677,10 @@ impl quote::ToTokens for PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlw
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCallWithMaxPageSize;
-impl quote::ToTokens for PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCallWithMaxPageSize {
+pub struct PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElCallWithMaxPageSize;
+impl quote::ToTokens for PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElCallWithMaxPageSize {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let postgresql_crud_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size = PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize;
+        let postgresql_crud_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size = PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize;
         let path_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_call = path_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_call();
         quote::quote! {
             #postgresql_crud_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size
@@ -679,8 +690,8 @@ impl quote::ToTokens for PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlw
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize;
-impl quote::ToTokens for PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize {
+pub struct PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize;
+impl quote::ToTokens for PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let postgresql_crud_common = postgresql_crud_common();
         let all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case = all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case();
@@ -692,10 +703,10 @@ impl quote::ToTokens for PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptio
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCallWithMaxPageSize;
-impl quote::ToTokens for PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCallWithMaxPageSize {
+pub struct PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElCallWithMaxPageSize;
+impl quote::ToTokens for PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElCallWithMaxPageSize {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let postgresql_crud_common_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size = PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize;
+        let postgresql_crud_common_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size = PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize;
         let path_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_call = path_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_call();
         quote::quote! {
             #postgresql_crud_common_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size
@@ -722,9 +733,9 @@ fn path_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_wi
 -> proc_macro2::TokenStream {
     quote::quote! {::all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size()}
 }
-fn default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_upper_camel_case()
+fn default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case()
 -> proc_macro2::TokenStream {
-    quote::quote! {DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize}
+    quote::quote! {DefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize}
 }
 fn crate_path_ts() -> proc_macro2::TokenStream {
     quote::quote! {crate::}
@@ -735,25 +746,24 @@ fn postgresql_crud() -> proc_macro2::TokenStream {
 fn postgresql_crud_common() -> proc_macro2::TokenStream {
     quote::quote! {postgresql_crud_common::}
 }
-fn default_but_option_is_always_some_and_vec_always_contains_one_el_upper_camel_case()
--> proc_macro2::TokenStream {
-    quote::quote! {DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl}
+fn default_but_option_is_some_and_vec_contains_one_el_upper_camel_case() -> proc_macro2::TokenStream
+{
+    quote::quote! {DefaultButOptionIsSomeAndVecContainsOneEl}
 }
 fn all_variants_array_default_but_option_is_some_and_vec_contains_one_el_upper_camel_case()
 -> proc_macro2::TokenStream {
-    quote::quote! {AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl}
+    quote::quote! {AllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneEl}
 }
-fn path_default_but_option_is_always_some_and_vec_always_contains_one_el_call()
--> proc_macro2::TokenStream {
-    quote::quote! {::default_but_option_is_always_some_and_vec_always_contains_one_el()}
+fn path_default_but_option_is_some_and_vec_contains_one_el_call() -> proc_macro2::TokenStream {
+    quote::quote! {::default_but_option_is_some_and_vec_contains_one_el()}
 }
-fn path_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_call()
+fn path_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_call()
 -> proc_macro2::TokenStream {
-    quote::quote! {::default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size()}
+    quote::quote! {::default_but_option_is_some_and_vec_contains_one_el_with_max_page_size()}
 }
 fn all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_upper_camel_case()
 -> proc_macro2::TokenStream {
-    quote::quote! {AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize}
+    quote::quote! {AllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize}
 }
 fn path_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_call()
 -> proc_macro2::TokenStream {

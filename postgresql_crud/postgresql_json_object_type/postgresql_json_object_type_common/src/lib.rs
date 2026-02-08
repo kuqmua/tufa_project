@@ -114,11 +114,11 @@ const _: () = {
         }
     }
 };
-impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl>
-    postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl for UniqueVec<T>
+impl<T: postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl>
+    postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl for UniqueVec<T>
 {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
-        Self(vec![postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::default_but_option_is_always_some_and_vec_always_contains_one_el()])
+    fn default_but_option_is_some_and_vec_contains_one_el() -> Self {
+        Self(vec![postgresql_crud_common::DefaultButOptionIsSomeAndVecContainsOneEl::default_but_option_is_some_and_vec_contains_one_el()])
     }
 }
 impl<T> Default for UniqueVec<T> {

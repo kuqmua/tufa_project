@@ -78,36 +78,38 @@ impl ImportPath {
         &self,
     ) -> &dyn quote::ToTokens {
         match &self {
-            Self::Crate => &token_patterns::CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl,
-            Self::PostgresqlCrud => &token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl,
-            Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl,
+            Self::Crate => &token_patterns::CrateAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneEl,
+            Self::PostgresqlCrud => &token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneEl,
+            Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneEl,
         }
     }
     fn all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size(
         &self,
     ) -> &dyn quote::ToTokens {
         match &self {
-            Self::Crate => &token_patterns::CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize,
-            Self::PostgresqlCrud => &token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize,
-            Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize,
+            Self::Crate => &token_patterns::CrateAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize,
+            Self::PostgresqlCrud => &token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize,
+            Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize,
         }
     }
-    fn default_but_option_is_always_some_and_vec_always_contains_one_el(
+    fn default_but_option_is_some_and_vec_contains_one_el(&self) -> &dyn quote::ToTokens {
+        match &self {
+            Self::Crate => &token_patterns::CrateDefaultButOptionIsSomeAndVecContainsOneEl,
+            Self::PostgresqlCrud => {
+                &token_patterns::PostgresqlCrudDefaultButOptionIsSomeAndVecContainsOneEl
+            }
+            Self::PostgresqlCrudCommon => {
+                &token_patterns::PostgresqlCrudCommonDefaultButOptionIsSomeAndVecContainsOneEl
+            }
+        }
+    }
+    fn default_but_option_is_some_and_vec_contains_one_el_with_max_page_size(
         &self,
     ) -> &dyn quote::ToTokens {
         match &self {
-            Self::Crate => &token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl,
-            Self::PostgresqlCrud => &token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl,
-            Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl,
-        }
-    }
-    fn default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size(
-        &self,
-    ) -> &dyn quote::ToTokens {
-        match &self {
-            Self::Crate => &token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize,
-            Self::PostgresqlCrud => &token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize,
-            Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize,
+            Self::Crate => &token_patterns::CrateDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize,
+            Self::PostgresqlCrud => &token_patterns::PostgresqlCrudDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize,
+            Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize,
         }
     }
     #[must_use]
@@ -622,9 +624,9 @@ pub fn generate_postgresql_type_where_ts(
     let impl_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_for_postgresql_type_tokens_where_ts = generate_impl_postgresql_crud_common_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(&ident, &{
         let variants_ts = variants.iter().map(|el_b9724130| {
             let el_upper_camel_case = el_b9724130.upper_camel_case();
-            let default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCall;
+            let default_but_option_is_some_and_vec_contains_one_el_call_ts = token_patterns::PostgresqlCrudCommonDefaultButOptionIsSomeAndVecContainsOneElCall;
             quote::quote! {
-                Self::#el_upper_camel_case(#default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts)
+                Self::#el_upper_camel_case(#default_but_option_is_some_and_vec_contains_one_el_call_ts)
             }
         });
         quote::quote! {vec![#(#variants_ts),*]}
@@ -849,20 +851,19 @@ pub fn generate_impl_postgresql_json_type_ts(
         }
     }
 }
-pub fn generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_el_for_tokens_ts(
+pub fn generate_impl_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(
     impl_generic_ts: &dyn quote::ToTokens,
     import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
     ident_generic_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let path_trait_ts =
-        import_path.default_but_option_is_always_some_and_vec_always_contains_one_el();
-    let default_but_option_is_always_some_and_vec_always_contains_one_el_snake_case =
-        naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElSnakeCase;
+    let path_trait_ts = import_path.default_but_option_is_some_and_vec_contains_one_el();
+    let default_but_option_is_some_and_vec_contains_one_el_snake_case =
+        naming::DefaultButOptionIsSomeAndVecContainsOneElSnakeCase;
     quote::quote! {
         impl #impl_generic_ts #path_trait_ts for #ident #ident_generic_ts {
-            fn #default_but_option_is_always_some_and_vec_always_contains_one_el_snake_case() -> Self {
+            fn #default_but_option_is_some_and_vec_contains_one_el_snake_case() -> Self {
                 #content_ts
             }
         }
@@ -885,20 +886,20 @@ pub fn generate_impl_all_variants_array_default_but_option_is_some_and_vec_conta
         }
     }
 }
-pub fn generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_for_tokens_ts(
+pub fn generate_impl_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_for_tokens_ts(
     impl_generic_ts: &dyn quote::ToTokens,
     import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
     ident_generic_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let path_trait_ts = import_path
-        .default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size();
-    let default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_snake_case =
-        naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSizeSnakeCase;
+    let path_trait_ts =
+        import_path.default_but_option_is_some_and_vec_contains_one_el_with_max_page_size();
+    let default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_snake_case =
+        naming::DefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSizeSnakeCase;
     quote::quote! {
         impl #impl_generic_ts #path_trait_ts for #ident #ident_generic_ts {
-            fn #default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_snake_case() -> Self {
+            fn #default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_snake_case() -> Self {
                 #content_ts
             }
         }
@@ -921,11 +922,11 @@ pub fn generate_impl_all_variants_array_default_but_option_is_some_and_vec_conta
         }
     }
 }
-pub fn generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_for_tokens_ts(
+pub fn generate_impl_postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(
     ident: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_el_for_tokens_ts(
+    generate_impl_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(
         &proc_macro2::TokenStream::new(),
         &ImportPath::PostgresqlCrudCommon,
         ident,
@@ -933,12 +934,12 @@ pub fn generate_impl_postgresql_crud_common_default_but_option_is_always_some_an
         content_ts,
     )
 }
-pub fn generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_el_for_tokens_ts(
+pub fn generate_impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(
     ident: &dyn quote::ToTokens,
     lifetime_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_el_for_tokens_ts(
+    generate_impl_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(
         &proc_macro2::TokenStream::new(),
         &ImportPath::PostgresqlCrud,
         ident,
@@ -958,18 +959,18 @@ pub fn generate_impl_postgresql_crud_all_variants_array_default_but_option_is_so
 ) -> proc_macro2::TokenStream {
     generate_impl_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(&ImportPath::PostgresqlCrud, ident, content_ts)
 }
-pub fn generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_for_tokens_ts(
+pub fn generate_impl_postgresql_crud_common_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_for_tokens_ts(
     ident: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_for_tokens_ts(&proc_macro2::TokenStream::new(), &ImportPath::PostgresqlCrudCommon, ident, &proc_macro2::TokenStream::new(), content_ts)
+    generate_impl_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_for_tokens_ts(&proc_macro2::TokenStream::new(), &ImportPath::PostgresqlCrudCommon, ident, &proc_macro2::TokenStream::new(), content_ts)
 }
-pub fn generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_for_tokens_ts(
+pub fn generate_impl_postgresql_crud_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_for_tokens_ts(
     ident: &dyn quote::ToTokens,
     lifetime_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_for_tokens_ts(&proc_macro2::TokenStream::new(), &ImportPath::PostgresqlCrud, ident, lifetime_ts, content_ts)
+    generate_impl_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_for_tokens_ts(&proc_macro2::TokenStream::new(), &ImportPath::PostgresqlCrud, ident, lifetime_ts, content_ts)
 }
 pub fn generate_impl_postgresql_crud_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_for_tokens_ts(
     ident: &dyn quote::ToTokens,
@@ -1348,18 +1349,19 @@ fn generate_update_to_read_only_ids_ts(
         }
     }
 }
-fn generate_read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_el_ts(
+fn generate_read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el_ts(
     import_path: ImportPath,
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_el_snake_case = naming::ReadOnlyIdsToOptionValueReadDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElSnakeCase;
+    let read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el_snake_case =
+        naming::ReadOnlyIdsToOptionValueReadDefaultButOptionIsSomeAndVecContainsOneElSnakeCase;
     let value_upper_camel_case = naming::ValueUpperCamelCase;
     let value_snake_case = naming::ValueSnakeCase;
     let read_upper_camel_case = naming::ReadUpperCamelCase;
     let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
     quote::quote! {
-        fn #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_el_snake_case(
+        fn #read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el_snake_case(
             #value_snake_case: &#path_ts::#read_only_ids_upper_camel_case
         ) -> Option<#import_path::#value_upper_camel_case<#path_ts::#read_upper_camel_case>> {
             #content_ts
@@ -1746,7 +1748,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_ts(
     read_inner_into_read_with_new_or_try_new_unwraped_ts: &dyn quote::ToTokens,
     read_inner_into_update_with_new_or_try_new_unwraped_ts: &dyn quote::ToTokens,
     update_to_read_only_ids_ts: &dyn quote::ToTokens,
-    read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_el_ts: &dyn quote::ToTokens,
+    read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el_ts: &dyn quote::ToTokens,
     previous_read_merged_with_option_update_into_read_ts: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_read_ts: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_option_value_read_ts: &dyn quote::ToTokens,
@@ -1816,8 +1818,8 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_ts(
         &self_postgresql_type_as_postgresql_type_ts,
         &update_to_read_only_ids_ts,
     );
-    let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_el_content_ts =
-        generate_read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_el_ts(*import_path, &self_postgresql_type_as_postgresql_type_ts, &read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_el_ts);
+    let read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el_content_ts =
+        generate_read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el_ts(*import_path, &self_postgresql_type_as_postgresql_type_ts, &read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el_ts);
     let previous_read_merged_with_option_update_into_read_content_ts =
         generate_previous_read_merged_with_option_update_into_read_ts(
             &self_postgresql_type_as_postgresql_type_ts,
@@ -1946,7 +1948,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_ts(
             #read_inner_into_read_with_new_or_try_new_unwraped_content_ts
             #read_inner_into_update_with_new_or_try_new_unwraped_content_ts
             #update_to_read_only_ids_content_ts
-            #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_el_content_ts
+            #read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el_content_ts
             #previous_read_merged_with_option_update_into_read_content_ts
             #read_only_ids_merged_with_create_into_read_content_ts
             #read_only_ids_merged_with_create_into_option_value_read_content_ts
@@ -2001,7 +2003,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_ts(
     read_inner_into_update_with_new_or_try_new_unwraped_ts: &dyn quote::ToTokens,
     read_only_ids_into_option_value_read_inner_ts: &dyn quote::ToTokens,
     update_to_read_only_ids_ts: &dyn quote::ToTokens,
-    read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_el_ts: &dyn quote::ToTokens,
+    read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el_ts: &dyn quote::ToTokens,
     previous_read_merged_with_option_update_into_read_ts: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_read_ts: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_option_value_read_ts: &dyn quote::ToTokens,
@@ -2068,8 +2070,8 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_ts(
         &self_postgresql_json_type_as_postgresql_json_type_ts,
         &update_to_read_only_ids_ts,
     );
-    let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_el_content_ts =
-        generate_read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_el_ts(*import_path, &self_postgresql_json_type_as_postgresql_json_type_ts, &read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_el_ts);
+    let read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el_content_ts =
+        generate_read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el_ts(*import_path, &self_postgresql_json_type_as_postgresql_json_type_ts, &read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el_ts);
     let previous_read_merged_with_option_update_into_read_content_ts =
         generate_previous_read_merged_with_option_update_into_read_ts(
             &self_postgresql_json_type_as_postgresql_json_type_ts,
@@ -2199,7 +2201,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_ts(
                 #read_only_ids_into_option_value_read_inner_ts
             }
             #update_to_read_only_ids_content_ts
-            #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_el_content_ts
+            #read_only_ids_to_option_value_read_default_but_option_is_some_and_vec_contains_one_el_content_ts
             #previous_read_merged_with_option_update_into_read_content_ts
             #read_only_ids_merged_with_create_into_read_content_ts
             #read_only_ids_merged_with_create_into_option_value_read_content_ts

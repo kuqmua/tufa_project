@@ -1,13 +1,13 @@
-pub trait DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl: Sized {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self;
+pub trait DefaultButOptionIsSomeAndVecContainsOneEl: Sized {
+    fn default_but_option_is_some_and_vec_contains_one_el() -> Self;
 }
-pub trait AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl: Sized {
+pub trait AllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneEl: Sized {
     fn all_variants_array_default_but_option_is_some_and_vec_contains_one_el() -> Vec<Self>;
 }
-pub trait DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize: Sized {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size() -> Self;
+pub trait DefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize: Sized {
+    fn default_but_option_is_some_and_vec_contains_one_el_with_max_page_size() -> Self;
 }
-pub trait AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize:
+pub trait AllEnumVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSize:
     Sized
 {
     fn all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size()
@@ -58,8 +58,8 @@ impl std::fmt::Display for LogicalOperator {
         write!(f, "{self:?}")
     }
 }
-impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl for LogicalOperator {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
+impl DefaultButOptionIsSomeAndVecContainsOneEl for LogicalOperator {
+    fn default_but_option_is_some_and_vec_contains_one_el() -> Self {
         Self::default()
     }
 }
