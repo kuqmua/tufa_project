@@ -1,20 +1,17 @@
-pub trait DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement: Sized {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self;
+pub trait DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl: Sized {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self;
 }
-pub trait AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement:
-    Sized
-{
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+pub trait AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl: Sized {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_el()
     -> Vec<Self>;
 }
-pub trait DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize: Sized {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size()
-    -> Self;
+pub trait DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize: Sized {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size() -> Self;
 }
-pub trait AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize:
+pub trait AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize:
     Sized
 {
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size()
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_el_with_max_page_size()
     -> Vec<Self>;
 }
 
@@ -62,8 +59,8 @@ impl std::fmt::Display for LogicalOperator {
         write!(f, "{self:?}")
     }
 }
-impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for LogicalOperator {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl for LogicalOperator {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
         Self::default()
     }
 }

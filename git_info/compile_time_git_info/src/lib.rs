@@ -20,7 +20,7 @@ pub fn compile_time_project_git_info(
         hash.len() == 40
             && hash
                 .chars()
-                .all(|element_e7daeee7| element_e7daeee7.is_ascii_hexdigit()),
+                .all(|el_e7daeee7| el_e7daeee7.is_ascii_hexdigit()),
         "093516ae-a89f-42df-8b01-9b2897111705"
     );
     let commit_id_ts = format!("\"{hash}\"")

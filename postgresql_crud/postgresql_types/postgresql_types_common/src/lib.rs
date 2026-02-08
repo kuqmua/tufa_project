@@ -258,22 +258,31 @@ impl<'lifetime> postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime>
             .query_part(increment, column, is_need_to_add_logical_operator)
     }
 }
-impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl
     for PaginationStartsWithOne
 {
     #[inline]
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
         Self(postgresql_crud_common::PaginationBase::new_unchecked(
             postgresql_crud_common::DEFAULT_PAGINATION_LIMIT,
             1,
         ))
     }
 }
-impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for PaginationStartsWithOne {
+impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize
+    for PaginationStartsWithOne
+{
     #[inline]
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size() -> Self {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size() -> Self
+    {
         let one: i32 = 1;
-        Self(postgresql_crud_common::PaginationBase::new_unchecked(i32::MAX.checked_sub(one).expect("c0f03c51-d565-4377-ad4e-f38ee636909b").into(), one.into()))
+        Self(postgresql_crud_common::PaginationBase::new_unchecked(
+            i32::MAX
+                .checked_sub(one)
+                .expect("c0f03c51-d565-4377-ad4e-f38ee636909b")
+                .into(),
+            one.into(),
+        ))
     }
 }
 #[must_use]

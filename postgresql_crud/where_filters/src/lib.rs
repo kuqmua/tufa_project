@@ -30,15 +30,15 @@ impl std::fmt::Display for EncodeFormat {
         }
     }
 }
-impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl
     for EncodeFormat
 {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
         Self::default()
     }
 }
 
-//difference between NotEmptyUniqueVec and PostgresqlJsonTypeNotEmptyUniqueVec only in postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement impl with different generic requirement and PostgresqlTypeWhereFilter
+//difference between NotEmptyUniqueVec and PostgresqlJsonTypeNotEmptyUniqueVec only in postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl impl with different generic requirement and PostgresqlTypeWhereFilter
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct PostgresqlJsonTypeNotEmptyUniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
@@ -62,16 +62,16 @@ impl<T: PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
         }
         {
             let mut acc_72940a4c = Vec::new();
-            for element_7721a8da in &value {
-                if acc_72940a4c.contains(&element_7721a8da) {
+            for el_7721a8da in &value {
+                if acc_72940a4c.contains(&el_7721a8da) {
                     return Err(
                         postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
-                            value: element_7721a8da.clone(),
+                            value: el_7721a8da.clone(),
                             code_occurence: error_occurence_lib::code_occurence!(),
                         },
                     );
                 }
-                acc_72940a4c.push(element_7721a8da);
+                acc_72940a4c.push(el_7721a8da);
             }
         }
         Ok(Self(value))
@@ -88,8 +88,8 @@ impl<T: PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVe
     where
         T: 'query_lifetime,
     {
-        for element_cc499cbc in self.0 {
-            if let Err(error) = query.try_bind(sqlx::types::Json(element_cc499cbc)) {
+        for el_cc499cbc in self.0 {
+            if let Err(error) = query.try_bind(sqlx::types::Json(el_cc499cbc)) {
                 return Err(error.to_string());
             }
         }
@@ -194,12 +194,12 @@ const _: () = {
         }
     }
 };
-impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>
-    postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl>
+    postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl
     for PostgresqlJsonTypeNotEmptyUniqueVec<T>
 {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(vec![postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()])
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
+        Self(vec![postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::default_but_option_is_always_some_and_vec_always_contains_one_el()])
     }
 }
 impl<T> Default for PostgresqlJsonTypeNotEmptyUniqueVec<T> {
@@ -365,10 +365,8 @@ impl std::fmt::Display for RegexRegex {
         write!(f, "{}", self.0)
     }
 }
-impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-    for RegexRegex
-{
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl for RegexRegex {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
         Self(regex::Regex::new("[a-z]+").expect("22a9eda5-7898-41d7-8176-8acb97786e1e"))
     }
 }
@@ -380,10 +378,10 @@ pub enum RegularExpressionCase {
     Insensitive,
     Sensitive,
 }
-impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl
     for RegularExpressionCase
 {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
         Self::Sensitive
     }
 }
@@ -624,16 +622,15 @@ const _: () = {
     }
 };
 impl<
-    T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+    T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl
         + sqlx::Type<sqlx::Postgres>
         + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
-> postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-    for Between<T>
+> postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl for Between<T>
 {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
         Self {
-            start: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-            end: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            start: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::default_but_option_is_always_some_and_vec_always_contains_one_el(),
+            end: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::default_but_option_is_always_some_and_vec_always_contains_one_el(),
         }
     }
 }
@@ -695,16 +692,16 @@ impl<T: PartialEq + Clone> PostgresqlTypeNotEmptyUniqueVec<T> {
         }
         {
             let mut acc_6be6ccee = Vec::new();
-            for element_b3d83e60 in &value {
-                if acc_6be6ccee.contains(&element_b3d83e60) {
+            for el_b3d83e60 in &value {
+                if acc_6be6ccee.contains(&el_b3d83e60) {
                     return Err(
                         postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
-                            value: element_b3d83e60.clone(),
+                            value: el_b3d83e60.clone(),
                             code_occurence: error_occurence_lib::code_occurence!(),
                         },
                     );
                 }
-                acc_6be6ccee.push(element_b3d83e60);
+                acc_6be6ccee.push(el_b3d83e60);
             }
         }
         Ok(Self(value))
@@ -789,12 +786,12 @@ const _: () = {
         }
     }
 };
-impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>
-    postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl>
+    postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl
     for PostgresqlTypeNotEmptyUniqueVec<T>
 {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(vec![postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()])
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
+        Self(vec![postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::default_but_option_is_always_some_and_vec_always_contains_one_el()])
     }
 }
 impl<T> Default for PostgresqlTypeNotEmptyUniqueVec<T> {
@@ -911,8 +908,8 @@ impl<
         mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
     ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
     {
-        for element_a05046df in self.0 {
-            if let Err(error) = query.try_bind(element_a05046df) {
+        for el_a05046df in self.0 {
+            if let Err(error) = query.try_bind(el_a05046df) {
                 return Err(error.to_string());
             }
         }
@@ -1058,13 +1055,13 @@ const _: () = {
     }
 };
 impl<
-    T: Clone + postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    T: Clone + postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl,
     const LENGTH: usize,
-> postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+> postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl
     for BoundedStdVecVec<T, LENGTH>
 {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(vec![<T as postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(); LENGTH])
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
+        Self(vec![<T as postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl>::default_but_option_is_always_some_and_vec_always_contains_one_el(); LENGTH])
     }
 }
 ////////////////

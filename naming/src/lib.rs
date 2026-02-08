@@ -482,7 +482,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
     ["to", "create"],
     ["reader"],
     ["field", "to", "update"],
-    ["json", "array", "element", "change"],
+    ["json", "array", "el", "change"],
     ["not", "unique", "id"],
     ["std", "vec", "vec", "generic"],
     ["fields", "filter", "is", "empty"],
@@ -547,15 +547,15 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
     ["generate", "postgresql", "crud", "primary", "key"],
     [
         "default", "but", "option", "is", "always", "some", "and", "vec", "always", "contains",
-        "one", "element"
+        "one", "el"
     ],
     [
         "all", "enum", "variants", "array", "default", "but", "option", "is", "always", "some",
-        "and", "vec", "always", "contains", "one", "element"
+        "and", "vec", "always", "contains", "one", "el"
     ],
     [
         "all", "enum", "variants", "array", "default", "but", "std", "option", "option", "is",
-        "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "element"
+        "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "el"
     ],
     ["generate", "postgresql", "json", "type"],
     ["to", "std", "string", "string"],
@@ -732,31 +732,17 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
     ["dimension", "two", "all", "elements", "equal"],
     ["dimension", "three", "all", "elements", "equal"],
     ["dimension", "four", "all", "elements", "equal"],
-    ["dimension", "one", "contains", "element", "greater", "than"],
-    ["dimension", "two", "contains", "element", "greater", "than"],
-    [
-        "dimension",
-        "three",
-        "contains",
-        "element",
-        "greater",
-        "than"
-    ],
-    [
-        "dimension",
-        "four",
-        "contains",
-        "element",
-        "greater",
-        "than"
-    ],
+    ["dimension", "one", "contains", "el", "greater", "than"],
+    ["dimension", "two", "contains", "el", "greater", "than"],
+    ["dimension", "three", "contains", "el", "greater", "than"],
+    ["dimension", "four", "contains", "el", "greater", "than"],
     ["dimension", "one", "all", "elements", "greater", "than"],
     ["dimension", "two", "all", "elements", "greater", "than"],
     ["dimension", "three", "all", "elements", "greater", "than"],
     ["dimension", "four", "all", "elements", "greater", "than"],
     [
         "contains",
-        "element",
+        "el",
         "case",
         "sensitive",
         "regular",
@@ -764,7 +750,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
     ],
     [
         "contains",
-        "element",
+        "el",
         "case",
         "insensitive",
         "regular",
@@ -786,7 +772,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
         "regular",
         "expression"
     ],
-    ["contains", "element"],
+    ["contains", "el"],
     ["equal", "second", "dimension"],
     ["from", "calendar", "date"],
     ["less", "than", "minimum", "postgresql", "value"],
@@ -831,7 +817,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
         "dimension",
         "one",
         "contains",
-        "element",
+        "el",
         "regular",
         "expression"
     ],
@@ -839,7 +825,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
         "dimension",
         "two",
         "contains",
-        "element",
+        "el",
         "regular",
         "expression"
     ],
@@ -847,7 +833,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
         "dimension",
         "three",
         "contains",
-        "element",
+        "el",
         "regular",
         "expression"
     ],
@@ -855,7 +841,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
         "dimension",
         "four",
         "contains",
-        "element",
+        "el",
         "regular",
         "expression"
     ],
@@ -995,10 +981,10 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
     ["length", "greater", "than"],
     ["contains", "all", "elements", "of", "array"],
     ["overlaps", "with", "array"],
-    ["contains", "element", "regular", "expression"],
+    ["contains", "el", "regular", "expression"],
     ["all", "elements", "regular", "expression"],
     ["all", "elements", "equal"],
-    ["contains", "element", "greater", "than"],
+    ["contains", "el", "greater", "than"],
     ["all", "elements", "greater", "than"],
     [
         "create",
@@ -1086,7 +1072,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
     [
         "sort", "vec", "of", "ident", "read", "with", "primary", "key", "by", "primary", "key"
     ],
-    ["generate", "element"],
+    ["generate", "el"],
     [
         "some", "value", "primary", "key", "read", "returned", "from", "create", "one"
     ],
@@ -1128,7 +1114,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
     ],
     [
         "read", "only", "ids", "to", "option", "value", "read", "default", "but", "option", "is",
-        "always", "some", "and", "vec", "always", "contains", "one", "element"
+        "always", "some", "and", "vec", "always", "contains", "one", "el"
     ],
     [
         "read", "from", "previous", "read", "unwraped", "merged", "with", "update"
@@ -1145,12 +1131,12 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
     ],
     [
         "default", "but", "option", "is", "always", "some", "and", "vec", "always", "contains",
-        "one", "element", "with", "max", "page", "size"
+        "one", "el", "with", "max", "page", "size"
     ],
     [
         "all", "enum", "variants", "array", "default", "but", "std", "option", "option", "is",
-        "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "element",
-        "with", "max", "page", "size"
+        "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "el", "with",
+        "max", "page", "size"
     ],
     ["ids", "are", "not", "unique"],
     ["postgresql", "type", "primary", "key"],
@@ -1463,7 +1449,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
         "vec",
         "where",
         "contains",
-        "element",
+        "el",
         "greater",
         "than"
     ],
@@ -1482,7 +1468,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
         "vec",
         "where",
         "contains",
-        "element",
+        "el",
         "regular",
         "expression"
     ],

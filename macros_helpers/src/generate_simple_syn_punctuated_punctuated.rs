@@ -6,9 +6,9 @@ pub fn generate_simple_syn_punctuated_punctuated(
     if parts_vec_len >= 1 {
         let mut handle =
             syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
-        for element_bef7ca16 in parts_vec.iter().rev().skip(1).rev() {
+        for el_bef7ca16 in parts_vec.iter().rev().skip(1).rev() {
             handle.push_value(syn::PathSegment {
-                ident: proc_macro2::Ident::new(element_bef7ca16, proc_macro2::Span::call_site()),
+                ident: proc_macro2::Ident::new(el_bef7ca16, proc_macro2::Span::call_site()),
                 arguments: syn::PathArguments::None,
             });
             handle.push_punct(syn::token::PathSep {

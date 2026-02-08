@@ -24,9 +24,9 @@ fn main() {
     let substring_value = "path = ";
     let paths_vec: Vec<String> = contents
         .lines()
-        .filter_map(|element_0731ade5| {
-            element_0731ade5.find("path = ").map(|index| {
-                element_0731ade5
+        .filter_map(|el_0731ade5| {
+            el_0731ade5.find("path = ").map(|index| {
+                el_0731ade5
                     .get(
                         index
                             .checked_add(substring_value.len())
@@ -43,8 +43,8 @@ fn main() {
         .args(["reset", "--hard"])
         .output()
         .expect("4fde85e0-22b3-46ab-b3c1-137558da2091");
-    for element_f232fe33 in paths_vec {
-        let path = format!("{canonicalize_pathbuf_as_string}/{element_f232fe33}");
+    for el_f232fe33 in paths_vec {
+        let path = format!("{canonicalize_pathbuf_as_string}/{el_f232fe33}");
         println!("start {path}");
         let _unused0 = std::process::Command::new("git")
             .args(["checkout", "."])

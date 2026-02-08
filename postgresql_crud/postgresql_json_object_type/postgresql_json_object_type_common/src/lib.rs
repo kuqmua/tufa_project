@@ -29,14 +29,14 @@ impl<T: PartialEq + Clone> UniqueVec<T> {
     }
     pub fn try_new(value: Vec<T>) -> Result<Self, UniqueVecTryNewErrorNamed<T>> {
         let mut acc_4855bea7 = Vec::new();
-        for element_4dddc7c0 in &value {
-            if acc_4855bea7.contains(&element_4dddc7c0) {
+        for el_4dddc7c0 in &value {
+            if acc_4855bea7.contains(&el_4dddc7c0) {
                 return Err(UniqueVecTryNewErrorNamed::NotUnique {
-                    value: element_4dddc7c0.clone(),
+                    value: el_4dddc7c0.clone(),
                     code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
-            acc_4855bea7.push(element_4dddc7c0);
+            acc_4855bea7.push(el_4dddc7c0);
         }
         Ok(Self(value))
     }
@@ -114,12 +114,11 @@ const _: () = {
         }
     }
 };
-impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>
-    postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-    for UniqueVec<T>
+impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl>
+    postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl for UniqueVec<T>
 {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(vec![postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()])
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
+        Self(vec![postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::default_but_option_is_always_some_and_vec_always_contains_one_el()])
     }
 }
 impl<T> Default for UniqueVec<T> {

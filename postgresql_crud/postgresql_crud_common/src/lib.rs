@@ -15,7 +15,7 @@ trait_alias!(DebugClonePartialEqSerializeDeserializeAlias = DebugClonePartialEqS
 trait_alias!(
     DebugClonePartialEqSerializeDeserializeDefaultSomeOneAlias =
         DebugClonePartialEqSerializeDeserializeAlias
-            + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+            + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl
 );
 trait_alias!(SqlxEncodePostgresSqlxTypePostgresAlias = for<'__> sqlx::Encode<'__, sqlx::Postgres> + sqlx::Type<sqlx::Postgres>);
 trait_alias!(UtoipaToSchemaAndSchemarsJsonSchemaAlias = for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema);
@@ -101,13 +101,13 @@ pub trait PostgresqlJsonType {
     ) -> Result<String, QueryPartErrorNamed>;
     type Where: WhereAlias
         + UtoipaToSchemaAndSchemarsJsonSchemaAlias
-        + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+        + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl
         + error_occurence_lib::ToStdStringString;
     //todo impl get fields from read
     //todo maybe add sqlx::Decode trait here and sqlx::Type
     type Read: ReadAlias
         + UtoipaToSchemaAndSchemarsJsonSchemaAlias
-        + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+        + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl;
     type ReadOnlyIds: ReadOnlyIdsAlias;
     fn select_only_ids_query_part(
         column_name_and_maybe_field_getter: &str,
@@ -197,8 +197,7 @@ pub trait PostgresqlJsonTypeObjectVecElementId {
 #[cfg(feature = "test-utils")]
 pub trait PostgresqlTypeTestCases {
     type PostgresqlType: PostgresqlType;
-    type Select: SelectAlias
-        + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
+    type Select: SelectAlias + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize;
     fn option_vec_create() -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Create>>;
     fn read_only_ids_to_two_dimensional_vec_read_inner(
         read_only_ids: &<Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
@@ -212,7 +211,7 @@ pub trait PostgresqlTypeTestCases {
     fn update_to_read_only_ids(
         value: &<Self::PostgresqlType as PostgresqlType>::Update,
     ) -> <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds;
-    fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+    fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_el(
         value: &<Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
     ) -> Option<Value<<Self::PostgresqlType as PostgresqlType>::Read>>;
     fn previous_read_merged_with_option_update_into_read(
@@ -294,11 +293,11 @@ pub trait PostgresqlTypeTestCases {
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PostgresqlType as PostgresqlType>::Where>>>;
-    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_element_greater_than(
+    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_el_greater_than(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PostgresqlType as PostgresqlType>::Where>>>;
-    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_element_regular_expression(
+    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_el_regular_expression(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PostgresqlType as PostgresqlType>::Where>>>;
@@ -330,7 +329,7 @@ pub trait PostgresqlJsonTypeTestCases {
     type PostgresqlJsonType: PostgresqlJsonType;
     type Select: SelectAlias
         + UtoipaToSchemaAndSchemarsJsonSchemaAlias
-        + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
+        + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize;
     fn option_vec_create() -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Create>>;
     fn read_only_ids_to_two_dimensional_vec_read_inner(
         read_only_ids: &<Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
@@ -347,7 +346,7 @@ pub trait PostgresqlJsonTypeTestCases {
     fn update_to_read_only_ids(
         value: &<Self::PostgresqlJsonType as PostgresqlJsonType>::Update,
     ) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds;
-    fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+    fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_el(
         value: &<Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
     ) -> Option<Value<<Self::PostgresqlJsonType as PostgresqlJsonType>::Read>>;
     fn previous_read_merged_with_option_update_into_read(
@@ -433,7 +432,7 @@ pub trait PostgresqlJsonTypeTestCases {
             SingleOrMultiple<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>,
         >,
     >;
-    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_element_greater_than(
+    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_el_greater_than(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
     ) -> Option<
@@ -441,7 +440,7 @@ pub trait PostgresqlJsonTypeTestCases {
             SingleOrMultiple<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>,
         >,
     >;
-    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_element_regular_expression(
+    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_el_regular_expression(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
     ) -> Option<
@@ -481,7 +480,7 @@ pub struct NullableJsonObjectPostgresqlTypeWhereFilter<
         + PartialEq
         + Clone
         + for<'lifetime> PostgresqlTypeWhereFilter<'lifetime>
-        + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+        + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl,
 >(pub Option<NotEmptyUniqueVec<T>>);
 impl<'query_lifetime, T> PostgresqlTypeWhereFilter<'query_lifetime>
     for NullableJsonObjectPostgresqlTypeWhereFilter<T>
@@ -490,7 +489,7 @@ where
         + PartialEq
         + Clone
         + for<'t_lifetime> PostgresqlTypeWhereFilter<'t_lifetime>
-        + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+        + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl,
 {
     fn query_bind(
         self,
@@ -524,24 +523,24 @@ where
         + PartialEq
         + Clone
         + for<'t_lifetime> PostgresqlTypeWhereFilter<'t_lifetime>
-        + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+        + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl,
 {
     fn to_std_string_string(&self) -> String {
         format!("{self:#?}")
     }
 }
-impl<T> AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+impl<T> AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl
     for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
     T: std::fmt::Debug
         + PartialEq
         + Clone
         + for<'t_lifetime> PostgresqlTypeWhereFilter<'t_lifetime>
-        + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+        + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl,
 {
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_el()
     -> Vec<Self> {
-        vec![Self(Some(DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))]
+        vec![Self(Some(DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::default_but_option_is_always_some_and_vec_always_contains_one_el()))]
     }
 }
 
@@ -780,8 +779,8 @@ impl<'query_lifetime, T: PostgresqlTypeWhereFilter<'query_lifetime>>
         sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String,
     > {
-        for element_4e314a75 in self.value.0 {
-            match PostgresqlTypeWhereFilter::query_bind(element_4e314a75, query) {
+        for el_4e314a75 in self.value.0 {
+            match PostgresqlTypeWhereFilter::query_bind(el_4e314a75, query) {
                 Ok(value) => {
                     query = value;
                 }
@@ -800,9 +799,9 @@ impl<'query_lifetime, T: PostgresqlTypeWhereFilter<'query_lifetime>>
     ) -> Result<String, QueryPartErrorNamed> {
         let mut acc_cc6d18f7 = String::default();
         let mut is_need_to_add_logical_operator_inner_handle = false;
-        for element_a38b9c67 in &self.value.0 {
+        for el_a38b9c67 in &self.value.0 {
             match PostgresqlTypeWhereFilter::query_part(
-                element_a38b9c67,
+                el_a38b9c67,
                 increment,
                 column,
                 is_need_to_add_logical_operator_inner_handle,
@@ -834,14 +833,14 @@ impl<
     T: std::fmt::Debug
         + PartialEq
         + Clone
-        + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
-> DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypeWhere<T>
+        + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl,
+> DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl for PostgresqlTypeWhere<T>
 {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
         Self {
-            logical_operator: DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            logical_operator: DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::default_but_option_is_always_some_and_vec_always_contains_one_el(),
             value: NotEmptyUniqueVec::try_new(
-                AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+                AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_el()
             ).expect("a918b427-2d74-4096-915c-2f97314cc05f"),
         }
     }
@@ -873,8 +872,8 @@ impl std::fmt::Display for Order {
         }
     }
 }
-impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Order {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl for Order {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
         Self::default()
     }
 }
@@ -1228,18 +1227,18 @@ impl<'query_lifetime> PostgresqlTypeWhereFilter<'query_lifetime> for PaginationS
             .query_part(increment, column, is_need_to_add_logical_operator)
     }
 }
-impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PaginationStartsWithZero {
+impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl for PaginationStartsWithZero {
     #[inline]
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
         Self(PaginationBase::new_unchecked(DEFAULT_PAGINATION_LIMIT, 0))
     }
 }
-impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize
+impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize
     for PaginationStartsWithZero
 {
     #[inline]
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size()
-    -> Self {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size() -> Self
+    {
         Self(PaginationBase::new_unchecked(i32::MAX.into(), 0))
     }
 }
@@ -1301,14 +1300,14 @@ impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
         }
         {
             let mut acc_11fac69e = Vec::new();
-            for element_db9bd5a0 in &value {
-                if acc_11fac69e.contains(&element_db9bd5a0) {
+            for el_db9bd5a0 in &value {
+                if acc_11fac69e.contains(&el_db9bd5a0) {
                     return Err(NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
-                        value: element_db9bd5a0.clone(),
+                        value: el_db9bd5a0.clone(),
                         code_occurence: error_occurence_lib::code_occurence!(),
                     });
                 }
-                acc_11fac69e.push(element_db9bd5a0);
+                acc_11fac69e.push(el_db9bd5a0);
             }
         }
         Ok(Self(value))
@@ -1385,21 +1384,19 @@ const _: () = {
         }
     }
 };
-impl<T: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>
-    DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NotEmptyUniqueVec<T>
+impl<T: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl>
+    DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl for NotEmptyUniqueVec<T>
 {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
+        Self(AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_el())
     }
 }
-impl<
-    T: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
-> DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize
-    for NotEmptyUniqueVec<T>
+impl<T: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize>
+    DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize for NotEmptyUniqueVec<T>
 {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size()
-    -> Self {
-        Self(AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size())
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size() -> Self
+    {
+        Self(AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_el_with_max_page_size())
     }
 }
 impl<T> Default for NotEmptyUniqueVec<T> {
@@ -1423,7 +1420,7 @@ where
         + PartialEq
         + Clone
         + for<'t_lifetime> PostgresqlTypeWhereFilter<'t_lifetime>
-        + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+        + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl,
 {
     fn query_bind(
         self,
@@ -1432,8 +1429,8 @@ where
         sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String,
     > {
-        for element_7f5ffb83 in self.0 {
-            match element_7f5ffb83.query_bind(query) {
+        for el_7f5ffb83 in self.0 {
+            match el_7f5ffb83.query_bind(query) {
                 Ok(value) => {
                     query = value;
                 }
@@ -1648,8 +1645,8 @@ impl UnsignedPartOfStdPrimitiveI32 {
         self.0
     }
 }
-impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for UnsignedPartOfStdPrimitiveI32 {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl for UnsignedPartOfStdPrimitiveI32 {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
         Self(0)
     }
 }
@@ -1794,11 +1791,11 @@ impl NotZeroUnsignedPartOfStdPrimitiveI32 {
         self.0.get()
     }
 }
-impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl
     for NotZeroUnsignedPartOfStdPrimitiveI32
 {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
+    fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
+        Self(DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::default_but_option_is_always_some_and_vec_always_contains_one_el())
     }
 }
 #[derive(

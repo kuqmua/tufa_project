@@ -246,11 +246,11 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionTwoGreaterThan { ident: proc_macro2::TokenStream },
     DimensionThreeGreaterThan { ident: proc_macro2::TokenStream },
     DimensionFourGreaterThan { ident: proc_macro2::TokenStream },
-    ContainsElementGreaterThan { ident: proc_macro2::TokenStream },
-    DimensionOneContainsElementGreaterThan { ident: proc_macro2::TokenStream },
-    DimensionTwoContainsElementGreaterThan { ident: proc_macro2::TokenStream },
-    DimensionThreeContainsElementGreaterThan { ident: proc_macro2::TokenStream },
-    DimensionFourContainsElementGreaterThan { ident: proc_macro2::TokenStream },
+    ContainsElGreaterThan { ident: proc_macro2::TokenStream },
+    DimensionOneContainsElGreaterThan { ident: proc_macro2::TokenStream },
+    DimensionTwoContainsElGreaterThan { ident: proc_macro2::TokenStream },
+    DimensionThreeContainsElGreaterThan { ident: proc_macro2::TokenStream },
+    DimensionFourContainsElGreaterThan { ident: proc_macro2::TokenStream },
     AllElementsGreaterThan { ident: proc_macro2::TokenStream },
     DimensionOneAllElementsGreaterThan { ident: proc_macro2::TokenStream },
     DimensionTwoAllElementsGreaterThan { ident: proc_macro2::TokenStream },
@@ -271,11 +271,11 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionTwoRegularExpression,
     DimensionThreeRegularExpression,
     DimensionFourRegularExpression,
-    ContainsElementRegularExpression,
-    DimensionOneContainsElementRegularExpression,
-    DimensionTwoContainsElementRegularExpression,
-    DimensionThreeContainsElementRegularExpression,
-    DimensionFourContainsElementRegularExpression,
+    ContainsElRegularExpression,
+    DimensionOneContainsElRegularExpression,
+    DimensionTwoContainsElRegularExpression,
+    DimensionThreeContainsElRegularExpression,
+    DimensionFourContainsElRegularExpression,
     AllElementsRegularExpression,
     DimensionOneAllElementsRegularExpression,
     DimensionTwoAllElementsRegularExpression,
@@ -311,11 +311,11 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             | Self::DimensionTwoGreaterThan { ident }
             | Self::DimensionThreeGreaterThan { ident }
             | Self::DimensionFourGreaterThan { ident }
-            | Self::ContainsElementGreaterThan { ident }
-            | Self::DimensionOneContainsElementGreaterThan { ident }
-            | Self::DimensionTwoContainsElementGreaterThan { ident }
-            | Self::DimensionThreeContainsElementGreaterThan { ident }
-            | Self::DimensionFourContainsElementGreaterThan { ident }
+            | Self::ContainsElGreaterThan { ident }
+            | Self::DimensionOneContainsElGreaterThan { ident }
+            | Self::DimensionTwoContainsElGreaterThan { ident }
+            | Self::DimensionThreeContainsElGreaterThan { ident }
+            | Self::DimensionFourContainsElGreaterThan { ident }
             | Self::AllElementsGreaterThan { ident }
             | Self::DimensionOneAllElementsGreaterThan { ident }
             | Self::DimensionTwoAllElementsGreaterThan { ident }
@@ -351,11 +351,11 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             | Self::DimensionTwoRegularExpression
             | Self::DimensionThreeRegularExpression
             | Self::DimensionFourRegularExpression
-            | Self::ContainsElementRegularExpression
-            | Self::DimensionOneContainsElementRegularExpression
-            | Self::DimensionTwoContainsElementRegularExpression
-            | Self::DimensionThreeContainsElementRegularExpression
-            | Self::DimensionFourContainsElementRegularExpression
+            | Self::ContainsElRegularExpression
+            | Self::DimensionOneContainsElRegularExpression
+            | Self::DimensionTwoContainsElRegularExpression
+            | Self::DimensionThreeContainsElRegularExpression
+            | Self::DimensionFourContainsElRegularExpression
             | Self::AllElementsRegularExpression
             | Self::DimensionOneAllElementsRegularExpression
             | Self::DimensionTwoAllElementsRegularExpression
@@ -408,20 +408,18 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionFourGreaterThan { .. } => {
                 &naming::DimensionFourGreaterThanUpperCamelCase
             }
-            Self::ContainsElementGreaterThan { .. } => {
-                &naming::ContainsElementGreaterThanUpperCamelCase
+            Self::ContainsElGreaterThan { .. } => &naming::ContainsElGreaterThanUpperCamelCase,
+            Self::DimensionOneContainsElGreaterThan { .. } => {
+                &naming::DimensionOneContainsElGreaterThanUpperCamelCase
             }
-            Self::DimensionOneContainsElementGreaterThan { .. } => {
-                &naming::DimensionOneContainsElementGreaterThanUpperCamelCase
+            Self::DimensionTwoContainsElGreaterThan { .. } => {
+                &naming::DimensionTwoContainsElGreaterThanUpperCamelCase
             }
-            Self::DimensionTwoContainsElementGreaterThan { .. } => {
-                &naming::DimensionTwoContainsElementGreaterThanUpperCamelCase
+            Self::DimensionThreeContainsElGreaterThan { .. } => {
+                &naming::DimensionThreeContainsElGreaterThanUpperCamelCase
             }
-            Self::DimensionThreeContainsElementGreaterThan { .. } => {
-                &naming::DimensionThreeContainsElementGreaterThanUpperCamelCase
-            }
-            Self::DimensionFourContainsElementGreaterThan { .. } => {
-                &naming::DimensionFourContainsElementGreaterThanUpperCamelCase
+            Self::DimensionFourContainsElGreaterThan { .. } => {
+                &naming::DimensionFourContainsElGreaterThanUpperCamelCase
             }
             Self::AllElementsGreaterThan { .. } => &naming::AllElementsGreaterThanUpperCamelCase,
             Self::DimensionOneAllElementsGreaterThan { .. } => {
@@ -459,20 +457,18 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionFourRegularExpression => {
                 &naming::DimensionFourRegularExpressionUpperCamelCase
             }
-            Self::ContainsElementRegularExpression => {
-                &naming::ContainsElementRegularExpressionUpperCamelCase
+            Self::ContainsElRegularExpression => &naming::ContainsElRegularExpressionUpperCamelCase,
+            Self::DimensionOneContainsElRegularExpression => {
+                &naming::DimensionOneContainsElRegularExpressionUpperCamelCase
             }
-            Self::DimensionOneContainsElementRegularExpression => {
-                &naming::DimensionOneContainsElementRegularExpressionUpperCamelCase
+            Self::DimensionTwoContainsElRegularExpression => {
+                &naming::DimensionTwoContainsElRegularExpressionUpperCamelCase
             }
-            Self::DimensionTwoContainsElementRegularExpression => {
-                &naming::DimensionTwoContainsElementRegularExpressionUpperCamelCase
+            Self::DimensionThreeContainsElRegularExpression => {
+                &naming::DimensionThreeContainsElRegularExpressionUpperCamelCase
             }
-            Self::DimensionThreeContainsElementRegularExpression => {
-                &naming::DimensionThreeContainsElementRegularExpressionUpperCamelCase
-            }
-            Self::DimensionFourContainsElementRegularExpression => {
-                &naming::DimensionFourContainsElementRegularExpressionUpperCamelCase
+            Self::DimensionFourContainsElRegularExpression => {
+                &naming::DimensionFourContainsElRegularExpressionUpperCamelCase
             }
             Self::AllElementsRegularExpression => {
                 &naming::AllElementsRegularExpressionUpperCamelCase

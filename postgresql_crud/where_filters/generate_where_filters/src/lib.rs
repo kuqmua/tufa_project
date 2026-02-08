@@ -110,8 +110,9 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
     let t_annotation_generic_ts = quote::quote! {<#t_ts>};
     let proc_macro2_ts_new = proc_macro2::TokenStream::new();
     let core_default_default_default_ts = token_patterns::CoreDefaultDefaultDefault;
-    let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_ts = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-    let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_ts = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+    let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_ts =
+        token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl;
+    let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCall;
     let pub_value_t_ts = quote::quote! {pub #value_snake_case: T};
     let unsigned_part_of_std_primitive_i32_ts =
         quote::quote! {postgresql_crud_common::UnsignedPartOfStdPrimitiveI32};
@@ -121,8 +122,8 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
         quote::quote! {#value_snake_case: #not_zero_unsigned_part_of_std_primitive_i32_ts};
     let pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts =
         quote::quote! {pub #value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts};
-    let value_default_but_option_is_always_some_and_vec_always_contains_one_element_ts = quote::quote! {
-        #value_snake_case: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_ts
+    let value_default_but_option_is_always_some_and_vec_always_contains_one_el_ts = quote::quote! {
+        #value_snake_case: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts
     };
     let generate_struct_ts = |filter_initialized_with_try_new_result_is_ok: bool, should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn quote::ToTokens, struct_additional_fields_ts: &dyn quote::ToTokens| {
         let maybe_pub_ts: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_ts_new } else { &naming::PubSnakeCase };
@@ -141,14 +142,14 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
             }
         }
     };
-    let generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_ts = |should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn quote::ToTokens, impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_ts: &dyn quote::ToTokens| {
-        postgresql_crud_macros_common::generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_ts(
+    let generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_el_ts = |should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn quote::ToTokens, impl_default_but_option_is_always_some_and_vec_always_contains_one_el_additional_fields_ts: &dyn quote::ToTokens| {
+        postgresql_crud_macros_common::generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_el_for_tokens_ts(
             &match &should_add_declaration_of_struct_ident_generic {
                 ShouldAddDeclarationOfStructIdentGeneric::False => proc_macro2::TokenStream::new(),
                 ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_ts } => {
                     maybe_additional_traits_ts.as_ref().map_or_else(
-                        || quote::quote! {<T: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_ts>},
-                        |value_29913af7| quote::quote! {<T: #value_29913af7 + #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_ts>}
+                        || quote::quote! {<T: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_ts>},
+                        |value_29913af7| quote::quote! {<T: #value_29913af7 + #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_ts>}
                     )
                 }
             },
@@ -160,8 +161,8 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
             },
             &quote::quote! {
                 Self {
-                    logical_operator: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_ts,
-                    #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_ts
+                    logical_operator: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts,
+                    #impl_default_but_option_is_always_some_and_vec_always_contains_one_el_additional_fields_ts
                 }
             },
         )
@@ -211,8 +212,8 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
         pub value: RegexRegex
     };
     let regular_expression_case_and_value_default_initialization_ts = quote::quote! {
-        regular_expression_case: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_ts,
-        #value_default_but_option_is_always_some_and_vec_always_contains_one_element_ts
+        regular_expression_case: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts,
+        #value_default_but_option_is_always_some_and_vec_always_contains_one_el_ts
     };
     let if_let_err_query_try_bind_self_value_to_string_ts = quote::quote! {
         if let Err(#error_snake_case) = #query_snake_case.try_bind(#self_snake_case.#value_snake_case.to_string()) {
@@ -305,7 +306,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
         };
     let value_match_self_value_query_part_initialization_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&value_snake_case, &value_snake_case, &quote::quote! {query_part});
     let dimensions_default_initialization_ts = quote::quote! {
-        #dimensions_snake_case: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_ts
+        #dimensions_snake_case: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts
     };
     let dimensions_default_initialization_comma_ts =
         quote::quote! {#dimensions_default_initialization_ts,};
@@ -331,7 +332,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
         |maybe_dimensions_default_initialization_ts: &dyn quote::ToTokens| {
             quote::quote! {
                 #maybe_dimensions_default_initialization_ts
-                #value_default_but_option_is_always_some_and_vec_always_contains_one_element_ts
+                #value_default_but_option_is_always_some_and_vec_always_contains_one_el_ts
             }
         };
     let is_query_bind_mutable_true = postgresql_crud_macros_common::IsQueryBindMutable::True;
@@ -384,7 +385,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
             let (
                 should_add_declaration_of_struct_ident_generic,
                 struct_additional_fields_ts,
-                impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_ts,
+                impl_default_but_option_is_always_some_and_vec_always_contains_one_el_additional_fields_ts,
                 increment_parameter_underscore,
                 query_part_content_ts,
                 is_query_bind_mutable,
@@ -572,8 +573,8 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                             is_query_bind_mutable_true,
                             quote::quote! {
                                 #maybe_dimensions_query_bind_content_ts
-                                for element_ea865d8c in #self_snake_case.#value_snake_case.into_vec() {
-                                    if let Err(#error_snake_case) = #query_snake_case.try_bind(element_ea865d8c) {
+                                for el_ea865d8c in #self_snake_case.#value_snake_case.into_vec() {
+                                    if let Err(#error_snake_case) = #query_snake_case.try_bind(el_ea865d8c) {
                                         return Err(#error_snake_case.to_string());
                                     }
                                 }
@@ -780,7 +781,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                             },
                             quote::quote! {
                                 #maybe_dimensions_default_initialization_ts
-                                encode_format: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_ts,
+                                encode_format: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts,
                                 encoded_string_representation: #core_default_default_default_ts
                             },
                             postgresql_crud_macros_common::IncrementParameterUnderscore::False,
@@ -857,11 +858,15 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                 let generate_length_filter_pattern_ts = |operator: &dyn std::fmt::Display| {
                     (
                         should_add_declaration_of_struct_ident_generic_false.clone(),
-                        pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts.clone(),
-                        value_default_but_option_is_always_some_and_vec_always_contains_one_element_ts.clone(),
+                        pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts
+                            .clone(),
+                        value_default_but_option_is_always_some_and_vec_always_contains_one_el_ts
+                            .clone(),
                         postgresql_crud_macros_common::IncrementParameterUnderscore::False,
                         {
-                            let format_handle_ts = generate_quotes::double_quotes_ts(&format!("{{}}(array_length({{}}, 1) {operator} ${{}})"));
+                            let format_handle_ts = generate_quotes::double_quotes_ts(&format!(
+                                "{{}}(array_length({{}}, 1) {operator} ${{}})"
+                            ));
                             quote::quote! {
                                 match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                     Ok(value_f7988de8) => Ok(format!(#format_handle_ts, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, value_f7988de8)),
@@ -1119,7 +1124,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                 &ident,
                 &struct_additional_fields_ts,
             );
-            let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_ts = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_ts(&should_add_declaration_of_struct_ident_generic, &ident, &impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_ts);
+            let impl_default_but_option_is_always_some_and_vec_always_contains_one_el_ts = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_el_ts(&should_add_declaration_of_struct_ident_generic, &ident, &impl_default_but_option_is_always_some_and_vec_always_contains_one_el_additional_fields_ts);
             let impl_postgresql_type_where_filter_ts =
                 generate_impl_postgresql_type_where_filter_ts(
                     &FilterType::PostgresqlType,
@@ -1133,13 +1138,13 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                 );
             let generated = quote::quote! {
                 #struct_ts
-                #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_ts
+                #impl_default_but_option_is_always_some_and_vec_always_contains_one_el_ts
                 #impl_postgresql_type_where_filter_ts
             };
             generated
         };
         let filter_array_ts = postgresql_crud_macros_common::PostgresqlTypeFilter::into_array()
-            .map(|element_7cfb1929| generate_filters_ts(&element_7cfb1929));
+            .map(|el_7cfb1929| generate_filters_ts(&el_7cfb1929));
         let generated = quote::quote! {#(#filter_array_ts)*};
         macros_helpers::maybe_write_ts_into_file(
             generate_where_filters_config
@@ -1180,7 +1185,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                     },
                     quote::quote! {
                         #maybe_dimensions_default_initialization_ts
-                        #value_default_but_option_is_always_some_and_vec_always_contains_one_element_ts
+                        #value_default_but_option_is_always_some_and_vec_always_contains_one_el_ts
                     },
                     {
                         let format_handle_ts = generate_quotes::double_quotes_ts(&generate_format_handle_stringified(&postgresql_type_kind));
@@ -1303,7 +1308,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                             &">",
                         )
                     };
-                let generate_contains_element_greater_than_ts =
+                let generate_contains_el_greater_than_ts =
                     |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                         generate_1763ccf3_10be_4527_912b_363d8ea05f4b_ts(
                             postgresql_type_pattern_handle,
@@ -1520,7 +1525,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                             },
                         )
                     };
-                let generate_contains_element_regular_expression_ts =
+                let generate_contains_el_regular_expression_ts =
                     |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                         let (
                             maybe_dimensions_declaration_ts,
@@ -1638,7 +1643,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                     },
                     quote::quote! {
                         #maybe_dimensions_default_initialization_ts
-                        #value_default_but_option_is_always_some_and_vec_always_contains_one_element_ts
+                        #value_default_but_option_is_always_some_and_vec_always_contains_one_el_ts
                     },
                     {
                         let format_handle_ts = generate_quotes::double_quotes_ts(&format!("{{}}({{}}{} @> {{}})", postgresql_type_kind.format_argument()));
@@ -1681,7 +1686,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                     },
                     quote::quote! {
                         #maybe_dimensions_default_initialization_ts
-                        #value_default_but_option_is_always_some_and_vec_always_contains_one_element_ts
+                        #value_default_but_option_is_always_some_and_vec_always_contains_one_el_ts
                     },
                     {
                         let format_handle_ts = generate_quotes::double_quotes_ts(&format!("{{}}(exists (select 1 from jsonb_array_elements_text({{}}{}) as e1 join jsonb_array_elements_text({{}}) as e2 on e1.value = e2.value))", postgresql_type_kind.format_argument()));
@@ -1707,7 +1712,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                 let (
                     should_add_declaration_of_struct_ident_generic,
                     struct_additional_fields_ts,
-                    impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_ts,
+                    impl_default_but_option_is_always_some_and_vec_always_contains_one_el_additional_fields_ts,
                     query_part_content_ts,
                     is_query_bind_mutable,
                     query_bind_content_ts
@@ -1737,11 +1742,11 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoGreaterThan { .. } => generate_greater_than_ts(&postgresql_type_pattern_handle_array_dimension2),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeGreaterThan { .. } => generate_greater_than_ts(&postgresql_type_pattern_handle_array_dimension3),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourGreaterThan { .. } => generate_greater_than_ts(&postgresql_type_pattern_handle_array_dimension4),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementGreaterThan { .. } => generate_contains_element_greater_than_ts(&postgresql_type_pattern_handle_standart),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementGreaterThan { .. } => generate_contains_element_greater_than_ts(&postgresql_type_pattern_handle_array_dimension1),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementGreaterThan { .. } => generate_contains_element_greater_than_ts(&postgresql_type_pattern_handle_array_dimension2),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementGreaterThan { .. } => generate_contains_element_greater_than_ts(&postgresql_type_pattern_handle_array_dimension3),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementGreaterThan { .. } => generate_contains_element_greater_than_ts(&postgresql_type_pattern_handle_array_dimension4),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElGreaterThan { .. } => generate_contains_el_greater_than_ts(&postgresql_type_pattern_handle_standart),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElGreaterThan { .. } => generate_contains_el_greater_than_ts(&postgresql_type_pattern_handle_array_dimension1),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElGreaterThan { .. } => generate_contains_el_greater_than_ts(&postgresql_type_pattern_handle_array_dimension2),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElGreaterThan { .. } => generate_contains_el_greater_than_ts(&postgresql_type_pattern_handle_array_dimension3),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElGreaterThan { .. } => generate_contains_el_greater_than_ts(&postgresql_type_pattern_handle_array_dimension4),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsGreaterThan { .. } => generate_all_elements_greater_than_ts(&postgresql_type_pattern_handle_standart),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsGreaterThan { .. } => generate_all_elements_greater_than_ts(&postgresql_type_pattern_handle_array_dimension1),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoAllElementsGreaterThan { .. } => generate_all_elements_greater_than_ts(&postgresql_type_pattern_handle_array_dimension2),
@@ -1762,11 +1767,11 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoRegularExpression => generate_regular_expression_ts(&postgresql_type_pattern_handle_array_dimension2),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeRegularExpression => generate_regular_expression_ts(&postgresql_type_pattern_handle_array_dimension3),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourRegularExpression => generate_regular_expression_ts(&postgresql_type_pattern_handle_array_dimension4),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementRegularExpression => generate_contains_element_regular_expression_ts(&postgresql_type_pattern_handle_standart),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementRegularExpression => generate_contains_element_regular_expression_ts(&postgresql_type_pattern_handle_array_dimension1),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementRegularExpression => generate_contains_element_regular_expression_ts(&postgresql_type_pattern_handle_array_dimension2),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementRegularExpression => generate_contains_element_regular_expression_ts(&postgresql_type_pattern_handle_array_dimension3),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementRegularExpression => generate_contains_element_regular_expression_ts(&postgresql_type_pattern_handle_array_dimension4),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElRegularExpression => generate_contains_el_regular_expression_ts(&postgresql_type_pattern_handle_standart),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElRegularExpression => generate_contains_el_regular_expression_ts(&postgresql_type_pattern_handle_array_dimension1),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElRegularExpression => generate_contains_el_regular_expression_ts(&postgresql_type_pattern_handle_array_dimension2),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElRegularExpression => generate_contains_el_regular_expression_ts(&postgresql_type_pattern_handle_array_dimension3),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElRegularExpression => generate_contains_el_regular_expression_ts(&postgresql_type_pattern_handle_array_dimension4),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsRegularExpression => generate_all_elements_regular_expression_ts(&postgresql_type_pattern_handle_standart),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsRegularExpression => generate_all_elements_regular_expression_ts(&postgresql_type_pattern_handle_array_dimension1),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoAllElementsRegularExpression => generate_all_elements_regular_expression_ts(&postgresql_type_pattern_handle_array_dimension2),
@@ -1790,7 +1795,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                     &ident,
                     &struct_additional_fields_ts,
                 );
-                let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_ts = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_ts(&should_add_declaration_of_struct_ident_generic, &ident, &impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_ts);
+                let impl_default_but_option_is_always_some_and_vec_always_contains_one_el_ts = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_el_ts(&should_add_declaration_of_struct_ident_generic, &ident, &impl_default_but_option_is_always_some_and_vec_always_contains_one_el_additional_fields_ts);
                 let impl_postgresql_type_where_filter_ts =
                     generate_impl_postgresql_type_where_filter_ts(
                         &FilterType::PostgresqlJsonType,
@@ -1804,13 +1809,13 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                     );
                 let generated = quote::quote! {
                     #struct_ts
-                    #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_ts
+                    #impl_default_but_option_is_always_some_and_vec_always_contains_one_el_ts
                     #impl_postgresql_type_where_filter_ts
                 };
                 generated
             };
         let filter_array_ts = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::into_array()
-            .map(|element_6a4ac539| generate_filters_ts(&element_6a4ac539));
+            .map(|el_6a4ac539| generate_filters_ts(&el_6a4ac539));
         let generated = quote::quote! {#(#filter_array_ts)*};
         macros_helpers::maybe_write_ts_into_file(
             generate_where_filters_config.postgresql_json_types_content_write_into_generate_where_filters_postgresql_json_types,

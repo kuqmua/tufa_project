@@ -8,37 +8,37 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_ts(
     let implementations_ts = serde_json::from_str::<Vec<Vec<String>>>(&input_ts.to_string())
         .expect("90e5793b-d813-44aa-a124-c738772030c2")
         .into_iter()
-        .map(|element_020a8657| {
+        .map(|el_020a8657| {
             {
                 let regex =
                     regex::Regex::new(REGEX_VALUE).expect("20948d87-2c38-4896-96b6-239d9c9a0a38");
-                for element_d68254e8 in &element_020a8657 {
+                for el_d68254e8 in &el_020a8657 {
                     assert!(
-                        regex.is_match(element_d68254e8),
+                        regex.is_match(el_d68254e8),
                         "faadba8a-ff38-40f9-af05-e4f95bba896a"
                     );
                 }
             }
-            let phrase_part_upper_camel_case_stringified = element_020a8657.iter().fold(
+            let phrase_part_upper_camel_case_stringified =
+                el_020a8657
+                    .iter()
+                    .fold(String::new(), |mut acc_3d60efa0, el_132cd6b1| {
+                        acc_3d60efa0.push_str(
+                            &naming_common::AsRefStrToUpperCamelCaseStringified::case(el_132cd6b1),
+                        );
+                        acc_3d60efa0
+                    });
+            let phrase_part_snake_case_stringified = el_020a8657.iter().enumerate().fold(
                 String::new(),
-                |mut acc_3d60efa0, element_132cd6b1| {
-                    acc_3d60efa0.push_str(
-                        &naming_common::AsRefStrToUpperCamelCaseStringified::case(element_132cd6b1),
-                    );
-                    acc_3d60efa0
-                },
-            );
-            let phrase_part_snake_case_stringified = element_020a8657.iter().enumerate().fold(
-                String::new(),
-                |mut acc_7a8bd950, (index, element_b9981760)| {
-                    let element_snake_case_stringified =
-                        naming_common::AsRefStrToSnakeCaseStringified::case(element_b9981760);
+                |mut acc_7a8bd950, (index, el_b9981760)| {
+                    let el_snake_case_stringified =
+                        naming_common::AsRefStrToSnakeCaseStringified::case(el_b9981760);
                     if index == 0 {
-                        acc_7a8bd950.push_str(&element_snake_case_stringified);
+                        acc_7a8bd950.push_str(&el_snake_case_stringified);
                     } else {
                         use std::fmt::Write as _;
                         assert!(
-                            write!(acc_7a8bd950, "_{element_snake_case_stringified}").is_ok(),
+                            write!(acc_7a8bd950, "_{el_snake_case_stringified}").is_ok(),
                             "ef718915-7a99-45a6-b3c5-496262804976"
                         );
                     }
@@ -132,18 +132,18 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_ts(
     input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let implementations_ts = serde_json::from_str::<Vec<Vec<String>>>(&input_ts.to_string()).expect("9d6a20af-a7b3-4fce-b11f-92b57a8fdb57").into_iter().map(|element_a5ccbaa7| {
+    let implementations_ts = serde_json::from_str::<Vec<Vec<String>>>(&input_ts.to_string()).expect("9d6a20af-a7b3-4fce-b11f-92b57a8fdb57").into_iter().map(|el_a5ccbaa7| {
         {
             let regex = regex::Regex::new(REGEX_VALUE).expect("cba1b5fb-6833-416b-96d9-b64b7a308008");
-            for element_6d4f29dd in &element_a5ccbaa7 {
-                assert!(regex.is_match(element_6d4f29dd), "4a12d90f-6428-4494-8305-40c149a1509a");
+            for el_6d4f29dd in &el_a5ccbaa7 {
+                assert!(regex.is_match(el_6d4f29dd), "4a12d90f-6428-4494-8305-40c149a1509a");
             }
         }
         let self_match_name = "self";
         {
             let mut is_self_exists_and_only_one = false;
-            for element_3eac2cfb in &element_a5ccbaa7 {
-                if element_3eac2cfb == self_match_name {
+            for el_3eac2cfb in &el_a5ccbaa7 {
+                if el_3eac2cfb == self_match_name {
                     is_self_exists_and_only_one = true;
                     break;
                 }
@@ -153,26 +153,26 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_ts(
         let (elements_concat_value_upper_camel_case_double_quotes_ts, elements_concat_value_snake_case_double_quotes_ts, struct_upper_camel_case_upper_camel_case_ts, struct_snake_case_token_upper_camel_case_ts, trait_upper_camel_case_upper_camel_case_ts, trait_snake_case_token_upper_camel_case_ts) = {
             let upper_camel_case_upper_camel_case_stringified = "UpperCamelCase";
             let snake_case_upper_camel_case_stringified = "SnakeCase";
-            let elements_concat_upper_camel_case_stringified = element_a5ccbaa7.iter().fold(String::new(), |mut acc_34997d76, element_98881b7d| {
-                acc_34997d76.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(element_98881b7d));
+            let elements_concat_upper_camel_case_stringified = el_a5ccbaa7.iter().fold(String::new(), |mut acc_34997d76, el_98881b7d| {
+                acc_34997d76.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(el_98881b7d));
                 acc_34997d76
             });
-            let elements_concat_value_upper_camel_case_double_quotes_ts = generate_quotes::double_quotes_ts(&element_a5ccbaa7.iter().fold(String::new(), |mut acc_ae77cbd3, element_626f2b61| {
-                if element_626f2b61 == "self" {
+            let elements_concat_value_upper_camel_case_double_quotes_ts = generate_quotes::double_quotes_ts(&el_a5ccbaa7.iter().fold(String::new(), |mut acc_ae77cbd3, el_626f2b61| {
+                if el_626f2b61 == "self" {
                     acc_ae77cbd3.push_str("{value}");
                 } else {
-                    acc_ae77cbd3.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(element_626f2b61));
+                    acc_ae77cbd3.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(el_626f2b61));
                 }
                 acc_ae77cbd3
             }));
             let elements_concat_value_snake_case_double_quotes_ts = generate_quotes::double_quotes_ts(&{
-                let mut value = element_a5ccbaa7.iter().fold(String::new(), |mut acc_cbcae5e1, element_73b0c851| {
+                let mut value = el_a5ccbaa7.iter().fold(String::new(), |mut acc_cbcae5e1, el_73b0c851| {
                     use std::fmt::Write as _;
                     let symbol = '_';
-                    if element_73b0c851 == "self" {
+                    if el_73b0c851 == "self" {
                         assert!(write!(acc_cbcae5e1, "{{value}}{symbol}").is_ok(), "6a02a2ff-1cb0-488d-85c0-32ea2d1291ac");
                     } else {
-                        assert!(write!(acc_cbcae5e1, "{}{symbol}", naming_common::AsRefStrToSnakeCaseStringified::case(element_73b0c851)).is_ok(), "d915980a-3aa3-4220-abfd-d5800927eef0");
+                        assert!(write!(acc_cbcae5e1, "{}{symbol}", naming_common::AsRefStrToSnakeCaseStringified::case(el_73b0c851)).is_ok(), "d915980a-3aa3-4220-abfd-d5800927eef0");
                     }
                     acc_cbcae5e1
                 });
@@ -244,9 +244,9 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_ts(
                             let path_before_stringified = type_path.path.segments.iter().take(
                                 type_path.path.segments.len().checked_sub(1).expect("e1f5a332-80ab-4a8a-8cbe-882e658185b7")
                             )
-                            .fold(String::new(), |mut acc_f0a77378, element_2b05e58f| {
+                            .fold(String::new(), |mut acc_f0a77378, el_2b05e58f| {
                                 use std::fmt::Write as _;
-                                assert!(write!(acc_f0a77378, "{}::", element_2b05e58f.ident).is_ok(), "67c90ce9-beea-4a81-99a2-874b8f04aa0a");
+                                assert!(write!(acc_f0a77378, "{}::", el_2b05e58f.ident).is_ok(), "67c90ce9-beea-4a81-99a2-874b8f04aa0a");
                                 acc_f0a77378
                             });
                             let last = type_path.path.segments.iter().last().expect("19f6e1a6-2e06-4043-8732-03f3807d58c4");
