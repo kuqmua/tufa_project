@@ -982,19 +982,17 @@ pub fn generate_postgresql_types(
             PostgresqlType,
             PostgresqlTypeTestCases,
         }
-        #[allow(clippy::arbitrary_source_item_ordering)]
         enum CanBePrimaryKey {
-            True,
             False,
+            True,
         }
         enum IsNotNullStandartCanBePrimaryKey {
             False,
             True,
         }
-        #[allow(clippy::arbitrary_source_item_ordering)]
         enum StartOrEnd {
-            Start,
             End,
+            Start,
         }
         enum IntRangeType {
             SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
@@ -1354,14 +1352,14 @@ pub fn generate_postgresql_types(
         };
         let generate_start_or_end_upper_camel_case = |start_or_end: &StartOrEnd| -> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
             match &start_or_end {
-                StartOrEnd::Start => &start_upper_camel_case,
                 StartOrEnd::End => &end_upper_camel_case,
+                StartOrEnd::Start => &start_upper_camel_case,
             }
         };
         let generate_start_or_end_snake_case = |start_or_end: &StartOrEnd| -> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
             match &start_or_end {
-                StartOrEnd::Start => &start_snake_case,
                 StartOrEnd::End => &end_snake_case,
+                StartOrEnd::Start => &start_snake_case,
             }
         };
         let (serde_serialize_derive_or_impl, serde_deserialize_derive_or_impl) = if matches!(&is_standart_not_null, postgresql_crud_macros_common::IsStandartNotNull::True) {
@@ -4381,7 +4379,6 @@ pub fn generate_postgresql_types(
         let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
         let ident_create_token_stream = {
             let ident_create_token_stream = match &can_be_primary_key {
-                CanBePrimaryKey::True => generate_pub_struct_tokens_token_stream(&ident_create_upper_camel_case, &quote::quote! {(());}, macros_helpers::DeriveDefault::False),
                 CanBePrimaryKey::False => macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
@@ -4393,26 +4390,27 @@ pub fn generate_postgresql_types(
                     .build_struct(
                         &ident_create_upper_camel_case,
                         &ident_origin_struct_content_token_stream
-                    )
+                    ),
+                CanBePrimaryKey::True => generate_pub_struct_tokens_token_stream(&ident_create_upper_camel_case, &quote::quote! {(());}, macros_helpers::DeriveDefault::False),
             };
             let maybe_impl_ident_create_token_stream = match &can_be_primary_key {
-                CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
                 CanBePrimaryKey::False => generate_pub_const_new_or_pub_try_new_token_stream(&ident_create_upper_camel_case),
+                CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
             };
             let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_create_upper_camel_case, &{
                 let content_token_stream: &dyn quote::ToTokens = match &can_be_primary_key {
-                    CanBePrimaryKey::True => &quote::quote! {()},
                     CanBePrimaryKey::False => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                    CanBePrimaryKey::True => &quote::quote! {()},
                 };
                 quote::quote! {Self(#content_token_stream)}
             });
             let maybe_impl_sqlx_encode_sqlx_postgres_for_ident_create_token_stream = match &can_be_primary_key {
-                CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
                 CanBePrimaryKey::False => postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(&ident_create_upper_camel_case, &quote::quote! {#self_snake_case.0}),
+                CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
             };
             let maybe_impl_sqlx_type_sqlx_postgres_for_ident_create_token_stream = match &can_be_primary_key {
-                CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
                 CanBePrimaryKey::False => postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_create_upper_camel_case, &ident_origin_upper_camel_case),
+                CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
             };
             quote::quote! {
                 #ident_create_token_stream
@@ -5031,8 +5029,8 @@ pub fn generate_postgresql_types(
                 &ident,
                 &ident_table_type_declaration_upper_camel_case,
                 &match &can_be_primary_key {
-                    CanBePrimaryKey::True => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::False,
                     CanBePrimaryKey::False => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
+                    CanBePrimaryKey::True => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::False,
                 },
                 &{
                     let postgresql_query_type = match &postgresql_type {
@@ -5107,17 +5105,17 @@ pub fn generate_postgresql_types(
                 &ident_create_upper_camel_case,
                 &postgresql_crud_macros_common::CreateQueryPartValueUnderscore::True,
                 &match &can_be_primary_key {
-                    CanBePrimaryKey::True => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::True,
                     CanBePrimaryKey::False => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
+                    CanBePrimaryKey::True => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::True,
                 },
                 &query_part_create_token_stream,
                 &match &can_be_primary_key {
-                    CanBePrimaryKey::True => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::True,
                     CanBePrimaryKey::False => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
+                    CanBePrimaryKey::True => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::True,
                 },
                 &match &can_be_primary_key {
-                    CanBePrimaryKey::True => postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
                     CanBePrimaryKey::False => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
+                    CanBePrimaryKey::True => postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
                 },
                 &bind_value_to_query_create_token_stream,
                 &ident_select_upper_camel_case,
@@ -5904,7 +5902,6 @@ pub fn generate_postgresql_types(
                 match &postgresql_type_pattern {
                     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &can_be_primary_key {
-                            CanBePrimaryKey::True => none_token_stream.clone(),
                             CanBePrimaryKey::False => {
                                 let content_token_stream = generate_standart_not_null_test_case_handle_token_stream(&IsNeedToUseInto::False);
                                 let new_or_try_new_token_stream = {
@@ -5925,6 +5922,7 @@ pub fn generate_postgresql_types(
                                     ).collect()
                                 )}
                             }
+                            CanBePrimaryKey::True => none_token_stream.clone(),
                         },
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_some_acc_content_token_stream(not_null_or_nullable, &generate_ident_token_stream(postgresql_type, &postgresql_crud_macros_common::NotNullOrNullable::NotNull, &PostgresqlTypePattern::Standart), &proc_macro2::TokenStream::new()),
                     },
