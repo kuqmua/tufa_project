@@ -844,7 +844,6 @@ enum Variant {
     MinusOne,
     Normal,
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 impl<
     'lifetime,
     T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'lifetime,
@@ -852,26 +851,8 @@ impl<
 > BoundedStdVecVec<T, LENGTH>
 {
     #[must_use]
-    pub const fn to_inner(&self) -> &Vec<T> {
-        &self.0
-    }
-    #[must_use]
     pub fn into_inner(self) -> Vec<T> {
         self.0
-    }
-    pub fn postgresql_type_query_part(
-        &self,
-        increment: &mut u64,
-        column: &dyn std::fmt::Display,
-        is_need_to_add_logical_operator: bool,
-    ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
-        self.query_part(
-            increment,
-            column,
-            is_need_to_add_logical_operator,
-            &PostgresqlTypeOrPostgresqlJsonType::PostgresqlType,
-            &Variant::Normal,
-        )
     }
     pub fn postgresql_json_type_query_part(
         &self,
@@ -884,6 +865,34 @@ impl<
             column,
             is_need_to_add_logical_operator,
             &PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType,
+            &Variant::Normal,
+        )
+    }
+    pub fn postgresql_json_type_query_part_minus_one(
+        &self,
+        increment: &mut u64,
+        column: &dyn std::fmt::Display,
+        is_need_to_add_logical_operator: bool,
+    ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
+        self.query_part(
+            increment,
+            column,
+            is_need_to_add_logical_operator,
+            &PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType,
+            &Variant::MinusOne,
+        )
+    }
+    pub fn postgresql_type_query_part(
+        &self,
+        increment: &mut u64,
+        column: &dyn std::fmt::Display,
+        is_need_to_add_logical_operator: bool,
+    ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
+        self.query_part(
+            increment,
+            column,
+            is_need_to_add_logical_operator,
+            &PostgresqlTypeOrPostgresqlJsonType::PostgresqlType,
             &Variant::Normal,
         )
     }
@@ -901,19 +910,17 @@ impl<
             &Variant::MinusOne,
         )
     }
-    pub fn postgresql_json_type_query_part_minus_one(
-        &self,
-        increment: &mut u64,
-        column: &dyn std::fmt::Display,
-        is_need_to_add_logical_operator: bool,
-    ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
-        self.query_part(
-            increment,
-            column,
-            is_need_to_add_logical_operator,
-            &PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType,
-            &Variant::MinusOne,
-        )
+    pub fn query_bind(
+        self,
+        mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
+    {
+        for element_a05046df in self.0 {
+            if let Err(error) = query.try_bind(element_a05046df) {
+                return Err(error.to_string());
+            }
+        }
+        Ok(query)
     }
     fn query_part(
         &self,
@@ -959,17 +966,9 @@ impl<
         }
         Ok(acc_24eb25aa)
     }
-    pub fn query_bind(
-        self,
-        mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
-    {
-        for element_a05046df in self.0 {
-            if let Err(error) = query.try_bind(element_a05046df) {
-                return Err(error.to_string());
-            }
-        }
-        Ok(query)
+    #[must_use]
+    pub const fn to_inner(&self) -> &Vec<T> {
+        &self.0
     }
 }
 impl<T, const LENGTH: usize> TryFrom<Vec<T>> for BoundedStdVecVec<T, LENGTH> {

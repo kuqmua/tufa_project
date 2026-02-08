@@ -637,7 +637,7 @@ pub fn generate_postgresql_types(
                         } => match &value.0.can_be_an_array_element() {
                             CanBeAnArrayElement::False => {
                                 Err(format!("{cant_support_array_version_message}{value:#?}"))
-                            },
+                            }
                             CanBeAnArrayElement::True => match &dimension1_not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                     Ok(Self {
@@ -652,7 +652,7 @@ pub fn generate_postgresql_types(
                             },
                         },
                     }
-                },
+                }
                 CanBeNullable::True => match &value.2 {
                     PostgresqlTypePattern::Standart => Ok(Self {
                         postgresql_type: value.0,
@@ -663,7 +663,7 @@ pub fn generate_postgresql_types(
                         match &value.0.can_be_an_array_element() {
                             CanBeAnArrayElement::False => {
                                 Err(format!("{cant_support_array_version_message}{value:#?}"))
-                            },
+                            }
                             CanBeAnArrayElement::True => Ok(Self {
                                 postgresql_type: value.0,
                                 not_null_or_nullable: value.1,
