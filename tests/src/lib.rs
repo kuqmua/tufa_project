@@ -227,7 +227,8 @@ mod tests {
                 String::from("test_unstable_lint"),
                 String::from("resolving_to_items_shadowing_supertrait_items"),
                 String::from("shadowing_supertrait_items"),
-                String::from("unqualified_local_imports"), //need to use some kind of defferent test flag or something for this
+                String::from("unqualified_local_imports"), //need to use some kind of different test flag or something for this
+                String::from("unreachable_cfg_select_predicates"),
             ],
         );
     }
