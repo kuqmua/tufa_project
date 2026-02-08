@@ -520,7 +520,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrud;
     let return_err_query_part_error_named_write_into_buffer_ts = postgresql_crud_macros_common::generate_return_err_query_part_error_named_write_into_buffer_ts(import_path);
 
-    // let postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCall;
+    // let postgresql_crud_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_call_ts = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCall;
     let syn_derive_input: syn::DeriveInput =
         syn::parse2(input).expect("991c614f-5cf9-4a53-873a-5280b62e2dfa");
     let generate_postgresql_table_config = serde_json::from_str::<GeneratePostgresqlTableConfig>(
@@ -1647,7 +1647,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &proc_macro2::TokenStream::new(),
                 &quote::quote! {format!("{self}")},
             );
-        let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_el_for_ident_select_ts = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_el_for_tokens_ts(&ident_select_upper_camel_case, &{
+        let impl_postgresql_crud_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_for_ident_select_ts = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(&ident_select_upper_camel_case, &{
             let elements_ts = generate_fields_named_with_comma_ts(&|el_5282570d: &macros_helpers::SynFieldWrapper| {
                 let field_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_5282570d.field_ident);
                 quote::quote! {
@@ -1660,7 +1660,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             #ident_select_ts
             #impl_std_fmt_display_for_ident_select_ts
             #impl_error_occurence_lib_to_std_string_string_for_ident_select_ts
-            #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_el_for_ident_select_ts
+            #impl_postgresql_crud_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_for_ident_select_ts
         }
     };
     let select_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts = quote::quote! {

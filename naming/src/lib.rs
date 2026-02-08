@@ -550,12 +550,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
         "one", "el"
     ],
     [
-        "all", "enum", "variants", "array", "default", "but", "option", "is", "always", "some",
-        "and", "vec", "always", "contains", "one", "el"
-    ],
-    [
-        "all", "enum", "variants", "array", "default", "but", "std", "option", "option", "is",
-        "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "el"
+        "all", "variants", "array", "default", "but", "option", "is", "some", "and", "vec",
+        "contains", "one", "el"
     ],
     ["generate", "postgresql", "json", "type"],
     ["to", "std", "string", "string"],
@@ -1134,9 +1130,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
         "one", "el", "with", "max", "page", "size"
     ],
     [
-        "all", "enum", "variants", "array", "default", "but", "std", "option", "option", "is",
-        "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "el", "with",
-        "max", "page", "size"
+        "all", "variants", "array", "default", "but", "option", "is", "some", "and", "vec",
+        "contains", "one", "el", "with", "max", "page", "size"
     ],
     ["ids", "are", "not", "unique"],
     ["postgresql", "type", "primary", "key"],

@@ -2,8 +2,7 @@ pub trait DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl: Sized {
     fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self;
 }
 pub trait AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl: Sized {
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_el()
-    -> Vec<Self>;
+    fn all_variants_array_default_but_option_is_some_and_vec_contains_one_el() -> Vec<Self>;
 }
 pub trait DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize: Sized {
     fn default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size() -> Self;
@@ -11,7 +10,7 @@ pub trait DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize: 
 pub trait AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize:
     Sized
 {
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_el_with_max_page_size()
+    fn all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size()
     -> Vec<Self>;
 }
 

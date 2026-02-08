@@ -74,7 +74,7 @@ pub enum ImportPath {
     PostgresqlCrudCommon,
 }
 impl ImportPath {
-    fn all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_el(
+    fn all_variants_array_default_but_option_is_some_and_vec_contains_one_el(
         &self,
     ) -> &dyn quote::ToTokens {
         match &self {
@@ -83,7 +83,7 @@ impl ImportPath {
             Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl,
         }
     }
-    fn all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size(
+    fn all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size(
         &self,
     ) -> &dyn quote::ToTokens {
         match &self {
@@ -619,7 +619,7 @@ pub fn generate_postgresql_type_where_ts(
             &proc_macro2::TokenStream::new(),
             &quote::quote! {format!("{self:#?}")},
         );
-    let impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_el_for_postgresql_type_tokens_where_ts = generate_impl_postgresql_crud_common_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_el_for_tokens_ts(&ident, &{
+    let impl_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_for_postgresql_type_tokens_where_ts = generate_impl_postgresql_crud_common_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(&ident, &{
         let variants_ts = variants.iter().map(|el_b9724130| {
             let el_upper_camel_case = el_b9724130.upper_camel_case();
             let default_but_option_is_always_some_and_vec_always_contains_one_el_call_ts = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElCall;
@@ -633,7 +633,7 @@ pub fn generate_postgresql_type_where_ts(
         #postgresql_type_tokens_where_ts
         #impl_postgresql_type_postgresql_type_where_filter_for_postgresql_type_tokens_where_ts
         #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_ts
-        #impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_el_for_postgresql_type_tokens_where_ts
+        #impl_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_for_postgresql_type_tokens_where_ts
     }
 }
 #[must_use]
@@ -868,17 +868,18 @@ pub fn generate_impl_default_but_option_is_always_some_and_vec_always_contains_o
         }
     }
 }
-pub fn generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_el_for_tokens_ts(
+pub fn generate_impl_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(
     import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let path_trait_ts = import_path
-        .all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_el();
-    let all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_el_snake_case = naming::AllEnumVariantsArrayDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElSnakeCase;
+    let path_trait_ts =
+        import_path.all_variants_array_default_but_option_is_some_and_vec_contains_one_el();
+    let all_variants_array_default_but_option_is_some_and_vec_contains_one_el_snake_case =
+        naming::AllVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElSnakeCase;
     quote::quote! {
         impl #path_trait_ts for #ident {
-            fn #all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_el_snake_case() -> Vec<Self> {
+            fn #all_variants_array_default_but_option_is_some_and_vec_contains_one_el_snake_case() -> Vec<Self> {
                 #content_ts
             }
         }
@@ -903,16 +904,18 @@ pub fn generate_impl_default_but_option_is_always_some_and_vec_always_contains_o
         }
     }
 }
-pub fn generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_for_tokens_ts(
+pub fn generate_impl_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_for_tokens_ts(
     import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let path_trait_ts = import_path.all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size();
-    let all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_el_with_max_page_size_snake_case = naming::AllEnumVariantsArrayDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElWithMaxPageSizeSnakeCase;
+    let path_trait_ts = import_path
+        .all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size();
+    let all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_snake_case =
+        naming::AllVariantsArrayDefaultButOptionIsSomeAndVecContainsOneElWithMaxPageSizeSnakeCase;
     quote::quote! {
         impl #path_trait_ts for #ident {
-            fn #all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_el_with_max_page_size_snake_case() -> Vec<Self> {
+            fn #all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_snake_case() -> Vec<Self> {
                 #content_ts
             }
         }
@@ -943,17 +946,17 @@ pub fn generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_a
         content_ts,
     )
 }
-pub fn generate_impl_postgresql_crud_common_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_el_for_tokens_ts(
+pub fn generate_impl_postgresql_crud_common_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(
     ident: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_el_for_tokens_ts(&ImportPath::PostgresqlCrudCommon, ident, content_ts)
+    generate_impl_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(&ImportPath::PostgresqlCrudCommon, ident, content_ts)
 }
-pub fn generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_el_for_tokens_ts(
+pub fn generate_impl_postgresql_crud_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(
     ident: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_el_for_tokens_ts(&ImportPath::PostgresqlCrud, ident, content_ts)
+    generate_impl_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_for_tokens_ts(&ImportPath::PostgresqlCrud, ident, content_ts)
 }
 pub fn generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_for_tokens_ts(
     ident: &dyn quote::ToTokens,
@@ -968,11 +971,11 @@ pub fn generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_a
 ) -> proc_macro2::TokenStream {
     generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_for_tokens_ts(&proc_macro2::TokenStream::new(), &ImportPath::PostgresqlCrud, ident, lifetime_ts, content_ts)
 }
-pub fn generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_for_tokens_ts(
+pub fn generate_impl_postgresql_crud_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_for_tokens_ts(
     ident: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size_for_tokens_ts(&ImportPath::PostgresqlCrud, ident, content_ts)
+    generate_impl_all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size_for_tokens_ts(&ImportPath::PostgresqlCrud, ident, content_ts)
 }
 pub fn impl_postgresql_type_where_filter_for_ident_ts(
     impl_generic_ts: &dyn quote::ToTokens,

@@ -538,8 +538,7 @@ where
         + for<'t_lifetime> PostgresqlTypeWhereFilter<'t_lifetime>
         + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl,
 {
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_el()
-    -> Vec<Self> {
+    fn all_variants_array_default_but_option_is_some_and_vec_contains_one_el() -> Vec<Self> {
         vec![Self(Some(DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::default_but_option_is_always_some_and_vec_always_contains_one_el()))]
     }
 }
@@ -840,7 +839,7 @@ impl<
         Self {
             logical_operator: DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::default_but_option_is_always_some_and_vec_always_contains_one_el(),
             value: NotEmptyUniqueVec::try_new(
-                AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_el()
+                AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::all_variants_array_default_but_option_is_some_and_vec_contains_one_el()
             ).expect("a918b427-2d74-4096-915c-2f97314cc05f"),
         }
     }
@@ -1388,7 +1387,7 @@ impl<T: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneE
     DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl for NotEmptyUniqueVec<T>
 {
     fn default_but_option_is_always_some_and_vec_always_contains_one_el() -> Self {
-        Self(AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_el())
+        Self(AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneEl::all_variants_array_default_but_option_is_some_and_vec_contains_one_el())
     }
 }
 impl<T: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize>
@@ -1396,7 +1395,7 @@ impl<T: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneE
 {
     fn default_but_option_is_always_some_and_vec_always_contains_one_el_with_max_page_size() -> Self
     {
-        Self(AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_el_with_max_page_size())
+        Self(AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElWithMaxPageSize::all_variants_array_default_but_option_is_some_and_vec_contains_one_el_with_max_page_size())
     }
 }
 impl<T> Default for NotEmptyUniqueVec<T> {
