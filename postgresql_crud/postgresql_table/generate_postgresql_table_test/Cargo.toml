@@ -14,6 +14,7 @@ proc-macro2.workspace = true
 quote.workspace = true
 generate_postgresql_table_source = {path = "../generate_postgresql_table_source"}
 macro_clippy_check_common = {path = "../../../macro_clippy_check_common"}
+token_patterns = {path = "../../../token_patterns"}
 
 [lints]
 workspace = true

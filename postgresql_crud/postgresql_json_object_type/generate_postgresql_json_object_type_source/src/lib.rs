@@ -2901,7 +2901,7 @@ pub fn generate_postgresql_json_object_type(
                                 &quote::quote! {__field0_value, __field1_value, __field2_value}
                             );
                             quote::quote! {
-                                #[allow(clippy::arbitrary_source_item_ordering)]
+                                #allow_clippy_arbitrary_source_item_ordering_token_stream
                                 impl<'de> serde::Deserialize<'de> for #ident_update_upper_camel_case {
                                     fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
                                     where

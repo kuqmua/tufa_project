@@ -39,12 +39,13 @@ server_config = {path = "../../../server_config"}"#,
                 let generate_table_example_token_stream = |
                     should_add_generate_postgresql_table_primary_key: ShouldAddGeneratePostgresqlTablePrimaryKey
                 |{
+                    let allow_clippy_arbitrary_source_item_ordering_token_stream = token_patterns::AllowClippyArbitrarySourceItemOrdering;
                     let maybe_generate_postgresql_table_primary_key_token_stream = match should_add_generate_postgresql_table_primary_key {
                         ShouldAddGeneratePostgresqlTablePrimaryKey::True => quote::quote!{#[generate_postgresql_table_primary_key]},
                         ShouldAddGeneratePostgresqlTablePrimaryKey::False => proc_macro2::TokenStream::new()
                     };
                     quote::quote!{
-                        #[allow(clippy::arbitrary_source_item_ordering)]
+                        #allow_clippy_arbitrary_source_item_ordering_token_stream
                         #[derive(Debug, Clone, Copy)]
                         #[postgresql_crud::generate_postgresql_table_config{{
                             "create_many_content_write_into_generate_postgresql_table_create_many": "False",

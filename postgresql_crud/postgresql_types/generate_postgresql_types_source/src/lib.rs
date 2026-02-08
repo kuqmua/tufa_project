@@ -1409,7 +1409,7 @@ pub fn generate_postgresql_types(
             let serde_serialize_derive_or_impl = {
                 let generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens = |content_token_stream: &dyn quote::ToTokens| {
                     quote::quote! {
-                        #[allow(clippy::arbitrary_source_item_ordering)]
+                        #allow_clippy_arbitrary_source_item_ordering_token_stream
                         const _: () = {
                             #[allow(unused_extern_crates, clippy::useless_attribute)]
                             extern crate serde as _serde;
@@ -1663,7 +1663,7 @@ pub fn generate_postgresql_types(
                 };
                 let generate_impl_serde_deserialize_for_tokens_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                     quote::quote! {
-                        #[allow(clippy::arbitrary_source_item_ordering)]
+                        #allow_clippy_arbitrary_source_item_ordering_token_stream
                         const _: () = {
                             #[allow(unused_extern_crates, clippy::useless_attribute)]
                             extern crate serde as _serde;
