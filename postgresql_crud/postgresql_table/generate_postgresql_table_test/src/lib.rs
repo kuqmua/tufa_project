@@ -44,6 +44,7 @@ server_config = {path = "../../../server_config"}"#,
                         ShouldAddGeneratePostgresqlTablePrimaryKey::False => proc_macro2::TokenStream::new()
                     };
                     quote::quote!{
+                        #[allow(clippy::arbitrary_source_item_ordering)]
                         #[derive(Debug, Clone, Copy)]
                         #[postgresql_crud::generate_postgresql_table_config{{
                             "create_many_content_write_into_generate_postgresql_table_create_many": "False",

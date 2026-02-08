@@ -521,6 +521,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
     let string_token_stream = token_patterns::StdStringString;
     let must_use_token_stream = token_patterns::MustUse;
+    let allow_clippy_arbitrary_source_item_ordering_token_stream =
+        token_patterns::AllowClippyArbitrarySourceItemOrdering;
     let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrud;
     let return_err_query_part_error_named_write_into_buffer_token_stream = postgresql_crud_macros_common::generate_return_err_query_part_error_named_write_into_buffer_token_stream(import_path);
 
@@ -1289,6 +1291,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 }
             };
             quote::quote! {
+                #allow_clippy_arbitrary_source_item_ordering_token_stream
                 impl #ident_create_upper_camel_case {
                     #fn_create_query_part_token_stream
                     #fn_create_query_bind_token_stream
@@ -1326,17 +1329,23 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 }
             },
         );
-        let ident_where_many_token_stream =
-            macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
-                .make_pub()
-                .derive_debug()
-                .derive_clone()
-                .derive_serde_serialize()
-                .derive_utoipa_to_schema()
-                .build_struct(
-                    &ident_where_many_upper_camel_case,
-                    &quote::quote! {{#fields_declaration_token_stream}},
-                );
+        let ident_where_many_token_stream = {
+            let content_token_stream_2ecd6da8 =
+                macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                    .make_pub()
+                    .derive_debug()
+                    .derive_clone()
+                    .derive_serde_serialize()
+                    .derive_utoipa_to_schema()
+                    .build_struct(
+                        &ident_where_many_upper_camel_case,
+                        &quote::quote! {{#fields_declaration_token_stream}},
+                    );
+            quote::quote! {
+                #allow_clippy_arbitrary_source_item_ordering_token_stream
+                #content_token_stream_2ecd6da8
+            }
+        };
         let ident_where_many_try_new_error_named_token_stream =
             macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
@@ -1614,11 +1623,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             }
         };
     let select_token_stream = {
-        let ident_select_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+        let ident_select_token_stream = {
+            let content_token_stream_179037cd = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_clone()
-            // .derive_copy()
             .derive_partial_eq()
             .derive_serde_serialize()
             .derive_serde_deserialize()
@@ -1637,6 +1646,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     quote::quote!{{#variants}}
                 }
             );
+            quote::quote! {
+                #allow_clippy_arbitrary_source_item_ordering_token_stream
+                #content_token_stream_179037cd
+            }
+        };
         let impl_std_fmt_display_for_ident_select_token_stream =
             macros_helpers::generate_impl_std_fmt_display_token_stream(
                 &proc_macro2::TokenStream::new(),
@@ -1671,7 +1685,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         #select_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
     };
     let ident_read_token_stream = {
-        let ident_read_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+        let ident_read_token_stream = {
+            let content_token_stream_f80f1f3e = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_partial_eq()
@@ -1702,6 +1717,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     }}
                 }
             );
+            quote::quote! {
+                #allow_clippy_arbitrary_source_item_ordering_token_stream
+                #content_token_stream_f80f1f3e
+            }
+        };
         let impl_ident_read_token_stream = {
             let fn_try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_token_stream = {
                 let declaration_primary_key_token_stream = {
@@ -1799,7 +1819,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         }
     };
     let ident_read_only_ids_token_stream = {
-        let ident_read_only_ids_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+        let ident_read_only_ids_token_stream = {
+            let content_token_stream_472e3ebf = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_clone()
@@ -1837,6 +1858,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     }}
                 }
             );
+            quote::quote! {
+                #allow_clippy_arbitrary_source_item_ordering_token_stream
+                #content_token_stream_472e3ebf
+            }
+        };
         let impl_sqlx_row_for_ident_read_only_ids_token_stream = {
             let undescore_underscore_row = quote::quote! {__row};
             let where_field_types_token_stream = generate_fields_named_with_comma_token_stream(
@@ -1973,15 +1999,22 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 #fields_named_without_primary_key_token_stream
             }
         };
-        let ident_update_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
-            .make_pub()
-            .derive_debug()
-            .derive_serde_serialize()
-            .derive_utoipa_to_schema()
-            .build_struct(
-                &ident_update_upper_camel_case,
-                &quote::quote! {{#fields_declaration_token_stream}},
-            );
+        let ident_update_token_stream = {
+            let content_token_stream_a09c0471 =
+                macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                    .make_pub()
+                    .derive_debug()
+                    .derive_serde_serialize()
+                    .derive_utoipa_to_schema()
+                    .build_struct(
+                        &ident_update_upper_camel_case,
+                        &quote::quote! {{#fields_declaration_token_stream}},
+                    );
+            quote::quote! {
+                #allow_clippy_arbitrary_source_item_ordering_token_stream
+                #content_token_stream_a09c0471
+            }
+        };
         let ident_update_try_new_error_named_token_stream =
             macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
@@ -2090,7 +2123,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         }
     };
     let ident_update_for_query_token_stream = {
-        let ident_update_for_query_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+        let ident_update_for_query_token_stream = {
+            let content_token_stream_50ae0c5f = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_serde_serialize()
@@ -2116,6 +2150,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     }}
                 }
             );
+            quote::quote! {
+                #allow_clippy_arbitrary_source_item_ordering_token_stream
+                #content_token_stream_50ae0c5f
+            }
+        };
         let impl_ident_update_for_query_token_stream = {
             let update_query_part_primary_key_token_stream = {
                 quote::quote! {
@@ -2242,6 +2281,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 },
             );
             quote::quote! {
+                #allow_clippy_arbitrary_source_item_ordering_token_stream
                 impl #ident_update_for_query_upper_camel_case {
                     #update_query_part_primary_key_token_stream
                     #update_query_part_fields_token_stream
@@ -2673,6 +2713,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         macros_helpers::generate_serialize_deserialize_version_of_named_syn_variant,
                     );
                 quote::quote! {
+                    #allow_clippy_arbitrary_source_item_ordering_token_stream
                     #derive_debug_serde_serialize_serde_deserialize
                     pub enum #ident_operation_response_variants_upper_camel_case {
                         #desirable_upper_camel_case(#desirable_type_token_stream),
@@ -2722,6 +2763,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     .iter()
                     .map(generate_error_occurence_variant_token_stream);
                 quote::quote! {
+                    #allow_clippy_arbitrary_source_item_ordering_token_stream
                     #derive_debug_this_error_error_occurence
                     pub enum #ident_operation_error_named_upper_camel_case {
                         #(#variants_token_stream),*
@@ -2758,21 +2800,25 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
          -> proc_macro2::TokenStream {
             let parameters_token_stream = {
                 let (derive_clone, derive_copy) = operation.derive_clone_and_copy();
-                macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
-                    .make_pub()
-                    .derive_debug()
-                    .derive_clone_if(derive_clone)
-                    .derive_copy_if(derive_copy)
-                    .build_struct(
-                        &generate_ident_operation_parameters_upper_camel_case(operation),
-                        &{
-                            let ident_operation_payload_upper_camel_case =
-                                generate_ident_operation_payload_upper_camel_case(operation);
-                            quote::quote! {{
-                                pub #payload_snake_case: #ident_operation_payload_upper_camel_case,
-                            }}
-                        },
-                    )
+                let content_token_stream_0d032fce = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                .make_pub()
+                .derive_debug()
+                .derive_clone_if(derive_clone)
+                .derive_copy_if(derive_copy)
+                .build_struct(
+                    &generate_ident_operation_parameters_upper_camel_case(operation),
+                    &{
+                        let ident_operation_payload_upper_camel_case =
+                            generate_ident_operation_payload_upper_camel_case(operation);
+                        quote::quote! {{
+                            pub #payload_snake_case: #ident_operation_payload_upper_camel_case,
+                        }}
+                    },
+                );
+                quote::quote! {
+                    #allow_clippy_arbitrary_source_item_ordering_token_stream
+                    #content_token_stream_0d032fce
+                }
             };
             quote::quote! {
                 #payload_token_stream
@@ -2787,18 +2833,23 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 generate_ident_operation_payload_upper_camel_case(operation);
             let ident_operation_payload_token_stream = {
                 let (derive_clone, derive_copy) = operation.derive_clone_and_copy();
-                macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
-                    .make_pub()
-                    .derive_debug()
-                    .derive_clone_if(derive_clone)
-                    .derive_copy_if(derive_copy)
-                    .derive_serde_serialize()
-                    .derive_serde_deserialize()
-                    .derive_utoipa_to_schema()
-                    .build_struct(
-                        &ident_operation_payload_upper_camel_case,
-                        &declaration_token_stream,
-                    )
+                let content_token_stream_ec5b096c =
+                    macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                        .make_pub()
+                        .derive_debug()
+                        .derive_clone_if(derive_clone)
+                        .derive_copy_if(derive_copy)
+                        .derive_serde_serialize()
+                        .derive_serde_deserialize()
+                        .derive_utoipa_to_schema()
+                        .build_struct(
+                            &ident_operation_payload_upper_camel_case,
+                            &declaration_token_stream,
+                        );
+                quote::quote! {
+                    #allow_clippy_arbitrary_source_item_ordering_token_stream
+                    #content_token_stream_ec5b096c
+                }
             };
             let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream(&ident_operation_payload_upper_camel_case, &quote::quote! {Self #default_init_content_token_stream});
             quote::quote! {
@@ -2852,6 +2903,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             .iter()
             .map(generate_error_occurence_variant_token_stream);
         quote::quote! {
+            #allow_clippy_arbitrary_source_item_ordering_token_stream
             #derive_debug_thiserror_error_occurence
             pub enum #ident_try_operation_error_named_upper_camel_case {
                 #(#variants_token_stream),*
@@ -4025,6 +4077,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         &ident_operation_payload_upper_camel_case,
                     );
                 quote::quote! {
+                    #allow_clippy_arbitrary_source_item_ordering_token_stream
                     const _: () = {
                         #[allow(unused_extern_crates, clippy::useless_attribute, clippy::arbitrary_source_item_ordering)]
                         extern crate serde as _serde;
@@ -7271,6 +7324,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         &macros_helpers::FormatWithCargofmt::True,
     );
     let generated = quote::quote! {
+        #allow_clippy_arbitrary_source_item_ordering_token_stream
         impl #ident {
             #(#impl_ident_vec_token_stream)*
         }
