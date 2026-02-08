@@ -802,7 +802,8 @@ pub fn generate_impl_postgresql_json_type_token_stream(
         quote::quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
     let query_lifetime_postgres_arguments_token_stream =
         quote::quote! {sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>};
-    let allow_clippy_arbitrary_source_item_ordering_token_stream = token_patterns::AllowClippyArbitrarySourceItemOrdering;
+    let allow_clippy_arbitrary_source_item_ordering_token_stream =
+        token_patterns::AllowClippyArbitrarySourceItemOrdering;
     //todo maybe reexport sqlx?
     quote::quote! {
         #allow_clippy_arbitrary_source_item_ordering_token_stream
@@ -1014,7 +1015,8 @@ pub fn impl_postgresql_type_where_filter_for_ident_token_stream(
     let query_bind_snake_case = naming::QueryBindSnakeCase;
     let postgresql_type_where_filter_upper_camel_case =
         naming::PostgresqlTypeWhereFilterUpperCamelCase;
-    let allow_clippy_arbitrary_source_item_ordering_token_stream = token_patterns::AllowClippyArbitrarySourceItemOrdering;
+    let allow_clippy_arbitrary_source_item_ordering_token_stream =
+        token_patterns::AllowClippyArbitrarySourceItemOrdering;
     quote::quote! {
         #allow_clippy_arbitrary_source_item_ordering_token_stream
         impl #impl_generic_token_stream #import_path ::#postgresql_type_where_filter_upper_camel_case<'lifetime> for #ident_token_stream #ident_generic_token_stream {
@@ -1150,7 +1152,8 @@ pub fn generate_impl_postgresql_type_token_stream(
         quote::quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
     let std_fmt_display_token_stream = token_patterns::StdFmtDisplay;
     let std_primitive_bool_token_stream = token_patterns::StdPrimitiveBool;
-    let allow_clippy_arbitrary_source_item_ordering_token_stream = token_patterns::AllowClippyArbitrarySourceItemOrdering;
+    let allow_clippy_arbitrary_source_item_ordering_token_stream =
+        token_patterns::AllowClippyArbitrarySourceItemOrdering;
     quote::quote! {
         #allow_clippy_arbitrary_source_item_ordering_token_stream
         impl #import_path :: #postgresql_type_upper_camel_case for #ident {
@@ -1243,7 +1246,8 @@ pub fn generate_impl_postgresql_type_not_primary_key_for_ident_token_stream(
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     let ident_create_upper_camel_case =
         naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
-    let allow_clippy_arbitrary_source_item_ordering_token_stream = token_patterns::AllowClippyArbitrarySourceItemOrdering;
+    let allow_clippy_arbitrary_source_item_ordering_token_stream =
+        token_patterns::AllowClippyArbitrarySourceItemOrdering;
     quote::quote! {
         #allow_clippy_arbitrary_source_item_ordering_token_stream
         impl #import_path::#postgresql_type_not_primary_key_upper_camel_case for #ident {
@@ -1803,7 +1807,8 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     let self_postgresql_type_as_postgresql_type_read_only_ids_token_stream = quote::quote! {#self_postgresql_type_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case};
     let self_postgresql_type_as_postgresql_type_create_token_stream = quote::quote! {#self_postgresql_type_as_postgresql_type_token_stream::#create_upper_camel_case};
     let self_postgresql_type_as_postgresql_type_where_token_stream = quote::quote! {#self_postgresql_type_as_postgresql_type_token_stream::#where_upper_camel_case};
-    let allow_clippy_arbitrary_source_item_ordering_token_stream = token_patterns::AllowClippyArbitrarySourceItemOrdering;
+    let allow_clippy_arbitrary_source_item_ordering_token_stream =
+        token_patterns::AllowClippyArbitrarySourceItemOrdering;
     let ident_select_upper_camel_case =
         naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
     let option_vec_create_content_token_stream = generate_option_vec_create_token_stream(
@@ -2038,7 +2043,8 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
     read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_element_greater_than_token_stream: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_element_regular_expression_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let allow_clippy_arbitrary_source_item_ordering_token_stream = token_patterns::AllowClippyArbitrarySourceItemOrdering;
+    let allow_clippy_arbitrary_source_item_ordering_token_stream =
+        token_patterns::AllowClippyArbitrarySourceItemOrdering;
     let value_upper_camel_case = naming::ValueUpperCamelCase;
     let value_snake_case = naming::ValueSnakeCase;
     let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
@@ -2300,7 +2306,8 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
             generate_underscore_underscore_field_index_token_stream(index);
         quote::quote! {#field_name_double_quotes_token_stream => Ok(__Field::#field_index_token_stream)}
     }
-    let allow_clippy_arbitrary_source_item_ordering_token_stream = token_patterns::AllowClippyArbitrarySourceItemOrdering;
+    let allow_clippy_arbitrary_source_item_ordering_token_stream =
+        token_patterns::AllowClippyArbitrarySourceItemOrdering;
     let vec_ident = vec_ident_type
         .iter()
         .map(|element_00a99fdb| element_00a99fdb.0)
