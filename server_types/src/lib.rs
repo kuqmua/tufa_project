@@ -7,25 +7,25 @@
         "variant": 
         // {
         //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_json_object_type_pattern": "Standart",
+        //     "pattern": "Standart",
         //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
         // }
         // ,
         // {
         //     "not_null_or_nullable": "Nullable",
-        //     "postgresql_json_object_type_pattern": "Standart",
+        //     "pattern": "Standart",
         //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
         // }
         // ,
         // {
         //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_json_object_type_pattern": "Array",
+        //     "pattern": "Array",
         //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
         // }
         // ,
         {
             "not_null_or_nullable": "Nullable",
-            "postgresql_json_object_type_pattern": "Array",
+            "pattern": "Array",
             "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
         }
     }
@@ -855,25 +855,25 @@ pub struct Animal {
         "variant":
         // {
         //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_json_object_type_pattern": "Standart",
+        //     "pattern": "Standart",
         //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
         // }
         // ,
         // {
         //     "not_null_or_nullable": "Nullable",
-        //     "postgresql_json_object_type_pattern": "Standart",
+        //     "pattern": "Standart",
         //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
         // }
         // ,
         // {
         //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_json_object_type_pattern": "Array",
+        //     "pattern": "Array",
         //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
         // }
         // ,
         {
             "not_null_or_nullable": "Nullable",
-            "postgresql_json_object_type_pattern": "Array",
+            "pattern": "Array",
             "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
         }
     }
@@ -1018,25 +1018,25 @@ pub struct Doggie {
         "variant":
         // {
         //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_json_object_type_pattern": "Standart",
+        //     "pattern": "Standart",
         //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
         // }
         // ,
         // {
         //     "not_null_or_nullable": "Nullable",
-        //     "postgresql_json_object_type_pattern": "Standart",
+        //     "pattern": "Standart",
         //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
         // }
         // ,
         // {
         //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_json_object_type_pattern": "Array",
+        //     "pattern": "Array",
         //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
         // }
         // ,
         {
             "not_null_or_nullable": "Nullable",
-            "postgresql_json_object_type_pattern": "Array",
+            "pattern": "Array",
             "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
         }
     }

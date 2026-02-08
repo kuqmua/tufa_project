@@ -27,7 +27,7 @@ test-utils = []"#,
                             "whole_content_write_into_generate_postgresql_json_object_type": "False",
                             "variant": {
                                 "not_null_or_nullable": "Nullable",
-                                "postgresql_json_object_type_pattern": "Array",
+                                "pattern": "Array",
                                 "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
                             }
                         }
