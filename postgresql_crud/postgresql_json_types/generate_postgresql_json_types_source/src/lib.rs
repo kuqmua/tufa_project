@@ -560,11 +560,6 @@ pub fn generate_postgresql_json_types(
     // .into_iter() //just for console prints ordering
     .map(|(index, element_1d376874)| {
         #[allow(clippy::arbitrary_source_item_ordering)]
-        enum IsStandartNotNull {
-            True,
-            False,
-        }
-        #[allow(clippy::arbitrary_source_item_ordering)]
         enum IsStandartNotNullUuid {
             True,
             False,
@@ -598,9 +593,9 @@ pub fn generate_postgresql_json_types(
         let rust_type_name = RustTypeName::from(postgresql_json_type);
         let postgresql_json_type_name = PostgresqlJsonTypeName::from(postgresql_json_type);
         let is_standart_not_null = if matches!((&postgresql_json_type_pattern, &not_null_or_nullable), (PostgresqlJsonTypePattern::Standart, postgresql_crud_macros_common::NotNullOrNullable::NotNull)) {
-            IsStandartNotNull::True
+            postgresql_crud_macros_common::IsStandartNotNull::True
         } else {
-            IsStandartNotNull::False
+            postgresql_crud_macros_common::IsStandartNotNull::False
         };
         let is_standart_not_null_uuid = if matches!((&not_null_or_nullable, &postgresql_json_type_pattern, &postgresql_json_type), (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart, PostgresqlJsonType::UuidUuidAsJsonbString)) {
             IsStandartNotNullUuid::True
@@ -851,7 +846,7 @@ pub fn generate_postgresql_json_types(
             //         generate_instance_type_some_schemars_schema_single_or_vec_single_box_new_schemars_schema_instance_type(&schemars::schema::InstanceType::String),
             //     )
             // };
-            // let schemars_json_schema = if let IsStandartNotNull::True = &is_standart_not_null {
+            // let schemars_json_schema = if let postgresql_crud_macros_common::IsStandartNotNull::True = &is_standart_not_null {
             //     match &postgresql_json_type {
             //         PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
             //         | PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber
@@ -919,7 +914,7 @@ pub fn generate_postgresql_json_types(
                     //     SchemarsJsonSchema::Derive => macros_helpers::DeriveSchemarsJsonSchema::True,
                     //     SchemarsJsonSchema::Impl(_) => macros_helpers::DeriveSchemarsJsonSchema::False,
                     // }
-                    if matches!(&is_standart_not_null, IsStandartNotNull::True) {
+                    if matches!(&is_standart_not_null, postgresql_crud_macros_common::IsStandartNotNull::True) {
                         match &postgresql_json_type {
                             PostgresqlJsonType::UuidUuidAsJsonbString => macros_helpers::DeriveSchemarsJsonSchema::False,
                             PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
@@ -1048,7 +1043,7 @@ pub fn generate_postgresql_json_types(
             let impl_std_convert_from_ident_create_for_ident_origin_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream(&ident_create_upper_camel_case, &ident_origin_upper_camel_case, &quote::quote! {#value_snake_case.0});
             let impl_std_convert_from_ident_update_for_ident_origin_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream(&ident_update_upper_camel_case, &ident_origin_upper_camel_case, &quote::quote! {#value_snake_case.0});
             //todo
-            let maybe_impl_schemars_json_schema_for_ident_origin_token_stream = if matches!(&is_standart_not_null, IsStandartNotNull::True) {
+            let maybe_impl_schemars_json_schema_for_ident_origin_token_stream = if matches!(&is_standart_not_null, postgresql_crud_macros_common::IsStandartNotNull::True) {
                 match &postgresql_json_type {
                     PostgresqlJsonType::UuidUuidAsJsonbString => {
                         let ident_standart_not_null_origin_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
@@ -1140,7 +1135,7 @@ pub fn generate_postgresql_json_types(
             //         }
             //     },
             // };
-            let maybe_impl_is_string_empty_for_ident_origin_token_stream = if matches!(&is_standart_not_null, IsStandartNotNull::True) {
+            let maybe_impl_is_string_empty_for_ident_origin_token_stream = if matches!(&is_standart_not_null, postgresql_crud_macros_common::IsStandartNotNull::True) {
                 match &postgresql_json_type {
                     PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
                     | PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber

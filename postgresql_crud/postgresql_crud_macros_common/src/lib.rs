@@ -7,6 +7,11 @@ pub enum DeriveOrImpl {
     Derive,
     Impl(proc_macro2::TokenStream),
 }
+#[derive(Debug)]
+pub enum IsStandartNotNull {
+    False,
+    True,
+}
 #[derive(
     Debug,
     Default,

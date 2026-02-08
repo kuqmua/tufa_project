@@ -36,8 +36,15 @@ pub enum PaginationStartsWithOneTryNewErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 impl PaginationStartsWithOne {
+    #[must_use]
+    pub const fn end(&self) -> i64 {
+        self.0.end()
+    }
+    #[must_use]
+    pub const fn start(&self) -> i64 {
+        self.0.start()
+    }
     pub fn try_new(
         limit: i64,
         offset: i64,
@@ -71,14 +78,6 @@ impl PaginationStartsWithOne {
                 },
             )
         }
-    }
-    #[must_use]
-    pub const fn start(&self) -> i64 {
-        self.0.start()
-    }
-    #[must_use]
-    pub const fn end(&self) -> i64 {
-        self.0.end()
     }
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
@@ -239,10 +238,16 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
         )
     }
 }
-#[allow(clippy::arbitrary_source_item_ordering)]
 impl<'lifetime> postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime>
     for PaginationStartsWithOne
 {
+    fn query_bind(
+        self,
+        query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
+    {
+        self.0.query_bind(query)
+    }
     fn query_part(
         &self,
         increment: &mut u64,
@@ -251,13 +256,6 @@ impl<'lifetime> postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime>
     ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
         self.0
             .query_part(increment, column, is_need_to_add_logical_operator)
-    }
-    fn query_bind(
-        self,
-        query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
-    {
-        self.0.query_bind(query)
     }
 }
 impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement

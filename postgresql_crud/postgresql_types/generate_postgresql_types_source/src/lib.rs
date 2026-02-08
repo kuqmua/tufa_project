@@ -987,15 +987,9 @@ pub fn generate_postgresql_types(
             True,
             False,
         }
-        #[allow(clippy::arbitrary_source_item_ordering)]
-        enum IsStandartNotNull {
-            True,
-            False,
-        }
-        #[allow(clippy::arbitrary_source_item_ordering)]
         enum IsNotNullStandartCanBePrimaryKey {
-            True,
             False,
+            True,
         }
         #[allow(clippy::arbitrary_source_item_ordering)]
         enum StartOrEnd {
@@ -1349,9 +1343,9 @@ pub fn generate_postgresql_types(
             PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql | PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql | PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql | PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => CanBePrimaryKey::True,
         };
         let is_standart_not_null = if matches!((&postgresql_type_pattern, &not_null_or_nullable), (PostgresqlTypePattern::Standart, postgresql_crud_macros_common::NotNullOrNullable::NotNull)) {
-            IsStandartNotNull::True
+            postgresql_crud_macros_common::IsStandartNotNull::True
         } else {
-            IsStandartNotNull::False
+            postgresql_crud_macros_common::IsStandartNotNull::False
         };
         let is_not_null_standart_can_be_primary_key = if matches!((&not_null_or_nullable, &postgresql_type_pattern, &can_be_primary_key), (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart, CanBePrimaryKey::True)) {
             IsNotNullStandartCanBePrimaryKey::True
@@ -1370,7 +1364,7 @@ pub fn generate_postgresql_types(
                 StartOrEnd::End => &end_snake_case,
             }
         };
-        let (serde_serialize_derive_or_impl, serde_deserialize_derive_or_impl) = if matches!(&is_standart_not_null, IsStandartNotNull::True) {
+        let (serde_serialize_derive_or_impl, serde_deserialize_derive_or_impl) = if matches!(&is_standart_not_null, postgresql_crud_macros_common::IsStandartNotNull::True) {
             #[allow(clippy::arbitrary_source_item_ordering)]
             enum ParameterNumber {
                 One,
@@ -1618,10 +1612,9 @@ pub fn generate_postgresql_types(
                 }
             };
             let serde_deserialize_derive_or_impl = {
-                #[allow(clippy::arbitrary_source_item_ordering)]
                 enum ShouldAddDeLifetime {
+                    False,
                     True,
-                    False
                 }
                 let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&ident_origin_upper_camel_case);
                 let tuple_struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_tuple_struct_ident_double_quotes_token_stream(&ident_origin_upper_camel_case);
@@ -2248,14 +2241,14 @@ pub fn generate_postgresql_types(
                         maybe_impl_lifetime_token_stream,
                         maybe_visitor_lifetime_token_stream
                     ) = match should_add_de_lifetime{
+                        ShouldAddDeLifetime::False => (
+                            proc_macro2::TokenStream::new(),
+                            quote::quote!{<'_>},
+                        ),
                         ShouldAddDeLifetime::True => (
                             quote::quote!{<'de>},
                             quote::quote!{<'de>},
                         ),
-                        ShouldAddDeLifetime::False => (
-                            proc_macro2::TokenStream::new(),
-                            quote::quote!{<'_>},
-                        )
                     };
                     quote::quote! {
                         impl #maybe_impl_lifetime_token_stream _serde::de::Visitor #maybe_visitor_lifetime_token_stream for #current_ident_token_stream {
@@ -2638,10 +2631,9 @@ pub fn generate_postgresql_types(
             let maybe_impl_ident_token_stream = if matches!(&postgresql_type_pattern, PostgresqlTypePattern::Standart) &&
                 matches!(&not_null_or_nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull)
             {
-                #[allow(clippy::arbitrary_source_item_ordering)]
                 enum IsConst {
+                    False,
                     True,
-                    False
                 }
                 let generate_inner_type_token_stream = |
                     is_const: IsConst,
@@ -2649,8 +2641,8 @@ pub fn generate_postgresql_types(
                     content_token_stream: &dyn quote::ToTokens
                 |{
                     let maybe_const_token_stream = match is_const {
-                        IsConst::True => quote::quote!{const},
                         IsConst::False => proc_macro2::TokenStream::new(),
+                        IsConst::True => quote::quote!{const},
                     };
                     quote::quote!{
                         #maybe_const_token_stream fn #name_token_stream() -> #ident_inner_type_token_stream {
@@ -3111,11 +3103,12 @@ pub fn generate_postgresql_types(
                 .derive_copy_if(derive_copy)
                 .derive_partial_eq()
                 .derive_eq_if(match &is_not_null_standart_can_be_primary_key {
-                    IsNotNullStandartCanBePrimaryKey::True => macros_helpers::DeriveEq::True,
                     IsNotNullStandartCanBePrimaryKey::False => macros_helpers::DeriveEq::False,
+                    IsNotNullStandartCanBePrimaryKey::True => macros_helpers::DeriveEq::True,
                 })
                 .derive_partial_ord_if(match &is_standart_not_null {
-                    IsStandartNotNull::True => match &postgresql_type {
+                    postgresql_crud_macros_common::IsStandartNotNull::False => macros_helpers::DerivePartialOrd::False,
+                    postgresql_crud_macros_common::IsStandartNotNull::True => match &postgresql_type {
                         PostgresqlType::StdPrimitiveI16AsInt2
                         | PostgresqlType::StdPrimitiveI32AsInt4
                         | PostgresqlType::StdPrimitiveI64AsInt8
@@ -3144,11 +3137,10 @@ pub fn generate_postgresql_types(
                         | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
                         | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => macros_helpers::DerivePartialOrd::False,
                     },
-                    IsStandartNotNull::False => macros_helpers::DerivePartialOrd::False
                 })
                 .derive_ord_if(match &is_not_null_standart_can_be_primary_key {
-                    IsNotNullStandartCanBePrimaryKey::True => macros_helpers::DeriveOrd::True,
                     IsNotNullStandartCanBePrimaryKey::False => macros_helpers::DeriveOrd::False,
+                    IsNotNullStandartCanBePrimaryKey::True => macros_helpers::DeriveOrd::True,
                 })
                 .derive_serde_serialize_if(match &serde_serialize_derive_or_impl {
                     postgresql_crud_macros_common::DeriveOrImpl::Derive => macros_helpers::DeriveSerdeSerialize::True,
@@ -3237,7 +3229,7 @@ pub fn generate_postgresql_types(
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
             };
-            let maybe_pub_enum_ident_standart_not_null_origin_try_new_error_named_token_stream = if matches!(&is_standart_not_null, IsStandartNotNull::True)
+            let maybe_pub_enum_ident_standart_not_null_origin_try_new_error_named_token_stream = if matches!(&is_standart_not_null, postgresql_crud_macros_common::IsStandartNotNull::True)
                 && let Ok(postgresql_type_initialization_try_new) = &postgresql_type_initialization_try_new_try_from_postgresql_type
             {
                 let content_token_stream_d57d5de2 = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
@@ -3319,7 +3311,7 @@ pub fn generate_postgresql_types(
             } else {
                 proc_macro2::TokenStream::new()
             };
-            let maybe_pub_enum_ident_standart_not_null_origin_try_new_for_deserialize_error_named_token_stream = if matches!(&is_standart_not_null, IsStandartNotNull::True)
+            let maybe_pub_enum_ident_standart_not_null_origin_try_new_for_deserialize_error_named_token_stream = if matches!(&is_standart_not_null, postgresql_crud_macros_common::IsStandartNotNull::True)
                 && let postgresql_crud_macros_common::DeriveOrImpl::Impl(_) = &serde_deserialize_derive_or_impl
             {
                 match &postgresql_type_deserialize {
@@ -4050,7 +4042,7 @@ pub fn generate_postgresql_types(
                     }
                 }
             };
-            let maybe_impl_is_string_empty_for_ident_origin_token_stream = if matches!(&is_standart_not_null, IsStandartNotNull::True) {
+            let maybe_impl_is_string_empty_for_ident_origin_token_stream = if matches!(&is_standart_not_null, postgresql_crud_macros_common::IsStandartNotNull::True) {
                 match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
                         PostgresqlType::StdPrimitiveI16AsInt2
@@ -4241,11 +4233,11 @@ pub fn generate_postgresql_types(
                 }
             };
             let maybe_impl_std_convert_from_ident_read_for_ident_origin_token_stream = match &is_not_null_standart_can_be_primary_key {
+                IsNotNullStandartCanBePrimaryKey::False => proc_macro2::TokenStream::new(),
                 IsNotNullStandartCanBePrimaryKey::True => macros_helpers::generate_impl_std_convert_from_token_stream(&ident_standart_not_null_read_upper_camel_case, &ident_origin_upper_camel_case, &{
                     let ident_standart_not_null_as_crate_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&ident_standart_not_null_upper_camel_case);
                     quote::quote! {Self::#new_snake_case(#ident_standart_not_null_as_crate_postgresql_type_token_stream::into_inner(#value_snake_case))}
                 }),
-                IsNotNullStandartCanBePrimaryKey::False => proc_macro2::TokenStream::new(),
             };
             quote::quote! {
                 #ident_origin_token_stream
@@ -4292,7 +4284,8 @@ pub fn generate_postgresql_types(
                 .derive_copy_if(derive_copy)
                 .derive_partial_eq()
                 .derive_partial_ord_if(match &is_standart_not_null {
-                    IsStandartNotNull::True => match &postgresql_type {
+                    postgresql_crud_macros_common::IsStandartNotNull::False => macros_helpers::DerivePartialOrd::False,
+                    postgresql_crud_macros_common::IsStandartNotNull::True => match &postgresql_type {
                         PostgresqlType::StdPrimitiveI16AsInt2
                         | PostgresqlType::StdPrimitiveI32AsInt4
                         | PostgresqlType::StdPrimitiveI64AsInt8
@@ -4321,7 +4314,6 @@ pub fn generate_postgresql_types(
                         | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
                         | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => macros_helpers::DerivePartialOrd::False,
                     },
-                    IsStandartNotNull::False => macros_helpers::DerivePartialOrd::False
                 })
                 .derive_serde_serialize()
                 .derive_serde_deserialize()
@@ -4821,15 +4813,15 @@ pub fn generate_postgresql_types(
                     derive_partial_ord,
                     derive_ord
                 ) = match &is_not_null_standart_can_be_primary_key {
-                    IsNotNullStandartCanBePrimaryKey::True => (
-                        macros_helpers::DeriveEq::True,
-                        macros_helpers::DerivePartialOrd::True,
-                        macros_helpers::DeriveOrd::True
-                    ),
                     IsNotNullStandartCanBePrimaryKey::False => (
                         macros_helpers::DeriveEq::False,
                         macros_helpers::DerivePartialOrd::False,
                         macros_helpers::DeriveOrd::False
+                    ),
+                    IsNotNullStandartCanBePrimaryKey::True => (
+                        macros_helpers::DeriveEq::True,
+                        macros_helpers::DerivePartialOrd::True,
+                        macros_helpers::DeriveOrd::True
                     ),
                 };
                 macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
@@ -5495,10 +5487,9 @@ pub fn generate_postgresql_types(
             )
         };
         let impl_postgresql_type_test_cases_for_ident_token_stream = {
-            #[allow(clippy::arbitrary_source_item_ordering)]
             enum IsNeedToUseInto {
-                True,
                 False,
+                True,
             }
             let generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream = |read_or_update: &postgresql_crud_macros_common::ReadOrUpdate| {
                 let read_or_update_upper_camel_case = read_or_update.upper_camel_case();
@@ -6583,11 +6574,10 @@ pub fn generate_postgresql_types(
             };
             let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_token_stream = match &postgresql_type_pattern {
                 PostgresqlTypePattern::Standart => {
-                    #[allow(clippy::arbitrary_source_item_ordering)]
                     enum IsNeedToImplPostgresqlTypeGreaterThanTest {
-                        TrueFromReadOnlyIds,
-                        TrueFromCreate,
                         False,
+                        TrueFromCreate,
+                        TrueFromReadOnlyIds,
                     }
                     enum CreateReadOnlyIds {
                         Create,
