@@ -35,7 +35,7 @@ pub const SQLX_TYPES_UUID_STRINGIFIED: &str = "sqlx::types::Uuid";
 pub const FIELD_IDENT_IS_NONE: &str = "field.ident is None";
 pub const SYN_TYPE_PATH: &str = "syn::Type::Path";
 
-naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!([
+naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
     ["primary", "key"],
     ["serialize", "deserialize"],
     ["with", "serialize", "deserialize"],
@@ -1537,7 +1537,7 @@ where
 }
 
 pub trait SwaggerUrlPathSelfQuotesTokenStream {
-    fn swagger_url_path_self_quotes_token_stream(
+    fn swagger_url_path_self_quotes_ts(
         &self,
         table_name_stringified: &str,
     ) -> proc_macro2::TokenStream;
@@ -1547,7 +1547,7 @@ impl<T> SwaggerUrlPathSelfQuotesTokenStream for T
 where
     T: SwaggerUrlPathSelfQuotesStringified,
 {
-    fn swagger_url_path_self_quotes_token_stream(
+    fn swagger_url_path_self_quotes_ts(
         &self,
         table_name_stringified: &str,
     ) -> proc_macro2::TokenStream {

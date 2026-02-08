@@ -355,11 +355,11 @@ impl quote::ToTokens for StdFmtDisplay {
 pub struct CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
 impl quote::ToTokens for CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let crate_path_token_stream = crate_path_token_stream();
+        let crate_path_ts = crate_path_ts();
         let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case =
             default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case();
         quote::quote! {
-            #crate_path_token_stream
+            #crate_path_ts
             #default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
         }
         .to_tokens(tokens);
@@ -369,13 +369,13 @@ impl quote::ToTokens for CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOn
 pub struct CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
 impl quote::ToTokens for CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let crate_path_token_stream = crate_path_token_stream();
+        let crate_path_ts = crate_path_ts();
         let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case =
             default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case();
         let path_default_but_option_is_always_some_and_vec_always_contains_one_element_call =
             path_default_but_option_is_always_some_and_vec_always_contains_one_element_call();
         quote::quote! {
-            #crate_path_token_stream
+            #crate_path_ts
             #default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
             #path_default_but_option_is_always_some_and_vec_always_contains_one_element_call
         }
@@ -452,10 +452,10 @@ impl quote::ToTokens
     for CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let crate_path_token_stream = crate_path_token_stream();
+        let crate_path_ts = crate_path_ts();
         let all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case();
         quote::quote! {
-            #crate_path_token_stream
+            #crate_path_ts
             #all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
         }
         .to_tokens(tokens);
@@ -537,10 +537,10 @@ impl quote::ToTokens
     for CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize
 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let crate_path_token_stream = crate_path_token_stream();
+        let crate_path_ts = crate_path_ts();
         let default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_upper_camel_case = default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_upper_camel_case();
         quote::quote! {
-            #crate_path_token_stream
+            #crate_path_ts
             #default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_upper_camel_case
         }
         .to_tokens(tokens);
@@ -552,11 +552,11 @@ impl quote::ToTokens
     for CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSizeCall
 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let crate_path_token_stream = crate_path_token_stream();
+        let crate_path_ts = crate_path_ts();
         let default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_upper_camel_case = default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_upper_camel_case();
         let path_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call = path_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call();
         quote::quote! {
-            #crate_path_token_stream
+            #crate_path_ts
             #default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_upper_camel_case
             #path_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call
         }
@@ -624,10 +624,10 @@ impl quote::ToTokens for PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecA
 pub struct CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
 impl quote::ToTokens for CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let crate_path_token_stream = crate_path_token_stream();
+        let crate_path_ts = crate_path_ts();
         let all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_upper_camel_case = all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_upper_camel_case();
         quote::quote! {
-            #crate_path_token_stream
+            #crate_path_ts
             #all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_upper_camel_case
         }
         .to_tokens(tokens);
@@ -720,7 +720,7 @@ fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_ma
 -> proc_macro2::TokenStream {
     quote::quote! {DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize}
 }
-fn crate_path_token_stream() -> proc_macro2::TokenStream {
+fn crate_path_ts() -> proc_macro2::TokenStream {
     quote::quote! {crate::}
 }
 fn postgresql_crud() -> proc_macro2::TokenStream {

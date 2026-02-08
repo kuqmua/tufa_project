@@ -7,10 +7,10 @@ pub fn postgresql_json_object_type_config(
 }
 #[proc_macro_derive(GeneratePostgresqlJsonObjectType)]
 pub fn generate_postgresql_json_object_type(
-    input_token_stream: proc_macro::TokenStream,
+    input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     generate_postgresql_json_object_type_source::generate_postgresql_json_object_type(
-        input_token_stream.into(),
+        input_ts.into(),
     )
     .into()
 }

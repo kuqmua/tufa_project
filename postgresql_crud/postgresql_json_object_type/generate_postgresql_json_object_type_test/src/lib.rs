@@ -19,7 +19,7 @@ postgresql_crud = {path = "../../../postgresql_crud", features = ["test-utils"]}
 [features]
 test-utils = []"#,
             &{
-                let object_example_token_stream = quote::quote!{
+                let object_example_ts = quote::quote!{
                     #[derive(Debug, Clone, Copy)]
                     #[postgresql_crud::postgresql_json_object_type_config{
                         {
@@ -38,10 +38,10 @@ test-utils = []"#,
                         pub field_2: postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
                     }
                 };
-                let token_stream = generate_postgresql_json_object_type_source::generate_postgresql_json_object_type(object_example_token_stream.clone());
+                let ts = generate_postgresql_json_object_type_source::generate_postgresql_json_object_type(object_example_ts.clone());
                 quote::quote! {
-                    #object_example_token_stream
-                    #token_stream
+                    #object_example_ts
+                    #ts
                 }
             }
             .to_string()

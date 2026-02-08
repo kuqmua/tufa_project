@@ -17,8 +17,8 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             }
         })
         .collect::<Vec<syn::Ident>>();
-    let variants_token_stream = variant_idents.iter().map(|variant_ident| {
-        let variant_ident_snake_case_token_stream = {
+    let variants_ts = variant_idents.iter().map(|variant_ident| {
+        let variant_ident_snake_case_ts = {
             let variant_ident_snake_case_stringified = convert_case::Casing::to_case(
                 &format!("\"{variant_ident}\""),
                 convert_case::Case::Snake,
@@ -28,7 +28,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 .expect("791603c1-e547-4486-898e-631abb15afc5")
         };
         quote::quote! {
-            #variant_ident_snake_case_token_stream => Ok(Self::#variant_ident),
+            #variant_ident_snake_case_ts => Ok(Self::#variant_ident),
         }
     });
     let error_variants_stringified =
@@ -46,7 +46,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 );
                 acc_d6966473
             });
-    let error_token_stream = {
+    let error_ts = {
         let error_stringified = format!(
             "\"Invalid {ident}, expected one of {error_variants_stringified} found {{value}}\""
         );
@@ -59,8 +59,8 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             type Err = String;
             fn from_str(value: &str) -> Result<Self, Self::Err> {
                 match value {
-                    #(#variants_token_stream)*
-                    _ => Err(format!(#error_token_stream)),
+                    #(#variants_ts)*
+                    _ => Err(format!(#error_ts)),
                 }
             }
         }

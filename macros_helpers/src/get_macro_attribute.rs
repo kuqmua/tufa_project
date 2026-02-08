@@ -14,7 +14,7 @@ pub fn get_macro_attribute<'attributes_litime>(
 }
 
 #[must_use]
-pub fn get_macro_attribute_meta_list_token_stream<'attributes_lifetime>(
+pub fn get_macro_attribute_meta_list_ts<'attributes_lifetime>(
     attributes: &'attributes_lifetime [syn::Attribute],
     attribute_path: &String,
 ) -> &'attributes_lifetime proc_macro2::TokenStream {

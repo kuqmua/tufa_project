@@ -91,7 +91,7 @@ impl crate::attribute_ident_stringified::AttributeIdentStringified
 }
 impl ErrorOccurenceFieldAttribute {
     #[must_use]
-    pub fn to_attribute_view_token_stream(&self) -> proc_macro2::TokenStream {
+    pub fn to_attribute_view_ts(&self) -> proc_macro2::TokenStream {
         let value = format!("#[{}]", crate::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(self));
         value
             .parse::<proc_macro2::TokenStream>()
@@ -110,7 +110,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
         panic!("79b0f231-02b9-4770-8052-5f6cc3debf97");
     };
     let std_string_string = token_patterns::StdStringString;
-    let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream = fields.iter()
+    let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_ts = fields.iter()
     .filter(|element_5782b638| *element_5782b638.ident.as_ref().expect("3078fd99-5fac-4d57-83ec-93f808b7444b") != *naming::CodeOccurenceSnakeCase.to_string())
     .map(|element_c25b655e| {
         fn get_type_path_third_segment_second_argument_check_if_hashmap<'value_lifetime>(
@@ -160,21 +160,21 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             args.iter().nth(1).expect("f4e88416-5417-405a-9c0d-6035f815bbdd")
         }
         let element_c25b655e_ident = element_c25b655e.ident.as_ref().expect("438aa90e-d1f3-4b89-a61a-e2d9f6a7e653");
-        let element_type_token_stream = {
+        let element_type_ts = {
             let element_type = &element_c25b655e.ty;
             quote::quote! {#element_type}
         };
         let std_snake_case = naming::StdSnakeCase;
-        let element_type_with_serialize_deserialize_token_stream = match ErrorOccurenceFieldAttribute::try_from(element_c25b655e).expect("2db209a8-2f57-4474-a9c6-9743aaaed57d") {
+        let element_type_with_serialize_deserialize_ts = match ErrorOccurenceFieldAttribute::try_from(element_c25b655e).expect("2db209a8-2f57-4474-a9c6-9743aaaed57d") {
             ErrorOccurenceFieldAttribute::EoToStdStringString => {
                 quote::quote! {
                     #std_string_string
                 }
             }
-            ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize | ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => element_type_token_stream,
+            ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize | ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => element_type_ts,
             ErrorOccurenceFieldAttribute::EoErrorOccurence => format!(
                 "{}{}",
-                element_type_token_stream,
+                element_type_ts,
                 naming::WithSerializeDeserializeUpperCamelCase
             ).parse::<proc_macro2::TokenStream>().expect("201dc0a4-4563-4e51-a228-ba085b767775"),
             ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
@@ -190,7 +190,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 };
                 assert!(segments.len() == 1, "0c65bbaa-59bd-4abd-9967-bea844983ee0");
                 let first_segment = segments.iter().next().expect("595050cf-f859-49c8-b57c-35c322c25da8");
-                let element_vec_type_with_serialize_deserialize_token_stream = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) = &first_segment.arguments {
+                let element_vec_type_with_serialize_deserialize_ts = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) = &first_segment.arguments {
                     assert!(args.len() == 1, "572a9da8-209f-42d0-9fac-da7e42e3829d");
                     format!(
                         "{}{}",
@@ -204,7 +204,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                     panic!("07c6ab44-5e5e-4fca-96a8-5786fb2d2f48");
                 };
                 quote::quote! {
-                    Vec<#element_vec_type_with_serialize_deserialize_token_stream>
+                    Vec<#element_vec_type_with_serialize_deserialize_ts>
                 }
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
@@ -215,27 +215,27 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
                 let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(element_c25b655e, &std_snake_case, std_string_string);
-                element_type_token_stream
+                element_type_ts
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
                 let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap(element_c25b655e, &std_snake_case, std_string_string);
-                let element_hashmap_value_type_with_serialize_deserialize_token_stream = format!(
+                let element_hashmap_value_type_with_serialize_deserialize_ts = format!(
                     "{}{}",
                     quote::quote! {#second_argument},
                     naming::WithSerializeDeserializeUpperCamelCase
                 ).parse::<proc_macro2::TokenStream>().expect("86307dbc-484e-4012-ac70-2d593b1f99e6");
                 quote::quote! {
-                    std::collections::HashMap<#std_string_string, #element_hashmap_value_type_with_serialize_deserialize_token_stream>
+                    std::collections::HashMap<#std_string_string, #element_hashmap_value_type_with_serialize_deserialize_ts>
                 }
             }
         };
-        quote::quote! {#element_c25b655e_ident: #element_type_with_serialize_deserialize_token_stream,}
+        quote::quote! {#element_c25b655e_ident: #element_type_with_serialize_deserialize_ts,}
     });
-    let code_occurence_snake_case_token_stream = naming::CodeOccurenceSnakeCase;
+    let code_occurence_snake_case_ts = naming::CodeOccurenceSnakeCase;
     quote::quote! {
         #element_ident {
-            #(#fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream)*
-            #code_occurence_snake_case_token_stream: error_occurence_lib::code_occurence::CodeOccurence,
+            #(#fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_ts)*
+            #code_occurence_snake_case_ts: error_occurence_lib::code_occurence::CodeOccurence,
         }
     }
 }

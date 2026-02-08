@@ -1,6 +1,6 @@
 #[proc_macro]
 pub fn compile_time_project_git_info(
-    _input_token_stream: proc_macro::TokenStream,
+    _input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let output = std::process::Command::new("git")
@@ -23,12 +23,12 @@ pub fn compile_time_project_git_info(
                 .all(|element_e7daeee7| element_e7daeee7.is_ascii_hexdigit()),
         "093516ae-a89f-42df-8b01-9b2897111705"
     );
-    let commit_id_token_stream = format!("\"{hash}\"")
+    let commit_id_ts = format!("\"{hash}\"")
         .parse::<proc_macro2::TokenStream>()
         .expect("842e75e8-1c25-44af-bb71-f15ee1c0c67d");
     let generated = quote::quote! {
         ProjectGitInfo {
-            commit: #commit_id_token_stream,
+            commit: #commit_id_ts,
         }
     };
     generated.into()

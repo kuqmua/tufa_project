@@ -35,16 +35,16 @@ server_config = {path = "../../../server_config"}"#,
                     False,
                     True,
                 }
-                let generate_table_example_token_stream = |
+                let generate_table_example_ts = |
                     should_add_generate_postgresql_table_primary_key: ShouldAddGeneratePostgresqlTablePrimaryKey
                 |{
-                    let allow_clippy_arbitrary_source_item_ordering_token_stream = token_patterns::AllowClippyArbitrarySourceItemOrdering;
-                    let maybe_generate_postgresql_table_primary_key_token_stream = match should_add_generate_postgresql_table_primary_key {
+                    let allow_clippy_arbitrary_source_item_ordering_ts = token_patterns::AllowClippyArbitrarySourceItemOrdering;
+                    let maybe_generate_postgresql_table_primary_key_ts = match should_add_generate_postgresql_table_primary_key {
                         ShouldAddGeneratePostgresqlTablePrimaryKey::False => proc_macro2::TokenStream::new(),
                         ShouldAddGeneratePostgresqlTablePrimaryKey::True => quote::quote!{#[generate_postgresql_table_primary_key]},
                     };
                     quote::quote!{
-                        #allow_clippy_arbitrary_source_item_ordering_token_stream
+                        #allow_clippy_arbitrary_source_item_ordering_ts
                         #[derive(Debug, Clone, Copy)]
                         #[postgresql_crud::generate_postgresql_table_config{{
                             "create_many_content_write_into_generate_postgresql_table_create_many": "False",
@@ -86,7 +86,7 @@ server_config = {path = "../../../server_config"}"#,
                         #[postgresql_crud::delete_one_additional_logic{}]
                         #[postgresql_crud::common_additional_logic{}]
                         pub struct TableExample {
-                            #maybe_generate_postgresql_table_primary_key_token_stream
+                            #maybe_generate_postgresql_table_primary_key_ts
                             pub primary_key_column:
                                 postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql,
                             pub column_0: postgresql_crud::StdPrimitiveI16AsNotNullInt2,
@@ -95,18 +95,18 @@ server_config = {path = "../../../server_config"}"#,
                         }
                     }
                 };
-                let token_stream =
+                let ts =
                     generate_postgresql_table_source::generate_postgresql_table(
-                        generate_table_example_token_stream(
+                        generate_table_example_ts(
                             ShouldAddGeneratePostgresqlTablePrimaryKey::True
                         )
                     );
-                let table_struct_token_stream = generate_table_example_token_stream(
+                let table_struct_ts = generate_table_example_ts(
                     ShouldAddGeneratePostgresqlTablePrimaryKey::False
                 );
                 quote::quote! {
-                    #table_struct_token_stream
-                    #token_stream
+                    #table_struct_ts
+                    #ts
                 }
             }
             .to_string()

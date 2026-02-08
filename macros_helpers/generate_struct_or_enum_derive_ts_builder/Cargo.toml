@@ -1,5 +1,5 @@
 [package]
-name = "generate_struct_or_enum_derive_token_stream_builder"
+name = "generate_struct_or_enum_derive_ts_builder"
 version = "0.1.0"
 edition = "2024"
 description = "description"

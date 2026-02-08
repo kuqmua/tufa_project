@@ -22,13 +22,13 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let std_env_var_error_snake_case = naming::StdEnvVarErrorSnakeCase;
     let env_var_name_snake_case = naming::EnvVarNameSnakeCase;
     let try_from_std_env_var_ok_upper_camel_case = naming::TryFromStdEnvVarOkUpperCamelCase;
-    let error_named_token_stream = {
-        let variants_token_stream = fields_named.iter().map(|element_f931deb2| {
+    let error_named_ts = {
+        let variants_ts = fields_named.iter().map(|element_f931deb2| {
             let element_ident = &element_f931deb2.ident.as_ref().expect("2ecb63c1-675f-489a-af65-a6a17c778bd6");
-            let element_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_ident);
+            let element_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_ident);
             let try_from_std_env_var_ok_self_error_named_upper_camel_case = naming::parameter::TryFromStdEnvVarOkSelfErrorNamedUpperCamelCase::from_tokens(&element_ident);
             quote::quote! {
-                #element_ident_upper_camel_case_token_stream {
+                #element_ident_upper_camel_case_ts {
                     #element_ident: config_lib::#try_from_std_env_var_ok_self_error_named_upper_camel_case,
                 }
             }
@@ -43,19 +43,19 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                     #std_env_var_error_snake_case: std::env::VarError,
                     env_var_name: String,
                 },
-                #(#variants_token_stream),*
+                #(#variants_ts),*
             }
         }
     };
-    let display_error_named_token_stream = {
-        let variants_token_stream = fields_named.iter().map(|element_f931deb2| {
+    let display_error_named_ts = {
+        let variants_ts = fields_named.iter().map(|element_f931deb2| {
             let element_ident = &element_f931deb2.ident.as_ref().expect("8b79a379-2073-4415-82c6-bf7ea4b05165");
-            let element_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_ident);
+            let element_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_ident);
             quote::quote! {
-                Self::#element_ident_upper_camel_case_token_stream { #element_ident } => write!(f, "{}", #element_ident)
+                Self::#element_ident_upper_camel_case_ts { #element_ident } => write!(f, "{}", #element_ident)
             }
         });
-        macros_helpers::generate_impl_std_fmt_display_token_stream(
+        macros_helpers::generate_impl_std_fmt_display_ts(
             &proc_macro2::TokenStream::new(),
             &ident_try_from_env_error_named_upper_camel_case,
             &proc_macro2::TokenStream::new(),
@@ -68,17 +68,17 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                         #std_env_var_error_snake_case,
                         env_var_name
                     } => write!(f, "{} {}", #std_env_var_error_snake_case, env_var_name),
-                    #(#variants_token_stream),*
+                    #(#variants_ts),*
                 }
             },
         )
     };
-    let try_from_env_token_stream = {
-        let fields_initialization_token_stream = fields_named.iter().map(|element_0b2240f0| {
+    let try_from_env_ts = {
+        let fields_initialization_ts = fields_named.iter().map(|element_0b2240f0| {
             let element_ident = &element_0b2240f0.ident.as_ref().expect("ebf4e1b2-f07a-40ee-b885-fc8be3444d9a");
             let element_ident_quotes_upper_snake_case_string = syn::LitStr::new(&naming::ToTokensToUpperSnakeCaseStringified::case(&element_ident), ident.span());
-            let element_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_ident);
-            let element_ident_wrapper_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_ident);
+            let element_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_ident);
+            let element_ident_wrapper_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_ident);
             quote::quote! {
                 let #element_ident = {
                     let env_var_name = String::from(#element_ident_quotes_upper_snake_case_string);
@@ -90,11 +90,11 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                             });
                         }
                         Ok(value) => match <
-                            config_lib::#element_ident_wrapper_upper_camel_case_token_stream as
+                            config_lib::#element_ident_wrapper_upper_camel_case_ts as
                             config_lib::#try_from_std_env_var_ok_upper_camel_case
                         >::try_from_std_env_var_ok(value) {
                             Err(error) => {
-                                return Err(#ident_try_from_env_error_named_upper_camel_case::#element_ident_upper_camel_case_token_stream {
+                                return Err(#ident_try_from_env_error_named_upper_camel_case::#element_ident_upper_camel_case_ts {
                                     #element_ident: error,
                                 });
                             }
@@ -104,7 +104,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 };
             }
         });
-        let fields_token_stream = fields_named
+        let fields_ts = fields_named
             .iter()
             .map(|element_dd7dea0c| &element_dd7dea0c.ident);
         quote::quote! {
@@ -115,18 +115,18 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                             #dotenv_snake_case: error,
                         });
                     }
-                    #(#fields_initialization_token_stream)*
+                    #(#fields_initialization_ts)*
                     Ok(Self {
-                        #(#fields_token_stream),*
+                        #(#fields_ts),*
                     })
                 }
             }
         }
     };
     let generated = quote::quote! {
-        #error_named_token_stream
-        #display_error_named_token_stream
-        #try_from_env_token_stream
+        #error_named_ts
+        #display_error_named_ts
+        #try_from_env_ts
     };
     // println!("{generated}");
     generated.into()

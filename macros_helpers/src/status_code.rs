@@ -74,7 +74,7 @@ pub enum StatusCode {
 }
 impl StatusCode {
     #[must_use]
-    pub fn to_axum_http_status_code_token_stream(&self) -> proc_macro2::TokenStream {
+    pub fn to_axum_http_status_code_ts(&self) -> proc_macro2::TokenStream {
         match *self {
             Self::Continue100 => quote::quote! {http::StatusCode::CONTINUE},
             Self::SwitchingProtocols101 => {
@@ -215,7 +215,7 @@ impl StatusCode {
         }
     }
     #[must_use]
-    pub fn to_http_status_code_token_stream(&self) -> proc_macro2::TokenStream {
+    pub fn to_http_status_code_ts(&self) -> proc_macro2::TokenStream {
         match *self {
             Self::Continue100 => quote::quote! {http::StatusCode::CONTINUE},
             Self::SwitchingProtocols101 => {
@@ -348,14 +348,14 @@ impl StatusCode {
         }
     }
     #[must_use]
-    pub fn to_proc_macro_attribute_view_token_stream(&self) -> proc_macro2::TokenStream {
+    pub fn to_proc_macro_attribute_view_ts(&self) -> proc_macro2::TokenStream {
         let value = format!("#[{self}]");
         value
             .parse::<proc_macro2::TokenStream>()
             .expect("48ab5b45-d715-4872-a5e3-aa17c1012898")
     }
     #[must_use]
-    pub fn to_status_code_description_token_stream(&self) -> proc_macro2::TokenStream {
+    pub fn to_status_code_description_ts(&self) -> proc_macro2::TokenStream {
         match *self {
             Self::Continue100 => quote::quote! {"continue"},
             Self::SwitchingProtocols101 => quote::quote! {"switching protocols"},
@@ -432,7 +432,7 @@ impl StatusCode {
         }
     }
     #[must_use]
-    pub fn to_status_code_token_stream(&self) -> proc_macro2::TokenStream {
+    pub fn to_status_code_ts(&self) -> proc_macro2::TokenStream {
         match *self {
             Self::Continue100 => quote::quote! {100},
             Self::SwitchingProtocols101 => quote::quote! {101},
