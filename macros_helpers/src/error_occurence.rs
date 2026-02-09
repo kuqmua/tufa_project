@@ -1,3 +1,6 @@
+use crate::attribute_ident_stringified::AttributeIdentStringified;
+use std::str::FromStr;
+
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum ErrorOccurenceFieldAttribute {
@@ -11,7 +14,7 @@ pub enum ErrorOccurenceFieldAttribute {
     EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize,
     EoHashMapKeyStdStringStringValueErrorOccurence,
 }
-impl std::str::FromStr for ErrorOccurenceFieldAttribute {
+impl FromStr for ErrorOccurenceFieldAttribute {
     type Err = ();
     fn from_str(value: &str) -> Result<Self, Self::Err> {
         if value == "eo_to_std_string_string" {
@@ -51,7 +54,7 @@ impl TryFrom<&syn::Field> for ErrorOccurenceFieldAttribute {
                         return Err("no first value in punctuated".to_owned());
                     }
                 };
-                if let Ok(value) = std::str::FromStr::from_str(&first_segment_ident.to_string()) {
+                if let Ok(value) = FromStr::from_str(&first_segment_ident.to_string()) {
                     if option_attribute.is_some() {
                         return Err("two or more supported attributes!".to_owned());
                     }
@@ -62,9 +65,7 @@ impl TryFrom<&syn::Field> for ErrorOccurenceFieldAttribute {
         option_attribute.map_or_else(|| Err("option attribute is None".to_owned()), Ok)
     }
 }
-impl crate::attribute_ident_stringified::AttributeIdentStringified
-    for ErrorOccurenceFieldAttribute
-{
+impl AttributeIdentStringified for ErrorOccurenceFieldAttribute {
     fn attribute_ident_stringified(&self) -> &str {
         match *self {
             Self::EoToStdStringString => "eo_to_std_string_string",
@@ -92,7 +93,10 @@ impl crate::attribute_ident_stringified::AttributeIdentStringified
 impl ErrorOccurenceFieldAttribute {
     #[must_use]
     pub fn to_attribute_view_ts(&self) -> proc_macro2::TokenStream {
-        let value = format!("#[{}]", crate::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(self));
+        let value = format!(
+            "#[{}]",
+            AttributeIdentStringified::attribute_ident_stringified(self)
+        );
         value
             .parse::<proc_macro2::TokenStream>()
             .expect("147c39e9-4e64-4080-9426-f66520a414d6")

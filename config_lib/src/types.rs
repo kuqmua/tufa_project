@@ -1,3 +1,7 @@
+use std::env;
+use std::fmt::{Display, Formatter, Result as FmtResult};
+use std::str::FromStr;
+
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
     Debug,
@@ -10,7 +14,6 @@
     serde::Deserialize,
     PartialEq,
     Eq,
-    from_str::FromStr,
 )]
 pub enum TracingLevel {
     Trace,
@@ -20,8 +23,21 @@ pub enum TracingLevel {
     #[default]
     Error,
 }
-impl std::fmt::Display for TracingLevel {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl FromStr for TracingLevel {
+    type Err = String;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "trace" => Ok(Self::Trace),
+            "debug" => Ok(Self::Debug),
+            "info" => Ok(Self::Info),
+            "warn" => Ok(Self::Warn),
+            "error" => Ok(Self::Error),
+            _ => Err(format!("Unknown tracing level: {s}")),
+        }
+    }
+}
+impl Display for TracingLevel {
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         write!(f, "{}", self.to_snake_case())
     }
 }
@@ -36,12 +52,21 @@ impl std::fmt::Display for TracingLevel {
     strum_macros::Display,
     serde::Serialize,
     serde::Deserialize,
-    from_str::FromStr,
 )]
 pub enum SourcePlaceType {
     #[default]
     Github,
     Source,
+}
+impl FromStr for SourcePlaceType {
+    type Err = String;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "github" => Ok(Self::Github),
+            "source" => Ok(Self::Source),
+            _ => Err(format!("Unknown source place type: {s}")),
+        }
+    }
 }
 impl SourcePlaceType {
     #[must_use]
@@ -55,13 +80,13 @@ impl SourcePlaceType {
             return default;
         }
         let name = "SOURCE_PLACE_TYPE";
-        match std::env::var(name) {
-            Ok(env_value) => match <Self as std::str::FromStr>::from_str(&env_value) {
+        match env::var(name) {
+            Ok(env_value) => match <Self as FromStr>::from_str(&env_value) {
                 Ok(value) => value,
                 Err(error) => {
                     let default = Self::default();
                     eprintln!(
-                        "using default SourcePlaceType::{default:#?} (<SourcePlaceType as std::str::FromStr>::from_str(&value): {error}) {fix_message}"
+                        "using default SourcePlaceType::{default:#?} (<SourcePlaceType as FromStr>::from_str(&value): {error}) {fix_message}"
                     );
                     default
                 }
@@ -69,7 +94,7 @@ impl SourcePlaceType {
             Err(error) => {
                 let default = Self::default();
                 eprintln!(
-                    "using default SourcePlaceType::{default:#?} (std::env::var(\"{name}\"): {error}) {fix_message}"
+                    "using default SourcePlaceType::{default:#?} (env::var(\"{name}\"): {error}) {fix_message}"
                 );
                 default
             }

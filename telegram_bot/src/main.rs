@@ -1,4 +1,8 @@
-#[derive(teloxide::utils::command::BotCommands, Clone)]
+use teloxide::prelude::Requester;
+use teloxide::types::Message;
+use teloxide::utils::command::BotCommands;
+
+#[derive(BotCommands, Clone)]
 #[command(
     rename_rule = "lowercase",
     description = "These commands are supported:"
@@ -18,16 +22,13 @@ enum Command {
 async fn main() {
     Box::pin(teloxide::repl(
         teloxide::Bot::from_env(),
-        async |bot: teloxide::Bot, msg: teloxide::types::Message, cmd: Command| {
+        async |bot: teloxide::Bot, msg: Message, cmd: Command| {
             log::info!("answer");
-            let _unused = teloxide::prelude::Requester::send_message(
+            let _unused = Requester::send_message(
                 &bot,
                 msg.chat.id,
                 match cmd {
-                    Command::Help => {
-                        <Command as teloxide::utils::command::BotCommands>::descriptions()
-                            .to_string()
-                    }
+                    Command::Help => <Command as BotCommands>::descriptions().to_string(),
                     Command::Username(username) => format!("Your username is @{username}."),
                     Command::UsernameAndAge { username, age } => {
                         format!("Your username is @{username} and age is {age}.")

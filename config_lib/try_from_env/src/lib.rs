@@ -1,3 +1,7 @@
+use naming::parameter::{
+    SelfTryFromEnvErrorNamedUpperCamelCase, TryFromStdEnvVarOkSelfErrorNamedUpperCamelCase,
+};
+
 #[proc_macro_derive(TryFromEnv)]
 pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -5,7 +9,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         syn::parse(input).expect("e45f75c2-92ea-4f80-9962-a2438ac0b3fe");
     let ident = &syn_derive_input.ident;
     let ident_try_from_env_error_named_upper_camel_case =
-        naming::parameter::SelfTryFromEnvErrorNamedUpperCamelCase::from_tokens(&ident);
+        SelfTryFromEnvErrorNamedUpperCamelCase::from_tokens(&ident);
     let data_struct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
         syn::Data::Enum(_) | syn::Data::Union(_) => panic!("54289ad5-e5f5-4062-bead-69242ae601a4"),
@@ -26,7 +30,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         let variants_ts = fields_named.iter().map(|el_f931deb2| {
             let el_ident = &el_f931deb2.ident.as_ref().expect("2ecb63c1-675f-489a-af65-a6a17c778bd6");
             let el_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_ident);
-            let try_from_std_env_var_ok_self_error_named_upper_camel_case = naming::parameter::TryFromStdEnvVarOkSelfErrorNamedUpperCamelCase::from_tokens(&el_ident);
+            let try_from_std_env_var_ok_self_error_named_upper_camel_case = TryFromStdEnvVarOkSelfErrorNamedUpperCamelCase::from_tokens(&el_ident);
             quote::quote! {
                 #el_ident_upper_camel_case_ts {
                     #el_ident: config_lib::#try_from_std_env_var_ok_self_error_named_upper_camel_case,

@@ -2,8 +2,9 @@
 pub fn compile_time_project_git_info(
     _input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
+    use std::process::Command;
     panic_location::panic_location();
-    let output = std::process::Command::new("git")
+    let output = Command::new("git")
         .args(["rev-parse", "HEAD"])
         .output()
         .expect("d6b0f81a-1fc1-42fe-a20c-5e3cfd8a6403");

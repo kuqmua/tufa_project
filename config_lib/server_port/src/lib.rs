@@ -1,9 +1,13 @@
+use serde::de::Error as SerdeError;
+use std::error::Error;
+use std::fmt::{Display, Formatter, Result as FmtResult};
+
 pub use server_port_try_from_u16::server_port_try_from_u16;
 
 #[derive(Debug, Clone, Copy, serde::Serialize)]
 pub struct ServerPort(u16);
-impl std::fmt::Display for ServerPort {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl Display for ServerPort {
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         write!(f, "{}", self.0)
     }
 }
@@ -14,8 +18,8 @@ pub struct ServerPortErrorNamed {
     server_port_min_value: u16,
     value: u16,
 }
-impl std::fmt::Display for ServerPortErrorNamed {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl Display for ServerPortErrorNamed {
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         write!(
             f,
             "server_port_min_value: {}, server_port_max_value: {}, value: {}",
@@ -23,7 +27,7 @@ impl std::fmt::Display for ServerPortErrorNamed {
         )
     }
 }
-impl std::error::Error for ServerPortErrorNamed {}
+impl Error for ServerPortErrorNamed {}
 impl TryFrom<u16> for ServerPort {
     type Error = ServerPortErrorNamed;
     fn try_from(value: u16) -> Result<Self, Self::Error> {
@@ -62,7 +66,7 @@ impl<'de> serde::Deserialize<'de> for ServerPort {
             }
         }) {
             Ok(value) => Ok(value),
-            Err(error) => Err(serde::de::Error::custom(error)),
+            Err(error) => Err(SerdeError::custom(error)),
         }
     }
 }

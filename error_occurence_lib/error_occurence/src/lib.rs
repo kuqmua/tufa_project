@@ -1,3 +1,5 @@
+use naming::parameter::SelfWithSerializeDeserializeUpperCamelCase;
+
 #[proc_macro_derive(
     ErrorOccurence,
     attributes(
@@ -34,7 +36,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         })
         .collect::<Vec<&syn::Ident>>();
     let ident_with_serialize_deserialize_upper_camel_case =
-        naming::parameter::SelfWithSerializeDeserializeUpperCamelCase::from_tokens(&ident);
+        SelfWithSerializeDeserializeUpperCamelCase::from_tokens(&ident);
     let syn::Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("d98214f7-c406-44c7-9cca-b98192949a95");
     };

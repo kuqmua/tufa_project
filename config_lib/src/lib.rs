@@ -1,4 +1,9 @@
 pub mod types;
+use std::net::AddrParseError;
+use std::net::SocketAddr;
+use std::num::ParseIntError;
+use std::str::FromStr;
+use std::str::ParseBoolError;
 
 pub use generate_getter_traits_for_struct_fields::GenerateGetterTraitsForStructFields;
 pub use try_from_env::TryFromEnv;
@@ -8,17 +13,15 @@ pub trait TryFromStdEnvVarOk: Sized {
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error>;
 }
 #[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
-pub struct ServiceSocketAddress(pub std::net::SocketAddr);
+pub struct ServiceSocketAddress(pub SocketAddr);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkServiceSocketAddressErrorNamed {
-    StdNetSocketAddr {
-        std_net_socket_addr: std::net::AddrParseError,
-    },
+    StdNetSocketAddr { std_net_socket_addr: AddrParseError },
 }
 impl TryFromStdEnvVarOk for ServiceSocketAddress {
     type Error = TryFromStdEnvVarOkServiceSocketAddressErrorNamed;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        <std::net::SocketAddr as std::str::FromStr>::from_str(&value)
+        <SocketAddr as FromStr>::from_str(&value)
             .map(Self)
             .map_err(|error| Self::Error::StdNetSocketAddr {
                 std_net_socket_addr: error,
@@ -33,7 +36,7 @@ pub enum TryFromStdEnvVarOkTimezoneErrorNamed {
         chrono_fixed_offset: String,
     },
     StdPrimitiveI32Parsing {
-        std_primitive_i32_parsing: std::num::ParseIntError,
+        std_primitive_i32_parsing: ParseIntError,
     },
 }
 impl TryFromStdEnvVarOk for Timezone {
@@ -176,7 +179,7 @@ pub struct EnableApiGitCommitCheck(pub bool);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed {
     StdPrimitiveBoolParsing {
-        std_primitive_bool_parsing: std::str::ParseBoolError,
+        std_primitive_bool_parsing: ParseBoolError,
     },
 }
 impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
@@ -198,7 +201,7 @@ pub struct MaximumSizeOfHttpBodyInBytes(pub usize);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed {
     StdPrimitiveUsizeParsing {
-        std_primitive_usize_parsing: std::num::ParseIntError,
+        std_primitive_usize_parsing: ParseIntError,
     },
 }
 impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {

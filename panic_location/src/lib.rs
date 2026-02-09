@@ -1,5 +1,6 @@
 pub fn panic_location() {
-    std::panic::set_hook(Box::new(move |panic_info| {
+    use std::panic::set_hook;
+    set_hook(Box::new(move |panic_info| {
         if let Some(location) = panic_info.location() {
             eprintln!(
                 "panic occurred in {}:{}:{}",

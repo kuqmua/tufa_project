@@ -1,3 +1,16 @@
+use axum::extract::rejection::{JsonDataError, JsonRejection, JsonSyntaxError};
+use http::header::ToStrError;
+use reqwest::header::HeaderMap;
+use sqlx::migrate::MigrateError;
+use sqlx::types::chrono::{NaiveDate, NaiveDateTime, NaiveTime};
+use sqlx::types::time::{PrimitiveDateTime, Time};
+use sqlx::types::uuid::Error as UuidError;
+use sqlx::types::{BigDecimal, Decimal};
+use std::io::Error as IoError;
+use time::error::ComponentRange;
+use tracing::dispatcher::SetGlobalDefaultError;
+use tracing::log::SetLoggerError;
+
 pub trait ToStdStringString {
     fn to_std_string_string(&self) -> String;
 }
@@ -106,17 +119,17 @@ impl ToStdStringString for Option<f64> {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for tracing::dispatcher::SetGlobalDefaultError {
+impl ToStdStringString for SetGlobalDefaultError {
     fn to_std_string_string(&self) -> String {
         String::from("tracing::dispatcher::SetGlobalDefaultError")
     }
 }
-impl ToStdStringString for tracing::log::SetLoggerError {
+impl ToStdStringString for SetLoggerError {
     fn to_std_string_string(&self) -> String {
         String::from("tracing::log::SetLoggerError")
     }
 }
-impl ToStdStringString for reqwest::header::HeaderMap {
+impl ToStdStringString for HeaderMap {
     fn to_std_string_string(&self) -> String {
         format!("{self:#?}")
     }
@@ -126,7 +139,7 @@ impl ToStdStringString for http_body::SizeHint {
         format!("{self:#?}")
     }
 }
-impl ToStdStringString for http::header::ToStrError {
+impl ToStdStringString for ToStrError {
     fn to_std_string_string(&self) -> String {
         format!("{self}")
     }
@@ -141,17 +154,17 @@ impl ToStdStringString for usize {
         format!("{self}")
     }
 }
-impl ToStdStringString for time::error::ComponentRange {
+impl ToStdStringString for ComponentRange {
     fn to_std_string_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for sqlx::types::uuid::Error {
+impl ToStdStringString for UuidError {
     fn to_std_string_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for std::io::Error {
+impl ToStdStringString for IoError {
     fn to_std_string_string(&self) -> String {
         format!("{self}")
     }
@@ -176,57 +189,57 @@ impl ToStdStringString for reqwest::StatusCode {
         format!("{self}")
     }
 }
-impl ToStdStringString for axum::extract::rejection::JsonDataError {
+impl ToStdStringString for JsonDataError {
     fn to_std_string_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for sqlx::migrate::MigrateError {
+impl ToStdStringString for MigrateError {
     fn to_std_string_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for axum::extract::rejection::JsonSyntaxError {
+impl ToStdStringString for JsonSyntaxError {
     fn to_std_string_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for axum::extract::rejection::JsonRejection {
+impl ToStdStringString for JsonRejection {
     fn to_std_string_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for sqlx::types::chrono::NaiveTime {
+impl ToStdStringString for NaiveTime {
     fn to_std_string_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for sqlx::types::chrono::NaiveDate {
+impl ToStdStringString for NaiveDate {
     fn to_std_string_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for sqlx::types::chrono::NaiveDateTime {
+impl ToStdStringString for NaiveDateTime {
     fn to_std_string_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for sqlx::types::time::Time {
+impl ToStdStringString for Time {
     fn to_std_string_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for sqlx::types::time::PrimitiveDateTime {
+impl ToStdStringString for PrimitiveDateTime {
     fn to_std_string_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for sqlx::types::Decimal {
+impl ToStdStringString for Decimal {
     fn to_std_string_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for sqlx::types::BigDecimal {
+impl ToStdStringString for BigDecimal {
     fn to_std_string_string(&self) -> String {
         format!("{self}")
     }

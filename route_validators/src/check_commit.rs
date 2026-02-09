@@ -1,3 +1,9 @@
+use axum::http::HeaderMap;
+use axum::http::StatusCode;
+use axum::http::header::HeaderValue;
+use axum::http::header::ToStrError;
+use error_occurence_lib::code_occurence::CodeOccurence;
+
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum ErrorNamed {
     CommitNotEqual {
@@ -5,26 +11,26 @@ pub enum ErrorNamed {
         commit_not_equal: String,
         #[eo_to_std_string_string_serialize_deserialize]
         commit_to_use: String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        code_occurence: CodeOccurence,
     },
     CommitToStrConversion {
         #[eo_to_std_string_string]
-        commit_to_str_conversion: axum::http::header::ToStrError,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        commit_to_str_conversion: ToStrError,
+        code_occurence: CodeOccurence,
     },
     NoCommitHeader {
         #[eo_to_std_string_string_serialize_deserialize]
         no_commit_header: String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        code_occurence: CodeOccurence,
     },
 }
 
 impl http_logic::GetAxumHttpStatusCode for ErrorNamed {
-    fn get_axum_http_status_code(&self) -> axum::http::StatusCode {
+    fn get_axum_http_status_code(&self) -> StatusCode {
         match self {
             Self::CommitNotEqual { .. }
             | Self::CommitToStrConversion { .. }
-            | Self::NoCommitHeader { .. } => axum::http::StatusCode::BAD_REQUEST,
+            | Self::NoCommitHeader { .. } => StatusCode::BAD_REQUEST,
         }
     }
 }
@@ -32,7 +38,7 @@ impl http_logic::GetAxumHttpStatusCode for ErrorNamed {
 pub fn check_commit(
     // app_state: &dyn app_state::GetEnableApiGitCommitCheck,
     enable_api_git_commit_check: bool,
-    headers: &axum::http::HeaderMap<axum::http::header::HeaderValue>,
+    headers: &HeaderMap<HeaderValue>,
 ) -> Result<(), ErrorNamed> {
     if
     // app_state.get_enable_api_git_commit_check()

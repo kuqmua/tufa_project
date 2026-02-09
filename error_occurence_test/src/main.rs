@@ -7,6 +7,10 @@
 // eo_error_occurence_field
 // https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/error_occurence_test/src/main.rs#L85 2024-05-06 09:17:23
 
+use error_occurence_lib::code_occurence::CodeOccurence;
+use std::collections::HashMap;
+use std::fmt;
+
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum ErrorNamedOne {
     //use ToStdStringString for hashmap keys instead of Display
@@ -26,13 +30,13 @@ pub enum ErrorNamedOne {
         #[eo_vec_error_occurence]
         eo_vec_error_occurence_field: Vec<ErrorUnnamedOne>, //IN SERIALIZE DESERIALIZE Vec<nested>
         #[eo_hashmap_key_std_string_string_value_to_std_string_string]
-        hashmap_string_string: std::collections::HashMap<String, DisplayStruct>,
+        hashmap_string_string: HashMap<String, DisplayStruct>,
         #[eo_hashmap_key_std_string_string_value_to_std_string_string_serialize_deserialize]
-        hashmap_string_serde: std::collections::HashMap<String, SerializeDeserializeStruct>,
+        hashmap_string_serde: HashMap<String, SerializeDeserializeStruct>,
         #[eo_hashmap_key_std_string_string_value_error_occurence]
-        hashmap_string_error_occurence: std::collections::HashMap<String, ErrorUnnamedOne>,
+        hashmap_string_error_occurence: HashMap<String, ErrorUnnamedOne>,
 
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        code_occurence: CodeOccurence,
     },
 }
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -40,12 +44,12 @@ pub enum ErrorNamedTwo {
     Another {
         #[eo_to_std_string_string_serialize_deserialize]
         sdasdasd: String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        code_occurence: CodeOccurence,
     },
     Variant {
         #[eo_to_std_string_string_serialize_deserialize]
         eo_display_with_serialize_deserialize_field: String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        code_occurence: CodeOccurence,
     },
 }
 
@@ -127,7 +131,7 @@ fn main() {
                 code_occurence: error_occurence_lib::code_occurence!(),
             }),
         ],
-        hashmap_string_string: std::collections::HashMap::from([
+        hashmap_string_string: HashMap::from([
             (
                 String::from("kesdfsfdsfsd"),
                 DisplayStruct {
@@ -143,7 +147,7 @@ fn main() {
                 },
             ),
         ]),
-        hashmap_string_serde: std::collections::HashMap::from([
+        hashmap_string_serde: HashMap::from([
             (
                 String::from("kdfgsdfgdsfgey"),
                 SerializeDeserializeStruct {
@@ -161,7 +165,7 @@ fn main() {
                 },
             ),
         ]),
-        hashmap_string_error_occurence: std::collections::HashMap::from([
+        hashmap_string_error_occurence: HashMap::from([
             (
                 String::from("ksdfgadsfgsdfgdfgey"),
                 ErrorUnnamedOne::Something(ErrorNamedTwo::Variant {
@@ -180,25 +184,6 @@ fn main() {
 
         code_occurence: error_occurence_lib::code_occurence!(),
     };
-    println!("{error}");
-    let e_serialize_deserialize_version = error.into_serialize_deserialize_version();
-    println!(
-        "--------------------------------------------------------------------------------------------------"
-    );
-    println!("{e_serialize_deserialize_version}");
-    let e_serialize_deserialize_version_json_string =
-        serde_json::to_string(&e_serialize_deserialize_version)
-            .expect("90127b1c-95fe-424c-951c-64abd475858a");
-    println!("{e_serialize_deserialize_version_json_string}");
-    println!(
-        "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-    );
-    let e_serialize_deserialize_version_deserialized: ErrorNamedOneWithSerializeDeserialize =
-        serde_json::from_str(&e_serialize_deserialize_version_json_string)
-            .expect("05fffda3-53e8-433b-8d9a-9b8f8371c45e");
-    println!("{e_serialize_deserialize_version_deserialized}");
-    println!(
-        "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-    );
+    println!("{error:?}");
 }
 // ///////////

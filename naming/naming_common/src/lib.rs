@@ -1,3 +1,4 @@
+use std::fmt::Display;
 //todo maybe add another generic - trait casing. and ToUpperCamelCaseString and others would implement it like .to_case::<UpperCamel>()
 pub trait AsRefStrToUpperCamelCaseStringified {
     fn case(&self) -> String;
@@ -73,7 +74,7 @@ pub trait DisplayToUpperCamelCaseStringified {
 }
 impl<T> DisplayToUpperCamelCaseStringified for T
 where
-    T: std::fmt::Display,
+    T: Display,
 {
     fn case(&self) -> String {
         to_upper_camel_case_stringified(&self.to_string())
@@ -95,7 +96,7 @@ pub trait DisplayToSnakeCaseStringified {
 }
 impl<T> DisplayToSnakeCaseStringified for T
 where
-    T: std::fmt::Display,
+    T: Display,
 {
     fn case(&self) -> String {
         to_snake_case_stringified(&self.to_string())
@@ -117,7 +118,7 @@ pub trait DisplayToUpperSnakeCaseStringified {
 }
 impl<T> DisplayToUpperSnakeCaseStringified for T
 where
-    T: std::fmt::Display,
+    T: Display,
 {
     fn case(&self) -> String {
         to_upper_snake_case_stringified(&self.to_string())
@@ -200,7 +201,7 @@ where
         to_ts_or_panic(&ToTokensToUpperSnakeCaseStringified::case(self))
     }
 }
-fn to_ts_or_panic(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
+fn to_ts_or_panic(value: &dyn Display) -> proc_macro2::TokenStream {
     value
         .to_string()
         .parse::<proc_macro2::TokenStream>()

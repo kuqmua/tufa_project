@@ -1,3 +1,6 @@
+use naming::ToTokensToUpperCamelCaseStringified;
+use naming::parameter::{GetSelfSnakeCase, GetSelfUpperCamelCase};
+
 #[proc_macro_derive(GenerateGetterTraitsForStructFields)]
 pub fn generate_getter_traits_for_struct_fields(
     input: proc_macro::TokenStream,
@@ -18,7 +21,7 @@ pub fn generate_getter_traits_for_struct_fields(
                 .expect("e5c23c45-9bcf-485b-a6d7-0fcb99f9346b");
             (
                 field_ident,
-                naming::ToTokensToUpperCamelCaseStringified::case(&field_ident),
+                ToTokensToUpperCamelCaseStringified::case(&field_ident),
             )
         };
         let field_type = field.ty;
@@ -70,8 +73,8 @@ pub fn generate_getter_trait(input: proc_macro::TokenStream) -> proc_macro::Toke
         .next()
         .expect("7c2531fd-3a78-43fa-8990-44d8e8438fa3");
     let first_field_unnamed_type = &first_field_unnamed.ty;
-    let get_ident_upper_camel_case = naming::parameter::GetSelfUpperCamelCase::from_tokens(&ident);
-    let get_ident_snake_case = naming::parameter::GetSelfSnakeCase::from_tokens(&ident);
+    let get_ident_upper_camel_case = GetSelfUpperCamelCase::from_tokens(&ident);
+    let get_ident_snake_case = GetSelfSnakeCase::from_tokens(&ident);
     let generated = quote::quote! {
         pub trait #get_ident_upper_camel_case {
             fn #get_ident_snake_case(&self) -> &#first_field_unnamed_type;

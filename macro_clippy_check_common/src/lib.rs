@@ -5,6 +5,8 @@ pub fn clippy_check(
     additional_content: &str,
     content_to_generate: &str,
 ) {
+    use std::fs::write;
+    use std::process::Command;
     let path = format!("../{crate_name}/");
     let cargo_toml_content = format!(
         r#"[package]
@@ -24,22 +26,23 @@ workspace = true"#
     let lib_rs_content = "\n";
     let path_lib_rs = format!("{path}src/lib.rs");
     let path_cargo_toml = format!("{path}Cargo.toml");
-    std::fs::write(&path_lib_rs, lib_rs_content).expect("404ab180-10f0-4b82-95ef-5635488fe436");
-    std::fs::write(
+    write(&path_lib_rs, lib_rs_content).expect("404ab180-10f0-4b82-95ef-5635488fe436");
+    write(
         &path_cargo_toml,
         format!("{cargo_toml_content}\n{additional_content}"),
     )
     .expect("3757da9b-0457-4301-9e68-efb60737dc71");
-    std::fs::write(&path_lib_rs, content_to_generate)
-        .expect("55124f90-c7c2-40b5-8b66-695635ea6afd");
+    write(&path_lib_rs, content_to_generate).expect("55124f90-c7c2-40b5-8b66-695635ea6afd");
     let return_to_previous = || {
-        std::fs::write(&path_lib_rs, lib_rs_content).expect("79231418-b44a-4dac-8a88-3d8403024827");
-        std::fs::write(&path_cargo_toml, cargo_toml_content)
-            .expect("ec801a87-2c48-4c64-9c6a-7e686db91094");
+        write(&path_lib_rs, lib_rs_content).expect("79231418-b44a-4dac-8a88-3d8403024827");
+        write(&path_cargo_toml, cargo_toml_content).expect("ec801a87-2c48-4c64-9c6a-7e686db91094");
     };
-    let manifest_dir = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    let manifest_dir = {
+        use std::path::PathBuf;
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    };
     let target_crate_dir = manifest_dir.join(format!("{command_path}{crate_name}"));
-    if let Ok(value_90318089) = std::process::Command::new("cargo")
+    if let Ok(value_90318089) = Command::new("cargo")
         .current_dir(&target_crate_dir)
         .args(["fmt"])
         .status()
@@ -52,7 +55,7 @@ workspace = true"#
         return_to_previous();
         panic!("8dc4f045-93a0-46a3-a6f6-0eab002dbb0c");
     }
-    if let Ok(value_f263835c) = std::process::Command::new("cargo")
+    if let Ok(value_f263835c) = Command::new("cargo")
         .current_dir(&target_crate_dir)
         .args([
             "clippy",

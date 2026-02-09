@@ -1,20 +1,88 @@
+use naming::parameter::{
+    PostgresqlJsonTypeWhereSelfUpperCamelCase, PostgresqlTypeWhereSelfUpperCamelCase,
+};
+use naming::{
+    AdjacentWithRangeUpperCamelCase, AllElementsEqualUpperCamelCase,
+    AllElementsGreaterThanUpperCamelCase, AllElementsRegularExpressionUpperCamelCase,
+    BeforeUpperCamelCase, BetweenUpperCamelCase, ContainsAllElementsOfArrayUpperCamelCase,
+    ContainsElGreaterThanUpperCamelCase, ContainsElRegularExpressionUpperCamelCase,
+    CurrentDateUpperCamelCase, CurrentTimeUpperCamelCase, CurrentTimestampUpperCamelCase,
+    DimensionFourAllElementsEqualUpperCamelCase, DimensionFourAllElementsGreaterThanUpperCamelCase,
+    DimensionFourAllElementsRegularExpressionUpperCamelCase, DimensionFourBetweenUpperCamelCase,
+    DimensionFourContainsAllElementsOfArrayUpperCamelCase,
+    DimensionFourContainsElGreaterThanUpperCamelCase,
+    DimensionFourContainsElRegularExpressionUpperCamelCase, DimensionFourEqualUpperCamelCase,
+    DimensionFourGreaterThanUpperCamelCase, DimensionFourInUpperCamelCase,
+    DimensionFourLengthEqualUpperCamelCase, DimensionFourLengthGreaterThanUpperCamelCase,
+    DimensionFourOverlapsWithArrayUpperCamelCase, DimensionFourRegularExpressionUpperCamelCase,
+    DimensionOneAdjacentWithRangeUpperCamelCase, DimensionOneAllElementsEqualUpperCamelCase,
+    DimensionOneAllElementsGreaterThanUpperCamelCase,
+    DimensionOneAllElementsRegularExpressionUpperCamelCase, DimensionOneBeforeUpperCamelCase,
+    DimensionOneBetweenUpperCamelCase, DimensionOneContainsAllElementsOfArrayUpperCamelCase,
+    DimensionOneContainsElGreaterThanUpperCamelCase,
+    DimensionOneContainsElRegularExpressionUpperCamelCase, DimensionOneCurrentDateUpperCamelCase,
+    DimensionOneCurrentTimeUpperCamelCase, DimensionOneCurrentTimestampUpperCamelCase,
+    DimensionOneEqualToEncodedStringRepresentationUpperCamelCase, DimensionOneEqualUpperCamelCase,
+    DimensionOneExcludedUpperBoundUpperCamelCase,
+    DimensionOneFindRangesThatFullyContainTheGivenRangeUpperCamelCase,
+    DimensionOneFindRangesWithinGivenRangeUpperCamelCase,
+    DimensionOneGreaterThanCurrentDateUpperCamelCase,
+    DimensionOneGreaterThanCurrentTimeUpperCamelCase,
+    DimensionOneGreaterThanCurrentTimestampUpperCamelCase,
+    DimensionOneGreaterThanExcludedUpperBoundUpperCamelCase,
+    DimensionOneGreaterThanIncludedLowerBoundUpperCamelCase, DimensionOneGreaterThanUpperCamelCase,
+    DimensionOneInUpperCamelCase, DimensionOneIncludedLowerBoundUpperCamelCase,
+    DimensionOneLengthEqualUpperCamelCase, DimensionOneLengthGreaterThanUpperCamelCase,
+    DimensionOneOverlapWithRangeUpperCamelCase, DimensionOneOverlapsWithArrayUpperCamelCase,
+    DimensionOneRangeLengthUpperCamelCase, DimensionOneRegularExpressionUpperCamelCase,
+    DimensionOneStrictlyToLeftOfRangeUpperCamelCase,
+    DimensionOneStrictlyToRightOfRangeUpperCamelCase, DimensionThreeAllElementsEqualUpperCamelCase,
+    DimensionThreeAllElementsGreaterThanUpperCamelCase,
+    DimensionThreeAllElementsRegularExpressionUpperCamelCase, DimensionThreeBetweenUpperCamelCase,
+    DimensionThreeContainsAllElementsOfArrayUpperCamelCase,
+    DimensionThreeContainsElGreaterThanUpperCamelCase,
+    DimensionThreeContainsElRegularExpressionUpperCamelCase, DimensionThreeEqualUpperCamelCase,
+    DimensionThreeGreaterThanUpperCamelCase, DimensionThreeInUpperCamelCase,
+    DimensionThreeLengthEqualUpperCamelCase, DimensionThreeLengthGreaterThanUpperCamelCase,
+    DimensionThreeOverlapsWithArrayUpperCamelCase, DimensionThreeRegularExpressionUpperCamelCase,
+    DimensionTwoAllElementsEqualUpperCamelCase, DimensionTwoAllElementsGreaterThanUpperCamelCase,
+    DimensionTwoAllElementsRegularExpressionUpperCamelCase, DimensionTwoBetweenUpperCamelCase,
+    DimensionTwoContainsAllElementsOfArrayUpperCamelCase,
+    DimensionTwoContainsElGreaterThanUpperCamelCase,
+    DimensionTwoContainsElRegularExpressionUpperCamelCase, DimensionTwoEqualUpperCamelCase,
+    DimensionTwoGreaterThanUpperCamelCase, DimensionTwoInUpperCamelCase,
+    DimensionTwoLengthEqualUpperCamelCase, DimensionTwoLengthGreaterThanUpperCamelCase,
+    DimensionTwoOverlapsWithArrayUpperCamelCase, DimensionTwoRegularExpressionUpperCamelCase,
+    EqualToEncodedStringRepresentationUpperCamelCase, EqualUpperCamelCase,
+    ExcludedUpperBoundUpperCamelCase, FindRangesThatFullyContainTheGivenRangeUpperCamelCase,
+    FindRangesWithinGivenRangeUpperCamelCase, GreaterThanCurrentDateUpperCamelCase,
+    GreaterThanCurrentTimeUpperCamelCase, GreaterThanCurrentTimestampUpperCamelCase,
+    GreaterThanExcludedUpperBoundUpperCamelCase, GreaterThanIncludedLowerBoundUpperCamelCase,
+    GreaterThanUpperCamelCase, InUpperCamelCase, IncludedLowerBoundUpperCamelCase,
+    LengthEqualUpperCamelCase, LengthGreaterThanUpperCamelCase, OverlapWithRangeUpperCamelCase,
+    OverlapsWithArrayUpperCamelCase, RangeLengthUpperCamelCase, RegularExpressionUpperCamelCase,
+    StrictlyToLeftOfRangeUpperCamelCase, StrictlyToRightOfRangeUpperCamelCase,
+};
+use proc_macro2::TokenStream;
+use quote::quote;
+
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
     Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension,
 )]
 pub enum PostgresqlTypeFilter {
-    Equal { ident: proc_macro2::TokenStream },
-    DimensionOneEqual { ident: proc_macro2::TokenStream },
-    GreaterThan { ident: proc_macro2::TokenStream },
-    DimensionOneGreaterThan { ident: proc_macro2::TokenStream },
-    Between { ident: proc_macro2::TokenStream },
-    DimensionOneBetween { ident: proc_macro2::TokenStream },
-    In { ident: proc_macro2::TokenStream },
-    DimensionOneIn { ident: proc_macro2::TokenStream },
+    Equal { ident: TokenStream },
+    DimensionOneEqual { ident: TokenStream },
+    GreaterThan { ident: TokenStream },
+    DimensionOneGreaterThan { ident: TokenStream },
+    Between { ident: TokenStream },
+    DimensionOneBetween { ident: TokenStream },
+    In { ident: TokenStream },
+    DimensionOneIn { ident: TokenStream },
     RegularExpression,
     DimensionOneRegularExpression,
-    Before { ident: proc_macro2::TokenStream },
-    DimensionOneBefore { ident: proc_macro2::TokenStream },
+    Before { ident: TokenStream },
+    DimensionOneBefore { ident: TokenStream },
     CurrentDate,
     DimensionOneCurrentDate,
     GreaterThanCurrentDate,
@@ -31,32 +99,32 @@ pub enum PostgresqlTypeFilter {
     DimensionOneLengthGreaterThan,
     EqualToEncodedStringRepresentation,
     DimensionOneEqualToEncodedStringRepresentation,
-    FindRangesWithinGivenRange { ident: proc_macro2::TokenStream },
-    DimensionOneFindRangesWithinGivenRange { ident: proc_macro2::TokenStream },
-    FindRangesThatFullyContainTheGivenRange { ident: proc_macro2::TokenStream },
-    DimensionOneFindRangesThatFullyContainTheGivenRange { ident: proc_macro2::TokenStream },
-    StrictlyToLeftOfRange { ident: proc_macro2::TokenStream },
-    DimensionOneStrictlyToLeftOfRange { ident: proc_macro2::TokenStream },
-    StrictlyToRightOfRange { ident: proc_macro2::TokenStream },
-    DimensionOneStrictlyToRightOfRange { ident: proc_macro2::TokenStream },
-    IncludedLowerBound { ident: proc_macro2::TokenStream },
-    DimensionOneIncludedLowerBound { ident: proc_macro2::TokenStream },
-    ExcludedUpperBound { ident: proc_macro2::TokenStream },
-    DimensionOneExcludedUpperBound { ident: proc_macro2::TokenStream },
-    GreaterThanIncludedLowerBound { ident: proc_macro2::TokenStream },
-    DimensionOneGreaterThanIncludedLowerBound { ident: proc_macro2::TokenStream },
-    GreaterThanExcludedUpperBound { ident: proc_macro2::TokenStream },
-    DimensionOneGreaterThanExcludedUpperBound { ident: proc_macro2::TokenStream },
-    OverlapWithRange { ident: proc_macro2::TokenStream },
-    DimensionOneOverlapWithRange { ident: proc_macro2::TokenStream },
-    AdjacentWithRange { ident: proc_macro2::TokenStream },
-    DimensionOneAdjacentWithRange { ident: proc_macro2::TokenStream },
+    FindRangesWithinGivenRange { ident: TokenStream },
+    DimensionOneFindRangesWithinGivenRange { ident: TokenStream },
+    FindRangesThatFullyContainTheGivenRange { ident: TokenStream },
+    DimensionOneFindRangesThatFullyContainTheGivenRange { ident: TokenStream },
+    StrictlyToLeftOfRange { ident: TokenStream },
+    DimensionOneStrictlyToLeftOfRange { ident: TokenStream },
+    StrictlyToRightOfRange { ident: TokenStream },
+    DimensionOneStrictlyToRightOfRange { ident: TokenStream },
+    IncludedLowerBound { ident: TokenStream },
+    DimensionOneIncludedLowerBound { ident: TokenStream },
+    ExcludedUpperBound { ident: TokenStream },
+    DimensionOneExcludedUpperBound { ident: TokenStream },
+    GreaterThanIncludedLowerBound { ident: TokenStream },
+    DimensionOneGreaterThanIncludedLowerBound { ident: TokenStream },
+    GreaterThanExcludedUpperBound { ident: TokenStream },
+    DimensionOneGreaterThanExcludedUpperBound { ident: TokenStream },
+    OverlapWithRange { ident: TokenStream },
+    DimensionOneOverlapWithRange { ident: TokenStream },
+    AdjacentWithRange { ident: TokenStream },
+    DimensionOneAdjacentWithRange { ident: TokenStream },
     RangeLength,
     DimensionOneRangeLength,
     //BitVecPositionEqual,//currently deactivated
 }
 impl PostgresqlFilter for PostgresqlTypeFilter {
-    fn maybe_generic(&self) -> Option<proc_macro2::TokenStream> {
+    fn maybe_generic(&self) -> Option<TokenStream> {
         match &self {
             Self::Equal { ident }
             | Self::DimensionOneEqual { ident }
@@ -110,108 +178,98 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
             | Self::DimensionOneRangeLength => None,
         }
     }
-    fn prefix_where_self_upper_camel_case(&self) -> proc_macro2::TokenStream {
-        let value = naming::parameter::PostgresqlTypeWhereSelfUpperCamelCase::from_display(
-            &self.upper_camel_case(),
-        );
-        quote::quote! {#value}
+    fn prefix_where_self_upper_camel_case(&self) -> TokenStream {
+        let value = PostgresqlTypeWhereSelfUpperCamelCase::from_display(&self.upper_camel_case());
+        quote! {#value}
     }
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         match &self {
-            Self::Equal { .. } => &naming::EqualUpperCamelCase,
-            Self::DimensionOneEqual { .. } => &naming::DimensionOneEqualUpperCamelCase,
-            Self::GreaterThan { .. } => &naming::GreaterThanUpperCamelCase,
-            Self::DimensionOneGreaterThan { .. } => &naming::DimensionOneGreaterThanUpperCamelCase,
-            Self::Between { .. } => &naming::BetweenUpperCamelCase,
-            Self::DimensionOneBetween { .. } => &naming::DimensionOneBetweenUpperCamelCase,
-            Self::In { .. } => &naming::InUpperCamelCase,
-            Self::DimensionOneIn { .. } => &naming::DimensionOneInUpperCamelCase,
-            Self::RegularExpression => &naming::RegularExpressionUpperCamelCase,
-            Self::DimensionOneRegularExpression => {
-                &naming::DimensionOneRegularExpressionUpperCamelCase
-            }
-            Self::Before { .. } => &naming::BeforeUpperCamelCase,
-            Self::DimensionOneBefore { .. } => &naming::DimensionOneBeforeUpperCamelCase,
-            Self::CurrentDate => &naming::CurrentDateUpperCamelCase,
-            Self::DimensionOneCurrentDate => &naming::DimensionOneCurrentDateUpperCamelCase,
-            Self::GreaterThanCurrentDate => &naming::GreaterThanCurrentDateUpperCamelCase,
+            Self::Equal { .. } => &EqualUpperCamelCase,
+            Self::DimensionOneEqual { .. } => &DimensionOneEqualUpperCamelCase,
+            Self::GreaterThan { .. } => &GreaterThanUpperCamelCase,
+            Self::DimensionOneGreaterThan { .. } => &DimensionOneGreaterThanUpperCamelCase,
+            Self::Between { .. } => &BetweenUpperCamelCase,
+            Self::DimensionOneBetween { .. } => &DimensionOneBetweenUpperCamelCase,
+            Self::In { .. } => &InUpperCamelCase,
+            Self::DimensionOneIn { .. } => &DimensionOneInUpperCamelCase,
+            Self::RegularExpression => &RegularExpressionUpperCamelCase,
+            Self::DimensionOneRegularExpression => &DimensionOneRegularExpressionUpperCamelCase,
+            Self::Before { .. } => &BeforeUpperCamelCase,
+            Self::DimensionOneBefore { .. } => &DimensionOneBeforeUpperCamelCase,
+            Self::CurrentDate => &CurrentDateUpperCamelCase,
+            Self::DimensionOneCurrentDate => &DimensionOneCurrentDateUpperCamelCase,
+            Self::GreaterThanCurrentDate => &GreaterThanCurrentDateUpperCamelCase,
             Self::DimensionOneGreaterThanCurrentDate => {
-                &naming::DimensionOneGreaterThanCurrentDateUpperCamelCase
+                &DimensionOneGreaterThanCurrentDateUpperCamelCase
             }
-            Self::CurrentTimestamp => &naming::CurrentTimestampUpperCamelCase,
-            Self::DimensionOneCurrentTimestamp => {
-                &naming::DimensionOneCurrentTimestampUpperCamelCase
-            }
-            Self::GreaterThanCurrentTimestamp => &naming::GreaterThanCurrentTimestampUpperCamelCase,
+            Self::CurrentTimestamp => &CurrentTimestampUpperCamelCase,
+            Self::DimensionOneCurrentTimestamp => &DimensionOneCurrentTimestampUpperCamelCase,
+            Self::GreaterThanCurrentTimestamp => &GreaterThanCurrentTimestampUpperCamelCase,
             Self::DimensionOneGreaterThanCurrentTimestamp => {
-                &naming::DimensionOneGreaterThanCurrentTimestampUpperCamelCase
+                &DimensionOneGreaterThanCurrentTimestampUpperCamelCase
             }
-            Self::CurrentTime => &naming::CurrentTimeUpperCamelCase,
-            Self::DimensionOneCurrentTime => &naming::DimensionOneCurrentTimeUpperCamelCase,
-            Self::GreaterThanCurrentTime => &naming::GreaterThanCurrentTimeUpperCamelCase,
+            Self::CurrentTime => &CurrentTimeUpperCamelCase,
+            Self::DimensionOneCurrentTime => &DimensionOneCurrentTimeUpperCamelCase,
+            Self::GreaterThanCurrentTime => &GreaterThanCurrentTimeUpperCamelCase,
             Self::DimensionOneGreaterThanCurrentTime => {
-                &naming::DimensionOneGreaterThanCurrentTimeUpperCamelCase
+                &DimensionOneGreaterThanCurrentTimeUpperCamelCase
             }
-            Self::DimensionOneLengthEqual => &naming::DimensionOneLengthEqualUpperCamelCase,
-            Self::DimensionOneLengthGreaterThan => {
-                &naming::DimensionOneLengthGreaterThanUpperCamelCase
-            }
+            Self::DimensionOneLengthEqual => &DimensionOneLengthEqualUpperCamelCase,
+            Self::DimensionOneLengthGreaterThan => &DimensionOneLengthGreaterThanUpperCamelCase,
             Self::EqualToEncodedStringRepresentation => {
-                &naming::EqualToEncodedStringRepresentationUpperCamelCase
+                &EqualToEncodedStringRepresentationUpperCamelCase
             }
             Self::DimensionOneEqualToEncodedStringRepresentation => {
-                &naming::DimensionOneEqualToEncodedStringRepresentationUpperCamelCase
+                &DimensionOneEqualToEncodedStringRepresentationUpperCamelCase
             }
-            Self::FindRangesWithinGivenRange { .. } => {
-                &naming::FindRangesWithinGivenRangeUpperCamelCase
-            }
+            Self::FindRangesWithinGivenRange { .. } => &FindRangesWithinGivenRangeUpperCamelCase,
             Self::DimensionOneFindRangesWithinGivenRange { .. } => {
-                &naming::DimensionOneFindRangesWithinGivenRangeUpperCamelCase
+                &DimensionOneFindRangesWithinGivenRangeUpperCamelCase
             }
             Self::FindRangesThatFullyContainTheGivenRange { .. } => {
-                &naming::FindRangesThatFullyContainTheGivenRangeUpperCamelCase
+                &FindRangesThatFullyContainTheGivenRangeUpperCamelCase
             }
             Self::DimensionOneFindRangesThatFullyContainTheGivenRange { .. } => {
-                &naming::DimensionOneFindRangesThatFullyContainTheGivenRangeUpperCamelCase
+                &DimensionOneFindRangesThatFullyContainTheGivenRangeUpperCamelCase
             }
-            Self::StrictlyToLeftOfRange { .. } => &naming::StrictlyToLeftOfRangeUpperCamelCase,
+            Self::StrictlyToLeftOfRange { .. } => &StrictlyToLeftOfRangeUpperCamelCase,
             Self::DimensionOneStrictlyToLeftOfRange { .. } => {
-                &naming::DimensionOneStrictlyToLeftOfRangeUpperCamelCase
+                &DimensionOneStrictlyToLeftOfRangeUpperCamelCase
             }
-            Self::StrictlyToRightOfRange { .. } => &naming::StrictlyToRightOfRangeUpperCamelCase,
+            Self::StrictlyToRightOfRange { .. } => &StrictlyToRightOfRangeUpperCamelCase,
             Self::DimensionOneStrictlyToRightOfRange { .. } => {
-                &naming::DimensionOneStrictlyToRightOfRangeUpperCamelCase
+                &DimensionOneStrictlyToRightOfRangeUpperCamelCase
             }
-            Self::IncludedLowerBound { .. } => &naming::IncludedLowerBoundUpperCamelCase,
+            Self::IncludedLowerBound { .. } => &IncludedLowerBoundUpperCamelCase,
             Self::DimensionOneIncludedLowerBound { .. } => {
-                &naming::DimensionOneIncludedLowerBoundUpperCamelCase
+                &DimensionOneIncludedLowerBoundUpperCamelCase
             }
-            Self::ExcludedUpperBound { .. } => &naming::ExcludedUpperBoundUpperCamelCase,
+            Self::ExcludedUpperBound { .. } => &ExcludedUpperBoundUpperCamelCase,
             Self::DimensionOneExcludedUpperBound { .. } => {
-                &naming::DimensionOneExcludedUpperBoundUpperCamelCase
+                &DimensionOneExcludedUpperBoundUpperCamelCase
             }
             Self::GreaterThanIncludedLowerBound { .. } => {
-                &naming::GreaterThanIncludedLowerBoundUpperCamelCase
+                &GreaterThanIncludedLowerBoundUpperCamelCase
             }
             Self::DimensionOneGreaterThanIncludedLowerBound { .. } => {
-                &naming::DimensionOneGreaterThanIncludedLowerBoundUpperCamelCase
+                &DimensionOneGreaterThanIncludedLowerBoundUpperCamelCase
             }
             Self::GreaterThanExcludedUpperBound { .. } => {
-                &naming::GreaterThanExcludedUpperBoundUpperCamelCase
+                &GreaterThanExcludedUpperBoundUpperCamelCase
             }
             Self::DimensionOneGreaterThanExcludedUpperBound { .. } => {
-                &naming::DimensionOneGreaterThanExcludedUpperBoundUpperCamelCase
+                &DimensionOneGreaterThanExcludedUpperBoundUpperCamelCase
             }
-            Self::OverlapWithRange { .. } => &naming::OverlapWithRangeUpperCamelCase,
+            Self::OverlapWithRange { .. } => &OverlapWithRangeUpperCamelCase,
             Self::DimensionOneOverlapWithRange { .. } => {
-                &naming::DimensionOneOverlapWithRangeUpperCamelCase
+                &DimensionOneOverlapWithRangeUpperCamelCase
             }
-            Self::AdjacentWithRange { .. } => &naming::AdjacentWithRangeUpperCamelCase,
+            Self::AdjacentWithRange { .. } => &AdjacentWithRangeUpperCamelCase,
             Self::DimensionOneAdjacentWithRange { .. } => {
-                &naming::DimensionOneAdjacentWithRangeUpperCamelCase
+                &DimensionOneAdjacentWithRangeUpperCamelCase
             }
-            Self::RangeLength => &naming::RangeLengthUpperCamelCase,
-            Self::DimensionOneRangeLength => &naming::DimensionOneRangeLengthUpperCamelCase,
+            Self::RangeLength => &RangeLengthUpperCamelCase,
+            Self::DimensionOneRangeLength => &DimensionOneRangeLengthUpperCamelCase,
         }
     }
 }
@@ -221,16 +279,16 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
     Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension,
 )]
 pub enum PostgresqlJsonTypeFilter {
-    Equal { ident: proc_macro2::TokenStream },
-    DimensionOneEqual { ident: proc_macro2::TokenStream },
-    DimensionTwoEqual { ident: proc_macro2::TokenStream },
-    DimensionThreeEqual { ident: proc_macro2::TokenStream },
-    DimensionFourEqual { ident: proc_macro2::TokenStream },
-    AllElementsEqual { ident: proc_macro2::TokenStream },
-    DimensionOneAllElementsEqual { ident: proc_macro2::TokenStream },
-    DimensionTwoAllElementsEqual { ident: proc_macro2::TokenStream },
-    DimensionThreeAllElementsEqual { ident: proc_macro2::TokenStream },
-    DimensionFourAllElementsEqual { ident: proc_macro2::TokenStream },
+    Equal { ident: TokenStream },
+    DimensionOneEqual { ident: TokenStream },
+    DimensionTwoEqual { ident: TokenStream },
+    DimensionThreeEqual { ident: TokenStream },
+    DimensionFourEqual { ident: TokenStream },
+    AllElementsEqual { ident: TokenStream },
+    DimensionOneAllElementsEqual { ident: TokenStream },
+    DimensionTwoAllElementsEqual { ident: TokenStream },
+    DimensionThreeAllElementsEqual { ident: TokenStream },
+    DimensionFourAllElementsEqual { ident: TokenStream },
     LengthEqual,
     DimensionOneLengthEqual,
     DimensionTwoLengthEqual,
@@ -241,31 +299,31 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionTwoLengthGreaterThan,
     DimensionThreeLengthGreaterThan,
     DimensionFourLengthGreaterThan,
-    GreaterThan { ident: proc_macro2::TokenStream },
-    DimensionOneGreaterThan { ident: proc_macro2::TokenStream },
-    DimensionTwoGreaterThan { ident: proc_macro2::TokenStream },
-    DimensionThreeGreaterThan { ident: proc_macro2::TokenStream },
-    DimensionFourGreaterThan { ident: proc_macro2::TokenStream },
-    ContainsElGreaterThan { ident: proc_macro2::TokenStream },
-    DimensionOneContainsElGreaterThan { ident: proc_macro2::TokenStream },
-    DimensionTwoContainsElGreaterThan { ident: proc_macro2::TokenStream },
-    DimensionThreeContainsElGreaterThan { ident: proc_macro2::TokenStream },
-    DimensionFourContainsElGreaterThan { ident: proc_macro2::TokenStream },
-    AllElementsGreaterThan { ident: proc_macro2::TokenStream },
-    DimensionOneAllElementsGreaterThan { ident: proc_macro2::TokenStream },
-    DimensionTwoAllElementsGreaterThan { ident: proc_macro2::TokenStream },
-    DimensionThreeAllElementsGreaterThan { ident: proc_macro2::TokenStream },
-    DimensionFourAllElementsGreaterThan { ident: proc_macro2::TokenStream },
-    Between { ident: proc_macro2::TokenStream },
-    DimensionOneBetween { ident: proc_macro2::TokenStream },
-    DimensionTwoBetween { ident: proc_macro2::TokenStream },
-    DimensionThreeBetween { ident: proc_macro2::TokenStream },
-    DimensionFourBetween { ident: proc_macro2::TokenStream },
-    In { ident: proc_macro2::TokenStream },
-    DimensionOneIn { ident: proc_macro2::TokenStream },
-    DimensionTwoIn { ident: proc_macro2::TokenStream },
-    DimensionThreeIn { ident: proc_macro2::TokenStream },
-    DimensionFourIn { ident: proc_macro2::TokenStream },
+    GreaterThan { ident: TokenStream },
+    DimensionOneGreaterThan { ident: TokenStream },
+    DimensionTwoGreaterThan { ident: TokenStream },
+    DimensionThreeGreaterThan { ident: TokenStream },
+    DimensionFourGreaterThan { ident: TokenStream },
+    ContainsElGreaterThan { ident: TokenStream },
+    DimensionOneContainsElGreaterThan { ident: TokenStream },
+    DimensionTwoContainsElGreaterThan { ident: TokenStream },
+    DimensionThreeContainsElGreaterThan { ident: TokenStream },
+    DimensionFourContainsElGreaterThan { ident: TokenStream },
+    AllElementsGreaterThan { ident: TokenStream },
+    DimensionOneAllElementsGreaterThan { ident: TokenStream },
+    DimensionTwoAllElementsGreaterThan { ident: TokenStream },
+    DimensionThreeAllElementsGreaterThan { ident: TokenStream },
+    DimensionFourAllElementsGreaterThan { ident: TokenStream },
+    Between { ident: TokenStream },
+    DimensionOneBetween { ident: TokenStream },
+    DimensionTwoBetween { ident: TokenStream },
+    DimensionThreeBetween { ident: TokenStream },
+    DimensionFourBetween { ident: TokenStream },
+    In { ident: TokenStream },
+    DimensionOneIn { ident: TokenStream },
+    DimensionTwoIn { ident: TokenStream },
+    DimensionThreeIn { ident: TokenStream },
+    DimensionFourIn { ident: TokenStream },
     RegularExpression,
     DimensionOneRegularExpression,
     DimensionTwoRegularExpression,
@@ -281,20 +339,20 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionTwoAllElementsRegularExpression,
     DimensionThreeAllElementsRegularExpression,
     DimensionFourAllElementsRegularExpression,
-    ContainsAllElementsOfArray { ident: proc_macro2::TokenStream },
-    DimensionOneContainsAllElementsOfArray { ident: proc_macro2::TokenStream },
-    DimensionTwoContainsAllElementsOfArray { ident: proc_macro2::TokenStream },
-    DimensionThreeContainsAllElementsOfArray { ident: proc_macro2::TokenStream },
-    DimensionFourContainsAllElementsOfArray { ident: proc_macro2::TokenStream },
+    ContainsAllElementsOfArray { ident: TokenStream },
+    DimensionOneContainsAllElementsOfArray { ident: TokenStream },
+    DimensionTwoContainsAllElementsOfArray { ident: TokenStream },
+    DimensionThreeContainsAllElementsOfArray { ident: TokenStream },
+    DimensionFourContainsAllElementsOfArray { ident: TokenStream },
     // ContainedInArray,
-    OverlapsWithArray { ident: proc_macro2::TokenStream },
-    DimensionOneOverlapsWithArray { ident: proc_macro2::TokenStream },
-    DimensionTwoOverlapsWithArray { ident: proc_macro2::TokenStream },
-    DimensionThreeOverlapsWithArray { ident: proc_macro2::TokenStream },
-    DimensionFourOverlapsWithArray { ident: proc_macro2::TokenStream },
+    OverlapsWithArray { ident: TokenStream },
+    DimensionOneOverlapsWithArray { ident: TokenStream },
+    DimensionTwoOverlapsWithArray { ident: TokenStream },
+    DimensionThreeOverlapsWithArray { ident: TokenStream },
+    DimensionFourOverlapsWithArray { ident: TokenStream },
 }
 impl PostgresqlFilter for PostgresqlJsonTypeFilter {
-    fn maybe_generic(&self) -> Option<proc_macro2::TokenStream> {
+    fn maybe_generic(&self) -> Option<TokenStream> {
         match &self {
             Self::Equal { ident }
             | Self::DimensionOneEqual { ident }
@@ -368,170 +426,145 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             | Self::DimensionFourLengthGreaterThan => None,
         }
     }
-    fn prefix_where_self_upper_camel_case(&self) -> proc_macro2::TokenStream {
-        let value = naming::parameter::PostgresqlJsonTypeWhereSelfUpperCamelCase::from_display(
-            &self.upper_camel_case(),
-        );
-        quote::quote! {#value}
+    fn prefix_where_self_upper_camel_case(&self) -> TokenStream {
+        let value =
+            PostgresqlJsonTypeWhereSelfUpperCamelCase::from_display(&self.upper_camel_case());
+        quote! {#value}
     }
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         match &self {
-            Self::Equal { .. } => &naming::EqualUpperCamelCase,
-            Self::DimensionOneEqual { .. } => &naming::DimensionOneEqualUpperCamelCase,
-            Self::DimensionTwoEqual { .. } => &naming::DimensionTwoEqualUpperCamelCase,
-            Self::DimensionThreeEqual { .. } => &naming::DimensionThreeEqualUpperCamelCase,
-            Self::DimensionFourEqual { .. } => &naming::DimensionFourEqualUpperCamelCase,
-            Self::AllElementsEqual { .. } => &naming::AllElementsEqualUpperCamelCase,
+            Self::Equal { .. } => &EqualUpperCamelCase,
+            Self::DimensionOneEqual { .. } => &DimensionOneEqualUpperCamelCase,
+            Self::DimensionTwoEqual { .. } => &DimensionTwoEqualUpperCamelCase,
+            Self::DimensionThreeEqual { .. } => &DimensionThreeEqualUpperCamelCase,
+            Self::DimensionFourEqual { .. } => &DimensionFourEqualUpperCamelCase,
+            Self::AllElementsEqual { .. } => &AllElementsEqualUpperCamelCase,
             Self::DimensionOneAllElementsEqual { .. } => {
-                &naming::DimensionOneAllElementsEqualUpperCamelCase
+                &DimensionOneAllElementsEqualUpperCamelCase
             }
             Self::DimensionTwoAllElementsEqual { .. } => {
-                &naming::DimensionTwoAllElementsEqualUpperCamelCase
+                &DimensionTwoAllElementsEqualUpperCamelCase
             }
             Self::DimensionThreeAllElementsEqual { .. } => {
-                &naming::DimensionThreeAllElementsEqualUpperCamelCase
+                &DimensionThreeAllElementsEqualUpperCamelCase
             }
             Self::DimensionFourAllElementsEqual { .. } => {
-                &naming::DimensionFourAllElementsEqualUpperCamelCase
+                &DimensionFourAllElementsEqualUpperCamelCase
             }
-            Self::LengthEqual => &naming::LengthEqualUpperCamelCase,
-            Self::DimensionOneLengthEqual => &naming::DimensionOneLengthEqualUpperCamelCase,
-            Self::DimensionTwoLengthEqual => &naming::DimensionTwoLengthEqualUpperCamelCase,
-            Self::DimensionThreeLengthEqual => &naming::DimensionThreeLengthEqualUpperCamelCase,
-            Self::DimensionFourLengthEqual => &naming::DimensionFourLengthEqualUpperCamelCase,
-            Self::GreaterThan { .. } => &naming::GreaterThanUpperCamelCase,
-            Self::DimensionOneGreaterThan { .. } => &naming::DimensionOneGreaterThanUpperCamelCase,
-            Self::DimensionTwoGreaterThan { .. } => &naming::DimensionTwoGreaterThanUpperCamelCase,
-            Self::DimensionThreeGreaterThan { .. } => {
-                &naming::DimensionThreeGreaterThanUpperCamelCase
-            }
-            Self::DimensionFourGreaterThan { .. } => {
-                &naming::DimensionFourGreaterThanUpperCamelCase
-            }
-            Self::ContainsElGreaterThan { .. } => &naming::ContainsElGreaterThanUpperCamelCase,
+            Self::LengthEqual => &LengthEqualUpperCamelCase,
+            Self::DimensionOneLengthEqual => &DimensionOneLengthEqualUpperCamelCase,
+            Self::DimensionTwoLengthEqual => &DimensionTwoLengthEqualUpperCamelCase,
+            Self::DimensionThreeLengthEqual => &DimensionThreeLengthEqualUpperCamelCase,
+            Self::DimensionFourLengthEqual => &DimensionFourLengthEqualUpperCamelCase,
+            Self::GreaterThan { .. } => &GreaterThanUpperCamelCase,
+            Self::DimensionOneGreaterThan { .. } => &DimensionOneGreaterThanUpperCamelCase,
+            Self::DimensionTwoGreaterThan { .. } => &DimensionTwoGreaterThanUpperCamelCase,
+            Self::DimensionThreeGreaterThan { .. } => &DimensionThreeGreaterThanUpperCamelCase,
+            Self::DimensionFourGreaterThan { .. } => &DimensionFourGreaterThanUpperCamelCase,
+            Self::ContainsElGreaterThan { .. } => &ContainsElGreaterThanUpperCamelCase,
             Self::DimensionOneContainsElGreaterThan { .. } => {
-                &naming::DimensionOneContainsElGreaterThanUpperCamelCase
+                &DimensionOneContainsElGreaterThanUpperCamelCase
             }
             Self::DimensionTwoContainsElGreaterThan { .. } => {
-                &naming::DimensionTwoContainsElGreaterThanUpperCamelCase
+                &DimensionTwoContainsElGreaterThanUpperCamelCase
             }
             Self::DimensionThreeContainsElGreaterThan { .. } => {
-                &naming::DimensionThreeContainsElGreaterThanUpperCamelCase
+                &DimensionThreeContainsElGreaterThanUpperCamelCase
             }
             Self::DimensionFourContainsElGreaterThan { .. } => {
-                &naming::DimensionFourContainsElGreaterThanUpperCamelCase
+                &DimensionFourContainsElGreaterThanUpperCamelCase
             }
-            Self::AllElementsGreaterThan { .. } => &naming::AllElementsGreaterThanUpperCamelCase,
+            Self::AllElementsGreaterThan { .. } => &AllElementsGreaterThanUpperCamelCase,
             Self::DimensionOneAllElementsGreaterThan { .. } => {
-                &naming::DimensionOneAllElementsGreaterThanUpperCamelCase
+                &DimensionOneAllElementsGreaterThanUpperCamelCase
             }
             Self::DimensionTwoAllElementsGreaterThan { .. } => {
-                &naming::DimensionTwoAllElementsGreaterThanUpperCamelCase
+                &DimensionTwoAllElementsGreaterThanUpperCamelCase
             }
             Self::DimensionThreeAllElementsGreaterThan { .. } => {
-                &naming::DimensionThreeAllElementsGreaterThanUpperCamelCase
+                &DimensionThreeAllElementsGreaterThanUpperCamelCase
             }
             Self::DimensionFourAllElementsGreaterThan { .. } => {
-                &naming::DimensionFourAllElementsGreaterThanUpperCamelCase
+                &DimensionFourAllElementsGreaterThanUpperCamelCase
             }
-            Self::Between { .. } => &naming::BetweenUpperCamelCase,
-            Self::DimensionOneBetween { .. } => &naming::DimensionOneBetweenUpperCamelCase,
-            Self::DimensionTwoBetween { .. } => &naming::DimensionTwoBetweenUpperCamelCase,
-            Self::DimensionThreeBetween { .. } => &naming::DimensionThreeBetweenUpperCamelCase,
-            Self::DimensionFourBetween { .. } => &naming::DimensionFourBetweenUpperCamelCase,
-            Self::In { .. } => &naming::InUpperCamelCase,
-            Self::DimensionOneIn { .. } => &naming::DimensionOneInUpperCamelCase,
-            Self::DimensionTwoIn { .. } => &naming::DimensionTwoInUpperCamelCase,
-            Self::DimensionThreeIn { .. } => &naming::DimensionThreeInUpperCamelCase,
-            Self::DimensionFourIn { .. } => &naming::DimensionFourInUpperCamelCase,
-            Self::RegularExpression => &naming::RegularExpressionUpperCamelCase,
-            Self::DimensionOneRegularExpression => {
-                &naming::DimensionOneRegularExpressionUpperCamelCase
-            }
-            Self::DimensionTwoRegularExpression => {
-                &naming::DimensionTwoRegularExpressionUpperCamelCase
-            }
-            Self::DimensionThreeRegularExpression => {
-                &naming::DimensionThreeRegularExpressionUpperCamelCase
-            }
-            Self::DimensionFourRegularExpression => {
-                &naming::DimensionFourRegularExpressionUpperCamelCase
-            }
-            Self::ContainsElRegularExpression => &naming::ContainsElRegularExpressionUpperCamelCase,
+            Self::Between { .. } => &BetweenUpperCamelCase,
+            Self::DimensionOneBetween { .. } => &DimensionOneBetweenUpperCamelCase,
+            Self::DimensionTwoBetween { .. } => &DimensionTwoBetweenUpperCamelCase,
+            Self::DimensionThreeBetween { .. } => &DimensionThreeBetweenUpperCamelCase,
+            Self::DimensionFourBetween { .. } => &DimensionFourBetweenUpperCamelCase,
+            Self::In { .. } => &InUpperCamelCase,
+            Self::DimensionOneIn { .. } => &DimensionOneInUpperCamelCase,
+            Self::DimensionTwoIn { .. } => &DimensionTwoInUpperCamelCase,
+            Self::DimensionThreeIn { .. } => &DimensionThreeInUpperCamelCase,
+            Self::DimensionFourIn { .. } => &DimensionFourInUpperCamelCase,
+            Self::RegularExpression => &RegularExpressionUpperCamelCase,
+            Self::DimensionOneRegularExpression => &DimensionOneRegularExpressionUpperCamelCase,
+            Self::DimensionTwoRegularExpression => &DimensionTwoRegularExpressionUpperCamelCase,
+            Self::DimensionThreeRegularExpression => &DimensionThreeRegularExpressionUpperCamelCase,
+            Self::DimensionFourRegularExpression => &DimensionFourRegularExpressionUpperCamelCase,
+            Self::ContainsElRegularExpression => &ContainsElRegularExpressionUpperCamelCase,
             Self::DimensionOneContainsElRegularExpression => {
-                &naming::DimensionOneContainsElRegularExpressionUpperCamelCase
+                &DimensionOneContainsElRegularExpressionUpperCamelCase
             }
             Self::DimensionTwoContainsElRegularExpression => {
-                &naming::DimensionTwoContainsElRegularExpressionUpperCamelCase
+                &DimensionTwoContainsElRegularExpressionUpperCamelCase
             }
             Self::DimensionThreeContainsElRegularExpression => {
-                &naming::DimensionThreeContainsElRegularExpressionUpperCamelCase
+                &DimensionThreeContainsElRegularExpressionUpperCamelCase
             }
             Self::DimensionFourContainsElRegularExpression => {
-                &naming::DimensionFourContainsElRegularExpressionUpperCamelCase
+                &DimensionFourContainsElRegularExpressionUpperCamelCase
             }
-            Self::AllElementsRegularExpression => {
-                &naming::AllElementsRegularExpressionUpperCamelCase
-            }
+            Self::AllElementsRegularExpression => &AllElementsRegularExpressionUpperCamelCase,
             Self::DimensionOneAllElementsRegularExpression => {
-                &naming::DimensionOneAllElementsRegularExpressionUpperCamelCase
+                &DimensionOneAllElementsRegularExpressionUpperCamelCase
             }
             Self::DimensionTwoAllElementsRegularExpression => {
-                &naming::DimensionTwoAllElementsRegularExpressionUpperCamelCase
+                &DimensionTwoAllElementsRegularExpressionUpperCamelCase
             }
             Self::DimensionThreeAllElementsRegularExpression => {
-                &naming::DimensionThreeAllElementsRegularExpressionUpperCamelCase
+                &DimensionThreeAllElementsRegularExpressionUpperCamelCase
             }
             Self::DimensionFourAllElementsRegularExpression => {
-                &naming::DimensionFourAllElementsRegularExpressionUpperCamelCase
+                &DimensionFourAllElementsRegularExpressionUpperCamelCase
             }
-            Self::LengthGreaterThan => &naming::LengthGreaterThanUpperCamelCase,
-            Self::DimensionOneLengthGreaterThan => {
-                &naming::DimensionOneLengthGreaterThanUpperCamelCase
-            }
-            Self::DimensionTwoLengthGreaterThan => {
-                &naming::DimensionTwoLengthGreaterThanUpperCamelCase
-            }
-            Self::DimensionThreeLengthGreaterThan => {
-                &naming::DimensionThreeLengthGreaterThanUpperCamelCase
-            }
-            Self::DimensionFourLengthGreaterThan => {
-                &naming::DimensionFourLengthGreaterThanUpperCamelCase
-            }
-            Self::ContainsAllElementsOfArray { .. } => {
-                &naming::ContainsAllElementsOfArrayUpperCamelCase
-            }
+            Self::LengthGreaterThan => &LengthGreaterThanUpperCamelCase,
+            Self::DimensionOneLengthGreaterThan => &DimensionOneLengthGreaterThanUpperCamelCase,
+            Self::DimensionTwoLengthGreaterThan => &DimensionTwoLengthGreaterThanUpperCamelCase,
+            Self::DimensionThreeLengthGreaterThan => &DimensionThreeLengthGreaterThanUpperCamelCase,
+            Self::DimensionFourLengthGreaterThan => &DimensionFourLengthGreaterThanUpperCamelCase,
+            Self::ContainsAllElementsOfArray { .. } => &ContainsAllElementsOfArrayUpperCamelCase,
             Self::DimensionOneContainsAllElementsOfArray { .. } => {
-                &naming::DimensionOneContainsAllElementsOfArrayUpperCamelCase
+                &DimensionOneContainsAllElementsOfArrayUpperCamelCase
             }
             Self::DimensionTwoContainsAllElementsOfArray { .. } => {
-                &naming::DimensionTwoContainsAllElementsOfArrayUpperCamelCase
+                &DimensionTwoContainsAllElementsOfArrayUpperCamelCase
             }
             Self::DimensionThreeContainsAllElementsOfArray { .. } => {
-                &naming::DimensionThreeContainsAllElementsOfArrayUpperCamelCase
+                &DimensionThreeContainsAllElementsOfArrayUpperCamelCase
             }
             Self::DimensionFourContainsAllElementsOfArray { .. } => {
-                &naming::DimensionFourContainsAllElementsOfArrayUpperCamelCase
+                &DimensionFourContainsAllElementsOfArrayUpperCamelCase
             }
-            Self::OverlapsWithArray { .. } => &naming::OverlapsWithArrayUpperCamelCase,
+            Self::OverlapsWithArray { .. } => &OverlapsWithArrayUpperCamelCase,
             Self::DimensionOneOverlapsWithArray { .. } => {
-                &naming::DimensionOneOverlapsWithArrayUpperCamelCase
+                &DimensionOneOverlapsWithArrayUpperCamelCase
             }
             Self::DimensionTwoOverlapsWithArray { .. } => {
-                &naming::DimensionTwoOverlapsWithArrayUpperCamelCase
+                &DimensionTwoOverlapsWithArrayUpperCamelCase
             }
             Self::DimensionThreeOverlapsWithArray { .. } => {
-                &naming::DimensionThreeOverlapsWithArrayUpperCamelCase
+                &DimensionThreeOverlapsWithArrayUpperCamelCase
             }
             Self::DimensionFourOverlapsWithArray { .. } => {
-                &naming::DimensionFourOverlapsWithArrayUpperCamelCase
+                &DimensionFourOverlapsWithArrayUpperCamelCase
             }
         }
     }
 }
 
 pub trait PostgresqlFilter {
-    fn maybe_generic(&self) -> Option<proc_macro2::TokenStream>;
-    fn prefix_where_self_upper_camel_case(&self) -> proc_macro2::TokenStream;
+    fn maybe_generic(&self) -> Option<TokenStream>;
+    fn prefix_where_self_upper_camel_case(&self) -> TokenStream;
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens;
 }

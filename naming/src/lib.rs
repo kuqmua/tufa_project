@@ -1,5 +1,7 @@
 pub mod parameter;
 
+use std::fmt::{Display, Formatter, Result as FmtResult};
+
 pub use naming_macros::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified;
 pub use naming_macros::AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified;
 pub use naming_macros::AsRefStrEnumWithUnitFieldsToUpperSnakeCaseStringified;
@@ -1468,8 +1470,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
 pub struct HashMap;
 #[derive(Debug, Clone, Copy)]
 pub struct HashMapUpperCamelCase;
-impl std::fmt::Display for HashMapUpperCamelCase {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl Display for HashMapUpperCamelCase {
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         write!(f, "HashMap")
     }
 }
@@ -1480,8 +1482,8 @@ impl quote::ToTokens for HashMapUpperCamelCase {
 }
 #[derive(Debug, Clone, Copy)]
 pub struct HashMapSnakeCase;
-impl std::fmt::Display for HashMapSnakeCase {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl Display for HashMapSnakeCase {
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         write!(f, "hashmap")
     }
 }
@@ -1491,8 +1493,8 @@ impl quote::ToTokens for HashMapSnakeCase {
     }
 }
 
-pub trait StdFmtDisplayPlusQuoteToTokens: std::fmt::Display + quote::ToTokens {}
-impl<T> StdFmtDisplayPlusQuoteToTokens for T where T: std::fmt::Display + quote::ToTokens {}
+pub trait StdFmtDisplayPlusQuoteToTokens: Display + quote::ToTokens {}
+impl<T> StdFmtDisplayPlusQuoteToTokens for T where T: Display + quote::ToTokens {}
 
 pub trait SwaggerUrlPathSelfQuotesStringified {
     fn swagger_url_path_self_quotes_stringified(&self, table_name_stringified: &str) -> String;

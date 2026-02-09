@@ -1,3 +1,5 @@
+use naming::parameter::{DeriveSelfIfSnakeCase, DeriveSelfSnakeCase, DeriveSelfUpperCamelCase};
+
 #[proc_macro]
 pub fn generate_struct_or_enum_derive_ts_builder(
     input_ts: proc_macro::TokenStream,
@@ -47,16 +49,15 @@ pub fn generate_struct_or_enum_derive_ts_builder(
             };
             Element {
                 derive_trait_name_upper_camel_case: {
-                    let value =
-                        naming::parameter::DeriveSelfUpperCamelCase::from_display(&snake_case);
+                    let value = DeriveSelfUpperCamelCase::from_display(&snake_case);
                     quote::quote! {#value}
                 },
                 derive_trait_name_snake_case: {
-                    let value = naming::parameter::DeriveSelfSnakeCase::from_display(&snake_case);
+                    let value = DeriveSelfSnakeCase::from_display(&snake_case);
                     quote::quote! {#value}
                 },
                 derive_trait_name_if_snake_case: {
-                    let value = naming::parameter::DeriveSelfIfSnakeCase::from_display(&snake_case);
+                    let value = DeriveSelfIfSnakeCase::from_display(&snake_case);
                     quote::quote! {#value}
                 },
                 trait_type: el_4f4a2c74

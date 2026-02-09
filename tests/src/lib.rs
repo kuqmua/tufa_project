@@ -1,5 +1,19 @@
 #[cfg(test)]
 mod tests {
+    use regex::Regex;
+    use reqwest::blocking;
+    use scraper::{Html, Selector};
+    use std::collections::HashSet;
+    use std::fs::{File, read_to_string};
+    use std::io::Read;
+    use std::process::{Command, Stdio};
+    use syn::visit::{Visit, visit_expr_method_call};
+    use syn::{Expr, ExprLit, ExprMethodCall, Lit, parse_file};
+    use toml::value::Table;
+    use toml::{Table as TomlTable, Value};
+    use uuid::Uuid;
+    use walkdir::WalkDir;
+
     #[derive(Debug, Clone, Copy)]
     enum RustOrClippy {
         Clippy,
@@ -18,14 +32,13 @@ mod tests {
         Expect,
         Panic,
     }
-    fn toml_value_from_from_cargo_toml_workspace() -> toml::Value {
-        let mut file =
-            std::fs::File::open("../Cargo.toml").expect("39a0d238-d776-4b4e-ac2a-62f76a60f527");
+    fn toml_value_from_from_cargo_toml_workspace() -> Value {
+        let mut file = File::open("../Cargo.toml").expect("39a0d238-d776-4b4e-ac2a-62f76a60f527");
         let mut contents = String::new();
-        let _: usize = std::io::Read::read_to_string(&mut file, &mut contents)
+        let _: usize = Read::read_to_string(&mut file, &mut contents)
             .expect("2f5914f2-bff0-40d3-9948-07f2c562779b");
         let table = contents
-            .parse::<toml::Table>()
+            .parse::<TomlTable>()
             .expect("beb11586-c73d-4686-9ae2-a219f3a3ef4a");
         table
             .get("workspace")
@@ -42,13 +55,13 @@ mod tests {
             .expect("dbd02f72-2647-4e41-a26f-a04cef447957")
             .clone()
         {
-            toml::Value::Table(value) => value,
-            toml::Value::String(_)
-            | toml::Value::Integer(_)
-            | toml::Value::Float(_)
-            | toml::Value::Boolean(_)
-            | toml::Value::Datetime(_)
-            | toml::Value::Array(_) => panic!("cae226cd-1876-4aa2-a46e-8de0698d15bb"),
+            Value::Table(value) => value,
+            Value::String(_)
+            | Value::Integer(_)
+            | Value::Float(_)
+            | Value::Boolean(_)
+            | Value::Datetime(_)
+            | Value::Array(_) => panic!("cae226cd-1876-4aa2-a46e-8de0698d15bb"),
         };
         toml_value_table.keys().cloned().collect::<Vec<String>>()
     }
@@ -92,16 +105,16 @@ mod tests {
             expect_or_panic: ExpectOrPanic,
             uuids: Vec<String>,
         }
-        impl<'ast> syn::visit::Visit<'ast> for ExpectVisitor {
-            fn visit_expr_method_call(&mut self, i: &'ast syn::ExprMethodCall) {
+        impl<'ast> Visit<'ast> for ExpectVisitor {
+            fn visit_expr_method_call(&mut self, i: &'ast ExprMethodCall) {
                 let expect_or_panic_str = match self.expect_or_panic {
                     ExpectOrPanic::Expect => "expect",
                     ExpectOrPanic::Panic => "panic",
                 };
                 if i.method == expect_or_panic_str {
                     if i.args.len() == 1 {
-                        if let syn::Expr::Lit(syn::ExprLit {
-                            lit: syn::Lit::Str(lit_str),
+                        if let Expr::Lit(ExprLit {
+                            lit: Lit::Str(lit_str),
                             ..
                         }) = i
                             .args
@@ -110,7 +123,7 @@ mod tests {
                             .clone()
                         {
                             let value = lit_str.value();
-                            match uuid::Uuid::parse_str(&value) {
+                            match Uuid::parse_str(&value) {
                                 Ok(uuid) if uuid.get_version() == Some(uuid::Version::Random) => {
                                     self.uuids.push(value);
                                 }
@@ -126,7 +139,7 @@ mod tests {
                         self.errors.push("with != 1 arg".to_owned());
                     }
                 }
-                syn::visit::visit_expr_method_call(self, i);
+                visit_expr_method_call(self, i);
             }
         }
         let mut all_uuids = Vec::new();
@@ -143,16 +156,16 @@ mod tests {
                     == Some("rs")
             })
         {
-            let Ok(content) = std::fs::read_to_string(el_fcc35079.path()) else {
+            let Ok(content) = read_to_string(el_fcc35079.path()) else {
                 continue;
             };
-            let ast = syn::parse_file(&content).expect("5e7a83eb-2556-47b7-8677-66f8612242ad");
+            let ast = parse_file(&content).expect("5e7a83eb-2556-47b7-8677-66f8612242ad");
             let mut visitor = ExpectVisitor {
                 expect_or_panic,
                 uuids: Vec::new(),
                 errors: Vec::new(),
             };
-            syn::visit::Visit::visit_file(&mut visitor, &ast);
+            Visit::visit_file(&mut visitor, &ast);
             all_uuids.extend(visitor.uuids);
             all_errors.extend(
                 visitor
@@ -161,7 +174,7 @@ mod tests {
                     .map(|el_2b9891bd| format!("{:?}: {}", el_fcc35079.path(), el_2b9891bd)),
             );
         }
-        let mut seen = std::collections::HashSet::new();
+        let mut seen = HashSet::new();
         let mut duplicates = Vec::new();
         for el_45f4b8bc in all_uuids {
             if !seen.insert(el_45f4b8bc.clone()) {
@@ -176,17 +189,17 @@ mod tests {
             "6062a9e9-c12b-4961-89d2-f52a0ea344b4",
         );
     }
-    fn project_directory() -> walkdir::WalkDir {
-        walkdir::WalkDir::new("../")
+    fn project_directory() -> WalkDir {
+        WalkDir::new("../")
     }
     #[test]
     fn check_if_workspace_cargo_toml_workspace_lints_rust_contains_all_rust_lints() {
         let rust_or_clippy = RustOrClippy::Rust;
         let lints_vec_from_cargo_toml = lints_vec_from_cargo_toml_workspace(rust_or_clippy);
         let lints_from_command = {
-            let output = std::process::Command::new("rustc")
+            let output = Command::new("rustc")
                 .args(["-W", "help"])
-                .stdout(std::process::Stdio::piped())
+                .stdout(Stdio::piped())
                 .output()
                 .expect("7c939ff3-1c10-4188-afe8-36bb5c769ea2");
             assert!(
@@ -201,7 +214,7 @@ mod tests {
                 );
             };
             let stdout = String::from_utf8_lossy(&output.stdout);
-            regex::Regex::new(r"(?m)^\s*([a-z0-9][a-z0-9_-]+)\s+(allow|warn|deny|forbid)\b")
+            Regex::new(r"(?m)^\s*([a-z0-9][a-z0-9_-]+)\s+(allow|warn|deny|forbid)\b")
                 .expect("60d99c87-273a-48ac-8daa-4f0a853d16bd")
                 .captures_iter(&stdout)
                 .map(|el_70833f93| el_70833f93[1].to_string().replace('-', "_").to_lowercase())
@@ -235,47 +248,44 @@ mod tests {
         let rust_or_clippy = RustOrClippy::Clippy;
         let lints_vec_from_cargo_toml = lints_vec_from_cargo_toml_workspace(rust_or_clippy);
         let clippy_lints_from_docs = {
-            let document = scraper::Html::parse_document(
-                &reqwest::blocking::get(
-                    "https://rust-lang.github.io/rust-clippy/master/index.html",
-                )
-                .expect("d1a0544a-566e-4bf4-a37e-7dac73be02fd")
-                .text()
-                .expect("012e3328-53a4-4266-b403-24ac3b8dcbf3"),
+            let document = Html::parse_document(
+                &blocking::get("https://rust-lang.github.io/rust-clippy/master/index.html")
+                    .expect("d1a0544a-566e-4bf4-a37e-7dac73be02fd")
+                    .text()
+                    .expect("012e3328-53a4-4266-b403-24ac3b8dcbf3"),
             );
             let mut ids = Vec::new();
-            for el_c17d8a0b in document.select(
-                &scraper::Selector::parse("html").expect("80427609-cfed-4b38-bdea-0794535ef84a"),
-            ) {
-                for el_e19e3742 in el_c17d8a0b.select(
-                    &scraper::Selector::parse("body")
-                        .expect("620c597c-0faa-408f-b9bc-29059d179951"),
-                ) {
+            for el_c17d8a0b in document
+                .select(&Selector::parse("html").expect("80427609-cfed-4b38-bdea-0794535ef84a"))
+            {
+                for el_e19e3742 in el_c17d8a0b
+                    .select(&Selector::parse("body").expect("620c597c-0faa-408f-b9bc-29059d179951"))
+                {
                     for el_3cd4b8b2 in el_e19e3742.select(
-                        &scraper::Selector::parse(r#"div[class="container"]"#)
+                        &Selector::parse(r#"div[class="container"]"#)
                             .expect("eb483b13-e70e-40f4-b83a-3eeb00413d57"),
                     ) {
                         for el_fda975ef in el_3cd4b8b2.select(
-                            &scraper::Selector::parse("article")
+                            &Selector::parse("article")
                                 .expect("d21dbe55-6f9f-4695-bf08-78da4f2424ea"),
                         ) {
                             let mut is_deprecated = false;
                             for el_ae33b117 in el_fda975ef.select(
-                                &scraper::Selector::parse("label")
+                                &Selector::parse("label")
                                     .expect("fe3d9f11-f3b0-4e54-a54a-842fabe3d8a7"),
                             ) {
                                 if is_deprecated {
                                     break;
                                 }
                                 for el_87a06075 in el_ae33b117.select(
-                                    &scraper::Selector::parse(r#"h2[class="lint-title"]"#)
+                                    &Selector::parse(r#"h2[class="lint-title"]"#)
                                         .expect("f1473d4e-e26a-491d-9980-e1874301a6b2"),
                                 ) {
                                     if is_deprecated {
                                         break;
                                     }
                                     if el_87a06075.select(
-                                        &scraper::Selector::parse(
+                                        &Selector::parse(
                                             r#"span[class="label label-default lint-group group-deprecated"]"#,
                                         ).expect("e86d5496-f62b-428c-ac6c-d533e0f6f775")
                                     ).next().is_some() {
@@ -309,30 +319,30 @@ mod tests {
             .expect("2376f58e-394d-4759-96c1-e5379fdbb0b1")
             .clone()
         {
-            toml::Value::Table(value_270f9bd5) => value_270f9bd5,
-            toml::Value::String(_)
-            | toml::Value::Integer(_)
-            | toml::Value::Float(_)
-            | toml::Value::Boolean(_)
-            | toml::Value::Datetime(_)
-            | toml::Value::Array(_) => panic!("e117fa5a-cc55-4ca8-a885-3d0c275592ea"),
+            Value::Table(value_270f9bd5) => value_270f9bd5,
+            Value::String(_)
+            | Value::Integer(_)
+            | Value::Float(_)
+            | Value::Boolean(_)
+            | Value::Datetime(_)
+            | Value::Array(_) => panic!("e117fa5a-cc55-4ca8-a885-3d0c275592ea"),
         } {
             let value_table = match value_5c36cb98 {
-                toml::Value::Table(value_31495eb6) => value_31495eb6,
-                toml::Value::String(_)
-                | toml::Value::Integer(_)
-                | toml::Value::Float(_)
-                | toml::Value::Boolean(_)
-                | toml::Value::Datetime(_)
-                | toml::Value::Array(_) => panic!("cb693a3f-ff75-47ba-b747-94361925e2e6"),
+                Value::Table(value_31495eb6) => value_31495eb6,
+                Value::String(_)
+                | Value::Integer(_)
+                | Value::Float(_)
+                | Value::Boolean(_)
+                | Value::Datetime(_)
+                | Value::Array(_) => panic!("cb693a3f-ff75-47ba-b747-94361925e2e6"),
             };
             let value_table_len = value_table.len();
-            let check_version = |value_df993c3d: &toml::value::Table| match value_df993c3d
+            let check_version = |value_df993c3d: &Table| match value_df993c3d
                 .get("version")
                 .expect("d5b2b269-d832-4c94-887b-ec44a7e2045f")
                 .clone()
             {
-                toml::Value::String(version_string) => {
+                Value::String(version_string) => {
                     fn check_version_string(value: &str) -> Option<()> {
                         let rest = value.strip_prefix('=')?;
                         let mut iter = rest.split('.');
@@ -347,24 +357,24 @@ mod tests {
                     check_version_string(&version_string)
                         .expect("6640b9bf-8fd4-4a00-8c88-72087ba83f60");
                 }
-                toml::Value::Table(_)
-                | toml::Value::Integer(_)
-                | toml::Value::Float(_)
-                | toml::Value::Boolean(_)
-                | toml::Value::Datetime(_)
-                | toml::Value::Array(_) => panic!("a3410a37-d6f8-4a5d-acb6-8449b02181ab"),
+                Value::Table(_)
+                | Value::Integer(_)
+                | Value::Float(_)
+                | Value::Boolean(_)
+                | Value::Datetime(_)
+                | Value::Array(_) => panic!("a3410a37-d6f8-4a5d-acb6-8449b02181ab"),
             };
-            let check_features = |value_121eb307: &toml::value::Table| match value_121eb307
+            let check_features = |value_121eb307: &Table| match value_121eb307
                 .get("features")
                 .expect("473577d5-0482-4460-b211-60131d9b7c2a")
             {
-                &toml::Value::Array(_) => (),
-                &toml::Value::String(_)
-                | &toml::Value::Table(_)
-                | &toml::Value::Integer(_)
-                | &toml::Value::Float(_)
-                | &toml::Value::Boolean(_)
-                | &toml::Value::Datetime(_) => {
+                &Value::Array(_) => (),
+                &Value::String(_)
+                | &Value::Table(_)
+                | &Value::Integer(_)
+                | &Value::Float(_)
+                | &Value::Boolean(_)
+                | &Value::Datetime(_) => {
                     panic!("38ba32e9-fe34-4628-8505-414b937c645f")
                 }
             };
@@ -380,13 +390,13 @@ mod tests {
                     .get("default-features")
                     .expect("847a138f-421b-47e5-a658-3789a8281b5c")
                 {
-                    &toml::Value::Boolean(_) => (),
-                    &toml::Value::String(_)
-                    | &toml::Value::Table(_)
-                    | &toml::Value::Integer(_)
-                    | &toml::Value::Float(_)
-                    | &toml::Value::Datetime(_)
-                    | &toml::Value::Array(_) => panic!("b320164b-7082-45f0-9f89-1f5f28f6b779"),
+                    &Value::Boolean(_) => (),
+                    &Value::String(_)
+                    | &Value::Table(_)
+                    | &Value::Integer(_)
+                    | &Value::Float(_)
+                    | &Value::Datetime(_)
+                    | &Value::Array(_) => panic!("b320164b-7082-45f0-9f89-1f5f28f6b779"),
                 }
             } else {
                 panic!("f1139378-0a18-4195-9b90-f3248a63253e {value_table:#?}")
@@ -403,10 +413,10 @@ mod tests {
     }
     #[test]
     fn check_rs_files_contains_only_unique_uuid_v4() {
-        let regex = regex::Regex::new(
+        let regex = Regex::new(
             r"\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\b"
         ).expect("e098a1ff-0e70-44f5-a75e-ffe6042ee9f5");
-        let mut seen = std::collections::HashSet::new();
+        let mut seen = HashSet::new();
         for el_44a8aa56 in project_directory()
             .into_iter()
             .filter_entry(|el_e4adf4c5| el_e4adf4c5.file_name() != "target")
@@ -419,11 +429,11 @@ mod tests {
                     == Some("rs")
             })
         {
-            let Ok(content) = std::fs::read_to_string(el_44a8aa56.path()) else {
+            let Ok(content) = read_to_string(el_44a8aa56.path()) else {
                 continue;
             };
             for el_714b3d9c in regex.find_iter(&content) {
-                let uuid = uuid::Uuid::parse_str(el_714b3d9c.as_str())
+                let uuid = Uuid::parse_str(el_714b3d9c.as_str())
                     .expect("c9711efd-eb37-4b10-b689-831fa916cb82");
                 assert!(
                     uuid.get_version_num() == 4,
@@ -464,7 +474,7 @@ mod tests {
             if exceptions.contains(&path.display().to_string().as_str()) {
                 continue;
             }
-            let Ok(content) = std::fs::read_to_string(path) else {
+            let Ok(content) = read_to_string(path) else {
                 continue; //skip binary non-utf8 files
             };
             for (key_0fa16fc1, value_3d676d2e) in content.lines().enumerate() {
@@ -502,11 +512,11 @@ mod tests {
             if exceptions.contains(&path.display().to_string().as_str()) {
                 continue;
             }
-            let mut file = std::fs::File::open(path).expect("bbb0d1fe-e503-4c46-8f2b-954d42090f41");
+            let mut file = File::open(path).expect("bbb0d1fe-e503-4c46-8f2b-954d42090f41");
             let mut content = String::new();
-            let _: usize = std::io::Read::read_to_string(&mut file, &mut content)
+            let _: usize = Read::read_to_string(&mut file, &mut content)
                 .expect("8952ff62-d903-4b93-b46a-85ae5177f98d");
-            let parsed: toml::Table = content
+            let parsed: Table = content
                 .parse()
                 .expect("49012f1f-e721-40b5-8167-5258d206196b");
             for el_3c618c8f in ["dependencies", "dev-dependencies", "build-dependencies"] {
@@ -526,20 +536,20 @@ mod tests {
                             )
                         };
                         match value_07583f81.clone() {
-                            toml::Value::Table(value_bba39a72) => {
+                            Value::Table(value_bba39a72) => {
                                 if !(value_bba39a72.contains_key("path")
                                     || (value_bba39a72.get("workspace")
-                                        == Some(&toml::Value::Boolean(true))))
+                                        == Some(&Value::Boolean(true))))
                                 {
                                     panic_with_message();
                                 }
                             }
-                            toml::Value::String(_)
-                            | toml::Value::Integer(_)
-                            | toml::Value::Float(_)
-                            | toml::Value::Boolean(_)
-                            | toml::Value::Datetime(_)
-                            | toml::Value::Array(_) => panic_with_message(),
+                            Value::String(_)
+                            | Value::Integer(_)
+                            | Value::Float(_)
+                            | Value::Boolean(_)
+                            | Value::Datetime(_)
+                            | Value::Array(_) => panic_with_message(),
                         }
                     }
                 }

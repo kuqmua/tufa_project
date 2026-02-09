@@ -1,5 +1,8 @@
-static SOURCE_PLACE_TYPE: std::sync::OnceLock<app_state::SourcePlaceType> =
-    std::sync::OnceLock::new();
+use std::fmt::{Display, Formatter, Result as FmtResult};
+use std::sync::OnceLock;
+use std::time::{Duration, SystemTime, UNIX_EPOCH};
+
+static SOURCE_PLACE_TYPE: OnceLock<app_state::SourcePlaceType> = OnceLock::new();
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
     Debug,
@@ -34,7 +37,7 @@ pub struct CodeOccurence {
     column: u32,
     commit: String,
     #[schema(value_type = StdTimeDuration)]
-    duration: std::time::Duration,
+    duration: Duration,
     macro_occurence: Option<MacroOccurence>,
 }
 impl CodeOccurence {
@@ -50,8 +53,8 @@ impl CodeOccurence {
             line,
             column,
             commit: git_info::PROJECT_GIT_INFO.commit.to_owned(),
-            duration: std::time::SystemTime::now()
-                .duration_since(std::time::UNIX_EPOCH)
+            duration: SystemTime::now()
+                .duration_since(UNIX_EPOCH)
                 .unwrap_or_default(),
             macro_occurence,
         }
@@ -63,8 +66,8 @@ pub struct StdTimeDuration {
     pub secs: u64,
     pub nanos: u32,
 }
-impl std::fmt::Display for CodeOccurence {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl Display for CodeOccurence {
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         write!(
             f,
             "{} {}",
@@ -103,7 +106,7 @@ impl std::fmt::Display for CodeOccurence {
                 ),
             },
             match (
-                std::time::UNIX_EPOCH.checked_add(self.duration),
+                UNIX_EPOCH.checked_add(self.duration),
                 chrono::FixedOffset::east_opt(10800)
             ) {
                 (Some(epoch), Some(offset)) => chrono::DateTime::<chrono::Utc>::from(epoch)

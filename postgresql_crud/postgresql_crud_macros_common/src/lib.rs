@@ -2,6 +2,8 @@ mod filters;
 
 pub use filters::*;
 
+use std::fmt::Display;
+
 #[derive(Debug, Clone)]
 pub enum DeriveOrImpl {
     Derive,
@@ -60,7 +62,7 @@ impl NotNullOrNullable {
         }
     }
     #[must_use]
-    pub fn rust(&self) -> &'static dyn std::fmt::Display {
+    pub fn rust(&self) -> &'static dyn Display {
         match &self {
             Self::NotNull => &"",
             Self::Nullable => &naming::OptionUpperCamelCase,
@@ -547,7 +549,8 @@ pub fn generate_postgresql_type_where_ts(
     should_derive_schemars_json_schema: &ShouldDeriveSchemarsJsonSchema,
     is_query_bind_mutable: &IsQueryBindMutable,
 ) -> proc_macro2::TokenStream {
-    let ident = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&prefix);
+    use naming::parameter::SelfWhereUpperCamelCase;
+    let ident = SelfWhereUpperCamelCase::from_tokens(&prefix);
     let value_snake_case = naming::ValueSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
     let increment_snake_case = naming::IncrementSnakeCase;
@@ -648,9 +651,7 @@ pub fn postgresql_crud_common_query_part_error_named_ts() -> proc_macro2::TokenS
     let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
     quote::quote! {postgresql_crud_common::#query_part_error_named_upper_camel_case}
 }
-pub fn generate_struct_ident_double_quotes_ts(
-    value: &dyn std::fmt::Display,
-) -> proc_macro2::TokenStream {
+pub fn generate_struct_ident_double_quotes_ts(value: &dyn Display) -> proc_macro2::TokenStream {
     generate_quotes::double_quotes_ts(&format!("struct {value}"))
 }
 pub fn generate_struct_ident_with_number_elements_double_quotes_ts(
@@ -660,7 +661,7 @@ pub fn generate_struct_ident_with_number_elements_double_quotes_ts(
     generate_quotes::double_quotes_ts(&format!("struct {ident} with {length} elements"))
 }
 pub fn generate_tuple_struct_ident_double_quotes_ts(
-    value: &dyn std::fmt::Display,
+    value: &dyn Display,
 ) -> proc_macro2::TokenStream {
     generate_quotes::double_quotes_ts(&format!("tuple struct {value}"))
 }
