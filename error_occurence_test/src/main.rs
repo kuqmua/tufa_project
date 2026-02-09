@@ -39,6 +39,12 @@ pub enum ErrorNamedOne {
         code_occurence: CodeOccurence,
     },
 }
+
+impl fmt::Display for ErrorNamedOne {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self)
+    }
+}
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum ErrorNamedTwo {
     Another {

@@ -12,7 +12,6 @@ categories = ["category"]
 [dependencies]
 thiserror.workspace = true
 serde.workspace = true
-serde_json.workspace = true
 error_occurence_lib = {path = "../error_occurence_lib"}
 
 [lints]

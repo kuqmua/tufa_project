@@ -20,7 +20,6 @@ strum_macros.workspace = true
 thiserror.workspace = true
 dotenv.workspace = true
 enum_extension_lib = {path = "../enum_extension_lib"}
-from_str = {path = "../from_str"}
 try_from_env = {path = "./try_from_env"}
 generate_getter_traits_for_struct_fields = {path = "./generate_getter_traits_for_struct_fields"}
 impl_display_as_debug = {path = "../impl_display_as_debug"}
