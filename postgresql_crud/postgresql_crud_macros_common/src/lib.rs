@@ -3,6 +3,7 @@ mod filters;
 pub use filters::*;
 
 use std::fmt::Display;
+use naming::parameter::{SelfCreateUpperCamelCase, SelfSelectUpperCamelCase};
 
 #[derive(Debug, Clone)]
 pub enum DeriveOrImpl {
@@ -1254,8 +1255,7 @@ pub fn generate_impl_postgresql_type_not_primary_key_for_ident_ts(
         naming::PostgresqlTypeNotPrimaryKeyUpperCamelCase;
     let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
     let create_upper_camel_case = naming::CreateUpperCamelCase;
-    let ident_create_upper_camel_case =
-        naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
+    let ident_create_upper_camel_case = SelfCreateUpperCamelCase::from_tokens(&ident);
     let allow_clippy_arbitrary_source_item_ordering_ts =
         token_patterns::AllowClippyArbitrarySourceItemOrdering;
     quote::quote! {
@@ -1817,8 +1817,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_ts(
         quote::quote! {#self_postgresql_type_as_postgresql_type_ts::#where_upper_camel_case};
     let allow_clippy_arbitrary_source_item_ordering_ts =
         token_patterns::AllowClippyArbitrarySourceItemOrdering;
-    let ident_select_upper_camel_case =
-        naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
+    let ident_select_upper_camel_case = SelfSelectUpperCamelCase::from_tokens(&ident);
     let option_vec_create_content_ts = generate_option_vec_create_ts(
         &self_postgresql_type_as_postgresql_type_ts,
         &option_vec_create_ts,
@@ -2073,8 +2072,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_ts(
     let self_postgresql_json_type_as_postgresql_json_type_read_only_ids_ts = quote::quote! {#self_postgresql_json_type_as_postgresql_json_type_ts::#read_only_ids_upper_camel_case};
     let self_postgresql_json_type_as_postgresql_json_type_create_ts = quote::quote! {#self_postgresql_json_type_as_postgresql_json_type_ts::#create_upper_camel_case};
     let self_postgresql_json_type_as_postgresql_json_type_where_ts = quote::quote! {#self_postgresql_json_type_as_postgresql_json_type_ts::#where_upper_camel_case};
-    let ident_select_upper_camel_case =
-        naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
+    let ident_select_upper_camel_case = SelfSelectUpperCamelCase::from_tokens(&ident);
     let option_vec_create_content_ts = generate_option_vec_create_ts(
         &self_postgresql_json_type_as_postgresql_json_type_ts,
         &option_vec_create_ts,
