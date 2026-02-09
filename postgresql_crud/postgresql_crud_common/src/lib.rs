@@ -12,6 +12,7 @@ use sqlx::{
     postgres::{PgArgumentBuffer, PgArguments, PgValueRef},
     query::Query,
     types::Json,
+    Postgres,
 };
 use std::fmt::{Debug, Display};
 
@@ -26,7 +27,7 @@ trait_alias!(
     DebugClonePartialEqSerializeDeserializeDefaultSomeOneAlias =
         DebugClonePartialEqSerializeDeserializeAlias + DefaultOptionSomeVecOneEl
 );
-trait_alias!(SqlxEncodePostgresSqlxTypePostgresAlias = for<'__> sqlx::Encode<'__, sqlx::Postgres> + sqlx::Type<sqlx::Postgres>);
+trait_alias!(SqlxEncodePostgresSqlxTypePostgresAlias = for<'__> sqlx::Encode<'__, Postgres> + Type<Postgres>);
 trait_alias!(UtoipaToSchemaAndSchemarsJsonSchemaAlias = for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema);
 
 trait_alias!(
@@ -62,7 +63,7 @@ pub trait PostgresqlType {
     fn select_query_part(value: &Self::Select, column: &str)
     -> Result<String, QueryPartErrorNamed>;
     type Where: WhereAlias;
-    type Read: ReadAlias + for<'__> sqlx::Decode<'__, sqlx::Postgres> + sqlx::Type<sqlx::Postgres>;
+    type Read: ReadAlias + for<'__> Decode<'__, Postgres> + Type<Postgres>;
     fn normalize(value: Self::Read) -> Self::Read;
     type ReadOnlyIds: ReadOnlyIdsAlias;
     fn select_only_ids_query_part(column: &str) -> Result<String, QueryPartErrorNamed>;
@@ -110,7 +111,7 @@ pub trait PostgresqlJsonType {
         + AllEnumVariantsArrayDefaultOptionSomeVecOneEl
         + error_occurence_lib::ToStdStringString;
     //todo impl get fields from read
-    //todo maybe add sqlx::Decode trait here and sqlx::Type
+    //todo maybe add Decode trait here and Type
     type Read: ReadAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + DefaultOptionSomeVecOneEl;
     type ReadOnlyIds: ReadOnlyIdsAlias;
     fn select_only_ids_query_part(
@@ -129,8 +130,8 @@ pub trait PostgresqlJsonType {
     ) -> Result<String, QueryPartErrorNamed>;
     fn update_query_bind(
         value: Self::UpdateForQuery,
-        query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> Result<sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>, String>;
+        query: Query<'_, Postgres, PgArguments>,
+    ) -> Result<Query<'_, Postgres, PgArguments>, String>;
     fn select_only_updated_ids_query_part(
         value: &Self::UpdateForQuery,
         field_ident: &str,
@@ -139,8 +140,8 @@ pub trait PostgresqlJsonType {
     ) -> Result<String, QueryPartErrorNamed>;
     fn select_only_updated_ids_query_bind<'lifetime>(
         value: &'lifetime Self::UpdateForQuery,
-        query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>;
+        query: Query<'lifetime, Postgres, PgArguments>,
+    ) -> Result<Query<'lifetime, Postgres, PgArguments>, String>;
     fn select_only_created_ids_query_part(
         value: &Self::CreateForQuery,
         field_ident: &str,
@@ -149,8 +150,8 @@ pub trait PostgresqlJsonType {
     ) -> Result<String, QueryPartErrorNamed>;
     fn select_only_created_ids_query_bind<'lifetime>(
         value: &'lifetime Self::CreateForQuery,
-        query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>;
+        query: Query<'lifetime, Postgres, PgArguments>,
+    ) -> Result<Query<'lifetime, Postgres, PgArguments>, String>;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 pub trait PostgresqlTypePrimaryKey {
@@ -186,12 +187,12 @@ pub trait PostgresqlJsonTypeObjectVecElementId {
     type ReadInner: ReadInnerAlias;
     fn query_bind_string_as_postgresql_text_create_for_query(
         value: <Self::PostgresqlJsonType as PostgresqlJsonType>::CreateForQuery,
-        query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> Result<sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>, String>;
+        query: Query<'_, Postgres, PgArguments>,
+    ) -> Result<Query<'_, Postgres, PgArguments>, String>;
     fn query_bind_string_as_postgresql_text_update_for_query(
         value: <Self::PostgresqlJsonType as PostgresqlJsonType>::UpdateForQuery,
-        query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> Result<sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>, String>;
+        query: Query<'_, Postgres, PgArguments>,
+    ) -> Result<Query<'_, Postgres, PgArguments>, String>;
     fn get_inner(
         value: &<Self::PostgresqlJsonType as PostgresqlJsonType>::CreateForQuery,
     ) -> &Self::ReadInner;
@@ -916,9 +917,9 @@ impl PaginationBase {
 impl<'query_lifetime> PostgresqlTypeWhereFilter<'query_lifetime> for PaginationBase {
     fn query_bind(
         self,
-        mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        mut query: Query<'query_lifetime, Postgres, PgArguments>,
     ) -> Result<
-        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        Query<'query_lifetime, Postgres, PgArguments>,
         String,
     > {
         if let Err(error) = query.try_bind(self.limit) {
@@ -1198,9 +1199,9 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
 impl<'query_lifetime> PostgresqlTypeWhereFilter<'query_lifetime> for PaginationStartsWithZero {
     fn query_bind(
         self,
-        query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        query: Query<'query_lifetime, Postgres, PgArguments>,
     ) -> Result<
-        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        Query<'query_lifetime, Postgres, PgArguments>,
         String,
     > {
         self.0.query_bind(query)
@@ -1408,9 +1409,9 @@ where
 {
     fn query_bind(
         self,
-        mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        mut query: Query<'query_lifetime, Postgres, PgArguments>,
     ) -> Result<
-        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        Query<'query_lifetime, Postgres, PgArguments>,
         String,
     > {
         for el_7f5ffb83 in self.0 {
@@ -1462,20 +1463,20 @@ pub struct JsonFieldRights {
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct NonPrimaryKeyPostgresqlTypeReadOnlyIds(pub Value<Option<()>>);
-impl sqlx::Decode<'_, sqlx::Postgres> for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
+impl Decode<'_, Postgres> for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
     fn decode(value: PgValueRef<'_>) -> Result<Self, BoxDynError> {
-        match <Json<Self> as Decode<sqlx::Postgres>>::decode(value) {
+        match <Json<Self> as Decode<Postgres>>::decode(value) {
             Ok(decode_value) => Ok(decode_value.0),
             Err(error) => Err(error),
         }
     }
 }
-impl sqlx::Type<sqlx::Postgres> for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-        <Json<Self> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+impl Type<Postgres> for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
+    fn compatible(ty: &<Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <Json<Self> as Type<Postgres>>::compatible(ty)
     }
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
+    fn type_info() -> <Postgres as sqlx::Database>::TypeInfo {
+        <Json<Self> as Type<Postgres>>::type_info()
     }
 }
 impl Default for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
@@ -1607,20 +1608,20 @@ impl error_occurence_lib::ToStdStringString for UnsignedPartOfStdPrimitiveI32 {
         self.0.to_string()
     }
 }
-impl sqlx::Type<sqlx::Postgres> for UnsignedPartOfStdPrimitiveI32 {
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-        <i32 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+impl Type<Postgres> for UnsignedPartOfStdPrimitiveI32 {
+    fn compatible(ty: &<Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <i32 as Type<Postgres>>::compatible(ty)
     }
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <i32 as sqlx::Type<sqlx::Postgres>>::type_info()
+    fn type_info() -> <Postgres as sqlx::Database>::TypeInfo {
+        <i32 as Type<Postgres>>::type_info()
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for UnsignedPartOfStdPrimitiveI32 {
+impl sqlx::Encode<'_, Postgres> for UnsignedPartOfStdPrimitiveI32 {
     fn encode_by_ref(
         &self,
         buf: &mut PgArgumentBuffer,
     ) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 impl UnsignedPartOfStdPrimitiveI32 {
@@ -1753,20 +1754,20 @@ impl error_occurence_lib::ToStdStringString for NotZeroUnsignedPartOfStdPrimitiv
         self.0.to_std_string_string()
     }
 }
-impl sqlx::Type<sqlx::Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-        <UnsignedPartOfStdPrimitiveI32 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+impl Type<Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
+    fn compatible(ty: &<Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <UnsignedPartOfStdPrimitiveI32 as Type<Postgres>>::compatible(ty)
     }
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <UnsignedPartOfStdPrimitiveI32 as sqlx::Type<sqlx::Postgres>>::type_info()
+    fn type_info() -> <Postgres as sqlx::Database>::TypeInfo {
+        <UnsignedPartOfStdPrimitiveI32 as Type<Postgres>>::type_info()
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
+impl sqlx::Encode<'_, Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
     fn encode_by_ref(
         &self,
         buf: &mut PgArgumentBuffer,
     ) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 impl NotZeroUnsignedPartOfStdPrimitiveI32 {

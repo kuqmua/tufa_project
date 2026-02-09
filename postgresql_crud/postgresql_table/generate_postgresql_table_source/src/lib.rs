@@ -1,3 +1,4 @@
+use naming::parameter::SelfReadUpperCamelCase;
 //todo decide where to do error log (maybe add in some places)
 //todo generate route what will return columns of the table and their rust and postgersql types
 //todo created at and updated at fields + created by + updated by
@@ -1140,7 +1141,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         }
     };
     let ident_read_upper_camel_case =
-        naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
+        SelfReadUpperCamelCase::from_tokens(&ident);
     let generate_value_declaration_ts = |content_ts: &dyn quote::ToTokens| {
         quote::quote! {#postgresql_crud_snake_case::#value_upper_camel_case<#content_ts>}
     };
@@ -3927,7 +3928,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             generate_parameters_payload_and_default_ts(
                 &operation,
                 &{
-                    let pub_handle_primary_key_field_ident_primary_key_inner_type_handle_ts = generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_ts(&naming::parameter::SelfReadUpperCamelCase::from_type_last_segment(primary_key_field_type));
+                    let pub_handle_primary_key_field_ident_primary_key_inner_type_handle_ts = generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_ts(&SelfReadUpperCamelCase::from_type_last_segment(primary_key_field_type));
                     quote::quote! {{
                         #pub_handle_primary_key_field_ident_primary_key_inner_type_handle_ts,
                         #pub_select_postgresql_crud_not_empty_unique_vec_ident_select_ts,
@@ -4880,7 +4881,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             generate_parameters_payload_and_default_ts(
                 &operation,
                 &{
-                    let content_ts = generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_ts(&naming::parameter::SelfReadUpperCamelCase::from_type_last_segment(primary_key_field_type));
+                    let content_ts = generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_ts(&SelfReadUpperCamelCase::from_type_last_segment(primary_key_field_type));
                     quote::quote! {{#content_ts}}
                 },
                 &{
