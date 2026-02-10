@@ -2907,10 +2907,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             }
             type_variants_from_request_response_syn_variants
         };
-    let generate_ident_try_operation_error_named_ts = |
-        operation: &Operation,
-        syn_variants: &Vec<syn::Variant>
-    | -> proc_macro2::TokenStream {
+    let generate_ident_try_operation_error_named_ts = |operation: &Operation,
+                                                       syn_variants: &Vec<syn::Variant>|
+     -> proc_macro2::TokenStream {
         let ident_try_operation_error_named_upper_camel_case =
             generate_ident_try_operation_error_named_upper_camel_case(operation);
         let variants = syn_variants
@@ -2944,15 +2943,14 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         }
     };
     let std_sync_arc_combination_of_app_state_logic_traits_ts = quote::quote! {std::sync::Arc<dyn #postgresql_crud_snake_case::CombinationOfAppStateLogicTraits>};
-    let generate_operation_ts = |
-        operation: &Operation,
-        current_additional_logic_ts: &dyn quote::ToTokens,
-        parameters_logic_ts: &dyn quote::ToTokens,
-        expected_updated_primary_keys_ts: &dyn quote::ToTokens,
-        query_string_ts: &dyn quote::ToTokens,
-        binded_query_ts: &dyn quote::ToTokens,
-        postgresql_logic_ts: &dyn quote::ToTokens
-    | -> proc_macro2::TokenStream {
+    let generate_operation_ts = |operation: &Operation,
+                                 current_additional_logic_ts: &dyn quote::ToTokens,
+                                 parameters_logic_ts: &dyn quote::ToTokens,
+                                 expected_updated_primary_keys_ts: &dyn quote::ToTokens,
+                                 query_string_ts: &dyn quote::ToTokens,
+                                 binded_query_ts: &dyn quote::ToTokens,
+                                 postgresql_logic_ts: &dyn quote::ToTokens|
+     -> proc_macro2::TokenStream {
         let operation_handle_snake_case_ts = operation.self_handle_snake_case_ts();
         let operation_snake_case_ts = operation.self_snake_case_ts();
         let request_parts_preparation_ts = {
