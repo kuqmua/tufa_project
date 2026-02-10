@@ -1,18 +1,17 @@
 use error_occurence_lib::code_occurence::CodeOccurence;
+pub use postgresql_crud_common_and_macros_common::*;
+use sqlx::encode::IsNull;
 use sqlx::{
-    Decode, Type,
+    Decode, Postgres, Type,
     error::BoxDynError,
     postgres::{PgArgumentBuffer, PgArguments, PgValueRef},
     query::Query,
     types::Json,
-    Postgres,
 };
-use std::fmt::{Debug, Display};
-use sqlx::encode::IsNull;
+use std::error::Error as StdErrorError;
 use std::fmt::Formatter;
 use std::fmt::Result as StdFmtResult;
-use std::error::Error as StdErrorError;
-pub use postgresql_crud_common_and_macros_common::*;
+use std::fmt::{Debug, Display};
 
 macro_rules! trait_alias {
     ($name:ident = $($bounds:tt)+) => {
@@ -600,8 +599,8 @@ const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: Debug + PartialEq + Clone + _serde::Deserialize<'de>>
-        _serde::Deserialize<'de> for PostgresqlTypeWhere<T>
+    impl<'de, T: Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de>
+        for PostgresqlTypeWhere<T>
     {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
@@ -618,10 +617,7 @@ const _: () = {
             struct __FieldVisitor;
             impl _serde::de::Visitor<'_> for __FieldVisitor {
                 type Value = __Field;
-                fn expecting(
-                    &self,
-                    __f: &mut Formatter<'_>,
-                ) -> _serde::__private228::fmt::Result {
+                fn expecting(&self, __f: &mut Formatter<'_>) -> _serde::__private228::fmt::Result {
                     _serde::__private228::Formatter::write_str(__f, "field identifier")
                 }
                 fn visit_u64<__E>(self, __value: u64) -> Result<Self::Value, __E>
@@ -673,10 +669,7 @@ const _: () = {
                 _serde::de::Visitor<'de> for __Visitor<'de, T>
             {
                 type Value = PostgresqlTypeWhere<T>;
-                fn expecting(
-                    &self,
-                    __f: &mut Formatter<'_>,
-                ) -> _serde::__private228::fmt::Result {
+                fn expecting(&self, __f: &mut Formatter<'_>) -> _serde::__private228::fmt::Result {
                     Formatter::write_str(__f, "struct PostgresqlTypeWhere")
                 }
                 #[inline]
@@ -924,10 +917,7 @@ impl<'query_lifetime> PostgresqlTypeWhereFilter<'query_lifetime> for PaginationB
     fn query_bind(
         self,
         mut query: Query<'query_lifetime, Postgres, PgArguments>,
-    ) -> Result<
-        Query<'query_lifetime, Postgres, PgArguments>,
-        String,
-    > {
+    ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
         if let Err(error) = query.try_bind(self.limit) {
             return Err(error.to_string());
         }
@@ -1063,10 +1053,7 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
         struct __FieldVisitor;
         impl serde::de::Visitor<'_> for __FieldVisitor {
             type Value = __Field;
-            fn expecting(
-                &self,
-                __f: &mut Formatter<'_>,
-            ) -> serde::__private228::fmt::Result {
+            fn expecting(&self, __f: &mut Formatter<'_>) -> serde::__private228::fmt::Result {
                 serde::__private228::Formatter::write_str(__f, "field identifier")
             }
             fn visit_u64<__E>(self, __value: u64) -> Result<Self::Value, __E>
@@ -1116,10 +1103,7 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
         }
         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
             type Value = PaginationStartsWithZero;
-            fn expecting(
-                &self,
-                __f: &mut Formatter<'_>,
-            ) -> serde::__private228::fmt::Result {
+            fn expecting(&self, __f: &mut Formatter<'_>) -> serde::__private228::fmt::Result {
                 Formatter::write_str(__f, "struct PaginationStartsWithZero")
             }
             #[inline]
@@ -1208,10 +1192,7 @@ impl<'query_lifetime> PostgresqlTypeWhereFilter<'query_lifetime> for PaginationS
     fn query_bind(
         self,
         query: Query<'query_lifetime, Postgres, PgArguments>,
-    ) -> Result<
-        Query<'query_lifetime, Postgres, PgArguments>,
-        String,
-    > {
+    ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
         self.0.query_bind(query)
     }
     fn query_part(
@@ -1314,8 +1295,8 @@ const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: Debug + PartialEq + Clone + _serde::Deserialize<'de>>
-        _serde::Deserialize<'de> for NotEmptyUniqueVec<T>
+    impl<'de, T: Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de>
+        for NotEmptyUniqueVec<T>
     {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
@@ -1334,14 +1315,8 @@ const _: () = {
                 _serde::de::Visitor<'de> for __Visitor<'de, T>
             {
                 type Value = NotEmptyUniqueVec<T>;
-                fn expecting(
-                    &self,
-                    __f: &mut Formatter<'_>,
-                ) -> _serde::__private228::fmt::Result {
-                    Formatter::write_str(
-                        __f,
-                        "tuple struct NotEmptyUniqueVec",
-                    )
+                fn expecting(&self, __f: &mut Formatter<'_>) -> _serde::__private228::fmt::Result {
+                    Formatter::write_str(__f, "tuple struct NotEmptyUniqueVec")
                 }
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
@@ -1420,10 +1395,7 @@ where
     fn query_bind(
         self,
         mut query: Query<'query_lifetime, Postgres, PgArguments>,
-    ) -> Result<
-        Query<'query_lifetime, Postgres, PgArguments>,
-        String,
-    > {
+    ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
         for el_7f5ffb83 in self.0 {
             match el_7f5ffb83.query_bind(query) {
                 Ok(value) => {
@@ -1570,10 +1542,7 @@ const _: () = {
                     &self,
                     __formatter: &mut Formatter<'_>,
                 ) -> _serde::__private228::fmt::Result {
-                    Formatter::write_str(
-                        __formatter,
-                        "tuple struct UnsignedPartOfStdPrimitiveI32",
-                    )
+                    Formatter::write_str(__formatter, "tuple struct UnsignedPartOfStdPrimitiveI32")
                 }
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>

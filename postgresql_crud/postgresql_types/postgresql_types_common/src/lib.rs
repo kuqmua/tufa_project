@@ -1,6 +1,6 @@
 use error_occurence_lib::code_occurence::CodeOccurence;
-use sqlx::query::Query;
 use sqlx::postgres::PgArguments;
+use sqlx::query::Query;
 use std::fmt::Display;
 
 #[derive(
@@ -250,8 +250,7 @@ impl<'lifetime> postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime>
     fn query_bind(
         self,
         query: Query<'lifetime, sqlx::Postgres, PgArguments>,
-    ) -> Result<Query<'lifetime, sqlx::Postgres, PgArguments>, String>
-    {
+    ) -> Result<Query<'lifetime, sqlx::Postgres, PgArguments>, String> {
         self.0.query_bind(query)
     }
     fn query_part(

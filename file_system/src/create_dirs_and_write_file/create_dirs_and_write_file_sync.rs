@@ -1,9 +1,9 @@
-use std::io::Error as IoError;
-use std::path::Path;
-use std::fs::File;
-use std::io::Write;
-use std::fs;
 use error_occurence_lib::code_occurence::CodeOccurence;
+use std::fs;
+use std::fs::File;
+use std::io::Error as IoError;
+use std::io::Write;
+use std::path::Path;
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum CreateDirsAndWriteFileSyncErrorNamed {

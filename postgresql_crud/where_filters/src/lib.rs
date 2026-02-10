@@ -1,8 +1,8 @@
-use std::fmt::Display;
+use error_occurence_lib::code_occurence::CodeOccurence;
 use sqlx::postgres::PgArguments;
 use sqlx::query::Query;
-use error_occurence_lib::code_occurence::CodeOccurence;
 use sqlx::types::Json;
+use std::fmt::Display;
 use std::fmt::Formatter;
 use std::fmt::Result as StdFmtResult;
 
@@ -87,10 +87,7 @@ impl<T: PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVe
     pub fn query_bind_one_by_one<'query_lifetime>(
         self,
         mut query: Query<'query_lifetime, sqlx::Postgres, PgArguments>,
-    ) -> Result<
-        Query<'query_lifetime, sqlx::Postgres, PgArguments>,
-        String,
-    >
+    ) -> Result<Query<'query_lifetime, sqlx::Postgres, PgArguments>, String>
     where
         T: 'query_lifetime,
     {
@@ -229,8 +226,7 @@ where
     fn query_bind(
         self,
         mut query: Query<'lifetime, sqlx::Postgres, PgArguments>,
-    ) -> Result<Query<'lifetime, sqlx::Postgres, PgArguments>, String>
-    {
+    ) -> Result<Query<'lifetime, sqlx::Postgres, PgArguments>, String> {
         if let Err(error) = query.try_bind(Json(self.0)) {
             return Err(error.to_string());
         }
@@ -659,8 +655,7 @@ impl<
     fn query_bind(
         self,
         mut query: Query<'lifetime, sqlx::Postgres, PgArguments>,
-    ) -> Result<Query<'lifetime, sqlx::Postgres, PgArguments>, String>
-    {
+    ) -> Result<Query<'lifetime, sqlx::Postgres, PgArguments>, String> {
         if let Err(error) = query.try_bind(self.start) {
             return Err(error.to_string());
         }
@@ -926,8 +921,7 @@ impl<
     pub fn query_bind(
         self,
         mut query: Query<'lifetime, sqlx::Postgres, PgArguments>,
-    ) -> Result<Query<'lifetime, sqlx::Postgres, PgArguments>, String>
-    {
+    ) -> Result<Query<'lifetime, sqlx::Postgres, PgArguments>, String> {
         for el_a05046df in self.0 {
             if let Err(error) = query.try_bind(el_a05046df) {
                 return Err(error.to_string());

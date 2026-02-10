@@ -1,21 +1,21 @@
-use naming::parameter::SelfTableTypeDeclarationUpperCamelCase;
-use naming::parameter::SelfWhereUpperCamelCase;
-use naming::parameter::SelfUpdateUpperCamelCase;
+use naming::parameter::JsonbSelfUpperCamelCase;
+use naming::parameter::SelfCreateForQueryUpperCamelCase;
+use naming::parameter::SelfCreateUpperCamelCase;
+use naming::parameter::SelfOriginUpperCamelCase;
+use naming::parameter::SelfReadInnerUpperCamelCase;
 use naming::parameter::SelfReadOnlyIdsUpperCamelCase;
 use naming::parameter::SelfReadUpperCamelCase;
 use naming::parameter::SelfSelectUpperCamelCase;
-use naming::parameter::SelfOriginUpperCamelCase;
+use naming::parameter::SelfTableTypeDeclarationUpperCamelCase;
 use naming::parameter::SelfUpdateForQueryUpperCamelCase;
-use naming::parameter::SelfCreateForQueryUpperCamelCase;
-use naming::parameter::SelfReadInnerUpperCamelCase;
-use naming::parameter::SelfCreateUpperCamelCase;
-use naming::parameter::JsonbSelfUpperCamelCase;
+use naming::parameter::SelfUpdateUpperCamelCase;
+use naming::parameter::SelfWhereUpperCamelCase;
 
-use std::iter::once;
 use std::collections::HashSet;
 use std::fmt::Display;
 use std::fmt::Formatter;
 use std::fmt::Result as StdFmtResult;
+use std::iter::once;
 
 #[must_use]
 pub fn generate_postgresql_json_types(

@@ -2,8 +2,8 @@ mod filters;
 
 pub use filters::*;
 
-use std::fmt::Display;
 use naming::parameter::{SelfCreateUpperCamelCase, SelfSelectUpperCamelCase};
+use std::fmt::Display;
 
 #[derive(Debug, Clone)]
 pub enum DeriveOrImpl {

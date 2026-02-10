@@ -1,7 +1,7 @@
+use error_occurence_lib::code_occurence::CodeOccurence;
+use std::fs;
 use std::io::Error as IoError;
 use std::path::Path;
-use std::fs;
-use error_occurence_lib::code_occurence::CodeOccurence;
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum CreateDirIfItDoesntExistErrorNamed {

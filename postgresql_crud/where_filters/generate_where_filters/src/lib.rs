@@ -386,8 +386,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
     };
     let postgresql_type_ts = {
         let generate_filters_ts = |filter: &postgresql_crud_macros_common::PostgresqlTypeFilter| {
-            let ident =
-                PostgresqlTypeWhereSelfUpperCamelCase::from_display(&filter);
+            let ident = PostgresqlTypeWhereSelfUpperCamelCase::from_display(&filter);
             let (
                 should_add_declaration_of_struct_ident_generic,
                 struct_additional_fields_ts,
@@ -1168,10 +1167,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
     let postgresql_json_type_ts = {
         let generate_filters_ts =
             |filter: &postgresql_crud_macros_common::PostgresqlJsonTypeFilter| {
-                let ident =
-                    PostgresqlJsonTypeWhereSelfUpperCamelCase::from_display(
-                        &filter,
-                    );
+                let ident = PostgresqlJsonTypeWhereSelfUpperCamelCase::from_display(&filter);
                 let pub_value_postgresql_json_type_not_empty_unique_vec_t_ts = quote::quote! {
                     pub #value_snake_case: PostgresqlJsonTypeNotEmptyUniqueVec<T>
                 };

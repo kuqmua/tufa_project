@@ -1,21 +1,21 @@
-use naming::parameter::SelfReadUpperCamelCase;
-use naming::parameter::SelfUpdateForQueryUpperCamelCase;
+use naming::parameter::SelfCreateUpperCamelCase;
+use naming::parameter::SelfNotNullUpperCamelCase;
+use naming::parameter::SelfOriginTryNewErrorNamedUpperCamelCase;
+use naming::parameter::SelfOriginTryNewForDeserializeErrorNamedUpperCamelCase;
+use naming::parameter::SelfOriginUpperCamelCase;
 use naming::parameter::SelfReadInnerUpperCamelCase;
 use naming::parameter::SelfReadOnlyIdsUpperCamelCase;
-use naming::parameter::SelfTableTypeDeclarationUpperCamelCase;
-use naming::parameter::SelfWhereUpperCamelCase;
+use naming::parameter::SelfReadUpperCamelCase;
 use naming::parameter::SelfSelectUpperCamelCase;
-use naming::parameter::SelfCreateUpperCamelCase;
-use naming::parameter::SelfOriginUpperCamelCase;
+use naming::parameter::SelfTableTypeDeclarationUpperCamelCase;
+use naming::parameter::SelfUpdateForQueryUpperCamelCase;
 use naming::parameter::SelfUpdateUpperCamelCase;
-use naming::parameter::SelfOriginTryNewForDeserializeErrorNamedUpperCamelCase;
-use naming::parameter::SelfOriginTryNewErrorNamedUpperCamelCase;
-use naming::parameter::SelfNotNullUpperCamelCase;
-use std::fmt::Formatter;
+use naming::parameter::SelfWhereUpperCamelCase;
 use std::fmt::Display;
-use std::iter::repeat_n;
-use std::iter::once;
+use std::fmt::Formatter;
 use std::fmt::Result as StdFmtResult;
+use std::iter::once;
+use std::iter::repeat_n;
 #[must_use]
 pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenStream {
     #[allow(clippy::arbitrary_source_item_ordering)]
@@ -318,9 +318,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             write!(
                 f,
                 "{}",
-                SelfNotNullUpperCamelCase::from_display(&PostgresqlType::from(
-                    self
-                ))
+                SelfNotNullUpperCamelCase::from_display(&PostgresqlType::from(self))
             )
         }
     }
@@ -472,10 +470,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                         &self,
                         __f: &mut Formatter<'_>,
                     ) -> _serde::__private228::fmt::Result {
-                        Formatter::write_str(
-                            __f,
-                            "struct PostgresqlTypeRecord",
-                        )
+                        Formatter::write_str(__f, "struct PostgresqlTypeRecord")
                     }
                     #[inline]
                     fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
