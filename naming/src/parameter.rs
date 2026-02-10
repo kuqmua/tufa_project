@@ -2016,5 +2016,14 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_ts!([
         "read",
         "inner",
         "acc"
+    ],
+    [
+        "self",
+        "generate",
+        "postgresql",
+        "json",
+        "object",
+        "type",
+        "generated"
     ]
 ]);

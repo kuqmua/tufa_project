@@ -1967,6 +1967,8 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_ts(
             &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_el_regular_expression_ts,
         );
     quote::quote! {
+        #[allow(unused_qualifications)]
+        #[allow(clippy::absolute_paths)]
         #allow_clippy_arbitrary_source_item_ordering_ts
         #cfg_ts
         impl #import_path::#postgresql_type_test_cases_upper_camel_case for #ident {
@@ -2218,6 +2220,8 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_ts(
             &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_el_regular_expression_ts,
         );
     quote::quote! {
+        #[allow(unused_qualifications)]
+        #[allow(clippy::absolute_paths)]
         #allow_clippy_arbitrary_source_item_ordering_ts
         #cfg_ts
         impl #import_path::#postgresql_json_type_test_cases_upper_camel_case for #ident {

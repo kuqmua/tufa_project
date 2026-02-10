@@ -1,24 +1,13 @@
-use naming::parameter::ElementSelfUpperCamelCase;
-use naming::parameter::SelfCreateForQueryUpperCamelCase;
-use naming::parameter::SelfCreateUpperCamelCase;
-use naming::parameter::SelfCurrentSnakeCase;
-use naming::parameter::SelfLastSnakeCase;
-use naming::parameter::SelfReadInnerUpperCamelCase;
-use naming::parameter::SelfReadOnlyIdsHandleUpperCamelCase;
-use naming::parameter::SelfReadOnlyIdsUpperCamelCase;
-use naming::parameter::SelfReadTryFromErrorNamedUpperCamelCase;
-use naming::parameter::SelfReadUpperCamelCase;
-use naming::parameter::SelfSelectElementUpperCamelCase;
-use naming::parameter::SelfSelectSnakeCase;
-use naming::parameter::SelfSelectUpperCamelCase;
-use naming::parameter::SelfTableTypeDeclarationUpperCamelCase;
-use naming::parameter::SelfUpdateElementUpperCamelCase;
-use naming::parameter::SelfUpdateForQueryElementUpperCamelCase;
-use naming::parameter::SelfUpdateForQueryUpperCamelCase;
-use naming::parameter::SelfUpdateTryNewErrorNamedUpperCamelCase;
-use naming::parameter::SelfUpdateUpperCamelCase;
-use naming::parameter::SelfWhereUpperCamelCase;
-
+use naming::parameter::{
+    ElementSelfUpperCamelCase, SelfCreateForQueryUpperCamelCase, SelfCreateUpperCamelCase,
+    SelfCurrentSnakeCase, SelfGeneratePostgresqlJsonObjectTypeGeneratedSnakeCase,
+    SelfLastSnakeCase, SelfReadInnerUpperCamelCase, SelfReadOnlyIdsHandleUpperCamelCase,
+    SelfReadOnlyIdsUpperCamelCase, SelfReadTryFromErrorNamedUpperCamelCase, SelfReadUpperCamelCase,
+    SelfSelectElementUpperCamelCase, SelfSelectSnakeCase, SelfSelectUpperCamelCase,
+    SelfTableTypeDeclarationUpperCamelCase, SelfUpdateElementUpperCamelCase,
+    SelfUpdateForQueryElementUpperCamelCase, SelfUpdateForQueryUpperCamelCase,
+    SelfUpdateTryNewErrorNamedUpperCamelCase, SelfUpdateUpperCamelCase, SelfWhereUpperCamelCase,
+};
 use std::iter::repeat_with;
 use syn::token::Colon;
 use syn::token::Pub;
@@ -7104,8 +7093,20 @@ pub fn generate_postgresql_json_object_type(
         },
         &macros_helpers::FormatWithCargofmt::True,
     );
-    let generated: proc_macro2::TokenStream =
-        quote::quote! {#(#postgresql_json_object_type_array)*};
+    let generated: proc_macro2::TokenStream = {
+        let ident_generate_postgresql_json_object_type_generated =
+            SelfGeneratePostgresqlJsonObjectTypeGeneratedSnakeCase::from_tokens(
+                &syn_derive_input.ident,
+            );
+        quote::quote! {
+            #[allow(unused_qualifications)]
+            #[allow(clippy::absolute_paths)]
+            mod #ident_generate_postgresql_json_object_type_generated {
+                #(#postgresql_json_object_type_array)*
+            }
+            pub use #ident_generate_postgresql_json_object_type_generated::*;
+        }
+    };
     macros_helpers::maybe_write_ts_into_file(
         generate_postgresql_json_object_type_config
             .whole_content_write_into_generate_postgresql_json_object_type,
