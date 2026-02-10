@@ -22,13 +22,14 @@
 #[postgresql_crud::delete_many_additional_error_variants{enum DeleteManyAdditionalErrorVariants{}}]
 #[postgresql_crud::delete_one_additional_error_variants{enum DeleteOneAdditionalErrorVariants{}}]
 #[postgresql_crud::common_additional_error_variants{
-    enum CommonAdditionalErrorVariants {
-        CheckCommit {
-            #[eo_error_occurence]
-            check_commit: postgresql_crud::check_commit::ErrorNamed,
-            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-        },
-    }
+    //todo
+    // enum CommonAdditionalErrorVariants {
+    //     CheckCommit {
+    //         #[eo_error_occurence]
+    //         check_commit: postgresql_crud::check_commit::ErrorNamed,
+    //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    //     },
+    // }
 }]
 #[postgresql_crud::create_many_additional_logic{}]
 #[postgresql_crud::create_one_additional_logic{}]
