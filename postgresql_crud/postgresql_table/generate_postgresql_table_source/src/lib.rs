@@ -2468,39 +2468,36 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             reqwest_syn_variant_wrapper.get_syn_variant().clone(),
         ]
     };
-    //todo
-    // let generate_additional_error_variants =
-    //     |current_syn_derive_input: &syn::DeriveInput,
-    //      generate_postgresql_table_attribute: GeneratePostgresqlTableAttribute|
-    //      -> Vec<syn::Variant> {
-    //         let generate_postgresql_table_attribute_stringified =
-    //             generate_postgresql_table_attribute.to_string();
-    //         let common_additional_error_variants_attribute_ts =
-    //             macros_helpers::get_macro_attribute_meta_list_ts(
-    //                 &current_syn_derive_input.attrs,
-    //                 &generate_postgresql_table_attribute.generate_path_to_attribute(),
-    //             );
-    //         let value: syn::DeriveInput =
-    //             syn::parse2((*common_additional_error_variants_attribute_ts).clone())
-    //                 .expect("1b80783d-f818-4ba3-ba17-3c7831d16530");
-    //         let value_ident_stringified = value.ident.to_string();
-    //         assert!(
-    //             value_ident_stringified == generate_postgresql_table_attribute_stringified,
-    //             "8a66c852-43a7-4c1c-ad6a-ac0a232d2215"
-    //         );
-    //         let variants = if let syn::Data::Enum(data_enum) = value.data {
-    //             data_enum.variants
-    //         } else {
-    //             panic!("f3ddc78c-27f7-443c-a892-e64b9654a425");
-    //         };
-    //         variants.into_iter().collect()
-    //     };
-    let common_additional_error_variants = vec![];
-    //todo
-    // generate_additional_error_variants(
-    //     &syn_derive_input,
-    //     GeneratePostgresqlTableAttribute::CommonAdditionalErrorVariants,
-    // );
+    let generate_additional_error_variants =
+        |current_syn_derive_input: &syn::DeriveInput,
+         generate_postgresql_table_attribute: GeneratePostgresqlTableAttribute|
+         -> Vec<syn::Variant> {
+            let generate_postgresql_table_attribute_stringified =
+                generate_postgresql_table_attribute.to_string();
+            let common_additional_error_variants_attribute_ts =
+                macros_helpers::get_macro_attribute_meta_list_ts(
+                    &current_syn_derive_input.attrs,
+                    &generate_postgresql_table_attribute.generate_path_to_attribute(),
+                );
+            let value: syn::DeriveInput =
+                syn::parse2((*common_additional_error_variants_attribute_ts).clone())
+                    .expect("1b80783d-f818-4ba3-ba17-3c7831d16530");
+            let value_ident_stringified = value.ident.to_string();
+            assert!(
+                value_ident_stringified == generate_postgresql_table_attribute_stringified,
+                "8a66c852-43a7-4c1c-ad6a-ac0a232d2215"
+            );
+            let variants = if let syn::Data::Enum(data_enum) = value.data {
+                data_enum.variants
+            } else {
+                panic!("f3ddc78c-27f7-443c-a892-e64b9654a425");
+            };
+            variants.into_iter().collect()
+        };
+    let common_additional_error_variants = generate_additional_error_variants(
+        &syn_derive_input,
+        GeneratePostgresqlTableAttribute::CommonAdditionalErrorVariants,
+    );
     let common_route_syn_variants = {
         let mut acc_94f701ab = vec![
             check_body_size_syn_variant_wrapper.get_syn_variant(),
@@ -2902,18 +2899,18 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             for el_21f2d46c in syn_variants {
                 type_variants_from_request_response_syn_variants.push((*el_21f2d46c).clone());
             }
-            //todo
-            // for el_60533068 in generate_additional_error_variants(
-            //     &syn_derive_input,
-            //     operation.generate_postgresql_table_attribute_additional_error_variants(),
-            // ) {
-            //     type_variants_from_request_response_syn_variants.push(el_60533068.clone());
-            // }
+            for el_60533068 in generate_additional_error_variants(
+                &syn_derive_input,
+                operation.generate_postgresql_table_attribute_additional_error_variants(),
+            ) {
+                type_variants_from_request_response_syn_variants.push(el_60533068.clone());
+            }
             type_variants_from_request_response_syn_variants
         };
-    let generate_ident_try_operation_error_named_ts = |operation: &Operation,
-                                                       syn_variants: &Vec<syn::Variant>|
-     -> proc_macro2::TokenStream {
+    let generate_ident_try_operation_error_named_ts = |
+        operation: &Operation,
+        syn_variants: &Vec<syn::Variant>
+    | -> proc_macro2::TokenStream {
         let ident_try_operation_error_named_upper_camel_case =
             generate_ident_try_operation_error_named_upper_camel_case(operation);
         let variants = syn_variants
@@ -2947,14 +2944,15 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         }
     };
     let std_sync_arc_combination_of_app_state_logic_traits_ts = quote::quote! {std::sync::Arc<dyn #postgresql_crud_snake_case::CombinationOfAppStateLogicTraits>};
-    let generate_operation_ts = |operation: &Operation,
-                                 current_additional_logic_ts: &dyn quote::ToTokens,
-                                 parameters_logic_ts: &dyn quote::ToTokens,
-                                 expected_updated_primary_keys_ts: &dyn quote::ToTokens,
-                                 query_string_ts: &dyn quote::ToTokens,
-                                 binded_query_ts: &dyn quote::ToTokens,
-                                 postgresql_logic_ts: &dyn quote::ToTokens|
-     -> proc_macro2::TokenStream {
+    let generate_operation_ts = |
+        operation: &Operation,
+        current_additional_logic_ts: &dyn quote::ToTokens,
+        parameters_logic_ts: &dyn quote::ToTokens,
+        expected_updated_primary_keys_ts: &dyn quote::ToTokens,
+        query_string_ts: &dyn quote::ToTokens,
+        binded_query_ts: &dyn quote::ToTokens,
+        postgresql_logic_ts: &dyn quote::ToTokens
+    | -> proc_macro2::TokenStream {
         let operation_handle_snake_case_ts = operation.self_handle_snake_case_ts();
         let operation_snake_case_ts = operation.self_snake_case_ts();
         let request_parts_preparation_ts = {

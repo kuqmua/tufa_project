@@ -1,46 +1,54 @@
+use app_state::GetDatabaseUrl;
+use app_state::GetServiceSocketAddress;
+use common_routes::common_routes;
+use git_info::PROJECT_GIT_INFO;
+use secrecy::ExposeSecret;
+use server_app_state::ServerAppState;
+use server_config::Config;
+use server_table_example::TableExample;
+use sqlx::postgres::PgPoolOptions;
+use std::sync::Arc;
+use tokio::net::TcpListener;
+use tokio::runtime::Builder;
+use tower_http::cors::CorsLayer;
+use tracing_subscriber::fmt::init;
 fn main() {
-    tracing_subscriber::fmt::init();
-    tokio::runtime::Builder::new_multi_thread()
+    init();
+    Builder::new_multi_thread()
         .worker_threads(num_cpus::get())
         .enable_all()
         .build()
         .expect("5995c954-bb76-4620-b819-2b26f4b8f728")
         .block_on(async {
-            let config = server_config::Config::try_from_env()
-                .expect("d74a6e5f-069a-49ea-9bac-19512e7b2bc5");
-            let postgres_pool = sqlx::postgres::PgPoolOptions::new()
+            let config = Config::try_from_env().expect("d74a6e5f-069a-49ea-9bac-19512e7b2bc5");
+            let postgres_pool = PgPoolOptions::new()
                 .max_connections(50)
-                .connect(secrecy::ExposeSecret::expose_secret(
-                    app_state::GetDatabaseUrl::get_database_url(&config),
+                .connect(ExposeSecret::expose_secret(
+                    GetDatabaseUrl::get_database_url(&config),
                 ))
                 .await
                 .expect("8b72f688-be7d-4f5c-9185-44a27290a9d0");
-            server_table_example::TableExample::prepare_postgresql(&postgres_pool)
+            TableExample::prepare_postgresql(&postgres_pool)
                 .await
                 .expect("647fa499-c465-432d-ba4a-498f3e943ada");
-            let tcp_listener = tokio::net::TcpListener::bind(
-                app_state::GetServiceSocketAddress::get_service_socket_address(&config),
-            )
-            .await
-            .expect("3f294e7c-3386-497f-b76c-c0364d59a60d");
-            let app_state = std::sync::Arc::new(server_app_state::ServerAppState {
+            let tcp_listener =
+                TcpListener::bind(GetServiceSocketAddress::get_service_socket_address(&config))
+                    .await
+                    .expect("3f294e7c-3386-497f-b76c-c0364d59a60d");
+            let app_state = Arc::new(ServerAppState {
                 postgres_pool,
                 config,
-                project_git_info: &git_info::PROJECT_GIT_INFO,
+                project_git_info: &PROJECT_GIT_INFO,
             });
             axum::serve(
                 tcp_listener,
                 axum::Router::new()
-                    .merge(common_routes::common_routes(std::sync::Arc::<
-                        server_app_state::ServerAppState<'_>,
-                    >::clone(
-                        &app_state
+                    .merge(common_routes(Arc::<ServerAppState<'_>>::clone(&app_state)))
+                    .merge(TableExample::routes(Arc::<ServerAppState<'_>>::clone(
+                        &app_state,
                     )))
-                    .merge(server_table_example::TableExample::routes(
-                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&app_state),
-                    ))
                     .layer(
-                        tower_http::cors::CorsLayer::new()
+                        CorsLayer::new()
                             // .allow_methods([
                             //     http::Method::GET,
                             //     http::Method::POST,
