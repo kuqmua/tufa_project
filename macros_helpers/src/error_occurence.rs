@@ -117,42 +117,22 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
     let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_ts = fields.iter()
     .filter(|el_5782b638| *el_5782b638.ident.as_ref().expect("3078fd99-5fac-4d57-83ec-93f808b7444b") != *naming::CodeOccurenceSnakeCase.to_string())
     .map(|el_c25b655e| {
-        fn get_type_path_third_segment_second_argument_check_if_hashmap<'value_lifetime>(
-            value: &'value_lifetime syn::Field,
-            std_snake_case: &naming::StdSnakeCase,
+        fn get_type_path_third_segment_second_argument_check_if_hashmap(
+            value: &syn::Field,
             std_string_string: token_patterns::StdStringString
-        ) -> &'value_lifetime syn::GenericArgument {
+        ) -> &syn::GenericArgument {
             let segments = if let syn::Type::Path(syn_type_path) = &value.ty {
                 &syn_type_path.path.segments
             } else {
                 panic!("55136128-fe0b-4599-978d-8577ae049c98");
             };
-            assert!(segments.len() == 3, "114c28f3-61af-4602-bc2f-c3688050e7cd");
-            let first_segment = segments.iter().next().expect("d5a27ffd-e0c9-4b77-99f1-3be08e20b0cf");
-            assert!(first_segment.ident == std_snake_case.to_string(), "b7871f5b-f882-4afa-95cc-13d1d64a568c");
-            match first_segment.arguments {
-                syn::PathArguments::None => (),
-                syn::PathArguments::AngleBracketed(_) | syn::PathArguments::Parenthesized(_) => {
-                    panic!("9224465f-7482-4695-95de-c3efe390e30e")
-                }
-            }
-            let second_segment = segments.iter().nth(1).expect("44675857-5632-4b93-9bc0-79815fc2fdc6");
-            {
-                let collections_snake_case = naming::CollectionsSnakeCase;
-                assert!(second_segment.ident == collections_snake_case.to_string(), "25cda941-c3cb-4c47-89f5-794fa867a43d");
-            };
-            match second_segment.arguments {
-                syn::PathArguments::None => (),
-                syn::PathArguments::AngleBracketed(_) | syn::PathArguments::Parenthesized(_) => {
-                    panic!("0784a9f2-d75d-4926-9f6d-ca63953104d8")
-                }
-            }
-            let third_segment = segments.iter().nth(2).expect("a037b0ba-efa7-42ea-b024-fb446c16ebc1");
+            assert!(segments.len() == 1, "114c28f3-61af-4602-bc2f-c3688050e7cd");
+            let first_segment = segments.iter().next().expect("a037b0ba-efa7-42ea-b024-fb446c16ebc1");
             {
                 let hashmap_upper_camel_case = naming::HashMapUpperCamelCase;
-                assert!(third_segment.ident == hashmap_upper_camel_case.to_string(), "5e1bc6b1-d997-489a-b903-cfc7f8618fe9");
+                assert!(first_segment.ident == hashmap_upper_camel_case.to_string(), "5e1bc6b1-d997-489a-b903-cfc7f8618fe9");
             };
-            let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) = &third_segment.arguments else {
+            let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) = &first_segment.arguments else {
                 panic!("f464b7a1-e00e-4d99-8ca3-3fdc93be3d26");
             };
             assert!(args.len() == 2, "47cde1b8-93d7-4945-935d-6cb710bb2b0b");
@@ -168,7 +148,6 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             let el_type = &el_c25b655e.ty;
             quote::quote! {#el_type}
         };
-        let std_snake_case = naming::StdSnakeCase;
         let el_type_with_serialize_deserialize_ts = match ErrorOccurenceFieldAttribute::try_from(el_c25b655e).expect("2db209a8-2f57-4474-a9c6-9743aaaed57d") {
             ErrorOccurenceFieldAttribute::EoToStdStringString => {
                 quote::quote! {
@@ -212,17 +191,17 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 }
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
-                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(el_c25b655e, &std_snake_case, std_string_string);
+                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(el_c25b655e, std_string_string);
                 quote::quote! {
                     std::collections::HashMap<#std_string_string, #std_string_string>
                 }
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
-                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(el_c25b655e, &std_snake_case, std_string_string);
+                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(el_c25b655e, std_string_string);
                 el_type_ts
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
-                let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap(el_c25b655e, &std_snake_case, std_string_string);
+                let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap(el_c25b655e, std_string_string);
                 let el_hashmap_value_type_with_serialize_deserialize_ts = format!(
                     "{}{}",
                     quote::quote! {#second_argument},

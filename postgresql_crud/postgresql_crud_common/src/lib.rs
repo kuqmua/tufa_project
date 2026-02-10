@@ -478,7 +478,7 @@ pub trait PostgresqlTypeWhereFilter<'query_lifetime> {
     schemars::JsonSchema,
 )]
 pub struct NullableJsonObjectPostgresqlTypeWhereFilter<
-    T: std::fmt::Debug
+    T: Debug
         + PartialEq
         + Clone
         + for<'lifetime> PostgresqlTypeWhereFilter<'lifetime>
@@ -487,7 +487,7 @@ pub struct NullableJsonObjectPostgresqlTypeWhereFilter<
 impl<'query_lifetime, T> PostgresqlTypeWhereFilter<'query_lifetime>
     for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
-    T: std::fmt::Debug
+    T: Debug
         + PartialEq
         + Clone
         + for<'t_lifetime> PostgresqlTypeWhereFilter<'t_lifetime>
@@ -505,7 +505,7 @@ where
     fn query_part(
         &self,
         increment: &mut u64,
-        column: &dyn std::fmt::Display,
+        column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartErrorNamed> {
         self.0.as_ref().map_or_else(
@@ -518,7 +518,7 @@ where
 }
 impl<T> error_occurence_lib::ToStdStringString for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
-    T: std::fmt::Debug
+    T: Debug
         + PartialEq
         + Clone
         + for<'t_lifetime> PostgresqlTypeWhereFilter<'t_lifetime>
@@ -531,7 +531,7 @@ where
 impl<T> AllEnumVariantsArrayDefaultOptionSomeVecOneEl
     for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
-    T: std::fmt::Debug
+    T: Debug
         + PartialEq
         + Clone
         + for<'t_lifetime> PostgresqlTypeWhereFilter<'t_lifetime>
@@ -594,7 +594,7 @@ const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
+    impl<'de, T: Debug + PartialEq + Clone + _serde::Deserialize<'de>>
         _serde::Deserialize<'de> for PostgresqlTypeWhere<T>
     {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
@@ -663,7 +663,7 @@ const _: () = {
                 marker: _serde::__private228::PhantomData<PostgresqlTypeWhere>,
                 lifetime: _serde::__private228::PhantomData<&'de ()>,
             }
-            impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
+            impl<'de, T: Debug + PartialEq + Clone + _serde::Deserialize<'de>>
                 _serde::de::Visitor<'de> for __Visitor<'de, T>
             {
                 type Value = PostgresqlTypeWhere<T>;
@@ -787,7 +787,7 @@ impl<'query_lifetime, T: PostgresqlTypeWhereFilter<'query_lifetime>>
     fn query_part(
         &self,
         increment: &mut u64,
-        column: &dyn std::fmt::Display,
+        column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartErrorNamed> {
         let mut acc_cc6d18f7 = String::default();
@@ -822,7 +822,7 @@ impl<'query_lifetime, T: PostgresqlTypeWhereFilter<'query_lifetime>>
         ))
     }
 }
-impl<T: std::fmt::Debug + PartialEq + Clone + AllEnumVariantsArrayDefaultOptionSomeVecOneEl>
+impl<T: Debug + PartialEq + Clone + AllEnumVariantsArrayDefaultOptionSomeVecOneEl>
     DefaultOptionSomeVecOneEl for PostgresqlTypeWhere<T>
 {
     fn default_option_some_vec_one_el() -> Self {
@@ -853,7 +853,7 @@ pub enum Order {
     #[serde(rename(serialize = "desc", deserialize = "desc"))]
     Desc,
 }
-impl std::fmt::Display for Order {
+impl Display for Order {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::Asc => write!(f, "{}", naming::AscUpperCamelCase),
@@ -933,7 +933,7 @@ impl<'query_lifetime> PostgresqlTypeWhereFilter<'query_lifetime> for PaginationB
     fn query_part(
         &self,
         increment: &mut u64,
-        _: &dyn std::fmt::Display,
+        _: &dyn Display,
         _: bool,
     ) -> Result<String, QueryPartErrorNamed> {
         let limit_increment = match increment_checked_add_one_returning_increment(increment) {
@@ -981,19 +981,19 @@ pub enum PaginationStartsWithZeroTryNewErrorNamed {
     LimitIsLessThanOrEqualToZero {
         #[eo_to_std_string_string_serialize_deserialize]
         limit: i64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        code_occurence: CodeOccurence,
     },
     OffsetIsLessThanZero {
         #[eo_to_std_string_string_serialize_deserialize]
         offset: i64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        code_occurence: CodeOccurence,
     },
     OffsetPlusLimitIsIntOverflow {
         #[eo_to_std_string_string_serialize_deserialize]
         limit: i64,
         #[eo_to_std_string_string_serialize_deserialize]
         offset: i64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        code_occurence: CodeOccurence,
     },
 }
 impl PaginationStartsWithZero {
@@ -1209,7 +1209,7 @@ impl<'query_lifetime> PostgresqlTypeWhereFilter<'query_lifetime> for PaginationS
     fn query_part(
         &self,
         increment: &mut u64,
-        column: &dyn std::fmt::Display,
+        column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartErrorNamed> {
         self.0
@@ -1304,7 +1304,7 @@ const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
+    impl<'de, T: Debug + PartialEq + Clone + _serde::Deserialize<'de>>
         _serde::Deserialize<'de> for NotEmptyUniqueVec<T>
     {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
@@ -1320,7 +1320,7 @@ const _: () = {
                 lifetime: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
-            impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
+            impl<'de, T: Debug + PartialEq + Clone + _serde::Deserialize<'de>>
                 _serde::de::Visitor<'de> for __Visitor<'de, T>
             {
                 type Value = NotEmptyUniqueVec<T>;
@@ -1401,7 +1401,7 @@ impl<T1> NotEmptyUniqueVec<T1> {
 }
 impl<'query_lifetime, T> PostgresqlTypeWhereFilter<'query_lifetime> for NotEmptyUniqueVec<T>
 where
-    T: std::fmt::Debug
+    T: Debug
         + PartialEq
         + Clone
         + for<'t_lifetime> PostgresqlTypeWhereFilter<'t_lifetime>
@@ -1429,7 +1429,7 @@ where
     fn query_part(
         &self,
         increment: &mut u64,
-        column: &dyn std::fmt::Display,
+        column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartErrorNamed> {
         let mut acc_57b31116 = String::default();
@@ -1791,7 +1791,7 @@ impl DefaultOptionSomeVecOneEl for NotZeroUnsignedPartOfStdPrimitiveI32 {
     utoipa::ToSchema,
     schemars::JsonSchema,
 )]
-pub enum SingleOrMultiple<T: std::fmt::Debug + PartialEq + Clone> {
+pub enum SingleOrMultiple<T: Debug + PartialEq + Clone> {
     Multiple(NotEmptyUniqueVec<T>),
     Single(T),
 }

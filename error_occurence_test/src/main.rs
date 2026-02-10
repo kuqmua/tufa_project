@@ -9,7 +9,6 @@
 
 use error_occurence_lib::code_occurence::CodeOccurence;
 use std::collections::HashMap;
-use std::fmt;
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum ErrorNamedOne {
@@ -40,11 +39,6 @@ pub enum ErrorNamedOne {
     },
 }
 
-impl fmt::Display for ErrorNamedOne {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{:?}", self)
-    }
-}
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum ErrorNamedTwo {
     Another {
