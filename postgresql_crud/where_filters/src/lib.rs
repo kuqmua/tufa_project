@@ -1,3 +1,11 @@
+use std::fmt::Display;
+use sqlx::postgres::PgArguments;
+use sqlx::query::Query;
+use error_occurence_lib::code_occurence::CodeOccurence;
+use sqlx::types::Json;
+use std::fmt::Formatter;
+use std::fmt::Result as StdFmtResult;
+
 generate_where_filters::generate_where_filters!({
     "postgresql_types_content_write_into_generate_where_filters_postgresql_types": "False",
     "postgresql_json_types_content_write_into_generate_where_filters_postgresql_json_types": "False",
@@ -21,8 +29,8 @@ pub enum EncodeFormat {
     Escape,
     Hex,
 }
-impl std::fmt::Display for EncodeFormat {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl Display for EncodeFormat {
+    fn fmt(&self, f: &mut Formatter<'_>) -> StdFmtResult {
         match &self {
             Self::Base64 => write!(f, "base64"),
             Self::Escape => write!(f, "escape"),
@@ -78,16 +86,16 @@ impl<T: PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
 impl<T: PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
     pub fn query_bind_one_by_one<'query_lifetime>(
         self,
-        mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        mut query: Query<'query_lifetime, sqlx::Postgres, PgArguments>,
     ) -> Result<
-        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        Query<'query_lifetime, sqlx::Postgres, PgArguments>,
         String,
     >
     where
         T: 'query_lifetime,
     {
         for el_cc499cbc in self.0 {
-            if let Err(error) = query.try_bind(sqlx::types::Json(el_cc499cbc)) {
+            if let Err(error) = query.try_bind(Json(el_cc499cbc)) {
                 return Err(error.to_string());
             }
         }
@@ -96,7 +104,7 @@ impl<T: PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVe
     pub fn query_part_one_by_one(
         &self,
         increment: &mut u64,
-        _: &dyn std::fmt::Display,
+        _: &dyn Display,
         _is_need_to_add_logical_operator: bool,
     ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
         let mut acc_ecd78d3a = String::default();
@@ -121,6 +129,7 @@ impl<T: PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVe
         Ok(acc_ecd78d3a)
     }
 }
+#[allow(unused_qualifications)]
 #[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
@@ -219,10 +228,10 @@ where
 {
     fn query_bind(
         self,
-        mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
+        mut query: Query<'lifetime, sqlx::Postgres, PgArguments>,
+    ) -> Result<Query<'lifetime, sqlx::Postgres, PgArguments>, String>
     {
-        if let Err(error) = query.try_bind(sqlx::types::Json(self.0)) {
+        if let Err(error) = query.try_bind(Json(self.0)) {
             return Err(error.to_string());
         }
         Ok(query)
@@ -230,7 +239,7 @@ where
     fn query_part(
         &self,
         increment: &mut u64,
-        _: &dyn std::fmt::Display,
+        _: &dyn Display,
         _is_need_to_add_logical_operator: bool,
     ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
         match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
@@ -245,12 +254,13 @@ pub struct RegexRegex(pub regex::Regex);
 // #[automatically_derived]
 // impl ::core::marker::StructuralPartialEq for RegexRegex {}
 // #[automatically_derived]
-impl ::core::cmp::PartialEq for RegexRegex {
+impl PartialEq for RegexRegex {
     #[inline]
     fn eq(&self, other: &Self) -> bool {
         self.0.to_string() == other.0.to_string()
     }
 }
+#[allow(unused_qualifications)]
 #[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[doc(hidden)]
@@ -270,6 +280,7 @@ const _: () = {
         }
     }
 };
+#[allow(unused_qualifications)]
 #[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[doc(hidden)]
@@ -343,6 +354,7 @@ const _: () = {
     }
 };
 //todo add some logic? for regex validation?
+#[allow(unused_qualifications)]
 #[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
@@ -363,8 +375,8 @@ const _: () = {
         }
     }
 };
-impl std::fmt::Display for RegexRegex {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl Display for RegexRegex {
+    fn fmt(&self, f: &mut Formatter<'_>) -> StdFmtResult {
         write!(f, "{}", self.0)
     }
 }
@@ -418,7 +430,7 @@ pub enum BetweenTryNewErrorNamed<T> {
         start: T,
         #[eo_to_std_string_string_serialize_deserialize]
         end: T,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        code_occurence: CodeOccurence,
     },
 }
 impl<T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + PartialOrd>
@@ -436,6 +448,7 @@ impl<T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> 
         }
     }
 }
+#[allow(unused_qualifications)]
 #[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
@@ -645,8 +658,8 @@ impl<
 {
     fn query_bind(
         self,
-        mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
+        mut query: Query<'lifetime, sqlx::Postgres, PgArguments>,
+    ) -> Result<Query<'lifetime, sqlx::Postgres, PgArguments>, String>
     {
         if let Err(error) = query.try_bind(self.start) {
             return Err(error.to_string());
@@ -659,7 +672,7 @@ impl<
     fn query_part(
         &self,
         increment: &mut u64,
-        _: &dyn std::fmt::Display,
+        _: &dyn Display,
         _: bool,
     ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
         let start_increment =
@@ -719,6 +732,7 @@ impl<T: PartialEq + Clone> PostgresqlTypeNotEmptyUniqueVec<T> {
         self.0
     }
 }
+#[allow(unused_qualifications)]
 #[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
@@ -832,7 +846,7 @@ pub enum BoundedStdVecVecTryNewErrorNamed {
         wrong_length: usize,
         #[eo_to_std_string_string_serialize_deserialize]
         expected: usize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        code_occurence: CodeOccurence,
     },
 }
 enum PostgresqlTypeOrPostgresqlJsonType {
@@ -856,7 +870,7 @@ impl<
     pub fn postgresql_json_type_query_part(
         &self,
         increment: &mut u64,
-        column: &dyn std::fmt::Display,
+        column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
         self.query_part(
@@ -870,7 +884,7 @@ impl<
     pub fn postgresql_json_type_query_part_minus_one(
         &self,
         increment: &mut u64,
-        column: &dyn std::fmt::Display,
+        column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
         self.query_part(
@@ -884,7 +898,7 @@ impl<
     pub fn postgresql_type_query_part(
         &self,
         increment: &mut u64,
-        column: &dyn std::fmt::Display,
+        column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
         self.query_part(
@@ -898,7 +912,7 @@ impl<
     pub fn postgresql_type_query_part_minus_one(
         &self,
         increment: &mut u64,
-        column: &dyn std::fmt::Display,
+        column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
         self.query_part(
@@ -911,8 +925,8 @@ impl<
     }
     pub fn query_bind(
         self,
-        mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
+        mut query: Query<'lifetime, sqlx::Postgres, PgArguments>,
+    ) -> Result<Query<'lifetime, sqlx::Postgres, PgArguments>, String>
     {
         for el_a05046df in self.0 {
             if let Err(error) = query.try_bind(el_a05046df) {
@@ -924,7 +938,7 @@ impl<
     fn query_part(
         &self,
         increment: &mut u64,
-        _: &dyn std::fmt::Display,
+        _: &dyn Display,
         _is_need_to_add_logical_operator: bool,
         postgresql_type_or_postgresql_json_type: &PostgresqlTypeOrPostgresqlJsonType,
         variant: &Variant,
@@ -985,6 +999,7 @@ impl<T, const LENGTH: usize> TryFrom<Vec<T>> for BoundedStdVecVec<T, LENGTH> {
         }
     }
 }
+#[allow(unused_qualifications)]
 #[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {

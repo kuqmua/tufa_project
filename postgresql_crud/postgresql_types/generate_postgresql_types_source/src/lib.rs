@@ -15,6 +15,7 @@ use std::fmt::Formatter;
 use std::fmt::Display;
 use std::iter::repeat_n;
 use std::iter::once;
+use std::fmt::Result as StdFmtResult;
 #[must_use]
 pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenStream {
     #[allow(clippy::arbitrary_source_item_ordering)]
@@ -313,7 +314,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
         }
     }
     impl Display for PostgresqlTypeRange {
-        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> StdFmtResult {
             write!(
                 f,
                 "{}",
@@ -380,6 +381,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
         not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         postgresql_type_pattern: PostgresqlTypePattern,
     }
+    #[allow(unused_qualifications)]
     #[allow(clippy::absolute_paths)]
     #[allow(clippy::arbitrary_source_item_ordering)]
     const _: () = {
@@ -1415,6 +1417,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             let serde_serialize_derive_or_impl = {
                 let generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens = |content_ts: &dyn quote::ToTokens| {
                     quote::quote! {
+                        #[allow(unused_qualifications)]
                         #[allow(clippy::absolute_paths)]
                         #allow_clippy_arbitrary_source_item_ordering_ts
                         const _: () = {
@@ -1669,6 +1672,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 };
                 let generate_impl_serde_deserialize_for_tokens_ts = |content_ts: &dyn quote::ToTokens| {
                     quote::quote! {
+                        #[allow(unused_qualifications)]
                         #[allow(clippy::absolute_paths)]
                         #allow_clippy_arbitrary_source_item_ordering_ts
                         const _: () = {
@@ -6064,7 +6068,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             #ident_standart_not_null_as_postgresql_type_test_cases_ts::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case)
                             .into_iter()
                             .flat_map(|element0| element0.into_iter().map(|element1| vec![Some(element1)]))
-                            .chain(once(vec![None]))
+                            .chain(std::iter::once(vec![None]))
                             .collect()
                         },
                     },

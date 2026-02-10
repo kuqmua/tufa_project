@@ -2448,6 +2448,7 @@ pub fn generate_impl_serde_deserialize_for_struct_ts(
     };
     let ident_double_quotes_ts = generate_quotes::double_quotes_ts(&ident);
     quote::quote! {
+        #[allow(unused_qualifications)]
         #[allow(clippy::absolute_paths)]
         #allow_clippy_arbitrary_source_item_ordering_ts
         const _: () = {

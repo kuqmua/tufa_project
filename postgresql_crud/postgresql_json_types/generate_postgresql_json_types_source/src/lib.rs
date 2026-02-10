@@ -1070,6 +1070,7 @@ pub fn generate_postgresql_json_types(
                             &format!("tests::{ident_standart_not_null_origin_upper_camel_case}")
                         );
                         quote::quote!{
+                            #[allow(unused_qualifications)]
                             #[allow(clippy::absolute_paths)]
                             #allow_clippy_arbitrary_source_item_ordering_ts
                             const _: () = {

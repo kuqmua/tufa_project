@@ -4,6 +4,37 @@ use naming::parameter::SelfTestsSnakeCase;
 use naming::parameter::UpdateQueryPartSelfSnakeCase;
 use naming::parameter::IsSelfUpdateExistSnakeCase;
 use naming::parameter::SelfUpdateForQueryUpperCamelCase;
+use naming::parameter::SelfUpdateTryNewErrorNamedUpperCamelCase;
+use naming::parameter::SelfUpdateManyPayloadUpperCamelCase;
+use naming::parameter::SelfUpdateManyParametersUpperCamelCase;
+use naming::parameter::SelfUpdateUpperCamelCase;
+use naming::parameter::TryFromSqlxPostgresPgRowWithNotEmptyUniqueVecSelfSelectSnakeCase;
+use naming::parameter::StdOptionOptionSelfWhereManyUpperCamelCase;
+use naming::parameter::SelfWhereManyTryNewErrorNamedUpperCamelCase;
+use naming::parameter::SelfWhereManyUpperCamelCase;
+use naming::parameter::SelfCreateUpperCamelCase;
+use naming::parameter::ErrorSelfSnakeCase;
+use naming::parameter::SelfPreparePostgresqlErrorNamedUpperCamelCase;
+use naming::parameter::SelfSelectUpperCamelCase;
+use naming::parameter::SelfDeleteOneErrorNamedWithSerializeDeserializeUpperCamelCase;
+use naming::parameter::SelfTryDeleteOneErrorNamedUpperCamelCase;
+use naming::parameter::SelfReadOneErrorNamedWithSerializeDeserializeUpperCamelCase;
+use naming::parameter::SelfTryReadOneErrorNamedUpperCamelCase;
+use naming::parameter::SelfDeleteOnePayloadUpperCamelCase;
+use naming::parameter::SelfDeleteOneParametersUpperCamelCase;
+use naming::parameter::SelfDeleteManyPayloadUpperCamelCase;
+use naming::parameter::SelfDeleteManyParametersUpperCamelCase;
+use naming::parameter::SelfReadOnlyIdsUpperCamelCase;
+use naming::parameter::SelfTableTypeDeclarationUpperCamelCase;
+use naming::parameter::SelfWhereUpperCamelCase;
+use naming::parameter::TrySelfSnakeCase;
+use naming::parameter::TrySelfHandleSnakeCase;
+use naming::parameter::SelfHandleSnakeCase;
+use naming::parameter::SelfPayloadExampleSnakeCase;
+use naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase;
+
+use naming::AsRefStrToSnakeCaseStringified;
+use naming::AsRefStrToSnakeCaseTokenStream;
 
 use macros_helpers::ErrorOccurenceFieldAttribute;
 
@@ -12,6 +43,13 @@ use std::iter::once;
 use std::str::FromStr;
 use syn::token::PathSep;
 use syn::punctuated::Punctuated;
+use syn::token::Comma;
+use syn::token::Colon;
+use syn::token::Bracket;
+use syn::token::Pound;
+use syn::token::Brace;
+use std::fmt::Result as StdFmtResult;
+use std::fmt::Formatter;
 //todo decide where to do error log (maybe add in some places)
 //todo generate route what will return columns of the table and their rust and postgersql types
 //todo created at and updated at fields + created by + updated by
@@ -171,38 +209,38 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         }
         fn operation_error_named_with_serialize_deserialize_snake_case(
             self,
-        ) -> naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase {
-            naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase::from_display(&self)
+        ) -> SelfErrorNamedWithSerializeDeserializeSnakeCase {
+            SelfErrorNamedWithSerializeDeserializeSnakeCase::from_display(&self)
         }
         fn operation_payload_example_snake_case(
             self,
         ) -> impl naming::StdFmtDisplayPlusQuoteToTokens {
-            naming::parameter::SelfPayloadExampleSnakeCase::from_display(&self)
+            SelfPayloadExampleSnakeCase::from_display(&self)
         }
         fn self_handle_snake_case_ts(self) -> proc_macro2::TokenStream {
             let value =
-                naming::parameter::SelfHandleSnakeCase::from_tokens(&self.self_snake_case_ts());
+                SelfHandleSnakeCase::from_tokens(&self.self_snake_case_ts());
             quote::quote! {#value}
         }
         fn self_snake_case_stringified(self) -> String {
-            naming::AsRefStrToSnakeCaseStringified::case(&self.to_string())
+            AsRefStrToSnakeCaseStringified::case(&self.to_string())
         }
         fn self_snake_case_ts(self) -> proc_macro2::TokenStream {
-            naming::AsRefStrToSnakeCaseTokenStream::case_or_panic(&self.to_string())
+            AsRefStrToSnakeCaseTokenStream::case_or_panic(&self.to_string())
         }
         fn try_self_handle_snake_case_ts(self) -> proc_macro2::TokenStream {
             let value =
-                naming::parameter::TrySelfHandleSnakeCase::from_tokens(&self.self_snake_case_ts());
+                TrySelfHandleSnakeCase::from_tokens(&self.self_snake_case_ts());
             quote::quote! {#value}
         }
         fn try_self_snake_case_ts(self) -> proc_macro2::TokenStream {
             let value =
-                naming::parameter::TrySelfSnakeCase::from_tokens(&self.self_snake_case_ts());
+                TrySelfSnakeCase::from_tokens(&self.self_snake_case_ts());
             quote::quote! {#value}
         }
     }
     impl Display for Operation {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> StdFmtResult {
             match &self {
                 Self::CreateMany => write!(f, "CreateMany"),
                 Self::CreateOne => write!(f, "CreateOne"),
@@ -630,12 +668,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let fields_len_without_primary_key = fields_without_primary_key.len();
     let primary_key_field_type = &primary_key_field.field_type;
     let primary_key_field_type_where_ts =
-        naming::parameter::SelfWhereUpperCamelCase::from_type_last_segment(
+        SelfWhereUpperCamelCase::from_type_last_segment(
             &primary_key_field.field_type,
         );
     //todo must remove this and use trait type instead
     let primary_key_field_type_table_type_declaration_ts =
-        naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_type_last_segment(
+        SelfTableTypeDeclarationUpperCamelCase::from_type_last_segment(
             &primary_key_field.field_type,
         );
     let generate_as_postgresql_type_ts = |field_type: &dyn quote::ToTokens| {
@@ -679,24 +717,24 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     };
     let primary_key_field_type_as_postgresql_type_read_upper_camel_case = quote::quote! {<#primary_key_field_type as postgresql_crud::#postgresql_type_upper_camel_case>::#read_upper_camel_case};
     let ident_read_only_ids_upper_camel_case =
-        naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
+        SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
     let ident_delete_many_parameters_upper_camel_case =
-        naming::parameter::SelfDeleteManyParametersUpperCamelCase::from_tokens(&ident);
+        SelfDeleteManyParametersUpperCamelCase::from_tokens(&ident);
     let ident_delete_many_payload_upper_camel_case =
-        naming::parameter::SelfDeleteManyPayloadUpperCamelCase::from_tokens(&ident);
+        SelfDeleteManyPayloadUpperCamelCase::from_tokens(&ident);
     let ident_delete_one_parameters_upper_camel_case =
-        naming::parameter::SelfDeleteOneParametersUpperCamelCase::from_tokens(&ident);
+        SelfDeleteOneParametersUpperCamelCase::from_tokens(&ident);
     let ident_delete_one_payload_upper_camel_case =
-        naming::parameter::SelfDeleteOnePayloadUpperCamelCase::from_tokens(&ident);
+        SelfDeleteOnePayloadUpperCamelCase::from_tokens(&ident);
     let ident_try_read_one_error_named_upper_camel_case =
-        naming::parameter::SelfTryReadOneErrorNamedUpperCamelCase::from_tokens(&ident);
+        SelfTryReadOneErrorNamedUpperCamelCase::from_tokens(&ident);
     let ident_read_one_error_named_with_serialize_deserialize_upper_camel_case =
-        naming::parameter::SelfReadOneErrorNamedWithSerializeDeserializeUpperCamelCase::from_tokens(
+        SelfReadOneErrorNamedWithSerializeDeserializeUpperCamelCase::from_tokens(
             &ident,
         );
     let ident_try_delete_one_error_named_upper_camel_case =
-        naming::parameter::SelfTryDeleteOneErrorNamedUpperCamelCase::from_tokens(&ident);
-    let ident_delete_one_error_named_with_serialize_deserialize_upper_camel_case = naming::parameter::SelfDeleteOneErrorNamedWithSerializeDeserializeUpperCamelCase::from_tokens(&ident);
+        SelfTryDeleteOneErrorNamedUpperCamelCase::from_tokens(&ident);
+    let ident_delete_one_error_named_with_serialize_deserialize_upper_camel_case = SelfDeleteOneErrorNamedWithSerializeDeserializeUpperCamelCase::from_tokens(&ident);
     let std_vec_vec_primary_key_field_type_read_ts =
         postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_ts(
             &primary_key_field_type_as_postgresql_type_read_upper_camel_case,
@@ -709,7 +747,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let primary_key_field_ident_upper_camel_case_ts =
         naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&primary_key_field_ident);
     let primary_key_field_type_update_ts =
-        &naming::parameter::SelfUpdateUpperCamelCase::from_type_last_segment(
+        &SelfUpdateUpperCamelCase::from_type_last_segment(
             primary_key_field_type,
         );
     let primary_key_field_type_update_for_query_ts =
@@ -717,7 +755,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             primary_key_field_type,
         );
     let ident_select_upper_camel_case =
-        naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
+        SelfSelectUpperCamelCase::from_tokens(&ident);
     let generate_from_handle_ts =
         |ident_ts: &dyn quote::ToTokens, content_ts: &dyn quote::ToTokens| {
             quote::quote! {
@@ -776,7 +814,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let mut impl_ident_vec_ts = Vec::new();
     let impl_ident_ts = {
         let ident_prepare_postgresql_error_named_upper_camel_case =
-            naming::parameter::SelfPreparePostgresqlErrorNamedUpperCamelCase::from_tokens(&ident);
+            SelfPreparePostgresqlErrorNamedUpperCamelCase::from_tokens(&ident);
         let content_ts = quote::quote! {
             #[eo_to_std_string_string]
             error: sqlx::Error,
@@ -1005,7 +1043,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     macros_helpers::generate_field_code_occurence_new_ts(file, line, column)
                 } else {
                     let error_increment_snake_case =
-                        naming::parameter::ErrorSelfSnakeCase::from_display(&index);
+                        ErrorSelfSnakeCase::from_display(&index);
                     quote::quote! {#field_ident: #error_increment_snake_case}
                 }
             })
@@ -1061,17 +1099,17 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         let mut segments = Punctuated::new();
                         segments.push(syn::PathSegment {
                             ident: proc_macro2::Ident::new(
-                                &naming::AsRefStrToSnakeCaseStringified::case(value),
+                                &AsRefStrToSnakeCaseStringified::case(value),
                                 proc_macro2::Span::call_site(),
                             ),
                             arguments: syn::PathArguments::None,
                         });
                         attributes.push(syn::Attribute {
-                            pound_token: syn::token::Pound {
+                            pound_token: Pound {
                                 spans: [proc_macro2::Span::call_site()],
                             },
                             style: syn::AttrStyle::Outer,
-                            bracket_token: syn::token::Bracket::default(),
+                            bracket_token: Bracket::default(),
                             meta: syn::Meta::Path(syn::Path {
                                 leading_colon: None,
                                 segments,
@@ -1082,14 +1120,14 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 },
                 ident: syn::Ident::new(&variant_name.to_string(), proc_macro2::Span::call_site()),
                 fields: syn::Fields::Named(syn::FieldsNamed {
-                    brace_token: syn::token::Brace::default(),
+                    brace_token: Brace::default(),
                     named: {
                         let mut handle = current_fields.into_iter().fold(Punctuated::new(), |mut acc_37be2059, element| {
                             acc_37be2059.push_value(syn::Field {
                                 attrs: vec![syn::Attribute {
-                                    pound_token: syn::token::Pound { spans: [proc_macro2::Span::call_site()] },
+                                    pound_token: Pound { spans: [proc_macro2::Span::call_site()] },
                                     style: syn::AttrStyle::Outer,
-                                    bracket_token: syn::token::Bracket::default(),
+                                    bracket_token: Bracket::default(),
                                     meta: syn::Meta::Path(syn::Path {
                                         leading_colon: None,
                                         segments: {
@@ -1105,13 +1143,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 vis: syn::Visibility::Inherited,
                                 mutability: syn::FieldMutability::None,
                                 ident: Some(syn::Ident::new(&element.1.to_string(), proc_macro2::Span::call_site())),
-                                colon_token: Some(syn::token::Colon { spans: [proc_macro2::Span::call_site()] }),
+                                colon_token: Some(Colon { spans: [proc_macro2::Span::call_site()] }),
                                 ty: syn::Type::Path(syn::TypePath {
                                     qself: None,
                                     path: syn::Path { leading_colon: None, segments: element.2 },
                                 }),
                             });
-                            acc_37be2059.push_punct(syn::token::Comma { spans: [proc_macro2::Span::call_site()] });
+                            acc_37be2059.push_punct(Comma { spans: [proc_macro2::Span::call_site()] });
                             acc_37be2059
                         });
                         handle.push_value(macros_helpers::code_occurence_syn_field());
@@ -1170,7 +1208,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     )
         };
     let ident_create_upper_camel_case =
-        naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
+        SelfCreateUpperCamelCase::from_tokens(&ident);
     let ident_create_ts = {
         let ident_create_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
             .make_pub()
@@ -1316,9 +1354,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         }
     };
     let ident_where_many_upper_camel_case =
-        naming::parameter::SelfWhereManyUpperCamelCase::from_tokens(&ident);
+        SelfWhereManyUpperCamelCase::from_tokens(&ident);
     let ident_where_many_try_new_error_named_upper_camel_case =
-        naming::parameter::SelfWhereManyTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
+        SelfWhereManyTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
     let ident_where_many_ts = {
         let fields_declaration_ts = generate_fields_named_with_comma_ts(
             &|element: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream {
@@ -1434,7 +1472,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     };
 
     let std_option_option_ident_where_many_upper_camel_case =
-        naming::parameter::StdOptionOptionSelfWhereManyUpperCamelCase::from_tokens(&ident);
+        StdOptionOptionSelfWhereManyUpperCamelCase::from_tokens(&ident);
     let std_option_option_ident_where_many_ts = {
         let std_option_option_ident_where_many_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
             .make_pub()
@@ -1597,7 +1635,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 }
             }
         };
-    let try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_snake_case = naming::parameter::TryFromSqlxPostgresPgRowWithNotEmptyUniqueVecSelfSelectSnakeCase::from_display(&ident);
+    let try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_snake_case = TryFromSqlxPostgresPgRowWithNotEmptyUniqueVecSelfSelectSnakeCase::from_display(&ident);
     let sqlx_error_syn_punctuated_punctuated =
         macros_helpers::generate_simple_syn_punctuated_punctuated(&["sqlx", "Error"]);
     let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string =
@@ -1961,13 +1999,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let postgresql_crud_order_by_ts =
         quote::quote! {#postgresql_crud_snake_case::#order_by_upper_camel_case};
     let ident_update_upper_camel_case =
-        naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
+        SelfUpdateUpperCamelCase::from_tokens(&ident);
     let ident_update_many_parameters_upper_camel_case =
-        naming::parameter::SelfUpdateManyParametersUpperCamelCase::from_tokens(&ident);
+        SelfUpdateManyParametersUpperCamelCase::from_tokens(&ident);
     let ident_update_many_payload_upper_camel_case =
-        naming::parameter::SelfUpdateManyPayloadUpperCamelCase::from_tokens(&ident);
+        SelfUpdateManyPayloadUpperCamelCase::from_tokens(&ident);
     let ident_update_try_new_error_named_upper_camel_case =
-        naming::parameter::SelfUpdateTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
+        SelfUpdateTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
     let ident_update_for_query_upper_camel_case =
         SelfUpdateForQueryUpperCamelCase::from_tokens(&ident);
     let update_query_part_primary_key_snake_case = naming::UpdateQueryPartPrimaryKeySnakeCase;
@@ -3099,7 +3137,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             quote::quote! {let #url_snake_case = format!(#format_handle_ts);}
         };
         let future_ts = {
-            let operation_http_method_snake_case_ts = naming::AsRefStrToSnakeCaseTokenStream::case_or_panic(&operation.http_method());
+            let operation_http_method_snake_case_ts = AsRefStrToSnakeCaseTokenStream::case_or_panic(&operation.http_method());
             let commit_header_addition_ts = quote::quote! {
                 .header(
                     &"commit".to_owned(),
@@ -4160,6 +4198,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 let ident_operation_payload_double_quotes_ts =
                     generate_quotes::double_quotes_ts(&ident_operation_payload_upper_camel_case);
                 quote::quote! {
+                    #[allow(unused_qualifications)]
                     #[allow(clippy::absolute_paths)]
                     #allow_clippy_arbitrary_source_item_ordering_ts
                     const _: () = {
@@ -6416,7 +6455,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 else if current_field_ident == field_ident {
                                     generate_some_postgresql_type_where_try_new_and_ts(&quote::quote!{match el_feacc53b {
                                         #import_path::SingleOrMultiple::Multiple(multiple) => multiple.into_vec().into_iter().collect(),
-                                        #import_path::SingleOrMultiple::Single(single) => once(single).collect(),
+                                        #import_path::SingleOrMultiple::Single(single) => std::iter::once(single).collect(),
                                     }})
                                 } else {
                                     none_ts.clone()

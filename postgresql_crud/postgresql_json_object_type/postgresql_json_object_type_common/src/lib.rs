@@ -1,3 +1,5 @@
+use error_occurence_lib::code_occurence::CodeOccurence;
+
 #[derive(
     Debug,
     serde::Serialize,
@@ -9,7 +11,7 @@ pub enum UniqueVecTryNewErrorNamed<T> {
     NotUnique {
         #[eo_to_std_string_string_serialize_deserialize]
         value: T,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        code_occurence: CodeOccurence,
     },
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
@@ -41,6 +43,7 @@ impl<T: PartialEq + Clone> UniqueVec<T> {
         Ok(Self(value))
     }
 }
+#[allow(unused_qualifications)]
 #[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {

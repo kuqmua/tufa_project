@@ -11,6 +11,7 @@ use std::fmt::{Debug, Display};
 use sqlx::encode::IsNull;
 use std::fmt::Formatter;
 use std::fmt::Result as StdFmtResult;
+use std::error::Error as StdErrorError;
 pub use postgresql_crud_common_and_macros_common::*;
 
 macro_rules! trait_alias {
@@ -1306,6 +1307,7 @@ impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
         Ok(Self(value))
     }
 }
+#[allow(unused_qualifications)]
 #[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
@@ -1545,6 +1547,7 @@ impl TryFrom<i32> for UnsignedPartOfStdPrimitiveI32 {
         }
     }
 }
+#[allow(unused_qualifications)]
 #[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
@@ -1629,8 +1632,8 @@ impl sqlx::Encode<'_, Postgres> for UnsignedPartOfStdPrimitiveI32 {
     fn encode_by_ref(
         &self,
         buf: &mut PgArgumentBuffer,
-    ) -> Result<IsNull, Box<dyn std::error::Error + Send + Sync>> {
-        sqlx::Encode::<Postgres>::encode_by_ref(&self.0, buf)
+    ) -> Result<IsNull, Box<dyn StdErrorError + Send + Sync>> {
+        <i32 as sqlx::Encode<Postgres>>::encode_by_ref(&self.0, buf)
     }
 }
 impl UnsignedPartOfStdPrimitiveI32 {
@@ -1692,6 +1695,7 @@ impl TryFrom<i32> for NotZeroUnsignedPartOfStdPrimitiveI32 {
         }
     }
 }
+#[allow(unused_qualifications)]
 #[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
@@ -1776,8 +1780,8 @@ impl sqlx::Encode<'_, Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
     fn encode_by_ref(
         &self,
         buf: &mut PgArgumentBuffer,
-    ) -> Result<IsNull, Box<dyn std::error::Error + Send + Sync>> {
-        sqlx::Encode::<Postgres>::encode_by_ref(&self.0, buf)
+    ) -> Result<IsNull, Box<dyn StdErrorError + Send + Sync>> {
+        <UnsignedPartOfStdPrimitiveI32 as sqlx::Encode<Postgres>>::encode_by_ref(&self.0, buf)
     }
 }
 impl NotZeroUnsignedPartOfStdPrimitiveI32 {

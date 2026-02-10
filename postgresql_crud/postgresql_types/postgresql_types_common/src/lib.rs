@@ -1,3 +1,8 @@
+use error_occurence_lib::code_occurence::CodeOccurence;
+use sqlx::query::Query;
+use sqlx::postgres::PgArguments;
+use std::fmt::Display;
+
 #[derive(
     Debug,
     Clone,
@@ -21,19 +26,19 @@ pub enum PaginationStartsWithOneTryNewErrorNamed {
     LimitIsLessThanOrEqualToZero {
         #[eo_to_std_string_string_serialize_deserialize]
         limit: i64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        code_occurence: CodeOccurence,
     },
     OffsetIsLessThanOne {
         #[eo_to_std_string_string_serialize_deserialize]
         offset: i64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        code_occurence: CodeOccurence,
     },
     OffsetPlusLimitIsIntOverflow {
         #[eo_to_std_string_string_serialize_deserialize]
         limit: i64,
         #[eo_to_std_string_string_serialize_deserialize]
         offset: i64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        code_occurence: CodeOccurence,
     },
 }
 impl PaginationStartsWithOne {
@@ -244,15 +249,15 @@ impl<'lifetime> postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime>
 {
     fn query_bind(
         self,
-        query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
+        query: Query<'lifetime, sqlx::Postgres, PgArguments>,
+    ) -> Result<Query<'lifetime, sqlx::Postgres, PgArguments>, String>
     {
         self.0.query_bind(query)
     }
     fn query_part(
         &self,
         increment: &mut u64,
-        column: &dyn std::fmt::Display,
+        column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
         self.0
@@ -282,6 +287,6 @@ impl postgresql_crud_common::DefaultOptionSomeVecOneElMaxPageSize for Pagination
     }
 }
 #[must_use]
-pub fn maybe_primary_key(is_primary_key: bool) -> impl std::fmt::Display {
+pub fn maybe_primary_key(is_primary_key: bool) -> impl Display {
     if is_primary_key { "primary key" } else { "" }
 }

@@ -1,3 +1,5 @@
+use config_lib::types::SourcePlaceType;
+
 #[derive(Debug)]
 pub struct ServerAppState<'lifetime> {
     pub config: server_config::Config,
@@ -12,7 +14,7 @@ impl app_state::GetEnableApiGitCommitCheck for ServerAppState<'_> {
     }
 }
 impl app_state::GetSourcePlaceType for ServerAppState<'_> {
-    fn get_source_place_type(&self) -> &config_lib::types::SourcePlaceType {
+    fn get_source_place_type(&self) -> &SourcePlaceType {
         self.config.get_source_place_type()
     }
 }

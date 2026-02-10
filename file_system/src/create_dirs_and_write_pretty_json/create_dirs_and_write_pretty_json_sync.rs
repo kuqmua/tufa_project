@@ -1,20 +1,25 @@
+use std::path::Path;
+use serde_json::Error as SerdeJsonError;
+use serde_json::Value as SerdeJsonValue;
+use error_occurence_lib::code_occurence::CodeOccurence;
+
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum CreateDirsAndWritePrettyJsonSyncErrorNamed {
     SerdeJson {
         #[eo_to_std_string_string]
-        error: serde_json::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        error: SerdeJsonError,
+        code_occurence: CodeOccurence,
     },
     WriteBytesIntoFile {
         #[eo_error_occurence]
         error: crate::CreateDirsAndWriteFileSyncErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        code_occurence: CodeOccurence,
     },
 }
 
 pub fn create_dirs_and_write_pretty_json_sync(
-    path: &std::path::Path,
-    serde_json_value: &serde_json::Value,
+    path: &Path,
+    serde_json_value: &SerdeJsonValue,
 ) -> Result<(), CreateDirsAndWritePrettyJsonSyncErrorNamed> {
     match serde_json::to_string_pretty(&serde_json_value) {
         Ok(value) => {
