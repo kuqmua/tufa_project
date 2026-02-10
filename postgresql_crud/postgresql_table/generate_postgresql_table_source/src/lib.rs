@@ -1,4 +1,17 @@
 use naming::parameter::SelfReadUpperCamelCase;
+use naming::parameter::SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSnakeCase;
+use naming::parameter::SelfTestsSnakeCase;
+use naming::parameter::UpdateQueryPartSelfSnakeCase;
+use naming::parameter::IsSelfUpdateExistSnakeCase;
+use naming::parameter::SelfUpdateForQueryUpperCamelCase;
+
+use macros_helpers::ErrorOccurenceFieldAttribute;
+
+use std::fmt::Display;
+use std::iter::once;
+use std::str::FromStr;
+use syn::token::PathSep;
+use syn::punctuated::Punctuated;
 //todo decide where to do error log (maybe add in some places)
 //todo generate route what will return columns of the table and their rust and postgersql types
 //todo created at and updated at fields + created by + updated by
@@ -188,7 +201,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             quote::quote! {#value}
         }
     }
-    impl std::fmt::Display for Operation {
+    impl Display for Operation {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match &self {
                 Self::CreateMany => write!(f, "CreateMany"),
@@ -700,7 +713,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             primary_key_field_type,
         );
     let primary_key_field_type_update_for_query_ts =
-        &naming::parameter::SelfUpdateForQueryUpperCamelCase::from_type_last_segment(
+        &SelfUpdateForQueryUpperCamelCase::from_type_last_segment(
             primary_key_field_type,
         );
     let ident_select_upper_camel_case =
@@ -842,7 +855,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             #field_type_postgresql_type_ts #create_table_column_query_part_snake_case(&#field_ident_double_quotes_ts, #is_primary_key_ts)
                         }
                     };
-                std::iter::once(
+                once(
                     generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_ts(
                         primary_key_field_type,
                         &primary_key_field.field_ident,
@@ -1032,12 +1045,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 #wraped_into_axum_response_ts
             }
         };
-    let new_syn_variant_wrapper = |variant_name: &dyn std::fmt::Display,
+    let new_syn_variant_wrapper = |variant_name: &dyn Display,
                                    status_code: Option<macros_helpers::StatusCode>,
                                    current_fields: Vec<(
-        macros_helpers::ErrorOccurenceFieldAttribute,
-        &dyn std::fmt::Display,
-        syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>,
+        ErrorOccurenceFieldAttribute,
+        &dyn Display,
+        Punctuated<syn::PathSegment, PathSep>,
     )>|
      -> SynVariantWrapper {
         SynVariantWrapper {
@@ -1045,7 +1058,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 attrs: {
                     let mut attributes = Vec::new();
                     if let Some(value) = status_code.as_ref() {
-                        let mut segments = syn::punctuated::Punctuated::new();
+                        let mut segments = Punctuated::new();
                         segments.push(syn::PathSegment {
                             ident: proc_macro2::Ident::new(
                                 &naming::AsRefStrToSnakeCaseStringified::case(value),
@@ -1071,7 +1084,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 fields: syn::Fields::Named(syn::FieldsNamed {
                     brace_token: syn::token::Brace::default(),
                     named: {
-                        let mut handle = current_fields.into_iter().fold(syn::punctuated::Punctuated::new(), |mut acc_37be2059, element| {
+                        let mut handle = current_fields.into_iter().fold(Punctuated::new(), |mut acc_37be2059, element| {
                             acc_37be2059.push_value(syn::Field {
                                 attrs: vec![syn::Attribute {
                                     pound_token: syn::token::Pound { spans: [proc_macro2::Span::call_site()] },
@@ -1080,7 +1093,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                     meta: syn::Meta::Path(syn::Path {
                                         leading_colon: None,
                                         segments: {
-                                            let mut handle = syn::punctuated::Punctuated::new();
+                                            let mut handle = Punctuated::new();
                                             handle.push(syn::PathSegment {
                                                 ident: proc_macro2::Ident::new(macros_helpers::AttributeIdentStringified::attribute_ident_stringified(&element.0), proc_macro2::Span::call_site()),
                                                 arguments: syn::PathArguments::None,
@@ -1114,7 +1127,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         &naming::QueryPartUpperCamelCase,
         Some(macros_helpers::StatusCode::BadRequest400),
         vec![(
-            macros_helpers::ErrorOccurenceFieldAttribute::EoErrorOccurence,
+            ErrorOccurenceFieldAttribute::EoErrorOccurence,
             &naming::ErrorSnakeCase,
             macros_helpers::generate_simple_syn_punctuated_punctuated(&[
                 &postgresql_crud_snake_case.to_string(),
@@ -1555,7 +1568,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             }
         };
     let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string_serialize_deserialize =
-        macros_helpers::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize;
+        ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize;
     let string_syn_punctuated_punctuated =
         macros_helpers::generate_simple_syn_punctuated_punctuated(&["String"]);
     let try_bind_syn_variant_wrapper = new_syn_variant_wrapper(
@@ -1588,7 +1601,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let sqlx_error_syn_punctuated_punctuated =
         macros_helpers::generate_simple_syn_punctuated_punctuated(&["sqlx", "Error"]);
     let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string =
-        macros_helpers::ErrorOccurenceFieldAttribute::EoToStdStringString;
+        ErrorOccurenceFieldAttribute::EoToStdStringString;
     let postgresql_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming::PostgresqlUpperCamelCase,
         Some(macros_helpers::StatusCode::InternalServerError500),
@@ -1956,7 +1969,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let ident_update_try_new_error_named_upper_camel_case =
         naming::parameter::SelfUpdateTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
     let ident_update_for_query_upper_camel_case =
-        naming::parameter::SelfUpdateForQueryUpperCamelCase::from_tokens(&ident);
+        SelfUpdateForQueryUpperCamelCase::from_tokens(&ident);
     let update_query_part_primary_key_snake_case = naming::UpdateQueryPartPrimaryKeySnakeCase;
     let ident_update_ts = {
         let generate_option_value_field_type_as_postgresql_type_update_ts =
@@ -2177,7 +2190,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         let field_ident_double_quotes_ts =
                             generate_quotes::double_quotes_ts(&field_ident);
                         let update_query_part_field_ident_snake_case =
-                            naming::parameter::UpdateQueryPartSelfSnakeCase::from_tokens(
+                            UpdateQueryPartSelfSnakeCase::from_tokens(
                                 &field_ident,
                             );
                         let field_type_as_postgresql_crud_postgresql_type_postgresql_type_ts =
@@ -2393,7 +2406,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         &naming::CheckBodySizeUpperCamelCase,
         Some(macros_helpers::StatusCode::BadRequest400),
         vec![(
-            macros_helpers::ErrorOccurenceFieldAttribute::EoErrorOccurence,
+            ErrorOccurenceFieldAttribute::EoErrorOccurence,
             &naming::CheckBodySizeSnakeCase,
             macros_helpers::generate_simple_syn_punctuated_punctuated(&[
                 &postgresql_crud_snake_case.to_string(),
@@ -2416,9 +2429,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             &naming::HeaderContentTypeApplicationJsonNotFoundUpperCamelCase,
             Some(macros_helpers::StatusCode::BadRequest400),
             Vec::<(
-                macros_helpers::ErrorOccurenceFieldAttribute,
-                &'static dyn std::fmt::Display,
-                syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>,
+                ErrorOccurenceFieldAttribute,
+                &'static dyn Display,
+                Punctuated<syn::PathSegment, PathSep>,
             )>::default(),
         );
     let common_http_request_syn_variants = {
@@ -2666,11 +2679,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             let error_occurence_attribute = if *field_ident == *naming::CodeOccurenceSnakeCase.to_string() {
                 proc_macro2::TokenStream::new()
             } else {
-                let mut error_occurence_attribute: Option<macros_helpers::ErrorOccurenceFieldAttribute> = None;
+                let mut error_occurence_attribute: Option<ErrorOccurenceFieldAttribute> = None;
                 for el_1c83e302 in &field.attrs {
                     if el_1c83e302.path().segments.len() == 1 {
                         let segment = el_1c83e302.path().segments.first().expect("5bd7ed8d-d28d-4614-8f3d-add4046df76a");
-                        if let Ok(value) = { <macros_helpers::ErrorOccurenceFieldAttribute as std::str::FromStr>::from_str(&segment.ident.to_string()) } {
+                        if let Ok(value) = { <ErrorOccurenceFieldAttribute as FromStr>::from_str(&segment.ident.to_string()) } {
                             if error_occurence_attribute.is_some() {
                                 panic!("9a469d36-1b5b-4f2e-8ed4-c8713c60fb39")
                             }
@@ -2869,7 +2882,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         let variants = syn_variants
         .iter()
         .cloned()
-        .chain(std::iter::once({
+        .chain(once({
             let ident_operation_error_named_with_serialize_deserialize_upper_camel_case =
                 generate_ident_operation_error_named_with_serialize_deserialize_upper_camel_case(operation);
             new_syn_variant_wrapper(
@@ -3377,13 +3390,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &common_route_syn_variants
                     .iter()
                     .copied()
-                    .chain(std::iter::once(
+                    .chain(once(
                         query_part_syn_variant_wrapper.get_syn_variant(),
                     ))
-                    .chain(std::iter::once(
+                    .chain(once(
                         row_and_rollback_syn_variant_wrapper.get_syn_variant(),
                     ))
-                    .chain(std::iter::once(
+                    .chain(once(
                         try_bind_syn_variant_wrapper.get_syn_variant(),
                     ))
                     .collect(),
@@ -3531,13 +3544,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &common_route_syn_variants
                     .iter()
                     .copied()
-                    .chain(std::iter::once(
+                    .chain(once(
                         row_and_rollback_syn_variant_wrapper.get_syn_variant(),
                     ))
-                    .chain(std::iter::once(
+                    .chain(once(
                         query_part_syn_variant_wrapper.get_syn_variant(),
                     ))
-                    .chain(std::iter::once(
+                    .chain(once(
                         try_bind_syn_variant_wrapper.get_syn_variant(),
                     ))
                     .collect(),
@@ -3681,13 +3694,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &common_route_syn_variants
                     .iter()
                     .copied()
-                    .chain(std::iter::once(
+                    .chain(once(
                         not_unique_field_syn_variant_wrapper.get_syn_variant(),
                     ))
-                    .chain(std::iter::once(
+                    .chain(once(
                         query_part_syn_variant_wrapper.get_syn_variant(),
                     ))
-                    .chain(std::iter::once(
+                    .chain(once(
                         try_bind_syn_variant_wrapper.get_syn_variant(),
                     ))
                     .collect(),
@@ -3911,13 +3924,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &common_route_syn_variants
                     .iter()
                     .copied()
-                    .chain(std::iter::once(
+                    .chain(once(
                         not_unique_field_syn_variant_wrapper.get_syn_variant(),
                     ))
-                    .chain(std::iter::once(
+                    .chain(once(
                         query_part_syn_variant_wrapper.get_syn_variant(),
                     ))
-                    .chain(std::iter::once(
+                    .chain(once(
                         try_bind_syn_variant_wrapper.get_syn_variant(),
                     ))
                     .collect(),
@@ -4060,13 +4073,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &common_route_syn_variants
                     .iter()
                     .copied()
-                    .chain(std::iter::once(
+                    .chain(once(
                         row_and_rollback_syn_variant_wrapper.get_syn_variant(),
                     ))
-                    .chain(std::iter::once(
+                    .chain(once(
                         query_part_syn_variant_wrapper.get_syn_variant(),
                     ))
-                    .chain(std::iter::once(
+                    .chain(once(
                         try_bind_syn_variant_wrapper.get_syn_variant(),
                     ))
                     .collect(),
@@ -4147,6 +4160,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 let ident_operation_payload_double_quotes_ts =
                     generate_quotes::double_quotes_ts(&ident_operation_payload_upper_camel_case);
                 quote::quote! {
+                    #[allow(clippy::absolute_paths)]
                     #allow_clippy_arbitrary_source_item_ordering_ts
                     const _: () = {
                         #[allow(unused_extern_crates, clippy::useless_attribute, clippy::arbitrary_source_item_ordering)]
@@ -4261,11 +4275,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 let field_ident_double_quotes_ts =
                                     generate_quotes::double_quotes_ts(&field_ident);
                                 let is_field_ident_update_exists_snake_case =
-                                    naming::parameter::IsSelfUpdateExistSnakeCase::from_tokens(
+                                    IsSelfUpdateExistSnakeCase::from_tokens(
                                         &field_ident,
                                     );
                                 let update_query_part_field_ident_snake_case =
-                                    naming::parameter::UpdateQueryPartSelfSnakeCase::from_tokens(
+                                    UpdateQueryPartSelfSnakeCase::from_tokens(
                                         &field_ident,
                                     );
                                 let generate_when_column_id_then_value_update_many_query_part_snake_case = naming::GenerateWhenColumnIdThenValueUpdateManyQueryPartSnakeCase;
@@ -4511,13 +4525,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &common_route_syn_variants
                     .iter()
                     .copied()
-                    .chain(std::iter::once(
+                    .chain(once(
                         row_and_rollback_syn_variant_wrapper.get_syn_variant(),
                     ))
-                    .chain(std::iter::once(
+                    .chain(once(
                         query_part_syn_variant_wrapper.get_syn_variant(),
                     ))
-                    .chain(std::iter::once(
+                    .chain(once(
                         try_bind_syn_variant_wrapper.get_syn_variant(),
                     ))
                     .collect(),
@@ -4546,7 +4560,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 let content_ts_9ec6b359 = generate_operation_error_initialization_eprintln_response_creation_ts(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                                 let generate_column_queals_value_comma_update_one_query_part_snake_case = naming::GenerateColumnQuealsValueCommaUpdateOneQueryPartSnakeCase;
                                 let update_query_part_field_ident_snake_case =
-                                    naming::parameter::UpdateQueryPartSelfSnakeCase::from_tokens(
+                                    UpdateQueryPartSelfSnakeCase::from_tokens(
                                         &field_ident,
                                     );
                                 quote::quote! {
@@ -4763,13 +4777,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &common_route_syn_variants
                     .iter()
                     .copied()
-                    .chain(std::iter::once(
+                    .chain(once(
                         row_and_rollback_syn_variant_wrapper.get_syn_variant(),
                     ))
-                    .chain(std::iter::once(
+                    .chain(once(
                         query_part_syn_variant_wrapper.get_syn_variant(),
                     ))
-                    .chain(std::iter::once(
+                    .chain(once(
                         try_bind_syn_variant_wrapper.get_syn_variant(),
                     ))
                     .collect(),
@@ -4867,10 +4881,10 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &common_route_syn_variants
                     .iter()
                     .copied()
-                    .chain(std::iter::once(
+                    .chain(once(
                         row_and_rollback_syn_variant_wrapper.get_syn_variant(),
                     ))
-                    .chain(std::iter::once(
+                    .chain(once(
                         try_bind_syn_variant_wrapper.get_syn_variant(),
                     ))
                     .collect(),
@@ -5008,7 +5022,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     slash_operation_payload_example_double_quotes_ts
                 ) = {
                     let generate_slash_route_double_quotes_ts = |
-                        value: &dyn std::fmt::Display
+                        value: &dyn Display
                     | generate_quotes::double_quotes_ts(&format!("/{value}"));
                     (
                         generate_slash_route_double_quotes_ts(&operation.self_snake_case_stringified()),
@@ -5049,7 +5063,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         }
     });
     let ident_tests_ts = {
-        let ident_tests_snake_case = naming::parameter::SelfTestsSnakeCase::from_display(&ident);
+        let ident_tests_snake_case = SelfTestsSnakeCase::from_display(&ident);
         let ident_double_quotes_ts =
             generate_quotes::double_quotes_ts(&naming::DisplayToSnakeCaseStringified::case(&ident));
         let ident_create_many_parameters_upper_camel_case =
@@ -5449,7 +5463,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             generate_fields_named_without_primary_key_without_comma_ts(
                 &|element: &macros_helpers::SynFieldWrapper| {
                     let field_ident = &element.field_ident;
-                    let field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_snake_case = naming::parameter::SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSnakeCase::from_tokens(
+                    let field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_snake_case = SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSnakeCase::from_tokens(
                     &field_ident
                 );
                     let ident_create_defaults_for_column_read_only_ids_to_two_dimensional_vec_read_inner_ts =
@@ -6402,7 +6416,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 else if current_field_ident == field_ident {
                                     generate_some_postgresql_type_where_try_new_and_ts(&quote::quote!{match el_feacc53b {
                                         #import_path::SingleOrMultiple::Multiple(multiple) => multiple.into_vec().into_iter().collect(),
-                                        #import_path::SingleOrMultiple::Single(single) => std::iter::once(single).collect(),
+                                        #import_path::SingleOrMultiple::Single(single) => once(single).collect(),
                                     }})
                                 } else {
                                     none_ts.clone()
@@ -6537,7 +6551,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             } else {
                                 proc_macro2::TokenStream::new()
                             };
-                        let field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_snake_case = naming::parameter::SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSnakeCase::from_tokens(
+                        let field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_snake_case = SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSnakeCase::from_tokens(
                             &field_ident
                         );
                         let ident_read_only_ids_upper_fields_initialization_without_primary_key_ts =
@@ -6740,7 +6754,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         } else {
                             proc_macro2::TokenStream::new()
                         };
-                        let field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_snake_case = naming::parameter::SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSnakeCase::from_tokens(
+                        let field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_snake_case = SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSnakeCase::from_tokens(
                             &field_ident
                         );
                         let ident_read_only_ids_upper_fields_initialization_without_primary_key_ts =

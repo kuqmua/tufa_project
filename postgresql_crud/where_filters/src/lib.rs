@@ -121,6 +121,7 @@ impl<T: PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVe
         Ok(acc_ecd78d3a)
     }
 }
+#[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     #[expect(clippy::useless_attribute)]
@@ -250,6 +251,7 @@ impl ::core::cmp::PartialEq for RegexRegex {
         self.0.to_string() == other.0.to_string()
     }
 }
+#[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[doc(hidden)]
 const _: () = {
@@ -268,6 +270,7 @@ const _: () = {
         }
     }
 };
+#[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[doc(hidden)]
 const _: () = {
@@ -340,6 +343,7 @@ const _: () = {
     }
 };
 //todo add some logic? for regex validation?
+#[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     #[automatically_derived]
@@ -432,6 +436,7 @@ impl<T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> 
         }
     }
 }
+#[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     extern crate serde as _serde;
@@ -714,6 +719,7 @@ impl<T: PartialEq + Clone> PostgresqlTypeNotEmptyUniqueVec<T> {
         self.0
     }
 }
+#[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     #[expect(clippy::useless_attribute)]
@@ -979,6 +985,7 @@ impl<T, const LENGTH: usize> TryFrom<Vec<T>> for BoundedStdVecVec<T, LENGTH> {
         }
     }
 }
+#[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     extern crate serde as _serde;

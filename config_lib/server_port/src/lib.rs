@@ -54,6 +54,7 @@ impl TryFrom<u16> for ServerPort {
         }
     }
 }
+#[allow(clippy::absolute_paths)]
 impl<'de> serde::Deserialize<'de> for ServerPort {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where

@@ -1,10 +1,3 @@
-macro_rules! trait_alias {
-    ($name:ident = $($bounds:tt)+) => {
-        pub trait $name: $($bounds)+ {}
-        impl<T: $($bounds)+> $name for T {}
-    };
-}
-
 use error_occurence_lib::code_occurence::CodeOccurence;
 use sqlx::{
     Decode, Type,
@@ -15,10 +8,19 @@ use sqlx::{
     Postgres,
 };
 use std::fmt::{Debug, Display};
+use sqlx::encode::IsNull;
+use std::fmt::Formatter;
+use std::fmt::Result as StdFmtResult;
+pub use postgresql_crud_common_and_macros_common::*;
+
+macro_rules! trait_alias {
+    ($name:ident = $($bounds:tt)+) => {
+        pub trait $name: $($bounds)+ {}
+        impl<T: $($bounds)+> $name for T {}
+    };
+}
 
 pub const DEFAULT_PAGINATION_LIMIT: i64 = 5;
-
-pub use postgresql_crud_common_and_macros_common::*;
 
 trait_alias!(DebugClonePartialEqAlias = Debug + Clone + PartialEq);
 trait_alias!(DebugClonePartialEqSerializeAlias = DebugClonePartialEqAlias + serde::Serialize);
@@ -589,6 +591,9 @@ impl<T: PartialEq + Clone> PostgresqlTypeWhere<T> {
         }
     }
 }
+
+#[allow(unused_qualifications)]
+#[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     #[expect(clippy::useless_attribute)]
@@ -614,7 +619,7 @@ const _: () = {
                 type Value = __Field;
                 fn expecting(
                     &self,
-                    __f: &mut _serde::__private228::Formatter<'_>,
+                    __f: &mut Formatter<'_>,
                 ) -> _serde::__private228::fmt::Result {
                     _serde::__private228::Formatter::write_str(__f, "field identifier")
                 }
@@ -669,9 +674,9 @@ const _: () = {
                 type Value = PostgresqlTypeWhere<T>;
                 fn expecting(
                     &self,
-                    __f: &mut _serde::__private228::Formatter<'_>,
+                    __f: &mut Formatter<'_>,
                 ) -> _serde::__private228::fmt::Result {
-                    _serde::__private228::Formatter::write_str(__f, "struct PostgresqlTypeWhere")
+                    Formatter::write_str(__f, "struct PostgresqlTypeWhere")
                 }
                 #[inline]
                 fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
@@ -854,7 +859,7 @@ pub enum Order {
     Desc,
 }
 impl Display for Order {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> StdFmtResult {
         match self {
             Self::Asc => write!(f, "{}", naming::AscUpperCamelCase),
             Self::Desc => write!(f, "{}", naming::DescUpperCamelCase),
@@ -1038,6 +1043,8 @@ impl PaginationStartsWithZero {
         }
     }
 }
+#[allow(unused_qualifications)]
+#[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
     fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
@@ -1057,7 +1064,7 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
             type Value = __Field;
             fn expecting(
                 &self,
-                __f: &mut serde::__private228::Formatter<'_>,
+                __f: &mut Formatter<'_>,
             ) -> serde::__private228::fmt::Result {
                 serde::__private228::Formatter::write_str(__f, "field identifier")
             }
@@ -1110,9 +1117,9 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
             type Value = PaginationStartsWithZero;
             fn expecting(
                 &self,
-                __f: &mut serde::__private228::Formatter<'_>,
+                __f: &mut Formatter<'_>,
             ) -> serde::__private228::fmt::Result {
-                serde::__private228::Formatter::write_str(__f, "struct PaginationStartsWithZero")
+                Formatter::write_str(__f, "struct PaginationStartsWithZero")
             }
             #[inline]
             fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
@@ -1299,6 +1306,7 @@ impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
         Ok(Self(value))
     }
 }
+#[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     #[expect(clippy::useless_attribute)]
@@ -1326,9 +1334,9 @@ const _: () = {
                 type Value = NotEmptyUniqueVec<T>;
                 fn expecting(
                     &self,
-                    __f: &mut _serde::__private228::Formatter<'_>,
+                    __f: &mut Formatter<'_>,
                 ) -> _serde::__private228::fmt::Result {
-                    _serde::__private228::Formatter::write_str(
+                    Formatter::write_str(
                         __f,
                         "tuple struct NotEmptyUniqueVec",
                     )
@@ -1537,6 +1545,7 @@ impl TryFrom<i32> for UnsignedPartOfStdPrimitiveI32 {
         }
     }
 }
+#[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     extern crate serde as _serde;
@@ -1556,9 +1565,9 @@ const _: () = {
                 type Value = UnsignedPartOfStdPrimitiveI32;
                 fn expecting(
                     &self,
-                    __formatter: &mut _serde::__private228::Formatter<'_>,
+                    __formatter: &mut Formatter<'_>,
                 ) -> _serde::__private228::fmt::Result {
-                    _serde::__private228::Formatter::write_str(
+                    Formatter::write_str(
                         __formatter,
                         "tuple struct UnsignedPartOfStdPrimitiveI32",
                     )
@@ -1620,7 +1629,7 @@ impl sqlx::Encode<'_, Postgres> for UnsignedPartOfStdPrimitiveI32 {
     fn encode_by_ref(
         &self,
         buf: &mut PgArgumentBuffer,
-    ) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
+    ) -> Result<IsNull, Box<dyn std::error::Error + Send + Sync>> {
         sqlx::Encode::<Postgres>::encode_by_ref(&self.0, buf)
     }
 }
@@ -1683,6 +1692,7 @@ impl TryFrom<i32> for NotZeroUnsignedPartOfStdPrimitiveI32 {
         }
     }
 }
+#[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     extern crate serde as _serde;
@@ -1702,9 +1712,9 @@ const _: () = {
                 type Value = NotZeroUnsignedPartOfStdPrimitiveI32;
                 fn expecting(
                     &self,
-                    __formatter: &mut _serde::__private228::Formatter<'_>,
+                    __formatter: &mut Formatter<'_>,
                 ) -> _serde::__private228::fmt::Result {
-                    _serde::__private228::Formatter::write_str(
+                    Formatter::write_str(
                         __formatter,
                         "tuple struct NotZeroUnsignedPartOfStdPrimitiveI32",
                     )
@@ -1766,7 +1776,7 @@ impl sqlx::Encode<'_, Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
     fn encode_by_ref(
         &self,
         buf: &mut PgArgumentBuffer,
-    ) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
+    ) -> Result<IsNull, Box<dyn std::error::Error + Send + Sync>> {
         sqlx::Encode::<Postgres>::encode_by_ref(&self.0, buf)
     }
 }

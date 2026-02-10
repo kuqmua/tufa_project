@@ -708,6 +708,7 @@ impl ObjectExampleAsNotNullJsonbObjectRead {
         })
     }
 }
+#[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -971,6 +972,7 @@ impl ObjectExampleWithIdAsNotNullJsonbObjectWithIdRead {
         })
     }
 }
+#[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -4011,6 +4013,7 @@ impl VecOfObjectExampleWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
         })
     }
 }
+#[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 impl<'de> serde::Deserialize<'de>
     for VecOfObjectExampleWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate

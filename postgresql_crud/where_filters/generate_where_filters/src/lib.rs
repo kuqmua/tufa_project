@@ -1,3 +1,8 @@
+use naming::parameter::PostgresqlJsonTypeWhereSelfUpperCamelCase;
+use naming::parameter::PostgresqlTypeWhereSelfUpperCamelCase;
+
+use std::fmt::Display;
+
 #[proc_macro]
 pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::TokenStream {
     #[derive(Clone)]
@@ -382,7 +387,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
     let postgresql_type_ts = {
         let generate_filters_ts = |filter: &postgresql_crud_macros_common::PostgresqlTypeFilter| {
             let ident =
-                naming::parameter::PostgresqlTypeWhereSelfUpperCamelCase::from_display(&filter);
+                PostgresqlTypeWhereSelfUpperCamelCase::from_display(&filter);
             let (
                 should_add_declaration_of_struct_ident_generic,
                 struct_additional_fields_ts,
@@ -450,7 +455,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         };
                 let generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_ts =
                     |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle,
-                     operator: &dyn std::fmt::Display| {
+                     operator: &dyn Display| {
                         generate_32abfefc_c087_480b_b502_cb78533dafb0_ts(
                             postgresql_type_pattern_handle,
                             &|postgresql_type_kind: &PostgresqlTypeKind| {
@@ -678,7 +683,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                     };
                 let generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_ts =
                     |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle,
-                     postgresql_syntax: &dyn std::fmt::Display| {
+                     postgresql_syntax: &dyn Display| {
                         let (
                             maybe_dimensions_declaration_ts,
                             maybe_dimensions_default_initialization_ts,
@@ -856,7 +861,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                             &"-|-",
                         )
                     };
-                let generate_length_filter_pattern_ts = |operator: &dyn std::fmt::Display| {
+                let generate_length_filter_pattern_ts = |operator: &dyn Display| {
                     (
                         should_add_declaration_of_struct_ident_generic_false.clone(),
                         pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts
@@ -1164,7 +1169,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
         let generate_filters_ts =
             |filter: &postgresql_crud_macros_common::PostgresqlJsonTypeFilter| {
                 let ident =
-                    naming::parameter::PostgresqlJsonTypeWhereSelfUpperCamelCase::from_display(
+                    PostgresqlJsonTypeWhereSelfUpperCamelCase::from_display(
                         &filter,
                     );
                 let pub_value_postgresql_json_type_not_empty_unique_vec_t_ts = quote::quote! {
@@ -1215,7 +1220,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
             };
                 let generate_7cc8e29b_53e1_4bee_9947_71987439148c_ts =
                     |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle,
-                     operator: &dyn std::fmt::Display| {
+                     operator: &dyn Display| {
                         generate_1763ccf3_10be_4527_912b_363d8ea05f4b_ts(
                             postgresql_type_pattern_handle,
                             &|postgresql_type_kind: &PostgresqlTypeKind| {
@@ -1247,7 +1252,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                     };
                 let generate_ae2fa44d_9035_49fd_ba20_eed1bd4680d4_ts =
                     |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle,
-                     operation: &dyn std::fmt::Display| {
+                     operation: &dyn Display| {
                         let (
                             maybe_dimensions_declaration_ts,
                             maybe_dimensions_default_initialization_ts,

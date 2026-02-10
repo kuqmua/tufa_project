@@ -41,6 +41,7 @@ impl<T: PartialEq + Clone> UniqueVec<T> {
         Ok(Self(value))
     }
 }
+#[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 const _: () = {
     extern crate serde as _serde;

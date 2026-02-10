@@ -1,4 +1,20 @@
 use naming::parameter::SelfReadUpperCamelCase;
+use naming::parameter::SelfUpdateForQueryUpperCamelCase;
+use naming::parameter::SelfReadInnerUpperCamelCase;
+use naming::parameter::SelfReadOnlyIdsUpperCamelCase;
+use naming::parameter::SelfTableTypeDeclarationUpperCamelCase;
+use naming::parameter::SelfWhereUpperCamelCase;
+use naming::parameter::SelfSelectUpperCamelCase;
+use naming::parameter::SelfCreateUpperCamelCase;
+use naming::parameter::SelfOriginUpperCamelCase;
+use naming::parameter::SelfUpdateUpperCamelCase;
+use naming::parameter::SelfOriginTryNewForDeserializeErrorNamedUpperCamelCase;
+use naming::parameter::SelfOriginTryNewErrorNamedUpperCamelCase;
+use naming::parameter::SelfNotNullUpperCamelCase;
+use std::fmt::Formatter;
+use std::fmt::Display;
+use std::iter::repeat_n;
+use std::iter::once;
 #[must_use]
 pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenStream {
     #[allow(clippy::arbitrary_source_item_ordering)]
@@ -160,7 +176,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
         SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange,
         SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange,
     }
-    fn wrap_into_sqlx_postgres_types_pg_range_stringified(value: &dyn std::fmt::Display) -> String {
+    fn wrap_into_sqlx_postgres_types_pg_range_stringified(value: &dyn Display) -> String {
         format!("sqlx::postgres::types::PgRange<{value}>")
     }
     enum CanBeNullable {
@@ -296,12 +312,12 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             }
         }
     }
-    impl std::fmt::Display for PostgresqlTypeRange {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl Display for PostgresqlTypeRange {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(
                 f,
                 "{}",
-                naming::parameter::SelfNotNullUpperCamelCase::from_display(&PostgresqlType::from(
+                SelfNotNullUpperCamelCase::from_display(&PostgresqlType::from(
                     self
                 ))
             )
@@ -364,6 +380,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
         not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         postgresql_type_pattern: PostgresqlTypePattern,
     }
+    #[allow(clippy::absolute_paths)]
     #[allow(clippy::arbitrary_source_item_ordering)]
     const _: () = {
         #[allow(
@@ -393,9 +410,9 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     type Value = __Field;
                     fn expecting(
                         &self,
-                        __f: &mut _serde::__private228::Formatter<'_>,
+                        __f: &mut Formatter<'_>,
                     ) -> _serde::__private228::fmt::Result {
-                        _serde::__private228::Formatter::write_str(__f, "field identifier")
+                        Formatter::write_str(__f, "field identifier")
                     }
                     fn visit_u64<__E>(self, __value: u64) -> Result<Self::Value, __E>
                     where
@@ -451,9 +468,9 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     type Value = PostgresqlTypeRecord;
                     fn expecting(
                         &self,
-                        __f: &mut _serde::__private228::Formatter<'_>,
+                        __f: &mut Formatter<'_>,
                     ) -> _serde::__private228::fmt::Result {
-                        _serde::__private228::Formatter::write_str(
+                        Formatter::write_str(
                             __f,
                             "struct PostgresqlTypeRecord",
                         )
@@ -915,7 +932,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     current_postgresql_type_record_handle: PostgresqlTypeRecordHandle
                 | generate_postgresql_type_record_handle_vec(current_postgresql_type_record_handle)
                 .into_iter()
-                .chain(std::iter::once(postgresql_type_record_handle.clone()))
+                .chain(once(postgresql_type_record_handle.clone()))
                 .collect();
                 //same pattern was in generate_postgresql_types 21.05.2025
                 match (
@@ -1196,19 +1213,19 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
         let ident_array_not_null_as_postgresql_type_test_cases_ts = generate_as_postgresql_type_test_cases_ts(&ident_array_not_null_upper_camel_case);
         let ident_array_nullable_as_postgresql_type_test_cases_ts = generate_as_postgresql_type_test_cases_ts(&ident_array_nullable_upper_camel_case);
 
-        let generate_ident_standart_not_null_origin_ts = |current_postgresql_type: &PostgresqlType| naming::parameter::SelfOriginUpperCamelCase::from_tokens(
+        let generate_ident_standart_not_null_origin_ts = |current_postgresql_type: &PostgresqlType| SelfOriginUpperCamelCase::from_tokens(
             &generate_ident_standart_not_null_ts(current_postgresql_type)
         );
         let ident_standart_not_null_origin_upper_camel_case = generate_ident_standart_not_null_origin_ts(postgresql_type);
-        let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
-        let ident_standart_nullable_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_nullable_upper_camel_case);
+        let ident_origin_upper_camel_case = SelfOriginUpperCamelCase::from_tokens(&ident);
+        let ident_standart_nullable_table_type_declaration_upper_camel_case = SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_nullable_upper_camel_case);
 
         let sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case = generate_ident_standart_not_null_origin_ts(&PostgresqlType::SqlxTypesChronoNaiveDateAsDate);
         let sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case = generate_ident_standart_not_null_origin_ts(&PostgresqlType::SqlxTypesChronoNaiveTimeAsTime);
         let sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case = generate_ident_standart_not_null_origin_ts(&PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp);
         let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case = generate_ident_standart_not_null_origin_ts(&PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz);
 
-        let generate_ident_standart_not_null_origin_try_new_error_named_ts = |current_postgresql_type: &PostgresqlType| naming::parameter::SelfOriginTryNewErrorNamedUpperCamelCase::from_tokens(
+        let generate_ident_standart_not_null_origin_try_new_error_named_ts = |current_postgresql_type: &PostgresqlType| SelfOriginTryNewErrorNamedUpperCamelCase::from_tokens(
             &generate_ident_standart_not_null_ts(current_postgresql_type)
         );
         let sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_upper_camel_case = generate_ident_standart_not_null_origin_try_new_error_named_ts(&PostgresqlType::SqlxTypesChronoNaiveDateAsDate);
@@ -1263,7 +1280,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             };
             value.parse::<proc_macro2::TokenStream>().expect("2555843f-283f-4bc8-8c93-48e6fe68ae6a")
         };
-        let generate_current_ident_origin_non_wrapping = |current_postgresql_type_pattern: &PostgresqlTypePattern, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable| naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_ts(postgresql_type, current_not_null_or_nullable, current_postgresql_type_pattern));
+        let generate_current_ident_origin_non_wrapping = |current_postgresql_type_pattern: &PostgresqlTypePattern, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable| SelfOriginUpperCamelCase::from_tokens(&generate_ident_ts(postgresql_type, current_not_null_or_nullable, current_postgresql_type_pattern));
         let field_type_handle: &dyn quote::ToTokens = {
             let generate_current_ident_origin = |current_postgresql_type_pattern: &PostgresqlTypePattern, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable| {
                 let value = generate_current_ident_origin_non_wrapping(current_postgresql_type_pattern, current_not_null_or_nullable);
@@ -1398,6 +1415,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             let serde_serialize_derive_or_impl = {
                 let generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens = |content_ts: &dyn quote::ToTokens| {
                     quote::quote! {
+                        #[allow(clippy::absolute_paths)]
                         #allow_clippy_arbitrary_source_item_ordering_ts
                         const _: () = {
                             #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -1429,7 +1447,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 let serde_state_initialization_two_fields_ts = generate_serde_state_initialization_ts(&parameter_number_two);
                 let serde_state_initialization_three_fields_ts = generate_serde_state_initialization_ts(&parameter_number_three);
                 let serde_state_initialization_four_fields_ts = generate_serde_state_initialization_ts(&parameter_number_four);
-                let generate_serialize_field_ts = |field_name: &dyn std::fmt::Display, third_parameter_ts: &dyn quote::ToTokens| {
+                let generate_serialize_field_ts = |field_name: &dyn Display, third_parameter_ts: &dyn quote::ToTokens| {
                     let field_name_double_quotes_ts = generate_quotes::double_quotes_ts(&field_name);
                     quote::quote! {_serde::ser::SerializeStruct::serialize_field(&mut __serde_state, #field_name_double_quotes_ts, #third_parameter_ts)?;}
                 };
@@ -1651,6 +1669,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 };
                 let generate_impl_serde_deserialize_for_tokens_ts = |content_ts: &dyn quote::ToTokens| {
                     quote::quote! {
+                        #[allow(clippy::absolute_paths)]
                         #allow_clippy_arbitrary_source_item_ordering_ts
                         const _: () = {
                             #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -2082,7 +2101,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                         while_some_next_key_field_sqlx_postgres_types_pg_range_std_primitive_i64_ts,
                         while_some_next_key_field_sqlx_postgres_types_pg_interval_ts,
                     ) = {
-                        let generate_while_some_next_key_field_ts = |vec_ts: &[(&dyn std::fmt::Display, &dyn quote::ToTokens)]| {
+                        let generate_while_some_next_key_field_ts = |vec_ts: &[(&dyn Display, &dyn quote::ToTokens)]| {
                             let fields_initialization_ts = vec_ts.iter().enumerate().map(|(index_2b1736c7, el_692238ce)| {
                                 let field_name_double_quotes_ts = generate_quotes::double_quotes_stringified(&el_692238ce.0);
                                 let field_type_ts = &el_692238ce.1;
@@ -2507,8 +2526,8 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
         };
         let value_ident_inner_type_ts = quote::quote! {#value_snake_case: #ident_inner_type_ts};
         let ident_standart_not_null_read_upper_camel_case = SelfReadUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
-        let ident_standart_not_null_origin_try_new_error_named_upper_camel_case = naming::parameter::SelfOriginTryNewErrorNamedUpperCamelCase::from_display(&ident_standart_not_null_upper_camel_case);
-        let ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case = naming::parameter::SelfOriginTryNewForDeserializeErrorNamedUpperCamelCase::from_display(&ident_standart_not_null_upper_camel_case);
+        let ident_standart_not_null_origin_try_new_error_named_upper_camel_case = SelfOriginTryNewErrorNamedUpperCamelCase::from_display(&ident_standart_not_null_upper_camel_case);
+        let ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case = SelfOriginTryNewForDeserializeErrorNamedUpperCamelCase::from_display(&ident_standart_not_null_upper_camel_case);
         let int_range_type_to_range_inner_type_ts = |int_range_type: &IntRangeType| -> proc_macro2::TokenStream {
             match &int_range_type {
                 IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote! {#std_primitive_i32_ts},
@@ -3089,7 +3108,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 #maybe_impl_ident_ts
             }
         };
-        let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
+        let ident_update_upper_camel_case = SelfUpdateUpperCamelCase::from_tokens(&ident);
         let ident_origin_ts = {
             let ident_origin_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
@@ -3393,7 +3412,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                             |value_6ed98462| generate_pg_range_conversion_ts(
                                                 &value_snake_case,
                                                 &{
-                                                    let range_postgresql_type_ident_origin = naming::parameter::SelfOriginUpperCamelCase::from_display(&generate_ident_stringified(&PostgresqlType::from(value_6ed98462), not_null_or_nullable, postgresql_type_pattern));
+                                                    let range_postgresql_type_ident_origin = SelfOriginUpperCamelCase::from_display(&generate_ident_stringified(&PostgresqlType::from(value_6ed98462), not_null_or_nullable, postgresql_type_pattern));
                                                     quote::quote! {#range_postgresql_type_ident_origin::#new_snake_case(value_af65ccce)}
                                                 }
                                             )
@@ -4270,7 +4289,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 )
         };
         let ident_origin_struct_content_ts = quote::quote!{(#ident_origin_upper_camel_case);};
-        let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
+        let ident_table_type_declaration_upper_camel_case = SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
         let ident_table_type_declaration_ts = {
             let ident_table_type_declaration_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
@@ -4372,8 +4391,8 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 #impl_postgresql_type_equal_operator_for_ident_table_type_declaration_ts
             }
         };
-        let ident_standart_not_null_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
-        let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
+        let ident_standart_not_null_table_type_declaration_upper_camel_case = SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
+        let ident_create_upper_camel_case = SelfCreateUpperCamelCase::from_tokens(&ident);
         let ident_create_ts = {
             let ident_create_ts = match &can_be_primary_key {
                 CanBePrimaryKey::False => macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
@@ -4417,7 +4436,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 #maybe_impl_sqlx_type_sqlx_postgres_for_ident_create_ts
             }
         };
-        let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
+        let ident_select_upper_camel_case = SelfSelectUpperCamelCase::from_tokens(&ident);
         let ident_select_ts = {
             let pub_struct_ident_select_ts = generate_pub_struct_tokens_ts(
                 &ident_select_upper_camel_case,
@@ -4466,7 +4485,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             }
         };
         let ident_read_upper_camel_case = SelfReadUpperCamelCase::from_tokens(&ident);
-        let ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&ident);
+        let ident_where_upper_camel_case = SelfWhereUpperCamelCase::from_tokens(&ident);
         let ident_where_ts = postgresql_crud_macros_common::generate_postgresql_type_where_ts(
             &allow_clippy_arbitrary_source_item_ordering_ts,
             &{
@@ -4614,7 +4633,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     }
                     PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                         let ident_standart_not_null_or_nullable_if_can_be_nullable_table_type_declaration_upper_camel_case = {
-                            let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&match &postgresql_type.can_be_nullable() {
+                            let value = SelfTableTypeDeclarationUpperCamelCase::from_tokens(&match &postgresql_type.can_be_nullable() {
                                 CanBeNullable::False => quote::quote! {#ident_standart_not_null_upper_camel_case},
                                 CanBeNullable::True => {
                                     let value = generate_ident_ts(postgresql_type, not_null_or_nullable, &PostgresqlTypePattern::Standart);
@@ -4646,7 +4665,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             let mut vec = common_postgresql_type_filters;
                             vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual {
                                 ident: {
-                                    let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&match &dimension1_not_null_or_nullable {
+                                    let value = SelfTableTypeDeclarationUpperCamelCase::from_tokens(&match &dimension1_not_null_or_nullable {
                                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_standart_not_null_upper_camel_case,
                                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_standart_nullable_upper_camel_case,
                                     });
@@ -4878,7 +4897,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 #maybe_impl_postgresql_type_where_filter_for_ident_read_if_can_be_primary_key_ts
             }
         };
-        let ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
+        let ident_read_only_ids_upper_camel_case = SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
         let ident_read_only_ids_ts = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
             let ident_read_only_ids_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
@@ -4906,7 +4925,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
         } else {
             proc_macro2::TokenStream::new()
         };
-        let ident_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident);
+        let ident_read_inner_upper_camel_case = SelfReadInnerUpperCamelCase::from_tokens(&ident);
         let ident_read_inner_ts = quote::quote! {
             pub type #ident_read_inner_upper_camel_case = #ident_inner_type_ts;
         };
@@ -4934,7 +4953,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 #impl_error_occurence_lib_to_std_string_string_for_ident_update_ts
             }
         };
-        let ident_update_for_query_upper_camel_case = naming::parameter::SelfUpdateForQueryUpperCamelCase::from_tokens(&ident);
+        let ident_update_for_query_upper_camel_case = SelfUpdateForQueryUpperCamelCase::from_tokens(&ident);
         let ident_update_for_query_ts = {
             let ident_update_for_query_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
@@ -5059,7 +5078,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     };
                     let maybe_array_part = match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => String::new(),
-                        PostgresqlTypePattern::ArrayDimension1 { .. } => std::iter::repeat_n("[]", array_dimensions_number).collect::<String>(),
+                        PostgresqlTypePattern::ArrayDimension1 { .. } => repeat_n("[]", array_dimensions_number).collect::<String>(),
                     };
                     let maybe_constraint_part = match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => String::new(),
@@ -5125,7 +5144,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                         PostgresqlTypePattern::Standart => quote::quote! {#column_snake_case.to_owned()},
                         PostgresqlTypePattern::ArrayDimension1 { .. } => {
                             let format_handle_ts = generate_quotes::double_quotes_ts(&{
-                                let acc = std::iter::repeat_n("[{}:{}]", array_dimensions_number).collect::<String>();
+                                let acc = repeat_n("[{}:{}]", array_dimensions_number).collect::<String>();
                                 format!("{{column}}{acc}")
                             });
                             let arguments_ts = (1..=array_dimensions_number)
@@ -5273,15 +5292,15 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                         match &postgresql_type_range {
                                             PostgresqlTypeRange::StdPrimitiveI32AsInt4 | PostgresqlTypeRange::StdPrimitiveI64AsInt8 => int_range_normalize_ts,
                                             PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate => {
-                                                let generate_dot_succ_opt_expect_ts = |id: &dyn std::fmt::Display| {
+                                                let generate_dot_succ_opt_expect_ts = |id: &dyn Display| {
                                                     let id_double_quotes_ts = generate_quotes::double_quotes_ts(&id);
                                                     quote::quote! {.succ_opt().expect(#id_double_quotes_ts)}
                                                 };
-                                                let generate_included_start_succ_opt_ts = |id: &dyn std::fmt::Display| {
+                                                let generate_included_start_succ_opt_ts = |id: &dyn Display| {
                                                     let dot_succ_opt_expect_ts = generate_dot_succ_opt_expect_ts(&id);
                                                     quote::quote! {#included_upper_camel_case(#start_snake_case #dot_succ_opt_expect_ts)}
                                                 };
-                                                let generate_excluded_end_succ_opt_ts = |id: &dyn std::fmt::Display| {
+                                                let generate_excluded_end_succ_opt_ts = |id: &dyn Display| {
                                                     let dot_succ_opt_expect_ts = generate_dot_succ_opt_expect_ts(&id);
                                                     quote::quote! {#excluded_upper_camel_case(#end_snake_case #dot_succ_opt_expect_ts)}
                                                 };
@@ -6045,7 +6064,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             #ident_standart_not_null_as_postgresql_type_test_cases_ts::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case)
                             .into_iter()
                             .flat_map(|element0| element0.into_iter().map(|element1| vec![Some(element1)]))
-                            .chain(std::iter::once(vec![None]))
+                            .chain(once(vec![None]))
                             .collect()
                         },
                     },
