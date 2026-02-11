@@ -1,9 +1,9 @@
 pub mod types;
-use std::net::AddrParseError;
-use std::net::SocketAddr;
-use std::num::ParseIntError;
-use std::str::FromStr;
-use std::str::ParseBoolError;
+use std::{
+    net::{AddrParseError, SocketAddr},
+    num::ParseIntError,
+    str::{FromStr, ParseBoolError},
+};
 
 pub use generate_getter_traits_for_struct_fields::GenerateGetterTraitsForStructFields;
 pub use try_from_env::TryFromEnv;

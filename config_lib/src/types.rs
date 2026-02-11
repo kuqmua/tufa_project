@@ -1,6 +1,8 @@
-use std::env;
-use std::fmt::{Display, Formatter, Result as FmtResult};
-use std::str::FromStr;
+use std::{
+    env,
+    fmt::{Display, Formatter, Result as FmtResult},
+    str::FromStr,
+};
 
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
