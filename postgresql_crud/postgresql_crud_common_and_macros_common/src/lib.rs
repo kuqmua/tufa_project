@@ -1,3 +1,4 @@
+use naming::{AndSnakeCase, NotSnakeCase, OrSnakeCase};
 use std::fmt::{Display, Formatter, Result as StdFmtResult};
 
 pub trait DefaultOptionSomeVecOneEl: Sized {
@@ -34,10 +35,10 @@ pub enum LogicalOperator {
 impl LogicalOperator {
     #[must_use]
     pub fn to_query_part(&self, is_need_to_add_logical_operator: bool) -> String {
-        let not_space = format!("{} ", naming::NotSnakeCase);
+        let not_space = format!("{NotSnakeCase} ");
         if is_need_to_add_logical_operator {
-            let and_space = format!("{} ", naming::AndSnakeCase);
-            let or_space = format!("{} ", naming::OrSnakeCase);
+            let and_space = format!("{AndSnakeCase} ");
+            let or_space = format!("{OrSnakeCase} ");
             match *self {
                 Self::And => and_space,
                 Self::Or => or_space,

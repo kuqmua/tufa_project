@@ -1,6 +1,3 @@
-use naming::parameter::{
-    PostgresqlJsonTypeWhereSelfUpperCamelCase, PostgresqlTypeWhereSelfUpperCamelCase,
-};
 use naming::{
     AdjacentWithRangeUpperCamelCase, AllElementsEqualUpperCamelCase,
     AllElementsGreaterThanUpperCamelCase, AllElementsRegularExpressionUpperCamelCase,
@@ -61,7 +58,9 @@ use naming::{
     GreaterThanUpperCamelCase, InUpperCamelCase, IncludedLowerBoundUpperCamelCase,
     LengthEqualUpperCamelCase, LengthGreaterThanUpperCamelCase, OverlapWithRangeUpperCamelCase,
     OverlapsWithArrayUpperCamelCase, RangeLengthUpperCamelCase, RegularExpressionUpperCamelCase,
-    StrictlyToLeftOfRangeUpperCamelCase, StrictlyToRightOfRangeUpperCamelCase,
+    StdFmtDisplayPlusQuoteToTokens, StrictlyToLeftOfRangeUpperCamelCase,
+    StrictlyToRightOfRangeUpperCamelCase,
+    parameter::{PostgresqlJsonTypeWhereSelfUpperCamelCase, PostgresqlTypeWhereSelfUpperCamelCase},
 };
 use proc_macro2::TokenStream;
 use quote::quote;
@@ -182,7 +181,7 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
         let value = PostgresqlTypeWhereSelfUpperCamelCase::from_display(&self.upper_camel_case());
         quote! {#value}
     }
-    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn StdFmtDisplayPlusQuoteToTokens {
         match &self {
             Self::Equal { .. } => &EqualUpperCamelCase,
             Self::DimensionOneEqual { .. } => &DimensionOneEqualUpperCamelCase,
@@ -431,7 +430,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             PostgresqlJsonTypeWhereSelfUpperCamelCase::from_display(&self.upper_camel_case());
         quote! {#value}
     }
-    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    fn upper_camel_case(&self) -> &'static dyn StdFmtDisplayPlusQuoteToTokens {
         match &self {
             Self::Equal { .. } => &EqualUpperCamelCase,
             Self::DimensionOneEqual { .. } => &DimensionOneEqualUpperCamelCase,
@@ -566,5 +565,5 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
 pub trait PostgresqlFilter {
     fn maybe_generic(&self) -> Option<TokenStream>;
     fn prefix_where_self_upper_camel_case(&self) -> TokenStream;
-    fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens;
+    fn upper_camel_case(&self) -> &'static dyn StdFmtDisplayPlusQuoteToTokens;
 }

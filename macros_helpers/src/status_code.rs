@@ -1,9 +1,9 @@
-use strum_macros::Display;
 use naming::{
+    AsRefStrEnumWithUnitFieldsToSnakeCaseStringified,
     AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified,
-    AsRefStrEnumWithUnitFieldsToSnakeCaseStringified
 };
 use quote::quote;
+use strum_macros::Display;
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
     Debug,

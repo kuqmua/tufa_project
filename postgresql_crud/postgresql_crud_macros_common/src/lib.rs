@@ -2,7 +2,59 @@ mod filters;
 
 pub use filters::*;
 
-use naming::parameter::{SelfCreateUpperCamelCase, SelfSelectUpperCamelCase};
+use naming::{
+    AllVariantsDefaultOptionSomeVecOneElMaxPageSizeSnakeCase,
+    AllVariantsDefaultOptionSomeVecOneElSnakeCase,
+    ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase, ColumnNameAndMaybeFieldGetterSnakeCase,
+    ColumnSnakeCase, CreateForQueryUpperCamelCase,
+    CreateIntoPostgresqlJsonTypeOptionVecWhereLengthEqualSnakeCase,
+    CreateIntoPostgresqlJsonTypeOptionVecWhereLengthGreaterThanSnakeCase,
+    CreateIntoPostgresqlTypeOptionVecWhereDimensionOneEqualSnakeCase, CreateQueryBindSnakeCase,
+    CreateQueryPartSnakeCase, CreateSnakeCase, CreateTableColumnQueryPartSnakeCase,
+    CreateUpperCamelCase, DefaultOptionSomeVecOneElMaxPageSizeSnakeCase,
+    DefaultOptionSomeVecOneElSnakeCase, EqualOperatorUpperCamelCase, FieldIdentSnakeCase,
+    FieldSnakeCase, IncrementSnakeCase, IsNeedToAddLogicalOperatorSnakeCase, IsPrimaryKeySnakeCase,
+    JsonbSetAccumulatorSnakeCase, JsonbSetPathSnakeCase, JsonbSetTargetSnakeCase, MutSnakeCase,
+    NormalizeSnakeCase, OptionUpdateSnakeCase, OptionUpperCamelCase, OptionVecCreateSnakeCase,
+    PostgresqlJsonTypeTestCasesUpperCamelCase, PostgresqlJsonTypeUpperCamelCase,
+    PostgresqlTypeEqualOperatorUpperCamelCase, PostgresqlTypeNotPrimaryKeyUpperCamelCase,
+    PostgresqlTypeOptionVecWhereGreaterThanTestSnakeCase, PostgresqlTypeTestCasesUpperCamelCase,
+    PostgresqlTypeUpperCamelCase, PostgresqlTypeWhereFilterUpperCamelCase,
+    PreviousReadMergedWithOptionUpdateIntoReadSnakeCase, QueryBindSnakeCase,
+    QueryPartErrorNamedUpperCamelCase, QueryPartSnakeCase, QuerySnakeCase,
+    ReadInnerIntoReadWithNewOrTryNewUnwrapedSnakeCase,
+    ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSnakeCase, ReadInnerUpperCamelCase,
+    ReadOnlyIdsIntoOptionValueReadInnerSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoOptionValueReadSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoOptionVecWhereEqualToJsonFieldSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereBetweenSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElGreaterThanSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElRegularExpressionSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionFourEqualSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionOneEqualSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionThreeEqualSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionTwoEqualSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereGreaterThanSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereInSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereRegularExpressionSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoReadSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoWhereEqualSnakeCase,
+    ReadOnlyIdsMergedWithTableTypeDeclarationIntoPostgresqlTypeOptionWhereGreaterThanSnakeCase,
+    ReadOnlyIdsSnakeCase, ReadOnlyIdsToOptionValueReadDefaultOptionSomeVecOneElSnakeCase,
+    ReadOnlyIdsToTwoDimensionalVecReadInnerSnakeCase, ReadOnlyIdsUpperCamelCase, ReadSnakeCase,
+    ReadUpperCamelCase, SelectOnlyCreatedIdsQueryBindSnakeCase,
+    SelectOnlyCreatedIdsQueryPartSnakeCase, SelectOnlyIdsQueryPartSnakeCase,
+    SelectOnlyUpdatedIdsQueryBindSnakeCase, SelectOnlyUpdatedIdsQueryPartSnakeCase,
+    SelectQueryPartSnakeCase, SelectUpperCamelCase, SelfUpperCamelCase,
+    StdFmtDisplayPlusQuoteToTokens, TableTypeDeclarationSnakeCase,
+    TableTypeDeclarationUpperCamelCase, UpdateForQueryUpperCamelCase, UpdateQueryBindSnakeCase,
+    UpdateQueryPartSnakeCase, UpdateToReadOnlyIdsSnakeCase, UpdateUpperCamelCase, ValueSnakeCase,
+    ValueUpperCamelCase, WhereUpperCamelCase,
+    parameter::{SelfCreateUpperCamelCase, SelfSelectUpperCamelCase, SelfWhereUpperCamelCase},
+};
 use std::fmt::Display;
 
 #[derive(Debug, Clone)]
@@ -66,7 +118,7 @@ impl NotNullOrNullable {
     pub fn rust(&self) -> &'static dyn Display {
         match &self {
             Self::NotNull => &"",
-            Self::Nullable => &naming::OptionUpperCamelCase,
+            Self::Nullable => &OptionUpperCamelCase,
         }
     }
 }
@@ -175,7 +227,7 @@ impl quote::ToTokens for IsCreateQueryBindMutable {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
             Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
-            Self::True => naming::MutSnakeCase.to_tokens(tokens),
+            Self::True => MutSnakeCase.to_tokens(tokens),
         }
     }
 }
@@ -188,7 +240,7 @@ impl quote::ToTokens for IsSelectQueryPartSelfSelectUsed {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
             Self::False => quote::quote! {_}.to_tokens(tokens),
-            Self::True => naming::ValueSnakeCase.to_tokens(tokens),
+            Self::True => ValueSnakeCase.to_tokens(tokens),
         }
     }
 }
@@ -202,7 +254,7 @@ impl quote::ToTokens for IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorM
         match &self {
             Self::False => quote::quote! {_}.to_tokens(tokens),
             Self::True => {
-                naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase.to_tokens(tokens);
+                ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase.to_tokens(tokens);
             }
         }
     }
@@ -229,7 +281,7 @@ impl quote::ToTokens for IsUpdateQueryPartSelfUpdateUsed {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
             Self::False => quote::quote! {_}.to_tokens(tokens),
-            Self::True => naming::ValueSnakeCase.to_tokens(tokens),
+            Self::True => ValueSnakeCase.to_tokens(tokens),
         }
     }
 }
@@ -242,7 +294,7 @@ impl quote::ToTokens for IsUpdateQueryPartJsonbSetTargetUsed {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
             Self::False => quote::quote! {_}.to_tokens(tokens),
-            Self::True => naming::JsonbSetTargetSnakeCase.to_tokens(tokens),
+            Self::True => JsonbSetTargetSnakeCase.to_tokens(tokens),
         }
     }
 }
@@ -255,7 +307,7 @@ impl quote::ToTokens for IsUpdateQueryBindMutable {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
             Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
-            Self::True => naming::MutSnakeCase.to_tokens(tokens),
+            Self::True => MutSnakeCase.to_tokens(tokens),
         }
     }
 }
@@ -268,7 +320,7 @@ impl quote::ToTokens for IsSelectOnlyUpdatedIdsQueryBindMutable {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
             Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
-            Self::True => naming::MutSnakeCase.to_tokens(tokens),
+            Self::True => MutSnakeCase.to_tokens(tokens),
         }
     }
 }
@@ -281,7 +333,7 @@ impl quote::ToTokens for IsSelectOnlyCreatedIdsQueryBindMutable {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
             Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
-            Self::True => naming::MutSnakeCase.to_tokens(tokens),
+            Self::True => MutSnakeCase.to_tokens(tokens),
         }
     }
 }
@@ -294,7 +346,7 @@ impl quote::ToTokens for IsQueryBindMutable {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
             Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
-            Self::True => naming::MutSnakeCase.to_tokens(tokens),
+            Self::True => MutSnakeCase.to_tokens(tokens),
         }
     }
 }
@@ -306,7 +358,7 @@ pub enum IncrementParameterUnderscore {
 impl quote::ToTokens for IncrementParameterUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::False => naming::IncrementSnakeCase.to_tokens(tokens),
+            Self::False => IncrementSnakeCase.to_tokens(tokens),
             Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
@@ -319,7 +371,7 @@ pub enum ColumnParameterUnderscore {
 impl quote::ToTokens for ColumnParameterUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::False => naming::ColumnSnakeCase.to_tokens(tokens),
+            Self::False => ColumnSnakeCase.to_tokens(tokens),
             Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
@@ -332,7 +384,7 @@ pub enum IsNeedToAddLogicalOperatorUnderscore {
 impl quote::ToTokens for IsNeedToAddLogicalOperatorUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::False => naming::IsNeedToAddLogicalOperatorSnakeCase.to_tokens(tokens),
+            Self::False => IsNeedToAddLogicalOperatorSnakeCase.to_tokens(tokens),
             Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
@@ -344,10 +396,10 @@ pub enum ReadOrUpdate {
 }
 impl ReadOrUpdate {
     #[must_use]
-    pub fn upper_camel_case(&self) -> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
+    pub fn upper_camel_case(&self) -> &dyn StdFmtDisplayPlusQuoteToTokens {
         match &self {
-            Self::Read => &naming::ReadUpperCamelCase,
-            Self::Update => &naming::UpdateUpperCamelCase,
+            Self::Read => &ReadUpperCamelCase,
+            Self::Update => &UpdateUpperCamelCase,
         }
     }
 }
@@ -359,7 +411,7 @@ pub enum IsPrimaryKeyUnderscore {
 impl quote::ToTokens for IsPrimaryKeyUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::False => naming::IsPrimaryKeySnakeCase.to_tokens(tokens),
+            Self::False => IsPrimaryKeySnakeCase.to_tokens(tokens),
             Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
@@ -390,7 +442,7 @@ pub enum EqualOperatorHandle {
 impl EqualOperatorHandle {
     #[must_use]
     pub fn to_tokens_path(&self, import_path: &ImportPath) -> proc_macro2::TokenStream {
-        let equal_operator_upper_camel_case = naming::EqualOperatorUpperCamelCase;
+        let equal_operator_upper_camel_case = EqualOperatorUpperCamelCase;
         let content_ts = match &self {
             Self::Equal => quote::quote! {Equal},
             Self::IsNull => quote::quote! {IsNull},
@@ -411,12 +463,12 @@ impl Dimension {
     #[must_use]
     pub fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_snake_case(
         &self,
-    ) -> Box<dyn naming::StdFmtDisplayPlusQuoteToTokens> {
+    ) -> Box<dyn StdFmtDisplayPlusQuoteToTokens> {
         match self {
-            Self::One => Box::new(naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionOneEqualSnakeCase),
-            Self::Two => Box::new(naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionTwoEqualSnakeCase),
-            Self::Three => Box::new(naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionThreeEqualSnakeCase),
-            Self::Four => Box::new(naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionFourEqualSnakeCase),
+            Self::One => Box::new(ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionOneEqualSnakeCase),
+            Self::Two => Box::new(ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionTwoEqualSnakeCase),
+            Self::Three => Box::new(ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionThreeEqualSnakeCase),
+            Self::Four => Box::new(ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionFourEqualSnakeCase),
         }
     }
 }
@@ -446,7 +498,7 @@ pub enum CreateQueryPartValueUnderscore {
 impl quote::ToTokens for CreateQueryPartValueUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::False => naming::ValueSnakeCase.to_tokens(tokens),
+            Self::False => ValueSnakeCase.to_tokens(tokens),
             Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
@@ -459,7 +511,7 @@ pub enum CreateQueryPartIncrementUnderscore {
 impl quote::ToTokens for CreateQueryPartIncrementUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::False => naming::IncrementSnakeCase.to_tokens(tokens),
+            Self::False => IncrementSnakeCase.to_tokens(tokens),
             Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
@@ -472,7 +524,7 @@ pub enum CreateQueryBindValueUnderscore {
 impl quote::ToTokens for CreateQueryBindValueUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::False => naming::ValueSnakeCase.to_tokens(tokens),
+            Self::False => ValueSnakeCase.to_tokens(tokens),
             Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
@@ -485,7 +537,7 @@ pub enum SelectQueryPartValueUnderscore {
 impl quote::ToTokens for SelectQueryPartValueUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::False => naming::ValueSnakeCase.to_tokens(tokens),
+            Self::False => ValueSnakeCase.to_tokens(tokens),
             Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
@@ -498,7 +550,7 @@ pub enum UpdateQueryPartValueUnderscore {
 impl quote::ToTokens for UpdateQueryPartValueUnderscore {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::False => naming::ValueSnakeCase.to_tokens(tokens),
+            Self::False => ValueSnakeCase.to_tokens(tokens),
             Self::True => quote::quote! {_}.to_tokens(tokens),
         }
     }
@@ -550,13 +602,12 @@ pub fn generate_postgresql_type_where_ts(
     should_derive_schemars_json_schema: &ShouldDeriveSchemarsJsonSchema,
     is_query_bind_mutable: &IsQueryBindMutable,
 ) -> proc_macro2::TokenStream {
-    use naming::parameter::SelfWhereUpperCamelCase;
     let ident = SelfWhereUpperCamelCase::from_tokens(&prefix);
-    let value_snake_case = naming::ValueSnakeCase;
-    let column_snake_case = naming::ColumnSnakeCase;
-    let increment_snake_case = naming::IncrementSnakeCase;
-    let query_snake_case = naming::QuerySnakeCase;
-    let is_need_to_add_logical_operator_snake_case = naming::IsNeedToAddLogicalOperatorSnakeCase;
+    let value_snake_case = ValueSnakeCase;
+    let column_snake_case = ColumnSnakeCase;
+    let increment_snake_case = IncrementSnakeCase;
+    let query_snake_case = QuerySnakeCase;
+    let is_need_to_add_logical_operator_snake_case = IsNeedToAddLogicalOperatorSnakeCase;
     let postgresql_type_tokens_where_ts = {
         let variants_ts = variants.iter().map(|el_a9dc0e35| {
             let el_upper_camel_case = el_a9dc0e35.upper_camel_case();
@@ -649,14 +700,14 @@ pub fn generate_postgresql_type_where_ts(
 }
 #[must_use]
 pub fn postgresql_crud_common_query_part_error_named_ts() -> proc_macro2::TokenStream {
-    let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
+    let query_part_error_named_upper_camel_case = QueryPartErrorNamedUpperCamelCase;
     quote::quote! {postgresql_crud_common::#query_part_error_named_upper_camel_case}
 }
 pub fn generate_struct_ident_double_quotes_ts(value: &dyn Display) -> proc_macro2::TokenStream {
     generate_quotes::double_quotes_ts(&format!("struct {value}"))
 }
 pub fn generate_struct_ident_with_number_elements_double_quotes_ts(
-    ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+    ident: &dyn StdFmtDisplayPlusQuoteToTokens,
     length: usize,
 ) -> proc_macro2::TokenStream {
     generate_quotes::double_quotes_ts(&format!("struct {ident} with {length} elements"))
@@ -683,7 +734,7 @@ pub fn generate_std_vec_vec_tokens_declaration_ts(
 }
 
 pub fn generate_serde_deserialize_double_quotes_ts(
-    ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+    ident: &dyn StdFmtDisplayPlusQuoteToTokens,
     length: usize,
 ) -> (
     proc_macro2::TokenStream,
@@ -734,38 +785,33 @@ pub fn generate_impl_postgresql_json_type_ts(
     select_only_created_ids_query_bind_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let path_ts = quote::quote! {#import_path ::};
-    let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
-    let create_upper_camel_case = naming::CreateUpperCamelCase;
-    let create_for_query_upper_camel_case = naming::CreateForQueryUpperCamelCase;
-    let value_snake_case = naming::ValueSnakeCase;
-    let select_upper_camel_case = naming::SelectUpperCamelCase;
-    let read_upper_camel_case = naming::ReadUpperCamelCase;
-    let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
-    let select_only_ids_query_part_snake_case = naming::SelectOnlyIdsQueryPartSnakeCase;
-    let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
-    let where_upper_camel_case = naming::WhereUpperCamelCase;
-    let update_upper_camel_case = naming::UpdateUpperCamelCase;
-    let update_for_query_upper_camel_case = naming::UpdateForQueryUpperCamelCase;
-    let increment_snake_case = naming::IncrementSnakeCase;
-    let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
-    let query_snake_case = naming::QuerySnakeCase;
-    let field_ident_snake_case = naming::FieldIdentSnakeCase;
-    let column_name_and_maybe_field_getter_snake_case =
-        naming::ColumnNameAndMaybeFieldGetterSnakeCase;
-    let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
-    let jsonb_set_path_snake_case = naming::JsonbSetPathSnakeCase;
-    let select_query_part_snake_case = naming::SelectQueryPartSnakeCase;
-    let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
-    let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
-    let select_only_updated_ids_query_part_snake_case =
-        naming::SelectOnlyUpdatedIdsQueryPartSnakeCase;
-    let select_only_updated_ids_query_bind_snake_case =
-        naming::SelectOnlyUpdatedIdsQueryBindSnakeCase;
-    let select_only_created_ids_query_part_snake_case =
-        naming::SelectOnlyCreatedIdsQueryPartSnakeCase;
-    let select_only_created_ids_query_bind_snake_case =
-        naming::SelectOnlyCreatedIdsQueryBindSnakeCase;
-    let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
+    let table_type_declaration_upper_camel_case = TableTypeDeclarationUpperCamelCase;
+    let create_upper_camel_case = CreateUpperCamelCase;
+    let create_for_query_upper_camel_case = CreateForQueryUpperCamelCase;
+    let value_snake_case = ValueSnakeCase;
+    let select_upper_camel_case = SelectUpperCamelCase;
+    let read_upper_camel_case = ReadUpperCamelCase;
+    let read_only_ids_upper_camel_case = ReadOnlyIdsUpperCamelCase;
+    let select_only_ids_query_part_snake_case = SelectOnlyIdsQueryPartSnakeCase;
+    let read_inner_upper_camel_case = ReadInnerUpperCamelCase;
+    let where_upper_camel_case = WhereUpperCamelCase;
+    let update_upper_camel_case = UpdateUpperCamelCase;
+    let update_for_query_upper_camel_case = UpdateForQueryUpperCamelCase;
+    let increment_snake_case = IncrementSnakeCase;
+    let postgresql_json_type_upper_camel_case = PostgresqlJsonTypeUpperCamelCase;
+    let query_snake_case = QuerySnakeCase;
+    let field_ident_snake_case = FieldIdentSnakeCase;
+    let column_name_and_maybe_field_getter_snake_case = ColumnNameAndMaybeFieldGetterSnakeCase;
+    let jsonb_set_accumulator_snake_case = JsonbSetAccumulatorSnakeCase;
+    let jsonb_set_path_snake_case = JsonbSetPathSnakeCase;
+    let select_query_part_snake_case = SelectQueryPartSnakeCase;
+    let update_query_part_snake_case = UpdateQueryPartSnakeCase;
+    let update_query_bind_snake_case = UpdateQueryBindSnakeCase;
+    let select_only_updated_ids_query_part_snake_case = SelectOnlyUpdatedIdsQueryPartSnakeCase;
+    let select_only_updated_ids_query_bind_snake_case = SelectOnlyUpdatedIdsQueryBindSnakeCase;
+    let select_only_created_ids_query_part_snake_case = SelectOnlyCreatedIdsQueryPartSnakeCase;
+    let select_only_created_ids_query_bind_snake_case = SelectOnlyCreatedIdsQueryBindSnakeCase;
+    let query_part_error_named_upper_camel_case = QueryPartErrorNamedUpperCamelCase;
     let reference_std_primitive_str_ts = token_patterns::RefStdPrimitiveStr;
     let std_primitive_bool_ts = token_patterns::StdPrimitiveBool;
     let reference_mut_std_primitive_u64_ts = {
@@ -866,7 +912,7 @@ pub fn generate_impl_default_option_some_vec_one_el_ts(
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let path_trait_ts = import_path.default_option_some_vec_one_el();
-    let default_option_some_vec_one_el_snake_case = naming::DefaultOptionSomeVecOneElSnakeCase;
+    let default_option_some_vec_one_el_snake_case = DefaultOptionSomeVecOneElSnakeCase;
     quote::quote! {
         impl #impl_generic_ts #path_trait_ts for #ident #ident_generic_ts {
             fn #default_option_some_vec_one_el_snake_case() -> Self {
@@ -882,7 +928,7 @@ pub fn generate_impl_all_variants_default_option_some_vec_one_el_ts(
 ) -> proc_macro2::TokenStream {
     let path_trait_ts = import_path.all_variants_default_option_some_vec_one_el();
     let all_variants_default_option_some_vec_one_el_snake_case =
-        naming::AllVariantsDefaultOptionSomeVecOneElSnakeCase;
+        AllVariantsDefaultOptionSomeVecOneElSnakeCase;
     quote::quote! {
         impl #path_trait_ts for #ident {
             fn #all_variants_default_option_some_vec_one_el_snake_case() -> Vec<Self> {
@@ -900,7 +946,7 @@ pub fn generate_impl_default_option_some_vec_one_el_max_page_size_ts(
 ) -> proc_macro2::TokenStream {
     let path_trait_ts = import_path.default_option_some_vec_one_el_max_page_size();
     let default_option_some_vec_one_el_max_page_size_snake_case =
-        naming::DefaultOptionSomeVecOneElMaxPageSizeSnakeCase;
+        DefaultOptionSomeVecOneElMaxPageSizeSnakeCase;
     quote::quote! {
         impl #impl_generic_ts #path_trait_ts for #ident #ident_generic_ts {
             fn #default_option_some_vec_one_el_max_page_size_snake_case() -> Self {
@@ -916,7 +962,7 @@ pub fn generate_impl_all_variants_default_option_some_vec_one_el_max_page_size_t
 ) -> proc_macro2::TokenStream {
     let path_trait_ts = import_path.all_variants_default_option_some_vec_one_el_max_page_size();
     let all_variants_default_option_some_vec_one_el_max_page_size_snake_case =
-        naming::AllVariantsDefaultOptionSomeVecOneElMaxPageSizeSnakeCase;
+        AllVariantsDefaultOptionSomeVecOneElMaxPageSizeSnakeCase;
     quote::quote! {
         impl #path_trait_ts for #ident {
             fn #all_variants_default_option_some_vec_one_el_max_page_size_snake_case() -> Vec<Self> {
@@ -1021,11 +1067,10 @@ pub fn impl_postgresql_type_where_filter_for_ident_ts(
     let std_fmt_display_ts = token_patterns::StdFmtDisplay;
     let std_primitive_bool_ts = token_patterns::StdPrimitiveBool;
     let std_string_string_ts = token_patterns::StdStringString;
-    let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
-    let query_part_snake_case = naming::QueryPartSnakeCase;
-    let query_bind_snake_case = naming::QueryBindSnakeCase;
-    let postgresql_type_where_filter_upper_camel_case =
-        naming::PostgresqlTypeWhereFilterUpperCamelCase;
+    let query_part_error_named_upper_camel_case = QueryPartErrorNamedUpperCamelCase;
+    let query_part_snake_case = QueryPartSnakeCase;
+    let query_bind_snake_case = QueryBindSnakeCase;
+    let postgresql_type_where_filter_upper_camel_case = PostgresqlTypeWhereFilterUpperCamelCase;
     let allow_clippy_arbitrary_source_item_ordering_ts =
         token_patterns::AllowClippyArbitrarySourceItemOrdering;
     quote::quote! {
@@ -1066,7 +1111,7 @@ pub fn generate_impl_sqlx_decode_sqlx_postgres_for_ident_ts(
     type_ts: &dyn quote::ToTokens,
     ok_value_match_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let value_snake_case = naming::ValueSnakeCase;
+    let value_snake_case = ValueSnakeCase;
     quote::quote! {
         impl sqlx::Decode<'_, sqlx::Postgres> for #ident_ts {
             fn decode(#value_snake_case: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
@@ -1129,33 +1174,31 @@ pub fn generate_impl_postgresql_type_ts(
     is_select_only_updated_ids_query_bind_mutable: &IsSelectOnlyUpdatedIdsQueryBindMutable,
     select_only_updated_ids_query_bind_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
-    let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
-    let create_table_column_query_part_snake_case = naming::CreateTableColumnQueryPartSnakeCase;
-    let create_upper_camel_case = naming::CreateUpperCamelCase;
-    let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
-    let create_query_bind_snake_case = naming::CreateQueryBindSnakeCase;
-    let select_upper_camel_case = naming::SelectUpperCamelCase;
-    let select_query_part_snake_case = naming::SelectQueryPartSnakeCase;
-    let where_upper_camel_case = naming::WhereUpperCamelCase;
-    let read_upper_camel_case = naming::ReadUpperCamelCase;
-    let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
-    let select_only_ids_query_part_snake_case = naming::SelectOnlyIdsQueryPartSnakeCase;
-    let normalize_snake_case = naming::NormalizeSnakeCase;
-    let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
-    let update_upper_camel_case = naming::UpdateUpperCamelCase;
-    let update_for_query_upper_camel_case = naming::UpdateForQueryUpperCamelCase;
-    let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
-    let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
-    let value_snake_case = naming::ValueSnakeCase;
-    let increment_snake_case = naming::IncrementSnakeCase;
-    let query_snake_case = naming::QuerySnakeCase;
-    let column_snake_case = naming::ColumnSnakeCase;
-    let select_only_updated_ids_query_part_snake_case =
-        naming::SelectOnlyUpdatedIdsQueryPartSnakeCase;
-    let select_only_updated_ids_query_bind_snake_case =
-        naming::SelectOnlyUpdatedIdsQueryBindSnakeCase;
-    let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
+    let postgresql_type_upper_camel_case = PostgresqlTypeUpperCamelCase;
+    let table_type_declaration_upper_camel_case = TableTypeDeclarationUpperCamelCase;
+    let create_table_column_query_part_snake_case = CreateTableColumnQueryPartSnakeCase;
+    let create_upper_camel_case = CreateUpperCamelCase;
+    let create_query_part_snake_case = CreateQueryPartSnakeCase;
+    let create_query_bind_snake_case = CreateQueryBindSnakeCase;
+    let select_upper_camel_case = SelectUpperCamelCase;
+    let select_query_part_snake_case = SelectQueryPartSnakeCase;
+    let where_upper_camel_case = WhereUpperCamelCase;
+    let read_upper_camel_case = ReadUpperCamelCase;
+    let read_only_ids_upper_camel_case = ReadOnlyIdsUpperCamelCase;
+    let select_only_ids_query_part_snake_case = SelectOnlyIdsQueryPartSnakeCase;
+    let normalize_snake_case = NormalizeSnakeCase;
+    let read_inner_upper_camel_case = ReadInnerUpperCamelCase;
+    let update_upper_camel_case = UpdateUpperCamelCase;
+    let update_for_query_upper_camel_case = UpdateForQueryUpperCamelCase;
+    let update_query_part_snake_case = UpdateQueryPartSnakeCase;
+    let update_query_bind_snake_case = UpdateQueryBindSnakeCase;
+    let value_snake_case = ValueSnakeCase;
+    let increment_snake_case = IncrementSnakeCase;
+    let query_snake_case = QuerySnakeCase;
+    let column_snake_case = ColumnSnakeCase;
+    let select_only_updated_ids_query_part_snake_case = SelectOnlyUpdatedIdsQueryPartSnakeCase;
+    let select_only_updated_ids_query_bind_snake_case = SelectOnlyUpdatedIdsQueryBindSnakeCase;
+    let query_part_error_named_upper_camel_case = QueryPartErrorNamedUpperCamelCase;
     let std_string_string_ts = token_patterns::StdStringString;
     let std_primitive_u64_ts = token_patterns::StdPrimitiveU64;
     let reference_std_primitive_str_ts = token_patterns::RefStdPrimitiveStr;
@@ -1252,9 +1295,9 @@ pub fn generate_impl_postgresql_type_not_primary_key_for_ident_ts(
     ident: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_not_primary_key_upper_camel_case =
-        naming::PostgresqlTypeNotPrimaryKeyUpperCamelCase;
-    let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
-    let create_upper_camel_case = naming::CreateUpperCamelCase;
+        PostgresqlTypeNotPrimaryKeyUpperCamelCase;
+    let postgresql_type_upper_camel_case = PostgresqlTypeUpperCamelCase;
+    let create_upper_camel_case = CreateUpperCamelCase;
     let ident_create_upper_camel_case = SelfCreateUpperCamelCase::from_tokens(&ident);
     let allow_clippy_arbitrary_source_item_ordering_ts =
         token_patterns::AllowClippyArbitrarySourceItemOrdering;
@@ -1273,16 +1316,16 @@ pub fn generate_impl_postgresql_type_not_primary_key_for_ident_ts(
 //     content_ts: &dyn quote::ToTokens,
 //     postgresql_type_or_postgresql_json_type: &PostgresqlTypeOrPostgresqlJsonType,
 // ) -> proc_macro2::TokenStream {
-//     let self_upper_camel_case = naming::SelfUpperCamelCase;
-//     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
-//     let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
-//     let create_snake_case = naming::CreateSnakeCase;
-//     let create_upper_camel_case = naming::CreateUpperCamelCase;
-//     let where_upper_camel_case = naming::WhereUpperCamelCase;
+//     let self_upper_camel_case = SelfUpperCamelCase;
+//     let read_only_ids_snake_case = ReadOnlyIdsSnakeCase;
+//     let read_only_ids_upper_camel_case = ReadOnlyIdsUpperCamelCase;
+//     let create_snake_case = CreateSnakeCase;
+//     let create_upper_camel_case = CreateUpperCamelCase;
+//     let where_upper_camel_case = WhereUpperCamelCase;
 //     let self_postgresql_type_or_postgresql_json_type_as_postgresql_json_type_ts = {
 //         let postgresql_type_or_postgresql_json_type_ts: &dyn quote::ToTokens = match &postgresql_type_or_postgresql_json_type {
-//             PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => &naming::PostgresqlTypeUpperCamelCase,
-//             PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => &naming::PostgresqlJsonTypeUpperCamelCase,
+//             PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => &PostgresqlTypeUpperCamelCase,
+//             PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => &PostgresqlJsonTypeUpperCamelCase,
 //         };
 //         quote::quote! {
 //             <#self_upper_camel_case::#postgresql_type_or_postgresql_json_type_ts as #import_path::#postgresql_type_or_postgresql_json_type_ts>
@@ -1302,8 +1345,8 @@ fn generate_option_vec_create_ts(
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let option_vec_create_snake_case = naming::OptionVecCreateSnakeCase;
-    let create_upper_camel_case = naming::CreateUpperCamelCase;
+    let option_vec_create_snake_case = OptionVecCreateSnakeCase;
+    let create_upper_camel_case = CreateUpperCamelCase;
     quote::quote! {
         fn #option_vec_create_snake_case() -> Option<Vec<#path_ts::#create_upper_camel_case>> {
             #content_ts
@@ -1315,10 +1358,10 @@ fn generate_read_only_ids_to_two_dimensional_vec_read_inner_ts(
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let read_only_ids_to_two_dimensional_vec_read_inner_snake_case =
-        naming::ReadOnlyIdsToTwoDimensionalVecReadInnerSnakeCase;
-    let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
-    let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
-    let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
+        ReadOnlyIdsToTwoDimensionalVecReadInnerSnakeCase;
+    let read_only_ids_upper_camel_case = ReadOnlyIdsUpperCamelCase;
+    let read_inner_upper_camel_case = ReadInnerUpperCamelCase;
+    let read_only_ids_snake_case = ReadOnlyIdsSnakeCase;
     quote::quote! {
         fn #read_only_ids_to_two_dimensional_vec_read_inner_snake_case(
             #read_only_ids_snake_case: &#path_ts::#read_only_ids_upper_camel_case
@@ -1333,9 +1376,9 @@ fn generate_read_inner_into_read_with_new_or_try_new_unwraped_ts(
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let read_inner_into_read_with_new_or_try_new_unwraped_snake_case =
-        naming::ReadInnerIntoReadWithNewOrTryNewUnwrapedSnakeCase;
-    let value_snake_case = naming::ValueSnakeCase;
-    let read_upper_camel_case = naming::ReadUpperCamelCase;
+        ReadInnerIntoReadWithNewOrTryNewUnwrapedSnakeCase;
+    let value_snake_case = ValueSnakeCase;
+    let read_upper_camel_case = ReadUpperCamelCase;
     quote::quote! {
         fn #read_inner_into_read_with_new_or_try_new_unwraped_snake_case(
             #value_snake_case: #type_ts
@@ -1350,9 +1393,9 @@ fn generate_read_inner_into_update_with_new_or_try_new_unwraped_ts(
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let read_inner_into_update_with_new_or_try_new_unwraped_snake_case =
-        naming::ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSnakeCase;
-    let update_upper_camel_case = naming::UpdateUpperCamelCase;
-    let value_snake_case = naming::ValueSnakeCase;
+        ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSnakeCase;
+    let update_upper_camel_case = UpdateUpperCamelCase;
+    let value_snake_case = ValueSnakeCase;
     quote::quote! {
         fn #read_inner_into_update_with_new_or_try_new_unwraped_snake_case(#value_snake_case: #type_ts) -> #path_ts::#update_upper_camel_case {
             #content_ts
@@ -1363,10 +1406,10 @@ fn generate_update_to_read_only_ids_ts(
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let update_to_read_only_ids_snake_case = naming::UpdateToReadOnlyIdsSnakeCase;
-    let update_upper_camel_case = naming::UpdateUpperCamelCase;
-    let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
-    let value_snake_case = naming::ValueSnakeCase;
+    let update_to_read_only_ids_snake_case = UpdateToReadOnlyIdsSnakeCase;
+    let update_upper_camel_case = UpdateUpperCamelCase;
+    let read_only_ids_upper_camel_case = ReadOnlyIdsUpperCamelCase;
+    let value_snake_case = ValueSnakeCase;
     quote::quote! {
         fn #update_to_read_only_ids_snake_case(
             #value_snake_case: &#path_ts::#update_upper_camel_case
@@ -1381,11 +1424,11 @@ fn generate_read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let read_only_ids_to_option_value_read_default_option_some_vec_one_el_snake_case =
-        naming::ReadOnlyIdsToOptionValueReadDefaultOptionSomeVecOneElSnakeCase;
-    let value_upper_camel_case = naming::ValueUpperCamelCase;
-    let value_snake_case = naming::ValueSnakeCase;
-    let read_upper_camel_case = naming::ReadUpperCamelCase;
-    let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
+        ReadOnlyIdsToOptionValueReadDefaultOptionSomeVecOneElSnakeCase;
+    let value_upper_camel_case = ValueUpperCamelCase;
+    let value_snake_case = ValueSnakeCase;
+    let read_upper_camel_case = ReadUpperCamelCase;
+    let read_only_ids_upper_camel_case = ReadOnlyIdsUpperCamelCase;
     quote::quote! {
         fn #read_only_ids_to_option_value_read_default_option_some_vec_one_el_snake_case(
             #value_snake_case: &#path_ts::#read_only_ids_upper_camel_case
@@ -1399,11 +1442,11 @@ fn generate_previous_read_merged_with_option_update_into_read_ts(
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let previous_read_merged_with_option_update_into_read_snake_case =
-        naming::PreviousReadMergedWithOptionUpdateIntoReadSnakeCase;
-    let read_upper_camel_case = naming::ReadUpperCamelCase;
-    let read_snake_case = naming::ReadSnakeCase;
-    let update_upper_camel_case = naming::UpdateUpperCamelCase;
-    let option_update_snake_case = naming::OptionUpdateSnakeCase;
+        PreviousReadMergedWithOptionUpdateIntoReadSnakeCase;
+    let read_upper_camel_case = ReadUpperCamelCase;
+    let read_snake_case = ReadSnakeCase;
+    let update_upper_camel_case = UpdateUpperCamelCase;
+    let option_update_snake_case = OptionUpdateSnakeCase;
     quote::quote! {
         fn #previous_read_merged_with_option_update_into_read_snake_case(
             #read_snake_case: #path_ts::#read_upper_camel_case,
@@ -1418,12 +1461,12 @@ fn generate_read_only_ids_merged_with_create_into_read_ts(
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let read_only_ids_merged_with_create_into_read_snake_case =
-        naming::ReadOnlyIdsMergedWithCreateIntoReadSnakeCase;
-    let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
-    let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
-    let create_upper_camel_case = naming::CreateUpperCamelCase;
-    let create_snake_case = naming::CreateSnakeCase;
-    let read_upper_camel_case = naming::ReadUpperCamelCase;
+        ReadOnlyIdsMergedWithCreateIntoReadSnakeCase;
+    let read_only_ids_upper_camel_case = ReadOnlyIdsUpperCamelCase;
+    let read_only_ids_snake_case = ReadOnlyIdsSnakeCase;
+    let create_upper_camel_case = CreateUpperCamelCase;
+    let create_snake_case = CreateSnakeCase;
+    let read_upper_camel_case = ReadUpperCamelCase;
     quote::quote! {
         fn #read_only_ids_merged_with_create_into_read_snake_case(
             #read_only_ids_snake_case: #path_ts::#read_only_ids_upper_camel_case,
@@ -1439,13 +1482,13 @@ fn generate_read_only_ids_merged_with_create_into_option_value_read_ts(
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let read_only_ids_merged_with_create_into_option_value_read_snake_case =
-        naming::ReadOnlyIdsMergedWithCreateIntoOptionValueReadSnakeCase;
-    let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
-    let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
-    let create_upper_camel_case = naming::CreateUpperCamelCase;
-    let create_snake_case = naming::CreateSnakeCase;
-    let value_upper_camel_case = naming::ValueUpperCamelCase;
-    let read_upper_camel_case = naming::ReadUpperCamelCase;
+        ReadOnlyIdsMergedWithCreateIntoOptionValueReadSnakeCase;
+    let read_only_ids_upper_camel_case = ReadOnlyIdsUpperCamelCase;
+    let read_only_ids_snake_case = ReadOnlyIdsSnakeCase;
+    let create_upper_camel_case = CreateUpperCamelCase;
+    let create_snake_case = CreateSnakeCase;
+    let value_upper_camel_case = ValueUpperCamelCase;
+    let read_upper_camel_case = ReadUpperCamelCase;
     quote::quote! {
         fn #read_only_ids_merged_with_create_into_option_value_read_snake_case(
             #read_only_ids_snake_case: #path_ts::#read_only_ids_upper_camel_case,
@@ -1460,12 +1503,12 @@ fn generate_read_only_ids_merged_with_create_into_table_type_declaration_ts(
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let read_only_ids_merged_with_create_into_table_type_declaration_snake_case =
-        naming::ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSnakeCase;
-    let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
-    let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
-    let create_upper_camel_case = naming::CreateUpperCamelCase;
-    let create_snake_case = naming::CreateSnakeCase;
-    let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
+        ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSnakeCase;
+    let read_only_ids_upper_camel_case = ReadOnlyIdsUpperCamelCase;
+    let read_only_ids_snake_case = ReadOnlyIdsSnakeCase;
+    let create_upper_camel_case = CreateUpperCamelCase;
+    let create_snake_case = CreateSnakeCase;
+    let table_type_declaration_upper_camel_case = TableTypeDeclarationUpperCamelCase;
     quote::quote! {
         fn #read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
             #read_only_ids_snake_case: #path_ts::#read_only_ids_upper_camel_case,
@@ -1483,9 +1526,9 @@ pub fn generate_read_only_ids_merged_with_create_into_where_equal_ts(
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let read_only_ids_merged_with_create_into_where_equal_snake_case =
-        naming::ReadOnlyIdsMergedWithCreateIntoWhereEqualSnakeCase;
-    let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
-    let create_snake_case = naming::CreateSnakeCase;
+        ReadOnlyIdsMergedWithCreateIntoWhereEqualSnakeCase;
+    let read_only_ids_snake_case = ReadOnlyIdsSnakeCase;
+    let create_snake_case = CreateSnakeCase;
     quote::quote! {
         fn #read_only_ids_merged_with_create_into_where_equal_snake_case(
             #read_only_ids_snake_case: #read_only_ids_ts,
@@ -1503,9 +1546,9 @@ pub fn generate_read_only_ids_merged_with_create_into_vec_where_equal_using_fiel
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case =
-        naming::ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSnakeCase;
-    let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
-    let create_snake_case = naming::CreateSnakeCase;
+        ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSnakeCase;
+    let read_only_ids_snake_case = ReadOnlyIdsSnakeCase;
+    let create_snake_case = CreateSnakeCase;
     quote::quote! {
         fn #read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case(
             #read_only_ids_snake_case: #read_only_ids_ts,
@@ -1524,8 +1567,8 @@ fn generate_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_
     content_ts: &dyn quote::ToTokens,
     postgresql_type_or_postgresql_json_type: PostgresqlTypeOrPostgresqlJsonType,
 ) -> proc_macro2::TokenStream {
-    let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
-    let create_snake_case = naming::CreateSnakeCase;
+    let read_only_ids_snake_case = ReadOnlyIdsSnakeCase;
+    let create_snake_case = CreateSnakeCase;
     let return_type_ts = {
         let return_type_handle_ts = quote::quote! {#import_path::NotEmptyUniqueVec<#where_ts>};
         match &postgresql_type_or_postgresql_json_type {
@@ -1537,10 +1580,10 @@ fn generate_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_
     };
     let name_ts: &dyn quote::ToTokens = match &postgresql_type_or_postgresql_json_type {
         PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => {
-            &naming::ReadOnlyIdsMergedWithCreateIntoOptionVecWhereEqualToJsonFieldSnakeCase
+            &ReadOnlyIdsMergedWithCreateIntoOptionVecWhereEqualToJsonFieldSnakeCase
         }
         PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => {
-            &naming::ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSnakeCase
+            &ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSnakeCase
         }
     };
     quote::quote! {
@@ -1574,11 +1617,11 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
-    let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
-    let create_upper_camel_case = naming::CreateUpperCamelCase;
-    let create_snake_case = naming::CreateSnakeCase;
-    let where_upper_camel_case = naming::WhereUpperCamelCase;
+    let read_only_ids_upper_camel_case = ReadOnlyIdsUpperCamelCase;
+    let read_only_ids_snake_case = ReadOnlyIdsSnakeCase;
+    let create_upper_camel_case = CreateUpperCamelCase;
+    let create_snake_case = CreateSnakeCase;
+    let where_upper_camel_case = WhereUpperCamelCase;
     quote::quote! {
         fn #name_ts(
             #read_only_ids_snake_case: #path_ts::#read_only_ids_upper_camel_case,
@@ -1595,7 +1638,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
 ) -> proc_macro2::TokenStream {
     generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_ts(
         import_path,
-        &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionOneEqualSnakeCase,
+        &ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionOneEqualSnakeCase,
         &path_ts,
         &content_ts
     )
@@ -1607,7 +1650,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
 ) -> proc_macro2::TokenStream {
     generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_ts(
         import_path,
-        &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionTwoEqualSnakeCase,
+        &ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionTwoEqualSnakeCase,
         &path_ts,
         &content_ts
     )
@@ -1619,7 +1662,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
 ) -> proc_macro2::TokenStream {
     generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_ts(
         import_path,
-        &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionThreeEqualSnakeCase,
+        &ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionThreeEqualSnakeCase,
         &path_ts,
         &content_ts
     )
@@ -1631,7 +1674,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
 ) -> proc_macro2::TokenStream {
     generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_ts(
         import_path,
-        &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionFourEqualSnakeCase,
+        &ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionFourEqualSnakeCase,
         &path_ts,
         &content_ts
     )
@@ -1642,10 +1685,10 @@ fn generate_create_into_postgresql_json_type_option_vec_where_length_equal_ts(
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let create_into_postgresql_json_type_option_vec_where_length_equal_snake_case =
-        naming::CreateIntoPostgresqlJsonTypeOptionVecWhereLengthEqualSnakeCase;
-    let create_upper_camel_case = naming::CreateUpperCamelCase;
-    let create_snake_case = naming::CreateSnakeCase;
-    let where_upper_camel_case = naming::WhereUpperCamelCase;
+        CreateIntoPostgresqlJsonTypeOptionVecWhereLengthEqualSnakeCase;
+    let create_upper_camel_case = CreateUpperCamelCase;
+    let create_snake_case = CreateSnakeCase;
+    let where_upper_camel_case = WhereUpperCamelCase;
     quote::quote! {
         fn #create_into_postgresql_json_type_option_vec_where_length_equal_snake_case(
             #create_snake_case: #path_ts::#create_upper_camel_case
@@ -1660,10 +1703,10 @@ fn generate_create_into_postgresql_json_type_option_vec_where_length_greater_tha
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case =
-        naming::CreateIntoPostgresqlJsonTypeOptionVecWhereLengthGreaterThanSnakeCase;
-    let create_upper_camel_case = naming::CreateUpperCamelCase;
-    let create_snake_case = naming::CreateSnakeCase;
-    let where_upper_camel_case = naming::WhereUpperCamelCase;
+        CreateIntoPostgresqlJsonTypeOptionVecWhereLengthGreaterThanSnakeCase;
+    let create_upper_camel_case = CreateUpperCamelCase;
+    let create_snake_case = CreateSnakeCase;
+    let where_upper_camel_case = WhereUpperCamelCase;
     quote::quote! {
         fn #create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case(
             #create_snake_case: #path_ts::#create_upper_camel_case
@@ -1678,11 +1721,11 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_no
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
-    let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
-    let create_upper_camel_case = naming::CreateUpperCamelCase;
-    let create_snake_case = naming::CreateSnakeCase;
-    let where_upper_camel_case = naming::WhereUpperCamelCase;
+    let read_only_ids_upper_camel_case = ReadOnlyIdsUpperCamelCase;
+    let read_only_ids_snake_case = ReadOnlyIdsSnakeCase;
+    let create_upper_camel_case = CreateUpperCamelCase;
+    let create_snake_case = CreateSnakeCase;
+    let where_upper_camel_case = WhereUpperCamelCase;
     quote::quote! {
         fn #method_name_ts(
             #read_only_ids_snake_case: #path_ts::#read_only_ids_upper_camel_case,
@@ -1698,7 +1741,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
-        &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereGreaterThanSnakeCase,
+        &ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereGreaterThanSnakeCase,
         import_path,
         path_ts,
         content_ts,
@@ -1710,7 +1753,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
-        &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereBetweenSnakeCase,
+        &ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereBetweenSnakeCase,
         import_path,
         path_ts,
         content_ts,
@@ -1722,7 +1765,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
-        &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereInSnakeCase,
+        &ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereInSnakeCase,
         import_path,
         path_ts,
         content_ts,
@@ -1734,7 +1777,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
-        &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereRegularExpressionSnakeCase,
+        &ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereRegularExpressionSnakeCase,
         import_path,
         path_ts,
         content_ts,
@@ -1746,7 +1789,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
-        &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElGreaterThanSnakeCase,
+        &ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElGreaterThanSnakeCase,
         import_path,
         path_ts,
         content_ts,
@@ -1758,7 +1801,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
-        &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElRegularExpressionSnakeCase,
+        &ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElRegularExpressionSnakeCase,
         import_path,
         path_ts,
         content_ts,
@@ -1798,17 +1841,17 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_ts(
     read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_el_greater_than_ts: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_el_regular_expression_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
-    let postgresql_type_test_cases_upper_camel_case = naming::PostgresqlTypeTestCasesUpperCamelCase;
-    let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
-    let table_type_declaration_snake_case = naming::TableTypeDeclarationSnakeCase;
-    let self_upper_camel_case = naming::SelfUpperCamelCase;
-    let select_upper_camel_case = naming::SelectUpperCamelCase;
-    let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
-    let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
-    let where_upper_camel_case = naming::WhereUpperCamelCase;
-    let create_upper_camel_case = naming::CreateUpperCamelCase;
-    let create_snake_case = naming::CreateSnakeCase;
+    let postgresql_type_upper_camel_case = PostgresqlTypeUpperCamelCase;
+    let postgresql_type_test_cases_upper_camel_case = PostgresqlTypeTestCasesUpperCamelCase;
+    let table_type_declaration_upper_camel_case = TableTypeDeclarationUpperCamelCase;
+    let table_type_declaration_snake_case = TableTypeDeclarationSnakeCase;
+    let self_upper_camel_case = SelfUpperCamelCase;
+    let select_upper_camel_case = SelectUpperCamelCase;
+    let read_only_ids_upper_camel_case = ReadOnlyIdsUpperCamelCase;
+    let read_only_ids_snake_case = ReadOnlyIdsSnakeCase;
+    let where_upper_camel_case = WhereUpperCamelCase;
+    let create_upper_camel_case = CreateUpperCamelCase;
+    let create_snake_case = CreateSnakeCase;
     let self_postgresql_type_as_postgresql_type_ts = quote::quote! {<#self_upper_camel_case::#postgresql_type_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>};
     let self_postgresql_type_as_postgresql_type_read_only_ids_ts = quote::quote! {#self_postgresql_type_as_postgresql_type_ts::#read_only_ids_upper_camel_case};
     let self_postgresql_type_as_postgresql_type_create_ts =
@@ -1894,10 +1937,11 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_ts(
         PostgresqlTypeOrPostgresqlJsonType::PostgresqlType,
     );
     let create_into_postgresql_type_option_vec_where_dimension_one_equal_snake_case =
-        naming::CreateIntoPostgresqlTypeOptionVecWhereDimensionOneEqualSnakeCase;
+        CreateIntoPostgresqlTypeOptionVecWhereDimensionOneEqualSnakeCase;
     let postgresql_type_option_vec_where_greater_than_test_snake_case =
-        naming::PostgresqlTypeOptionVecWhereGreaterThanTestSnakeCase;
-    let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_snake_case = naming::ReadOnlyIdsMergedWithTableTypeDeclarationIntoPostgresqlTypeOptionWhereGreaterThanSnakeCase;
+        PostgresqlTypeOptionVecWhereGreaterThanTestSnakeCase;
+    let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_snake_case =
+        ReadOnlyIdsMergedWithTableTypeDeclarationIntoPostgresqlTypeOptionWhereGreaterThanSnakeCase;
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_content_ts = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_ts(
         *import_path,
         &self_postgresql_type_as_postgresql_type_ts,
@@ -2058,19 +2102,19 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_ts(
 ) -> proc_macro2::TokenStream {
     let allow_clippy_arbitrary_source_item_ordering_ts =
         token_patterns::AllowClippyArbitrarySourceItemOrdering;
-    let value_upper_camel_case = naming::ValueUpperCamelCase;
-    let value_snake_case = naming::ValueSnakeCase;
-    let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
+    let value_upper_camel_case = ValueUpperCamelCase;
+    let value_snake_case = ValueSnakeCase;
+    let postgresql_json_type_upper_camel_case = PostgresqlJsonTypeUpperCamelCase;
     let postgresql_json_type_test_cases_upper_camel_case =
-        naming::PostgresqlJsonTypeTestCasesUpperCamelCase;
-    let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
-    let self_upper_camel_case = naming::SelfUpperCamelCase;
-    let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
+        PostgresqlJsonTypeTestCasesUpperCamelCase;
+    let read_inner_upper_camel_case = ReadInnerUpperCamelCase;
+    let self_upper_camel_case = SelfUpperCamelCase;
+    let read_only_ids_upper_camel_case = ReadOnlyIdsUpperCamelCase;
     let read_only_ids_into_option_value_read_inner_snake_case =
-        naming::ReadOnlyIdsIntoOptionValueReadInnerSnakeCase;
-    let create_upper_camel_case = naming::CreateUpperCamelCase;
-    let select_upper_camel_case = naming::SelectUpperCamelCase;
-    let where_upper_camel_case = naming::WhereUpperCamelCase;
+        ReadOnlyIdsIntoOptionValueReadInnerSnakeCase;
+    let create_upper_camel_case = CreateUpperCamelCase;
+    let select_upper_camel_case = SelectUpperCamelCase;
+    let where_upper_camel_case = WhereUpperCamelCase;
     let self_postgresql_json_type_as_postgresql_json_type_ts = quote::quote! {<#self_upper_camel_case::#postgresql_json_type_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>};
     let self_postgresql_json_type_as_postgresql_json_type_read_only_ids_ts = quote::quote! {#self_postgresql_json_type_as_postgresql_json_type_ts::#read_only_ids_upper_camel_case};
     let self_postgresql_json_type_as_postgresql_json_type_create_ts = quote::quote! {#self_postgresql_json_type_as_postgresql_json_type_ts::#create_upper_camel_case};
@@ -2291,7 +2335,7 @@ pub fn generate_match_try_new_in_deserialize_ts(
     }
 }
 pub fn generate_impl_serde_deserialize_for_struct_ts(
-    ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+    ident: &dyn StdFmtDisplayPlusQuoteToTokens,
     vec_ident_type: &[(&syn::Ident, &syn::Type)],
     len: usize,
     generate_type_ts: &dyn Fn(&syn::Ident, &syn::Type) -> proc_macro2::TokenStream,
@@ -2330,7 +2374,7 @@ pub fn generate_impl_serde_deserialize_for_struct_ts(
     let field_enum_variants_ts = {
         let field_enum_variants_ts = (0..len)
             .map(|i| {
-                format!("__{}{i}", naming::FieldSnakeCase)
+                format!("__{FieldSnakeCase}{i}")
                     .parse::<proc_macro2::TokenStream>()
                     .expect("c46314b0-baee-41c8-b9c6-54b888310ca8")
             })
@@ -2626,7 +2670,7 @@ pub fn generate_value_initialization_ts(
     import_path: &ImportPath,
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let value_snake_case = naming::ValueSnakeCase;
+    let value_snake_case = ValueSnakeCase;
     quote::quote! {#import_path::Value { #value_snake_case: #content_ts }}
 }
 pub fn impl_postgresql_type_equal_operator_for_ident_ts(
@@ -2634,9 +2678,8 @@ pub fn impl_postgresql_type_equal_operator_for_ident_ts(
     ident: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let postgresql_type_equal_operator_upper_camel_case =
-        naming::PostgresqlTypeEqualOperatorUpperCamelCase;
-    let equal_operator_upper_camel_case = naming::EqualOperatorUpperCamelCase;
+    let postgresql_type_equal_operator_upper_camel_case = PostgresqlTypeEqualOperatorUpperCamelCase;
+    let equal_operator_upper_camel_case = EqualOperatorUpperCamelCase;
     quote::quote! {
         impl #import_path::#postgresql_type_equal_operator_upper_camel_case for #ident {
             fn operator(&self) -> #import_path::#equal_operator_upper_camel_case {
