@@ -1,7 +1,6 @@
 use error_occurence_lib::code_occurence::CodeOccurence;
 use std::{
-    fs,
-    fs::File,
+    fs::{self, File},
     io::{Error as IoError, Write},
     path::Path,
 };
