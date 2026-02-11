@@ -40,8 +40,8 @@ test-utils = []"#,
                 };
                 let ts = generate_postgresql_json_object_type_source::generate_postgresql_json_object_type(object_example_ts.clone());
                 quote::quote! {
-                    #object_example_ts
                     #ts
+                    #object_example_ts
                 }
             }
             .to_string()
