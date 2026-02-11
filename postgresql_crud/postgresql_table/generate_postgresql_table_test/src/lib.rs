@@ -105,8 +105,8 @@ server_config = {path = "../../../server_config"}"#,
                     ShouldAddGeneratePostgresqlTablePrimaryKey::False
                 );
                 quote::quote! {
-                    #table_struct_ts
                     #ts
+                    #table_struct_ts
                 }
             }
             .to_string()

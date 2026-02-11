@@ -1,16 +1,10 @@
-use naming::parameter::JsonbSelfUpperCamelCase;
-use naming::parameter::SelfCreateForQueryUpperCamelCase;
-use naming::parameter::SelfCreateUpperCamelCase;
-use naming::parameter::SelfOriginUpperCamelCase;
-use naming::parameter::SelfReadInnerUpperCamelCase;
-use naming::parameter::SelfReadOnlyIdsUpperCamelCase;
-use naming::parameter::SelfReadUpperCamelCase;
-use naming::parameter::SelfSelectUpperCamelCase;
-use naming::parameter::SelfTableTypeDeclarationUpperCamelCase;
-use naming::parameter::SelfUpdateForQueryUpperCamelCase;
-use naming::parameter::SelfUpdateUpperCamelCase;
-use naming::parameter::SelfWhereUpperCamelCase;
-
+use naming::GeneratePostgresqlJsonTypesModSnakeCase;
+use naming::parameter::{
+    JsonbSelfUpperCamelCase, SelfCreateForQueryUpperCamelCase, SelfCreateUpperCamelCase,
+    SelfOriginUpperCamelCase, SelfReadInnerUpperCamelCase, SelfReadOnlyIdsUpperCamelCase,
+    SelfReadUpperCamelCase, SelfSelectUpperCamelCase, SelfTableTypeDeclarationUpperCamelCase,
+    SelfUpdateForQueryUpperCamelCase, SelfUpdateUpperCamelCase, SelfWhereUpperCamelCase,
+};
 use std::collections::HashSet;
 use std::fmt::Display;
 use std::fmt::Formatter;
@@ -3869,6 +3863,7 @@ pub fn generate_postgresql_json_types(
         &macros_helpers::FormatWithCargofmt::True
     );
     let generated = {
+        let generate_postgresql_json_types_mod_snake_case = GeneratePostgresqlJsonTypesModSnakeCase;
         let content_ts = postgresql_json_type_array
             .into_iter()
             .map(|el_af9caefa| {
@@ -3877,7 +3872,14 @@ pub fn generate_postgresql_json_types(
                     .expect("84e21b40-b5a4-4f4c-86d3-8f6ecfbe1f6e")
             })
             .collect::<Vec<proc_macro2::TokenStream>>();
-        quote::quote! {#(#content_ts)*}
+        quote::quote! {
+            #[allow(unused_qualifications)]
+            #[allow(clippy::absolute_paths)]
+            mod #generate_postgresql_json_types_mod_snake_case {
+                #(#content_ts)*
+            }
+            pub use #generate_postgresql_json_types_mod_snake_case::*;
+        }
     };
     macros_helpers::maybe_write_ts_into_file(
         generate_postgresql_json_types_config

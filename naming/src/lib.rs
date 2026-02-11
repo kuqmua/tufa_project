@@ -1463,7 +1463,9 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
         "regular",
         "expression"
     ],
-    ["executor", "acquire"]
+    ["executor", "acquire"],
+    ["generate", "postgresql", "json", "types", "mod"],
+    ["generate", "postgresql", "types", "mod"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

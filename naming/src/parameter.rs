@@ -2024,6 +2024,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_ts!([
         "json",
         "object",
         "type",
-        "generated"
-    ]
+        "mod"
+    ],
+    ["self", "generate", "postgresql", "table", "mod"]
 ]);

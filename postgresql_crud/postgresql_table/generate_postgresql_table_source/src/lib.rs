@@ -7,6 +7,7 @@ use naming::parameter::SelfDeleteOneErrorNamedWithSerializeDeserializeUpperCamel
 use naming::parameter::SelfDeleteOneParametersUpperCamelCase;
 use naming::parameter::SelfDeleteOnePayloadUpperCamelCase;
 use naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase;
+use naming::parameter::SelfGeneratePostgresqlTableModSnakeCase;
 use naming::parameter::SelfHandleSnakeCase;
 use naming::parameter::SelfPayloadExampleSnakeCase;
 use naming::parameter::SelfPreparePostgresqlErrorNamedUpperCamelCase;
@@ -7437,21 +7438,34 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         &common_ts,
         &macros_helpers::FormatWithCargofmt::True,
     );
-    let generated = quote::quote! {
-        #allow_clippy_arbitrary_source_item_ordering_ts
-        impl #ident {
-            #(#impl_ident_vec_ts)*
+    let generated = {
+        let ident_generate_postgresql_table_mod_snake_case =
+            SelfGeneratePostgresqlTableModSnakeCase::from_tokens(&ident);
+        let content_ts_1c0e3fcd = quote::quote! {
+            #allow_clippy_arbitrary_source_item_ordering_ts
+            impl #ident {
+                #(#impl_ident_vec_ts)*
+            }
+            #common_ts
+            #create_many_ts
+            #create_one_ts
+            #read_many_ts
+            #read_one_ts
+            #update_many_ts
+            #update_one_ts
+            #delete_many_ts
+            #delete_one_ts
+            #ident_tests_ts
+        };
+        quote::quote! {
+            #[allow(unused_qualifications)]
+            #[allow(clippy::absolute_paths)]
+            mod #ident_generate_postgresql_table_mod_snake_case {
+                use super::#ident;
+                #content_ts_1c0e3fcd
+            }
+            pub use #ident_generate_postgresql_table_mod_snake_case::*;
         }
-        #common_ts
-        #create_many_ts
-        #create_one_ts
-        #read_many_ts
-        #read_one_ts
-        #update_many_ts
-        #update_one_ts
-        #delete_many_ts
-        #delete_one_ts
-        #ident_tests_ts
     };
     macros_helpers::maybe_write_ts_into_file(
         generate_postgresql_table_config.whole_content_write_into_generate_postgresql_table,

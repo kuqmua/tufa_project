@@ -1,3 +1,4 @@
+use naming::GeneratePostgresqlTypesModSnakeCase;
 use naming::parameter::SelfCreateUpperCamelCase;
 use naming::parameter::SelfNotNullUpperCamelCase;
 use naming::parameter::SelfOriginTryNewErrorNamedUpperCamelCase;
@@ -6789,6 +6790,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
         &macros_helpers::FormatWithCargofmt::True,
     );
     let generated = {
+        let generate_postgresql_types_mod_snake_case = GeneratePostgresqlTypesModSnakeCase;
         let content_ts = postgresql_type_array
             .into_iter()
             .map(|el_f9569807| {
@@ -6797,7 +6799,14 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     .expect("e0c9257d-e554-4147-8174-b431c364c1ac")
             })
             .collect::<Vec<proc_macro2::TokenStream>>();
-        quote::quote! {#(#content_ts)*}
+        quote::quote! {
+            #[allow(unused_qualifications)]
+            #[allow(clippy::absolute_paths)]
+            mod #generate_postgresql_types_mod_snake_case {
+                #(#content_ts)*
+            }
+            pub use #generate_postgresql_types_mod_snake_case::*;
+        }
     };
     macros_helpers::maybe_write_ts_into_file(
         generate_postgresql_json_types_config.whole_content_write_into_generate_postgresql_types,
