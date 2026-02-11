@@ -1,5 +1,15 @@
 use naming::{
-    GeneratePostgresqlJsonTypesModSnakeCase,
+    ArrayOfUpperCamelCase, AsUpperCamelCase, BooleanUpperCamelCase,
+    ColumnNameAndMaybeFieldGetterSnakeCase, CreateForQueryUpperCamelCase, CreateSnakeCase,
+    EqualUpperCamelCase, ErrorSnakeCase, GeneratePostgresqlJsonTypesModSnakeCase,
+    IncrementSnakeCase, JsonbSetAccumulatorSnakeCase, NewSnakeCase, NumberUpperCamelCase,
+    OptionUpdateSnakeCase, OptionVecCreateSnakeCase, PostgresqlJsonTypeUpperCamelCase,
+    QuerySnakeCase, ReadInnerUpperCamelCase, ReadOnlyIdsMergedWithCreateIntoReadSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoWhereEqualSnakeCase, ReadOnlyIdsSnakeCase,
+    ReadOnlyIdsToTwoDimensionalVecReadInnerSnakeCase, ReadSnakeCase, SelfSnakeCase,
+    SelfUpperCamelCase, StringUpperCamelCase, UpdateForQueryUpperCamelCase, UpdateUpperCamelCase,
+    ValueSnakeCase, VecOfUpperCamelCase,
     parameter::{
         JsonbSelfUpperCamelCase, SelfCreateForQueryUpperCamelCase, SelfCreateUpperCamelCase,
         SelfOriginUpperCamelCase, SelfReadInnerUpperCamelCase, SelfReadOnlyIdsUpperCamelCase,
@@ -67,9 +77,9 @@ pub fn generate_postgresql_json_types(
                 f,
                 "{}",
                 JsonbSelfUpperCamelCase::from_display(match &self {
-                    Self::Number => &naming::NumberUpperCamelCase,
-                    Self::Boolean => &naming::BooleanUpperCamelCase,
-                    Self::String => &naming::StringUpperCamelCase,
+                    Self::Number => &NumberUpperCamelCase,
+                    Self::Boolean => &BooleanUpperCamelCase,
+                    Self::String => &StringUpperCamelCase,
                 })
             )
         }
@@ -614,30 +624,30 @@ pub fn generate_postgresql_json_types(
         } else {
             IsStandartNotNullUuid::False
         };
-        let value_snake_case = naming::ValueSnakeCase;
-        let as_upper_camel_case = naming::AsUpperCamelCase;
-        let new_snake_case = naming::NewSnakeCase;
-        let self_upper_camel_case = naming::SelfUpperCamelCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let read_snake_case = naming::ReadSnakeCase;
-        let error_snake_case = naming::ErrorSnakeCase;
-        let option_vec_create_snake_case = naming::OptionVecCreateSnakeCase;
-        let option_update_snake_case = naming::OptionUpdateSnakeCase;
-        let read_only_ids_to_two_dimensional_vec_read_inner_snake_case = naming::ReadOnlyIdsToTwoDimensionalVecReadInnerSnakeCase;
-        let create_snake_case = naming::CreateSnakeCase;
-        let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
-        let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
+        let value_snake_case = ValueSnakeCase;
+        let as_upper_camel_case = AsUpperCamelCase;
+        let new_snake_case = NewSnakeCase;
+        let self_upper_camel_case = SelfUpperCamelCase;
+        let increment_snake_case = IncrementSnakeCase;
+        let query_snake_case = QuerySnakeCase;
+        let read_snake_case = ReadSnakeCase;
+        let error_snake_case = ErrorSnakeCase;
+        let option_vec_create_snake_case = OptionVecCreateSnakeCase;
+        let option_update_snake_case = OptionUpdateSnakeCase;
+        let read_only_ids_to_two_dimensional_vec_read_inner_snake_case = ReadOnlyIdsToTwoDimensionalVecReadInnerSnakeCase;
+        let create_snake_case = CreateSnakeCase;
+        let read_only_ids_snake_case = ReadOnlyIdsSnakeCase;
+        let postgresql_json_type_upper_camel_case = PostgresqlJsonTypeUpperCamelCase;
         let import_path = ImportPath::PostgresqlCrudCommon;
-        let create_for_query_upper_camel_case = naming::CreateForQueryUpperCamelCase;
-        let update_for_query_upper_camel_case = naming::UpdateForQueryUpperCamelCase;
-        let update_upper_camel_case = naming::UpdateUpperCamelCase;
-        let self_snake_case = naming::SelfSnakeCase;
-        let equal_upper_camel_case = naming::EqualUpperCamelCase;
-        let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
-        let read_only_ids_merged_with_create_into_read_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoReadSnakeCase;
-        let read_only_ids_merged_with_create_into_where_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoWhereEqualSnakeCase;
-        let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSnakeCase;
+        let create_for_query_upper_camel_case = CreateForQueryUpperCamelCase;
+        let update_for_query_upper_camel_case = UpdateForQueryUpperCamelCase;
+        let update_upper_camel_case = UpdateUpperCamelCase;
+        let self_snake_case = SelfSnakeCase;
+        let equal_upper_camel_case = EqualUpperCamelCase;
+        let read_inner_upper_camel_case = ReadInnerUpperCamelCase;
+        let read_only_ids_merged_with_create_into_read_snake_case = ReadOnlyIdsMergedWithCreateIntoReadSnakeCase;
+        let read_only_ids_merged_with_create_into_where_equal_snake_case = ReadOnlyIdsMergedWithCreateIntoWhereEqualSnakeCase;
+        let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case = ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSnakeCase;
 
         let std_primitive_i8_ts = token_patterns::StdPrimitiveI8;
         let std_primitive_i16_ts = token_patterns::StdPrimitiveI16;
@@ -664,8 +674,8 @@ pub fn generate_postgresql_json_types(
 
         let generate_import_path_value_initialization_ts = |content_ts: &dyn quote::ToTokens| postgresql_crud_macros_common::generate_value_initialization_ts(&import_path, &content_ts);
         let generate_ident_ts = |current_not_null_or_nullable: &NotNullOrNullable, current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern| {
-            let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
-            let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
+            let vec_of_upper_camel_case = VecOfUpperCamelCase;
+            let array_of_upper_camel_case = ArrayOfUpperCamelCase;
             let not_null_or_nullable_rust = current_not_null_or_nullable.rust();
             let (rust_part, postgresql_part) = match &current_postgresql_json_type_pattern {
                 PostgresqlJsonTypePattern::Standart => (rust_type_name.to_string(), postgresql_json_type_name.to_string()),
@@ -843,13 +853,13 @@ pub fn generate_postgresql_json_types(
             // let (instance_type_number_ts, instance_type_string_ts) = {
             //     let generate_instance_type_some_schemars_schema_single_or_vec_single_box_new_schemars_schema_instance_type = |instance_type: &schemars::schema::InstanceType| {
             //         let instance_type_ts: &dyn quote::ToTokens = match &instance_type {
-            //             schemars::schema::InstanceType::Null => &naming::NullUpperCamelCase,
-            //             schemars::schema::InstanceType::Boolean => &naming::BooleanUpperCamelCase,
-            //             schemars::schema::InstanceType::Object => &naming::ObjectUpperCamelCase,
-            //             schemars::schema::InstanceType::Array => &naming::ArrayUpperCamelCase,
-            //             schemars::schema::InstanceType::Number => &naming::NumberUpperCamelCase,
-            //             schemars::schema::InstanceType::String => &naming::StringUpperCamelCase,
-            //             schemars::schema::InstanceType::Integer => &naming::IntegerUpperCamelCase,
+            //             schemars::schema::InstanceType::Null => &NullUpperCamelCase,
+            //             schemars::schema::InstanceType::Boolean => &BooleanUpperCamelCase,
+            //             schemars::schema::InstanceType::Object => &ObjectUpperCamelCase,
+            //             schemars::schema::InstanceType::Array => &ArrayUpperCamelCase,
+            //             schemars::schema::InstanceType::Number => &NumberUpperCamelCase,
+            //             schemars::schema::InstanceType::String => &StringUpperCamelCase,
+            //             schemars::schema::InstanceType::Integer => &IntegerUpperCamelCase,
             //         };
             //         quote::quote! {Some(schemars::schema::SingleOrVec::Single(Box::new(schemars::schema::InstanceType::#instance_type_ts)))}
             //     };
@@ -2096,7 +2106,7 @@ pub fn generate_postgresql_json_types(
                 &{
                     let format_handle = {
                         //last child dimension value does not matter - null or type - works both good
-                        let column_name_and_maybe_field_getter_field_ident = format!("{{{}}}->'{{field_ident}}'", naming::ColumnNameAndMaybeFieldGetterSnakeCase);
+                        let column_name_and_maybe_field_getter_field_ident = format!("{{{ColumnNameAndMaybeFieldGetterSnakeCase}}}->'{{field_ident}}'");
                         let format_handle = ArrayDimension::try_from(postgresql_json_type_pattern).map_or_else(
                             |()| column_name_and_maybe_field_getter_field_ident.clone(),
                             |array_dimension| {
@@ -2403,7 +2413,7 @@ pub fn generate_postgresql_json_types(
                 &ident_update_upper_camel_case,
                 &ident_update_for_query_upper_camel_case,
                 &{
-                    let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
+                    let jsonb_set_accumulator_snake_case = JsonbSetAccumulatorSnakeCase;
                     let format_handle_ts = generate_quotes::double_quotes_ts(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}',${{value_26526e0f}})"));
                     quote::quote! {
                         match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
