@@ -1,12 +1,55 @@
-use naming::parameter::{
-    ElementSelfUpperCamelCase, SelfCreateForQueryUpperCamelCase, SelfCreateUpperCamelCase,
-    SelfCurrentSnakeCase, SelfGeneratePostgresqlJsonObjectTypeModSnakeCase, SelfLastSnakeCase,
-    SelfReadInnerUpperCamelCase, SelfReadOnlyIdsHandleUpperCamelCase,
-    SelfReadOnlyIdsUpperCamelCase, SelfReadTryFromErrorNamedUpperCamelCase, SelfReadUpperCamelCase,
-    SelfSelectElementUpperCamelCase, SelfSelectSnakeCase, SelfSelectUpperCamelCase,
-    SelfTableTypeDeclarationUpperCamelCase, SelfUpdateElementUpperCamelCase,
-    SelfUpdateForQueryElementUpperCamelCase, SelfUpdateForQueryUpperCamelCase,
-    SelfUpdateTryNewErrorNamedUpperCamelCase, SelfUpdateUpperCamelCase, SelfWhereUpperCamelCase,
+use naming::{
+    AllFieldsAreNoneUpperCamelCase, ArrayOfUpperCamelCase, AsRefStrToUpperCamelCaseTokenStream,
+    AsUpperCamelCase, ColumnNameAndMaybeFieldGetterSnakeCase, ColumnSnakeCase,
+    CreateIntoPostgresqlJsonTypeOptionVecWhereLengthEqualSnakeCase,
+    CreateIntoPostgresqlJsonTypeOptionVecWhereLengthGreaterThanSnakeCase, CreateSnakeCase,
+    CreateUpdateDeleteAreEmptyUpperCamelCase, DefaultOptionSomeVecOneElSnakeCase,
+    DefaultOptionSomeVecOneElUpperCamelCase, DeleteSnakeCase, EqualUpperCamelCase, ErrorSnakeCase,
+    FieldsSnakeCase, GenerateJsonbSetTargetSnakeCase, IdSnakeCase, IdsAreNotUniqueUpperCamelCase,
+    IncrementSnakeCase, IsNeedToAddLogicalOperatorSnakeCase, JsonbObjectUpperCamelCase,
+    JsonbSetAccumulatorSnakeCase, JsonbSetPathSnakeCase, JsonbSetTargetSnakeCase,
+    NotUniqueIdInJsonDeleteArrayUpperCamelCase,
+    NotUniqueIdInJsonUpdateAndDeleteArraysUpperCamelCase, OptionUpdateSnakeCase,
+    OptionVecCreateSnakeCase, PostgresqlJsonTypeTestCasesUpperCamelCase,
+    PostgresqlJsonTypeUpperCamelCase, PostgresqlTypeTestCasesUpperCamelCase,
+    PostgresqlTypeUpperCamelCase, PreviousReadMergedWithOptionUpdateIntoReadSnakeCase,
+    QueryPartErrorNamedUpperCamelCase, QueryPartSnakeCase, QuerySnakeCase,
+    ReadInnerIntoReadWithNewOrTryNewUnwrapedSnakeCase,
+    ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSnakeCase,
+    ReadOnlyIdsIntoOptionValueReadInnerSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoOptionValueReadSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereBetweenSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElGreaterThanSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElRegularExpressionSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereGreaterThanSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereInSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereRegularExpressionSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoReadSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoWhereEqualSnakeCase, ReadOnlyIdsSnakeCase,
+    ReadOnlyIdsToOptionValueReadDefaultOptionSomeVecOneElSnakeCase,
+    ReadOnlyIdsToTwoDimensionalVecReadInnerSnakeCase, ReadSnakeCase,
+    SelectOnlyCreatedIdsQueryBindSnakeCase, SelectOnlyCreatedIdsQueryPartSnakeCase,
+    SelectOnlyIdsQueryPartSnakeCase, SelectOnlyUpdatedIdsQueryBindSnakeCase,
+    SelectOnlyUpdatedIdsQueryPartSnakeCase, SelectQueryPartPostgresqlTypeSnakeCase,
+    SelectQueryPartSnakeCase, SelfSnakeCase, SelfUpperCamelCase, StdFmtDisplayPlusQuoteToTokens,
+    StdOptionOptionObjectAccSnakeCase, ToTokensToUpperCamelCaseTokenStream,
+    UpdateQueryBindSnakeCase, UpdateQueryPartSnakeCase, UpdateSnakeCase,
+    UpdateToReadOnlyIdsSnakeCase, UuidUuidAsNotNullJsonbStringUpperCamelCase, ValueSnakeCase,
+    ValueUpperCamelCase, VecOfUpperCamelCase, WithIdUpperCamelCase,
+    parameter::{
+        ElementSelfUpperCamelCase, SelfCreateForQueryUpperCamelCase, SelfCreateUpperCamelCase,
+        SelfCurrentSnakeCase, SelfGeneratePostgresqlJsonObjectTypeModSnakeCase, SelfLastSnakeCase,
+        SelfReadInnerUpperCamelCase, SelfReadOnlyIdsHandleUpperCamelCase,
+        SelfReadOnlyIdsUpperCamelCase, SelfReadTryFromErrorNamedUpperCamelCase,
+        SelfReadUpperCamelCase, SelfSelectElementUpperCamelCase, SelfSelectSnakeCase,
+        SelfSelectUpperCamelCase, SelfTableTypeDeclarationUpperCamelCase,
+        SelfUpdateElementUpperCamelCase, SelfUpdateForQueryElementUpperCamelCase,
+        SelfUpdateForQueryUpperCamelCase, SelfUpdateTryNewErrorNamedUpperCamelCase,
+        SelfUpdateUpperCamelCase, SelfWhereUpperCamelCase,
+    },
 };
 use std::iter::repeat_with;
 use syn::token::{Colon, Pub};
@@ -221,64 +264,64 @@ pub fn generate_postgresql_json_object_type(
             let pattern = &element.pattern;
             let trait_gen = &element.trait_gen;
 
-            let create_snake_case = naming::CreateSnakeCase;
-            let update_snake_case = naming::UpdateSnakeCase;
-            let delete_snake_case = naming::DeleteSnakeCase;
-            let value_upper_camel_case = naming::ValueUpperCamelCase;
-            let value_snake_case = naming::ValueSnakeCase;
-            let as_upper_camel_case = naming::AsUpperCamelCase;
-            let select_query_part_postgresql_type_snake_case = naming::SelectQueryPartPostgresqlTypeSnakeCase;
-            let increment_snake_case = naming::IncrementSnakeCase;
-            let query_snake_case = naming::QuerySnakeCase;
-            let id_snake_case = naming::IdSnakeCase;
-            let error_snake_case = naming::ErrorSnakeCase;
-            let fields_snake_case = naming::FieldsSnakeCase;
-            let self_upper_camel_case = naming::SelfUpperCamelCase;
-            let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
-            let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
-            let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
-            let jsonb_set_target_snake_case = naming::JsonbSetTargetSnakeCase;
-            let jsonb_set_path_snake_case = naming::JsonbSetPathSnakeCase;
-            let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
-            let select_query_part_snake_case = naming::SelectQueryPartSnakeCase;
-            let column_snake_case = naming::ColumnSnakeCase;
-            let self_snake_case = naming::SelfSnakeCase;
-            let read_snake_case = naming::ReadSnakeCase;
-            let equal_upper_camel_case = naming::EqualUpperCamelCase;
-            let option_update_snake_case = naming::OptionUpdateSnakeCase;
-            let query_part_snake_case = naming::QueryPartSnakeCase;
-            let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
-            let read_only_ids_to_two_dimensional_vec_read_inner_snake_case = naming::ReadOnlyIdsToTwoDimensionalVecReadInnerSnakeCase;
-            let select_only_ids_query_part_snake_case = naming::SelectOnlyIdsQueryPartSnakeCase;
-            let read_inner_into_read_with_new_or_try_new_unwraped_snake_case = naming::ReadInnerIntoReadWithNewOrTryNewUnwrapedSnakeCase;
-            let read_only_ids_into_option_value_read_inner_snake_case = naming::ReadOnlyIdsIntoOptionValueReadInnerSnakeCase;
-            let update_to_read_only_ids_snake_case = naming::UpdateToReadOnlyIdsSnakeCase;
-            let select_only_updated_ids_query_part_snake_case = naming::SelectOnlyUpdatedIdsQueryPartSnakeCase;
-            let select_only_created_ids_query_part_snake_case = naming::SelectOnlyCreatedIdsQueryPartSnakeCase;
-            let is_need_to_add_logical_operator_snake_case = naming::IsNeedToAddLogicalOperatorSnakeCase;
-            let select_only_updated_ids_query_bind_snake_case = naming::SelectOnlyUpdatedIdsQueryBindSnakeCase;
-            let select_only_created_ids_query_bind_snake_case = naming::SelectOnlyCreatedIdsQueryBindSnakeCase;
-            let read_inner_into_update_with_new_or_try_new_unwraped_snake_case = naming::ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSnakeCase;
-            let option_vec_create_snake_case = naming::OptionVecCreateSnakeCase;
-            let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
-            let read_only_ids_merged_with_create_into_read_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoReadSnakeCase;
-            let read_only_ids_to_option_value_read_default_option_some_vec_one_el_snake_case = naming::ReadOnlyIdsToOptionValueReadDefaultOptionSomeVecOneElSnakeCase;
-            let previous_read_merged_with_option_update_into_read_snake_case = naming::PreviousReadMergedWithOptionUpdateIntoReadSnakeCase;
-            let read_only_ids_merged_with_create_into_option_value_read_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoOptionValueReadSnakeCase;
-            let read_only_ids_merged_with_create_into_where_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoWhereEqualSnakeCase;
-            let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSnakeCase;
-            let read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSnakeCase;
-            let read_only_ids_merged_with_create_into_table_type_declaration_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSnakeCase;
-            let create_into_postgresql_json_type_option_vec_where_length_equal_snake_case = naming::CreateIntoPostgresqlJsonTypeOptionVecWhereLengthEqualSnakeCase;
-            let create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case = naming::CreateIntoPostgresqlJsonTypeOptionVecWhereLengthGreaterThanSnakeCase;
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereGreaterThanSnakeCase;
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereBetweenSnakeCase;
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_in_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereInSnakeCase;
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_regular_expression_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereRegularExpressionSnakeCase;
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_el_greater_than_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElGreaterThanSnakeCase;
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_el_regular_expression_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElRegularExpressionSnakeCase;
-            let default_option_some_vec_one_el_upper_camel_case = naming::DefaultOptionSomeVecOneElUpperCamelCase;
-            let default_option_some_vec_one_el_snake_case = naming::DefaultOptionSomeVecOneElSnakeCase;
+            let create_snake_case = CreateSnakeCase;
+            let update_snake_case = UpdateSnakeCase;
+            let delete_snake_case = DeleteSnakeCase;
+            let value_upper_camel_case = ValueUpperCamelCase;
+            let value_snake_case = ValueSnakeCase;
+            let as_upper_camel_case = AsUpperCamelCase;
+            let select_query_part_postgresql_type_snake_case = SelectQueryPartPostgresqlTypeSnakeCase;
+            let increment_snake_case = IncrementSnakeCase;
+            let query_snake_case = QuerySnakeCase;
+            let id_snake_case = IdSnakeCase;
+            let error_snake_case = ErrorSnakeCase;
+            let fields_snake_case = FieldsSnakeCase;
+            let self_upper_camel_case = SelfUpperCamelCase;
+            let update_query_part_snake_case = UpdateQueryPartSnakeCase;
+            let update_query_bind_snake_case = UpdateQueryBindSnakeCase;
+            let jsonb_set_accumulator_snake_case = JsonbSetAccumulatorSnakeCase;
+            let jsonb_set_target_snake_case = JsonbSetTargetSnakeCase;
+            let jsonb_set_path_snake_case = JsonbSetPathSnakeCase;
+            let column_name_and_maybe_field_getter_snake_case = ColumnNameAndMaybeFieldGetterSnakeCase;
+            let select_query_part_snake_case = SelectQueryPartSnakeCase;
+            let column_snake_case = ColumnSnakeCase;
+            let self_snake_case = SelfSnakeCase;
+            let read_snake_case = ReadSnakeCase;
+            let equal_upper_camel_case = EqualUpperCamelCase;
+            let option_update_snake_case = OptionUpdateSnakeCase;
+            let query_part_snake_case = QueryPartSnakeCase;
+            let read_only_ids_snake_case = ReadOnlyIdsSnakeCase;
+            let read_only_ids_to_two_dimensional_vec_read_inner_snake_case = ReadOnlyIdsToTwoDimensionalVecReadInnerSnakeCase;
+            let select_only_ids_query_part_snake_case = SelectOnlyIdsQueryPartSnakeCase;
+            let read_inner_into_read_with_new_or_try_new_unwraped_snake_case = ReadInnerIntoReadWithNewOrTryNewUnwrapedSnakeCase;
+            let read_only_ids_into_option_value_read_inner_snake_case = ReadOnlyIdsIntoOptionValueReadInnerSnakeCase;
+            let update_to_read_only_ids_snake_case = UpdateToReadOnlyIdsSnakeCase;
+            let select_only_updated_ids_query_part_snake_case = SelectOnlyUpdatedIdsQueryPartSnakeCase;
+            let select_only_created_ids_query_part_snake_case = SelectOnlyCreatedIdsQueryPartSnakeCase;
+            let is_need_to_add_logical_operator_snake_case = IsNeedToAddLogicalOperatorSnakeCase;
+            let select_only_updated_ids_query_bind_snake_case = SelectOnlyUpdatedIdsQueryBindSnakeCase;
+            let select_only_created_ids_query_bind_snake_case = SelectOnlyCreatedIdsQueryBindSnakeCase;
+            let read_inner_into_update_with_new_or_try_new_unwraped_snake_case = ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSnakeCase;
+            let option_vec_create_snake_case = OptionVecCreateSnakeCase;
+            let postgresql_json_type_upper_camel_case = PostgresqlJsonTypeUpperCamelCase;
+            let read_only_ids_merged_with_create_into_read_snake_case = ReadOnlyIdsMergedWithCreateIntoReadSnakeCase;
+            let read_only_ids_to_option_value_read_default_option_some_vec_one_el_snake_case = ReadOnlyIdsToOptionValueReadDefaultOptionSomeVecOneElSnakeCase;
+            let previous_read_merged_with_option_update_into_read_snake_case = PreviousReadMergedWithOptionUpdateIntoReadSnakeCase;
+            let read_only_ids_merged_with_create_into_option_value_read_snake_case = ReadOnlyIdsMergedWithCreateIntoOptionValueReadSnakeCase;
+            let read_only_ids_merged_with_create_into_where_equal_snake_case = ReadOnlyIdsMergedWithCreateIntoWhereEqualSnakeCase;
+            let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case = ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSnakeCase;
+            let read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_snake_case = ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSnakeCase;
+            let read_only_ids_merged_with_create_into_table_type_declaration_snake_case = ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSnakeCase;
+            let create_into_postgresql_json_type_option_vec_where_length_equal_snake_case = CreateIntoPostgresqlJsonTypeOptionVecWhereLengthEqualSnakeCase;
+            let create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case = CreateIntoPostgresqlJsonTypeOptionVecWhereLengthGreaterThanSnakeCase;
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_snake_case = ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereGreaterThanSnakeCase;
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_snake_case = ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereBetweenSnakeCase;
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_in_snake_case = ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereInSnakeCase;
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_regular_expression_snake_case = ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereRegularExpressionSnakeCase;
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_el_greater_than_snake_case = ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElGreaterThanSnakeCase;
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_el_regular_expression_snake_case = ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElRegularExpressionSnakeCase;
+            let default_option_some_vec_one_el_upper_camel_case = DefaultOptionSomeVecOneElUpperCamelCase;
+            let default_option_some_vec_one_el_snake_case = DefaultOptionSomeVecOneElSnakeCase;
 
             let std_string_string_ts = token_patterns::StdStringString;
             let self_field_vec_ts = quote::quote! {.0.to_vec()};
@@ -296,7 +339,7 @@ pub fn generate_postgresql_json_object_type(
             };
 
             let import_path_query_part_error_named_ts = {
-                let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
+                let query_part_error_named_upper_camel_case = QueryPartErrorNamedUpperCamelCase;
                 quote::quote! {#import_path::#query_part_error_named_upper_camel_case}
             };
             let postgresql_crud_default_option_some_vec_one_el_call_ts = token_patterns::PostgresqlCrudDefaultOptionSomeVecOneElCall;
@@ -347,10 +390,10 @@ pub fn generate_postgresql_json_object_type(
             let is_standart_with_id_false = IsStandartWithId::False;
             let is_standart_with_id_true = IsStandartWithId::True;
             let generate_ident_upper_camel_case = |ident_pattern: &IdentPattern| {
-                let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
-                let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
-                let jsonb_object_upper_camel_case = naming::JsonbObjectUpperCamelCase;
-                let with_id_upper_camel_case = naming::WithIdUpperCamelCase;
+                let vec_of_upper_camel_case = VecOfUpperCamelCase;
+                let array_of_upper_camel_case = ArrayOfUpperCamelCase;
+                let jsonb_object_upper_camel_case = JsonbObjectUpperCamelCase;
+                let with_id_upper_camel_case = WithIdUpperCamelCase;
                 let syn_derive_input_ident_stringified = syn_derive_input_ident.to_string();
                 let jsonb_object_upper_camel_case_stringified = jsonb_object_upper_camel_case.to_string();
                 let vec_of_syn_derive_input_ident_with_id = format!("{vec_of_upper_camel_case}{syn_derive_input_ident}{with_id_upper_camel_case}");
@@ -381,13 +424,13 @@ pub fn generate_postgresql_json_object_type(
                 quote::quote! {<#first_type_ts as #import_path::#second_type_ts>}
             };
             let generate_type_as_postgresql_json_type_ts = |type_ts: &dyn quote::ToTokens| {
-                generate_type_as_import_path_ts(&type_ts, &naming::PostgresqlJsonTypeUpperCamelCase)
+                generate_type_as_import_path_ts(&type_ts, &postgresql_json_type_upper_camel_case)
             };
             let ident_as_import_path_postgresql_json_type_ts = generate_type_as_postgresql_json_type_ts(&ident);
             let ident_standart_not_null_as_import_path_postgresql_json_type_ts = generate_type_as_postgresql_json_type_ts(&ident_standart_not_null_upper_camel_case);
             let ident_array_not_null_as_import_path_postgresql_json_type_ts = generate_type_as_postgresql_json_type_ts(&ident_array_not_null_upper_camel_case);
 
-            let uuid_uuid_as_not_null_jsonb_string_upper_camel_case = naming::UuidUuidAsNotNullJsonbStringUpperCamelCase;
+            let uuid_uuid_as_not_null_jsonb_string_upper_camel_case = UuidUuidAsNotNullJsonbStringUpperCamelCase;
             let uuid_uuid_as_not_null_jsonb_string_ts = quote::quote!{#import_path::#uuid_uuid_as_not_null_jsonb_string_upper_camel_case};
             let uuid_uuid_as_not_null_jsonb_string_table_type_declaration_upper_camel_case = {
                 let uuid_uuid_as_not_null_jsonb_string_table_type_declaration_upper_camel_case = SelfTableTypeDeclarationUpperCamelCase::from_display(&uuid_uuid_as_not_null_jsonb_string_upper_camel_case);
@@ -442,13 +485,13 @@ pub fn generate_postgresql_json_object_type(
                 }
             };
             let generate_type_as_postgresql_type_ts = |type_ts: &dyn quote::ToTokens| {
-                generate_type_as_import_path_ts(&type_ts, &naming::PostgresqlTypeUpperCamelCase)
+                generate_type_as_import_path_ts(&type_ts, &PostgresqlTypeUpperCamelCase)
             };
             let generate_type_as_postgresql_json_type_test_cases_ts = |type_ts: &dyn quote::ToTokens| {
-                generate_type_as_import_path_ts(&type_ts, &naming::PostgresqlJsonTypeTestCasesUpperCamelCase)
+                generate_type_as_import_path_ts(&type_ts, &PostgresqlJsonTypeTestCasesUpperCamelCase)
             };
             let generate_type_as_postgresql_type_test_cases_ts = |type_ts: &dyn quote::ToTokens| {
-                generate_type_as_import_path_ts(&type_ts, &naming::PostgresqlTypeTestCasesUpperCamelCase)
+                generate_type_as_import_path_ts(&type_ts, &PostgresqlTypeTestCasesUpperCamelCase)
             };
             let self_as_postgresql_json_type_test_cases_ts = generate_type_as_postgresql_json_type_test_cases_ts(&self_upper_camel_case);
             let ident_standart_not_null_as_postgresql_json_type_ts = generate_type_as_postgresql_json_type_ts(
@@ -529,7 +572,7 @@ pub fn generate_postgresql_json_object_type(
                                     field_type: &dyn quote::ToTokens,
                                     second_argument_ts: &dyn quote::ToTokens,
                                 |{
-                                    let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                    let field_ident_upper_camel_case = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                     let field_type_as_postgresql_json_type_test_cases_ts = generate_type_as_postgresql_json_type_test_cases_ts(&field_type);
                                     quote::quote!{
                                         #ident_with_id_standart_not_null_where_upper_camel_case::#field_ident_upper_camel_case(
@@ -575,7 +618,7 @@ pub fn generate_postgresql_json_object_type(
                                     field_type: &dyn quote::ToTokens,
                                     second_argument_ts: &dyn quote::ToTokens,
                                 |{
-                                    let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                    let field_ident_upper_camel_case = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                     let field_type_as_postgresql_json_type_test_cases_ts = generate_type_as_postgresql_json_type_test_cases_ts(&field_type);
                                     quote::quote!{
                                         #ident_with_id_standart_not_null_where_upper_camel_case::#field_ident_upper_camel_case(
@@ -676,7 +719,7 @@ pub fn generate_postgresql_json_object_type(
                 quote::quote! {(#content);}
             };
             let generate_ident_table_type_declaration_or_ident_create_common_ts = |postgresql_json_type_subtype_table_type_declaration_or_create: &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate| {
-                let ident_table_type_declaration_or_ident_create_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_json_type_subtype_table_type_declaration_or_create {
+                let ident_table_type_declaration_or_ident_create_upper_camel_case: &dyn StdFmtDisplayPlusQuoteToTokens = match &postgresql_json_type_subtype_table_type_declaration_or_create {
                     PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration => &ident_table_type_declaration_upper_camel_case,
                     PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create => &ident_create_upper_camel_case,
                 };
@@ -843,7 +886,7 @@ pub fn generate_postgresql_json_object_type(
                     &quote::quote!{sqlx::types::Json<#self_upper_camel_case>}
                 );
                 let maybe_ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_ts = if is_standart_not_null {
-                    let ident_with_id_table_type_declaration_or_ident_with_id_standart_not_null_create_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_json_type_subtype_table_type_declaration_or_create {
+                    let ident_with_id_table_type_declaration_or_ident_with_id_standart_not_null_create_upper_camel_case: &dyn StdFmtDisplayPlusQuoteToTokens = match &postgresql_json_type_subtype_table_type_declaration_or_create {
                         PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration => &ident_with_id_standart_not_null_table_type_declaration_upper_camel_case,
                         PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create => &ident_with_id_standart_not_null_create_upper_camel_case,
                     };
@@ -1125,7 +1168,7 @@ pub fn generate_postgresql_json_object_type(
             |{
                 let content_ts = get_vec_syn_field(is_standart_with_id).iter().map(|el_f3a1af0f| {
                     let field_ident_stringified = el_f3a1af0f.field_ident.to_string();
-                    let variant_name_ts: &dyn quote::ToTokens = &naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
+                    let variant_name_ts: &dyn quote::ToTokens = &AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
                     let field_ident_double_quotes_ts: &dyn quote::ToTokens = &generate_quotes::double_quotes_ts(&field_ident_stringified);
                     let field_type_as_crud_postgresql_json_type_from_field_ts = generate_type_as_postgresql_json_type_ts(&el_f3a1af0f.field_type);
                     let ident_or_ident_with_id_standart_not_null_select_el_upper_camel_case: &dyn quote::ToTokens = match &is_standart_with_id {
@@ -1477,7 +1520,7 @@ pub fn generate_postgresql_json_object_type(
                                 let content_ts_ecc4a666 = get_vec_syn_field(is_standart_with_id).iter().map(|el_840c2253| {
                                     let field_ident = &el_840c2253.field_ident;
                                     let serialize_deserialize_field_ident_double_quotes_ts = generate_quotes::double_quotes_ts(&field_ident);
-                                    let variant_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                    let variant_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                     let field_type_as_json_type_select_ts = generate_type_as_postgresql_json_type_select_ts(&el_840c2253.field_type);
                                     quote::quote! {
                                         #[serde(rename(serialize = #serialize_deserialize_field_ident_double_quotes_ts, deserialize = #serialize_deserialize_field_ident_double_quotes_ts))]
@@ -1505,7 +1548,7 @@ pub fn generate_postgresql_json_object_type(
                                 };
                                 let elements_ts = get_vec_syn_field(is_standart_with_id).iter().map(|el_20fc16d2| {
                                     let field_ident = &el_20fc16d2.field_ident;
-                                    let field_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                    let field_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                     quote::quote! {#self_upper_camel_case::#field_ident_upper_camel_case_ts(#content_ts)}
                                 });
                                 quote::quote! {#(#elements_ts),*}
@@ -1589,7 +1632,7 @@ pub fn generate_postgresql_json_object_type(
                     use postgresql_crud_macros_common::NotNullOrNullable;
                     let generate_ident_where_field_variants_ts = |is_standart_with_id: &IsStandartWithId| {
                         let variants_ts = get_vec_syn_field(is_standart_with_id).iter().map(|el_622d1e96| {
-                            let field_ident_upper_camel_case_ts = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&el_622d1e96.field_ident.to_string());
+                            let field_ident_upper_camel_case_ts = AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&el_622d1e96.field_ident.to_string());
                             let field_type_as_json_type_where_ts = generate_type_as_postgresql_json_type_subtype_ts(
                                 &el_622d1e96.field_type,
                                 &postgresql_json_type_subtype_where
@@ -1706,7 +1749,7 @@ pub fn generate_postgresql_json_object_type(
                     let generate_where_filter_query_part_fields_content_standart_not_null_ts = |is_standart_with_id: &IsStandartWithId| {
                         let query_part_variants_ts = get_vec_syn_field(is_standart_with_id).iter().map(|el_32d414b1| {
                             let field_ident_stringified = el_32d414b1.field_ident.to_string();
-                            let field_ident_upper_camel_case_ts = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
+                            let field_ident_upper_camel_case_ts = AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
                             let format_handle_ts = generate_quotes::double_quotes_ts(&format!("{{column}}->'{field_ident_stringified}'"));
                             quote::quote! {
                                 Self::#field_ident_upper_camel_case_ts(value) => #import_path::PostgresqlTypeWhereFilter::#query_part_snake_case(
@@ -1721,7 +1764,7 @@ pub fn generate_postgresql_json_object_type(
                     };
                     let generate_where_filter_query_bind_fields_content_standart_not_null_ts = |is_standart_with_id: &IsStandartWithId| {
                         let query_bind_variants_ts = get_vec_syn_field(is_standart_with_id).iter().map(|el_ee6a2665| {
-                            let field_ident_upper_camel_case_ts = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&el_ee6a2665.field_ident.to_string());
+                            let field_ident_upper_camel_case_ts = AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&el_ee6a2665.field_ident.to_string());
                             quote::quote! {
                                 Self::#field_ident_upper_camel_case_ts(#value_snake_case) => #postgresql_type_where_filter_query_bind_value_query_ts
                             }
@@ -1896,7 +1939,7 @@ pub fn generate_postgresql_json_object_type(
                             Self::#content_ts(#postgresql_crud_default_option_some_vec_one_el_call_ts)
                         };
                         let variants_ts = get_vec_syn_field(is_standart_with_id).iter().map(|el_7f3524bc| {
-                            generate_self_variant_default_some_one_ts(&naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&el_7f3524bc.field_ident.to_string()))
+                            generate_self_variant_default_some_one_ts(&AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&el_7f3524bc.field_ident.to_string()))
                         });
                         let self_equal_default_some_one_ts = generate_self_variant_default_some_one_ts(&equal_upper_camel_case);
                         quote::quote! {vec![
@@ -2095,7 +2138,7 @@ pub fn generate_postgresql_json_object_type(
                     };
                     generate_ident_read_ts(&ident_read_upper_camel_case, &content_ts, derive_serde_deserialize)
                 };
-                let all_fields_are_none_upper_camel_case = naming::AllFieldsAreNoneUpperCamelCase;
+                let all_fields_are_none_upper_camel_case = AllFieldsAreNoneUpperCamelCase;
                 let generate_ident_read_try_from_error_named_ts = |current_ident_ts: &dyn quote::ToTokens|macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
@@ -2585,7 +2628,7 @@ pub fn generate_postgresql_json_object_type(
             let ident_with_id_standart_not_null_update_el_upper_camel_case = &SelfUpdateElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_update_for_query_el_upper_camel_case = &SelfUpdateForQueryElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let (generate_jsonb_set_target_snake_case, generate_jsonb_set_target_ts) = {
-                let generate_jsonb_set_target_snake_case = naming::GenerateJsonbSetTargetSnakeCase;
+                let generate_jsonb_set_target_snake_case = GenerateJsonbSetTargetSnakeCase;
                 let generate_jsonb_set_target_ts = {
                     let format_handle_ts = generate_quotes::double_quotes_ts(&format!("{{{jsonb_set_target_snake_case}}}->'{{value_12d082b5}}'"));
                     quote::quote! {
@@ -2693,10 +2736,10 @@ pub fn generate_postgresql_json_object_type(
                         #content_ts_c9a843aa
                     }
                 };
-                let not_unique_id_in_json_delete_array_upper_camel_case = naming::NotUniqueIdInJsonDeleteArrayUpperCamelCase;
-                let not_unique_id_in_json_update_and_delete_arrays_upper_camel_case = naming::NotUniqueIdInJsonUpdateAndDeleteArraysUpperCamelCase;
-                let create_update_delete_are_empty_upper_camel_case = naming::CreateUpdateDeleteAreEmptyUpperCamelCase;
-                let ids_are_not_unique_uppper_camel_case = naming::IdsAreNotUniqueUpperCamelCase;
+                let not_unique_id_in_json_delete_array_upper_camel_case = NotUniqueIdInJsonDeleteArrayUpperCamelCase;
+                let not_unique_id_in_json_update_and_delete_arrays_upper_camel_case = NotUniqueIdInJsonUpdateAndDeleteArraysUpperCamelCase;
+                let create_update_delete_are_empty_upper_camel_case = CreateUpdateDeleteAreEmptyUpperCamelCase;
+                let ids_are_not_unique_uppper_camel_case = IdsAreNotUniqueUpperCamelCase;
                 let ident_update_try_new_error_named_upper_camel_case = &SelfUpdateTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
                 let maybe_ident_update_try_new_error_named_ts = match &pattern {
                     Pattern::Standart => proc_macro2::TokenStream::new(),
@@ -3085,7 +3128,7 @@ pub fn generate_postgresql_json_object_type(
                             &{
                                 let variants_ts = vec_syn_field.iter().map(|el_092057f6| {
                                     let field_ident = &el_092057f6.field_ident;
-                                    let variant_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                    let variant_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                     let field_ident_double_quotes_ts = generate_field_ident_double_quotes_ts(el_092057f6);
                                     let value_field_type_as_json_type_update_ts = wrap_into_value_declaration_ts(
                                         &generate_type_as_postgresql_json_type_update_ts(&el_092057f6.field_type)
@@ -3106,7 +3149,7 @@ pub fn generate_postgresql_json_object_type(
                     let impl_postgresql_crud_all_variants_default_option_some_vec_one_el_for_ident_update_el_ts = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_variants_default_option_some_vec_one_el_ts(&ident_standart_not_null_update_el_upper_camel_case, &{
                         let elements_ts = vec_syn_field.iter().map(|el_2080bd7e| {
                             let field_ident = &el_2080bd7e.field_ident;
-                            let variant_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                            let variant_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                             let value_content_ts = wrap_into_value_initialization_ts(
                                 &postgresql_crud_default_option_some_vec_one_el_call_ts
                             );
@@ -3261,7 +3304,7 @@ pub fn generate_postgresql_json_object_type(
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                     let match_variants_ts = vec_syn_field.iter().map(|el_bca06812| {
                                         let field_ident = &el_bca06812.field_ident;
-                                        let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                        let field_ident_upper_camel_case = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                         let field_ident_double_quotes_ts = generate_quotes::double_quotes_ts(&field_ident);
                                         let field_type_as_postgresql_json_type_ts = generate_type_as_postgresql_json_type_ts(&el_bca06812.field_type);
                                         let if_write_is_err_curly_braces_ts = macros_helpers::generate_if_write_is_err_curly_braces_ts(
@@ -3302,7 +3345,7 @@ pub fn generate_postgresql_json_object_type(
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     let match_content_ts = vec_syn_field.iter().map(|el_a8f45572| {
                                         let field_ident = &el_a8f45572.field_ident;
-                                        let field_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                        let field_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                         let field_ident_double_quotes_ts = generate_quotes::double_quotes_ts(&field_ident);
                                         let field_type_as_postgresql_json_type_ts = generate_type_as_postgresql_json_type_ts(&el_a8f45572.field_type);
                                         let if_write_is_err_curly_braces_ts = macros_helpers::generate_if_write_is_err_curly_braces_ts(
@@ -3350,7 +3393,7 @@ pub fn generate_postgresql_json_object_type(
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                     let match_variants_ts = vec_syn_field.iter().map(|el_74643094| {
                                         let field_ident = &el_74643094.field_ident;
-                                        let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                        let field_ident_upper_camel_case = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                         let field_ident_double_quotes_ts = generate_quotes::double_quotes_ts(&field_ident);
                                         let field_type_as_postgresql_json_type_ts = generate_type_as_postgresql_json_type_ts(&el_74643094.field_type);
                                         let if_write_is_err_curly_braces_ts = macros_helpers::generate_if_write_is_err_curly_braces_ts(
@@ -3556,7 +3599,7 @@ pub fn generate_postgresql_json_object_type(
                             &{
                                 let variants_ts = vec_syn_field.iter().map(|el_9d8af887| {
                                     let field_ident = &el_9d8af887.field_ident;
-                                    let variant_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                    let variant_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                     let field_ident_double_quotes_ts = generate_field_ident_double_quotes_ts(el_9d8af887);
                                     let value_field_type_as_json_type_update_for_query_ts = wrap_into_value_declaration_ts(&generate_type_as_postgresql_json_type_update_for_query_ts(&el_9d8af887.field_type));
                                     quote::quote! {
@@ -3573,7 +3616,7 @@ pub fn generate_postgresql_json_object_type(
                         &{
                             let variants_ts = vec_syn_field.iter().map(|el_2a5d6ff3| {
                                 let field_ident = &el_2a5d6ff3.field_ident;
-                                let variant_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                let variant_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                 let value_initialization_ts = generate_import_path_value_initialization_ts(&{
                                     let field_type_as_json_type_update_for_query_ts = generate_type_as_postgresql_json_type_update_for_query_ts(
                                         &el_2a5d6ff3.field_type
@@ -4005,10 +4048,10 @@ pub fn generate_postgresql_json_object_type(
                     &match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                let object_acc_snake_case = naming::StdOptionOptionObjectAccSnakeCase;
+                                let object_acc_snake_case = StdOptionOptionObjectAccSnakeCase;
                                 let format_handle_ts = generate_quotes::double_quotes_ts(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',{{{object_acc_snake_case}}})"));
                                 let query_part_variants_ts = vec_syn_field.iter().map(|el_ebd92dbf| {
-                                    let variant_ident_upper_camel_case_ts = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&el_ebd92dbf.field_ident.to_string());
+                                    let variant_ident_upper_camel_case_ts = AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&el_ebd92dbf.field_ident.to_string());
                                     let field_ident_double_quotes_ts = generate_field_ident_double_quotes_ts(el_ebd92dbf);
                                     let field_type_as_crud_postgresql_json_type_from_field_ts = generate_field_type_as_crud_postgresql_json_type_from_field_ts(el_ebd92dbf);
                                     quote::quote! {
@@ -4079,7 +4122,7 @@ pub fn generate_postgresql_json_object_type(
                         Pattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                 let update_query_bind_variants_ts = vec_syn_field.iter().map(|el_9968a29b| {
-                                    let variant_ident_upper_camel_case_ts = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&el_9968a29b.field_ident.to_string());
+                                    let variant_ident_upper_camel_case_ts = AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&el_9968a29b.field_ident.to_string());
                                     let field_type_as_crud_postgresql_json_type_from_field_ts = generate_field_type_as_crud_postgresql_json_type_from_field_ts(
                                         el_9968a29b
                                     );
@@ -4201,7 +4244,7 @@ pub fn generate_postgresql_json_object_type(
                                 let match_content_ts = vec_syn_field.iter().map(|el_e3bd5731| {
                                     let field_ident = &el_e3bd5731.field_ident;
                                     let field_type_as_postgresql_json_type_ts = generate_type_as_postgresql_json_type_ts(&el_e3bd5731.field_type);
-                                    let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                    let field_ident_upper_camel_case = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                     quote::quote! {
                                         #ident_standart_not_null_update_for_query_el_upper_camel_case::#field_ident_upper_camel_case(value_b79c2851) => {
                                             match #field_type_as_postgresql_json_type_ts::#select_only_updated_ids_query_bind_snake_case(
@@ -4830,7 +4873,7 @@ pub fn generate_postgresql_json_object_type(
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                 let content_ts = vec_syn_field.iter().map(|el_3a1eac56| {
                                     let field_ident = &el_3a1eac56.field_ident;
-                                    let field_ident_upper_camel_case = &naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                    let field_ident_upper_camel_case = &ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                     let field_type_as_postgresql_json_type_test_cases_ts = generate_type_as_postgresql_json_type_test_cases_ts(&el_3a1eac56.field_type);
                                     quote::quote! {
                                         if let Some(value_2bbd2c96) = #field_type_as_postgresql_json_type_test_cases_ts::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_snake_case(
@@ -5381,7 +5424,7 @@ pub fn generate_postgresql_json_object_type(
                                     let self_el_as_postgresql_type_update_ts = generate_type_as_postgresql_type_subtype_ts(&self_postgresql_json_type_ts, &PostgresqlTypeSubtype::Update);
                                     let parameters_ts = vec_syn_field.iter().map(|el_cefffeeb| {
                                         let field_ident = &el_cefffeeb.field_ident;
-                                        let field_ident_upper_camel_case = &naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                        let field_ident_upper_camel_case = &ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                         let field_type_as_postgresql_json_type_test_cases_ts = generate_type_as_postgresql_json_type_test_cases_ts(&el_cefffeeb.field_type);
                                         let value_content_ts = wrap_into_value_initialization_ts(&quote::quote!{
                                             #field_type_as_postgresql_json_type_test_cases_ts::#read_inner_into_update_with_new_or_try_new_unwraped_snake_case(el_23bdfe1e.#value_snake_case)
@@ -5510,7 +5553,7 @@ pub fn generate_postgresql_json_object_type(
                                     });
                                     let match_content_ts = vec_syn_field.iter().map(|el_4fb1f3d0| {
                                         let field_ident = &el_4fb1f3d0.field_ident;
-                                        let field_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                        let field_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                         let field_type_as_postgresql_json_type_test_cases_ts = generate_type_as_postgresql_json_type_test_cases_ts(&el_4fb1f3d0.field_type);
                                         quote::quote! {
                                             #ident_update_el_upper_camel_case::#field_ident_upper_camel_case_ts(value_0f4d677e) => {
@@ -5556,7 +5599,7 @@ pub fn generate_postgresql_json_object_type(
                                         let for_loop_ts = vec_syn_field.iter().map(|el_cf4923ce| {
                                             let field_ident = &el_cf4923ce.field_ident;
                                             let field_ident_ts = {
-                                                let current_field_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                                let current_field_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                                 quote::quote!{
                                                     #ident_standart_not_null_update_el_upper_camel_case::#current_field_ident_upper_camel_case_ts(value_d2a6daf8) => {
                                                         #field_ident = Some(value_d2a6daf8.#value_snake_case.clone());
@@ -5573,7 +5616,7 @@ pub fn generate_postgresql_json_object_type(
                                                 .map(|el_2908bd7a| {
                                                     let current_field_ident = &el_2908bd7a.field_ident;
                                                     let current_field_ident_upper_camel_case_ts =
-                                                        naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(
+                                                        ToTokensToUpperCamelCaseTokenStream::case_or_panic(
                                                             &current_field_ident,
                                                         );
                                                     quote::quote! {
@@ -5719,7 +5762,7 @@ pub fn generate_postgresql_json_object_type(
                             });
                             let match_content_ts = vec_syn_field.iter().map(|el_b625a4b0| {
                                 let field_ident = &el_b625a4b0.field_ident;
-                                let field_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                let field_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                 quote::quote! {
                                     #ident_standart_not_null_update_el_upper_camel_case::#field_ident_upper_camel_case_ts(#value_snake_case) => {
                                         #field_ident = Some(#value_snake_case.#value_snake_case);
@@ -6135,7 +6178,7 @@ pub fn generate_postgresql_json_object_type(
                                     Pattern::Standart => {
                                         let elements_ts = vec_syn_field.iter().map(|el_23a78055| {
                                             let field_ident = &el_23a78055.field_ident;
-                                            let field_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                            let field_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                             let field_type_as_postgresql_json_type_test_cases_ts = generate_type_as_postgresql_json_type_test_cases_ts(&el_23a78055.field_type);
                                             quote::quote! {
                                                 #ident_where_upper_camel_case::#field_ident_upper_camel_case_ts(
@@ -6235,7 +6278,7 @@ pub fn generate_postgresql_json_object_type(
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                     let content_ts = vec_syn_field.iter().map(|el_459c3da8| {
                                         let field_ident = &el_459c3da8.field_ident;
-                                        let field_ident_upper_camel_case = &naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                        let field_ident_upper_camel_case = &ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                         let field_type_as_postgresql_json_type_test_cases_ts = generate_type_as_postgresql_json_type_test_cases_ts(&el_459c3da8.field_type);
                                         quote::quote! {
                                             for el_d830c061 in #field_type_as_postgresql_json_type_test_cases_ts::#read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_snake_case(
@@ -6354,7 +6397,7 @@ pub fn generate_postgresql_json_object_type(
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                         let content_ts = vec_syn_field.iter().map(|el_d41dce84| {
                                             let field_ident = &el_d41dce84.field_ident;
-                                            let field_ident_upper_camel_case = &naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                            let field_ident_upper_camel_case = &ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                             let field_type_as_postgresql_json_type_test_cases_ts = generate_type_as_postgresql_json_type_test_cases_ts(&el_d41dce84.field_type);
                                             quote::quote! {
                                                 if let Some(value_927601a4) = #field_type_as_postgresql_json_type_test_cases_ts::#create_into_postgresql_json_type_option_vec_where_length_equal_snake_case(
@@ -6500,7 +6543,7 @@ pub fn generate_postgresql_json_object_type(
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                         let content_ts = vec_syn_field.iter().map(|el_9d0245f1| {
                                             let field_ident = &el_9d0245f1.field_ident;
-                                            let field_ident_upper_camel_case = &naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                            let field_ident_upper_camel_case = &ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                             let field_type_as_postgresql_json_type_test_cases_ts = generate_type_as_postgresql_json_type_test_cases_ts(&el_9d0245f1.field_type);
                                             quote::quote! {
                                                 if let Some(value_3432b965) = #field_type_as_postgresql_json_type_test_cases_ts::#create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case(
@@ -6624,7 +6667,7 @@ pub fn generate_postgresql_json_object_type(
                                         let content_ts = vec_syn_field.iter().map(|el_59346ba9| {
                                             let field_ident = &el_59346ba9.field_ident;
                                             let field_type = &el_59346ba9.field_type;
-                                            let field_ident_upper_camel_case = &naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                            let field_ident_upper_camel_case = &ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                             let field_type_as_postgresql_json_type_test_cases_ts = generate_type_as_postgresql_json_type_test_cases_ts(&field_type);
                                             quote::quote! {
                                                 if let Some(value_a2900ac9) = #field_type_as_postgresql_json_type_test_cases_ts::#method_name_ts(
