@@ -1,17 +1,20 @@
-use error_occurence_lib::code_occurence::CodeOccurence;
 pub use postgresql_crud_common_and_macros_common::*;
-use sqlx::encode::IsNull;
+
+use error_occurence_lib::code_occurence::CodeOccurence;
 use sqlx::{
-    Decode, Postgres, Type,
+    encode::IsNull,
     error::BoxDynError,
     postgres::{PgArgumentBuffer, PgArguments, PgValueRef},
     query::Query,
     types::Json,
+    {Decode, Postgres, Type},
 };
-use std::error::Error as StdErrorError;
-use std::fmt::Formatter;
-use std::fmt::Result as StdFmtResult;
-use std::fmt::{Debug, Display};
+use std::{
+    error::Error as StdErrorError,
+    fmt::{
+        Formatter, Result as StdFmtResult, {Debug, Display},
+    },
+};
 
 macro_rules! trait_alias {
     ($name:ident = $($bounds:tt)+) => {

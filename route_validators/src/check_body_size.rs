@@ -1,7 +1,7 @@
-use axum::body::Body;
-use axum::body::HttpBody;
-use axum::body::to_bytes;
-use axum::http::StatusCode;
+use axum::{
+    body::{Body, HttpBody, to_bytes},
+    http::StatusCode,
+};
 use error_occurence_lib::code_occurence::CodeOccurence;
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]

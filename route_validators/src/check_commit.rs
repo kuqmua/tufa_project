@@ -1,7 +1,7 @@
-use axum::http::HeaderMap;
-use axum::http::StatusCode;
-use axum::http::header::HeaderValue;
-use axum::http::header::ToStrError;
+use axum::http::{
+    HeaderMap, StatusCode,
+    header::{HeaderValue, ToStrError},
+};
 use error_occurence_lib::code_occurence::CodeOccurence;
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]

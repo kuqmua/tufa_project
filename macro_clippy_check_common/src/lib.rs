@@ -5,8 +5,7 @@ pub fn clippy_check(
     additional_content: &str,
     content_to_generate: &str,
 ) {
-    use std::fs::write;
-    use std::process::Command;
+    use std::{fs::write, process::Command};
     let path = format!("../{crate_name}/");
     let cargo_toml_content = format!(
         r#"[package]
