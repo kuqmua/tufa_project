@@ -1,6 +1,5 @@
-use std::{env, fs, path::PathBuf, process::Command};
-
 fn main() {
+    use std::{env, fs, path::PathBuf, process::Command};
     let _unused = dotenv::dotenv().expect("0964b79a-fd4d-40ef-83dc-e06e2862122e");
     let gitmodules_path_env_name = "GITMODULES_PATH";
     let string_path =

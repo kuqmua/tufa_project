@@ -9,8 +9,7 @@ use naming::parameter::{
     SelfUpdateTryNewErrorNamedUpperCamelCase, SelfUpdateUpperCamelCase, SelfWhereUpperCamelCase,
 };
 use std::iter::repeat_with;
-use syn::token::Colon;
-use syn::token::Pub;
+use syn::token::{Colon, Pub};
 //todo generate authorization rights enum for json fields
 //todo bug in update if updating array and creating element in jsonb array without anything - read_only_ids generation logic of vec returns wrong query part
 #[must_use]

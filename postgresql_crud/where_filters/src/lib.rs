@@ -1,11 +1,6 @@
 use error_occurence_lib::code_occurence::CodeOccurence;
-use sqlx::postgres::PgArguments;
-use sqlx::query::Query;
-use sqlx::types::Json;
-use std::fmt::Display;
-use std::fmt::Formatter;
-use std::fmt::Result as StdFmtResult;
-
+use sqlx::{postgres::PgArguments, query::Query, types::Json};
+use std::fmt::{Display, Formatter, Result as StdFmtResult, Write as _};
 generate_where_filters::generate_where_filters!({
     "postgresql_types_content_write_into_generate_where_filters_postgresql_types": "False",
     "postgresql_json_types_content_write_into_generate_where_filters_postgresql_json_types": "False",
@@ -108,7 +103,6 @@ impl<T: PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVe
         for _ in self.to_vec() {
             match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
                 Ok(value) => {
-                    use std::fmt::Write as _;
                     if write!(acc_ecd78d3a, "${value},").is_err() {
                         return Err(
                             postgresql_crud_common::QueryPartErrorNamed::WriteIntoBuffer {
@@ -945,7 +939,6 @@ impl<
         for _ in 0..current_len {
             match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
                 Ok(value) => {
-                    use std::fmt::Write as _;
                     if write!(
                         acc_24eb25aa,
                         "{}",

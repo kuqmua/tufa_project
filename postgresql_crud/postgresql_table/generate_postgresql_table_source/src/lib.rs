@@ -1,56 +1,34 @@
-use naming::parameter::ErrorSelfSnakeCase;
-use naming::parameter::IsSelfUpdateExistSnakeCase;
-use naming::parameter::SelfCreateUpperCamelCase;
-use naming::parameter::SelfDeleteManyParametersUpperCamelCase;
-use naming::parameter::SelfDeleteManyPayloadUpperCamelCase;
-use naming::parameter::SelfDeleteOneErrorNamedWithSerializeDeserializeUpperCamelCase;
-use naming::parameter::SelfDeleteOneParametersUpperCamelCase;
-use naming::parameter::SelfDeleteOnePayloadUpperCamelCase;
-use naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase;
-use naming::parameter::SelfGeneratePostgresqlTableModSnakeCase;
-use naming::parameter::SelfHandleSnakeCase;
-use naming::parameter::SelfPayloadExampleSnakeCase;
-use naming::parameter::SelfPreparePostgresqlErrorNamedUpperCamelCase;
-use naming::parameter::SelfReadOneErrorNamedWithSerializeDeserializeUpperCamelCase;
-use naming::parameter::SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSnakeCase;
-use naming::parameter::SelfReadOnlyIdsUpperCamelCase;
-use naming::parameter::SelfReadUpperCamelCase;
-use naming::parameter::SelfSelectUpperCamelCase;
-use naming::parameter::SelfTableTypeDeclarationUpperCamelCase;
-use naming::parameter::SelfTestsSnakeCase;
-use naming::parameter::SelfTryDeleteOneErrorNamedUpperCamelCase;
-use naming::parameter::SelfTryReadOneErrorNamedUpperCamelCase;
-use naming::parameter::SelfUpdateForQueryUpperCamelCase;
-use naming::parameter::SelfUpdateManyParametersUpperCamelCase;
-use naming::parameter::SelfUpdateManyPayloadUpperCamelCase;
-use naming::parameter::SelfUpdateTryNewErrorNamedUpperCamelCase;
-use naming::parameter::SelfUpdateUpperCamelCase;
-use naming::parameter::SelfWhereManyTryNewErrorNamedUpperCamelCase;
-use naming::parameter::SelfWhereManyUpperCamelCase;
-use naming::parameter::SelfWhereUpperCamelCase;
-use naming::parameter::StdOptionOptionSelfWhereManyUpperCamelCase;
-use naming::parameter::TryFromSqlxPostgresPgRowWithNotEmptyUniqueVecSelfSelectSnakeCase;
-use naming::parameter::TrySelfHandleSnakeCase;
-use naming::parameter::TrySelfSnakeCase;
-use naming::parameter::UpdateQueryPartSelfSnakeCase;
-
-use naming::AsRefStrToSnakeCaseStringified;
-use naming::AsRefStrToSnakeCaseTokenStream;
-
 use macros_helpers::ErrorOccurenceFieldAttribute;
-
-use std::fmt::Display;
-use std::fmt::Formatter;
-use std::fmt::Result as StdFmtResult;
-use std::iter::once;
-use std::str::FromStr;
-use syn::punctuated::Punctuated;
-use syn::token::Brace;
-use syn::token::Bracket;
-use syn::token::Colon;
-use syn::token::Comma;
-use syn::token::PathSep;
-use syn::token::Pound;
+use naming::parameter::{
+    ErrorSelfSnakeCase, IsSelfUpdateExistSnakeCase, SelfCreateUpperCamelCase,
+    SelfDeleteManyParametersUpperCamelCase, SelfDeleteManyPayloadUpperCamelCase,
+    SelfDeleteOneErrorNamedWithSerializeDeserializeUpperCamelCase,
+    SelfDeleteOneParametersUpperCamelCase, SelfDeleteOnePayloadUpperCamelCase,
+    SelfErrorNamedWithSerializeDeserializeSnakeCase, SelfGeneratePostgresqlTableModSnakeCase,
+    SelfHandleSnakeCase, SelfPayloadExampleSnakeCase,
+    SelfPreparePostgresqlErrorNamedUpperCamelCase,
+    SelfReadOneErrorNamedWithSerializeDeserializeUpperCamelCase,
+    SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSnakeCase, SelfReadOnlyIdsUpperCamelCase,
+    SelfReadUpperCamelCase, SelfSelectUpperCamelCase, SelfTableTypeDeclarationUpperCamelCase,
+    SelfTestsSnakeCase, SelfTryDeleteOneErrorNamedUpperCamelCase,
+    SelfTryReadOneErrorNamedUpperCamelCase, SelfUpdateForQueryUpperCamelCase,
+    SelfUpdateManyParametersUpperCamelCase, SelfUpdateManyPayloadUpperCamelCase,
+    SelfUpdateTryNewErrorNamedUpperCamelCase, SelfUpdateUpperCamelCase,
+    SelfWhereManyTryNewErrorNamedUpperCamelCase, SelfWhereManyUpperCamelCase,
+    SelfWhereUpperCamelCase, StdOptionOptionSelfWhereManyUpperCamelCase,
+    TryFromSqlxPostgresPgRowWithNotEmptyUniqueVecSelfSelectSnakeCase, TrySelfHandleSnakeCase,
+    TrySelfSnakeCase, UpdateQueryPartSelfSnakeCase,
+};
+use naming::{AsRefStrToSnakeCaseStringified, AsRefStrToSnakeCaseTokenStream};
+use std::{
+    fmt::{Display, Formatter, Result as StdFmtResult},
+    iter::once,
+    str::FromStr,
+};
+use syn::{
+    punctuated::Punctuated, token::Brace, token::Bracket, token::Colon, token::Comma,
+    token::PathSep, token::Pound,
+};
 //todo decide where to do error log (maybe add in some places)
 //todo generate route what will return columns of the table and their rust and postgersql types
 //todo created at and updated at fields + created by + updated by

@@ -1,6 +1,5 @@
 use error_occurence_lib::code_occurence::CodeOccurence;
-use sqlx::postgres::PgArguments;
-use sqlx::query::Query;
+use sqlx::{postgres::PgArguments, query::Query};
 use std::fmt::Display;
 
 #[derive(

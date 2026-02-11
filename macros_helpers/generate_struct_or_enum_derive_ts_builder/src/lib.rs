@@ -1,9 +1,8 @@
-use naming::parameter::{DeriveSelfIfSnakeCase, DeriveSelfSnakeCase, DeriveSelfUpperCamelCase};
-
 #[proc_macro]
 pub fn generate_struct_or_enum_derive_ts_builder(
     input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
+    use naming::parameter::{DeriveSelfIfSnakeCase, DeriveSelfSnakeCase, DeriveSelfUpperCamelCase};
     #[derive(Clone)]
     struct Element {
         derive_trait_name_if_snake_case: proc_macro2::TokenStream,

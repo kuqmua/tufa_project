@@ -1,8 +1,7 @@
-use crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated;
 use syn::{Field, FieldMutability, Ident, Path, Type, TypePath, Visibility, token::Colon};
-
 #[must_use]
 pub fn code_occurence_syn_field() -> Field {
+    use crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated;
     Field {
         attrs: Vec::new(),
         vis: Visibility::Inherited,

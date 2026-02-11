@@ -1,15 +1,19 @@
-use naming::GeneratePostgresqlJsonTypesModSnakeCase;
-use naming::parameter::{
-    JsonbSelfUpperCamelCase, SelfCreateForQueryUpperCamelCase, SelfCreateUpperCamelCase,
-    SelfOriginUpperCamelCase, SelfReadInnerUpperCamelCase, SelfReadOnlyIdsUpperCamelCase,
-    SelfReadUpperCamelCase, SelfSelectUpperCamelCase, SelfTableTypeDeclarationUpperCamelCase,
-    SelfUpdateForQueryUpperCamelCase, SelfUpdateUpperCamelCase, SelfWhereUpperCamelCase,
+use naming::{
+    GeneratePostgresqlJsonTypesModSnakeCase,
+    parameter::{
+        JsonbSelfUpperCamelCase, SelfCreateForQueryUpperCamelCase, SelfCreateUpperCamelCase,
+        SelfOriginUpperCamelCase, SelfReadInnerUpperCamelCase, SelfReadOnlyIdsUpperCamelCase,
+        SelfReadUpperCamelCase, SelfSelectUpperCamelCase, SelfTableTypeDeclarationUpperCamelCase,
+        SelfUpdateForQueryUpperCamelCase, SelfUpdateUpperCamelCase, SelfWhereUpperCamelCase,
+    },
 };
-use std::collections::HashSet;
-use std::fmt::Display;
-use std::fmt::Formatter;
-use std::fmt::Result as StdFmtResult;
-use std::iter::once;
+use postgresql_crud_macros_common::{ImportPath, IsStandartNotNull, NotNullOrNullable};
+use rayon::iter::{IntoParallelRefIterator as _, ParallelIterator as _};
+use std::{
+    collections::HashSet,
+    fmt::{Display, Formatter, Result as StdFmtResult},
+    iter::once,
+};
 
 #[must_use]
 pub fn generate_postgresql_json_types(
@@ -141,22 +145,22 @@ pub fn generate_postgresql_json_types(
     enum PostgresqlJsonTypePattern {
         Standart,
         ArrayDimension1 {
-            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension1_not_null_or_nullable: NotNullOrNullable,
         },
         ArrayDimension2 {
-            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-            dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension1_not_null_or_nullable: NotNullOrNullable,
+            dimension2_not_null_or_nullable: NotNullOrNullable,
         },
         ArrayDimension3 {
-            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-            dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-            dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension1_not_null_or_nullable: NotNullOrNullable,
+            dimension2_not_null_or_nullable: NotNullOrNullable,
+            dimension3_not_null_or_nullable: NotNullOrNullable,
         },
         ArrayDimension4 {
-            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-            dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-            dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-            dimension4_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension1_not_null_or_nullable: NotNullOrNullable,
+            dimension2_not_null_or_nullable: NotNullOrNullable,
+            dimension3_not_null_or_nullable: NotNullOrNullable,
+            dimension4_not_null_or_nullable: NotNullOrNullable,
         },
     }
     impl PostgresqlJsonTypePattern {
@@ -237,16 +241,16 @@ pub fn generate_postgresql_json_types(
     enum ArrayDimension {
         ArrayDimension1,
         ArrayDimension2 {
-            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension1_not_null_or_nullable: NotNullOrNullable,
         },
         ArrayDimension3 {
-            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-            dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension1_not_null_or_nullable: NotNullOrNullable,
+            dimension2_not_null_or_nullable: NotNullOrNullable,
         },
         ArrayDimension4 {
-            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-            dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-            dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension1_not_null_or_nullable: NotNullOrNullable,
+            dimension2_not_null_or_nullable: NotNullOrNullable,
+            dimension3_not_null_or_nullable: NotNullOrNullable,
         },
     }
     impl ArrayDimension {
@@ -296,7 +300,7 @@ pub fn generate_postgresql_json_types(
     #[derive(Debug, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
     struct PostgresqlJsonTypeRecord {
         postgresql_json_type: PostgresqlJsonType,
-        not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        not_null_or_nullable: NotNullOrNullable,
         postgresql_json_type_pattern: PostgresqlJsonTypePattern,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
@@ -319,8 +323,6 @@ pub fn generate_postgresql_json_types(
             macros_helpers::ShouldWriteTokenStreamIntoFile,
         variant: GeneratePostgresqlJsonTypesConfigVariant,
     }
-    use rayon::iter::IntoParallelRefIterator as _;
-    use rayon::iter::ParallelIterator as _;
     panic_location::panic_location();
     let generate_postgresql_json_types_config =
         serde_json::from_str::<GeneratePostgresqlJsonTypesConfig>(&input_ts.to_string())
@@ -328,7 +330,7 @@ pub fn generate_postgresql_json_types(
     let (fields_ts, postgresql_json_type_array) = {
         {
             let generate_standart = |acc_29796d99: &mut Vec<PostgresqlJsonTypeRecord>, postgresql_json_type: PostgresqlJsonType|{
-                for el_2f39e657 in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                for el_2f39e657 in NotNullOrNullable::into_array() {
                     acc_29796d99.push(PostgresqlJsonTypeRecord {
                         postgresql_json_type: postgresql_json_type.clone(),
                         not_null_or_nullable: el_2f39e657,
@@ -337,8 +339,8 @@ pub fn generate_postgresql_json_types(
                 }
             };
             let generate_array_dimension1 = |acc_5b22a398: &mut Vec<PostgresqlJsonTypeRecord>, postgresql_json_type: PostgresqlJsonType|{
-                for el_29854486 in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                    for el_6440cc9c in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                for el_29854486 in NotNullOrNullable::into_array() {
+                    for el_6440cc9c in NotNullOrNullable::into_array() {
                         acc_5b22a398.push(PostgresqlJsonTypeRecord {
                             postgresql_json_type: postgresql_json_type.clone(),
                             not_null_or_nullable: el_29854486,
@@ -348,9 +350,9 @@ pub fn generate_postgresql_json_types(
                 }
             };
             let generate_array_dimension2 = |acc_e59f7158: &mut Vec<PostgresqlJsonTypeRecord>, postgresql_json_type: PostgresqlJsonType|{
-                for el_a6ba4c3e in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                    for el_4b5a815d in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                        for el_2e4896dd in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                for el_a6ba4c3e in NotNullOrNullable::into_array() {
+                    for el_4b5a815d in NotNullOrNullable::into_array() {
+                        for el_2e4896dd in NotNullOrNullable::into_array() {
                             acc_e59f7158.push(PostgresqlJsonTypeRecord {
                                 postgresql_json_type: postgresql_json_type.clone(),
                                 not_null_or_nullable: el_a6ba4c3e,
@@ -364,10 +366,10 @@ pub fn generate_postgresql_json_types(
                 }
             };
             let generate_array_dimension3 = |acc_77498dc3: &mut Vec<PostgresqlJsonTypeRecord>, postgresql_json_type: PostgresqlJsonType|{
-                for el_8f03b1c2 in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                    for el_a27b642f in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                        for el_dc57e9b7 in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                            for el_4361fee5 in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                for el_8f03b1c2 in NotNullOrNullable::into_array() {
+                    for el_a27b642f in NotNullOrNullable::into_array() {
+                        for el_dc57e9b7 in NotNullOrNullable::into_array() {
+                            for el_4361fee5 in NotNullOrNullable::into_array() {
                                 acc_77498dc3.push(PostgresqlJsonTypeRecord {
                                     postgresql_json_type: postgresql_json_type.clone(),
                                     not_null_or_nullable: el_8f03b1c2,
@@ -383,11 +385,11 @@ pub fn generate_postgresql_json_types(
                 }
             };
             let generate_array_dimension4 = |acc_7c8a3329: &mut Vec<PostgresqlJsonTypeRecord>, postgresql_json_type: PostgresqlJsonType|{
-                for el_daf10957 in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                    for el_fc5a53dd in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                        for el_69b59c5c in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                            for el_d7efbd09 in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                for el_c16cb65b in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                for el_daf10957 in NotNullOrNullable::into_array() {
+                    for el_fc5a53dd in NotNullOrNullable::into_array() {
+                        for el_69b59c5c in NotNullOrNullable::into_array() {
+                            for el_d7efbd09 in NotNullOrNullable::into_array() {
+                                for el_c16cb65b in NotNullOrNullable::into_array() {
                                     acc_7c8a3329.push(PostgresqlJsonTypeRecord {
                                         postgresql_json_type: postgresql_json_type.clone(),
                                         not_null_or_nullable: el_daf10957,
@@ -488,7 +490,6 @@ pub fn generate_postgresql_json_types(
             );
             acc_d97120ed
         }.into_iter().fold(Vec::new(), |mut acc_5e43269c, el_c4f9bf8f| {
-            use postgresql_crud_macros_common::NotNullOrNullable;
             for el_7ae8d2ae in {
                 #[derive(Clone)]
                 struct PostgresqlJsonTypeRecordHandle {
@@ -603,12 +604,12 @@ pub fn generate_postgresql_json_types(
         let postgresql_json_type_pattern = &el_1d376874.postgresql_json_type_pattern;
         let rust_type_name = RustTypeName::from(postgresql_json_type);
         let postgresql_json_type_name = PostgresqlJsonTypeName::from(postgresql_json_type);
-        let is_standart_not_null = if matches!((&postgresql_json_type_pattern, &not_null_or_nullable), (PostgresqlJsonTypePattern::Standart, postgresql_crud_macros_common::NotNullOrNullable::NotNull)) {
-            postgresql_crud_macros_common::IsStandartNotNull::True
+        let is_standart_not_null = if matches!((&postgresql_json_type_pattern, &not_null_or_nullable), (PostgresqlJsonTypePattern::Standart, NotNullOrNullable::NotNull)) {
+            IsStandartNotNull::True
         } else {
-            postgresql_crud_macros_common::IsStandartNotNull::False
+            IsStandartNotNull::False
         };
-        let is_standart_not_null_uuid = if matches!((&not_null_or_nullable, &postgresql_json_type_pattern, &postgresql_json_type), (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart, PostgresqlJsonType::UuidUuidAsJsonbString)) {
+        let is_standart_not_null_uuid = if matches!((&not_null_or_nullable, &postgresql_json_type_pattern, &postgresql_json_type), (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart, PostgresqlJsonType::UuidUuidAsJsonbString)) {
             IsStandartNotNullUuid::True
         } else {
             IsStandartNotNullUuid::False
@@ -627,7 +628,7 @@ pub fn generate_postgresql_json_types(
         let create_snake_case = naming::CreateSnakeCase;
         let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
         let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
-        let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
+        let import_path = ImportPath::PostgresqlCrudCommon;
         let create_for_query_upper_camel_case = naming::CreateForQueryUpperCamelCase;
         let update_for_query_upper_camel_case = naming::UpdateForQueryUpperCamelCase;
         let update_upper_camel_case = naming::UpdateUpperCamelCase;
@@ -662,7 +663,7 @@ pub fn generate_postgresql_json_types(
         let postgresql_crud_common_default_option_some_vec_one_el_max_page_size_call_ts = token_patterns::PostgresqlCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall;
 
         let generate_import_path_value_initialization_ts = |content_ts: &dyn quote::ToTokens| postgresql_crud_macros_common::generate_value_initialization_ts(&import_path, &content_ts);
-        let generate_ident_ts = |current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern| {
+        let generate_ident_ts = |current_not_null_or_nullable: &NotNullOrNullable, current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern| {
             let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
             let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
             let not_null_or_nullable_rust = current_not_null_or_nullable.rust();
@@ -719,13 +720,13 @@ pub fn generate_postgresql_json_types(
             format!("{not_null_or_nullable_rust}{rust_part}{as_upper_camel_case}{current_not_null_or_nullable}{postgresql_part}").parse::<proc_macro2::TokenStream>().expect("998d1471-be98-4669-8bd3-ca6c4a1a5853")
         };
         let ident = &generate_ident_ts(not_null_or_nullable, postgresql_json_type_pattern);
-        let ident_standart_not_null_upper_camel_case = &generate_ident_ts(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &PostgresqlJsonTypePattern::Standart);
+        let ident_standart_not_null_upper_camel_case = &generate_ident_ts(&NotNullOrNullable::NotNull, &PostgresqlJsonTypePattern::Standart);
         let ident_standart_not_null_table_type_declaration_upper_camel_case = SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
         let ident_table_type_declaration_upper_camel_case = SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
         let ident_create_upper_camel_case = SelfCreateUpperCamelCase::from_tokens(&ident);
         let ident_where_upper_camel_case = SelfWhereUpperCamelCase::from_tokens(&ident);
         let ident_read_only_ids_upper_camel_case = SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
-        let ident_not_null_ts = generate_ident_ts(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern);
+        let ident_not_null_ts = generate_ident_ts(&NotNullOrNullable::NotNull, postgresql_json_type_pattern);
         let ident_ts = {
             let ident_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
@@ -775,8 +776,8 @@ pub fn generate_postgresql_json_types(
         let self_ident_origin_new_value_ts = quote::quote! {Self(#ident_origin_upper_camel_case::new(#value_snake_case))};
         let maybe_const_fn = match &postgresql_json_type_pattern {
             PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                postgresql_crud_macros_common::NotNullOrNullable::NotNull => ConstFn::True,
-                postgresql_crud_macros_common::NotNullOrNullable::Nullable => ConstFn::False,
+                NotNullOrNullable::NotNull => ConstFn::True,
+                NotNullOrNullable::Nullable => ConstFn::False,
             },
             PostgresqlJsonTypePattern::ArrayDimension1 { .. } |
             PostgresqlJsonTypePattern::ArrayDimension2 { .. } |
@@ -821,7 +822,7 @@ pub fn generate_postgresql_json_types(
         };
         let ident_origin_ts = {
             let generate_current_ident_origin_non_wrapping = |
-                current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
+                current_not_null_or_nullable: &NotNullOrNullable,
                 current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern
             | SelfOriginUpperCamelCase::from_tokens(&generate_ident_ts(current_not_null_or_nullable, current_postgresql_json_type_pattern));
             // let schema_name_format_handle_ts = generate_quotes::double_quotes_ts(&ident_origin_upper_camel_case);
@@ -857,7 +858,7 @@ pub fn generate_postgresql_json_types(
             //         generate_instance_type_some_schemars_schema_single_or_vec_single_box_new_schemars_schema_instance_type(&schemars::schema::InstanceType::String),
             //     )
             // };
-            // let schemars_json_schema = if let postgresql_crud_macros_common::IsStandartNotNull::True = &is_standart_not_null {
+            // let schemars_json_schema = if let IsStandartNotNull::True = &is_standart_not_null {
             //     match &postgresql_json_type {
             //         PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
             //         | PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber
@@ -925,7 +926,7 @@ pub fn generate_postgresql_json_types(
                     //     SchemarsJsonSchema::Derive => macros_helpers::DeriveSchemarsJsonSchema::True,
                     //     SchemarsJsonSchema::Impl(_) => macros_helpers::DeriveSchemarsJsonSchema::False,
                     // }
-                    if matches!(&is_standart_not_null, postgresql_crud_macros_common::IsStandartNotNull::True) {
+                    if matches!(&is_standart_not_null, IsStandartNotNull::True) {
                         match &postgresql_json_type {
                             PostgresqlJsonType::UuidUuidAsJsonbString => macros_helpers::DeriveSchemarsJsonSchema::False,
                             PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
@@ -949,43 +950,43 @@ pub fn generate_postgresql_json_types(
                     &ident_origin_upper_camel_case,
                     &{
                         let content_ts: &dyn quote::ToTokens = {
-                            let generate_current_ident_origin = |current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern| {
+                            let generate_current_ident_origin = |current_not_null_or_nullable: &NotNullOrNullable, current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern| {
                                 let value = generate_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_postgresql_json_type_pattern);
                                 match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_ts(&value),
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(&value),
+                                    NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_ts(&value),
+                                    NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(&value),
                                 }
                             };
                             match &postgresql_json_type_pattern {
                                 PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_read_inner_standart_not_null_alias_ts,
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(&ident_standart_not_null_origin_upper_camel_case),
+                                    NotNullOrNullable::NotNull => &ident_read_inner_standart_not_null_alias_ts,
+                                    NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(&ident_standart_not_null_origin_upper_camel_case),
                                 },
                                 PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
-                                    let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&postgresql_crud_macros_common::NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
-                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &postgresql_json_type_pattern.down_by_1().expect("e994797d-7334-4e30-b180-af24c16b68b1")),
-                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => (&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern),
+                                    let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &postgresql_json_type_pattern.down_by_1().expect("e994797d-7334-4e30-b180-af24c16b68b1")),
+                                        NotNullOrNullable::Nullable => (&NotNullOrNullable::NotNull, postgresql_json_type_pattern),
                                     };
                                     generate_current_ident_origin(current_not_null_or_nullable, current_postgresql_json_type_pattern)
                                 },
                                 PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, .. } => &{
-                                    let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&postgresql_crud_macros_common::NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
-                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &postgresql_json_type_pattern.down_by_1().expect("76eb44e3-3099-4c9a-a935-da3e6f6e4210")),
-                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => (&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern),
+                                    let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &postgresql_json_type_pattern.down_by_1().expect("76eb44e3-3099-4c9a-a935-da3e6f6e4210")),
+                                        NotNullOrNullable::Nullable => (&NotNullOrNullable::NotNull, postgresql_json_type_pattern),
                                     };
                                     generate_current_ident_origin(current_not_null_or_nullable, current_postgresql_json_type_pattern)
                                 },
                                 PostgresqlJsonTypePattern::ArrayDimension3 { dimension1_not_null_or_nullable, .. } => &{
-                                    let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&postgresql_crud_macros_common::NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
-                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &postgresql_json_type_pattern.down_by_1().expect("1b996c86-0b08-476a-b963-373dd6838496")),
-                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => (&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern),
+                                    let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &postgresql_json_type_pattern.down_by_1().expect("1b996c86-0b08-476a-b963-373dd6838496")),
+                                        NotNullOrNullable::Nullable => (&NotNullOrNullable::NotNull, postgresql_json_type_pattern),
                                     };
                                     generate_current_ident_origin(current_not_null_or_nullable, current_postgresql_json_type_pattern)
                                 },
                                 PostgresqlJsonTypePattern::ArrayDimension4 { dimension1_not_null_or_nullable, .. } => &{
-                                    let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&postgresql_crud_macros_common::NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
-                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &postgresql_json_type_pattern.down_by_1().expect("d24b7481-27d9-40c0-8476-344a16d08f27")),
-                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => (&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern),
+                                    let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &postgresql_json_type_pattern.down_by_1().expect("d24b7481-27d9-40c0-8476-344a16d08f27")),
+                                        NotNullOrNullable::Nullable => (&NotNullOrNullable::NotNull, postgresql_json_type_pattern),
                                     };
                                     generate_current_ident_origin(current_not_null_or_nullable, current_postgresql_json_type_pattern)
                                 },
@@ -997,39 +998,39 @@ pub fn generate_postgresql_json_types(
             let ident_origin_impl_new_self_content_ts = {
                 let generate_value_map_type_new_ts = |type_ts: &dyn quote::ToTokens| quote::quote! {#value_snake_case.map(#type_ts::#new_snake_case)};
                 let generate_array_dimensions_initialization_ts = |type_ts: &dyn quote::ToTokens| match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#value_snake_case.into_iter().map(#type_ts::#new_snake_case).collect()},
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_value_map_type_new_ts(&type_ts),
+                    NotNullOrNullable::NotNull => quote::quote! {#value_snake_case.into_iter().map(#type_ts::#new_snake_case).collect()},
+                    NotNullOrNullable::Nullable => generate_value_map_type_new_ts(&type_ts),
                 };
                 match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {value},
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_value_map_type_new_ts(&ident_standart_not_null_origin_upper_camel_case),
+                        NotNullOrNullable::NotNull => quote::quote! {value},
+                        NotNullOrNullable::Nullable => generate_value_map_type_new_ts(&ident_standart_not_null_origin_upper_camel_case),
                     },
                     PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_array_dimensions_initialization_ts(&{
-                        let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&postgresql_json_type_pattern.down_by_1().expect("1160d3df-2e2b-4a33-a297-6b48546b9ca8"), dimension1_not_null_or_nullable),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
+                        let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &NotNullOrNullable) = match &not_null_or_nullable {
+                            NotNullOrNullable::NotNull => (&postgresql_json_type_pattern.down_by_1().expect("1160d3df-2e2b-4a33-a297-6b48546b9ca8"), dimension1_not_null_or_nullable),
+                            NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &NotNullOrNullable::NotNull),
                         };
                         generate_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_postgresql_json_type_pattern)
                     }),
                     PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, .. } => generate_array_dimensions_initialization_ts(&{
-                        let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&postgresql_json_type_pattern.down_by_1().expect("8ab62f4e-611b-4228-a295-3e731e934b9c"), dimension1_not_null_or_nullable),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
+                        let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &NotNullOrNullable) = match &not_null_or_nullable {
+                            NotNullOrNullable::NotNull => (&postgresql_json_type_pattern.down_by_1().expect("8ab62f4e-611b-4228-a295-3e731e934b9c"), dimension1_not_null_or_nullable),
+                            NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &NotNullOrNullable::NotNull),
                         };
                         generate_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_postgresql_json_type_pattern)
                     }),
                     PostgresqlJsonTypePattern::ArrayDimension3 { dimension1_not_null_or_nullable, .. } => generate_array_dimensions_initialization_ts(&{
-                        let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&postgresql_json_type_pattern.down_by_1().expect("ed64919d-4679-45da-9d14-22ddee84716b"), dimension1_not_null_or_nullable),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
+                        let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &NotNullOrNullable) = match &not_null_or_nullable {
+                            NotNullOrNullable::NotNull => (&postgresql_json_type_pattern.down_by_1().expect("ed64919d-4679-45da-9d14-22ddee84716b"), dimension1_not_null_or_nullable),
+                            NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &NotNullOrNullable::NotNull),
                         };
                         generate_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_postgresql_json_type_pattern)
                     }),
                     PostgresqlJsonTypePattern::ArrayDimension4 { dimension1_not_null_or_nullable, .. } => generate_array_dimensions_initialization_ts(&{
-                        let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&postgresql_json_type_pattern.down_by_1().expect("25646d29-5a30-49fb-b91a-7b49ed8c5b0a"), dimension1_not_null_or_nullable),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
+                        let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &NotNullOrNullable) = match &not_null_or_nullable {
+                            NotNullOrNullable::NotNull => (&postgresql_json_type_pattern.down_by_1().expect("25646d29-5a30-49fb-b91a-7b49ed8c5b0a"), dimension1_not_null_or_nullable),
+                            NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &NotNullOrNullable::NotNull),
                         };
                         generate_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_postgresql_json_type_pattern)
                     }),
@@ -1054,7 +1055,7 @@ pub fn generate_postgresql_json_types(
             let impl_std_convert_from_ident_create_for_ident_origin_ts = macros_helpers::generate_impl_std_convert_from_ts(&ident_create_upper_camel_case, &ident_origin_upper_camel_case, &quote::quote! {#value_snake_case.0});
             let impl_std_convert_from_ident_update_for_ident_origin_ts = macros_helpers::generate_impl_std_convert_from_ts(&ident_update_upper_camel_case, &ident_origin_upper_camel_case, &quote::quote! {#value_snake_case.0});
             //todo
-            let maybe_impl_schemars_json_schema_for_ident_origin_ts = if matches!(&is_standart_not_null, postgresql_crud_macros_common::IsStandartNotNull::True) {
+            let maybe_impl_schemars_json_schema_for_ident_origin_ts = if matches!(&is_standart_not_null, IsStandartNotNull::True) {
                 match &postgresql_json_type {
                     PostgresqlJsonType::UuidUuidAsJsonbString => {
                         let ident_standart_not_null_origin_double_quotes_ts = generate_quotes::double_quotes_ts(
@@ -1148,7 +1149,7 @@ pub fn generate_postgresql_json_types(
             //         }
             //     },
             // };
-            let maybe_impl_is_string_empty_for_ident_origin_ts = if matches!(&is_standart_not_null, postgresql_crud_macros_common::IsStandartNotNull::True) {
+            let maybe_impl_is_string_empty_for_ident_origin_ts = if matches!(&is_standart_not_null, IsStandartNotNull::True) {
                 match &postgresql_json_type {
                     PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
                     | PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber
@@ -1178,7 +1179,7 @@ pub fn generate_postgresql_json_types(
             let impl_default_option_some_vec_one_el_for_ident_origin_ts = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_option_some_vec_one_el_ts(&ident_origin_upper_camel_case, &{
                 let content_ts = match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_type {
+                        NotNullOrNullable::NotNull => match &postgresql_json_type {
                             PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
                             | PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber
                             | PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber
@@ -1193,11 +1194,11 @@ pub fn generate_postgresql_json_types(
                             PostgresqlJsonType::StdStringStringAsJsonbString => quote::quote! {String::default()},
                             PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote! {uuid::Uuid::new_v4()},
                         },
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {Some(#postgresql_crud_common_default_option_some_vec_one_el_call_ts)},
+                        NotNullOrNullable::Nullable => quote::quote! {Some(#postgresql_crud_common_default_option_some_vec_one_el_call_ts)},
                     },
                     PostgresqlJsonTypePattern::ArrayDimension1 { .. } | PostgresqlJsonTypePattern::ArrayDimension2 { .. } | PostgresqlJsonTypePattern::ArrayDimension3 { .. } | PostgresqlJsonTypePattern::ArrayDimension4 { .. } => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {vec![#postgresql_crud_common_default_option_some_vec_one_el_call_ts]},
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {Some(#postgresql_crud_common_default_option_some_vec_one_el_call_ts)},
+                        NotNullOrNullable::NotNull => quote::quote! {vec![#postgresql_crud_common_default_option_some_vec_one_el_call_ts]},
+                        NotNullOrNullable::Nullable => quote::quote! {Some(#postgresql_crud_common_default_option_some_vec_one_el_call_ts)},
                     },
                 };
                 quote::quote! {Self(#content_ts)}
@@ -1383,7 +1384,7 @@ pub fn generate_postgresql_json_types(
         };
         let ident_read_upper_camel_case = SelfReadUpperCamelCase::from_tokens(&ident);
         let ident_where_ts = match &not_null_or_nullable {
-            postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_postgresql_type_where_ts(
+            NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_postgresql_type_where_ts(
                 &allow_clippy_arbitrary_source_item_ordering_ts,
                 &{
                     #[derive(Debug, Clone)]
@@ -1771,7 +1772,7 @@ pub fn generate_postgresql_json_types(
                 &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
                 &postgresql_crud_macros_common::IsQueryBindMutable::False,
             ),
-            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
+            NotNullOrNullable::Nullable => quote::quote! {
                 pub type #ident_where_upper_camel_case = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter<
                     <#ident_not_null_ts as #import_path::PostgresqlJsonType>::Where
                 >;
@@ -1825,7 +1826,6 @@ pub fn generate_postgresql_json_types(
             .build_struct(
                 &ident_read_only_ids_upper_camel_case,
                 &{
-                    use postgresql_crud_macros_common::NotNullOrNullable;
                     let std_option_option_unit_ts = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(&quote::quote! {()});
                     let vec_ts = |value: &dyn quote::ToTokens| postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_ts(&value);
                     let content_ts = if matches!(&postgresql_json_type, PostgresqlJsonType::UuidUuidAsJsonbString) {
@@ -1924,8 +1924,8 @@ pub fn generate_postgresql_json_types(
         let ident_read_inner_ts = {
             let type_ts = match &postgresql_json_type_pattern {
                 PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_read_inner_standart_not_null_alias_ts,
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(&ident_read_inner_standart_not_null_alias_ts),
+                    NotNullOrNullable::NotNull => &ident_read_inner_standart_not_null_alias_ts,
+                    NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(&ident_read_inner_standart_not_null_alias_ts),
                 },
                 PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
                     let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {#ident_read_inner_standart_not_null_alias_ts});
@@ -1960,7 +1960,6 @@ pub fn generate_postgresql_json_types(
                 },
             };
             let impl_std_convert_from_ident_origin_for_ident_read_inner_ts = {
-                use postgresql_crud_macros_common::NotNullOrNullable;
                 let value_dot_zero_ts = quote::quote!{#value_snake_case.0};
                 let nullable_ts = quote::quote!{#value_dot_zero_ts.map(Into::into)};
                 let into_inner_content_ts = match &postgresql_json_type_pattern {
@@ -2056,7 +2055,7 @@ pub fn generate_postgresql_json_types(
                 #impl_sqlx_type_sqlx_postgres_for_ident_update_for_query_ts
             }
         };
-        let postgresql_crud_macros_common_import_path_postgresql_crud_common = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
+        let postgresql_crud_macros_common_import_path_postgresql_crud_common = ImportPath::PostgresqlCrudCommon;
         let impl_postgresql_json_type_for_ident_ts = {
             let generate_dimension_number_stringified = |dimensions_number: usize| format!("dimension{dimensions_number}");
             let generate_dimension_number_start_stringified = |dimensions_number: usize| format!("{}_start", generate_dimension_number_stringified(dimensions_number));
@@ -2097,7 +2096,6 @@ pub fn generate_postgresql_json_types(
                 &{
                     let format_handle = {
                         //last child dimension value does not matter - null or type - works both good
-                        use postgresql_crud_macros_common::NotNullOrNullable;
                         let column_name_and_maybe_field_getter_field_ident = format!("{{{}}}->'{{field_ident}}'", naming::ColumnNameAndMaybeFieldGetterSnakeCase);
                         let format_handle = ArrayDimension::try_from(postgresql_json_type_pattern).map_or_else(
                             |()| column_name_and_maybe_field_getter_field_ident.clone(),
@@ -2288,13 +2286,13 @@ pub fn generate_postgresql_json_types(
                     };
                     let generate_into_iter_map_el_collect_not_null_or_nullable_ts = |
                         el_ts: &dyn quote::ToTokens,
-                        current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable
+                        current_not_null_or_nullable: &NotNullOrNullable
                     | {
                         generate_into_iter_map_el_collect_ts(
                             &el_ts,
                             &match &current_not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#el_ts.0},
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_el_zero_ts(
+                                NotNullOrNullable::NotNull => quote::quote! {#el_ts.0},
+                                NotNullOrNullable::Nullable => generate_match_el_zero_ts(
                                     &quote::quote! {#el_ts.0},
                                     &quote::quote! {value_f8b0b01d},
                                     &proc_macro2::TokenStream::new()
@@ -2305,15 +2303,15 @@ pub fn generate_postgresql_json_types(
                     let generate_into_iter_map_el_collect_not_null_or_nullable_content_ts = |
                         el_ts: &dyn quote::ToTokens,
                         value_ts: &dyn quote::ToTokens,
-                        current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
+                        current_not_null_or_nullable: &NotNullOrNullable,
                         current_content_ts: &dyn quote::ToTokens
                     | {
                         match &current_not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_into_iter_map_el_collect_ts(
+                            NotNullOrNullable::NotNull => generate_into_iter_map_el_collect_ts(
                                 &el_ts,
                                 &quote::quote! {#el_ts.0 #current_content_ts}
                             ),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            NotNullOrNullable::Nullable => {
                                 let match_el_zero_ts = generate_match_el_zero_ts(
                                     &quote::quote! {#el_ts.0},
                                     &value_ts,
@@ -2394,8 +2392,8 @@ pub fn generate_postgresql_json_types(
                         }
                     };
                     match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#content_ts #into_inner_content_ts},
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_el_zero_ts(
+                        NotNullOrNullable::NotNull => quote::quote! {#content_ts #into_inner_content_ts},
+                        NotNullOrNullable::Nullable => generate_match_el_zero_ts(
                             &content_ts,
                             &quote::quote!{value_3432e728},
                             &into_inner_content_ts
@@ -2524,7 +2522,6 @@ pub fn generate_postgresql_json_types(
                 PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote! {uuid_uuid_test_cases_vec},
             };
             let generate_array_dimension_equal_ts = |dimension: &postgresql_crud_macros_common::Dimension| {
-                use postgresql_crud_macros_common::NotNullOrNullable;
                 let dimension_index_number_max = postgresql_crud_macros_common::DimensionIndexNumber::from(dimension);
                 let generate_dimension_index_number_ts = |not_null_or_nullable_vec: &[&NotNullOrNullable]|{
                     assert!(!not_null_or_nullable_vec.is_empty(), "c1a5939d-3235-4bcd-88fc-bfdf2101dffd");
@@ -2798,7 +2795,6 @@ pub fn generate_postgresql_json_types(
                 }
             };
             let option_vec_create_ts = {
-                use postgresql_crud_macros_common::NotNullOrNullable;
                 let generate_some_acc_content_ts = |current_not_null_or_nullable: &NotNullOrNullable, current_ident_ts: &dyn quote::ToTokens| {
                     let (new_content_ts, maybe_acc_push_none_ts) = match &current_not_null_or_nullable {
                         NotNullOrNullable::NotNull => (quote::quote! {vec![el_88131059.0.into()]}, proc_macro2::TokenStream::new()),
@@ -2912,7 +2908,6 @@ pub fn generate_postgresql_json_types(
                 }
             };
             let read_only_ids_to_two_dimensional_vec_read_inner_ts = {
-                use postgresql_crud_macros_common::NotNullOrNullable;
                 let (has_len_greater_than_one_ts, has_len_greater_than_one_for_for_ts) = {
                     let generate_ts = |content_ts: &dyn quote::ToTokens| {
                         quote::quote! {let has_len_greater_than_one = #content_ts;}
@@ -3072,17 +3067,17 @@ pub fn generate_postgresql_json_types(
             let update_to_read_only_ids_ts = {
                 let value_initialization_ts = generate_import_path_value_initialization_ts(&if matches!(&postgresql_json_type, PostgresqlJsonType::UuidUuidAsJsonbString) {
                     let generate_iter_or_match_ts = |
-                        current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
+                        current_not_null_or_nullable: &NotNullOrNullable,
                         current_ident_ts: &dyn quote::ToTokens,
-                        update_current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable
+                        update_current_not_null_or_nullable: &NotNullOrNullable
                     | {
                         let value_zero_zero_ts = quote::quote! {#value_snake_case.0.0};
                         let content_ts = {
                             let current_ident_update_ts = SelfUpdateUpperCamelCase::from_tokens(&current_ident_ts);
                             let content_ts = {
                                 let content_ts = match &update_current_not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {el_aa999306.clone()},
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {value_92de91cc.clone()},
+                                    NotNullOrNullable::NotNull => quote::quote! {el_aa999306.clone()},
+                                    NotNullOrNullable::Nullable => quote::quote! {value_92de91cc.clone()},
                                 };
                                 quote::quote! {#current_ident_update_ts(#content_ts)}
                             };
@@ -3095,18 +3090,18 @@ pub fn generate_postgresql_json_types(
                             }
                         };
                         match &current_not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
+                            NotNullOrNullable::NotNull => quote::quote! {
                                 #value_zero_zero_ts.iter().map(|el_aa999306|#content_ts).collect()
                             },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
+                            NotNullOrNullable::Nullable => quote::quote! {
                                 #value_zero_zero_ts.as_ref().map(|value_92de91cc| #content_ts)
                             },
                         }
                     };
                     match &postgresql_json_type_pattern {
                         PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#value_snake_case.0.clone().into()},
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_iter_or_match_ts(
+                            NotNullOrNullable::NotNull => quote::quote! {#value_snake_case.0.clone().into()},
+                            NotNullOrNullable::Nullable => generate_iter_or_match_ts(
                                 not_null_or_nullable,
                                 &ident_not_null_ts,
                                 not_null_or_nullable
@@ -3116,12 +3111,12 @@ pub fn generate_postgresql_json_types(
                             not_null_or_nullable,
                             &generate_ident_ts(
                                 &match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => *dimension1_not_null_or_nullable,
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                    NotNullOrNullable::NotNull => *dimension1_not_null_or_nullable,
+                                    NotNullOrNullable::Nullable => NotNullOrNullable::NotNull,
                                 },
                                 &match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_json_type_pattern.down_by_1().expect("e84064c3-5c31-4fa6-8dbc-ba454128c9da"),
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_json_type_pattern.clone(),
+                                    NotNullOrNullable::NotNull => postgresql_json_type_pattern.down_by_1().expect("e84064c3-5c31-4fa6-8dbc-ba454128c9da"),
+                                    NotNullOrNullable::Nullable => postgresql_json_type_pattern.clone(),
                                 },
                             ),
                             not_null_or_nullable,
@@ -3130,12 +3125,12 @@ pub fn generate_postgresql_json_types(
                             not_null_or_nullable,
                             &generate_ident_ts(
                                 &match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => *dimension1_not_null_or_nullable,
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                    NotNullOrNullable::NotNull => *dimension1_not_null_or_nullable,
+                                    NotNullOrNullable::Nullable => NotNullOrNullable::NotNull,
                                 },
                                 &match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_json_type_pattern.down_by_1().expect("226c6318-6be3-4b85-b2cd-c0b53a2d6bf9"),
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_json_type_pattern.clone(),
+                                    NotNullOrNullable::NotNull => postgresql_json_type_pattern.down_by_1().expect("226c6318-6be3-4b85-b2cd-c0b53a2d6bf9"),
+                                    NotNullOrNullable::Nullable => postgresql_json_type_pattern.clone(),
                                 },
                             ),
                             not_null_or_nullable,
@@ -3144,12 +3139,12 @@ pub fn generate_postgresql_json_types(
                             not_null_or_nullable,
                             &generate_ident_ts(
                                 &match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => *dimension1_not_null_or_nullable,
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                    NotNullOrNullable::NotNull => *dimension1_not_null_or_nullable,
+                                    NotNullOrNullable::Nullable => NotNullOrNullable::NotNull,
                                 },
                                 &match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_json_type_pattern.down_by_1().expect("3ae1e9f8-84ec-4369-a633-eca188d9b10a"),
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_json_type_pattern.clone(),
+                                    NotNullOrNullable::NotNull => postgresql_json_type_pattern.down_by_1().expect("3ae1e9f8-84ec-4369-a633-eca188d9b10a"),
+                                    NotNullOrNullable::Nullable => postgresql_json_type_pattern.clone(),
                                 },
                             ),
                             not_null_or_nullable,
@@ -3158,12 +3153,12 @@ pub fn generate_postgresql_json_types(
                             not_null_or_nullable,
                             &generate_ident_ts(
                                 &match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => *dimension1_not_null_or_nullable,
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                    NotNullOrNullable::NotNull => *dimension1_not_null_or_nullable,
+                                    NotNullOrNullable::Nullable => NotNullOrNullable::NotNull,
                                 },
                                 &match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_json_type_pattern.down_by_1().expect("44d51dc5-1b15-4807-ad63-c4fcfb01251c"),
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_json_type_pattern.clone(),
+                                    NotNullOrNullable::NotNull => postgresql_json_type_pattern.down_by_1().expect("44d51dc5-1b15-4807-ad63-c4fcfb01251c"),
+                                    NotNullOrNullable::Nullable => postgresql_json_type_pattern.clone(),
                                 },
                             ),
                             not_null_or_nullable,
@@ -3220,11 +3215,11 @@ pub fn generate_postgresql_json_types(
                     }
                 };
                 match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                    NotNullOrNullable::NotNull => {
                         let equal_ts = generate_equal_ts(&quote::quote! {#ident_table_type_declaration_upper_camel_case::new(#create_snake_case.0.into())});
                         quote::quote! {#ident_where_upper_camel_case::#equal_upper_camel_case(#equal_ts)}
                     }
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                    NotNullOrNullable::Nullable => {
                         let current_ident_where_upper_camel_case = SelfWhereUpperCamelCase::from_tokens(&ident_not_null_ts);
                         let current_ident_table_type_declaration_upper_camel_case = SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_not_null_ts);
                         let equal_ts = generate_equal_ts(&quote::quote! {#current_ident_table_type_declaration_upper_camel_case::new(value_18544acf.into())});
@@ -3261,8 +3256,8 @@ pub fn generate_postgresql_json_types(
                         let create_dot_zero_dot_zero = quote::quote! {#create_snake_case.0.0};
                         let content_ts = {
                             let content_ts: &dyn quote::ToTokens = match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => &create_dot_zero_dot_zero,
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote! {value_1bbf74bc.0},
+                                NotNullOrNullable::NotNull => &create_dot_zero_dot_zero,
+                                NotNullOrNullable::Nullable => &quote::quote! {value_1bbf74bc.0},
                             };
                             quote::quote! {
                                 ::LengthEqual(
@@ -3276,8 +3271,8 @@ pub fn generate_postgresql_json_types(
                             }
                         };
                         match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#ident_where_upper_camel_case #content_ts},
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            NotNullOrNullable::NotNull => quote::quote! {#ident_where_upper_camel_case #content_ts},
+                            NotNullOrNullable::Nullable => {
                                 let current_ident_where_upper_camel_case = SelfWhereUpperCamelCase::from_tokens(&ident_not_null_ts);
                                 quote::quote! {
                                     #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
@@ -3323,8 +3318,8 @@ pub fn generate_postgresql_json_types(
                         let create_dot_zero_dot_zero = quote::quote! {#create_snake_case.0.0};
                         let content_ts = {
                             let content_ts: &dyn quote::ToTokens = match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => &create_dot_zero_dot_zero,
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote! {value_68880991.0},
+                                NotNullOrNullable::NotNull => &create_dot_zero_dot_zero,
+                                NotNullOrNullable::Nullable => &quote::quote! {value_68880991.0},
                             };
                             quote::quote! {
                                 ::LengthGreaterThan(
@@ -3356,8 +3351,8 @@ pub fn generate_postgresql_json_types(
                             }
                         };
                         match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#ident_where_upper_camel_case #content_ts},
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            NotNullOrNullable::NotNull => quote::quote! {#ident_where_upper_camel_case #content_ts},
+                            NotNullOrNullable::Nullable => {
                                 let current_ident_where_upper_camel_case = SelfWhereUpperCamelCase::from_tokens(&ident_not_null_ts);
                                 quote::quote! {
                                     #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(match #create_dot_zero_dot_zero {
@@ -3419,7 +3414,7 @@ pub fn generate_postgresql_json_types(
             };
             //todo additonal logic for Option<value> and element of array? optional element of array?
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_ts = if matches!(&postgresql_json_type_pattern, PostgresqlJsonTypePattern::Standart) &&
-                matches!(&not_null_or_nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull)
+                matches!(&not_null_or_nullable, NotNullOrNullable::NotNull)
             {
                 let (
                     int_greater_than_one_less_ts,
@@ -3482,7 +3477,7 @@ pub fn generate_postgresql_json_types(
                 none_ts.clone()
             };
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_ts = if matches!(&postgresql_json_type_pattern, PostgresqlJsonTypePattern::Standart) &&
-                matches!(&not_null_or_nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull)
+                matches!(&not_null_or_nullable, NotNullOrNullable::NotNull)
             {
                 let (
                     between_one_less_and_one_more_int_ts,
@@ -3560,7 +3555,7 @@ pub fn generate_postgresql_json_types(
                 none_ts.clone()
             };
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_in_ts = if matches!(&postgresql_json_type_pattern, PostgresqlJsonTypePattern::Standart) &&
-                matches!(&not_null_or_nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull)
+                matches!(&not_null_or_nullable, NotNullOrNullable::NotNull)
             {
                 match &postgresql_json_type {
                     PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber |
@@ -3604,7 +3599,7 @@ pub fn generate_postgresql_json_types(
                 none_ts.clone()
             };
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_regular_expression_ts = if matches!(&postgresql_json_type_pattern, PostgresqlJsonTypePattern::Standart) &&
-                matches!(&not_null_or_nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull)
+                matches!(&not_null_or_nullable, NotNullOrNullable::NotNull)
             {
                 match &postgresql_json_type {
                     PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber |
@@ -3647,8 +3642,8 @@ pub fn generate_postgresql_json_types(
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_el_greater_than_ts = match &postgresql_json_type_pattern {
                 PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                     if matches!((&not_null_or_nullable, &dimension1_not_null_or_nullable), (
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull
+                        NotNullOrNullable::NotNull,
+                        NotNullOrNullable::NotNull
                     )) {
                         let (
                             int_greater_than_one_less_ts,
@@ -3733,8 +3728,8 @@ pub fn generate_postgresql_json_types(
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_el_regular_expression_ts = match &postgresql_json_type_pattern {
                 PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                     if matches!((&not_null_or_nullable, &dimension1_not_null_or_nullable), (
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull
+                        NotNullOrNullable::NotNull,
+                        NotNullOrNullable::NotNull
                     )) {
                         match &postgresql_json_type {
                             PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber |

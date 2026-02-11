@@ -1,5 +1,4 @@
-use app_state::GetDatabaseUrl;
-use app_state::GetServiceSocketAddress;
+use app_state::{GetDatabaseUrl, GetServiceSocketAddress};
 use common_routes::common_routes;
 use git_info::PROJECT_GIT_INFO;
 use secrecy::ExposeSecret;
@@ -8,8 +7,7 @@ use server_config::Config;
 use server_table_example::TableExample;
 use sqlx::postgres::PgPoolOptions;
 use std::sync::Arc;
-use tokio::net::TcpListener;
-use tokio::runtime::Builder;
+use tokio::{net::TcpListener, runtime::Builder};
 use tower_http::cors::CorsLayer;
 use tracing_subscriber::fmt::init;
 fn main() {

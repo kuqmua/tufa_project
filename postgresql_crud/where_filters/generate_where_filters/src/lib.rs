@@ -1,6 +1,6 @@
-use naming::parameter::PostgresqlJsonTypeWhereSelfUpperCamelCase;
-use naming::parameter::PostgresqlTypeWhereSelfUpperCamelCase;
-
+use naming::parameter::{
+    PostgresqlJsonTypeWhereSelfUpperCamelCase, PostgresqlTypeWhereSelfUpperCamelCase,
+};
 use std::fmt::Display;
 
 #[proc_macro]

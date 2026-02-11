@@ -1,15 +1,16 @@
 use axum::extract::rejection::{JsonDataError, JsonRejection, JsonSyntaxError};
 use http::header::ToStrError;
 use reqwest::header::HeaderMap;
-use sqlx::migrate::MigrateError;
-use sqlx::types::chrono::{NaiveDate, NaiveDateTime, NaiveTime};
-use sqlx::types::time::{PrimitiveDateTime, Time};
-use sqlx::types::uuid::Error as UuidError;
-use sqlx::types::{BigDecimal, Decimal};
+use sqlx::{
+    migrate::MigrateError,
+    types::chrono::{NaiveDate, NaiveDateTime, NaiveTime},
+    types::time::{PrimitiveDateTime, Time},
+    types::uuid::Error as UuidError,
+    types::{BigDecimal, Decimal},
+};
 use std::io::Error as IoError;
 use time::error::ComponentRange;
-use tracing::dispatcher::SetGlobalDefaultError;
-use tracing::log::SetLoggerError;
+use tracing::{dispatcher::SetGlobalDefaultError, log::SetLoggerError};
 
 pub trait ToStdStringString {
     fn to_std_string_string(&self) -> String;

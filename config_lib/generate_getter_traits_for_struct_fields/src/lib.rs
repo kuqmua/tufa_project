@@ -1,10 +1,8 @@
-use naming::ToTokensToUpperCamelCaseStringified;
-use naming::parameter::{GetSelfSnakeCase, GetSelfUpperCamelCase};
-
 #[proc_macro_derive(GenerateGetterTraitsForStructFields)]
 pub fn generate_getter_traits_for_struct_fields(
     input: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
+    use naming::ToTokensToUpperCamelCaseStringified;
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput =
         syn::parse(input).expect("49780295-2350-409b-979d-ebd653dd223b");
@@ -52,6 +50,7 @@ pub fn generate_getter_traits_for_struct_fields(
 
 #[proc_macro_derive(GenerateGetterTrait)]
 pub fn generate_getter_trait(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    use naming::parameter::{GetSelfSnakeCase, GetSelfUpperCamelCase};
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput =
         syn::parse(input).expect("195b48f5-8dda-4735-a580-86e5db9cdcf3");

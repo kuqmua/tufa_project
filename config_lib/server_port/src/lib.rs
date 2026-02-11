@@ -1,6 +1,8 @@
 use serde::de::Error as SerdeError;
-use std::error::Error;
-use std::fmt::{Display, Formatter, Result as FmtResult};
+use std::{
+    error::Error,
+    fmt::{Display, Formatter, Result as FmtResult},
+};
 
 pub use server_port_try_from_u16::server_port_try_from_u16;
 

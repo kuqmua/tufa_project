@@ -1,9 +1,8 @@
-use naming::parameter::{
-    SelfTryFromEnvErrorNamedUpperCamelCase, TryFromStdEnvVarOkSelfErrorNamedUpperCamelCase,
-};
-
 #[proc_macro_derive(TryFromEnv)]
 pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    use naming::parameter::{
+        SelfTryFromEnvErrorNamedUpperCamelCase, TryFromStdEnvVarOkSelfErrorNamedUpperCamelCase,
+    };
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput =
         syn::parse(input).expect("e45f75c2-92ea-4f80-9962-a2438ac0b3fe");

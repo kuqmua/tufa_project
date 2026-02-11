@@ -2,30 +2,22 @@ pub mod parameter;
 
 use std::fmt::{Display, Formatter, Result as FmtResult};
 
-pub use naming_macros::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified;
-pub use naming_macros::AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified;
-pub use naming_macros::AsRefStrEnumWithUnitFieldsToUpperSnakeCaseStringified;
-
-pub use naming_common::AsRefStrToSnakeCaseStringified;
-pub use naming_common::AsRefStrToSnakeCaseTokenStream;
-pub use naming_common::AsRefStrToUpperCamelCaseStringified;
-pub use naming_common::AsRefStrToUpperCamelCaseTokenStream;
-pub use naming_common::AsRefStrToUpperSnakeCaseStringified;
-pub use naming_common::AsRefStrToUpperSnakeCaseTokenStream;
-
-pub use naming_common::DisplayToSnakeCaseStringified;
-pub use naming_common::DisplayToSnakeCaseTokenStream;
-pub use naming_common::DisplayToUpperCamelCaseStringified;
-pub use naming_common::DisplayToUpperCamelCaseTokenStream;
-pub use naming_common::DisplayToUpperSnakeCaseStringified;
-pub use naming_common::DisplayToUpperSnakeCaseTokenStream;
-
-pub use naming_common::ToTokensToSnakeCaseStringified;
-pub use naming_common::ToTokensToSnakeCaseTokenStream;
-pub use naming_common::ToTokensToUpperCamelCaseStringified;
-pub use naming_common::ToTokensToUpperCamelCaseTokenStream;
-pub use naming_common::ToTokensToUpperSnakeCaseStringified;
-pub use naming_common::ToTokensToUpperSnakeCaseTokenStream;
+pub use naming_common::{
+    AsRefStrToSnakeCaseStringified, AsRefStrToSnakeCaseTokenStream,
+    AsRefStrToUpperCamelCaseStringified, AsRefStrToUpperCamelCaseTokenStream,
+    AsRefStrToUpperSnakeCaseStringified, AsRefStrToUpperSnakeCaseTokenStream,
+    DisplayToSnakeCaseStringified, DisplayToSnakeCaseTokenStream,
+    DisplayToUpperCamelCaseStringified, DisplayToUpperCamelCaseTokenStream,
+    DisplayToUpperSnakeCaseStringified, DisplayToUpperSnakeCaseTokenStream,
+    ToTokensToSnakeCaseStringified, ToTokensToSnakeCaseTokenStream,
+    ToTokensToUpperCamelCaseStringified, ToTokensToUpperCamelCaseTokenStream,
+    ToTokensToUpperSnakeCaseStringified, ToTokensToUpperSnakeCaseTokenStream,
+};
+pub use naming_macros::{
+    AsRefStrEnumWithUnitFieldsToSnakeCaseStringified,
+    AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified,
+    AsRefStrEnumWithUnitFieldsToUpperSnakeCaseStringified,
+};
 
 pub const GITHUB_URL: &str = "https://github.com/kuqmua/tufa_project";
 pub const SUPPORTS_ONLY_STRINGIFIED: &str = "supports only";

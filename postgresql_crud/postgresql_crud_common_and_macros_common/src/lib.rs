@@ -1,4 +1,4 @@
-use std::fmt;
+use std::fmt::{Display, Formatter, Result as StdFmtResult};
 
 pub trait DefaultOptionSomeVecOneEl: Sized {
     fn default_option_some_vec_one_el() -> Self;
@@ -52,8 +52,8 @@ impl LogicalOperator {
         }
     }
 }
-impl fmt::Display for LogicalOperator {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+impl Display for LogicalOperator {
+    fn fmt(&self, f: &mut Formatter<'_>) -> StdFmtResult {
         write!(f, "{self:?}")
     }
 }

@@ -1,6 +1,4 @@
-use teloxide::prelude::Requester;
-use teloxide::types::Message;
-use teloxide::utils::command::BotCommands;
+use teloxide::{prelude::Requester, types::Message, utils::command::BotCommands};
 
 #[derive(BotCommands, Clone)]
 #[command(

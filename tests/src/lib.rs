@@ -3,17 +3,19 @@ mod tests {
     use regex::Regex;
     use reqwest::blocking;
     use scraper::{Html, Selector};
-    use std::collections::HashSet;
-    use std::fs::{File, read_to_string};
-    use std::io::Read;
-    use std::process::{Command, Stdio};
-    use syn::visit::{Visit, visit_expr_method_call};
-    use syn::{Expr, ExprLit, ExprMethodCall, Lit, parse_file};
-    use toml::value::Table;
-    use toml::{Table as TomlTable, Value};
+    use std::{
+        collections::HashSet,
+        fs::{File, read_to_string},
+        io::Read,
+        process::{Command, Stdio},
+    };
+    use syn::{
+        Expr, ExprLit, ExprMethodCall, Lit, parse_file,
+        visit::{Visit, visit_expr_method_call},
+    };
+    use toml::{Table as TomlTable, Value, value::Table};
     use uuid::Uuid;
     use walkdir::WalkDir;
-
     #[derive(Debug, Clone, Copy)]
     enum RustOrClippy {
         Clippy,
