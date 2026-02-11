@@ -1,9 +1,6 @@
 use error_occurence_lib::code_occurence::CodeOccurence;
-use std::fs;
-use std::io::Error as IoError;
-use std::path::Path;
-use tokio::fs::File;
-use tokio::io::AsyncWriteExt;
+use std::{fs, io::Error as IoError, path::Path};
+use tokio::{fs::File, io::AsyncWriteExt};
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum CreateDirsAndWriteFileTokioAsyncErrorNamed {

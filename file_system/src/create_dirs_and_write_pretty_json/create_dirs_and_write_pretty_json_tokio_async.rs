@@ -1,6 +1,5 @@
 use error_occurence_lib::code_occurence::CodeOccurence;
-use serde_json::Error as SerdeJsonError;
-use serde_json::Value as SerdeJsonValue;
+use serde_json::{Error as SerdeJsonError, Value as SerdeJsonValue};
 use std::path::Path;
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
