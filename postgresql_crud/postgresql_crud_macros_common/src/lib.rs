@@ -1971,6 +1971,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_ts(
         #[allow(clippy::absolute_paths)]
         #allow_clippy_arbitrary_source_item_ordering_ts
         #cfg_ts
+        #[allow(clippy::float_arithmetic)]
         impl #import_path::#postgresql_type_test_cases_upper_camel_case for #ident {
             type #postgresql_type_upper_camel_case = #self_upper_camel_case;
             type #select_upper_camel_case = #ident_select_upper_camel_case;
@@ -2224,6 +2225,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_ts(
         #[allow(clippy::absolute_paths)]
         #allow_clippy_arbitrary_source_item_ordering_ts
         #cfg_ts
+        #[allow(clippy::float_arithmetic)]
         impl #import_path::#postgresql_json_type_test_cases_upper_camel_case for #ident {
             type #postgresql_json_type_upper_camel_case = #self_upper_camel_case;
             type #select_upper_camel_case = #ident_select_upper_camel_case;
