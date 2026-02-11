@@ -1,4 +1,7 @@
 use crate::attribute_ident_stringified::AttributeIdentStringified;
+use naming::{
+    CodeOccurenceSnakeCase, HashMapUpperCamelCase, WithSerializeDeserializeUpperCamelCase,
+};
 use std::str::FromStr;
 
 #[allow(clippy::arbitrary_source_item_ordering)]
@@ -114,8 +117,9 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
         panic!("79b0f231-02b9-4770-8052-5f6cc3debf97");
     };
     let std_string_string = token_patterns::StdStringString;
+    let code_occurence_snake_case = CodeOccurenceSnakeCase;
     let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_ts = fields.iter()
-    .filter(|el_5782b638| *el_5782b638.ident.as_ref().expect("3078fd99-5fac-4d57-83ec-93f808b7444b") != *naming::CodeOccurenceSnakeCase.to_string())
+    .filter(|el_5782b638| *el_5782b638.ident.as_ref().expect("3078fd99-5fac-4d57-83ec-93f808b7444b") != *code_occurence_snake_case.to_string())
     .map(|el_c25b655e| {
         fn get_type_path_third_segment_second_argument_check_if_hashmap(
             value: &syn::Field,
@@ -129,7 +133,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             assert!(segments.len() == 1, "114c28f3-61af-4602-bc2f-c3688050e7cd");
             let first_segment = segments.iter().next().expect("a037b0ba-efa7-42ea-b024-fb446c16ebc1");
             {
-                let hashmap_upper_camel_case = naming::HashMapUpperCamelCase;
+                let hashmap_upper_camel_case = HashMapUpperCamelCase;
                 assert!(first_segment.ident == hashmap_upper_camel_case.to_string(), "5e1bc6b1-d997-489a-b903-cfc7f8618fe9");
             };
             let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) = &first_segment.arguments else {
@@ -156,9 +160,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             }
             ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize | ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => el_type_ts,
             ErrorOccurenceFieldAttribute::EoErrorOccurence => format!(
-                "{}{}",
-                el_type_ts,
-                naming::WithSerializeDeserializeUpperCamelCase
+                "{el_type_ts}{WithSerializeDeserializeUpperCamelCase}"
             ).parse::<proc_macro2::TokenStream>().expect("201dc0a4-4563-4e51-a228-ba085b767775"),
             ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
                 quote::quote! {
@@ -181,7 +183,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                             let first_arg = args.iter().next().expect("e9b33787-870e-4520-a364-816c0f47f508");
                             quote::quote! {#first_arg}
                         },
-                        naming::WithSerializeDeserializeUpperCamelCase,
+                        WithSerializeDeserializeUpperCamelCase,
                     ).parse::<proc_macro2::TokenStream>().expect("22c364b9-c645-46ec-984e-cf0b911feb84")
                 } else {
                     panic!("07c6ab44-5e5e-4fca-96a8-5786fb2d2f48");
@@ -205,7 +207,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 let el_hashmap_value_type_with_serialize_deserialize_ts = format!(
                     "{}{}",
                     quote::quote! {#second_argument},
-                    naming::WithSerializeDeserializeUpperCamelCase
+                    WithSerializeDeserializeUpperCamelCase
                 ).parse::<proc_macro2::TokenStream>().expect("86307dbc-484e-4012-ac70-2d593b1f99e6");
                 quote::quote! {
                     std::collections::HashMap<#std_string_string, #el_hashmap_value_type_with_serialize_deserialize_ts>
@@ -214,11 +216,10 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
         };
         quote::quote! {#el_c25b655e_ident: #el_type_with_serialize_deserialize_ts,}
     });
-    let code_occurence_snake_case_ts = naming::CodeOccurenceSnakeCase;
     quote::quote! {
         #el_ident {
             #(#fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_ts)*
-            #code_occurence_snake_case_ts: error_occurence_lib::code_occurence::CodeOccurence,
+            #code_occurence_snake_case: error_occurence_lib::code_occurence::CodeOccurence,
         }
     }
 }

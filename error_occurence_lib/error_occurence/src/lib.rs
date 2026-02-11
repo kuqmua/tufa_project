@@ -1,4 +1,8 @@
 use naming::parameter::SelfWithSerializeDeserializeUpperCamelCase;
+use naming::{
+    CodeOccurenceSnakeCase, IntoSerializeDeserializeVersionSnakeCase, ValueSnakeCase,
+    WithSerializeDeserializeUpperCamelCase,
+};
 
 #[proc_macro_derive(
     ErrorOccurence,
@@ -76,13 +80,11 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             });
         all_equal.expect("b9da972a-f38b-4217-939c-54ffd56f0301")
     };
-    let value_snake_case = naming::ValueSnakeCase;
+    let value_snake_case = ValueSnakeCase;
     let std_string_string = token_patterns::StdStringString;
-    let code_occurence_snake_case = naming::CodeOccurenceSnakeCase;
+    let code_occurence_snake_case = CodeOccurenceSnakeCase;
     let code_occurence_snake_case_stringified = code_occurence_snake_case.to_string();
-    let code_occurence_snake_case_ts = naming::CodeOccurenceSnakeCase;
-    let into_serialize_deserialize_version_snake_case_ts =
-        naming::IntoSerializeDeserializeVersionSnakeCase;
+    let into_serialize_deserialize_version_snake_case_ts = IntoSerializeDeserializeVersionSnakeCase;
     let maybe_generic_parameters_ts = if generic_parameters.is_empty() {
         proc_macro2::TokenStream::new()
     } else {
@@ -280,14 +282,14 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             if index == 0 {
                                 quote::quote! {
                                     Self::#el_ident {
-                                        #code_occurence_snake_case_ts,
+                                        #code_occurence_snake_case,
                                         ..
                                     }
                                 }
                             } else {
                                 quote::quote! {
                                     | Self::#el_ident {
-                                        #code_occurence_snake_case_ts,
+                                        #code_occurence_snake_case,
                                         ..
                                     }
                                 }
@@ -302,7 +304,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         },
                         match self {
                             #(#code_occurence_variants_ts)*
-                            => #code_occurence_snake_case_ts
+                            => #code_occurence_snake_case
                         }
                     )
                 }
@@ -381,7 +383,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             #(#fields_idents_ts),*
                         } => #ident_with_serialize_deserialize_upper_camel_case::#el_ident {
                             #(#fields_into_serialize_deserialize_version_excluding_code_occurence_ts)*
-                            #code_occurence_snake_case_ts,
+                            #code_occurence_snake_case,
                         }
                     }
                 });
@@ -459,7 +461,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     .ty;
                                 quote::quote! {#field_type}.to_string()
                             },
-                            naming::WithSerializeDeserializeUpperCamelCase
+                            WithSerializeDeserializeUpperCamelCase
                         )
                         .parse::<proc_macro2::TokenStream>()
                         .expect("9ff40f7e-b7b0-4226-8663-d2de6d5e05ed")

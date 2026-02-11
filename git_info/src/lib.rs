@@ -1,3 +1,4 @@
+pub use naming::GITHUB_URL;
 pub const PROJECT_GIT_INFO: ProjectGitInfo<'_> =
     compile_time_git_info::compile_time_project_git_info!();
 
@@ -22,7 +23,7 @@ where
     T: GetGitCommitId, //todo wtf
 {
     fn get_git_commit_link(&self) -> String {
-        format!("{}/tree/{}", naming::GITHUB_URL, self.get_git_commit_id())
+        format!("{}/tree/{}", GITHUB_URL, self.get_git_commit_id())
     }
 }
 

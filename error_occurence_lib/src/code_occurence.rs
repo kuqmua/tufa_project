@@ -1,3 +1,4 @@
+use naming::GITHUB_URL;
 use std::{
     fmt::{Display, Formatter, Result as FmtResult},
     sync::OnceLock,
@@ -89,18 +90,15 @@ impl Display for CodeOccurence {
                 app_state::SourcePlaceType::Github => self.macro_occurence.as_ref().map_or_else(
                     || format!(
                         "{}/blob/{}/{}#L{}",
-                        naming::GITHUB_URL,
-                        self.commit,
-                        self.file,
-                        self.line
+                        GITHUB_URL, self.commit, self.file, self.line
                     ),
                     |value_2ad91ca0| format!(
                         "{}/blob/{}/{}#L{} ({}/blob/{}/{}#L{})",
-                        naming::GITHUB_URL,
+                        GITHUB_URL,
                         self.commit,
                         self.file,
                         self.line,
-                        naming::GITHUB_URL,
+                        GITHUB_URL,
                         self.commit,
                         value_2ad91ca0.file,
                         value_2ad91ca0.line

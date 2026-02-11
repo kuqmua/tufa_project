@@ -3,6 +3,11 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     use naming::parameter::{
         SelfTryFromEnvErrorNamedUpperCamelCase, TryFromStdEnvVarOkSelfErrorNamedUpperCamelCase,
     };
+    use naming::{
+        DotenvSnakeCase, DotenvUpperCamelCase, EnvVarNameSnakeCase, StdEnvVarErrorSnakeCase,
+        StdEnvVarErrorUpperCamelCase, ToTokensToUpperCamelCaseTokenStream,
+        ToTokensToUpperSnakeCaseStringified, TryFromStdEnvVarOkUpperCamelCase,
+    };
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput =
         syn::parse(input).expect("e45f75c2-92ea-4f80-9962-a2438ac0b3fe");
@@ -19,16 +24,16 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             panic!("330b2512-2672-4aab-a447-27aa15a56f1c")
         }
     };
-    let dotenv_upper_camel_case = naming::DotenvUpperCamelCase;
-    let dotenv_snake_case = naming::DotenvSnakeCase;
-    let std_env_var_error_upper_camel_case = naming::StdEnvVarErrorUpperCamelCase;
-    let std_env_var_error_snake_case = naming::StdEnvVarErrorSnakeCase;
-    let env_var_name_snake_case = naming::EnvVarNameSnakeCase;
-    let try_from_std_env_var_ok_upper_camel_case = naming::TryFromStdEnvVarOkUpperCamelCase;
+    let dotenv_upper_camel_case = DotenvUpperCamelCase;
+    let dotenv_snake_case = DotenvSnakeCase;
+    let std_env_var_error_upper_camel_case = StdEnvVarErrorUpperCamelCase;
+    let std_env_var_error_snake_case = StdEnvVarErrorSnakeCase;
+    let env_var_name_snake_case = EnvVarNameSnakeCase;
+    let try_from_std_env_var_ok_upper_camel_case = TryFromStdEnvVarOkUpperCamelCase;
     let error_named_ts = {
         let variants_ts = fields_named.iter().map(|el_f931deb2| {
             let el_ident = &el_f931deb2.ident.as_ref().expect("2ecb63c1-675f-489a-af65-a6a17c778bd6");
-            let el_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_ident);
+            let el_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_ident);
             let try_from_std_env_var_ok_self_error_named_upper_camel_case = TryFromStdEnvVarOkSelfErrorNamedUpperCamelCase::from_tokens(&el_ident);
             quote::quote! {
                 #el_ident_upper_camel_case_ts {
@@ -57,7 +62,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 .as_ref()
                 .expect("8b79a379-2073-4415-82c6-bf7ea4b05165");
             let el_ident_upper_camel_case_ts =
-                naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_ident);
+                ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_ident);
             quote::quote! {
                 Self::#el_ident_upper_camel_case_ts { #el_ident } => write!(f, "{}", #el_ident)
             }
@@ -83,9 +88,9 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let try_from_env_ts = {
         let fields_initialization_ts = fields_named.iter().map(|el_0b2240f0| {
             let el_ident = &el_0b2240f0.ident.as_ref().expect("ebf4e1b2-f07a-40ee-b885-fc8be3444d9a");
-            let el_ident_quotes_upper_snake_case_string = syn::LitStr::new(&naming::ToTokensToUpperSnakeCaseStringified::case(&el_ident), ident.span());
-            let el_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_ident);
-            let el_ident_wrapper_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_ident);
+            let el_ident_quotes_upper_snake_case_string = syn::LitStr::new(&ToTokensToUpperSnakeCaseStringified::case(&el_ident), ident.span());
+            let el_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_ident);
+            let el_ident_wrapper_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_ident);
             quote::quote! {
                 let #el_ident = {
                     let env_var_name = String::from(#el_ident_quotes_upper_snake_case_string);
