@@ -6,7 +6,7 @@ pub fn generate_field_code_occurence_new_ts(
     line: u32,
     column: u32,
 ) -> TokenStream {
-    use naming::CodeOccurenceSnakeCase;
+    use naming::CodeOccurenceSc;
     let code_occurence_new_ts = {
         let file_ts = generate_quotes::double_quotes_ts(&file);
         let line_ts = {
@@ -34,6 +34,6 @@ pub fn generate_field_code_occurence_new_ts(
             )
         }
     };
-    let code_occurence_snake_case = CodeOccurenceSnakeCase;
-    quote! {#code_occurence_snake_case: #code_occurence_new_ts}
+    let code_occurence_sc = CodeOccurenceSc;
+    quote! {#code_occurence_sc: #code_occurence_new_ts}
 }

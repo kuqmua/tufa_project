@@ -20,17 +20,17 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         })
         .collect::<Vec<syn::Ident>>();
     let variants_ts = variant_idents.iter().map(|variant_ident| {
-        let variant_ident_snake_case_ts = {
-            let variant_ident_snake_case_stringified = convert_case::Casing::to_case(
+        let variant_ident_sc_ts = {
+            let variant_ident_sc_stringified = convert_case::Casing::to_case(
                 &format!("\"{variant_ident}\""),
                 convert_case::Case::Snake,
             );
-            variant_ident_snake_case_stringified
+            variant_ident_sc_stringified
                 .parse::<proc_macro2::TokenStream>()
                 .expect("791603c1-e547-4486-898e-631abb15afc5")
         };
         quote! {
-            #variant_ident_snake_case_ts => Ok(Self::#variant_ident),
+            #variant_ident_sc_ts => Ok(Self::#variant_ident),
         }
     });
     let error_variants_stringified =
@@ -38,12 +38,12 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             .iter()
             .fold(String::default(), |mut acc_d6966473, variant_ident| {
                 use std::fmt::Write as _;
-                let variant_ident_snake_case_stringified = convert_case::Casing::to_case(
+                let variant_ident_sc_stringified = convert_case::Casing::to_case(
                     &format!("{variant_ident}"),
                     convert_case::Case::Snake,
                 );
                 assert!(
-                    write!(acc_d6966473, "\'{variant_ident_snake_case_stringified}\',").is_ok(),
+                    write!(acc_d6966473, "\'{variant_ident_sc_stringified}\',").is_ok(),
                     "09c49558-9d46-41d1-86a5-f76c1460a21e"
                 );
                 acc_d6966473

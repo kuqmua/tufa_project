@@ -1,33 +1,23 @@
 use naming::{
-    ArrayOfUpperCamelCase, AsUpperCamelCase, ColumnSnakeCase, ContainsNullByteUpperCamelCase,
-    CreateSnakeCase, DateNaiveSnakeCase, DateNaiveUpperCamelCase, DateSnakeCase,
-    DateUpperCamelCase, DaysSnakeCase, EarlierDateNotSupportedUpperCamelCase,
-    EarliestSupportedDateSnakeCase, EndSnakeCase, EndUpperCamelCase, EqualUpperCamelCase,
-    ErrorSnakeCase, ExcludedStartGreaterThanExcludedEndUpperCamelCase,
-    ExcludedStartGreaterThanIncludedEndUpperCamelCase, ExcludedUpperCamelCase,
-    GeneratePostgresqlTypesModSnakeCase, HourSnakeCase, IncludedEndCannotBeMaxUpperCamelCase,
-    IncludedStartGreaterThanExcludedEndUpperCamelCase,
-    IncludedStartGreaterThanIncludedEndUpperCamelCase, IncludedUpperCamelCase, IncrementSnakeCase,
-    InvalidHourOrMinuteOrSecondOrMicrosecondUpperCamelCase, MicroSnakeCase, MicrosecondSnakeCase,
-    MicrosecondsSnakeCase, MinSnakeCase, MinuteSnakeCase, MonthsSnakeCase,
-    NanosecondPrecisionIsNotSupportedUpperCamelCase, NanosecondSnakeCase, NewSnakeCase,
-    OptionUpdateSnakeCase, OptionVecCreateSnakeCase, PostgresqlTypeUpperCamelCase, QuerySnakeCase,
-    ReadIntoTableTypeDeclarationSnakeCase, ReadOnlyIdsIntoReadSnakeCase,
-    ReadOnlyIdsIntoTableTypeDeclarationSnakeCase, ReadOnlyIdsIntoUpdateSnakeCase,
-    ReadOnlyIdsMergedWithCreateIntoReadSnakeCase, ReadOnlyIdsSnakeCase,
-    ReadOnlyIdsToTwoDimensionalVecReadInnerSnakeCase, ReadOnlyIdsUpperCamelCase, ReadSnakeCase,
-    ReadUpperCamelCase, SecSnakeCase, SecondSnakeCase, SelfSnakeCase, SelfUpperCamelCase,
-    StartSnakeCase, StartUpperCamelCase, StdFmtDisplayPlusQuoteToTokens,
-    TableTypeDeclarationSnakeCase, TableTypeDeclarationUpperCamelCase, TimeSnakeCase,
-    TimeUpperCamelCase, ToStdStringStringSnakeCase, TryNewForDeserializeSnakeCase, TryNewSnakeCase,
-    UnboundedUpperCamelCase, UpdateUpperCamelCase, ValueSnakeCase, VecOfUpperCamelCase,
+    ArrayOfUcc, AsUcc, ColumnSc, ContainsNullByteUcc, CreateSc, DateNaiveSc, DateNaiveUcc, DateSc,
+    DateUcc, DaysSc, EarlierDateNotSupportedUcc, EarliestSupportedDateSc, EndSc, EndUcc, EqualUcc,
+    ErrorSc, ExcludedStartGreaterThanExcludedEndUcc, ExcludedStartGreaterThanIncludedEndUcc,
+    ExcludedUcc, GeneratePostgresqlTypesModSc, HourSc, IncludedEndCannotBeMaxUcc,
+    IncludedStartGreaterThanExcludedEndUcc, IncludedStartGreaterThanIncludedEndUcc, IncludedUcc,
+    IncrementSc, InvalidHourOrMinuteOrSecondOrMicrosecondUcc, MicroSc, MicrosecondSc,
+    MicrosecondsSc, MinSc, MinuteSc, MonthsSc, NanosecondPrecisionIsNotSupportedUcc, NanosecondSc,
+    NewSc, OptionUpdateSc, OptionVecCreateSc, PostgresqlTypeUcc, QuerySc,
+    ReadIntoTableTypeDeclarationSc, ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeDeclarationSc,
+    ReadOnlyIdsIntoUpdateSc, ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsSc,
+    ReadOnlyIdsToTwoDimensionalVecReadInnerSc, ReadOnlyIdsUcc, ReadSc, ReadUcc, SecSc, SecondSc,
+    SelfSc, SelfUcc, StartSc, StartUcc, StdFmtDisplayPlusQuoteToTokens, TableTypeDeclarationSc,
+    TableTypeDeclarationUcc, TimeSc, TimeUcc, ToStdStringStringSc, TryNewForDeserializeSc,
+    TryNewSc, UnboundedUcc, UpdateUcc, ValueSc, VecOfUcc,
     parameter::{
-        SelfCreateUpperCamelCase, SelfNotNullUpperCamelCase,
-        SelfOriginTryNewErrorNamedUpperCamelCase,
-        SelfOriginTryNewForDeserializeErrorNamedUpperCamelCase, SelfOriginUpperCamelCase,
-        SelfReadInnerUpperCamelCase, SelfReadOnlyIdsUpperCamelCase, SelfReadUpperCamelCase,
-        SelfSelectUpperCamelCase, SelfTableTypeDeclarationUpperCamelCase,
-        SelfUpdateForQueryUpperCamelCase, SelfUpdateUpperCamelCase, SelfWhereUpperCamelCase,
+        SelfCreateUcc, SelfNotNullUcc, SelfOriginTryNewErrorNamedUcc,
+        SelfOriginTryNewForDeserializeErrorNamedUcc, SelfOriginUcc, SelfReadInnerUcc,
+        SelfReadOnlyIdsUcc, SelfReadUcc, SelfSelectUcc, SelfTableTypeDeclarationUcc,
+        SelfUpdateForQueryUcc, SelfUpdateUcc, SelfWhereUcc,
     },
 };
 use postgresql_crud_macros_common::NotNullOrNullable;
@@ -339,7 +329,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             write!(
                 f,
                 "{}",
-                SelfNotNullUpperCamelCase::from_display(&PostgresqlType::from(self))
+                SelfNotNullUcc::from_display(&PostgresqlType::from(self))
             )
         }
     }
@@ -1107,10 +1097,10 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                     let d1 = dimension1_not_null_or_nullable;
                     let d1_rust = dimension1_not_null_or_nullable.rust();
-                    (format!("{VecOfUpperCamelCase}{d1_rust}{rust_type_name}"), format!("{ArrayOfUpperCamelCase}{d1}{postgresql_type_name}"))
+                    (format!("{VecOfUcc}{d1_rust}{rust_type_name}"), format!("{ArrayOfUcc}{d1}{postgresql_type_name}"))
                 }
             };
-            format!("{not_null_or_nullable_rust}{rust_part}{AsUpperCamelCase}{current_not_null_or_nullable}{postgresql_part}")
+            format!("{not_null_or_nullable_rust}{rust_part}{AsUcc}{current_not_null_or_nullable}{postgresql_part}")
         };
         let generate_ident_ts = |
             current_postgresql_type: &PostgresqlType,
@@ -1123,16 +1113,16 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
         ).parse::<proc_macro2::TokenStream>().expect("ff3eb7a6-8369-46fd-82f5-2afdf752365f");
         let ident = &generate_ident_ts(postgresql_type, not_null_or_nullable, postgresql_type_pattern);
         let generate_ident_standart_not_null_ts = |current_postgresql_type: &PostgresqlType| generate_ident_ts(current_postgresql_type, &NotNullOrNullable::NotNull, &PostgresqlTypePattern::Standart);
-        let ident_standart_not_null_upper_camel_case = generate_ident_standart_not_null_ts(postgresql_type);
-        let ident_standart_nullable_upper_camel_case = generate_ident_ts(postgresql_type, &NotNullOrNullable::Nullable, &PostgresqlTypePattern::Standart);
-        let ident_array_not_null_upper_camel_case = generate_ident_ts(
+        let ident_standart_not_null_ucc = generate_ident_standart_not_null_ts(postgresql_type);
+        let ident_standart_nullable_ucc = generate_ident_ts(postgresql_type, &NotNullOrNullable::Nullable, &PostgresqlTypePattern::Standart);
+        let ident_array_not_null_ucc = generate_ident_ts(
             postgresql_type,
             &NotNullOrNullable::NotNull,
             &PostgresqlTypePattern::ArrayDimension1 {
                 dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
             },
         );
-        let ident_array_nullable_upper_camel_case = generate_ident_ts(
+        let ident_array_nullable_ucc = generate_ident_ts(
             postgresql_type,
             &NotNullOrNullable::NotNull,
             &PostgresqlTypePattern::ArrayDimension1 {
@@ -1148,35 +1138,35 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
         };
         let generate_as_postgresql_type_ts = |content_ts: &dyn quote::ToTokens| generate_ts(&content_ts, &PostgresqlTypeOrPostgresqlTypeTestCases::PostgresqlType);
         let generate_as_postgresql_type_test_cases_ts = |content_ts: &dyn quote::ToTokens| generate_ts(&content_ts, &PostgresqlTypeOrPostgresqlTypeTestCases::PostgresqlTypeTestCases);
-        let self_as_postgresql_type_ts = generate_as_postgresql_type_ts(&SelfUpperCamelCase);
-        let ident_standart_not_null_as_postgresql_type_ts = generate_as_postgresql_type_ts(&ident_standart_not_null_upper_camel_case);
-        let ident_standart_nullable_as_postgresql_type_ts = generate_as_postgresql_type_ts(&ident_standart_nullable_upper_camel_case);
-        let self_postgresql_type_as_postgresql_type_ts = generate_as_postgresql_type_ts(&quote! {Self::#PostgresqlTypeUpperCamelCase});
+        let self_as_postgresql_type_ts = generate_as_postgresql_type_ts(&SelfUcc);
+        let ident_standart_not_null_as_postgresql_type_ts = generate_as_postgresql_type_ts(&ident_standart_not_null_ucc);
+        let ident_standart_nullable_as_postgresql_type_ts = generate_as_postgresql_type_ts(&ident_standart_nullable_ucc);
+        let self_postgresql_type_as_postgresql_type_ts = generate_as_postgresql_type_ts(&quote! {Self::#PostgresqlTypeUcc});
 
-        let ident_standart_not_null_as_postgresql_type_test_cases_ts = generate_as_postgresql_type_test_cases_ts(&ident_standart_not_null_upper_camel_case);
-        let ident_standart_nullable_as_postgresql_type_test_cases_ts = generate_as_postgresql_type_test_cases_ts(&ident_standart_nullable_upper_camel_case);
-        let ident_array_not_null_as_postgresql_type_test_cases_ts = generate_as_postgresql_type_test_cases_ts(&ident_array_not_null_upper_camel_case);
-        let ident_array_nullable_as_postgresql_type_test_cases_ts = generate_as_postgresql_type_test_cases_ts(&ident_array_nullable_upper_camel_case);
+        let ident_standart_not_null_as_postgresql_type_test_cases_ts = generate_as_postgresql_type_test_cases_ts(&ident_standart_not_null_ucc);
+        let ident_standart_nullable_as_postgresql_type_test_cases_ts = generate_as_postgresql_type_test_cases_ts(&ident_standart_nullable_ucc);
+        let ident_array_not_null_as_postgresql_type_test_cases_ts = generate_as_postgresql_type_test_cases_ts(&ident_array_not_null_ucc);
+        let ident_array_nullable_as_postgresql_type_test_cases_ts = generate_as_postgresql_type_test_cases_ts(&ident_array_nullable_ucc);
 
-        let generate_ident_standart_not_null_origin_ts = |current_postgresql_type: &PostgresqlType| SelfOriginUpperCamelCase::from_tokens(
+        let generate_ident_standart_not_null_origin_ts = |current_postgresql_type: &PostgresqlType| SelfOriginUcc::from_tokens(
             &generate_ident_standart_not_null_ts(current_postgresql_type)
         );
-        let ident_standart_not_null_origin_upper_camel_case = generate_ident_standart_not_null_origin_ts(postgresql_type);
-        let ident_origin_upper_camel_case = SelfOriginUpperCamelCase::from_tokens(&ident);
-        let ident_standart_nullable_table_type_declaration_upper_camel_case = SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_nullable_upper_camel_case);
+        let ident_standart_not_null_origin_ucc = generate_ident_standart_not_null_origin_ts(postgresql_type);
+        let ident_origin_ucc = SelfOriginUcc::from_tokens(&ident);
+        let ident_standart_nullable_table_type_declaration_ucc = SelfTableTypeDeclarationUcc::from_tokens(&ident_standart_nullable_ucc);
 
-        let sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case = generate_ident_standart_not_null_origin_ts(&PostgresqlType::SqlxTypesChronoNaiveDateAsDate);
-        let sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case = generate_ident_standart_not_null_origin_ts(&PostgresqlType::SqlxTypesChronoNaiveTimeAsTime);
-        let sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case = generate_ident_standart_not_null_origin_ts(&PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp);
-        let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case = generate_ident_standart_not_null_origin_ts(&PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz);
+        let sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc = generate_ident_standart_not_null_origin_ts(&PostgresqlType::SqlxTypesChronoNaiveDateAsDate);
+        let sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc = generate_ident_standart_not_null_origin_ts(&PostgresqlType::SqlxTypesChronoNaiveTimeAsTime);
+        let sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc = generate_ident_standart_not_null_origin_ts(&PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp);
+        let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc = generate_ident_standart_not_null_origin_ts(&PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz);
 
-        let generate_ident_standart_not_null_origin_try_new_error_named_ts = |current_postgresql_type: &PostgresqlType| SelfOriginTryNewErrorNamedUpperCamelCase::from_tokens(
+        let generate_ident_standart_not_null_origin_try_new_error_named_ts = |current_postgresql_type: &PostgresqlType| SelfOriginTryNewErrorNamedUcc::from_tokens(
             &generate_ident_standart_not_null_ts(current_postgresql_type)
         );
-        let sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_upper_camel_case = generate_ident_standart_not_null_origin_try_new_error_named_ts(&PostgresqlType::SqlxTypesChronoNaiveDateAsDate);
-        let sqlx_types_chrono_naive_time_as_not_null_time_origin_try_new_error_named_upper_camel_case = generate_ident_standart_not_null_origin_try_new_error_named_ts(&PostgresqlType::SqlxTypesChronoNaiveTimeAsTime);
-        let sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_try_new_error_named_upper_camel_case = generate_ident_standart_not_null_origin_try_new_error_named_ts(&PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp);
-        let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_try_new_error_named_upper_camel_case = generate_ident_standart_not_null_origin_try_new_error_named_ts(&PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz);
+        let sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_ucc = generate_ident_standart_not_null_origin_try_new_error_named_ts(&PostgresqlType::SqlxTypesChronoNaiveDateAsDate);
+        let sqlx_types_chrono_naive_time_as_not_null_time_origin_try_new_error_named_ucc = generate_ident_standart_not_null_origin_try_new_error_named_ts(&PostgresqlType::SqlxTypesChronoNaiveTimeAsTime);
+        let sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_try_new_error_named_ucc = generate_ident_standart_not_null_origin_try_new_error_named_ts(&PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp);
+        let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_try_new_error_named_ucc = generate_ident_standart_not_null_origin_try_new_error_named_ts(&PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz);
         let inner_type_standart_not_null_ts = {
             let value = {
                 let std_primitive_i16_stringified = "i16".to_owned();
@@ -1225,7 +1215,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             };
             value.parse::<proc_macro2::TokenStream>().expect("2555843f-283f-4bc8-8c93-48e6fe68ae6a")
         };
-        let generate_current_ident_origin_non_wrapping = |current_postgresql_type_pattern: &PostgresqlTypePattern, current_not_null_or_nullable: &NotNullOrNullable| SelfOriginUpperCamelCase::from_tokens(&generate_ident_ts(postgresql_type, current_not_null_or_nullable, current_postgresql_type_pattern));
+        let generate_current_ident_origin_non_wrapping = |current_postgresql_type_pattern: &PostgresqlTypePattern, current_not_null_or_nullable: &NotNullOrNullable| SelfOriginUcc::from_tokens(&generate_ident_ts(postgresql_type, current_not_null_or_nullable, current_postgresql_type_pattern));
         let field_type_handle: &dyn quote::ToTokens = {
             let generate_current_ident_origin = |current_postgresql_type_pattern: &PostgresqlTypePattern, current_not_null_or_nullable: &NotNullOrNullable| {
                 let value = generate_current_ident_origin_non_wrapping(current_postgresql_type_pattern, current_not_null_or_nullable);
@@ -1237,7 +1227,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             match &postgresql_type_pattern {
                 PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                     NotNullOrNullable::NotNull => &inner_type_standart_not_null_ts,
-                    NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(&ident_standart_not_null_origin_upper_camel_case),
+                    NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(&ident_standart_not_null_origin_ucc),
                 },
                 PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
                     let (current_postgresql_type_pattern, current_not_null_or_nullable): (&PostgresqlTypePattern, &NotNullOrNullable) = match &not_null_or_nullable {
@@ -1250,19 +1240,19 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
         };
         let generate_typical_query_bind_ts = |content_ts: &dyn quote::ToTokens| match &not_null_or_nullable {
             NotNullOrNullable::NotNull => quote! {
-                if let Err(er) = #QuerySnakeCase.try_bind(#content_ts) {
+                if let Err(er) = #QuerySc.try_bind(#content_ts) {
                     return Err(er.to_string());
                 }
-                Ok(#QuerySnakeCase)
+                Ok(#QuerySc)
             },
             NotNullOrNullable::Nullable => quote! {
-                if let Err(er) = #QuerySnakeCase.try_bind(#content_ts.0.0) {
+                if let Err(er) = #QuerySc.try_bind(#content_ts.0.0) {
                     return Err(er.to_string());
                 }
-                Ok(#QuerySnakeCase)
+                Ok(#QuerySc)
             },
         };
-        let typical_query_bind_ts = generate_typical_query_bind_ts(&ValueSnakeCase);
+        let typical_query_bind_ts = generate_typical_query_bind_ts(&ValueSc);
         let ident_inner_type_ts = match &element.postgresql_type_pattern {
             PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                 NotNullOrNullable::NotNull => &inner_type_standart_not_null_ts,
@@ -1309,16 +1299,16 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
         } else {
             IsNotNullStandartCanBePrimaryKey::False
         };
-        let generate_start_or_end_upper_camel_case = |start_or_end: &StartOrEnd| -> &dyn StdFmtDisplayPlusQuoteToTokens {
+        let generate_start_or_end_ucc = |start_or_end: &StartOrEnd| -> &dyn StdFmtDisplayPlusQuoteToTokens {
             match &start_or_end {
-                StartOrEnd::End => &EndUpperCamelCase,
-                StartOrEnd::Start => &StartUpperCamelCase,
+                StartOrEnd::End => &EndUcc,
+                StartOrEnd::Start => &StartUcc,
             }
         };
-        let generate_start_or_end_snake_case = |start_or_end: &StartOrEnd| -> &dyn StdFmtDisplayPlusQuoteToTokens {
+        let generate_start_or_end_sc = |start_or_end: &StartOrEnd| -> &dyn StdFmtDisplayPlusQuoteToTokens {
             match &start_or_end {
-                StartOrEnd::End => &EndSnakeCase,
-                StartOrEnd::Start => &StartSnakeCase,
+                StartOrEnd::End => &EndSc,
+                StartOrEnd::Start => &StartSc,
             }
         };
         let (serde_serialize_derive_or_impl, serde_deserialize_derive_or_impl) = if matches!(&is_standart_not_null, postgresql_crud_macros_common::IsStandartNotNull::True) {
@@ -1342,21 +1332,21 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     (0..=self.get_index()).collect()
                 }
             }
-            let self_dot_zero_ts = quote! {#SelfSnakeCase.0};
+            let self_dot_zero_ts = quote! {#SelfSc.0};
             let parameter_number_one = ParameterNumber::One;
             let parameter_number_two = ParameterNumber::Two;
             let parameter_number_three = ParameterNumber::Three;
             let parameter_number_four = ParameterNumber::Four;
-            let ident_standart_not_null_double_quotes_ts = generate_quotes::double_quotes_ts(&ident_standart_not_null_upper_camel_case);
-            let ident_standart_not_null_origin_double_quotes_ts = generate_quotes::double_quotes_ts(&ident_standart_not_null_origin_upper_camel_case);
+            let ident_standart_not_null_double_quotes_ts = generate_quotes::double_quotes_ts(&ident_standart_not_null_ucc);
+            let ident_standart_not_null_origin_double_quotes_ts = generate_quotes::double_quotes_ts(&ident_standart_not_null_origin_ucc);
             let generate_std_ops_bound_ts = |type_ts: &dyn quote::ToTokens| {
                 quote! {std::ops::Bound<#type_ts>}
             };
             let std_ops_bound_std_primitive_i32_ts = generate_std_ops_bound_ts(&std_primitive_i32_ts);
             let std_ops_bound_std_primitive_i64_ts = generate_std_ops_bound_ts(&std_primitive_i64_ts);
-            let std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ts = generate_std_ops_bound_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case);
-            let std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ts = generate_std_ops_bound_ts(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case);
-            let std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts = generate_std_ops_bound_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case);
+            let std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ts = generate_std_ops_bound_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc);
+            let std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ts = generate_std_ops_bound_ts(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc);
+            let std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts = generate_std_ops_bound_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc);
             let serde_serialize_derive_or_impl = {
                 let generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens = |content_ts: &dyn quote::ToTokens| {
                     quote! {
@@ -1367,7 +1357,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             #[allow(unused_extern_crates, clippy::useless_attribute)]
                             extern crate serde as _serde;
                             #[automatically_derived]
-                            impl _serde::Serialize for #ident_standart_not_null_origin_upper_camel_case {
+                            impl _serde::Serialize for #ident_standart_not_null_origin_ucc {
                                 fn serialize<__S>(&self, __serializer: __S) -> Result<__S::Ok, __S::Error>
                                 where
                                     __S: _serde::Serializer,
@@ -1402,8 +1392,8 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     let generate_self_zero_tokens_ts = |value_ts: &dyn quote::ToTokens| {
                         quote! {&#self_dot_zero_ts.#value_ts}
                     };
-                    let start_serialize_field_ts = generate_serialize_field_ts(&StartSnakeCase, &generate_self_zero_tokens_ts(&StartSnakeCase));
-                    let end_serialize_field_ts = generate_serialize_field_ts(&EndSnakeCase, &generate_self_zero_tokens_ts(&EndSnakeCase));
+                    let start_serialize_field_ts = generate_serialize_field_ts(&StartSc, &generate_self_zero_tokens_ts(&StartSc));
+                    let end_serialize_field_ts = generate_serialize_field_ts(&EndSc, &generate_self_zero_tokens_ts(&EndSc));
                     quote! {
                         #serde_state_initialization_two_fields_ts
                         #start_serialize_field_ts
@@ -1415,13 +1405,13 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 let impl_serde_serialize_for_uuid_uuid_ts = generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote! {.to_string()}));
                 let generate_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens = |current_ident_ts: &dyn quote::ToTokens| {
                     let generate_serialize_field_match_std_ops_bound_ts = |start_or_end: &StartOrEnd| {
-                        let start_or_end_ts = generate_start_or_end_snake_case(start_or_end);
+                        let start_or_end_ts = generate_start_or_end_sc(start_or_end);
                         generate_serialize_field_ts(
                             &start_or_end_ts,
                             &quote! {
                                 &match self.0.#start_or_end_ts {
-                                    std::ops::Bound::Included(#ValueSnakeCase) => std::ops::Bound::Included(#current_ident_ts::#TryNewSnakeCase(#ValueSnakeCase).map_err(_serde::ser::Error::custom)?),
-                                    std::ops::Bound::Excluded(#ValueSnakeCase) => std::ops::Bound::Excluded(#current_ident_ts::#TryNewSnakeCase(#ValueSnakeCase).map_err(_serde::ser::Error::custom)?),
+                                    std::ops::Bound::Included(#ValueSc) => std::ops::Bound::Included(#current_ident_ts::#TryNewSc(#ValueSc).map_err(_serde::ser::Error::custom)?),
+                                    std::ops::Bound::Excluded(#ValueSc) => std::ops::Bound::Excluded(#current_ident_ts::#TryNewSc(#ValueSc).map_err(_serde::ser::Error::custom)?),
                                     std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                 }
                             },
@@ -1455,13 +1445,13 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                         let generate_field_inner_type_standart_not_null_ts_as_chrono_timelike_ts = |content_ts: &dyn quote::ToTokens| {
                             quote! {&(<#inner_type_standart_not_null_ts as chrono::Timelike>::#content_ts)}
                         };
-                        let hour_serialize_field_ts = generate_serialize_field_ts(&HourSnakeCase, &generate_field_inner_type_standart_not_null_ts_as_chrono_timelike_ts(&quote! {hour(&self.0)}));
-                        let min_serialize_field_ts = generate_serialize_field_ts(&MinSnakeCase, &generate_field_inner_type_standart_not_null_ts_as_chrono_timelike_ts(&quote! {minute(&self.0)}));
-                        let sec_serialize_field_ts = generate_serialize_field_ts(&SecSnakeCase, &generate_field_inner_type_standart_not_null_ts_as_chrono_timelike_ts(&quote! {second(&self.0)}));
+                        let hour_serialize_field_ts = generate_serialize_field_ts(&HourSc, &generate_field_inner_type_standart_not_null_ts_as_chrono_timelike_ts(&quote! {hour(&self.0)}));
+                        let min_serialize_field_ts = generate_serialize_field_ts(&MinSc, &generate_field_inner_type_standart_not_null_ts_as_chrono_timelike_ts(&quote! {minute(&self.0)}));
+                        let sec_serialize_field_ts = generate_serialize_field_ts(&SecSc, &generate_field_inner_type_standart_not_null_ts_as_chrono_timelike_ts(&quote! {second(&self.0)}));
                         let micro_serialize_field_ts = generate_serialize_field_ts(
-                            &MicroSnakeCase,
+                            &MicroSc,
                             &generate_field_inner_type_standart_not_null_ts_as_chrono_timelike_ts(&quote! {
-                                #NanosecondSnakeCase(&self.0).checked_div(1000).expect("aea037b7-95ef-4616-b018-6f2ed1651928")
+                                #NanosecondSc(&self.0).checked_div(1000).expect("aea037b7-95ef-4616-b018-6f2ed1651928")
                             }),
                         );
                         quote! {
@@ -1475,10 +1465,10 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     })),
                     PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
                         let generate_serialize_field_self_zero_ts = |value: &dyn StdFmtDisplayPlusQuoteToTokens| generate_serialize_field_ts(&value, &quote! {&self.0.#value()});
-                        let hour_serialize_field_ts = generate_serialize_field_self_zero_ts(&HourSnakeCase);
-                        let minute_serialize_field_ts = generate_serialize_field_self_zero_ts(&MinuteSnakeCase);
-                        let second_serialize_field_ts = generate_serialize_field_self_zero_ts(&SecondSnakeCase);
-                        let microsecond_serialize_field_ts = generate_serialize_field_self_zero_ts(&MicrosecondSnakeCase);
+                        let hour_serialize_field_ts = generate_serialize_field_self_zero_ts(&HourSc);
+                        let minute_serialize_field_ts = generate_serialize_field_self_zero_ts(&MinuteSc);
+                        let second_serialize_field_ts = generate_serialize_field_self_zero_ts(&SecondSc);
+                        let microsecond_serialize_field_ts = generate_serialize_field_self_zero_ts(&MicrosecondSc);
                         quote! {
                             #serde_state_initialization_four_fields_ts
                             #hour_serialize_field_ts
@@ -1490,9 +1480,9 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     })),
                     PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
                         let generate_serialize_field_handle_ts = |value: &dyn StdFmtDisplayPlusQuoteToTokens| generate_serialize_field_ts(&value, &quote! {&#self_dot_zero_ts.#value});
-                        let months_serialize_field_ts = generate_serialize_field_handle_ts(&MonthsSnakeCase);
-                        let days_serialize_field_ts = generate_serialize_field_handle_ts(&DaysSnakeCase);
-                        let microseconds_serialize_field_ts = generate_serialize_field_handle_ts(&MicrosecondsSnakeCase);
+                        let months_serialize_field_ts = generate_serialize_field_handle_ts(&MonthsSc);
+                        let days_serialize_field_ts = generate_serialize_field_handle_ts(&DaysSc);
+                        let microseconds_serialize_field_ts = generate_serialize_field_handle_ts(&MicrosecondsSc);
                         quote! {
                             #serde_state_initialization_three_fields_ts
                             #months_serialize_field_ts
@@ -1508,16 +1498,16 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                         }
                         let generate_serialize_field_try_new_unwrap_ts = |date_or_time: &DateOrTime| {
                             let date_or_time_ts: &dyn StdFmtDisplayPlusQuoteToTokens = match &date_or_time {
-                                DateOrTime::Date => &DateSnakeCase,
-                                DateOrTime::Time => &TimeSnakeCase,
+                                DateOrTime::Date => &DateSc,
+                                DateOrTime::Time => &TimeSc,
                             };
                             generate_serialize_field_ts(&date_or_time_ts, &{
                                 let current_ident_ts: &dyn quote::ToTokens = match &date_or_time {
-                                    DateOrTime::Date => &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case,
-                                    DateOrTime::Time => &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case,
+                                    DateOrTime::Date => &sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc,
+                                    DateOrTime::Time => &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc,
                                 };
                                 quote! {
-                                    &match #current_ident_ts::#TryNewSnakeCase(self.0.#date_or_time_ts()) {
+                                    &match #current_ident_ts::#TryNewSc(self.0.#date_or_time_ts()) {
                                         Ok(value_b2ac0c33) => value_b2ac0c33,
                                         Err(error_2c555724) => {
                                             return Err(_serde::ser::Error::custom(error_2c555724));
@@ -1542,15 +1532,15 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                         }
                         let generate_serialize_field_try_new_unwrap_ts = |date_naive_or_time: &DateNaiveOrTime| {
                             let date_naive_or_time_ts: &dyn StdFmtDisplayPlusQuoteToTokens = match &date_naive_or_time {
-                                DateNaiveOrTime::Date => &DateNaiveSnakeCase,
-                                DateNaiveOrTime::Time => &TimeSnakeCase,
+                                DateNaiveOrTime::Date => &DateNaiveSc,
+                                DateNaiveOrTime::Time => &TimeSc,
                             };
                             generate_serialize_field_ts(&date_naive_or_time_ts, &{
                                 let current_ident_ts: &dyn quote::ToTokens = match &date_naive_or_time {
-                                    DateNaiveOrTime::Date => &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case,
-                                    DateNaiveOrTime::Time => &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case,
+                                    DateNaiveOrTime::Date => &sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc,
+                                    DateNaiveOrTime::Time => &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc,
                                 };
-                                quote! {&#current_ident_ts::#TryNewSnakeCase(self.0.#date_naive_or_time_ts()).map_err(_serde::ser::Error::custom)?}
+                                quote! {&#current_ident_ts::#TryNewSc(self.0.#date_naive_or_time_ts()).map_err(_serde::ser::Error::custom)?}
                             })
                         };
                         let date_naive_serialize_field_ts = generate_serialize_field_try_new_unwrap_ts(&DateNaiveOrTime::Date);
@@ -1565,9 +1555,9 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_uuid_uuid_ts),
                     PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote! {.bytes()}))),
                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range | PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_ts),
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case)),
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case)),
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case)),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc)),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc)),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc)),
                 }
             };
             let serde_deserialize_derive_or_impl = {
@@ -1575,21 +1565,21 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     False,
                     True,
                 }
-                let struct_ident_double_quotes_ts = postgresql_crud_macros_common::generate_struct_ident_double_quotes_ts(&ident_origin_upper_camel_case);
-                let tuple_struct_ident_double_quotes_ts = postgresql_crud_macros_common::generate_tuple_struct_ident_double_quotes_ts(&ident_origin_upper_camel_case);
+                let struct_ident_double_quotes_ts = postgresql_crud_macros_common::generate_struct_ident_double_quotes_ts(&ident_origin_ucc);
+                let tuple_struct_ident_double_quotes_ts = postgresql_crud_macros_common::generate_tuple_struct_ident_double_quotes_ts(&ident_origin_ucc);
                 let struct_visitor_ts = quote! {
                     #[doc(hidden)]
                     struct __Visitor<'de> {
-                        marker: serde::__private228::PhantomData<#ident_standart_not_null_origin_upper_camel_case>,
+                        marker: serde::__private228::PhantomData<#ident_standart_not_null_origin_ucc>,
                         lifetime: serde::__private228::PhantomData<&'de ()>,
                     }
                 };
-                let start_end_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 2] = [&StartSnakeCase, &EndSnakeCase];
-                let hour_min_sec_micro_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 4] = [&HourSnakeCase, &MinSnakeCase, &SecSnakeCase, &MicroSnakeCase];
-                let hour_minute_second_microsecond_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 4] = [&HourSnakeCase, &MinuteSnakeCase, &SecondSnakeCase, &MicrosecondSnakeCase];
-                let date_time_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 2] = [&DateSnakeCase, &TimeSnakeCase];
-                let date_naive_time_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 2] = [&DateNaiveSnakeCase, &TimeSnakeCase];
-                let months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 3] = [&MonthsSnakeCase, &DaysSnakeCase, &MicrosecondsSnakeCase];
+                let start_end_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 2] = [&StartSc, &EndSc];
+                let hour_min_sec_micro_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 4] = [&HourSc, &MinSc, &SecSc, &MicroSc];
+                let hour_minute_second_microsecond_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 4] = [&HourSc, &MinuteSc, &SecondSc, &MicrosecondSc];
+                let date_time_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 2] = [&DateSc, &TimeSc];
+                let date_naive_time_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 2] = [&DateNaiveSc, &TimeSc];
+                let months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 3] = [&MonthsSc, &DaysSc, &MicrosecondsSc];
                 let serde_deserializer_deserialize_struct_visitor_ts = {
                     quote! {
                         _serde::Deserializer::deserialize_struct(
@@ -1622,7 +1612,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             #[allow(unused_extern_crates, clippy::useless_attribute)]
                             extern crate serde as _serde;
                             #[automatically_derived]
-                            impl<'de> _serde::Deserialize<'de> for #ident_standart_not_null_origin_upper_camel_case {
+                            impl<'de> _serde::Deserialize<'de> for #ident_standart_not_null_origin_ucc {
                                 fn deserialize<__D>(
                                     __deserializer: __D,
                                 ) -> Result<Self, __D::Error>
@@ -1668,14 +1658,14 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 let generate_serde_private_ok_ts = |content_ts: &dyn quote::ToTokens| {
                     quote! {Ok(#content_ts)}
                 };
-                let generate_serde_private_ok_postgresql_type_ts = |content_ts: &dyn quote::ToTokens| generate_serde_private_ok_ts(&quote! {#ident_standart_not_null_origin_upper_camel_case(#content_ts)});
+                let generate_serde_private_ok_postgresql_type_ts = |content_ts: &dyn quote::ToTokens| generate_serde_private_ok_ts(&quote! {#ident_standart_not_null_origin_ucc(#content_ts)});
                 let match_uuid_uuid_field_type_try_parse_ts = quote! {match #inner_type_standart_not_null_ts::try_parse(&#field_0_value_ts) {
                     Ok(value_3c0b34fb) => value_3c0b34fb,
                     Err(error) => {
                         return Err(serde::de::Error::custom(error));
                     }
                 }};
-                let sqlx_types_mac_address_mac_address_field_type_new_field_0_value_ts = quote! {#inner_type_standart_not_null_ts::#NewSnakeCase(#field_0_value_ts)};
+                let sqlx_types_mac_address_mac_address_field_type_new_field_0_value_ts = quote! {#inner_type_standart_not_null_ts::#NewSc(#field_0_value_ts)};
                 let array_std_primitive_u8_6_ts = quote! {[u8; 6]};
                 let generate_vec_field_index_values_ts = |length: usize|{
                     let fields_ts = (1..=length).collect::<Vec<_>>().into_iter().enumerate().map(|(index_a8d5119e, _)| generate_field_index_value_ts(index_a8d5119e));
@@ -1685,7 +1675,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     let generate_match_origin_try_new_for_deserialize_ts = |length: usize| {
                         let fields_ts = generate_vec_field_index_values_ts(length);
                         quote! {
-                            match #ident_standart_not_null_origin_upper_camel_case::#TryNewForDeserializeSnakeCase(#fields_ts) {
+                            match #ident_standart_not_null_origin_ucc::#TryNewForDeserializeSc(#fields_ts) {
                                 Ok(value_e81dd4a5) => Ok(value_e81dd4a5),
                                 Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                             }
@@ -1702,7 +1692,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     let generate_origin_new_for_deserialize_ts = |length: usize| {
                         let fields_ts = generate_vec_field_index_values_ts(length);
                         quote! {
-                            Ok(#ident_standart_not_null_origin_upper_camel_case::new_for_deserialize(#fields_ts))
+                            Ok(#ident_standart_not_null_origin_ucc::new_for_deserialize(#fields_ts))
                         }
                     };
                     (generate_origin_new_for_deserialize_ts(2), generate_origin_new_for_deserialize_ts(3))
@@ -1729,7 +1719,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     )
                 };
                 let generate_fields_serde_de_seq_access_next_el_initialization_ts = |vec_ts: &[&dyn quote::ToTokens]| {
-                    let error_message_ts = postgresql_crud_macros_common::generate_struct_ident_with_number_elements_double_quotes_ts(&ident_standart_not_null_origin_upper_camel_case, vec_ts.len());
+                    let error_message_ts = postgresql_crud_macros_common::generate_struct_ident_with_number_elements_double_quotes_ts(&ident_standart_not_null_origin_ucc, vec_ts.len());
                     let fields_initialization_ts = vec_ts.iter().enumerate().map(|(index_70b4dabd, el_9dc7f312)| {
                         let field_index_value_ts = generate_field_index_value_ts(index_70b4dabd);
                         let index_usize_ts = format!("{index_70b4dabd}usize").parse::<proc_macro2::TokenStream>().expect("ce15e6bf-cf71-42c3-9f6d-94d0f7ec6ede");
@@ -1823,14 +1813,14 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             }
                         }),
                         generate_fn_visit_seq_ts(&{
-                            let fields_initialization_ts = generate_fields_serde_de_seq_access_next_el_initialization_ts(&[&sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case, &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case]);
+                            let fields_initialization_ts = generate_fields_serde_de_seq_access_next_el_initialization_ts(&[&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc, &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc]);
                             quote! {
                                 #fields_initialization_ts
                                 #origin_new_for_deserialize_two_ts
                             }
                         }),
                         generate_fn_visit_seq_ts(&{
-                            let fields_initialization_ts = generate_fields_serde_de_seq_access_next_el_initialization_ts(&[&sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case, &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case]);
+                            let fields_initialization_ts = generate_fields_serde_de_seq_access_next_el_initialization_ts(&[&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc, &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc]);
                             quote! {
                                 #fields_initialization_ts
                                 #origin_new_for_deserialize_two_ts
@@ -2026,8 +2016,8 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                         (
                             generate_field_option_none_initialization_ts(&[&std_primitive_u32_ts, &std_primitive_u32_ts, &std_primitive_u32_ts, &std_primitive_u32_ts]),
                             generate_field_option_none_initialization_ts(&[&std_primitive_u8_ts, &std_primitive_u8_ts, &std_primitive_u8_ts, &std_primitive_u32_ts]),
-                            generate_field_option_none_initialization_ts(&[&sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case, &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case]),
-                            generate_field_option_none_initialization_ts(&[&sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case, &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case]),
+                            generate_field_option_none_initialization_ts(&[&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc, &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc]),
+                            generate_field_option_none_initialization_ts(&[&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc, &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc]),
                             generate_field_option_none_initialization_ts(&[&std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts, &std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts]),
                             generate_field_option_none_initialization_ts(&[&std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ts, &std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ts]),
                             generate_field_option_none_initialization_ts(&[&std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ts, &std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ts]),
@@ -2074,19 +2064,19 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             }
                         };
                         (
-                            generate_while_some_next_key_field_ts(&[(&HourSnakeCase, &std_primitive_u32_ts), (&MinSnakeCase, &std_primitive_u32_ts), (&SecSnakeCase, &std_primitive_u32_ts), (&MicroSnakeCase, &std_primitive_u32_ts)]),
-                            generate_while_some_next_key_field_ts(&[(&HourSnakeCase, &std_primitive_u8_ts), (&MinuteSnakeCase, &std_primitive_u8_ts), (&SecondSnakeCase, &std_primitive_u8_ts), (&MicrosecondSnakeCase, &std_primitive_u32_ts)]),
-                            generate_while_some_next_key_field_ts(&[(&DateSnakeCase, &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case), (&TimeSnakeCase, &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case)]),
-                            generate_while_some_next_key_field_ts(&[(&DateNaiveSnakeCase, &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case), (&TimeSnakeCase, &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case)]),
-                            generate_while_some_next_key_field_ts(&[(&StartSnakeCase, &std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts), (&EndSnakeCase, &std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts)]),
-                            generate_while_some_next_key_field_ts(&[(&StartSnakeCase, &std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ts), (&EndSnakeCase, &std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ts)]),
+                            generate_while_some_next_key_field_ts(&[(&HourSc, &std_primitive_u32_ts), (&MinSc, &std_primitive_u32_ts), (&SecSc, &std_primitive_u32_ts), (&MicroSc, &std_primitive_u32_ts)]),
+                            generate_while_some_next_key_field_ts(&[(&HourSc, &std_primitive_u8_ts), (&MinuteSc, &std_primitive_u8_ts), (&SecondSc, &std_primitive_u8_ts), (&MicrosecondSc, &std_primitive_u32_ts)]),
+                            generate_while_some_next_key_field_ts(&[(&DateSc, &sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc), (&TimeSc, &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc)]),
+                            generate_while_some_next_key_field_ts(&[(&DateNaiveSc, &sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc), (&TimeSc, &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc)]),
+                            generate_while_some_next_key_field_ts(&[(&StartSc, &std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts), (&EndSc, &std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts)]),
+                            generate_while_some_next_key_field_ts(&[(&StartSc, &std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ts), (&EndSc, &std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ts)]),
                             generate_while_some_next_key_field_ts(&[
-                                (&StartSnakeCase, &std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ts),
-                                (&EndSnakeCase, &std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ts),
+                                (&StartSc, &std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ts),
+                                (&EndSc, &std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ts),
                             ]),
-                            generate_while_some_next_key_field_ts(&[(&StartSnakeCase, &std_ops_bound_std_primitive_i32_ts), (&EndSnakeCase, &std_ops_bound_std_primitive_i32_ts)]),
-                            generate_while_some_next_key_field_ts(&[(&StartSnakeCase, &std_ops_bound_std_primitive_i64_ts), (&EndSnakeCase, &std_ops_bound_std_primitive_i64_ts)]),
-                            generate_while_some_next_key_field_ts(&[(&MonthsSnakeCase, &std_primitive_i32_ts), (&DaysSnakeCase, &std_primitive_i32_ts), (&MicrosecondsSnakeCase, &std_primitive_i64_ts)]),
+                            generate_while_some_next_key_field_ts(&[(&StartSc, &std_ops_bound_std_primitive_i32_ts), (&EndSc, &std_ops_bound_std_primitive_i32_ts)]),
+                            generate_while_some_next_key_field_ts(&[(&StartSc, &std_ops_bound_std_primitive_i64_ts), (&EndSc, &std_ops_bound_std_primitive_i64_ts)]),
+                            generate_while_some_next_key_field_ts(&[(&MonthsSc, &std_primitive_i32_ts), (&DaysSc, &std_primitive_i32_ts), (&MicrosecondsSc, &std_primitive_i64_ts)]),
                         )
                     };
                     let (match_field_initialization_hour_min_sec_micro_ts, match_field_initialization_start_end_ts, match_field_initialization_hour_minute_second_microsecond_ts, match_field_initialization_date_time_ts, match_field_initialization_date_naive_time_ts, match_field_initialization_months_days_microseconds_ts) = {
@@ -2239,7 +2229,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             ShouldAddDeLifetime::True,
                             &quote! {__Visitor<'de>},
                             &quote! {
-                                type Value = #ident_standart_not_null_origin_upper_camel_case;
+                                type Value = #ident_standart_not_null_origin_ucc;
                                 #zero_ts
                                 #first_ts
                                 #second_ts
@@ -2471,10 +2461,10 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
         } else {
             (postgresql_crud_macros_common::DeriveOrImpl::Derive, postgresql_crud_macros_common::DeriveOrImpl::Derive)
         };
-        let value_ident_inner_type_ts = quote! {#ValueSnakeCase: #ident_inner_type_ts};
-        let ident_standart_not_null_read_upper_camel_case = SelfReadUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
-        let ident_standart_not_null_origin_try_new_error_named_upper_camel_case = SelfOriginTryNewErrorNamedUpperCamelCase::from_display(&ident_standart_not_null_upper_camel_case);
-        let ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case = SelfOriginTryNewForDeserializeErrorNamedUpperCamelCase::from_display(&ident_standart_not_null_upper_camel_case);
+        let value_ident_inner_type_ts = quote! {#ValueSc: #ident_inner_type_ts};
+        let ident_standart_not_null_read_ucc = SelfReadUcc::from_tokens(&ident_standart_not_null_ucc);
+        let ident_standart_not_null_origin_try_new_error_named_ucc = SelfOriginTryNewErrorNamedUcc::from_display(&ident_standart_not_null_ucc);
+        let ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc = SelfOriginTryNewForDeserializeErrorNamedUcc::from_display(&ident_standart_not_null_ucc);
         let int_range_type_to_range_inner_type_ts = |int_range_type: &IntRangeType| -> proc_macro2::TokenStream {
             match &int_range_type {
                 IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote! {#std_primitive_i32_ts},
@@ -2488,7 +2478,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             )}
         };
         let generate_sqlx_types_chrono_naive_date_time_new_ts = |content_ts: &dyn quote::ToTokens| {
-            quote! {sqlx::types::chrono::NaiveDateTime::#NewSnakeCase(#content_ts)}
+            quote! {sqlx::types::chrono::NaiveDateTime::#NewSc(#content_ts)}
         };
         let generate_sqlx_types_time_time_from_hms_micro_unwrap_ts = |content_ts: &dyn quote::ToTokens| {
             quote! {sqlx::types::time::Time::from_hms_micro(#content_ts).expect("7a1a18fa-c0cf-45e4-8b52-60f58a793c36")}
@@ -2497,9 +2487,9 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             let pub_fn_new_or_try_new_ts = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
                 &macros_helpers::generate_pub_try_new_ts(
                     &value_ident_inner_type_ts,
-                    &ident_standart_not_null_origin_try_new_error_named_upper_camel_case,
+                    &ident_standart_not_null_origin_try_new_error_named_ucc,
                     &quote! {
-                        match #ident_origin_upper_camel_case::#TryNewSnakeCase(#ValueSnakeCase) {
+                        match #ident_origin_ucc::#TryNewSc(#ValueSc) {
                             Ok(value_0f9f1a61) => Ok(Self(value_0f9f1a61)),
                             Err(er) => Err(er)
                         }
@@ -2507,7 +2497,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 )
             } else {
                 &{
-                    let self_ident_origin_new_value_ts = quote! {Self(#ident_origin_upper_camel_case::#NewSnakeCase(#ValueSnakeCase))};
+                    let self_ident_origin_new_value_ts = quote! {Self(#ident_origin_ucc::#NewSc(#ValueSc))};
                     if matches!(&postgresql_type_pattern, PostgresqlTypePattern::Standart)
                         && matches!(&not_null_or_nullable, NotNullOrNullable::NotNull)
                     {
@@ -3055,7 +3045,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 #maybe_impl_ident_ts
             }
         };
-        let ident_update_upper_camel_case = SelfUpdateUpperCamelCase::from_tokens(&ident);
+        let ident_update_ucc = SelfUpdateUcc::from_tokens(&ident);
         let ident_origin_ts = {
             let ident_origin_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
@@ -3112,67 +3102,67 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     postgresql_crud_macros_common::DeriveOrImpl::Impl(_) => macros_helpers::DeriveSerdeDeserialize::False,
                 })
                 .build_struct(
-                    &ident_origin_upper_camel_case,
+                    &ident_origin_ucc,
                     &quote!{(#field_type_handle);},
                 );
             let generate_int_range_type_error_variants_ts = |int_range_type: &IntRangeType| {
                 let range_inner_type_ts = int_range_type_to_range_inner_type_ts(int_range_type);
                 quote! {
-                    #IncludedStartGreaterThanIncludedEndUpperCamelCase {
+                    #IncludedStartGreaterThanIncludedEndUcc {
                         #[eo_to_std_string_string_serialize_deserialize]
-                        #StartSnakeCase: #range_inner_type_ts,
+                        #StartSc: #range_inner_type_ts,
                         #[eo_to_std_string_string_serialize_deserialize]
-                        #EndSnakeCase: #range_inner_type_ts,
+                        #EndSc: #range_inner_type_ts,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
-                    #IncludedStartGreaterThanExcludedEndUpperCamelCase {
+                    #IncludedStartGreaterThanExcludedEndUcc {
                         #[eo_to_std_string_string_serialize_deserialize]
-                        #StartSnakeCase: #range_inner_type_ts,
+                        #StartSc: #range_inner_type_ts,
                         #[eo_to_std_string_string_serialize_deserialize]
-                        #EndSnakeCase: #range_inner_type_ts,
+                        #EndSc: #range_inner_type_ts,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
-                    #ExcludedStartGreaterThanIncludedEndUpperCamelCase {
+                    #ExcludedStartGreaterThanIncludedEndUcc {
                         #[eo_to_std_string_string_serialize_deserialize]
-                        #StartSnakeCase: #range_inner_type_ts,
+                        #StartSc: #range_inner_type_ts,
                         #[eo_to_std_string_string_serialize_deserialize]
-                        #EndSnakeCase: #range_inner_type_ts,
+                        #EndSc: #range_inner_type_ts,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
-                    #ExcludedStartGreaterThanExcludedEndUpperCamelCase {
+                    #ExcludedStartGreaterThanExcludedEndUcc {
                         #[eo_to_std_string_string_serialize_deserialize]
-                        #StartSnakeCase: #range_inner_type_ts,
+                        #StartSc: #range_inner_type_ts,
                         #[eo_to_std_string_string_serialize_deserialize]
-                        #EndSnakeCase: #range_inner_type_ts,
+                        #EndSc: #range_inner_type_ts,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
-                    #IncludedEndCannotBeMaxUpperCamelCase {
+                    #IncludedEndCannotBeMaxUcc {
                         #[eo_to_std_string_string_serialize_deserialize]
-                        #EndSnakeCase: #range_inner_type_ts,
+                        #EndSc: #range_inner_type_ts,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
                 }
             };
             let nanosecond_precision_is_not_supported_variant_try_new_ts = quote! {
-                #NanosecondPrecisionIsNotSupportedUpperCamelCase {
+                #NanosecondPrecisionIsNotSupportedUcc {
                     #[eo_to_std_string_string_serialize_deserialize]
-                    #ValueSnakeCase: #std_string_string_ts,
+                    #ValueSc: #std_string_string_ts,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
             };
             let sqlx_types_chrono_naive_date_as_date_try_new_error_named_variants_ts = quote! {
-                #EarlierDateNotSupportedUpperCamelCase {
+                #EarlierDateNotSupportedUcc {
                     #[eo_to_std_string_string_serialize_deserialize]
-                    #ValueSnakeCase: #std_string_string_ts,
+                    #ValueSc: #std_string_string_ts,
                     #[eo_to_std_string_string_serialize_deserialize]
-                    #EarliestSupportedDateSnakeCase: #std_string_string_ts,
+                    #EarliestSupportedDateSc: #std_string_string_ts,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
             };
             let std_string_string_as_text_try_new_error_named_variants_ts = quote! {
-                #ContainsNullByteUpperCamelCase {
+                #ContainsNullByteUcc {
                     #[eo_to_std_string_string_serialize_deserialize]
-                    #ValueSnakeCase: #ident_inner_type_ts,
+                    #ValueSc: #ident_inner_type_ts,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
             };
@@ -3187,16 +3177,16 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     .derive_thiserror_error()
                     .derive_error_occurence_lib_error_occurence()
                     .build_enum(
-                        &ident_standart_not_null_origin_try_new_error_named_upper_camel_case,
+                        &ident_standart_not_null_origin_try_new_error_named_ucc,
                         &{
                             let generate_start_end_ts = |content_ts: &dyn quote::ToTokens| {
                                 let (start_variant_ts, end_variant_ts) = {
                                     let generate_variant_ts = |start_or_end: &StartOrEnd| {
-                                        let start_or_end_upper_camel_case = generate_start_or_end_upper_camel_case(start_or_end);
+                                        let start_or_end_ucc = generate_start_or_end_ucc(start_or_end);
                                         quote! {
-                                            #start_or_end_upper_camel_case {
+                                            #start_or_end_ucc {
                                                 #[eo_error_occurence]
-                                                #ErrorSnakeCase: #content_ts,
+                                                #ErrorSc: #content_ts,
                                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                             }
                                         }
@@ -3213,39 +3203,39 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime | PostgresqlTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => &nanosecond_precision_is_not_supported_variant_try_new_ts,
                                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_error_named_variants_ts,
                                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => &quote! {
-                                    #DateUpperCamelCase {
+                                    #DateUcc {
                                         #[eo_error_occurence]
-                                        #ErrorSnakeCase: #sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_upper_camel_case,
+                                        #ErrorSc: #sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_ucc,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
-                                    #TimeUpperCamelCase {
+                                    #TimeUcc {
                                         #[eo_error_occurence]
-                                        #ErrorSnakeCase: #sqlx_types_chrono_naive_time_as_not_null_time_origin_try_new_error_named_upper_camel_case,
+                                        #ErrorSc: #sqlx_types_chrono_naive_time_as_not_null_time_origin_try_new_error_named_ucc,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
                                 },
                                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &quote! {
-                                    #DateNaiveUpperCamelCase {
+                                    #DateNaiveUcc {
                                         #[eo_error_occurence]
-                                        #ErrorSnakeCase: #sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_upper_camel_case,
+                                        #ErrorSc: #sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_ucc,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
-                                    #TimeUpperCamelCase {
+                                    #TimeUcc {
                                         #[eo_error_occurence]
-                                        #ErrorSnakeCase: #sqlx_types_chrono_naive_time_as_not_null_time_origin_try_new_error_named_upper_camel_case,
+                                        #ErrorSc: #sqlx_types_chrono_naive_time_as_not_null_time_origin_try_new_error_named_ucc,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
                                 },
                                 PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => &generate_int_range_type_error_variants_ts(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range),
                                 PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => &generate_int_range_type_error_variants_ts(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range),
                                 PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &generate_start_end_ts(
-                                    &sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_upper_camel_case
+                                    &sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_ucc
                                 ),
                                 PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &generate_start_end_ts(
-                                    &sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_try_new_error_named_upper_camel_case
+                                    &sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_try_new_error_named_ucc
                                 ),
                                 PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &generate_start_end_ts(
-                                    &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_try_new_error_named_upper_camel_case
+                                    &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_try_new_error_named_ucc
                                 ),
                             };
                             quote!{{#content_ts}}
@@ -3274,36 +3264,36 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             .derive_thiserror_error()
                             .derive_error_occurence_lib_error_occurence()
                             .build_enum(
-                                &ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case,
+                                &ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc,
                                 &{
                                     let content_ts: &dyn quote::ToTokens = match &postgresql_type_impl_try_new_for_deserialize {
                                         PostgresqlTypeImplTryNewForDeserialize::StdStringStringAsText => &std_string_string_as_text_try_new_error_named_variants_ts,
                                         PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => &quote! {
-                                            #InvalidHourOrMinuteOrSecondOrMicrosecondUpperCamelCase {
+                                            #InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
                                                 #[eo_to_std_string_string_serialize_deserialize]
-                                                #HourSnakeCase: #std_primitive_u32_ts,
+                                                #HourSc: #std_primitive_u32_ts,
                                                 #[eo_to_std_string_string_serialize_deserialize]
-                                                #MinSnakeCase: #std_primitive_u32_ts,
+                                                #MinSc: #std_primitive_u32_ts,
                                                 #[eo_to_std_string_string_serialize_deserialize]
-                                                #SecSnakeCase: #std_primitive_u32_ts,
+                                                #SecSc: #std_primitive_u32_ts,
                                                 #[eo_to_std_string_string_serialize_deserialize]
-                                                #MicroSnakeCase: #std_primitive_u32_ts,
+                                                #MicroSc: #std_primitive_u32_ts,
                                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                             },
                                             #nanosecond_precision_is_not_supported_variant_try_new_ts
                                         },
                                         PostgresqlTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => &quote! {
-                                            #InvalidHourOrMinuteOrSecondOrMicrosecondUpperCamelCase {
+                                            #InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
                                                 #[eo_to_std_string_string_serialize_deserialize]
-                                                #HourSnakeCase: #std_primitive_u8_ts,
+                                                #HourSc: #std_primitive_u8_ts,
                                                 #[eo_to_std_string_string_serialize_deserialize]
-                                                #MinuteSnakeCase: #std_primitive_u8_ts,
+                                                #MinuteSc: #std_primitive_u8_ts,
                                                 #[eo_to_std_string_string_serialize_deserialize]
-                                                #SecondSnakeCase: #std_primitive_u8_ts,
+                                                #SecondSc: #std_primitive_u8_ts,
                                                 #[eo_to_std_string_string_serialize_deserialize]
-                                                #MicrosecondSnakeCase: #std_primitive_u32_ts,
+                                                #MicrosecondSc: #std_primitive_u32_ts,
                                                 #[eo_to_std_string_string_serialize_deserialize]
-                                                #ErrorSnakeCase: #std_string_string_ts,
+                                                #ErrorSc: #std_string_string_ts,
                                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                             },
                                             #nanosecond_precision_is_not_supported_variant_try_new_ts
@@ -3331,27 +3321,27 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     let content_ts = {
                         let content_ts = {
                             let generate_match_option_ts = |type_ts: &dyn quote::ToTokens| {
-                                quote! {value.map(#type_ts::#NewSnakeCase)}
+                                quote! {value.map(#type_ts::#NewSc)}
                             };
                             let generate_array_dimensions_initialization_ts = |type_ts: &dyn quote::ToTokens| match &not_null_or_nullable {
-                                NotNullOrNullable::NotNull => quote! {value.into_iter().map(#type_ts::#NewSnakeCase).collect()},
+                                NotNullOrNullable::NotNull => quote! {value.into_iter().map(#type_ts::#NewSc).collect()},
                                 NotNullOrNullable::Nullable => generate_match_option_ts(&type_ts),
                             };
                             match &postgresql_type_pattern {
                                 PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                                     NotNullOrNullable::NotNull => {
                                         postgresql_type_range_try_from_postgresql_type.as_ref().map_or_else(
-                                            |()| quote! {#ValueSnakeCase},
+                                            |()| quote! {#ValueSc},
                                             |value_6ed98462| generate_pg_range_conversion_ts(
-                                                &ValueSnakeCase,
+                                                &ValueSc,
                                                 &{
-                                                    let range_postgresql_type_ident_origin = SelfOriginUpperCamelCase::from_display(&generate_ident_stringified(&PostgresqlType::from(value_6ed98462), not_null_or_nullable, postgresql_type_pattern));
-                                                    quote! {#range_postgresql_type_ident_origin::#NewSnakeCase(value_af65ccce)}
+                                                    let range_postgresql_type_ident_origin = SelfOriginUcc::from_display(&generate_ident_stringified(&PostgresqlType::from(value_6ed98462), not_null_or_nullable, postgresql_type_pattern));
+                                                    quote! {#range_postgresql_type_ident_origin::#NewSc(value_af65ccce)}
                                                 }
                                             )
                                         )
                                     }
-                                    NotNullOrNullable::Nullable => generate_match_option_ts(&ident_standart_not_null_origin_upper_camel_case),
+                                    NotNullOrNullable::Nullable => generate_match_option_ts(&ident_standart_not_null_origin_ucc),
                                 },
                                 PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_array_dimensions_initialization_ts(&{
                                     let (current_postgresql_type_pattern, current_not_null_or_nullable): (&PostgresqlTypePattern, &NotNullOrNullable) = match &not_null_or_nullable {
@@ -3387,8 +3377,8 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 |postgresql_type_initialization_try_new| {
                     let content_ts = {
                         let generate_match_option_ts = |type_ts: &dyn quote::ToTokens| {
-                            quote! {Ok(Self(match #ValueSnakeCase {
-                                Some(value_989d943e) => Some(match #type_ts::#TryNewSnakeCase(value_989d943e) {
+                            quote! {Ok(Self(match #ValueSc {
+                                Some(value_989d943e) => Some(match #type_ts::#TryNewSc(value_989d943e) {
                                     Ok(value_ea2a4a8c) => value_ea2a4a8c,
                                     Err(er) => {
                                         return Err(er);
@@ -3401,8 +3391,8 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             NotNullOrNullable::NotNull => quote! {
                                 Ok(Self({
                                     let mut acc_4ce2782a = Vec::new();
-                                    for el_de177578 in #ValueSnakeCase {
-                                        match #type_ts::#TryNewSnakeCase(el_de177578) {
+                                    for el_de177578 in #ValueSc {
+                                        match #type_ts::#TryNewSc(el_de177578) {
                                             Ok(value_a763a416) => {
                                                 acc_4ce2782a.push(value_a763a416);
                                             },
@@ -3426,114 +3416,114 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                         };
                                         quote! {
                                             let max = #max_value_ts;
-                                            let (#StartSnakeCase, #EndSnakeCase) = match (#ValueSnakeCase.#StartSnakeCase, #ValueSnakeCase.#EndSnakeCase) {
-                                                (std::ops::Bound::Included(#StartSnakeCase), std::ops::Bound::Included(#EndSnakeCase)) => {
-                                                    if #StartSnakeCase > #EndSnakeCase {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#IncludedStartGreaterThanIncludedEndUpperCamelCase {
-                                                            #StartSnakeCase,
-                                                            #EndSnakeCase,
+                                            let (#StartSc, #EndSc) = match (#ValueSc.#StartSc, #ValueSc.#EndSc) {
+                                                (std::ops::Bound::Included(#StartSc), std::ops::Bound::Included(#EndSc)) => {
+                                                    if #StartSc > #EndSc {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#IncludedStartGreaterThanIncludedEndUcc {
+                                                            #StartSc,
+                                                            #EndSc,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
                                                     }
-                                                    if #EndSnakeCase == max {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#IncludedEndCannotBeMaxUpperCamelCase {
-                                                            #EndSnakeCase,
+                                                    if #EndSc == max {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#IncludedEndCannotBeMaxUcc {
+                                                            #EndSc,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
                                                     }
-                                                    (std::ops::Bound::Included(#StartSnakeCase), std::ops::Bound::Included(#EndSnakeCase))
+                                                    (std::ops::Bound::Included(#StartSc), std::ops::Bound::Included(#EndSc))
                                                 }
-                                                (std::ops::Bound::Included(#StartSnakeCase), std::ops::Bound::Excluded(#EndSnakeCase)) => {
-                                                    if #StartSnakeCase > #EndSnakeCase {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#IncludedStartGreaterThanExcludedEndUpperCamelCase {
-                                                            #StartSnakeCase,
-                                                            #EndSnakeCase,
+                                                (std::ops::Bound::Included(#StartSc), std::ops::Bound::Excluded(#EndSc)) => {
+                                                    if #StartSc > #EndSc {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#IncludedStartGreaterThanExcludedEndUcc {
+                                                            #StartSc,
+                                                            #EndSc,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
                                                     }
-                                                    (std::ops::Bound::Included(#StartSnakeCase), std::ops::Bound::Excluded(#EndSnakeCase))
+                                                    (std::ops::Bound::Included(#StartSc), std::ops::Bound::Excluded(#EndSc))
                                                 }
-                                                (std::ops::Bound::Included(#StartSnakeCase), std::ops::Bound::Unbounded) => (std::ops::Bound::Included(#StartSnakeCase), std::ops::Bound::Unbounded),
-                                                (std::ops::Bound::Excluded(#StartSnakeCase), std::ops::Bound::Included(#EndSnakeCase)) => {
-                                                    if #StartSnakeCase > #EndSnakeCase {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#ExcludedStartGreaterThanIncludedEndUpperCamelCase {
-                                                            #StartSnakeCase,
-                                                            #EndSnakeCase,
+                                                (std::ops::Bound::Included(#StartSc), std::ops::Bound::Unbounded) => (std::ops::Bound::Included(#StartSc), std::ops::Bound::Unbounded),
+                                                (std::ops::Bound::Excluded(#StartSc), std::ops::Bound::Included(#EndSc)) => {
+                                                    if #StartSc > #EndSc {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#ExcludedStartGreaterThanIncludedEndUcc {
+                                                            #StartSc,
+                                                            #EndSc,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
                                                     }
-                                                    if #EndSnakeCase == max {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#IncludedEndCannotBeMaxUpperCamelCase {
-                                                            #EndSnakeCase,
+                                                    if #EndSc == max {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#IncludedEndCannotBeMaxUcc {
+                                                            #EndSc,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
                                                     }
-                                                    (std::ops::Bound::Excluded(#StartSnakeCase), std::ops::Bound::Included(#EndSnakeCase))
+                                                    (std::ops::Bound::Excluded(#StartSc), std::ops::Bound::Included(#EndSc))
                                                 }
-                                                (std::ops::Bound::Excluded(#StartSnakeCase), std::ops::Bound::Excluded(#EndSnakeCase)) => {
-                                                    if #StartSnakeCase > #EndSnakeCase {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#ExcludedStartGreaterThanExcludedEndUpperCamelCase {
-                                                            #StartSnakeCase,
-                                                            #EndSnakeCase,
+                                                (std::ops::Bound::Excluded(#StartSc), std::ops::Bound::Excluded(#EndSc)) => {
+                                                    if #StartSc > #EndSc {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#ExcludedStartGreaterThanExcludedEndUcc {
+                                                            #StartSc,
+                                                            #EndSc,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
                                                     }
-                                                    (std::ops::Bound::Excluded(#StartSnakeCase), std::ops::Bound::Excluded(#EndSnakeCase))
+                                                    (std::ops::Bound::Excluded(#StartSc), std::ops::Bound::Excluded(#EndSc))
                                                 }
-                                                (std::ops::Bound::Excluded(#StartSnakeCase), std::ops::Bound::Unbounded) => (std::ops::Bound::Excluded(#StartSnakeCase), std::ops::Bound::Unbounded),
-                                                (std::ops::Bound::Unbounded, std::ops::Bound::Included(#EndSnakeCase)) => {
-                                                    if #EndSnakeCase == max {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#IncludedEndCannotBeMaxUpperCamelCase {
-                                                            #EndSnakeCase,
+                                                (std::ops::Bound::Excluded(#StartSc), std::ops::Bound::Unbounded) => (std::ops::Bound::Excluded(#StartSc), std::ops::Bound::Unbounded),
+                                                (std::ops::Bound::Unbounded, std::ops::Bound::Included(#EndSc)) => {
+                                                    if #EndSc == max {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#IncludedEndCannotBeMaxUcc {
+                                                            #EndSc,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
                                                     }
-                                                    (std::ops::Bound::Unbounded, std::ops::Bound::Included(#EndSnakeCase))
+                                                    (std::ops::Bound::Unbounded, std::ops::Bound::Included(#EndSc))
                                                 }
-                                                (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(#EndSnakeCase)) => (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(#EndSnakeCase)),
+                                                (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(#EndSc)) => (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(#EndSc)),
                                                 (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded),
                                             };
-                                            Ok(Self(sqlx::postgres::types::PgRange { #StartSnakeCase, #EndSnakeCase }))
+                                            Ok(Self(sqlx::postgres::types::PgRange { #StartSc, #EndSc }))
                                         }
                                     };
                                     let generate_ok_self_sqlx_postgres_types_pg_range_ts = |current_ident_ts: &dyn quote::ToTokens| quote! {
                                         Ok(Self(sqlx::postgres::types::PgRange {
-                                            #StartSnakeCase: match #ValueSnakeCase.#StartSnakeCase {
-                                                std::ops::Bound::Included(included_value) => match #current_ident_ts::#TryNewSnakeCase(included_value) {
+                                            #StartSc: match #ValueSc.#StartSc {
+                                                std::ops::Bound::Included(included_value) => match #current_ident_ts::#TryNewSc(included_value) {
                                                     Ok(value_a9c1f658) => std::ops::Bound::Included(value_a9c1f658.0),
                                                     Err(er) => {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#StartUpperCamelCase {
-                                                            #ErrorSnakeCase: er,
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#StartUcc {
+                                                            #ErrorSc: er,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
                                                     }
                                                 },
-                                                std::ops::Bound::Excluded(excluded_value) => match #current_ident_ts::#TryNewSnakeCase(excluded_value) {
+                                                std::ops::Bound::Excluded(excluded_value) => match #current_ident_ts::#TryNewSc(excluded_value) {
                                                     Ok(value_f0ff8036) => std::ops::Bound::Excluded(value_f0ff8036.0),
                                                     Err(er) => {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#StartUpperCamelCase {
-                                                            #ErrorSnakeCase: er,
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#StartUcc {
+                                                            #ErrorSc: er,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
                                                     }
                                                 },
                                                 std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                             },
-                                            #EndSnakeCase: match #ValueSnakeCase.#EndSnakeCase {
-                                                std::ops::Bound::Included(included_value) => match #current_ident_ts::#TryNewSnakeCase(included_value) {
+                                            #EndSc: match #ValueSc.#EndSc {
+                                                std::ops::Bound::Included(included_value) => match #current_ident_ts::#TryNewSc(included_value) {
                                                     Ok(value_80168e2b) => std::ops::Bound::Included(value_80168e2b.0),
                                                     Err(er) => {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#EndUpperCamelCase {
-                                                            #ErrorSnakeCase: er,
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#EndUcc {
+                                                            #ErrorSc: er,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
                                                     }
                                                 },
-                                                std::ops::Bound::Excluded(excluded_value) => match #current_ident_ts::#TryNewSnakeCase(excluded_value) {
+                                                std::ops::Bound::Excluded(excluded_value) => match #current_ident_ts::#TryNewSc(excluded_value) {
                                                     Ok(value_05f87b70) => std::ops::Bound::Excluded(value_05f87b70.0),
                                                     Err(er) => {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#EndUpperCamelCase {
-                                                            #ErrorSnakeCase: er,
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#EndUcc {
+                                                            #ErrorSc: er,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
                                                     }
@@ -3544,91 +3534,91 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                     };
                                     match &postgresql_type_initialization_try_new {
                                         PostgresqlTypeInitializationTryNew::StdStringStringAsText => quote! {
-                                            if #ValueSnakeCase.find('\0').is_some() {
-                                                Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#ContainsNullByteUpperCamelCase {
-                                                    #ValueSnakeCase,
+                                            if #ValueSc.find('\0').is_some() {
+                                                Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#ContainsNullByteUcc {
+                                                    #ValueSc,
                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                 })
                                             } else {
-                                                Ok(Self(#ValueSnakeCase))
+                                                Ok(Self(#ValueSc))
                                             }
                                         },
                                         PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime => quote! {
-                                            if <#inner_type_standart_not_null_ts as chrono::Timelike>::nanosecond(&#ValueSnakeCase).checked_rem(1000).expect("7c8b4e12-8509-41e4-8769-0fe10aafd930") != 0 {
-                                                return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#NanosecondPrecisionIsNotSupportedUpperCamelCase {
-                                                    #ValueSnakeCase: #ValueSnakeCase.to_string(),
+                                            if <#inner_type_standart_not_null_ts as chrono::Timelike>::nanosecond(&#ValueSc).checked_rem(1000).expect("7c8b4e12-8509-41e4-8769-0fe10aafd930") != 0 {
+                                                return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#NanosecondPrecisionIsNotSupportedUcc {
+                                                    #ValueSc: #ValueSc.to_string(),
                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                 });
                                             }
-                                            Ok(Self(#ValueSnakeCase))
+                                            Ok(Self(#ValueSc))
                                         },
                                         PostgresqlTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => quote! {
-                                            if #ValueSnakeCase.nanosecond().checked_rem(1000).expect("ce47524f-de07-4a01-a4c5-78d39398b922") != 0 {
-                                                return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#NanosecondPrecisionIsNotSupportedUpperCamelCase {
-                                                    #ValueSnakeCase: #ValueSnakeCase.to_string(),
+                                            if #ValueSc.nanosecond().checked_rem(1000).expect("ce47524f-de07-4a01-a4c5-78d39398b922") != 0 {
+                                                return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#NanosecondPrecisionIsNotSupportedUcc {
+                                                    #ValueSc: #ValueSc.to_string(),
                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                 });
                                             }
-                                            Ok(Self(#ValueSnakeCase))
+                                            Ok(Self(#ValueSc))
                                         },
                                         PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => quote! {
-                                            let #EarliestSupportedDateSnakeCase = #inner_type_standart_not_null_ts::from_ymd_opt(-4713, 12, 31).expect("9f6241e5-a3ce-4ade-b33c-37432d4cafd3");
-                                            if #ValueSnakeCase >= #EarliestSupportedDateSnakeCase {
-                                                Ok(Self(#ValueSnakeCase))
+                                            let #EarliestSupportedDateSc = #inner_type_standart_not_null_ts::from_ymd_opt(-4713, 12, 31).expect("9f6241e5-a3ce-4ade-b33c-37432d4cafd3");
+                                            if #ValueSc >= #EarliestSupportedDateSc {
+                                                Ok(Self(#ValueSc))
                                             }
                                             else {
-                                                Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#EarlierDateNotSupportedUpperCamelCase {
-                                                    #ValueSnakeCase: #ValueSnakeCase.to_string(),
-                                                    #EarliestSupportedDateSnakeCase: #EarliestSupportedDateSnakeCase.to_string(),
+                                                Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#EarlierDateNotSupportedUcc {
+                                                    #ValueSc: #ValueSc.to_string(),
+                                                    #EarliestSupportedDateSc: #EarliestSupportedDateSc.to_string(),
                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                 })
                                             }
                                         },
                                         PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote! {
-                                            let #DateSnakeCase = match #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::#TryNewSnakeCase(
-                                                #ValueSnakeCase.#DateSnakeCase()
+                                            let #DateSc = match #sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc::#TryNewSc(
+                                                #ValueSc.#DateSc()
                                             ) {
                                                 Ok(value_9be8eddb) => value_9be8eddb,
                                                 Err(er) => {
-                                                    return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#DateUpperCamelCase {
-                                                        #ErrorSnakeCase: er,
+                                                    return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#DateUcc {
+                                                        #ErrorSc: er,
                                                         code_occurence: error_occurence_lib::code_occurence!(),
                                                     });
                                                 }
                                             };
-                                            let #TimeSnakeCase = match #sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case::#TryNewSnakeCase(
-                                                #ValueSnakeCase.#TimeSnakeCase()
+                                            let #TimeSc = match #sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc::#TryNewSc(
+                                                #ValueSc.#TimeSc()
                                             ) {
                                                 Ok(value_993484ce) => value_993484ce,
                                                 Err(er) => {
-                                                    return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#TimeUpperCamelCase {
-                                                        #ErrorSnakeCase: er,
+                                                    return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#TimeUcc {
+                                                        #ErrorSc: er,
                                                         code_occurence: error_occurence_lib::code_occurence!(),
                                                     });
                                                 }
                                             };
-                                            Ok(Self(#inner_type_standart_not_null_ts::#NewSnakeCase(#DateSnakeCase.0, #TimeSnakeCase.0)))
+                                            Ok(Self(#inner_type_standart_not_null_ts::#NewSc(#DateSc.0, #TimeSc.0)))
                                         },
                                         PostgresqlTypeInitializationTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
                                             let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts = generate_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&generate_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
-                                                #DateNaiveSnakeCase.0,
-                                                #TimeSnakeCase.0
+                                                #DateNaiveSc.0,
+                                                #TimeSc.0
                                             }));
                                             quote! {
-                                                let #DateNaiveSnakeCase = match #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::#TryNewSnakeCase(#ValueSnakeCase.date_naive()) {
+                                                let #DateNaiveSc = match #sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc::#TryNewSc(#ValueSc.date_naive()) {
                                                     Ok(value_158945ad) => value_158945ad,
                                                     Err(er) => {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#DateNaiveUpperCamelCase {
-                                                            #ErrorSnakeCase: er,
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#DateNaiveUcc {
+                                                            #ErrorSc: er,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
                                                     }
                                                 };
-                                                let #TimeSnakeCase = match #sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case::#TryNewSnakeCase(#ValueSnakeCase.time()) {
+                                                let #TimeSc = match #sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc::#TryNewSc(#ValueSc.time()) {
                                                     Ok(value_c5af739c) => value_c5af739c,
                                                     Err(er) => {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#TimeUpperCamelCase {
-                                                            #ErrorSnakeCase: er,
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#TimeUcc {
+                                                            #ErrorSc: er,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
                                                     }
@@ -3638,12 +3628,12 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                         }
                                         PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_int_range_check_ts(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range),
                                         PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => generate_int_range_check_ts(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range),
-                                        PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => generate_ok_self_sqlx_postgres_types_pg_range_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case),
-                                        PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => generate_ok_self_sqlx_postgres_types_pg_range_ts(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case),
-                                        PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => generate_ok_self_sqlx_postgres_types_pg_range_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case),
+                                        PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => generate_ok_self_sqlx_postgres_types_pg_range_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc),
+                                        PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => generate_ok_self_sqlx_postgres_types_pg_range_ts(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc),
+                                        PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => generate_ok_self_sqlx_postgres_types_pg_range_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc),
                                     }
                                 }
-                                NotNullOrNullable::Nullable => generate_match_option_ts(&ident_standart_not_null_origin_upper_camel_case),
+                                NotNullOrNullable::Nullable => generate_match_option_ts(&ident_standart_not_null_origin_ucc),
                             },
                             PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_array_dimensions_initialization_ts(&{
                                 let (current_postgresql_type_pattern, current_not_null_or_nullable): (&PostgresqlTypePattern, &NotNullOrNullable) = match &not_null_or_nullable {
@@ -3655,7 +3645,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                         }
                     };
                     quote! {
-                        pub fn #TryNewSnakeCase(#value_ident_inner_type_ts) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
+                        pub fn #TryNewSc(#value_ident_inner_type_ts) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_ucc> {
                             #content_ts
                         }
                     }
@@ -3669,27 +3659,27 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                     let parameters_ts = {
                                         let generate_start_end_std_std_ops_bound_ts = |current_ident_ts: &dyn quote::ToTokens| {
                                             quote! {
-                                                #StartSnakeCase: std::ops::Bound<#current_ident_ts>,
-                                                #EndSnakeCase: std::ops::Bound<#current_ident_ts>
+                                                #StartSc: std::ops::Bound<#current_ident_ts>,
+                                                #EndSc: std::ops::Bound<#current_ident_ts>
                                             }
                                         };
                                         match &postgresql_type_impl_new_for_deserialize {
                                             PostgresqlTypeImplNewForDeserialize::SsqlxPostgresTypesPgIntervalAsInterval => quote! {
-                                                #MonthsSnakeCase: #std_primitive_i32_ts,
-                                                #DaysSnakeCase: #std_primitive_i32_ts,
-                                                #MicrosecondsSnakeCase: #std_primitive_i64_ts,
+                                                #MonthsSc: #std_primitive_i32_ts,
+                                                #DaysSc: #std_primitive_i32_ts,
+                                                #MicrosecondsSc: #std_primitive_i64_ts,
                                             },
                                             PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote! {
-                                                #DateSnakeCase: #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case,
-                                                #TimeSnakeCase: #sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case
+                                                #DateSc: #sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc,
+                                                #TimeSc: #sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc
                                             },
                                             PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote! {
-                                                #DateNaiveSnakeCase: #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case,
-                                                #TimeSnakeCase: #sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case,
+                                                #DateNaiveSc: #sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc,
+                                                #TimeSc: #sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc,
                                             },
-                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => generate_start_end_std_std_ops_bound_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case),
-                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => generate_start_end_std_std_ops_bound_ts(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case),
-                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => generate_start_end_std_std_ops_bound_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case),
+                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => generate_start_end_std_std_ops_bound_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc),
+                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => generate_start_end_std_std_ops_bound_ts(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc),
+                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => generate_start_end_std_std_ops_bound_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc),
                                         }
                                     };
                                     let content_ts = {
@@ -3710,18 +3700,18 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                         match &postgresql_type_impl_new_for_deserialize {
                                             PostgresqlTypeImplNewForDeserialize::SsqlxPostgresTypesPgIntervalAsInterval => quote! {
                                                 Self(sqlx::postgres::types::PgInterval {
-                                                    #MonthsSnakeCase,
-                                                    #DaysSnakeCase,
-                                                    #MicrosecondsSnakeCase,
+                                                    #MonthsSc,
+                                                    #DaysSc,
+                                                    #MicrosecondsSc,
                                                 })
                                             },
                                             PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote! {
-                                                Self(#inner_type_standart_not_null_ts::#NewSnakeCase(#DateSnakeCase.0, #TimeSnakeCase.0))
+                                                Self(#inner_type_standart_not_null_ts::#NewSc(#DateSc.0, #TimeSc.0))
                                             },
                                             PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
                                                 let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts = generate_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&generate_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
-                                                    #DateNaiveSnakeCase.0,
-                                                    #TimeSnakeCase.0
+                                                    #DateNaiveSc.0,
+                                                    #TimeSc.0
                                                 }));
                                                 quote! {Self(#sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts)}
                                             }
@@ -3754,18 +3744,18 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                             }
                                             PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => {
                                                 quote! {
-                                                    #HourSnakeCase: #std_primitive_u32_ts,
-                                                    #MinSnakeCase: #std_primitive_u32_ts,
-                                                    #SecSnakeCase: #std_primitive_u32_ts,
-                                                    #MicroSnakeCase: #std_primitive_u32_ts
+                                                    #HourSc: #std_primitive_u32_ts,
+                                                    #MinSc: #std_primitive_u32_ts,
+                                                    #SecSc: #std_primitive_u32_ts,
+                                                    #MicroSc: #std_primitive_u32_ts
                                                 }
                                             }
                                             PostgresqlTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => {
                                                 quote! {
-                                                    #HourSnakeCase: #std_primitive_u8_ts,
-                                                    #MinuteSnakeCase: #std_primitive_u8_ts,
-                                                    #SecondSnakeCase: #std_primitive_u8_ts,
-                                                    #MicrosecondSnakeCase: #std_primitive_u32_ts
+                                                    #HourSc: #std_primitive_u8_ts,
+                                                    #MinuteSc: #std_primitive_u8_ts,
+                                                    #SecondSc: #std_primitive_u8_ts,
+                                                    #MicrosecondSc: #std_primitive_u32_ts
                                                 }
                                             }
                                             PostgresqlTypeImplTryNewForDeserialize::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_value_pg_range_int_type_ts(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range),
@@ -3775,7 +3765,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                     let content_ts = {
                                         let generate_self_match_try_new_ts = |current_parameters_ts: &dyn quote::ToTokens, match_error_variants_ts: &dyn quote::ToTokens| {
                                             quote! {
-                                                match Self::#TryNewSnakeCase(#current_parameters_ts) {
+                                                match Self::#TryNewSc(#current_parameters_ts) {
                                                     Ok(value_b318fc86) => Ok(value_b318fc86),
                                                     Err(er) => match er {
                                                         #match_error_variants_ts
@@ -3784,49 +3774,49 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                             }
                                         };
                                         let try_new_convert_pg_range_int_content_ts = generate_self_match_try_new_ts(
-                                            &quote! {sqlx::postgres::types::PgRange { #StartSnakeCase: start_9a8ef454, #EndSnakeCase: end_a14eb2b9 }},
+                                            &quote! {sqlx::postgres::types::PgRange { #StartSc: start_9a8ef454, #EndSc: end_a14eb2b9 }},
                                             &quote! {
-                                                #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#IncludedStartGreaterThanIncludedEndUpperCamelCase {
-                                                    #StartSnakeCase,
-                                                    #EndSnakeCase,
+                                                #ident_standart_not_null_origin_try_new_error_named_ucc::#IncludedStartGreaterThanIncludedEndUcc {
+                                                    #StartSc,
+                                                    #EndSc,
                                                     code_occurence,
-                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#IncludedStartGreaterThanIncludedEndUpperCamelCase {
-                                                    #StartSnakeCase,
-                                                    #EndSnakeCase,
-                                                    code_occurence,
-                                                }),
-                                                #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#IncludedStartGreaterThanExcludedEndUpperCamelCase {
-                                                    #StartSnakeCase,
-                                                    #EndSnakeCase,
-                                                    code_occurence,
-                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#IncludedStartGreaterThanExcludedEndUpperCamelCase {
-                                                    #StartSnakeCase,
-                                                    #EndSnakeCase,
+                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#IncludedStartGreaterThanIncludedEndUcc {
+                                                    #StartSc,
+                                                    #EndSc,
                                                     code_occurence,
                                                 }),
-                                                #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#ExcludedStartGreaterThanIncludedEndUpperCamelCase {
-                                                    #StartSnakeCase,
-                                                    #EndSnakeCase,
+                                                #ident_standart_not_null_origin_try_new_error_named_ucc::#IncludedStartGreaterThanExcludedEndUcc {
+                                                    #StartSc,
+                                                    #EndSc,
                                                     code_occurence,
-                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#ExcludedStartGreaterThanIncludedEndUpperCamelCase {
-                                                    #StartSnakeCase,
-                                                    #EndSnakeCase,
-                                                    code_occurence,
-                                                }),
-                                                #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#ExcludedStartGreaterThanExcludedEndUpperCamelCase {
-                                                    #StartSnakeCase,
-                                                    #EndSnakeCase,
-                                                    code_occurence,
-                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#ExcludedStartGreaterThanExcludedEndUpperCamelCase {
-                                                    #StartSnakeCase,
-                                                    #EndSnakeCase,
+                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#IncludedStartGreaterThanExcludedEndUcc {
+                                                    #StartSc,
+                                                    #EndSc,
                                                     code_occurence,
                                                 }),
-                                                #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#IncludedEndCannotBeMaxUpperCamelCase {
-                                                    #EndSnakeCase,
+                                                #ident_standart_not_null_origin_try_new_error_named_ucc::#ExcludedStartGreaterThanIncludedEndUcc {
+                                                    #StartSc,
+                                                    #EndSc,
                                                     code_occurence,
-                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#IncludedEndCannotBeMaxUpperCamelCase {
-                                                    #EndSnakeCase,
+                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#ExcludedStartGreaterThanIncludedEndUcc {
+                                                    #StartSc,
+                                                    #EndSc,
+                                                    code_occurence,
+                                                }),
+                                                #ident_standart_not_null_origin_try_new_error_named_ucc::#ExcludedStartGreaterThanExcludedEndUcc {
+                                                    #StartSc,
+                                                    #EndSc,
+                                                    code_occurence,
+                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#ExcludedStartGreaterThanExcludedEndUcc {
+                                                    #StartSc,
+                                                    #EndSc,
+                                                    code_occurence,
+                                                }),
+                                                #ident_standart_not_null_origin_try_new_error_named_ucc::#IncludedEndCannotBeMaxUcc {
+                                                    #EndSc,
+                                                    code_occurence,
+                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#IncludedEndCannotBeMaxUcc {
+                                                    #EndSc,
                                                     code_occurence,
                                                 }),
                                             },
@@ -3834,40 +3824,40 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                         match &postgresql_type_impl_try_new_for_deserialize {
                                             PostgresqlTypeImplTryNewForDeserialize::StdStringStringAsText => {
                                                 let variant_ts = quote! {
-                                                    #ContainsNullByteUpperCamelCase {
-                                                        #ValueSnakeCase,
+                                                    #ContainsNullByteUcc {
+                                                        #ValueSc,
                                                         code_occurence,
                                                     }
                                                 };
                                                 generate_self_match_try_new_ts(
                                                     &quote!{value_356f2a0b},
                                                     &quote! {
-                                                        #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#variant_ts => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#variant_ts),
+                                                        #ident_standart_not_null_origin_try_new_error_named_ucc::#variant_ts => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#variant_ts),
                                                     },
                                                 )
                                             }
                                             PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => {
                                                 quote! {
                                                     match #inner_type_standart_not_null_ts::from_hms_micro_opt(
-                                                        #HourSnakeCase,
-                                                        #MinSnakeCase,
-                                                        #SecSnakeCase,
-                                                        #MicroSnakeCase,
+                                                        #HourSc,
+                                                        #MinSc,
+                                                        #SecSc,
+                                                        #MicroSc,
                                                     ) {
                                                         Some(value_b143b9e1) => {
                                                             if <#inner_type_standart_not_null_ts as chrono::Timelike>::nanosecond(&value_b143b9e1).checked_rem(1000).expect("c0514180-cfe0-44e2-9dcf-ab41df7e11f3") != 0 {
-                                                                return Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#NanosecondPrecisionIsNotSupportedUpperCamelCase {
-                                                                    #ValueSnakeCase: value_b143b9e1.to_string(),
+                                                                return Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#NanosecondPrecisionIsNotSupportedUcc {
+                                                                    #ValueSc: value_b143b9e1.to_string(),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                                 });
                                                             }
                                                             Ok(Self(value_b143b9e1))
                                                         },
-                                                        None => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#InvalidHourOrMinuteOrSecondOrMicrosecondUpperCamelCase {
-                                                            #HourSnakeCase,
-                                                            #MinSnakeCase,
-                                                            #SecSnakeCase,
-                                                            #MicroSnakeCase,
+                                                        None => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
+                                                            #HourSc,
+                                                            #MinSc,
+                                                            #SecSc,
+                                                            #MicroSc,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         })
                                                     }
@@ -3876,26 +3866,26 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                             PostgresqlTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => {
                                                 quote! {
                                                     match #inner_type_standart_not_null_ts::from_hms_micro(
-                                                        #HourSnakeCase,
-                                                        #MinuteSnakeCase,
-                                                        #SecondSnakeCase,
-                                                        #MicrosecondSnakeCase,
+                                                        #HourSc,
+                                                        #MinuteSc,
+                                                        #SecondSc,
+                                                        #MicrosecondSc,
                                                     ) {
                                                         Ok(value_9932d535) => {
                                                             if value_9932d535.nanosecond().checked_rem(1000).expect("0def33ce-99c1-4969-9f1d-6923319ccc5b") != 0 {
-                                                                return Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#NanosecondPrecisionIsNotSupportedUpperCamelCase {
-                                                                    #ValueSnakeCase: value_9932d535.to_string(),
+                                                                return Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#NanosecondPrecisionIsNotSupportedUcc {
+                                                                    #ValueSc: value_9932d535.to_string(),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                                 });
                                                             }
                                                             Ok(Self(value_9932d535))
                                                         },
-                                                        Err(er) => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#InvalidHourOrMinuteOrSecondOrMicrosecondUpperCamelCase {
-                                                            #HourSnakeCase,
-                                                            #MinuteSnakeCase,
-                                                            #SecondSnakeCase,
-                                                            #MicrosecondSnakeCase,
-                                                            #ErrorSnakeCase: er.to_string(),
+                                                        Err(er) => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
+                                                            #HourSc,
+                                                            #MinuteSc,
+                                                            #SecondSc,
+                                                            #MicrosecondSc,
+                                                            #ErrorSc: er.to_string(),
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         })
                                                     }
@@ -3904,13 +3894,13 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                             PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => generate_self_match_try_new_ts(
                                                 &quote!{value_356f2a0b},
                                                 &quote! {
-                                                    #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#EarlierDateNotSupportedUpperCamelCase {
-                                                        #ValueSnakeCase,
-                                                        #EarliestSupportedDateSnakeCase,
+                                                    #ident_standart_not_null_origin_try_new_error_named_ucc::#EarlierDateNotSupportedUcc {
+                                                        #ValueSc,
+                                                        #EarliestSupportedDateSc,
                                                         code_occurence,
-                                                    } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#EarlierDateNotSupportedUpperCamelCase {
-                                                        #ValueSnakeCase,
-                                                        #EarliestSupportedDateSnakeCase,
+                                                    } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#EarlierDateNotSupportedUcc {
+                                                        #ValueSc,
+                                                        #EarliestSupportedDateSc,
                                                         code_occurence,
                                                     }),
                                                 },
@@ -3919,7 +3909,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                         }
                                     };
                                     quote! {
-                                        fn #TryNewForDeserializeSnakeCase(#parameters_ts) -> Result<Self, #ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case> {
+                                        fn #TryNewForDeserializeSc(#parameters_ts) -> Result<Self, #ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc> {
                                             #content_ts
                                         }
                                     }
@@ -3932,7 +3922,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 };
                 quote! {
                     #allow_clippy_arbitrary_source_item_ordering_ts
-                    impl #ident_origin_upper_camel_case {
+                    impl #ident_origin_ucc {
                         #fn_new_or_try_new_ts
                         #maybe_fn_new_or_try_new_for_deserialize_token
                     }
@@ -3940,7 +3930,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             };
             let impl_std_convert_from_ident_origin_for_ident_inner_type_ts = {
                 let content_ts = {
-                    let value_dot_zero = quote! {#ValueSnakeCase.0};
+                    let value_dot_zero = quote! {#ValueSc.0};
                     let generate_match_ts = |
                         match_content_ts: &dyn quote::ToTokens,
                         some_content_ts: &dyn quote::ToTokens,
@@ -3982,8 +3972,8 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     }
                 };
                 quote! {
-                    impl From<#ident_origin_upper_camel_case> for #ident_inner_type_ts {
-                        fn from(#ValueSnakeCase: #ident_origin_upper_camel_case) -> Self {
+                    impl From<#ident_origin_ucc> for #ident_inner_type_ts {
+                        fn from(#ValueSc: #ident_origin_ucc) -> Self {
                             #content_ts
                         }
                     }
@@ -4016,13 +4006,13 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                         | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
                         | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => proc_macro2::TokenStream::new(),
                         PostgresqlType::StdStringStringAsText => postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_content_ts(
-                            &ident_origin_upper_camel_case,
+                            &ident_origin_ucc,
                             &quote! {self.0.clone().is_empty()},
                         ),
                         PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql |
                         PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient |
                         PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_content_ts(
-                            &ident_origin_upper_camel_case,
+                            &ident_origin_ucc,
                             &quote! {self.0.to_string().is_empty()},
                         ),
                     },
@@ -4039,9 +4029,9 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 postgresql_crud_macros_common::DeriveOrImpl::Derive => &proc_macro2::TokenStream::new(),
                 postgresql_crud_macros_common::DeriveOrImpl::Impl(value) => value,
             };
-            let impl_std_fmt_display_for_ident_origin_ts = macros_helpers::generate_impl_std_fmt_display_ts(&proc_macro2::TokenStream::new(), &ident_origin_upper_camel_case, &proc_macro2::TokenStream::new(), &quote! {write!(f, "{self:?}")});
-            let impl_error_occurence_lib_to_std_string_string_for_ident_origin_ts = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_ts(&proc_macro2::TokenStream::new(), &ident_origin_upper_camel_case, &proc_macro2::TokenStream::new(), &quote! {self.to_string()});
-            let impl_default_option_some_vec_one_el_for_ident_origin_ts = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_option_some_vec_one_el_ts(&ident_origin_upper_camel_case, &{
+            let impl_std_fmt_display_for_ident_origin_ts = macros_helpers::generate_impl_std_fmt_display_ts(&proc_macro2::TokenStream::new(), &ident_origin_ucc, &proc_macro2::TokenStream::new(), &quote! {write!(f, "{self:?}")});
+            let impl_error_occurence_lib_to_std_string_string_for_ident_origin_ts = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_ts(&proc_macro2::TokenStream::new(), &ident_origin_ucc, &proc_macro2::TokenStream::new(), &quote! {self.to_string()});
+            let impl_default_option_some_vec_one_el_for_ident_origin_ts = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_option_some_vec_one_el_ts(&ident_origin_ucc, &{
                 let content_ts = match &postgresql_type_pattern {
                     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => {
@@ -4064,17 +4054,17 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                 let current_ident_as_default_option_some_vec_one_el_call_ts = generate_as_default_option_some_vec_one_el_call_ts(&current_ident_ts);
                                 quote! {
                                     sqlx::postgres::types::PgRange {
-                                        #StartSnakeCase: std::ops::Bound::Included(
+                                        #StartSc: std::ops::Bound::Included(
                                             #current_ident_as_default_option_some_vec_one_el_call_ts.0
                                         ),
-                                        #EndSnakeCase: std::ops::Bound::Excluded(
+                                        #EndSc: std::ops::Bound::Excluded(
                                             #current_ident_as_default_option_some_vec_one_el_call_ts.0
                                         ),
                                     }
                                 }
                             };
-                            let sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_option_some_vec_one_el_call_ts = generate_as_default_option_some_vec_one_el_call_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case);
-                            let sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_option_some_vec_one_el_call_ts = generate_as_default_option_some_vec_one_el_call_ts(&sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case);
+                            let sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_option_some_vec_one_el_call_ts = generate_as_default_option_some_vec_one_el_call_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc);
+                            let sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_option_some_vec_one_el_call_ts = generate_as_default_option_some_vec_one_el_call_ts(&sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc);
                             let initialization_ts: &dyn quote::ToTokens = match &postgresql_type {
                                 PostgresqlType::StdPrimitiveI16AsInt2
                                 | PostgresqlType::StdPrimitiveI32AsInt4
@@ -4095,9 +4085,9 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                 PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => &quote! {vec![#core_default_default_default_ts]},
                                 PostgresqlType::SqlxTypesTimeTimeAsTime => &generate_sqlx_types_time_time_from_hms_micro_unwrap_ts(&quote! {0,0,0,0}),
                                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => &quote! {#inner_type_standart_not_null_ts {
-                                    #MonthsSnakeCase: #core_default_default_default_ts,
-                                    #DaysSnakeCase: #core_default_default_default_ts,
-                                    #MicrosecondsSnakeCase: #core_default_default_default_ts
+                                    #MonthsSc: #core_default_default_default_ts,
+                                    #DaysSc: #core_default_default_default_ts,
+                                    #MicrosecondsSc: #core_default_default_default_ts
                                 }},
                                 PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &generate_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
                                     #sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_option_some_vec_one_el_call_ts.0,
@@ -4108,12 +4098,12 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                     #sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_option_some_vec_one_el_call_ts.0,
                                 })),
                                 PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => &quote! {
-                                    sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSnakeCase(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default_ts).expect("9e9c9b57-1a39-4674-a112-5e009fcbab0f"))
+                                    sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSc(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default_ts).expect("9e9c9b57-1a39-4674-a112-5e009fcbab0f"))
                                 },
                                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range | PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => &pg_range_int_default_initialization_ts,
-                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &generate_sqlx_postgres_types_pg_range_default_option_some_vec_one_el_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case),
-                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &generate_sqlx_postgres_types_pg_range_default_option_some_vec_one_el_ts(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case),
-                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &generate_sqlx_postgres_types_pg_range_default_option_some_vec_one_el_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case),
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &generate_sqlx_postgres_types_pg_range_default_option_some_vec_one_el_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc),
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &generate_sqlx_postgres_types_pg_range_default_option_some_vec_one_el_ts(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc),
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &generate_sqlx_postgres_types_pg_range_default_option_some_vec_one_el_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc),
                             };
                             quote! {#initialization_ts}
                         }
@@ -4126,9 +4116,9 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 };
                 quote! {Self(#content_ts)}
             });
-            let impl_sqlx_type_sqlx_postgres_for_ident_origin_ts = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_ts(&ident_origin_upper_camel_case, &field_type_handle);
-            let impl_sqlx_encode_sqlx_postgres_for_ident_origin_ts = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_ts(&ident_origin_upper_camel_case, &quote! {#SelfSnakeCase.0});
-            let impl_sqlx_decode_sqlx_postgres_for_ident_origin_ts = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_ts(&ident_origin_upper_camel_case, &field_type_handle, &{
+            let impl_sqlx_type_sqlx_postgres_for_ident_origin_ts = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_ts(&ident_origin_ucc, &field_type_handle);
+            let impl_sqlx_encode_sqlx_postgres_for_ident_origin_ts = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_ts(&ident_origin_ucc, &quote! {#SelfSc.0});
+            let impl_sqlx_decode_sqlx_postgres_for_ident_origin_ts = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_ts(&ident_origin_ucc, &field_type_handle, &{
                 let scopes_value_ts = quote! {(value_147c3532)};
                 let ok_self_scopes_value_ts = quote! {Ok(Self #scopes_value_ts)};
                 match &postgresql_type_pattern {
@@ -4159,9 +4149,9 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
                             | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => ok_self_scopes_value_ts,
                             PostgresqlType::SqlxTypesChronoNaiveDateAsDate | PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range | PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote! {
-                                match Self::#TryNewSnakeCase #scopes_value_ts {
+                                match Self::#TryNewSc #scopes_value_ts {
                                     Ok(value_93eb5329) => Ok(value_93eb5329),
-                                    Err(er) => Err(Box::#NewSnakeCase(er)),
+                                    Err(er) => Err(Box::#NewSc(er)),
                                 }
                             },
                         },
@@ -4172,7 +4162,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             });
             let impl_sqlx_postgres_pg_has_array_type_for_ident_origin_ts = {
                 quote! {
-                    impl sqlx::postgres::PgHasArrayType for #ident_origin_upper_camel_case {
+                    impl sqlx::postgres::PgHasArrayType for #ident_origin_ucc {
                         fn array_type_info() -> sqlx::postgres::PgTypeInfo {
                             <#inner_type_standart_not_null_ts as sqlx::postgres::PgHasArrayType>::array_type_info()
                         }
@@ -4181,9 +4171,9 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             };
             let maybe_impl_std_convert_from_ident_read_for_ident_origin_ts = match &is_not_null_standart_can_be_primary_key {
                 IsNotNullStandartCanBePrimaryKey::False => proc_macro2::TokenStream::new(),
-                IsNotNullStandartCanBePrimaryKey::True => macros_helpers::generate_impl_std_convert_from_ts(&ident_standart_not_null_read_upper_camel_case, &ident_origin_upper_camel_case, &{
-                    let ident_standart_not_null_as_crate_postgresql_type_ts = generate_as_postgresql_type_ts(&ident_standart_not_null_upper_camel_case);
-                    quote! {Self::#NewSnakeCase(#ident_standart_not_null_as_crate_postgresql_type_ts::into_inner(#ValueSnakeCase))}
+                IsNotNullStandartCanBePrimaryKey::True => macros_helpers::generate_impl_std_convert_from_ts(&ident_standart_not_null_read_ucc, &ident_origin_ucc, &{
+                    let ident_standart_not_null_as_crate_postgresql_type_ts = generate_as_postgresql_type_ts(&ident_standart_not_null_ucc);
+                    quote! {Self::#NewSc(#ident_standart_not_null_as_crate_postgresql_type_ts::into_inner(#ValueSc))}
                 }),
             };
             quote! {
@@ -4221,8 +4211,8 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     &content_ts
                 )
         };
-        let ident_origin_struct_content_ts = quote!{(#ident_origin_upper_camel_case);};
-        let ident_table_type_declaration_upper_camel_case = SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
+        let ident_origin_struct_content_ts = quote!{(#ident_origin_ucc);};
+        let ident_table_type_declaration_ucc = SelfTableTypeDeclarationUcc::from_tokens(&ident);
         let ident_table_type_declaration_ts = {
             let ident_table_type_declaration_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
@@ -4265,19 +4255,19 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 .derive_serde_serialize()
                 .derive_serde_deserialize()
                 .build_struct(
-                    &ident_table_type_declaration_upper_camel_case,
+                    &ident_table_type_declaration_ucc,
                     &ident_origin_struct_content_ts
                 );
-            let impl_ident_table_type_declaration_ts = generate_pub_const_new_or_pub_try_new_ts(&ident_table_type_declaration_upper_camel_case);
+            let impl_ident_table_type_declaration_ts = generate_pub_const_new_or_pub_try_new_ts(&ident_table_type_declaration_ucc);
             let impl_default_option_some_vec_one_el_for_ident_table_type_declaration_ts =
-                postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_option_some_vec_one_el_ts(&ident_table_type_declaration_upper_camel_case, &quote! {Self(#postgresql_crud_common_default_option_some_vec_one_el_call_ts)});
-            let impl_sqlx_type_sqlx_postgres_for_ident_table_type_declaration_ts = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_ts(&ident_table_type_declaration_upper_camel_case, &ident_origin_upper_camel_case);
-            let impl_sqlx_encode_sqlx_postgres_for_ident_table_type_declaration_ts = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_ts(&ident_table_type_declaration_upper_camel_case, &quote! {#SelfSnakeCase.0});
-            let impl_sqlx_decode_sqlx_postgres_for_ident_table_type_declaration_ts = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_ts(&ident_table_type_declaration_upper_camel_case, &ident_origin_upper_camel_case, &quote! {Ok(Self(value_147c3532))});
+                postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_option_some_vec_one_el_ts(&ident_table_type_declaration_ucc, &quote! {Self(#postgresql_crud_common_default_option_some_vec_one_el_call_ts)});
+            let impl_sqlx_type_sqlx_postgres_for_ident_table_type_declaration_ts = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_ts(&ident_table_type_declaration_ucc, &ident_origin_ucc);
+            let impl_sqlx_encode_sqlx_postgres_for_ident_table_type_declaration_ts = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_ts(&ident_table_type_declaration_ucc, &quote! {#SelfSc.0});
+            let impl_sqlx_decode_sqlx_postgres_for_ident_table_type_declaration_ts = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_ts(&ident_table_type_declaration_ucc, &ident_origin_ucc, &quote! {Ok(Self(value_147c3532))});
             //todo rewrite as dependency of PostgresqlType trait?
             let impl_postgresql_type_equal_operator_for_ident_table_type_declaration_ts = postgresql_crud_macros_common::impl_postgresql_type_equal_operator_for_ident_ts(
                 &import_path,
-                &ident_table_type_declaration_upper_camel_case,
+                &ident_table_type_declaration_ucc,
                 //todo
                 &{
                     let equal_ts = postgresql_crud_macros_common::EqualOperatorHandle::Equal.to_tokens_path(&import_path);
@@ -4324,8 +4314,8 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 #impl_postgresql_type_equal_operator_for_ident_table_type_declaration_ts
             }
         };
-        let ident_standart_not_null_table_type_declaration_upper_camel_case = SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
-        let ident_create_upper_camel_case = SelfCreateUpperCamelCase::from_tokens(&ident);
+        let ident_standart_not_null_table_type_declaration_ucc = SelfTableTypeDeclarationUcc::from_tokens(&ident_standart_not_null_ucc);
+        let ident_create_ucc = SelfCreateUcc::from_tokens(&ident);
         let ident_create_ts = {
             let ident_create_ts = match &can_be_primary_key {
                 CanBePrimaryKey::False => macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
@@ -4337,16 +4327,16 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     .derive_serde_serialize()
                     .derive_serde_deserialize()
                     .build_struct(
-                        &ident_create_upper_camel_case,
+                        &ident_create_ucc,
                         &ident_origin_struct_content_ts
                     ),
-                CanBePrimaryKey::True => generate_pub_struct_tokens_ts(&ident_create_upper_camel_case, &quote! {(());}, macros_helpers::DeriveDefault::False),
+                CanBePrimaryKey::True => generate_pub_struct_tokens_ts(&ident_create_ucc, &quote! {(());}, macros_helpers::DeriveDefault::False),
             };
             let maybe_impl_ident_create_ts = match &can_be_primary_key {
-                CanBePrimaryKey::False => generate_pub_const_new_or_pub_try_new_ts(&ident_create_upper_camel_case),
+                CanBePrimaryKey::False => generate_pub_const_new_or_pub_try_new_ts(&ident_create_ucc),
                 CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
             };
-            let impl_default_option_some_vec_one_el_for_ident_create_ts = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_option_some_vec_one_el_ts(&ident_create_upper_camel_case, &{
+            let impl_default_option_some_vec_one_el_for_ident_create_ts = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_option_some_vec_one_el_ts(&ident_create_ucc, &{
                 let content_ts: &dyn quote::ToTokens = match &can_be_primary_key {
                     CanBePrimaryKey::False => &postgresql_crud_common_default_option_some_vec_one_el_call_ts,
                     CanBePrimaryKey::True => &quote! {()},
@@ -4354,11 +4344,11 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 quote! {Self(#content_ts)}
             });
             let maybe_impl_sqlx_encode_sqlx_postgres_for_ident_create_ts = match &can_be_primary_key {
-                CanBePrimaryKey::False => postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_ts(&ident_create_upper_camel_case, &quote! {#SelfSnakeCase.0}),
+                CanBePrimaryKey::False => postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_ts(&ident_create_ucc, &quote! {#SelfSc.0}),
                 CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
             };
             let maybe_impl_sqlx_type_sqlx_postgres_for_ident_create_ts = match &can_be_primary_key {
-                CanBePrimaryKey::False => postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_ts(&ident_create_upper_camel_case, &ident_origin_upper_camel_case),
+                CanBePrimaryKey::False => postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_ts(&ident_create_ucc, &ident_origin_ucc),
                 CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
             };
             quote! {
@@ -4369,10 +4359,10 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 #maybe_impl_sqlx_type_sqlx_postgres_for_ident_create_ts
             }
         };
-        let ident_select_upper_camel_case = SelfSelectUpperCamelCase::from_tokens(&ident);
+        let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
         let ident_select_ts = {
             let pub_struct_ident_select_ts = generate_pub_struct_tokens_ts(
-                &ident_select_upper_camel_case,
+                &ident_select_ucc,
                 &match &postgresql_type_pattern {
                     PostgresqlTypePattern::Standart => quote! {;},
                     PostgresqlTypePattern::ArrayDimension1 { .. } => {
@@ -4407,8 +4397,8 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     }
                 };
                 (
-                    postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_option_some_vec_one_el_ts(&ident_select_upper_camel_case, &generate_default_content_ts(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)),
-                    postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_option_some_vec_one_el_max_page_size_ts(&ident_select_upper_camel_case, &generate_default_content_ts(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)),
+                    postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_option_some_vec_one_el_ts(&ident_select_ucc, &generate_default_content_ts(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)),
+                    postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_option_some_vec_one_el_max_page_size_ts(&ident_select_ucc, &generate_default_content_ts(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)),
                 )
             };
             quote! {
@@ -4417,21 +4407,21 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 #impl_default_option_some_vec_one_el_max_page_size_for_ident_select_ts
             }
         };
-        let ident_read_upper_camel_case = SelfReadUpperCamelCase::from_tokens(&ident);
-        let ident_where_upper_camel_case = SelfWhereUpperCamelCase::from_tokens(&ident);
+        let ident_read_ucc = SelfReadUcc::from_tokens(&ident);
+        let ident_where_ucc = SelfWhereUcc::from_tokens(&ident);
         let ident_where_ts = postgresql_crud_macros_common::generate_postgresql_type_where_ts(
             &allow_clippy_arbitrary_source_item_ordering_ts,
             &{
-                let common_postgresql_type_filters = vec![postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: quote! {#ident_table_type_declaration_upper_camel_case} }];
+                let common_postgresql_type_filters = vec![postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: quote! {#ident_table_type_declaration_ucc} }];
                 match &postgresql_type_pattern {
                     PostgresqlTypePattern::Standart => {
                         let greater_than = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan {
-                            ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                            ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                         };
                         let between = postgresql_crud_macros_common::PostgresqlTypeFilter::Between {
-                            ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                            ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                         };
-                        let in_handle = postgresql_crud_macros_common::PostgresqlTypeFilter::In { ident: quote! {#ident_table_type_declaration_upper_camel_case} };
+                        let in_handle = postgresql_crud_macros_common::PostgresqlTypeFilter::In { ident: quote! {#ident_table_type_declaration_ucc} };
                         let regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression;
                         let equal_to_encoded_string_representation = postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation;
                         let current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate;
@@ -4441,7 +4431,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                         let current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTimestamp;
                         let greater_than_current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTimestamp;
                         let before = postgresql_crud_macros_common::PostgresqlTypeFilter::Before {
-                            ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                            ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                         };
                         // let bit_vec_position_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::BitVecPositionEqual;
                         let common_standart_postgresql_type_filters = { common_postgresql_type_filters };
@@ -4462,34 +4452,34 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             let ranges_common_filter_vec = {
                                 let mut vec = common_standart_postgresql_type_filters.clone();
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::FindRangesWithinGivenRange {
-                                    ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                                    ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::FindRangesThatFullyContainTheGivenRange {
-                                    ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                                    ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange {
-                                    ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                                    ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange {
-                                    ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                                    ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound {
-                                    ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                                    ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound {
-                                    ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                                    ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanIncludedLowerBound {
-                                    ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                                    ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanExcludedUpperBound {
-                                    ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                                    ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange {
-                                    ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                                    ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange {
-                                    ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                                    ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength);
                                 vec
@@ -4565,9 +4555,9 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                         }
                     }
                     PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
-                        let ident_standart_not_null_or_nullable_if_can_be_nullable_table_type_declaration_upper_camel_case = {
-                            let value = SelfTableTypeDeclarationUpperCamelCase::from_tokens(&match &postgresql_type.can_be_nullable() {
-                                CanBeNullable::False => quote! {#ident_standart_not_null_upper_camel_case},
+                        let ident_standart_not_null_or_nullable_if_can_be_nullable_table_type_declaration_ucc = {
+                            let value = SelfTableTypeDeclarationUcc::from_tokens(&match &postgresql_type.can_be_nullable() {
+                                CanBeNullable::False => quote! {#ident_standart_not_null_ucc},
                                 CanBeNullable::True => {
                                     let value = generate_ident_ts(postgresql_type, not_null_or_nullable, &PostgresqlTypePattern::Standart);
                                     quote! {#value}
@@ -4576,13 +4566,13 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             quote! {#value}
                         };
                         let dimension_one_greater_than = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThan {
-                            ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                            ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                         };
                         let dimension_one_between = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBetween {
-                            ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                            ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                         };
                         let dimension_one_in_handle = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIn {
-                            ident: ident_standart_not_null_or_nullable_if_can_be_nullable_table_type_declaration_upper_camel_case,
+                            ident: ident_standart_not_null_or_nullable_if_can_be_nullable_table_type_declaration_ucc,
                         };
                         let dimension_one_regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRegularExpression;
                         let dimension_one_current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneCurrentDate;
@@ -4592,15 +4582,15 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                         let dimension_one_current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneCurrentTimestamp;
                         let dimension_one_greater_than_current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanCurrentTimestamp;
                         let dimension_one_before = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBefore {
-                            ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                            ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                         };
                         let common_array_dimension1_postgresql_type_filters = {
                             let mut vec = common_postgresql_type_filters;
                             vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual {
                                 ident: {
-                                    let value = SelfTableTypeDeclarationUpperCamelCase::from_tokens(&match &dimension1_not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => &ident_standart_not_null_upper_camel_case,
-                                        NotNullOrNullable::Nullable => &ident_standart_nullable_upper_camel_case,
+                                    let value = SelfTableTypeDeclarationUcc::from_tokens(&match &dimension1_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => &ident_standart_not_null_ucc,
+                                        NotNullOrNullable::Nullable => &ident_standart_nullable_ucc,
                                     });
                                     quote! {#value}
                                 },
@@ -4632,16 +4622,16 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                     quote! {#range_el_ident_standart_not_null_as_crate_postgresql_type_ts::Read}
                                 };
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneFindRangesWithinGivenRange {
-                                    ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                                    ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneFindRangesThatFullyContainTheGivenRange {
-                                    ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                                    ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneStrictlyToLeftOfRange {
-                                    ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                                    ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneStrictlyToRightOfRange {
-                                    ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                                    ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIncludedLowerBound {
                                     ident: range_el_ident_standart_not_null_as_crate_postgresql_type_read_ts.clone(),
@@ -4656,10 +4646,10 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                     ident: range_el_ident_standart_not_null_as_crate_postgresql_type_read_ts,
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneOverlapWithRange {
-                                    ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                                    ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneAdjacentWithRange {
-                                    ident: quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                                    ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRangeLength);
                                 vec
@@ -4783,37 +4773,37 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     .derive_serde_serialize()
                     .derive_serde_deserialize()
                     .build_struct(
-                        &ident_read_upper_camel_case,
+                        &ident_read_ucc,
                         &ident_origin_struct_content_ts
                     )
             };
-            let impl_ident_read_ts = generate_pub_const_new_or_pub_try_new_ts(&ident_read_upper_camel_case);
-            let impl_error_occurence_lib_to_std_string_string_for_ident_read_ts = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_ts(&proc_macro2::TokenStream::new(), &ident_read_upper_camel_case, &proc_macro2::TokenStream::new(), &quote! {self.0.to_string()});
+            let impl_ident_read_ts = generate_pub_const_new_or_pub_try_new_ts(&ident_read_ucc);
+            let impl_error_occurence_lib_to_std_string_string_for_ident_read_ts = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_ts(&proc_macro2::TokenStream::new(), &ident_read_ucc, &proc_macro2::TokenStream::new(), &quote! {self.0.to_string()});
             let impl_crate_default_option_some_vec_one_el_for_ident_read_ts =
-                postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_option_some_vec_one_el_ts(&ident_read_upper_camel_case, &quote! {Self(#postgresql_crud_common_default_option_some_vec_one_el_call_ts)});
-            let impl_sqlx_encode_sqlx_postgres_for_ident_origin_ts = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_ts(&ident_read_upper_camel_case, &quote! {#SelfSnakeCase.0});
+                postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_option_some_vec_one_el_ts(&ident_read_ucc, &quote! {Self(#postgresql_crud_common_default_option_some_vec_one_el_call_ts)});
+            let impl_sqlx_encode_sqlx_postgres_for_ident_origin_ts = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_ts(&ident_read_ucc, &quote! {#SelfSc.0});
             let impl_sqlx_decode_sqlx_postgres_for_ident_read_ts = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_ts(
-                &ident_read_upper_camel_case,
-                &ident_origin_upper_camel_case,
+                &ident_read_ucc,
+                &ident_origin_ucc,
                 &quote! {Ok(Self(value_147c3532))}
             );
-            let impl_sqlx_type_sqlx_postgres_for_ident_read_ts = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_ts(&ident_read_upper_camel_case, &ident_origin_upper_camel_case);
+            let impl_sqlx_type_sqlx_postgres_for_ident_read_ts = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_ts(&ident_read_ucc, &ident_origin_ucc);
             let maybe_impl_postgresql_type_where_filter_for_ident_read_if_can_be_primary_key_ts = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
                 postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_ts(
                     &quote! {<'lifetime>},
-                    &ident_standart_not_null_read_upper_camel_case,
+                    &ident_standart_not_null_read_ucc,
                     &proc_macro2::TokenStream::new(),
                     &postgresql_crud_macros_common::IncrementParameterUnderscore::False,
                     &postgresql_crud_macros_common::ColumnParameterUnderscore::False,
                     &postgresql_crud_macros_common::IsNeedToAddLogicalOperatorUnderscore::True,
                     &quote! {
-                        match #import_path::increment_checked_add_one_returning_increment(#IncrementSnakeCase) {
+                        match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
                             Ok(value_8da76391) => Ok(format!("({column} = ${value_8da76391})")),
                             Err(er) => Err(er)
                         }
                     },
                     &postgresql_crud_macros_common::IsQueryBindMutable::True,
-                    &generate_typical_query_bind_ts(&SelfSnakeCase),
+                    &generate_typical_query_bind_ts(&SelfSc),
                     &import_path,
                 )
             } else {
@@ -4830,7 +4820,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 #maybe_impl_postgresql_type_where_filter_for_ident_read_if_can_be_primary_key_ts
             }
         };
-        let ident_read_only_ids_upper_camel_case = SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
+        let ident_read_only_ids_ucc = SelfReadOnlyIdsUcc::from_tokens(&ident);
         let ident_read_only_ids_ts = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
             let ident_read_only_ids_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
@@ -4841,15 +4831,15 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 .derive_serde_serialize()
                 .derive_serde_deserialize()
                 .build_struct(
-                    &ident_read_only_ids_upper_camel_case,
-                    &quote!{(#ident_read_upper_camel_case);},
+                    &ident_read_only_ids_ucc,
+                    &quote!{(#ident_read_ucc);},
                 );
             let impl_sqlx_decode_sqlx_postgres_for_ident_read_only_ids_ts = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_ts(
-                &ident_read_only_ids_upper_camel_case,
-                &ident_read_upper_camel_case,
+                &ident_read_only_ids_ucc,
+                &ident_read_ucc,
                 &quote! {Ok(Self(value_147c3532))}
             );
-            let impl_sqlx_type_sqlx_postgres_for_ident_read_only_ids_ts = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_ts(&ident_read_only_ids_upper_camel_case, &ident_read_upper_camel_case);
+            let impl_sqlx_type_sqlx_postgres_for_ident_read_only_ids_ts = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_ts(&ident_read_only_ids_ucc, &ident_read_ucc);
             quote! {
                 #ident_read_only_ids_ts
                 #impl_sqlx_decode_sqlx_postgres_for_ident_read_only_ids_ts
@@ -4858,9 +4848,9 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
         } else {
             proc_macro2::TokenStream::new()
         };
-        let ident_read_inner_upper_camel_case = SelfReadInnerUpperCamelCase::from_tokens(&ident);
+        let ident_read_inner_ucc = SelfReadInnerUcc::from_tokens(&ident);
         let ident_read_inner_ts = quote! {
-            pub type #ident_read_inner_upper_camel_case = #ident_inner_type_ts;
+            pub type #ident_read_inner_ucc = #ident_inner_type_ts;
         };
         let ident_update_ts = {
             let ident_update_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
@@ -4872,13 +4862,13 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 .derive_serde_serialize()
                 .derive_serde_deserialize()
                 .build_struct(
-                    &ident_update_upper_camel_case,
+                    &ident_update_ucc,
                     &ident_origin_struct_content_ts
                 );
-            let impl_ident_update_ts = generate_pub_const_new_or_pub_try_new_ts(&ident_update_upper_camel_case);
+            let impl_ident_update_ts = generate_pub_const_new_or_pub_try_new_ts(&ident_update_ucc);
             let impl_default_option_some_vec_one_el_for_ident_update_ts =
-                postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_option_some_vec_one_el_ts(&ident_update_upper_camel_case, &quote! {Self(#postgresql_crud_common_default_option_some_vec_one_el_call_ts)});
-            let impl_error_occurence_lib_to_std_string_string_for_ident_update_ts = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_ts(&proc_macro2::TokenStream::new(), &ident_update_upper_camel_case, &proc_macro2::TokenStream::new(), &quote! {self.0.#ToStdStringStringSnakeCase()});
+                postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_option_some_vec_one_el_ts(&ident_update_ucc, &quote! {Self(#postgresql_crud_common_default_option_some_vec_one_el_call_ts)});
+            let impl_error_occurence_lib_to_std_string_string_for_ident_update_ts = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_ts(&proc_macro2::TokenStream::new(), &ident_update_ucc, &proc_macro2::TokenStream::new(), &quote! {self.0.#ToStdStringStringSc()});
             quote! {
                 #ident_update_ts
                 #impl_ident_update_ts
@@ -4886,7 +4876,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 #impl_error_occurence_lib_to_std_string_string_for_ident_update_ts
             }
         };
-        let ident_update_for_query_upper_camel_case = SelfUpdateForQueryUpperCamelCase::from_tokens(&ident);
+        let ident_update_for_query_ucc = SelfUpdateForQueryUcc::from_tokens(&ident);
         let ident_update_for_query_ts = {
             let ident_update_for_query_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
@@ -4897,12 +4887,12 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 .derive_serde_serialize()
                 .derive_serde_deserialize()
                 .build_struct(
-                    &ident_update_for_query_upper_camel_case,
+                    &ident_update_for_query_ucc,
                     &ident_origin_struct_content_ts
                 );
-            let impl_sqlx_type_sqlx_postgres_for_ident_update_for_query_ts = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_ts(&ident_update_for_query_upper_camel_case, &ident_origin_upper_camel_case);
-            let impl_sqlx_encode_sqlx_postgres_for_ident_update_for_query_ts = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_ts(&ident_update_for_query_upper_camel_case, &quote! {#SelfSnakeCase.0});
-            let impl_std_convert_from_ident_update_for_ident_update_for_query_ts = macros_helpers::generate_impl_std_convert_from_ts(&ident_update_upper_camel_case, &ident_update_for_query_upper_camel_case, &quote! {Self(#ValueSnakeCase.0)});
+            let impl_sqlx_type_sqlx_postgres_for_ident_update_for_query_ts = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_ts(&ident_update_for_query_ucc, &ident_origin_ucc);
+            let impl_sqlx_encode_sqlx_postgres_for_ident_update_for_query_ts = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_ts(&ident_update_for_query_ucc, &quote! {#SelfSc.0});
+            let impl_std_convert_from_ident_update_for_ident_update_for_query_ts = macros_helpers::generate_impl_std_convert_from_ts(&ident_update_ucc, &ident_update_for_query_ucc, &quote! {Self(#ValueSc.0)});
             quote! {
                 #ident_update_for_query_ts
                 #impl_sqlx_type_sqlx_postgres_for_ident_update_for_query_ts
@@ -4923,7 +4913,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 );
                 quote! {
                     let mut acc_c7df00f5 = String::default();
-                    match #import_path::increment_checked_add_one_returning_increment(#IncrementSnakeCase) {
+                    match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
                         Ok(value_ba581e0f) => {
                             #if_write_is_err_ts
                         },
@@ -4934,7 +4924,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     Ok(acc_c7df00f5)
                 }
             };
-            let ok_query_ts = quote! {Ok(#QuerySnakeCase)};
+            let ok_query_ts = quote! {Ok(#QuerySc)};
             let (query_part_create_ts, bind_value_to_query_create_ts): Handle<'_> = {
                 let typical: Handle<'_> = { (&typical_query_part_ts, &typical_query_bind_ts) };
                 let default_initialized_by_postgresql: Handle<'_> = (&ok_std_string_string_from_default_ts, &ok_query_ts);
@@ -4976,7 +4966,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             postgresql_crud_macros_common::generate_impl_postgresql_type_ts(
                 &import_path,
                 &ident,
-                &ident_table_type_declaration_upper_camel_case,
+                &ident_table_type_declaration_ucc,
                 &match &can_be_primary_key {
                     CanBePrimaryKey::False => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
                     CanBePrimaryKey::True => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::False,
@@ -5051,7 +5041,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                         }
                     }
                 },
-                &ident_create_upper_camel_case,
+                &ident_create_ucc,
                 &postgresql_crud_macros_common::CreateQueryPartValueUnderscore::True,
                 &match &can_be_primary_key {
                     CanBePrimaryKey::False => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
@@ -5067,14 +5057,14 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     CanBePrimaryKey::True => postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
                 },
                 &bind_value_to_query_create_ts,
-                &ident_select_upper_camel_case,
+                &ident_select_ucc,
                 &match &element.postgresql_type_pattern {
                     PostgresqlTypePattern::Standart => postgresql_crud_macros_common::SelectQueryPartValueUnderscore::True,
                     PostgresqlTypePattern::ArrayDimension1 { .. } => postgresql_crud_macros_common::SelectQueryPartValueUnderscore::False,
                 },
                 &{
                     let content_ts = match &postgresql_type_pattern {
-                        PostgresqlTypePattern::Standart => quote! {#ColumnSnakeCase.to_owned()},
+                        PostgresqlTypePattern::Standart => quote! {#ColumnSc.to_owned()},
                         PostgresqlTypePattern::ArrayDimension1 { .. } => {
                             let format_handle_ts = generate_quotes::double_quotes_ts(&{
                                 let acc = repeat_n("[{}:{}]", array_dimensions_number).collect::<String>();
@@ -5086,8 +5076,8 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                 .parse::<proc_macro2::TokenStream>()
                                 .expect("6f2305ee-85e9-4dce-9a14-9e299586668a");
                                 quote! {
-                                    #ValueSnakeCase.#dimension_number_pagination_ts.start(),
-                                    #ValueSnakeCase.#dimension_number_pagination_ts.end(),
+                                    #ValueSc.#dimension_number_pagination_ts.start(),
+                                    #ValueSc.#dimension_number_pagination_ts.end(),
                                 }
                             });
                             quote! {format!(
@@ -5098,36 +5088,36 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     };
                     quote! {Ok(#content_ts)}
                 },
-                &ident_where_upper_camel_case,
-                &ident_read_upper_camel_case,
+                &ident_where_ucc,
+                &ident_read_ucc,
                 &{
                     let generate_ident_read_ident_origin_ts = |content_ts: &dyn quote::ToTokens| {
-                        quote! {#ident_read_upper_camel_case(#ident_origin_upper_camel_case(#content_ts))}
+                        quote! {#ident_read_ucc(#ident_origin_ucc(#content_ts))}
                     };
                     match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                             NotNullOrNullable::NotNull => {
                                 PostgresqlTypeRange::try_from(postgresql_type).as_ref().map_or_else(
-                                    |()| quote! {#ValueSnakeCase},
+                                    |()| quote! {#ValueSc},
                                     |postgresql_type_range| {
                                         let generate_sqlx_postgres_types_pg_range_ts = |start_ts: &dyn quote::ToTokens, end_ts: &dyn quote::ToTokens| {
                                             quote! {
                                                 sqlx::postgres::types::PgRange{
-                                                    #StartSnakeCase: std::ops::Bound::#start_ts,
-                                                    #EndSnakeCase: std::ops::Bound::#end_ts
+                                                    #StartSc: std::ops::Bound::#start_ts,
+                                                    #EndSc: std::ops::Bound::#end_ts
                                                 }
                                             }
                                         };
-                                        let included_start_ts = quote! {#IncludedUpperCamelCase(#StartSnakeCase)};
-                                        let excluded_end_ts = quote! {#ExcludedUpperCamelCase(#EndSnakeCase)};
-                                        let included_end_ts = quote! {#IncludedUpperCamelCase(#EndSnakeCase)};
-                                        let excluded_start_ts = quote! {#ExcludedUpperCamelCase(#StartSnakeCase)};
+                                        let included_start_ts = quote! {#IncludedUcc(#StartSc)};
+                                        let excluded_end_ts = quote! {#ExcludedUcc(#EndSc)};
+                                        let included_end_ts = quote! {#IncludedUcc(#EndSc)};
+                                        let excluded_start_ts = quote! {#ExcludedUcc(#StartSc)};
                                         let sqlx_postgres_types_pg_range_excluded_excluded_ts = generate_sqlx_postgres_types_pg_range_ts(&excluded_start_ts, &excluded_end_ts);
                                         let sqlx_postgres_types_pg_range_excluded_included_ts = generate_sqlx_postgres_types_pg_range_ts(&excluded_start_ts, &included_end_ts);
-                                        let sqlx_postgres_types_pg_range_included_unbounded_ts = generate_sqlx_postgres_types_pg_range_ts(&included_start_ts, &UnboundedUpperCamelCase);
-                                        let sqlx_postgres_types_pg_range_unbounded_excluded_ts = generate_sqlx_postgres_types_pg_range_ts(&UnboundedUpperCamelCase, &excluded_end_ts);
+                                        let sqlx_postgres_types_pg_range_included_unbounded_ts = generate_sqlx_postgres_types_pg_range_ts(&included_start_ts, &UnboundedUcc);
+                                        let sqlx_postgres_types_pg_range_unbounded_excluded_ts = generate_sqlx_postgres_types_pg_range_ts(&UnboundedUcc, &excluded_end_ts);
                                         let sqlx_postgres_types_pg_range_included_excluded_ts = generate_sqlx_postgres_types_pg_range_ts(&included_start_ts, &excluded_end_ts);
-                                        let sqlx_postgres_types_pg_range_unbounded_unbounded_ts = generate_sqlx_postgres_types_pg_range_ts(&UnboundedUpperCamelCase, &UnboundedUpperCamelCase);
+                                        let sqlx_postgres_types_pg_range_unbounded_unbounded_ts = generate_sqlx_postgres_types_pg_range_ts(&UnboundedUcc, &UnboundedUcc);
                                         let generate_range_match_ts = |
                                             included_included_ts: &dyn quote::ToTokens,
                                             included_excluded_ts: &dyn quote::ToTokens,
@@ -5139,41 +5129,41 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                             unbounded_excluded_ts: &dyn quote::ToTokens
                                         | {
                                             quote! {
-                                                #ident_standart_not_null_read_upper_camel_case(#ident_standart_not_null_origin_upper_camel_case(match (
-                                                    #ValueSnakeCase.0.0.#StartSnakeCase,
-                                                    #ValueSnakeCase.0.0.#EndSnakeCase
+                                                #ident_standart_not_null_read_ucc(#ident_standart_not_null_origin_ucc(match (
+                                                    #ValueSc.0.0.#StartSc,
+                                                    #ValueSc.0.0.#EndSc
                                                 ) {
-                                                    (std::ops::Bound::#IncludedUpperCamelCase(#StartSnakeCase), std::ops::Bound::#IncludedUpperCamelCase(#EndSnakeCase)) => {
+                                                    (std::ops::Bound::#IncludedUcc(#StartSc), std::ops::Bound::#IncludedUcc(#EndSc)) => {
                                                         #included_included_ts
                                                     },
-                                                    (std::ops::Bound::#IncludedUpperCamelCase(#StartSnakeCase), std::ops::Bound::#ExcludedUpperCamelCase(#EndSnakeCase)) => {
+                                                    (std::ops::Bound::#IncludedUcc(#StartSc), std::ops::Bound::#ExcludedUcc(#EndSc)) => {
                                                         #included_excluded_ts
                                                     },
-                                                    (std::ops::Bound::#IncludedUpperCamelCase(#StartSnakeCase), std::ops::Bound::#UnboundedUpperCamelCase) => {
+                                                    (std::ops::Bound::#IncludedUcc(#StartSc), std::ops::Bound::#UnboundedUcc) => {
                                                         #included_unbounded_ts
                                                     },
-                                                    (std::ops::Bound::#ExcludedUpperCamelCase(#StartSnakeCase), std::ops::Bound::#IncludedUpperCamelCase(#EndSnakeCase)) => {
+                                                    (std::ops::Bound::#ExcludedUcc(#StartSc), std::ops::Bound::#IncludedUcc(#EndSc)) => {
                                                         #excluded_included_ts
                                                     },
-                                                    (std::ops::Bound::#ExcludedUpperCamelCase(#StartSnakeCase), std::ops::Bound::#ExcludedUpperCamelCase(#EndSnakeCase)) => {
+                                                    (std::ops::Bound::#ExcludedUcc(#StartSc), std::ops::Bound::#ExcludedUcc(#EndSc)) => {
                                                         #excluded_excluded_ts
                                                     },
-                                                    (std::ops::Bound::#ExcludedUpperCamelCase(#StartSnakeCase), std::ops::Bound::#UnboundedUpperCamelCase) => {
+                                                    (std::ops::Bound::#ExcludedUcc(#StartSc), std::ops::Bound::#UnboundedUcc) => {
                                                         #excluded_unbounded_ts
                                                     },
-                                                    (std::ops::Bound::#UnboundedUpperCamelCase, std::ops::Bound::#IncludedUpperCamelCase(#EndSnakeCase)) => {
+                                                    (std::ops::Bound::#UnboundedUcc, std::ops::Bound::#IncludedUcc(#EndSc)) => {
                                                         #unbounded_included_ts
                                                     },
-                                                    (std::ops::Bound::#UnboundedUpperCamelCase, std::ops::Bound::#ExcludedUpperCamelCase(#EndSnakeCase)) => {
+                                                    (std::ops::Bound::#UnboundedUcc, std::ops::Bound::#ExcludedUcc(#EndSc)) => {
                                                         #unbounded_excluded_ts
                                                     },
-                                                    (std::ops::Bound::#UnboundedUpperCamelCase, std::ops::Bound::#UnboundedUpperCamelCase) => #sqlx_postgres_types_pg_range_unbounded_unbounded_ts,
+                                                    (std::ops::Bound::#UnboundedUcc, std::ops::Bound::#UnboundedUcc) => #sqlx_postgres_types_pg_range_unbounded_unbounded_ts,
                                                 }))
                                             }
                                         };
                                         let generate_if_start_end_equal_ts = |true_ts: &dyn quote::ToTokens, false_ts: &dyn quote::ToTokens| {
                                             quote! {
-                                                if #StartSnakeCase == #EndSnakeCase {
+                                                if #StartSc == #EndSc {
                                                     #true_ts
                                                 } else {
                                                     #false_ts
@@ -5190,17 +5180,17 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                                     quote! {#first_ts(#second_ts.checked_add(1).expect("0ec0992f-1d63-443f-b528-7fabfff31423"))}
                                                 };
                                                 (
-                                                    generate_checked_add_one_expect_ts(&IncludedUpperCamelCase, &StartSnakeCase),
-                                                    generate_checked_add_one_expect_ts(&ExcludedUpperCamelCase, &EndSnakeCase)
+                                                    generate_checked_add_one_expect_ts(&IncludedUcc, &StartSc),
+                                                    generate_checked_add_one_expect_ts(&ExcludedUcc, &EndSc)
                                                 )
                                             };
                                             let included_excluded_checked_add_ts = generate_sqlx_postgres_types_pg_range_ts(&included_start_ts, &excluded_end_checked_add_ts);
-                                            let included_unbounded_ts = generate_sqlx_postgres_types_pg_range_ts(&included_start_ts, &UnboundedUpperCamelCase);
+                                            let included_unbounded_ts = generate_sqlx_postgres_types_pg_range_ts(&included_start_ts, &UnboundedUcc);
                                             let included_checked_add_excluded_checked_add_ts = generate_sqlx_postgres_types_pg_range_ts(&included_start_checked_add_ts, &excluded_end_checked_add_ts);
                                             let included_checked_add_excluded_ts = generate_sqlx_postgres_types_pg_range_ts(&included_start_checked_add_ts, &excluded_end_ts);
-                                            let included_checked_add_unbounded_ts = generate_sqlx_postgres_types_pg_range_ts(&included_start_checked_add_ts, &UnboundedUpperCamelCase);
-                                            let unbounded_excluded_checked_add_ts = generate_sqlx_postgres_types_pg_range_ts(&UnboundedUpperCamelCase, &excluded_end_checked_add_ts);
-                                            let unbounded_excluded_ts = generate_sqlx_postgres_types_pg_range_ts(&UnboundedUpperCamelCase, &excluded_end_ts);
+                                            let included_checked_add_unbounded_ts = generate_sqlx_postgres_types_pg_range_ts(&included_start_checked_add_ts, &UnboundedUcc);
+                                            let unbounded_excluded_checked_add_ts = generate_sqlx_postgres_types_pg_range_ts(&UnboundedUcc, &excluded_end_checked_add_ts);
+                                            let unbounded_excluded_ts = generate_sqlx_postgres_types_pg_range_ts(&UnboundedUcc, &excluded_end_ts);
                                             generate_range_match_ts(
                                                 &included_excluded_checked_add_ts,
                                                 &generate_if_start_end_equal_ts(&sqlx_postgres_types_pg_range_unbounded_unbounded_ts, &sqlx_postgres_types_pg_range_included_excluded_ts),
@@ -5218,8 +5208,8 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                             &sqlx_postgres_types_pg_range_included_unbounded_ts,
                                             &generate_if_start_end_equal_ts(&sqlx_postgres_types_pg_range_unbounded_unbounded_ts, &sqlx_postgres_types_pg_range_excluded_included_ts),
                                             &generate_if_start_end_equal_ts(&sqlx_postgres_types_pg_range_unbounded_unbounded_ts, &sqlx_postgres_types_pg_range_excluded_excluded_ts),
-                                            &generate_sqlx_postgres_types_pg_range_ts(&excluded_start_ts, &UnboundedUpperCamelCase),
-                                            &generate_sqlx_postgres_types_pg_range_ts(&UnboundedUpperCamelCase, &included_end_ts),
+                                            &generate_sqlx_postgres_types_pg_range_ts(&excluded_start_ts, &UnboundedUcc),
+                                            &generate_sqlx_postgres_types_pg_range_ts(&UnboundedUcc, &included_end_ts),
                                             &sqlx_postgres_types_pg_range_unbounded_excluded_ts,
                                         );
                                         match &postgresql_type_range {
@@ -5231,14 +5221,14 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                                 };
                                                 let generate_included_start_succ_opt_ts = |id: &dyn Display| {
                                                     let dot_succ_opt_expect_ts = generate_dot_succ_opt_expect_ts(&id);
-                                                    quote! {#IncludedUpperCamelCase(#StartSnakeCase #dot_succ_opt_expect_ts)}
+                                                    quote! {#IncludedUcc(#StartSc #dot_succ_opt_expect_ts)}
                                                 };
                                                 let generate_excluded_end_succ_opt_ts = |id: &dyn Display| {
                                                     let dot_succ_opt_expect_ts = generate_dot_succ_opt_expect_ts(&id);
-                                                    quote! {#ExcludedUpperCamelCase(#EndSnakeCase #dot_succ_opt_expect_ts)}
+                                                    quote! {#ExcludedUcc(#EndSc #dot_succ_opt_expect_ts)}
                                                 };
                                                 generate_range_match_ts(
-                                                    &generate_sqlx_postgres_types_pg_range_ts(&included_start_ts, &quote! {#ExcludedUpperCamelCase(#EndSnakeCase.succ_opt().expect("9ebce3b4-4ca7-4ff5-8b7a-a3539125bba0"))}),
+                                                    &generate_sqlx_postgres_types_pg_range_ts(&included_start_ts, &quote! {#ExcludedUcc(#EndSc.succ_opt().expect("9ebce3b4-4ca7-4ff5-8b7a-a3539125bba0"))}),
                                                     &if_equal_unbounded_unbounded_or_included_excluded_ts,
                                                     &sqlx_postgres_types_pg_range_included_unbounded_ts,
                                                     &generate_if_start_end_equal_ts(
@@ -5246,8 +5236,8 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                                         &generate_sqlx_postgres_types_pg_range_ts(&generate_included_start_succ_opt_ts(&"98a0357b-d21a-4949-a101-c641528d2376"), &generate_excluded_end_succ_opt_ts(&"fe53a6b9-2d7e-4605-9f5a-7f5c21cc01e6")),
                                                     ),
                                                     &generate_if_start_end_equal_ts(&sqlx_postgres_types_pg_range_unbounded_unbounded_ts, &generate_sqlx_postgres_types_pg_range_ts(&generate_included_start_succ_opt_ts(&"d8a26635-c478-4a2a-acf4-bf1765702889"), &excluded_end_ts)),
-                                                    &generate_sqlx_postgres_types_pg_range_ts(&generate_included_start_succ_opt_ts(&"9811c7c7-d7f5-4fb7-9d25-affb0bd4f5fb"), &UnboundedUpperCamelCase),
-                                                    &generate_sqlx_postgres_types_pg_range_ts(&UnboundedUpperCamelCase, &generate_excluded_end_succ_opt_ts(&"d6288f19-0a24-42ad-9e69-36036d9f2c1d")),
+                                                    &generate_sqlx_postgres_types_pg_range_ts(&generate_included_start_succ_opt_ts(&"9811c7c7-d7f5-4fb7-9d25-affb0bd4f5fb"), &UnboundedUcc),
+                                                    &generate_sqlx_postgres_types_pg_range_ts(&UnboundedUcc, &generate_excluded_end_succ_opt_ts(&"d6288f19-0a24-42ad-9e69-36036d9f2c1d")),
                                                     &sqlx_postgres_types_pg_range_unbounded_excluded_ts,
                                                 )
                                             }
@@ -5257,76 +5247,76 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                 )
                             }
                             NotNullOrNullable::Nullable => generate_ident_read_ident_origin_ts(&quote! {
-                                #ValueSnakeCase.0.0.map(
+                                #ValueSc.0.0.map(
                                     |value_4561270e|
                                     <
-                                        #ident_standart_not_null_upper_camel_case
+                                        #ident_standart_not_null_ucc
                                         as
                                         #import_path::PostgresqlType
                                     >::normalize(
-                                        #ident_standart_not_null_read_upper_camel_case(value_4561270e)
+                                        #ident_standart_not_null_read_ucc(value_4561270e)
                                     ).0
                                 )
                             }),
                         },
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_ident_read_ident_origin_ts(&quote! {
-                                #ValueSnakeCase.0.0.into_iter().map(|el_7302af7b|{
+                                #ValueSc.0.0.into_iter().map(|el_7302af7b|{
                                     #ident_standart_not_null_as_postgresql_type_ts::normalize(
-                                        #ident_standart_not_null_read_upper_camel_case(el_7302af7b)
+                                        #ident_standart_not_null_read_ucc(el_7302af7b)
                                     ).0
                                 }).collect()
                             }),
                             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_ident_read_ident_origin_ts(&{
                                 let current_ident_ts = generate_ident_ts(postgresql_type, &NotNullOrNullable::Nullable, &PostgresqlTypePattern::Standart);
-                                let ident_array_standart_nullable_read_upper_camel_case = SelfReadUpperCamelCase::from_tokens(&current_ident_ts);
+                                let ident_array_standart_nullable_read_ucc = SelfReadUcc::from_tokens(&current_ident_ts);
                                 quote! {
-                                    #ValueSnakeCase.0.0.into_iter().map(|el_fc25e056|{
+                                    #ValueSc.0.0.into_iter().map(|el_fc25e056|{
                                         #ident_standart_nullable_as_postgresql_type_ts::normalize(
-                                            #ident_array_standart_nullable_read_upper_camel_case(el_fc25e056)
+                                            #ident_array_standart_nullable_read_ucc(el_fc25e056)
                                         ).0
                                     }).collect()
                                 }
                             }),
                             (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_ident_read_ident_origin_ts(&{
-                                let ident_array_dimension1_not_null_not_null_upper_camel_case = generate_ident_ts(
+                                let ident_array_dimension1_not_null_not_null_ucc = generate_ident_ts(
                                     postgresql_type,
                                     &NotNullOrNullable::NotNull,
                                     &PostgresqlTypePattern::ArrayDimension1 {
                                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
                                     },
                                 );
-                                let ident_array_dimension1_not_null_not_null_read_upper_camel_case = SelfReadUpperCamelCase::from_tokens(&ident_array_dimension1_not_null_not_null_upper_camel_case);
+                                let ident_array_dimension1_not_null_not_null_read_ucc = SelfReadUcc::from_tokens(&ident_array_dimension1_not_null_not_null_ucc);
                                 quote! {
-                                    #ValueSnakeCase.0.0.map(|value_b4d912fb|
+                                    #ValueSc.0.0.map(|value_b4d912fb|
                                         <
-                                            #ident_array_dimension1_not_null_not_null_upper_camel_case
+                                            #ident_array_dimension1_not_null_not_null_ucc
                                             as
                                             #import_path::PostgresqlType
                                         >::normalize(
-                                            #ident_array_dimension1_not_null_not_null_read_upper_camel_case(value_b4d912fb),
+                                            #ident_array_dimension1_not_null_not_null_read_ucc(value_b4d912fb),
                                         ).0
                                     )
                                 }
                             }),
                             (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_ident_read_ident_origin_ts(&{
-                                let ident_array_dimension1_not_null_nullable_upper_camel_case = generate_ident_ts(
+                                let ident_array_dimension1_not_null_nullable_ucc = generate_ident_ts(
                                     postgresql_type,
                                     &NotNullOrNullable::NotNull,
                                     &PostgresqlTypePattern::ArrayDimension1 {
                                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
                                     },
                                 );
-                                let ident_array_dimension1_not_null_nullable_read_upper_camel_case = SelfReadUpperCamelCase::from_tokens(&ident_array_dimension1_not_null_nullable_upper_camel_case);
+                                let ident_array_dimension1_not_null_nullable_read_ucc = SelfReadUcc::from_tokens(&ident_array_dimension1_not_null_nullable_ucc);
                                 quote! {
-                                    #ValueSnakeCase.0.0.map(
+                                    #ValueSc.0.0.map(
                                         |value_dd042db2|
                                         <
-                                            #ident_array_dimension1_not_null_nullable_upper_camel_case
+                                            #ident_array_dimension1_not_null_nullable_ucc
                                             as
                                             #import_path::PostgresqlType
                                         >::normalize(
-                                            #ident_array_dimension1_not_null_nullable_read_upper_camel_case(value_dd042db2),
+                                            #ident_array_dimension1_not_null_nullable_read_ucc(value_dd042db2),
                                         ).0
                                     )
                                 }
@@ -5335,21 +5325,21 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     }
                 },
                 &if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
-                    quote! {#ident_read_only_ids_upper_camel_case}
+                    quote! {#ident_read_only_ids_ucc}
                 } else {
                     quote! {#import_path_non_primary_key_postgresql_type_read_only_ids_ts}
                 },
                 &select_only_ids_and_select_only_updated_ids_query_common_ts,
-                &ident_read_inner_upper_camel_case,
+                &ident_read_inner_ucc,
                 &{
                     let generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_ts = |content_ts: &dyn quote::ToTokens| {
                         quote! {
                             #ident_standart_not_null_as_postgresql_type_ts::into_inner(
-                                #ident_standart_not_null_read_upper_camel_case(#content_ts)
+                                #ident_standart_not_null_read_ucc(#content_ts)
                             )
                         }
                     };
-                    let value_dot_zero_ts = quote! {#ValueSnakeCase.0};
+                    let value_dot_zero_ts = quote! {#ValueSc.0};
                     let value_dot_zero_dot_zero_ts = quote! {#value_dot_zero_ts.0};
                     match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => match &not_null_or_nullable {
@@ -5419,8 +5409,8 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                         },
                     }
                 },
-                &ident_update_upper_camel_case,
-                &ident_update_for_query_upper_camel_case,
+                &ident_update_ucc,
+                &ident_update_for_query_ucc,
                 &postgresql_crud_macros_common::UpdateQueryPartValueUnderscore::True,
                 &postgresql_crud_macros_common::UpdateQueryPartJsonbSetAccumulatorUnderscore::True,
                 &postgresql_crud_macros_common::UpdateQueryPartJsonbSetTargetUnderscore::True,
@@ -5430,7 +5420,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 &typical_query_bind_ts,
                 &select_only_ids_and_select_only_updated_ids_query_common_ts,
                 &postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::False,
-                &quote! {Ok(#QuerySnakeCase)},
+                &quote! {Ok(#QuerySc)},
             )
         };
         let impl_postgresql_type_test_cases_for_ident_ts = {
@@ -5439,15 +5429,15 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 True,
             }
             let generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts = |read_or_update: &postgresql_crud_macros_common::ReadOrUpdate| {
-                let read_or_update_upper_camel_case = read_or_update.upper_camel_case();
+                let read_or_update_ucc = read_or_update.ucc();
                 let content_ts = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
-                    quote! {#TryNewSnakeCase(#ValueSnakeCase).expect("69477d2f-1c78-4a08-bdb7-c84022352dee")}
+                    quote! {#TryNewSc(#ValueSc).expect("69477d2f-1c78-4a08-bdb7-c84022352dee")}
                 } else {
-                    quote! {#NewSnakeCase(#ValueSnakeCase)}
+                    quote! {#NewSc(#ValueSc)}
                 };
-                quote! {<#SelfUpperCamelCase::#PostgresqlTypeUpperCamelCase
+                quote! {<#SelfUcc::#PostgresqlTypeUcc
                     as
-                #import_path::#PostgresqlTypeUpperCamelCase>::#read_or_update_upper_camel_case:: #content_ts}
+                #import_path::#PostgresqlTypeUcc>::#read_or_update_ucc:: #content_ts}
             };
             let generate_standart_not_null_test_case_handle_ts = |is_need_to_use_into: &IsNeedToUseInto| {
                 let generate_range_read_only_ids_to_two_dimensional_vec_read_inner_ts =
@@ -5666,7 +5656,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             self_sqlx_types_chrono_naive_time_max_ts,
                         ) = {
                             let generate_self_sqlx_types_chrono_naive_time_standart_not_null_function_ts = |content_ts_9d2b411e: &dyn quote::ToTokens|generate_ident_standart_not_null_function_ts(
-                                &SelfUpperCamelCase,
+                                &SelfUcc,
                                 &content_ts_9d2b411e
                             );
                             (
@@ -5725,7 +5715,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             sqlx_types_chrono_naive_date_max_ts
                         ) = {
                             let generate_self_sqlx_types_chrono_naive_date_standart_not_null_function_ts = |content_ts_16bc2a50: &dyn quote::ToTokens|generate_ident_standart_not_null_function_ts(
-                                &SelfUpperCamelCase,
+                                &SelfUcc,
                                 &content_ts_16bc2a50
                             );
                             (
@@ -5777,19 +5767,19 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                         <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("127.0.0.1/32").expect("32c744a0-38d5-45b6-a0b8-f744d7c7947e"),
                         <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("::1/128").expect("560815f8-60a6-42e2-9c9d-0edcbcc22457"),
                         <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("2001:db8::/32").expect("793db0ef-c8ea-4683-9782-34e304730d02"),
-                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSnakeCase(std::net::Ipv4Addr::#NewSnakeCase(192, 168, 0, 0), 24).expect("c44934f2-335e-44b7-bb4d-0a91374b4a85")),
-                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSnakeCase(std::net::Ipv4Addr::#NewSnakeCase(10, 0, 0, 0), 8).expect("39e588d9-b32b-4611-a2f3-3ce500b93db0")),
-                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSnakeCase(std::net::Ipv4Addr::LOCALHOST, 32).expect("43fb25bd-03cd-44fe-bde8-dc92d8bafc71")),
-                        sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::#NewSnakeCase(std::net::Ipv6Addr::LOCALHOST, 128).expect("b443be46-1805-4fda-b24b-71dba8d8b9d4")),
-                        sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::#NewSnakeCase("2001:db8::".parse().expect("d4e6df27-fdb6-4e66-898c-abcfc41c5e49"), 32).expect("a7486c5e-6577-4b80-a3ec-097002698431")),
+                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSc(std::net::Ipv4Addr::#NewSc(192, 168, 0, 0), 24).expect("c44934f2-335e-44b7-bb4d-0a91374b4a85")),
+                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSc(std::net::Ipv4Addr::#NewSc(10, 0, 0, 0), 8).expect("39e588d9-b32b-4611-a2f3-3ce500b93db0")),
+                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSc(std::net::Ipv4Addr::LOCALHOST, 32).expect("43fb25bd-03cd-44fe-bde8-dc92d8bafc71")),
+                        sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::#NewSc(std::net::Ipv6Addr::LOCALHOST, 128).expect("b443be46-1805-4fda-b24b-71dba8d8b9d4")),
+                        sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::#NewSc("2001:db8::".parse().expect("d4e6df27-fdb6-4e66-898c-abcfc41c5e49"), 32).expect("a7486c5e-6577-4b80-a3ec-097002698431")),
                     ]},
                     PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => quote! {vec![
-                        sqlx::types::mac_address::MacAddress::#NewSnakeCase([0x00, 0x00, 0x00, 0x00, 0x00, 0x00]), // All zeros
-                        sqlx::types::mac_address::MacAddress::#NewSnakeCase([0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]), // All ones (broadcast address)
-                        sqlx::types::mac_address::MacAddress::#NewSnakeCase([0x02, 0x00, 0x00, 0x00, 0x00, 0x01]), // Locally administered address
-                        sqlx::types::mac_address::MacAddress::#NewSnakeCase([0x00, 0x1A, 0x2B, 0x3C, 0x4D, 0x5E]), // Universally administered address
-                        sqlx::types::mac_address::MacAddress::#NewSnakeCase([0x01, 0x00, 0x5E, 0x00, 0x00, 0xFB]), // Multicast address
-                        sqlx::types::mac_address::MacAddress::#NewSnakeCase([0xDE, 0xAD, 0xBE, 0xEF, 0xCA, 0xFE]), // Random valid MAC
+                        sqlx::types::mac_address::MacAddress::#NewSc([0x00, 0x00, 0x00, 0x00, 0x00, 0x00]), // All zeros
+                        sqlx::types::mac_address::MacAddress::#NewSc([0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]), // All ones (broadcast address)
+                        sqlx::types::mac_address::MacAddress::#NewSc([0x02, 0x00, 0x00, 0x00, 0x00, 0x01]), // Locally administered address
+                        sqlx::types::mac_address::MacAddress::#NewSc([0x00, 0x1A, 0x2B, 0x3C, 0x4D, 0x5E]), // Universally administered address
+                        sqlx::types::mac_address::MacAddress::#NewSc([0x01, 0x00, 0x5E, 0x00, 0x00, 0xFB]), // Multicast address
+                        sqlx::types::mac_address::MacAddress::#NewSc([0xDE, 0xAD, 0xBE, 0xEF, 0xCA, 0xFE]), // Random valid MAC
                     ]},
                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_int_pgrange_read_only_ids_to_two_dimensional_vec_read_inner_ts(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range),
                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => generate_int_pgrange_read_only_ids_to_two_dimensional_vec_read_inner_ts(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range),
@@ -5840,7 +5830,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     let ident_as_postgresql_type_test_cases_ts = generate_as_postgresql_type_test_cases_ts(&current_ident_ts);
                     quote! {Some({
                         let mut acc_0b59a062 = Vec::new();
-                        for el_0fd5865b in #ident_as_postgresql_type_test_cases_ts::#OptionVecCreateSnakeCase().unwrap_or(Vec::new()) {
+                        for el_0fd5865b in #ident_as_postgresql_type_test_cases_ts::#OptionVecCreateSc().unwrap_or(Vec::new()) {
                             acc_0b59a062.push(#self_as_postgresql_type_ts::Create::#new_or_try_new_content_ts);
                         }
                         #maybe_acc_push_none_ts
@@ -5862,7 +5852,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                             ).expect("941bd15c-a751-45e7-8266-f17df4ee00aa")
                                         }
                                     } else {
-                                        quote! {#self_as_postgresql_type_create_ts::#NewSnakeCase}
+                                        quote! {#self_as_postgresql_type_create_ts::#NewSc}
                                     }
                                 };
                                 quote! {Some(
@@ -5936,7 +5926,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                     };
                                     (
                                         generate_new_or_try_new_ts(&quote! {
-                                            #content_ts::#OptionVecCreateSnakeCase().unwrap_or(Vec::new())
+                                            #content_ts::#OptionVecCreateSc().unwrap_or(Vec::new())
                                             .into_iter()
                                             .map(|el_ffb375dd|el_ffb375dd.0.into())
                                             .collect()
@@ -5947,7 +5937,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                 };
                                 quote! {
                                     acc_0b59a062.push(#self_as_postgresql_type_ts::Create::#first_ts);
-                                    if let Some(value_6465e8ae) = #content_ts::#OptionVecCreateSnakeCase().unwrap_or(Vec::new()).first() {
+                                    if let Some(value_6465e8ae) = #content_ts::#OptionVecCreateSc().unwrap_or(Vec::new()).first() {
                                         acc_0b59a062.push(#self_as_postgresql_type_ts::Create::#second_ts);
                                         acc_0b59a062.push(#self_as_postgresql_type_ts::Create::#third_ts);
                                     }
@@ -5994,7 +5984,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             quote! {vec![{#content_ts}]}
                         }
                         NotNullOrNullable::Nullable => quote! {
-                            #ident_standart_not_null_as_postgresql_type_test_cases_ts::#ReadOnlyIdsToTwoDimensionalVecReadInnerSnakeCase(#ReadOnlyIdsSnakeCase)
+                            #ident_standart_not_null_as_postgresql_type_test_cases_ts::#ReadOnlyIdsToTwoDimensionalVecReadInnerSc(#ReadOnlyIdsSc)
                             .into_iter()
                             .flat_map(|el0| el0.into_iter().map(|el1| vec![Some(el1)]))
                             .chain(std::iter::once(vec![None]))
@@ -6007,7 +5997,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                 let el_d27d1981_ts = generate_star_or_dot_clone_ts(&quote!{el_d27d1981});
                                 quote! {
                                     let mut acc_abf96c9f = Vec::new();
-                                    let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_not_null_as_postgresql_type_test_cases_ts::#ReadOnlyIdsToTwoDimensionalVecReadInnerSnakeCase(#ReadOnlyIdsSnakeCase);
+                                    let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_not_null_as_postgresql_type_test_cases_ts::#ReadOnlyIdsToTwoDimensionalVecReadInnerSc(#ReadOnlyIdsSc);
                                     let option_additional = {
                                         let mut option_additional = None;
                                         for el_cb3f4b45 in &read_only_ids_to_two_dimensional_vec_read_inner {
@@ -6056,7 +6046,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                 let el_6b831e7c_ts = generate_star_or_dot_clone_ts(&quote!{el_6b831e7c});
                                 quote! {
                                     let mut acc_68eba82f = Vec::new();
-                                    let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_nullable_as_postgresql_type_test_cases_ts::#ReadOnlyIdsToTwoDimensionalVecReadInnerSnakeCase(#ReadOnlyIdsSnakeCase);
+                                    let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_nullable_as_postgresql_type_test_cases_ts::#ReadOnlyIdsToTwoDimensionalVecReadInnerSc(#ReadOnlyIdsSc);
                                     let option_additional = {
                                         let mut option_additional = None;
                                         for el_b04183c6 in &read_only_ids_to_two_dimensional_vec_read_inner {
@@ -6104,7 +6094,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             let el_31abc64a_ts = generate_star_or_dot_clone_ts(&quote!{el_31abc64a});
                             quote! {
                                 let mut acc_5f7f59ac = Vec::new();
-                                let read_only_ids_to_two_dimensional_vec_read_inner = #content_ts::#ReadOnlyIdsToTwoDimensionalVecReadInnerSnakeCase(#ReadOnlyIdsSnakeCase);
+                                let read_only_ids_to_two_dimensional_vec_read_inner = #content_ts::#ReadOnlyIdsToTwoDimensionalVecReadInnerSc(#ReadOnlyIdsSc);
                                 let option_additional = {
                                     let mut option_additional = None;
                                     for el_12a259ab in &read_only_ids_to_two_dimensional_vec_read_inner {
@@ -6168,7 +6158,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             let read_inner_into_update_with_new_or_try_new_unwraped_ts = generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts(&postgresql_crud_macros_common::ReadOrUpdate::Update);
             let update_to_read_only_ids_ts = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
                 quote! {
-                    #ident_read_only_ids_upper_camel_case(#ident_read_upper_camel_case(#ValueSnakeCase.0 #maybe_dot_clone_ts))//todo its not correct. must be only for primary key but it for all types what van be primary key
+                    #ident_read_only_ids_ucc(#ident_read_ucc(#ValueSc.0 #maybe_dot_clone_ts))//todo its not correct. must be only for primary key but it for all types what van be primary key
                 }
             } else {
                 let value_initialization_ts = generate_import_path_value_initialization_ts(&none_ts);
@@ -6180,7 +6170,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 //todo that is not correct for array of generated by postgresql primary keys but maybe just need to remove this variants and thats it?
                 let value_initialization_ts = generate_import_path_value_initialization_ts(&{
                     let content_ts: &dyn quote::ToTokens = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
-                        &quote! {#ValueSnakeCase.0 #maybe_dot_clone_ts}
+                        &quote! {#ValueSc.0 #maybe_dot_clone_ts}
                     } else {
                         &postgresql_crud_common_default_option_some_vec_one_el_call_ts
                     };
@@ -6189,13 +6179,13 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 quote! {Some(#value_initialization_ts)}
             };
             let previous_read_merged_with_option_update_into_read_ts = quote! {
-                #OptionUpdateSnakeCase.map_or(#ReadSnakeCase, |#ValueSnakeCase| #ident_read_upper_camel_case(#ValueSnakeCase.0))
+                #OptionUpdateSc.map_or(#ReadSc, |#ValueSc| #ident_read_ucc(#ValueSc.0))
             };
             let read_only_ids_merged_with_create_into_read_ts = {
                 let content_ts = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
-                    quote! {#ReadOnlyIdsSnakeCase.0}
+                    quote! {#ReadOnlyIdsSc.0}
                 } else {
-                    quote! {#ident_read_upper_camel_case(#CreateSnakeCase.0)}
+                    quote! {#ident_read_ucc(#CreateSc.0)}
                 };
                 quote! {
                     #self_postgresql_type_as_postgresql_type_ts::normalize(#content_ts)
@@ -6203,20 +6193,20 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             };
             let read_only_ids_merged_with_create_into_option_value_read_ts = {
                 let value_initialization_ts = generate_import_path_value_initialization_ts(&quote! {
-                    <Self as #import_path::PostgresqlTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoReadSnakeCase(
-                        #ReadOnlyIdsSnakeCase,
-                        #CreateSnakeCase
+                    <Self as #import_path::PostgresqlTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoReadSc(
+                        #ReadOnlyIdsSc,
+                        #CreateSc
                     )
                 });
                 quote! {Some(#value_initialization_ts)}
             };
             let read_only_ids_merged_with_create_into_table_type_declaration_ts = {
                 let content_ts = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
-                    quote! {#ReadOnlyIdsSnakeCase.0.0}
+                    quote! {#ReadOnlyIdsSc.0.0}
                 } else {
-                    quote! {#CreateSnakeCase.0}
+                    quote! {#CreateSc.0}
                 };
-                quote! {#ident_table_type_declaration_upper_camel_case(#content_ts)}
+                quote! {#ident_table_type_declaration_ucc(#content_ts)}
             };
             //todo maybe it into function (not in proc macro)
             let read_only_ids_merged_with_create_into_where_equal_ts = {
@@ -6224,14 +6214,14 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     && matches!(&not_null_or_nullable, NotNullOrNullable::NotNull)
                     && matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True)
                 {
-                    quote! {#ReadOnlyIdsSnakeCase.0.0}
+                    quote! {#ReadOnlyIdsSc.0.0}
                 } else {
-                    quote! {#CreateSnakeCase.0}
+                    quote! {#CreateSc.0}
                 };
                 quote! {
-                    #ident_where_upper_camel_case::#EqualUpperCamelCase(where_filters::PostgresqlTypeWhereEqual {
+                    #ident_where_ucc::#EqualUcc(where_filters::PostgresqlTypeWhereEqual {
                         logical_operator: #import_path::LogicalOperator::Or,
-                        #ValueSnakeCase: #ident_table_type_declaration_upper_camel_case(#content_ts),
+                        #ValueSc: #ident_table_type_declaration_ucc(#content_ts),
                     })
                 }
             };
@@ -6244,13 +6234,13 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             let create_into_postgresql_type_option_vec_where_dimension_one_equal_ts = match &postgresql_type_pattern {
                 PostgresqlTypePattern::Standart => none_ts.clone(),
                 PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
-                    let ident_standart_not_null_or_nullable_table_type_declaration_upper_camel_case: &dyn quote::ToTokens = match &dimension1_not_null_or_nullable {
-                        NotNullOrNullable::NotNull => &ident_standart_not_null_table_type_declaration_upper_camel_case,
-                        NotNullOrNullable::Nullable => &ident_standart_nullable_table_type_declaration_upper_camel_case,
+                    let ident_standart_not_null_or_nullable_table_type_declaration_ucc: &dyn quote::ToTokens = match &dimension1_not_null_or_nullable {
+                        NotNullOrNullable::NotNull => &ident_standart_not_null_table_type_declaration_ucc,
+                        NotNullOrNullable::Nullable => &ident_standart_nullable_table_type_declaration_ucc,
                     };
                     let some_ts = {
                         let content_ts: &dyn quote::ToTokens = match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => &quote! {#CreateSnakeCase.0.0},
+                            NotNullOrNullable::NotNull => &quote! {#CreateSc.0.0},
                             NotNullOrNullable::Nullable => &quote! {value_09152b2e.0},
                         };
                         quote! {
@@ -6258,7 +6248,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                 let mut acc_74c71d5d = Vec::new();
                                 for (index_7702518c, el_081d735b) in #content_ts.into_iter().enumerate() {
                                     acc_74c71d5d.push(
-                                        #ident_where_upper_camel_case::DimensionOneEqual(
+                                        #ident_where_ucc::DimensionOneEqual(
                                             where_filters::PostgresqlTypeWhereDimensionOneEqual {
                                                 logical_operator: #import_path::LogicalOperator::Or,
                                                 dimensions: where_filters::BoundedStdVecVec::try_from(
@@ -6268,7 +6258,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                                         ).expect("8d269b8f-41db-4fd9-b33a-e0c532593163")
                                                     ]
                                                 ).expect("fe1e037f-70ce-4744-b34b-0413754e6fb0"),
-                                                #ValueSnakeCase: #ident_standart_not_null_or_nullable_table_type_declaration_upper_camel_case(el_081d735b),
+                                                #ValueSc: #ident_standart_not_null_or_nullable_table_type_declaration_ucc(el_081d735b),
                                             }
                                         )
                                     );
@@ -6286,7 +6276,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => some_ts,
                         NotNullOrNullable::Nullable => quote! {
-                            match #CreateSnakeCase.0.0 {
+                            match #CreateSc.0.0 {
                                 Some(value_09152b2e) => #some_ts,
                                 None => None
                             }
@@ -6500,7 +6490,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             }
                         }
                         NotNullOrNullable::Nullable => quote! {
-                            <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlTypeTestCases>::postgresql_type_option_vec_where_greater_than_test().map(
+                            <#ident_standart_not_null_ucc as #import_path::PostgresqlTypeTestCases>::postgresql_type_option_vec_where_greater_than_test().map(
                                 |el_e4af7fd9|
                                 #import_path::NotEmptyUniqueVec::try_new(
                                     el_e4af7fd9
@@ -6508,8 +6498,8 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                     .into_iter()
                                     .map(|el_504739e6| #import_path::PostgresqlTypeGreaterThanTest {
                                         variant: el_504739e6.variant,
-                                        create: #ident_create_upper_camel_case(#ident_origin_upper_camel_case(Some(el_504739e6.create.0))),
-                                        greater_than: #ident_table_type_declaration_upper_camel_case(#ident_origin_upper_camel_case(Some(el_504739e6.greater_than.0))),
+                                        create: #ident_create_ucc(#ident_origin_ucc(Some(el_504739e6.create.0))),
+                                        greater_than: #ident_table_type_declaration_ucc(#ident_origin_ucc(Some(el_504739e6.greater_than.0))),
                                     })
                                     .collect()
                                 ).expect("63ce5df3-2b2b-4b2d-be70-0041e6a1cad2")
@@ -6562,25 +6552,25 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     let generate_some_ts = |value_476d047b: &CreateReadOnlyIds| match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => {
                             let content_ts = match &value_476d047b {
-                                CreateReadOnlyIds::ReadOnlyIds => quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case(#ReadOnlyIdsSnakeCase.0.0)},
+                                CreateReadOnlyIds::ReadOnlyIds => quote! {#ident_standart_not_null_table_type_declaration_ucc(#ReadOnlyIdsSc.0.0)},
                                 CreateReadOnlyIds::Create => quote! {table_type_declaration},
                             };
-                            quote! {Some(#ident_where_upper_camel_case::GreaterThan(
+                            quote! {Some(#ident_where_ucc::GreaterThan(
                                 where_filters::PostgresqlTypeWhereGreaterThan {
                                     logical_operator: greater_than_variant.logical_operator(),
-                                    #ValueSnakeCase: #content_ts,
+                                    #ValueSc: #content_ts,
                                 }
                             ))}
                         }
                         NotNullOrNullable::Nullable => {
                             let content_ts = match &value_476d047b {
-                                CreateReadOnlyIds::ReadOnlyIds => quote! {#ReadOnlyIdsSnakeCase.0},
-                                CreateReadOnlyIds::Create => quote! {#TableTypeDeclarationSnakeCase.0.0},
+                                CreateReadOnlyIds::ReadOnlyIds => quote! {#ReadOnlyIdsSc.0},
+                                CreateReadOnlyIds::Create => quote! {#TableTypeDeclarationSc.0.0},
                             };
                             quote! {
-                                #content_ts.map(|el_886032ca| #ident_where_upper_camel_case::GreaterThan(where_filters::PostgresqlTypeWhereGreaterThan {
+                                #content_ts.map(|el_886032ca| #ident_where_ucc::GreaterThan(where_filters::PostgresqlTypeWhereGreaterThan {
                                     logical_operator: greater_than_variant.logical_operator(),
-                                    value: #ident_standart_not_null_table_type_declaration_upper_camel_case(el_886032ca),
+                                    value: #ident_standart_not_null_table_type_declaration_ucc(el_886032ca),
                                 }))
                             }
                         }
@@ -6641,26 +6631,26 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             )
         };
         let maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_ts = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
-            let postgresql_type_primary_key_upper_camel_case = naming::PostgresqlTypePrimaryKeyUpperCamelCase;
-            let value_as_read_only_ids_ts = quote! {#ValueSnakeCase: #self_as_postgresql_type_ts::#ReadOnlyIdsUpperCamelCase};
+            let postgresql_type_primary_key_ucc = naming::PostgresqlTypePrimaryKeyUcc;
+            let value_as_read_only_ids_ts = quote! {#ValueSc: #self_as_postgresql_type_ts::#ReadOnlyIdsUcc};
             quote! {
                 #allow_clippy_arbitrary_source_item_ordering_ts
-                impl #import_path::#postgresql_type_primary_key_upper_camel_case for #ident_standart_not_null_upper_camel_case {
-                    type #PostgresqlTypeUpperCamelCase = Self;
-                    type #TableTypeDeclarationUpperCamelCase = #ident_standart_not_null_table_type_declaration_upper_camel_case;
-                    fn #ReadOnlyIdsIntoTableTypeDeclarationSnakeCase(#value_as_read_only_ids_ts) -> #self_as_postgresql_type_ts::#TableTypeDeclarationUpperCamelCase {
-                        #ident_table_type_declaration_upper_camel_case(#ValueSnakeCase.0.0)
+                impl #import_path::#postgresql_type_primary_key_ucc for #ident_standart_not_null_ucc {
+                    type #PostgresqlTypeUcc = Self;
+                    type #TableTypeDeclarationUcc = #ident_standart_not_null_table_type_declaration_ucc;
+                    fn #ReadOnlyIdsIntoTableTypeDeclarationSc(#value_as_read_only_ids_ts) -> #self_as_postgresql_type_ts::#TableTypeDeclarationUcc {
+                        #ident_table_type_declaration_ucc(#ValueSc.0.0)
                     }
-                    fn #ReadOnlyIdsIntoReadSnakeCase(#value_as_read_only_ids_ts) -> #self_as_postgresql_type_ts::#ReadUpperCamelCase {
-                        #ValueSnakeCase.0
+                    fn #ReadOnlyIdsIntoReadSc(#value_as_read_only_ids_ts) -> #self_as_postgresql_type_ts::#ReadUcc {
+                        #ValueSc.0
                     }
-                    fn #ReadOnlyIdsIntoUpdateSnakeCase(#value_as_read_only_ids_ts) -> #self_as_postgresql_type_ts::#UpdateUpperCamelCase {
-                        #ident_update_upper_camel_case(#ValueSnakeCase.0.0)
+                    fn #ReadOnlyIdsIntoUpdateSc(#value_as_read_only_ids_ts) -> #self_as_postgresql_type_ts::#UpdateUcc {
+                        #ident_update_ucc(#ValueSc.0.0)
                     }
-                    fn #ReadIntoTableTypeDeclarationSnakeCase(
-                        #ValueSnakeCase: #self_as_postgresql_type_ts::#ReadUpperCamelCase
-                    ) -> #self_as_postgresql_type_ts::#TableTypeDeclarationUpperCamelCase {
-                        #ident_table_type_declaration_upper_camel_case(#ValueSnakeCase.0)
+                    fn #ReadIntoTableTypeDeclarationSc(
+                        #ValueSc: #self_as_postgresql_type_ts::#ReadUcc
+                    ) -> #self_as_postgresql_type_ts::#TableTypeDeclarationUcc {
+                        #ident_table_type_declaration_ucc(#ValueSc.0)
                     }
                 }
             }
@@ -6723,7 +6713,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
         &macros_helpers::FormatWithCargofmt::True,
     );
     let generated = {
-        let generate_postgresql_types_mod_snake_case = GeneratePostgresqlTypesModSnakeCase;
+        let generate_postgresql_types_mod_sc = GeneratePostgresqlTypesModSc;
         let content_ts = postgresql_type_array
             .into_iter()
             .map(|el_f9569807| {
@@ -6735,10 +6725,10 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
         quote! {
             #[allow(unused_qualifications)]
             #[allow(clippy::absolute_paths)]
-            mod #generate_postgresql_types_mod_snake_case {
+            mod #generate_postgresql_types_mod_sc {
                 #(#content_ts)*
             }
-            pub use #generate_postgresql_types_mod_snake_case::*;
+            pub use #generate_postgresql_types_mod_sc::*;
         }
     };
     macros_helpers::maybe_write_ts_into_file(

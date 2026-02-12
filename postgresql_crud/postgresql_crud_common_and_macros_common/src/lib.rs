@@ -1,4 +1,4 @@
-use naming::{AndSnakeCase, NotSnakeCase, OrSnakeCase};
+use naming::{AndSc, NotSc, OrSc};
 use quote::quote;
 use std::fmt::{Display, Formatter, Result as StdFmtResult};
 
@@ -36,10 +36,10 @@ pub enum LogicalOperator {
 impl LogicalOperator {
     #[must_use]
     pub fn to_query_part(&self, is_need_to_add_logical_operator: bool) -> String {
-        let not_space = format!("{NotSnakeCase} ");
+        let not_space = format!("{NotSc} ");
         if is_need_to_add_logical_operator {
-            let and_space = format!("{AndSnakeCase} ");
-            let or_space = format!("{OrSnakeCase} ");
+            let and_space = format!("{AndSc} ");
+            let or_space = format!("{OrSc} ");
             match *self {
                 Self::And => and_space,
                 Self::Or => or_space,

@@ -6,18 +6,15 @@ pub fn generate_impl_error_occurence_lib_to_std_string_string_ts(
     ident_generics_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    use naming::{
-        ErrorOccurenceLibSnakeCase, SelfSnakeCase, ToStdStringStringSnakeCase,
-        ToStdStringStringUpperCamelCase,
-    };
-    let error_occurence_lib_snake_case = ErrorOccurenceLibSnakeCase;
-    let to_std_string_string_upper_camel_case = ToStdStringStringUpperCamelCase;
-    let to_std_string_string_snake_case = ToStdStringStringSnakeCase;
+    use naming::{ErrorOccurenceLibSc, SelfSc, ToStdStringStringSc, ToStdStringStringUcc};
+    let error_occurence_lib_sc = ErrorOccurenceLibSc;
+    let to_std_string_string_ucc = ToStdStringStringUcc;
+    let to_std_string_string_sc = ToStdStringStringSc;
     let std_string_string_ts = token_patterns::StdStringString;
-    let self_snake_case = SelfSnakeCase;
+    let self_sc = SelfSc;
     quote! {
-        impl #impl_generics_ts #error_occurence_lib_snake_case::#to_std_string_string_upper_camel_case for #ident_ts #ident_generics_ts {
-            fn #to_std_string_string_snake_case(&#self_snake_case) -> #std_string_string_ts {
+        impl #impl_generics_ts #error_occurence_lib_sc::#to_std_string_string_ucc for #ident_ts #ident_generics_ts {
+            fn #to_std_string_string_sc(&#self_sc) -> #std_string_string_ts {
                 #content_ts
             }
         }

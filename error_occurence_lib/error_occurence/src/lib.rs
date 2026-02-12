@@ -1,6 +1,6 @@
 use naming::{
-    CodeOccurenceSnakeCase, IntoSerializeDeserializeVersionSnakeCase, ValueSnakeCase,
-    WithSerializeDeserializeUpperCamelCase, parameter::SelfWithSerializeDeserializeUpperCamelCase,
+    CodeOccurenceSc, IntoSerializeDeserializeVersionSc, ValueSc, WithSerializeDeserializeUcc,
+    parameter::SelfWithSerializeDeserializeUcc,
 };
 use quote::quote;
 
@@ -39,8 +39,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             }
         })
         .collect::<Vec<&syn::Ident>>();
-    let ident_with_serialize_deserialize_upper_camel_case =
-        SelfWithSerializeDeserializeUpperCamelCase::from_tokens(&ident);
+    let ident_with_serialize_deserialize_ucc = SelfWithSerializeDeserializeUcc::from_tokens(&ident);
     let syn::Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("d98214f7-c406-44c7-9cca-b98192949a95");
     };
@@ -80,11 +79,11 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             });
         all_equal.expect("b9da972a-f38b-4217-939c-54ffd56f0301")
     };
-    let value_snake_case = ValueSnakeCase;
+    let value_sc = ValueSc;
     let std_string_string = token_patterns::StdStringString;
-    let code_occurence_snake_case = CodeOccurenceSnakeCase;
-    let code_occurence_snake_case_stringified = code_occurence_snake_case.to_string();
-    let into_serialize_deserialize_version_snake_case_ts = IntoSerializeDeserializeVersionSnakeCase;
+    let code_occurence_sc = CodeOccurenceSc;
+    let code_occurence_sc_stringified = code_occurence_sc.to_string();
+    let into_serialize_deserialize_version_sc_ts = IntoSerializeDeserializeVersionSc;
     let maybe_generic_parameters_ts = if generic_parameters.is_empty() {
         proc_macro2::TokenStream::new()
     } else {
@@ -102,7 +101,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let generate_enum_ident_with_serialize_deserialize_ts = |variants_ts: &dyn quote::ToTokens| {
         quote! {
             #[derive(Debug, thiserror::Error, serde::Serialize, serde::Deserialize)]
-            pub enum #ident_with_serialize_deserialize_upper_camel_case #maybe_generic_parameters_ts {
+            pub enum #ident_with_serialize_deserialize_ucc #maybe_generic_parameters_ts {
                 #variants_ts
             }
         }
@@ -111,7 +110,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         |variants: &dyn quote::ToTokens| {
             quote! {
                 impl #maybe_generic_parameters_ts #ident #maybe_generic_parameters_ts {
-                    pub fn #into_serialize_deserialize_version_snake_case_ts(self) -> #ident_with_serialize_deserialize_upper_camel_case #maybe_generic_parameters_ts {
+                    pub fn #into_serialize_deserialize_version_sc_ts(self) -> #ident_with_serialize_deserialize_ucc #maybe_generic_parameters_ts {
                         #[allow(clippy::redundant_closure_for_method_calls)]
                         match self {
                             #variants
@@ -133,7 +132,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     };
                     let fields_idents_excluding_code_occurence_ts = {
                         let acc_ts = fields.iter()
-                        .filter(|el_e26e2572| *el_e26e2572.ident.as_ref().expect("07504636-310e-43cf-aa3b-afd7443987f0") != *code_occurence_snake_case_stringified)
+                        .filter(|el_e26e2572| *el_e26e2572.ident.as_ref().expect("07504636-310e-43cf-aa3b-afd7443987f0") != *code_occurence_sc_stringified)
                         .map(|el_e4070354| el_e4070354.ident.as_ref().expect("971ace15-e8cb-4780-8589-2da5e99e5587"))
                         .collect::<Vec<&syn::Ident>>();
                         if acc_ts.is_empty() {
@@ -145,7 +144,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     };
                     let fields_format_excluding_code_occurence_ts = generate_quotes::double_quotes_ts(
                         &fields.iter()
-                        .filter(|el_6ba47e94| *el_6ba47e94.ident.as_ref().expect("3d70a4f4-046d-4f37-af70-d6c7b1c46b9d") != *code_occurence_snake_case_stringified)
+                        .filter(|el_6ba47e94| *el_6ba47e94.ident.as_ref().expect("3d70a4f4-046d-4f37-af70-d6c7b1c46b9d") != *code_occurence_sc_stringified)
                         .fold(
                             String::new(),
                             |mut acc_924ab1b3, el_e405984a| {
@@ -157,7 +156,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         )
                     );
                     let fields_format_values_excluding_code_occurence_ts = fields.iter()
-                    .filter(|el_48337db8| *el_48337db8.ident.as_ref().expect("f6f6fb24-bdf2-4bb6-a2be-32462758dba9") != *code_occurence_snake_case_stringified)
+                    .filter(|el_48337db8| *el_48337db8.ident.as_ref().expect("f6f6fb24-bdf2-4bb6-a2be-32462758dba9") != *code_occurence_sc_stringified)
                     .map(|el_f00312fe| {
                         let current_ident = &el_f00312fe.ident.as_ref().expect("e97b25b9-49d3-4f89-a18a-4e77355c4c9c");
                         match macros_helpers::ErrorOccurenceFieldAttribute::try_from(el_f00312fe).expect("8ff56aeb-8636-43d6-b8c1-f8fb0486f817") {
@@ -219,11 +218,11 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 }
                             }
                             macros_helpers::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString | macros_helpers::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
-                                let if_write_is_err_ts = macros_helpers::generate_if_write_is_err_ts(&quote! {acc_06473093, "\n {key}: {}", &error_occurence_lib::ToStdStringString::to_std_string_string(#value_snake_case)}, &quote! {panic!("d030580a-6c03-4913-9088-b77316b9f285");});
+                                let if_write_is_err_ts = macros_helpers::generate_if_write_is_err_ts(&quote! {acc_06473093, "\n {key}: {}", &error_occurence_lib::ToStdStringString::to_std_string_string(#value_sc)}, &quote! {panic!("d030580a-6c03-4913-9088-b77316b9f285");});
                                 quote! {
                                     #current_ident.iter().fold(
                                         #std_string_string::new(),
-                                        |mut acc_06473093, (key, #value_snake_case)| {
+                                        |mut acc_06473093, (key, #value_sc)| {
                                             #if_write_is_err_ts
                                             acc_06473093
                                         }
@@ -237,7 +236,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         quote! {
                                             acc_a47e1ba7,
                                             "\n {key}: {}",
-                                            #value_snake_case.to_string().lines().fold(
+                                            #value_sc.to_string().lines().fold(
                                                 #std_string_string::new(),
                                                 |mut acc_addfc699, el_8b8f577e| {
                                                     #if_write_is_err_ts
@@ -251,7 +250,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 quote! {
                                     #current_ident.iter().fold(
                                         #std_string_string::new(),
-                                        |mut acc_a47e1ba7, (key, #value_snake_case)| {
+                                        |mut acc_a47e1ba7, (key, #value_sc)| {
                                             #if_write_is_err_ts
                                             acc_a47e1ba7
                                         }
@@ -282,14 +281,14 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             if index == 0 {
                                 quote! {
                                     Self::#el_ident {
-                                        #code_occurence_snake_case,
+                                        #code_occurence_sc,
                                         ..
                                     }
                                 }
                             } else {
                                 quote! {
                                     | Self::#el_ident {
-                                        #code_occurence_snake_case,
+                                        #code_occurence_sc,
                                         ..
                                     }
                                 }
@@ -304,7 +303,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         },
                         match self {
                             #(#code_occurence_variants_ts)*
-                            => #code_occurence_snake_case
+                            => #code_occurence_sc
                         }
                     )
                 }
@@ -320,7 +319,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     };
                     let fields_idents_ts = fields.iter().map(|el_cddf556e| &el_cddf556e.ident);
                     let fields_into_serialize_deserialize_version_excluding_code_occurence_ts = fields.iter()
-                    .filter(|el_6a54951c| *el_6a54951c.ident.as_ref().expect("0488fc4c-be15-431b-904b-8bf6a5b2e8e6") != *code_occurence_snake_case_stringified)
+                    .filter(|el_6a54951c| *el_6a54951c.ident.as_ref().expect("0488fc4c-be15-431b-904b-8bf6a5b2e8e6") != *code_occurence_sc_stringified)
                     .map(|el_d7e120a3| {
                         let current_ident = &el_d7e120a3.ident.as_ref().expect("9a672ac2-5184-4427-9d88-70cb2a0bd199");
                         let conversion_ts = match macros_helpers::ErrorOccurenceFieldAttribute::try_from(el_d7e120a3).expect("449c3781-1900-4ed4-b784-485db5a08508") {
@@ -381,9 +380,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     quote! {
                         Self::#el_ident {
                             #(#fields_idents_ts),*
-                        } => #ident_with_serialize_deserialize_upper_camel_case::#el_ident {
+                        } => #ident_with_serialize_deserialize_ucc::#el_ident {
                             #(#fields_into_serialize_deserialize_version_excluding_code_occurence_ts)*
-                            #code_occurence_snake_case,
+                            #code_occurence_sc,
                         }
                     }
                 });
@@ -397,9 +396,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 );
                 generate_enum_ident_with_serialize_deserialize_ts(&quote! {#(#variants_ts),*})
             };
-            let impl_std_fmt_display_for_ident_with_serialize_deserialize_ts = macros_helpers::generate_impl_std_fmt_display_ts(&maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts, &ident_with_serialize_deserialize_upper_camel_case, &maybe_generic_parameters_ts, &impl_std_fmt_display_handle_content_ts);
+            let impl_std_fmt_display_for_ident_with_serialize_deserialize_ts = macros_helpers::generate_impl_std_fmt_display_ts(&maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts, &ident_with_serialize_deserialize_ucc, &maybe_generic_parameters_ts, &impl_std_fmt_display_handle_content_ts);
             let impl_error_occurence_lib_to_std_string_string_to_std_string_string_for_ident_with_serialize_deserialize_ts =
-                macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_ts(&maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts, &ident_with_serialize_deserialize_upper_camel_case, &maybe_generic_parameters_ts, &quote! {format!("{self}")});
+                macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_ts(&maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts, &ident_with_serialize_deserialize_ucc, &maybe_generic_parameters_ts, &quote! {format!("{self}")});
             quote! {
                 #impl_std_fmt_display_for_ident_ts
                 #impl_ident_into_serialize_deserialize_version_ts
@@ -430,8 +429,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 let variants_ts = data_enum.variants.iter().map(|el_0e2b2f9c| {
                     let el_ident = &el_0e2b2f9c.ident;
                     quote! {
-                        Self::#el_ident(value) => #ident_with_serialize_deserialize_upper_camel_case::#el_ident(
-                            value.#into_serialize_deserialize_version_snake_case_ts(),
+                        Self::#el_ident(value) => #ident_with_serialize_deserialize_ucc::#el_ident(
+                            value.#into_serialize_deserialize_version_sc_ts(),
                         )
                     }
                 });
@@ -459,7 +458,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     .ty;
                                 quote! {#field_type}.to_string()
                             },
-                            WithSerializeDeserializeUpperCamelCase
+                            WithSerializeDeserializeUcc
                         )
                         .parse::<proc_macro2::TokenStream>()
                         .expect("9ff40f7e-b7b0-4226-8663-d2de6d5e05ed")
@@ -468,7 +467,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 });
                 generate_enum_ident_with_serialize_deserialize_ts(&quote! {#(#variants_ts),*})
             };
-            let impl_std_fmt_display_for_ident_with_serialize_deserialize_ts = macros_helpers::generate_impl_std_fmt_display_ts(&maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts, &ident_with_serialize_deserialize_upper_camel_case, &maybe_generic_parameters_ts, &{
+            let impl_std_fmt_display_for_ident_with_serialize_deserialize_ts = macros_helpers::generate_impl_std_fmt_display_ts(&maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts, &ident_with_serialize_deserialize_ucc, &maybe_generic_parameters_ts, &{
                 let display_formatter_unnamed_ts = generate_display_formatter_unnamed_ts();
                 quote! {
                     write!(

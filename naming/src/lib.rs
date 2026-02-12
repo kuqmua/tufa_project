@@ -4,20 +4,16 @@ use quote::quote;
 use std::fmt::{Display, Formatter, Result as FmtResult};
 
 pub use naming_common::{
-    AsRefStrToSnakeCaseStringified, AsRefStrToSnakeCaseTokenStream,
-    AsRefStrToUpperCamelCaseStringified, AsRefStrToUpperCamelCaseTokenStream,
-    AsRefStrToUpperSnakeCaseStringified, AsRefStrToUpperSnakeCaseTokenStream,
-    DisplayToSnakeCaseStringified, DisplayToSnakeCaseTokenStream,
-    DisplayToUpperCamelCaseStringified, DisplayToUpperCamelCaseTokenStream,
-    DisplayToUpperSnakeCaseStringified, DisplayToUpperSnakeCaseTokenStream,
-    ToTokensToSnakeCaseStringified, ToTokensToSnakeCaseTokenStream,
-    ToTokensToUpperCamelCaseStringified, ToTokensToUpperCamelCaseTokenStream,
-    ToTokensToUpperSnakeCaseStringified, ToTokensToUpperSnakeCaseTokenStream,
+    AsRefStrToScStringified, AsRefStrToScTokenStream, AsRefStrToUccStringified,
+    AsRefStrToUccTokenStream, AsRefStrToUpperScStringified, AsRefStrToUpperScTokenStream,
+    DisplayToScStringified, DisplayToScTokenStream, DisplayToUccStringified,
+    DisplayToUccTokenStream, DisplayToUpperScStringified, DisplayToUpperScTokenStream,
+    ToTokensToScStringified, ToTokensToScTokenStream, ToTokensToUccStringified,
+    ToTokensToUccTokenStream, ToTokensToUpperScStringified, ToTokensToUpperScTokenStream,
 };
 pub use naming_macros::{
-    AsRefStrEnumWithUnitFieldsToSnakeCaseStringified,
-    AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified,
-    AsRefStrEnumWithUnitFieldsToUpperSnakeCaseStringified,
+    AsRefStrEnumWithUnitFieldsToScStringified, AsRefStrEnumWithUnitFieldsToUccStringified,
+    AsRefStrEnumWithUnitFieldsToUpperScStringified,
 };
 
 pub const GITHUB_URL: &str = "https://github.com/kuqmua/tufa_project";
@@ -30,7 +26,7 @@ pub const SQLX_TYPES_UUID_STRINGIFIED: &str = "sqlx::types::Uuid";
 pub const FIELD_IDENT_IS_NONE: &str = "field.ident is None";
 pub const SYN_TYPE_PATH: &str = "syn::Type::Path";
 
-naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
+naming_macros::generate_upper_camel_and_sc_stringified_and_ts!([
     ["primary", "key"],
     ["serialize", "deserialize"],
     ["with", "serialize", "deserialize"],
@@ -1464,25 +1460,25 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_ts!([
 #[derive(Debug, Clone, Copy)]
 pub struct HashMap;
 #[derive(Debug, Clone, Copy)]
-pub struct HashMapUpperCamelCase;
-impl Display for HashMapUpperCamelCase {
+pub struct HashMapUcc;
+impl Display for HashMapUcc {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         write!(f, "HashMap")
     }
 }
-impl quote::ToTokens for HashMapUpperCamelCase {
+impl quote::ToTokens for HashMapUcc {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         quote! {HashMap}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct HashMapSnakeCase;
-impl Display for HashMapSnakeCase {
+pub struct HashMapSc;
+impl Display for HashMapSc {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         write!(f, "hashmap")
     }
 }
-impl quote::ToTokens for HashMapSnakeCase {
+impl quote::ToTokens for HashMapSc {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         quote! {hashmap}.to_tokens(tokens);
     }
@@ -1497,7 +1493,7 @@ pub trait SwaggerUrlPathSelfQuotesStringified {
 
 impl<T> SwaggerUrlPathSelfQuotesStringified for T
 where
-    T: AsRefStrToSnakeCaseStringified,
+    T: AsRefStrToScStringified,
 {
     fn swagger_url_path_self_quotes_stringified(&self, table_name_stringified: &str) -> String {
         generate_quotes::double_quotes_stringified(&format!(

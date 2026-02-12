@@ -3,7 +3,7 @@ use axum::http::{
     header::{HeaderValue, ToStrError},
 };
 use error_occurence_lib::code_occurence::CodeOccurence;
-use naming::CommitSnakeCase;
+use naming::CommitSc;
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum ErrorNamed {
@@ -44,7 +44,7 @@ pub fn check_commit(
     if
     // app_state.get_enable_api_git_commit_check()
     enable_api_git_commit_check {
-        headers.get(CommitSnakeCase.to_string()).map_or_else(
+        headers.get(CommitSc.to_string()).map_or_else(
             || {
                 Err(ErrorNamed::NoCommitHeader {
                     no_commit_header: String::from("no_commit_header"),

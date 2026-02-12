@@ -1,10 +1,7 @@
 pub use postgresql_crud_common_and_macros_common::*;
 
 use error_occurence_lib::code_occurence::CodeOccurence;
-use naming::{
-    AscUpperCamelCase, DescUpperCamelCase, DisplayToSnakeCaseStringified,
-    DisplayToUpperCamelCaseStringified,
-};
+use naming::{AscUcc, DescUcc, DisplayToScStringified, DisplayToUccStringified};
 use sqlx::{
     encode::IsNull,
     error::BoxDynError,
@@ -862,8 +859,8 @@ pub enum Order {
 impl Display for Order {
     fn fmt(&self, f: &mut Formatter<'_>) -> StdFmtResult {
         match self {
-            Self::Asc => write!(f, "{AscUpperCamelCase}"),
-            Self::Desc => write!(f, "{DescUpperCamelCase}"),
+            Self::Asc => write!(f, "{AscUcc}"),
+            Self::Desc => write!(f, "{DescUcc}"),
         }
     }
 }
@@ -874,12 +871,12 @@ impl DefaultOptionSomeVecOneEl for Order {
 }
 impl Order {
     #[must_use]
-    pub fn to_snake_case_stringified(&self) -> String {
-        DisplayToSnakeCaseStringified::case(&self)
+    pub fn to_sc_stringified(&self) -> String {
+        DisplayToScStringified::case(&self)
     }
     #[must_use]
-    pub fn to_upper_camel_case_stringified(&self) -> String {
-        DisplayToUpperCamelCaseStringified::case(&self)
+    pub fn to_ucc_stringified(&self) -> String {
+        DisplayToUccStringified::case(&self)
     }
 }
 

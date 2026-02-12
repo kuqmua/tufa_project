@@ -40,7 +40,7 @@ impl FromStr for TracingLevel {
 }
 impl Display for TracingLevel {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
-        write!(f, "{}", self.to_snake_case())
+        write!(f, "{}", self.to_sc())
     }
 }
 

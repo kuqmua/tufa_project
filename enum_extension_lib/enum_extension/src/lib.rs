@@ -77,11 +77,11 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
                 variants_vec
             }
             //todo - it can be done in compile time
-            pub fn to_upper_camel_case(&self) -> String {
+            pub fn to_ucc(&self) -> String {
                 enum_extension_lib::Casing::to_case(&format!("{:?}", self),enum_extension_lib::Case::UpperCamel)
             }
             //todo - it can be done in compile time
-            pub fn to_snake_case(&self) -> String {
+            pub fn to_sc(&self) -> String {
                 enum_extension_lib::Casing::to_case(&format!("{:?}", self),enum_extension_lib::Case::Snake)
             }
         }

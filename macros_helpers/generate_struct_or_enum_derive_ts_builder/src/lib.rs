@@ -2,22 +2,22 @@
 pub fn generate_struct_or_enum_derive_ts_builder(
     input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
-    use naming::parameter::{DeriveSelfIfSnakeCase, DeriveSelfSnakeCase, DeriveSelfUpperCamelCase};
+    use naming::parameter::{DeriveSelfIfSc, DeriveSelfSc, DeriveSelfUcc};
     #[derive(Clone)]
     struct Element {
-        derive_trait_name_if_snake_case: proc_macro2::TokenStream,
-        derive_trait_name_snake_case: proc_macro2::TokenStream,
-        derive_trait_name_upper_camel_case: proc_macro2::TokenStream,
+        derive_trait_name_if_sc: proc_macro2::TokenStream,
+        derive_trait_name_sc: proc_macro2::TokenStream,
+        derive_trait_name_ucc: proc_macro2::TokenStream,
         trait_type: proc_macro2::TokenStream,
     }
-    let make_pub_snake_case_ts = quote::quote! {make_pub};
-    let make_pub_if_snake_case_ts = quote::quote! {make_pub_if};
-    let make_pub_upper_camel_case_ts = quote::quote! {MakePub};
+    let make_pub_sc_ts = quote::quote! {make_pub};
+    let make_pub_if_sc_ts = quote::quote! {make_pub_if};
+    let make_pub_ucc_ts = quote::quote! {MakePub};
     let el_vec = serde_json::from_str::<Vec<String>>(&input_ts.to_string())
         .expect("c5d09740-51b2-4c11-9b66-931622d1a053")
         .into_iter()
         .map(|el_4f4a2c74| {
-            let snake_case = {
+            let sc = {
                 let mut result = String::with_capacity(el_4f4a2c74.len());
                 let mut prev_is_underscore = false;
                 let mut prev_is_lowercase = false;
@@ -47,16 +47,16 @@ pub fn generate_struct_or_enum_derive_ts_builder(
                 result.trim_matches('_').to_owned()
             };
             Element {
-                derive_trait_name_upper_camel_case: {
-                    let value = DeriveSelfUpperCamelCase::from_display(&snake_case);
+                derive_trait_name_ucc: {
+                    let value = DeriveSelfUcc::from_display(&sc);
                     quote::quote! {#value}
                 },
-                derive_trait_name_snake_case: {
-                    let value = DeriveSelfSnakeCase::from_display(&snake_case);
+                derive_trait_name_sc: {
+                    let value = DeriveSelfSc::from_display(&sc);
                     quote::quote! {#value}
                 },
-                derive_trait_name_if_snake_case: {
-                    let value = DeriveSelfIfSnakeCase::from_display(&snake_case);
+                derive_trait_name_if_sc: {
+                    let value = DeriveSelfIfSc::from_display(&sc);
                     quote::quote! {#value}
                 },
                 trait_type: el_4f4a2c74
@@ -76,10 +76,10 @@ pub fn generate_struct_or_enum_derive_ts_builder(
             }
         }
         (
-            generate_pun_enum_ts(&make_pub_upper_camel_case_ts),
-            el_vec.iter().map(|el_4f4a2c74| {
-                generate_pun_enum_ts(&el_4f4a2c74.derive_trait_name_upper_camel_case)
-            }),
+            generate_pun_enum_ts(&make_pub_ucc_ts),
+            el_vec
+                .iter()
+                .map(|el_4f4a2c74| generate_pun_enum_ts(&el_4f4a2c74.derive_trait_name_ucc)),
         )
     };
     let (make_pub_derive_trait_name_bool_ts, field_vec_ts) = {
@@ -89,38 +89,38 @@ pub fn generate_struct_or_enum_derive_ts_builder(
             quote::quote! {#ident: bool,}
         }
         (
-            generate_derive_trait_name_bool_ts(&make_pub_snake_case_ts),
+            generate_derive_trait_name_bool_ts(&make_pub_sc_ts),
             el_vec.iter().map(|el_03225620| {
-                generate_derive_trait_name_bool_ts(&el_03225620.derive_trait_name_snake_case)
+                generate_derive_trait_name_bool_ts(&el_03225620.derive_trait_name_sc)
             }),
         )
     };
     let (make_pub_derive_and_derive_if_ts, derive_and_derive_if_vec_ts) = {
         (
             quote::quote! {
-                pub const fn #make_pub_snake_case_ts(mut self) -> Self {
-                    self.#make_pub_snake_case_ts = true;
+                pub const fn #make_pub_sc_ts(mut self) -> Self {
+                    self.#make_pub_sc_ts = true;
                     self
                 }
-                pub const fn #make_pub_if_snake_case_ts(mut self, condition: #make_pub_upper_camel_case_ts) -> Self {
-                    if let #make_pub_upper_camel_case_ts::True = condition {
-                        self.#make_pub_snake_case_ts = true;
+                pub const fn #make_pub_if_sc_ts(mut self, condition: #make_pub_ucc_ts) -> Self {
+                    if let #make_pub_ucc_ts::True = condition {
+                        self.#make_pub_sc_ts = true;
                     }
                     self
                 }
             },
             el_vec.iter().map(|el_09fab389|{
-                let derive_trait_name_upper_camel_case = &el_09fab389.derive_trait_name_upper_camel_case;
-                let derive_trait_name_snake_case = &el_09fab389.derive_trait_name_snake_case;
-                let derive_trait_name_if_snake_case = &el_09fab389.derive_trait_name_if_snake_case;
+                let derive_trait_name_ucc = &el_09fab389.derive_trait_name_ucc;
+                let derive_trait_name_sc = &el_09fab389.derive_trait_name_sc;
+                let derive_trait_name_if_sc = &el_09fab389.derive_trait_name_if_sc;
                 quote::quote!{
-                    pub const fn #derive_trait_name_snake_case(mut self) -> Self {
-                        self.#derive_trait_name_snake_case = true;
+                    pub const fn #derive_trait_name_sc(mut self) -> Self {
+                        self.#derive_trait_name_sc = true;
                         self
                     }
-                    pub const fn #derive_trait_name_if_snake_case(mut self, condition: #derive_trait_name_upper_camel_case) -> Self {
-                        if let #derive_trait_name_upper_camel_case::True = condition {
-                            self.#derive_trait_name_snake_case = true;
+                    pub const fn #derive_trait_name_if_sc(mut self, condition: #derive_trait_name_ucc) -> Self {
+                        if let #derive_trait_name_ucc::True = condition {
+                            self.#derive_trait_name_sc = true;
                         }
                         self
                     }
@@ -129,31 +129,30 @@ pub fn generate_struct_or_enum_derive_ts_builder(
         )
     };
     let if_self_derive_acc_push_vec_ts = el_vec.iter().map(|el_09bcde51| {
-        let derive_trait_name_snake_case = &el_09bcde51.derive_trait_name_snake_case;
+        let derive_trait_name_sc = &el_09bcde51.derive_trait_name_sc;
         let trait_type = &el_09bcde51.trait_type;
         quote::quote! {
-            if self.#derive_trait_name_snake_case {
+            if self.#derive_trait_name_sc {
                 acc_2a71375c.push(quote::quote!{#trait_type});
             }
         }
     });
-    let struct_or_enum_derive_ts_builder_upper_camel_case =
-        quote::quote! {StructOrEnumDeriveTokenStreamBuilder};
-    let struct_or_enum_upper_camel_case = quote::quote! {StructOrEnum};
+    let struct_or_enum_derive_ts_builder_ucc = quote::quote! {StructOrEnumDeriveTokenStreamBuilder};
+    let struct_or_enum_ucc = quote::quote! {StructOrEnum};
     let generated: proc_macro2::TokenStream = quote::quote! {
         #make_pub_pub_enum_ts
         #(#pub_enum_derive_vec_ts)*
         #[derive(Debug, Clone, Copy)]
-        enum #struct_or_enum_upper_camel_case {
+        enum #struct_or_enum_ucc {
             Struct,
             Enum
         }
         #[derive(Debug, Default, Clone, Copy)]
-        pub struct #struct_or_enum_derive_ts_builder_upper_camel_case {
+        pub struct #struct_or_enum_derive_ts_builder_ucc {
             #make_pub_derive_trait_name_bool_ts
             #(#field_vec_ts)*
         }
-        impl #struct_or_enum_derive_ts_builder_upper_camel_case {
+        impl #struct_or_enum_derive_ts_builder_ucc {
             pub fn new() -> Self {
                 Self::default()
             }
@@ -161,19 +160,19 @@ pub fn generate_struct_or_enum_derive_ts_builder(
             #(#derive_and_derive_if_vec_ts)*
             fn build_handle(
                 self,
-                struct_or_enum: #struct_or_enum_upper_camel_case,
+                struct_or_enum: #struct_or_enum_ucc,
                 current_ident: &dyn quote::ToTokens,
                 content_ts: &dyn quote::ToTokens,
             ) -> proc_macro2::TokenStream {
-                let maybe_pub_ts = self.#make_pub_snake_case_ts.then(|| quote::quote!{pub});
+                let maybe_pub_ts = self.#make_pub_sc_ts.then(|| quote::quote!{pub});
                 let derive_ts = {
                     let mut acc_2a71375c = Vec::new();
                     #(#if_self_derive_acc_push_vec_ts)*
                     acc_2a71375c
                 };
                 let struct_or_enum_ts = match struct_or_enum {
-                    #struct_or_enum_upper_camel_case::Struct => quote::quote!{struct},
-                    #struct_or_enum_upper_camel_case::Enum => quote::quote!{enum},
+                    #struct_or_enum_ucc::Struct => quote::quote!{struct},
+                    #struct_or_enum_ucc::Enum => quote::quote!{enum},
                 };
                 // quote::quote! {
                 //     #[derive(#(#derive_ts),*)]
@@ -235,14 +234,14 @@ pub fn generate_struct_or_enum_derive_ts_builder(
                 current_ident: &dyn quote::ToTokens,
                 content_ts: &dyn quote::ToTokens,
             ) -> proc_macro2::TokenStream {
-                self.build_handle(#struct_or_enum_upper_camel_case::Struct, current_ident, content_ts)
+                self.build_handle(#struct_or_enum_ucc::Struct, current_ident, content_ts)
             }
             pub fn build_enum(
                 self,
                 current_ident: &dyn quote::ToTokens,
                 content_ts: &dyn quote::ToTokens,
             ) -> proc_macro2::TokenStream {
-                self.build_handle(#struct_or_enum_upper_camel_case::Enum, current_ident, content_ts)
+                self.build_handle(#struct_or_enum_ucc::Enum, current_ident, content_ts)
             }
         }
     };

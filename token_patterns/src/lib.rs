@@ -194,10 +194,8 @@ impl quote::ToTokens for ErrorOccurenceLibCodeOccurenceCodeOccurence {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct CodeOccurenceSnakeCaseDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence;
-impl quote::ToTokens
-    for CodeOccurenceSnakeCaseDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence
-{
+pub struct CodeOccurenceScDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence;
+impl quote::ToTokens for CodeOccurenceScDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         quote! {code_occurence: error_occurence_lib::code_occurence::CodeOccurence}
             .to_tokens(tokens);
@@ -358,11 +356,10 @@ pub struct CrateDefaultOptionSomeVecOneEl;
 impl quote::ToTokens for CrateDefaultOptionSomeVecOneEl {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let crate_path_ts = crate_path_ts();
-        let default_option_some_vec_one_el_upper_camel_case =
-            default_option_some_vec_one_el_upper_camel_case();
+        let default_option_some_vec_one_el_ucc = default_option_some_vec_one_el_ucc();
         quote! {
             #crate_path_ts
-            #default_option_some_vec_one_el_upper_camel_case
+            #default_option_some_vec_one_el_ucc
         }
         .to_tokens(tokens);
     }
@@ -372,12 +369,11 @@ pub struct CrateDefaultOptionSomeVecOneElCall;
 impl quote::ToTokens for CrateDefaultOptionSomeVecOneElCall {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let crate_path_ts = crate_path_ts();
-        let default_option_some_vec_one_el_upper_camel_case =
-            default_option_some_vec_one_el_upper_camel_case();
+        let default_option_some_vec_one_el_ucc = default_option_some_vec_one_el_ucc();
         let path_default_option_some_vec_one_el_call = path_default_option_some_vec_one_el_call();
         quote! {
             #crate_path_ts
-            #default_option_some_vec_one_el_upper_camel_case
+            #default_option_some_vec_one_el_ucc
             #path_default_option_some_vec_one_el_call
         }
         .to_tokens(tokens);
@@ -388,11 +384,10 @@ pub struct PostgresqlCrudDefaultOptionSomeVecOneEl;
 impl quote::ToTokens for PostgresqlCrudDefaultOptionSomeVecOneEl {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let postgresql_crud = postgresql_crud();
-        let default_option_some_vec_one_el_upper_camel_case =
-            default_option_some_vec_one_el_upper_camel_case();
+        let default_option_some_vec_one_el_ucc = default_option_some_vec_one_el_ucc();
         quote! {
             #postgresql_crud
-            #default_option_some_vec_one_el_upper_camel_case
+            #default_option_some_vec_one_el_ucc
         }
         .to_tokens(tokens);
     }
@@ -416,11 +411,10 @@ pub struct PostgresqlCrudCommonDefaultOptionSomeVecOneEl;
 impl quote::ToTokens for PostgresqlCrudCommonDefaultOptionSomeVecOneEl {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let postgresql_crud_common = postgresql_crud_common();
-        let default_option_some_vec_one_el_upper_camel_case =
-            default_option_some_vec_one_el_upper_camel_case();
+        let default_option_some_vec_one_el_ucc = default_option_some_vec_one_el_ucc();
         quote! {
             #postgresql_crud_common
-            #default_option_some_vec_one_el_upper_camel_case
+            #default_option_some_vec_one_el_ucc
         }
         .to_tokens(tokens);
     }
@@ -444,11 +438,11 @@ pub struct CrateAllEnumVariantsArrayDefaultOptionSomeVecOneEl;
 impl quote::ToTokens for CrateAllEnumVariantsArrayDefaultOptionSomeVecOneEl {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let crate_path_ts = crate_path_ts();
-        let all_variants_default_option_some_vec_one_el_upper_camel_case =
-            all_variants_default_option_some_vec_one_el_upper_camel_case();
+        let all_variants_default_option_some_vec_one_el_ucc =
+            all_variants_default_option_some_vec_one_el_ucc();
         quote! {
             #crate_path_ts
-            #all_variants_default_option_some_vec_one_el_upper_camel_case
+            #all_variants_default_option_some_vec_one_el_ucc
         }
         .to_tokens(tokens);
     }
@@ -473,11 +467,11 @@ pub struct PostgresqlCrudAllEnumVariantsArrayDefaultOptionSomeVecOneEl;
 impl quote::ToTokens for PostgresqlCrudAllEnumVariantsArrayDefaultOptionSomeVecOneEl {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let postgresql_crud = postgresql_crud();
-        let all_variants_default_option_some_vec_one_el_upper_camel_case =
-            all_variants_default_option_some_vec_one_el_upper_camel_case();
+        let all_variants_default_option_some_vec_one_el_ucc =
+            all_variants_default_option_some_vec_one_el_ucc();
         quote! {
             #postgresql_crud
-            #all_variants_default_option_some_vec_one_el_upper_camel_case
+            #all_variants_default_option_some_vec_one_el_ucc
         }
         .to_tokens(tokens);
     }
@@ -502,11 +496,11 @@ pub struct PostgresqlCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneEl;
 impl quote::ToTokens for PostgresqlCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneEl {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let postgresql_crud_common = postgresql_crud_common();
-        let all_variants_default_option_some_vec_one_el_upper_camel_case =
-            all_variants_default_option_some_vec_one_el_upper_camel_case();
+        let all_variants_default_option_some_vec_one_el_ucc =
+            all_variants_default_option_some_vec_one_el_ucc();
         quote! {
             #postgresql_crud_common
-            #all_variants_default_option_some_vec_one_el_upper_camel_case
+            #all_variants_default_option_some_vec_one_el_ucc
         }
         .to_tokens(tokens);
     }
@@ -531,11 +525,11 @@ pub struct CrateDefaultOptionSomeVecOneElMaxPageSize;
 impl quote::ToTokens for CrateDefaultOptionSomeVecOneElMaxPageSize {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let crate_path_ts = crate_path_ts();
-        let default_option_some_vec_one_el_max_page_size_upper_camel_case =
-            default_option_some_vec_one_el_max_page_size_upper_camel_case();
+        let default_option_some_vec_one_el_max_page_size_ucc =
+            default_option_some_vec_one_el_max_page_size_ucc();
         quote! {
             #crate_path_ts
-            #default_option_some_vec_one_el_max_page_size_upper_camel_case
+            #default_option_some_vec_one_el_max_page_size_ucc
         }
         .to_tokens(tokens);
     }
@@ -545,13 +539,13 @@ pub struct CrateDefaultOptionSomeVecOneElMaxPageSizeCall;
 impl quote::ToTokens for CrateDefaultOptionSomeVecOneElMaxPageSizeCall {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let crate_path_ts = crate_path_ts();
-        let default_option_some_vec_one_el_max_page_size_upper_camel_case =
-            default_option_some_vec_one_el_max_page_size_upper_camel_case();
+        let default_option_some_vec_one_el_max_page_size_ucc =
+            default_option_some_vec_one_el_max_page_size_ucc();
         let path_default_option_some_vec_one_el_max_page_size_call =
             path_default_option_some_vec_one_el_max_page_size_call();
         quote! {
             #crate_path_ts
-            #default_option_some_vec_one_el_max_page_size_upper_camel_case
+            #default_option_some_vec_one_el_max_page_size_ucc
             #path_default_option_some_vec_one_el_max_page_size_call
         }
         .to_tokens(tokens);
@@ -562,11 +556,11 @@ pub struct PostgresqlCrudDefaultOptionSomeVecOneElMaxPageSize;
 impl quote::ToTokens for PostgresqlCrudDefaultOptionSomeVecOneElMaxPageSize {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let postgresql_crud = postgresql_crud();
-        let default_option_some_vec_one_el_max_page_size_upper_camel_case =
-            default_option_some_vec_one_el_max_page_size_upper_camel_case();
+        let default_option_some_vec_one_el_max_page_size_ucc =
+            default_option_some_vec_one_el_max_page_size_ucc();
         quote! {
             #postgresql_crud
-            #default_option_some_vec_one_el_max_page_size_upper_camel_case
+            #default_option_some_vec_one_el_max_page_size_ucc
         }
         .to_tokens(tokens);
     }
@@ -591,11 +585,11 @@ pub struct PostgresqlCrudCommonDefaultOptionSomeVecOneElMaxPageSize;
 impl quote::ToTokens for PostgresqlCrudCommonDefaultOptionSomeVecOneElMaxPageSize {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let postgresql_crud_common = postgresql_crud_common();
-        let default_option_some_vec_one_el_max_page_size_upper_camel_case =
-            default_option_some_vec_one_el_max_page_size_upper_camel_case();
+        let default_option_some_vec_one_el_max_page_size_ucc =
+            default_option_some_vec_one_el_max_page_size_ucc();
         quote! {
             #postgresql_crud_common
-            #default_option_some_vec_one_el_max_page_size_upper_camel_case
+            #default_option_some_vec_one_el_max_page_size_ucc
         }
         .to_tokens(tokens);
     }
@@ -620,11 +614,11 @@ pub struct CrateAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize;
 impl quote::ToTokens for CrateAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let crate_path_ts = crate_path_ts();
-        let all_variants_default_option_some_vec_one_el_max_page_size_upper_camel_case =
-            all_variants_default_option_some_vec_one_el_max_page_size_upper_camel_case();
+        let all_variants_default_option_some_vec_one_el_max_page_size_ucc =
+            all_variants_default_option_some_vec_one_el_max_page_size_ucc();
         quote! {
             #crate_path_ts
-            #all_variants_default_option_some_vec_one_el_max_page_size_upper_camel_case
+            #all_variants_default_option_some_vec_one_el_max_page_size_ucc
         }
         .to_tokens(tokens);
     }
@@ -649,11 +643,11 @@ pub struct PostgresqlCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSiz
 impl quote::ToTokens for PostgresqlCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let postgresql_crud = postgresql_crud();
-        let all_variants_default_option_some_vec_one_el_max_page_size_upper_camel_case =
-            all_variants_default_option_some_vec_one_el_max_page_size_upper_camel_case();
+        let all_variants_default_option_some_vec_one_el_max_page_size_ucc =
+            all_variants_default_option_some_vec_one_el_max_page_size_ucc();
         quote! {
             #postgresql_crud
-            #all_variants_default_option_some_vec_one_el_max_page_size_upper_camel_case
+            #all_variants_default_option_some_vec_one_el_max_page_size_ucc
         }
         .to_tokens(tokens);
     }
@@ -682,11 +676,11 @@ impl quote::ToTokens
 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let postgresql_crud_common = postgresql_crud_common();
-        let all_variants_default_option_some_vec_one_el_max_page_size_upper_camel_case =
-            all_variants_default_option_some_vec_one_el_max_page_size_upper_camel_case();
+        let all_variants_default_option_some_vec_one_el_max_page_size_ucc =
+            all_variants_default_option_some_vec_one_el_max_page_size_ucc();
         quote! {
             #postgresql_crud_common
-            #all_variants_default_option_some_vec_one_el_max_page_size_upper_camel_case
+            #all_variants_default_option_some_vec_one_el_max_page_size_ucc
         }
         .to_tokens(tokens);
     }
@@ -726,7 +720,7 @@ fn path_all_variants_default_option_some_vec_one_el_max_page_size_call() -> proc
 {
     quote! {::all_variants_default_option_some_vec_one_el_max_page_size()}
 }
-fn default_option_some_vec_one_el_max_page_size_upper_camel_case() -> proc_macro2::TokenStream {
+fn default_option_some_vec_one_el_max_page_size_ucc() -> proc_macro2::TokenStream {
     quote! {DefaultOptionSomeVecOneElMaxPageSize}
 }
 fn crate_path_ts() -> proc_macro2::TokenStream {
@@ -738,10 +732,10 @@ fn postgresql_crud() -> proc_macro2::TokenStream {
 fn postgresql_crud_common() -> proc_macro2::TokenStream {
     quote! {postgresql_crud_common::}
 }
-fn default_option_some_vec_one_el_upper_camel_case() -> proc_macro2::TokenStream {
+fn default_option_some_vec_one_el_ucc() -> proc_macro2::TokenStream {
     quote! {DefaultOptionSomeVecOneEl}
 }
-fn all_variants_default_option_some_vec_one_el_upper_camel_case() -> proc_macro2::TokenStream {
+fn all_variants_default_option_some_vec_one_el_ucc() -> proc_macro2::TokenStream {
     quote! {AllEnumVariantsArrayDefaultOptionSomeVecOneEl}
 }
 fn path_default_option_some_vec_one_el_call() -> proc_macro2::TokenStream {
@@ -750,8 +744,7 @@ fn path_default_option_some_vec_one_el_call() -> proc_macro2::TokenStream {
 fn path_default_option_some_vec_one_el_max_page_size_call() -> proc_macro2::TokenStream {
     quote! {::default_option_some_vec_one_el_max_page_size()}
 }
-fn all_variants_default_option_some_vec_one_el_max_page_size_upper_camel_case()
--> proc_macro2::TokenStream {
+fn all_variants_default_option_some_vec_one_el_max_page_size_ucc() -> proc_macro2::TokenStream {
     quote! {AllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize}
 }
 fn path_all_variants_default_option_some_vec_one_el_call() -> proc_macro2::TokenStream {
