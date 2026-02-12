@@ -4,12 +4,11 @@ use quote::quote;
 use std::fmt::{Display, Formatter, Result as FmtResult};
 
 pub use naming_common::{
-    AsRefStrToScStringified, AsRefStrToScTokenStream, AsRefStrToUccStringified,
-    AsRefStrToUccTokenStream, AsRefStrToUpperScStringified, AsRefStrToUpperScTokenStream,
-    DisplayToScStringified, DisplayToScTokenStream, DisplayToUccStringified,
-    DisplayToUccTokenStream, DisplayToUpperScStringified, DisplayToUpperScTokenStream,
-    ToTokensToScStringified, ToTokensToScTokenStream, ToTokensToUccStringified,
-    ToTokensToUccTokenStream, ToTokensToUpperScStringified, ToTokensToUpperScTokenStream,
+    AsRefStrToScStringified, AsRefStrToScTs, AsRefStrToUccStringified, AsRefStrToUccTs,
+    AsRefStrToUpperScStringified, AsRefStrToUpperScTs, DisplayToScStringified, DisplayToScTs,
+    DisplayToUccStringified, DisplayToUccTs, DisplayToUpperScStringified, DisplayToUpperScTs,
+    ToTokensToScStringified, ToTokensToScTs, ToTokensToUccStringified, ToTokensToUccTs,
+    ToTokensToUpperScStringified, ToTokensToUpperScTs,
 };
 pub use naming_macros::{
     AsRefStrEnumWithUnitFieldsToScStringified, AsRefStrEnumWithUnitFieldsToUccStringified,

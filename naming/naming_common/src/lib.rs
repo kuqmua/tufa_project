@@ -13,10 +13,10 @@ where
         to_ucc_stringified(self)
     }
 }
-pub trait AsRefStrToUccTokenStream {
+pub trait AsRefStrToUccTs {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
-impl<T> AsRefStrToUccTokenStream for T
+impl<T> AsRefStrToUccTs for T
 where
     T: Sized + AsRefStrToUccStringified,
 {
@@ -36,10 +36,10 @@ where
         to_sc_stringified(self)
     }
 }
-pub trait AsRefStrToScTokenStream {
+pub trait AsRefStrToScTs {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
-impl<T> AsRefStrToScTokenStream for T
+impl<T> AsRefStrToScTs for T
 where
     T: Sized + AsRefStrToScStringified,
 {
@@ -59,10 +59,10 @@ where
         to_upper_sc_stringified(self)
     }
 }
-pub trait AsRefStrToUpperScTokenStream {
+pub trait AsRefStrToUpperScTs {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
-impl<T> AsRefStrToUpperScTokenStream for T
+impl<T> AsRefStrToUpperScTs for T
 where
     T: Sized + AsRefStrToUpperScStringified,
 {
@@ -81,10 +81,10 @@ where
         to_ucc_stringified(&self.to_string())
     }
 }
-pub trait DisplayToUccTokenStream {
+pub trait DisplayToUccTs {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
-impl<T> DisplayToUccTokenStream for T
+impl<T> DisplayToUccTs for T
 where
     T: DisplayToUccStringified,
 {
@@ -103,10 +103,10 @@ where
         to_sc_stringified(&self.to_string())
     }
 }
-pub trait DisplayToScTokenStream {
+pub trait DisplayToScTs {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
-impl<T> DisplayToScTokenStream for T
+impl<T> DisplayToScTs for T
 where
     T: DisplayToScStringified,
 {
@@ -125,10 +125,10 @@ where
         to_upper_sc_stringified(&self.to_string())
     }
 }
-pub trait DisplayToUpperScTokenStream {
+pub trait DisplayToUpperScTs {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
-impl<T> DisplayToUpperScTokenStream for T
+impl<T> DisplayToUpperScTs for T
 where
     T: DisplayToUpperScStringified,
 {
@@ -147,10 +147,10 @@ where
         to_ucc_stringified(&quote! {#self}.to_string())
     }
 }
-pub trait ToTokensToUccTokenStream {
+pub trait ToTokensToUccTs {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
-impl<T> ToTokensToUccTokenStream for T
+impl<T> ToTokensToUccTs for T
 where
     T: ToTokensToUccStringified,
 {
@@ -169,10 +169,10 @@ where
         to_sc_stringified(&quote! {#self}.to_string())
     }
 }
-pub trait ToTokensToScTokenStream {
+pub trait ToTokensToScTs {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
-impl<T> ToTokensToScTokenStream for T
+impl<T> ToTokensToScTs for T
 where
     T: ToTokensToScStringified,
 {
@@ -191,10 +191,10 @@ where
         to_upper_sc_stringified(&quote! {#self}.to_string())
     }
 }
-pub trait ToTokensToUpperScTokenStream {
+pub trait ToTokensToUpperScTs {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
-impl<T> ToTokensToUpperScTokenStream for T
+impl<T> ToTokensToUpperScTs for T
 where
     T: ToTokensToUpperScStringified,
 {

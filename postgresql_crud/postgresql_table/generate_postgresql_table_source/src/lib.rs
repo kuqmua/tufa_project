@@ -1,12 +1,11 @@
 use macros_helpers::ErrorOccurenceFieldAttribute;
 use naming::{
     AdditionalParametersSc, AppStateSc, AsRefStrEnumWithUnitFieldsToScStringified,
-    AsRefStrEnumWithUnitFieldsToUccStringified, AsRefStrToScStringified, AsRefStrToScTokenStream,
-    BeginSc, BindedQuerySc, BodyBytesSc, BodySc, BySc, CheckBodySizeSc, CheckBodySizeUcc,
-    CodeOccurenceSc, ColumnSc, ColumnsSc, CommitSc, CommonAdditionalErrorVariantsSc,
-    CommonAdditionalLogicSc, CommonReadOnlyIdsReturnedFromCreateOneSc, ConfigSc,
-    CreateExtensionIfNotExistsPgJsonschemaUcc, CreateExtensionIfNotExistsUuidOsspUcc,
-    CreateIntoPostgresqlJsonTypeOptionVecWhereLengthEqualSc,
+    AsRefStrEnumWithUnitFieldsToUccStringified, AsRefStrToScStringified, AsRefStrToScTs, BeginSc,
+    BindedQuerySc, BodyBytesSc, BodySc, BySc, CheckBodySizeSc, CheckBodySizeUcc, CodeOccurenceSc,
+    ColumnSc, ColumnsSc, CommitSc, CommonAdditionalErrorVariantsSc, CommonAdditionalLogicSc,
+    CommonReadOnlyIdsReturnedFromCreateOneSc, ConfigSc, CreateExtensionIfNotExistsPgJsonschemaUcc,
+    CreateExtensionIfNotExistsUuidOsspUcc, CreateIntoPostgresqlJsonTypeOptionVecWhereLengthEqualSc,
     CreateIntoPostgresqlJsonTypeOptionVecWhereLengthGreaterThanSc,
     CreateIntoPostgresqlTypeOptionVecWhereDimensionOneEqualSc, CreateManyAdditionalErrorVariantsSc,
     CreateManyAdditionalLogicSc, CreateOneAdditionalErrorVariantsSc, CreateOneAdditionalLogicSc,
@@ -45,7 +44,7 @@ use naming::{
     SelectOnlyIdsQueryPartSc, SelectOnlyUpdatedIdsQueryPartSc, SelectPrimaryKeySc,
     SelectQueryPartSc, SelectSc, SelectUcc, SerdeJsonSc, SerdeJsonToStringSc, SerdeJsonToStringUcc,
     SerdeJsonUcc, SerdeSc, StatusCodeSc, StdFmtDisplayPlusQuoteToTokens, TableNameSc, TableSc,
-    ToTokensToScStringified, ToTokensToUccTokenStream, TrueSc, TryBindSc, TryBindUcc,
+    ToTokensToScStringified, ToTokensToUccTs, TrueSc, TryBindSc, TryBindUcc,
     UpdateForQuerySc, UpdateForQueryUcc, UpdateForQueryVecSc, UpdateManyAdditionalErrorVariantsSc,
     UpdateManyAdditionalLogicSc, UpdateOneAdditionalErrorVariantsSc, UpdateOneAdditionalLogicSc,
     UpdateQueryBindSc, UpdateQueryPartPrimaryKeySc, UpdateQueryPartSc, UpdateSc, UpdateUcc, UrlSc,
@@ -249,7 +248,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             AsRefStrToScStringified::case(&self.to_string())
         }
         fn self_sc_ts(self) -> proc_macro2::TokenStream {
-            AsRefStrToScTokenStream::case_or_panic(&self.to_string())
+            AsRefStrToScTs::case_or_panic(&self.to_string())
         }
         fn try_self_handle_sc_ts(self) -> proc_macro2::TokenStream {
             let value = TrySelfHandleSc::from_tokens(&self.self_sc_ts());
@@ -615,7 +614,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         );
     let primary_key_field_ident = &primary_key_field.field_ident;
     let primary_key_field_ident_ucc_ts =
-        ToTokensToUccTokenStream::case_or_panic(&primary_key_field_ident);
+        ToTokensToUccTs::case_or_panic(&primary_key_field_ident);
     let primary_key_field_type_update_ts =
         &SelfUpdateUcc::from_type_last_segment(primary_key_field_type);
     let primary_key_field_type_update_for_query_ts =
@@ -808,7 +807,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             let variants_ts = generate_fields_named_with_comma_ts(
                 &|element: &macros_helpers::SynFieldWrapper| {
                     let field_ident_ucc_ts =
-                        ToTokensToUccTokenStream::case_or_panic(&element.field_ident);
+                        ToTokensToUccTs::case_or_panic(&element.field_ident);
                     let initialization_ts = {
                         let field_ident_string_double_quotes_ts =
                             generate_quotes::double_quotes_ts(&element.field_ident);
@@ -1540,7 +1539,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &{
                     let variants = generate_fields_named_with_comma_ts(&|element: &macros_helpers::SynFieldWrapper| {
                         let serialize_deserialize_ident_ts = generate_quotes::double_quotes_ts(&element.field_ident);
-                        let field_ident_ucc_ts = ToTokensToUccTokenStream::case_or_panic(&element.field_ident);
+                        let field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&element.field_ident);
                         let el_syn_field_ty_as_postgresql_type_select_ts = generate_as_postgresql_type_select_ts(&element.field_type);
                         quote! {
                             #[serde(rename(serialize = #serialize_deserialize_ident_ts, deserialize = #serialize_deserialize_ident_ts))]
@@ -1571,7 +1570,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             );
         let impl_postgresql_crud_all_variants_default_option_some_vec_one_el_for_ident_select_ts = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_variants_default_option_some_vec_one_el_ts(&ident_select_ucc, &{
             let elements_ts = generate_fields_named_with_comma_ts(&|el_5282570d: &macros_helpers::SynFieldWrapper| {
-                let field_ident_ucc_ts = ToTokensToUccTokenStream::case_or_panic(&el_5282570d.field_ident);
+                let field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_5282570d.field_ident);
                 quote! {
                     Self::#field_ident_ucc_ts(#postgresql_crud_default_option_some_vec_one_el_call_ts)
                 }
@@ -1669,7 +1668,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     .iter()
                     .map(|el_3ce946f9| {
                         let field_ident = &el_3ce946f9.field_ident;
-                        let field_ident_ucc_ts = ToTokensToUccTokenStream::case_or_panic(&el_3ce946f9.field_ident);
+                        let field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_3ce946f9.field_ident);
                         let field_ident_string_double_quotes_ts = generate_quotes::double_quotes_ts(&el_3ce946f9.field_ident);
                         let el_syn_field_ty_as_postgresql_type_read_ts = generate_as_postgresql_type_read_ts(&el_3ce946f9.field_type);
                         quote! {
@@ -2977,7 +2976,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             quote! {let #UrlSc = format!(#format_handle_ts);}
         };
         let future_ts = {
-            let operation_http_method_sc_ts = AsRefStrToScTokenStream::case_or_panic(&operation.http_method());
+            let operation_http_method_sc_ts = AsRefStrToScTs::case_or_panic(&operation.http_method());
             let commit_header_addition_ts = quote! {
                 .header(
                     &"commit".to_owned(),
@@ -3617,7 +3616,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     let order_by_column_match_ts = generate_fields_named_with_comma_ts(
                         &|element: &macros_helpers::SynFieldWrapper| {
                             let field_ident_ucc =
-                                ToTokensToUccTokenStream::case_or_panic(&element.field_ident);
+                                ToTokensToUccTs::case_or_panic(&element.field_ident);
                             let field_ident_double_quotes_ts =
                                 generate_quotes::double_quotes_ts(&element.field_ident);
                             quote! {
@@ -4957,7 +4956,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &|element: &macros_helpers::SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let field_type = &element.field_type;
-                    let field_ident_ucc = ToTokensToUccTokenStream::case_or_panic(&field_ident);
+                    let field_ident_ucc = ToTokensToUccTs::case_or_panic(&field_ident);
                     let ucc = DefaultOptionSomeVecOneElMaxPageSizeUcc;
                     let sc = DefaultOptionSomeVecOneElMaxPageSizeSc;
                     quote! {

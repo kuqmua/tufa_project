@@ -3,8 +3,8 @@ use quote::quote;
 pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     use naming::parameter::{SelfTryFromEnvErrorNamedUcc, TryFromStdEnvVarOkSelfErrorNamedUcc};
     use naming::{
-        DotenvSc, DotenvUcc, EnvVarNameSc, StdEnvVarErrorSc, StdEnvVarErrorUcc,
-        ToTokensToUccTokenStream, ToTokensToUpperScStringified, TryFromStdEnvVarOkUcc,
+        DotenvSc, DotenvUcc, EnvVarNameSc, StdEnvVarErrorSc, StdEnvVarErrorUcc, ToTokensToUccTs,
+        ToTokensToUpperScStringified, TryFromStdEnvVarOkUcc,
     };
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput =
@@ -33,7 +33,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 .ident
                 .as_ref()
                 .expect("2ecb63c1-675f-489a-af65-a6a17c778bd6");
-            let el_ident_ucc_ts = ToTokensToUccTokenStream::case_or_panic(&el_ident);
+            let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
             let try_from_std_env_var_ok_self_error_named_ucc =
                 TryFromStdEnvVarOkSelfErrorNamedUcc::from_tokens(&el_ident);
             quote! {
@@ -62,7 +62,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 .ident
                 .as_ref()
                 .expect("8b79a379-2073-4415-82c6-bf7ea4b05165");
-            let el_ident_ucc_ts = ToTokensToUccTokenStream::case_or_panic(&el_ident);
+            let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
             quote! {
                 Self::#el_ident_ucc_ts { #el_ident } => write!(f, "{}", #el_ident)
             }
@@ -93,8 +93,8 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 .expect("ebf4e1b2-f07a-40ee-b885-fc8be3444d9a");
             let el_ident_quotes_upper_sc_string =
                 syn::LitStr::new(&ToTokensToUpperScStringified::case(&el_ident), ident.span());
-            let el_ident_ucc_ts = ToTokensToUccTokenStream::case_or_panic(&el_ident);
-            let el_ident_wrapper_ucc_ts = ToTokensToUccTokenStream::case_or_panic(&el_ident);
+            let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
+            let el_ident_wrapper_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
             quote! {
                 let #el_ident = {
                     let env_var_name = String::from(#el_ident_quotes_upper_sc_string);
