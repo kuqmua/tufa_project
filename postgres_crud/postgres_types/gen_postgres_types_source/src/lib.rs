@@ -4903,7 +4903,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 quote! {Ok(#std_string_string_ts::from(#content_ts))}
             };
             let ok_std_string_string_from_default_ts = gen_ok_std_string_string_from_tokens_ts(&quote! {"default"});
-            let ok_std_string_string_from_uuid_gen_v4_ts = gen_ok_std_string_string_from_tokens_ts(&quote! {"uuid_gen_v4()"});
+            let ok_std_string_string_from_uuid_generate_v4_ts = gen_ok_std_string_string_from_tokens_ts(&quote! {"uuid_generate_v4()"});
             let typical_query_part_ts = {
                 let if_write_is_err_ts = macros_helpers::gen_if_write_is_err_ts(
                     &quote! {acc_c7df00f5, "${value_ba581e0f}"},
@@ -4951,7 +4951,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                     | PostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
                     | PostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => typical,
                     PostgresType::StdPrimitiveI16AsSmallSerialInitializedByPostgres | PostgresType::StdPrimitiveI32AsSerialInitializedByPostgres | PostgresType::StdPrimitiveI64AsBigSerialInitializedByPostgres => default_initialized_by_postgres,
-                    PostgresType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgres => (&ok_std_string_string_from_uuid_gen_v4_ts, &ok_query_ts),
+                    PostgresType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgres => (&ok_std_string_string_from_uuid_generate_v4_ts, &ok_query_ts),
                 }
             };
             let select_only_ids_and_select_only_updated_ids_query_common_ts = {
