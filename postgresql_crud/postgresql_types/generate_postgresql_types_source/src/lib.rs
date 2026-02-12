@@ -188,7 +188,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
         SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange,
         SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange,
     }
-    fn wrap_into_sqlx_postgres_types_pg_range_stringified(value: &dyn Display) -> String {
+    fn wrap_into_sqlx_postgres_types_pg_range_str(value: &dyn Display) -> String {
         format!("sqlx::postgres::types::PgRange<{value}>")
     }
     enum CanBeNullable {
@@ -1084,7 +1084,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
 
         let generate_import_path_value_initialization_ts = |content_ts: &dyn quote::ToTokens| postgresql_crud_macros_common::generate_value_initialization_ts(&import_path, &content_ts);
 
-        let generate_ident_stringified = |
+        let generate_ident_str = |
             current_postgresql_type: &PostgresqlType,
             current_not_null_or_nullable: &NotNullOrNullable,
             current_postgresql_type_pattern: &PostgresqlTypePattern
@@ -1106,7 +1106,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             current_postgresql_type: &PostgresqlType,
             current_not_null_or_nullable: &NotNullOrNullable,
             current_postgresql_type_pattern: &PostgresqlTypePattern
-        | generate_ident_stringified(
+        | generate_ident_str(
             current_postgresql_type,
             current_not_null_or_nullable,
             current_postgresql_type_pattern
@@ -1169,48 +1169,48 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
         let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_try_new_error_named_ucc = generate_ident_standart_not_null_origin_try_new_error_named_ts(&PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz);
         let inner_type_standart_not_null_ts = {
             let value = {
-                let std_primitive_i16_stringified = "i16".to_owned();
-                let std_primitive_i32_stringified = "i32".to_owned();
-                let std_primitive_i64_stringified = "i64".to_owned();
-                let std_primitive_f32_stringified = "f32".to_owned();
-                let std_primitive_f64_stringified = "f64".to_owned();
-                let sqlx_postgres_types_pg_money_stringified = "sqlx::postgres::types::PgMoney".to_owned();
-                let std_primitive_bool_stringified = "bool".to_owned();
-                let std_string_string_stringified = "String".to_owned();
-                let std_vec_vec_std_primitive_u8_stringified = "Vec<u8>".to_owned();
-                let sqlx_types_chrono_naive_date_stringified = "sqlx::types::chrono::NaiveDate".to_owned();
-                let sqlx_types_chrono_naive_time_stringified = "sqlx::types::chrono::NaiveTime".to_owned();
-                let sqlx_types_time_time_stringified = "sqlx::types::time::Time".to_owned();
-                let sqlx_postgres_types_pg_interval_stringified = "sqlx::postgres::types::PgInterval".to_owned();
-                let sqlx_types_chrono_naive_date_time_stringified = "sqlx::types::chrono::NaiveDateTime".to_owned();
-                let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified = "sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>".to_owned();
-                let uuid_uuid_stringified = "uuid::Uuid".to_owned();
-                let sqlx_types_ipnetwork_ip_network_stringified = "sqlx::types::ipnetwork::IpNetwork".to_owned();
-                let sqlx_types_mac_address_mac_address_stringified = "sqlx::types::mac_address::MacAddress".to_owned();
+                let std_primitive_i16_str = "i16".to_owned();
+                let std_primitive_i32_str = "i32".to_owned();
+                let std_primitive_i64_str = "i64".to_owned();
+                let std_primitive_f32_str = "f32".to_owned();
+                let std_primitive_f64_str = "f64".to_owned();
+                let sqlx_postgres_types_pg_money_str = "sqlx::postgres::types::PgMoney".to_owned();
+                let std_primitive_bool_str = "bool".to_owned();
+                let std_string_string_str = "String".to_owned();
+                let std_vec_vec_std_primitive_u8_str = "Vec<u8>".to_owned();
+                let sqlx_types_chrono_naive_date_str = "sqlx::types::chrono::NaiveDate".to_owned();
+                let sqlx_types_chrono_naive_time_str = "sqlx::types::chrono::NaiveTime".to_owned();
+                let sqlx_types_time_time_str = "sqlx::types::time::Time".to_owned();
+                let sqlx_postgres_types_pg_interval_str = "sqlx::postgres::types::PgInterval".to_owned();
+                let sqlx_types_chrono_naive_date_time_str = "sqlx::types::chrono::NaiveDateTime".to_owned();
+                let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_str = "sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>".to_owned();
+                let uuid_uuid_str = "uuid::Uuid".to_owned();
+                let sqlx_types_ipnetwork_ip_network_str = "sqlx::types::ipnetwork::IpNetwork".to_owned();
+                let sqlx_types_mac_address_mac_address_str = "sqlx::types::mac_address::MacAddress".to_owned();
                 match &postgresql_type {
-                    PostgresqlType::StdPrimitiveF32AsFloat4 => std_primitive_f32_stringified,
-                    PostgresqlType::StdPrimitiveF64AsFloat8 => std_primitive_f64_stringified,
-                    PostgresqlType::StdPrimitiveI16AsInt2 | PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => std_primitive_i16_stringified,
-                    PostgresqlType::StdPrimitiveI32AsInt4 | PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => std_primitive_i32_stringified,
-                    PostgresqlType::StdPrimitiveI64AsInt8 | PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => std_primitive_i64_stringified,
-                    PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => sqlx_postgres_types_pg_money_stringified,
-                    PostgresqlType::StdPrimitiveBoolAsBool => std_primitive_bool_stringified,
-                    PostgresqlType::StdStringStringAsText => std_string_string_stringified,
-                    PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => std_vec_vec_std_primitive_u8_stringified,
-                    PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => sqlx_types_chrono_naive_time_stringified,
-                    PostgresqlType::SqlxTypesTimeTimeAsTime => sqlx_types_time_time_stringified,
-                    PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => sqlx_postgres_types_pg_interval_stringified,
-                    PostgresqlType::SqlxTypesChronoNaiveDateAsDate => sqlx_types_chrono_naive_date_stringified,
-                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => sqlx_types_chrono_naive_date_time_stringified,
-                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified,
-                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => uuid_uuid_stringified,
-                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => sqlx_types_ipnetwork_ip_network_stringified,
-                    PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => sqlx_types_mac_address_mac_address_stringified,
-                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => wrap_into_sqlx_postgres_types_pg_range_stringified(&std_primitive_i32_stringified),
-                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => wrap_into_sqlx_postgres_types_pg_range_stringified(&std_primitive_i64_stringified),
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_chrono_naive_date_stringified),
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_chrono_naive_date_time_stringified),
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified),
+                    PostgresqlType::StdPrimitiveF32AsFloat4 => std_primitive_f32_str,
+                    PostgresqlType::StdPrimitiveF64AsFloat8 => std_primitive_f64_str,
+                    PostgresqlType::StdPrimitiveI16AsInt2 | PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => std_primitive_i16_str,
+                    PostgresqlType::StdPrimitiveI32AsInt4 | PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => std_primitive_i32_str,
+                    PostgresqlType::StdPrimitiveI64AsInt8 | PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => std_primitive_i64_str,
+                    PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => sqlx_postgres_types_pg_money_str,
+                    PostgresqlType::StdPrimitiveBoolAsBool => std_primitive_bool_str,
+                    PostgresqlType::StdStringStringAsText => std_string_string_str,
+                    PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => std_vec_vec_std_primitive_u8_str,
+                    PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => sqlx_types_chrono_naive_time_str,
+                    PostgresqlType::SqlxTypesTimeTimeAsTime => sqlx_types_time_time_str,
+                    PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => sqlx_postgres_types_pg_interval_str,
+                    PostgresqlType::SqlxTypesChronoNaiveDateAsDate => sqlx_types_chrono_naive_date_str,
+                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => sqlx_types_chrono_naive_date_time_str,
+                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => sqlx_types_chrono_date_time_sqlx_types_chrono_utc_str,
+                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => uuid_uuid_str,
+                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => sqlx_types_ipnetwork_ip_network_str,
+                    PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => sqlx_types_mac_address_mac_address_str,
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => wrap_into_sqlx_postgres_types_pg_range_str(&std_primitive_i32_str),
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => wrap_into_sqlx_postgres_types_pg_range_str(&std_primitive_i64_str),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => wrap_into_sqlx_postgres_types_pg_range_str(&sqlx_types_chrono_naive_date_str),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => wrap_into_sqlx_postgres_types_pg_range_str(&sqlx_types_chrono_naive_date_time_str),
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => wrap_into_sqlx_postgres_types_pg_range_str(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_str),
                 }
             };
             value.parse::<proc_macro2::TokenStream>().expect("2555843f-283f-4bc8-8c93-48e6fe68ae6a")
@@ -1927,7 +1927,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 let (fn_visit_bytes_start_end_ts, fn_visit_bytes_hour_min_sec_micro_ts, fn_visit_bytes_hour_minute_second_microsecond_ts, fn_visit_bytes_date_time_ts, fn_visit_bytes_date_naive_time_ts, fn_visit_bytes_months_days_microseconds_ts) = {
                     let generate_fn_visit_bytes_ts = |vec_ts: &[&dyn StdFmtDisplayPlusQuoteToTokens]| {
                         let fields_ts = vec_ts.iter().enumerate().map(|(index_545c3b1e, el_1dbc37ab)| {
-                            let b_el_double_quotes_ts = format!("b{}", generate_quotes::double_quotes_stringified(&el_1dbc37ab)).parse::<proc_macro2::TokenStream>().expect("c76c976b-9009-43d2-8d4b-1ec559b76008");
+                            let b_el_double_quotes_ts = format!("b{}", generate_quotes::double_quotes_str(&el_1dbc37ab)).parse::<proc_macro2::TokenStream>().expect("c76c976b-9009-43d2-8d4b-1ec559b76008");
                             let field_index_name_ts = generate_field_index_ts(index_545c3b1e);
                             quote! {#b_el_double_quotes_ts => Ok(__Field::#field_index_name_ts)}
                         });
@@ -2040,7 +2040,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     ) = {
                         let generate_while_some_next_key_field_ts = |vec_ts: &[(&dyn Display, &dyn quote::ToTokens)]| {
                             let fields_initialization_ts = vec_ts.iter().enumerate().map(|(index_2b1736c7, el_692238ce)| {
-                                let field_name_double_quotes_ts = generate_quotes::double_quotes_stringified(&el_692238ce.0);
+                                let field_name_double_quotes_ts = generate_quotes::double_quotes_str(&el_692238ce.0);
                                 let field_type_ts = &el_692238ce.1;
                                 let field_index_name_ts = generate_field_index_ts(index_2b1736c7);
                                 quote! {
@@ -2082,7 +2082,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     let (match_field_initialization_hour_min_sec_micro_ts, match_field_initialization_start_end_ts, match_field_initialization_hour_minute_second_microsecond_ts, match_field_initialization_date_time_ts, match_field_initialization_date_naive_time_ts, match_field_initialization_months_days_microseconds_ts) = {
                         let generate_match_field_initialization_ts = |vec_ts: &[&dyn StdFmtDisplayPlusQuoteToTokens]| {
                             let fields_initialization_ts = vec_ts.iter().enumerate().map(|(index_e1adef1a, el_f8a9e25b)| {
-                                let field_name_double_quotes_ts = generate_quotes::double_quotes_stringified(&el_f8a9e25b);
+                                let field_name_double_quotes_ts = generate_quotes::double_quotes_str(&el_f8a9e25b);
                                 let field_index_ts = generate_field_index_ts(index_e1adef1a);
                                 let field_index_value_ts = generate_field_index_value_ts(index_e1adef1a);
                                 quote! {
@@ -3335,7 +3335,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                                             |value_6ed98462| generate_pg_range_conversion_ts(
                                                 &ValueSc,
                                                 &{
-                                                    let range_postgresql_type_ident_origin = SelfOriginUcc::from_display(&generate_ident_stringified(&PostgresqlType::from(value_6ed98462), not_null_or_nullable, postgresql_type_pattern));
+                                                    let range_postgresql_type_ident_origin = SelfOriginUcc::from_display(&generate_ident_str(&PostgresqlType::from(value_6ed98462), not_null_or_nullable, postgresql_type_pattern));
                                                     quote! {#range_postgresql_type_ident_origin::#NewSc(value_af65ccce)}
                                                 }
                                             )

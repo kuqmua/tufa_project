@@ -407,7 +407,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                     };
                 let generate_32abfefc_c087_480b_b502_cb78533dafb0_ts =
                         |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle,
-                         generate_format_handle_stringified: &dyn Fn(
+                         generate_format_handle_str: &dyn Fn(
                             &PostgresqlTypeKind,
                         )
                             -> String| {
@@ -427,7 +427,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         generate_maybe_dimensions_default_initialization_value_default_ts(&maybe_dimensions_default_initialization_ts),
                         postgresql_crud_macros_common::IncrementParameterUnderscore::False,
                         {
-                            let format_handle_ts = generate_quotes::double_quotes_ts(&generate_format_handle_stringified(&postgresql_type_kind));
+                            let format_handle_ts = generate_quotes::double_quotes_ts(&generate_format_handle_str(&postgresql_type_kind));
                             quote! {
                                 #maybe_dimensions_indexes_initialization_ts
                                 #value_match_increment_checked_add_one_initialization_ts
@@ -1176,7 +1176,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                     |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                         generate_postgresql_type_dimensions_helpers(postgresql_type_pattern_handle, &postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType)
                     };
-                let generate_1763ccf3_10be_4527_912b_363d8ea05f4b_ts = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, generate_format_handle_stringified: &dyn Fn(&PostgresqlTypeKind) -> String| {
+                let generate_1763ccf3_10be_4527_912b_363d8ea05f4b_ts = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, generate_format_handle_str: &dyn Fn(&PostgresqlTypeKind) -> String| {
                 let (maybe_dimensions_declaration_ts, maybe_dimensions_default_initialization_ts, maybe_dimensions_indexes_initialization_ts, postgresql_type_kind, maybe_additional_parameters_ts, maybe_dimensions_query_bind_content_ts) = generate_postgresql_json_type_dimensions_helpers(postgresql_type_pattern_handle);
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
@@ -1189,7 +1189,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         #value_default_option_some_vec_one_el_ts
                     },
                     {
-                        let format_handle_ts = generate_quotes::double_quotes_ts(&generate_format_handle_stringified(&postgresql_type_kind));
+                        let format_handle_ts = generate_quotes::double_quotes_ts(&generate_format_handle_str(&postgresql_type_kind));
                         quote! {
                             #maybe_dimensions_indexes_initialization_ts
                             #value_match_increment_checked_add_one_initialization_ts

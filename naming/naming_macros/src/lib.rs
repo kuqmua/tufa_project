@@ -3,7 +3,7 @@ use quote::quote;
 const REGEX_VALUE: &str = "^[a-zA-Z]+$";
 
 #[proc_macro]
-pub fn generate_upper_camel_and_sc_stringified_and_ts(
+pub fn generate_upper_camel_and_sc_str_and_ts(
     input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -21,25 +21,25 @@ pub fn generate_upper_camel_and_sc_stringified_and_ts(
                     );
                 }
             }
-            let phrase_part_ucc_stringified =
+            let phrase_part_ucc_str =
                 el_020a8657
                     .iter()
                     .fold(String::new(), |mut acc_3d60efa0, el_132cd6b1| {
                         acc_3d60efa0
-                            .push_str(&naming_common::AsRefStrToUccStringified::case(el_132cd6b1));
+                            .push_str(&naming_common::AsRefStrToUccStr::case(el_132cd6b1));
                         acc_3d60efa0
                     });
-            let phrase_part_sc_stringified = el_020a8657.iter().enumerate().fold(
+            let phrase_part_sc_str = el_020a8657.iter().enumerate().fold(
                 String::new(),
                 |mut acc_7a8bd950, (index, el_b9981760)| {
-                    let el_sc_stringified =
-                        naming_common::AsRefStrToScStringified::case(el_b9981760);
+                    let el_sc_str =
+                        naming_common::AsRefStrToScStr::case(el_b9981760);
                     if index == 0 {
-                        acc_7a8bd950.push_str(&el_sc_stringified);
+                        acc_7a8bd950.push_str(&el_sc_str);
                     } else {
                         use std::fmt::Write as _;
                         assert!(
-                            write!(acc_7a8bd950, "_{el_sc_stringified}").is_ok(),
+                            write!(acc_7a8bd950, "_{el_sc_str}").is_ok(),
                             "ef718915-7a99-45a6-b3c5-496262804976"
                         );
                     }
@@ -47,23 +47,23 @@ pub fn generate_upper_camel_and_sc_stringified_and_ts(
                 },
             );
             let phrase_part_ucc_double_quotes_ts =
-                generate_quotes::double_quotes_ts(&phrase_part_ucc_stringified);
+                generate_quotes::double_quotes_ts(&phrase_part_ucc_str);
             let phrase_part_sc_double_quotes_ts =
-                generate_quotes::double_quotes_ts(&phrase_part_sc_stringified);
-            let phrase_part_ucc_ts = phrase_part_ucc_stringified
+                generate_quotes::double_quotes_ts(&phrase_part_sc_str);
+            let phrase_part_ucc_ts = phrase_part_ucc_str
                 .parse::<proc_macro2::TokenStream>()
                 .expect("7cf3ffc0-e9c9-4d91-b42f-beb77350d743");
-            let phrase_part_sc_ts = phrase_part_sc_stringified
+            let phrase_part_sc_ts = phrase_part_sc_str
                 .parse::<proc_macro2::TokenStream>()
                 .expect("114a573a-3df3-4e4a-96c4-043eed3a358c");
             let phrase_part_ucc_ucc_ts = {
-                let value = format!("{phrase_part_ucc_stringified}Ucc");
+                let value = format!("{phrase_part_ucc_str}Ucc");
                 value
                     .parse::<proc_macro2::TokenStream>()
                     .expect("4ab6a54c-892b-4f8f-a6b6-aead9c3671fe")
             };
             let phrase_part_sc_ucc_ts = {
-                let value = format!("{phrase_part_ucc_stringified}Sc");
+                let value = format!("{phrase_part_ucc_str}Sc");
                 value
                     .parse::<proc_macro2::TokenStream>()
                     .expect("0cc47b2e-03e2-48b8-8df3-7bbbe09de244")
@@ -123,7 +123,7 @@ pub fn generate_upper_camel_and_sc_stringified_and_ts(
 }
 
 #[proc_macro]
-pub fn generate_self_upper_camel_and_sc_stringified_and_ts(
+pub fn generate_self_upper_camel_and_sc_str_and_ts(
     input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -146,17 +146,17 @@ pub fn generate_self_upper_camel_and_sc_stringified_and_ts(
             assert!(is_self_exists_and_only_one, "5680dd63-c98d-4e98-a67e-e13a3710a7c2");
         };
         let (elements_concat_value_ucc_double_quotes_ts, elements_concat_value_sc_double_quotes_ts, struct_ucc_ucc_ts, struct_sc_token_ucc_ts, trait_ucc_ucc_ts, trait_sc_token_ucc_ts) = {
-            let ucc_ucc_stringified = "Ucc";
-            let sc_ucc_stringified = "Sc";
-            let elements_concat_ucc_stringified = el_a5ccbaa7.iter().fold(String::new(), |mut acc_34997d76, el_98881b7d| {
-                acc_34997d76.push_str(&naming_common::AsRefStrToUccStringified::case(el_98881b7d));
+            let ucc_ucc_str = "Ucc";
+            let sc_ucc_str = "Sc";
+            let elements_concat_ucc_str = el_a5ccbaa7.iter().fold(String::new(), |mut acc_34997d76, el_98881b7d| {
+                acc_34997d76.push_str(&naming_common::AsRefStrToUccStr::case(el_98881b7d));
                 acc_34997d76
             });
             let elements_concat_value_ucc_double_quotes_ts = generate_quotes::double_quotes_ts(&el_a5ccbaa7.iter().fold(String::new(), |mut acc_ae77cbd3, el_626f2b61| {
                 if el_626f2b61 == "self" {
                     acc_ae77cbd3.push_str("{value}");
                 } else {
-                    acc_ae77cbd3.push_str(&naming_common::AsRefStrToUccStringified::case(el_626f2b61));
+                    acc_ae77cbd3.push_str(&naming_common::AsRefStrToUccStr::case(el_626f2b61));
                 }
                 acc_ae77cbd3
             }));
@@ -167,7 +167,7 @@ pub fn generate_self_upper_camel_and_sc_stringified_and_ts(
                     if el_73b0c851 == "self" {
                         assert!(write!(acc_cbcae5e1, "{{value}}{symbol}").is_ok(), "6a02a2ff-1cb0-488d-85c0-32ea2d1291ac");
                     } else {
-                        assert!(write!(acc_cbcae5e1, "{}{symbol}", naming_common::AsRefStrToScStringified::case(el_73b0c851)).is_ok(), "d915980a-3aa3-4220-abfd-d5800927eef0");
+                        assert!(write!(acc_cbcae5e1, "{}{symbol}", naming_common::AsRefStrToScStr::case(el_73b0c851)).is_ok(), "d915980a-3aa3-4220-abfd-d5800927eef0");
                     }
                     acc_cbcae5e1
                 });
@@ -175,21 +175,21 @@ pub fn generate_self_upper_camel_and_sc_stringified_and_ts(
                 value
             });
             let struct_ucc_ucc_ts = {
-                let value = format!("{elements_concat_ucc_stringified}{ucc_ucc_stringified}");
+                let value = format!("{elements_concat_ucc_str}{ucc_ucc_str}");
                 value.parse::<proc_macro2::TokenStream>().expect("82f4ac08-08bd-4152-9633-7fb0ad2f59a9")
             };
             let struct_sc_token_ucc_ts = {
-                let value = format!("{elements_concat_ucc_stringified}{sc_ucc_stringified}");
+                let value = format!("{elements_concat_ucc_str}{sc_ucc_str}");
                 value.parse::<proc_macro2::TokenStream>().expect("21044eba-c2c2-4c48-b84a-f7af8777436f")
             };
             let (trait_ucc_ucc_ts, trait_sc_token_ucc_ts) = {
-                let trait_ucc_stringified = "Trait";
+                let trait_ucc_str = "Trait";
                 let trait_ucc_ucc_ts = {
-                    let value = format!("{elements_concat_ucc_stringified}{ucc_ucc_stringified}{trait_ucc_stringified}");
+                    let value = format!("{elements_concat_ucc_str}{ucc_ucc_str}{trait_ucc_str}");
                     value.parse::<proc_macro2::TokenStream>().expect("1066857a-b509-4b94-937f-8a72af6482fe")
                 };
                 let trait_sc_token_ucc_ts = {
-                    let value = format!("{elements_concat_ucc_stringified}{sc_ucc_stringified}{trait_ucc_stringified}");
+                    let value = format!("{elements_concat_ucc_str}{sc_ucc_str}{trait_ucc_str}");
                     value.parse::<proc_macro2::TokenStream>().expect("8db74cfd-cc35-4e38-83fa-3e0497504821")
                 };
                 (trait_ucc_ucc_ts, trait_sc_token_ucc_ts)
@@ -210,9 +210,9 @@ pub fn generate_self_upper_camel_and_sc_stringified_and_ts(
                 quote! {#struct_sc_token_ucc_ts}
             };
             let casing_ts = if is_ucc {
-                quote! {naming_common::AsRefStrToUccStringified::case}
+                quote! {naming_common::AsRefStrToUccStr::case}
             } else {
-                quote! {naming_common::AsRefStrToScStringified::case}
+                quote! {naming_common::AsRefStrToScStr::case}
             };
             quote! {
                 #[derive(Debug)]
@@ -236,7 +236,7 @@ pub fn generate_self_upper_camel_and_sc_stringified_and_ts(
                     }
                     pub fn from_type_last_segment(value: &syn::Type) -> Self {
                         if let syn::Type::Path(type_path) = value {
-                            let path_before_stringified = type_path.path.segments.iter().take(
+                            let path_before_str = type_path.path.segments.iter().take(
                                 type_path.path.segments.len().checked_sub(1).expect("e1f5a332-80ab-4a8a-8cbe-882e658185b7")
                             )
                             .fold(String::new(), |mut acc_f0a77378, el_2b05e58f| {
@@ -245,7 +245,7 @@ pub fn generate_self_upper_camel_and_sc_stringified_and_ts(
                                 acc_f0a77378
                             });
                             let last = type_path.path.segments.iter().last().expect("19f6e1a6-2e06-4043-8732-03f3807d58c4");
-                            Self(format!("{path_before_stringified}{}", Self::format(&#casing_ts(&last.ident.to_string()))))
+                            Self(format!("{path_before_str}{}", Self::format(&#casing_ts(&last.ident.to_string()))))
                         }
                         else {
                             panic!("518933f8-c5b4-4452-908d-0fff899e7a25");
@@ -259,8 +259,8 @@ pub fn generate_self_upper_camel_and_sc_stringified_and_ts(
                 }
                 impl quote::ToTokens for #struct_ident_ts {
                     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-                        let value_stringified = self.to_string();
-                        let value_ts = value_stringified.parse::<proc_macro2::TokenStream>()
+                        let value_str = self.to_string();
+                        let value_ts = value_str.parse::<proc_macro2::TokenStream>()
                             .expect("71c8d26b-18c4-4bbe-a07e-3114a15932d2");
                         value_ts.to_tokens(tokens);
                     }
@@ -284,15 +284,15 @@ pub fn generate_self_upper_camel_and_sc_stringified_and_ts(
 ////////////////////
 /*
 only works if all enum variants without fields like this
-#[derive(macros_assistants::AsRefStrToUccStringified)]
+#[derive(macros_assistants::AsRefStrToUccStr)]
 enum Operation {
      One,
      Two,
      Three,
 }
 */
-#[proc_macro_derive(AsRefStrEnumWithUnitFieldsToUccStringified)]
-pub fn as_ref_str_enum_with_unit_fields_to_ucc_stringified(
+#[proc_macro_derive(AsRefStrEnumWithUnitFieldsToUccStr)]
+pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(
     input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -309,8 +309,8 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_stringified(
         .map(|variant| match variant.fields {
             syn::Fields::Unit => {
                 let variant_ident = &variant.ident;
-                let variant_ident_ucc_stringified = naming_common::ToTokensToUccStringified::case(&variant_ident);
-                let variant_ident_ucc_double_quotes_ts = generate_quotes::double_quotes_ts(&variant_ident_ucc_stringified);
+                let variant_ident_ucc_str = naming_common::ToTokensToUccStr::case(&variant_ident);
+                let variant_ident_ucc_double_quotes_ts = generate_quotes::double_quotes_ts(&variant_ident_ucc_str);
                 quote! {Self::#variant_ident => #std_string_string_ts::from(#variant_ident_ucc_double_quotes_ts)}
             }
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("4955c50d-3db7-4881-a085-64b08a1ef413"),
@@ -318,7 +318,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_stringified(
         .collect::<Vec<proc_macro2::TokenStream>>();
     let trait_path_ts = trait_path_ts();
     let generated = quote! {
-        impl #trait_path_ts::AsRefStrToUccStringified for #ident {
+        impl #trait_path_ts::AsRefStrToUccStr for #ident {
             fn case(&self) -> #std_string_string_ts {//todo maybe write duplicate Trait with &str instead of String
                 match self {
                     #(#variants_matching_values_ts),*
@@ -332,15 +332,15 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_stringified(
 
 /*
 only works if all enum variants without fields like this
- #[derive(macros_assistants::AsRefStrToScStringified)]
+ #[derive(macros_assistants::AsRefStrToScStr)]
  enum Operation {
      One,
      Two,
      Three,
  }
 */
-#[proc_macro_derive(AsRefStrEnumWithUnitFieldsToScStringified)]
-pub fn as_ref_str_enum_with_unit_fields_to_sc_stringified(
+#[proc_macro_derive(AsRefStrEnumWithUnitFieldsToScStr)]
+pub fn as_ref_str_enum_with_unit_fields_to_sc_str(
     input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -357,8 +357,8 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_stringified(
         .map(|variant| match variant.fields {
             syn::Fields::Unit => {
                 let variant_ident = &variant.ident;
-                let variant_ident_sc_stringified = naming_common::ToTokensToScStringified::case(&variant_ident);
-                let variant_ident_sc_double_quotes_ts = generate_quotes::double_quotes_ts(&variant_ident_sc_stringified);
+                let variant_ident_sc_str = naming_common::ToTokensToScStr::case(&variant_ident);
+                let variant_ident_sc_double_quotes_ts = generate_quotes::double_quotes_ts(&variant_ident_sc_str);
                 quote! {Self::#variant_ident => #std_string_string_ts::from(#variant_ident_sc_double_quotes_ts)}
             }
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("b3ef2657-22f2-4df6-a58c-263a50e3c247"),
@@ -366,7 +366,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_stringified(
         .collect::<Vec<proc_macro2::TokenStream>>();
     let trait_path_ts = trait_path_ts();
     let generated = quote! {
-        impl #trait_path_ts::AsRefStrToScStringified for #ident {
+        impl #trait_path_ts::AsRefStrToScStr for #ident {
             fn case(&self) -> #std_string_string_ts {
                 match self {
                     #(#variants_matching_values_ts),*
@@ -379,15 +379,15 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_stringified(
 }
 /*
 only works if all enum variants without fields like this
- #[derive(macros_assistants::AsRefStrToUpperScStringified)]
+ #[derive(macros_assistants::AsRefStrToUpperScStr)]
  enum Operation {
      One,
      Two,
      Three,
  }
 */
-#[proc_macro_derive(AsRefStrEnumWithUnitFieldsToUpperScStringified)]
-pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_stringified(
+#[proc_macro_derive(AsRefStrEnumWithUnitFieldsToUpperScStr)]
+pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(
     input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -404,8 +404,8 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_stringified(
         .map(|variant| match variant.fields {
             syn::Fields::Unit => {
                 let variant_ident = &variant.ident;
-                let variant_ident_sc_stringified = naming_common::ToTokensToUpperScStringified::case(&variant_ident);
-                let variant_ident_sc_double_quotes_ts = generate_quotes::double_quotes_ts(&variant_ident_sc_stringified);
+                let variant_ident_sc_str = naming_common::ToTokensToUpperScStr::case(&variant_ident);
+                let variant_ident_sc_double_quotes_ts = generate_quotes::double_quotes_ts(&variant_ident_sc_str);
                 quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_sc_double_quotes_ts)}
             }
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("b6fedcff-1a88-455f-bd93-219ec45a1fce"),
@@ -413,7 +413,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_stringified(
         .collect::<Vec<proc_macro2::TokenStream>>();
     let trait_path_ts = trait_path_ts();
     let generated = quote! {
-        impl #trait_path_ts::ToUpperScStringified for #ident {
+        impl #trait_path_ts::ToUpperScStr for #ident {
             fn case(&self) -> #std_string_string {
                 match self {
                     #(#variants_matching_values_ts),*

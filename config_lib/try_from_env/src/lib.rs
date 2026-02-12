@@ -4,7 +4,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     use naming::parameter::{SelfTryFromEnvErrorNamedUcc, TryFromStdEnvVarOkSelfErrorNamedUcc};
     use naming::{
         DotenvSc, DotenvUcc, EnvVarNameSc, StdEnvVarErrorSc, StdEnvVarErrorUcc, ToTokensToUccTs,
-        ToTokensToUpperScStringified, TryFromStdEnvVarOkUcc,
+        ToTokensToUpperScStr, TryFromStdEnvVarOkUcc,
     };
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput =
@@ -92,7 +92,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 .as_ref()
                 .expect("ebf4e1b2-f07a-40ee-b885-fc8be3444d9a");
             let el_ident_quotes_upper_sc_string =
-                syn::LitStr::new(&ToTokensToUpperScStringified::case(&el_ident), ident.span());
+                syn::LitStr::new(&ToTokensToUpperScStr::case(&el_ident), ident.span());
             let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
             let el_ident_wrapper_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
             quote! {

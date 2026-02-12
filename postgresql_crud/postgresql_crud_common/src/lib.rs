@@ -1,7 +1,7 @@
 pub use postgresql_crud_common_and_macros_common::*;
 
 use error_occurence_lib::code_occurence::CodeOccurence;
-use naming::{AscUcc, DescUcc, DisplayToScStringified, DisplayToUccStringified};
+use naming::{AscUcc, DescUcc, DisplayToScStr, DisplayToUccStr};
 use sqlx::{
     encode::IsNull,
     error::BoxDynError,
@@ -871,12 +871,12 @@ impl DefaultOptionSomeVecOneEl for Order {
 }
 impl Order {
     #[must_use]
-    pub fn to_sc_stringified(&self) -> String {
-        DisplayToScStringified::case(&self)
+    pub fn to_sc_str(&self) -> String {
+        DisplayToScStr::case(&self)
     }
     #[must_use]
-    pub fn to_ucc_stringified(&self) -> String {
-        DisplayToUccStringified::case(&self)
+    pub fn to_ucc_str(&self) -> String {
+        DisplayToUccStr::case(&self)
     }
 }
 

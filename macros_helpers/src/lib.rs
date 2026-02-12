@@ -1,4 +1,4 @@
-mod attribute_ident_stringified;
+mod attribute_ident_str;
 mod code_occurence_syn_field;
 mod error_occurence;
 mod generate_field_code_occurence_new_ts;
@@ -20,7 +20,7 @@ mod wrap_derive;
 mod write_string_into_file;
 mod write_ts_into_file;
 
-pub use attribute_ident_stringified::AttributeIdentStringified;
+pub use attribute_ident_str::AttributeIdentStr;
 pub use code_occurence_syn_field::code_occurence_syn_field;
 pub use error_occurence::{
     ErrorOccurenceFieldAttribute, generate_serialize_deserialize_version_of_named_syn_variant,

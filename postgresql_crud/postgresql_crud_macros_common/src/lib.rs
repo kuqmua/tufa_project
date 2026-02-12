@@ -98,7 +98,7 @@ impl NotNullOrNullable {
         }
     }
     #[must_use]
-    pub fn prefix_stringified(&self) -> String {
+    pub fn prefix_str(&self) -> String {
         match &self {
             Self::NotNull => String::default(),
             Self::Nullable => String::from("StdOptionOption"),
@@ -2333,11 +2333,11 @@ pub fn generate_impl_serde_deserialize_for_struct_ts(
     len: usize,
     generate_type_ts: &dyn Fn(&syn::Ident, &syn::Type) -> proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
-    fn generate_underscore_underscore_field_index_stringified(index: usize) -> String {
+    fn generate_underscore_underscore_field_index_str(index: usize) -> String {
         format!("__field{index}")
     }
     fn generate_underscore_underscore_field_index_ts(index: usize) -> proc_macro2::TokenStream {
-        generate_underscore_underscore_field_index_stringified(index)
+        generate_underscore_underscore_field_index_str(index)
             .parse::<proc_macro2::TokenStream>()
             .expect("ff7433a3-459b-45f4-a41f-01bf7ce46757")
     }
@@ -2346,7 +2346,7 @@ pub fn generate_impl_serde_deserialize_for_struct_ts(
     ) -> proc_macro2::TokenStream {
         format!(
             "{}_handle",
-            generate_underscore_underscore_field_index_stringified(index)
+            generate_underscore_underscore_field_index_str(index)
         )
         .parse::<proc_macro2::TokenStream>()
         .expect("09a0c518-28da-455b-bce8-fb6defae8a3b")
@@ -2402,9 +2402,9 @@ pub fn generate_impl_serde_deserialize_for_struct_ts(
         let visit_bytes_value_enum_variants_ts =
             vec_ident.iter().enumerate().map(|(index, element)| {
                 let b_field_name_double_quotes_ts = {
-                    let el_ident_double_quotes_stringified =
-                        generate_quotes::double_quotes_stringified(&element.to_string());
-                    let value = format!("b{el_ident_double_quotes_stringified}");
+                    let el_ident_double_quotes_str =
+                        generate_quotes::double_quotes_str(&element.to_string());
+                    let value = format!("b{el_ident_double_quotes_str}");
                     value
                         .parse::<proc_macro2::TokenStream>()
                         .expect("9e33625e-5f3d-4110-9641-204910c7f08e")

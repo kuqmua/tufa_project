@@ -1,4 +1,4 @@
-use crate::attribute_ident_stringified::AttributeIdentStringified;
+use crate::attribute_ident_str::AttributeIdentStr;
 use naming::{CodeOccurenceSc, HashMapUcc, WithSerializeDeserializeUcc};
 use quote::quote;
 use std::str::FromStr;
@@ -67,8 +67,8 @@ impl TryFrom<&syn::Field> for ErrorOccurenceFieldAttribute {
         option_attribute.map_or_else(|| Err("option attribute is None".to_owned()), Ok)
     }
 }
-impl AttributeIdentStringified for ErrorOccurenceFieldAttribute {
-    fn attribute_ident_stringified(&self) -> &str {
+impl AttributeIdentStr for ErrorOccurenceFieldAttribute {
+    fn attribute_ident_str(&self) -> &str {
         match *self {
             Self::EoToStdStringString => "eo_to_std_string_string",
             Self::EoToStdStringStringSerializeDeserialize => {
@@ -97,7 +97,7 @@ impl ErrorOccurenceFieldAttribute {
     pub fn to_attribute_view_ts(&self) -> proc_macro2::TokenStream {
         let value = format!(
             "#[{}]",
-            AttributeIdentStringified::attribute_ident_stringified(self)
+            AttributeIdentStr::attribute_ident_str(self)
         );
         value
             .parse::<proc_macro2::TokenStream>()
@@ -139,11 +139,11 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 panic!("f464b7a1-e00e-4d99-8ca3-3fdc93be3d26");
             };
             assert!(args.len() == 2, "47cde1b8-93d7-4945-935d-6cb710bb2b0b");
-            let first_argument_stringified = {
+            let first_argument_str = {
                 let first_argument = args.iter().next().expect("f9d97146-c9ba-48f6-9f80-3540f7f7aa60");
                 quote! {#first_argument}.to_string()
             };
-            assert!(quote! {#std_string_string}.to_string() == first_argument_stringified, "bbdda4ab-809d-45c7-92f4-245f23318458");
+            assert!(quote! {#std_string_string}.to_string() == first_argument_str, "bbdda4ab-809d-45c7-92f4-245f23318458");
             args.iter().nth(1).expect("f4e88416-5417-405a-9c0d-6035f815bbdd")
         }
         let el_c25b655e_ident = el_c25b655e.ident.as_ref().expect("438aa90e-d1f3-4b89-a61a-e2d9f6a7e653");

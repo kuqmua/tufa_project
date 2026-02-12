@@ -4,7 +4,7 @@ use quote::quote;
 pub fn generate_getter_traits_for_struct_fields(
     input: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
-    use naming::ToTokensToUccStringified;
+    use naming::ToTokensToUccStr;
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput =
         syn::parse(input).expect("49780295-2350-409b-979d-ebd653dd223b");
@@ -19,7 +19,7 @@ pub fn generate_getter_traits_for_struct_fields(
                 .ident
                 .as_ref()
                 .expect("e5c23c45-9bcf-485b-a6d7-0fcb99f9346b");
-            (field_ident, ToTokensToUccStringified::case(&field_ident))
+            (field_ident, ToTokensToUccStr::case(&field_ident))
         };
         let field_type = field.ty;
         let path_trait_ident = format!("app_state::Get{ucc_field_ident}")

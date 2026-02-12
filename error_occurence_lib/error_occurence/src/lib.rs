@@ -82,7 +82,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let value_sc = ValueSc;
     let std_string_string = token_patterns::StdStringString;
     let code_occurence_sc = CodeOccurenceSc;
-    let code_occurence_sc_stringified = code_occurence_sc.to_string();
+    let code_occurence_sc_str = code_occurence_sc.to_string();
     let into_serialize_deserialize_version_sc_ts = IntoSerializeDeserializeVersionSc;
     let maybe_generic_parameters_ts = if generic_parameters.is_empty() {
         proc_macro2::TokenStream::new()
@@ -132,7 +132,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     };
                     let fields_idents_excluding_code_occurence_ts = {
                         let acc_ts = fields.iter()
-                        .filter(|el_e26e2572| *el_e26e2572.ident.as_ref().expect("07504636-310e-43cf-aa3b-afd7443987f0") != *code_occurence_sc_stringified)
+                        .filter(|el_e26e2572| *el_e26e2572.ident.as_ref().expect("07504636-310e-43cf-aa3b-afd7443987f0") != *code_occurence_sc_str)
                         .map(|el_e4070354| el_e4070354.ident.as_ref().expect("971ace15-e8cb-4780-8589-2da5e99e5587"))
                         .collect::<Vec<&syn::Ident>>();
                         if acc_ts.is_empty() {
@@ -144,7 +144,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     };
                     let fields_format_excluding_code_occurence_ts = generate_quotes::double_quotes_ts(
                         &fields.iter()
-                        .filter(|el_6ba47e94| *el_6ba47e94.ident.as_ref().expect("3d70a4f4-046d-4f37-af70-d6c7b1c46b9d") != *code_occurence_sc_stringified)
+                        .filter(|el_6ba47e94| *el_6ba47e94.ident.as_ref().expect("3d70a4f4-046d-4f37-af70-d6c7b1c46b9d") != *code_occurence_sc_str)
                         .fold(
                             String::new(),
                             |mut acc_924ab1b3, el_e405984a| {
@@ -156,7 +156,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         )
                     );
                     let fields_format_values_excluding_code_occurence_ts = fields.iter()
-                    .filter(|el_48337db8| *el_48337db8.ident.as_ref().expect("f6f6fb24-bdf2-4bb6-a2be-32462758dba9") != *code_occurence_sc_stringified)
+                    .filter(|el_48337db8| *el_48337db8.ident.as_ref().expect("f6f6fb24-bdf2-4bb6-a2be-32462758dba9") != *code_occurence_sc_str)
                     .map(|el_f00312fe| {
                         let current_ident = &el_f00312fe.ident.as_ref().expect("e97b25b9-49d3-4f89-a18a-4e77355c4c9c");
                         match macros_helpers::ErrorOccurenceFieldAttribute::try_from(el_f00312fe).expect("8ff56aeb-8636-43d6-b8c1-f8fb0486f817") {
@@ -319,7 +319,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     };
                     let fields_idents_ts = fields.iter().map(|el_cddf556e| &el_cddf556e.ident);
                     let fields_into_serialize_deserialize_version_excluding_code_occurence_ts = fields.iter()
-                    .filter(|el_6a54951c| *el_6a54951c.ident.as_ref().expect("0488fc4c-be15-431b-904b-8bf6a5b2e8e6") != *code_occurence_sc_stringified)
+                    .filter(|el_6a54951c| *el_6a54951c.ident.as_ref().expect("0488fc4c-be15-431b-904b-8bf6a5b2e8e6") != *code_occurence_sc_str)
                     .map(|el_d7e120a3| {
                         let current_ident = &el_d7e120a3.ident.as_ref().expect("9a672ac2-5184-4427-9d88-70cb2a0bd199");
                         let conversion_ts = match macros_helpers::ErrorOccurenceFieldAttribute::try_from(el_d7e120a3).expect("449c3781-1900-4ed4-b784-485db5a08508") {

@@ -1,5 +1,5 @@
 use naming::{
-    AsRefStrEnumWithUnitFieldsToScStringified, AsRefStrEnumWithUnitFieldsToUccStringified,
+    AsRefStrEnumWithUnitFieldsToScStr, AsRefStrEnumWithUnitFieldsToUccStr,
 };
 use quote::quote;
 use strum_macros::Display;
@@ -12,8 +12,8 @@ use strum_macros::Display;
     Clone,
     Copy,
     Hash,
-    AsRefStrEnumWithUnitFieldsToUccStringified,
-    AsRefStrEnumWithUnitFieldsToScStringified,
+    AsRefStrEnumWithUnitFieldsToUccStr,
+    AsRefStrEnumWithUnitFieldsToScStr,
 )]
 pub enum StatusCode {
     Continue100,

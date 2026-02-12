@@ -2064,9 +2064,9 @@ pub fn generate_postgresql_json_types(
         };
         let postgresql_crud_macros_common_import_path_postgresql_crud_common = ImportPath::PostgresqlCrudCommon;
         let impl_postgresql_json_type_for_ident_ts = {
-            let generate_dimension_number_stringified = |dimensions_number: usize| format!("dimension{dimensions_number}");
-            let generate_dimension_number_start_stringified = |dimensions_number: usize| format!("{}_start", generate_dimension_number_stringified(dimensions_number));
-            let generate_dimension_number_end_stringified = |dimensions_number: usize| format!("{}_end", generate_dimension_number_stringified(dimensions_number));
+            let generate_dimension_number_str = |dimensions_number: usize| format!("dimension{dimensions_number}");
+            let generate_dimension_number_start_str = |dimensions_number: usize| format!("{}_start", generate_dimension_number_str(dimensions_number));
+            let generate_dimension_number_end_str = |dimensions_number: usize| format!("{}_end", generate_dimension_number_str(dimensions_number));
             let select_only_created_or_updated_ids_query_part_ts = if matches!(&postgresql_json_type, PostgresqlJsonType::UuidUuidAsJsonbString) {
                 quote! {
                     match #import_path::increment_checked_add_one_returning_increment(#increment_sc) {
@@ -2151,8 +2151,8 @@ pub fn generate_postgresql_json_types(
                                     }
                                 }
                                 let generate_jsonb_agg = |jsonb_agg_content: &str, jsonb_array_elements_content: &str, ordinality_content: &str, dimensions_number: usize| {
-                                    let dimension_number_start = generate_dimension_number_start_stringified(dimensions_number);
-                                    let dimension_number_end = generate_dimension_number_end_stringified(dimensions_number);
+                                    let dimension_number_start = generate_dimension_number_start_str(dimensions_number);
+                                    let dimension_number_end = generate_dimension_number_end_str(dimensions_number);
                                     format!(
                                         "select jsonb_agg(({jsonb_agg_content})) from jsonb_array_elements(({jsonb_array_elements_content})) with ordinality {ordinality_content} between {{{dimension_number_start}}} and {{{dimension_number_end}}}"
                                     )
@@ -2238,17 +2238,17 @@ pub fn generate_postgresql_json_types(
                     let maybe_dimensions_start_end_initialization = ArrayDimension::try_from(postgresql_json_type_pattern).ok().into_iter().flat_map(|array_dimension| {
                         (1..=array_dimension.to_usize()).map(|el_8d56d66d| {
                             let dimension_number_start_ts =
-                                generate_dimension_number_start_stringified(el_8d56d66d)
+                                generate_dimension_number_start_str(el_8d56d66d)
                                     .parse::<proc_macro2::TokenStream>()
                                     .expect("77ec13b9-710a-460f-9239-ac9c3680244d");
                             let dimension_number_end_ts =
-                                generate_dimension_number_end_stringified(el_8d56d66d)
+                                generate_dimension_number_end_str(el_8d56d66d)
                                     .parse::<proc_macro2::TokenStream>()
                                     .expect("24acbb5e-c0fe-4257-b299-8746887ce198");
                             let dimension_number_pagination_ts =
                                 format!(
                                     "{}_pagination",
-                                    generate_dimension_number_stringified(el_8d56d66d)
+                                    generate_dimension_number_str(el_8d56d66d)
                                 )
                                 .parse::<proc_macro2::TokenStream>()
                                 .expect("745c99b3-4e24-46c2-a671-9c7b4dce76f4");

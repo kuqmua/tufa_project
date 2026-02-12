@@ -1,7 +1,7 @@
 use macros_helpers::ErrorOccurenceFieldAttribute;
 use naming::{
-    AdditionalParametersSc, AppStateSc, AsRefStrEnumWithUnitFieldsToScStringified,
-    AsRefStrEnumWithUnitFieldsToUccStringified, AsRefStrToScStringified, AsRefStrToScTs, BeginSc,
+    AdditionalParametersSc, AppStateSc, AsRefStrEnumWithUnitFieldsToScStr,
+    AsRefStrEnumWithUnitFieldsToUccStr, AsRefStrToScStr, AsRefStrToScTs, BeginSc,
     BindedQuerySc, BodyBytesSc, BodySc, BySc, CheckBodySizeSc, CheckBodySizeUcc, CodeOccurenceSc,
     ColumnSc, ColumnsSc, CommitSc, CommonAdditionalErrorVariantsSc, CommonAdditionalLogicSc,
     CommonReadOnlyIdsReturnedFromCreateOneSc, ConfigSc, CreateExtensionIfNotExistsPgJsonschemaUcc,
@@ -13,7 +13,7 @@ use naming::{
     DefaultOptionSomeVecOneElMaxPageSizeSc, DefaultOptionSomeVecOneElMaxPageSizeUcc,
     DefaultOptionSomeVecOneElSc, DefaultOptionSomeVecOneElUcc, DeleteManyAdditionalErrorVariantsSc,
     DeleteManyAdditionalLogicSc, DeleteOneAdditionalErrorVariantsSc, DeleteOneAdditionalLogicSc,
-    DeserializeResponseUcc, DesirableUcc, DisplayToScStringified, ElementSc, EndpointLocationSc,
+    DeserializeResponseUcc, DesirableUcc, DisplayToScStr, ElementSc, EndpointLocationSc,
     ErrorNamedUcc, ErrorSc, ExecutorAcquireSc, ExecutorSc, ExpectedResponseSc,
     FailedToGetResponseTextUcc, FalseSc, FromHandleSc, FutureSc,
     GenerateColumnQuealsValueCommaUpdateOneQueryPartSc, GeneratePostgresqlTablePrimaryKeySc,
@@ -44,7 +44,7 @@ use naming::{
     SelectOnlyIdsQueryPartSc, SelectOnlyUpdatedIdsQueryPartSc, SelectPrimaryKeySc,
     SelectQueryPartSc, SelectSc, SelectUcc, SerdeJsonSc, SerdeJsonToStringSc, SerdeJsonToStringUcc,
     SerdeJsonUcc, SerdeSc, StatusCodeSc, StdFmtDisplayPlusQuoteToTokens, TableNameSc, TableSc,
-    ToTokensToScStringified, ToTokensToUccTs, TrueSc, TryBindSc, TryBindUcc,
+    ToTokensToScStr, ToTokensToUccTs, TrueSc, TryBindSc, TryBindUcc,
     UpdateForQuerySc, UpdateForQueryUcc, UpdateForQueryVecSc, UpdateManyAdditionalErrorVariantsSc,
     UpdateManyAdditionalLogicSc, UpdateOneAdditionalErrorVariantsSc, UpdateOneAdditionalLogicSc,
     UpdateQueryBindSc, UpdateQueryPartPrimaryKeySc, UpdateQueryPartSc, UpdateSc, UpdateUcc, UrlSc,
@@ -138,8 +138,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         Debug,
         Clone,
         Copy,
-        AsRefStrEnumWithUnitFieldsToUccStringified,
-        AsRefStrEnumWithUnitFieldsToScStringified,
+        AsRefStrEnumWithUnitFieldsToUccStr,
+        AsRefStrEnumWithUnitFieldsToScStr,
     )]
     enum Operation {
         CreateMany,
@@ -244,8 +244,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             let value = SelfHandleSc::from_tokens(&self.self_sc_ts());
             quote! {#value}
         }
-        fn self_sc_stringified(self) -> String {
-            AsRefStrToScStringified::case(&self.to_string())
+        fn self_sc_str(self) -> String {
+            AsRefStrToScStr::case(&self.to_string())
         }
         fn self_sc_ts(self) -> proc_macro2::TokenStream {
             AsRefStrToScTs::case_or_panic(&self.to_string())
@@ -308,7 +308,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(AsRefStrEnumWithUnitFieldsToScStringified)]
+    #[derive(AsRefStrEnumWithUnitFieldsToScStr)]
     enum OperationHttpMethod {
         Post,
         Patch,
@@ -467,8 +467,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     )
     .expect("1b6adf7e-7da9-4e2d-82e6-e8bb48ba8ee6");
     let ident = &syn_derive_input.ident;
-    let ident_sc_stringified = ToTokensToScStringified::case(&ident);
-    let ident_sc_double_quotes_ts = generate_quotes::double_quotes_ts(&ident_sc_stringified);
+    let ident_sc_str = ToTokensToScStr::case(&ident);
+    let ident_sc_double_quotes_ts = generate_quotes::double_quotes_ts(&ident_sc_str);
     let self_table_name_call_ts = quote! {Self::#TableNameSc()};
     let (primary_key_field, fields, fields_without_primary_key) =
         if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
@@ -503,10 +503,10 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                     .first()
                                     .expect("a9c3b38b-0a8d-43b1-a33e-bf3858394ea5")
                                     .ident;
-                                let generate_postgresql_table_primary_key_sc_stringified =
+                                let generate_postgresql_table_primary_key_sc_str =
                                     GeneratePostgresqlTablePrimaryKeySc.to_string();
                                 if first_segment_ident
-                                    == &generate_postgresql_table_primary_key_sc_stringified
+                                    == &generate_postgresql_table_primary_key_sc_str
                                 {
                                     if option_primary_key_field.is_some() {
                                         panic!("1a75cea1-9961-4f01-a54a-5b4acc08547c");
@@ -957,7 +957,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         let mut segments = Punctuated::new();
                         segments.push(syn::PathSegment {
                             ident: proc_macro2::Ident::new(
-                                &AsRefStrToScStringified::case(value),
+                                &AsRefStrToScStr::case(value),
                                 proc_macro2::Span::call_site(),
                             ),
                             arguments: syn::PathArguments::None,
@@ -991,7 +991,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                         segments: {
                                             let mut handle = Punctuated::new();
                                             handle.push(syn::PathSegment {
-                                                ident: proc_macro2::Ident::new(macros_helpers::AttributeIdentStringified::attribute_ident_stringified(&element.0), proc_macro2::Span::call_site()),
+                                                ident: proc_macro2::Ident::new(macros_helpers::AttributeIdentStr::attribute_ident_str(&element.0), proc_macro2::Span::call_site()),
                                                 arguments: syn::PathArguments::None,
                                             });
                                             handle
@@ -2327,7 +2327,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         |current_syn_derive_input: &syn::DeriveInput,
          generate_postgresql_table_attribute: GeneratePostgresqlTableAttribute|
          -> Vec<syn::Variant> {
-            let generate_postgresql_table_attribute_stringified =
+            let generate_postgresql_table_attribute_str =
                 generate_postgresql_table_attribute.to_string();
             let common_additional_error_variants_attribute_ts =
                 macros_helpers::get_macro_attribute_meta_list_ts(
@@ -2337,9 +2337,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             let value: syn::DeriveInput =
                 syn::parse2((*common_additional_error_variants_attribute_ts).clone())
                     .expect("1b80783d-f818-4ba3-ba17-3c7831d16530");
-            let value_ident_stringified = value.ident.to_string();
+            let value_ident_str = value.ident.to_string();
             assert!(
-                value_ident_stringified == generate_postgresql_table_attribute_stringified,
+                value_ident_str == generate_postgresql_table_attribute_str,
                 "8a66c852-43a7-4c1c-ad6a-ac0a232d2215"
             );
             let variants = if let syn::Data::Enum(data_enum) = value.data {
@@ -2972,7 +2972,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             }
         };
         let url_ts = {
-            let format_handle_ts = generate_quotes::double_quotes_ts(&format!("{{endpoint_location}}/{{table}}/{}", operation.self_sc_stringified()));
+            let format_handle_ts = generate_quotes::double_quotes_ts(&format!("{{endpoint_location}}/{{table}}/{}", operation.self_sc_str()));
             quote! {let #UrlSc = format!(#format_handle_ts);}
         };
         let future_ts = {
@@ -3633,8 +3633,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 #order_by_column_match_ts
                             },
                             #ParametersSc.#PayloadSc.#OrderBySc.#OrderSc.as_ref().map_or_else(
-                                || postgresql_crud::Order::default().to_sc_stringified(),
-                                #import_path::Order::to_sc_stringified
+                                || postgresql_crud::Order::default().to_sc_str(),
+                                #import_path::Order::to_sc_str
                             )
                         },
                         &generate_write_into_buffer_query_part_syn_variant_error_initialization_eprintln_response_creation_ts(&operation),
@@ -4850,7 +4850,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         value: &dyn Display
                     | generate_quotes::double_quotes_ts(&format!("/{value}"));
                     (
-                        generate_slash_route_double_quotes_ts(&operation.self_sc_stringified()),
+                        generate_slash_route_double_quotes_ts(&operation.self_sc_str()),
                         generate_slash_route_double_quotes_ts(&operation_payload_example_sc)
                     )
                 };
@@ -4890,7 +4890,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let ident_tests_ts = {
         let ident_tests_sc = SelfTestsSc::from_display(&ident);
         let ident_double_quotes_ts =
-            generate_quotes::double_quotes_ts(&DisplayToScStringified::case(&ident));
+            generate_quotes::double_quotes_ts(&DisplayToScStr::case(&ident));
         let ident_create_many_parameters_ucc =
             generate_ident_operation_parameters_ucc(&Operation::CreateMany);
         let ident_read_many_parameters_ucc =

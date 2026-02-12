@@ -161,11 +161,11 @@ pub fn generate_postgresql_json_object_type(
     // );
 
     // element.iter().enumerate().fold(String::new(), |mut acc_1e1c6a6e, (index, element)| {
-    //     let el_sc_stringified = naming_common::AsRefStrToScStringified::case(element);
+    //     let el_sc_str = naming_common::AsRefStrToScStr::case(element);
     //     if index == 0 {
-    //         acc_1e1c6a6e.push_str(&el_sc_stringified);
+    //         acc_1e1c6a6e.push_str(&el_sc_str);
     //     } else {
-    //         acc_1e1c6a6e.push_str(&format!("_{el_sc_stringified}"));
+    //         acc_1e1c6a6e.push_str(&format!("_{el_sc_str}"));
     //     }
     //     acc_1e1c6a6e
     // });
@@ -382,14 +382,14 @@ pub fn generate_postgresql_json_object_type(
                 let array_of_ucc = ArrayOfUcc;
                 let jsonb_object_ucc = JsonbObjectUcc;
                 let with_id_ucc = WithIdUcc;
-                let syn_derive_input_ident_stringified = syn_derive_input_ident.to_string();
-                let jsonb_object_ucc_stringified = jsonb_object_ucc.to_string();
+                let syn_derive_input_ident_str = syn_derive_input_ident.to_string();
+                let jsonb_object_ucc_str = jsonb_object_ucc.to_string();
                 let vec_of_syn_derive_input_ident_with_id = format!("{vec_of_ucc}{syn_derive_input_ident}{with_id_ucc}");
                 let array_of_not_null_jsonb_object_with_id = format!("{array_of_ucc}{}{jsonb_object_ucc}{with_id_ucc}", postgresql_crud_macros_common::NotNullOrNullable::NotNull);
                 let (rust_part, postgresql_part, current_not_null_or_nullable) = match &ident_pattern {
-                    IdentPattern::StandartNotNullWithoutId => (syn_derive_input_ident_stringified, jsonb_object_ucc_stringified, postgresql_crud_macros_common::NotNullOrNullable::NotNull),
+                    IdentPattern::StandartNotNullWithoutId => (syn_derive_input_ident_str, jsonb_object_ucc_str, postgresql_crud_macros_common::NotNullOrNullable::NotNull),
                     IdentPattern::StandartNotNullWithId => (format!("{syn_derive_input_ident}{with_id_ucc}"), format!("{jsonb_object_ucc}{with_id_ucc}"), postgresql_crud_macros_common::NotNullOrNullable::NotNull),
-                    IdentPattern::StandartNullableWithoutId => (syn_derive_input_ident_stringified, jsonb_object_ucc_stringified, postgresql_crud_macros_common::NotNullOrNullable::Nullable),
+                    IdentPattern::StandartNullableWithoutId => (syn_derive_input_ident_str, jsonb_object_ucc_str, postgresql_crud_macros_common::NotNullOrNullable::Nullable),
                     IdentPattern::ArrayNotNullWithId => (vec_of_syn_derive_input_ident_with_id, array_of_not_null_jsonb_object_with_id, postgresql_crud_macros_common::NotNullOrNullable::NotNull),
                     IdentPattern::ArrayNullableWithIdentifier => (vec_of_syn_derive_input_ident_with_id, array_of_not_null_jsonb_object_with_id, postgresql_crud_macros_common::NotNullOrNullable::Nullable),
                 };
@@ -1155,9 +1155,9 @@ pub fn generate_postgresql_json_object_type(
                 column_name_and_maybe_field_getter_for_error_message_field_ident_ts: &dyn quote::ToTokens,
             |{
                 let content_ts = get_vec_syn_field(is_standart_with_id).iter().map(|el_f3a1af0f| {
-                    let field_ident_stringified = el_f3a1af0f.field_ident.to_string();
-                    let variant_name_ts: &dyn quote::ToTokens = &AsRefStrToUccTs::case_or_panic(&field_ident_stringified);
-                    let field_ident_double_quotes_ts: &dyn quote::ToTokens = &generate_quotes::double_quotes_ts(&field_ident_stringified);
+                    let field_ident_str = el_f3a1af0f.field_ident.to_string();
+                    let variant_name_ts: &dyn quote::ToTokens = &AsRefStrToUccTs::case_or_panic(&field_ident_str);
+                    let field_ident_double_quotes_ts: &dyn quote::ToTokens = &generate_quotes::double_quotes_ts(&field_ident_str);
                     let field_type_as_crud_postgresql_json_type_from_field_ts = generate_type_as_postgresql_json_type_ts(&el_f3a1af0f.field_type);
                     let ident_or_ident_with_id_standart_not_null_select_el_ucc: &dyn quote::ToTokens = match &is_standart_with_id {
                         IsStandartWithId::False => &ident_standart_not_null_select_el_ucc,
@@ -1736,9 +1736,9 @@ pub fn generate_postgresql_json_object_type(
                     };
                     let generate_where_filter_query_part_fields_content_standart_not_null_ts = |is_standart_with_id: &IsStandartWithId| {
                         let query_part_variants_ts = get_vec_syn_field(is_standart_with_id).iter().map(|el_32d414b1| {
-                            let field_ident_stringified = el_32d414b1.field_ident.to_string();
-                            let field_ident_ucc_ts = AsRefStrToUccTs::case_or_panic(&field_ident_stringified);
-                            let format_handle_ts = generate_quotes::double_quotes_ts(&format!("{{column}}->'{field_ident_stringified}'"));
+                            let field_ident_str = el_32d414b1.field_ident.to_string();
+                            let field_ident_ucc_ts = AsRefStrToUccTs::case_or_panic(&field_ident_str);
+                            let format_handle_ts = generate_quotes::double_quotes_ts(&format!("{{column}}->'{field_ident_str}'"));
                             quote! {
                                 Self::#field_ident_ucc_ts(value) => #import_path::PostgresqlTypeWhereFilter::#query_part_sc(
                                     value,
@@ -2780,7 +2780,7 @@ pub fn generate_postgresql_json_object_type(
                                 &generate_create_update_delete_fields_ts_ffcbdaf0(&ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::False),
                                 &ident_update_try_new_error_named_ucc,
                                 &{
-                                    let custom_serde_error_deserializing_ident_update_stringified = format!("custom serde error deserializing {ident_update_ucc}");
+                                    let custom_serde_error_deserializing_ident_update_str = format!("custom serde error deserializing {ident_update_ucc}");
                                     let check_if_all_empty_ts = {
                                         quote! {
                                             if create.is_empty() && update.is_empty() && delete.is_empty() {
@@ -2854,7 +2854,7 @@ pub fn generate_postgresql_json_object_type(
                                             .collect::<Vec<&#uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_update_ts>>();
                                         };
                                         let check_not_unique_id_in_delete_aray_ts = {
-                                            let not_unique_id_in_json_delete_array_double_quotes_ts = generate_quotes::double_quotes_ts(&format!("{custom_serde_error_deserializing_ident_update_stringified}: not unique {id_sc} in json delete array: {{}}"));
+                                            let not_unique_id_in_json_delete_array_double_quotes_ts = generate_quotes::double_quotes_ts(&format!("{custom_serde_error_deserializing_ident_update_str}: not unique {id_sc} in json delete array: {{}}"));
                                             quote! {
                                                 let delete_acc = {
                                                     let mut delete_acc = Vec::new();
@@ -2877,7 +2877,7 @@ pub fn generate_postgresql_json_object_type(
                                             }
                                         };
                                         let check_not_unique_id_in_update_and_delete_arrays_ts = {
-                                            let not_unique_id_in_json_update_and_delete_arrays_double_quotes_ts = generate_quotes::double_quotes_ts(&format!("{custom_serde_error_deserializing_ident_update_stringified}: not unique {id_sc} in json update and delete arrays: {{}}"));
+                                            let not_unique_id_in_json_update_and_delete_arrays_double_quotes_ts = generate_quotes::double_quotes_ts(&format!("{custom_serde_error_deserializing_ident_update_str}: not unique {id_sc} in json update and delete arrays: {{}}"));
                                             quote! {
                                                 for el_fefe9816 in update_acc {
                                                     if delete_acc.contains(&el_fefe9816) {

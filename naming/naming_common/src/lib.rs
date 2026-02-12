@@ -1,16 +1,16 @@
 use quote::quote;
 use std::fmt::Display;
 //todo maybe add another generic - trait casing. and ToUccString and others would implement it like .to_case::<UpperCamel>()
-pub trait AsRefStrToUccStringified {
+pub trait AsRefStrToUccStr {
     fn case(&self) -> String;
 }
-impl<T: Sized> AsRefStrToUccStringified for T
+impl<T: Sized> AsRefStrToUccStr for T
 where
     String: PartialEq<T>,
     Self: AsRef<str>,
 {
     fn case(&self) -> String {
-        to_ucc_stringified(self)
+        to_ucc_str(self)
     }
 }
 pub trait AsRefStrToUccTs {
@@ -18,22 +18,22 @@ pub trait AsRefStrToUccTs {
 }
 impl<T> AsRefStrToUccTs for T
 where
-    T: Sized + AsRefStrToUccStringified,
+    T: Sized + AsRefStrToUccStr,
 {
     fn case_or_panic(&self) -> proc_macro2::TokenStream {
-        to_ts_or_panic(&AsRefStrToUccStringified::case(self))
+        to_ts_or_panic(&AsRefStrToUccStr::case(self))
     }
 }
-pub trait AsRefStrToScStringified {
+pub trait AsRefStrToScStr {
     fn case(&self) -> String;
 }
-impl<T: Sized> AsRefStrToScStringified for T
+impl<T: Sized> AsRefStrToScStr for T
 where
     String: PartialEq<T>,
     Self: AsRef<str>,
 {
     fn case(&self) -> String {
-        to_sc_stringified(self)
+        to_sc_str(self)
     }
 }
 pub trait AsRefStrToScTs {
@@ -41,22 +41,22 @@ pub trait AsRefStrToScTs {
 }
 impl<T> AsRefStrToScTs for T
 where
-    T: Sized + AsRefStrToScStringified,
+    T: Sized + AsRefStrToScStr,
 {
     fn case_or_panic(&self) -> proc_macro2::TokenStream {
-        to_ts_or_panic(&AsRefStrToScStringified::case(self))
+        to_ts_or_panic(&AsRefStrToScStr::case(self))
     }
 }
-pub trait AsRefStrToUpperScStringified {
+pub trait AsRefStrToUpperScStr {
     fn case(&self) -> String;
 }
-impl<T: Sized> AsRefStrToUpperScStringified for T
+impl<T: Sized> AsRefStrToUpperScStr for T
 where
     String: PartialEq<T>,
     Self: AsRef<str>,
 {
     fn case(&self) -> String {
-        to_upper_sc_stringified(self)
+        to_upper_sc_str(self)
     }
 }
 pub trait AsRefStrToUpperScTs {
@@ -64,21 +64,21 @@ pub trait AsRefStrToUpperScTs {
 }
 impl<T> AsRefStrToUpperScTs for T
 where
-    T: Sized + AsRefStrToUpperScStringified,
+    T: Sized + AsRefStrToUpperScStr,
 {
     fn case_or_panic(&self) -> proc_macro2::TokenStream {
-        to_ts_or_panic(&AsRefStrToUpperScStringified::case(self))
+        to_ts_or_panic(&AsRefStrToUpperScStr::case(self))
     }
 }
-pub trait DisplayToUccStringified {
+pub trait DisplayToUccStr {
     fn case(&self) -> String;
 }
-impl<T> DisplayToUccStringified for T
+impl<T> DisplayToUccStr for T
 where
     T: Display,
 {
     fn case(&self) -> String {
-        to_ucc_stringified(&self.to_string())
+        to_ucc_str(&self.to_string())
     }
 }
 pub trait DisplayToUccTs {
@@ -86,21 +86,21 @@ pub trait DisplayToUccTs {
 }
 impl<T> DisplayToUccTs for T
 where
-    T: DisplayToUccStringified,
+    T: DisplayToUccStr,
 {
     fn case_or_panic(&self) -> proc_macro2::TokenStream {
-        to_ts_or_panic(&DisplayToUccStringified::case(self))
+        to_ts_or_panic(&DisplayToUccStr::case(self))
     }
 }
-pub trait DisplayToScStringified {
+pub trait DisplayToScStr {
     fn case(&self) -> String;
 }
-impl<T> DisplayToScStringified for T
+impl<T> DisplayToScStr for T
 where
     T: Display,
 {
     fn case(&self) -> String {
-        to_sc_stringified(&self.to_string())
+        to_sc_str(&self.to_string())
     }
 }
 pub trait DisplayToScTs {
@@ -108,21 +108,21 @@ pub trait DisplayToScTs {
 }
 impl<T> DisplayToScTs for T
 where
-    T: DisplayToScStringified,
+    T: DisplayToScStr,
 {
     fn case_or_panic(&self) -> proc_macro2::TokenStream {
-        to_ts_or_panic(&DisplayToScStringified::case(self))
+        to_ts_or_panic(&DisplayToScStr::case(self))
     }
 }
-pub trait DisplayToUpperScStringified {
+pub trait DisplayToUpperScStr {
     fn case(&self) -> String;
 }
-impl<T> DisplayToUpperScStringified for T
+impl<T> DisplayToUpperScStr for T
 where
     T: Display,
 {
     fn case(&self) -> String {
-        to_upper_sc_stringified(&self.to_string())
+        to_upper_sc_str(&self.to_string())
     }
 }
 pub trait DisplayToUpperScTs {
@@ -130,21 +130,21 @@ pub trait DisplayToUpperScTs {
 }
 impl<T> DisplayToUpperScTs for T
 where
-    T: DisplayToUpperScStringified,
+    T: DisplayToUpperScStr,
 {
     fn case_or_panic(&self) -> proc_macro2::TokenStream {
-        to_ts_or_panic(&DisplayToUpperScStringified::case(self))
+        to_ts_or_panic(&DisplayToUpperScStr::case(self))
     }
 }
-pub trait ToTokensToUccStringified {
+pub trait ToTokensToUccStr {
     fn case(&self) -> String;
 }
-impl<T> ToTokensToUccStringified for T
+impl<T> ToTokensToUccStr for T
 where
     T: quote::ToTokens,
 {
     fn case(&self) -> String {
-        to_ucc_stringified(&quote! {#self}.to_string())
+        to_ucc_str(&quote! {#self}.to_string())
     }
 }
 pub trait ToTokensToUccTs {
@@ -152,21 +152,21 @@ pub trait ToTokensToUccTs {
 }
 impl<T> ToTokensToUccTs for T
 where
-    T: ToTokensToUccStringified,
+    T: ToTokensToUccStr,
 {
     fn case_or_panic(&self) -> proc_macro2::TokenStream {
-        to_ts_or_panic(&ToTokensToUccStringified::case(self))
+        to_ts_or_panic(&ToTokensToUccStr::case(self))
     }
 }
-pub trait ToTokensToScStringified {
+pub trait ToTokensToScStr {
     fn case(&self) -> String;
 }
-impl<T> ToTokensToScStringified for T
+impl<T> ToTokensToScStr for T
 where
     T: quote::ToTokens,
 {
     fn case(&self) -> String {
-        to_sc_stringified(&quote! {#self}.to_string())
+        to_sc_str(&quote! {#self}.to_string())
     }
 }
 pub trait ToTokensToScTs {
@@ -174,21 +174,21 @@ pub trait ToTokensToScTs {
 }
 impl<T> ToTokensToScTs for T
 where
-    T: ToTokensToScStringified,
+    T: ToTokensToScStr,
 {
     fn case_or_panic(&self) -> proc_macro2::TokenStream {
-        to_ts_or_panic(&ToTokensToScStringified::case(self))
+        to_ts_or_panic(&ToTokensToScStr::case(self))
     }
 }
-pub trait ToTokensToUpperScStringified {
+pub trait ToTokensToUpperScStr {
     fn case(&self) -> String;
 }
-impl<T> ToTokensToUpperScStringified for T
+impl<T> ToTokensToUpperScStr for T
 where
     T: quote::ToTokens,
 {
     fn case(&self) -> String {
-        to_upper_sc_stringified(&quote! {#self}.to_string())
+        to_upper_sc_str(&quote! {#self}.to_string())
     }
 }
 pub trait ToTokensToUpperScTs {
@@ -196,10 +196,10 @@ pub trait ToTokensToUpperScTs {
 }
 impl<T> ToTokensToUpperScTs for T
 where
-    T: ToTokensToUpperScStringified,
+    T: ToTokensToUpperScStr,
 {
     fn case_or_panic(&self) -> proc_macro2::TokenStream {
-        to_ts_or_panic(&ToTokensToUpperScStringified::case(self))
+        to_ts_or_panic(&ToTokensToUpperScStr::case(self))
     }
 }
 fn to_ts_or_panic(value: &dyn Display) -> proc_macro2::TokenStream {
@@ -208,19 +208,19 @@ fn to_ts_or_panic(value: &dyn Display) -> proc_macro2::TokenStream {
         .parse::<proc_macro2::TokenStream>()
         .expect("753ce6dd-aa0f-4836-8e74-20a7c4f88f60")
 }
-fn to_ucc_stringified<T: AsRef<str>>(value: &T) -> String
+fn to_ucc_str<T: AsRef<str>>(value: &T) -> String
 where
     String: PartialEq<T>,
 {
     convert_case::Casing::to_case(value, convert_case::Case::UpperCamel)
 }
-fn to_sc_stringified<T: AsRef<str>>(value: &T) -> String
+fn to_sc_str<T: AsRef<str>>(value: &T) -> String
 where
     String: PartialEq<T>,
 {
     convert_case::Casing::to_case(value, convert_case::Case::Snake)
 }
-fn to_upper_sc_stringified<T: AsRef<str>>(value: &T) -> String
+fn to_upper_sc_str<T: AsRef<str>>(value: &T) -> String
 where
     String: PartialEq<T>,
 {

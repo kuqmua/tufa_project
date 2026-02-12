@@ -1,4 +1,4 @@
-naming_macros::generate_self_upper_camel_and_sc_stringified_and_ts!([
+naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
     ["self", "parameters"],
     ["self", "payload"],
     ["self", "payload", "with", "serialize", "deserialize"],

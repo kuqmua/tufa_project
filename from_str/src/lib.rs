@@ -21,11 +21,11 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         .collect::<Vec<syn::Ident>>();
     let variants_ts = variant_idents.iter().map(|variant_ident| {
         let variant_ident_sc_ts = {
-            let variant_ident_sc_stringified = convert_case::Casing::to_case(
+            let variant_ident_sc_str = convert_case::Casing::to_case(
                 &format!("\"{variant_ident}\""),
                 convert_case::Case::Snake,
             );
-            variant_ident_sc_stringified
+            variant_ident_sc_str
                 .parse::<proc_macro2::TokenStream>()
                 .expect("791603c1-e547-4486-898e-631abb15afc5")
         };
@@ -33,26 +33,26 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             #variant_ident_sc_ts => Ok(Self::#variant_ident),
         }
     });
-    let error_variants_stringified =
+    let error_variants_str =
         variant_idents
             .iter()
             .fold(String::default(), |mut acc_d6966473, variant_ident| {
                 use std::fmt::Write as _;
-                let variant_ident_sc_stringified = convert_case::Casing::to_case(
+                let variant_ident_sc_str = convert_case::Casing::to_case(
                     &format!("{variant_ident}"),
                     convert_case::Case::Snake,
                 );
                 assert!(
-                    write!(acc_d6966473, "\'{variant_ident_sc_stringified}\',").is_ok(),
+                    write!(acc_d6966473, "\'{variant_ident_sc_str}\',").is_ok(),
                     "09c49558-9d46-41d1-86a5-f76c1460a21e"
                 );
                 acc_d6966473
             });
     let error_ts = {
-        let error_stringified = format!(
-            "\"Invalid {ident}, expected one of {error_variants_stringified} found {{value}}\""
+        let error_str = format!(
+            "\"Invalid {ident}, expected one of {error_variants_str} found {{value}}\""
         );
-        error_stringified
+        error_str
             .parse::<proc_macro2::TokenStream>()
             .expect("1b778757-4118-4419-bb33-a2f677afa169")
     };

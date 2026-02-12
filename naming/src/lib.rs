@@ -4,15 +4,15 @@ use quote::quote;
 use std::fmt::{Display, Formatter, Result as FmtResult};
 
 pub use naming_common::{
-    AsRefStrToScStringified, AsRefStrToScTs, AsRefStrToUccStringified, AsRefStrToUccTs,
-    AsRefStrToUpperScStringified, AsRefStrToUpperScTs, DisplayToScStringified, DisplayToScTs,
-    DisplayToUccStringified, DisplayToUccTs, DisplayToUpperScStringified, DisplayToUpperScTs,
-    ToTokensToScStringified, ToTokensToScTs, ToTokensToUccStringified, ToTokensToUccTs,
-    ToTokensToUpperScStringified, ToTokensToUpperScTs,
+    AsRefStrToScStr, AsRefStrToScTs, AsRefStrToUccStr, AsRefStrToUccTs,
+    AsRefStrToUpperScStr, AsRefStrToUpperScTs, DisplayToScStr, DisplayToScTs,
+    DisplayToUccStr, DisplayToUccTs, DisplayToUpperScStr, DisplayToUpperScTs,
+    ToTokensToScStr, ToTokensToScTs, ToTokensToUccStr, ToTokensToUccTs,
+    ToTokensToUpperScStr, ToTokensToUpperScTs,
 };
 pub use naming_macros::{
-    AsRefStrEnumWithUnitFieldsToScStringified, AsRefStrEnumWithUnitFieldsToUccStringified,
-    AsRefStrEnumWithUnitFieldsToUpperScStringified,
+    AsRefStrEnumWithUnitFieldsToScStr, AsRefStrEnumWithUnitFieldsToUccStr,
+    AsRefStrEnumWithUnitFieldsToUpperScStr,
 };
 
 pub const GITHUB_URL: &str = "https://github.com/kuqmua/tufa_project";
@@ -25,7 +25,7 @@ pub const SQLX_TYPES_UUID_STRINGIFIED: &str = "sqlx::types::Uuid";
 pub const FIELD_IDENT_IS_NONE: &str = "field.ident is None";
 pub const SYN_TYPE_PATH: &str = "syn::Type::Path";
 
-naming_macros::generate_upper_camel_and_sc_stringified_and_ts!([
+naming_macros::generate_upper_camel_and_sc_str_and_ts!([
     ["primary", "key"],
     ["serialize", "deserialize"],
     ["with", "serialize", "deserialize"],
@@ -1486,18 +1486,18 @@ impl quote::ToTokens for HashMapSc {
 pub trait StdFmtDisplayPlusQuoteToTokens: Display + quote::ToTokens {}
 impl<T> StdFmtDisplayPlusQuoteToTokens for T where T: Display + quote::ToTokens {}
 
-pub trait SwaggerUrlPathSelfQuotesStringified {
-    fn swagger_url_path_self_quotes_stringified(&self, table_name_stringified: &str) -> String;
+pub trait SwaggerUrlPathSelfQuotesStr {
+    fn swagger_url_path_self_quotes_str(&self, table_name_str: &str) -> String;
 }
 
-impl<T> SwaggerUrlPathSelfQuotesStringified for T
+impl<T> SwaggerUrlPathSelfQuotesStr for T
 where
-    T: AsRefStrToScStringified,
+    T: AsRefStrToScStr,
 {
-    fn swagger_url_path_self_quotes_stringified(&self, table_name_stringified: &str) -> String {
-        generate_quotes::double_quotes_stringified(&format!(
+    fn swagger_url_path_self_quotes_str(&self, table_name_str: &str) -> String {
+        generate_quotes::double_quotes_str(&format!(
             "/{}/{}",
-            table_name_stringified,
+            table_name_str,
             self.case(),
         ))
     }
@@ -1506,19 +1506,19 @@ where
 pub trait SwaggerUrlPathSelfQuotesTokenStream {
     fn swagger_url_path_self_quotes_ts(
         &self,
-        table_name_stringified: &str,
+        table_name_str: &str,
     ) -> proc_macro2::TokenStream;
 }
 
 impl<T> SwaggerUrlPathSelfQuotesTokenStream for T
 where
-    T: SwaggerUrlPathSelfQuotesStringified,
+    T: SwaggerUrlPathSelfQuotesStr,
 {
     fn swagger_url_path_self_quotes_ts(
         &self,
-        table_name_stringified: &str,
+        table_name_str: &str,
     ) -> proc_macro2::TokenStream {
-        let value = self.swagger_url_path_self_quotes_stringified(table_name_stringified);
+        let value = self.swagger_url_path_self_quotes_str(table_name_str);
         value
             .parse::<proc_macro2::TokenStream>()
             .expect("f292686b-7b16-4f33-a085-e67b4091f266")
