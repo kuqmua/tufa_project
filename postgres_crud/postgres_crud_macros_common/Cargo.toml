@@ -1,0 +1,26 @@
+[package]
+name = "postgres_crud_macros_common"
+version = "0.1.0"
+edition = "2024"
+description = "description"
+repository = "repository"
+readme = "readme"
+license = "license"
+keywords = ["keyword"]
+categories = ["category"]
+
+[dependencies]
+proc-macro2.workspace = true
+quote.workspace = true
+syn.workspace = true
+serde.workspace = true
+strum.workspace = true
+strum_macros.workspace = true
+naming = {path = "../../naming"}
+token_patterns = {path = "../../token_patterns"}
+enum_extension_lib = {path = "../../enum_extension_lib"}
+gen_quotes = {path = "../../gen_quotes"}
+macros_helpers = {path = "../../macros_helpers"}
+
+[lints]
+workspace = true

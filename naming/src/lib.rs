@@ -218,7 +218,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["source", "handle"],
     ["column", "decode", "index"],
     ["expected", "response"],
-    ["postgresql", "crud"],
+    ["postgres", "crud"],
     ["check", "body", "size", "error", "named"],
     ["create", "many", "additional", "error", "variants"],
     ["create", "one", "additional", "error", "variants"],
@@ -390,7 +390,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["body"],
     ["env"],
     ["collections"],
-    ["postgresql"],
+    ["postgres"],
     ["bind"],
     ["version"],
     ["checked"],
@@ -434,36 +434,13 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["empty", "column", "json", "reader"],
     ["not", "unique", "column", "json", "reader"],
     [
-        "gen",
-        "postgresql",
-        "json",
-        "type",
-        "to",
-        "read",
-        "from",
-        "vec"
+        "gen", "postgres", "json", "type", "to", "read", "from", "vec"
     ],
     [
-        "gen",
-        "postgresql",
-        "json",
-        "type",
-        "to",
-        "read",
-        "from",
-        "vec",
-        "error",
-        "named"
+        "gen", "postgres", "json", "type", "to", "read", "from", "vec", "error", "named"
     ],
     [
-        "gen",
-        "postgresql",
-        "json",
-        "type",
-        "to",
-        "read",
-        "error",
-        "named"
+        "gen", "postgres", "json", "type", "to", "read", "error", "named"
     ],
     ["option", "to", "read"],
     ["option", "to", "update"],
@@ -503,16 +480,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["all", "fields", "are", "none"],
     ["self"],
     [
-        "option",
-        "to",
-        "update",
-        "try",
-        "gen",
-        "postgresql",
-        "json",
-        "type",
-        "error",
-        "named"
+        "option", "to", "update", "try", "gen", "postgres", "json", "type", "error", "named"
     ],
     ["create", "query", "part"],
     ["create", "query", "bind"],
@@ -525,7 +493,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
         "column", "name", "and", "maybe", "field", "getter", "for", "error", "message"
     ],
     ["field", "ident"],
-    ["postgresql", "json", "type"],
+    ["postgres", "json", "type"],
     ["create", "query", "part", "error", "named"],
     ["create"],
     ["dotenv"],
@@ -533,12 +501,12 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["env", "var", "name"],
     ["try", "from", "std", "env", "var", "ok"],
     ["table", "name"],
-    ["gen", "postgresql", "crud", "primary", "key"],
+    ["gen", "postgres", "crud", "primary", "key"],
     ["default", "option", "some", "vec", "one", "el"],
     [
         "all", "variants", "default", "option", "some", "vec", "one", "el"
     ],
-    ["gen", "postgresql", "json", "type"],
+    ["gen", "postgres", "json", "type"],
     ["to", "std", "string", "string"],
     ["error", "occurence", "lib"],
     ["logical", "operator"],
@@ -547,63 +515,27 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["self", "to", "read"],
     ["self", "select"],
     ["self", "read"],
-    ["postgresql", "crud", "base", "self", "traits"],
-    ["postgresql", "base", "type"],
-    ["postgresql", "base", "type", "self"],
-    ["postgresql", "base", "type", "primary", "key"],
-    ["postgresql", "base", "type", "primary", "key", "self"],
+    ["postgres", "crud", "base", "self", "traits"],
+    ["postgres", "base", "type"],
+    ["postgres", "base", "type", "self"],
+    ["postgres", "base", "type", "primary", "key"],
+    ["postgres", "base", "type", "primary", "key", "self"],
     [
-        "postgresql",
-        "base",
-        "type",
-        "std",
-        "option",
-        "option",
-        "self"
+        "postgres", "base", "type", "std", "option", "option", "self"
     ],
-    ["postgresql", "type", "self", "traits"],
-    ["postgresql", "type"],
+    ["postgres", "type", "self", "traits"],
+    ["postgres", "type"],
     ["self", "column"],
-    ["postgresql", "json", "type", "object", "self", "select"],
+    ["postgres", "json", "type", "object", "self", "select"],
     [
-        "postgresql",
-        "json",
-        "type",
-        "std",
-        "option",
-        "option",
-        "object",
-        "self",
-        "select"
+        "postgres", "json", "type", "std", "option", "option", "object", "self", "select"
     ],
     [
-        "postgresql",
-        "json",
-        "type",
-        "std",
-        "vec",
-        "vec",
-        "object",
-        "with",
-        "id",
-        "self",
-        "select"
+        "postgres", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "select"
     ],
     [
-        "postgresql",
-        "json",
-        "type",
-        "std",
-        "option",
-        "option",
-        "std",
-        "vec",
-        "vec",
-        "object",
-        "with",
-        "id",
-        "self",
-        "select"
+        "postgres", "json", "type", "std", "option", "option", "std", "vec", "vec", "object",
+        "with", "id", "self", "select"
     ],
     ["true"],
     ["false"],
@@ -756,7 +688,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["contains", "el"],
     ["equal", "second", "dimension"],
     ["from", "calendar", "date"],
-    ["less", "than", "minimum", "postgresql", "value"],
+    ["less", "than", "minimum", "postgres", "value"],
     ["year"],
     ["month"],
     ["day"],
@@ -769,7 +701,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["std", "vec", "vec", "std", "vec", "vec"],
     ["uuid", "uuid"],
     ["fixed", "length"],
-    ["postgresql", "type", "where", "filter"],
+    ["postgres", "type", "where", "filter"],
     ["is", "primary", "key"],
     ["create", "table", "column", "query", "part"],
     ["table", "type", "declaration"],
@@ -977,8 +909,8 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
         "jsonschema"
     ],
     ["create", "extension", "if", "not", "exists", "uuid", "ossp"],
-    ["prepare", "postgresql"],
-    ["prepare", "postgresql", "table"],
+    ["prepare", "postgres"],
+    ["prepare", "postgres", "table"],
     [
         "header",
         "content",
@@ -1005,7 +937,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["test", "cases"],
     ["contains", "null", "byte"],
     ["new", "or", "try", "new", "unwraped", "for", "test"],
-    ["postgresql", "type", "test", "cases"],
+    ["postgres", "type", "test", "cases"],
     ["included", "start", "greater", "than", "included", "end"],
     ["included", "start", "greater", "than", "excluded", "end"],
     ["excluded", "start", "greater", "than", "included", "end"],
@@ -1042,7 +974,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["new"],
     ["try", "new"],
     ["try", "new", "for", "deserialize"],
-    ["postgresql", "json", "type", "test", "cases"],
+    ["postgres", "json", "type", "test", "cases"],
     ["postgres", "pool"],
     ["postgres", "pool", "for", "tokio", "spawn", "sync", "move"],
     ["ident", "create", "default"],
@@ -1061,12 +993,12 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
         "primary", "key", "read", "returned", "from", "create", "one"
     ],
     ["select", "primary", "key", "field", "ident"],
-    ["select", "query", "part", "postgresql", "type"],
-    ["select", "query", "part", "postgresql", "json", "type"],
-    ["update", "query", "part", "postgresql", "type"],
-    ["update", "query", "part", "postgresql", "json", "type"],
-    ["update", "query", "bind", "postgresql", "type"],
-    ["update", "query", "bind", "postgresql", "json", "type"],
+    ["select", "query", "part", "postgres", "type"],
+    ["select", "query", "part", "postgres", "json", "type"],
+    ["update", "query", "part", "postgres", "type"],
+    ["update", "query", "part", "postgres", "json", "type"],
+    ["update", "query", "bind", "postgres", "type"],
+    ["update", "query", "bind", "postgres", "json", "type"],
     ["read", "only", "ids"],
     ["select", "only", "ids", "query", "part"],
     ["read", "only", "ids", "returned", "from", "create", "one"],
@@ -1082,7 +1014,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     [
         "common", "read", "only", "ids", "returned", "from", "create", "one"
     ],
-    ["gen", "postgresql", "table", "primary", "key"],
+    ["gen", "postgres", "table", "primary", "key"],
     ["read", "new", "or", "try", "new", "unwraped", "for", "test"],
     [
         "read", "only", "ids", "to", "option", "value", "read", "inner"
@@ -1117,9 +1049,9 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
         "all", "variants", "default", "option", "some", "vec", "one", "el", "max", "page", "size"
     ],
     ["ids", "are", "not", "unique"],
-    ["postgresql", "type", "primary", "key"],
-    ["postgresql", "type", "read"],
-    ["postgresql", "type", "not", "primary", "key"],
+    ["postgres", "type", "primary", "key"],
+    ["postgres", "type", "read"],
+    ["postgres", "type", "not", "primary", "key"],
     [
         "read", "only", "ids", "merged", "with", "create", "into", "where", "equal"
     ],
@@ -1167,7 +1099,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
         "using", "fields"
     ],
     ["equal", "operator"],
-    ["postgresql", "type", "equal", "operator"],
+    ["postgres", "type", "equal", "operator"],
     [
         "read",
         "only",
@@ -1207,7 +1139,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     [
         "create",
         "into",
-        "postgresql",
+        "postgres",
         "type",
         "option",
         "vec",
@@ -1226,7 +1158,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
         "type",
         "declaration",
         "into",
-        "postgresql",
+        "postgres",
         "type",
         "option",
         "where",
@@ -1234,14 +1166,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
         "than"
     ],
     [
-        "postgresql",
-        "type",
-        "option",
-        "vec",
-        "where",
-        "greater",
-        "than",
-        "test"
+        "postgres", "type", "option", "vec", "where", "greater", "than", "test"
     ],
     [
         "read",
@@ -1251,7 +1176,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
         "with",
         "create",
         "into",
-        "postgresql",
+        "postgres",
         "json",
         "type",
         "option",
@@ -1269,7 +1194,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
         "with",
         "create",
         "into",
-        "postgresql",
+        "postgres",
         "json",
         "type",
         "option",
@@ -1287,7 +1212,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
         "with",
         "create",
         "into",
-        "postgresql",
+        "postgres",
         "json",
         "type",
         "option",
@@ -1305,7 +1230,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
         "with",
         "create",
         "into",
-        "postgresql",
+        "postgres",
         "json",
         "type",
         "option",
@@ -1316,52 +1241,29 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
         "equal"
     ],
     ["prepare", "extensions"],
-    ["prepare", "postgresql", "table", "and", "extensions"],
+    ["prepare", "postgres", "table", "and", "extensions"],
     ["table"],
     ["routes"],
     ["routes", "handle"],
     [
-        "create",
-        "into",
-        "postgresql",
-        "json",
-        "type",
-        "option",
-        "vec",
-        "where",
-        "length",
-        "greater",
-        "than"
+        "create", "into", "postgres", "json", "type", "option", "vec", "where", "length",
+        "greater", "than"
     ],
     [
-        "create",
-        "into",
-        "postgresql",
-        "json",
-        "type",
-        "option",
-        "vec",
-        "where",
-        "length",
-        "equal"
+        "create", "into", "postgres", "json", "type", "option", "vec", "where", "length", "equal"
     ],
     ["from", "handle"],
     [
-        "read",
-        "only",
-        "ids",
-        "merged",
-        "with",
-        "create",
-        "into",
-        "postgresql",
-        "json",
-        "type",
-        "option",
-        "vec",
-        "where",
-        "greater",
-        "than"
+        "read", "only", "ids", "merged", "with", "create", "into", "postgres", "json", "type",
+        "option", "vec", "where", "greater", "than"
+    ],
+    [
+        "read", "only", "ids", "merged", "with", "create", "into", "postgres", "json", "type",
+        "option", "vec", "where", "between"
+    ],
+    [
+        "read", "only", "ids", "merged", "with", "create", "into", "postgres", "json", "type",
+        "option", "vec", "where", "in"
     ],
     [
         "read",
@@ -1371,39 +1273,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
         "with",
         "create",
         "into",
-        "postgresql",
-        "json",
-        "type",
-        "option",
-        "vec",
-        "where",
-        "between"
-    ],
-    [
-        "read",
-        "only",
-        "ids",
-        "merged",
-        "with",
-        "create",
-        "into",
-        "postgresql",
-        "json",
-        "type",
-        "option",
-        "vec",
-        "where",
-        "in"
-    ],
-    [
-        "read",
-        "only",
-        "ids",
-        "merged",
-        "with",
-        "create",
-        "into",
-        "postgresql",
+        "postgres",
         "json",
         "type",
         "option",
@@ -1413,23 +1283,8 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
         "expression"
     ],
     [
-        "read",
-        "only",
-        "ids",
-        "merged",
-        "with",
-        "create",
-        "into",
-        "postgresql",
-        "json",
-        "type",
-        "option",
-        "vec",
-        "where",
-        "contains",
-        "el",
-        "greater",
-        "than"
+        "read", "only", "ids", "merged", "with", "create", "into", "postgres", "json", "type",
+        "option", "vec", "where", "contains", "el", "greater", "than"
     ],
     [
         "read",
@@ -1439,7 +1294,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
         "with",
         "create",
         "into",
-        "postgresql",
+        "postgres",
         "json",
         "type",
         "option",
@@ -1451,8 +1306,8 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
         "expression"
     ],
     ["executor", "acquire"],
-    ["gen", "postgresql", "json", "types", "mod"],
-    ["gen", "postgresql", "types", "mod"]
+    ["gen", "postgres", "json", "types", "mod"],
+    ["gen", "postgres", "types", "mod"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

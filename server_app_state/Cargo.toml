@@ -17,7 +17,7 @@ common_routes = {path = "../common_routes"}
 git_info = {path = "../git_info"}
 app_state = {path = "../app_state"}
 server_config = {path = "../server_config"}
-postgresql_crud = {path = "../postgresql_crud", features = ["test-utils"]}
+postgres_crud = {path = "../postgres_crud", features = ["test-utils"]}
 
 [lints]
 workspace = true

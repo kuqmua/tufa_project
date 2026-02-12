@@ -216,8 +216,8 @@ pub mod pg_test {
         // perform one-off initialization when the pg_test framework starts
     }
 
-    pub fn postgresql_conf_options() -> Vec<&'static str> {
-        // return any postgresql.conf settings that are required for your tests
+    pub fn postgres_conf_options() -> Vec<&'static str> {
+        // return any postgres.conf settings that are required for your tests
         Vec::new()
     }
 }

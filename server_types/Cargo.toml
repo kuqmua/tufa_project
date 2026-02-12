@@ -20,10 +20,10 @@ utoipa.workspace = true
 schemars.workspace = true
 uuid.workspace = true
 error_occurence_lib = {path = "../error_occurence_lib"}
-postgresql_crud = {path = "../postgresql_crud", features = ["test-utils"]}
+postgres_crud = {path = "../postgres_crud", features = ["test-utils"]}
 
 [lints]
 workspace = true
 
 [features]
-test-utils = ["postgresql_crud/test-utils"]
+test-utils = ["postgres_crud/test-utils"]
