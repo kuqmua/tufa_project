@@ -4,8 +4,9 @@ use naming::{
     AsRefStrEnumWithUnitFieldsToSnakeCaseStringified,
     AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified, AsRefStrToSnakeCaseStringified,
     AsRefStrToSnakeCaseTokenStream, BeginSnakeCase, BindedQuerySnakeCase, BodyBytesSnakeCase,
-    BodySnakeCase, BySnakeCase, CodeOccurenceSnakeCase, ColumnSnakeCase, ColumnsSnakeCase,
-    CommitSnakeCase, CommonAdditionalErrorVariantsSnakeCase, CommonAdditionalLogicSnakeCase,
+    BodySnakeCase, BySnakeCase, CheckBodySizeSnakeCase, CheckBodySizeUpperCamelCase,
+    CodeOccurenceSnakeCase, ColumnSnakeCase, ColumnsSnakeCase, CommitSnakeCase,
+    CommonAdditionalErrorVariantsSnakeCase, CommonAdditionalLogicSnakeCase,
     CommonReadOnlyIdsReturnedFromCreateOneSnakeCase, ConfigSnakeCase,
     CreateExtensionIfNotExistsPgJsonschemaUpperCamelCase,
     CreateExtensionIfNotExistsUuidOsspUpperCamelCase,
@@ -15,30 +16,37 @@ use naming::{
     CreateManyAdditionalErrorVariantsSnakeCase, CreateManyAdditionalLogicSnakeCase,
     CreateOneAdditionalErrorVariantsSnakeCase, CreateOneAdditionalLogicSnakeCase,
     CreateQueryBindSnakeCase, CreateQueryPartSnakeCase, CreateSnakeCase,
-    CreateTableColumnQueryPartSnakeCase, DefaultOptionSomeVecOneElMaxPageSizeSnakeCase,
+    CreateTableColumnQueryPartSnakeCase, CreateUpperCamelCase,
+    DefaultOptionSomeVecOneElMaxPageSizeSnakeCase,
     DefaultOptionSomeVecOneElMaxPageSizeUpperCamelCase, DefaultOptionSomeVecOneElSnakeCase,
     DefaultOptionSomeVecOneElUpperCamelCase, DeleteManyAdditionalErrorVariantsSnakeCase,
     DeleteManyAdditionalLogicSnakeCase, DeleteOneAdditionalErrorVariantsSnakeCase,
-    DeleteOneAdditionalLogicSnakeCase, DesirableUpperCamelCase, ElementSnakeCase,
-    EndpointLocationSnakeCase, ErrorSnakeCase, ExecutorAcquireSnakeCase, ExecutorSnakeCase,
-    ExpectedResponseSnakeCase, FromHandleSnakeCase, FutureSnakeCase,
+    DeleteOneAdditionalLogicSnakeCase, DeserializeResponseUpperCamelCase, DesirableUpperCamelCase,
+    DisplayToSnakeCaseStringified, ElementSnakeCase, EndpointLocationSnakeCase,
+    ErrorNamedUpperCamelCase, ErrorSnakeCase, ExecutorAcquireSnakeCase, ExecutorSnakeCase,
+    ExpectedResponseSnakeCase, FailedToGetResponseTextUpperCamelCase, FalseSnakeCase,
+    FromHandleSnakeCase, FutureSnakeCase,
     GenerateColumnQuealsValueCommaUpdateOneQueryPartSnakeCase,
     GeneratePostgresqlTablePrimaryKeySnakeCase, GenerateSelectQueryPartSnakeCase,
-    GenerateWhenColumnIdThenValueUpdateManyQueryPartSnakeCase, IdentCreateDefaultSnakeCase,
-    IncrementSnakeCase, IntoSerializeDeserializeVersionSnakeCase, NoFieldsProvidedUpperCamelCase,
+    GenerateWhenColumnIdThenValueUpdateManyQueryPartSnakeCase,
+    HeaderContentTypeApplicationJsonNotFoundUpperCamelCase, HeadersSnakeCase,
+    IdentCreateDefaultSnakeCase, IncrementSnakeCase, IntoSerializeDeserializeVersionSnakeCase,
+    NoFieldsProvidedUpperCamelCase, NotUniqueFieldSnakeCase, NotUniqueFieldUpperCamelCase,
     NotUniquePrimaryKeySnakeCase, NotUniquePrimaryKeyUpperCamelCase, OptionVecCreateSnakeCase,
     OrderBySnakeCase, OrderByUpperCamelCase, OrderSnakeCase, PaginationSnakeCase,
     ParametersSnakeCase, PayloadSnakeCase, PayloadUpperCamelCase, PoolConnectionSnakeCase,
     PoolSnakeCase, PostgresPoolForTokioSpawnSyncMoveSnakeCase, PostgresPoolSnakeCase,
-    PostgresqlCrudSnakeCase, PostgresqlTypeOptionVecWhereGreaterThanTestSnakeCase,
-    PostgresqlTypeUpperCamelCase, PrefixSnakeCase, PrepareExtensionsSnakeCase,
+    PostgresqlCrudSnakeCase, PostgresqlSnakeCase,
+    PostgresqlTypeOptionVecWhereGreaterThanTestSnakeCase, PostgresqlTypeUpperCamelCase,
+    PostgresqlUpperCamelCase, PrefixSnakeCase, PrepareExtensionsSnakeCase,
     PreparePostgresqlSnakeCase, PreparePostgresqlTableSnakeCase, PreparePostgresqlUpperCamelCase,
     PrimaryKeyQueryPartSnakeCase, PrimaryKeySnakeCase, QueryBindSnakeCase,
-    QueryPartErrorNamedUpperCamelCase, QueryPartSnakeCase, QuerySnakeCase, QueryStringSnakeCase,
-    ReadIntoTableTypeDeclarationSnakeCase, ReadManyAdditionalErrorVariantsSnakeCase,
-    ReadManyAdditionalLogicSnakeCase, ReadOneAdditionalErrorVariantsSnakeCase,
-    ReadOneAdditionalLogicSnakeCase, ReadOnlyIdsIntoReadSnakeCase,
-    ReadOnlyIdsIntoTableTypeDeclarationSnakeCase, ReadOnlyIdsIntoUpdateSnakeCase,
+    QueryPartErrorNamedUpperCamelCase, QueryPartSnakeCase, QueryPartUpperCamelCase, QuerySnakeCase,
+    QueryStringSnakeCase, ReadIntoTableTypeDeclarationSnakeCase,
+    ReadManyAdditionalErrorVariantsSnakeCase, ReadManyAdditionalLogicSnakeCase,
+    ReadOneAdditionalErrorVariantsSnakeCase, ReadOneAdditionalLogicSnakeCase,
+    ReadOnlyIdsIntoReadSnakeCase, ReadOnlyIdsIntoTableTypeDeclarationSnakeCase,
+    ReadOnlyIdsIntoUpdateSnakeCase,
     ReadOnlyIdsMergedWithCreateIntoOptionVecWhereEqualToJsonFieldSnakeCase,
     ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereBetweenSnakeCase,
     ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElGreaterThanSnakeCase,
@@ -49,17 +57,22 @@ use naming::{
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSnakeCase,
     ReadOnlyIdsMergedWithCreateIntoWhereEqualSnakeCase,
     ReadOnlyIdsMergedWithTableTypeDeclarationIntoPostgresqlTypeOptionWhereGreaterThanSnakeCase,
-    ReadOnlyIdsSnakeCase, ReadUpperCamelCase, RequestSnakeCase, ResponseSnakeCase,
-    RollbackSnakeCase, RoutesHandleSnakeCase, RoutesSnakeCase, RowsSnakeCase,
-    SelectOnlyIdsQueryPartSnakeCase, SelectOnlyUpdatedIdsQueryPartSnakeCase,
-    SelectPrimaryKeySnakeCase, SelectQueryPartSnakeCase, SelectSnakeCase, StatusCodeSnakeCase,
+    ReadOnlyIdsSnakeCase, ReadOnlyIdsUpperCamelCase, ReadUpperCamelCase, RequestSnakeCase,
+    ReqwestSnakeCase, ReqwestUpperCamelCase, ResponseSnakeCase, ResponseTextSnakeCase,
+    RollbackSnakeCase, RoutesHandleSnakeCase, RoutesSnakeCase, RowAndRollbackUpperCamelCase,
+    RowSnakeCase, RowsSnakeCase, SelectOnlyIdsQueryPartSnakeCase,
+    SelectOnlyUpdatedIdsQueryPartSnakeCase, SelectPrimaryKeySnakeCase, SelectQueryPartSnakeCase,
+    SelectSnakeCase, SelectUpperCamelCase, SerdeJsonSnakeCase, SerdeJsonToStringSnakeCase,
+    SerdeJsonToStringUpperCamelCase, SerdeJsonUpperCamelCase, SerdeSnakeCase, StatusCodeSnakeCase,
     StdFmtDisplayPlusQuoteToTokens, TableNameSnakeCase, TableSnakeCase,
-    ToTokensToSnakeCaseStringified, ToTokensToUpperCamelCaseTokenStream, UpdateForQuerySnakeCase,
-    UpdateForQueryUpperCamelCase, UpdateForQueryVecSnakeCase,
-    UpdateManyAdditionalErrorVariantsSnakeCase, UpdateManyAdditionalLogicSnakeCase,
-    UpdateOneAdditionalErrorVariantsSnakeCase, UpdateOneAdditionalLogicSnakeCase,
-    UpdateQueryBindSnakeCase, UpdateQueryPartPrimaryKeySnakeCase, UpdateQueryPartSnakeCase,
-    UpdateSnakeCase, UrlSnakeCase, ValueSnakeCase, ValueUpperCamelCase, WhereManySnakeCase,
+    ToTokensToSnakeCaseStringified, ToTokensToUpperCamelCaseTokenStream, TrueSnakeCase,
+    TryBindSnakeCase, TryBindUpperCamelCase, UpdateForQuerySnakeCase, UpdateForQueryUpperCamelCase,
+    UpdateForQueryVecSnakeCase, UpdateManyAdditionalErrorVariantsSnakeCase,
+    UpdateManyAdditionalLogicSnakeCase, UpdateOneAdditionalErrorVariantsSnakeCase,
+    UpdateOneAdditionalLogicSnakeCase, UpdateQueryBindSnakeCase,
+    UpdateQueryPartPrimaryKeySnakeCase, UpdateQueryPartSnakeCase, UpdateSnakeCase,
+    UpdateUpperCamelCase, UrlSnakeCase, ValueSnakeCase, ValueUpperCamelCase, WhereManySnakeCase,
+    WhereUpperCamelCase,
     parameter::{
         ErrorSelfSnakeCase, IsSelfUpdateExistSnakeCase, SelfCreateUpperCamelCase,
         SelfDeleteManyParametersUpperCamelCase, SelfDeleteManyPayloadUpperCamelCase,
@@ -583,18 +596,18 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             let as_postgresql_type_ts = generate_as_postgresql_type_ts(&field_type);
             quote! {#as_postgresql_type_ts #tokens}
         };
-    // let generate_as_postgresql_type_table_type_declaration_ts = |field_type: &dyn quote::ToTokens| generate_as_postgresql_type_tokens_ts(&field_type, &naming::TableTypeDeclarationUpperCamelCase);
+    // let generate_as_postgresql_type_table_type_declaration_ts = |field_type: &dyn quote::ToTokens| generate_as_postgresql_type_tokens_ts(&field_type, &TableTypeDeclarationUpperCamelCase);
     // let primary_key_field_type_as_postgresql_type_table_type_declaration_ts = generate_as_postgresql_type_table_type_declaration_ts(&primary_key_field_type);
     let generate_as_postgresql_type_create_ts = |field_type: &dyn quote::ToTokens| {
-        generate_as_postgresql_type_tokens_ts(&field_type, &naming::CreateUpperCamelCase)
+        generate_as_postgresql_type_tokens_ts(&field_type, &CreateUpperCamelCase)
     };
     let generate_as_postgresql_type_select_ts = |field_type: &dyn quote::ToTokens| {
-        generate_as_postgresql_type_tokens_ts(&field_type, &naming::SelectUpperCamelCase)
+        generate_as_postgresql_type_tokens_ts(&field_type, &SelectUpperCamelCase)
     };
     let primary_key_field_type_as_postgresql_type_select_ts =
         generate_as_postgresql_type_select_ts(&primary_key_field_type);
     let generate_as_postgresql_type_where_ts = |field_type: &dyn quote::ToTokens| {
-        generate_as_postgresql_type_tokens_ts(&field_type, &naming::WhereUpperCamelCase)
+        generate_as_postgresql_type_tokens_ts(&field_type, &WhereUpperCamelCase)
     };
     let primary_key_field_type_as_postgresql_type_where_ts =
         generate_as_postgresql_type_where_ts(&primary_key_field_type);
@@ -602,12 +615,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         generate_as_postgresql_type_tokens_ts(&field_type, &ReadUpperCamelCase)
     };
     let generate_as_postgresql_type_read_only_ids_ts = |field_type: &dyn quote::ToTokens| {
-        generate_as_postgresql_type_tokens_ts(&field_type, &naming::ReadOnlyIdsUpperCamelCase)
+        generate_as_postgresql_type_tokens_ts(&field_type, &ReadOnlyIdsUpperCamelCase)
     };
     let primary_key_field_type_as_postgresql_type_read_ts =
         generate_as_postgresql_type_read_ts(&primary_key_field_type);
     let generate_as_postgresql_type_update_ts = |field_type: &dyn quote::ToTokens| {
-        generate_as_postgresql_type_tokens_ts(&field_type, &naming::UpdateUpperCamelCase)
+        generate_as_postgresql_type_tokens_ts(&field_type, &UpdateUpperCamelCase)
     };
     let generate_as_postgresql_type_update_for_query_ts = |field_type: &dyn quote::ToTokens| {
         generate_as_postgresql_type_tokens_ts(&field_type, &UpdateForQueryUpperCamelCase)
@@ -771,9 +784,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 let generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_ts =
                     |field_type: &syn::Type, field_ident: &syn::Ident, is_primary_key: bool| {
                         let is_primary_key_ts: &dyn quote::ToTokens = if is_primary_key {
-                            &naming::TrueSnakeCase
+                            &TrueSnakeCase
                         } else {
-                            &naming::FalseSnakeCase
+                            &FalseSnakeCase
                         };
                         let field_ident_double_quotes_ts =
                             generate_quotes::double_quotes_ts(&field_ident);
@@ -1049,7 +1062,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         }
     };
     let query_part_syn_variant_wrapper = new_syn_variant_wrapper(
-        &naming::QueryPartUpperCamelCase,
+        &QueryPartUpperCamelCase,
         Some(macros_helpers::StatusCode::BadRequest400),
         vec![(
             ErrorOccurenceFieldAttribute::EoErrorOccurence,
@@ -1495,9 +1508,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let string_syn_punctuated_punctuated =
         macros_helpers::generate_simple_syn_punctuated_punctuated(&["String"]);
     let try_bind_syn_variant_wrapper = new_syn_variant_wrapper(
-        &naming::TryBindUpperCamelCase,
+        &TryBindUpperCamelCase,
         Some(macros_helpers::StatusCode::InternalServerError500),
-        vec![(macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string_serialize_deserialize, &naming::TryBindSnakeCase, string_syn_punctuated_punctuated.clone())],
+        vec![(macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string_serialize_deserialize, &TryBindSnakeCase, string_syn_punctuated_punctuated.clone())],
     );
     let generate_query_postgresql_type_where_filter_query_bind_parameters_payload_where_many_query_ts =
         |operation: &Operation| {
@@ -1527,11 +1540,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string =
         ErrorOccurenceFieldAttribute::EoToStdStringString;
     let postgresql_syn_variant_wrapper = new_syn_variant_wrapper(
-        &naming::PostgresqlUpperCamelCase,
+        &PostgresqlUpperCamelCase,
         Some(macros_helpers::StatusCode::InternalServerError500),
         vec![(
             macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string,
-            &naming::PostgresqlSnakeCase,
+            &PostgresqlSnakeCase,
             sqlx_error_syn_punctuated_punctuated.clone(),
         )],
     );
@@ -2240,10 +2253,10 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             }
         };
     let row_and_rollback_syn_variant_wrapper = new_syn_variant_wrapper(
-        &naming::RowAndRollbackUpperCamelCase,
+        &RowAndRollbackUpperCamelCase,
         Some(macros_helpers::StatusCode::InternalServerError500),
         vec![
-            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &naming::RowSnakeCase, sqlx_error_syn_punctuated_punctuated.clone()),
+            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &RowSnakeCase, sqlx_error_syn_punctuated_punctuated.clone()),
             (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &RollbackSnakeCase, sqlx_error_syn_punctuated_punctuated),
         ],
     );
@@ -2265,84 +2278,84 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             &ident_read_upper_camel_case,
         );
     let not_unique_field_syn_variant_wrapper = new_syn_variant_wrapper(
-        &naming::NotUniqueFieldUpperCamelCase,
+        &NotUniqueFieldUpperCamelCase,
         Some(macros_helpers::StatusCode::BadRequest400),
         vec![(
             macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string_serialize_deserialize,
-            &naming::NotUniqueFieldSnakeCase,
+            &NotUniqueFieldSnakeCase,
             macros_helpers::generate_simple_syn_punctuated_punctuated(&[&ident_select_upper_camel_case.to_string()]),
         )],
     );
     let serde_json_to_string_syn_variant_wrapper = new_syn_variant_wrapper(
-        &naming::SerdeJsonToStringUpperCamelCase,
+        &SerdeJsonToStringUpperCamelCase,
         None,
         vec![(
             macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string,
-            &naming::SerdeJsonToStringSnakeCase,
+            &SerdeJsonToStringSnakeCase,
             macros_helpers::generate_simple_syn_punctuated_punctuated(&["serde_json", "Error"]),
         )],
     );
     let failed_to_get_response_text_syn_variant_wrapper = new_syn_variant_wrapper(
-        &naming::FailedToGetResponseTextUpperCamelCase,
+        &FailedToGetResponseTextUpperCamelCase,
         Some(macros_helpers::StatusCode::BadRequest400),
         vec![
             (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &StatusCodeSnakeCase, macros_helpers::generate_simple_syn_punctuated_punctuated(&["reqwest", "StatusCode"])),
             (
                 macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string,
-                &naming::HeadersSnakeCase,
+                &HeadersSnakeCase,
                 macros_helpers::generate_simple_syn_punctuated_punctuated(&["reqwest", "header", "HeaderMap"]),
             ),
-            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &naming::ReqwestSnakeCase, macros_helpers::generate_simple_syn_punctuated_punctuated(&["reqwest", "Error"])),
+            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &ReqwestSnakeCase, macros_helpers::generate_simple_syn_punctuated_punctuated(&["reqwest", "Error"])),
         ],
     );
     let deserialize_response_syn_variant_wrapper = new_syn_variant_wrapper(
-        &naming::DeserializeResponseUpperCamelCase,
+        &DeserializeResponseUpperCamelCase,
         None,
         vec![
             (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &StatusCodeSnakeCase, macros_helpers::generate_simple_syn_punctuated_punctuated(&["reqwest", "StatusCode"])),
             (
                 macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string,
-                &naming::HeadersSnakeCase,
+                &HeadersSnakeCase,
                 macros_helpers::generate_simple_syn_punctuated_punctuated(&["reqwest", "header", "HeaderMap"]),
             ),
-            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string_serialize_deserialize, &naming::ResponseTextSnakeCase, string_syn_punctuated_punctuated),
-            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &naming::SerdeSnakeCase, macros_helpers::generate_simple_syn_punctuated_punctuated(&["serde_json", "Error"])),
+            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string_serialize_deserialize, &ResponseTextSnakeCase, string_syn_punctuated_punctuated),
+            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &SerdeSnakeCase, macros_helpers::generate_simple_syn_punctuated_punctuated(&["serde_json", "Error"])),
         ],
     );
     let reqwest_syn_variant_wrapper = new_syn_variant_wrapper(
-        &naming::ReqwestUpperCamelCase,
+        &ReqwestUpperCamelCase,
         None,
         vec![(
             macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string,
-            &naming::ReqwestSnakeCase,
+            &ReqwestSnakeCase,
             macros_helpers::generate_simple_syn_punctuated_punctuated(&["reqwest", "Error"]),
         )],
     );
     let check_body_size_syn_variant_wrapper = new_syn_variant_wrapper(
-        &naming::CheckBodySizeUpperCamelCase,
+        &CheckBodySizeUpperCamelCase,
         Some(macros_helpers::StatusCode::BadRequest400),
         vec![(
             ErrorOccurenceFieldAttribute::EoErrorOccurence,
-            &naming::CheckBodySizeSnakeCase,
+            &CheckBodySizeSnakeCase,
             macros_helpers::generate_simple_syn_punctuated_punctuated(&[
                 &PostgresqlCrudSnakeCase.to_string(),
                 "check_body_size",
-                &naming::ErrorNamedUpperCamelCase.to_string(),
+                &ErrorNamedUpperCamelCase.to_string(),
             ]),
         )],
     );
     let serde_json_syn_variant_wrapper = new_syn_variant_wrapper(
-        &naming::SerdeJsonUpperCamelCase,
+        &SerdeJsonUpperCamelCase,
         Some(macros_helpers::StatusCode::BadRequest400),
         vec![(
             macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string,
-            &naming::SerdeJsonSnakeCase,
+            &SerdeJsonSnakeCase,
             macros_helpers::generate_simple_syn_punctuated_punctuated(&["serde_json", "Error"]),
         )],
     );
     let header_content_type_application_json_not_found_syn_variant_wrapper =
         new_syn_variant_wrapper(
-            &naming::HeaderContentTypeApplicationJsonNotFoundUpperCamelCase,
+            &HeaderContentTypeApplicationJsonNotFoundUpperCamelCase,
             Some(macros_helpers::StatusCode::BadRequest400),
             Vec::<(
                 ErrorOccurenceFieldAttribute,
@@ -4946,7 +4959,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let ident_tests_ts = {
         let ident_tests_snake_case = SelfTestsSnakeCase::from_display(&ident);
         let ident_double_quotes_ts =
-            generate_quotes::double_quotes_ts(&naming::DisplayToSnakeCaseStringified::case(&ident));
+            generate_quotes::double_quotes_ts(&DisplayToSnakeCaseStringified::case(&ident));
         let ident_create_many_parameters_upper_camel_case =
             generate_ident_operation_parameters_upper_camel_case(&Operation::CreateMany);
         let ident_read_many_parameters_upper_camel_case =
