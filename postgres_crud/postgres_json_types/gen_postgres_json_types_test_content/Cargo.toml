@@ -11,20 +11,3 @@ categories = ["category"]
 
 [lints]
 workspace = true
-[dependencies]
-schemars.workspace = true
-regex.workspace = true
-uuid.workspace = true
-sqlx.workspace = true
-serde.workspace = true
-utoipa.workspace = true
-error_occurence_lib = {path = "../../../error_occurence_lib"}
-postgres_crud_common = {path = "../../postgres_crud_common"}
-gen_postgres_json_types_common = {path = "../gen_postgres_json_types_common"}
-where_filters = {path = "../../where_filters"}
-
-[dev-dependencies]
-uuid.workspace = true
-
-[features]
-test-utils = []
