@@ -2024,7 +2024,7 @@ pub fn gen_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2::Tok
                             "",
                             #IncrementSc,
                         ) {
-                            Ok(ValueSc) => Ok(ValueSc),
+                            Ok(#ValueSc) => Ok(#ValueSc),
                             Err(#error_0_ts) => Err(#error_0_ts)
                         }
                     }
@@ -5616,7 +5616,7 @@ pub fn gen_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2::Tok
                     for el_30614c66 in [1,2] {
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
-                        let current_table = table_Test_read_many_by_non_existent_primary_keys.clone();
+                        let current_table = table_test_read_many_by_non_existent_primary_keys.clone();
                         acc_9189f86e.push(futures::FutureExt::boxed(async move {
                             #content_ts
                         }));
@@ -5735,7 +5735,7 @@ pub fn gen_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2::Tok
                     for el_a636d084 in [1,2] {
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
-                        let current_table = table_Test_read_many_by_equal_to_created_primary_keys.clone();
+                        let current_table = table_test_read_many_by_equal_to_created_primary_keys.clone();
                         let ident_create_default_cloned = ident_create_default.clone();
                         acc_9189f86e.push(futures::FutureExt::boxed(async move {
                             #content_ts
@@ -6703,7 +6703,7 @@ pub fn gen_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2::Tok
                     for el_39819198 in [1,2] {
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
-                        let current_table = table_Test_read_many_by_equal_to_created_primary_keys.clone();
+                        let current_table = table_test_read_many_by_equal_to_created_primary_keys.clone();
                         acc_9189f86e.push(futures::FutureExt::boxed(async move {
                             #content_ts
                         }));
@@ -6790,7 +6790,7 @@ pub fn gen_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2::Tok
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
                         //todo is table name correct?
-                        let current_table = table_Test_read_many_by_equal_to_created_primary_keys.clone();
+                        let current_table = table_test_read_many_by_equal_to_created_primary_keys.clone();
                         let ident_create_default_cloned = ident_create_default.clone();
                         acc_9189f86e.push(futures::FutureExt::boxed(async move {
                             #content_ts
@@ -7093,8 +7093,8 @@ pub fn gen_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2::Tok
                         let table_initialization = add_table_postfix("initialization");
                         let table_create_many = add_table_postfix("create_many");
                         let table_create_one = add_table_postfix("create_one");
-                        let table_Test_read_many_by_non_existent_primary_keys = add_table_postfix("Test_read_many_by_non_existent_primary_keys");
-                        let table_Test_read_many_by_equal_to_created_primary_keys = add_table_postfix("Test_read_many_by_equal_to_created_primary_keys");
+                        let table_test_read_many_by_non_existent_primary_keys = add_table_postfix("Test_read_many_by_non_existent_primary_keys");
+                        let table_test_read_many_by_equal_to_created_primary_keys = add_table_postfix("Test_read_many_by_equal_to_created_primary_keys");
                         #(#table_field_idents_initialization_vec_ts)*
                         let table_read_one = add_table_postfix("read_one");
                         let table_update_many = add_table_postfix("update_many");
@@ -7105,8 +7105,8 @@ pub fn gen_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2::Tok
                             &table_initialization,
                             &table_create_many,
                             &table_create_one,
-                            &table_Test_read_many_by_non_existent_primary_keys,
-                            &table_Test_read_many_by_equal_to_created_primary_keys,
+                            &table_test_read_many_by_non_existent_primary_keys,
+                            &table_test_read_many_by_equal_to_created_primary_keys,
                             #(#table_test_name_field_idents_vec_ts)*
                             &table_read_one,
                             &table_update_many,
@@ -7114,7 +7114,7 @@ pub fn gen_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2::Tok
                             &table_delete_many,
                             &table_delete_one,
                         ];
-                        let drop_all_Test_tables = async ||{
+                        let drop_all_test_tables = async ||{
                             let _unused = futures::future::try_join_all(
                                 table_names
                                 .iter()
@@ -7128,7 +7128,7 @@ pub fn gen_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2::Tok
                             .await
                             .expect("b9c1eb2e-4ead-449b-abb8-0a160cf68efd");
                         };
-                        drop_all_Test_tables().await;
+                        drop_all_test_tables().await;
                         #ident::prepare_extensions(&#PostgresPoolSc).await.expect("0633ff48-ebc4-460f-a282-d750511f5d78");
                         //do not make it concurrent. would be postgresql error: "duplicate key value violates unique constraint \"pg_class_relname_nsp_index\""
                         for el_dac43b91 in table_names {
@@ -7190,7 +7190,7 @@ pub fn gen_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2::Tok
                             async |fut| { fut.await; },
                         )
                         .await;
-                        drop_all_Test_tables().await;
+                        drop_all_test_tables().await;
                     });
                 }
             }
