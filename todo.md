@@ -260,7 +260,7 @@
 * Cut enum extension into few different proc macroses
 * Write match should trace inside init or new function of error initialization
 * https://blog.turbo.fish/proc-macro-error-handling/
-* Some logic around location() file!() line!() column!() - maybe generate all other functions - github link and others on compile time instead of runtime?
+* Some logic around location() file!() line!() column!() - maybe gen all other functions - github link and others on compile time instead of runtime?
 
 ## Code Generation Tools
 * Gen rust files: https://matklad.github.io/2022/03/26/self-modifying-code.html

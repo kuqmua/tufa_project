@@ -49,14 +49,13 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 acc_d6966473
             });
     let error_ts = {
-        let error_str = format!(
-            "\"Invalid {ident}, expected one of {error_variants_str} found {{value}}\""
-        );
+        let error_str =
+            format!("\"Invalid {ident}, expected one of {error_variants_str} found {{value}}\"");
         error_str
             .parse::<proc_macro2::TokenStream>()
             .expect("1b778757-4118-4419-bb33-a2f677afa169")
     };
-    let generated = quote! {
+    let gend = quote! {
         impl std::str::FromStr for #ident {
             type Err = String;
             fn from_str(value: &str) -> Result<Self, Self::Err> {
@@ -68,7 +67,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         }
     };
     // if ident == "" {
-    //    println!("{generated}");
+    //    println!("{gend}");
     // }
-    generated.into()
+    gend.into()
 }

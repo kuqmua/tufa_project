@@ -3,7 +3,7 @@ pub fn clippy_check(
     crate_name: &str,
     command_path: &str,
     additional_content: &str,
-    content_to_generate: &str,
+    content_to_gen: &str,
 ) {
     use std::{fs::write, process::Command};
     let path = format!("../{crate_name}/");
@@ -31,7 +31,7 @@ workspace = true"#
         format!("{cargo_toml_content}\n{additional_content}"),
     )
     .expect("3757da9b-0457-4301-9e68-efb60737dc71");
-    write(&path_lib_rs, content_to_generate).expect("55124f90-c7c2-40b5-8b66-695635ea6afd");
+    write(&path_lib_rs, content_to_gen).expect("55124f90-c7c2-40b5-8b66-695635ea6afd");
     let return_to_previous = || {
         write(&path_lib_rs, lib_rs_content).expect("79231418-b44a-4dac-8a88-3d8403024827");
         write(&path_cargo_toml, cargo_toml_content).expect("ec801a87-2c48-4c64-9c6a-7e686db91094");

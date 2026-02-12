@@ -57,7 +57,7 @@ fn main() {
                                 .parse()
                                 .expect("2a0b7c30-d4ba-4ce9-9fa9-98e981782191")]),
                     )
-                    //todo partialy move to generate postresql crud implementation (except git_info route)
+                    //todo partialy move to gen postresql crud implementation (except git_info route)
                     // .merge(utoipa_swagger_ui::SwaggerUi::new(constants::SLASH_SWAGGER_UI).url("/api-docs/openapi.json", {
                     //         // error: needless use of `for_each`
                     //         // #[derive(utoipa::OpenApi)]
@@ -129,7 +129,7 @@ fn main() {
                     //     //     ),
                     //     //     modifiers(&SecurityAddon),
                     //     //     tags((name = "server", description = "server api"))
-                    //     // )] //todo - this thing actually using builder pattern. maybe generate builder in GeneratePostgresqlTable then merge it together?
+                    //     // )] //todo - this thing actually using builder pattern. maybe gen builder in GenPostgresqlTable then merge it together?
                     //     struct ApiDoc;
                     //     struct SecurityAddon;
                     //     impl utoipa::Modify for SecurityAddon {

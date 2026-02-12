@@ -67,7 +67,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 Self::#el_ident_ucc_ts { #el_ident } => write!(f, "{}", #el_ident)
             }
         });
-        macros_helpers::generate_impl_std_fmt_display_ts(
+        macros_helpers::gen_impl_std_fmt_display_ts(
             &proc_macro2::TokenStream::new(),
             &ident_try_from_env_error_named_ucc,
             &proc_macro2::TokenStream::new(),
@@ -137,11 +137,11 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             }
         }
     };
-    let generated = quote! {
+    let gend = quote! {
         #error_named_ts
         #display_error_named_ts
         #try_from_env_ts
     };
-    // println!("{generated}");
-    generated.into()
+    // println!("{gend}");
+    gend.into()
 }

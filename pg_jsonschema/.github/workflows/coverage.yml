@@ -49,7 +49,7 @@ jobs:
           sudo chmod a+rw /usr/share/postgresql/16/extension
           sudo chmod a+rw /usr/lib/postgresql/16/lib/
 
-      - name: Generate code coverage
+      - name: Gen code coverage
         id: coverage
         run: |
           CARGO_INCREMENTAL=0 RUSTFLAGS='-Clink-args=-Wl,-undefined,dynamic_lookup -Cinstrument-coverage' LLVM_PROFILE_FILE='cargo-test-%p-%m.profraw' cargo test

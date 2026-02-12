@@ -1,17 +1,17 @@
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, postgresql_crud::GeneratePostgresqlTable)]
-#[postgresql_crud::generate_postgresql_table_config{{
-    "create_many_content_write_into_generate_postgresql_table_create_many": "False",
-    "create_one_content_write_into_generate_postgresql_table_create_one": "False",
-    "read_many_content_write_into_generate_postgresql_table_read_many": "False",
-    "read_one_content_write_into_generate_postgresql_table_read_one": "False",
-    "update_many_content_write_into_generate_postgresql_table_update_many": "False",
-    "update_one_content_write_into_generate_postgresql_table_update_one": "False",
-    "delete_many_content_write_into_generate_postgresql_table_delete_many": "False",
-    "delete_one_content_write_into_generate_postgresql_table_delete_one": "False",
-    "tests_content_write_into_generate_postgresql_table_tests": "False",
-    "common_content_write_into_generate_postgresql_table_common": "False",
-    "whole_content_write_into_generate_postgresql_table": "False"
+#[derive(Debug, Clone, Copy, postgresql_crud::GenPostgresqlTable)]
+#[postgresql_crud::gen_postgresql_table_config{{
+    "create_many_content_write_into_gen_postgresql_table_create_many": "False",
+    "create_one_content_write_into_gen_postgresql_table_create_one": "False",
+    "read_many_content_write_into_gen_postgresql_table_read_many": "False",
+    "read_one_content_write_into_gen_postgresql_table_read_one": "False",
+    "update_many_content_write_into_gen_postgresql_table_update_many": "False",
+    "update_one_content_write_into_gen_postgresql_table_update_one": "False",
+    "delete_many_content_write_into_gen_postgresql_table_delete_many": "False",
+    "delete_one_content_write_into_gen_postgresql_table_delete_one": "False",
+    "tests_content_write_into_gen_postgresql_table_tests": "False",
+    "common_content_write_into_gen_postgresql_table_common": "False",
+    "whole_content_write_into_gen_postgresql_table": "False"
 }}]
 #[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
 #[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]
@@ -40,9 +40,9 @@
 #[postgresql_crud::delete_one_additional_logic{}]
 #[postgresql_crud::common_additional_logic{}]
 pub struct TableExample {
-    // #[generate_postgresql_crud_primary_key]
+    // #[gen_postgresql_crud_primary_key]
     // pub primary_key: postgresql_crud::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql,
-    #[generate_postgresql_table_primary_key]
+    #[gen_postgresql_table_primary_key]
     pub primary_key_column:
         postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql,
 

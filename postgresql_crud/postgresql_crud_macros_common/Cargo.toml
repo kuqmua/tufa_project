@@ -19,7 +19,7 @@ strum_macros.workspace = true
 naming = {path = "../../naming"}
 token_patterns = {path = "../../token_patterns"}
 enum_extension_lib = {path = "../../enum_extension_lib"}
-generate_quotes = {path = "../../generate_quotes"}
+gen_quotes = {path = "../../gen_quotes"}
 macros_helpers = {path = "../../macros_helpers"}
 
 [lints]

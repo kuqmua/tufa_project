@@ -1,10 +1,10 @@
 #[allow(unused_qualifications)]
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, postgresql_crud::GeneratePostgresqlJsonObjectType)]
+#[derive(Debug, Clone, Copy, postgresql_crud::GenPostgresqlJsonObjectType)]
 #[postgresql_crud::postgresql_json_object_type_config{
     {
         "postgresql_table_columns_content_write_into_postgresql_table_columns_using_postgresql_json_object_types": "False",
-        "whole_content_write_into_generate_postgresql_json_object_type": "False",
+        "whole_content_write_into_gen_postgresql_json_object_type": "False",
         "variant": 
         // {
         //     "not_null_or_nullable": "NotNull",
@@ -850,11 +850,11 @@ pub struct Animal {
 
 #[allow(unused_qualifications)]
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, postgresql_crud::GeneratePostgresqlJsonObjectType)]
+#[derive(Debug, Clone, Copy, postgresql_crud::GenPostgresqlJsonObjectType)]
 #[postgresql_crud::postgresql_json_object_type_config{
     {
         "postgresql_table_columns_content_write_into_postgresql_table_columns_using_postgresql_json_object_types": "False",
-        "whole_content_write_into_generate_postgresql_json_object_type": "False",
+        "whole_content_write_into_gen_postgresql_json_object_type": "False",
         "variant":
         // {
         //     "not_null_or_nullable": "NotNull",
@@ -1015,11 +1015,11 @@ pub struct Doggie {
 
 #[allow(unused_qualifications)]
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, postgresql_crud::GeneratePostgresqlJsonObjectType)]
+#[derive(Debug, Clone, Copy, postgresql_crud::GenPostgresqlJsonObjectType)]
 #[postgresql_crud::postgresql_json_object_type_config{
     {
         "postgresql_table_columns_content_write_into_postgresql_table_columns_using_postgresql_json_object_types": "False",
-        "whole_content_write_into_generate_postgresql_json_object_type": "False",
+        "whole_content_write_into_gen_postgresql_json_object_type": "False",
         "variant":
         // {
         //     "not_null_or_nullable": "NotNull",

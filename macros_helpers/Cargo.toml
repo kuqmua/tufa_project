@@ -17,9 +17,9 @@ syn.workspace = true
 strum_macros.workspace = true
 serde.workspace = true
 token_patterns = {path = "../token_patterns"}
-generate_quotes = {path = "../generate_quotes"}
+gen_quotes = {path = "../gen_quotes"}
 naming = {path = "../naming"}
-generate_struct_or_enum_derive_ts_builder = {path = "./generate_struct_or_enum_derive_ts_builder"}
+gen_struct_or_enum_derive_ts_builder = {path = "./gen_struct_or_enum_derive_ts_builder"}
 
 [lints]
 workspace = true

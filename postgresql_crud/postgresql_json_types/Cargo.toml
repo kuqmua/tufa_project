@@ -16,11 +16,11 @@ sqlx.workspace = true
 serde.workspace = true
 schemars.workspace = true
 regex.workspace = true
-generate_postgresql_json_types = {path = "./generate_postgresql_json_types"}
+gen_postgresql_json_types = {path = "./gen_postgresql_json_types"}
 error_occurence_lib = {path = "../../error_occurence_lib"}
 postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}
 where_filters = {path = "../where_filters"}
-generate_postgresql_json_types_common = {path = "./generate_postgresql_json_types_common"}
+gen_postgresql_json_types_common = {path = "./gen_postgresql_json_types_common"}
 
 [lints]
 workspace = true

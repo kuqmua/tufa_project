@@ -1,9 +1,9 @@
 use config_lib::types::{SourcePlaceType, TracingLevel};
 use std::net::SocketAddr;
 
-#[derive(Debug, config_lib::TryFromEnv, config_lib::GenerateGetterTraitsForStructFields)]
+#[derive(Debug, config_lib::TryFromEnv, config_lib::GenGetterTraitsForStructFields)]
 pub struct Config {
-    //todo maybe auto generate .env and docker-compose environment variables. and maybe write in directly into files
+    //todo maybe auto gen .env and docker-compose environment variables. and maybe write in directly into files
     pub database_url: secrecy::SecretBox<String>,
     pub enable_api_git_commit_check: bool,
     pub maximum_size_of_http_body_in_bytes: usize,

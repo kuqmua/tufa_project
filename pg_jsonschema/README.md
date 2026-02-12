@@ -180,7 +180,7 @@ select
         'b', i::text
     )
 from
-    generate_series(1, 20000) t(i);
+    gen_series(1, 20000) t(i);
 -- Query Completed in 351 ms 
 ```
 for comparison, the equivalent test using postgres-json-schema's `validate_json_schema` function ran in 5.54 seconds. pg_jsonschema's ~15x speedup on this example JSON schema grows quickly as the schema becomes more complex.

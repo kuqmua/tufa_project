@@ -1,4 +1,4 @@
-//todo generate openapi spec
+//todo gen openapi spec
 use axum::{
     Json, Router,
     extract::State,

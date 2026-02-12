@@ -1,4 +1,4 @@
-naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
+naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ["self", "parameters"],
     ["self", "payload"],
     ["self", "payload", "with", "serialize", "deserialize"],
@@ -92,8 +92,8 @@ naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
     ],
     ["try", "self", "with", "serialize", "deserialize"],
     ["tvfrr", "extraction", "logic", "try", "self"],
-    ["try", "self", "generated", "logic", "error", "named"],
-    ["try", "self", "generated", "logic", "desirable"],
+    ["try", "self", "gend", "logic", "error", "named"],
+    ["try", "self", "gend", "logic", "desirable"],
     ["try", "self", "logic"],
     ["try", "self", "logic", "response", "variants"],
     ["try", "self", "logic", "error", "named"],
@@ -101,7 +101,7 @@ naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
     [
         "try",
         "self",
-        "generated",
+        "gend",
         "logic",
         "error",
         "named",
@@ -222,7 +222,7 @@ naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
         "to",
         "update",
         "try",
-        "generate",
+        "gen",
         "postgresql",
         "json",
         "type",
@@ -235,7 +235,7 @@ naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
         "to",
         "update",
         "try",
-        "generate",
+        "gen",
         "postgresql",
         "json",
         "type",
@@ -247,15 +247,15 @@ naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
     ],
     ["self", "json", "array", "change"],
     ["self", "to", "create", "origin"],
-    ["self", "to", "create", "with", "generated", "id"],
-    ["self", "to", "create", "without", "generated", "id"],
+    ["self", "to", "create", "with", "gend", "id"],
+    ["self", "to", "create", "without", "gend", "id"],
     [
-        "self", "json", "array", "change", "try", "generate", "error", "named"
+        "self", "json", "array", "change", "try", "gen", "error", "named"
     ],
     ["self", "field", "to", "update"],
     [
         "self",
-        "generate",
+        "gen",
         "postgresql",
         "json",
         "type",
@@ -267,7 +267,7 @@ naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
     [
         "self",
         "try",
-        "generate",
+        "gen",
         "json",
         "array",
         "element",
@@ -296,7 +296,7 @@ naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
     ],
     [
         "self",
-        "generate",
+        "gen",
         "postgresql",
         "json",
         "type",
@@ -332,7 +332,7 @@ naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
         "try", "new", "error", "named"
     ],
     [
-        "object", "self", "option", "to", "update", "try", "generate", "error", "named"
+        "object", "self", "option", "to", "update", "try", "gen", "error", "named"
     ],
     [
         "object",
@@ -341,7 +341,7 @@ naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
         "to",
         "update",
         "try",
-        "generate",
+        "gen",
         "postgresql",
         "json",
         "type",
@@ -352,7 +352,7 @@ naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
         "deserialize"
     ],
     [
-        "std", "option", "option", "object", "self", "option", "to", "update", "try", "generate",
+        "std", "option", "option", "object", "self", "option", "to", "update", "try", "gen",
         "error", "named"
     ],
     [
@@ -367,7 +367,7 @@ naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
         "to",
         "update",
         "try",
-        "generate",
+        "gen",
         "postgresql",
         "json",
         "type",
@@ -389,7 +389,7 @@ naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
         "to",
         "update",
         "try",
-        "generate",
+        "gen",
         "postgresql",
         "json",
         "type",
@@ -603,7 +603,7 @@ naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
     ],
     [
         "std", "vec", "vec", "object", "with", "id", "self", "option", "to", "update", "try",
-        "generate", "error", "named"
+        "gen", "error", "named"
     ],
     [
         "postgresql",
@@ -623,7 +623,7 @@ naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
         "to",
         "update",
         "try",
-        "generate",
+        "gen",
         "postgresql",
         "json",
         "type",
@@ -640,7 +640,7 @@ naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
         "to",
         "update",
         "try",
-        "generate",
+        "gen",
         "postgresql",
         "json",
         "type",
@@ -659,7 +659,7 @@ naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
         "to",
         "update",
         "try",
-        "generate",
+        "gen",
         "postgresql",
         "json",
         "type",
@@ -1845,7 +1845,7 @@ naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
     ["vec", "self", "array", "not", "null"],
     ["vec", "self", "array", "nullable"],
     [
-        "self", "option", "to", "update", "try", "generate", "error", "named"
+        "self", "option", "to", "update", "try", "gen", "error", "named"
     ],
     [
         "postgresql",
@@ -1867,7 +1867,7 @@ naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
     ],
     [
         "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "option",
-        "to", "update", "try", "generate", "error", "named"
+        "to", "update", "try", "gen", "error", "named"
     ],
     ["postgresql", "type", "where", "self"],
     [
@@ -2017,14 +2017,6 @@ naming_macros::generate_self_upper_camel_and_sc_str_and_ts!([
         "inner",
         "acc"
     ],
-    [
-        "self",
-        "generate",
-        "postgresql",
-        "json",
-        "object",
-        "type",
-        "mod"
-    ],
-    ["self", "generate", "postgresql", "table", "mod"]
+    ["self", "gen", "postgresql", "json", "object", "type", "mod"],
+    ["self", "gen", "postgresql", "table", "mod"]
 ]);

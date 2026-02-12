@@ -10,7 +10,7 @@ keywords = ["keyword"]
 categories = ["category"]
 
 [dependencies]
-generate_postgresql_table = {path = "./generate_postgresql_table"}
+gen_postgresql_table = {path = "./gen_postgresql_table"}
 app_state = {path = "../../app_state"}
 
 [lints]

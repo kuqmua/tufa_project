@@ -13,7 +13,7 @@ categories = ["category"]
 proc-macro2.workspace = true
 quote.workspace = true
 syn.workspace = true
-generate_quotes = {path = "../generate_quotes"}
+gen_quotes = {path = "../gen_quotes"}
 naming_macros = {path = "./naming_macros"}
 naming_common = {path = "./naming_common"}
 

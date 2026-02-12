@@ -15,7 +15,7 @@ uuid.workspace = true
 serde.workspace = true
 chrono.workspace = true
 thiserror.workspace = true
-generate_postgresql_types = {path = "./generate_postgresql_types"}
+gen_postgresql_types = {path = "./gen_postgresql_types"}
 postgresql_types_common = {path = "./postgresql_types_common"}
 postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}
 error_occurence_lib = {path = "../../error_occurence_lib"}

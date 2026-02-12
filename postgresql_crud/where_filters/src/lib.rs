@@ -1,10 +1,10 @@
 use error_occurence_lib::code_occurence::CodeOccurence;
 use sqlx::{postgres::PgArguments, query::Query, types::Json};
 use std::fmt::{Display, Formatter, Result as StdFmtResult, Write as _};
-generate_where_filters::generate_where_filters!({
-    "postgresql_types_content_write_into_generate_where_filters_postgresql_types": "False",
-    "postgresql_json_types_content_write_into_generate_where_filters_postgresql_json_types": "False",
-    "whole_content_write_into_generate_where_filters": "False"
+gen_where_filters::gen_where_filters!({
+    "postgresql_types_content_write_into_gen_where_filters_postgresql_types": "False",
+    "postgresql_json_types_content_write_into_gen_where_filters_postgresql_json_types": "False",
+    "whole_content_write_into_gen_where_filters": "False"
 });
 
 #[derive(

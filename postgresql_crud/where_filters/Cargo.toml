@@ -16,7 +16,7 @@ schemars.workspace = true
 utoipa.workspace = true
 regex.workspace = true
 thiserror.workspace = true
-generate_where_filters = {path = "./generate_where_filters"}
+gen_where_filters = {path = "./gen_where_filters"}
 error_occurence_lib = {path = "../../error_occurence_lib"}
 postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}
 

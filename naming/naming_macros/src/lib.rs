@@ -3,7 +3,7 @@ use quote::quote;
 const REGEX_VALUE: &str = "^[a-zA-Z]+$";
 
 #[proc_macro]
-pub fn generate_upper_camel_and_sc_str_and_ts(
+pub fn gen_upper_camel_and_sc_str_and_ts(
     input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -25,15 +25,13 @@ pub fn generate_upper_camel_and_sc_str_and_ts(
                 el_020a8657
                     .iter()
                     .fold(String::new(), |mut acc_3d60efa0, el_132cd6b1| {
-                        acc_3d60efa0
-                            .push_str(&naming_common::AsRefStrToUccStr::case(el_132cd6b1));
+                        acc_3d60efa0.push_str(&naming_common::AsRefStrToUccStr::case(el_132cd6b1));
                         acc_3d60efa0
                     });
             let phrase_part_sc_str = el_020a8657.iter().enumerate().fold(
                 String::new(),
                 |mut acc_7a8bd950, (index, el_b9981760)| {
-                    let el_sc_str =
-                        naming_common::AsRefStrToScStr::case(el_b9981760);
+                    let el_sc_str = naming_common::AsRefStrToScStr::case(el_b9981760);
                     if index == 0 {
                         acc_7a8bd950.push_str(&el_sc_str);
                     } else {
@@ -47,9 +45,8 @@ pub fn generate_upper_camel_and_sc_str_and_ts(
                 },
             );
             let phrase_part_ucc_double_quotes_ts =
-                generate_quotes::double_quotes_ts(&phrase_part_ucc_str);
-            let phrase_part_sc_double_quotes_ts =
-                generate_quotes::double_quotes_ts(&phrase_part_sc_str);
+                gen_quotes::double_quotes_ts(&phrase_part_ucc_str);
+            let phrase_part_sc_double_quotes_ts = gen_quotes::double_quotes_ts(&phrase_part_sc_str);
             let phrase_part_ucc_ts = phrase_part_ucc_str
                 .parse::<proc_macro2::TokenStream>()
                 .expect("7cf3ffc0-e9c9-4d91-b42f-beb77350d743");
@@ -68,15 +65,15 @@ pub fn generate_upper_camel_and_sc_str_and_ts(
                     .parse::<proc_macro2::TokenStream>()
                     .expect("0cc47b2e-03e2-48b8-8df3-7bbbe09de244")
             };
-            let generate_struct_declaration = |struct_name_ts: &dyn quote::ToTokens| {
+            let gen_struct_declaration = |struct_name_ts: &dyn quote::ToTokens| {
                 quote! {
                     #[derive(Debug)]
                     pub struct #struct_name_ts;
                 }
             };
-            let ucc_struct_declaration_ts = generate_struct_declaration(&phrase_part_ucc_ucc_ts);
-            let sc_struct_declaration_ts = generate_struct_declaration(&phrase_part_sc_ucc_ts);
-            let generate_display_implementation_ts =
+            let ucc_struct_declaration_ts = gen_struct_declaration(&phrase_part_ucc_ucc_ts);
+            let sc_struct_declaration_ts = gen_struct_declaration(&phrase_part_sc_ucc_ts);
+            let gen_display_implementation_ts =
                 |struct_name_ts: &dyn quote::ToTokens, write_content_ts: &dyn quote::ToTokens| {
                     quote! {
                         impl std::fmt::Display for #struct_name_ts {
@@ -86,15 +83,15 @@ pub fn generate_upper_camel_and_sc_str_and_ts(
                         }
                     }
                 };
-            let ucc_display_implementation_ts = generate_display_implementation_ts(
+            let ucc_display_implementation_ts = gen_display_implementation_ts(
                 &phrase_part_ucc_ucc_ts,
                 &phrase_part_ucc_double_quotes_ts,
             );
-            let sc_display_implementation_ts = generate_display_implementation_ts(
+            let sc_display_implementation_ts = gen_display_implementation_ts(
                 &phrase_part_sc_ucc_ts,
                 &phrase_part_sc_double_quotes_ts,
             );
-            let generate_to_tokens_implementation_ts =
+            let gen_to_tokens_implementation_ts =
                 |struct_name_ts: &dyn quote::ToTokens, quote_content_ts: &dyn quote::ToTokens| {
                     quote! {
                         impl quote::ToTokens for #struct_name_ts {
@@ -105,9 +102,9 @@ pub fn generate_upper_camel_and_sc_str_and_ts(
                     }
                 };
             let ucc_to_tokens_implementation_ts =
-                generate_to_tokens_implementation_ts(&phrase_part_ucc_ucc_ts, &phrase_part_ucc_ts);
+                gen_to_tokens_implementation_ts(&phrase_part_ucc_ucc_ts, &phrase_part_ucc_ts);
             let snake_to_tokens_implementation_ts =
-                generate_to_tokens_implementation_ts(&phrase_part_sc_ucc_ts, &phrase_part_sc_ts);
+                gen_to_tokens_implementation_ts(&phrase_part_sc_ucc_ts, &phrase_part_sc_ts);
             quote! {
                 #ucc_struct_declaration_ts
                 #ucc_display_implementation_ts
@@ -117,13 +114,13 @@ pub fn generate_upper_camel_and_sc_str_and_ts(
                 #snake_to_tokens_implementation_ts
             }
         });
-    let generated = quote! {#(#implementations_ts)*};
-    // println!("{generated}");
-    generated.into()
+    let gend = quote! {#(#implementations_ts)*};
+    // println!("{gend}");
+    gend.into()
 }
 
 #[proc_macro]
-pub fn generate_self_upper_camel_and_sc_str_and_ts(
+pub fn gen_self_upper_camel_and_sc_str_and_ts(
     input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -152,7 +149,7 @@ pub fn generate_self_upper_camel_and_sc_str_and_ts(
                 acc_34997d76.push_str(&naming_common::AsRefStrToUccStr::case(el_98881b7d));
                 acc_34997d76
             });
-            let elements_concat_value_ucc_double_quotes_ts = generate_quotes::double_quotes_ts(&el_a5ccbaa7.iter().fold(String::new(), |mut acc_ae77cbd3, el_626f2b61| {
+            let elements_concat_value_ucc_double_quotes_ts = gen_quotes::double_quotes_ts(&el_a5ccbaa7.iter().fold(String::new(), |mut acc_ae77cbd3, el_626f2b61| {
                 if el_626f2b61 == "self" {
                     acc_ae77cbd3.push_str("{value}");
                 } else {
@@ -160,7 +157,7 @@ pub fn generate_self_upper_camel_and_sc_str_and_ts(
                 }
                 acc_ae77cbd3
             }));
-            let elements_concat_value_sc_double_quotes_ts = generate_quotes::double_quotes_ts(&{
+            let elements_concat_value_sc_double_quotes_ts = gen_quotes::double_quotes_ts(&{
                 let mut value = el_a5ccbaa7.iter().fold(String::new(), |mut acc_cbcae5e1, el_73b0c851| {
                     use std::fmt::Write as _;
                     let symbol = '_';
@@ -203,7 +200,7 @@ pub fn generate_self_upper_camel_and_sc_str_and_ts(
                 trait_sc_token_ucc_ts,
             )
         };
-        let generate_struct_ts = |elements_concat_value_case_double_quotes_ts: &dyn quote::ToTokens, is_ucc: bool, trait_ident_ts: &dyn quote::ToTokens| {
+        let gen_struct_ts = |elements_concat_value_case_double_quotes_ts: &dyn quote::ToTokens, is_ucc: bool, trait_ident_ts: &dyn quote::ToTokens| {
             let struct_ident_ts = if is_ucc {
                 quote! {#struct_ucc_ucc_ts}
             } else {
@@ -269,16 +266,16 @@ pub fn generate_self_upper_camel_and_sc_str_and_ts(
                 impl #trait_ident_ts for #struct_ident_ts {}
             }
         };
-        let pub_struct_ucc_ts = generate_struct_ts(&elements_concat_value_ucc_double_quotes_ts, true, &trait_ucc_ucc_ts);
-        let pub_struct_sc_ts = generate_struct_ts(&elements_concat_value_sc_double_quotes_ts, false, &trait_sc_token_ucc_ts);
+        let pub_struct_ucc_ts = gen_struct_ts(&elements_concat_value_ucc_double_quotes_ts, true, &trait_ucc_ucc_ts);
+        let pub_struct_sc_ts = gen_struct_ts(&elements_concat_value_sc_double_quotes_ts, false, &trait_sc_token_ucc_ts);
         quote! {
             #pub_struct_ucc_ts
             #pub_struct_sc_ts
         }
     });
-    let generated = quote! {#(#implementations_ts)*};
-    // println!("{generated}");
-    generated.into()
+    let gend = quote! {#(#implementations_ts)*};
+    // println!("{gend}");
+    gend.into()
 }
 
 ////////////////////
@@ -310,14 +307,14 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(
             syn::Fields::Unit => {
                 let variant_ident = &variant.ident;
                 let variant_ident_ucc_str = naming_common::ToTokensToUccStr::case(&variant_ident);
-                let variant_ident_ucc_double_quotes_ts = generate_quotes::double_quotes_ts(&variant_ident_ucc_str);
+                let variant_ident_ucc_double_quotes_ts = gen_quotes::double_quotes_ts(&variant_ident_ucc_str);
                 quote! {Self::#variant_ident => #std_string_string_ts::from(#variant_ident_ucc_double_quotes_ts)}
             }
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("4955c50d-3db7-4881-a085-64b08a1ef413"),
         })
         .collect::<Vec<proc_macro2::TokenStream>>();
     let trait_path_ts = trait_path_ts();
-    let generated = quote! {
+    let gend = quote! {
         impl #trait_path_ts::AsRefStrToUccStr for #ident {
             fn case(&self) -> #std_string_string_ts {//todo maybe write duplicate Trait with &str instead of String
                 match self {
@@ -326,8 +323,8 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(
             }
         }
     };
-    // println!("{generated}");
-    generated.into()
+    // println!("{gend}");
+    gend.into()
 }
 
 /*
@@ -358,14 +355,14 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(
             syn::Fields::Unit => {
                 let variant_ident = &variant.ident;
                 let variant_ident_sc_str = naming_common::ToTokensToScStr::case(&variant_ident);
-                let variant_ident_sc_double_quotes_ts = generate_quotes::double_quotes_ts(&variant_ident_sc_str);
+                let variant_ident_sc_double_quotes_ts = gen_quotes::double_quotes_ts(&variant_ident_sc_str);
                 quote! {Self::#variant_ident => #std_string_string_ts::from(#variant_ident_sc_double_quotes_ts)}
             }
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("b3ef2657-22f2-4df6-a58c-263a50e3c247"),
         })
         .collect::<Vec<proc_macro2::TokenStream>>();
     let trait_path_ts = trait_path_ts();
-    let generated = quote! {
+    let gend = quote! {
         impl #trait_path_ts::AsRefStrToScStr for #ident {
             fn case(&self) -> #std_string_string_ts {
                 match self {
@@ -374,8 +371,8 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(
             }
         }
     };
-    // println!("{generated}");
-    generated.into()
+    // println!("{gend}");
+    gend.into()
 }
 /*
 only works if all enum variants without fields like this
@@ -405,14 +402,14 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(
             syn::Fields::Unit => {
                 let variant_ident = &variant.ident;
                 let variant_ident_sc_str = naming_common::ToTokensToUpperScStr::case(&variant_ident);
-                let variant_ident_sc_double_quotes_ts = generate_quotes::double_quotes_ts(&variant_ident_sc_str);
+                let variant_ident_sc_double_quotes_ts = gen_quotes::double_quotes_ts(&variant_ident_sc_str);
                 quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_sc_double_quotes_ts)}
             }
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("b6fedcff-1a88-455f-bd93-219ec45a1fce"),
         })
         .collect::<Vec<proc_macro2::TokenStream>>();
     let trait_path_ts = trait_path_ts();
-    let generated = quote! {
+    let gend = quote! {
         impl #trait_path_ts::ToUpperScStr for #ident {
             fn case(&self) -> #std_string_string {
                 match self {
@@ -421,8 +418,8 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(
             }
         }
     };
-    // println!("{generated}");
-    generated.into()
+    // println!("{gend}");
+    gend.into()
 }
 
 fn trait_path_ts() -> proc_macro2::TokenStream {

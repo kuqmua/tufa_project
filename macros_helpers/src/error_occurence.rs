@@ -95,10 +95,7 @@ impl AttributeIdentStr for ErrorOccurenceFieldAttribute {
 impl ErrorOccurenceFieldAttribute {
     #[must_use]
     pub fn to_attribute_view_ts(&self) -> proc_macro2::TokenStream {
-        let value = format!(
-            "#[{}]",
-            AttributeIdentStr::attribute_ident_str(self)
-        );
+        let value = format!("#[{}]", AttributeIdentStr::attribute_ident_str(self));
         value
             .parse::<proc_macro2::TokenStream>()
             .expect("147c39e9-4e64-4080-9426-f66520a414d6")
@@ -106,7 +103,7 @@ impl ErrorOccurenceFieldAttribute {
 }
 
 #[must_use]
-pub fn generate_serialize_deserialize_version_of_named_syn_variant(
+pub fn gen_serialize_deserialize_version_of_named_syn_variant(
     value: &syn::Variant,
 ) -> proc_macro2::TokenStream {
     let el_ident = &value.ident;

@@ -1,6 +1,4 @@
-use naming::{
-    AsRefStrEnumWithUnitFieldsToScStr, AsRefStrEnumWithUnitFieldsToUccStr,
-};
+use naming::{AsRefStrEnumWithUnitFieldsToScStr, AsRefStrEnumWithUnitFieldsToUccStr};
 use quote::quote;
 use strum_macros::Display;
 #[allow(clippy::arbitrary_source_item_ordering)]

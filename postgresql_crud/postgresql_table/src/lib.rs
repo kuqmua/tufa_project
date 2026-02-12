@@ -1,4 +1,4 @@
-pub use generate_postgresql_table::*;
+pub use gen_postgresql_table::*;
 
 pub trait CombinationOfAppStateLogicTraits:
     app_state::GetEnableApiGitCommitCheck
@@ -12,7 +12,7 @@ pub trait CombinationOfAppStateLogicTraits:
 }
 
 #[must_use]
-pub fn generate_create_many_query_string(
+pub fn gen_create_many_query_string(
     table: &str,
     columns: &str,
     values: &str,
@@ -21,7 +21,7 @@ pub fn generate_create_many_query_string(
     format!("insert into {table} ({columns}) values {values} returning {columns_to_return}")
 }
 #[must_use]
-pub fn generate_create_one_query_string(
+pub fn gen_create_one_query_string(
     table: &str,
     columns: &str,
     values: &str,
@@ -30,30 +30,19 @@ pub fn generate_create_one_query_string(
     format!("insert into {table} ({columns}) values ({values}) returning {columns_to_return}")
 }
 #[must_use]
-pub fn generate_read_many_query_string(
-    table: &str,
-    select_string: &str,
-    where_string: &str,
-) -> String {
+pub fn gen_read_many_query_string(table: &str, select_string: &str, where_string: &str) -> String {
     format!("select {select_string} from {table} {where_string}")
 }
 #[must_use]
-pub fn generate_read_one_query_string(
-    table: &str,
-    select_string: &str,
-    where_string: &str,
-) -> String {
+pub fn gen_read_one_query_string(table: &str, select_string: &str, where_string: &str) -> String {
     format!("select {select_string} from {table} where {where_string}")
 }
 #[must_use]
-pub fn generate_column_queals_value_comma_update_one_query_part(
-    column: &str,
-    value: &str,
-) -> String {
+pub fn gen_column_queals_value_comma_update_one_query_part(column: &str, value: &str) -> String {
     format!("{column} = {value},")
 }
 #[must_use]
-pub fn generate_when_column_id_then_value_update_many_query_part(
+pub fn gen_when_column_id_then_value_update_many_query_part(
     column: &str,
     id: &str,
     value: &str,
@@ -61,7 +50,7 @@ pub fn generate_when_column_id_then_value_update_many_query_part(
     format!("when {column} = {id} then {value} ")
 }
 #[must_use]
-pub fn generate_column_equals_case_acc_else_column_end_comma_update_many_query_part(
+pub fn gen_column_equals_case_acc_else_column_end_comma_update_many_query_part(
     column: &str,
     acc: &str,
 ) -> String {
@@ -69,7 +58,7 @@ pub fn generate_column_equals_case_acc_else_column_end_comma_update_many_query_p
 }
 //todo additional parameter for columns_to_return instead of primary_key_field_name in "returning {primary_key_field_name}""
 #[must_use]
-pub fn generate_update_many_query_string(
+pub fn gen_update_many_query_string(
     table: &str,
     elements: &str,
     primary_key_field_name: &str,
@@ -82,7 +71,7 @@ pub fn generate_update_many_query_string(
 }
 //todo additional parameter for columns_to_return instead of primary_key_field_name in "returning {primary_key_field_name}""
 #[must_use]
-pub fn generate_update_one_query_string(
+pub fn gen_update_one_query_string(
     table: &str,
     columns: &str,
     primary_key_field_name: &str,
@@ -94,7 +83,7 @@ pub fn generate_update_one_query_string(
     )
 }
 #[must_use]
-pub fn generate_delete_many_query_string(
+pub fn gen_delete_many_query_string(
     table: &str,
     where_string: &str,
     primary_key_field_name: &str,
@@ -102,7 +91,7 @@ pub fn generate_delete_many_query_string(
     format!("delete from {table} {where_string} returning {primary_key_field_name}")
 }
 #[must_use]
-pub fn generate_delete_one_query_string(table: &str, primary_key_field_name: &str) -> String {
+pub fn gen_delete_one_query_string(table: &str, primary_key_field_name: &str) -> String {
     format!(
         "delete from {table} where {primary_key_field_name} = $1 returning {primary_key_field_name}"
     )

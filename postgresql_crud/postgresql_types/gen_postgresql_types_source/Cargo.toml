@@ -1,0 +1,30 @@
+[package]
+name = "gen_postgresql_types_source"
+version = "0.1.0"
+edition = "2024"
+description = "description"
+repository = "repository"
+readme = "readme"
+license = "license"
+keywords = ["keyword"]
+categories = ["category"]
+
+[dependencies]
+proc-macro2.workspace = true
+quote.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+strum.workspace = true
+strum_macros.workspace = true
+rayon.workspace = true
+postgresql_crud_macros_common = {path = "../../postgresql_crud_macros_common"}
+postgresql_crud_common_and_macros_common = {path = "../../postgresql_crud_common_and_macros_common"}
+enum_extension_lib = {path = "../../../enum_extension_lib"}
+gen_quotes = {path = "../../../gen_quotes"}
+panic_location = {path = "../../../panic_location"}
+macros_helpers = {path = "../../../macros_helpers"}
+naming = {path = "../../../naming"}
+token_patterns = {path = "../../../token_patterns"}
+
+[lints]
+workspace = true

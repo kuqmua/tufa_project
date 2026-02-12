@@ -5,14 +5,14 @@ use std::{
     str::{FromStr, ParseBoolError},
 };
 
-pub use generate_getter_traits_for_struct_fields::GenerateGetterTraitsForStructFields;
+pub use gen_getter_traits_for_struct_fields::GenGetterTraitsForStructFields;
 pub use try_from_env::TryFromEnv;
 
 pub trait TryFromStdEnvVarOk: Sized {
     type Error;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error>;
 }
-#[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
+#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct ServiceSocketAddress(pub SocketAddr);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkServiceSocketAddressErrorNamed {
@@ -28,7 +28,7 @@ impl TryFromStdEnvVarOk for ServiceSocketAddress {
             })
     }
 }
-#[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
+#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct Timezone(pub chrono::FixedOffset);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkTimezoneErrorNamed {
@@ -57,7 +57,7 @@ impl TryFromStdEnvVarOk for Timezone {
         Ok(Self(fixed_offset))
     }
 }
-#[derive(Debug, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
+#[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct RedisUrl(pub secrecy::SecretBox<String>);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkRedisUrlErrorNamed {
@@ -75,7 +75,7 @@ impl TryFromStdEnvVarOk for RedisUrl {
         }))
     }
 }
-#[derive(Debug, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
+#[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct MongoUrl(pub secrecy::SecretBox<String>);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkMongoUrlErrorNamed {
@@ -93,7 +93,7 @@ impl TryFromStdEnvVarOk for MongoUrl {
         }))
     }
 }
-#[derive(Debug, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
+#[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct DatabaseUrl(pub secrecy::SecretBox<String>);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkDatabaseUrlErrorNamed {
@@ -111,7 +111,7 @@ impl TryFromStdEnvVarOk for DatabaseUrl {
         }))
     }
 }
-#[derive(Debug, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
+#[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct StartingCheckLink(pub String);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkStartingCheckLinkErrorNamed {
@@ -130,7 +130,7 @@ impl TryFromStdEnvVarOk for StartingCheckLink {
     }
 }
 
-#[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
+#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct TracingLevel(pub types::TracingLevel);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkTracingLevelErrorNamed {
@@ -152,7 +152,7 @@ impl TryFromStdEnvVarOk for TracingLevel {
     }
 }
 
-#[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
+#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct SourcePlaceType(pub types::SourcePlaceType);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkSourcePlaceTypeErrorNamed {
@@ -174,7 +174,7 @@ impl TryFromStdEnvVarOk for SourcePlaceType {
     }
 }
 
-#[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
+#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct EnableApiGitCommitCheck(pub bool);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed {
@@ -196,7 +196,7 @@ impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
     }
 }
 
-#[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
+#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct MaximumSizeOfHttpBodyInBytes(pub usize);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed {

@@ -4,11 +4,10 @@ use quote::quote;
 use std::fmt::{Display, Formatter, Result as FmtResult};
 
 pub use naming_common::{
-    AsRefStrToScStr, AsRefStrToScTs, AsRefStrToUccStr, AsRefStrToUccTs,
-    AsRefStrToUpperScStr, AsRefStrToUpperScTs, DisplayToScStr, DisplayToScTs,
-    DisplayToUccStr, DisplayToUccTs, DisplayToUpperScStr, DisplayToUpperScTs,
-    ToTokensToScStr, ToTokensToScTs, ToTokensToUccStr, ToTokensToUccTs,
-    ToTokensToUpperScStr, ToTokensToUpperScTs,
+    AsRefStrToScStr, AsRefStrToScTs, AsRefStrToUccStr, AsRefStrToUccTs, AsRefStrToUpperScStr,
+    AsRefStrToUpperScTs, DisplayToScStr, DisplayToScTs, DisplayToUccStr, DisplayToUccTs,
+    DisplayToUpperScStr, DisplayToUpperScTs, ToTokensToScStr, ToTokensToScTs, ToTokensToUccStr,
+    ToTokensToUccTs, ToTokensToUpperScStr, ToTokensToUpperScTs,
 };
 pub use naming_macros::{
     AsRefStrEnumWithUnitFieldsToScStr, AsRefStrEnumWithUnitFieldsToUccStr,
@@ -25,7 +24,7 @@ pub const SQLX_TYPES_UUID_STRINGIFIED: &str = "sqlx::types::Uuid";
 pub const FIELD_IDENT_IS_NONE: &str = "field.ident is None";
 pub const SYN_TYPE_PATH: &str = "syn::Type::Path";
 
-naming_macros::generate_upper_camel_and_sc_str_and_ts!([
+naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["primary", "key"],
     ["serialize", "deserialize"],
     ["with", "serialize", "deserialize"],
@@ -386,7 +385,7 @@ naming_macros::generate_upper_camel_and_sc_str_and_ts!([
     ["read", "inner"],
     ["logic"],
     ["extraction"],
-    ["generated"],
+    ["gend"],
     ["route"],
     ["body"],
     ["env"],
@@ -405,7 +404,7 @@ naming_macros::generate_upper_camel_and_sc_str_and_ts!([
     ["done"],
     ["but"],
     ["operation"],
-    ["generate"],
+    ["gen"],
     ["increments"],
     ["increment"],
     ["additional"],
@@ -435,7 +434,7 @@ naming_macros::generate_upper_camel_and_sc_str_and_ts!([
     ["empty", "column", "json", "reader"],
     ["not", "unique", "column", "json", "reader"],
     [
-        "generate",
+        "gen",
         "postgresql",
         "json",
         "type",
@@ -445,7 +444,7 @@ naming_macros::generate_upper_camel_and_sc_str_and_ts!([
         "vec"
     ],
     [
-        "generate",
+        "gen",
         "postgresql",
         "json",
         "type",
@@ -457,7 +456,7 @@ naming_macros::generate_upper_camel_and_sc_str_and_ts!([
         "named"
     ],
     [
-        "generate",
+        "gen",
         "postgresql",
         "json",
         "type",
@@ -491,8 +490,8 @@ naming_macros::generate_upper_camel_and_sc_str_and_ts!([
     ],
     ["fields", "are", "empty"],
     ["wrap", "into", "jsonb", "build", "object"],
-    ["generate", "jsonb", "set", "target"],
-    ["generate", "jsonb", "set", "path"],
+    ["gen", "jsonb", "set", "target"],
+    ["gen", "jsonb", "set", "path"],
     [
         "column", "name", "and", "maybe", "field", "getter", "field", "ident"
     ],
@@ -500,7 +499,7 @@ naming_macros::generate_upper_camel_and_sc_str_and_ts!([
         "column", "name", "and", "maybe", "field", "getter", "for", "error", "message", "field",
         "ident"
     ],
-    ["generate", "not", "unique", "field"],
+    ["gen", "not", "unique", "field"],
     ["all", "fields", "are", "none"],
     ["self"],
     [
@@ -508,7 +507,7 @@ naming_macros::generate_upper_camel_and_sc_str_and_ts!([
         "to",
         "update",
         "try",
-        "generate",
+        "gen",
         "postgresql",
         "json",
         "type",
@@ -534,12 +533,12 @@ naming_macros::generate_upper_camel_and_sc_str_and_ts!([
     ["env", "var", "name"],
     ["try", "from", "std", "env", "var", "ok"],
     ["table", "name"],
-    ["generate", "postgresql", "crud", "primary", "key"],
+    ["gen", "postgresql", "crud", "primary", "key"],
     ["default", "option", "some", "vec", "one", "el"],
     [
         "all", "variants", "default", "option", "some", "vec", "one", "el"
     ],
-    ["generate", "postgresql", "json", "type"],
+    ["gen", "postgresql", "json", "type"],
     ["to", "std", "string", "string"],
     ["error", "occurence", "lib"],
     ["logical", "operator"],
@@ -992,16 +991,16 @@ naming_macros::generate_upper_camel_and_sc_str_and_ts!([
     ["where", "many"],
     ["no", "fields", "provided"],
     ["additional", "parameters"],
-    ["generate", "select", "query", "part"],
+    ["gen", "select", "query", "part"],
     ["update", "query", "part", "primary", "key"],
     [
-        "generate", "column", "queals", "value", "comma", "update", "one", "query", "part"
+        "gen", "column", "queals", "value", "comma", "update", "one", "query", "part"
     ],
     ["primary", "key", "query", "part"],
     ["columns"],
-    ["generate", "when", "column", "id", "then", "value"],
+    ["gen", "when", "column", "id", "then", "value"],
     [
-        "generate", "when", "column", "id", "then", "value", "update", "many", "query", "part"
+        "gen", "when", "column", "id", "then", "value", "update", "many", "query", "part"
     ],
     ["test", "cases"],
     ["contains", "null", "byte"],
@@ -1054,7 +1053,7 @@ naming_macros::generate_upper_camel_and_sc_str_and_ts!([
     [
         "sort", "vec", "of", "ident", "read", "with", "primary", "key", "by", "primary", "key"
     ],
-    ["generate", "el"],
+    ["gen", "el"],
     [
         "some", "value", "primary", "key", "read", "returned", "from", "create", "one"
     ],
@@ -1083,7 +1082,7 @@ naming_macros::generate_upper_camel_and_sc_str_and_ts!([
     [
         "common", "read", "only", "ids", "returned", "from", "create", "one"
     ],
-    ["generate", "postgresql", "table", "primary", "key"],
+    ["gen", "postgresql", "table", "primary", "key"],
     ["read", "new", "or", "try", "new", "unwraped", "for", "test"],
     [
         "read", "only", "ids", "to", "option", "value", "read", "inner"
@@ -1452,8 +1451,8 @@ naming_macros::generate_upper_camel_and_sc_str_and_ts!([
         "expression"
     ],
     ["executor", "acquire"],
-    ["generate", "postgresql", "json", "types", "mod"],
-    ["generate", "postgresql", "types", "mod"]
+    ["gen", "postgresql", "json", "types", "mod"],
+    ["gen", "postgresql", "types", "mod"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
@@ -1495,29 +1494,19 @@ where
     T: AsRefStrToScStr,
 {
     fn swagger_url_path_self_quotes_str(&self, table_name_str: &str) -> String {
-        generate_quotes::double_quotes_str(&format!(
-            "/{}/{}",
-            table_name_str,
-            self.case(),
-        ))
+        gen_quotes::double_quotes_str(&format!("/{}/{}", table_name_str, self.case(),))
     }
 }
 
 pub trait SwaggerUrlPathSelfQuotesTokenStream {
-    fn swagger_url_path_self_quotes_ts(
-        &self,
-        table_name_str: &str,
-    ) -> proc_macro2::TokenStream;
+    fn swagger_url_path_self_quotes_ts(&self, table_name_str: &str) -> proc_macro2::TokenStream;
 }
 
 impl<T> SwaggerUrlPathSelfQuotesTokenStream for T
 where
     T: SwaggerUrlPathSelfQuotesStr,
 {
-    fn swagger_url_path_self_quotes_ts(
-        &self,
-        table_name_str: &str,
-    ) -> proc_macro2::TokenStream {
+    fn swagger_url_path_self_quotes_ts(&self, table_name_str: &str) -> proc_macro2::TokenStream {
         let value = self.swagger_url_path_self_quotes_str(table_name_str);
         value
             .parse::<proc_macro2::TokenStream>()

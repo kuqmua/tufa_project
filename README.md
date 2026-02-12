@@ -36,7 +36,7 @@ This is a Rust workspace project with the following main components:
 - `error_occurence_lib`: Advanced error handling with context
 - `from_sqlx_postgres_error`: SQLx PostgreSQL error conversion
 - `from_str`: String parsing utilities
-- `generate_quotes`: Quote generation utilities
+- `gen_quotes`: Quote generation utilities
 - `macros_helpers`: Helper macros for code generation
 - And many more utility crates...
 
@@ -133,7 +133,7 @@ Utilities for converting SQLx PostgreSQL errors to application-specific errors.
 ### from_str
 Safe string parsing with detailed error context.
 
-### generate_quotes
+### gen_quotes
 Utilities for generating quotes and text content.
 
 ### macros_helpers
