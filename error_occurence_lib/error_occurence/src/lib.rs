@@ -1,7 +1,6 @@
-use naming::parameter::SelfWithSerializeDeserializeUpperCamelCase;
 use naming::{
     CodeOccurenceSnakeCase, IntoSerializeDeserializeVersionSnakeCase, ValueSnakeCase,
-    WithSerializeDeserializeUpperCamelCase,
+    WithSerializeDeserializeUpperCamelCase, parameter::SelfWithSerializeDeserializeUpperCamelCase,
 };
 use quote::quote;
 

@@ -1,5 +1,7 @@
-use naming::parameter::{
-    PostgresqlJsonTypeWhereSelfUpperCamelCase, PostgresqlTypeWhereSelfUpperCamelCase,
+use naming::{
+    ColumnSnakeCase, DimensionsIndexesSnakeCase, DimensionsSnakeCase, ErrorSnakeCase,
+    IncrementSnakeCase, PubSnakeCase, QuerySnakeCase, SelfSnakeCase, ValueSnakeCase,
+    parameter::{PostgresqlJsonTypeWhereSelfUpperCamelCase, PostgresqlTypeWhereSelfUpperCamelCase},
 };
 use quote::quote;
 use std::fmt::Display;
@@ -103,14 +105,6 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
     let generate_where_filters_config =
         serde_json::from_str::<GenerateWhereFiltersConfig>(&input_ts.to_string())
             .expect("1217b73b-456c-4a3e-8a5a-5d5b8b8c3452");
-    let query_snake_case = naming::QuerySnakeCase;
-    let value_snake_case = naming::ValueSnakeCase;
-    let column_snake_case = naming::ColumnSnakeCase;
-    let self_snake_case = naming::SelfSnakeCase;
-    let increment_snake_case = naming::IncrementSnakeCase;
-    let error_snake_case = naming::ErrorSnakeCase;
-    let dimensions_snake_case = naming::DimensionsSnakeCase;
-    let dimensions_indexes_snake_case = naming::DimensionsIndexesSnakeCase;
     let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
     let t_ts = quote! {T};
     let t_annotation_generic_ts = quote! {<#t_ts>};
@@ -120,20 +114,20 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
         token_patterns::PostgresqlCrudCommonDefaultOptionSomeVecOneEl;
     let postgresql_crud_common_default_option_some_vec_one_el_call_ts =
         token_patterns::PostgresqlCrudCommonDefaultOptionSomeVecOneElCall;
-    let pub_value_t_ts = quote! {pub #value_snake_case: T};
+    let pub_value_t_ts = quote! {pub #ValueSnakeCase: T};
     let unsigned_part_of_std_primitive_i32_ts =
         quote! {postgresql_crud_common::UnsignedPartOfStdPrimitiveI32};
     let not_zero_unsigned_part_of_std_primitive_i32_ts =
         quote! {postgresql_crud_common::NotZeroUnsignedPartOfStdPrimitiveI32};
     let value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts =
-        quote! {#value_snake_case: #not_zero_unsigned_part_of_std_primitive_i32_ts};
+        quote! {#ValueSnakeCase: #not_zero_unsigned_part_of_std_primitive_i32_ts};
     let pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts =
         quote! {pub #value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts};
     let value_default_option_some_vec_one_el_ts = quote! {
-        #value_snake_case: #postgresql_crud_common_default_option_some_vec_one_el_call_ts
+        #ValueSnakeCase: #postgresql_crud_common_default_option_some_vec_one_el_call_ts
     };
     let generate_struct_ts = |filter_initialized_with_try_new_result_is_ok: bool, should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn quote::ToTokens, struct_additional_fields_ts: &dyn quote::ToTokens| {
-        let maybe_pub_ts: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_ts_new } else { &naming::PubSnakeCase };
+        let maybe_pub_ts: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_ts_new } else { &PubSnakeCase };
         let maybe_derive_serde_deserialize_ts: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_ts_new } else { &quote! {serde::Deserialize,} };
         let maybe_declaration_of_struct_ident_generic_ts: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
             ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_ts_new,
@@ -223,19 +217,19 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
         #value_default_option_some_vec_one_el_ts
     };
     let if_let_err_query_try_bind_self_value_to_string_ts = quote! {
-        if let Err(#error_snake_case) = #query_snake_case.try_bind(#self_snake_case.#value_snake_case.to_string()) {
-            return Err(#error_snake_case.to_string());
+        if let Err(#ErrorSnakeCase) = #QuerySnakeCase.try_bind(#SelfSnakeCase.#ValueSnakeCase.to_string()) {
+            return Err(#ErrorSnakeCase.to_string());
         }
-        Ok(#query_snake_case)
+        Ok(#QuerySnakeCase)
     };
     let if_let_err_query_try_bind_self_value_ts = quote! {
-        if let Err(#error_snake_case) = #query_snake_case.try_bind(#self_snake_case.#value_snake_case) {
-            return Err(#error_snake_case.to_string());
+        if let Err(#ErrorSnakeCase) = #QuerySnakeCase.try_bind(#SelfSnakeCase.#ValueSnakeCase) {
+            return Err(#ErrorSnakeCase.to_string());
         }
     };
     let query_bind_one_value_ts = quote! {
         #if_let_err_query_try_bind_self_value_ts
-        Ok(#query_snake_case)
+        Ok(#QuerySnakeCase)
     };
     let should_add_declaration_of_struct_ident_generic_false =
         ShouldAddDeclarationOfStructIdentGeneric::False;
@@ -246,10 +240,10 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
     let generate_match_increment_checked_add_one_initialization_ts =
         |ident_ts: &dyn quote::ToTokens| {
             quote! {
-                let #ident_ts = match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
+                let #ident_ts = match postgresql_crud_common::increment_checked_add_one_returning_increment(#IncrementSnakeCase) {
                     Ok(value_25d59e01) => value_25d59e01,
-                    Err(#error_snake_case) => {
-                        return Err(#error_snake_case);
+                    Err(#ErrorSnakeCase) => {
+                        return Err(#ErrorSnakeCase);
                     },
                 };
             }
@@ -269,18 +263,18 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                 + for<'__> sqlx::Encode<'__, sqlx::Postgres>
             }),
         };
-    let value_between_t_ts = quote! {#value_snake_case: Between<T>};
+    let value_between_t_ts = quote! {#ValueSnakeCase: Between<T>};
     let pub_value_between_t_ts = quote! {pub #value_between_t_ts};
     let query_self_value_query_bind_ts = quote! {
-        match #self_snake_case.#value_snake_case.query_bind(#query_snake_case) {
+        match #SelfSnakeCase.#ValueSnakeCase.query_bind(#QuerySnakeCase) {
             Ok(value_f6d31bdd) => {
-                #query_snake_case = value_f6d31bdd;
+                #QuerySnakeCase = value_f6d31bdd;
             },
-            Err(#error_snake_case) => {
-                return Err(#error_snake_case);
+            Err(#ErrorSnakeCase) => {
+                return Err(#ErrorSnakeCase);
             }
         }
-        Ok(#query_snake_case)
+        Ok(#QuerySnakeCase)
     };
     let postgresql_type_pattern_handle_standart = PostgresqlTypePatternHandle::Standart;
     let postgresql_type_pattern_handle_array_dimension1 =
@@ -294,40 +288,40 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
     let generate_pub_dimensions_bounded_vec_ts =
         |vec_length_ts: &dyn quote::ToTokens,
          kind_of_unsigned_part_of_std_primitive_i32: &KindOfUnsignedPartOfStdPrimitiveI32| {
-            quote! {pub #dimensions_snake_case: BoundedStdVecVec<postgresql_crud_common::#kind_of_unsigned_part_of_std_primitive_i32, #vec_length_ts>}
+            quote! {pub #DimensionsSnakeCase: BoundedStdVecVec<postgresql_crud_common::#kind_of_unsigned_part_of_std_primitive_i32, #vec_length_ts>}
         };
     let value_match_increment_checked_add_one_initialization_ts =
-        generate_match_increment_checked_add_one_initialization_ts(&value_snake_case);
+        generate_match_increment_checked_add_one_initialization_ts(&ValueSnakeCase);
     let generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts =
         |ident_ts: &dyn quote::ToTokens,
          field_ts: &dyn quote::ToTokens,
          function_ts: &dyn quote::ToTokens| {
             quote! {
-                let #ident_ts = match self.#field_ts.#function_ts(#increment_snake_case, #column_snake_case, is_need_to_add_logical_operator) {
+                let #ident_ts = match self.#field_ts.#function_ts(#IncrementSnakeCase, #ColumnSnakeCase, is_need_to_add_logical_operator) {
                     Ok(value_0a22ee9a) => value_0a22ee9a,
-                    Err(#error_snake_case) => {
-                        return Err(#error_snake_case);
+                    Err(#ErrorSnakeCase) => {
+                        return Err(#ErrorSnakeCase);
                     }
                 };
             }
         };
-    let value_match_self_value_query_part_initialization_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&value_snake_case, &value_snake_case, &quote! {query_part});
+    let value_match_self_value_query_part_initialization_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&ValueSnakeCase, &ValueSnakeCase, &quote! {query_part});
     let dimensions_default_initialization_ts = quote! {
-        #dimensions_snake_case: #postgresql_crud_common_default_option_some_vec_one_el_call_ts
+        #DimensionsSnakeCase: #postgresql_crud_common_default_option_some_vec_one_el_call_ts
     };
     let dimensions_default_initialization_comma_ts =
         quote! {#dimensions_default_initialization_ts,};
     let query_self_dimensions_query_bind_query_ts = quote! {
-        match #self_snake_case.#dimensions_snake_case.query_bind(#query_snake_case) {
+        match #SelfSnakeCase.#DimensionsSnakeCase.query_bind(#QuerySnakeCase) {
             Ok(value_ed6f1157) => {
-                #query_snake_case = value_ed6f1157;
+                #QuerySnakeCase = value_ed6f1157;
             }
-            Err(#error_snake_case) => {
-                return Err(#error_snake_case);
+            Err(#ErrorSnakeCase) => {
+                return Err(#ErrorSnakeCase);
             }
         }
     };
-    let dimensions_indexes_comma_ts = quote! {#dimensions_indexes_snake_case,};
+    let dimensions_indexes_comma_ts = quote! {#DimensionsIndexesSnakeCase,};
     let generate_maybe_dimensions_declaration_pub_value_t_ts =
         |maybe_dimensions_declaration_ts: &dyn quote::ToTokens| {
             quote! {
@@ -372,8 +366,8 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                 },
                 dimensions_default_initialization_comma_ts.clone(),
                 generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(
-                    &dimensions_indexes_snake_case,
-                    &dimensions_snake_case,
+                    &DimensionsIndexesSnakeCase,
+                    &DimensionsSnakeCase,
                     &match &postgresql_type_or_postgresql_json_type {
                         postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => quote! {postgresql_type_query_part},
                         postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => quote! {postgresql_json_type_query_part},
@@ -403,7 +397,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         maybe_additional_traits_ts: Some(sqlx_type_postgresq_encode_ts.clone()),
                     };
                 let pub_value_postgresql_type_not_empty_unique_vec_t_ts =
-                    quote! {pub #value_snake_case: PostgresqlTypeNotEmptyUniqueVec<T>};
+                    quote! {pub #ValueSnakeCase: PostgresqlTypeNotEmptyUniqueVec<T>};
                 let generate_postgresql_type_dimensions_helpers_postgresql_type =
                     |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                         generate_postgresql_type_dimensions_helpers(
@@ -439,10 +433,10 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                 #value_match_increment_checked_add_one_initialization_ts
                                 Ok(format!(
                                     #format_handle_ts,
-                                    &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    #column_snake_case,
+                                    &#SelfSnakeCase.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    #ColumnSnakeCase,
                                     #maybe_additional_parameters_ts
-                                    #value_snake_case
+                                    #ValueSnakeCase
                                 ))
                             }
                         },
@@ -500,10 +494,10 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                 #value_match_self_value_query_part_initialization_ts
                                 Ok(format!(
                                     #format_handle_ts,
-                                    &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    #column_snake_case,
+                                    &#SelfSnakeCase.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    #ColumnSnakeCase,
                                     #maybe_additional_parameters_ts
-                                    #value_snake_case
+                                    #ValueSnakeCase
                                 ))
                             }
                         },
@@ -552,15 +546,15 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                     );
                                 quote! {
                                     #maybe_dimensions_indexes_initialization_ts
-                                    let #value_snake_case = {
+                                    let #ValueSnakeCase = {
                                         let mut acc_14596a52 = String::default();
-                                        for _ in #self_snake_case.#value_snake_case.to_vec() {
-                                            match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
+                                        for _ in #SelfSnakeCase.#ValueSnakeCase.to_vec() {
+                                            match postgresql_crud_common::increment_checked_add_one_returning_increment(#IncrementSnakeCase) {
                                                 Ok(value_daedba9c) => {
                                                     #if_write_is_err_ts
                                                 },
-                                                Err(#error_snake_case) => {
-                                                    return Err(#error_snake_case);
+                                                Err(#ErrorSnakeCase) => {
+                                                    return Err(#ErrorSnakeCase);
                                                 },
                                             }
                                         }
@@ -569,22 +563,22 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                     };
                                     Ok(format!(
                                         #format_handle_ts,
-                                        &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                        #column_snake_case,
+                                        &#SelfSnakeCase.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                        #ColumnSnakeCase,
                                         #maybe_additional_parameters_ts
-                                        #value_snake_case
+                                        #ValueSnakeCase
                                     ))
                                 }
                             },
                             is_query_bind_mutable_true,
                             quote! {
                                 #maybe_dimensions_query_bind_content_ts
-                                for el_ea865d8c in #self_snake_case.#value_snake_case.into_vec() {
-                                    if let Err(#error_snake_case) = #query_snake_case.try_bind(el_ea865d8c) {
-                                        return Err(#error_snake_case.to_string());
+                                for el_ea865d8c in #SelfSnakeCase.#ValueSnakeCase.into_vec() {
+                                    if let Err(#ErrorSnakeCase) = #QuerySnakeCase.try_bind(el_ea865d8c) {
+                                        return Err(#ErrorSnakeCase.to_string());
                                     }
                                 }
-                                Ok(#query_snake_case)
+                                Ok(#QuerySnakeCase)
                             },
                         )
                     };
@@ -621,11 +615,11 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                     #value_match_increment_checked_add_one_initialization_ts
                                     Ok(format!(
                                         #format_handle_ts,
-                                        &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                        #column_snake_case,
+                                        &#SelfSnakeCase.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                        #ColumnSnakeCase,
                                         #maybe_additional_parameters_ts
-                                        #self_snake_case.regular_expression_case.postgreql_syntax(),
-                                        #value_snake_case
+                                        #SelfSnakeCase.regular_expression_case.postgreql_syntax(),
+                                        #ValueSnakeCase
                                     ))
                                 }
                             },
@@ -667,10 +661,10 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                     #value_match_increment_checked_add_one_initialization_ts
                                     Ok(format!(
                                         #format_handle_ts,
-                                        &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                        #column_snake_case,
+                                        &#SelfSnakeCase.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                        #ColumnSnakeCase,
                                         #maybe_additional_parameters_ts
-                                        #value_snake_case
+                                        #ValueSnakeCase
                                     ))
                                 }
                             },
@@ -708,8 +702,8 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                 #maybe_dimensions_indexes_initialization_ts
                                 Ok(format!(
                                     #format_handle_ts,
-                                    &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    #column_snake_case,
+                                    &#SelfSnakeCase.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    #ColumnSnakeCase,
                                     #maybe_additional_parameters_ts
                                 ))
                             }
@@ -720,7 +714,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         },
                         quote! {
                             #maybe_dimensions_query_bind_content_ts
-                            Ok(#query_snake_case)
+                            Ok(#QuerySnakeCase)
                         },
                     )
                     };
@@ -801,21 +795,21 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                     #value_match_increment_checked_add_one_initialization_ts
                                     Ok(format!(
                                         #format_handle_ts,
-                                        &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                        #column_snake_case,
+                                        &#SelfSnakeCase.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                        #ColumnSnakeCase,
                                         #maybe_additional_parameters_ts
-                                        &#self_snake_case.encode_format,
-                                        #value_snake_case
+                                        &#SelfSnakeCase.encode_format,
+                                        #ValueSnakeCase
                                     ))
                                 }
                             },
                             is_query_bind_mutable_true,
                             quote! {
                                 #maybe_dimensions_query_bind_content_ts
-                                if let Err(#error_snake_case) = #query_snake_case.try_bind(self.encoded_string_representation) {
-                                    return Err(#error_snake_case.to_string());
+                                if let Err(#ErrorSnakeCase) = #QuerySnakeCase.try_bind(self.encoded_string_representation) {
+                                    return Err(#ErrorSnakeCase.to_string());
                                 }
-                                Ok(#query_snake_case)
+                                Ok(#QuerySnakeCase)
                             },
                         )
                     };
@@ -873,9 +867,9 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                 "{{}}(array_length({{}}, 1) {operator} ${{}})"
                             ));
                             quote! {
-                                match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                                    Ok(value_f7988de8) => Ok(format!(#format_handle_ts, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, value_f7988de8)),
-                                    Err(#error_snake_case) => Err(#error_snake_case),
+                                match #import_path::increment_checked_add_one_returning_increment(#IncrementSnakeCase) {
+                                    Ok(value_f7988de8) => Ok(format!(#format_handle_ts, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #ColumnSnakeCase, value_f7988de8)),
+                                    Err(#ErrorSnakeCase) => Err(#ErrorSnakeCase),
                                 }
                             }
                         },
@@ -940,13 +934,13 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         maybe_additional_parameters_ts,
                         maybe_dimensions_query_bind_content_ts
                     ) = DimensionNumber::try_from(postgresql_type_pattern_handle).map_or_else(
-                        |()| (proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), PostgresqlTypeKind::Standart, quote! {#column_snake_case,}, proc_macro2::TokenStream::new()),
+                        |()| (proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), PostgresqlTypeKind::Standart, quote! {#ColumnSnakeCase,}, proc_macro2::TokenStream::new()),
                         |dimension_number| (
                             generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_ts(&dimension_number),
                             dimensions_default_initialization_comma_ts.clone(),
                             {
-                                let dimensions_indexes1_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&quote! {dimensions_indexes1}, &dimensions_snake_case, &quote! {postgresql_type_query_part});
-                                let dimensions_indexes2_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&quote! {dimensions_indexes2}, &dimensions_snake_case, &quote! {postgresql_type_query_part});
+                                let dimensions_indexes1_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&quote! {dimensions_indexes1}, &DimensionsSnakeCase, &quote! {postgresql_type_query_part});
+                                let dimensions_indexes2_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&quote! {dimensions_indexes2}, &DimensionsSnakeCase, &quote! {postgresql_type_query_part});
                                 quote! {
                                     #dimensions_indexes1_ts
                                     #dimensions_indexes2_ts
@@ -959,12 +953,12 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                 dimensions_indexes2,
                             },
                             quote! {
-                                match #self_snake_case.#dimensions_snake_case.clone().query_bind(#query_snake_case) {
+                                match #SelfSnakeCase.#DimensionsSnakeCase.clone().query_bind(#QuerySnakeCase) {
                                     Ok(value_6cb14cdc) => {
-                                        #query_snake_case = value_6cb14cdc;
+                                        #QuerySnakeCase = value_6cb14cdc;
                                     },
-                                    Err(#error_snake_case) => {
-                                        return Err(#error_snake_case);
+                                    Err(#ErrorSnakeCase) => {
+                                        return Err(#ErrorSnakeCase);
                                     }
                                 }
                                 #query_self_dimensions_query_bind_query_ts
@@ -992,10 +986,10 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                     #value_match_increment_checked_add_one_initialization_ts
                                     Ok(format!(
                                         #format_handle_ts,
-                                        &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                        #column_snake_case,
+                                        &#SelfSnakeCase.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                        #ColumnSnakeCase,
                                         #maybe_additional_parameters_ts
-                                        #value_snake_case
+                                        #ValueSnakeCase
                                     ))
                                 }
                             },
@@ -1018,7 +1012,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                             postgresql_crud_macros_common::IncrementParameterUnderscore::False,
                             quote! {
                                 #maybe_dimensions_indexes_initialization_ts
-                                let operator = <T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&#self_snake_case.#value_snake_case);
+                                let operator = <T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&#SelfSnakeCase.#ValueSnakeCase);
                                 let operator_query_str = operator.to_query_str();
                                 let content = match operator {
                                     postgresql_crud_common::EqualOperator::Equal => {
@@ -1027,15 +1021,15 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                     },
                                     postgresql_crud_common::EqualOperator::IsNull => operator_query_str.to_owned(),
                                 };
-                                Ok(format!("{}({} {content})", &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case))
+                                Ok(format!("{}({} {content})", &#SelfSnakeCase.logical_operator.to_query_part(is_need_to_add_logical_operator), #ColumnSnakeCase))
                             },
                             is_query_bind_mutable_true,
                             quote! {
                                 #maybe_dimensions_query_bind_content_ts
-                                if let postgresql_crud_common::EqualOperator::Equal = &<T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&#self_snake_case.#value_snake_case) {
+                                if let postgresql_crud_common::EqualOperator::Equal = &<T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&#SelfSnakeCase.#ValueSnakeCase) {
                                     #if_let_err_query_try_bind_self_value_ts
                                 }
-                                Ok(#query_snake_case)
+                                Ok(#QuerySnakeCase)
                             },
                         )
                     }
@@ -1050,7 +1044,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                             postgresql_crud_macros_common::IncrementParameterUnderscore::False,
                             quote! {
                                 #maybe_dimensions_indexes_initialization_ts
-                                let operator = <T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&#self_snake_case.#value_snake_case);
+                                let operator = <T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&#SelfSnakeCase.#ValueSnakeCase);
                                 let operator_query_str = operator.to_query_str();
                                 let content = match operator {
                                     postgresql_crud_common::EqualOperator::Equal => {
@@ -1059,17 +1053,17 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                     }
                                     postgresql_crud_common::EqualOperator::IsNull => operator_query_str.to_owned(),
                                 };
-                                Ok(format!("{}({}{dimensions_indexes} {content})", &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case))
+                                Ok(format!("{}({}{dimensions_indexes} {content})", &#SelfSnakeCase.logical_operator.to_query_part(is_need_to_add_logical_operator), #ColumnSnakeCase))
                             },
                             is_query_bind_mutable_true,
                             quote! {
                                 #maybe_dimensions_query_bind_content_ts
                                 if let postgresql_crud_common::EqualOperator::Equal = &<T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(
-                                    &#self_snake_case.#value_snake_case
+                                    &#SelfSnakeCase.#ValueSnakeCase
                                 ) {
                                     #if_let_err_query_try_bind_self_value_ts
                                 }
-                                Ok(#query_snake_case)
+                                Ok(#QuerySnakeCase)
                             },
                         )
                     }
@@ -1170,13 +1164,13 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
             |filter: &postgresql_crud_macros_common::PostgresqlJsonTypeFilter| {
                 let ident = PostgresqlJsonTypeWhereSelfUpperCamelCase::from_display(&filter);
                 let pub_value_postgresql_json_type_not_empty_unique_vec_t_ts = quote! {
-                    pub #value_snake_case: PostgresqlJsonTypeNotEmptyUniqueVec<T>
+                    pub #ValueSnakeCase: PostgresqlJsonTypeNotEmptyUniqueVec<T>
                 };
                 let query_bind_sqlx_types_json_self_value_ts = quote! {
-                    if let Err(#error_snake_case) = #query_snake_case.try_bind(sqlx::types::Json(#self_snake_case.#value_snake_case)) {
-                        return Err(#error_snake_case.to_string());
+                    if let Err(#ErrorSnakeCase) = #QuerySnakeCase.try_bind(sqlx::types::Json(#SelfSnakeCase.#ValueSnakeCase)) {
+                        return Err(#ErrorSnakeCase.to_string());
                     }
-                    Ok(#query_snake_case)
+                    Ok(#QuerySnakeCase)
                 };
                 let generate_postgresql_json_type_dimensions_helpers =
                     |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
@@ -1201,10 +1195,10 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                             #value_match_increment_checked_add_one_initialization_ts
                             Ok(format!(
                                 #format_handle_ts,
-                                &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                #column_snake_case,
+                                &#SelfSnakeCase.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #ColumnSnakeCase,
                                 #maybe_additional_parameters_ts
-                                #value_snake_case
+                                #ValueSnakeCase
                             ))
                         }
                     },
@@ -1264,11 +1258,11 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                             should_add_declaration_of_struct_ident_generic_false.clone(),
                             quote! {
                                 #maybe_dimensions_declaration_ts
-                                pub #value_snake_case: #unsigned_part_of_std_primitive_i32_ts
+                                pub #ValueSnakeCase: #unsigned_part_of_std_primitive_i32_ts
                             },
                             quote! {
                                 #maybe_dimensions_default_initialization_ts
-                                #value_snake_case: #core_default_default_default_ts
+                                #ValueSnakeCase: #core_default_default_default_ts
                             },
                             {
                                 let format_handle_ts = generate_quotes::double_quotes_ts(&format!(
@@ -1280,10 +1274,10 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                     #value_match_increment_checked_add_one_initialization_ts
                                     Ok(format!(
                                         #format_handle_ts,
-                                        &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                        #column_snake_case,
+                                        &#SelfSnakeCase.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                        #ColumnSnakeCase,
                                         #maybe_additional_parameters_ts
-                                        #value_snake_case
+                                        #ValueSnakeCase
                                     ))
                                 }
                             },
@@ -1383,10 +1377,10 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                             #content_ts
                             Ok(format!(
                                 #format_handle_ts,
-                                &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                #column_snake_case,
+                                &#SelfSnakeCase.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #ColumnSnakeCase,
                                 #maybe_additional_parameters_ts
-                                #value_snake_case
+                                #ValueSnakeCase
                             ))
                         }
                     },
@@ -1437,31 +1431,31 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                     generate_maybe_dimensions_default_initialization_value_default_ts(&maybe_dimensions_default_initialization_ts),
                     {
                         let format_handle_ts = generate_quotes::double_quotes_ts(&format!("{{}}({{}}{} in ({{}}))", postgresql_type_kind.format_argument()));
-                        let value_initialization_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&value_snake_case, &value_snake_case, &quote! {query_part_one_by_one});
+                        let value_initialization_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&ValueSnakeCase, &ValueSnakeCase, &quote! {query_part_one_by_one});
                         quote! {
                             #maybe_dimensions_indexes_initialization_ts
                             #value_initialization_ts
                             Ok(format!(
                                 #format_handle_ts,
-                                &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                #column_snake_case,
+                                &#SelfSnakeCase.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #ColumnSnakeCase,
                                 #maybe_additional_parameters_ts
-                                #value_snake_case
+                                #ValueSnakeCase
                             ))
                         }
                     },
                     is_query_bind_mutable_true,
                     quote! {
                         #maybe_dimensions_query_bind_content_ts
-                        match #self_snake_case.#value_snake_case.query_bind_one_by_one(#query_snake_case) {
+                        match #SelfSnakeCase.#ValueSnakeCase.query_bind_one_by_one(#QuerySnakeCase) {
                             Ok(value_c79b2256) => {
-                                #query_snake_case = value_c79b2256;
+                                #QuerySnakeCase = value_c79b2256;
                             }
-                            Err(#error_snake_case) => {
-                                return Err(#error_snake_case);
+                            Err(#ErrorSnakeCase) => {
+                                return Err(#ErrorSnakeCase);
                             }
                         }
-                        Ok(#query_snake_case)
+                        Ok(#QuerySnakeCase)
                     },
                 )
                     };
@@ -1479,7 +1473,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_ts(&dimension_number),
                         dimensions_default_initialization_comma_ts.clone(),
                         {
-                            let dimensions_indexes_initialization_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&dimensions_indexes_snake_case, &dimensions_snake_case, &quote! {postgresql_json_type_query_part_minus_one});
+                            let dimensions_indexes_initialization_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&DimensionsIndexesSnakeCase, &DimensionsSnakeCase, &quote! {postgresql_json_type_query_part_minus_one});
                             let last_dimensions_index_intialization_ts = generate_match_increment_checked_add_one_initialization_ts(&quote! {last_dimensions_index});
                             quote! {
                                 #dimensions_indexes_initialization_ts
@@ -1489,7 +1483,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         PostgresqlTypeKind::ArrayDimension,
                         quote! {
                             last_dimensions_index,
-                            #dimensions_indexes_snake_case,
+                            #DimensionsIndexesSnakeCase,
                         },
                         query_self_dimensions_query_bind_query_ts.clone(),
                     )
@@ -1517,11 +1511,11 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                     #value_match_increment_checked_add_one_initialization_ts
                                     Ok(format!(
                                         #format_handle_ts,
-                                        &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                        #column_snake_case,
+                                        &#SelfSnakeCase.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                        #ColumnSnakeCase,
                                         #maybe_additional_parameters_ts
-                                        #self_snake_case.regular_expression_case.postgreql_syntax(),
-                                        #value_snake_case
+                                        #SelfSnakeCase.regular_expression_case.postgreql_syntax(),
+                                        #ValueSnakeCase
                                     ))
                                 }
                             },
@@ -1566,11 +1560,11 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                     #value_match_increment_checked_add_one_initialization_ts
                                     Ok(format!(
                                         #format_handle_ts,
-                                        &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                        #column_snake_case,
+                                        &#SelfSnakeCase.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                        #ColumnSnakeCase,
                                         #maybe_additional_parameters_ts
-                                        #self_snake_case.regular_expression_case.postgreql_syntax(),
-                                        #value_snake_case
+                                        #SelfSnakeCase.regular_expression_case.postgreql_syntax(),
+                                        #ValueSnakeCase
                                     ))
                                 }
                             },
@@ -1615,11 +1609,11 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                     #value_match_increment_checked_add_one_initialization_ts
                                     Ok(format!(
                                         #format_handle_ts,
-                                        &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                        #column_snake_case,
+                                        &#SelfSnakeCase.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                        #ColumnSnakeCase,
                                         #maybe_additional_parameters_ts
-                                        #self_snake_case.regular_expression_case.postgreql_syntax(),
-                                        #value_snake_case
+                                        #SelfSnakeCase.regular_expression_case.postgreql_syntax(),
+                                        #ValueSnakeCase
                                     ))
                                 }
                             },
@@ -1659,10 +1653,10 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                             #value_match_self_value_query_part_initialization_ts
                             Ok(format!(
                                 #format_handle_ts,
-                                &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                #column_snake_case,
+                                &#SelfSnakeCase.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #ColumnSnakeCase,
                                 #maybe_additional_parameters_ts
-                                #value_snake_case
+                                #ValueSnakeCase
                             ))
                         }
                     },
@@ -1702,10 +1696,10 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                             #value_match_self_value_query_part_initialization_ts
                             Ok(format!(
                                 #format_handle_ts,
-                                &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                #column_snake_case,
+                                &#SelfSnakeCase.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #ColumnSnakeCase,
                                 #maybe_additional_parameters_ts
-                                #value_snake_case
+                                #ValueSnakeCase
                             ))
                         }
                     },
