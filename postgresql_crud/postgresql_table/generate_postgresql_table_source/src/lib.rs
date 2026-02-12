@@ -1,25 +1,87 @@
 use macros_helpers::ErrorOccurenceFieldAttribute;
-use naming::parameter::{
-    ErrorSelfSnakeCase, IsSelfUpdateExistSnakeCase, SelfCreateUpperCamelCase,
-    SelfDeleteManyParametersUpperCamelCase, SelfDeleteManyPayloadUpperCamelCase,
-    SelfDeleteOneErrorNamedWithSerializeDeserializeUpperCamelCase,
-    SelfDeleteOneParametersUpperCamelCase, SelfDeleteOnePayloadUpperCamelCase,
-    SelfErrorNamedWithSerializeDeserializeSnakeCase, SelfGeneratePostgresqlTableModSnakeCase,
-    SelfHandleSnakeCase, SelfPayloadExampleSnakeCase,
-    SelfPreparePostgresqlErrorNamedUpperCamelCase,
-    SelfReadOneErrorNamedWithSerializeDeserializeUpperCamelCase,
-    SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSnakeCase, SelfReadOnlyIdsUpperCamelCase,
-    SelfReadUpperCamelCase, SelfSelectUpperCamelCase, SelfTableTypeDeclarationUpperCamelCase,
-    SelfTestsSnakeCase, SelfTryDeleteOneErrorNamedUpperCamelCase,
-    SelfTryReadOneErrorNamedUpperCamelCase, SelfUpdateForQueryUpperCamelCase,
-    SelfUpdateManyParametersUpperCamelCase, SelfUpdateManyPayloadUpperCamelCase,
-    SelfUpdateTryNewErrorNamedUpperCamelCase, SelfUpdateUpperCamelCase,
-    SelfWhereManyTryNewErrorNamedUpperCamelCase, SelfWhereManyUpperCamelCase,
-    SelfWhereUpperCamelCase, StdOptionOptionSelfWhereManyUpperCamelCase,
-    TryFromSqlxPostgresPgRowWithNotEmptyUniqueVecSelfSelectSnakeCase, TrySelfHandleSnakeCase,
-    TrySelfSnakeCase, UpdateQueryPartSelfSnakeCase,
+use naming::{
+    AdditionalParametersSnakeCase, AppStateSnakeCase,
+    AsRefStrEnumWithUnitFieldsToSnakeCaseStringified,
+    AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified, AsRefStrToSnakeCaseStringified,
+    AsRefStrToSnakeCaseTokenStream, BeginSnakeCase, BindedQuerySnakeCase, BodyBytesSnakeCase,
+    BodySnakeCase, BySnakeCase, CodeOccurenceSnakeCase, ColumnSnakeCase, ColumnsSnakeCase,
+    CommitSnakeCase, CommonAdditionalErrorVariantsSnakeCase, CommonAdditionalLogicSnakeCase,
+    CommonReadOnlyIdsReturnedFromCreateOneSnakeCase, ConfigSnakeCase,
+    CreateExtensionIfNotExistsPgJsonschemaUpperCamelCase,
+    CreateExtensionIfNotExistsUuidOsspUpperCamelCase,
+    CreateIntoPostgresqlJsonTypeOptionVecWhereLengthEqualSnakeCase,
+    CreateIntoPostgresqlJsonTypeOptionVecWhereLengthGreaterThanSnakeCase,
+    CreateIntoPostgresqlTypeOptionVecWhereDimensionOneEqualSnakeCase,
+    CreateManyAdditionalErrorVariantsSnakeCase, CreateManyAdditionalLogicSnakeCase,
+    CreateOneAdditionalErrorVariantsSnakeCase, CreateOneAdditionalLogicSnakeCase,
+    CreateQueryBindSnakeCase, CreateQueryPartSnakeCase, CreateSnakeCase,
+    CreateTableColumnQueryPartSnakeCase, DefaultOptionSomeVecOneElMaxPageSizeSnakeCase,
+    DefaultOptionSomeVecOneElMaxPageSizeUpperCamelCase, DefaultOptionSomeVecOneElSnakeCase,
+    DefaultOptionSomeVecOneElUpperCamelCase, DeleteManyAdditionalErrorVariantsSnakeCase,
+    DeleteManyAdditionalLogicSnakeCase, DeleteOneAdditionalErrorVariantsSnakeCase,
+    DeleteOneAdditionalLogicSnakeCase, DesirableUpperCamelCase, ElementSnakeCase,
+    EndpointLocationSnakeCase, ErrorSnakeCase, ExecutorAcquireSnakeCase, ExecutorSnakeCase,
+    ExpectedResponseSnakeCase, FromHandleSnakeCase, FutureSnakeCase,
+    GenerateColumnQuealsValueCommaUpdateOneQueryPartSnakeCase,
+    GeneratePostgresqlTablePrimaryKeySnakeCase, GenerateSelectQueryPartSnakeCase,
+    IdentCreateDefaultSnakeCase, IncrementSnakeCase, IntoSerializeDeserializeVersionSnakeCase,
+    NoFieldsProvidedUpperCamelCase, NotUniquePrimaryKeySnakeCase,
+    NotUniquePrimaryKeyUpperCamelCase, OptionVecCreateSnakeCase, OrderBySnakeCase,
+    OrderByUpperCamelCase, OrderSnakeCase, PaginationSnakeCase, ParametersSnakeCase,
+    PayloadSnakeCase, PayloadUpperCamelCase, PoolConnectionSnakeCase, PoolSnakeCase,
+    PostgresPoolForTokioSpawnSyncMoveSnakeCase, PostgresPoolSnakeCase, PostgresqlCrudSnakeCase,
+    PostgresqlTypeOptionVecWhereGreaterThanTestSnakeCase, PostgresqlTypeUpperCamelCase,
+    PrefixSnakeCase, PrepareExtensionsSnakeCase, PreparePostgresqlSnakeCase,
+    PreparePostgresqlTableSnakeCase, PreparePostgresqlUpperCamelCase, PrimaryKeyQueryPartSnakeCase,
+    PrimaryKeySnakeCase, QueryBindSnakeCase, QueryPartErrorNamedUpperCamelCase, QueryPartSnakeCase,
+    QuerySnakeCase, QueryStringSnakeCase, ReadIntoTableTypeDeclarationSnakeCase,
+    ReadManyAdditionalErrorVariantsSnakeCase, ReadManyAdditionalLogicSnakeCase,
+    ReadOneAdditionalErrorVariantsSnakeCase, ReadOneAdditionalLogicSnakeCase,
+    ReadOnlyIdsIntoReadSnakeCase, ReadOnlyIdsIntoTableTypeDeclarationSnakeCase,
+    ReadOnlyIdsIntoUpdateSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoOptionVecWhereEqualToJsonFieldSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereBetweenSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElGreaterThanSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElRegularExpressionSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereGreaterThanSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereInSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereRegularExpressionSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSnakeCase,
+    ReadOnlyIdsMergedWithCreateIntoWhereEqualSnakeCase,
+    ReadOnlyIdsMergedWithTableTypeDeclarationIntoPostgresqlTypeOptionWhereGreaterThanSnakeCase,
+    ReadOnlyIdsSnakeCase, ReadUpperCamelCase, RequestSnakeCase, ResponseSnakeCase,
+    RollbackSnakeCase, RoutesHandleSnakeCase, RoutesSnakeCase, RowsSnakeCase,
+    SelectOnlyIdsQueryPartSnakeCase, SelectOnlyUpdatedIdsQueryPartSnakeCase,
+    SelectPrimaryKeySnakeCase, SelectQueryPartSnakeCase, SelectSnakeCase, StatusCodeSnakeCase,
+    StdFmtDisplayPlusQuoteToTokens, TableNameSnakeCase, TableSnakeCase,
+    ToTokensToSnakeCaseStringified, ToTokensToUpperCamelCaseTokenStream, UpdateForQuerySnakeCase,
+    UpdateForQueryUpperCamelCase, UpdateForQueryVecSnakeCase,
+    UpdateManyAdditionalErrorVariantsSnakeCase, UpdateManyAdditionalLogicSnakeCase,
+    UpdateOneAdditionalErrorVariantsSnakeCase, UpdateOneAdditionalLogicSnakeCase,
+    UpdateQueryBindSnakeCase, UpdateQueryPartPrimaryKeySnakeCase, UpdateQueryPartSnakeCase,
+    UpdateSnakeCase, UrlSnakeCase, ValueSnakeCase, ValueUpperCamelCase, WhereManySnakeCase,
+    GenerateWhenColumnIdThenValueUpdateManyQueryPartSnakeCase,
+    parameter::{
+        ErrorSelfSnakeCase, IsSelfUpdateExistSnakeCase, SelfCreateUpperCamelCase,
+        SelfDeleteManyParametersUpperCamelCase, SelfDeleteManyPayloadUpperCamelCase,
+        SelfDeleteOneErrorNamedWithSerializeDeserializeUpperCamelCase,
+        SelfDeleteOneParametersUpperCamelCase, SelfDeleteOnePayloadUpperCamelCase,
+        SelfErrorNamedWithSerializeDeserializeSnakeCase, SelfGeneratePostgresqlTableModSnakeCase,
+        SelfHandleSnakeCase, SelfPayloadExampleSnakeCase,
+        SelfPreparePostgresqlErrorNamedUpperCamelCase,
+        SelfReadOneErrorNamedWithSerializeDeserializeUpperCamelCase,
+        SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSnakeCase, SelfReadOnlyIdsUpperCamelCase,
+        SelfReadUpperCamelCase, SelfSelectUpperCamelCase, SelfTableTypeDeclarationUpperCamelCase,
+        SelfTestsSnakeCase, SelfTryDeleteOneErrorNamedUpperCamelCase,
+        SelfTryReadOneErrorNamedUpperCamelCase, SelfUpdateForQueryUpperCamelCase,
+        SelfUpdateManyParametersUpperCamelCase, SelfUpdateManyPayloadUpperCamelCase,
+        SelfUpdateTryNewErrorNamedUpperCamelCase, SelfUpdateUpperCamelCase,
+        SelfWhereManyTryNewErrorNamedUpperCamelCase, SelfWhereManyUpperCamelCase,
+        SelfWhereUpperCamelCase, StdOptionOptionSelfWhereManyUpperCamelCase,
+        TryFromSqlxPostgresPgRowWithNotEmptyUniqueVecSelfSelectSnakeCase, TrySelfHandleSnakeCase,
+        TrySelfSnakeCase, UpdateQueryPartSelfSnakeCase,
+    },
 };
-use naming::{AsRefStrToSnakeCaseStringified, AsRefStrToSnakeCaseTokenStream};
 use std::{
     fmt::{Display, Formatter, Result as StdFmtResult},
     iter::once,
@@ -92,8 +154,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         Debug,
         Clone,
         Copy,
-        naming::AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified,
-        naming::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified,
+        AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified,
+        AsRefStrEnumWithUnitFieldsToSnakeCaseStringified,
     )]
     enum Operation {
         CreateMany,
@@ -191,9 +253,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         ) -> SelfErrorNamedWithSerializeDeserializeSnakeCase {
             SelfErrorNamedWithSerializeDeserializeSnakeCase::from_display(&self)
         }
-        fn operation_payload_example_snake_case(
-            self,
-        ) -> impl naming::StdFmtDisplayPlusQuoteToTokens {
+        fn operation_payload_example_snake_case(self) -> impl StdFmtDisplayPlusQuoteToTokens {
             SelfPayloadExampleSnakeCase::from_display(&self)
         }
         fn self_handle_snake_case_ts(self) -> proc_macro2::TokenStream {
@@ -264,7 +324,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(naming::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
+    #[derive(AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
     enum OperationHttpMethod {
         Post,
         Patch,
@@ -305,57 +365,43 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         fn generate_path_to_attribute(self) -> String {
             let value = match self {
                 Self::CreateManyAdditionalErrorVariants => {
-                    naming::CreateManyAdditionalErrorVariantsSnakeCase.to_string()
+                    CreateManyAdditionalErrorVariantsSnakeCase.to_string()
                 }
                 Self::CreateOneAdditionalErrorVariants => {
-                    naming::CreateOneAdditionalErrorVariantsSnakeCase.to_string()
+                    CreateOneAdditionalErrorVariantsSnakeCase.to_string()
                 }
                 Self::ReadManyAdditionalErrorVariants => {
-                    naming::ReadManyAdditionalErrorVariantsSnakeCase.to_string()
+                    ReadManyAdditionalErrorVariantsSnakeCase.to_string()
                 }
                 Self::ReadOneAdditionalErrorVariants => {
-                    naming::ReadOneAdditionalErrorVariantsSnakeCase.to_string()
+                    ReadOneAdditionalErrorVariantsSnakeCase.to_string()
                 }
                 Self::UpdateManyAdditionalErrorVariants => {
-                    naming::UpdateManyAdditionalErrorVariantsSnakeCase.to_string()
+                    UpdateManyAdditionalErrorVariantsSnakeCase.to_string()
                 }
                 Self::UpdateOneAdditionalErrorVariants => {
-                    naming::UpdateOneAdditionalErrorVariantsSnakeCase.to_string()
+                    UpdateOneAdditionalErrorVariantsSnakeCase.to_string()
                 }
                 Self::DeleteManyAdditionalErrorVariants => {
-                    naming::DeleteManyAdditionalErrorVariantsSnakeCase.to_string()
+                    DeleteManyAdditionalErrorVariantsSnakeCase.to_string()
                 }
                 Self::DeleteOneAdditionalErrorVariants => {
-                    naming::DeleteOneAdditionalErrorVariantsSnakeCase.to_string()
+                    DeleteOneAdditionalErrorVariantsSnakeCase.to_string()
                 }
                 Self::CommonAdditionalErrorVariants => {
-                    naming::CommonAdditionalErrorVariantsSnakeCase.to_string()
+                    CommonAdditionalErrorVariantsSnakeCase.to_string()
                 }
-                Self::CreateManyAdditionalLogic => {
-                    naming::CreateManyAdditionalLogicSnakeCase.to_string()
-                }
-                Self::CreateOneAdditionalLogic => {
-                    naming::CreateOneAdditionalLogicSnakeCase.to_string()
-                }
-                Self::ReadManyAdditionalLogic => {
-                    naming::ReadManyAdditionalLogicSnakeCase.to_string()
-                }
-                Self::ReadOneAdditionalLogic => naming::ReadOneAdditionalLogicSnakeCase.to_string(),
-                Self::UpdateManyAdditionalLogic => {
-                    naming::UpdateManyAdditionalLogicSnakeCase.to_string()
-                }
-                Self::UpdateOneAdditionalLogic => {
-                    naming::UpdateOneAdditionalLogicSnakeCase.to_string()
-                }
-                Self::DeleteManyAdditionalLogic => {
-                    naming::DeleteManyAdditionalLogicSnakeCase.to_string()
-                }
-                Self::DeleteOneAdditionalLogic => {
-                    naming::DeleteOneAdditionalLogicSnakeCase.to_string()
-                }
-                Self::CommonAdditionalLogic => naming::CommonAdditionalLogicSnakeCase.to_string(),
+                Self::CreateManyAdditionalLogic => CreateManyAdditionalLogicSnakeCase.to_string(),
+                Self::CreateOneAdditionalLogic => CreateOneAdditionalLogicSnakeCase.to_string(),
+                Self::ReadManyAdditionalLogic => ReadManyAdditionalLogicSnakeCase.to_string(),
+                Self::ReadOneAdditionalLogic => ReadOneAdditionalLogicSnakeCase.to_string(),
+                Self::UpdateManyAdditionalLogic => UpdateManyAdditionalLogicSnakeCase.to_string(),
+                Self::UpdateOneAdditionalLogic => UpdateOneAdditionalLogicSnakeCase.to_string(),
+                Self::DeleteManyAdditionalLogic => DeleteManyAdditionalLogicSnakeCase.to_string(),
+                Self::DeleteOneAdditionalLogic => DeleteOneAdditionalLogicSnakeCase.to_string(),
+                Self::CommonAdditionalLogic => CommonAdditionalLogicSnakeCase.to_string(),
             };
-            format!("{}::{value}", naming::PostgresqlCrudSnakeCase)
+            format!("{PostgresqlCrudSnakeCase}::{value}")
         }
     }
     enum ShouldWrapIntoValue {
@@ -401,129 +447,127 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             macros_helpers::ShouldWriteTokenStreamIntoFile,
     }
     panic_location::panic_location();
-    let generate_select_query_part_snake_case = naming::GenerateSelectQueryPartSnakeCase;
+    let generate_select_query_part_snake_case = GenerateSelectQueryPartSnakeCase;
     let create_extension_if_not_exists_pg_jsonschema_upper_camel_case =
-        naming::CreateExtensionIfNotExistsPgJsonschemaUpperCamelCase;
+        CreateExtensionIfNotExistsPgJsonschemaUpperCamelCase;
     let create_extension_if_not_exists_uuid_ossp_upper_camel_case =
-        naming::CreateExtensionIfNotExistsUuidOsspUpperCamelCase;
-    let prepare_postgresql_upper_camel_case = naming::PreparePostgresqlUpperCamelCase;
-    let pool_snake_case = naming::PoolSnakeCase;
-    let value_snake_case = naming::ValueSnakeCase;
-    let el_snake_case = naming::ElementSnakeCase;
-    let update_snake_case = naming::UpdateSnakeCase;
-    let no_fields_provided_upper_camel_case = naming::NoFieldsProvidedUpperCamelCase;
-    let where_many_snake_case = naming::WhereManySnakeCase;
-    let additional_parameters_snake_case = naming::AdditionalParametersSnakeCase;
-    let postgresql_crud_snake_case = &naming::PostgresqlCrudSnakeCase;
-    let value_upper_camel_case = naming::ValueUpperCamelCase;
-    let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
-    let create_query_bind_snake_case = naming::CreateQueryBindSnakeCase;
-    let parameters_snake_case = naming::ParametersSnakeCase;
-    let payload_snake_case = naming::PayloadSnakeCase;
-    let select_snake_case = naming::SelectSnakeCase;
-    let increment_snake_case = naming::IncrementSnakeCase;
-    let error_snake_case = naming::ErrorSnakeCase;
-    let query_part_snake_case = naming::QueryPartSnakeCase;
-    let query_bind_snake_case = naming::QueryBindSnakeCase;
-    let order_by_snake_case = naming::OrderBySnakeCase;
-    let response_snake_case = naming::ResponseSnakeCase;
-    let status_code_snake_case = naming::StatusCodeSnakeCase;
-    let body_snake_case = naming::BodySnakeCase;
-    let executor_acquire_snake_case = naming::ExecutorAcquireSnakeCase;
-    let executor_snake_case = naming::ExecutorSnakeCase;
-    let rows_snake_case = naming::RowsSnakeCase;
-    let begin_snake_case = naming::BeginSnakeCase;
-    let commit_snake_case = naming::CommitSnakeCase;
-    let desirable_upper_camel_case = naming::DesirableUpperCamelCase;
-    let request_snake_case = naming::RequestSnakeCase;
-    let app_state_snake_case = naming::AppStateSnakeCase;
-    let pool_connection_snake_case = naming::PoolConnectionSnakeCase;
-    let body_bytes_snake_case = naming::BodyBytesSnakeCase;
-    let url_snake_case = naming::UrlSnakeCase;
-    let endpoint_location_snake_case = naming::EndpointLocationSnakeCase;
-    let future_snake_case = naming::FutureSnakeCase;
-    let by_snake_case = naming::BySnakeCase;
-    let prefix_snake_case = naming::PrefixSnakeCase;
-    let query_snake_case = naming::QuerySnakeCase;
-    let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
-    let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
-    let expected_response_snake_case = naming::ExpectedResponseSnakeCase;
-    let column_snake_case = naming::ColumnSnakeCase;
-    let columns_snake_case = naming::ColumnsSnakeCase;
-    let order_snake_case = naming::OrderSnakeCase;
-    let order_by_upper_camel_case = naming::OrderByUpperCamelCase;
-    let query_string_snake_case = naming::QueryStringSnakeCase;
-    let binded_query_snake_case = naming::BindedQuerySnakeCase;
-    let rollback_snake_case = naming::RollbackSnakeCase;
-    let table_snake_case = naming::TableSnakeCase;
-    let table_name_snake_case = naming::TableNameSnakeCase;
-    let update_for_query_upper_camel_case = naming::UpdateForQueryUpperCamelCase;
-    let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
-    let into_serialize_deserialize_version_snake_case =
-        naming::IntoSerializeDeserializeVersionSnakeCase;
-    let primary_key_snake_case = naming::PrimaryKeySnakeCase;
-    let pagination_snake_case = naming::PaginationSnakeCase;
-    let config_snake_case = naming::ConfigSnakeCase;
-    let postgres_pool_snake_case = naming::PostgresPoolSnakeCase;
-    let ident_create_default_snake_case = naming::IdentCreateDefaultSnakeCase;
+        CreateExtensionIfNotExistsUuidOsspUpperCamelCase;
+    let prepare_postgresql_upper_camel_case = PreparePostgresqlUpperCamelCase;
+    let pool_snake_case = PoolSnakeCase;
+    let value_snake_case = ValueSnakeCase;
+    let el_snake_case = ElementSnakeCase;
+    let update_snake_case = UpdateSnakeCase;
+    let no_fields_provided_upper_camel_case = NoFieldsProvidedUpperCamelCase;
+    let where_many_snake_case = WhereManySnakeCase;
+    let additional_parameters_snake_case = AdditionalParametersSnakeCase;
+    let postgresql_crud_snake_case = &PostgresqlCrudSnakeCase;
+    let value_upper_camel_case = ValueUpperCamelCase;
+    let create_query_part_snake_case = CreateQueryPartSnakeCase;
+    let create_query_bind_snake_case = CreateQueryBindSnakeCase;
+    let parameters_snake_case = ParametersSnakeCase;
+    let payload_snake_case = PayloadSnakeCase;
+    let select_snake_case = SelectSnakeCase;
+    let increment_snake_case = IncrementSnakeCase;
+    let error_snake_case = ErrorSnakeCase;
+    let query_part_snake_case = QueryPartSnakeCase;
+    let query_bind_snake_case = QueryBindSnakeCase;
+    let order_by_snake_case = OrderBySnakeCase;
+    let response_snake_case = ResponseSnakeCase;
+    let status_code_snake_case = StatusCodeSnakeCase;
+    let body_snake_case = BodySnakeCase;
+    let executor_acquire_snake_case = ExecutorAcquireSnakeCase;
+    let executor_snake_case = ExecutorSnakeCase;
+    let rows_snake_case = RowsSnakeCase;
+    let begin_snake_case = BeginSnakeCase;
+    let commit_snake_case = CommitSnakeCase;
+    let desirable_upper_camel_case = DesirableUpperCamelCase;
+    let request_snake_case = RequestSnakeCase;
+    let app_state_snake_case = AppStateSnakeCase;
+    let pool_connection_snake_case = PoolConnectionSnakeCase;
+    let body_bytes_snake_case = BodyBytesSnakeCase;
+    let url_snake_case = UrlSnakeCase;
+    let endpoint_location_snake_case = EndpointLocationSnakeCase;
+    let future_snake_case = FutureSnakeCase;
+    let by_snake_case = BySnakeCase;
+    let prefix_snake_case = PrefixSnakeCase;
+    let query_snake_case = QuerySnakeCase;
+    let update_query_part_snake_case = UpdateQueryPartSnakeCase;
+    let update_query_bind_snake_case = UpdateQueryBindSnakeCase;
+    let expected_response_snake_case = ExpectedResponseSnakeCase;
+    let column_snake_case = ColumnSnakeCase;
+    let columns_snake_case = ColumnsSnakeCase;
+    let order_snake_case = OrderSnakeCase;
+    let order_by_upper_camel_case = OrderByUpperCamelCase;
+    let query_string_snake_case = QueryStringSnakeCase;
+    let binded_query_snake_case = BindedQuerySnakeCase;
+    let rollback_snake_case = RollbackSnakeCase;
+    let table_snake_case = TableSnakeCase;
+    let table_name_snake_case = TableNameSnakeCase;
+    let update_for_query_upper_camel_case = UpdateForQueryUpperCamelCase;
+    let query_part_error_named_upper_camel_case = QueryPartErrorNamedUpperCamelCase;
+    let into_serialize_deserialize_version_snake_case = IntoSerializeDeserializeVersionSnakeCase;
+    let primary_key_snake_case = PrimaryKeySnakeCase;
+    let pagination_snake_case = PaginationSnakeCase;
+    let config_snake_case = ConfigSnakeCase;
+    let postgres_pool_snake_case = PostgresPoolSnakeCase;
+    let ident_create_default_snake_case = IdentCreateDefaultSnakeCase;
     let postgres_pool_for_tokio_spawn_sync_move_snake_case =
-        naming::PostgresPoolForTokioSpawnSyncMoveSnakeCase;
-    let select_primary_key_snake_case = naming::SelectPrimaryKeySnakeCase;
-    let update_for_query_vec_snake_case = naming::UpdateForQueryVecSnakeCase;
+        PostgresPoolForTokioSpawnSyncMoveSnakeCase;
+    let select_primary_key_snake_case = SelectPrimaryKeySnakeCase;
+    let update_for_query_vec_snake_case = UpdateForQueryVecSnakeCase;
     let common_read_only_ids_returned_from_create_one_snake_case =
-        naming::CommonReadOnlyIdsReturnedFromCreateOneSnakeCase;
-    let select_only_updated_ids_query_part_snake_case =
-        naming::SelectOnlyUpdatedIdsQueryPartSnakeCase;
-    let update_for_query_snake_case = naming::UpdateForQuerySnakeCase;
-    let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
-    let create_snake_case = naming::CreateSnakeCase;
-    let read_upper_camel_case = naming::ReadUpperCamelCase;
-    let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
-    let create_table_column_query_part_snake_case = naming::CreateTableColumnQueryPartSnakeCase;
+        CommonReadOnlyIdsReturnedFromCreateOneSnakeCase;
+    let select_only_updated_ids_query_part_snake_case = SelectOnlyUpdatedIdsQueryPartSnakeCase;
+    let update_for_query_snake_case = UpdateForQuerySnakeCase;
+    let read_only_ids_snake_case = ReadOnlyIdsSnakeCase;
+    let create_snake_case = CreateSnakeCase;
+    let read_upper_camel_case = ReadUpperCamelCase;
+    let postgresql_type_upper_camel_case = PostgresqlTypeUpperCamelCase;
+    let create_table_column_query_part_snake_case = CreateTableColumnQueryPartSnakeCase;
     let read_only_ids_merged_with_create_into_where_equal_snake_case =
-        naming::ReadOnlyIdsMergedWithCreateIntoWhereEqualSnakeCase;
+        ReadOnlyIdsMergedWithCreateIntoWhereEqualSnakeCase;
     let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case =
-        naming::ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSnakeCase;
+        ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSnakeCase;
     let read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_snake_case =
-        naming::ReadOnlyIdsMergedWithCreateIntoOptionVecWhereEqualToJsonFieldSnakeCase;
+        ReadOnlyIdsMergedWithCreateIntoOptionVecWhereEqualToJsonFieldSnakeCase;
     let create_into_postgresql_json_type_option_vec_where_length_equal_snake_case =
-        naming::CreateIntoPostgresqlJsonTypeOptionVecWhereLengthEqualSnakeCase;
+        CreateIntoPostgresqlJsonTypeOptionVecWhereLengthEqualSnakeCase;
     let create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case =
-        naming::CreateIntoPostgresqlJsonTypeOptionVecWhereLengthGreaterThanSnakeCase;
+        CreateIntoPostgresqlJsonTypeOptionVecWhereLengthGreaterThanSnakeCase;
     let create_into_postgresql_type_option_vec_where_dimension_one_equal_snake_case =
-        naming::CreateIntoPostgresqlTypeOptionVecWhereDimensionOneEqualSnakeCase;
-    let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_snake_case = naming::ReadOnlyIdsMergedWithTableTypeDeclarationIntoPostgresqlTypeOptionWhereGreaterThanSnakeCase;
-    let default_option_some_vec_one_el_upper_camel_case =
-        naming::DefaultOptionSomeVecOneElUpperCamelCase;
-    let default_option_some_vec_one_el_snake_case = naming::DefaultOptionSomeVecOneElSnakeCase;
+        CreateIntoPostgresqlTypeOptionVecWhereDimensionOneEqualSnakeCase;
+    let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_snake_case =
+        ReadOnlyIdsMergedWithTableTypeDeclarationIntoPostgresqlTypeOptionWhereGreaterThanSnakeCase;
+    let default_option_some_vec_one_el_upper_camel_case = DefaultOptionSomeVecOneElUpperCamelCase;
+    let default_option_some_vec_one_el_snake_case = DefaultOptionSomeVecOneElSnakeCase;
     let read_only_ids_into_table_type_declaration_snake_case =
-        naming::ReadOnlyIdsIntoTableTypeDeclarationSnakeCase;
+        ReadOnlyIdsIntoTableTypeDeclarationSnakeCase;
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_snake_case =
-        naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereGreaterThanSnakeCase;
+        ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereGreaterThanSnakeCase;
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_snake_case =
-        naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereBetweenSnakeCase;
+        ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereBetweenSnakeCase;
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_in_snake_case =
-        naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereInSnakeCase;
+        ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereInSnakeCase;
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_regular_expression_snake_case =
-        naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereRegularExpressionSnakeCase;
+        ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereRegularExpressionSnakeCase;
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_el_greater_than_snake_case =
-        naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElGreaterThanSnakeCase;
+        ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElGreaterThanSnakeCase;
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_el_regular_expression_snake_case =
-        naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElRegularExpressionSnakeCase;
-    let read_only_ids_into_read_snake_case = naming::ReadOnlyIdsIntoReadSnakeCase;
-    let read_only_ids_into_update_snake_case = naming::ReadOnlyIdsIntoUpdateSnakeCase;
-    let read_into_table_type_declaration_snake_case = naming::ReadIntoTableTypeDeclarationSnakeCase;
-    let prepare_postgresql_snake_case = naming::PreparePostgresqlSnakeCase;
-    let prepare_extensions_snake_case = naming::PrepareExtensionsSnakeCase;
-    let prepare_postgresql_table_snake_case = naming::PreparePostgresqlTableSnakeCase;
-    let option_vec_create_snake_case = naming::OptionVecCreateSnakeCase;
+        ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereContainsElRegularExpressionSnakeCase;
+    let read_only_ids_into_read_snake_case = ReadOnlyIdsIntoReadSnakeCase;
+    let read_only_ids_into_update_snake_case = ReadOnlyIdsIntoUpdateSnakeCase;
+    let read_into_table_type_declaration_snake_case = ReadIntoTableTypeDeclarationSnakeCase;
+    let prepare_postgresql_snake_case = PreparePostgresqlSnakeCase;
+    let prepare_extensions_snake_case = PrepareExtensionsSnakeCase;
+    let prepare_postgresql_table_snake_case = PreparePostgresqlTableSnakeCase;
+    let option_vec_create_snake_case = OptionVecCreateSnakeCase;
     let postgresql_type_option_vec_where_greater_than_test_snake_case =
-        naming::PostgresqlTypeOptionVecWhereGreaterThanTestSnakeCase;
-    let routes_handle_snake_case = naming::RoutesHandleSnakeCase;
-    let routes_snake_case = naming::RoutesSnakeCase;
-    let select_query_part_snake_case = naming::SelectQueryPartSnakeCase;
-    let from_handle_snake_case = naming::FromHandleSnakeCase;
-    let select_only_ids_query_part_snake_case = naming::SelectOnlyIdsQueryPartSnakeCase;
+        PostgresqlTypeOptionVecWhereGreaterThanTestSnakeCase;
+    let routes_handle_snake_case = RoutesHandleSnakeCase;
+    let routes_snake_case = RoutesSnakeCase;
+    let select_query_part_snake_case = SelectQueryPartSnakeCase;
+    let from_handle_snake_case = FromHandleSnakeCase;
+    let select_only_ids_query_part_snake_case = SelectOnlyIdsQueryPartSnakeCase;
     let error_0_ts = token_patterns::Error0;
     let error_1_ts = token_patterns::Error1;
     let error_2_ts = token_patterns::Error2;
@@ -562,7 +606,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     )
     .expect("1b6adf7e-7da9-4e2d-82e6-e8bb48ba8ee6");
     let ident = &syn_derive_input.ident;
-    let ident_snake_case_stringified = naming::ToTokensToSnakeCaseStringified::case(&ident);
+    let ident_snake_case_stringified = ToTokensToSnakeCaseStringified::case(&ident);
     let ident_snake_case_double_quotes_ts =
         generate_quotes::double_quotes_ts(&ident_snake_case_stringified);
     let self_table_name_call_ts = quote::quote! {Self::#table_name_snake_case()};
@@ -600,7 +644,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                     .expect("a9c3b38b-0a8d-43b1-a33e-bf3858394ea5")
                                     .ident;
                                 let generate_postgresql_table_primary_key_snake_case_stringified =
-                                    naming::GeneratePostgresqlTablePrimaryKeySnakeCase.to_string();
+                                    GeneratePostgresqlTablePrimaryKeySnakeCase.to_string();
                                 if first_segment_ident
                                     == &generate_postgresql_table_primary_key_snake_case_stringified
                                 {
@@ -676,7 +720,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let primary_key_field_type_as_postgresql_type_where_ts =
         generate_as_postgresql_type_where_ts(&primary_key_field_type);
     let generate_as_postgresql_type_read_ts = |field_type: &dyn quote::ToTokens| {
-        generate_as_postgresql_type_tokens_ts(&field_type, &naming::ReadUpperCamelCase)
+        generate_as_postgresql_type_tokens_ts(&field_type, &read_upper_camel_case)
     };
     let generate_as_postgresql_type_read_only_ids_ts = |field_type: &dyn quote::ToTokens| {
         generate_as_postgresql_type_tokens_ts(&field_type, &naming::ReadOnlyIdsUpperCamelCase)
@@ -687,7 +731,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         generate_as_postgresql_type_tokens_ts(&field_type, &naming::UpdateUpperCamelCase)
     };
     let generate_as_postgresql_type_update_for_query_ts = |field_type: &dyn quote::ToTokens| {
-        generate_as_postgresql_type_tokens_ts(&field_type, &naming::UpdateForQueryUpperCamelCase)
+        generate_as_postgresql_type_tokens_ts(&field_type, &update_for_query_upper_camel_case)
     };
     let primary_key_field_type_as_postgresql_type_read_upper_camel_case = quote::quote! {<#primary_key_field_type as postgresql_crud::#postgresql_type_upper_camel_case>::#read_upper_camel_case};
     let ident_read_only_ids_upper_camel_case = SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
@@ -717,7 +761,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         );
     let primary_key_field_ident = &primary_key_field.field_ident;
     let primary_key_field_ident_upper_camel_case_ts =
-        naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&primary_key_field_ident);
+        ToTokensToUpperCamelCaseTokenStream::case_or_panic(&primary_key_field_ident);
     let primary_key_field_type_update_ts =
         &SelfUpdateUpperCamelCase::from_type_last_segment(primary_key_field_type);
     let primary_key_field_type_update_for_query_ts =
@@ -913,9 +957,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             let variants_ts = generate_fields_named_with_comma_ts(
                 &|element: &macros_helpers::SynFieldWrapper| {
                     let field_ident_upper_camel_case_ts =
-                        naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(
-                            &element.field_ident,
-                        );
+                        ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
                     let initialization_ts = {
                         let field_ident_string_double_quotes_ts =
                             generate_quotes::double_quotes_ts(&element.field_ident);
@@ -1005,7 +1047,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 if *field_ident
                     .as_ref()
                     .expect("edbbd08a-ab4b-4553-ae90-e97c714f7908")
-                    == naming::CodeOccurenceSnakeCase.to_string()
+                    == CodeOccurenceSnakeCase.to_string()
                 {
                     macros_helpers::generate_field_code_occurence_new_ts(file, line, column)
                 } else {
@@ -1132,7 +1174,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         Some(macros_helpers::StatusCode::BadRequest400),
         vec![(
             ErrorOccurenceFieldAttribute::EoErrorOccurence,
-            &naming::ErrorSnakeCase,
+            &error_snake_case,
             macros_helpers::generate_simple_syn_punctuated_punctuated(&[
                 &postgresql_crud_snake_case.to_string(),
                 &query_part_error_named_upper_camel_case.to_string(),
@@ -1649,7 +1691,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &{
                     let variants = generate_fields_named_with_comma_ts(&|element: &macros_helpers::SynFieldWrapper| {
                         let serialize_deserialize_ident_ts = generate_quotes::double_quotes_ts(&element.field_ident);
-                        let field_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
+                        let field_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
                         let el_syn_field_ty_as_postgresql_type_select_ts = generate_as_postgresql_type_select_ts(&element.field_type);
                         quote::quote! {
                             #[serde(rename(serialize = #serialize_deserialize_ident_ts, deserialize = #serialize_deserialize_ident_ts))]
@@ -1680,7 +1722,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             );
         let impl_postgresql_crud_all_variants_default_option_some_vec_one_el_for_ident_select_ts = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_variants_default_option_some_vec_one_el_ts(&ident_select_upper_camel_case, &{
             let elements_ts = generate_fields_named_with_comma_ts(&|el_5282570d: &macros_helpers::SynFieldWrapper| {
-                let field_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_5282570d.field_ident);
+                let field_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_5282570d.field_ident);
                 quote::quote! {
                     Self::#field_ident_upper_camel_case_ts(#postgresql_crud_default_option_some_vec_one_el_call_ts)
                 }
@@ -1778,7 +1820,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     .iter()
                     .map(|el_3ce946f9| {
                         let field_ident = &el_3ce946f9.field_ident;
-                        let field_ident_upper_camel_case_ts = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_3ce946f9.field_ident);
+                        let field_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_3ce946f9.field_ident);
                         let field_ident_string_double_quotes_ts = generate_quotes::double_quotes_ts(&el_3ce946f9.field_ident);
                         let el_syn_field_ty_as_postgresql_type_read_ts = generate_as_postgresql_type_read_ts(&el_3ce946f9.field_type);
                         quote::quote! {
@@ -1971,16 +2013,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         SelfUpdateTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
     let ident_update_for_query_upper_camel_case =
         SelfUpdateForQueryUpperCamelCase::from_tokens(&ident);
-    let update_query_part_primary_key_snake_case = naming::UpdateQueryPartPrimaryKeySnakeCase;
+    let update_query_part_primary_key_snake_case = UpdateQueryPartPrimaryKeySnakeCase;
     let ident_update_ts = {
         let generate_option_value_field_type_as_postgresql_type_update_ts =
             |syn_type: &syn::Type| {
                 let path_value_ts = {
-                    let value = format!(
-                        "{}::{}",
-                        naming::PostgresqlCrudSnakeCase,
-                        naming::ValueUpperCamelCase
-                    );
+                    let value = format!("{postgresql_crud_snake_case}::{value_upper_camel_case}");
                     value
                         .parse::<proc_macro2::TokenStream>()
                         .expect("dbdbb7f2-7801-49e7-917e-f7daa9b4dd91")
@@ -2148,7 +2186,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         let field_ident = &element.field_ident;
                         let option_value_field_type_as_postgresql_type_update_for_query_ts = {
                             let path_value_ts = {
-                                let value = format!("{}::{}", naming::PostgresqlCrudSnakeCase, naming::ValueUpperCamelCase);
+                                let value = format!("{postgresql_crud_snake_case}::{value_upper_camel_case}");
                                 value.parse::<proc_macro2::TokenStream>().expect("2b09d4ae-757c-4c6b-a9ba-edd2ea95128a")
                             };
                             let syn_type_as_postgresql_type_update_for_query_ts = generate_as_postgresql_type_update_for_query_ts(&element.field_type);
@@ -2679,7 +2717,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     .as_ref()
                     .expect("a21dc807-77ad-4b05-a9ae-e1f17216b490");
                 let error_occurence_attribute = if *field_ident
-                    == *naming::CodeOccurenceSnakeCase.to_string()
+                    == *CodeOccurenceSnakeCase.to_string()
                 {
                     proc_macro2::TokenStream::new()
                 } else {
@@ -2804,7 +2842,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         | Operation::ReadOne
         | Operation::UpdateMany
         | Operation::DeleteMany
-        | Operation::DeleteOne => format!("{ident}{operation}{}", naming::PayloadUpperCamelCase)
+        | Operation::DeleteOne => format!("{ident}{operation}{PayloadUpperCamelCase}")
             .parse::<proc_macro2::TokenStream>()
             .expect("c042f504-5275-4388-80cc-a141c066daf8"),
     };
@@ -3752,7 +3790,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     let order_by_column_match_ts = generate_fields_named_with_comma_ts(
                         &|element: &macros_helpers::SynFieldWrapper| {
                             let field_ident_upper_camel_case =
-                                naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(
+                                ToTokensToUpperCamelCaseTokenStream::case_or_panic(
                                     &element.field_ident,
                                 );
                             let field_ident_double_quotes_ts =
@@ -4088,8 +4126,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 format!("{ident}{operation}PayloadTryNewErrorNamed")
                     .parse::<proc_macro2::TokenStream>()
                     .expect("3da248bb-84ba-48c9-9b7c-e0853198e0aa");
-            let not_unique_primary_key_upper_camel_case = naming::NotUniquePrimaryKeyUpperCamelCase;
-            let not_unique_primary_key_snake_case = naming::NotUniquePrimaryKeySnakeCase;
+            let not_unique_primary_key_upper_camel_case = NotUniquePrimaryKeyUpperCamelCase;
+            let not_unique_primary_key_snake_case = NotUniquePrimaryKeySnakeCase;
             let ident_operation_payload_try_new_error_named_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
@@ -4261,7 +4299,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                     IsSelfUpdateExistSnakeCase::from_tokens(&field_ident);
                                 let update_query_part_field_ident_snake_case =
                                     UpdateQueryPartSelfSnakeCase::from_tokens(&field_ident);
-                                let generate_when_column_id_then_value_update_many_query_part_snake_case = naming::GenerateWhenColumnIdThenValueUpdateManyQueryPartSnakeCase;
+                                let generate_when_column_id_then_value_update_many_query_part_snake_case =
+                                    GenerateWhenColumnIdThenValueUpdateManyQueryPartSnakeCase;
                                 quote::quote! {
                                     {
                                         let mut #is_field_ident_update_exists_snake_case = false;
@@ -4531,7 +4570,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 let field_ident_double_quotes_ts =
                                     generate_quotes::double_quotes_ts(&field_ident);
                                 let content_ts_9ec6b359 = generate_operation_error_initialization_eprintln_response_creation_ts(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
-                                let generate_column_queals_value_comma_update_one_query_part_snake_case = naming::GenerateColumnQuealsValueCommaUpdateOneQueryPartSnakeCase;
+                                let generate_column_queals_value_comma_update_one_query_part_snake_case =
+                                    GenerateColumnQuealsValueCommaUpdateOneQueryPartSnakeCase;
                                 let update_query_part_field_ident_snake_case =
                                     UpdateQueryPartSelfSnakeCase::from_tokens(&field_ident);
                                 quote::quote! {
@@ -4549,7 +4589,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 }
                             },
                         );
-                    let primary_key_query_part_snake_case = naming::PrimaryKeyQueryPartSnakeCase;
+                    let primary_key_query_part_snake_case = PrimaryKeyQueryPartSnakeCase;
                     let additional_parameters_primary_key_modification_ts =
                         generate_match_update_query_part_primary_key_ts(
                             &operation,
@@ -5094,10 +5134,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     let field_ident = &element.field_ident;
                     let field_type = &element.field_type;
                     let field_ident_upper_camel_case =
-                        naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
-                    let upper_camel_case =
-                        naming::DefaultOptionSomeVecOneElMaxPageSizeUpperCamelCase;
-                    let snake_case = naming::DefaultOptionSomeVecOneElMaxPageSizeSnakeCase;
+                        ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                    let upper_camel_case = DefaultOptionSomeVecOneElMaxPageSizeUpperCamelCase;
+                    let snake_case = DefaultOptionSomeVecOneElMaxPageSizeSnakeCase;
                     quote::quote! {
                         #ident_select_upper_camel_case::#field_ident_upper_camel_case(
                             <
