@@ -1,3 +1,5 @@
+//todo
+use proc_macro2::TokenStream as Ts2;
 naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ["self", "parameters"],
     ["self", "payload"],

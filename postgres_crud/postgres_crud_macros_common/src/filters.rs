@@ -45,7 +45,7 @@ use naming::{
     StrictlyToRightOfRangeUcc,
     parameter::{PostgresJsonTypeWhereSelfUcc, PostgresTypeWhereSelfUcc},
 };
-use proc_macro2::TokenStream;
+use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 
 #[allow(clippy::arbitrary_source_item_ordering)]
@@ -53,18 +53,18 @@ use quote::quote;
     Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension,
 )]
 pub enum PostgresTypeFilter {
-    Equal { ident: TokenStream },
-    DimensionOneEqual { ident: TokenStream },
-    GreaterThan { ident: TokenStream },
-    DimensionOneGreaterThan { ident: TokenStream },
-    Between { ident: TokenStream },
-    DimensionOneBetween { ident: TokenStream },
-    In { ident: TokenStream },
-    DimensionOneIn { ident: TokenStream },
+    Equal { ident: Ts2 },
+    DimensionOneEqual { ident: Ts2 },
+    GreaterThan { ident: Ts2 },
+    DimensionOneGreaterThan { ident: Ts2 },
+    Between { ident: Ts2 },
+    DimensionOneBetween { ident: Ts2 },
+    In { ident: Ts2 },
+    DimensionOneIn { ident: Ts2 },
     RegularExpression,
     DimensionOneRegularExpression,
-    Before { ident: TokenStream },
-    DimensionOneBefore { ident: TokenStream },
+    Before { ident: Ts2 },
+    DimensionOneBefore { ident: Ts2 },
     CurrentDate,
     DimensionOneCurrentDate,
     GreaterThanCurrentDate,
@@ -81,32 +81,32 @@ pub enum PostgresTypeFilter {
     DimensionOneLengthGreaterThan,
     EqualToEncodedStringRepresentation,
     DimensionOneEqualToEncodedStringRepresentation,
-    FindRangesWithinGivenRange { ident: TokenStream },
-    DimensionOneFindRangesWithinGivenRange { ident: TokenStream },
-    FindRangesThatFullyContainTheGivenRange { ident: TokenStream },
-    DimensionOneFindRangesThatFullyContainTheGivenRange { ident: TokenStream },
-    StrictlyToLeftOfRange { ident: TokenStream },
-    DimensionOneStrictlyToLeftOfRange { ident: TokenStream },
-    StrictlyToRightOfRange { ident: TokenStream },
-    DimensionOneStrictlyToRightOfRange { ident: TokenStream },
-    IncludedLowerBound { ident: TokenStream },
-    DimensionOneIncludedLowerBound { ident: TokenStream },
-    ExcludedUpperBound { ident: TokenStream },
-    DimensionOneExcludedUpperBound { ident: TokenStream },
-    GreaterThanIncludedLowerBound { ident: TokenStream },
-    DimensionOneGreaterThanIncludedLowerBound { ident: TokenStream },
-    GreaterThanExcludedUpperBound { ident: TokenStream },
-    DimensionOneGreaterThanExcludedUpperBound { ident: TokenStream },
-    OverlapWithRange { ident: TokenStream },
-    DimensionOneOverlapWithRange { ident: TokenStream },
-    AdjacentWithRange { ident: TokenStream },
-    DimensionOneAdjacentWithRange { ident: TokenStream },
+    FindRangesWithinGivenRange { ident: Ts2 },
+    DimensionOneFindRangesWithinGivenRange { ident: Ts2 },
+    FindRangesThatFullyContainTheGivenRange { ident: Ts2 },
+    DimensionOneFindRangesThatFullyContainTheGivenRange { ident: Ts2 },
+    StrictlyToLeftOfRange { ident: Ts2 },
+    DimensionOneStrictlyToLeftOfRange { ident: Ts2 },
+    StrictlyToRightOfRange { ident: Ts2 },
+    DimensionOneStrictlyToRightOfRange { ident: Ts2 },
+    IncludedLowerBound { ident: Ts2 },
+    DimensionOneIncludedLowerBound { ident: Ts2 },
+    ExcludedUpperBound { ident: Ts2 },
+    DimensionOneExcludedUpperBound { ident: Ts2 },
+    GreaterThanIncludedLowerBound { ident: Ts2 },
+    DimensionOneGreaterThanIncludedLowerBound { ident: Ts2 },
+    GreaterThanExcludedUpperBound { ident: Ts2 },
+    DimensionOneGreaterThanExcludedUpperBound { ident: Ts2 },
+    OverlapWithRange { ident: Ts2 },
+    DimensionOneOverlapWithRange { ident: Ts2 },
+    AdjacentWithRange { ident: Ts2 },
+    DimensionOneAdjacentWithRange { ident: Ts2 },
     RangeLength,
     DimensionOneRangeLength,
     //BitVecPositionEqual,//currently deactivated
 }
 impl PostgresFilter for PostgresTypeFilter {
-    fn maybe_generic(&self) -> Option<TokenStream> {
+    fn maybe_generic(&self) -> Option<Ts2> {
         match &self {
             Self::Equal { ident }
             | Self::DimensionOneEqual { ident }
@@ -160,7 +160,7 @@ impl PostgresFilter for PostgresTypeFilter {
             | Self::DimensionOneRangeLength => None,
         }
     }
-    fn prefix_where_self_ucc(&self) -> TokenStream {
+    fn prefix_where_self_ucc(&self) -> Ts2 {
         let value = PostgresTypeWhereSelfUcc::from_display(&self.ucc());
         quote! {#value}
     }
@@ -241,16 +241,16 @@ impl PostgresFilter for PostgresTypeFilter {
     Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension,
 )]
 pub enum PostgresJsonTypeFilter {
-    Equal { ident: TokenStream },
-    DimensionOneEqual { ident: TokenStream },
-    DimensionTwoEqual { ident: TokenStream },
-    DimensionThreeEqual { ident: TokenStream },
-    DimensionFourEqual { ident: TokenStream },
-    AllElementsEqual { ident: TokenStream },
-    DimensionOneAllElementsEqual { ident: TokenStream },
-    DimensionTwoAllElementsEqual { ident: TokenStream },
-    DimensionThreeAllElementsEqual { ident: TokenStream },
-    DimensionFourAllElementsEqual { ident: TokenStream },
+    Equal { ident: Ts2 },
+    DimensionOneEqual { ident: Ts2 },
+    DimensionTwoEqual { ident: Ts2 },
+    DimensionThreeEqual { ident: Ts2 },
+    DimensionFourEqual { ident: Ts2 },
+    AllElementsEqual { ident: Ts2 },
+    DimensionOneAllElementsEqual { ident: Ts2 },
+    DimensionTwoAllElementsEqual { ident: Ts2 },
+    DimensionThreeAllElementsEqual { ident: Ts2 },
+    DimensionFourAllElementsEqual { ident: Ts2 },
     LengthEqual,
     DimensionOneLengthEqual,
     DimensionTwoLengthEqual,
@@ -261,31 +261,31 @@ pub enum PostgresJsonTypeFilter {
     DimensionTwoLengthGreaterThan,
     DimensionThreeLengthGreaterThan,
     DimensionFourLengthGreaterThan,
-    GreaterThan { ident: TokenStream },
-    DimensionOneGreaterThan { ident: TokenStream },
-    DimensionTwoGreaterThan { ident: TokenStream },
-    DimensionThreeGreaterThan { ident: TokenStream },
-    DimensionFourGreaterThan { ident: TokenStream },
-    ContainsElGreaterThan { ident: TokenStream },
-    DimensionOneContainsElGreaterThan { ident: TokenStream },
-    DimensionTwoContainsElGreaterThan { ident: TokenStream },
-    DimensionThreeContainsElGreaterThan { ident: TokenStream },
-    DimensionFourContainsElGreaterThan { ident: TokenStream },
-    AllElementsGreaterThan { ident: TokenStream },
-    DimensionOneAllElementsGreaterThan { ident: TokenStream },
-    DimensionTwoAllElementsGreaterThan { ident: TokenStream },
-    DimensionThreeAllElementsGreaterThan { ident: TokenStream },
-    DimensionFourAllElementsGreaterThan { ident: TokenStream },
-    Between { ident: TokenStream },
-    DimensionOneBetween { ident: TokenStream },
-    DimensionTwoBetween { ident: TokenStream },
-    DimensionThreeBetween { ident: TokenStream },
-    DimensionFourBetween { ident: TokenStream },
-    In { ident: TokenStream },
-    DimensionOneIn { ident: TokenStream },
-    DimensionTwoIn { ident: TokenStream },
-    DimensionThreeIn { ident: TokenStream },
-    DimensionFourIn { ident: TokenStream },
+    GreaterThan { ident: Ts2 },
+    DimensionOneGreaterThan { ident: Ts2 },
+    DimensionTwoGreaterThan { ident: Ts2 },
+    DimensionThreeGreaterThan { ident: Ts2 },
+    DimensionFourGreaterThan { ident: Ts2 },
+    ContainsElGreaterThan { ident: Ts2 },
+    DimensionOneContainsElGreaterThan { ident: Ts2 },
+    DimensionTwoContainsElGreaterThan { ident: Ts2 },
+    DimensionThreeContainsElGreaterThan { ident: Ts2 },
+    DimensionFourContainsElGreaterThan { ident: Ts2 },
+    AllElementsGreaterThan { ident: Ts2 },
+    DimensionOneAllElementsGreaterThan { ident: Ts2 },
+    DimensionTwoAllElementsGreaterThan { ident: Ts2 },
+    DimensionThreeAllElementsGreaterThan { ident: Ts2 },
+    DimensionFourAllElementsGreaterThan { ident: Ts2 },
+    Between { ident: Ts2 },
+    DimensionOneBetween { ident: Ts2 },
+    DimensionTwoBetween { ident: Ts2 },
+    DimensionThreeBetween { ident: Ts2 },
+    DimensionFourBetween { ident: Ts2 },
+    In { ident: Ts2 },
+    DimensionOneIn { ident: Ts2 },
+    DimensionTwoIn { ident: Ts2 },
+    DimensionThreeIn { ident: Ts2 },
+    DimensionFourIn { ident: Ts2 },
     RegularExpression,
     DimensionOneRegularExpression,
     DimensionTwoRegularExpression,
@@ -301,20 +301,20 @@ pub enum PostgresJsonTypeFilter {
     DimensionTwoAllElementsRegularExpression,
     DimensionThreeAllElementsRegularExpression,
     DimensionFourAllElementsRegularExpression,
-    ContainsAllElementsOfArray { ident: TokenStream },
-    DimensionOneContainsAllElementsOfArray { ident: TokenStream },
-    DimensionTwoContainsAllElementsOfArray { ident: TokenStream },
-    DimensionThreeContainsAllElementsOfArray { ident: TokenStream },
-    DimensionFourContainsAllElementsOfArray { ident: TokenStream },
+    ContainsAllElementsOfArray { ident: Ts2 },
+    DimensionOneContainsAllElementsOfArray { ident: Ts2 },
+    DimensionTwoContainsAllElementsOfArray { ident: Ts2 },
+    DimensionThreeContainsAllElementsOfArray { ident: Ts2 },
+    DimensionFourContainsAllElementsOfArray { ident: Ts2 },
     // ContainedInArray,
-    OverlapsWithArray { ident: TokenStream },
-    DimensionOneOverlapsWithArray { ident: TokenStream },
-    DimensionTwoOverlapsWithArray { ident: TokenStream },
-    DimensionThreeOverlapsWithArray { ident: TokenStream },
-    DimensionFourOverlapsWithArray { ident: TokenStream },
+    OverlapsWithArray { ident: Ts2 },
+    DimensionOneOverlapsWithArray { ident: Ts2 },
+    DimensionTwoOverlapsWithArray { ident: Ts2 },
+    DimensionThreeOverlapsWithArray { ident: Ts2 },
+    DimensionFourOverlapsWithArray { ident: Ts2 },
 }
 impl PostgresFilter for PostgresJsonTypeFilter {
-    fn maybe_generic(&self) -> Option<TokenStream> {
+    fn maybe_generic(&self) -> Option<Ts2> {
         match &self {
             Self::Equal { ident }
             | Self::DimensionOneEqual { ident }
@@ -388,7 +388,7 @@ impl PostgresFilter for PostgresJsonTypeFilter {
             | Self::DimensionFourLengthGreaterThan => None,
         }
     }
-    fn prefix_where_self_ucc(&self) -> TokenStream {
+    fn prefix_where_self_ucc(&self) -> Ts2 {
         let value = PostgresJsonTypeWhereSelfUcc::from_display(&self.ucc());
         quote! {#value}
     }
@@ -505,7 +505,7 @@ impl PostgresFilter for PostgresJsonTypeFilter {
 }
 
 pub trait PostgresFilter {
-    fn maybe_generic(&self) -> Option<TokenStream>;
-    fn prefix_where_self_ucc(&self) -> TokenStream;
+    fn maybe_generic(&self) -> Option<Ts2>;
+    fn prefix_where_self_ucc(&self) -> Ts2;
     fn ucc(&self) -> &'static dyn StdFmtDisplayPlusQuoteToTokens;
 }

@@ -1,3 +1,4 @@
+use proc_macro2::TokenStream as Ts2;
 #[proc_macro]
 pub fn gen_struct_or_enum_derive_ts_builder(
     input_ts: proc_macro::TokenStream,
@@ -5,10 +6,10 @@ pub fn gen_struct_or_enum_derive_ts_builder(
     use naming::parameter::{DeriveSelfIfSc, DeriveSelfSc, DeriveSelfUcc};
     #[derive(Clone)]
     struct Element {
-        derive_trait_name_if_sc: proc_macro2::TokenStream,
-        derive_trait_name_sc: proc_macro2::TokenStream,
-        derive_trait_name_ucc: proc_macro2::TokenStream,
-        trait_type: proc_macro2::TokenStream,
+        derive_trait_name_if_sc: Ts2,
+        derive_trait_name_sc: Ts2,
+        derive_trait_name_ucc: Ts2,
+        trait_type: Ts2,
     }
     let make_pub_sc_ts = quote::quote! {make_pub};
     let make_pub_if_sc_ts = quote::quote! {make_pub_if};
@@ -60,13 +61,13 @@ pub fn gen_struct_or_enum_derive_ts_builder(
                     quote::quote! {#value}
                 },
                 trait_type: el_4f4a2c74
-                    .parse::<proc_macro2::TokenStream>()
+                    .parse::<Ts2>()
                     .expect("8672240f-97b3-40f5-bf14-dc4b13af528f"),
             }
         })
         .collect::<Vec<Element>>();
     let (make_pub_pub_enum_ts, pub_enum_derive_vec_ts) = {
-        fn gen_pun_enum_ts(ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+        fn gen_pun_enum_ts(ident: &dyn quote::ToTokens) -> Ts2 {
             quote::quote! {
                 #[derive(Debug, Clone, Copy)]
                 pub enum #ident {
@@ -83,7 +84,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(
         )
     };
     let (make_pub_derive_trait_name_bool_ts, field_vec_ts) = {
-        fn gen_derive_trait_name_bool_ts(ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+        fn gen_derive_trait_name_bool_ts(ident: &dyn quote::ToTokens) -> Ts2 {
             quote::quote! {#ident: bool,}
         }
         (
@@ -137,7 +138,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(
     });
     let struct_or_enum_derive_ts_builder_ucc = quote::quote! {StructOrEnumDeriveTokenStreamBuilder};
     let struct_or_enum_ucc = quote::quote! {StructOrEnum};
-    let gend: proc_macro2::TokenStream = quote::quote! {
+    let gend: Ts2 = quote::quote! {
         #make_pub_pub_enum_ts
         #(#pub_enum_derive_vec_ts)*
         #[derive(Debug, Clone, Copy)]
@@ -161,7 +162,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(
                 struct_or_enum: #struct_or_enum_ucc,
                 current_ident: &dyn quote::ToTokens,
                 content_ts: &dyn quote::ToTokens,
-            ) -> proc_macro2::TokenStream {
+            ) -> Ts2 {
                 let maybe_pub_ts = self.#make_pub_sc_ts.then(|| quote::quote!{pub});
                 let derive_ts = {
                     let mut acc_2a71375c = Vec::new();
@@ -231,14 +232,14 @@ pub fn gen_struct_or_enum_derive_ts_builder(
                 self,
                 current_ident: &dyn quote::ToTokens,
                 content_ts: &dyn quote::ToTokens,
-            ) -> proc_macro2::TokenStream {
+            ) -> Ts2 {
                 self.build_handle(#struct_or_enum_ucc::Struct, current_ident, content_ts)
             }
             pub fn build_enum(
                 self,
                 current_ident: &dyn quote::ToTokens,
                 content_ts: &dyn quote::ToTokens,
-            ) -> proc_macro2::TokenStream {
+            ) -> Ts2 {
                 self.build_handle(#struct_or_enum_ucc::Enum, current_ident, content_ts)
             }
         }

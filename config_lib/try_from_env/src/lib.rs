@@ -1,3 +1,4 @@
+use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 #[proc_macro_derive(TryFromEnv)]
 pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -68,9 +69,9 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             }
         });
         macros_helpers::gen_impl_std_fmt_display_ts(
-            &proc_macro2::TokenStream::new(),
+            &Ts2::new(),
             &ident_try_from_env_error_named_ucc,
-            &proc_macro2::TokenStream::new(),
+            &Ts2::new(),
             &quote! {
                 match self {
                     Self::#dotenv_ucc {

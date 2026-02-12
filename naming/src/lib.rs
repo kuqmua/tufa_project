@@ -1,5 +1,6 @@
 pub mod parameter;
 
+use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use std::fmt::{Display, Formatter, Result as FmtResult};
 
@@ -1320,7 +1321,7 @@ impl Display for HashMapUcc {
     }
 }
 impl quote::ToTokens for HashMapUcc {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {HashMap}.to_tokens(tokens);
     }
 }
@@ -1332,7 +1333,7 @@ impl Display for HashMapSc {
     }
 }
 impl quote::ToTokens for HashMapSc {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {hashmap}.to_tokens(tokens);
     }
 }
@@ -1354,17 +1355,17 @@ where
 }
 
 pub trait SwaggerUrlPathSelfQuotesTokenStream {
-    fn swagger_url_path_self_quotes_ts(&self, table_name_str: &str) -> proc_macro2::TokenStream;
+    fn swagger_url_path_self_quotes_ts(&self, table_name_str: &str) -> Ts2;
 }
 
 impl<T> SwaggerUrlPathSelfQuotesTokenStream for T
 where
     T: SwaggerUrlPathSelfQuotesStr,
 {
-    fn swagger_url_path_self_quotes_ts(&self, table_name_str: &str) -> proc_macro2::TokenStream {
+    fn swagger_url_path_self_quotes_ts(&self, table_name_str: &str) -> Ts2 {
         let value = self.swagger_url_path_self_quotes_str(table_name_str);
         value
-            .parse::<proc_macro2::TokenStream>()
+            .parse::<Ts2>()
             .expect("f292686b-7b16-4f33-a085-e67b4091f266")
     }
 }

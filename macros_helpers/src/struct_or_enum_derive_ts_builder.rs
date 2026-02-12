@@ -1,3 +1,5 @@
+//todo
+use proc_macro2::TokenStream as Ts2;
 gen_struct_or_enum_derive_ts_builder::gen_struct_or_enum_derive_ts_builder!([
     "Debug",
     "Default",

@@ -1,7 +1,6 @@
+use proc_macro2::TokenStream as Ts2;
 use quote::quote;
-
 const REGEX_VALUE: &str = "^[a-zA-Z]+$";
-
 #[proc_macro]
 pub fn gen_upper_camel_and_sc_str_and_ts(
     input_ts: proc_macro::TokenStream,
@@ -48,21 +47,21 @@ pub fn gen_upper_camel_and_sc_str_and_ts(
                 gen_quotes::double_quotes_ts(&phrase_part_ucc_str);
             let phrase_part_sc_double_quotes_ts = gen_quotes::double_quotes_ts(&phrase_part_sc_str);
             let phrase_part_ucc_ts = phrase_part_ucc_str
-                .parse::<proc_macro2::TokenStream>()
+                .parse::<Ts2>()
                 .expect("7cf3ffc0-e9c9-4d91-b42f-beb77350d743");
             let phrase_part_sc_ts = phrase_part_sc_str
-                .parse::<proc_macro2::TokenStream>()
+                .parse::<Ts2>()
                 .expect("114a573a-3df3-4e4a-96c4-043eed3a358c");
             let phrase_part_ucc_ucc_ts = {
                 let value = format!("{phrase_part_ucc_str}Ucc");
                 value
-                    .parse::<proc_macro2::TokenStream>()
+                    .parse::<Ts2>()
                     .expect("4ab6a54c-892b-4f8f-a6b6-aead9c3671fe")
             };
             let phrase_part_sc_ucc_ts = {
                 let value = format!("{phrase_part_ucc_str}Sc");
                 value
-                    .parse::<proc_macro2::TokenStream>()
+                    .parse::<Ts2>()
                     .expect("0cc47b2e-03e2-48b8-8df3-7bbbe09de244")
             };
             let gen_struct_declaration = |struct_name_ts: &dyn quote::ToTokens| {
@@ -95,7 +94,7 @@ pub fn gen_upper_camel_and_sc_str_and_ts(
                 |struct_name_ts: &dyn quote::ToTokens, quote_content_ts: &dyn quote::ToTokens| {
                     quote! {
                         impl quote::ToTokens for #struct_name_ts {
-                            fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+                            fn to_tokens(&self, tokens: &mut Ts2) {
                                 quote!{#quote_content_ts}.to_tokens(tokens);
                             }
                         }
@@ -173,21 +172,21 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(
             });
             let struct_ucc_ucc_ts = {
                 let value = format!("{elements_concat_ucc_str}{ucc_ucc_str}");
-                value.parse::<proc_macro2::TokenStream>().expect("82f4ac08-08bd-4152-9633-7fb0ad2f59a9")
+                value.parse::<Ts2>().expect("82f4ac08-08bd-4152-9633-7fb0ad2f59a9")
             };
             let struct_sc_token_ucc_ts = {
                 let value = format!("{elements_concat_ucc_str}{sc_ucc_str}");
-                value.parse::<proc_macro2::TokenStream>().expect("21044eba-c2c2-4c48-b84a-f7af8777436f")
+                value.parse::<Ts2>().expect("21044eba-c2c2-4c48-b84a-f7af8777436f")
             };
             let (trait_ucc_ucc_ts, trait_sc_token_ucc_ts) = {
                 let trait_ucc_str = "Trait";
                 let trait_ucc_ucc_ts = {
                     let value = format!("{elements_concat_ucc_str}{ucc_ucc_str}{trait_ucc_str}");
-                    value.parse::<proc_macro2::TokenStream>().expect("1066857a-b509-4b94-937f-8a72af6482fe")
+                    value.parse::<Ts2>().expect("1066857a-b509-4b94-937f-8a72af6482fe")
                 };
                 let trait_sc_token_ucc_ts = {
                     let value = format!("{elements_concat_ucc_str}{sc_ucc_str}{trait_ucc_str}");
-                    value.parse::<proc_macro2::TokenStream>().expect("8db74cfd-cc35-4e38-83fa-3e0497504821")
+                    value.parse::<Ts2>().expect("8db74cfd-cc35-4e38-83fa-3e0497504821")
                 };
                 (trait_ucc_ucc_ts, trait_sc_token_ucc_ts)
             };
@@ -226,7 +225,7 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(
                     }
                     pub fn from_tokens(value: &dyn quote::ToTokens) -> Self {
                         Self::wrap(&#casing_ts(&{
-                            let mut tokens = proc_macro2::TokenStream::new();
+                            let mut tokens = Ts2::new();
                             quote::ToTokens::to_tokens(&value, &mut tokens);
                             tokens
                         }.to_string()))
@@ -255,9 +254,9 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(
                     }
                 }
                 impl quote::ToTokens for #struct_ident_ts {
-                    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+                    fn to_tokens(&self, tokens: &mut Ts2) {
                         let value_str = self.to_string();
-                        let value_ts = value_str.parse::<proc_macro2::TokenStream>()
+                        let value_ts = value_str.parse::<Ts2>()
                             .expect("71c8d26b-18c4-4bbe-a07e-3114a15932d2");
                         value_ts.to_tokens(tokens);
                     }
@@ -312,7 +311,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(
             }
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("4955c50d-3db7-4881-a085-64b08a1ef413"),
         })
-        .collect::<Vec<proc_macro2::TokenStream>>();
+        .collect::<Vec<Ts2>>();
     let trait_path_ts = trait_path_ts();
     let gend = quote! {
         impl #trait_path_ts::AsRefStrToUccStr for #ident {
@@ -360,7 +359,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(
             }
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("b3ef2657-22f2-4df6-a58c-263a50e3c247"),
         })
-        .collect::<Vec<proc_macro2::TokenStream>>();
+        .collect::<Vec<Ts2>>();
     let trait_path_ts = trait_path_ts();
     let gend = quote! {
         impl #trait_path_ts::AsRefStrToScStr for #ident {
@@ -407,7 +406,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(
             }
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("b6fedcff-1a88-455f-bd93-219ec45a1fce"),
         })
-        .collect::<Vec<proc_macro2::TokenStream>>();
+        .collect::<Vec<Ts2>>();
     let trait_path_ts = trait_path_ts();
     let gend = quote! {
         impl #trait_path_ts::ToUpperScStr for #ident {
@@ -422,6 +421,6 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(
     gend.into()
 }
 
-fn trait_path_ts() -> proc_macro2::TokenStream {
+fn trait_path_ts() -> Ts2 {
     quote! {naming}
 }

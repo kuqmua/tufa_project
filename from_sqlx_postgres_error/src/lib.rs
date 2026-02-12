@@ -12,7 +12,7 @@
 //     //     let field_ident = field.ident;
 //     //     let field_ty =
 //     //     quote! {}
-//     // }).collect::<Vec<proc_macro2::TokenStream>>();
+//     // }).collect::<Vec<Ts2>>();
 
 //     let field_code_occurence_new_d7be05e4_ebc4_47bc_a99c_d1143d5e4dae_ts = macros_helpers::gen_field_code_occurence_new_ts(
 //         file!(),

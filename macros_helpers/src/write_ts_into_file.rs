@@ -1,5 +1,5 @@
+use proc_macro2::TokenStream as Ts2;
 use std::{fs::File, io::Write, path::Path, process::Command};
-
 #[derive(Debug, Clone, Copy)]
 pub enum FormatWithCargofmt {
     False,
@@ -13,7 +13,7 @@ pub enum ShouldWriteTokenStreamIntoFile {
 pub fn maybe_write_ts_into_file(
     should_write_ts_into_file: ShouldWriteTokenStreamIntoFile,
     file_name: &str,
-    ts: &proc_macro2::TokenStream,
+    ts: &Ts2,
     format_with_cargofmt: &FormatWithCargofmt,
 ) {
     if matches!(

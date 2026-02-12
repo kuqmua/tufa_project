@@ -1,11 +1,11 @@
+use proc_macro2::TokenStream as Ts2;
 use quote::quote;
-
 pub fn gen_impl_error_occurence_lib_to_std_string_string_ts(
     impl_generics_ts: &dyn quote::ToTokens,
     ident_ts: &dyn quote::ToTokens,
     ident_generics_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     use naming::{ErrorOccurenceLibSc, SelfSc, ToStdStringStringSc, ToStdStringStringUcc};
     let error_occurence_lib_sc = ErrorOccurenceLibSc;
     let to_std_string_string_ucc = ToStdStringStringUcc;

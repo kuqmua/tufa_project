@@ -2,6 +2,7 @@ use naming::{
     CodeOccurenceSc, IntoSerializeDeserializeVersionSc, ValueSc, WithSerializeDeserializeUcc,
     parameter::SelfWithSerializeDeserializeUcc,
 };
+use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 
 #[proc_macro_derive(
@@ -85,13 +86,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let code_occurence_sc_str = code_occurence_sc.to_string();
     let into_serialize_deserialize_version_sc_ts = IntoSerializeDeserializeVersionSc;
     let maybe_generic_parameters_ts = if generic_parameters.is_empty() {
-        proc_macro2::TokenStream::new()
+        Ts2::new()
     } else {
         quote! {<#(#generic_parameters),*>}
     };
     let maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts =
         if generic_parameters.is_empty() {
-            proc_macro2::TokenStream::new()
+            Ts2::new()
         } else {
             let value = generic_parameters
                 .iter()
@@ -135,7 +136,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         .map(|el_e4070354| el_e4070354.ident.as_ref().expect("971ace15-e8cb-4780-8589-2da5e99e5587"))
                         .collect::<Vec<&syn::Ident>>();
                         if acc_ts.is_empty() {
-                            proc_macro2::TokenStream::new()
+                            Ts2::new()
                         }
                         else {
                             quote!{#(#acc_ts),*,}
@@ -466,7 +467,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             },
                             WithSerializeDeserializeUcc
                         )
-                        .parse::<proc_macro2::TokenStream>()
+                        .parse::<Ts2>()
                         .expect("9ff40f7e-b7b0-4226-8663-d2de6d5e05ed")
                     };
                     quote! {#el_ident(#inner_type_with_serialize_deserialize_ts)}

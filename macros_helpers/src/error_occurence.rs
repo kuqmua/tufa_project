@@ -1,5 +1,6 @@
 use crate::attribute_ident_str::AttributeIdentStr;
 use naming::{CodeOccurenceSc, HashMapUcc, WithSerializeDeserializeUcc};
+use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use std::str::FromStr;
 
@@ -94,18 +95,16 @@ impl AttributeIdentStr for ErrorOccurenceFieldAttribute {
 }
 impl ErrorOccurenceFieldAttribute {
     #[must_use]
-    pub fn to_attribute_view_ts(&self) -> proc_macro2::TokenStream {
+    pub fn to_attribute_view_ts(&self) -> Ts2 {
         let value = format!("#[{}]", AttributeIdentStr::attribute_ident_str(self));
         value
-            .parse::<proc_macro2::TokenStream>()
+            .parse::<Ts2>()
             .expect("147c39e9-4e64-4080-9426-f66520a414d6")
     }
 }
 
 #[must_use]
-pub fn gen_serialize_deserialize_version_of_named_syn_variant(
-    value: &syn::Variant,
-) -> proc_macro2::TokenStream {
+pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &syn::Variant) -> Ts2 {
     let el_ident = &value.ident;
     let fields = if let syn::Fields::Named(fields) = &value.fields {
         &fields.named
@@ -157,7 +156,7 @@ pub fn gen_serialize_deserialize_version_of_named_syn_variant(
             ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize | ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => el_type_ts,
             ErrorOccurenceFieldAttribute::EoErrorOccurence => format!(
                 "{el_type_ts}{WithSerializeDeserializeUcc}"
-            ).parse::<proc_macro2::TokenStream>().expect("201dc0a4-4563-4e51-a228-ba085b767775"),
+            ).parse::<Ts2>().expect("201dc0a4-4563-4e51-a228-ba085b767775"),
             ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
                 quote! {
                     Vec<#std_string_string>
@@ -180,7 +179,7 @@ pub fn gen_serialize_deserialize_version_of_named_syn_variant(
                             quote! {#first_arg}
                         },
                         WithSerializeDeserializeUcc,
-                    ).parse::<proc_macro2::TokenStream>().expect("22c364b9-c645-46ec-984e-cf0b911feb84")
+                    ).parse::<Ts2>().expect("22c364b9-c645-46ec-984e-cf0b911feb84")
                 } else {
                     panic!("07c6ab44-5e5e-4fca-96a8-5786fb2d2f48");
                 };
@@ -204,7 +203,7 @@ pub fn gen_serialize_deserialize_version_of_named_syn_variant(
                     "{}{}",
                     quote! {#second_argument},
                     WithSerializeDeserializeUcc
-                ).parse::<proc_macro2::TokenStream>().expect("86307dbc-484e-4012-ac70-2d593b1f99e6");
+                ).parse::<Ts2>().expect("86307dbc-484e-4012-ac70-2d593b1f99e6");
                 quote! {
                     std::collections::HashMap<#std_string_string, #el_hashmap_value_type_with_serialize_deserialize_ts>
                 }

@@ -1,10 +1,11 @@
+use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 pub fn gen_impl_std_fmt_display_ts(
     impl_generics_ts: &dyn ToTokens,
     ident_ts: &dyn ToTokens,
     ident_generics_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     use naming::SelfSc;
     let self_sc = SelfSc;
     quote! {

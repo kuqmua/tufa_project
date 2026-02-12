@@ -1,3 +1,4 @@
+use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use std::fmt::Display;
 //todo maybe add another generic - trait casing. and ToUccString and others would implement it like .to_case::<UpperCamel>()
@@ -14,13 +15,13 @@ where
     }
 }
 pub trait AsRefStrToUccTs {
-    fn case_or_panic(&self) -> proc_macro2::TokenStream;
+    fn case_or_panic(&self) -> Ts2;
 }
 impl<T> AsRefStrToUccTs for T
 where
     T: Sized + AsRefStrToUccStr,
 {
-    fn case_or_panic(&self) -> proc_macro2::TokenStream {
+    fn case_or_panic(&self) -> Ts2 {
         to_ts_or_panic(&AsRefStrToUccStr::case(self))
     }
 }
@@ -37,13 +38,13 @@ where
     }
 }
 pub trait AsRefStrToScTs {
-    fn case_or_panic(&self) -> proc_macro2::TokenStream;
+    fn case_or_panic(&self) -> Ts2;
 }
 impl<T> AsRefStrToScTs for T
 where
     T: Sized + AsRefStrToScStr,
 {
-    fn case_or_panic(&self) -> proc_macro2::TokenStream {
+    fn case_or_panic(&self) -> Ts2 {
         to_ts_or_panic(&AsRefStrToScStr::case(self))
     }
 }
@@ -60,13 +61,13 @@ where
     }
 }
 pub trait AsRefStrToUpperScTs {
-    fn case_or_panic(&self) -> proc_macro2::TokenStream;
+    fn case_or_panic(&self) -> Ts2;
 }
 impl<T> AsRefStrToUpperScTs for T
 where
     T: Sized + AsRefStrToUpperScStr,
 {
-    fn case_or_panic(&self) -> proc_macro2::TokenStream {
+    fn case_or_panic(&self) -> Ts2 {
         to_ts_or_panic(&AsRefStrToUpperScStr::case(self))
     }
 }
@@ -82,13 +83,13 @@ where
     }
 }
 pub trait DisplayToUccTs {
-    fn case_or_panic(&self) -> proc_macro2::TokenStream;
+    fn case_or_panic(&self) -> Ts2;
 }
 impl<T> DisplayToUccTs for T
 where
     T: DisplayToUccStr,
 {
-    fn case_or_panic(&self) -> proc_macro2::TokenStream {
+    fn case_or_panic(&self) -> Ts2 {
         to_ts_or_panic(&DisplayToUccStr::case(self))
     }
 }
@@ -104,13 +105,13 @@ where
     }
 }
 pub trait DisplayToScTs {
-    fn case_or_panic(&self) -> proc_macro2::TokenStream;
+    fn case_or_panic(&self) -> Ts2;
 }
 impl<T> DisplayToScTs for T
 where
     T: DisplayToScStr,
 {
-    fn case_or_panic(&self) -> proc_macro2::TokenStream {
+    fn case_or_panic(&self) -> Ts2 {
         to_ts_or_panic(&DisplayToScStr::case(self))
     }
 }
@@ -126,13 +127,13 @@ where
     }
 }
 pub trait DisplayToUpperScTs {
-    fn case_or_panic(&self) -> proc_macro2::TokenStream;
+    fn case_or_panic(&self) -> Ts2;
 }
 impl<T> DisplayToUpperScTs for T
 where
     T: DisplayToUpperScStr,
 {
-    fn case_or_panic(&self) -> proc_macro2::TokenStream {
+    fn case_or_panic(&self) -> Ts2 {
         to_ts_or_panic(&DisplayToUpperScStr::case(self))
     }
 }
@@ -148,13 +149,13 @@ where
     }
 }
 pub trait ToTokensToUccTs {
-    fn case_or_panic(&self) -> proc_macro2::TokenStream;
+    fn case_or_panic(&self) -> Ts2;
 }
 impl<T> ToTokensToUccTs for T
 where
     T: ToTokensToUccStr,
 {
-    fn case_or_panic(&self) -> proc_macro2::TokenStream {
+    fn case_or_panic(&self) -> Ts2 {
         to_ts_or_panic(&ToTokensToUccStr::case(self))
     }
 }
@@ -170,13 +171,13 @@ where
     }
 }
 pub trait ToTokensToScTs {
-    fn case_or_panic(&self) -> proc_macro2::TokenStream;
+    fn case_or_panic(&self) -> Ts2;
 }
 impl<T> ToTokensToScTs for T
 where
     T: ToTokensToScStr,
 {
-    fn case_or_panic(&self) -> proc_macro2::TokenStream {
+    fn case_or_panic(&self) -> Ts2 {
         to_ts_or_panic(&ToTokensToScStr::case(self))
     }
 }
@@ -192,20 +193,20 @@ where
     }
 }
 pub trait ToTokensToUpperScTs {
-    fn case_or_panic(&self) -> proc_macro2::TokenStream;
+    fn case_or_panic(&self) -> Ts2;
 }
 impl<T> ToTokensToUpperScTs for T
 where
     T: ToTokensToUpperScStr,
 {
-    fn case_or_panic(&self) -> proc_macro2::TokenStream {
+    fn case_or_panic(&self) -> Ts2 {
         to_ts_or_panic(&ToTokensToUpperScStr::case(self))
     }
 }
-fn to_ts_or_panic(value: &dyn Display) -> proc_macro2::TokenStream {
+fn to_ts_or_panic(value: &dyn Display) -> Ts2 {
     value
         .to_string()
-        .parse::<proc_macro2::TokenStream>()
+        .parse::<Ts2>()
         .expect("753ce6dd-aa0f-4836-8e74-20a7c4f88f60")
 }
 fn to_ucc_str<T: AsRef<str>>(value: &T) -> String

@@ -1,3 +1,4 @@
+use proc_macro2::TokenStream as Ts2;
 #[must_use]
 pub fn get_macro_attribute<'attributes_litime>(
     attributes: &'attributes_litime [syn::Attribute],
@@ -17,7 +18,7 @@ pub fn get_macro_attribute<'attributes_litime>(
 pub fn get_macro_attribute_meta_list_ts<'attributes_lifetime>(
     attributes: &'attributes_lifetime [syn::Attribute],
     attribute_path: &String,
-) -> &'attributes_lifetime proc_macro2::TokenStream {
+) -> &'attributes_lifetime Ts2 {
     let option_attribute = attributes
         .iter()
         .find(|attr| {

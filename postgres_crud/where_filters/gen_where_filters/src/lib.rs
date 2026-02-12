@@ -3,6 +3,7 @@ use naming::{
     ValueSc,
     parameter::{PostgresJsonTypeWhereSelfUcc, PostgresTypeWhereSelfUcc},
 };
+use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use std::fmt::Display;
 
@@ -12,7 +13,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
     enum ShouldAddDeclarationOfStructIdentGeneric {
         False,
         True {
-            maybe_additional_traits_ts: Option<proc_macro2::TokenStream>,
+            maybe_additional_traits_ts: Option<Ts2>,
         },
     }
     enum FilterType {
@@ -57,10 +58,10 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                 Self::Four => 4,
             }
         }
-        fn dimension_ts(&self) -> proc_macro2::TokenStream {
+        fn dimension_ts(&self) -> Ts2 {
             self.dimension_std_primitive_u8()
                 .to_string()
-                .parse::<proc_macro2::TokenStream>()
+                .parse::<Ts2>()
                 .expect("18c32bc0-2e55-4b4d-a6a8-b8680e5fe463")
         }
     }
@@ -69,7 +70,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
         CanNotBeZero,
     }
     impl quote::ToTokens for KindOfUnsignedPartOfStdPrimitiveI32 {
-        fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        fn to_tokens(&self, tokens: &mut Ts2) {
             match &self {
                 Self::CanBeZero => quote! {UnsignedPartOfStdPrimitiveI32}.to_tokens(tokens),
                 Self::CanNotBeZero => {
@@ -107,7 +108,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
     let import_path = postgres_crud_macros_common::ImportPath::PostgresCrudCommon;
     let t_ts = quote! {T};
     let t_annotation_generic_ts = quote! {<#t_ts>};
-    let proc_macro2_ts_new = proc_macro2::TokenStream::new();
+    let proc_macro2_ts_new = Ts2::new();
     let core_default_default_default_ts = token_patterns::CoreDefaultDefaultDefault;
     let postgres_crud_common_default_option_some_vec_one_el_ts =
         token_patterns::PostgresCrudCommonDefaultOptionSomeVecOneEl;
@@ -145,7 +146,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
     let gen_impl_default_option_some_vec_one_el_ts = |should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn quote::ToTokens, impl_default_option_some_vec_one_el_additional_fields_ts: &dyn quote::ToTokens| {
         postgres_crud_macros_common::gen_impl_default_option_some_vec_one_el_ts(
             &match &should_add_declaration_of_struct_ident_generic {
-                ShouldAddDeclarationOfStructIdentGeneric::False => proc_macro2::TokenStream::new(),
+                ShouldAddDeclarationOfStructIdentGeneric::False => Ts2::new(),
                 ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_ts } => {
                     maybe_additional_traits_ts.as_ref().map_or_else(
                         || quote! {<T: #postgres_crud_common_default_option_some_vec_one_el_ts>},
@@ -352,7 +353,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
         };
     let gen_postgres_type_dimensions_helpers = |postgres_type_pattern_handle: &PostgresTypePatternHandle, postgres_type_or_postgres_json_type: &postgres_crud_macros_common::PostgresTypeOrPostgresJsonType| {
         DimensionNumber::try_from(postgres_type_pattern_handle).map_or_else(
-            |()| (proc_macro2::TokenStream::new(),proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), PostgresTypeKind::Standart, proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new()),
+            |()| (Ts2::new(),Ts2::new(), Ts2::new(), PostgresTypeKind::Standart, Ts2::new(), Ts2::new()),
             |dimension_number| (
                 match &postgres_type_or_postgres_json_type {
                     postgres_crud_macros_common::PostgresTypeOrPostgresJsonType::PostgresType => gen_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_ts(&dimension_number),
@@ -939,7 +940,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                         maybe_additional_parameters_ts,
                         maybe_dimensions_query_bind_content_ts
                     ) = DimensionNumber::try_from(postgres_type_pattern_handle).map_or_else(
-                        |()| (proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), PostgresTypeKind::Standart, quote! {#ColumnSc,}, proc_macro2::TokenStream::new()),
+                        |()| (Ts2::new(), Ts2::new(), Ts2::new(), PostgresTypeKind::Standart, quote! {#ColumnSc,}, Ts2::new()),
                         |dimension_number| (
                             gen_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_ts(&dimension_number),
                             dimensions_default_initialization_comma_ts.clone(),
@@ -1464,7 +1465,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                     postgres_type_kind, maybe_additional_parameters_ts,
                     maybe_dimensions_query_bind_content_ts
                 ) = DimensionNumber::try_from(postgres_type_pattern_handle).map_or_else(
-                    |()| (proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), PostgresTypeKind::Standart, proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new()),
+                    |()| (Ts2::new(), Ts2::new(), Ts2::new(), PostgresTypeKind::Standart, Ts2::new(), Ts2::new()),
                     |dimension_number| (
                         gen_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_ts(&dimension_number),
                         dimensions_default_initialization_comma_ts.clone(),

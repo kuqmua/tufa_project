@@ -44,13 +44,14 @@ use naming::{
     ValueSc, ValueUcc, WhereUcc,
     parameter::{SelfCreateUcc, SelfSelectUcc, SelfWhereUcc},
 };
+use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use std::fmt::Display;
 
 #[derive(Debug, Clone)]
 pub enum DeriveOrImpl {
     Derive,
-    Impl(proc_macro2::TokenStream),
+    Impl(Ts2),
 }
 #[derive(Debug)]
 pub enum IsStandartNotNull {
@@ -78,20 +79,14 @@ pub enum NotNullOrNullable {
 }
 impl NotNullOrNullable {
     #[must_use]
-    pub fn maybe_option_wrap(
-        &self,
-        content_ts: proc_macro2::TokenStream,
-    ) -> proc_macro2::TokenStream {
+    pub fn maybe_option_wrap(&self, content_ts: Ts2) -> Ts2 {
         match &self {
             Self::NotNull => content_ts,
             Self::Nullable => quote! {Option<#content_ts>},
         }
     }
     #[must_use]
-    pub fn maybe_some_wrap(
-        &self,
-        content_ts: proc_macro2::TokenStream,
-    ) -> proc_macro2::TokenStream {
+    pub fn maybe_some_wrap(&self, content_ts: Ts2) -> Ts2 {
         match &self {
             Self::NotNull => content_ts,
             Self::Nullable => quote! {Some(#content_ts)},
@@ -173,9 +168,9 @@ impl ImportPath {
     }
 }
 impl quote::ToTokens for ImportPath {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         self.sc_std_primitive_str()
-            .parse::<proc_macro2::TokenStream>()
+            .parse::<Ts2>()
             .expect("d8636ee5-942b-472d-a025-c6e0700e1b59")
             .to_tokens(tokens);
     }
@@ -186,9 +181,9 @@ pub enum ShouldDeriveSchemarsJsonSchema {
     True,
 }
 impl quote::ToTokens for ShouldDeriveSchemarsJsonSchema {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
-            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+            Self::False => Ts2::new().to_tokens(tokens),
             Self::True => quote! {, schemars::JsonSchema}.to_tokens(tokens),
         }
     }
@@ -199,9 +194,9 @@ pub enum ShouldDeriveUtoipaToSchema {
     True,
 }
 impl quote::ToTokens for ShouldDeriveUtoipaToSchema {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
-            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+            Self::False => Ts2::new().to_tokens(tokens),
             Self::True => quote! {, utoipa::ToSchema}.to_tokens(tokens),
         }
     }
@@ -212,9 +207,9 @@ pub enum IsCreateQueryBindMutable {
     True,
 }
 impl quote::ToTokens for IsCreateQueryBindMutable {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
-            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+            Self::False => Ts2::new().to_tokens(tokens),
             Self::True => MutSc.to_tokens(tokens),
         }
     }
@@ -225,7 +220,7 @@ pub enum IsSelectQueryPartSelfSelectUsed {
     True,
 }
 impl quote::ToTokens for IsSelectQueryPartSelfSelectUsed {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
             Self::True => ValueSc.to_tokens(tokens),
@@ -238,7 +233,7 @@ pub enum IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed {
     True,
 }
 impl quote::ToTokens for IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
             Self::True => {
@@ -253,7 +248,7 @@ pub enum IsSelectQueryPartIsPostgresTypeUsed {
     True,
 }
 impl quote::ToTokens for IsSelectQueryPartIsPostgresTypeUsed {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
             Self::True => quote! {is_postgres_type}.to_tokens(tokens),
@@ -266,7 +261,7 @@ pub enum IsUpdateQueryPartSelfUpdateUsed {
     True,
 }
 impl quote::ToTokens for IsUpdateQueryPartSelfUpdateUsed {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
             Self::True => ValueSc.to_tokens(tokens),
@@ -279,7 +274,7 @@ pub enum IsUpdateQueryPartJsonbSetTargetUsed {
     True,
 }
 impl quote::ToTokens for IsUpdateQueryPartJsonbSetTargetUsed {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
             Self::True => JsonbSetTargetSc.to_tokens(tokens),
@@ -292,9 +287,9 @@ pub enum IsUpdateQueryBindMutable {
     True,
 }
 impl quote::ToTokens for IsUpdateQueryBindMutable {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
-            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+            Self::False => Ts2::new().to_tokens(tokens),
             Self::True => MutSc.to_tokens(tokens),
         }
     }
@@ -305,9 +300,9 @@ pub enum IsSelectOnlyUpdatedIdsQueryBindMutable {
     True,
 }
 impl quote::ToTokens for IsSelectOnlyUpdatedIdsQueryBindMutable {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
-            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+            Self::False => Ts2::new().to_tokens(tokens),
             Self::True => MutSc.to_tokens(tokens),
         }
     }
@@ -318,9 +313,9 @@ pub enum IsSelectOnlyCreatedIdsQueryBindMutable {
     True,
 }
 impl quote::ToTokens for IsSelectOnlyCreatedIdsQueryBindMutable {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
-            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+            Self::False => Ts2::new().to_tokens(tokens),
             Self::True => MutSc.to_tokens(tokens),
         }
     }
@@ -331,9 +326,9 @@ pub enum IsQueryBindMutable {
     True,
 }
 impl quote::ToTokens for IsQueryBindMutable {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
-            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+            Self::False => Ts2::new().to_tokens(tokens),
             Self::True => MutSc.to_tokens(tokens),
         }
     }
@@ -344,7 +339,7 @@ pub enum IncrementParameterUnderscore {
     True,
 }
 impl quote::ToTokens for IncrementParameterUnderscore {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => IncrementSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
@@ -357,7 +352,7 @@ pub enum ColumnParameterUnderscore {
     True,
 }
 impl quote::ToTokens for ColumnParameterUnderscore {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => ColumnSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
@@ -370,7 +365,7 @@ pub enum IsNeedToAddLogicalOperatorUnderscore {
     True,
 }
 impl quote::ToTokens for IsNeedToAddLogicalOperatorUnderscore {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => IsNeedToAddLogicalOperatorSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
@@ -397,7 +392,7 @@ pub enum IsPrimaryKeyUnderscore {
     True,
 }
 impl quote::ToTokens for IsPrimaryKeyUnderscore {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => IsPrimaryKeySc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
@@ -429,7 +424,7 @@ pub enum EqualOperatorHandle {
 }
 impl EqualOperatorHandle {
     #[must_use]
-    pub fn to_tokens_path(&self, import_path: &ImportPath) -> proc_macro2::TokenStream {
+    pub fn to_tokens_path(&self, import_path: &ImportPath) -> Ts2 {
         let equal_operator_ucc = EqualOperatorUcc;
         let content_ts = match &self {
             Self::Equal => quote! {Equal},
@@ -492,7 +487,7 @@ pub enum CreateQueryPartValueUnderscore {
     True,
 }
 impl quote::ToTokens for CreateQueryPartValueUnderscore {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => ValueSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
@@ -505,7 +500,7 @@ pub enum CreateQueryPartIncrementUnderscore {
     True,
 }
 impl quote::ToTokens for CreateQueryPartIncrementUnderscore {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => IncrementSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
@@ -518,7 +513,7 @@ pub enum CreateQueryBindValueUnderscore {
     True,
 }
 impl quote::ToTokens for CreateQueryBindValueUnderscore {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => ValueSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
@@ -531,7 +526,7 @@ pub enum SelectQueryPartValueUnderscore {
     True,
 }
 impl quote::ToTokens for SelectQueryPartValueUnderscore {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => ValueSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
@@ -544,7 +539,7 @@ pub enum UpdateQueryPartValueUnderscore {
     True,
 }
 impl quote::ToTokens for UpdateQueryPartValueUnderscore {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => ValueSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
@@ -557,7 +552,7 @@ pub enum UpdateQueryPartJsonbSetAccumulatorUnderscore {
     True,
 }
 impl quote::ToTokens for UpdateQueryPartJsonbSetAccumulatorUnderscore {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {jsonb_set_accumulator}.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
@@ -570,7 +565,7 @@ pub enum UpdateQueryPartJsonbSetTargetUnderscore {
     True,
 }
 impl quote::ToTokens for UpdateQueryPartJsonbSetTargetUnderscore {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {jsonb_set_target}.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
@@ -583,7 +578,7 @@ pub enum UpdateQueryPartJsonbSetPathUnderscore {
     True,
 }
 impl quote::ToTokens for UpdateQueryPartJsonbSetPathUnderscore {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {jsonb_set_path}.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
@@ -597,7 +592,7 @@ pub fn gen_postgres_type_where_ts(
     should_derive_utoipa_to_schema: &ShouldDeriveUtoipaToSchema,
     should_derive_schemars_json_schema: &ShouldDeriveSchemarsJsonSchema,
     is_query_bind_mutable: &IsQueryBindMutable,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let ident = SelfWhereUcc::from_tokens(&prefix);
     let value_sc = ValueSc;
     let column_sc = ColumnSc;
@@ -608,11 +603,9 @@ pub fn gen_postgres_type_where_ts(
         let variants_ts = variants.iter().map(|el_a9dc0e35| {
             let el_ucc = el_a9dc0e35.ucc();
             let prefix_where_self_ucc = el_a9dc0e35.prefix_where_self_ucc();
-            let option_type_ts: Option<proc_macro2::TokenStream> = el_a9dc0e35.maybe_generic();
-            let type_ts = option_type_ts.map_or_else(
-                proc_macro2::TokenStream::new,
-                |value_0016edb0| quote! {<#value_0016edb0>},
-            );
+            let option_type_ts: Option<Ts2> = el_a9dc0e35.maybe_generic();
+            let type_ts =
+                option_type_ts.map_or_else(Ts2::new, |value_0016edb0| quote! {<#value_0016edb0>});
             quote! {#el_ucc(where_filters::#prefix_where_self_ucc #type_ts)}
         });
         quote! {
@@ -627,7 +620,7 @@ pub fn gen_postgres_type_where_ts(
         impl_postgres_type_where_filter_for_ident_ts(
             &quote! {<'lifetime>},
             &ident,
-            &proc_macro2::TokenStream::new(),
+            &Ts2::new(),
             &IncrementParameterUnderscore::False,
             &ColumnParameterUnderscore::False,
             &IsNeedToAddLogicalOperatorUnderscore::False,
@@ -670,9 +663,9 @@ pub fn gen_postgres_type_where_ts(
         );
     let impl_error_occurence_lib_to_std_string_string_for_postgres_type_tokens_where_ts =
         macros_helpers::gen_impl_error_occurence_lib_to_std_string_string_ts(
-            &proc_macro2::TokenStream::new(),
+            &Ts2::new(),
             &ident,
-            &proc_macro2::TokenStream::new(),
+            &Ts2::new(),
             &quote! {format!("{self:#?}")},
         );
     let impl_all_variants_default_option_some_vec_one_el_for_postgres_type_tokens_where_ts =
@@ -695,46 +688,36 @@ pub fn gen_postgres_type_where_ts(
     }
 }
 #[must_use]
-pub fn postgres_crud_common_query_part_error_named_ts() -> proc_macro2::TokenStream {
+pub fn postgres_crud_common_query_part_error_named_ts() -> Ts2 {
     let query_part_error_named_ucc = QueryPartErrorNamedUcc;
     quote! {postgres_crud_common::#query_part_error_named_ucc}
 }
-pub fn gen_struct_ident_double_quotes_ts(value: &dyn Display) -> proc_macro2::TokenStream {
+pub fn gen_struct_ident_double_quotes_ts(value: &dyn Display) -> Ts2 {
     gen_quotes::double_quotes_ts(&format!("struct {value}"))
 }
 pub fn gen_struct_ident_with_number_elements_double_quotes_ts(
     ident: &dyn StdFmtDisplayPlusQuoteToTokens,
     length: usize,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     gen_quotes::double_quotes_ts(&format!("struct {ident} with {length} elements"))
 }
-pub fn gen_tuple_struct_ident_double_quotes_ts(value: &dyn Display) -> proc_macro2::TokenStream {
+pub fn gen_tuple_struct_ident_double_quotes_ts(value: &dyn Display) -> Ts2 {
     gen_quotes::double_quotes_ts(&format!("tuple struct {value}"))
 }
-pub fn gen_sqlx_types_json_type_declaration_ts(
-    type_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+pub fn gen_sqlx_types_json_type_declaration_ts(type_ts: &dyn quote::ToTokens) -> Ts2 {
     quote! {sqlx::types::Json<#type_ts>}
 }
-pub fn gen_std_option_option_tokens_declaration_ts(
-    type_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+pub fn gen_std_option_option_tokens_declaration_ts(type_ts: &dyn quote::ToTokens) -> Ts2 {
     quote! {Option<#type_ts>}
 }
-pub fn gen_std_vec_vec_tokens_declaration_ts(
-    type_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+pub fn gen_std_vec_vec_tokens_declaration_ts(type_ts: &dyn quote::ToTokens) -> Ts2 {
     quote! {Vec<#type_ts>}
 }
 
 pub fn gen_serde_deserialize_double_quotes_ts(
     ident: &dyn StdFmtDisplayPlusQuoteToTokens,
     length: usize,
-) -> (
-    proc_macro2::TokenStream,
-    proc_macro2::TokenStream,
-    proc_macro2::TokenStream,
-) {
+) -> (Ts2, Ts2, Ts2) {
     let struct_postgres_type_ident_where_tokens_double_quotes_ts =
         gen_struct_ident_double_quotes_ts(ident);
     let struct_postgres_type_ident_where_tokens_with_number_elements_double_quotes_ts =
@@ -776,7 +759,7 @@ pub fn gen_impl_postgres_json_type_ts(
     select_only_created_ids_query_part_ts: &dyn quote::ToTokens,
     is_select_only_created_ids_query_bind_mutable: &IsSelectOnlyCreatedIdsQueryBindMutable,
     select_only_created_ids_query_bind_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let path_ts = quote! {#import_path ::};
     let table_type_declaration_ucc = TableTypeDeclarationUcc;
     let create_ucc = CreateUcc;
@@ -903,7 +886,7 @@ pub fn gen_impl_default_option_some_vec_one_el_ts(
     ident: &dyn quote::ToTokens,
     ident_generic_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let path_trait_ts = import_path.default_option_some_vec_one_el();
     let default_option_some_vec_one_el_sc = DefaultOptionSomeVecOneElSc;
     quote! {
@@ -918,7 +901,7 @@ pub fn gen_impl_all_variants_default_option_some_vec_one_el_ts(
     import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let path_trait_ts = import_path.all_variants_default_option_some_vec_one_el();
     let all_variants_default_option_some_vec_one_el_sc = AllVariantsDefaultOptionSomeVecOneElSc;
     quote! {
@@ -935,7 +918,7 @@ pub fn gen_impl_default_option_some_vec_one_el_max_page_size_ts(
     ident: &dyn quote::ToTokens,
     ident_generic_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let path_trait_ts = import_path.default_option_some_vec_one_el_max_page_size();
     let default_option_some_vec_one_el_max_page_size_sc = DefaultOptionSomeVecOneElMaxPageSizeSc;
     quote! {
@@ -950,7 +933,7 @@ pub fn gen_impl_all_variants_default_option_some_vec_one_el_max_page_size_ts(
     import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let path_trait_ts = import_path.all_variants_default_option_some_vec_one_el_max_page_size();
     let all_variants_default_option_some_vec_one_el_max_page_size_sc =
         AllVariantsDefaultOptionSomeVecOneElMaxPageSizeSc;
@@ -965,12 +948,12 @@ pub fn gen_impl_all_variants_default_option_some_vec_one_el_max_page_size_ts(
 pub fn gen_impl_postgres_crud_common_default_option_some_vec_one_el_ts(
     ident: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     gen_impl_default_option_some_vec_one_el_ts(
-        &proc_macro2::TokenStream::new(),
+        &Ts2::new(),
         &ImportPath::PostgresCrudCommon,
         ident,
-        &proc_macro2::TokenStream::new(),
+        &Ts2::new(),
         content_ts,
     )
 }
@@ -978,9 +961,9 @@ pub fn gen_impl_postgres_crud_default_option_some_vec_one_el_ts(
     ident: &dyn quote::ToTokens,
     lifetime_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     gen_impl_default_option_some_vec_one_el_ts(
-        &proc_macro2::TokenStream::new(),
+        &Ts2::new(),
         &ImportPath::PostgresCrud,
         ident,
         lifetime_ts,
@@ -990,7 +973,7 @@ pub fn gen_impl_postgres_crud_default_option_some_vec_one_el_ts(
 pub fn gen_impl_postgres_crud_common_all_variants_default_option_some_vec_one_el_ts(
     ident: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     gen_impl_all_variants_default_option_some_vec_one_el_ts(
         &ImportPath::PostgresCrudCommon,
         ident,
@@ -1000,7 +983,7 @@ pub fn gen_impl_postgres_crud_common_all_variants_default_option_some_vec_one_el
 pub fn gen_impl_postgres_crud_all_variants_default_option_some_vec_one_el_ts(
     ident: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     gen_impl_all_variants_default_option_some_vec_one_el_ts(
         &ImportPath::PostgresCrud,
         ident,
@@ -1010,12 +993,12 @@ pub fn gen_impl_postgres_crud_all_variants_default_option_some_vec_one_el_ts(
 pub fn gen_impl_postgres_crud_common_default_option_some_vec_one_el_max_page_size_ts(
     ident: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     gen_impl_default_option_some_vec_one_el_max_page_size_ts(
-        &proc_macro2::TokenStream::new(),
+        &Ts2::new(),
         &ImportPath::PostgresCrudCommon,
         ident,
-        &proc_macro2::TokenStream::new(),
+        &Ts2::new(),
         content_ts,
     )
 }
@@ -1023,9 +1006,9 @@ pub fn gen_impl_postgres_crud_default_option_some_vec_one_el_max_page_size_ts(
     ident: &dyn quote::ToTokens,
     lifetime_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     gen_impl_default_option_some_vec_one_el_max_page_size_ts(
-        &proc_macro2::TokenStream::new(),
+        &Ts2::new(),
         &ImportPath::PostgresCrud,
         ident,
         lifetime_ts,
@@ -1035,7 +1018,7 @@ pub fn gen_impl_postgres_crud_default_option_some_vec_one_el_max_page_size_ts(
 pub fn gen_impl_postgres_crud_all_variants_default_option_some_vec_one_el_max_page_size_ts(
     ident: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     gen_impl_all_variants_default_option_some_vec_one_el_max_page_size_ts(
         &ImportPath::PostgresCrud,
         ident,
@@ -1053,7 +1036,7 @@ pub fn impl_postgres_type_where_filter_for_ident_ts(
     is_query_bind_mutable: &IsQueryBindMutable,
     query_bind_content_ts: &dyn quote::ToTokens,
     import_path: &ImportPath,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let std_primitive_u64_ts = token_patterns::StdPrimitiveU64;
     let std_fmt_display_ts = token_patterns::StdFmtDisplay;
     let std_primitive_bool_ts = token_patterns::StdPrimitiveBool;
@@ -1088,7 +1071,7 @@ pub fn impl_postgres_type_where_filter_for_ident_ts(
 pub fn gen_impl_sqlx_encode_sqlx_postgres_for_ident_ts(
     ident_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     quote! {
         impl sqlx::Encode<'_, sqlx::Postgres> for #ident_ts {
             fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
@@ -1101,7 +1084,7 @@ pub fn gen_impl_sqlx_decode_sqlx_postgres_for_ident_ts(
     ident_ts: &dyn quote::ToTokens,
     type_ts: &dyn quote::ToTokens,
     ok_value_match_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let value_sc = ValueSc;
     quote! {
         impl sqlx::Decode<'_, sqlx::Postgres> for #ident_ts {
@@ -1117,7 +1100,7 @@ pub fn gen_impl_sqlx_decode_sqlx_postgres_for_ident_ts(
 pub fn gen_impl_sqlx_type_sqlx_postgres_for_ident_ts(
     ident_ts: &dyn quote::ToTokens,
     type_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     quote! {
         impl sqlx::Type<sqlx::Postgres> for #ident_ts {
             fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
@@ -1164,7 +1147,7 @@ pub fn gen_impl_postgres_type_ts(
     select_only_updated_ids_query_part_ts: &dyn quote::ToTokens,
     is_select_only_updated_ids_query_bind_mutable: &IsSelectOnlyUpdatedIdsQueryBindMutable,
     select_only_updated_ids_query_bind_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let postgres_type_ucc = PostgresTypeUcc;
     let table_type_declaration_ucc = TableTypeDeclarationUcc;
     let create_table_column_query_part_sc = CreateTableColumnQueryPartSc;
@@ -1284,7 +1267,7 @@ pub fn gen_impl_postgres_type_ts(
 pub fn gen_impl_postgres_type_not_primary_key_for_ident_ts(
     import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let postgres_type_not_primary_key_ucc = PostgresTypeNotPrimaryKeyUcc;
     let postgres_type_ucc = PostgresTypeUcc;
     let create_ucc = CreateUcc;
@@ -1305,7 +1288,7 @@ pub fn gen_impl_postgres_type_not_primary_key_for_ident_ts(
 //     method_name_ts: &dyn quote::ToTokens,
 //     content_ts: &dyn quote::ToTokens,
 //     postgres_type_or_postgres_json_type: &PostgresTypeOrPostgresJsonType,
-// ) -> proc_macro2::TokenStream {
+// ) -> Ts2 {
 //     let self_ucc = SelfUcc;
 //     let read_only_ids_sc = ReadOnlyIdsSc;
 //     let read_only_ids_ucc = ReadOnlyIdsUcc;
@@ -1334,7 +1317,7 @@ pub fn gen_impl_postgres_type_not_primary_key_for_ident_ts(
 fn gen_option_vec_create_ts(
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let option_vec_create_sc = OptionVecCreateSc;
     let create_ucc = CreateUcc;
     quote! {
@@ -1346,7 +1329,7 @@ fn gen_option_vec_create_ts(
 fn gen_read_only_ids_to_two_dimensional_vec_read_inner_ts(
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let read_only_ids_to_two_dimensional_vec_read_inner_sc =
         ReadOnlyIdsToTwoDimensionalVecReadInnerSc;
     let read_only_ids_ucc = ReadOnlyIdsUcc;
@@ -1364,7 +1347,7 @@ fn gen_read_inner_into_read_with_new_or_try_new_unwraped_ts(
     type_ts: &dyn quote::ToTokens,
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let read_inner_into_read_with_new_or_try_new_unwraped_sc =
         ReadInnerIntoReadWithNewOrTryNewUnwrapedSc;
     let value_sc = ValueSc;
@@ -1381,7 +1364,7 @@ fn gen_read_inner_into_update_with_new_or_try_new_unwraped_ts(
     type_ts: &dyn quote::ToTokens,
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let read_inner_into_update_with_new_or_try_new_unwraped_sc =
         ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc;
     let update_ucc = UpdateUcc;
@@ -1395,7 +1378,7 @@ fn gen_read_inner_into_update_with_new_or_try_new_unwraped_ts(
 fn gen_update_to_read_only_ids_ts(
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let update_to_read_only_ids_sc = UpdateToReadOnlyIdsSc;
     let update_ucc = UpdateUcc;
     let read_only_ids_ucc = ReadOnlyIdsUcc;
@@ -1412,7 +1395,7 @@ fn gen_read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts(
     import_path: ImportPath,
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let read_only_ids_to_option_value_read_default_option_some_vec_one_el_sc =
         ReadOnlyIdsToOptionValueReadDefaultOptionSomeVecOneElSc;
     let value_ucc = ValueUcc;
@@ -1430,7 +1413,7 @@ fn gen_read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts(
 fn gen_previous_read_merged_with_option_update_into_read_ts(
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let previous_read_merged_with_option_update_into_read_sc =
         PreviousReadMergedWithOptionUpdateIntoReadSc;
     let read_ucc = ReadUcc;
@@ -1449,7 +1432,7 @@ fn gen_previous_read_merged_with_option_update_into_read_ts(
 fn gen_read_only_ids_merged_with_create_into_read_ts(
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let read_only_ids_merged_with_create_into_read_sc = ReadOnlyIdsMergedWithCreateIntoReadSc;
     let read_only_ids_ucc = ReadOnlyIdsUcc;
     let read_only_ids_sc = ReadOnlyIdsSc;
@@ -1469,7 +1452,7 @@ fn gen_read_only_ids_merged_with_create_into_option_value_read_ts(
     import_path: ImportPath,
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let read_only_ids_merged_with_create_into_option_value_read_sc =
         ReadOnlyIdsMergedWithCreateIntoOptionValueReadSc;
     let read_only_ids_ucc = ReadOnlyIdsUcc;
@@ -1490,7 +1473,7 @@ fn gen_read_only_ids_merged_with_create_into_option_value_read_ts(
 fn gen_read_only_ids_merged_with_create_into_table_type_declaration_ts(
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let read_only_ids_merged_with_create_into_table_type_declaration_sc =
         ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSc;
     let read_only_ids_ucc = ReadOnlyIdsUcc;
@@ -1513,7 +1496,7 @@ pub fn gen_read_only_ids_merged_with_create_into_where_equal_ts(
     create_ts: &dyn quote::ToTokens,
     where_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let read_only_ids_merged_with_create_into_where_equal_sc =
         ReadOnlyIdsMergedWithCreateIntoWhereEqualSc;
     let read_only_ids_sc = ReadOnlyIdsSc;
@@ -1533,7 +1516,7 @@ pub fn gen_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts
     create_ts: &dyn quote::ToTokens,
     where_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_sc =
         ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc;
     let read_only_ids_sc = ReadOnlyIdsSc;
@@ -1555,7 +1538,7 @@ fn gen_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_to_js
     where_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
     postgres_type_or_postgres_json_type: PostgresTypeOrPostgresJsonType,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let read_only_ids_sc = ReadOnlyIdsSc;
     let create_sc = CreateSc;
     let return_type_ts = {
@@ -1590,7 +1573,7 @@ pub fn gen_read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_t
     create_ts: &dyn quote::ToTokens,
     where_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_to_json_field_postgres_type_or_postgres_json_type_ts(
         import_path,
         &read_only_ids_ts,
@@ -1605,7 +1588,7 @@ fn gen_read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where
     name_ts: &dyn quote::ToTokens,
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let read_only_ids_ucc = ReadOnlyIdsUcc;
     let read_only_ids_sc = ReadOnlyIdsSc;
     let create_ucc = CreateUcc;
@@ -1624,7 +1607,7 @@ fn gen_read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where
     import_path: ImportPath,
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_dimension_number_equal_ts(
         import_path,
         &ReadOnlyIdsMergedWithCreateIntoPostgresJsonTypeOptionVecWhereDimensionOneEqualSc,
@@ -1636,7 +1619,7 @@ fn gen_read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where
     import_path: ImportPath,
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_dimension_number_equal_ts(
         import_path,
         &ReadOnlyIdsMergedWithCreateIntoPostgresJsonTypeOptionVecWhereDimensionTwoEqualSc,
@@ -1648,7 +1631,7 @@ fn gen_read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where
     import_path: ImportPath,
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_dimension_number_equal_ts(
         import_path,
         &ReadOnlyIdsMergedWithCreateIntoPostgresJsonTypeOptionVecWhereDimensionThreeEqualSc,
@@ -1660,7 +1643,7 @@ fn gen_read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where
     import_path: ImportPath,
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_dimension_number_equal_ts(
         import_path,
         &ReadOnlyIdsMergedWithCreateIntoPostgresJsonTypeOptionVecWhereDimensionFourEqualSc,
@@ -1672,7 +1655,7 @@ fn gen_create_into_postgres_json_type_option_vec_where_length_equal_ts(
     import_path: ImportPath,
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let create_into_postgres_json_type_option_vec_where_length_equal_sc =
         CreateIntoPostgresJsonTypeOptionVecWhereLengthEqualSc;
     let create_ucc = CreateUcc;
@@ -1690,7 +1673,7 @@ fn gen_create_into_postgres_json_type_option_vec_where_length_greater_than_ts(
     import_path: ImportPath,
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let create_into_postgres_json_type_option_vec_where_length_greater_than_sc =
         CreateIntoPostgresJsonTypeOptionVecWhereLengthGreaterThanSc;
     let create_ucc = CreateUcc;
@@ -1709,7 +1692,7 @@ fn gen_read_only_ids_merged_with_create_into_postgres_json_type_option_not_empty
     import_path: ImportPath,
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let read_only_ids_ucc = ReadOnlyIdsUcc;
     let read_only_ids_sc = ReadOnlyIdsSc;
     let create_ucc = CreateUcc;
@@ -1728,7 +1711,7 @@ fn gen_read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where
     import_path: ImportPath,
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_postgres_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
         &ReadOnlyIdsMergedWithCreateIntoPostgresJsonTypeOptionVecWhereGreaterThanSc,
         import_path,
@@ -1740,7 +1723,7 @@ fn gen_read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where
     import_path: ImportPath,
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_postgres_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
         &ReadOnlyIdsMergedWithCreateIntoPostgresJsonTypeOptionVecWhereBetweenSc,
         import_path,
@@ -1752,7 +1735,7 @@ fn gen_read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where
     import_path: ImportPath,
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_postgres_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
         &ReadOnlyIdsMergedWithCreateIntoPostgresJsonTypeOptionVecWhereInSc,
         import_path,
@@ -1764,7 +1747,7 @@ fn gen_read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where
     import_path: ImportPath,
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_postgres_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
         &ReadOnlyIdsMergedWithCreateIntoPostgresJsonTypeOptionVecWhereRegularExpressionSc,
         import_path,
@@ -1776,7 +1759,7 @@ fn gen_read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where
     import_path: ImportPath,
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_postgres_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
         &ReadOnlyIdsMergedWithCreateIntoPostgresJsonTypeOptionVecWhereContainsElGreaterThanSc,
         import_path,
@@ -1788,7 +1771,7 @@ fn gen_read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where
     import_path: ImportPath,
     path_ts: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_postgres_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
         &ReadOnlyIdsMergedWithCreateIntoPostgresJsonTypeOptionVecWhereContainsElRegularExpressionSc,
         import_path,
@@ -1829,7 +1812,7 @@ pub fn gen_impl_postgres_type_test_cases_for_ident_ts(
     read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_regular_expression_ts: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_contains_el_greater_than_ts: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_contains_el_regular_expression_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let postgres_type_ucc = PostgresTypeUcc;
     let postgres_type_test_cases_ucc = PostgresTypeTestCasesUcc;
     let table_type_declaration_ucc = TableTypeDeclarationUcc;
@@ -2090,7 +2073,7 @@ pub fn gen_impl_postgres_json_type_test_cases_for_ident_ts(
     read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_regular_expression_ts: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_contains_el_greater_than_ts: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_contains_el_regular_expression_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let allow_clippy_arbitrary_source_item_ordering_ts =
         token_patterns::AllowClippyArbitrarySourceItemOrdering;
     let value_ucc = ValueUcc;
@@ -2300,14 +2283,13 @@ pub fn gen_impl_postgres_json_type_test_cases_for_ident_ts(
     }
 }
 #[must_use]
-pub fn postgres_crud_common_query_part_error_named_checked_add_initialization_ts()
--> proc_macro2::TokenStream {
+pub fn postgres_crud_common_query_part_error_named_checked_add_initialization_ts() -> Ts2 {
     quote! {postgres_crud_common::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }}
 }
 pub fn gen_impl_crate_is_string_empty_for_ident_content_ts(
     ident: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     quote! {
         impl postgres_crud_common::IsStringEmpty for #ident {
             fn is_string_empty(&self) -> bool {
@@ -2319,7 +2301,7 @@ pub fn gen_impl_crate_is_string_empty_for_ident_content_ts(
 pub fn gen_match_try_new_in_deserialize_ts(
     ident: &dyn quote::ToTokens,
     initialization_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     quote! {
         match #ident::try_new(#initialization_ts) {
             Ok(value) => Ok(value),
@@ -2331,28 +2313,28 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
     ident: &dyn StdFmtDisplayPlusQuoteToTokens,
     vec_ident_type: &[(&syn::Ident, &syn::Type)],
     len: usize,
-    gen_type_ts: &dyn Fn(&syn::Ident, &syn::Type) -> proc_macro2::TokenStream,
-) -> proc_macro2::TokenStream {
+    gen_type_ts: &dyn Fn(&syn::Ident, &syn::Type) -> Ts2,
+) -> Ts2 {
     fn gen_underscore_underscore_field_index_str(index: usize) -> String {
         format!("__field{index}")
     }
-    fn gen_underscore_underscore_field_index_ts(index: usize) -> proc_macro2::TokenStream {
+    fn gen_underscore_underscore_field_index_ts(index: usize) -> Ts2 {
         gen_underscore_underscore_field_index_str(index)
-            .parse::<proc_macro2::TokenStream>()
+            .parse::<Ts2>()
             .expect("ff7433a3-459b-45f4-a41f-01bf7ce46757")
     }
-    fn gen_underscore_underscore_field_index_handle_ts(index: usize) -> proc_macro2::TokenStream {
+    fn gen_underscore_underscore_field_index_handle_ts(index: usize) -> Ts2 {
         format!(
             "{}_handle",
             gen_underscore_underscore_field_index_str(index)
         )
-        .parse::<proc_macro2::TokenStream>()
+        .parse::<Ts2>()
         .expect("09a0c518-28da-455b-bce8-fb6defae8a3b")
     }
     fn gen_field_ident_double_quotes_serde_private_ok_field_ts(
         field_name_double_quotes_ts: &dyn quote::ToTokens,
         index: usize,
-    ) -> proc_macro2::TokenStream {
+    ) -> Ts2 {
         let field_index_ts = gen_underscore_underscore_field_index_ts(index);
         quote! {#field_name_double_quotes_ts => Ok(__Field::#field_index_ts)}
     }
@@ -2366,10 +2348,10 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         let field_enum_variants_ts = (0..len)
             .map(|i| {
                 format!("__{FieldSc}{i}")
-                    .parse::<proc_macro2::TokenStream>()
+                    .parse::<Ts2>()
                     .expect("c46314b0-baee-41c8-b9c6-54b888310ca8")
             })
-            .collect::<Vec<proc_macro2::TokenStream>>();
+            .collect::<Vec<Ts2>>();
         quote! {#(#field_enum_variants_ts),*}
     };
     let visit_u64_value_enum_variants_ts = {
@@ -2377,7 +2359,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
             let index_u64_ts = {
                 let value = format!("{index}u64");
                 value
-                    .parse::<proc_macro2::TokenStream>()
+                    .parse::<Ts2>()
                     .expect("828ff7b4-5b7c-4109-8739-c6aa240f0f66")
             };
             let field_index_ts = gen_underscore_underscore_field_index_ts(index);
@@ -2404,7 +2386,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                         gen_quotes::double_quotes_str(&element.to_string());
                     let value = format!("b{el_ident_double_quotes_str}");
                     value
-                        .parse::<proc_macro2::TokenStream>()
+                        .parse::<Ts2>()
                         .expect("9e33625e-5f3d-4110-9641-204910c7f08e")
                 };
                 gen_field_ident_double_quotes_serde_private_ok_field_ts(
@@ -2644,13 +2626,13 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         };
     }
 }
-pub fn wrap_content_into_scopes_ts(content_ts: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+pub fn wrap_content_into_scopes_ts(content_ts: &dyn quote::ToTokens) -> Ts2 {
     quote! {(#content_ts)}
 }
 pub fn maybe_wrap_into_braces_ts(
     content_ts: &dyn quote::ToTokens,
     std_primitive_bool: bool,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     if std_primitive_bool {
         wrap_content_into_scopes_ts(&content_ts)
     } else {
@@ -2660,7 +2642,7 @@ pub fn maybe_wrap_into_braces_ts(
 pub fn gen_value_initialization_ts(
     import_path: &ImportPath,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let value_sc = ValueSc;
     quote! {#import_path::Value { #value_sc: #content_ts }}
 }
@@ -2668,7 +2650,7 @@ pub fn impl_postgres_type_equal_operator_for_ident_ts(
     import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
     content_ts: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+) -> Ts2 {
     let postgres_type_equal_operator_ucc = PostgresTypeEqualOperatorUcc;
     let equal_operator_ucc = EqualOperatorUcc;
     quote! {
@@ -2680,9 +2662,7 @@ pub fn impl_postgres_type_equal_operator_for_ident_ts(
     }
 }
 #[must_use]
-pub fn gen_query_part_error_named_write_into_buffer_ts(
-    import_path: ImportPath,
-) -> proc_macro2::TokenStream {
+pub fn gen_query_part_error_named_write_into_buffer_ts(import_path: ImportPath) -> Ts2 {
     quote! {
         #import_path::QueryPartErrorNamed::WriteIntoBuffer {
             code_occurence: error_occurence_lib::code_occurence!()
@@ -2690,9 +2670,7 @@ pub fn gen_query_part_error_named_write_into_buffer_ts(
     }
 }
 #[must_use]
-pub fn gen_return_err_query_part_error_named_write_into_buffer_ts(
-    import_path: ImportPath,
-) -> proc_macro2::TokenStream {
+pub fn gen_return_err_query_part_error_named_write_into_buffer_ts(import_path: ImportPath) -> Ts2 {
     let content_ts = gen_query_part_error_named_write_into_buffer_ts(import_path);
     quote! {return Err(#content_ts);}
 }

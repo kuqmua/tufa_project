@@ -14,6 +14,7 @@ use naming::{
     },
 };
 use postgres_crud_macros_common::{ImportPath, IsStandartNotNull, NotNullOrNullable};
+use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use rayon::iter::{IntoParallelRefIterator as _, ParallelIterator as _};
 use std::{
@@ -23,7 +24,7 @@ use std::{
 };
 
 #[must_use]
-pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenStream {
+pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, strum_macros::Display)]
     enum RustTypeName {
@@ -127,9 +128,9 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
         UuidUuidAsJsonbString,
     }
     impl quote::ToTokens for PostgresJsonType {
-        fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        fn to_tokens(&self, tokens: &mut Ts2) {
             self.to_string()
-                .parse::<proc_macro2::TokenStream>()
+                .parse::<Ts2>()
                 .expect("eb6cafe0-ad0d-4108-8b0e-c062b155efbb")
                 .to_tokens(tokens);
         }
@@ -722,7 +723,7 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                     )
                 }
             };
-            format!("{not_null_or_nullable_rust}{rust_part}{as_ucc}{current_not_null_or_nullable}{postgres_part}").parse::<proc_macro2::TokenStream>().expect("998d1471-be98-4669-8bd3-ca6c4a1a5853")
+            format!("{not_null_or_nullable_rust}{rust_part}{as_ucc}{current_not_null_or_nullable}{postgres_part}").parse::<Ts2>().expect("998d1471-be98-4669-8bd3-ca6c4a1a5853")
         };
         let ident = &gen_ident_ts(not_null_or_nullable, postgres_json_type_pattern);
         let ident_standart_not_null_ucc = &gen_ident_ts(&NotNullOrNullable::NotNull, &PostgresJsonTypePattern::Standart);
@@ -1104,13 +1105,13 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                     | PostgresJsonType::StdPrimitiveF32AsJsonbNumber
                     | PostgresJsonType::StdPrimitiveF64AsJsonbNumber
                     | PostgresJsonType::StdPrimitiveBoolAsJsonbBoolean
-                    | PostgresJsonType::StdStringStringAsJsonbString => proc_macro2::TokenStream::new(),
+                    | PostgresJsonType::StdStringStringAsJsonbString => Ts2::new(),
                 }
             } else {
-                proc_macro2::TokenStream::new()
+                Ts2::new()
             };
             // match &schemars_json_schema {
-            //     SchemarsJsonSchema::Derive => &proc_macro2::TokenStream::new(),
+            //     SchemarsJsonSchema::Derive => &Ts2::new(),
             //     SchemarsJsonSchema::Impl(schema_object_ts) => &{
             //         let schema_id_format_handle_ts = gen_quotes::double_quotes_ts(&format!("postgres_crud::postgersql_json_type::{ident_origin_ucc}"));
             //         let metadata_ts = &schema_object_ts.metadata;
@@ -1166,7 +1167,7 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                     | PostgresJsonType::StdPrimitiveU64AsJsonbNumber
                     | PostgresJsonType::StdPrimitiveF32AsJsonbNumber
                     | PostgresJsonType::StdPrimitiveF64AsJsonbNumber
-                    | PostgresJsonType::StdPrimitiveBoolAsJsonbBoolean => proc_macro2::TokenStream::new(),
+                    | PostgresJsonType::StdPrimitiveBoolAsJsonbBoolean => Ts2::new(),
                     PostgresJsonType::StdStringStringAsJsonbString => postgres_crud_macros_common::gen_impl_crate_is_string_empty_for_ident_content_ts(
                         &ident_origin_ucc,
                         &quote!{self.0.clone().is_empty()}
@@ -1177,10 +1178,10 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                     ),
                 }
             } else {
-                proc_macro2::TokenStream::new()
+                Ts2::new()
             };
-            let impl_std_fmt_display_for_ident_origin_ts = macros_helpers::gen_impl_std_fmt_display_ts(&proc_macro2::TokenStream::new(), &ident_origin_ucc, &proc_macro2::TokenStream::new(), &quote! {write!(f, "{self:?}")});
-            let impl_error_occurence_lib_to_std_string_string_for_ident_origin_ts = macros_helpers::gen_impl_error_occurence_lib_to_std_string_string_ts(&proc_macro2::TokenStream::new(), &ident_origin_ucc, &proc_macro2::TokenStream::new(), &quote! {format!("{self:#?}")});
+            let impl_std_fmt_display_for_ident_origin_ts = macros_helpers::gen_impl_std_fmt_display_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
+            let impl_error_occurence_lib_to_std_string_string_for_ident_origin_ts = macros_helpers::gen_impl_error_occurence_lib_to_std_string_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {format!("{self:#?}")});
             let impl_default_option_some_vec_one_el_for_ident_origin_ts = postgres_crud_macros_common::gen_impl_postgres_crud_common_default_option_some_vec_one_el_ts(&ident_origin_ucc, &{
                 let content_ts = match &postgres_json_type_pattern {
                     PostgresJsonTypePattern::Standart => match &not_null_or_nullable {
@@ -1317,7 +1318,7 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
             let maybe_impl_std_convert_from_ident_update_for_ident_create_for_query_ts = if matches!(&is_standart_not_null_uuid, IsStandartNotNullUuid::True) {
                 macros_helpers::gen_impl_std_convert_from_ts(&ident_update_ucc, &ident_create_for_query_ucc, &quote! {Self(#value_sc.0)})
             } else {
-                proc_macro2::TokenStream::new()
+                Ts2::new()
             };
             quote! {
                 #ident_create_for_query_ts
@@ -1347,7 +1348,7 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                         |array_dimension| {
                             let mut arguments_ts = Vec::new();
                             for el_419a74e5 in 1..=array_dimension.to_usize() {
-                                let dimension_number_pagination_ts = format!("dimension{el_419a74e5}_pagination").parse::<proc_macro2::TokenStream>()
+                                let dimension_number_pagination_ts = format!("dimension{el_419a74e5}_pagination").parse::<Ts2>()
                                 .expect("2ad1faf7-57a8-4cfb-8b71-0082b06436ea");
                                 arguments_ts.push(quote! {
                                     #dimension_number_pagination_ts: #import_path::PaginationStartsWithZero
@@ -1359,7 +1360,7 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                 );
             let gen_default_some_one_content_ts = |default_some_one_or_default_some_one_with_max_page_size: &postgres_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize| {
                 let content_ts = ArrayDimension::try_from(postgres_json_type_pattern).map_or_else(
-                    |()| proc_macro2::TokenStream::new(),
+                    |()| Ts2::new(),
                     |array_dimension| {
                         let content_ts: &dyn quote::ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
                             postgres_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &postgres_crud_common_default_option_some_vec_one_el_call_ts,
@@ -1367,7 +1368,7 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                         };
                         let mut arguments_ts = Vec::new();
                         for el_d56aec99 in 1..=array_dimension.to_usize() {
-                            let dimension_number_pagination_ts = format!("dimension{el_d56aec99}_pagination").parse::<proc_macro2::TokenStream>().expect("26ca29fb-fd98-466a-a380-974a6c5d4166");
+                            let dimension_number_pagination_ts = format!("dimension{el_d56aec99}_pagination").parse::<Ts2>().expect("26ca29fb-fd98-466a-a380-974a6c5d4166");
                             arguments_ts.push(quote! {
                                 #dimension_number_pagination_ts: #content_ts
                             });
@@ -2016,9 +2017,9 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                 }
             };
             let impl_error_occurence_lib_to_std_string_string_for_ident_update_ts = if matches!(&is_standart_not_null_uuid, IsStandartNotNullUuid::True) {
-                macros_helpers::gen_impl_error_occurence_lib_to_std_string_string_ts(&proc_macro2::TokenStream::new(), &ident_update_ucc, &proc_macro2::TokenStream::new(), &quote! {format!("{self:?}")})
+                macros_helpers::gen_impl_error_occurence_lib_to_std_string_string_ts(&Ts2::new(), &ident_update_ucc, &Ts2::new(), &quote! {format!("{self:?}")})
             } else {
-                proc_macro2::TokenStream::new()
+                Ts2::new()
             };
             let impl_default_option_some_vec_one_el_for_ident_update_ts =
                 postgres_crud_macros_common::gen_impl_postgres_crud_common_default_option_some_vec_one_el_ts(&ident_update_ucc, &quote! {Self(#postgres_crud_common_default_option_some_vec_one_el_call_ts)});
@@ -2237,18 +2238,18 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                         (1..=array_dimension.to_usize()).map(|el_8d56d66d| {
                             let dimension_number_start_ts =
                                 gen_dimension_number_start_str(el_8d56d66d)
-                                    .parse::<proc_macro2::TokenStream>()
+                                    .parse::<Ts2>()
                                     .expect("77ec13b9-710a-460f-9239-ac9c3680244d");
                             let dimension_number_end_ts =
                                 gen_dimension_number_end_str(el_8d56d66d)
-                                    .parse::<proc_macro2::TokenStream>()
+                                    .parse::<Ts2>()
                                     .expect("24acbb5e-c0fe-4257-b299-8746887ce198");
                             let dimension_number_pagination_ts =
                                 format!(
                                     "{}_pagination",
                                     gen_dimension_number_str(el_8d56d66d)
                                 )
-                                .parse::<proc_macro2::TokenStream>()
+                                .parse::<Ts2>()
                                 .expect("745c99b3-4e24-46c2-a671-9c7b4dce76f4");
                             quote! {
                                 let #dimension_number_start_ts = #value_sc.#dimension_number_pagination_ts.start();
@@ -2300,7 +2301,7 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                                 NotNullOrNullable::Nullable => gen_match_el_zero_ts(
                                     &quote! {#el_ts.0},
                                     &quote! {value_f8b0b01d},
-                                    &proc_macro2::TokenStream::new()
+                                    &Ts2::new()
                                 )
                             }
                         )
@@ -2327,7 +2328,7 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                         }
                     };
                     let into_inner_content_ts = match &postgres_json_type_pattern {
-                        PostgresJsonTypePattern::Standart => proc_macro2::TokenStream::new(),
+                        PostgresJsonTypePattern::Standart => Ts2::new(),
                         PostgresJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => gen_into_iter_map_el_collect_not_null_or_nullable_ts(
                             &quote!{el_0fdb74a5},
                             dimension1_not_null_or_nullable,
@@ -2456,7 +2457,7 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                             CreateForQueryOrUpdateForQuery::UpdateForQuery => "update",
                         }
                     )
-                    .parse::<proc_macro2::TokenStream>()
+                    .parse::<Ts2>()
                     .expect("f1bcde08-085f-4c98-9a1e-1fb583c9fb6e");
                     let type_ts: &dyn quote::ToTokens = match &create_for_query_or_update_for_query {
                         CreateForQueryOrUpdateForQuery::CreateForQuery => &create_for_query_ucc,
@@ -2497,7 +2498,7 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                 }
             }
         } else {
-            proc_macro2::TokenStream::new()
+            Ts2::new()
         };
         let impl_postgres_json_type_test_cases_for_ident_ts = {
             enum F32OrF64 {
@@ -2531,8 +2532,8 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                 let gen_dimension_index_number_ts = |not_null_or_nullable_vec: &[&NotNullOrNullable]|{
                     assert!(!not_null_or_nullable_vec.is_empty(), "c1a5939d-3235-4bcd-88fc-bfdf2101dffd");
                     let content_ts_c85923bd = {
-                        let gen_index_number_ts = |index_c1128a3e: usize|format!("index_{index_c1128a3e}").parse::<proc_macro2::TokenStream>().expect("afbe7252-745f-40ad-9bf4-1bb20377b5a5");
-                        let gen_value_number_ts = |index_0abe6039: usize|format!("value{index_0abe6039}").parse::<proc_macro2::TokenStream>().expect("568d8eb6-df23-4f57-afdd-ef392e3b7f72");
+                        let gen_index_number_ts = |index_c1128a3e: usize|format!("index_{index_c1128a3e}").parse::<Ts2>().expect("afbe7252-745f-40ad-9bf4-1bb20377b5a5");
+                        let gen_value_number_ts = |index_0abe6039: usize|format!("value{index_0abe6039}").parse::<Ts2>().expect("568d8eb6-df23-4f57-afdd-ef392e3b7f72");
                         let gen_for_in_ts = |
                             index_ts: &dyn quote::ToTokens,
                             value_ts: &dyn quote::ToTokens,
@@ -2600,8 +2601,8 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                                     postgres_crud_macros_common::DimensionIndexNumber::Two => "Three",
                                     postgres_crud_macros_common::DimensionIndexNumber::Three => "Four",
                                 };
-                                let dimension_number_starting_with_one_equal_ts = format!("Dimension{}Equal", to_number_starting_with_one_word_str(&dimension_index_number_max)).parse::<proc_macro2::TokenStream>().expect("52fa34ac-5cd1-4ae9-8a1d-832e73a505d7");
-                                let postgres_json_type_where_dimension_number_starting_with_one_equal_ts = format!("PostgresJsonTypeWhereDimension{}Equal", to_number_starting_with_one_word_str(&dimension_index_number_max)).parse::<proc_macro2::TokenStream>().expect("15d769b0-0767-473c-a2c5-3d0f6e221ced");
+                                let dimension_number_starting_with_one_equal_ts = format!("Dimension{}Equal", to_number_starting_with_one_word_str(&dimension_index_number_max)).parse::<Ts2>().expect("52fa34ac-5cd1-4ae9-8a1d-832e73a505d7");
+                                let postgres_json_type_where_dimension_number_starting_with_one_equal_ts = format!("PostgresJsonTypeWhereDimension{}Equal", to_number_starting_with_one_word_str(&dimension_index_number_max)).parse::<Ts2>().expect("15d769b0-0767-473c-a2c5-3d0f6e221ced");
                                 let current_where_ident_where_ucc = SelfWhereUcc::from_tokens(&gen_ident_ts(&NotNullOrNullable::NotNull, postgres_json_type_pattern));
                                 let current_value_ident_table_type_declaration_ucc = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(
                                     not_null_or_nullable_vec.last().expect("1221f6ec-8865-4456-bd18-ebeff15439f6"),
@@ -2623,7 +2624,7 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                                     )
                                     .map(|el_db559599| {
                                         let index_number_ts = format!("index_{el_db559599}")
-                                            .parse::<proc_macro2::TokenStream>()
+                                            .parse::<Ts2>()
                                             .expect("f0ce7e73-6d15-4de8-8f15-ce00334ed410");
                                         quote! {
                                             postgres_crud_common::UnsignedPartOfStdPrimitiveI32::try_from(
@@ -2631,7 +2632,7 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                                                     .expect("5a1818e7-3865-4222-bf6b-31486bd721d2")
                                             ).expect("ad1ab73f-fd3b-4162-adb0-bb09a19d31a0")
                                         }
-                                    }).collect::<Vec<proc_macro2::TokenStream>>();
+                                    }).collect::<Vec<Ts2>>();
                                     quote! {#(#content_ts_0dc5a500),*}
                                 };
                                 quote! {
@@ -2802,7 +2803,7 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
             let option_vec_create_ts = {
                 let gen_some_acc_content_ts = |current_not_null_or_nullable: &NotNullOrNullable, current_ident_ts: &dyn quote::ToTokens| {
                     let (new_content_ts, maybe_acc_push_none_ts) = match &current_not_null_or_nullable {
-                        NotNullOrNullable::NotNull => (quote! {vec![el_88131059.0.into()]}, proc_macro2::TokenStream::new()),
+                        NotNullOrNullable::NotNull => (quote! {vec![el_88131059.0.into()]}, Ts2::new()),
                         NotNullOrNullable::Nullable => (quote! {Some(el_88131059.0.into())}, quote! {acc_50e99088.push(<Self as #import_path::PostgresJsonType>::Create::new(None));}),
                     };
                     //todo check - maybe need to add something here
@@ -2816,17 +2817,17 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                                 acc_50e99088.push(<Self as #import_path::PostgresJsonType>::Create::new(acc_27624e5e));
                             }
                         },
-                        NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                        NotNullOrNullable::Nullable => Ts2::new(),
                     };
                     let maybe_dot_clone_ts = match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => quote!{.clone()},
-                        NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                        NotNullOrNullable::Nullable => Ts2::new(),
                     };
                     // let maybe_dot_clone_ts = match &postgres_json_type_pattern {
                     //     PostgresJsonTypePattern::Standart => match &not_null_or_nullable {
                     //         NotNullOrNullable::NotNull => match &postgres_json_type {
                     //             | PostgresJsonType::StdPrimitiveF32AsJsonbNumber
-                    //             | PostgresJsonType::StdPrimitiveF64AsJsonbNumber => proc_macro2::TokenStream::new(),
+                    //             | PostgresJsonType::StdPrimitiveF64AsJsonbNumber => Ts2::new(),
                     //             PostgresJsonType::StdPrimitiveI8AsJsonbNumber
                     //             | PostgresJsonType::StdPrimitiveI16AsJsonbNumber
                     //             | PostgresJsonType::StdPrimitiveI32AsJsonbNumber
@@ -2839,7 +2840,7 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                     //             | PostgresJsonType::StdStringStringAsJsonbString
                     //             | PostgresJsonType::UuidUuidAsJsonbString => quote!{.clone()},
                     //         }
-                    //         NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                    //         NotNullOrNullable::Nullable => Ts2::new(),
                     //     },
                     //     PostgresJsonTypePattern::ArrayDimension1 { .. } |
                     //     PostgresJsonTypePattern::ArrayDimension2 { .. } |
@@ -2983,7 +2984,7 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
                         quote! {acc_0a07db18.push(vec![#content_ts]);}
                     };
                     let maybe_acc_push_vec_none_ts = match &not_null_or_nullable {
-                        NotNullOrNullable::NotNull => proc_macro2::TokenStream::new(),
+                        NotNullOrNullable::NotNull => Ts2::new(),
                         NotNullOrNullable::Nullable => quote! {acc_0a07db18.push(vec![None]);},
                     };
                     quote! {
@@ -3839,7 +3840,7 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
         };
         (
             {
-                let field_ident = format!("field_{index}").parse::<proc_macro2::TokenStream>().expect("f992f797-a4df-40d0-9984-3a3a3ad439d7");
+                let field_ident = format!("field_{index}").parse::<Ts2>().expect("f992f797-a4df-40d0-9984-3a3a3ad439d7");
                 quote! {pub #field_ident: #ident,}.to_string()
             },
             gend.to_string(),
@@ -3852,8 +3853,8 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
         &{
             let fields_content_ts = fields_ts
                 .into_iter()
-                .map(|el_7ec253fa| el_7ec253fa.parse::<proc_macro2::TokenStream>().expect("1d8cd8e4-5f51-4aed-a626-79d759d86ebf"))
-                .collect::<Vec<proc_macro2::TokenStream>>();
+                .map(|el_7ec253fa| el_7ec253fa.parse::<Ts2>().expect("1d8cd8e4-5f51-4aed-a626-79d759d86ebf"))
+                .collect::<Vec<Ts2>>();
             quote! {
                 pub struct PostgresTableColumnsUsingPostgresJsonTypes {
                     #(#fields_content_ts)*
@@ -3868,10 +3869,10 @@ pub fn gen_postgres_json_types(input_ts: &proc_macro2::TokenStream) -> proc_macr
             .into_iter()
             .map(|el_af9caefa| {
                 el_af9caefa
-                    .parse::<proc_macro2::TokenStream>()
+                    .parse::<Ts2>()
                     .expect("84e21b40-b5a4-4f4c-86d3-8f6ecfbe1f6e")
             })
-            .collect::<Vec<proc_macro2::TokenStream>>();
+            .collect::<Vec<Ts2>>();
         quote! {
             #[allow(unused_qualifications)]
             #[allow(clippy::absolute_paths)]

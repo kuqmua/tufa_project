@@ -1,5 +1,5 @@
+use proc_macro2::TokenStream as Ts2;
 use quote::quote;
-
 #[proc_macro]
 pub fn compile_time_project_git_info(
     _input_ts: proc_macro::TokenStream,
@@ -27,7 +27,7 @@ pub fn compile_time_project_git_info(
         "093516ae-a89f-42df-8b01-9b2897111705"
     );
     let commit_id_ts = format!("\"{hash}\"")
-        .parse::<proc_macro2::TokenStream>()
+        .parse::<Ts2>()
         .expect("842e75e8-1c25-44af-bb71-f15ee1c0c67d");
     let gend = quote! {
         ProjectGitInfo {

@@ -1,5 +1,5 @@
+use proc_macro2::TokenStream as Ts2;
 use quote::quote;
-
 #[proc_macro_derive(FromStr)]
 pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -26,7 +26,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 convert_case::Case::Snake,
             );
             variant_ident_sc_str
-                .parse::<proc_macro2::TokenStream>()
+                .parse::<Ts2>()
                 .expect("791603c1-e547-4486-898e-631abb15afc5")
         };
         quote! {
@@ -52,7 +52,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         let error_str =
             format!("\"Invalid {ident}, expected one of {error_variants_str} found {{value}}\"");
         error_str
-            .parse::<proc_macro2::TokenStream>()
+            .parse::<Ts2>()
             .expect("1b778757-4118-4419-bb33-a2f677afa169")
     };
     let gend = quote! {

@@ -37,15 +37,14 @@ use naming::{
         SelfUpdateUcc, SelfWhereUcc,
     },
 };
+use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use std::iter::repeat_with;
 use syn::token::{Colon, Pub};
 //todo gen authorization rights enum for json fields
 //todo bug in update if updating array and creating element in jsonb array without anything - read_only_ids generation logic of vec returns wrong query part
 #[must_use]
-pub fn gen_postgres_json_object_type(
-    input_ts: proc_macro2::TokenStream,
-) -> proc_macro2::TokenStream {
+pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
     #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
     enum TraitGen {
         PostgresJsonType,
@@ -200,8 +199,8 @@ pub fn gen_postgres_json_object_type(
                 UpdateForQuery,
             }
             impl quote::ToTokens for PostgresJsonTypeSubtype {
-                fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-                    self.to_string().parse::<proc_macro2::TokenStream>().expect("43ac0b62-551a-421e-aee0-9bf3dfffa3cc").to_tokens(tokens);
+                fn to_tokens(&self, tokens: &mut Ts2) {
+                    self.to_string().parse::<Ts2>().expect("43ac0b62-551a-421e-aee0-9bf3dfffa3cc").to_tokens(tokens);
                 }
             }
             #[derive(Debug, Clone, strum_macros::Display)]
@@ -216,8 +215,8 @@ pub fn gen_postgres_json_object_type(
                 Update,
             }
             impl quote::ToTokens for PostgresTypeSubtype {
-                fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-                    self.to_string().parse::<proc_macro2::TokenStream>().expect("5825d4b7-dd55-41e4-b54e-7b31557181b6").to_tokens(tokens);
+                fn to_tokens(&self, tokens: &mut Ts2) {
+                    self.to_string().parse::<Ts2>().expect("5825d4b7-dd55-41e4-b54e-7b31557181b6").to_tokens(tokens);
                 }
             }
             #[allow(clippy::arbitrary_source_item_ordering)]
@@ -392,7 +391,7 @@ pub fn gen_postgres_json_object_type(
                     IdentPattern::ArrayNullableWithIdentifier => (vec_of_syn_derive_input_ident_with_id, array_of_not_null_jsonb_object_with_id, postgres_crud_macros_common::NotNullOrNullable::Nullable),
                 };
                 let current_not_null_or_nullable_rust = current_not_null_or_nullable.rust();
-                format!("{current_not_null_or_nullable_rust}{rust_part}{as_ucc}{current_not_null_or_nullable}{postgres_part}").parse::<proc_macro2::TokenStream>().expect("43784dd3-f37a-438d-8bc8-d17f63feac66")
+                format!("{current_not_null_or_nullable_rust}{rust_part}{as_ucc}{current_not_null_or_nullable}{postgres_part}").parse::<Ts2>().expect("43784dd3-f37a-438d-8bc8-d17f63feac66")
             };
 
             let ident = &gen_ident_ucc(&match (&not_null_or_nullable, &pattern) {
@@ -655,7 +654,7 @@ pub fn gen_postgres_json_object_type(
                     }
                 }
                 else {
-                    proc_macro2::TokenStream::new()
+                    Ts2::new()
                 };
                 quote! {
                     #ident_ts
@@ -687,9 +686,9 @@ pub fn gen_postgres_json_object_type(
                 &syn_field_wrapper.field_type
             );
             let gen_gen_impl_error_occurence_lib_to_std_string_string_wrapper_ts = |current_ident_ts: &dyn quote::ToTokens| macros_helpers::gen_impl_error_occurence_lib_to_std_string_string_ts(
-                &proc_macro2::TokenStream::new(),
+                &Ts2::new(),
                 &current_ident_ts,
-                &proc_macro2::TokenStream::new(),
+                &Ts2::new(),
                 &quote! {format!("{self:?}")}
             );
             let ident_as_postgres_json_type_table_type_declaration_ts = gen_type_as_postgres_json_type_subtype_ts(&ident, &postgres_json_type_subtype_table_type_declaration);
@@ -763,7 +762,7 @@ pub fn gen_postgres_json_object_type(
                 let ident_table_type_declaration_or_ident_create_ts = gen_ident_table_type_declaration_or_create_ts(
                     &match &postgres_json_type_subtype_table_type_declaration_or_create {
                         PostgresJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration => quote!{#allow_clippy_arbitrary_source_item_ordering_ts},
-                        PostgresJsonTypeSubtypeTableTypeDeclarationOrCreate::Create => proc_macro2::TokenStream::new(),
+                        PostgresJsonTypeSubtypeTableTypeDeclarationOrCreate::Create => Ts2::new(),
                     },
                     &ident_table_type_declaration_or_ident_create_ucc,
                     &match &pattern {
@@ -836,7 +835,7 @@ pub fn gen_postgres_json_object_type(
                     content_ts: &dyn quote::ToTokens
                 | postgres_crud_macros_common::gen_impl_postgres_crud_default_option_some_vec_one_el_ts(
                     &current_ident_ts,
-                    &proc_macro2::TokenStream::new(),
+                    &Ts2::new(),
                     &quote! {Self #content_ts}
                 );
                 let gen_impl_postgres_crud_default_option_some_vec_one_el_for_ident_table_type_declaration_or_create_standart_not_null_content_ts = |is_standart_with_id: &IsStandartWithId| {
@@ -904,7 +903,7 @@ pub fn gen_postgres_json_object_type(
                         #impl_postgres_crud_default_option_some_vec_one_el_for_ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_ts
                     }
                 } else {
-                    proc_macro2::TokenStream::new()
+                    Ts2::new()
                 };
                 quote! {
                     #ident_table_type_declaration_or_ident_create_ts
@@ -927,8 +926,8 @@ pub fn gen_postgres_json_object_type(
             let ident_create_ts = {
                 let ident_create_common_ts = gen_ident_table_type_declaration_or_ident_create_common_ts(&PostgresJsonTypeSubtypeTableTypeDeclarationOrCreate::Create);
                 let gen_impl_std_fmt_display_for_ident_create_ts = |current_ident_ts: &dyn quote::ToTokens| macros_helpers::gen_impl_std_fmt_display_ts(
-                    &proc_macro2::TokenStream::new(),
-                    &current_ident_ts, &proc_macro2::TokenStream::new(),
+                    &Ts2::new(),
+                    &current_ident_ts, &Ts2::new(),
                     &quote! {write!(f, "{self:?}")}
                 );
                 let impl_std_fmt_display_for_ident_create_ts = gen_impl_std_fmt_display_for_ident_create_ts(&ident_create_ucc);
@@ -941,7 +940,7 @@ pub fn gen_postgres_json_object_type(
                         #impl_error_occurence_lib_to_std_string_string_for_ident_with_id_create_standart_not_null_ts
                     }
                 } else {
-                    proc_macro2::TokenStream::new()
+                    Ts2::new()
                 };
                 quote! {
                     #ident_create_common_ts
@@ -1092,7 +1091,7 @@ pub fn gen_postgres_json_object_type(
                         #impl_std_convert_from_ident_with_id_standart_not_null_create_for_ident_with_id_standart_not_null_create_for_query_ts
                     }
                 } else {
-                    proc_macro2::TokenStream::new()
+                    Ts2::new()
                 };
                 quote! {
                     #ident_create_for_query_ts
@@ -1327,7 +1326,7 @@ pub fn gen_postgres_json_object_type(
                         }
                     }
                     else {
-                        proc_macro2::TokenStream::new()
+                        Ts2::new()
                     };
                     let select_query_part_postgres_type_ts = {
                         let content_ts = match &pattern {
@@ -1475,12 +1474,12 @@ pub fn gen_postgres_json_object_type(
                     (
                         postgres_crud_macros_common::gen_impl_postgres_crud_default_option_some_vec_one_el_ts(
                             &ident_select_ucc,
-                            &proc_macro2::TokenStream::new(),
+                            &Ts2::new(),
                             &gen_default_some_one_content_ts(&postgres_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)
                         ),
                         postgres_crud_macros_common::gen_impl_postgres_crud_default_option_some_vec_one_el_max_page_size_ts(
                             &ident_select_ucc,
-                            &proc_macro2::TokenStream::new(),
+                            &Ts2::new(),
                             &gen_default_some_one_content_ts(&postgres_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)
                         )
                     )
@@ -1561,7 +1560,7 @@ pub fn gen_postgres_json_object_type(
                         #impl_postgres_crud_all_variants_default_option_some_vec_one_el_for_ident_select_el_or_ident_with_id_standart_not_null_select_el_with_max_page_size_ts
                     }
                 };
-                let maybe_ident_select_el_ts = if is_standart_not_null { gen_ident_select_el_or_ident_with_id_standart_not_null_select_el_ts(&is_standart_with_id_false) } else { proc_macro2::TokenStream::new() };
+                let maybe_ident_select_el_ts = if is_standart_not_null { gen_ident_select_el_or_ident_with_id_standart_not_null_select_el_ts(&is_standart_with_id_false) } else { Ts2::new() };
                 let maybe_ident_with_id_standart_not_null_select_ts = if is_standart_not_null {
                     let ident_with_id_standart_not_null_select_ts = gen_ident_select_standart_not_null_ts(&is_standart_with_id_true);
                     let impl_ident_with_id_standart_not_null_select_ts = {
@@ -1580,12 +1579,12 @@ pub fn gen_postgres_json_object_type(
                     let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_standart_not_null_select_ts = gen_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_ts(&ident_with_id_standart_not_null_select_ucc);
                     let impl_postgres_crud_default_option_some_vec_one_el_for_ident_with_id_standart_not_null_select_ts = postgres_crud_macros_common::gen_impl_postgres_crud_default_option_some_vec_one_el_ts(
                         &ident_with_id_standart_not_null_select_ucc,
-                        &proc_macro2::TokenStream::new(),
+                        &Ts2::new(),
                         &impl_postgres_crud_default_option_some_vec_one_el_standart_not_null_content_ts
                     );
                     let impl_postgres_crud_default_option_some_vec_one_el_max_page_size_for_ident_with_id_standart_not_null_select_ts = postgres_crud_macros_common::gen_impl_postgres_crud_default_option_some_vec_one_el_max_page_size_ts(
                         &ident_with_id_standart_not_null_select_ucc,
-                        &proc_macro2::TokenStream::new(),
+                        &Ts2::new(),
                         &impl_postgres_crud_default_option_some_vec_one_el_max_page_size_standart_not_null_content_ts
                     );
                     let ident_with_id_select_el_ts = gen_ident_select_el_or_ident_with_id_standart_not_null_select_el_ts(&is_standart_with_id_true);
@@ -1599,7 +1598,7 @@ pub fn gen_postgres_json_object_type(
                         #ident_with_id_select_el_ts
                     }
                 } else {
-                    proc_macro2::TokenStream::new()
+                    Ts2::new()
                 };
                 quote! {
                     #ident_select_ts
@@ -1729,7 +1728,7 @@ pub fn gen_postgres_json_object_type(
                                     }
                                 }),
                             },
-                            NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                            NotNullOrNullable::Nullable => Ts2::new(),
                         }
                     };
                     let gen_where_filter_query_part_fields_content_standart_not_null_ts = |is_standart_with_id: &IsStandartWithId| {
@@ -1766,7 +1765,7 @@ pub fn gen_postgres_json_object_type(
                         postgres_crud_macros_common::impl_postgres_type_where_filter_for_ident_ts(
                             &quote! {<'lifetime>},
                             &current_ident_ts,
-                            &proc_macro2::TokenStream::new(),
+                            &Ts2::new(),
                             &postgres_crud_macros_common::IncrementParameterUnderscore::False,
                             &postgres_crud_macros_common::ColumnParameterUnderscore::False,
                             &postgres_crud_macros_common::IsNeedToAddLogicalOperatorUnderscore::False,
@@ -1801,7 +1800,7 @@ pub fn gen_postgres_json_object_type(
                                         }
                                     }
                                 ),
-                                NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                                NotNullOrNullable::Nullable => Ts2::new(),
                             },
                             Pattern::Array => gen_impl_postgres_type_where_filter_for_ident_ts(
                                 &{
@@ -1916,7 +1915,7 @@ pub fn gen_postgres_json_object_type(
                         }
                     };
                     let maybe_impl_error_occurence_lib_to_std_string_string_for_ident_where_ts = if matches!((&pattern, &not_null_or_nullable), (Pattern::Standart, NotNullOrNullable::Nullable)) {
-                        proc_macro2::TokenStream::new()
+                        Ts2::new()
                     } else {
                         gen_gen_impl_error_occurence_lib_to_std_string_string_wrapper_ts(&ident_where_ucc)
                     };
@@ -1936,7 +1935,7 @@ pub fn gen_postgres_json_object_type(
                     let maybe_impl_postgres_crud_all_variants_default_option_some_vec_one_el_for_ident_where_ts = match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
                             NotNullOrNullable::NotNull => postgres_crud_macros_common::gen_impl_postgres_crud_all_variants_default_option_some_vec_one_el_ts(&ident_where_ucc, &gen_impl_postgres_crud_all_variants_default_option_some_vec_one_el_content_standart_not_null_where(&is_standart_with_id_false)),
-                            NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                            NotNullOrNullable::Nullable => Ts2::new(),
                         },
                         Pattern::Array => postgres_crud_macros_common::gen_impl_postgres_crud_all_variants_default_option_some_vec_one_el_ts(&ident_where_ucc, &{
                             let el_filters_ts = vec_syn_field_with_id.iter().map(|el_a3184731| {
@@ -2010,7 +2009,7 @@ pub fn gen_postgres_json_object_type(
                             #impl_postgres_crud_all_variants_default_option_some_vec_one_el_for_ident_with_id_standart_not_null_where_ts
                         }
                     } else {
-                        proc_macro2::TokenStream::new()
+                        Ts2::new()
                     };
                     quote! {
                         #maybe_ident_where_ts
@@ -2048,7 +2047,7 @@ pub fn gen_postgres_json_object_type(
                     let maybe_serde_skip_serializing_if_option_is_none_ts = match &read_with_or_without_annotation_or_inner {
                         ReadWithOrWithoutAnnotationOrInner::WithSerdeOptionIsNoneAnnotation => quote! {#[serde(skip_serializing_if = "Option::is_none")]},
                         ReadWithOrWithoutAnnotationOrInner::WithoutSerdeOptionIsNoneAnnotation |
-                        ReadWithOrWithoutAnnotationOrInner::Inner => proc_macro2::TokenStream::new(),
+                        ReadWithOrWithoutAnnotationOrInner::Inner => Ts2::new(),
                     };
                     let field_ident = &el_274293a0.field_ident;
                     let field_type_as_json_type_read_ts = match &read_with_or_without_annotation_or_inner {
@@ -2143,9 +2142,9 @@ pub fn gen_postgres_json_object_type(
                 let maybe_ident_read_try_from_error_named_ts = match &pattern {
                     Pattern::Standart => match &not_null_or_nullable {
                         postgres_crud_macros_common::NotNullOrNullable::NotNull => gen_ident_read_try_from_error_named_ts(&ident_read_try_from_error_named_ucc),
-                        postgres_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                        postgres_crud_macros_common::NotNullOrNullable::Nullable => Ts2::new(),
                     },
-                    Pattern::Array => proc_macro2::TokenStream::new(),
+                    Pattern::Array => Ts2::new(),
                 };
                 let gen_ident_read_or_ident_with_id_standart_not_null_read_ucc = |is_standart_with_id: &IsStandartWithId| match &is_standart_with_id {
                     IsStandartWithId::False => &ident_read_ucc,
@@ -2171,7 +2170,7 @@ pub fn gen_postgres_json_object_type(
                                 }
                                 let gen_fields_ts = |with_reference: &WithReference| {
                                     let maybe_reference_symbol_ts = match &with_reference {
-                                        WithReference::False => proc_macro2::TokenStream::new(),
+                                        WithReference::False => Ts2::new(),
                                         WithReference::True => quote! {&},
                                     };
                                     let fields_ts = current_vec_syn_field.iter().map(|el_a6b6e788| {
@@ -2278,12 +2277,12 @@ pub fn gen_postgres_json_object_type(
                 let maybe_impl_serde_deserialize_for_ident_read_or_ident_with_id_standart_not_null_read_ts = match &pattern {
                     Pattern::Standart => match &not_null_or_nullable {
                         postgres_crud_macros_common::NotNullOrNullable::NotNull => gen_impl_serde_deserialize_for_ident_read_or_ident_with_id_standart_not_null_read_ts(&is_standart_with_id_false),
-                        postgres_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                        postgres_crud_macros_common::NotNullOrNullable::Nullable => Ts2::new(),
                     },
-                    Pattern::Array => proc_macro2::TokenStream::new(),
+                    Pattern::Array => Ts2::new(),
                 };
                 let gen_impl_postgres_crud_default_option_some_vec_one_el_for_ident_read_or_ident_with_id_standart_not_null_read_ts = |is_standart_with_id: &IsStandartWithId| {
-                    postgres_crud_macros_common::gen_impl_postgres_crud_default_option_some_vec_one_el_ts(&gen_ident_read_or_ident_with_id_standart_not_null_read_ucc(is_standart_with_id), &proc_macro2::TokenStream::new(), &{
+                    postgres_crud_macros_common::gen_impl_postgres_crud_default_option_some_vec_one_el_ts(&gen_ident_read_or_ident_with_id_standart_not_null_read_ucc(is_standart_with_id), &Ts2::new(), &{
                         let fields_ts = get_vec_syn_field(is_standart_with_id).iter().map(|el_6a2035df| {
                             let field_ident = &el_6a2035df.field_ident;
                             let value_content_ts = wrap_into_value_initialization_ts(
@@ -2297,17 +2296,17 @@ pub fn gen_postgres_json_object_type(
                 let impl_postgres_crud_default_option_some_vec_one_el_for_ident_read_or_ident_with_id_standart_not_null_read_ts = match &pattern {
                     Pattern::Standart => match &not_null_or_nullable {
                         postgres_crud_macros_common::NotNullOrNullable::NotNull => gen_impl_postgres_crud_default_option_some_vec_one_el_for_ident_read_or_ident_with_id_standart_not_null_read_ts(&is_standart_with_id_false),
-                        postgres_crud_macros_common::NotNullOrNullable::Nullable => postgres_crud_macros_common::gen_impl_postgres_crud_default_option_some_vec_one_el_ts(&ident_read_ucc, &proc_macro2::TokenStream::new(), &self_some_postgres_crud_default_option_some_vec_one_el_call_ts),
+                        postgres_crud_macros_common::NotNullOrNullable::Nullable => postgres_crud_macros_common::gen_impl_postgres_crud_default_option_some_vec_one_el_ts(&ident_read_ucc, &Ts2::new(), &self_some_postgres_crud_default_option_some_vec_one_el_call_ts),
                     },
                     Pattern::Array => match &not_null_or_nullable {
                         postgres_crud_macros_common::NotNullOrNullable::NotNull => postgres_crud_macros_common::gen_impl_postgres_crud_default_option_some_vec_one_el_ts(
                             &ident_read_ucc,
-                            &proc_macro2::TokenStream::new(),
+                            &Ts2::new(),
                             &quote! {
                                 Self(#vec_postgres_crud_default_option_some_vec_one_el_call_ts)
                             },
                         ),
-                        postgres_crud_macros_common::NotNullOrNullable::Nullable => postgres_crud_macros_common::gen_impl_postgres_crud_default_option_some_vec_one_el_ts(&ident_read_ucc, &proc_macro2::TokenStream::new(), &self_some_postgres_crud_default_option_some_vec_one_el_call_ts),
+                        postgres_crud_macros_common::NotNullOrNullable::Nullable => postgres_crud_macros_common::gen_impl_postgres_crud_default_option_some_vec_one_el_ts(&ident_read_ucc, &Ts2::new(), &self_some_postgres_crud_default_option_some_vec_one_el_call_ts),
                     },
                 };
                 let impl_sqlx_type_sqlx_postgres_for_ident_read_ts = gen_sqlx_types_json_type_declaration_wrapper_ts(&ident_read_ucc);
@@ -2351,7 +2350,7 @@ pub fn gen_postgres_json_object_type(
                         #impl_sqlx_decode_sqlx_postgres_for_ident_with_id_standart_not_null_read_ts
                     }
                 } else {
-                    proc_macro2::TokenStream::new()
+                    Ts2::new()
                 };
                 quote! {
                     #ident_read_ts
@@ -2445,7 +2444,7 @@ pub fn gen_postgres_json_object_type(
                     }
                 }
                 else {
-                    proc_macro2::TokenStream::new()
+                    Ts2::new()
                 };
                 let ident_read_only_ids_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
@@ -2539,7 +2538,7 @@ pub fn gen_postgres_json_object_type(
                         #impl_sqlx_type_sqlx_postgres_for_ident_with_id_standart_not_null_read_only_ids_ts
                     }
                 } else {
-                    proc_macro2::TokenStream::new()
+                    Ts2::new()
                 };
                 quote! {
                     #maybe_ident_read_only_ids_handle_ts
@@ -2595,7 +2594,7 @@ pub fn gen_postgres_json_object_type(
                         #ident_with_id_read_inner_ts
                     }
                 } else {
-                    proc_macro2::TokenStream::new()
+                    Ts2::new()
                 };
                 quote! {
                     #ident_read_inner_ts
@@ -2638,7 +2637,7 @@ pub fn gen_postgres_json_object_type(
                 delete_ts: &dyn quote::ToTokens
             | {
                 let maybe_serde_skip_serializing_if_vec_is_empty_ts = match &should_add_serde_skip_serializing_if_vec_is_empty_annotation {
-                    ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::False => proc_macro2::TokenStream::new(),
+                    ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::False => Ts2::new(),
                     ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::True => quote! {#[serde(skip_serializing_if = "Vec::is_empty")]},
                 };
                 quote! {
@@ -2728,7 +2727,7 @@ pub fn gen_postgres_json_object_type(
                 let ids_are_not_unique_uppper_camel_case = IdsAreNotUniqueUcc;
                 let ident_update_try_new_error_named_ucc = &SelfUpdateTryNewErrorNamedUcc::from_tokens(&ident);
                 let maybe_ident_update_try_new_error_named_ts = match &pattern {
-                    Pattern::Standart => proc_macro2::TokenStream::new(),
+                    Pattern::Standart => Ts2::new(),
                     Pattern::Array => match &not_null_or_nullable {
                         postgres_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                             .make_pub()
@@ -2760,7 +2759,7 @@ pub fn gen_postgres_json_object_type(
                                     },
                                 }}
                             ),
-                        postgres_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                        postgres_crud_macros_common::NotNullOrNullable::Nullable => Ts2::new(),
                     },
                 };
                 let impl_ident_update_ts = {
@@ -2926,7 +2925,7 @@ pub fn gen_postgres_json_object_type(
                     }
                 };
                 let maybe_impl_serde_deserialize_for_ident_update_ts = match &pattern {
-                    Pattern::Standart => proc_macro2::TokenStream::new(),
+                    Pattern::Standart => Ts2::new(),
                     Pattern::Array => match &not_null_or_nullable {
                         postgres_crud_macros_common::NotNullOrNullable::NotNull => {
                             //todo maybe reuse?
@@ -3076,10 +3075,10 @@ pub fn gen_postgres_json_object_type(
                                 }
                             }
                         }
-                        postgres_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                        postgres_crud_macros_common::NotNullOrNullable::Nullable => Ts2::new(),
                     },
                 };
-                let impl_postgres_crud_default_option_some_vec_one_el_for_ident_update_ts = postgres_crud_macros_common::gen_impl_postgres_crud_default_option_some_vec_one_el_ts(&ident_update_ucc, &proc_macro2::TokenStream::new(), &{
+                let impl_postgres_crud_default_option_some_vec_one_el_for_ident_update_ts = postgres_crud_macros_common::gen_impl_postgres_crud_default_option_some_vec_one_el_ts(&ident_update_ucc, &Ts2::new(), &{
                     let value = match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
                             postgres_crud_macros_common::NotNullOrNullable::NotNull => quote! {(#postgres_crud_default_option_some_vec_one_el_call_ts)},
@@ -3148,7 +3147,7 @@ pub fn gen_postgres_json_object_type(
                         #impl_postgres_crud_all_variants_default_option_some_vec_one_el_for_ident_update_el_ts
                     }
                 } else {
-                    proc_macro2::TokenStream::new()
+                    Ts2::new()
                 };
                 let maybe_ident_with_id_standart_not_null_update_el_ts = if is_standart_not_null {
                     //thought it can be reused as struct with generic parameter, but turns out its too painfull
@@ -3201,7 +3200,7 @@ pub fn gen_postgres_json_object_type(
                     );
                     let impl_postgres_crud_default_option_some_vec_one_el_for_ident_with_standart_not_null_update_el_ts = postgres_crud_macros_common::gen_impl_postgres_crud_default_option_some_vec_one_el_ts(
                         &ident_with_id_standart_not_null_update_el_ucc,
-                        &proc_macro2::TokenStream::new(),
+                        &Ts2::new(),
                         &quote! {Self {
                             #id_sc: #postgres_crud_default_option_some_vec_one_el_call_ts,
                             #fields_sc: #postgres_crud_default_option_some_vec_one_el_call_ts,
@@ -3213,7 +3212,7 @@ pub fn gen_postgres_json_object_type(
                         #impl_postgres_crud_default_option_some_vec_one_el_for_ident_with_standart_not_null_update_el_ts
                     }
                 } else {
-                    proc_macro2::TokenStream::new()
+                    Ts2::new()
                 };
                 quote! {
                     #ident_update_ts
@@ -3627,7 +3626,7 @@ pub fn gen_postgres_json_object_type(
                         #impl_std_convert_from_ident_standart_not_null_update_el_for_ident_standart_not_null_update_for_query_el_ts
                     }
                 } else {
-                    proc_macro2::TokenStream::new()
+                    Ts2::new()
                 };
                 let maybe_ident_with_id_standart_not_null_update_for_query_el_ts = if is_standart_not_null {
                     let ident_with_id_standart_not_null_update_for_query_el_fields_declaration_ts = quote! {
@@ -3666,7 +3665,7 @@ pub fn gen_postgres_json_object_type(
                         #impl_std_convert_from_ident_with_id_standart_not_null_update_el_for_ident_with_id_standart_not_null_update_for_query_el_ts
                     }
                 } else {
-                    proc_macro2::TokenStream::new()
+                    Ts2::new()
                 };
                 quote!{
                     #ident_update_for_query_ts
@@ -4797,7 +4796,7 @@ pub fn gen_postgres_json_object_type(
                 );
                 match &trait_gen {
                     TraitGen::PostgresTypeAndPostgresJsonType => (impl_postgres_crud_postgres_json_type_for_ident_ts, impl_postgres_crud_postgres_types_postgres_type_postgres_type_ts),
-                    TraitGen::PostgresJsonType => (impl_postgres_crud_postgres_json_type_for_ident_ts, proc_macro2::TokenStream::new()),
+                    TraitGen::PostgresJsonType => (impl_postgres_crud_postgres_json_type_for_ident_ts, Ts2::new()),
                 }
             };
             let self_postgres_json_type_ts = quote!{#self_ucc::#postgres_json_type_ucc};
@@ -5067,14 +5066,14 @@ pub fn gen_postgres_json_object_type(
                                                         let current_field_ident = &el_value.field_ident;
                                                         if field_ident == current_field_ident {
                                                             let maybe_dot_clone_ts = match should_add_dot_clone.clone() {
-                                                                ShouldAddDotClone::False => proc_macro2::TokenStream::new(),
+                                                                ShouldAddDotClone::False => Ts2::new(),
                                                                 ShouldAddDotClone::True => quote! { .clone() },
                                                             };
                                                             quote! {#el_ts #maybe_dot_clone_ts}
                                                         } else {
                                                             quote! {#postgres_crud_default_option_some_vec_one_el_call_ts}
                                                         }
-                                                    }).collect::<Vec<proc_macro2::TokenStream>>()
+                                                    }).collect::<Vec<Ts2>>()
                                                 };
                                                 (
                                                     gen_parameters_ts(
@@ -5150,7 +5149,7 @@ pub fn gen_postgres_json_object_type(
                                     ) = match &pattern {
                                         Pattern::Standart => (
                                             &ident_standart_not_null_as_postgres_json_type_test_cases_ts,
-                                            &proc_macro2::TokenStream::new()
+                                            &Ts2::new()
                                         ),
                                         Pattern::Array => (
                                             &ident_array_not_null_as_postgres_json_type_test_cases_ts,
@@ -5186,7 +5185,7 @@ pub fn gen_postgres_json_object_type(
                                 postgres_crud_macros_common::NotNullOrNullable::NotNull => {
                                     let fields_last_initialization_ts = {
                                         if vec_syn_field.len() == 1 {
-                                            proc_macro2::TokenStream::new()
+                                            Ts2::new()
                                         }
                                         else {
                                             let content_ts = vec_syn_field.iter().map(|el_43e09b9b| {
@@ -5207,7 +5206,7 @@ pub fn gen_postgres_json_object_type(
                                         let field_ident_current_sc = SelfCurrentSc::from_display(&field_ident);
                                         let field_ident_last_sc = SelfLastSc::from_display(&field_ident);
                                         let maybe_field_ident_last_clone_from_field_ident_current = if vec_syn_field.len() == 1 {
-                                            proc_macro2::TokenStream::new()
+                                            Ts2::new()
                                         }
                                         else {
                                             quote!{#field_ident_last_sc.clone_from(&#field_ident_current_sc);}
@@ -5373,7 +5372,7 @@ pub fn gen_postgres_json_object_type(
                                         let field_ident = &el_e47b9709.field_ident;
                                         let field_type_as_postgres_json_type_test_cases_ts = gen_type_as_postgres_json_type_test_cases_ts(&el_e47b9709.field_type);
                                         // let maybe_dot_clone_ts = if vec_syn_field.len() == 1 {
-                                        //     proc_macro2::TokenStream::new()
+                                        //     Ts2::new()
                                         // }
                                         // else {
                                         //     quote!{.clone()}
@@ -5593,7 +5592,7 @@ pub fn gen_postgres_json_object_type(
                                                 }
                                             };
                                             let fields_without_current_ident_ts = if vec_syn_field.is_empty() {
-                                                proc_macro2::TokenStream::new()
+                                                Ts2::new()
                                             }
                                             else {
                                                 let content_ts_e0bf4e67 = vec_syn_field
@@ -5614,7 +5613,7 @@ pub fn gen_postgres_json_object_type(
                                                     Some(value_5b375af0) => quote! { #value_5b375af0 | #el_2be3f4ee },
                                                 }));
                                                 content_ts_e0bf4e67.map_or_else(
-                                                    proc_macro2::TokenStream::new,
+                                                    Ts2::new,
                                                     |value_5c826b8c| quote!{#value_5c826b8c => (),}
                                                 )
                                             };
@@ -5755,7 +5754,7 @@ pub fn gen_postgres_json_object_type(
                                     }
                                 }
                             });
-                            let gen_struct_initialization_ts = |function: &dyn Fn(&dyn quote::ToTokens) -> proc_macro2::TokenStream|{//content_ts: &dyn quote::ToTokens
+                            let gen_struct_initialization_ts = |function: &dyn Fn(&dyn quote::ToTokens) -> Ts2|{//content_ts: &dyn quote::ToTokens
                                 let ts = vec_syn_field.iter().map(|el_96e0a086| {
                                     let field_ident = &el_96e0a086.field_ident;
                                     let value_initialization_ts = gen_import_path_value_initialization_ts(&{
@@ -5906,7 +5905,7 @@ pub fn gen_postgres_json_object_type(
                                     }
                                     postgres_crud_macros_common::NotNullOrNullable::Nullable => gen_nullable_ts(
                                         &ident_standart_not_null_ucc,
-                                        &proc_macro2::TokenStream::new()
+                                        &Ts2::new()
                                     )
                                 },
                                 Pattern::Array => match &not_null_or_nullable {
@@ -6005,7 +6004,7 @@ pub fn gen_postgres_json_object_type(
                                     }
                                     postgres_crud_macros_common::NotNullOrNullable::Nullable => gen_nullable_ts(
                                         &ident_standart_not_null_ucc,
-                                        &proc_macro2::TokenStream::new()
+                                        &Ts2::new()
                                     )
                                 },
                                 Pattern::Array => match &not_null_or_nullable {
@@ -7101,7 +7100,7 @@ pub fn gen_postgres_json_object_type(
             };
             (
                 {
-                    let field_ident = format!("field_{index}").parse::<proc_macro2::TokenStream>().expect("7f9a06a5-db0f-420d-ae83-581ccc02c99f");
+                    let field_ident = format!("field_{index}").parse::<Ts2>().expect("7f9a06a5-db0f-420d-ae83-581ccc02c99f");
                     quote! {
                         pub #field_ident: #ident,
                     }
@@ -7109,7 +7108,7 @@ pub fn gen_postgres_json_object_type(
                 gend,
             )
         })
-        .collect::<(Vec<proc_macro2::TokenStream>, Vec<proc_macro2::TokenStream>)>();
+        .collect::<(Vec<Ts2>, Vec<Ts2>)>();
     macros_helpers::maybe_write_ts_into_file(
         gen_postgres_json_object_type_config
             .postgres_table_columns_content_write_into_postgres_table_columns_using_postgres_json_object_types,
@@ -7121,7 +7120,7 @@ pub fn gen_postgres_json_object_type(
         },
         &macros_helpers::FormatWithCargofmt::True,
     );
-    let gend: proc_macro2::TokenStream = {
+    let gend: Ts2 = {
         let ident_gen_postgres_json_object_type_mod =
             SelfGenPostgresJsonObjectTypeModSc::from_tokens(&syn_derive_input.ident);
         quote! {
