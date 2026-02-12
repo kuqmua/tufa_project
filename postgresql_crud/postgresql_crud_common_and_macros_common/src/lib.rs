@@ -1,4 +1,5 @@
 use naming::{AndSnakeCase, NotSnakeCase, OrSnakeCase};
+use quote::quote;
 use std::fmt::{Display, Formatter, Result as StdFmtResult};
 
 pub trait DefaultOptionSomeVecOneEl: Sized {
@@ -66,10 +67,10 @@ impl DefaultOptionSomeVecOneEl for LogicalOperator {
 impl quote::ToTokens for LogicalOperator {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match *self {
-            Self::And => quote::quote! {And},
-            Self::Or => quote::quote! {Or},
-            Self::AndNot => quote::quote! {AndNot},
-            Self::OrNot => quote::quote! {OrNot},
+            Self::And => quote! {And},
+            Self::Or => quote! {Or},
+            Self::AndNot => quote! {AndNot},
+            Self::OrNot => quote! {OrNot},
         }
         .to_tokens(tokens);
     }
@@ -93,9 +94,9 @@ impl PostgresqlTypeGreaterThanVariant {
 impl quote::ToTokens for PostgresqlTypeGreaterThanVariant {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match *self {
-            Self::EqualNotGreaterThan => quote::quote! {EqualNotGreaterThan},
-            Self::GreaterThan => quote::quote! {GreaterThan},
-            Self::NotGreaterThan => quote::quote! {NotGreaterThan},
+            Self::EqualNotGreaterThan => quote! {EqualNotGreaterThan},
+            Self::GreaterThan => quote! {GreaterThan},
+            Self::NotGreaterThan => quote! {NotGreaterThan},
         }
         .to_tokens(tokens);
     }
@@ -119,9 +120,9 @@ impl PostgresqlJsonTypeLengthGreaterThanVariant {
 impl quote::ToTokens for PostgresqlJsonTypeLengthGreaterThanVariant {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match *self {
-            Self::EqualNotLengthGreaterThan => quote::quote! {EqualNotLengthGreaterThan},
-            Self::LengthGreaterThan => quote::quote! {LengthGreaterThan},
-            Self::NotLengthGreaterThan => quote::quote! {NotLengthGreaterThan},
+            Self::EqualNotLengthGreaterThan => quote! {EqualNotLengthGreaterThan},
+            Self::LengthGreaterThan => quote! {LengthGreaterThan},
+            Self::NotLengthGreaterThan => quote! {NotLengthGreaterThan},
         }
         .to_tokens(tokens);
     }

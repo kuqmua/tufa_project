@@ -1,3 +1,5 @@
+use quote::quote;
+
 const REGEX_VALUE: &str = "^[a-zA-Z]+$";
 
 #[proc_macro]
@@ -68,7 +70,7 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_ts(
                     .expect("0cc47b2e-03e2-48b8-8df3-7bbbe09de244")
             };
             let generate_struct_declaration = |struct_name_ts: &dyn quote::ToTokens| {
-                quote::quote! {
+                quote! {
                     #[derive(Debug)]
                     pub struct #struct_name_ts;
                 }
@@ -79,7 +81,7 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_ts(
                 generate_struct_declaration(&phrase_part_snake_case_upper_camel_case_ts);
             let generate_display_implementation_ts =
                 |struct_name_ts: &dyn quote::ToTokens, write_content_ts: &dyn quote::ToTokens| {
-                    quote::quote! {
+                    quote! {
                         impl std::fmt::Display for #struct_name_ts {
                             fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                                 write!(f, #write_content_ts)
@@ -97,10 +99,10 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_ts(
             );
             let generate_to_tokens_implementation_ts =
                 |struct_name_ts: &dyn quote::ToTokens, quote_content_ts: &dyn quote::ToTokens| {
-                    quote::quote! {
+                    quote! {
                         impl quote::ToTokens for #struct_name_ts {
                             fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-                                quote::quote!{#quote_content_ts}.to_tokens(tokens);
+                                quote!{#quote_content_ts}.to_tokens(tokens);
                             }
                         }
                     }
@@ -113,7 +115,7 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_ts(
                 &phrase_part_snake_case_upper_camel_case_ts,
                 &phrase_part_snake_case_ts,
             );
-            quote::quote! {
+            quote! {
                 #upper_camel_case_struct_declaration_ts
                 #upper_camel_case_display_implementation_ts
                 #upper_camel_case_to_tokens_implementation_ts
@@ -122,7 +124,7 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_ts(
                 #snake_to_tokens_implementation_ts
             }
         });
-    let generated = quote::quote! {#(#implementations_ts)*};
+    let generated = quote! {#(#implementations_ts)*};
     // println!("{generated}");
     generated.into()
 }
@@ -210,16 +212,16 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_ts(
         };
         let generate_struct_ts = |elements_concat_value_case_double_quotes_ts: &dyn quote::ToTokens, is_upper_camel_case: bool, trait_ident_ts: &dyn quote::ToTokens| {
             let struct_ident_ts = if is_upper_camel_case {
-                quote::quote! {#struct_upper_camel_case_upper_camel_case_ts}
+                quote! {#struct_upper_camel_case_upper_camel_case_ts}
             } else {
-                quote::quote! {#struct_snake_case_token_upper_camel_case_ts}
+                quote! {#struct_snake_case_token_upper_camel_case_ts}
             };
             let casing_ts = if is_upper_camel_case {
-                quote::quote! {naming_common::AsRefStrToUpperCamelCaseStringified::case}
+                quote! {naming_common::AsRefStrToUpperCamelCaseStringified::case}
             } else {
-                quote::quote! {naming_common::AsRefStrToSnakeCaseStringified::case}
+                quote! {naming_common::AsRefStrToSnakeCaseStringified::case}
             };
-            quote::quote! {
+            quote! {
                 #[derive(Debug)]
                 pub struct #struct_ident_ts(String);
                 impl #struct_ident_ts {
@@ -276,12 +278,12 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_ts(
         };
         let pub_struct_upper_camel_case_ts = generate_struct_ts(&elements_concat_value_upper_camel_case_double_quotes_ts, true, &trait_upper_camel_case_upper_camel_case_ts);
         let pub_struct_snake_case_ts = generate_struct_ts(&elements_concat_value_snake_case_double_quotes_ts, false, &trait_snake_case_token_upper_camel_case_ts);
-        quote::quote! {
+        quote! {
             #pub_struct_upper_camel_case_ts
             #pub_struct_snake_case_ts
         }
     });
-    let generated = quote::quote! {#(#implementations_ts)*};
+    let generated = quote! {#(#implementations_ts)*};
     // println!("{generated}");
     generated.into()
 }
@@ -316,13 +318,13 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_camel_case_stringified(
                 let variant_ident = &variant.ident;
                 let variant_ident_upper_camel_case_stringified = naming_common::ToTokensToUpperCamelCaseStringified::case(&variant_ident);
                 let variant_ident_upper_camel_case_double_quotes_ts = generate_quotes::double_quotes_ts(&variant_ident_upper_camel_case_stringified);
-                quote::quote! {Self::#variant_ident => #std_string_string_ts::from(#variant_ident_upper_camel_case_double_quotes_ts)}
+                quote! {Self::#variant_ident => #std_string_string_ts::from(#variant_ident_upper_camel_case_double_quotes_ts)}
             }
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("4955c50d-3db7-4881-a085-64b08a1ef413"),
         })
         .collect::<Vec<proc_macro2::TokenStream>>();
     let trait_path_ts = trait_path_ts();
-    let generated = quote::quote! {
+    let generated = quote! {
         impl #trait_path_ts::AsRefStrToUpperCamelCaseStringified for #ident {
             fn case(&self) -> #std_string_string_ts {//todo maybe write duplicate Trait with &str instead of String
                 match self {
@@ -364,13 +366,13 @@ pub fn as_ref_str_enum_with_unit_fields_to_snake_case_stringified(
                 let variant_ident = &variant.ident;
                 let variant_ident_snake_case_stringified = naming_common::ToTokensToSnakeCaseStringified::case(&variant_ident);
                 let variant_ident_snake_case_double_quotes_ts = generate_quotes::double_quotes_ts(&variant_ident_snake_case_stringified);
-                quote::quote! {Self::#variant_ident => #std_string_string_ts::from(#variant_ident_snake_case_double_quotes_ts)}
+                quote! {Self::#variant_ident => #std_string_string_ts::from(#variant_ident_snake_case_double_quotes_ts)}
             }
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("b3ef2657-22f2-4df6-a58c-263a50e3c247"),
         })
         .collect::<Vec<proc_macro2::TokenStream>>();
     let trait_path_ts = trait_path_ts();
-    let generated = quote::quote! {
+    let generated = quote! {
         impl #trait_path_ts::AsRefStrToSnakeCaseStringified for #ident {
             fn case(&self) -> #std_string_string_ts {
                 match self {
@@ -411,13 +413,13 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_snake_case_stringified(
                 let variant_ident = &variant.ident;
                 let variant_ident_snake_case_stringified = naming_common::ToTokensToUpperSnakeCaseStringified::case(&variant_ident);
                 let variant_ident_snake_case_double_quotes_ts = generate_quotes::double_quotes_ts(&variant_ident_snake_case_stringified);
-                quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_snake_case_double_quotes_ts)}
+                quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_snake_case_double_quotes_ts)}
             }
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("b6fedcff-1a88-455f-bd93-219ec45a1fce"),
         })
         .collect::<Vec<proc_macro2::TokenStream>>();
     let trait_path_ts = trait_path_ts();
-    let generated = quote::quote! {
+    let generated = quote! {
         impl #trait_path_ts::ToUpperSnakeCaseStringified for #ident {
             fn case(&self) -> #std_string_string {
                 match self {
@@ -431,5 +433,5 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_snake_case_stringified(
 }
 
 fn trait_path_ts() -> proc_macro2::TokenStream {
-    quote::quote! {naming}
+    quote! {naming}
 }

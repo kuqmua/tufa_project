@@ -1,3 +1,5 @@
+use quote::quote;
+
 #[proc_macro_derive(FromStr)]
 pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -27,7 +29,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 .parse::<proc_macro2::TokenStream>()
                 .expect("791603c1-e547-4486-898e-631abb15afc5")
         };
-        quote::quote! {
+        quote! {
             #variant_ident_snake_case_ts => Ok(Self::#variant_ident),
         }
     });
@@ -54,7 +56,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             .parse::<proc_macro2::TokenStream>()
             .expect("1b778757-4118-4419-bb33-a2f677afa169")
     };
-    let generated = quote::quote! {
+    let generated = quote! {
         impl std::str::FromStr for #ident {
             type Err = String;
             fn from_str(value: &str) -> Result<Self, Self::Err> {

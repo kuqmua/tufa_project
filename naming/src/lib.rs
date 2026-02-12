@@ -1,5 +1,6 @@
 pub mod parameter;
 
+use quote::quote;
 use std::fmt::{Display, Formatter, Result as FmtResult};
 
 pub use naming_common::{
@@ -1471,7 +1472,7 @@ impl Display for HashMapUpperCamelCase {
 }
 impl quote::ToTokens for HashMapUpperCamelCase {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {HashMap}.to_tokens(tokens);
+        quote! {HashMap}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
@@ -1483,7 +1484,7 @@ impl Display for HashMapSnakeCase {
 }
 impl quote::ToTokens for HashMapSnakeCase {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {hashmap}.to_tokens(tokens);
+        quote! {hashmap}.to_tokens(tokens);
     }
 }
 

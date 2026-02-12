@@ -1,3 +1,4 @@
+use quote::quote;
 use std::fmt::Display;
 //todo maybe add another generic - trait casing. and ToUpperCamelCaseString and others would implement it like .to_case::<UpperCamel>()
 pub trait AsRefStrToUpperCamelCaseStringified {
@@ -143,7 +144,7 @@ where
     T: quote::ToTokens,
 {
     fn case(&self) -> String {
-        to_upper_camel_case_stringified(&quote::quote! {#self}.to_string())
+        to_upper_camel_case_stringified(&quote! {#self}.to_string())
     }
 }
 pub trait ToTokensToUpperCamelCaseTokenStream {
@@ -165,7 +166,7 @@ where
     T: quote::ToTokens,
 {
     fn case(&self) -> String {
-        to_snake_case_stringified(&quote::quote! {#self}.to_string())
+        to_snake_case_stringified(&quote! {#self}.to_string())
     }
 }
 pub trait ToTokensToSnakeCaseTokenStream {
@@ -187,7 +188,7 @@ where
     T: quote::ToTokens,
 {
     fn case(&self) -> String {
-        to_upper_snake_case_stringified(&quote::quote! {#self}.to_string())
+        to_upper_snake_case_stringified(&quote! {#self}.to_string())
     }
 }
 pub trait ToTokensToUpperSnakeCaseTokenStream {

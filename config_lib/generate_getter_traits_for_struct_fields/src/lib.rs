@@ -1,3 +1,5 @@
+use quote::quote;
+
 #[proc_macro_derive(GenerateGetterTraitsForStructFields)]
 pub fn generate_getter_traits_for_struct_fields(
     input: proc_macro::TokenStream,
@@ -29,7 +31,7 @@ pub fn generate_getter_traits_for_struct_fields(
         let function_name_ident = format!("get_{field_ident}")
             .parse::<proc_macro2::TokenStream>()
             .expect("a349efd0-9b62-426b-a473-b9d3a3201424");
-        quote::quote! {
+        quote! {
             impl #path_trait_ident for #ident {
                 fn #function_name_ident (&self) -> &#field_type {
                     &self.#field_ident
@@ -42,7 +44,7 @@ pub fn generate_getter_traits_for_struct_fields(
             }
         }
     });
-    let generated = quote::quote! {
+    let generated = quote! {
         #(#generated_traits_implementations)*
     };
     generated.into()
@@ -74,7 +76,7 @@ pub fn generate_getter_trait(input: proc_macro::TokenStream) -> proc_macro::Toke
     let first_field_unnamed_type = &first_field_unnamed.ty;
     let get_ident_upper_camel_case = GetSelfUpperCamelCase::from_tokens(&ident);
     let get_ident_snake_case = GetSelfSnakeCase::from_tokens(&ident);
-    let generated = quote::quote! {
+    let generated = quote! {
         pub trait #get_ident_upper_camel_case {
             fn #get_ident_snake_case(&self) -> &#first_field_unnamed_type;
         }

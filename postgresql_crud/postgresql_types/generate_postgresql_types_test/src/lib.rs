@@ -2,6 +2,7 @@
 mod tests {
     #[test]
     fn clippy() {
+        use quote::quote;
         macro_clippy_check_common::clippy_check(
             "generate_postgresql_types_test_content",
             "../postgresql_crud/postgresql_types/",
@@ -19,7 +20,7 @@ where_filters = {path = "../../where_filters"}
 [features]
 test-utils = []"#,
             &generate_postgresql_types_source::generate_postgresql_types(
-                &quote::quote! {
+                &quote! {
                     {
                         "postgresql_table_columns_content_write_into_postgresql_table_columns_using_postgresql_types": "False",
                         "whole_content_write_into_generate_postgresql_types": "False",

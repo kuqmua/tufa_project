@@ -2,6 +2,7 @@
 mod tests {
     #[test]
     fn clippy() {
+        use quote::quote;
         macro_clippy_check_common::clippy_check(
             "generate_postgresql_json_object_type_test_content",
             "../postgresql_crud/postgresql_json_object_type/",
@@ -19,7 +20,7 @@ postgresql_crud = {path = "../../../postgresql_crud", features = ["test-utils"]}
 [features]
 test-utils = []"#,
             &{
-                let object_example_ts = quote::quote!{
+                let object_example_ts = quote!{
                     #[derive(Debug, Clone, Copy)]
                     #[postgresql_crud::postgresql_json_object_type_config{
                         {
@@ -39,7 +40,7 @@ test-utils = []"#,
                     }
                 };
                 let ts = generate_postgresql_json_object_type_source::generate_postgresql_json_object_type(object_example_ts.clone());
-                quote::quote! {
+                quote! {
                     #ts
                     #object_example_ts
                 }

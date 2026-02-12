@@ -2,6 +2,7 @@ use crate::attribute_ident_stringified::AttributeIdentStringified;
 use naming::{
     CodeOccurenceSnakeCase, HashMapUpperCamelCase, WithSerializeDeserializeUpperCamelCase,
 };
+use quote::quote;
 use std::str::FromStr;
 
 #[allow(clippy::arbitrary_source_item_ordering)]
@@ -142,19 +143,19 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             assert!(args.len() == 2, "47cde1b8-93d7-4945-935d-6cb710bb2b0b");
             let first_argument_stringified = {
                 let first_argument = args.iter().next().expect("f9d97146-c9ba-48f6-9f80-3540f7f7aa60");
-                quote::quote! {#first_argument}.to_string()
+                quote! {#first_argument}.to_string()
             };
-            assert!(quote::quote! {#std_string_string}.to_string() == first_argument_stringified, "bbdda4ab-809d-45c7-92f4-245f23318458");
+            assert!(quote! {#std_string_string}.to_string() == first_argument_stringified, "bbdda4ab-809d-45c7-92f4-245f23318458");
             args.iter().nth(1).expect("f4e88416-5417-405a-9c0d-6035f815bbdd")
         }
         let el_c25b655e_ident = el_c25b655e.ident.as_ref().expect("438aa90e-d1f3-4b89-a61a-e2d9f6a7e653");
         let el_type_ts = {
             let el_type = &el_c25b655e.ty;
-            quote::quote! {#el_type}
+            quote! {#el_type}
         };
         let el_type_with_serialize_deserialize_ts = match ErrorOccurenceFieldAttribute::try_from(el_c25b655e).expect("2db209a8-2f57-4474-a9c6-9743aaaed57d") {
             ErrorOccurenceFieldAttribute::EoToStdStringString => {
-                quote::quote! {
+                quote! {
                     #std_string_string
                 }
             }
@@ -163,7 +164,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 "{el_type_ts}{WithSerializeDeserializeUpperCamelCase}"
             ).parse::<proc_macro2::TokenStream>().expect("201dc0a4-4563-4e51-a228-ba085b767775"),
             ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
-                quote::quote! {
+                quote! {
                     Vec<#std_string_string>
                 }
             }
@@ -181,20 +182,20 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                         "{}{}",
                         {
                             let first_arg = args.iter().next().expect("e9b33787-870e-4520-a364-816c0f47f508");
-                            quote::quote! {#first_arg}
+                            quote! {#first_arg}
                         },
                         WithSerializeDeserializeUpperCamelCase,
                     ).parse::<proc_macro2::TokenStream>().expect("22c364b9-c645-46ec-984e-cf0b911feb84")
                 } else {
                     panic!("07c6ab44-5e5e-4fca-96a8-5786fb2d2f48");
                 };
-                quote::quote! {
+                quote! {
                     Vec<#el_vec_type_with_serialize_deserialize_ts>
                 }
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
                 let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(el_c25b655e, std_string_string);
-                quote::quote! {
+                quote! {
                     std::collections::HashMap<#std_string_string, #std_string_string>
                 }
             }
@@ -206,17 +207,17 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap(el_c25b655e, std_string_string);
                 let el_hashmap_value_type_with_serialize_deserialize_ts = format!(
                     "{}{}",
-                    quote::quote! {#second_argument},
+                    quote! {#second_argument},
                     WithSerializeDeserializeUpperCamelCase
                 ).parse::<proc_macro2::TokenStream>().expect("86307dbc-484e-4012-ac70-2d593b1f99e6");
-                quote::quote! {
+                quote! {
                     std::collections::HashMap<#std_string_string, #el_hashmap_value_type_with_serialize_deserialize_ts>
                 }
             }
         };
-        quote::quote! {#el_c25b655e_ident: #el_type_with_serialize_deserialize_ts,}
+        quote! {#el_c25b655e_ident: #el_type_with_serialize_deserialize_ts,}
     });
-    quote::quote! {
+    quote! {
         #el_ident {
             #(#fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_ts)*
             #code_occurence_snake_case: error_occurence_lib::code_occurence::CodeOccurence,

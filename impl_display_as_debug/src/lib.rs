@@ -1,3 +1,5 @@
+use quote::quote;
+
 #[proc_macro_derive(ImplDisplayAsDebug)]
 pub fn impl_display_as_debug(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -8,7 +10,7 @@ pub fn impl_display_as_debug(input: proc_macro::TokenStream) -> proc_macro::Toke
         &proc_macro2::TokenStream::new(),
         &ident,
         &proc_macro2::TokenStream::new(),
-        &quote::quote! {write!(f, "{:#?}", self)},
+        &quote! {write!(f, "{:#?}", self)},
     );
     // println!("{generated}");
     generated.into()

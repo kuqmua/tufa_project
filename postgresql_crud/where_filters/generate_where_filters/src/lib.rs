@@ -1,6 +1,7 @@
 use naming::parameter::{
     PostgresqlJsonTypeWhereSelfUpperCamelCase, PostgresqlTypeWhereSelfUpperCamelCase,
 };
+use quote::quote;
 use std::fmt::Display;
 
 #[proc_macro]
@@ -68,9 +69,9 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
     impl quote::ToTokens for KindOfUnsignedPartOfStdPrimitiveI32 {
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
             match &self {
-                Self::CanBeZero => quote::quote! {UnsignedPartOfStdPrimitiveI32}.to_tokens(tokens),
+                Self::CanBeZero => quote! {UnsignedPartOfStdPrimitiveI32}.to_tokens(tokens),
                 Self::CanNotBeZero => {
-                    quote::quote! {NotZeroUnsignedPartOfStdPrimitiveI32}.to_tokens(tokens);
+                    quote! {NotZeroUnsignedPartOfStdPrimitiveI32}.to_tokens(tokens);
                 }
             }
         }
@@ -111,36 +112,36 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
     let dimensions_snake_case = naming::DimensionsSnakeCase;
     let dimensions_indexes_snake_case = naming::DimensionsIndexesSnakeCase;
     let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
-    let t_ts = quote::quote! {T};
-    let t_annotation_generic_ts = quote::quote! {<#t_ts>};
+    let t_ts = quote! {T};
+    let t_annotation_generic_ts = quote! {<#t_ts>};
     let proc_macro2_ts_new = proc_macro2::TokenStream::new();
     let core_default_default_default_ts = token_patterns::CoreDefaultDefaultDefault;
     let postgresql_crud_common_default_option_some_vec_one_el_ts =
         token_patterns::PostgresqlCrudCommonDefaultOptionSomeVecOneEl;
     let postgresql_crud_common_default_option_some_vec_one_el_call_ts =
         token_patterns::PostgresqlCrudCommonDefaultOptionSomeVecOneElCall;
-    let pub_value_t_ts = quote::quote! {pub #value_snake_case: T};
+    let pub_value_t_ts = quote! {pub #value_snake_case: T};
     let unsigned_part_of_std_primitive_i32_ts =
-        quote::quote! {postgresql_crud_common::UnsignedPartOfStdPrimitiveI32};
+        quote! {postgresql_crud_common::UnsignedPartOfStdPrimitiveI32};
     let not_zero_unsigned_part_of_std_primitive_i32_ts =
-        quote::quote! {postgresql_crud_common::NotZeroUnsignedPartOfStdPrimitiveI32};
+        quote! {postgresql_crud_common::NotZeroUnsignedPartOfStdPrimitiveI32};
     let value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts =
-        quote::quote! {#value_snake_case: #not_zero_unsigned_part_of_std_primitive_i32_ts};
+        quote! {#value_snake_case: #not_zero_unsigned_part_of_std_primitive_i32_ts};
     let pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts =
-        quote::quote! {pub #value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts};
-    let value_default_option_some_vec_one_el_ts = quote::quote! {
+        quote! {pub #value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts};
+    let value_default_option_some_vec_one_el_ts = quote! {
         #value_snake_case: #postgresql_crud_common_default_option_some_vec_one_el_call_ts
     };
     let generate_struct_ts = |filter_initialized_with_try_new_result_is_ok: bool, should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn quote::ToTokens, struct_additional_fields_ts: &dyn quote::ToTokens| {
         let maybe_pub_ts: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_ts_new } else { &naming::PubSnakeCase };
-        let maybe_derive_serde_deserialize_ts: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_ts_new } else { &quote::quote! {serde::Deserialize,} };
+        let maybe_derive_serde_deserialize_ts: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_ts_new } else { &quote! {serde::Deserialize,} };
         let maybe_declaration_of_struct_ident_generic_ts: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
             ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_ts_new,
             ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_ts } => {
-                &maybe_additional_traits_ts.as_ref().map_or_else(|| quote::quote! {<#t_ts>}, |value_d05f3d4f| quote::quote! {<#t_ts: #value_d05f3d4f>})
+                &maybe_additional_traits_ts.as_ref().map_or_else(|| quote! {<#t_ts>}, |value_d05f3d4f| quote! {<#t_ts: #value_d05f3d4f>})
             }
         };
-        quote::quote! {
+        quote! {
             #[derive(Debug, Clone, PartialEq, serde::Serialize, #maybe_derive_serde_deserialize_ts schemars::JsonSchema)]
             pub struct #ident #maybe_declaration_of_struct_ident_generic_ts {
                 #maybe_pub_ts logical_operator: #import_path::LogicalOperator,
@@ -154,8 +155,8 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                 ShouldAddDeclarationOfStructIdentGeneric::False => proc_macro2::TokenStream::new(),
                 ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_ts } => {
                     maybe_additional_traits_ts.as_ref().map_or_else(
-                        || quote::quote! {<T: #postgresql_crud_common_default_option_some_vec_one_el_ts>},
-                        |value_29913af7| quote::quote! {<T: #value_29913af7 + #postgresql_crud_common_default_option_some_vec_one_el_ts>}
+                        || quote! {<T: #postgresql_crud_common_default_option_some_vec_one_el_ts>},
+                        |value_29913af7| quote! {<T: #value_29913af7 + #postgresql_crud_common_default_option_some_vec_one_el_ts>}
                     )
                 }
             },
@@ -165,7 +166,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                 ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_ts_new,
                 ShouldAddDeclarationOfStructIdentGeneric::True { .. } => &t_annotation_generic_ts,
             },
-            &quote::quote! {
+            &quote! {
                 Self {
                     logical_operator: #postgresql_crud_common_default_option_some_vec_one_el_call_ts,
                     #impl_default_option_some_vec_one_el_additional_fields_ts
@@ -186,18 +187,18 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                 let maybe_t_additional_traits_for_postgresql_type_where_filter_ts: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
                     ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_ts_new,
                     ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_ts } => {
-                        let send_and_lifetime_ts = quote::quote! {Send + 'lifetime};
-                        let serde_serialize_ts = quote::quote! {serde::Serialize};
+                        let send_and_lifetime_ts = quote! {Send + 'lifetime};
+                        let serde_serialize_ts = quote! {serde::Serialize};
                         let content_ts = match (&filter_type, &maybe_additional_traits_ts) {
-                            (FilterType::PostgresqlType, Some(value)) => &quote::quote! {#value + #send_and_lifetime_ts},
+                            (FilterType::PostgresqlType, Some(value)) => &quote! {#value + #send_and_lifetime_ts},
                             (FilterType::PostgresqlType, None) => &send_and_lifetime_ts,
-                            (FilterType::PostgresqlJsonType, Some(value)) => &quote::quote! {#value + #serde_serialize_ts + #send_and_lifetime_ts},
-                            (FilterType::PostgresqlJsonType, None) => &quote::quote! {#serde_serialize_ts + #send_and_lifetime_ts},
+                            (FilterType::PostgresqlJsonType, Some(value)) => &quote! {#value + #serde_serialize_ts + #send_and_lifetime_ts},
+                            (FilterType::PostgresqlJsonType, None) => &quote! {#serde_serialize_ts + #send_and_lifetime_ts},
                         };
-                        &quote::quote! {, T: #content_ts}
+                        &quote! {, T: #content_ts}
                     }
                 };
-                quote::quote! {<'lifetime #maybe_t_additional_traits_for_postgresql_type_where_filter_ts>}
+                quote! {<'lifetime #maybe_t_additional_traits_for_postgresql_type_where_filter_ts>}
             },
             &ident,
             &match &should_add_declaration_of_struct_ident_generic {
@@ -213,26 +214,26 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
             &postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon,
         )
     };
-    let regular_expression_case_and_value_declaration_ts = quote::quote! {
+    let regular_expression_case_and_value_declaration_ts = quote! {
         pub regular_expression_case: RegularExpressionCase,
         pub value: RegexRegex
     };
-    let regular_expression_case_and_value_default_initialization_ts = quote::quote! {
+    let regular_expression_case_and_value_default_initialization_ts = quote! {
         regular_expression_case: #postgresql_crud_common_default_option_some_vec_one_el_call_ts,
         #value_default_option_some_vec_one_el_ts
     };
-    let if_let_err_query_try_bind_self_value_to_string_ts = quote::quote! {
+    let if_let_err_query_try_bind_self_value_to_string_ts = quote! {
         if let Err(#error_snake_case) = #query_snake_case.try_bind(#self_snake_case.#value_snake_case.to_string()) {
             return Err(#error_snake_case.to_string());
         }
         Ok(#query_snake_case)
     };
-    let if_let_err_query_try_bind_self_value_ts = quote::quote! {
+    let if_let_err_query_try_bind_self_value_ts = quote! {
         if let Err(#error_snake_case) = #query_snake_case.try_bind(#self_snake_case.#value_snake_case) {
             return Err(#error_snake_case.to_string());
         }
     };
-    let query_bind_one_value_ts = quote::quote! {
+    let query_bind_one_value_ts = quote! {
         #if_let_err_query_try_bind_self_value_ts
         Ok(#query_snake_case)
     };
@@ -244,7 +245,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
         };
     let generate_match_increment_checked_add_one_initialization_ts =
         |ident_ts: &dyn quote::ToTokens| {
-            quote::quote! {
+            quote! {
                 let #ident_ts = match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
                     Ok(value_25d59e01) => value_25d59e01,
                     Err(#error_snake_case) => {
@@ -255,11 +256,11 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
         };
     let should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone =
         ShouldAddDeclarationOfStructIdentGeneric::True {
-            maybe_additional_traits_ts: Some(quote::quote! {std::fmt::Debug + PartialEq + Clone}),
+            maybe_additional_traits_ts: Some(quote! {std::fmt::Debug + PartialEq + Clone}),
         };
     let should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode =
         ShouldAddDeclarationOfStructIdentGeneric::True {
-            maybe_additional_traits_ts: Some(quote::quote! {
+            maybe_additional_traits_ts: Some(quote! {
                 std::fmt::Debug
                 + PartialEq
                 + PartialOrd
@@ -268,9 +269,9 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                 + for<'__> sqlx::Encode<'__, sqlx::Postgres>
             }),
         };
-    let value_between_t_ts = quote::quote! {#value_snake_case: Between<T>};
-    let pub_value_between_t_ts = quote::quote! {pub #value_between_t_ts};
-    let query_self_value_query_bind_ts = quote::quote! {
+    let value_between_t_ts = quote! {#value_snake_case: Between<T>};
+    let pub_value_between_t_ts = quote! {pub #value_between_t_ts};
+    let query_self_value_query_bind_ts = quote! {
         match #self_snake_case.#value_snake_case.query_bind(#query_snake_case) {
             Ok(value_f6d31bdd) => {
                 #query_snake_case = value_f6d31bdd;
@@ -293,7 +294,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
     let generate_pub_dimensions_bounded_vec_ts =
         |vec_length_ts: &dyn quote::ToTokens,
          kind_of_unsigned_part_of_std_primitive_i32: &KindOfUnsignedPartOfStdPrimitiveI32| {
-            quote::quote! {pub #dimensions_snake_case: BoundedStdVecVec<postgresql_crud_common::#kind_of_unsigned_part_of_std_primitive_i32, #vec_length_ts>}
+            quote! {pub #dimensions_snake_case: BoundedStdVecVec<postgresql_crud_common::#kind_of_unsigned_part_of_std_primitive_i32, #vec_length_ts>}
         };
     let value_match_increment_checked_add_one_initialization_ts =
         generate_match_increment_checked_add_one_initialization_ts(&value_snake_case);
@@ -301,7 +302,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
         |ident_ts: &dyn quote::ToTokens,
          field_ts: &dyn quote::ToTokens,
          function_ts: &dyn quote::ToTokens| {
-            quote::quote! {
+            quote! {
                 let #ident_ts = match self.#field_ts.#function_ts(#increment_snake_case, #column_snake_case, is_need_to_add_logical_operator) {
                     Ok(value_0a22ee9a) => value_0a22ee9a,
                     Err(#error_snake_case) => {
@@ -310,13 +311,13 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                 };
             }
         };
-    let value_match_self_value_query_part_initialization_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&value_snake_case, &value_snake_case, &quote::quote! {query_part});
-    let dimensions_default_initialization_ts = quote::quote! {
+    let value_match_self_value_query_part_initialization_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&value_snake_case, &value_snake_case, &quote! {query_part});
+    let dimensions_default_initialization_ts = quote! {
         #dimensions_snake_case: #postgresql_crud_common_default_option_some_vec_one_el_call_ts
     };
     let dimensions_default_initialization_comma_ts =
-        quote::quote! {#dimensions_default_initialization_ts,};
-    let query_self_dimensions_query_bind_query_ts = quote::quote! {
+        quote! {#dimensions_default_initialization_ts,};
+    let query_self_dimensions_query_bind_query_ts = quote! {
         match #self_snake_case.#dimensions_snake_case.query_bind(#query_snake_case) {
             Ok(value_ed6f1157) => {
                 #query_snake_case = value_ed6f1157;
@@ -326,17 +327,17 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
             }
         }
     };
-    let dimensions_indexes_comma_ts = quote::quote! {#dimensions_indexes_snake_case,};
+    let dimensions_indexes_comma_ts = quote! {#dimensions_indexes_snake_case,};
     let generate_maybe_dimensions_declaration_pub_value_t_ts =
         |maybe_dimensions_declaration_ts: &dyn quote::ToTokens| {
-            quote::quote! {
+            quote! {
                 #maybe_dimensions_declaration_ts
                 #pub_value_t_ts
             }
         };
     let generate_maybe_dimensions_default_initialization_value_default_ts =
         |maybe_dimensions_default_initialization_ts: &dyn quote::ToTokens| {
-            quote::quote! {
+            quote! {
                 #maybe_dimensions_default_initialization_ts
                 #value_default_option_some_vec_one_el_ts
             }
@@ -350,7 +351,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                     &dimension_number.dimension_ts(),
                     &KindOfUnsignedPartOfStdPrimitiveI32::CanNotBeZero,
                 );
-            quote::quote! {#pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_ts,}
+            quote! {#pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_ts,}
         };
     let generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_ts =
         |dimension_number: &DimensionNumber| {
@@ -359,7 +360,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                     &dimension_number.dimension_ts(),
                     &KindOfUnsignedPartOfStdPrimitiveI32::CanBeZero,
                 );
-            quote::quote! {#pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_ts,}
+            quote! {#pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_ts,}
         };
     let generate_postgresql_type_dimensions_helpers = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, postgresql_type_or_postgresql_json_type: &postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType| {
         DimensionNumber::try_from(postgresql_type_pattern_handle).map_or_else(
@@ -374,8 +375,8 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                     &dimensions_indexes_snake_case,
                     &dimensions_snake_case,
                     &match &postgresql_type_or_postgresql_json_type {
-                        postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => quote::quote! {postgresql_type_query_part},
-                        postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => quote::quote! {postgresql_json_type_query_part},
+                        postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => quote! {postgresql_type_query_part},
+                        postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => quote! {postgresql_json_type_query_part},
                     },
                 ),
                 PostgresqlTypeKind::ArrayDimension,
@@ -396,13 +397,13 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                 is_query_bind_mutable,
                 query_bind_content_ts,
             ) = {
-                let sqlx_type_postgresq_encode_ts = quote::quote! {sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>};
+                let sqlx_type_postgresq_encode_ts = quote! {sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>};
                 let should_add_declaration_of_struct_ident_generic_true_type_encode =
                     ShouldAddDeclarationOfStructIdentGeneric::True {
                         maybe_additional_traits_ts: Some(sqlx_type_postgresq_encode_ts.clone()),
                     };
                 let pub_value_postgresql_type_not_empty_unique_vec_t_ts =
-                    quote::quote! {pub #value_snake_case: PostgresqlTypeNotEmptyUniqueVec<T>};
+                    quote! {pub #value_snake_case: PostgresqlTypeNotEmptyUniqueVec<T>};
                 let generate_postgresql_type_dimensions_helpers_postgresql_type =
                     |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                         generate_postgresql_type_dimensions_helpers(
@@ -433,7 +434,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         postgresql_crud_macros_common::IncrementParameterUnderscore::False,
                         {
                             let format_handle_ts = generate_quotes::double_quotes_ts(&generate_format_handle_stringified(&postgresql_type_kind));
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_indexes_initialization_ts
                                 #value_match_increment_checked_add_one_initialization_ts
                                 Ok(format!(
@@ -446,7 +447,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                             }
                         },
                         is_query_bind_mutable_true,
-                        quote::quote! {
+                        quote! {
                             #maybe_dimensions_query_bind_content_ts
                             #query_bind_one_value_ts
                         },
@@ -486,7 +487,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         );
                         (
                         should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
-                        quote::quote! {
+                        quote! {
                             #maybe_dimensions_declaration_ts
                             #pub_value_between_t_ts
                         },
@@ -494,7 +495,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         postgresql_crud_macros_common::IncrementParameterUnderscore::False,
                         {
                             let format_handle_ts = generate_quotes::double_quotes_ts(&format!("{{}}({{}}{} {{}})", postgresql_type_kind.format_argument()));
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_indexes_initialization_ts
                                 #value_match_self_value_query_part_initialization_ts
                                 Ok(format!(
@@ -507,7 +508,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                             }
                         },
                         is_query_bind_mutable_true,
-                        quote::quote! {
+                        quote! {
                             #maybe_dimensions_query_bind_content_ts
                             #query_self_value_query_bind_ts
                         },
@@ -528,10 +529,10 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         (
                             ShouldAddDeclarationOfStructIdentGeneric::True {
                                 maybe_additional_traits_ts: Some(
-                                    quote::quote! {std::fmt::Debug + PartialEq + Clone + #sqlx_type_postgresq_encode_ts},
+                                    quote! {std::fmt::Debug + PartialEq + Clone + #sqlx_type_postgresq_encode_ts},
                                 ),
                             },
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_declaration_ts
                                 #pub_value_postgresql_type_not_empty_unique_vec_t_ts
                             },
@@ -546,10 +547,10 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                 ));
                                 let if_write_is_err_ts =
                                     macros_helpers::generate_if_write_is_err_ts(
-                                        &quote::quote! {acc_14596a52, "${value_daedba9c},"},
-                                        &quote::quote! {panic!("87f47f75-b2db-4d88-a0f0-e254ac7d14a3");},
+                                        &quote! {acc_14596a52, "${value_daedba9c},"},
+                                        &quote! {panic!("87f47f75-b2db-4d88-a0f0-e254ac7d14a3");},
                                     );
-                                quote::quote! {
+                                quote! {
                                     #maybe_dimensions_indexes_initialization_ts
                                     let #value_snake_case = {
                                         let mut acc_14596a52 = String::default();
@@ -576,7 +577,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                 }
                             },
                             is_query_bind_mutable_true,
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_query_bind_content_ts
                                 for el_ea865d8c in #self_snake_case.#value_snake_case.into_vec() {
                                     if let Err(#error_snake_case) = #query_snake_case.try_bind(el_ea865d8c) {
@@ -601,11 +602,11 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         );
                         (
                             should_add_declaration_of_struct_ident_generic_false.clone(),
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_declaration_ts
                                 #regular_expression_case_and_value_declaration_ts
                             },
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_default_initialization_ts
                                 #regular_expression_case_and_value_default_initialization_ts
                             },
@@ -615,7 +616,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                     "{{}}({{}}{} {{}} ${{}})",
                                     postgresql_type_kind.format_argument()
                                 ));
-                                quote::quote! {
+                                quote! {
                                     #maybe_dimensions_indexes_initialization_ts
                                     #value_match_increment_checked_add_one_initialization_ts
                                     Ok(format!(
@@ -629,7 +630,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                 }
                             },
                             is_query_bind_mutable_true,
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_query_bind_content_ts
                                 #if_let_err_query_try_bind_self_value_to_string_ts
                             },
@@ -661,7 +662,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                     "{{}}({{}}{} < ${{}})",
                                     postgresql_type_kind.format_argument()
                                 ));
-                                quote::quote! {
+                                quote! {
                                     #maybe_dimensions_indexes_initialization_ts
                                     #value_match_increment_checked_add_one_initialization_ts
                                     Ok(format!(
@@ -674,7 +675,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                 }
                             },
                             is_query_bind_mutable_true,
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_query_bind_content_ts
                                 #query_bind_one_value_ts
                             },
@@ -703,7 +704,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         },
                         {
                             let format_handle_ts = generate_quotes::double_quotes_ts(&format!("{{}}({{}}{} {postgresql_syntax})", postgresql_type_kind.format_argument()));
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_indexes_initialization_ts
                                 Ok(format!(
                                     #format_handle_ts,
@@ -717,7 +718,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                             PostgresqlTypePatternHandle::Standart => is_query_bind_mutable_false,
                             PostgresqlTypePatternHandle::ArrayDimension1 | PostgresqlTypePatternHandle::ArrayDimension2 | PostgresqlTypePatternHandle::ArrayDimension3 | PostgresqlTypePatternHandle::ArrayDimension4 => is_query_bind_mutable_true,
                         },
-                        quote::quote! {
+                        quote! {
                             #maybe_dimensions_query_bind_content_ts
                             Ok(#query_snake_case)
                         },
@@ -779,12 +780,12 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         );
                         (
                             should_add_declaration_of_struct_ident_generic_false.clone(),
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_declaration_ts
                                 pub encode_format: EncodeFormat,
                                 pub encoded_string_representation: String,
                             },
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_default_initialization_ts
                                 encode_format: #postgresql_crud_common_default_option_some_vec_one_el_call_ts,
                                 encoded_string_representation: #core_default_default_default_ts
@@ -795,7 +796,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                     "{{}}(encode({{}}{}, '{{}}') = ${{}})",
                                     postgresql_type_kind.format_argument()
                                 ));
-                                quote::quote! {
+                                quote! {
                                     #maybe_dimensions_indexes_initialization_ts
                                     #value_match_increment_checked_add_one_initialization_ts
                                     Ok(format!(
@@ -809,7 +810,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                 }
                             },
                             is_query_bind_mutable_true,
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_query_bind_content_ts
                                 if let Err(#error_snake_case) = #query_snake_case.try_bind(self.encoded_string_representation) {
                                     return Err(#error_snake_case.to_string());
@@ -871,7 +872,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                             let format_handle_ts = generate_quotes::double_quotes_ts(&format!(
                                 "{{}}(array_length({{}}, 1) {operator} ${{}})"
                             ));
-                            quote::quote! {
+                            quote! {
                                 match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                     Ok(value_f7988de8) => Ok(format!(#format_handle_ts, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, value_f7988de8)),
                                     Err(#error_snake_case) => Err(#error_snake_case),
@@ -939,25 +940,25 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         maybe_additional_parameters_ts,
                         maybe_dimensions_query_bind_content_ts
                     ) = DimensionNumber::try_from(postgresql_type_pattern_handle).map_or_else(
-                        |()| (proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), PostgresqlTypeKind::Standart, quote::quote! {#column_snake_case,}, proc_macro2::TokenStream::new()),
+                        |()| (proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), PostgresqlTypeKind::Standart, quote! {#column_snake_case,}, proc_macro2::TokenStream::new()),
                         |dimension_number| (
                             generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_ts(&dimension_number),
                             dimensions_default_initialization_comma_ts.clone(),
                             {
-                                let dimensions_indexes1_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&quote::quote! {dimensions_indexes1}, &dimensions_snake_case, &quote::quote! {postgresql_type_query_part});
-                                let dimensions_indexes2_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&quote::quote! {dimensions_indexes2}, &dimensions_snake_case, &quote::quote! {postgresql_type_query_part});
-                                quote::quote! {
+                                let dimensions_indexes1_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&quote! {dimensions_indexes1}, &dimensions_snake_case, &quote! {postgresql_type_query_part});
+                                let dimensions_indexes2_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&quote! {dimensions_indexes2}, &dimensions_snake_case, &quote! {postgresql_type_query_part});
+                                quote! {
                                     #dimensions_indexes1_ts
                                     #dimensions_indexes2_ts
                                 }
                             },
                             PostgresqlTypeKind::ArrayDimension,
-                            quote::quote! {
+                            quote! {
                                 dimensions_indexes1,
                                 column,
                                 dimensions_indexes2,
                             },
-                            quote::quote! {
+                            quote! {
                                 match #self_snake_case.#dimensions_snake_case.clone().query_bind(#query_snake_case) {
                                     Ok(value_6cb14cdc) => {
                                         #query_snake_case = value_6cb14cdc;
@@ -972,7 +973,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                     );
                         (
                             ShouldAddDeclarationOfStructIdentGeneric::False,
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_declaration_ts
                                 #pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts
                             },
@@ -986,7 +987,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                     postgresql_type_kind.format_argument(),
                                     postgresql_type_kind.format_argument(),
                                 ));
-                                quote::quote! {
+                                quote! {
                                     #maybe_dimensions_indexes_initialization_ts
                                     #value_match_increment_checked_add_one_initialization_ts
                                     Ok(format!(
@@ -999,7 +1000,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                 }
                             },
                             is_query_bind_mutable_true,
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_query_bind_content_ts
                                 #query_bind_one_value_ts
                             },
@@ -1010,12 +1011,12 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         let (maybe_dimensions_declaration_ts, maybe_dimensions_default_initialization_ts, maybe_dimensions_indexes_initialization_ts, _, _, maybe_dimensions_query_bind_content_ts) = generate_postgresql_type_dimensions_helpers_postgresql_type(&postgresql_type_pattern_handle_standart);
                         (
                             ShouldAddDeclarationOfStructIdentGeneric::True {
-                                maybe_additional_traits_ts: Some(quote::quote! {#sqlx_type_postgresq_encode_ts + postgresql_crud_common::PostgresqlTypeEqualOperator}),
+                                maybe_additional_traits_ts: Some(quote! {#sqlx_type_postgresq_encode_ts + postgresql_crud_common::PostgresqlTypeEqualOperator}),
                             },
                             generate_maybe_dimensions_declaration_pub_value_t_ts(&maybe_dimensions_declaration_ts),
                             generate_maybe_dimensions_default_initialization_value_default_ts(&maybe_dimensions_default_initialization_ts),
                             postgresql_crud_macros_common::IncrementParameterUnderscore::False,
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_indexes_initialization_ts
                                 let operator = <T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&#self_snake_case.#value_snake_case);
                                 let operator_query_str = operator.to_query_str();
@@ -1029,7 +1030,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                 Ok(format!("{}({} {content})", &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case))
                             },
                             is_query_bind_mutable_true,
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_query_bind_content_ts
                                 if let postgresql_crud_common::EqualOperator::Equal = &<T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&#self_snake_case.#value_snake_case) {
                                     #if_let_err_query_try_bind_self_value_ts
@@ -1042,12 +1043,12 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         let (maybe_dimensions_declaration_ts, maybe_dimensions_default_initialization_ts, maybe_dimensions_indexes_initialization_ts, _, _, maybe_dimensions_query_bind_content_ts) = generate_postgresql_type_dimensions_helpers_postgresql_type(&postgresql_type_pattern_handle_array_dimension1);
                         (
                             ShouldAddDeclarationOfStructIdentGeneric::True {
-                                maybe_additional_traits_ts: Some(quote::quote! {#sqlx_type_postgresq_encode_ts + postgresql_crud_common::PostgresqlTypeEqualOperator}),
+                                maybe_additional_traits_ts: Some(quote! {#sqlx_type_postgresq_encode_ts + postgresql_crud_common::PostgresqlTypeEqualOperator}),
                             },
                             generate_maybe_dimensions_declaration_pub_value_t_ts(&maybe_dimensions_declaration_ts),
                             generate_maybe_dimensions_default_initialization_value_default_ts(&maybe_dimensions_default_initialization_ts),
                             postgresql_crud_macros_common::IncrementParameterUnderscore::False,
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_indexes_initialization_ts
                                 let operator = <T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&#self_snake_case.#value_snake_case);
                                 let operator_query_str = operator.to_query_str();
@@ -1061,7 +1062,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                 Ok(format!("{}({}{dimensions_indexes} {content})", &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case))
                             },
                             is_query_bind_mutable_true,
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_query_bind_content_ts
                                 if let postgresql_crud_common::EqualOperator::Equal = &<T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(
                                     &#self_snake_case.#value_snake_case
@@ -1145,7 +1146,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                     &is_query_bind_mutable,
                     &query_bind_content_ts,
                 );
-            let generated = quote::quote! {
+            let generated = quote! {
                 #struct_ts
                 #impl_default_option_some_vec_one_el_ts
                 #impl_postgresql_type_where_filter_ts
@@ -1154,7 +1155,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
         };
         let filter_array_ts = postgresql_crud_macros_common::PostgresqlTypeFilter::into_array()
             .map(|el_7cfb1929| generate_filters_ts(&el_7cfb1929));
-        let generated = quote::quote! {#(#filter_array_ts)*};
+        let generated = quote! {#(#filter_array_ts)*};
         macros_helpers::maybe_write_ts_into_file(
             generate_where_filters_config
                 .postgresql_types_content_write_into_generate_where_filters_postgresql_types,
@@ -1168,10 +1169,10 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
         let generate_filters_ts =
             |filter: &postgresql_crud_macros_common::PostgresqlJsonTypeFilter| {
                 let ident = PostgresqlJsonTypeWhereSelfUpperCamelCase::from_display(&filter);
-                let pub_value_postgresql_json_type_not_empty_unique_vec_t_ts = quote::quote! {
+                let pub_value_postgresql_json_type_not_empty_unique_vec_t_ts = quote! {
                     pub #value_snake_case: PostgresqlJsonTypeNotEmptyUniqueVec<T>
                 };
-                let query_bind_sqlx_types_json_self_value_ts = quote::quote! {
+                let query_bind_sqlx_types_json_self_value_ts = quote! {
                     if let Err(#error_snake_case) = #query_snake_case.try_bind(sqlx::types::Json(#self_snake_case.#value_snake_case)) {
                         return Err(#error_snake_case.to_string());
                     }
@@ -1185,17 +1186,17 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                 let (maybe_dimensions_declaration_ts, maybe_dimensions_default_initialization_ts, maybe_dimensions_indexes_initialization_ts, postgresql_type_kind, maybe_additional_parameters_ts, maybe_dimensions_query_bind_content_ts) = generate_postgresql_json_type_dimensions_helpers(postgresql_type_pattern_handle);
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
-                    quote::quote! {
+                    quote! {
                         #maybe_dimensions_declaration_ts
                         #pub_value_t_ts
                     },
-                    quote::quote! {
+                    quote! {
                         #maybe_dimensions_default_initialization_ts
                         #value_default_option_some_vec_one_el_ts
                     },
                     {
                         let format_handle_ts = generate_quotes::double_quotes_ts(&generate_format_handle_stringified(&postgresql_type_kind));
-                        quote::quote! {
+                        quote! {
                             #maybe_dimensions_indexes_initialization_ts
                             #value_match_increment_checked_add_one_initialization_ts
                             Ok(format!(
@@ -1208,7 +1209,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         }
                     },
                     is_query_bind_mutable_true,
-                    quote::quote! {
+                    quote! {
                         #maybe_dimensions_query_bind_content_ts
                         #query_bind_sqlx_types_json_self_value_ts
                     },
@@ -1261,11 +1262,11 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         );
                         (
                             should_add_declaration_of_struct_ident_generic_false.clone(),
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_declaration_ts
                                 pub #value_snake_case: #unsigned_part_of_std_primitive_i32_ts
                             },
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_default_initialization_ts
                                 #value_snake_case: #core_default_default_default_ts
                             },
@@ -1274,7 +1275,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                     "{{}}(jsonb_array_length({{}}{}) {operation} ${{}})",
                                     postgresql_type_kind.format_argument()
                                 ));
-                                quote::quote! {
+                                quote! {
                                     #maybe_dimensions_indexes_initialization_ts
                                     #value_match_increment_checked_add_one_initialization_ts
                                     Ok(format!(
@@ -1287,7 +1288,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                 }
                             },
                             is_query_bind_mutable_true,
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_query_bind_content_ts
                                 #query_bind_one_value_ts
                             },
@@ -1352,14 +1353,14 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         );
                         (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
-                    quote::quote! {
+                    quote! {
                         #maybe_dimensions_declaration_ts
                         #pub_value_between_t_ts
                     },
                     generate_maybe_dimensions_default_initialization_value_default_ts(&maybe_dimensions_default_initialization_ts),
                     {
                         let content_ts: &dyn quote::ToTokens = match postgresql_type_pattern_handle {
-                            PostgresqlTypePatternHandle::Standart => &quote::quote!{
+                            PostgresqlTypePatternHandle::Standart => &quote!{
                                 let value = match self.value.query_part(
                                     increment,
                                     column,
@@ -1377,7 +1378,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                             PostgresqlTypePatternHandle::ArrayDimension4 => &value_match_increment_checked_add_one_initialization_ts
                         };
                         let format_handle_ts = generate_quotes::double_quotes_ts(&format!("{{}}({{}}{} {{}})", postgresql_type_kind.format_argument()));
-                        quote::quote! {
+                        quote! {
                             #maybe_dimensions_indexes_initialization_ts
                             #content_ts
                             Ok(format!(
@@ -1392,7 +1393,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                     is_query_bind_mutable_true,
                     {
                         let content_ts: &dyn quote::ToTokens = match postgresql_type_pattern_handle {
-                            PostgresqlTypePatternHandle::Standart => &quote::quote!{
+                            PostgresqlTypePatternHandle::Standart => &quote!{
                                 match self.value.query_bind(query) {
                                     Ok(value) => {
                                         query = value;
@@ -1408,7 +1409,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                             PostgresqlTypePatternHandle::ArrayDimension3 |
                             PostgresqlTypePatternHandle::ArrayDimension4 => &query_bind_sqlx_types_json_self_value_ts
                         };
-                        quote::quote! {
+                        quote! {
                             #maybe_dimensions_query_bind_content_ts
                             #content_ts
                         }
@@ -1429,15 +1430,15 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         );
                         (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
-                    quote::quote! {
+                    quote! {
                         #maybe_dimensions_declaration_ts
                         #pub_value_postgresql_json_type_not_empty_unique_vec_t_ts
                     },
                     generate_maybe_dimensions_default_initialization_value_default_ts(&maybe_dimensions_default_initialization_ts),
                     {
                         let format_handle_ts = generate_quotes::double_quotes_ts(&format!("{{}}({{}}{} in ({{}}))", postgresql_type_kind.format_argument()));
-                        let value_initialization_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&value_snake_case, &value_snake_case, &quote::quote! {query_part_one_by_one});
-                        quote::quote! {
+                        let value_initialization_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&value_snake_case, &value_snake_case, &quote! {query_part_one_by_one});
+                        quote! {
                             #maybe_dimensions_indexes_initialization_ts
                             #value_initialization_ts
                             Ok(format!(
@@ -1450,7 +1451,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         }
                     },
                     is_query_bind_mutable_true,
-                    quote::quote! {
+                    quote! {
                         #maybe_dimensions_query_bind_content_ts
                         match #self_snake_case.#value_snake_case.query_bind_one_by_one(#query_snake_case) {
                             Ok(value_c79b2256) => {
@@ -1478,15 +1479,15 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_ts(&dimension_number),
                         dimensions_default_initialization_comma_ts.clone(),
                         {
-                            let dimensions_indexes_initialization_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&dimensions_indexes_snake_case, &dimensions_snake_case, &quote::quote! {postgresql_json_type_query_part_minus_one});
-                            let last_dimensions_index_intialization_ts = generate_match_increment_checked_add_one_initialization_ts(&quote::quote! {last_dimensions_index});
-                            quote::quote! {
+                            let dimensions_indexes_initialization_ts = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&dimensions_indexes_snake_case, &dimensions_snake_case, &quote! {postgresql_json_type_query_part_minus_one});
+                            let last_dimensions_index_intialization_ts = generate_match_increment_checked_add_one_initialization_ts(&quote! {last_dimensions_index});
+                            quote! {
                                 #dimensions_indexes_initialization_ts
                                 #last_dimensions_index_intialization_ts
                             }
                         },
                         PostgresqlTypeKind::ArrayDimension,
-                        quote::quote! {
+                        quote! {
                             last_dimensions_index,
                             #dimensions_indexes_snake_case,
                         },
@@ -1495,11 +1496,11 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                 );
                         (
                             should_add_declaration_of_struct_ident_generic_false.clone(),
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_declaration_ts
                                 #regular_expression_case_and_value_declaration_ts
                             },
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_default_initialization_ts
                                 #regular_expression_case_and_value_default_initialization_ts
                             },
@@ -1511,7 +1512,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                         PostgresqlTypeKind::ArrayDimension => "{}->>${}",
                                     }
                                 ));
-                                quote::quote! {
+                                quote! {
                                     #maybe_dimensions_indexes_initialization_ts
                                     #value_match_increment_checked_add_one_initialization_ts
                                     Ok(format!(
@@ -1525,7 +1526,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                 }
                             },
                             is_query_bind_mutable_true,
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_query_bind_content_ts
                                 #if_let_err_query_try_bind_self_value_to_string_ts
                             },
@@ -1545,11 +1546,11 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         );
                         (
                             should_add_declaration_of_struct_ident_generic_false.clone(),
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_declaration_ts
                                 #regular_expression_case_and_value_declaration_ts
                             },
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_default_initialization_ts
                                 #regular_expression_case_and_value_default_initialization_ts
                             },
@@ -1560,7 +1561,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                     // "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) {{}} ${{}}))",
                                     postgresql_type_kind.format_argument()
                                 ));
-                                quote::quote! {
+                                quote! {
                                     #maybe_dimensions_indexes_initialization_ts
                                     #value_match_increment_checked_add_one_initialization_ts
                                     Ok(format!(
@@ -1574,7 +1575,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                 }
                             },
                             is_query_bind_mutable_true,
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_query_bind_content_ts
                                 #if_let_err_query_try_bind_self_value_to_string_ts
                             },
@@ -1594,11 +1595,11 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         );
                         (
                             should_add_declaration_of_struct_ident_generic_false.clone(),
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_declaration_ts
                                 #regular_expression_case_and_value_declaration_ts
                             },
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_default_initialization_ts
                                 #regular_expression_case_and_value_default_initialization_ts
                             },
@@ -1609,7 +1610,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                     // "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) !{{}} ${{}}))",
                                     postgresql_type_kind.format_argument()
                                 ));
-                                quote::quote! {
+                                quote! {
                                     #maybe_dimensions_indexes_initialization_ts
                                     #value_match_increment_checked_add_one_initialization_ts
                                     Ok(format!(
@@ -1623,7 +1624,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                                 }
                             },
                             is_query_bind_mutable_true,
-                            quote::quote! {
+                            quote! {
                                 #maybe_dimensions_query_bind_content_ts
                                 #if_let_err_query_try_bind_self_value_to_string_ts
                             },
@@ -1643,17 +1644,17 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         );
                         (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
-                    quote::quote! {
+                    quote! {
                         #maybe_dimensions_declaration_ts
                         #pub_value_postgresql_json_type_not_empty_unique_vec_t_ts
                     },
-                    quote::quote! {
+                    quote! {
                         #maybe_dimensions_default_initialization_ts
                         #value_default_option_some_vec_one_el_ts
                     },
                     {
                         let format_handle_ts = generate_quotes::double_quotes_ts(&format!("{{}}({{}}{} @> {{}})", postgresql_type_kind.format_argument()));
-                        quote::quote! {
+                        quote! {
                             #maybe_dimensions_indexes_initialization_ts
                             #value_match_self_value_query_part_initialization_ts
                             Ok(format!(
@@ -1666,7 +1667,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         }
                     },
                     is_query_bind_mutable_true,
-                    quote::quote! {
+                    quote! {
                         #maybe_dimensions_query_bind_content_ts
                         #query_bind_sqlx_types_json_self_value_ts
                     },
@@ -1686,17 +1687,17 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         );
                         (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
-                    quote::quote! {
+                    quote! {
                         #maybe_dimensions_declaration_ts
                         #pub_value_postgresql_json_type_not_empty_unique_vec_t_ts
                     },
-                    quote::quote! {
+                    quote! {
                         #maybe_dimensions_default_initialization_ts
                         #value_default_option_some_vec_one_el_ts
                     },
                     {
                         let format_handle_ts = generate_quotes::double_quotes_ts(&format!("{{}}(exists (select 1 from jsonb_array_elements_text({{}}{}) as e1 join jsonb_array_elements_text({{}}) as e2 on e1.value = e2.value))", postgresql_type_kind.format_argument()));
-                        quote::quote! {
+                        quote! {
                             #maybe_dimensions_indexes_initialization_ts
                             #value_match_self_value_query_part_initialization_ts
                             Ok(format!(
@@ -1709,7 +1710,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         }
                     },
                     is_query_bind_mutable_true,
-                    quote::quote! {
+                    quote! {
                         #maybe_dimensions_query_bind_content_ts
                         #query_bind_sqlx_types_json_self_value_ts
                     },
@@ -1818,7 +1819,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
                         &is_query_bind_mutable,
                         &query_bind_content_ts,
                     );
-                let generated = quote::quote! {
+                let generated = quote! {
                     #struct_ts
                     #impl_default_option_some_vec_one_el_ts
                     #impl_postgresql_type_where_filter_ts
@@ -1827,7 +1828,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
             };
         let filter_array_ts = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::into_array()
             .map(|el_6a4ac539| generate_filters_ts(&el_6a4ac539));
-        let generated = quote::quote! {#(#filter_array_ts)*};
+        let generated = quote! {#(#filter_array_ts)*};
         macros_helpers::maybe_write_ts_into_file(
             generate_where_filters_config.postgresql_json_types_content_write_into_generate_where_filters_postgresql_json_types,
             "generate_where_filters_postgresql_json_types",
@@ -1836,7 +1837,7 @@ pub fn generate_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::
         );
         generated
     };
-    let generated = quote::quote! {
+    let generated = quote! {
         #postgresql_type_ts
         #postgresql_json_type_ts
     };

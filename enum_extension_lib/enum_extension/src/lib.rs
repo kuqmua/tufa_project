@@ -1,3 +1,5 @@
+use quote::quote;
+
 #[proc_macro_derive(EnumExtension)]
 pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -18,16 +20,16 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
                 syn::Fields::Named(fields_named) => {
                     let generated = fields_named.named.into_iter().map(|field| {
                         let field_ident = field.ident; //todo maybe unwrap_or_else panic?
-                        quote::quote! { #field_ident: Default::default() }
+                        quote! { #field_ident: Default::default() }
                     });
-                    quote::quote! {
+                    quote! {
                        #variant_ident {
                            #(#generated),*
                        }
                     }
                 }
-                syn::Fields::Unnamed(_) => quote::quote! { #variant_ident(Default::default()) },
-                syn::Fields::Unit => quote::quote! { #variant_ident },
+                syn::Fields::Unnamed(_) => quote! { #variant_ident(Default::default()) },
+                syn::Fields::Unit => quote! { #variant_ident },
             }
         }),
         syn::Data::Struct(_) | syn::Data::Union(_) => {
@@ -35,7 +37,7 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
         }
     };
     let ident = &syn_derive_input.ident;
-    let generated = quote::quote! {
+    let generated = quote! {
         impl #ident {
             pub fn get_length() -> usize {
                 #len

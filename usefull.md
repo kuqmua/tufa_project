@@ -252,7 +252,7 @@ Found a problem. Is it possible to make reexport serde from module, from which w
 ```rust
 #[proc_macro_derive(ProcMacroDeriveExample)]
 pub fn proc_macro_derive_example(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    let generated = quote::quote! {
+    let generated = quote! {
         #[derive(Debug, serde::Serialize)]
         pub struct Something {
             pub something: String,

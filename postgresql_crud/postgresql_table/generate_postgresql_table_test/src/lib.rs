@@ -2,6 +2,7 @@
 mod tests {
     #[test]
     fn clippy() {
+        use quote::quote;
         macro_clippy_check_common::clippy_check(
             "generate_postgresql_table_test_content",
             "../postgresql_crud/postgresql_table/",
@@ -41,9 +42,9 @@ server_config = {path = "../../../server_config"}"#,
                     let allow_clippy_arbitrary_source_item_ordering_ts = token_patterns::AllowClippyArbitrarySourceItemOrdering;
                     let maybe_generate_postgresql_table_primary_key_ts = match should_add_generate_postgresql_table_primary_key {
                         ShouldAddGeneratePostgresqlTablePrimaryKey::False => proc_macro2::TokenStream::new(),
-                        ShouldAddGeneratePostgresqlTablePrimaryKey::True => quote::quote!{#[generate_postgresql_table_primary_key]},
+                        ShouldAddGeneratePostgresqlTablePrimaryKey::True => quote!{#[generate_postgresql_table_primary_key]},
                     };
-                    quote::quote!{
+                    quote!{
                         #allow_clippy_arbitrary_source_item_ordering_ts
                         #[derive(Debug, Clone, Copy)]
                         #[postgresql_crud::generate_postgresql_table_config{{
@@ -104,7 +105,7 @@ server_config = {path = "../../../server_config"}"#,
                 let table_struct_ts = generate_table_example_ts(
                     ShouldAddGeneratePostgresqlTablePrimaryKey::False
                 );
-                quote::quote! {
+                quote! {
                     #ts
                     #table_struct_ts
                 }

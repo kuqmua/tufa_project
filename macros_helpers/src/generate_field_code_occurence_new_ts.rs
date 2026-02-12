@@ -1,4 +1,5 @@
 use proc_macro2::TokenStream;
+use quote::quote;
 #[must_use]
 pub fn generate_field_code_occurence_new_ts(
     file: &'static str,
@@ -20,7 +21,7 @@ pub fn generate_field_code_occurence_new_ts(
                 .parse::<TokenStream>()
                 .expect("105a4e62-7574-4b1e-bd5f-eed440d72e89")
         };
-        quote::quote! {
+        quote! {
             error_occurence_lib::code_occurence::CodeOccurence::new(
                 file!().to_owned(),
                 line!(),
@@ -34,5 +35,5 @@ pub fn generate_field_code_occurence_new_ts(
         }
     };
     let code_occurence_snake_case = CodeOccurenceSnakeCase;
-    quote::quote! {#code_occurence_snake_case: #code_occurence_new_ts}
+    quote! {#code_occurence_snake_case: #code_occurence_new_ts}
 }

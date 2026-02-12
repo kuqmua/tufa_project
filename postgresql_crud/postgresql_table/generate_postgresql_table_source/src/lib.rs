@@ -81,6 +81,7 @@ use naming::{
         TrySelfSnakeCase, UpdateQueryPartSelfSnakeCase,
     },
 };
+use quote::quote;
 use std::{
     fmt::{Display, Formatter, Result as StdFmtResult},
     iter::once,
@@ -140,7 +141,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
             match &self {
                 Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
-                Self::True => quote::quote! {&}.to_tokens(tokens),
+                Self::True => quote! {&}.to_tokens(tokens),
             }
         }
     }
@@ -257,7 +258,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         }
         fn self_handle_snake_case_ts(self) -> proc_macro2::TokenStream {
             let value = SelfHandleSnakeCase::from_tokens(&self.self_snake_case_ts());
-            quote::quote! {#value}
+            quote! {#value}
         }
         fn self_snake_case_stringified(self) -> String {
             AsRefStrToSnakeCaseStringified::case(&self.to_string())
@@ -267,11 +268,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         }
         fn try_self_handle_snake_case_ts(self) -> proc_macro2::TokenStream {
             let value = TrySelfHandleSnakeCase::from_tokens(&self.self_snake_case_ts());
-            quote::quote! {#value}
+            quote! {#value}
         }
         fn try_self_snake_case_ts(self) -> proc_macro2::TokenStream {
             let value = TrySelfSnakeCase::from_tokens(&self.self_snake_case_ts());
-            quote::quote! {#value}
+            quote! {#value}
         }
     }
     impl Display for Operation {
@@ -487,7 +488,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let ident_snake_case_stringified = ToTokensToSnakeCaseStringified::case(&ident);
     let ident_snake_case_double_quotes_ts =
         generate_quotes::double_quotes_ts(&ident_snake_case_stringified);
-    let self_table_name_call_ts = quote::quote! {Self::#TableNameSnakeCase()};
+    let self_table_name_call_ts = quote! {Self::#TableNameSnakeCase()};
     let (primary_key_field, fields, fields_without_primary_key) =
         if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
             if let syn::Fields::Named(fields_named) = &data_struct.fields {
@@ -573,14 +574,14 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             &primary_key_field.field_type,
         );
     let generate_as_postgresql_type_ts = |field_type: &dyn quote::ToTokens| {
-        quote::quote! {<#field_type as postgresql_crud::PostgresqlType>::}
+        quote! {<#field_type as postgresql_crud::PostgresqlType>::}
     };
     let primary_key_field_type_as_postgresql_type_ts =
         generate_as_postgresql_type_ts(&primary_key_field_type);
     let generate_as_postgresql_type_tokens_ts =
         |field_type: &dyn quote::ToTokens, tokens: &dyn quote::ToTokens| {
             let as_postgresql_type_ts = generate_as_postgresql_type_ts(&field_type);
-            quote::quote! {#as_postgresql_type_ts #tokens}
+            quote! {#as_postgresql_type_ts #tokens}
         };
     // let generate_as_postgresql_type_table_type_declaration_ts = |field_type: &dyn quote::ToTokens| generate_as_postgresql_type_tokens_ts(&field_type, &naming::TableTypeDeclarationUpperCamelCase);
     // let primary_key_field_type_as_postgresql_type_table_type_declaration_ts = generate_as_postgresql_type_table_type_declaration_ts(&primary_key_field_type);
@@ -611,7 +612,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let generate_as_postgresql_type_update_for_query_ts = |field_type: &dyn quote::ToTokens| {
         generate_as_postgresql_type_tokens_ts(&field_type, &UpdateForQueryUpperCamelCase)
     };
-    let primary_key_field_type_as_postgresql_type_read_upper_camel_case = quote::quote! {<#primary_key_field_type as postgresql_crud::#PostgresqlTypeUpperCamelCase>::#ReadUpperCamelCase};
+    let primary_key_field_type_as_postgresql_type_read_upper_camel_case = quote! {<#primary_key_field_type as postgresql_crud::#PostgresqlTypeUpperCamelCase>::#ReadUpperCamelCase};
     let ident_read_only_ids_upper_camel_case = SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
     let ident_delete_many_parameters_upper_camel_case =
         SelfDeleteManyParametersUpperCamelCase::from_tokens(&ident);
@@ -647,7 +648,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let ident_select_upper_camel_case = SelfSelectUpperCamelCase::from_tokens(&ident);
     let generate_from_handle_ts =
         |ident_ts: &dyn quote::ToTokens, content_ts: &dyn quote::ToTokens| {
-            quote::quote! {
+            quote! {
                 fn #FromHandleSnakeCase(#ValueSnakeCase: #ident_ts) -> Self {
                     #content_ts
                 }
@@ -655,7 +656,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         };
     let generate_select_postgresql_crud_not_empty_unique_vec_ident_select_ts =
         |should_add_borrow: &ShouldAddBorrow| {
-            quote::quote! {#SelectSnakeCase: #should_add_borrow postgresql_crud::NotEmptyUniqueVec<#ident_select_upper_camel_case>}
+            quote! {#SelectSnakeCase: #should_add_borrow postgresql_crud::NotEmptyUniqueVec<#ident_select_upper_camel_case>}
         };
     let select_borrow_postgresql_crud_not_empty_unique_vec_ident_select_ts =
         generate_select_postgresql_crud_not_empty_unique_vec_ident_select_ts(
@@ -666,7 +667,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             &ShouldAddBorrow::False,
         );
     let pub_select_postgresql_crud_not_empty_unique_vec_ident_select_ts = {
-        quote::quote! {pub #select_postgresql_crud_not_empty_unique_vec_ident_select_ts}
+        quote! {pub #select_postgresql_crud_not_empty_unique_vec_ident_select_ts}
     };
     let generate_fields_named_with_comma_ts = |function: &dyn Fn(
         &macros_helpers::SynFieldWrapper,
@@ -674,7 +675,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         -> proc_macro2::TokenStream|
      -> proc_macro2::TokenStream {
         let fields_ts = fields.iter().map(function);
-        quote::quote! {#(#fields_ts),*}
+        quote! {#(#fields_ts),*}
     };
     let generate_fields_named_without_comma_ts = |function: &dyn Fn(
         &macros_helpers::SynFieldWrapper,
@@ -682,17 +683,17 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         -> proc_macro2::TokenStream|
      -> proc_macro2::TokenStream {
         let fields_ts = fields.iter().map(function);
-        quote::quote! {#(#fields_ts)*}
+        quote! {#(#fields_ts)*}
     };
     let generate_fields_named_without_primary_key_with_comma_ts = |function: &dyn Fn(&macros_helpers::SynFieldWrapper) -> proc_macro2::TokenStream| -> proc_macro2::TokenStream {
         let fields_ts = fields_without_primary_key.iter().map(function);
-        quote::quote! {#(#fields_ts),*}
+        quote! {#(#fields_ts),*}
     };
     let generate_fields_named_without_primary_key_without_comma_ts = |function: &dyn Fn(&macros_helpers::SynFieldWrapper) -> proc_macro2::TokenStream| -> proc_macro2::TokenStream {
         let fields_ts = fields_without_primary_key.iter().map(function);
-        quote::quote! {#(#fields_ts)*}
+        quote! {#(#fields_ts)*}
     };
-    let none_ts = quote::quote! {None};
+    let none_ts = quote! {None};
     let fields_named_with_comma_none_ts = generate_fields_named_with_comma_ts(
         &|_: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream { none_ts.clone() },
     );
@@ -704,7 +705,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let impl_ident_ts = {
         let ident_prepare_postgresql_error_named_upper_camel_case =
             SelfPreparePostgresqlErrorNamedUpperCamelCase::from_tokens(&ident);
-        let content_ts = quote::quote! {
+        let content_ts = quote! {
             #[eo_to_std_string_string]
             error: sqlx::Error,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -717,7 +718,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 .derive_error_occurence_lib_error_occurence()
                 .build_enum(
                     &ident_prepare_postgresql_error_named_upper_camel_case,
-                    &quote::quote! {{
+                    &quote! {{
                         #CreateExtensionIfNotExistsPgJsonschemaUpperCamelCase {
                             #content_ts
                         },
@@ -729,7 +730,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         },
                     }},
                 );
-        let pub_fn_table_ts = quote::quote! {
+        let pub_fn_table_ts = quote! {
             #must_use_ts
             pub const fn #TableNameSnakeCase() -> &'static str {
                 #ident_snake_case_double_quotes_ts
@@ -738,13 +739,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         let fn_primary_key_ts = {
             let primary_key_field_ident_double_quotes_ts =
                 generate_quotes::double_quotes_ts(&primary_key_field_ident);
-            quote::quote! {
+            quote! {
                 const fn #PrimaryKeySnakeCase() -> &'static str {
                     #primary_key_field_ident_double_quotes_ts
                 }
             }
         };
-        let pub_async_fn_prepare_extensions_ts = quote::quote! {
+        let pub_async_fn_prepare_extensions_ts = quote! {
             pub async fn #PrepareExtensionsSnakeCase(#PoolSnakeCase: &sqlx::Pool<sqlx::Postgres>) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
                 if let Err(#ErrorSnakeCase) = sqlx::query("create extension if not exists pg_jsonschema").execute(#PoolSnakeCase).await {
                     return Err(#ident_prepare_postgresql_error_named_upper_camel_case::#CreateExtensionIfNotExistsPgJsonschemaUpperCamelCase {
@@ -778,7 +779,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             generate_quotes::double_quotes_ts(&field_ident);
                         let field_type_postgresql_type_ts =
                             generate_as_postgresql_type_ts(&field_type);
-                        quote::quote! {
+                        quote! {
                             #field_type_postgresql_type_ts #CreateTableColumnQueryPartSnakeCase(&#field_ident_double_quotes_ts, #is_primary_key_ts)
                         }
                     };
@@ -797,7 +798,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     )
                 })).collect::<Vec<proc_macro2::TokenStream>>()
             };
-            quote::quote! {
+            quote! {
                 pub async fn #PreparePostgresqlTableSnakeCase(#PoolSnakeCase: &sqlx::Pool<sqlx::Postgres>, table: &str) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
                     if let Err(error) = sqlx::query(&format!(
                         #prepare_postgresql_double_quotes_ts,
@@ -812,7 +813,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 }
             }
         };
-        let pub_async_fn_prepare_postgresql_ts = quote::quote! {
+        let pub_async_fn_prepare_postgresql_ts = quote! {
             pub async fn #PreparePostgresqlSnakeCase(#PoolSnakeCase: &sqlx::Pool<sqlx::Postgres>) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
                 Self::#PrepareExtensionsSnakeCase(#PoolSnakeCase).await?;
                 Self::#PreparePostgresqlTableSnakeCase(#PoolSnakeCase, #ident_snake_case_double_quotes_ts).await?;
@@ -820,8 +821,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             }
         };
         let pub_fn_allow_methods_ts = {
-            let http_method_ts = quote::quote! {http::Method};
-            quote::quote! {
+            let http_method_ts = quote! {http::Method};
+            quote! {
                 #must_use_ts
                 pub const fn allow_methods() -> [#http_method_ts;4] {[
                     #http_method_ts::GET,
@@ -841,7 +842,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             generate_quotes::double_quotes_ts(&element.field_ident);
                         let as_postgresql_crud_postgresql_type_postgresql_type_ts =
                             generate_as_postgresql_type_ts(&element.field_type);
-                        quote::quote! {
+                        quote! {
                             => match #as_postgresql_crud_postgresql_type_postgresql_type_ts #SelectQueryPartSnakeCase(
                                 #ColumnSnakeCase,
                                 #field_ident_string_double_quotes_ts
@@ -853,14 +854,14 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             }
                         }
                     };
-                    quote::quote! {#ident_select_upper_camel_case::#field_ident_upper_camel_case_ts(#ColumnSnakeCase) #initialization_ts}
+                    quote! {#ident_select_upper_camel_case::#field_ident_upper_camel_case_ts(#ColumnSnakeCase) #initialization_ts}
                 },
             );
             let std_option_option_std_primitive_char_ts =
                 postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(
                     &token_patterns::StdPrimitiveChar,
                 );
-            quote::quote! {
+            quote! {
                 fn #GenerateSelectQueryPartSnakeCase(#select_borrow_postgresql_crud_not_empty_unique_vec_ident_select_ts) -> Result<#string_ts, #import_path ::#QueryPartErrorNamedUpperCamelCase> {
                     let mut acc_37c883c3 = #string_ts::default();
                     for el_78d2ec39 in #SelectSnakeCase.to_vec() {
@@ -874,7 +875,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 }
             }
         };
-        impl_ident_vec_ts.push(quote::quote! {
+        impl_ident_vec_ts.push(quote! {
             #pub_fn_table_ts
             #fn_primary_key_ts
             #pub_async_fn_prepare_extensions_ts
@@ -883,7 +884,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             #pub_fn_allow_methods_ts
             #fn_generate_select_query_part_ts
         });
-        quote::quote! {
+        quote! {
             #ident_prepare_postgresql_error_named_ts
         }
     };
@@ -892,10 +893,10 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
          status_code_ts: &dyn quote::ToTokens,
          should_add_return: &ShouldAddReturn| {
             let return_content_ts = match should_add_return {
-                ShouldAddReturn::False => quote::quote! {response},
-                ShouldAddReturn::True => quote::quote! {return response;},
+                ShouldAddReturn::False => quote! {response},
+                ShouldAddReturn::True => quote! {return response;},
             };
-            quote::quote! {
+            quote! {
                 let mut response = axum::response::IntoResponse::into_response(
                     axum::Json(#axum_json_content_ts)
                 );
@@ -930,13 +931,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     macros_helpers::generate_field_code_occurence_new_ts(file, line, column)
                 } else {
                     let error_increment_snake_case = ErrorSelfSnakeCase::from_display(&index);
-                    quote::quote! {#field_ident: #error_increment_snake_case}
+                    quote! {#field_ident: #error_increment_snake_case}
                 }
             })
         } else {
             panic!("10773d36-d47f-4563-98f2-118d9ac519fc");
         };
-        quote::quote! {
+        quote! {
             #variant_ident {
                 #(#fields_ts),*
             }
@@ -959,11 +960,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 .expect("81efa954-1175-4f89-a343-c79f8184e19b")
                 .to_axum_http_status_code_ts();
             let wraped_into_axum_response_ts = wrap_into_axum_response_ts(
-                &quote::quote! {#ident_operation_response_variants_upper_camel_case::#FromHandleSnakeCase(#ErrorSnakeCase)},
+                &quote! {#ident_operation_response_variants_upper_camel_case::#FromHandleSnakeCase(#ErrorSnakeCase)},
                 &status_code_ts,
                 &ShouldAddReturn::True,
             );
-            quote::quote! {
+            quote! {
                 let #ErrorSnakeCase = #ident_operation_error_named_upper_camel_case::#syn_variant_initialization_ts;
                 // eprintln!("{error}");
                 #wraped_into_axum_response_ts
@@ -1068,7 +1069,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 line!(),
                 column!(),
             );
-        quote::quote! {
+        quote! {
             match Self::#GenerateSelectQueryPartSnakeCase(&#ParametersSnakeCase.#PayloadSnakeCase.#SelectSnakeCase) {
                 Ok(value_357219fb) => value_357219fb,
                 Err(#error_0_ts) => {
@@ -1079,7 +1080,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     };
     let ident_read_upper_camel_case = SelfReadUpperCamelCase::from_tokens(&ident);
     let generate_value_declaration_ts = |content_ts: &dyn quote::ToTokens| {
-        quote::quote! {#PostgresqlCrudSnakeCase::#ValueUpperCamelCase<#content_ts>}
+        quote! {#PostgresqlCrudSnakeCase::#ValueUpperCamelCase<#content_ts>}
     };
     let generate_import_path_value_initialization_ts = |content_ts: &dyn quote::ToTokens| {
         postgresql_crud_macros_common::generate_value_initialization_ts(&import_path, &content_ts)
@@ -1107,18 +1108,18 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         let field_ident = &element.field_ident;
                         let el_syn_field_ty_as_postgresql_type_create_ts =
                             generate_as_postgresql_type_create_ts(&element.field_type);
-                        quote::quote! {
+                        quote! {
                             pub #field_ident: #el_syn_field_ty_as_postgresql_type_create_ts
                         }
                     },
                 );
-                quote::quote! {{#content_ts}}
+                quote! {{#content_ts}}
             });
         let impl_ident_create_ts = {
             let primary_key_field_type_as_default_option_some_vec_one_el_call_ts = {
                 let primary_key_field_type_as_postgresql_type_create_ts =
                     generate_as_postgresql_type_create_ts(&primary_key_field_type);
-                quote::quote! {
+                quote! {
                     <
                         #primary_key_field_type_as_postgresql_type_create_ts as #PostgresqlCrudSnakeCase::#DefaultOptionSomeVecOneElUpperCamelCase
                     >::#DefaultOptionSomeVecOneElSnakeCase()
@@ -1130,10 +1131,10 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         let as_postgresql_crud_postgresql_type_postgresql_type_ts =
                             generate_as_postgresql_type_ts(&field_type);
                         let if_write_is_err_ts = macros_helpers::generate_if_write_is_err_ts(
-                            &quote::quote! {acc_a097110b, "{value_c3f0b59a},"},
+                            &quote! {acc_a097110b, "{value_c3f0b59a},"},
                             &return_err_query_part_error_named_write_into_buffer_ts,
                         );
-                        quote::quote! {
+                        quote! {
                             match #as_postgresql_crud_postgresql_type_postgresql_type_ts #CreateQueryPartSnakeCase(
                                 &#content_ts,
                                 #IncrementSnakeCase
@@ -1153,11 +1154,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         &|element: &macros_helpers::SynFieldWrapper| {
                             generate_match_as_postgresql_crud_postgresql_type_postgresql_type_create_query_part_ts(&element.field_type, &{
                         let el_field_ident = &element.field_ident;
-                        quote::quote! {self.#el_field_ident}
+                        quote! {self.#el_field_ident}
                     })
                         },
                     );
-                quote::quote! {
+                quote! {
                     fn #CreateQueryPartSnakeCase(&self, #IncrementSnakeCase: &mut u64) -> Result<#string_ts, postgresql_crud::#QueryPartErrorNamedUpperCamelCase> {
                         let mut acc_a097110b = String::default();
                         #primary_key_content_ts
@@ -1172,7 +1173,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     |field_type: &syn::Type, content_ts: &dyn quote::ToTokens| {
                         let as_postgresql_crud_postgresql_type_postgresql_type_ts =
                             generate_as_postgresql_type_ts(&field_type);
-                        quote::quote! {
+                        quote! {
                             match #as_postgresql_crud_postgresql_type_postgresql_type_ts #CreateQueryBindSnakeCase(
                                 #content_ts,
                                 #QuerySnakeCase
@@ -1192,11 +1193,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         &|element: &macros_helpers::SynFieldWrapper| {
                             generate_query_as_postgresql_crud_postgresql_type_postgresql_type_create_query_bind_ts(&element.field_type, &{
                         let field_ident = &element.field_ident;
-                        quote::quote! {self.#field_ident}
+                        quote! {self.#field_ident}
                     })
                         },
                     );
-                quote::quote! {
+                quote! {
                     fn #CreateQueryBindSnakeCase(self, mut #QuerySnakeCase: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
                         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
                         String
@@ -1207,7 +1208,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     }
                 }
             };
-            quote::quote! {
+            quote! {
                 #allow_clippy_arbitrary_source_item_ordering_ts
                 impl #ident_create_upper_camel_case {
                     #fn_create_query_part_ts
@@ -1223,15 +1224,15 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         generate_fields_named_without_primary_key_with_comma_ts(
                             &|element: &macros_helpers::SynFieldWrapper| {
                                 let field_ident = &element.field_ident;
-                                quote::quote! {#field_ident: #postgresql_crud_default_option_some_vec_one_el_call_ts}
+                                quote! {#field_ident: #postgresql_crud_default_option_some_vec_one_el_call_ts}
                             },
                         );
-                    quote::quote! {
+                    quote! {
                         Self{#fields_initialiation_without_primary_key_with_default_option_some_vec_one_el_ts}
                     }
                 },
             );
-        quote::quote! {
+        quote! {
             #ident_create_ts
             #impl_ident_create_ts
             #impl_postgresql_crud_default_option_some_vec_one_el_for_ident_create_ts
@@ -1248,9 +1249,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     generate_as_postgresql_type_where_ts(&element.field_type);
                 let std_option_option_postgresql_type_where_syn_field_ty_as_postgresql_type_where_ts =
                     postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(
-                        &quote::quote! {postgresql_crud::PostgresqlTypeWhere<#el_syn_field_ty_as_postgresql_type_where_ts>},
+                        &quote! {postgresql_crud::PostgresqlTypeWhere<#el_syn_field_ty_as_postgresql_type_where_ts>},
                     );
-                quote::quote! {
+                quote! {
                     #field_ident: #std_option_option_postgresql_type_where_syn_field_ty_as_postgresql_type_where_ts
                 }
             },
@@ -1264,9 +1265,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 .derive_utoipa_to_schema()
                 .build_struct(
                     &ident_where_many_upper_camel_case,
-                    &quote::quote! {{#fields_declaration_ts}},
+                    &quote! {{#fields_declaration_ts}},
                 );
-            quote::quote! {
+            quote! {
                 #allow_clippy_arbitrary_source_item_ordering_ts
                 #content_ts_2ecd6da8
             }
@@ -1279,7 +1280,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 .derive_error_occurence_lib_error_occurence()
                 .build_enum(
                     &ident_where_many_try_new_error_named_upper_camel_case,
-                    &quote::quote! {{
+                    &quote! {{
                         #NoFieldsProvidedUpperCamelCase {
                             #[eo_to_std_string_string]
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -1296,13 +1297,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         generate_fields_named_with_comma_ts(
                             &|element: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream {
                                 let field_ident = &element.field_ident;
-                                quote::quote! {#should_add_borrow #field_ident}
+                                quote! {#should_add_borrow #field_ident}
                             },
                         )
                     };
                     let fields_ts = generate_fields_ts(ShouldAddBorrow::True);
                     let fields_inialization_ts = generate_fields_ts(ShouldAddBorrow::False);
-                    quote::quote! {
+                    quote! {
                         if matches!((#fields_ts), (#fields_named_with_comma_none_ts)) {
                             return Err(#ident_where_many_try_new_error_named_upper_camel_case::#NoFieldsProvidedUpperCamelCase {
                                 code_occurence: error_occurence_lib::code_occurence!(),
@@ -1324,7 +1325,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     let syn_type_as_postgresql_type_where_ts =
                         generate_as_postgresql_type_where_ts(&syn_type);
                     postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(
-                        &quote::quote! {postgresql_crud::PostgresqlTypeWhere<#syn_type_as_postgresql_type_where_ts>},
+                        &quote! {postgresql_crud::PostgresqlTypeWhere<#syn_type_as_postgresql_type_where_ts>},
                     )
                 },
             );
@@ -1335,17 +1336,17 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     let fields_ts = generate_fields_named_without_comma_ts(
                         &|el_0fd667f6: &macros_helpers::SynFieldWrapper| {
                             let field_ident = &el_0fd667f6.field_ident;
-                            quote::quote! {
+                            quote! {
                                 #field_ident: Some(
                                     #postgresql_crud_default_option_some_vec_one_el_call_ts
                                 ),
                             }
                         },
                     );
-                    quote::quote! {Self{#fields_ts}}
+                    quote! {Self{#fields_ts}}
                 },
             );
-        quote::quote! {
+        quote! {
             #ident_where_many_ts
             #ident_where_many_try_new_error_named_ts
             #impl_pub_try_new_for_ident_where_many_ts
@@ -1370,12 +1371,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     let std_option_option_ident_read_only_ids_standart_not_null_ts = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(
                         &ident_where_many_upper_camel_case
                     );
-                    quote::quote!{(pub #std_option_option_ident_read_only_ids_standart_not_null_ts);}
+                    quote!{(pub #std_option_option_ident_read_only_ids_standart_not_null_ts);}
                 }
             );
         let impl_postgresql_type_where_filter_for_std_option_option_ident_where_many_ts =
             postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_ts(
-                &quote::quote! {<'lifetime>},
+                &quote! {<'lifetime>},
                 &std_option_option_ident_where_many_upper_camel_case,
                 &proc_macro2::TokenStream::new(),
                 &postgresql_crud_macros_common::IncrementParameterUnderscore::False,
@@ -1388,9 +1389,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     let maybe_is_first_push_to_additional_parameters_already_happend_true_ts = if index == fields_len_without_primary_key {
                         proc_macro2::TokenStream::new()
                     } else {
-                        quote::quote! {is_first_push_to_additional_parameters_already_happend = true;}
+                        quote! {is_first_push_to_additional_parameters_already_happend = true;}
                     };
-                    quote::quote! {
+                    quote! {
                         if let Some(value_da0f0616) = &#ValueSnakeCase.#field_ident {
                             match postgresql_crud::PostgresqlTypeWhereFilter::query_part(
                                 value_da0f0616,
@@ -1409,7 +1410,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         }
                     }
                 });
-                    quote::quote! {
+                    quote! {
                         Ok(match &self.0 {
                             Some(value) => {
                                 let mut #AdditionalParametersSnakeCase = #string_ts::from("where");
@@ -1426,7 +1427,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     let binded_query_modifications_ts = generate_fields_named_without_comma_ts(
                         &|element: &macros_helpers::SynFieldWrapper| {
                             let field_ident = &element.field_ident;
-                            quote::quote! {
+                            quote! {
                                 if let Some(value_b12d6fe0) = value_27176ffb.#field_ident {
                                     match postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value_b12d6fe0, #QuerySnakeCase) {
                                         Ok(value_edaee3b2) => {
@@ -1440,7 +1441,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             }
                         },
                     );
-                    quote::quote! {
+                    quote! {
                         if let Some(value_27176ffb) = self.0 {
                             #binded_query_modifications_ts
                         }
@@ -1452,16 +1453,17 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         let impl_postgresql_crud_default_option_some_vec_one_el_for_std_option_option_ident_where_many_ts =
             generate_impl_postgresql_crud_default_option_some_vec_one_el_for_tokens_no_lifetime_ts(
                 &std_option_option_ident_where_many_upper_camel_case,
-                &quote::quote! {Self(Some(#postgresql_crud_default_option_some_vec_one_el_call_ts))},
+                &quote! {Self(Some(#postgresql_crud_default_option_some_vec_one_el_call_ts))},
             );
-        quote::quote! {
+        quote! {
             #std_option_option_ident_where_many_ts
             #impl_postgresql_type_where_filter_for_std_option_option_ident_where_many_ts
             #impl_postgresql_crud_default_option_some_vec_one_el_for_std_option_option_ident_where_many_ts
         }
     };
-    let pub_where_many_std_option_option_ident_where_many_ts = quote::quote! {pub #WhereManySnakeCase: #std_option_option_ident_where_many_upper_camel_case};
-    let where_many_postgresql_crud_default_option_some_vec_one_el_call_ts = quote::quote! {
+    let pub_where_many_std_option_option_ident_where_many_ts =
+        quote! {pub #WhereManySnakeCase: #std_option_option_ident_where_many_upper_camel_case};
+    let where_many_postgresql_crud_default_option_some_vec_one_el_call_ts = quote! {
         #WhereManySnakeCase: #postgresql_crud_default_option_some_vec_one_el_call_ts
     };
     let generate_read_or_delete_many_additional_paramaters_initialization_ts =
@@ -1474,7 +1476,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     line!(),
                     column!(),
                 );
-            quote::quote! {
+            quote! {
                 match postgresql_crud::PostgresqlTypeWhereFilter::query_part(
                     &#ParametersSnakeCase.#PayloadSnakeCase.#WhereManySnakeCase,
                     &mut #IncrementSnakeCase,
@@ -1507,7 +1509,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     line!(),
                     column!(),
                 );
-            quote::quote! {
+            quote! {
                 match postgresql_crud::PostgresqlTypeWhereFilter::query_bind(#ParametersSnakeCase.#PayloadSnakeCase.#WhereManySnakeCase, #QuerySnakeCase) {
                     Ok(value_03a58371) => {
                         #QuerySnakeCase = value_03a58371;
@@ -1543,7 +1545,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     line!(),
                     column!(),
                 );
-            quote::quote! {
+            quote! {
                 match #ident_read_upper_camel_case::#try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_snake_case(
                     &value_b27d7d79,
                     &#ParametersSnakeCase.#PayloadSnakeCase.#SelectSnakeCase
@@ -1571,15 +1573,15 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         let serialize_deserialize_ident_ts = generate_quotes::double_quotes_ts(&element.field_ident);
                         let field_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
                         let el_syn_field_ty_as_postgresql_type_select_ts = generate_as_postgresql_type_select_ts(&element.field_type);
-                        quote::quote! {
+                        quote! {
                             #[serde(rename(serialize = #serialize_deserialize_ident_ts, deserialize = #serialize_deserialize_ident_ts))]
                             #field_ident_upper_camel_case_ts(#el_syn_field_ty_as_postgresql_type_select_ts)
                         }
                     });
-                    quote::quote!{{#variants}}
+                    quote!{{#variants}}
                 }
             );
-            quote::quote! {
+            quote! {
                 #allow_clippy_arbitrary_source_item_ordering_ts
                 #content_ts_179037cd
             }
@@ -1589,32 +1591,32 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &proc_macro2::TokenStream::new(),
                 &ident_select_upper_camel_case,
                 &proc_macro2::TokenStream::new(),
-                &quote::quote! {write!(f, "{}", serde_json::to_string(&self).unwrap_or_else(|el_2636212f|format!("cannot serialize into json: {el_2636212f:?}")))},
+                &quote! {write!(f, "{}", serde_json::to_string(&self).unwrap_or_else(|el_2636212f|format!("cannot serialize into json: {el_2636212f:?}")))},
             );
         let impl_error_occurence_lib_to_std_string_string_for_ident_select_ts =
             macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_ts(
                 &proc_macro2::TokenStream::new(),
                 &ident_select_upper_camel_case,
                 &proc_macro2::TokenStream::new(),
-                &quote::quote! {format!("{self}")},
+                &quote! {format!("{self}")},
             );
         let impl_postgresql_crud_all_variants_default_option_some_vec_one_el_for_ident_select_ts = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_variants_default_option_some_vec_one_el_ts(&ident_select_upper_camel_case, &{
             let elements_ts = generate_fields_named_with_comma_ts(&|el_5282570d: &macros_helpers::SynFieldWrapper| {
                 let field_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_5282570d.field_ident);
-                quote::quote! {
+                quote! {
                     Self::#field_ident_upper_camel_case_ts(#postgresql_crud_default_option_some_vec_one_el_call_ts)
                 }
             });
-            quote::quote! {vec![#elements_ts]}
+            quote! {vec![#elements_ts]}
         });
-        quote::quote! {
+        quote! {
             #ident_select_ts
             #impl_std_fmt_display_for_ident_select_ts
             #impl_error_occurence_lib_to_std_string_string_for_ident_select_ts
             #impl_postgresql_crud_all_variants_default_option_some_vec_one_el_for_ident_select_ts
         }
     };
-    let select_postgresql_crud_default_option_some_vec_one_el_call_ts = quote::quote! {
+    let select_postgresql_crud_default_option_some_vec_one_el_call_ts = quote! {
         #SelectSnakeCase: #postgresql_crud_default_option_some_vec_one_el_call_ts
     };
     let ident_read_ts = {
@@ -1630,7 +1632,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &{
                     let field_option_primary_key_ts = {
                         let std_option_option_value_primary_key_field_type_as_postgresql_type_read_ts = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(&generate_value_declaration_ts(&generate_as_postgresql_type_read_ts(&primary_key_field_type)));
-                        quote::quote! {
+                        quote! {
                             #field_attribute_serde_skip_serializing_if_option_is_none_ts
                             pub #primary_key_field_ident: #std_option_option_value_primary_key_field_type_as_postgresql_type_read_ts
                         }
@@ -1639,18 +1641,18 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         let field_visibility = &element.field_visibility;
                         let field_ident = &element.field_ident;
                         let std_option_option_value_field_type_as_postgresql_type_read_ts = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(&generate_value_declaration_ts(&generate_as_postgresql_type_read_ts(&element.field_type)));
-                        quote::quote! {
+                        quote! {
                             #field_attribute_serde_skip_serializing_if_option_is_none_ts
                             #field_visibility #field_ident: #std_option_option_value_field_type_as_postgresql_type_read_ts
                         }
                     });
-                    quote::quote!{{
+                    quote!{{
                         #field_option_primary_key_ts,
                         #fields_options_without_primary_key_ts
                     }}
                 }
             );
-            quote::quote! {
+            quote! {
                 #allow_clippy_arbitrary_source_item_ordering_ts
                 #content_ts_f80f1f3e
             }
@@ -1659,7 +1661,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             let fn_try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_ts = {
                 let declaration_primary_key_ts = {
                     let std_option_option_value_primary_key_field_type_as_primary_key_ts = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(&generate_value_declaration_ts(&primary_key_field_type_as_postgresql_type_read_upper_camel_case));
-                    quote::quote! {
+                    quote! {
                         let mut #primary_key_field_ident: #std_option_option_value_primary_key_field_type_as_primary_key_ts = None;
                     }
                 };
@@ -1668,7 +1670,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         &|element: &macros_helpers::SynFieldWrapper| {
                             let field_ident = &element.field_ident;
                             let std_option_option_value_field_type_as_postgresql_type_read_ts = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(&generate_value_declaration_ts(&generate_as_postgresql_type_read_ts(&element.field_type)));
-                            quote::quote! {
+                            quote! {
                                 let mut #field_ident: #std_option_option_value_field_type_as_postgresql_type_read_ts = None;
                             }
                         },
@@ -1677,7 +1679,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 let assignment_variant_primary_key_ts = {
                     let primary_key_field_ident_string_double_quotes_ts =
                         generate_quotes::double_quotes_ts(&primary_key_field_ident);
-                    quote::quote! {
+                    quote! {
                         #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_ts(_) => match sqlx::Row::try_get::<
                             #primary_key_field_type_as_postgresql_type_read_upper_camel_case,
                             #ref_std_primitive_str
@@ -1701,7 +1703,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         let field_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_3ce946f9.field_ident);
                         let field_ident_string_double_quotes_ts = generate_quotes::double_quotes_ts(&el_3ce946f9.field_ident);
                         let el_syn_field_ty_as_postgresql_type_read_ts = generate_as_postgresql_type_read_ts(&el_3ce946f9.field_type);
-                        quote::quote! {
+                        quote! {
                             #ident_select_upper_camel_case::#field_ident_upper_camel_case_ts(_) => match sqlx::Row::try_get::<
                                 #el_syn_field_ty_as_postgresql_type_read_ts,
                                 #ref_std_primitive_str
@@ -1723,7 +1725,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     .iter()
                     .map(|el_2bfe6afc| &el_2bfe6afc.field_ident)
                     .collect::<Vec<&syn::Ident>>();
-                quote::quote! {
+                quote! {
                     fn #try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_snake_case(
                         #ValueSnakeCase: &sqlx::postgres::PgRow,
                         #select_borrow_postgresql_crud_not_empty_unique_vec_ident_select_ts
@@ -1740,13 +1742,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     }
                 }
             };
-            quote::quote! {
+            quote! {
                 impl #ident_read_upper_camel_case {
                     #fn_try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_ts
                 }
             }
         };
-        quote::quote! {
+        quote! {
             #ident_read_ts
             #impl_ident_read_ts
         }
@@ -1772,7 +1774,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             WrapIntoOption::False => generate_as_postgresql_type_read_only_ids_ts(&field_type),
                             WrapIntoOption::True => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(&generate_as_postgresql_type_read_only_ids_ts(&field_type)),
                         };
-                        quote::quote! {
+                        quote! {
                             pub #field_ident: #field_type_ts
                         }
                     };
@@ -1784,25 +1786,25 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             &WrapIntoOption::True
                         )
                     );
-                    quote::quote!{{
+                    quote!{{
                         #primary_key_ts,
                         #content_ts
                     }}
                 }
             );
-            quote::quote! {
+            quote! {
                 #allow_clippy_arbitrary_source_item_ordering_ts
                 #content_ts_472e3ebf
             }
         };
         let impl_sqlx_row_for_ident_read_only_ids_ts = {
-            let undescore_underscore_row = quote::quote! {__row};
+            let undescore_underscore_row = quote! {__row};
             let where_field_types_ts = generate_fields_named_with_comma_ts(
                 &|element: &macros_helpers::SynFieldWrapper| {
                     let field_type = &element.field_type;
                     let el_syn_field_ty_as_postgresql_type_read_only_ids_ts =
                         generate_as_postgresql_type_read_only_ids_ts(&field_type);
-                    quote::quote! {
+                    quote! {
                         #el_syn_field_ty_as_postgresql_type_read_only_ids_ts: ::sqlx::decode::Decode<'lifetime, R::Database>
                     }
                 },
@@ -1812,7 +1814,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     generate_as_postgresql_type_read_only_ids_ts(&primary_key_field_type);
                 let field_ident_double_quotes_ts =
                     generate_quotes::double_quotes_ts(&primary_key_field_ident);
-                quote::quote! {
+                quote! {
                     let #primary_key_field_ident = match sqlx::Row::try_get::<#el_syn_field_ty_as_postgresql_type_read_only_ids_ts, &str>(
                         #undescore_underscore_row,
                         #field_ident_double_quotes_ts
@@ -1830,10 +1832,10 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         let field_ident = &element.field_ident;
                         let field_type = &element.field_type;
                         let field_ident_double_quotes_ts =
-                            generate_quotes::double_quotes_ts(&quote::quote! {#field_ident});
+                            generate_quotes::double_quotes_ts(&quote! {#field_ident});
                         let el_syn_field_ty_as_postgresql_type_read_only_ids_ts =
                             generate_as_postgresql_type_read_only_ids_ts(&field_type);
-                        quote::quote! {
+                        quote! {
                             let #field_ident = sqlx::Row::try_get::<
                                 #el_syn_field_ty_as_postgresql_type_read_only_ids_ts,
                                 &str
@@ -1844,10 +1846,10 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             let self_fields_ts = generate_fields_named_with_comma_ts(
                 &|element: &macros_helpers::SynFieldWrapper| {
                     let field_ident = &element.field_ident;
-                    quote::quote! {#field_ident}
+                    quote! {#field_ident}
                 },
             );
-            quote::quote! {
+            quote! {
                 impl<'lifetime, R: ::sqlx::Row<Database = sqlx::Postgres>> ::sqlx::FromRow<'lifetime, R> for #ident_read_only_ids_upper_camel_case
                 where
                     &'lifetime ::std::primitive::str: ::sqlx::ColumnIndex<R>,
@@ -1861,7 +1863,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 }
             }
         };
-        quote::quote! {
+        quote! {
             #ident_read_only_ids_ts
             #impl_sqlx_row_for_ident_read_only_ids_ts
         }
@@ -1880,8 +1882,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 .parse::<proc_macro2::TokenStream>()
                 .expect("f9e053d1-c5ce-4a8e-ac79-6cc30ba19bb9")
         };
-    let postgresql_crud_order_by_ts =
-        quote::quote! {#PostgresqlCrudSnakeCase::#OrderByUpperCamelCase};
+    let postgresql_crud_order_by_ts = quote! {#PostgresqlCrudSnakeCase::#OrderByUpperCamelCase};
     let ident_update_upper_camel_case = SelfUpdateUpperCamelCase::from_tokens(&ident);
     let ident_update_many_parameters_upper_camel_case =
         SelfUpdateManyParametersUpperCamelCase::from_tokens(&ident);
@@ -1904,7 +1905,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 let syn_type_as_postgresql_type_update_ts =
                     generate_as_postgresql_type_update_ts(&syn_type);
                 postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(
-                    &quote::quote! {#path_value_ts<#syn_type_as_postgresql_type_update_ts>},
+                    &quote! {#path_value_ts<#syn_type_as_postgresql_type_update_ts>},
                 )
             };
         let fields_declaration_ts = {
@@ -1916,12 +1917,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             generate_option_value_field_type_as_postgresql_type_update_ts(
                                 &element.field_type,
                             );
-                        quote::quote! {
+                        quote! {
                             #field_ident: #option_value_field_type_as_postgresql_type_update_ts
                         }
                     },
                 );
-            quote::quote! {
+            quote! {
                 #primary_key_field_ident: #primary_key_field_type_update_ts,
                 #fields_named_without_primary_key_ts
             }
@@ -1934,9 +1935,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 .derive_utoipa_to_schema()
                 .build_struct(
                     &ident_update_upper_camel_case,
-                    &quote::quote! {{#fields_declaration_ts}},
+                    &quote! {{#fields_declaration_ts}},
                 );
-            quote::quote! {
+            quote! {
                 #allow_clippy_arbitrary_source_item_ordering_ts
                 #content_ts_a09c0471
             }
@@ -1949,7 +1950,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 .derive_error_occurence_lib_error_occurence()
                 .build_enum(
                     &ident_update_try_new_error_named_upper_camel_case,
-                    &quote::quote! {{
+                    &quote! {{
                         #NoFieldsProvidedUpperCamelCase {
                             #[eo_to_std_string_string]
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -1975,7 +1976,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 &generate_fields_named_without_primary_key_with_comma_ts(
                                     &|element: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream {
                                         let field_ident = &element.field_ident;
-                                        quote::quote! {&#field_ident}
+                                        quote! {&#field_ident}
                                     },
                                 ),
                             ),
@@ -1987,10 +1988,10 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     let fields_inialization_ts = generate_fields_named_with_comma_ts(
                         &|element: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream {
                             let field_ident = &element.field_ident;
-                            quote::quote! {#field_ident}
+                            quote! {#field_ident}
                         },
                     );
-                    quote::quote! {
+                    quote! {
                         if matches!(#left_ts, #right_ts) {
                             return Err(#ident_update_try_new_error_named_upper_camel_case::#NoFieldsProvidedUpperCamelCase {
                                 code_occurence: error_occurence_lib::code_occurence!(),
@@ -2010,7 +2011,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 fields_len,
                 &|syn_ident: &syn::Ident, syn_type: &syn::Type| {
                     if syn_ident == primary_key_field_ident {
-                        quote::quote! {#primary_key_field_type_update_ts}
+                        quote! {#primary_key_field_type_update_ts}
                     } else {
                         generate_option_value_field_type_as_postgresql_type_update_ts(syn_type)
                     }
@@ -2021,7 +2022,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &ident_update_upper_camel_case,
                 &{
                     let primary_key_field_with_default_option_some_vec_one_el_ts = {
-                        quote::quote! {
+                        quote! {
                             #primary_key_field_ident: #postgresql_crud_default_option_some_vec_one_el_call_ts
                         }
                     };
@@ -2029,20 +2030,20 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         generate_fields_named_without_primary_key_with_comma_ts(
                             &|element: &macros_helpers::SynFieldWrapper| {
                                 let field_ident = &element.field_ident;
-                                quote::quote! {
+                                quote! {
                                     #field_ident: Some(postgresql_crud::Value{
                                         #ValueSnakeCase: #postgresql_crud_default_option_some_vec_one_el_call_ts
                                     })
                                 }
                             },
                         );
-                    quote::quote! {Self{
+                    quote! {Self{
                         #primary_key_field_with_default_option_some_vec_one_el_ts,
                         #fields_without_primary_key_with_default_option_some_vec_one_el_ts
                     }}
                 },
             );
-        quote::quote! {
+        quote! {
             #ident_update_ts
             #ident_update_try_new_error_named_ts
             #impl_pub_try_new_for_ident_update_ts
@@ -2068,24 +2069,24 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 value.parse::<proc_macro2::TokenStream>().expect("2b09d4ae-757c-4c6b-a9ba-edd2ea95128a")
                             };
                             let syn_type_as_postgresql_type_update_for_query_ts = generate_as_postgresql_type_update_for_query_ts(&element.field_type);
-                            postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(&quote::quote! {#path_value_ts<#syn_type_as_postgresql_type_update_for_query_ts>})
+                            postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_ts(&quote! {#path_value_ts<#syn_type_as_postgresql_type_update_for_query_ts>})
                         };
-                        quote::quote! {#field_ident: #option_value_field_type_as_postgresql_type_update_for_query_ts}
+                        quote! {#field_ident: #option_value_field_type_as_postgresql_type_update_for_query_ts}
                     });
-                    quote::quote!{{
+                    quote!{{
                         #primary_key_field_ident: #primary_key_field_type_update_for_query_ts,
                         #fields_named_without_primary_key_ts
                     }}
                 }
             );
-            quote::quote! {
+            quote! {
                 #allow_clippy_arbitrary_source_item_ordering_ts
                 #content_ts_50ae0c5f
             }
         };
         let impl_ident_update_for_query_ts = {
             let update_query_part_primary_key_ts = {
-                quote::quote! {
+                quote! {
                     fn #update_query_part_primary_key_snake_case(&self, #IncrementSnakeCase: &mut u64) -> Result<#string_ts, #PostgresqlCrudSnakeCase::#QueryPartErrorNamedUpperCamelCase> {
                         match #primary_key_field_type_as_postgresql_type_ts #UpdateQueryPartSnakeCase(
                             &self.#primary_key_field_ident,
@@ -2110,7 +2111,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             UpdateQueryPartSelfSnakeCase::from_tokens(&field_ident);
                         let field_type_as_postgresql_crud_postgresql_type_postgresql_type_ts =
                             generate_as_postgresql_type_ts(&element.field_type);
-                        quote::quote! {
+                        quote! {
                             fn #update_query_part_field_ident_snake_case(
                                 #ValueSnakeCase: &postgresql_crud::Value<#field_type_as_postgresql_crud_postgresql_type_postgresql_type_ts #UpdateForQueryUpperCamelCase>,
                                 #IncrementSnakeCase: &mut u64
@@ -2133,7 +2134,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 let primary_key_content_ts = {
                     let primary_key_field_ident_double_quotes_ts =
                         generate_quotes::double_quotes_ts(&primary_key_field_ident);
-                    quote::quote! {
+                    quote! {
                         acc_88c91f52.push_str(&match <#primary_key_field_type as postgresql_crud::PostgresqlType>::#SelectOnlyUpdatedIdsQueryPartSnakeCase(
                             &self.#primary_key_field_ident,
                             #primary_key_field_ident_double_quotes_ts,
@@ -2150,7 +2151,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     let field_ident = &element.field_ident;
                     let field_ident_double_quotes_ts = generate_quotes::double_quotes_ts(&field_ident);
                     let field_type_as_postgresql_crud_postgresql_type_postgresql_type_ts = generate_as_postgresql_type_ts(&element.field_type);
-                    quote::quote! {
+                    quote! {
                         if let Some(value_90f79b11) = &self.#field_ident {
                             acc_88c91f52.push_str(&match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_ts #SelectOnlyUpdatedIdsQueryPartSnakeCase(
                                 &value_90f79b11.#ValueSnakeCase,
@@ -2165,7 +2166,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         }
                     }
                 });
-                quote::quote! {
+                quote! {
                     fn #SelectOnlyUpdatedIdsQueryPartSnakeCase(&self, #IncrementSnakeCase: &mut u64) -> Result<#string_ts, postgresql_crud::QueryPartErrorNamed> {
                         let mut acc_88c91f52 = String::new();
                         #primary_key_content_ts
@@ -2188,23 +2189,23 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                         generate_as_postgresql_type_update_for_query_ts(
                                             &element.field_type,
                                         );
-                                    quote::quote! {
+                                    quote! {
                                          #field_type_as_postgresql_type_update_for_query_ts::from(value_0e64c53a.#ValueSnakeCase)
                                     }
                                 });
-                            quote::quote! {
+                            quote! {
                                 #field_ident: value.#field_ident.map(|value_0e64c53a| #value_initialization_ts)
                             }
                         },
                     );
-                quote::quote! {
+                quote! {
                     Self {
                         #primary_key_field_ident: #primary_key_field_type_as_postgresql_type_update_for_query_ts::from(#ValueSnakeCase.#primary_key_field_ident),
                         #fields_named_without_primary_key_ts
                     }
                 }
             });
-            quote::quote! {
+            quote! {
                 #allow_clippy_arbitrary_source_item_ordering_ts
                 impl #ident_update_for_query_upper_camel_case {
                     #update_query_part_primary_key_ts
@@ -2214,7 +2215,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 }
             }
         };
-        quote::quote! {
+        quote! {
             #ident_update_for_query_ts
             #impl_ident_update_for_query_ts
         }
@@ -2229,7 +2230,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     line!(),
                     column!(),
                 );
-            quote::quote! {
+            quote! {
                 match #content_ts.#update_query_part_primary_key_snake_case(&mut #IncrementSnakeCase) {
                     Ok(value_f269a3b2) => value_f269a3b2,
                     Err(#error_0_ts) => {
@@ -2246,16 +2247,16 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &RollbackSnakeCase, sqlx_error_syn_punctuated_punctuated),
         ],
     );
-    let sqlx_query_sqlx_postgres_ts = quote::quote! {sqlx::query::<sqlx::Postgres>};
+    let sqlx_query_sqlx_postgres_ts = quote! {sqlx::query::<sqlx::Postgres>};
     let (
         postgresql_crud_postgresql_type_where_filter_query_part_ts,
         postgresql_crud_postgresql_type_where_filter_query_bind_ts,
     ) = {
         let postgresql_crud_postgresql_type_where_filter_ts =
-            quote::quote! {#PostgresqlCrudSnakeCase::PostgresqlTypeWhereFilter::};
+            quote! {#PostgresqlCrudSnakeCase::PostgresqlTypeWhereFilter::};
         (
-            quote::quote! {#postgresql_crud_postgresql_type_where_filter_ts #QueryPartSnakeCase},
-            quote::quote! {#postgresql_crud_postgresql_type_where_filter_ts #QueryBindSnakeCase},
+            quote! {#postgresql_crud_postgresql_type_where_filter_ts #QueryPartSnakeCase},
+            quote! {#postgresql_crud_postgresql_type_where_filter_ts #QueryBindSnakeCase},
         )
     };
 
@@ -2411,7 +2412,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     );
     let generate_pub_handle_ts = |is_pub: bool| {
         if is_pub {
-            quote::quote! {pub}
+            quote! {pub}
         } else {
             proc_macro2::TokenStream::new()
         }
@@ -2420,7 +2421,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         |primary_key_type_ts: &dyn quote::ToTokens| {
             let is_pub = true;
             let pub_handle_ts = generate_pub_handle_ts(is_pub);
-            quote::quote! {#pub_handle_ts #primary_key_field_ident: #primary_key_type_ts}
+            quote! {#pub_handle_ts #primary_key_field_ident: #primary_key_type_ts}
         };
     let generate_match_postgres_transaction_rollback_await_ts =
         |operation: &Operation,
@@ -2446,7 +2447,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     row_and_rollback_line,
                     row_and_rollback_column,
                 );
-            quote::quote! {{
+            quote! {{
                 if let Err(#error_1_ts) = #ExecutorSnakeCase.#RollbackSnakeCase().await {
                     #row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_ts
                 }
@@ -2471,13 +2472,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     row_and_rollback_line,
                     row_and_rollback_column,
                 );
-            quote::quote! {
+            quote! {
                 drop(#RowsSnakeCase);
                 #match_postgres_transaction_rollback_await_ts
             }
         };
     let wrap_into_value_ts = |content_ts: &dyn quote::ToTokens| {
-        quote::quote! {
+        quote! {
             let #ValueSnakeCase = {
                 #content_ts
             };
@@ -2488,7 +2489,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
          value_handle_ts: &dyn quote::ToTokens,
          try_next_error_initialization_ts: &dyn quote::ToTokens,
          should_wrap_into_value: &ShouldWrapIntoValue| {
-            let content_ts = quote::quote! {
+            let content_ts = quote! {
                 let mut #RowsSnakeCase = #BindedQuerySnakeCase.fetch(#executor_name_ts.as_mut());
                 let mut acc_d16ac269 = Vec::new();
                 while let Some(value_d9cc2c36) = match #PostgresqlCrudSnakeCase::TryStreamExt::try_next(&mut #RowsSnakeCase).await {
@@ -2514,7 +2515,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         |executor_name_ts: &dyn quote::ToTokens,
          value_handle_ts: &dyn quote::ToTokens,
          fetch_one_error_initialization_ts: &dyn quote::ToTokens| {
-            quote::quote! {
+            quote! {
                 match #BindedQuerySnakeCase.fetch_one(#executor_name_ts.as_mut()).await {
                     Ok(value_b27d7d79) => {
                         #value_handle_ts
@@ -2529,7 +2530,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         |sqlx_row_try_get_type_ts: &dyn quote::ToTokens,
          ok_ts: &dyn quote::ToTokens,
          err_ts: &dyn quote::ToTokens| {
-            quote::quote! {
+            quote! {
                 match #sqlx_row::try_get::<
                     #sqlx_row_try_get_type_ts,
                     #ref_std_primitive_str
@@ -2552,7 +2553,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         line!(),
                         column!(),
                     );
-                quote::quote! {
+                quote! {
                     let mut #ExecutorSnakeCase = match #sqlx_acquire::#BeginSnakeCase(#ExecutorAcquireSnakeCase).await {
                         Ok(value_1aaca28f) => value_1aaca28f,
                         Err(#error_0_ts) => {
@@ -2570,13 +2571,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         line!(),
                         column!(),
                     );
-                quote::quote! {
+                quote! {
                     if let Err(#error_0_ts) = #ExecutorSnakeCase.#CommitSnakeCase().await {
                         #postgresql_syn_variant_error_initialization_eprintln_response_creation_ts
                     }
                 }
             };
-            quote::quote! {
+            quote! {
                 #postgres_transaction_begin_ts
                 #content_ts
                 #postgres_transaction_commit_ts
@@ -2625,12 +2626,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         .to_attribute_view_ts()
                 };
                 let field_type = &field.ty;
-                quote::quote! {
+                quote! {
                     #error_occurence_attribute
                     #field_ident: #field_type
                 }
             });
-            quote::quote! {
+            quote! {
                 #variant_ident {
                     #(#fields_mapped_into_ts),*
                 }
@@ -2647,7 +2648,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 let variants_ts = type_variants_from_request_response_syn_variants.iter().map(
                     macros_helpers::generate_serialize_deserialize_version_of_named_syn_variant,
                 );
-                quote::quote! {
+                quote! {
                     #allow_clippy_arbitrary_source_item_ordering_ts
                     #derive_debug_serde_serialize_serde_deserialize
                     pub enum #ident_operation_response_variants_upper_camel_case {
@@ -2669,10 +2670,10 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     };
                     let fields_mapped_into_ts = {
                         let fields_ts = fields_named.named.iter().map(|field| &field.ident);
-                        quote::quote! {#(#fields_ts),*}
+                        quote! {#(#fields_ts),*}
                     };
                     let ident_operation_error_named_with_serialize_deserialize_upper_camel_case = generate_ident_operation_error_named_with_serialize_deserialize_upper_camel_case(operation);
-                    quote::quote! {
+                    quote! {
                         #ident_operation_error_named_with_serialize_deserialize_upper_camel_case::#variant_ident {
                             #fields_mapped_into_ts
                         } => Self::#variant_ident {
@@ -2680,14 +2681,14 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         }
                     }
                 });
-                        quote::quote! {
+                        quote! {
                             match #ValueSnakeCase.#IntoSerializeDeserializeVersionSnakeCase() {
                                 #(#variants_ts),*
                             }
                         }
                     },
                 );
-                quote::quote! {
+                quote! {
                     impl #ident_operation_response_variants_upper_camel_case {
                         #from_handle_ts
                     }
@@ -2697,7 +2698,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 let variants_ts = type_variants_from_request_response_syn_variants
                     .iter()
                     .map(generate_error_occurence_variant_ts);
-                quote::quote! {
+                quote! {
                     #allow_clippy_arbitrary_source_item_ordering_ts
                     #derive_debug_this_error_error_occurence
                     pub enum #ident_operation_error_named_upper_camel_case {
@@ -2705,7 +2706,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     }
                 }
             };
-            quote::quote! {
+            quote! {
                 #ident_try_operation_logic_response_variants_ts
                 #impl_ident_operation_response_variants_ts
                 #ident_operation_error_named_ts
@@ -2713,8 +2714,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         };
     let generate_ident_operation_payload_upper_camel_case = |operation: &Operation| match &operation
     {
-        Operation::CreateOne => quote::quote! {#ident_create_upper_camel_case},
-        Operation::UpdateOne => quote::quote! {#ident_update_upper_camel_case},
+        Operation::CreateOne => quote! {#ident_create_upper_camel_case},
+        Operation::UpdateOne => quote! {#ident_update_upper_camel_case},
         Operation::CreateMany
         | Operation::ReadMany
         | Operation::ReadOne
@@ -2744,17 +2745,17 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     &{
                         let ident_operation_payload_upper_camel_case =
                             generate_ident_operation_payload_upper_camel_case(operation);
-                        quote::quote! {{
+                        quote! {{
                             pub #PayloadSnakeCase: #ident_operation_payload_upper_camel_case,
                         }}
                     },
                 );
-            quote::quote! {
+            quote! {
                 #allow_clippy_arbitrary_source_item_ordering_ts
                 #content_ts_0d032fce
             }
         };
-        quote::quote! {
+        quote! {
             #payload_ts
             #parameters_ts
         }
@@ -2777,13 +2778,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         .derive_serde_deserialize()
                         .derive_utoipa_to_schema()
                         .build_struct(&ident_operation_payload_upper_camel_case, &declaration_ts);
-                quote::quote! {
+                quote! {
                     #allow_clippy_arbitrary_source_item_ordering_ts
                     #content_ts_ec5b096c
                 }
             };
-            let impl_postgresql_crud_default_option_some_vec_one_el_for_operation_payload_ts = generate_impl_postgresql_crud_default_option_some_vec_one_el_for_tokens_no_lifetime_ts(&ident_operation_payload_upper_camel_case, &quote::quote! {Self #default_init_content_ts});
-            quote::quote! {
+            let impl_postgresql_crud_default_option_some_vec_one_el_for_operation_payload_ts = generate_impl_postgresql_crud_default_option_some_vec_one_el_for_tokens_no_lifetime_ts(&ident_operation_payload_upper_camel_case, &quote! {Self #default_init_content_ts});
+            quote! {
                 #ident_operation_payload_ts
                 #impl_postgresql_crud_default_option_some_vec_one_el_for_operation_payload_ts
             }
@@ -2829,7 +2830,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         }))
         .collect::<Vec<syn::Variant>>();
         let variants_ts = variants.iter().map(generate_error_occurence_variant_ts);
-        quote::quote! {
+        quote! {
             #allow_clippy_arbitrary_source_item_ordering_ts
             #derive_debug_thiserror_error_occurence
             pub enum #ident_try_operation_error_named_upper_camel_case {
@@ -2837,7 +2838,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             }
         }
     };
-    let std_sync_arc_combination_of_app_state_logic_traits_ts = quote::quote! {std::sync::Arc<dyn #PostgresqlCrudSnakeCase::CombinationOfAppStateLogicTraits>};
+    let std_sync_arc_combination_of_app_state_logic_traits_ts =
+        quote! {std::sync::Arc<dyn #PostgresqlCrudSnakeCase::CombinationOfAppStateLogicTraits>};
     let generate_operation_ts = |operation: &Operation,
                                  current_additional_logic_ts: &dyn quote::ToTokens,
                                  parameters_logic_ts: &dyn quote::ToTokens,
@@ -2865,7 +2867,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     line!(),
                     column!(),
                 );
-            quote::quote! {
+            quote! {
                 let (parts, #BodySnakeCase) = #RequestSnakeCase.into_parts();
                 let headers = parts.headers;
                 if !matches!(
@@ -2906,7 +2908,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     .generate_postgresql_table_attribute_additional_logic()
                     .generate_path_to_attribute(),
             );
-            quote::quote! {
+            quote! {
                 #current_additional_logic_ts
                 #operation_additional_logic_ts
             }
@@ -2920,7 +2922,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     line!(),
                     column!(),
                 );
-            quote::quote! {
+            quote! {
                 let mut #PoolConnectionSnakeCase = match #AppStateSnakeCase.get_postgres_pool().acquire().await {
                     Ok(value_4535ee48) => value_4535ee48,
                     Err(#error_0_ts) => {
@@ -2939,14 +2941,14 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             &{
                 let ident_operation_response_variants_upper_camel_case =
                     generate_ident_operation_response_variants_upper_camel_case(operation);
-                quote::quote! {#ident_operation_response_variants_upper_camel_case::#DesirableUpperCamelCase(#ValueSnakeCase)}
+                quote! {#ident_operation_response_variants_upper_camel_case::#DesirableUpperCamelCase(#ValueSnakeCase)}
             },
             &operation
                 .desirable_status_code()
                 .to_axum_http_status_code_ts(),
             &ShouldAddReturn::False,
         );
-        quote::quote! {
+        quote! {
             #[allow(clippy::single_call_fn)]
             async fn #operation_handle_snake_case_ts(
                 #AppStateSnakeCase: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_ts>,
@@ -2991,7 +2993,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         let ident_operation_parameters_upper_camel_case =
             generate_ident_operation_parameters_upper_camel_case(operation);
         //todo in case of large type there is a stackoverflow. for example it was a 3.5md json file generated by create_many_payload_example. 3400 fields = success. 16000 = stackoverflow
-        quote::quote! {
+        quote! {
             let #ParametersSnakeCase = #ident_operation_parameters_upper_camel_case {
                 #PayloadSnakeCase: match serde_json::from_slice::<#ident_operation_payload_upper_camel_case>(
                     &#BodyBytesSnakeCase,
@@ -3011,7 +3013,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         let ident_operation_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(operation);
         let payload_ts = {
             let serde_json_to_string_syn_variant_initialization_ts = generate_initialization_ts(&serde_json_to_string_syn_variant_wrapper, file!(), line!(), column!());
-            quote::quote! {
+            quote! {
                 let #PayloadSnakeCase = {
                     match serde_json::to_string(&#ParametersSnakeCase.#PayloadSnakeCase) {
                         Ok(value_1772a83e) => value_1772a83e,
@@ -3024,21 +3026,21 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         };
         let url_ts = {
             let format_handle_ts = generate_quotes::double_quotes_ts(&format!("{{endpoint_location}}/{{table}}/{}", operation.self_snake_case_stringified()));
-            quote::quote! {let #UrlSnakeCase = format!(#format_handle_ts);}
+            quote! {let #UrlSnakeCase = format!(#format_handle_ts);}
         };
         let future_ts = {
             let operation_http_method_snake_case_ts = AsRefStrToSnakeCaseTokenStream::case_or_panic(&operation.http_method());
-            let commit_header_addition_ts = quote::quote! {
+            let commit_header_addition_ts = quote! {
                 .header(
                     &"commit".to_owned(),
                     git_info::PROJECT_GIT_INFO.commit,
                 )
             };
             let application_json_double_quotes_ts = generate_quotes::double_quotes_ts(&"application/json");
-            let content_type_application_json_header_addition_ts = quote::quote! {
+            let content_type_application_json_header_addition_ts = quote! {
                 .header(reqwest::header::CONTENT_TYPE, #application_json_double_quotes_ts)
             };
-            quote::quote! {
+            quote! {
                 let #FutureSnakeCase = reqwest::Client::new()
                     .#operation_http_method_snake_case_ts(&#UrlSnakeCase)
                     #commit_header_addition_ts
@@ -3049,7 +3051,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         };
         let response_ts = {
             let reqwest_syn_variant_initialization_ts = generate_initialization_ts(&reqwest_syn_variant_wrapper, file!(), line!(), column!());
-            quote::quote! {
+            quote! {
                 let #ResponseSnakeCase = match #FutureSnakeCase.await {
                     Ok(value_180559e9) => value_180559e9,
                     Err(#error_0_ts) => {
@@ -3058,15 +3060,15 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 };
             }
         };
-        let error_0_response_status_ts = quote::quote! {
+        let error_0_response_status_ts = quote! {
             let #error_0_ts = #ResponseSnakeCase.status();
         };
-        let headers_ts = quote::quote! {
+        let headers_ts = quote! {
             let #error_1_ts = #ResponseSnakeCase.headers().clone();
         };
         let response_text_ts = {
             let failed_to_get_response_text_syn_variant_initialization_ts = generate_initialization_ts(&failed_to_get_response_text_syn_variant_wrapper, file!(), line!(), column!());
-            quote::quote! {
+            quote! {
                 let #error_2_ts = match #ResponseSnakeCase.text().await {
                     Ok(value_6a62b2b9) => value_6a62b2b9,
                     Err(#error_2_ts) => {
@@ -3078,7 +3080,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         let ident_operation_response_variants_upper_camel_case = generate_ident_operation_response_variants_upper_camel_case(operation);
         let expected_response_ts = {
             let deserialize_response_syn_variant_initialization_ts = generate_initialization_ts(&deserialize_response_syn_variant_wrapper, file!(), line!(), column!());
-            quote::quote! {
+            quote! {
                 let #ExpectedResponseSnakeCase = match serde_json::from_str::<#ident_operation_response_variants_upper_camel_case>(&#error_2_ts) {
                     Ok(value_563d2a75) => value_563d2a75,
                     Err(#error_3_ts) => {
@@ -3094,17 +3096,17 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 let variant_ident = &el_f83d5272.ident;
                 let fields_idents_ts = if let syn::Fields::Named(fields_named) = &el_f83d5272.fields {
                     let fields_idents = fields_named.named.iter().map(|field| &field.ident);
-                    quote::quote! {#(#fields_idents),*}
+                    quote! {#(#fields_idents),*}
                 } else {
                     panic!("8dcafc1c-2fc8-4d85-b0ba-cc7725b313a0");
                 };
-                quote::quote! {
+                quote! {
                     #ident_operation_response_variants_upper_camel_case::#variant_ident {
                         #fields_idents_ts
                     } => #try_operation_logic_error_named_with_serialize_deserialize_upper_camel_case::#variant_ident { #fields_idents_ts }
                 }
             });
-            quote::quote! {
+            quote! {
                 let #operation_error_named_with_serialize_deserialize_snake_case = match #ExpectedResponseSnakeCase {
                     #ident_operation_response_variants_upper_camel_case::#DesirableUpperCamelCase(#ValueSnakeCase) => {
                         return Ok(#desirable_from_or_try_from_desirable_with_serialize_deserialize_ts);
@@ -3115,14 +3117,14 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         };
         let return_error_ts = {
             let field_code_occurence_new_6ac7b78e_da5d_4274_b58c_67bb9625d008_ts = macros_helpers::generate_field_code_occurence_new_ts(file!(), line!(), column!());
-            quote::quote! {
+            quote! {
                 Err(#ident_try_operation_error_named_upper_camel_case::#try_operation_logic_error_named_with_serialize_deserialize_upper_camel_case {
                     #operation_error_named_with_serialize_deserialize_snake_case,
                     #field_code_occurence_new_6ac7b78e_da5d_4274_b58c_67bb9625d008_ts,
                 })
             }
         };
-        quote::quote! {
+        quote! {
             #[allow(clippy::single_call_fn)]
             async fn #try_operation_handle_snake_case_ts(
                 #EndpointLocationSnakeCase: #ref_std_primitive_str,
@@ -3154,7 +3156,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     };
     let generate_match_ident_read_only_ids_as_from_row_from_row_ts =
         |content_ts: &dyn quote::ToTokens| {
-            quote::quote! {
+            quote! {
                 match <#ident_read_only_ids_upper_camel_case as sqlx::FromRow<'_, sqlx::postgres::PgRow>>::from_row(&value_b27d7d79) {
                     Ok(value_33759463) => value_33759463,
                     Err(#error_0_ts) => #content_ts
@@ -3171,14 +3173,14 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         let content_ts = generate_match_ident_read_only_ids_as_from_row_from_row_ts(
                             &{
                                 let content_ts = generate_drop_rows_match_postgres_transaction_rollback_await_handle_ts(&current_operation, file!(), line!(), column!(), file!(), line!(), column!());
-                                quote::quote! {{#content_ts}}
+                                quote! {{#content_ts}}
                             },
                         );
-                        quote::quote! {Some(#content_ts)}
+                        quote! {Some(#content_ts)}
                     }
                     CreateOrUpdateOrDeleteMany::Delete => generate_sqlx_row_try_get_primary_key_ts(
                         &primary_key_field_type_as_postgresql_type_read_upper_camel_case,
-                        &quote::quote! {Some(value_69ecb6a9)},
+                        &quote! {Some(value_69ecb6a9)},
                         &generate_drop_rows_match_postgres_transaction_rollback_await_handle_ts(
                             &current_operation,
                             file!(),
@@ -3208,8 +3210,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             wrap_into_value_ts(&generate_fetch_one_ts(
                 &ExecutorSnakeCase,
                 &generate_sqlx_row_try_get_primary_key_ts(
-                    &quote::quote! {#primary_key_field_type_as_postgresql_type_read_upper_camel_case},
-                    &quote::quote! {value_69ecb6a9},
+                    &quote! {#primary_key_field_type_as_postgresql_type_read_upper_camel_case},
+                    &quote! {value_69ecb6a9},
                     &generate_match_postgres_transaction_rollback_await_ts(
                         &current_operation,
                         file!(),
@@ -3237,19 +3239,19 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             &{
                 let ident_operation_payload_upper_camel_case =
                     generate_ident_operation_payload_upper_camel_case(operation);
-                quote::quote! {<#ident_operation_payload_upper_camel_case as postgresql_crud::#DefaultOptionSomeVecOneElUpperCamelCase>::#DefaultOptionSomeVecOneElSnakeCase()}
+                quote! {<#ident_operation_payload_upper_camel_case as postgresql_crud::#DefaultOptionSomeVecOneElUpperCamelCase>::#DefaultOptionSomeVecOneElSnakeCase()}
             },
-            &quote::quote! {http::StatusCode::OK},
+            &quote! {http::StatusCode::OK},
             &ShouldAddReturn::False,
         );
-        quote::quote! {
+        quote! {
             #must_use_ts
             pub fn #operation_payload_example_snake_case() -> axum::response::Response {
                 #wraped_into_axum_response_ts
             }
         }
     };
-    let increment_initialization_ts = quote::quote! {let mut #IncrementSnakeCase: u64 = 0;};
+    let increment_initialization_ts = quote! {let mut #IncrementSnakeCase: u64 = 0;};
     let column_names = {
         let mut value = fields
             .iter()
@@ -3272,7 +3274,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             let field_ident_double_quotes_ts = generate_quotes::double_quotes_ts(&field_ident);
             let field_type_as_postgresql_crud_postgresql_type_postgresql_type_ts = generate_as_postgresql_type_ts(&element.field_type);
             let content_ts_00878df8 = generate_operation_error_initialization_eprintln_response_creation_ts(operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
-            quote::quote! {
+            quote! {
                 match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_ts #SelectOnlyIdsQueryPartSnakeCase(#field_ident_double_quotes_ts) {
                     Ok(value_aa341baf) => {
                         acc_a35168d8.push_str(&value_aa341baf);
@@ -3283,7 +3285,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 }
             }
         });
-        quote::quote! {
+        quote! {
             {
                 let mut acc_a35168d8 = #string_ts::new();
                 #(#select_only_ids_query_part_initialization_ts)*
@@ -3306,7 +3308,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     line!(),
                     column!(),
                 );
-            quote::quote! {
+            quote! {
                 let #error_0_ts = #query_part_error_named_write_into_buffer_ts;
                 #content_ts_fa8795ea
             }
@@ -3333,9 +3335,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_ts(
                             &ident_create_upper_camel_case,
                         );
-                    quote::quote! {(pub #std_vec_vec_ident_create_ts);}
+                    quote! {(pub #std_vec_vec_ident_create_ts);}
                 },
-                &quote::quote! {(vec![#postgresql_crud_default_option_some_vec_one_el_call_ts])},
+                &quote! {(vec![#postgresql_crud_default_option_some_vec_one_el_call_ts])},
             ),
         );
         let operation_ts = {
@@ -3345,7 +3347,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 let parameters_logic_ts = generate_parameters_logic_ts(&operation);
                 let query_string_ts = {
                     let if_write_is_err_ts = macros_helpers::generate_if_write_is_err_ts(
-                        &quote::quote! {
+                        &quote! {
                             acc_8a58994e,
                             "({value_f4fdd10d}),"
                         },
@@ -3363,7 +3365,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         );
                     let select_only_ids_query_part_ts =
                         generate_select_only_ids_query_part_ts(&operation);
-                    quote::quote! {#PostgresqlCrudSnakeCase::generate_create_many_query_string(
+                    quote! {#PostgresqlCrudSnakeCase::generate_create_many_query_string(
                         #TableSnakeCase,
                         #column_names_double_quotes_ts,
                         &{
@@ -3394,7 +3396,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             line!(),
                             column!(),
                         );
-                    quote::quote! {
+                    quote! {
                         let mut #QuerySnakeCase = sqlx::query::<sqlx::Postgres>(&#QueryStringSnakeCase);
                         for el_7f862135 in #ParametersSnakeCase.#PayloadSnakeCase.0 {
                             match el_7f862135.#CreateQueryBindSnakeCase(#QuerySnakeCase) {
@@ -3426,7 +3428,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     &postgresql_logic_ts,
                 ));
             };
-            quote::quote! {
+            quote! {
                 #try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_ts
             }
         };
@@ -3441,12 +3443,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &std_vec_vec_ident_read_only_ids_ts,
                 &ValueSnakeCase,
             ));
-            quote::quote! {
+            quote! {
                 #try_operation_error_named_ts
             }
         };
         impl_ident_vec_ts.push(generate_operation_payload_example_ts(&operation));
-        quote::quote! {
+        quote! {
             #parameters_ts
             #operation_ts
             #try_operation_ts
@@ -3490,7 +3492,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         );
                     let select_only_ids_query_part_ts =
                         generate_select_only_ids_query_part_ts(&operation);
-                    quote::quote! {
+                    quote! {
                         #PostgresqlCrudSnakeCase::generate_create_one_query_string(
                             #TableSnakeCase,
                             #column_names_double_quotes_ts,
@@ -3513,7 +3515,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             line!(),
                             column!(),
                         );
-                    quote::quote! {
+                    quote! {
                         let mut #QuerySnakeCase = #sqlx_query_sqlx_postgres_ts(&#QueryStringSnakeCase);
                         match #ParametersSnakeCase.#PayloadSnakeCase.#CreateQueryBindSnakeCase(#QuerySnakeCase) {
                             Ok(value_06f852cd) => {
@@ -3546,7 +3548,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                             line!(),
                                             column!(),
                                         );
-                                    quote::quote! {{#content_ts}}
+                                    quote! {{#content_ts}}
                                 }),
                                 &generate_match_postgres_transaction_rollback_await_ts(
                                     &current_operation,
@@ -3570,7 +3572,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     &postgresql_logic_ts,
                 ));
             };
-            quote::quote! {
+            quote! {
                 #try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_ts
             }
         };
@@ -3585,12 +3587,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &ident_read_only_ids_upper_camel_case,
                 &ValueSnakeCase,
             ));
-            quote::quote! {
+            quote! {
                 #try_operation_error_named_ts
             }
         };
         impl_ident_vec_ts.push(generate_operation_payload_example_ts(&operation));
-        quote::quote! {
+        quote! {
             #parameters_ts
             #operation_ts
             #try_operation_ts
@@ -3620,13 +3622,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             &operation,
             generate_parameters_payload_and_default_ts(
                 &operation,
-                &quote::quote! {{
+                &quote! {{
                     #pub_where_many_std_option_option_ident_where_many_ts,
                     #pub_select_postgresql_crud_not_empty_unique_vec_ident_select_ts,
                     pub #OrderBySnakeCase: #postgresql_crud_order_by_ts<#ident_select_upper_camel_case>,
                     pub #PaginationSnakeCase: postgresql_crud::PaginationStartsWithZero,
                 }},
-                &quote::quote! {{
+                &quote! {{
                     #where_many_postgresql_crud_default_option_some_vec_one_el_call_ts,
                     #select_postgresql_crud_default_option_some_vec_one_el_call_ts,
                     #OrderBySnakeCase: postgresql_crud::OrderBy {
@@ -3673,13 +3675,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 );
                             let field_ident_double_quotes_ts =
                                 generate_quotes::double_quotes_ts(&element.field_ident);
-                            quote::quote! {
+                            quote! {
                                 #ident_select_upper_camel_case::#field_ident_upper_camel_case(_) => #field_ident_double_quotes_ts
                             }
                         },
                     );
                     let if_write_is_err_curly_braces_0_ts = macros_helpers::generate_if_write_is_err_curly_braces_ts(
-                        &quote::quote! {
+                        &quote! {
                             #AdditionalParametersSnakeCase,
                             #additional_parameters_order_by_handle_ts,
                             #PrefixSnakeCase,
@@ -3694,7 +3696,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         &generate_write_into_buffer_query_part_syn_variant_error_initialization_eprintln_response_creation_ts(&operation),
                     );
                     let if_write_is_err_curly_braces_1_ts = macros_helpers::generate_if_write_is_err_curly_braces_ts(
-                        &quote::quote! {
+                        &quote! {
                             #AdditionalParametersSnakeCase,
                             "{prefix}{}",
                             match #postgresql_crud_postgresql_type_where_filter_query_part_ts(
@@ -3711,7 +3713,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         },
                         &generate_write_into_buffer_query_part_syn_variant_error_initialization_eprintln_response_creation_ts(&operation)
                     );
-                    quote::quote! {#PostgresqlCrudSnakeCase::generate_read_many_query_string(
+                    quote! {#PostgresqlCrudSnakeCase::generate_read_many_query_string(
                         #TableSnakeCase,
                         &#select_query_part_parameters_payload_select_ts,
                         &{
@@ -3734,7 +3736,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             line!(),
                             column!(),
                         );
-                    quote::quote! {
+                    quote! {
                         let mut #QuerySnakeCase = #sqlx_query_sqlx_postgres_ts(&#QueryStringSnakeCase);
                         #query_postgresql_type_where_filter_query_bind_parameters_payload_where_many_query_ts
                         match #postgresql_crud_postgresql_type_where_filter_query_bind_ts(
@@ -3756,7 +3758,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         &ExecutorAcquireSnakeCase,
                         &{
                             let match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_ts = generate_match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_ts(&ReadManyOrReadOne::ReadMany);
-                            quote::quote! {Some(#match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_ts)}
+                            quote! {Some(#match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_vec_ident_select_ts)}
                         },
                         &generate_operation_error_initialization_eprintln_response_creation_ts(
                             &operation,
@@ -3767,7 +3769,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         ),
                         &ShouldWrapIntoValue::False,
                     );
-                    quote::quote! {{
+                    quote! {{
                         #fetch_ts
                     }}
                 };
@@ -3781,7 +3783,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     &postgresql_logic_ts,
                 ));
             };
-            quote::quote! {
+            quote! {
                 #try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_ts
             }
         };
@@ -3800,7 +3802,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &operation,
                 &type_variants_from_request_response_syn_variants,
                 &std_vec_vec_struct_options_ident_ts,
-                &quote::quote! {
+                &quote! {
                     #ValueSnakeCase
                     .into_iter()
                     .fold(Vec::new(), |mut acc_4adf5a80, el_6a197212| {
@@ -3809,12 +3811,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     })
                 },
             ));
-            quote::quote! {
+            quote! {
                 #try_operation_error_named_ts
             }
         };
         impl_ident_vec_ts.push(generate_operation_payload_example_ts(&operation));
-        quote::quote! {
+        quote! {
             #parameters_ts
             #operation_ts
             #try_operation_ts
@@ -3846,12 +3848,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &operation,
                 &{
                     let pub_handle_primary_key_field_ident_primary_key_inner_type_handle_ts = generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_ts(&SelfReadUpperCamelCase::from_type_last_segment(primary_key_field_type));
-                    quote::quote! {{
+                    quote! {{
                         #pub_handle_primary_key_field_ident_primary_key_inner_type_handle_ts,
                         #pub_select_postgresql_crud_not_empty_unique_vec_ident_select_ts,
                     }}
                 },
-                &quote::quote! {{
+                &quote! {{
                     #primary_key_field_ident: #postgresql_crud_default_option_some_vec_one_el_call_ts,
                     #select_postgresql_crud_default_option_some_vec_one_el_call_ts
                 }},
@@ -3872,7 +3874,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             line!(),
                             column!(),
                         );
-                    quote::quote! {#PostgresqlCrudSnakeCase::generate_read_one_query_string(
+                    quote! {#PostgresqlCrudSnakeCase::generate_read_one_query_string(
                         #TableSnakeCase,
                         &#select_query_part_parameters_payload_select_ts,
                         &match #postgresql_crud_postgresql_type_where_filter_query_part_ts(
@@ -3898,7 +3900,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 line!(),
                                 column!(),
                             );
-                        quote::quote! {
+                        quote! {
                             match #postgresql_crud_postgresql_type_where_filter_query_bind_ts(#ParametersSnakeCase.#PayloadSnakeCase.#primary_key_field_ident, #QuerySnakeCase) {
                                 Ok(value_80ee6983) => {
                                     #QuerySnakeCase = value_80ee6983;
@@ -3909,7 +3911,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             }
                         }
                     };
-                    quote::quote! {
+                    quote! {
                         let mut #QuerySnakeCase = #sqlx_query_sqlx_postgres_ts(&#QueryStringSnakeCase);
                         #binded_query_modifications_ts
                         #QuerySnakeCase
@@ -3930,7 +3932,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     &postgresql_logic_ts,
                 ));
             };
-            quote::quote! {
+            quote! {
                 #try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_ts
             }
         };
@@ -3951,12 +3953,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &ident_read_upper_camel_case,
                 &ValueSnakeCase,
             ));
-            quote::quote! {
+            quote! {
                 #try_operation_error_named_ts
             }
         };
         impl_ident_vec_ts.push(generate_operation_payload_example_ts(&operation));
-        quote::quote! {
+        quote! {
             #parameters_ts
             #operation_ts
             #try_operation_ts
@@ -3998,7 +4000,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     .derive_utoipa_to_schema()
                     .build_struct(
                         &ident_operation_payload_upper_camel_case,
-                        &quote::quote! {(#std_vec_vec_ident_update_ts);},
+                        &quote! {(#std_vec_vec_ident_update_ts);},
                     );
             let ident_operation_payload_try_new_error_named_upper_camel_case =
                 format!("{ident}{operation}PayloadTryNewErrorNamed")
@@ -4013,7 +4015,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 .derive_error_occurence_lib_error_occurence()
                 .build_enum(
                     &ident_operation_payload_try_new_error_named_upper_camel_case,
-                    &quote::quote!{{
+                    &quote!{{
                         #not_unique_primary_key_upper_camel_case {
                             #[eo_to_std_string_string]
                             #not_unique_primary_key_snake_case: #primary_key_field_type_update_ts,
@@ -4025,9 +4027,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             let impl_pub_try_new_for_ident_operation_payload_ts =
                 macros_helpers::generate_impl_pub_try_new_for_ident_ts(
                     &generate_ident_operation_payload_upper_camel_case(&operation),
-                    &quote::quote! {#ValueSnakeCase: #std_vec_vec_ident_update_ts},
+                    &quote! {#ValueSnakeCase: #std_vec_vec_ident_update_ts},
                     &ident_operation_payload_try_new_error_named_upper_camel_case,
-                    &quote::quote! {
+                    &quote! {
                         let mut acc_6bf275fc = Vec::new();
                         for el_35facc3a in &#ValueSnakeCase {
                             if acc_6bf275fc.contains(&&el_35facc3a.#primary_key_field_ident) {
@@ -4053,11 +4055,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 let match_ident_update_many_payload_try_new_field0_ts =
                     postgresql_crud_macros_common::generate_match_try_new_in_deserialize_ts(
                         &ident_operation_payload_upper_camel_case,
-                        &quote::quote! {__field0},
+                        &quote! {__field0},
                     );
                 let ident_operation_payload_double_quotes_ts =
                     generate_quotes::double_quotes_ts(&ident_operation_payload_upper_camel_case);
-                quote::quote! {
+                quote! {
                     #[allow(unused_qualifications)]
                     #[allow(clippy::absolute_paths)]
                     #allow_clippy_arbitrary_source_item_ordering_ts
@@ -4129,11 +4131,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             };
             let impl_postgresql_crud_default_option_some_vec_one_el_for_operation_payload_ts = generate_impl_postgresql_crud_default_option_some_vec_one_el_for_tokens_no_lifetime_ts(
                 &ident_operation_payload_upper_camel_case,
-                &quote::quote! {
+                &quote! {
                     Self(vec![#postgresql_crud_default_option_some_vec_one_el_call_ts])
                 },
             );
-            quote::quote! {
+            quote! {
                 #ident_operation_payload_vec_ts
                 #ident_operation_payload_try_new_error_named_ts
                 #impl_pub_try_new_for_ident_operation_payload_ts
@@ -4147,7 +4149,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             {
                 let parameters_logic_ts = {
                     let parameters_logic_ts = generate_parameters_logic_ts(&operation);
-                    quote::quote! {
+                    quote! {
                         #parameters_logic_ts
                         let #UpdateForQueryVecSnakeCase = #ParametersSnakeCase.#PayloadSnakeCase.0.into_iter()
                         .map(#ident_update_for_query_upper_camel_case::#FromHandleSnakeCase)
@@ -4179,7 +4181,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                     UpdateQueryPartSelfSnakeCase::from_tokens(&field_ident);
                                 let generate_when_column_id_then_value_update_many_query_part_snake_case =
                                     GenerateWhenColumnIdThenValueUpdateManyQueryPartSnakeCase;
-                                quote::quote! {
+                                quote! {
                                     {
                                         let mut #is_field_ident_update_exists_snake_case = false;
                                         for el_a72f3eac in &#UpdateForQueryVecSnakeCase {
@@ -4225,9 +4227,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     let if_write_is_err_ts = macros_helpers::generate_if_write_is_err_ts(
                         &{
                             let match_update_query_part_primary_key_operation_ts = generate_match_update_query_part_primary_key_operation_ts(
-                                &quote::quote!{el_9b2b56f8}
+                                &quote!{el_9b2b56f8}
                             );
-                            quote::quote! {
+                            quote! {
                                 acc_a95eb175,
                                 "{},",
                                 #match_update_query_part_primary_key_operation_ts
@@ -4237,7 +4239,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             &operation
                         )
                     );
-                    quote::quote! {
+                    quote! {
                         {
                             #increment_initialization_ts
                             let elements = {
@@ -4293,7 +4295,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 let field_ident = &element.field_ident;
                                 let as_postgresql_crud_postgresql_type_postgresql_type_ts =
                                     generate_as_postgresql_type_ts(&element.field_type);
-                                quote::quote! {
+                                quote! {
                                     for el_4b24f8f0 in &#UpdateForQueryVecSnakeCase {
                                         if let Some(value_2edaa480) = &el_4b24f8f0.#field_ident {
                                             if let Err(error_696908ba) = #QuerySnakeCase.try_bind(el_4b24f8f0.#primary_key_field_ident) {
@@ -4316,7 +4318,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 }
                             },
                         );
-                    let primary_key_update_assignment_ts = quote::quote! {
+                    let primary_key_update_assignment_ts = quote! {
                         for el_323f7dfc in &#UpdateForQueryVecSnakeCase {
                             match #primary_key_field_type_as_postgresql_type_ts #UpdateQueryBindSnakeCase(
                                 el_323f7dfc.#primary_key_field_ident,
@@ -4337,7 +4339,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 let field_ident = &element.field_ident;
                                 let as_postgresql_crud_postgresql_type_postgresql_type_ts =
                                     generate_as_postgresql_type_ts(&element.field_type);
-                                quote::quote! {
+                                quote! {
                                     for el_a1660ed1 in &#UpdateForQueryVecSnakeCase {
                                         if let Some(value_47030ac2) = &el_a1660ed1.#field_ident {
                                             match #as_postgresql_crud_postgresql_type_postgresql_type_ts select_only_updated_ids_query_bind(
@@ -4356,7 +4358,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 }
                             },
                         );
-                    quote::quote! {
+                    quote! {
                         let mut #QuerySnakeCase = #sqlx_query_sqlx_postgres_ts(&#QueryStringSnakeCase);
                         #fields_named_without_primary_key_update_assignment_ts
                         #primary_key_update_assignment_ts
@@ -4381,7 +4383,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     &postgresql_logic_ts,
                 ));
             };
-            quote::quote! {
+            quote! {
                 #try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_ts
             }
         };
@@ -4396,12 +4398,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &std_vec_vec_ident_read_only_ids_ts,
                 &ValueSnakeCase,
             ));
-            quote::quote! {
+            quote! {
                 #try_operation_error_named_ts
             }
         };
         impl_ident_vec_ts.push(generate_operation_payload_example_ts(&operation));
-        quote::quote! {
+        quote! {
             #parameters_ts
             #operation_ts
             #try_operation_ts
@@ -4435,7 +4437,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             {
                 let parameters_logic_ts = {
                     let parameters_logic_ts = generate_parameters_logic_ts(&operation);
-                    quote::quote! {
+                    quote! {
                         #parameters_logic_ts
                         let #UpdateForQuerySnakeCase = #ident_update_for_query_upper_camel_case::#FromHandleSnakeCase(#ParametersSnakeCase.#PayloadSnakeCase);
                     }
@@ -4452,7 +4454,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                     GenerateColumnQuealsValueCommaUpdateOneQueryPartSnakeCase;
                                 let update_query_part_field_ident_snake_case =
                                     UpdateQueryPartSelfSnakeCase::from_tokens(&field_ident);
-                                quote::quote! {
+                                quote! {
                                     if let Some(value_2d144436) = &#UpdateForQuerySnakeCase.#field_ident {
                                         acc_683e37b8.push_str(&#PostgresqlCrudSnakeCase::#generate_column_queals_value_comma_update_one_query_part_snake_case(
                                             #field_ident_double_quotes_ts,
@@ -4471,7 +4473,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     let additional_parameters_primary_key_modification_ts =
                         generate_match_update_query_part_primary_key_ts(
                             &operation,
-                            &quote::quote! {#UpdateForQuerySnakeCase},
+                            &quote! {#UpdateForQuerySnakeCase},
                         );
                     let content_ts_255ad2f1 =
                         generate_operation_error_initialization_eprintln_response_creation_ts(
@@ -4481,7 +4483,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             line!(),
                             column!(),
                         );
-                    quote::quote! {
+                    quote! {
                         {
                             #increment_initialization_ts
                             let #ColumnsSnakeCase = {
@@ -4522,7 +4524,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 let field_ident = &element.field_ident;
                                 let as_postgresql_crud_postgresql_type_postgresql_type_ts =
                                     generate_as_postgresql_type_ts(&element.field_type);
-                                quote::quote! {
+                                quote! {
                                     if let Some(value_ed87c152) = &#UpdateForQuerySnakeCase.#field_ident {
                                         match #as_postgresql_crud_postgresql_type_postgresql_type_ts #UpdateQueryBindSnakeCase(
                                             value_ed87c152.#ValueSnakeCase.clone(),//todo is there a way to remove .clone here?
@@ -4539,7 +4541,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 }
                             },
                         );
-                    let binded_query_primary_key_modification_ts = quote::quote! {
+                    let binded_query_primary_key_modification_ts = quote! {
                         match #primary_key_field_type_as_postgresql_type_ts #UpdateQueryBindSnakeCase(
                             #UpdateForQuerySnakeCase.#primary_key_field_ident,
                             #QuerySnakeCase,
@@ -4558,7 +4560,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 let field_ident = &element.field_ident;
                                 let as_postgresql_crud_postgresql_type_postgresql_type_ts =
                                     generate_as_postgresql_type_ts(&element.field_type);
-                                quote::quote! {
+                                quote! {
                                     if let Some(value_b2902425) = &#UpdateForQuerySnakeCase.#field_ident {
                                         match #as_postgresql_crud_postgresql_type_postgresql_type_ts select_only_updated_ids_query_bind(
                                             &value_b2902425.#ValueSnakeCase,
@@ -4575,7 +4577,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 }
                             },
                         );
-                    quote::quote! {
+                    quote! {
                         let mut #QuerySnakeCase = #sqlx_query_sqlx_postgres_ts(&#QueryStringSnakeCase);
                         #binded_query_modifications_ts
                         #binded_query_primary_key_modification_ts
@@ -4625,7 +4627,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     &postgresql_logic_ts,
                 ));
             };
-            quote::quote! {
+            quote! {
                 #try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_ts
             }
         };
@@ -4640,12 +4642,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &ident_read_only_ids_upper_camel_case,
                 &ValueSnakeCase,
             ));
-            quote::quote! {
+            quote! {
                 #try_operation_error_named_ts
             }
         };
         impl_ident_vec_ts.push(generate_operation_payload_example_ts(&operation));
-        quote::quote! {
+        quote! {
             #parameters_ts
             #operation_ts
             #try_operation_ts
@@ -4676,8 +4678,8 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             &operation,
             generate_parameters_payload_and_default_ts(
                 &operation,
-                &quote::quote! {{#pub_where_many_std_option_option_ident_where_many_ts}},
-                &quote::quote! {{#where_many_postgresql_crud_default_option_some_vec_one_el_call_ts}},
+                &quote! {{#pub_where_many_std_option_option_ident_where_many_ts}},
+                &quote! {{#where_many_postgresql_crud_default_option_some_vec_one_el_call_ts}},
             ),
         );
         let operation_ts = {
@@ -4690,7 +4692,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         generate_read_or_delete_many_additional_paramaters_initialization_ts(
                             &ReadManyOrDeleteMany::DeleteMany,
                         );
-                    quote::quote! {#PostgresqlCrudSnakeCase::generate_delete_many_query_string(
+                    quote! {#PostgresqlCrudSnakeCase::generate_delete_many_query_string(
                         #TableSnakeCase,
                         &{
                             #increment_initialization_ts
@@ -4701,7 +4703,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 };
                 let binded_query_ts = {
                     let query_postgresql_type_where_filter_query_bind_parameters_payload_where_many_query_ts = generate_query_postgresql_type_where_filter_query_bind_parameters_payload_where_many_query_ts(&operation);
-                    quote::quote! {
+                    quote! {
                         let mut #QuerySnakeCase = #sqlx_query_sqlx_postgres_ts(&#QueryStringSnakeCase);
                         #query_postgresql_type_where_filter_query_bind_parameters_payload_where_many_query_ts
                         #QuerySnakeCase
@@ -4724,7 +4726,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     &postgresql_logic_ts,
                 ));
             };
-            quote::quote! {
+            quote! {
                 #try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_ts
             }
         };
@@ -4739,12 +4741,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &std_vec_vec_primary_key_field_type_read_ts,
                 &ValueSnakeCase,
             ));
-            quote::quote! {
+            quote! {
                 #try_operation_error_named_ts
             }
         };
         impl_ident_vec_ts.push(generate_operation_payload_example_ts(&operation));
-        quote::quote! {
+        quote! {
             #parameters_ts
             #operation_ts
             #try_operation_ts
@@ -4775,15 +4777,15 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &operation,
                 &{
                     let content_ts = generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_ts(&SelfReadUpperCamelCase::from_type_last_segment(primary_key_field_type));
-                    quote::quote! {{#content_ts}}
+                    quote! {{#content_ts}}
                 },
                 &{
                     let primary_key_field_with_default_option_some_vec_one_el_ts = {
-                        quote::quote! {
+                        quote! {
                             #primary_key_field_ident: #postgresql_crud_default_option_some_vec_one_el_call_ts
                         }
                     };
-                    quote::quote! {{#primary_key_field_with_default_option_some_vec_one_el_ts}}
+                    quote! {{#primary_key_field_with_default_option_some_vec_one_el_ts}}
                 },
             ),
         );
@@ -4792,7 +4794,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 generate_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_ts(&operation, &primary_key_field_type_as_postgresql_type_read_upper_camel_case, &type_variants_from_request_response_syn_variants);
             {
                 let parameters_logic_ts = generate_parameters_logic_ts(&operation);
-                let query_string_ts = quote::quote! {#PostgresqlCrudSnakeCase::generate_delete_one_query_string(
+                let query_string_ts = quote! {#PostgresqlCrudSnakeCase::generate_delete_one_query_string(
                     #TableSnakeCase,
                     Self::#PrimaryKeySnakeCase(),
                 )};
@@ -4805,7 +4807,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             line!(),
                             column!(),
                         );
-                    quote::quote! {
+                    quote! {
                         let mut #QuerySnakeCase = #sqlx_query_sqlx_postgres_ts(&#QueryStringSnakeCase);
                         match postgresql_crud::PostgresqlTypeWhereFilter::query_bind(
                             #ParametersSnakeCase.#PayloadSnakeCase.#primary_key_field_ident,
@@ -4838,7 +4840,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     &postgresql_logic_ts,
                 ));
             };
-            quote::quote! {
+            quote! {
                 #try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_ts
             }
         };
@@ -4853,12 +4855,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &primary_key_field_type_as_postgresql_type_read_upper_camel_case,
                 &ValueSnakeCase,
             ));
-            quote::quote! {
+            quote! {
                 #try_operation_error_named_ts
             }
         };
         impl_ident_vec_ts.push(generate_operation_payload_example_ts(&operation));
-        quote::quote! {
+        quote! {
             #parameters_ts
             #operation_ts
             #try_operation_ts
@@ -4887,11 +4889,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     Operation::CreateMany |
                     Operation::CreateOne |
                     Operation::ReadMany |
-                    Operation::ReadOne => quote::quote!{post},
+                    Operation::ReadOne => quote!{post},
                     Operation::UpdateMany |
-                    Operation::UpdateOne => quote::quote!{patch},
+                    Operation::UpdateOne => quote!{patch},
                     Operation::DeleteMany |
-                    Operation::DeleteOne => quote::quote!{delete},
+                    Operation::DeleteOne => quote!{delete},
                 };
                 let operation_snake_case_ts = operation.self_handle_snake_case_ts();
                 let operation_payload_example_snake_case =
@@ -4908,7 +4910,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         generate_slash_route_double_quotes_ts(&operation_payload_example_snake_case)
                     )
                 };
-                quote::quote!{
+                quote!{
                     .route(#slash_operation_double_quotes_ts, axum::routing::#method_ts({
                         let table_owned = table.to_owned();
                         async move |
@@ -4919,7 +4921,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     .route(#slash_operation_payload_example_double_quotes_ts, axum::routing::get(async move||Self::#operation_payload_example_snake_case()))
                 }
             });
-            quote::quote!{
+            quote!{
                 #[allow(clippy::single_call_fn)]
                 fn #RoutesHandleSnakeCase(#AppStateSnakeCase: #std_sync_arc_combination_of_app_state_logic_traits_ts, #TableSnakeCase: &str) -> axum::Router {
                     axum::Router::new().nest(
@@ -4931,12 +4933,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 }
             }
         };
-        let routes_ts = quote::quote!{
+        let routes_ts = quote!{
             pub fn #RoutesSnakeCase(#AppStateSnakeCase: #std_sync_arc_combination_of_app_state_logic_traits_ts) -> axum::Router {
                 Self::#RoutesHandleSnakeCase(#AppStateSnakeCase, #self_table_name_call_ts)
             }
         };
-        quote::quote! {
+        quote! {
             #routes_handle_ts
             #routes_ts
         }
@@ -4961,12 +4963,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             generate_ident_operation_payload_upper_camel_case(&Operation::ReadOne);
         let ident_update_one_parameters_upper_camel_case =
             generate_ident_operation_parameters_upper_camel_case(&Operation::UpdateOne);
-        let config_path_ts = quote::quote! {server_config::Config};
-        let underscore_unused_ts = quote::quote! {_unused};
+        let config_path_ts = quote! {server_config::Config};
+        let underscore_unused_ts = quote! {_unused};
         //todo maybe remove it?\
         let generate_some_postgresql_type_where_try_new_ts =
             |logical_operator_ts: &dyn quote::ToTokens, content_ts: &dyn quote::ToTokens| {
-                quote::quote! {
+                quote! {
                     Some(
                         #import_path::PostgresqlTypeWhere::try_new(
                             #logical_operator_ts,
@@ -4978,11 +4980,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         let generate_some_postgresql_type_where_try_new_and_ts =
             |content_ts: &dyn quote::ToTokens| {
                 generate_some_postgresql_type_where_try_new_ts(
-                    &quote::quote! {#import_path::LogicalOperator::And},
+                    &quote! {#import_path::LogicalOperator::And},
                     content_ts,
                 )
             };
-        let generate_postgresql_type_where_try_new_primary_key_content_ts = quote::quote! {
+        let generate_postgresql_type_where_try_new_primary_key_content_ts = quote! {
             #import_path::PostgresqlTypeWhere::try_new(
                 logical_operator,
                 vec
@@ -4994,7 +4996,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     let field_ident = &element.field_ident;
                     let field_type_as_postgresql_type_create_ts =
                         generate_as_postgresql_type_create_ts(&element.field_type);
-                    quote::quote! {
+                    quote! {
                         #field_ident: <#field_type_as_postgresql_type_create_ts as postgresql_crud::DefaultOptionSomeVecOneEl>::default_option_some_vec_one_el()
                     }
                 },
@@ -5002,7 +5004,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         let fields_none_initialization_ts = generate_fields_named_without_primary_key_with_comma_ts(
             &|element: &macros_helpers::SynFieldWrapper| {
                 let field_ident = &element.field_ident;
-                quote::quote! {#field_ident: None}
+                quote! {#field_ident: None}
             },
         );
         //todo instead of first dropping table - check if its not exists. if exists Test must fail
@@ -5015,7 +5017,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                     let upper_camel_case = DefaultOptionSomeVecOneElMaxPageSizeUpperCamelCase;
                     let snake_case = DefaultOptionSomeVecOneElMaxPageSizeSnakeCase;
-                    quote::quote! {
+                    quote! {
                         #ident_select_upper_camel_case::#field_ident_upper_camel_case(
                             <
                                 <
@@ -5030,7 +5032,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     }
                 },
             );
-            quote::quote! {
+            quote! {
                 let select_default_all_with_max_page_size = postgresql_crud::NotEmptyUniqueVec::try_new(vec![
                     #content_ts
                 ]).expect("5e82ac66-c7d7-4e1c-8800-b2bb75b0d0cc");
@@ -5038,7 +5040,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         };
         let generate_primary_key_field_type_as_postgresql_type_primary_key_method_call_ts =
             |method_ts: &dyn quote::ToTokens, parameters_ts: &dyn quote::ToTokens| {
-                quote::quote! {
+                quote! {
                     <
                         #primary_key_field_type
                         as
@@ -5051,7 +5053,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         let primary_key_field_type_read_into_table_type_declaration_el_primary_key_field_ident_clone_ts =
             generate_primary_key_field_type_as_postgresql_type_primary_key_method_call_ts(
                 &ReadIntoTableTypeDeclarationSnakeCase,
-                &quote::quote! {el_adcc8db3},
+                &quote! {el_adcc8db3},
             );
         let (
             primary_key_field_type_read_only_ids_into_read_el_fdc88812_primary_key_field_ident_ts,
@@ -5070,29 +5072,19 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 )
             };
             (
+                generate_read_only_ids_into_read_ts(&quote! {el_fdc88812.#primary_key_field_ident}),
+                generate_read_only_ids_into_read_ts(&quote! {el_43ab7fb5.#primary_key_field_ident}),
+                generate_read_only_ids_into_read_ts(&quote! {el_bf356906.#primary_key_field_ident}),
+                generate_read_only_ids_into_read_ts(&quote! {el_80a93892.#primary_key_field_ident}),
+                generate_read_only_ids_into_read_ts(&quote! {el_adf2b4c4.#primary_key_field_ident}),
                 generate_read_only_ids_into_read_ts(
-                    &quote::quote! {el_fdc88812.#primary_key_field_ident},
+                    &quote! {read_only_ids_from_try_create_one.#primary_key_field_ident},
                 ),
                 generate_read_only_ids_into_read_ts(
-                    &quote::quote! {el_43ab7fb5.#primary_key_field_ident},
+                    &quote! {read_only_ids_current_element.#primary_key_field_ident},
                 ),
                 generate_read_only_ids_into_read_ts(
-                    &quote::quote! {el_bf356906.#primary_key_field_ident},
-                ),
-                generate_read_only_ids_into_read_ts(
-                    &quote::quote! {el_80a93892.#primary_key_field_ident},
-                ),
-                generate_read_only_ids_into_read_ts(
-                    &quote::quote! {el_adf2b4c4.#primary_key_field_ident},
-                ),
-                generate_read_only_ids_into_read_ts(
-                    &quote::quote! {read_only_ids_from_try_create_one.#primary_key_field_ident},
-                ),
-                generate_read_only_ids_into_read_ts(
-                    &quote::quote! {read_only_ids_current_element.#primary_key_field_ident},
-                ),
-                generate_read_only_ids_into_read_ts(
-                    &quote::quote! {read_only_ids_returned_from_create_one.#primary_key_field_ident},
+                    &quote! {read_only_ids_returned_from_create_one.#primary_key_field_ident},
                 ),
             )
         };
@@ -5100,9 +5092,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             let method_call_ts =
                 generate_primary_key_field_type_as_postgresql_type_primary_key_method_call_ts(
                     &ReadOnlyIdsIntoUpdateSnakeCase,
-                    &quote::quote! {read_only_ids_current_element.#primary_key_field_ident},
+                    &quote! {read_only_ids_current_element.#primary_key_field_ident},
                 );
-            quote::quote! {
+            quote! {
                 <
                     #primary_key_field_type
                     as
@@ -5130,9 +5122,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             let current_field_type = &element.field_type;
                             let maybe_dot_clone_ts = match &should_add_dot_clone {
                                 ShouldAddDotClone::False => proc_macro2::TokenStream::new(),
-                                ShouldAddDotClone::True => quote::quote! {.clone()},
+                                ShouldAddDotClone::True => quote! {.clone()},
                             };
-                            quote::quote! {
+                            quote! {
                                 #current_field_ident: <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(
                                     #read_only_ids_content_ts.#current_field_ident #maybe_dot_clone_ts.expect("f967434c-f45a-47f9-a289-36ef99d80e33"),
                                     #create_content_ts.#current_field_ident #maybe_dot_clone_ts
@@ -5148,18 +5140,18 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     &ShouldAddDotClone::False,
                 ),
                 generate_field_ident_read_only_ids_merged_with_create_into_option_value_read_ts(
-                    &quote::quote! {read_only_ids_from_try_create_one},
-                    &quote::quote! {ident_create},
+                    &quote! {read_only_ids_from_try_create_one},
+                    &quote! {ident_create},
                     &ShouldAddDotClone::False,
                 ),
                 generate_field_ident_read_only_ids_merged_with_create_into_option_value_read_ts(
-                    &quote::quote! {read_only_ids_returned_from_create_one},
-                    &quote::quote! {ident_create_default},
+                    &quote! {read_only_ids_returned_from_create_one},
+                    &quote! {ident_create_default},
                     &ShouldAddDotClone::False,
                 ),
                 generate_field_ident_read_only_ids_merged_with_create_into_option_value_read_ts(
-                    &quote::quote! {read_only_ids_returned_from_create_one},
-                    &quote::quote! {ident_create},
+                    &quote! {read_only_ids_returned_from_create_one},
+                    &quote! {ident_create},
                     &ShouldAddDotClone::True,
                 ),
             )
@@ -5168,20 +5160,20 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             generate_fields_named_without_primary_key_with_comma_ts(
                 &|element: &macros_helpers::SynFieldWrapper| {
                     let current_field_ident = &element.field_ident;
-                    quote::quote! {
+                    quote! {
                         #current_field_ident: None
                     }
                 },
             );
         let select_default_all_with_max_page_size_clone_ts =
-            quote::quote! {select_default_all_with_max_page_size.clone()};
+            quote! {select_default_all_with_max_page_size.clone()};
 
         let common_read_only_ids_returned_from_create_one_ts = {
-            let primary_key_read_ts = quote::quote! {primary_key_read};
-            let primary_key_read_clone_ts = quote::quote! {primary_key_read.clone()};
+            let primary_key_read_ts = quote! {primary_key_read};
+            let primary_key_read_clone_ts = quote! {primary_key_read.clone()};
             let value_initialization_ts =
                 generate_import_path_value_initialization_ts(&primary_key_read_clone_ts);
-            quote::quote! {
+            quote! {
                 let #CommonReadOnlyIdsReturnedFromCreateOneSnakeCase = {
                     let read_only_ids_from_try_create_one = generate_read_only_ids_from_try_create_one_default(&#UrlSnakeCase, &table_initialization).await;
                     let primary_key_read = #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_ts;
@@ -5226,11 +5218,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         let current_field_ident = &element.field_ident;
                         let current_field_type = &element.field_type;
                         if field_ident == current_field_ident {
-                            quote::quote! {
+                            quote! {
                                 #current_field_ident: #content_ts
                             }
                         } else {
-                            quote::quote! {
+                            quote! {
                                 #current_field_ident: <
                                     <#current_field_type as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultOptionSomeVecOneEl
                                 >::default_option_some_vec_one_el()
@@ -5265,7 +5257,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     let field_ident = &el_51b56762.field_ident;
                     let initialization_variable_name_ts = generate_initialization_variable_name_ts(field_ident);
                     let format_content_ts = generate_quotes::double_quotes_ts(&format!("{el_8f39799f}_{field_ident}"));
-                    quote::quote! {
+                    quote! {
                         let #initialization_variable_name_ts = add_table_postfix(#format_content_ts);
                     }
                 }));
@@ -5275,7 +5267,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             let field_ident = &el_785024b5.field_ident;
                             let initialization_variable_name_ts =
                                 generate_initialization_variable_name_ts(field_ident);
-                            quote::quote! {&#initialization_variable_name_ts,}
+                            quote! {&#initialization_variable_name_ts,}
                         },
                     ),
                 );
@@ -5336,7 +5328,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             &table_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_el_regular_expression_name,
         ]);
         let select_default_all_with_max_page_size_cloned_clone_ts =
-            quote::quote! {select_default_all_with_max_page_size_cloned.clone()};
+            quote! {select_default_all_with_max_page_size_cloned.clone()};
         let read_only_ids_to_two_dimensional_vec_read_inner_acc_fields_ts =
             generate_fields_named_without_primary_key_without_comma_ts(
                 &|element: &macros_helpers::SynFieldWrapper| {
@@ -5351,7 +5343,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 let current_field_ident = &el_0dfa76d6.field_ident;
                                 let current_field_type = &el_0dfa76d6.field_type;
                                 if field_ident == current_field_ident {
-                                    quote::quote! {
+                                    quote! {
                                         if let Some(value_a5f7e6cd) = &common_read_only_ids_returned_from_create_one.#current_field_ident {
                                             for el_b3522b7d in <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(value_a5f7e6cd) {
                                                 for _ in el_b3522b7d {
@@ -5365,7 +5357,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 }
                             },
                         );
-                    quote::quote! {
+                    quote! {
                         let #field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_snake_case = {
                             let mut acc_458cda9e = Vec::new();
                             #ident_create_defaults_for_column_read_only_ids_to_two_dimensional_vec_read_inner_ts
@@ -5383,7 +5375,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         let value_initialization_ts = generate_import_path_value_initialization_ts(
                             &postgresql_crud_default_option_some_vec_one_el_call_ts,
                         );
-                        quote::quote! {
+                        quote! {
                             #current_field_ident: el_f108da5a.#current_field_ident.as_ref().map_or_else(
                                 || Some(#value_initialization_ts),
                                 <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_option_some_vec_one_el
@@ -5391,7 +5383,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         }
                     },
                 );
-            quote::quote! {
+            quote! {
                 async fn generate_read_only_ids_current_elements(
                     url: &str,
                     current_table: &str,
@@ -5479,11 +5471,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &|element: &macros_helpers::SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let field_type = &element.field_type;
-                    let ident_create_content_ts = generate_ident_create_content_el_id_ts(
-                        field_ident,
-                        &quote::quote! {el_03a4f4ee},
-                    );
-                    quote::quote! {
+                    let ident_create_content_ts =
+                        generate_ident_create_content_el_id_ts(field_ident, &quote! {el_03a4f4ee});
+                    quote! {
                         for el_fce0969c in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#OptionVecCreateSnakeCase().unwrap_or(Vec::new())
                             .chunks(10)
                             .map(Vec::from)
@@ -5607,19 +5597,17 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     }
                 },
             );
-            quote::quote! {#create_many_tests_ts}
+            quote! {#create_many_tests_ts}
         };
         let create_one_tests_ts = {
             let create_one_tests_ts = generate_fields_named_without_primary_key_without_comma_ts(
                 &|element: &macros_helpers::SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let field_type = &element.field_type;
-                    let ident_create_content_ts = generate_ident_create_content_el_id_ts(
-                        field_ident,
-                        &quote::quote! {el_7632d698},
-                    );
+                    let ident_create_content_ts =
+                        generate_ident_create_content_el_id_ts(field_ident, &quote! {el_7632d698});
                     let value_initialization_ts = generate_import_path_value_initialization_ts(&primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_ts);
-                    quote::quote! {
+                    quote! {
                         for el_7632d698 in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#OptionVecCreateSnakeCase().unwrap_or(Vec::new()) {
                             let table_create_one_cloned = table_create_one.clone();
                             let url_cloned = url.clone();
@@ -5668,11 +5656,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     }
                 },
             );
-            quote::quote! {#create_one_tests_ts}
+            quote! {#create_one_tests_ts}
         };
         let add_create_one_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts =
             |content_ts: &dyn quote::ToTokens| {
-                quote::quote! {
+                quote! {
                     let read_only_ids_from_try_create_one = generate_read_only_ids_from_try_create_one_default(
                         &url_cloned,
                         &current_table
@@ -5695,7 +5683,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             //todo additional read_many checks
             let test_read_many_by_non_existent_primary_keys_ts = {
                 let content_ts = add_create_one_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
-                    quote::quote! {
+                    quote! {
                         assert!(
                             generate_try_read_many_order_by_primary_key_with_big_pagination(
                                 &url_cloned,
@@ -5725,7 +5713,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         );
                     }
                 });
-                quote::quote! {
+                quote! {
                     for el_30614c66 in [1,2] {
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
@@ -5738,7 +5726,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             };
             let test_read_many_by_equal_to_created_primary_keys_ts = {
                 let content_ts = add_create_one_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
-                    quote::quote! {
+                    quote! {
                         let ident_vec_create = std::iter::repeat_n(
                             ident_create_default_cloned.clone(),//todo maybe remove
                             el_a636d084
@@ -5844,7 +5832,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         );
                     }
                 });
-                quote::quote! {
+                quote! {
                     for el_a636d084 in [1,2] {
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
@@ -5858,7 +5846,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             };
             let generate_read_only_ids_merged_with_create_into_where_assert_eq_ts =
                 |ident_where_many_try_new_parameters_content_ts: &dyn quote::ToTokens| {
-                    quote::quote! {
+                    quote! {
                         assert_eq!(
                             vec![
                                 #ident_read_upper_camel_case {
@@ -5884,13 +5872,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 };
             let generate_option_vec_create_call_unwrap_or_vec_ts =
                 |_: &syn::Ident, field_type: &syn::Type| {
-                    quote::quote! {
+                    quote! {
                         <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#OptionVecCreateSnakeCase().unwrap_or(Vec::new())
                     }
                 };
             let generate_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_ts =
                 |field_ident: &syn::Ident, field_type: &syn::Type| {
-                    quote::quote! {
+                    quote! {
                         <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#OptionVecCreateSnakeCase()
                         .filter(|el_bba28182| !el_bba28182.is_empty())
                         .unwrap_or_else(|| vec![ident_create_default.#field_ident.clone()])
@@ -5898,7 +5886,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 };
             let generate_postgresql_type_option_vec_where_greater_than_test_unwrap_or_else_vec_call_ts =
                 |_: &syn::Ident, field_type: &syn::Type| {
-                    quote::quote! {
+                    quote! {
                         <#field_type as #import_path::PostgresqlTypeTestCases>::#PostgresqlTypeOptionVecWhereGreaterThanTestSnakeCase()
                         .map_or_else(Vec::new, Into::into)
                     }
@@ -5922,7 +5910,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 generate_table_test_name_field_ident_ts(test_name, field_ident);
                             let ident_create_content_ts = generate_create_content_ts(field_ident);
                             let content_ts = generate_content_ts(element);
-                            quote::quote! {
+                            quote! {
                                 for #ElementSnakeCase in #method_call_ts {
                                     let current_table = #table_test_name_field_ident_ts.clone();
                                     let url_cloned = url.clone();
@@ -6010,7 +5998,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         },
                     )
                 };
-            let some_primary_key_where_initialization_ts = quote::quote! {
+            let some_primary_key_where_initialization_ts = quote! {
                 Some(
                     generate_postgresql_type_where_try_new_primary_key(
                         postgresql_crud::LogicalOperator::And,
@@ -6045,7 +6033,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                             postgresql_crud_macros_common::EqualOrEqualUsingFields::Equal => &ReadOnlyIdsMergedWithCreateIntoWhereEqualSnakeCase,
                                             postgresql_crud_macros_common::EqualOrEqualUsingFields::EqualUsingFields => &ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSnakeCase
                                         };
-                                        quote::quote!{
+                                        quote!{
                                             <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::#method_ts(
                                                 read_only_ids_returned_from_create_one.#current_field_ident.clone().expect("11c3740b-7c3c-4dd5-b468-71bfa2f10892"),
                                                 ident_create.#current_field_ident.clone()
@@ -6053,10 +6041,10 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                         }
                                     };
                                     match &equal_or_equal_using_fields {
-                                        postgresql_crud_macros_common::EqualOrEqualUsingFields::Equal => generate_some_postgresql_type_where_try_new_and_ts(&quote::quote!{
+                                        postgresql_crud_macros_common::EqualOrEqualUsingFields::Equal => generate_some_postgresql_type_where_try_new_and_ts(&quote!{
                                             vec![#method_content_ts]
                                         }),
-                                        postgresql_crud_macros_common::EqualOrEqualUsingFields::EqualUsingFields => quote::quote!{
+                                        postgresql_crud_macros_common::EqualOrEqualUsingFields::EqualUsingFields => quote!{
                                             Some(#import_path::PostgresqlTypeWhere::new(
                                                 #import_path::LogicalOperator::And,
                                                 #method_content_ts
@@ -6083,12 +6071,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     if current_field_ident == primary_key_field_ident {
                         some_primary_key_where_initialization_ts.clone()
                     } else if current_field_ident == field_ident {
-                        generate_some_postgresql_type_where_try_new_and_ts(&quote::quote! {vec![el_48a3d976]})
+                        generate_some_postgresql_type_where_try_new_and_ts(&quote! {vec![el_48a3d976]})
                     } else {
                         none_ts.clone()
                     }
                 }));
-                quote::quote! {
+                quote! {
                     if let Some(value_d5cd3c70) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoOptionVecWhereEqualToJsonFieldSnakeCase(
                         read_only_ids_returned_from_create_one.#field_ident.clone().expect("65cef584-1427-482f-9c42-574630badedf"),
                         ident_create.#field_ident.clone()
@@ -6116,7 +6104,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                             some_primary_key_where_initialization_ts.clone()
                                         } else if current_field_ident == field_ident {
                                             generate_some_postgresql_type_where_try_new_and_ts(
-                                                &quote::quote! {vec![el_39d1fb5d]},
+                                                &quote! {vec![el_39d1fb5d]},
                                             )
                                         } else {
                                             none_ts.clone()
@@ -6124,7 +6112,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                     },
                                 ),
                             );
-                        quote::quote! {
+                        quote! {
                             if let Some(value_b02d763d) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#CreateIntoPostgresqlTypeOptionVecWhereDimensionOneEqualSnakeCase(
                                 ident_create.#field_ident.clone()
                             ) {
@@ -6141,7 +6129,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 &|field_ident: &syn::Ident| {
                     generate_ident_create_content_ts(
                         field_ident,
-                        &quote::quote! {#ElementSnakeCase.#CreateSnakeCase},
+                        &quote! {#ElementSnakeCase.#CreateSnakeCase},
                     )
                 },
                 &|element: &macros_helpers::SynFieldWrapper| {
@@ -6152,12 +6140,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         if current_field_ident == primary_key_field_ident {
                             some_primary_key_where_initialization_ts.clone()
                         } else if current_field_ident == field_ident {
-                            generate_some_postgresql_type_where_try_new_and_ts(&quote::quote! {vec![value_60baba1f]})
+                            generate_some_postgresql_type_where_try_new_and_ts(&quote! {vec![value_60baba1f]})
                         } else {
                             none_ts.clone()
                         }
                     }));
-                    quote::quote! {
+                    quote! {
                         if let Some(value_60baba1f) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#ReadOnlyIdsMergedWithTableTypeDeclarationIntoPostgresqlTypeOptionWhereGreaterThanSnakeCase(
                             #ElementSnakeCase.variant,
                             read_only_ids_returned_from_create_one.#field_ident.clone().expect("c8d34556-5a81-4c63-8e26-c79021eb876c"),
@@ -6186,12 +6174,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             if current_field_ident == primary_key_field_ident {
                                 some_primary_key_where_initialization_ts.clone()
                             } else if current_field_ident == field_ident {
-                                generate_some_postgresql_type_where_try_new_and_ts(&quote::quote! {vec![el_3efa0bb4]})
+                                generate_some_postgresql_type_where_try_new_and_ts(&quote! {vec![el_3efa0bb4]})
                             } else {
                                 none_ts.clone()
                             }
                         }));
-                        quote::quote! {
+                        quote! {
                             if let Some(value_bb67b871) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_snake_case(
                                 read_only_ids_returned_from_create_one.#field_ident.clone().expect("2ed000a5-cf70-4df1-903a-c1f6d224e926"),
                                 ident_create.#field_ident.clone()
@@ -6222,12 +6210,12 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         if current_field_ident == primary_key_field_ident {
                             some_primary_key_where_initialization_ts.clone()
                         } else if current_field_ident == field_ident {
-                            generate_some_postgresql_type_where_try_new_and_ts(&quote::quote! {vec![el_c09ef321]})
+                            generate_some_postgresql_type_where_try_new_and_ts(&quote! {vec![el_c09ef321]})
                         } else {
                             none_ts.clone()
                         }
                     }));
-                    quote::quote! {
+                    quote! {
                         if let Some(value_f825e068) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#CreateIntoPostgresqlJsonTypeOptionVecWhereLengthEqualSnakeCase(
                             ident_create.#field_ident.clone()
                         ) {
@@ -6252,13 +6240,13 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 some_primary_key_where_initialization_ts.clone()
                             }
                             else if current_field_ident == field_ident {
-                                generate_some_postgresql_type_where_try_new_and_ts(&quote::quote!{vec![el_527b546b]})
+                                generate_some_postgresql_type_where_try_new_and_ts(&quote!{vec![el_527b546b]})
                             } else {
                                 none_ts.clone()
                             }
                         })
                     );
-                    quote::quote!{
+                    quote!{
                         if let Some(value_cd4aa374) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#CreateIntoPostgresqlJsonTypeOptionVecWhereLengthGreaterThanSnakeCase(
                             ident_create.#field_ident.clone()
                         ) {
@@ -6293,7 +6281,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                     some_primary_key_where_initialization_ts.clone()
                                 }
                                 else if current_field_ident == field_ident {
-                                    generate_some_postgresql_type_where_try_new_and_ts(&quote::quote!{match el_feacc53b {
+                                    generate_some_postgresql_type_where_try_new_and_ts(&quote!{match el_feacc53b {
                                         #import_path::SingleOrMultiple::Multiple(multiple) => multiple.into_vec().into_iter().collect(),
                                         #import_path::SingleOrMultiple::Single(single) => std::iter::once(single).collect(),
                                     }})
@@ -6302,7 +6290,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 }
                             })
                         );
-                        quote::quote!{
+                        quote!{
                             if let Some(value_0b85c066) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#method_ts(
                                 read_only_ids_returned_from_create_one.#field_ident.clone().expect("df01c8ac-63e3-42f7-aae4-018c7958c00d"),
                                 ident_create.#field_ident.clone()
@@ -6342,7 +6330,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     )
                 )
             };
-            quote::quote! {
+            quote! {
                 #test_read_many_by_non_existent_primary_keys_ts
                 #test_read_many_by_equal_to_created_primary_keys_ts
                 #read_only_ids_merged_with_create_into_where_equal_ts
@@ -6364,7 +6352,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_el_regular_expression_ts
             }
         };
-        let read_one_tests_ts = quote::quote! {
+        let read_one_tests_ts = quote! {
             acc_9189f86e.push({
                 let table_read_one_cloned = table_read_one.clone();
                 let url_cloned = url.clone();
@@ -6390,7 +6378,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                             fields_without_primary_key.len() > 1;
                         let maybe_previous_read_ts =
                             if is_fields_without_primary_key_len_greater_than_one {
-                                quote::quote! {
+                                quote! {
                                     let previous_read = itertools::Itertools::sorted_by(
                                         generate_try_read_many_order_by_primary_key_with_big_pagination(
                                             &url_cloned,
@@ -6440,9 +6428,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                     let current_field_ident = &syn_field_wrapper.field_ident;
                                     let current_field_type = &syn_field_wrapper.field_type;
                                     if field_ident == current_field_ident {
-                                        quote::quote! {#current_field_ident: Some(<#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::update_to_read_only_ids(&update))}
+                                        quote! {#current_field_ident: Some(<#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::update_to_read_only_ids(&update))}
                                     } else {
-                                        quote::quote! {#current_field_ident: None}
+                                        quote! {#current_field_ident: None}
                                     }
                                 },
                             );
@@ -6452,12 +6440,10 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                     let current_field_ident = &syn_field_wrapper.field_ident;
                                     if field_ident == current_field_ident {
                                         let value_initialization_ts =
-                                            generate_import_path_value_initialization_ts(
-                                                &quote::quote! {
-                                                    #UpdateSnakeCase.clone()
-                                                },
-                                            );
-                                        quote::quote! {Some(#value_initialization_ts)}
+                                            generate_import_path_value_initialization_ts(&quote! {
+                                                #UpdateSnakeCase.clone()
+                                            });
+                                        quote! {Some(#value_initialization_ts)}
                                     } else {
                                         none_ts.clone()
                                     }
@@ -6472,7 +6458,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                             generate_import_path_value_initialization_ts(&{
                                                 let current_field_type =
                                                     &syn_field_wrapper.field_type;
-                                                quote::quote! {
+                                                quote! {
                                                     <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::previous_read_merged_with_option_update_into_read(
                                                         <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_option_some_vec_one_el(
                                                             &read_only_ids_current_element.#current_field_ident.clone().expect("96213542-59eb-4767-b120-d9ba575087c8")
@@ -6481,11 +6467,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                                     )
                                                 }
                                             });
-                                        quote::quote! {
+                                        quote! {
                                             #current_field_ident: Some(#value_initialization_ts)
                                         }
                                     } else {
-                                        quote::quote! {
+                                        quote! {
                                             #current_field_ident: el_a6bc6b2f.#current_field_ident
                                         }
                                     }
@@ -6494,7 +6480,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         let expected_read_many_ts =
                             if is_fields_without_primary_key_len_greater_than_one {
                                 let value_initialization_ts = generate_import_path_value_initialization_ts(&primary_key_field_type_read_only_is_into_read_read_only_ids_current_el_primary_key_field_ident_ts);
-                                quote::quote! {
+                                quote! {
                                     previous_read.into_iter().map(|el_a6bc6b2f| #ident_read_upper_camel_case {
                                         #primary_key_field_ident: Some(#value_initialization_ts),
                                         #ident_read_fields_initialization_without_primary_key_after_update_one_ts
@@ -6502,7 +6488,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                 }
                             } else {
                                 let value_initialization_ts = generate_import_path_value_initialization_ts(&primary_key_field_type_read_only_is_into_read_read_only_ids_current_el_primary_key_field_ident_ts);
-                                quote::quote! {
+                                quote! {
                                     vec![
                                         #ident_read_upper_camel_case {
                                             #primary_key_field_ident: Some(#value_initialization_ts),
@@ -6511,7 +6497,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                     ]
                                 }
                             };
-                        quote::quote! {
+                        quote! {
                             for (index_7f181188, read_only_ids_current_element) in generate_read_only_ids_current_elements(
                                 &url,
                                 &table_update_many,
@@ -6613,7 +6599,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         }
                     },
                 );
-            quote::quote! {#update_many_only_one_column_tests_ts}
+            quote! {#update_many_only_one_column_tests_ts}
         };
         let update_one_tests_ts = {
             let update_one_only_one_column_tests_ts =
@@ -6622,7 +6608,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         let field_ident = &el_d82ff77f.field_ident;
                         let field_type = &el_d82ff77f.field_type;
                         let maybe_previous_read_ts = if fields_without_primary_key.len() > 1 {
-                            quote::quote! {
+                            quote! {
                                 let previous_read = generate_ident_try_read_one_handle_primary_key(
                                     &url_cloned,
                                     #primary_key_field_type_read_only_is_into_read_read_only_ids_current_el_primary_key_field_ident_ts,
@@ -6644,9 +6630,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                     let current_field_ident = &element.field_ident;
                                     let current_field_type = &element.field_type;
                                     if field_ident == current_field_ident {
-                                        quote::quote! {#current_field_ident: Some(<#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::update_to_read_only_ids(&update))}
+                                        quote! {#current_field_ident: Some(<#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::update_to_read_only_ids(&update))}
                                     } else {
-                                        quote::quote! {#current_field_ident: None}
+                                        quote! {#current_field_ident: None}
                                     }
                                 },
                             );
@@ -6657,9 +6643,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                     if field_ident == current_field_ident {
                                         let value_initialization_ts =
                                             generate_import_path_value_initialization_ts(
-                                                &quote::quote! {#UpdateSnakeCase.clone()},
+                                                &quote! {#UpdateSnakeCase.clone()},
                                             );
-                                        quote::quote! {Some(#value_initialization_ts)}
+                                        quote! {Some(#value_initialization_ts)}
                                     } else {
                                         none_ts.clone()
                                     }
@@ -6672,36 +6658,34 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                                     let current_field_type = &element.field_type;
                                     if field_ident == current_field_ident {
                                         let value_initialization_ts =
-                                            generate_import_path_value_initialization_ts(
-                                                &quote::quote! {
+                                            generate_import_path_value_initialization_ts(&quote! {
+                                                <
+                                                    #current_field_type
+                                                    as
+                                                    postgresql_crud::PostgresqlTypeTestCases
+                                                >::previous_read_merged_with_option_update_into_read(
                                                     <
                                                         #current_field_type
                                                         as
                                                         postgresql_crud::PostgresqlTypeTestCases
-                                                    >::previous_read_merged_with_option_update_into_read(
-                                                        <
-                                                            #current_field_type
-                                                            as
-                                                            postgresql_crud::PostgresqlTypeTestCases
-                                                        >::read_only_ids_to_option_value_read_default_option_some_vec_one_el(
-                                                            &read_only_ids_current_element.#current_field_ident.clone().expect("4f19d0d2-a23f-4b77-a2bc-c7b04db7a129")
-                                                        ).expect("c7685b19-9bca-47bc-a3a5-8fc543b174a5").#ValueSnakeCase,
-                                                        Some(#UpdateSnakeCase.clone())
-                                                    )
-                                                },
-                                            );
-                                        quote::quote! {
+                                                    >::read_only_ids_to_option_value_read_default_option_some_vec_one_el(
+                                                        &read_only_ids_current_element.#current_field_ident.clone().expect("4f19d0d2-a23f-4b77-a2bc-c7b04db7a129")
+                                                    ).expect("c7685b19-9bca-47bc-a3a5-8fc543b174a5").#ValueSnakeCase,
+                                                    Some(#UpdateSnakeCase.clone())
+                                                )
+                                            });
+                                        quote! {
                                             #current_field_ident: Some(#value_initialization_ts)
                                         }
                                     } else {
-                                        quote::quote! {
+                                        quote! {
                                             #current_field_ident: previous_read.#current_field_ident
                                         }
                                     }
                                 },
                             );
                         let value_initialization_ts = generate_import_path_value_initialization_ts(&primary_key_field_type_read_only_is_into_read_read_only_ids_current_el_primary_key_field_ident_ts);
-                        quote::quote! {
+                        quote! {
                             for (index_26824592, read_only_ids_current_element) in generate_read_only_ids_current_elements(
                                 &url,
                                 &table_update_one,
@@ -6774,11 +6758,11 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         }
                     },
                 );
-            quote::quote! {#update_one_only_one_column_tests_ts}
+            quote! {#update_one_only_one_column_tests_ts}
         };
         let delete_many_tests_ts = {
             let test_delete_many_by_non_existent_primary_keys_ts = {
-                let content_ts = add_create_one_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&quote::quote! {
+                let content_ts = add_create_one_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&quote! {
                     assert!(
                         #ident::try_delete_many_handle(
                             &url_cloned,
@@ -6812,7 +6796,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         "51d14103-5122-4d96-a45c-4dd958ab3adc"
                     );
                 });
-                quote::quote! {
+                quote! {
                     for el_39819198 in [1,2] {
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
@@ -6828,9 +6812,9 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     let primary_key_field_type_read_only_ids_into_table_type_declaration_el_primary_key_field_ident_clone_ts =
                         generate_primary_key_field_type_as_postgresql_type_primary_key_method_call_ts(
                             &ReadOnlyIdsIntoTableTypeDeclarationSnakeCase,
-                            &quote::quote! {el_3bb88958.#primary_key_field_ident},
+                            &quote! {el_3bb88958.#primary_key_field_ident},
                         );
-                    quote::quote! {
+                    quote! {
                         let read_only_ids_from_try_create_many = #ident::try_create_many_handle(
                             &url_cloned,
                             #ident_create_many_parameters_upper_camel_case {
@@ -6898,7 +6882,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                         );
                     }
                 });
-                quote::quote! {
+                quote! {
                     for el_56409d32 in [1,2] {
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
@@ -6911,14 +6895,14 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                     };
                 }
             };
-            quote::quote! {
+            quote! {
                 #test_delete_many_by_non_existent_primary_keys_ts
                 #test_delete_many_by_primary_keys_ts
             }
         };
         let delete_one_tests_ts = {
             let value_initialization_ts = generate_import_path_value_initialization_ts(&primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_ts);
-            quote::quote! {
+            quote! {
                 acc_9189f86e.push({
                     let table_delete_one_cloned = table_delete_one.clone();
                     let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
@@ -6980,7 +6964,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
                 });
             }
         };
-        quote::quote! {
+        quote! {
             #[cfg(test)]
             mod #ident_tests_snake_case {
                 use super::*;
@@ -7315,7 +7299,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
         &ident_tests_ts,
         &macros_helpers::FormatWithCargofmt::True,
     );
-    let common_ts = quote::quote! {
+    let common_ts = quote! {
         #impl_ident_ts
         #ident_create_ts
         #ident_where_many_ts
@@ -7336,7 +7320,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
     let generated = {
         let ident_generate_postgresql_table_mod_snake_case =
             SelfGeneratePostgresqlTableModSnakeCase::from_tokens(&ident);
-        let content_ts_1c0e3fcd = quote::quote! {
+        let content_ts_1c0e3fcd = quote! {
             #allow_clippy_arbitrary_source_item_ordering_ts
             impl #ident {
                 #(#impl_ident_vec_ts)*
@@ -7352,7 +7336,7 @@ pub fn generate_postgresql_table(input: proc_macro2::TokenStream) -> proc_macro2
             #delete_one_ts
             #ident_tests_ts
         };
-        quote::quote! {
+        quote! {
             #[allow(unused_qualifications)]
             #[allow(clippy::absolute_paths)]
             mod #ident_generate_postgresql_table_mod_snake_case {

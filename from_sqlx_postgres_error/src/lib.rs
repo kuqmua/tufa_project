@@ -11,7 +11,7 @@
 //     // sqlx_postgres_error_named_syn_variants.iter().map(|el_ea7f6dd1|{
 //     //     let field_ident = field.ident;
 //     //     let field_ty =
-//     //     quote::quote! {}
+//     //     quote! {}
 //     // }).collect::<Vec<proc_macro2::TokenStream>>();
 
 //     let field_code_occurence_new_d7be05e4_ebc4_47bc_a99c_d1143d5e4dae_ts = macros_helpers::generate_field_code_occurence_new_ts(
@@ -110,7 +110,7 @@
 //         column!(),
 //         &proc_macro_name_upper_camel_case_ident_stringified,
 //     );
-//     let generated = quote::quote! {
+//     let generated = quote! {
 //         impl From<sqlx::Error> for #ident {
 //             fn from(val: sqlx::Error) -> Self {
 //                 match val {

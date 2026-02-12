@@ -1,3 +1,4 @@
+use quote::quote;
 #[proc_macro_derive(TryFromEnv)]
 pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     use naming::parameter::{
@@ -35,13 +36,13 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             let el_ident = &el_f931deb2.ident.as_ref().expect("2ecb63c1-675f-489a-af65-a6a17c778bd6");
             let el_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_ident);
             let try_from_std_env_var_ok_self_error_named_upper_camel_case = TryFromStdEnvVarOkSelfErrorNamedUpperCamelCase::from_tokens(&el_ident);
-            quote::quote! {
+            quote! {
                 #el_ident_upper_camel_case_ts {
                     #el_ident: config_lib::#try_from_std_env_var_ok_self_error_named_upper_camel_case,
                 }
             }
         });
-        quote::quote! {
+        quote! {
             #[derive(Debug, thiserror::Error)]
             pub enum #ident_try_from_env_error_named_upper_camel_case {
                 #dotenv_upper_camel_case {
@@ -63,7 +64,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 .expect("8b79a379-2073-4415-82c6-bf7ea4b05165");
             let el_ident_upper_camel_case_ts =
                 ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_ident);
-            quote::quote! {
+            quote! {
                 Self::#el_ident_upper_camel_case_ts { #el_ident } => write!(f, "{}", #el_ident)
             }
         });
@@ -71,7 +72,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             &proc_macro2::TokenStream::new(),
             &ident_try_from_env_error_named_upper_camel_case,
             &proc_macro2::TokenStream::new(),
-            &quote::quote! {
+            &quote! {
                 match self {
                     Self::#dotenv_upper_camel_case {
                         #dotenv_snake_case
@@ -91,7 +92,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             let el_ident_quotes_upper_snake_case_string = syn::LitStr::new(&ToTokensToUpperSnakeCaseStringified::case(&el_ident), ident.span());
             let el_ident_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_ident);
             let el_ident_wrapper_upper_camel_case_ts = ToTokensToUpperCamelCaseTokenStream::case_or_panic(&el_ident);
-            quote::quote! {
+            quote! {
                 let #el_ident = {
                     let env_var_name = String::from(#el_ident_quotes_upper_snake_case_string);
                     match std::env::var(&env_var_name) {
@@ -117,7 +118,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             }
         });
         let fields_ts = fields_named.iter().map(|el_dd7dea0c| &el_dd7dea0c.ident);
-        quote::quote! {
+        quote! {
             impl #ident {
                 pub fn try_from_env() -> Result<Self, #ident_try_from_env_error_named_upper_camel_case> {
                     if let Err(error) = dotenv::dotenv() {
@@ -133,7 +134,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             }
         }
     };
-    let generated = quote::quote! {
+    let generated = quote! {
         #error_named_ts
         #display_error_named_ts
         #try_from_env_ts
