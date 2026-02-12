@@ -1,9 +1,9 @@
 use naming::{
-    AsUpperCamelCase, ColumnSnakeCase, ContainsNullByteUpperCamelCase, CreateSnakeCase,
-    DateNaiveSnakeCase, DateNaiveUpperCamelCase, DateSnakeCase, DateUpperCamelCase, DaysSnakeCase,
-    EarlierDateNotSupportedUpperCamelCase, EarliestSupportedDateSnakeCase, EndSnakeCase,
-    EndUpperCamelCase, EqualUpperCamelCase, ErrorSnakeCase,
-    ExcludedStartGreaterThanExcludedEndUpperCamelCase,
+    ArrayOfUpperCamelCase, AsUpperCamelCase, ColumnSnakeCase, ContainsNullByteUpperCamelCase,
+    CreateSnakeCase, DateNaiveSnakeCase, DateNaiveUpperCamelCase, DateSnakeCase,
+    DateUpperCamelCase, DaysSnakeCase, EarlierDateNotSupportedUpperCamelCase,
+    EarliestSupportedDateSnakeCase, EndSnakeCase, EndUpperCamelCase, EqualUpperCamelCase,
+    ErrorSnakeCase, ExcludedStartGreaterThanExcludedEndUpperCamelCase,
     ExcludedStartGreaterThanIncludedEndUpperCamelCase, ExcludedUpperCamelCase,
     GeneratePostgresqlTypesModSnakeCase, HourSnakeCase, IncludedEndCannotBeMaxUpperCamelCase,
     IncludedStartGreaterThanExcludedEndUpperCamelCase,
@@ -17,10 +17,10 @@ use naming::{
     ReadOnlyIdsMergedWithCreateIntoReadSnakeCase, ReadOnlyIdsSnakeCase,
     ReadOnlyIdsToTwoDimensionalVecReadInnerSnakeCase, ReadOnlyIdsUpperCamelCase, ReadSnakeCase,
     ReadUpperCamelCase, SecSnakeCase, SecondSnakeCase, SelfSnakeCase, SelfUpperCamelCase,
-    StartSnakeCase, StartUpperCamelCase, TableTypeDeclarationSnakeCase,
-    TableTypeDeclarationUpperCamelCase, TimeSnakeCase, TimeUpperCamelCase,
-    ToStdStringStringSnakeCase, TryNewForDeserializeSnakeCase, TryNewSnakeCase,
-    UnboundedUpperCamelCase, UpdateUpperCamelCase, ValueSnakeCase,
+    StartSnakeCase, StartUpperCamelCase, StdFmtDisplayPlusQuoteToTokens,
+    TableTypeDeclarationSnakeCase, TableTypeDeclarationUpperCamelCase, TimeSnakeCase,
+    TimeUpperCamelCase, ToStdStringStringSnakeCase, TryNewForDeserializeSnakeCase, TryNewSnakeCase,
+    UnboundedUpperCamelCase, UpdateUpperCamelCase, ValueSnakeCase, VecOfUpperCamelCase,
     parameter::{
         SelfCreateUpperCamelCase, SelfNotNullUpperCamelCase,
         SelfOriginTryNewErrorNamedUpperCamelCase,
@@ -1099,8 +1099,6 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
             current_not_null_or_nullable: &NotNullOrNullable,
             current_postgresql_type_pattern: &PostgresqlTypePattern
         | {
-            let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
-            let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
             let rust_type_name = RustTypeName::from(current_postgresql_type);
             let postgresql_type_name = PostgresqlTypeName::from(current_postgresql_type);
             let not_null_or_nullable_rust = current_not_null_or_nullable.rust();
@@ -1109,7 +1107,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                 PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                     let d1 = dimension1_not_null_or_nullable;
                     let d1_rust = dimension1_not_null_or_nullable.rust();
-                    (format!("{vec_of_upper_camel_case}{d1_rust}{rust_type_name}"), format!("{array_of_upper_camel_case}{d1}{postgresql_type_name}"))
+                    (format!("{VecOfUpperCamelCase}{d1_rust}{rust_type_name}"), format!("{ArrayOfUpperCamelCase}{d1}{postgresql_type_name}"))
                 }
             };
             format!("{not_null_or_nullable_rust}{rust_part}{AsUpperCamelCase}{current_not_null_or_nullable}{postgresql_part}")
@@ -1311,13 +1309,13 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
         } else {
             IsNotNullStandartCanBePrimaryKey::False
         };
-        let generate_start_or_end_upper_camel_case = |start_or_end: &StartOrEnd| -> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
+        let generate_start_or_end_upper_camel_case = |start_or_end: &StartOrEnd| -> &dyn StdFmtDisplayPlusQuoteToTokens {
             match &start_or_end {
                 StartOrEnd::End => &EndUpperCamelCase,
                 StartOrEnd::Start => &StartUpperCamelCase,
             }
         };
-        let generate_start_or_end_snake_case = |start_or_end: &StartOrEnd| -> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
+        let generate_start_or_end_snake_case = |start_or_end: &StartOrEnd| -> &dyn StdFmtDisplayPlusQuoteToTokens {
             match &start_or_end {
                 StartOrEnd::End => &EndSnakeCase,
                 StartOrEnd::Start => &StartSnakeCase,
@@ -1476,7 +1474,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                         }
                     })),
                     PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
-                        let generate_serialize_field_self_zero_ts = |value: &dyn naming::StdFmtDisplayPlusQuoteToTokens| generate_serialize_field_ts(&value, &quote! {&self.0.#value()});
+                        let generate_serialize_field_self_zero_ts = |value: &dyn StdFmtDisplayPlusQuoteToTokens| generate_serialize_field_ts(&value, &quote! {&self.0.#value()});
                         let hour_serialize_field_ts = generate_serialize_field_self_zero_ts(&HourSnakeCase);
                         let minute_serialize_field_ts = generate_serialize_field_self_zero_ts(&MinuteSnakeCase);
                         let second_serialize_field_ts = generate_serialize_field_self_zero_ts(&SecondSnakeCase);
@@ -1491,7 +1489,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                         }
                     })),
                     PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
-                        let generate_serialize_field_handle_ts = |value: &dyn naming::StdFmtDisplayPlusQuoteToTokens| generate_serialize_field_ts(&value, &quote! {&#self_dot_zero_ts.#value});
+                        let generate_serialize_field_handle_ts = |value: &dyn StdFmtDisplayPlusQuoteToTokens| generate_serialize_field_ts(&value, &quote! {&#self_dot_zero_ts.#value});
                         let months_serialize_field_ts = generate_serialize_field_handle_ts(&MonthsSnakeCase);
                         let days_serialize_field_ts = generate_serialize_field_handle_ts(&DaysSnakeCase);
                         let microseconds_serialize_field_ts = generate_serialize_field_handle_ts(&MicrosecondsSnakeCase);
@@ -1509,7 +1507,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             Time,
                         }
                         let generate_serialize_field_try_new_unwrap_ts = |date_or_time: &DateOrTime| {
-                            let date_or_time_ts: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &date_or_time {
+                            let date_or_time_ts: &dyn StdFmtDisplayPlusQuoteToTokens = match &date_or_time {
                                 DateOrTime::Date => &DateSnakeCase,
                                 DateOrTime::Time => &TimeSnakeCase,
                             };
@@ -1543,7 +1541,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                             Time,
                         }
                         let generate_serialize_field_try_new_unwrap_ts = |date_naive_or_time: &DateNaiveOrTime| {
-                            let date_naive_or_time_ts: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &date_naive_or_time {
+                            let date_naive_or_time_ts: &dyn StdFmtDisplayPlusQuoteToTokens = match &date_naive_or_time {
                                 DateNaiveOrTime::Date => &DateNaiveSnakeCase,
                                 DateNaiveOrTime::Time => &TimeSnakeCase,
                             };
@@ -1586,12 +1584,12 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                         lifetime: serde::__private228::PhantomData<&'de ()>,
                     }
                 };
-                let start_end_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 2] = [&StartSnakeCase, &EndSnakeCase];
-                let hour_min_sec_micro_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 4] = [&HourSnakeCase, &MinSnakeCase, &SecSnakeCase, &MicroSnakeCase];
-                let hour_minute_second_microsecond_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 4] = [&HourSnakeCase, &MinuteSnakeCase, &SecondSnakeCase, &MicrosecondSnakeCase];
-                let date_time_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 2] = [&DateSnakeCase, &TimeSnakeCase];
-                let date_naive_time_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 2] = [&DateNaiveSnakeCase, &TimeSnakeCase];
-                let months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 3] = [&MonthsSnakeCase, &DaysSnakeCase, &MicrosecondsSnakeCase];
+                let start_end_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 2] = [&StartSnakeCase, &EndSnakeCase];
+                let hour_min_sec_micro_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 4] = [&HourSnakeCase, &MinSnakeCase, &SecSnakeCase, &MicroSnakeCase];
+                let hour_minute_second_microsecond_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 4] = [&HourSnakeCase, &MinuteSnakeCase, &SecondSnakeCase, &MicrosecondSnakeCase];
+                let date_time_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 2] = [&DateSnakeCase, &TimeSnakeCase];
+                let date_naive_time_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 2] = [&DateNaiveSnakeCase, &TimeSnakeCase];
+                let months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 3] = [&MonthsSnakeCase, &DaysSnakeCase, &MicrosecondsSnakeCase];
                 let serde_deserializer_deserialize_struct_visitor_ts = {
                     quote! {
                         _serde::Deserializer::deserialize_struct(
@@ -1906,7 +1904,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     (generate_fn_visit_u64_ts(&parameter_number_two), generate_fn_visit_u64_ts(&parameter_number_three), generate_fn_visit_u64_ts(&parameter_number_four))
                 };
                 let (fn_visit_str_value_start_end_ts, fn_visit_str_value_hour_min_sec_micro_ts, fn_visit_str_value_hour_minute_second_microsecond_ts, fn_visit_str_value_date_time_ts, fn_visit_str_value_date_naive_time_ts, fn_visit_str_value_months_days_microseconds_ts) = {
-                    let generate_fn_visit_str_ts = |vec_ts: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
+                    let generate_fn_visit_str_ts = |vec_ts: &[&dyn StdFmtDisplayPlusQuoteToTokens]| {
                         let fields_ts = vec_ts.iter().enumerate().map(|(index_e1c5acfd, el_29343926)| {
                             let el_double_quotes_ts = generate_quotes::double_quotes_ts(&el_29343926);
                             let field_index_name_ts = generate_field_index_ts(index_e1c5acfd);
@@ -1937,7 +1935,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     )
                 };
                 let (fn_visit_bytes_start_end_ts, fn_visit_bytes_hour_min_sec_micro_ts, fn_visit_bytes_hour_minute_second_microsecond_ts, fn_visit_bytes_date_time_ts, fn_visit_bytes_date_naive_time_ts, fn_visit_bytes_months_days_microseconds_ts) = {
-                    let generate_fn_visit_bytes_ts = |vec_ts: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
+                    let generate_fn_visit_bytes_ts = |vec_ts: &[&dyn StdFmtDisplayPlusQuoteToTokens]| {
                         let fields_ts = vec_ts.iter().enumerate().map(|(index_545c3b1e, el_1dbc37ab)| {
                             let b_el_double_quotes_ts = format!("b{}", generate_quotes::double_quotes_stringified(&el_1dbc37ab)).parse::<proc_macro2::TokenStream>().expect("c76c976b-9009-43d2-8d4b-1ec559b76008");
                             let field_index_name_ts = generate_field_index_ts(index_545c3b1e);
@@ -2092,7 +2090,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                         )
                     };
                     let (match_field_initialization_hour_min_sec_micro_ts, match_field_initialization_start_end_ts, match_field_initialization_hour_minute_second_microsecond_ts, match_field_initialization_date_time_ts, match_field_initialization_date_naive_time_ts, match_field_initialization_months_days_microseconds_ts) = {
-                        let generate_match_field_initialization_ts = |vec_ts: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
+                        let generate_match_field_initialization_ts = |vec_ts: &[&dyn StdFmtDisplayPlusQuoteToTokens]| {
                             let fields_initialization_ts = vec_ts.iter().enumerate().map(|(index_e1adef1a, el_f8a9e25b)| {
                                 let field_name_double_quotes_ts = generate_quotes::double_quotes_stringified(&el_f8a9e25b);
                                 let field_index_ts = generate_field_index_ts(index_e1adef1a);
@@ -2179,7 +2177,7 @@ pub fn generate_postgresql_types(input_ts: &proc_macro2::TokenStream) -> proc_ma
                     )
                 };
                 let (const_fields_start_end_ts, const_fields_sqlx_types_chrono_naive_time_ts, const_fields_sqlx_types_time_time_ts, const_fields_sqlx_types_chrono_naive_date_time_ts, const_fields_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts, const_fields_sqlx_postgres_types_pg_interval_ts) = {
-                    let generate_const_fields_ts = |vec_ts: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
+                    let generate_const_fields_ts = |vec_ts: &[&dyn StdFmtDisplayPlusQuoteToTokens]| {
                         let field_names_ts = vec_ts.iter().map(|el_391d76e4| generate_quotes::double_quotes_ts(&el_391d76e4));
                         quote! {
                             #[doc(hidden)]
