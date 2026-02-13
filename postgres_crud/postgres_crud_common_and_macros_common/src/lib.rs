@@ -1,6 +1,6 @@
 use naming::{AndSc, NotSc, OrSc};
 use proc_macro2::TokenStream as Ts2;
-use quote::quote;
+use quote::{ToTokens, quote};
 use std::fmt::{Display, Formatter, Result as StdFmtResult};
 
 pub trait DefaultOptionSomeVecOneEl: Sized {
@@ -65,7 +65,7 @@ impl DefaultOptionSomeVecOneEl for LogicalOperator {
         Self::default()
     }
 }
-impl quote::ToTokens for LogicalOperator {
+impl ToTokens for LogicalOperator {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match *self {
             Self::And => quote! {And},
@@ -92,7 +92,7 @@ impl PostgresTypeGreaterThanVariant {
         }
     }
 }
-impl quote::ToTokens for PostgresTypeGreaterThanVariant {
+impl ToTokens for PostgresTypeGreaterThanVariant {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match *self {
             Self::EqualNotGreaterThan => quote! {EqualNotGreaterThan},
@@ -118,7 +118,7 @@ impl PostgresJsonTypeLengthGreaterThanVariant {
         }
     }
 }
-impl quote::ToTokens for PostgresJsonTypeLengthGreaterThanVariant {
+impl ToTokens for PostgresJsonTypeLengthGreaterThanVariant {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match *self {
             Self::EqualNotLengthGreaterThan => quote! {EqualNotLengthGreaterThan},

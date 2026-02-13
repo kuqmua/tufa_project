@@ -65,7 +65,7 @@ use naming::{
         TrySelfHandleSc, TrySelfSc, UpdateQueryPartSelfSc,
     },
 };
-use quote::quote;
+use quote::{ToTokens, quote};
 use std::{
     fmt::{Display, Formatter, Result as StdFmtResult},
     iter::once,
@@ -121,7 +121,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
         False,
         True,
     }
-    impl quote::ToTokens for ShouldAddBorrow {
+    impl ToTokens for ShouldAddBorrow {
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
             match &self {
                 Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
@@ -534,40 +534,37 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
     //todo must remove this and use trait type instead
     let primary_key_field_type_table_type_declaration_ts =
         SelfTableTypeDeclarationUcc::from_type_last_segment(&primary_key_field.field_type);
-    let gen_as_postgres_type_ts = |field_type: &dyn quote::ToTokens| {
+    let gen_as_postgres_type_ts = |field_type: &dyn ToTokens| {
         quote! {<#field_type as postgres_crud::PostgresType>::}
     };
     let primary_key_field_type_as_postgres_type_ts =
         gen_as_postgres_type_ts(&primary_key_field_type);
-    let gen_as_postgres_type_tokens_ts =
-        |field_type: &dyn quote::ToTokens, tokens: &dyn quote::ToTokens| {
-            let as_postgres_type_ts = gen_as_postgres_type_ts(&field_type);
-            quote! {#as_postgres_type_ts #tokens}
-        };
-    // let gen_as_postgres_type_table_type_declaration_ts = |field_type: &dyn quote::ToTokens| gen_as_postgres_type_tokens_ts(&field_type, &TableTypeDeclarationUcc);
+    let gen_as_postgres_type_tokens_ts = |field_type: &dyn ToTokens, tokens: &dyn ToTokens| {
+        let as_postgres_type_ts = gen_as_postgres_type_ts(&field_type);
+        quote! {#as_postgres_type_ts #tokens}
+    };
+    // let gen_as_postgres_type_table_type_declaration_ts = |field_type: &dyn ToTokens| gen_as_postgres_type_tokens_ts(&field_type, &TableTypeDeclarationUcc);
     // let primary_key_field_type_as_postgres_type_table_type_declaration_ts = gen_as_postgres_type_table_type_declaration_ts(&primary_key_field_type);
     let gen_as_postgres_type_create_ts =
-        |field_type: &dyn quote::ToTokens| gen_as_postgres_type_tokens_ts(&field_type, &CreateUcc);
+        |field_type: &dyn ToTokens| gen_as_postgres_type_tokens_ts(&field_type, &CreateUcc);
     let gen_as_postgres_type_select_ts =
-        |field_type: &dyn quote::ToTokens| gen_as_postgres_type_tokens_ts(&field_type, &SelectUcc);
+        |field_type: &dyn ToTokens| gen_as_postgres_type_tokens_ts(&field_type, &SelectUcc);
     let primary_key_field_type_as_postgres_type_select_ts =
         gen_as_postgres_type_select_ts(&primary_key_field_type);
     let gen_as_postgres_type_where_ts =
-        |field_type: &dyn quote::ToTokens| gen_as_postgres_type_tokens_ts(&field_type, &WhereUcc);
+        |field_type: &dyn ToTokens| gen_as_postgres_type_tokens_ts(&field_type, &WhereUcc);
     let primary_key_field_type_as_postgres_type_where_ts =
         gen_as_postgres_type_where_ts(&primary_key_field_type);
     let gen_as_postgres_type_read_ts =
-        |field_type: &dyn quote::ToTokens| gen_as_postgres_type_tokens_ts(&field_type, &ReadUcc);
-    let gen_as_postgres_type_read_only_ids_ts = |field_type: &dyn quote::ToTokens| {
-        gen_as_postgres_type_tokens_ts(&field_type, &ReadOnlyIdsUcc)
-    };
+        |field_type: &dyn ToTokens| gen_as_postgres_type_tokens_ts(&field_type, &ReadUcc);
+    let gen_as_postgres_type_read_only_ids_ts =
+        |field_type: &dyn ToTokens| gen_as_postgres_type_tokens_ts(&field_type, &ReadOnlyIdsUcc);
     let primary_key_field_type_as_postgres_type_read_ts =
         gen_as_postgres_type_read_ts(&primary_key_field_type);
     let gen_as_postgres_type_update_ts =
-        |field_type: &dyn quote::ToTokens| gen_as_postgres_type_tokens_ts(&field_type, &UpdateUcc);
-    let gen_as_postgres_type_update_for_query_ts = |field_type: &dyn quote::ToTokens| {
-        gen_as_postgres_type_tokens_ts(&field_type, &UpdateForQueryUcc)
-    };
+        |field_type: &dyn ToTokens| gen_as_postgres_type_tokens_ts(&field_type, &UpdateUcc);
+    let gen_as_postgres_type_update_for_query_ts =
+        |field_type: &dyn ToTokens| gen_as_postgres_type_tokens_ts(&field_type, &UpdateForQueryUcc);
     let primary_key_field_type_as_postgres_type_read_ucc =
         quote! {<#primary_key_field_type as postgres_crud::#PostgresTypeUcc>::#ReadUcc};
     let ident_read_only_ids_ucc = SelfReadOnlyIdsUcc::from_tokens(&ident);
@@ -596,7 +593,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
     let primary_key_field_type_update_for_query_ts =
         &SelfUpdateForQueryUcc::from_type_last_segment(primary_key_field_type);
     let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
-    let gen_from_handle_ts = |ident_ts: &dyn quote::ToTokens, content_ts: &dyn quote::ToTokens| {
+    let gen_from_handle_ts = |ident_ts: &dyn ToTokens, content_ts: &dyn ToTokens| {
         quote! {
             fn #FromHandleSc(#ValueSc: #ident_ts) -> Self {
                 #content_ts
@@ -713,7 +710,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
             let serde_json_to_string_schemars_schema_for_generic_unwrap_ts = {
                 let gen_field_type_as_postgres_crud_create_table_column_query_part_create_table_query_part_ts =
                     |field_type: &syn::Type, field_ident: &syn::Ident, is_primary_key: bool| {
-                        let is_primary_key_ts: &dyn quote::ToTokens =
+                        let is_primary_key_ts: &dyn ToTokens =
                             if is_primary_key { &TrueSc } else { &FalseSc };
                         let field_ident_double_quotes_ts =
                             gen_quotes::double_quotes_ts(&field_ident);
@@ -827,8 +824,8 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
         }
     };
     let wrap_into_axum_response_ts =
-        |axum_json_content_ts: &dyn quote::ToTokens,
-         status_code_ts: &dyn quote::ToTokens,
+        |axum_json_content_ts: &dyn ToTokens,
+         status_code_ts: &dyn ToTokens,
          should_add_return: &ShouldAddReturn| {
             let return_content_ts = match should_add_return {
                 ShouldAddReturn::False => quote! {response},
@@ -1015,14 +1012,14 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
         }
     };
     let ident_read_ucc = SelfReadUcc::from_tokens(&ident);
-    let gen_value_declaration_ts = |content_ts: &dyn quote::ToTokens| {
+    let gen_value_declaration_ts = |content_ts: &dyn ToTokens| {
         quote! {#PostgresCrudSc::#ValueUcc<#content_ts>}
     };
-    let gen_import_path_value_initialization_ts = |content_ts: &dyn quote::ToTokens| {
+    let gen_import_path_value_initialization_ts = |content_ts: &dyn ToTokens| {
         postgres_crud_macros_common::gen_value_initialization_ts(&import_path, &content_ts)
     };
     let gen_impl_postgres_crud_default_option_some_vec_one_el_for_tokens_no_lifetime_ts =
-        |current_ident: &dyn quote::ToTokens, content_ts: &dyn quote::ToTokens| {
+        |current_ident: &dyn ToTokens, content_ts: &dyn ToTokens| {
             postgres_crud_macros_common::gen_impl_postgres_crud_default_option_some_vec_one_el_ts(
                 &current_ident,
                 &proc_macro2::TokenStream::new(),
@@ -1063,7 +1060,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
             };
             let fn_create_query_part_ts = {
                 let gen_match_as_postgres_crud_postgres_type_postgres_type_create_query_part_ts =
-                    |field_type: &syn::Type, content_ts: &dyn quote::ToTokens| {
+                    |field_type: &syn::Type, content_ts: &dyn ToTokens| {
                         let as_postgres_crud_postgres_type_postgres_type_ts =
                             gen_as_postgres_type_ts(&field_type);
                         let if_write_is_err_ts = macros_helpers::gen_if_write_is_err_ts(
@@ -1112,7 +1109,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
             };
             let fn_create_query_bind_ts = {
                 let gen_query_as_postgres_crud_postgres_type_postgres_type_create_query_bind_ts =
-                    |field_type: &syn::Type, content_ts: &dyn quote::ToTokens| {
+                    |field_type: &syn::Type, content_ts: &dyn ToTokens| {
                         let as_postgres_crud_postgres_type_postgres_type_ts =
                             gen_as_postgres_type_ts(&field_type);
                         quote! {
@@ -1715,7 +1712,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
                         False,
                         True,
                     }
-                    let gen_field_ts = |field_ident: &dyn quote::ToTokens, field_type: &dyn quote::ToTokens, wrap_into_option: &WrapIntoOption| {
+                    let gen_field_ts = |field_ident: &dyn ToTokens, field_type: &dyn ToTokens, wrap_into_option: &WrapIntoOption| {
                         let field_type_ts = match &wrap_into_option {
                             WrapIntoOption::False => gen_as_postgres_type_read_only_ids_ts(&field_type),
                             WrapIntoOption::True => postgres_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&gen_as_postgres_type_read_only_ids_ts(&field_type)),
@@ -1898,13 +1895,12 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
                 &ident_update_try_new_error_named_ucc,
                 &{
                     let (left_ts, right_ts) = {
-                        let maybe_wrap_into_braces_handle_ts =
-                            |content_ts: &dyn quote::ToTokens| {
-                                postgres_crud_macros_common::maybe_wrap_into_braces_ts(
-                                    content_ts,
-                                    fields_len_without_primary_key > 1,
-                                )
-                            };
+                        let maybe_wrap_into_braces_handle_ts = |content_ts: &dyn ToTokens| {
+                            postgres_crud_macros_common::maybe_wrap_into_braces_ts(
+                                content_ts,
+                                fields_len_without_primary_key > 1,
+                            )
+                        };
                         (
                             maybe_wrap_into_braces_handle_ts(
                                 &gen_fields_named_without_primary_key_with_comma_ts(
@@ -2154,7 +2150,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
         }
     };
     let gen_match_update_query_part_primary_key_ts =
-        |operation: &Operation, content_ts: &dyn quote::ToTokens| {
+        |operation: &Operation, content_ts: &dyn ToTokens| {
             let content_ts_75b4019b =
                 gen_operation_error_initialization_eprintln_response_creation_ts(
                     operation,
@@ -2348,7 +2344,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
         }
     };
     let gen_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_ts =
-        |primary_key_type_ts: &dyn quote::ToTokens| {
+        |primary_key_type_ts: &dyn ToTokens| {
             let is_pub = true;
             let pub_handle_ts = gen_pub_handle_ts(is_pub);
             quote! {#pub_handle_ts #primary_key_field_ident: #primary_key_type_ts}
@@ -2407,16 +2403,16 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
                 #match_postgres_transaction_rollback_await_ts
             }
         };
-    let wrap_into_value_ts = |content_ts: &dyn quote::ToTokens| {
+    let wrap_into_value_ts = |content_ts: &dyn ToTokens| {
         quote! {
             let #ValueSc = {
                 #content_ts
             };
         }
     };
-    let gen_fetch_ts = |executor_name_ts: &dyn quote::ToTokens,
-                        value_handle_ts: &dyn quote::ToTokens,
-                        try_next_error_initialization_ts: &dyn quote::ToTokens,
+    let gen_fetch_ts = |executor_name_ts: &dyn ToTokens,
+                        value_handle_ts: &dyn ToTokens,
+                        try_next_error_initialization_ts: &dyn ToTokens,
                         should_wrap_into_value: &ShouldWrapIntoValue| {
         let content_ts = quote! {
             let mut #RowsSc = #BindedQuerySc.fetch(#executor_name_ts.as_mut());
@@ -2441,9 +2437,9 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
         }
     };
     let gen_fetch_one_ts =
-        |executor_name_ts: &dyn quote::ToTokens,
-         value_handle_ts: &dyn quote::ToTokens,
-         fetch_one_error_initialization_ts: &dyn quote::ToTokens| {
+        |executor_name_ts: &dyn ToTokens,
+         value_handle_ts: &dyn ToTokens,
+         fetch_one_error_initialization_ts: &dyn ToTokens| {
             quote! {
                 match #BindedQuerySc.fetch_one(#executor_name_ts.as_mut()).await {
                     Ok(value_b27d7d79) => {
@@ -2456,9 +2452,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
             }
         };
     let gen_sqlx_row_try_get_primary_key_ts =
-        |sqlx_row_try_get_type_ts: &dyn quote::ToTokens,
-         ok_ts: &dyn quote::ToTokens,
-         err_ts: &dyn quote::ToTokens| {
+        |sqlx_row_try_get_type_ts: &dyn ToTokens, ok_ts: &dyn ToTokens, err_ts: &dyn ToTokens| {
             quote! {
                 match #sqlx_row::try_get::<
                     #sqlx_row_try_get_type_ts,
@@ -2472,7 +2466,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
             }
         };
     let wrap_content_into_postgres_transaction_begin_commit_value_ts =
-        |operation: &Operation, content_ts: &dyn quote::ToTokens| {
+        |operation: &Operation, content_ts: &dyn ToTokens| {
             let postgres_transaction_begin_ts = {
                 let content_ts_efebc55b =
                     gen_operation_error_initialization_eprintln_response_creation_ts(
@@ -2566,7 +2560,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
         };
     let gen_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_ts =
         |operation: &Operation,
-         desirable_type_ts: &dyn quote::ToTokens,
+         desirable_type_ts: &dyn ToTokens,
          type_variants_from_request_response_syn_variants: &Vec<syn::Variant>|
          -> proc_macro2::TokenStream {
             let ident_operation_response_variants_ucc =
@@ -2680,8 +2674,8 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
     };
     let gen_parameters_payload_and_default_ts =
         |operation: &Operation,
-         declaration_ts: &dyn quote::ToTokens,
-         default_init_content_ts: &dyn quote::ToTokens| {
+         declaration_ts: &dyn ToTokens,
+         default_init_content_ts: &dyn ToTokens| {
             let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
             let ident_operation_payload_ts = {
                 let (derive_clone, derive_copy) = operation.derive_clone_and_copy();
@@ -2762,12 +2756,12 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
     let std_sync_arc_combination_of_app_state_logic_traits_ts =
         quote! {std::sync::Arc<dyn #PostgresCrudSc::CombinationOfAppStateLogicTraits>};
     let gen_operation_ts = |operation: &Operation,
-                            current_additional_logic_ts: &dyn quote::ToTokens,
-                            parameters_logic_ts: &dyn quote::ToTokens,
-                            expected_updated_primary_keys_ts: &dyn quote::ToTokens,
-                            query_string_ts: &dyn quote::ToTokens,
-                            binded_query_ts: &dyn quote::ToTokens,
-                            postgres_logic_ts: &dyn quote::ToTokens|
+                            current_additional_logic_ts: &dyn ToTokens,
+                            parameters_logic_ts: &dyn ToTokens,
+                            expected_updated_primary_keys_ts: &dyn ToTokens,
+                            query_string_ts: &dyn ToTokens,
+                            binded_query_ts: &dyn ToTokens,
+                            postgres_logic_ts: &dyn ToTokens|
      -> proc_macro2::TokenStream {
         let operation_handle_sc_ts = operation.self_handle_sc_ts();
         let operation_sc_ts = operation.self_sc_ts();
@@ -2925,7 +2919,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
             };
         }
     };
-    let gen_try_operation_ts = |operation: &Operation, type_variants_from_request_response_syn_variants: &[syn::Variant], result_ok_type_ts: &dyn quote::ToTokens, desirable_from_or_try_from_desirable_with_serialize_deserialize_ts: &dyn quote::ToTokens| {
+    let gen_try_operation_ts = |operation: &Operation, type_variants_from_request_response_syn_variants: &[syn::Variant], result_ok_type_ts: &dyn ToTokens, desirable_from_or_try_from_desirable_with_serialize_deserialize_ts: &dyn ToTokens| {
         let try_operation_sc_ts = operation.try_self_sc_ts();
         let try_operation_handle_sc_ts = operation.try_self_handle_sc_ts();
         let ident_try_operation_error_named_ucc = gen_ident_try_operation_error_named_ucc(operation);
@@ -3073,15 +3067,14 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
             }
         }
     };
-    let gen_match_ident_read_only_ids_as_from_row_from_row_ts =
-        |content_ts: &dyn quote::ToTokens| {
-            quote! {
-                match <#ident_read_only_ids_ucc as sqlx::FromRow<'_, sqlx::postgres::PgRow>>::from_row(&value_b27d7d79) {
-                    Ok(value_33759463) => value_33759463,
-                    Err(#error_0_ts) => #content_ts
-                }
+    let gen_match_ident_read_only_ids_as_from_row_from_row_ts = |content_ts: &dyn ToTokens| {
+        quote! {
+            match <#ident_read_only_ids_ucc as sqlx::FromRow<'_, sqlx::postgres::PgRow>>::from_row(&value_b27d7d79) {
+                Ok(value_33759463) => value_33759463,
+                Err(#error_0_ts) => #content_ts
             }
-        };
+        }
+    };
     let gen_create_update_delete_many_fetch_ts =
         |create_or_update_or_delete_many: &CreateOrUpdateOrDeleteMany| {
             let current_operation = Operation::from(create_or_update_or_delete_many);
@@ -4086,7 +4079,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
                             column!(),
                         );
                     let gen_match_update_query_part_primary_key_operation_ts =
-                        |content_ts: &dyn quote::ToTokens| {
+                        |content_ts: &dyn ToTokens| {
                             gen_match_update_query_part_primary_key_ts(&operation, &content_ts)
                         };
                     let fields_named_without_primary_key_update_assignment_ts =
@@ -4878,7 +4871,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
         let underscore_unused_ts = quote! {_unused};
         //todo maybe remove it?\
         let gen_some_postgres_type_where_try_new_ts =
-            |logical_operator_ts: &dyn quote::ToTokens, content_ts: &dyn quote::ToTokens| {
+            |logical_operator_ts: &dyn ToTokens, content_ts: &dyn ToTokens| {
                 quote! {
                     Some(
                         #import_path::PostgresTypeWhere::try_new(
@@ -4888,7 +4881,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
                     )
                 }
             };
-        let gen_some_postgres_type_where_try_new_and_ts = |content_ts: &dyn quote::ToTokens| {
+        let gen_some_postgres_type_where_try_new_and_ts = |content_ts: &dyn ToTokens| {
             gen_some_postgres_type_where_try_new_ts(
                 &quote! {#import_path::LogicalOperator::And},
                 content_ts,
@@ -4947,7 +4940,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
             }
         };
         let gen_primary_key_field_type_as_postgres_type_primary_key_method_call_ts =
-            |method_ts: &dyn quote::ToTokens, parameters_ts: &dyn quote::ToTokens| {
+            |method_ts: &dyn ToTokens, parameters_ts: &dyn ToTokens| {
                 quote! {
                     <
                         #primary_key_field_type
@@ -4973,7 +4966,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
             primary_key_field_type_read_only_is_into_read_read_only_ids_current_el_primary_key_field_ident_ts,
             primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_ts,
         ) = {
-            let gen_read_only_ids_into_read_ts = |content_ts: &dyn quote::ToTokens| {
+            let gen_read_only_ids_into_read_ts = |content_ts: &dyn ToTokens| {
                 gen_primary_key_field_type_as_postgres_type_primary_key_method_call_ts(
                     &ReadOnlyIdsIntoReadSc,
                     &content_ts,
@@ -5021,8 +5014,8 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
                 True,
             }
             let gen_field_ident_read_only_ids_merged_with_create_into_option_value_read_ts =
-                |read_only_ids_content_ts: &dyn quote::ToTokens,
-                 create_content_ts: &dyn quote::ToTokens,
+                |read_only_ids_content_ts: &dyn ToTokens,
+                 create_content_ts: &dyn ToTokens,
                  should_add_dot_clone: &ShouldAddDotClone| {
                     gen_fields_named_without_primary_key_with_comma_ts(
                         &|element: &macros_helpers::SynFieldWrapper| {
@@ -5119,30 +5112,28 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
                 };
             }
         };
-        let gen_ident_create_content_ts =
-            |field_ident: &syn::Ident, content_ts: &dyn quote::ToTokens| {
-                gen_fields_named_without_primary_key_with_comma_ts(
-                    &|element: &macros_helpers::SynFieldWrapper| {
-                        let current_field_ident = &element.field_ident;
-                        let current_field_type = &element.field_type;
-                        if field_ident == current_field_ident {
-                            quote! {
-                                #current_field_ident: #content_ts
-                            }
-                        } else {
-                            quote! {
-                                #current_field_ident: <
-                                    <#current_field_type as postgres_crud::PostgresType>::Create as postgres_crud::DefaultOptionSomeVecOneEl
-                                >::default_option_some_vec_one_el()
-                            }
+        let gen_ident_create_content_ts = |field_ident: &syn::Ident, content_ts: &dyn ToTokens| {
+            gen_fields_named_without_primary_key_with_comma_ts(
+                &|element: &macros_helpers::SynFieldWrapper| {
+                    let current_field_ident = &element.field_ident;
+                    let current_field_type = &element.field_type;
+                    if field_ident == current_field_ident {
+                        quote! {
+                            #current_field_ident: #content_ts
                         }
-                    },
-                )
-            };
-        let gen_ident_create_content_el_id_ts =
-            |field_ident: &syn::Ident, el_ts: &dyn quote::ToTokens| {
-                gen_ident_create_content_ts(field_ident, &el_ts)
-            };
+                    } else {
+                        quote! {
+                            #current_field_ident: <
+                                <#current_field_type as postgres_crud::PostgresType>::Create as postgres_crud::DefaultOptionSomeVecOneEl
+                            >::default_option_some_vec_one_el()
+                        }
+                    }
+                },
+            )
+        };
+        let gen_ident_create_content_el_id_ts = |field_ident: &syn::Ident, el_ts: &dyn ToTokens| {
+            gen_ident_create_content_ts(field_ident, &el_ts)
+        };
         let gen_ident_create_content_el_ts =
             |field_ident: &syn::Ident| gen_ident_create_content_ts(field_ident, &ElementSc);
         let gen_table_test_name_field_ident_ts = |test_name: &str, field_ident: &syn::Ident| {
@@ -5563,7 +5554,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
             quote! {#create_one_tests_ts}
         };
         let add_create_one_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts =
-            |content_ts: &dyn quote::ToTokens| {
+            |content_ts: &dyn ToTokens| {
                 quote! {
                     let read_only_ids_from_try_create_one = gen_read_only_ids_from_try_create_one_default(
                         &url_cloned,
@@ -5749,7 +5740,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
                 }
             };
             let gen_read_only_ids_merged_with_create_into_where_assert_eq_ts =
-                |ident_where_many_try_new_parameters_content_ts: &dyn quote::ToTokens| {
+                |ident_where_many_try_new_parameters_content_ts: &dyn ToTokens| {
                     quote! {
                         assert_eq!(
                             vec![
@@ -5937,7 +5928,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
                                     some_primary_key_where_initialization_ts.clone()
                                 } else if current_field_ident == field_ident {
                                     let method_content_ts = {
-                                        let method_ts: &dyn quote::ToTokens = match &equal_or_equal_using_fields {
+                                        let method_ts: &dyn ToTokens = match &equal_or_equal_using_fields {
                                             postgres_crud_macros_common::EqualOrEqualUsingFields::Equal => &ReadOnlyIdsMergedWithCreateIntoWhereEqualSc,
                                             postgres_crud_macros_common::EqualOrEqualUsingFields::EqualUsingFields => &ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc
                                         };
@@ -6180,7 +6171,7 @@ pub fn gen_postgres_table(input: proc_macro2::TokenStream) -> proc_macro2::Token
                 read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_contains_el_regular_expression_ts,
             ) = {
                 let gen_read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_filter_ts =
-                    |table_name: &str, method_ts: &dyn quote::ToTokens| {
+                    |table_name: &str, method_ts: &dyn ToTokens| {
                         gen_read_test_ts(
                     table_name,
                     &gen_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_ts,

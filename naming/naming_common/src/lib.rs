@@ -1,5 +1,5 @@
 use proc_macro2::TokenStream as Ts2;
-use quote::quote;
+use quote::{ToTokens, quote};
 use std::fmt::Display;
 //todo maybe add another generic - trait casing. and ToUccString and others would implement it like .to_case::<UpperCamel>()
 pub trait AsRefStrToUccStr {
@@ -142,7 +142,7 @@ pub trait ToTokensToUccStr {
 }
 impl<T> ToTokensToUccStr for T
 where
-    T: quote::ToTokens,
+    T: ToTokens,
 {
     fn case(&self) -> String {
         to_ucc_str(&quote! {#self}.to_string())
@@ -164,7 +164,7 @@ pub trait ToTokensToScStr {
 }
 impl<T> ToTokensToScStr for T
 where
-    T: quote::ToTokens,
+    T: ToTokens,
 {
     fn case(&self) -> String {
         to_sc_str(&quote! {#self}.to_string())
@@ -186,7 +186,7 @@ pub trait ToTokensToUpperScStr {
 }
 impl<T> ToTokensToUpperScStr for T
 where
-    T: quote::ToTokens,
+    T: ToTokens,
 {
     fn case(&self) -> String {
         to_upper_sc_str(&quote! {#self}.to_string())

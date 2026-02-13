@@ -15,7 +15,7 @@ use naming::{
 };
 use postgres_crud_macros_common::{ImportPath, IsStandartNotNull, NotNullOrNullable};
 use proc_macro2::TokenStream as Ts2;
-use quote::quote;
+use quote::{ToTokens, quote};
 use rayon::iter::{IntoParallelRefIterator as _, ParallelIterator as _};
 use std::{
     collections::HashSet,
@@ -127,7 +127,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
         StdStringStringAsJsonbString,
         UuidUuidAsJsonbString,
     }
-    impl quote::ToTokens for PostgresJsonType {
+    impl ToTokens for PostgresJsonType {
         fn to_tokens(&self, tokens: &mut Ts2) {
             self.to_string()
                 .parse::<Ts2>()
@@ -588,18 +588,18 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
             True,
         }
         // struct SchemaObjectTokenStream<'lifetime> {
-        //     metadata: &'lifetime dyn quote::ToTokens,
-        //     instance_type: &'lifetime dyn quote::ToTokens,
-        //     format: &'lifetime dyn quote::ToTokens,
-        //     enum_values: &'lifetime dyn quote::ToTokens,
-        //     const_value: &'lifetime dyn quote::ToTokens,
-        //     subschemas: &'lifetime dyn quote::ToTokens,
-        //     number: &'lifetime dyn quote::ToTokens,
-        //     string: &'lifetime dyn quote::ToTokens,
-        //     array: &'lifetime dyn quote::ToTokens,
-        //     object: &'lifetime dyn quote::ToTokens,
-        //     reference: &'lifetime dyn quote::ToTokens,
-        //     extensions: &'lifetime dyn quote::ToTokens,
+        //     metadata: &'lifetime dyn ToTokens,
+        //     instance_type: &'lifetime dyn ToTokens,
+        //     format: &'lifetime dyn ToTokens,
+        //     enum_values: &'lifetime dyn ToTokens,
+        //     const_value: &'lifetime dyn ToTokens,
+        //     subschemas: &'lifetime dyn ToTokens,
+        //     number: &'lifetime dyn ToTokens,
+        //     string: &'lifetime dyn ToTokens,
+        //     array: &'lifetime dyn ToTokens,
+        //     object: &'lifetime dyn ToTokens,
+        //     reference: &'lifetime dyn ToTokens,
+        //     extensions: &'lifetime dyn ToTokens,
         // }
         // enum SchemarsJsonSchema<'schema_object_ts_tifetime> {
         //     Derive,
@@ -668,7 +668,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
         let postgres_crud_common_default_option_some_vec_one_el_call_ts = token_patterns::PostgresCrudCommonDefaultOptionSomeVecOneElCall;
         let postgres_crud_common_default_option_some_vec_one_el_max_page_size_call_ts = token_patterns::PostgresCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall;
 
-        let gen_import_path_value_initialization_ts = |content_ts: &dyn quote::ToTokens| postgres_crud_macros_common::gen_value_initialization_ts(&import_path, &content_ts);
+        let gen_import_path_value_initialization_ts = |content_ts: &dyn ToTokens| postgres_crud_macros_common::gen_value_initialization_ts(&import_path, &content_ts);
         let gen_ident_ts = |current_not_null_or_nullable: &NotNullOrNullable, current_postgres_json_type_pattern: &PostgresJsonTypePattern| {
             let vec_of_ucc = VecOfUcc;
             let array_of_ucc = ArrayOfUcc;
@@ -750,7 +750,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
         let ident_standart_not_null_origin_ucc = SelfOriginUcc::from_tokens(&ident_standart_not_null_ucc);
         let ident_origin_ucc = SelfOriginUcc::from_tokens(&ident);
         let ident_read_inner_standart_not_null_alias_ts = {
-            let content_ts: &dyn quote::ToTokens = match &postgres_json_type {
+            let content_ts: &dyn ToTokens = match &postgres_json_type {
                 PostgresJsonType::StdPrimitiveI8AsJsonbNumber => &std_primitive_i8_ts,
                 PostgresJsonType::StdPrimitiveI16AsJsonbNumber => &std_primitive_i16_ts,
                 PostgresJsonType::StdPrimitiveI32AsJsonbNumber => &std_primitive_i32_ts,
@@ -769,12 +769,12 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
         };
         let ident_read_inner_ucc = SelfReadInnerUcc::from_tokens(&ident);
         let value_ident_read_inner_ts = quote! {#value_sc: #ident_read_inner_ucc};
-        let gen_pub_fn_new_value_ident_read_inner_content_ts = |content_ts: &dyn quote::ToTokens| macros_helpers::gen_pub_new_ts(
+        let gen_pub_fn_new_value_ident_read_inner_content_ts = |content_ts: &dyn ToTokens| macros_helpers::gen_pub_new_ts(
             &must_use_ts,
             &value_ident_read_inner_ts,
             &content_ts
         );
-        let gen_pub_const_fn_new_value_ident_read_inner_content_ts = |content_ts: &dyn quote::ToTokens| macros_helpers::gen_pub_const_new_ts(
+        let gen_pub_const_fn_new_value_ident_read_inner_content_ts = |content_ts: &dyn ToTokens| macros_helpers::gen_pub_const_new_ts(
             &must_use_ts,
             &value_ident_read_inner_ts,
             &content_ts
@@ -790,7 +790,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
             PostgresJsonTypePattern::ArrayDimension3 { .. } |
             PostgresJsonTypePattern::ArrayDimension4 { .. } => ConstFn::False,
         };
-        let gen_pub_new_or_fn_new_ts = |const_new_ts: &dyn quote::ToTokens, new_ts: &dyn quote::ToTokens|match maybe_const_fn {
+        let gen_pub_new_or_fn_new_ts = |const_new_ts: &dyn ToTokens, new_ts: &dyn ToTokens|match maybe_const_fn {
             ConstFn::False => gen_pub_fn_new_value_ident_read_inner_content_ts(
                 &new_ts
             ),
@@ -848,7 +848,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
             // let extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_ts = quote! {schemars::Map::default()};
             // let (instance_type_number_ts, instance_type_string_ts) = {
             //     let gen_instance_type_some_schemars_schema_single_or_vec_single_box_new_schemars_schema_instance_type = |instance_type: &schemars::schema::InstanceType| {
-            //         let instance_type_ts: &dyn quote::ToTokens = match &instance_type {
+            //         let instance_type_ts: &dyn ToTokens = match &instance_type {
             //             schemars::schema::InstanceType::Null => &NullUcc,
             //             schemars::schema::InstanceType::Boolean => &BooleanUcc,
             //             schemars::schema::InstanceType::Object => &ObjectUcc,
@@ -955,7 +955,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                 .build_struct(
                     &ident_origin_ucc,
                     &{
-                        let content_ts: &dyn quote::ToTokens = {
+                        let content_ts: &dyn ToTokens = {
                             let gen_current_ident_origin = |current_not_null_or_nullable: &NotNullOrNullable, current_postgres_json_type_pattern: &PostgresJsonTypePattern| {
                                 let value = gen_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_postgres_json_type_pattern);
                                 match &not_null_or_nullable {
@@ -1002,8 +1002,8 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 );
             let ident_origin_impl_new_self_content_ts = {
-                let gen_value_map_type_new_ts = |type_ts: &dyn quote::ToTokens| quote! {#value_sc.map(#type_ts::#new_sc)};
-                let gen_array_dimensions_initialization_ts = |type_ts: &dyn quote::ToTokens| match &not_null_or_nullable {
+                let gen_value_map_type_new_ts = |type_ts: &dyn ToTokens| quote! {#value_sc.map(#type_ts::#new_sc)};
+                let gen_array_dimensions_initialization_ts = |type_ts: &dyn ToTokens| match &not_null_or_nullable {
                     NotNullOrNullable::NotNull => quote! {#value_sc.into_iter().map(#type_ts::#new_sc).collect()},
                     NotNullOrNullable::Nullable => gen_value_map_type_new_ts(&type_ts),
                 };
@@ -1362,7 +1362,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                 let content_ts = ArrayDimension::try_from(postgres_json_type_pattern).map_or_else(
                     |()| Ts2::new(),
                     |array_dimension| {
-                        let content_ts: &dyn quote::ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
+                        let content_ts: &dyn ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
                             postgres_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &postgres_crud_common_default_option_some_vec_one_el_call_ts,
                             postgres_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &postgres_crud_common_default_option_some_vec_one_el_max_page_size_call_ts,
                         };
@@ -1833,7 +1833,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                 &ident_read_only_ids_ucc,
                 &{
                     let std_option_option_unit_ts = postgres_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&quote! {()});
-                    let vec_ts = |value: &dyn quote::ToTokens| postgres_crud_macros_common::gen_std_vec_vec_tokens_declaration_ts(&value);
+                    let vec_ts = |value: &dyn ToTokens| postgres_crud_macros_common::gen_std_vec_vec_tokens_declaration_ts(&value);
                     let content_ts = if matches!(&postgres_json_type, PostgresJsonType::UuidUuidAsJsonbString) {
                         match &postgres_json_type_pattern {
                             PostgresJsonTypePattern::Standart => {
@@ -2278,20 +2278,20 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                 &{
                     let content_ts = quote! {#value_sc.0.0};
                     let gen_match_el_zero_ts = |
-                        match_ts: &dyn quote::ToTokens,
-                        value_ts: &dyn quote::ToTokens,
-                        current_content_ts: &dyn quote::ToTokens
+                        match_ts: &dyn ToTokens,
+                        value_ts: &dyn ToTokens,
+                        current_content_ts: &dyn ToTokens
                     | {
                         quote! {#match_ts.map(|#value_ts| #value_ts.0 #current_content_ts)}
                     };
                     let gen_into_iter_map_el_collect_ts = |
-                        el_ts: &dyn quote::ToTokens,
-                        current_content_ts: &dyn quote::ToTokens
+                        el_ts: &dyn ToTokens,
+                        current_content_ts: &dyn ToTokens
                     | {
                         quote! {.into_iter().map(|#el_ts|#current_content_ts).collect()}
                     };
                     let gen_into_iter_map_el_collect_not_null_or_nullable_ts = |
-                        el_ts: &dyn quote::ToTokens,
+                        el_ts: &dyn ToTokens,
                         current_not_null_or_nullable: &NotNullOrNullable
                     | {
                         gen_into_iter_map_el_collect_ts(
@@ -2307,10 +2307,10 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                         )
                     };
                     let gen_into_iter_map_el_collect_not_null_or_nullable_content_ts = |
-                        el_ts: &dyn quote::ToTokens,
-                        value_ts: &dyn quote::ToTokens,
+                        el_ts: &dyn ToTokens,
+                        value_ts: &dyn ToTokens,
                         current_not_null_or_nullable: &NotNullOrNullable,
-                        current_content_ts: &dyn quote::ToTokens
+                        current_content_ts: &dyn ToTokens
                     | {
                         match &current_not_null_or_nullable {
                             NotNullOrNullable::NotNull => gen_into_iter_map_el_collect_ts(
@@ -2459,7 +2459,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                     )
                     .parse::<Ts2>()
                     .expect("f1bcde08-085f-4c98-9a1e-1fb583c9fb6e");
-                    let type_ts: &dyn quote::ToTokens = match &create_for_query_or_update_for_query {
+                    let type_ts: &dyn ToTokens = match &create_for_query_or_update_for_query {
                         CreateForQueryOrUpdateForQuery::CreateForQuery => &create_for_query_ucc,
                         CreateForQueryOrUpdateForQuery::UpdateForQuery => &update_for_query_ucc,
                     };
@@ -2535,10 +2535,10 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                         let gen_index_number_ts = |index_c1128a3e: usize|format!("index_{index_c1128a3e}").parse::<Ts2>().expect("afbe7252-745f-40ad-9bf4-1bb20377b5a5");
                         let gen_value_number_ts = |index_0abe6039: usize|format!("value{index_0abe6039}").parse::<Ts2>().expect("568d8eb6-df23-4f57-afdd-ef392e3b7f72");
                         let gen_for_in_ts = |
-                            index_ts: &dyn quote::ToTokens,
-                            value_ts: &dyn quote::ToTokens,
-                            enumerate_ts: &dyn quote::ToTokens,
-                            content_ts_aaf03124: &dyn quote::ToTokens,
+                            index_ts: &dyn ToTokens,
+                            value_ts: &dyn ToTokens,
+                            enumerate_ts: &dyn ToTokens,
+                            content_ts_aaf03124: &dyn ToTokens,
                         |quote!{
                             for (#index_ts, #value_ts) in #enumerate_ts.0.into_iter().enumerate() {
                                 #content_ts_aaf03124
@@ -2548,7 +2548,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                             index_0082bcdf: usize,
                             index_e81c6d28: usize,
                             index_b7b230b2: usize,
-                            content_ts_d575a40c: &dyn quote::ToTokens,
+                            content_ts_d575a40c: &dyn ToTokens,
                         |gen_for_in_ts(
                             &gen_index_number_ts(index_0082bcdf),
                             &gen_value_number_ts(index_e81c6d28),
@@ -2556,9 +2556,9 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                             &content_ts_d575a40c
                         );
                         let gen_if_let_some_ts = |
-                            some_ts: &dyn quote::ToTokens,
-                            equal_ts: &dyn quote::ToTokens,
-                            content_ts_9292e3cf: &dyn quote::ToTokens,
+                            some_ts: &dyn ToTokens,
+                            equal_ts: &dyn ToTokens,
+                            content_ts_9292e3cf: &dyn ToTokens,
                         |quote!{
                             if let Some(#some_ts) = #equal_ts.0 {
                                 #content_ts_9292e3cf
@@ -2567,7 +2567,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                         let gen_if_let_some_equals_value_index_dot_zero_ts = |
                             index_c4552aef: usize,
                             index_9f1fbc9f: usize,
-                            content_ts_832b20d5: &dyn quote::ToTokens,
+                            content_ts_832b20d5: &dyn ToTokens,
                         |gen_if_let_some_ts(
                             &gen_value_number_ts(index_c4552aef),
                             &gen_value_number_ts(index_9f1fbc9f),
@@ -2801,7 +2801,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                 }
             };
             let option_vec_create_ts = {
-                let gen_some_acc_content_ts = |current_not_null_or_nullable: &NotNullOrNullable, current_ident_ts: &dyn quote::ToTokens| {
+                let gen_some_acc_content_ts = |current_not_null_or_nullable: &NotNullOrNullable, current_ident_ts: &dyn ToTokens| {
                     let (new_content_ts, maybe_acc_push_none_ts) = match &current_not_null_or_nullable {
                         NotNullOrNullable::NotNull => (quote! {vec![el_88131059.0.into()]}, Ts2::new()),
                         NotNullOrNullable::Nullable => (quote! {Some(el_88131059.0.into())}, quote! {acc_50e99088.push(<Self as #import_path::PostgresJsonType>::Create::new(None));}),
@@ -2915,7 +2915,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
             };
             let read_only_ids_to_two_dimensional_vec_read_inner_ts = {
                 let (has_len_greater_than_one_ts, has_len_greater_than_one_for_for_ts) = {
-                    let gen_ts = |content_ts: &dyn quote::ToTokens| {
+                    let gen_ts = |content_ts: &dyn ToTokens| {
                         quote! {let has_len_greater_than_one = #content_ts;}
                     };
                     (
@@ -2932,7 +2932,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                         }}),
                     )
                 };
-                let gen_acc_content_handle_ts = |current_ident_ts: &dyn quote::ToTokens, has_len_greater_than_one_content_ts: &dyn quote::ToTokens| {
+                let gen_acc_content_handle_ts = |current_ident_ts: &dyn ToTokens, has_len_greater_than_one_content_ts: &dyn ToTokens| {
                     let current_ident_read_only_ids_ucc = SelfReadOnlyIdsUcc::from_tokens(&current_ident_ts);
                     let option_additional_content_ts = {
                         let el_82c7dc0a_clone_ts = quote! {el_82c7dc0a.clone()};
@@ -2941,7 +2941,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                         let (first_content_ts, second_content_ts) = match &not_null_or_nullable {
                             NotNullOrNullable::NotNull => (first, second),
                             NotNullOrNullable::Nullable => {
-                                let gen_ts = |content_ts: &dyn quote::ToTokens| quote! {Some(#content_ts)};
+                                let gen_ts = |content_ts: &dyn ToTokens| quote! {Some(#content_ts)};
                                 (gen_ts(&first), gen_ts(&second))
                             }
                         };
@@ -3074,7 +3074,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                 let value_initialization_ts = gen_import_path_value_initialization_ts(&if matches!(&postgres_json_type, PostgresJsonType::UuidUuidAsJsonbString) {
                     let gen_iter_or_match_ts = |
                         current_not_null_or_nullable: &NotNullOrNullable,
-                        current_ident_ts: &dyn quote::ToTokens,
+                        current_ident_ts: &dyn ToTokens,
                         update_current_not_null_or_nullable: &NotNullOrNullable
                     | {
                         let value_zero_zero_ts = quote! {#value_sc.0.0};
@@ -3212,7 +3212,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                 quote! {#ident_table_type_declaration_ucc(#content_ts)}
             };
             let read_only_ids_merged_with_create_into_where_equal_ts = {
-                let gen_equal_ts = |content_ts: &dyn quote::ToTokens| {
+                let gen_equal_ts = |content_ts: &dyn ToTokens| {
                     quote! {
                         where_filters::PostgresJsonTypeWhereEqual {
                             logical_operator: #import_path::LogicalOperator::Or,
@@ -3261,7 +3261,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                     let content_ts = {
                         let create_dot_zero_dot_zero = quote! {#create_sc.0.0};
                         let content_ts = {
-                            let content_ts: &dyn quote::ToTokens = match &not_null_or_nullable {
+                            let content_ts: &dyn ToTokens = match &not_null_or_nullable {
                                 NotNullOrNullable::NotNull => &create_dot_zero_dot_zero,
                                 NotNullOrNullable::Nullable => &quote! {value_1bbf74bc.0},
                             };
@@ -3323,7 +3323,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                     let content_ts = {
                         let create_dot_zero_dot_zero = quote! {#create_sc.0.0};
                         let content_ts = {
-                            let content_ts: &dyn quote::ToTokens = match &not_null_or_nullable {
+                            let content_ts: &dyn ToTokens = match &not_null_or_nullable {
                                 NotNullOrNullable::NotNull => &create_dot_zero_dot_zero,
                                 NotNullOrNullable::Nullable => &quote! {value_68880991.0},
                             };
@@ -3394,10 +3394,10 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                     PostgresJsonTypePattern::ArrayDimension1 { .. } | PostgresJsonTypePattern::ArrayDimension2 { .. } | PostgresJsonTypePattern::ArrayDimension3 { .. } | PostgresJsonTypePattern::ArrayDimension4 { .. } => gen_ts(),
                 }
             };
-            let gen_dot_checked_sub_one_ts = |content_ts: &dyn quote::ToTokens|quote!{#content_ts.checked_sub(1)};
+            let gen_dot_checked_sub_one_ts = |content_ts: &dyn ToTokens|quote!{#content_ts.checked_sub(1)};
             let gen_minus_one_is_finite_then_some_ts = |
                 f32_or_f64: F32OrF64,
-                content_ts: &dyn quote::ToTokens
+                content_ts: &dyn ToTokens
             |{
                 let minus_ts = match &f32_or_f64 {
                     F32OrF64::F32 => quote!{1.0f32},
@@ -3427,7 +3427,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                     float_32_greater_than_one_less_ts,
                     float_64_greater_than_one_less_ts,
                 ) = {
-                    let gen_greater_than_one_less_ts = |content_ts: &dyn quote::ToTokens|quote!{
+                    let gen_greater_than_one_less_ts = |content_ts: &dyn ToTokens|quote!{
                         let value_7aa498e8 = #content_ts?;
                         match #import_path::NotEmptyUniqueVec::try_new(
                             vec![
@@ -3490,8 +3490,8 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                     between_one_less_and_one_more_float_ts
                 ) = {
                     let gen_between_one_less_and_one_more_ts = |
-                        less_ts: &dyn quote::ToTokens,
-                        more_ts: &dyn quote::ToTokens
+                        less_ts: &dyn ToTokens,
+                        more_ts: &dyn ToTokens
                     |quote!{
                         if let (Some(start), Some(end)) = (#less_ts, #more_ts) {
                             match where_filters::Between::try_new(
@@ -3523,14 +3523,14 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                     };
                     (
                         {
-                            let gen_content_ts = |content_ts: &dyn quote::ToTokens|quote!{create.0.0.#content_ts(1)};
+                            let gen_content_ts = |content_ts: &dyn ToTokens|quote!{create.0.0.#content_ts(1)};
                             gen_between_one_less_and_one_more_ts(
                                 &gen_content_ts(&quote!{checked_sub}),
                                 &gen_content_ts(&quote!{checked_add})
                             )
                         },
                         {
-                            let gen_content_ts = |content_ts: &dyn quote::ToTokens|quote!{{
+                            let gen_content_ts = |content_ts: &dyn ToTokens|quote!{{
                                 let value = create.0.0 #content_ts 1.0;
                                 value.is_finite().then_some(value)
                             }};
@@ -3656,7 +3656,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                             float_32_greater_than_one_less_ts,
                             float_64_greater_than_one_less_ts,
                         ) = {
-                            let gen_greater_than_one_less_ts = |content_ts: &dyn quote::ToTokens|quote!{
+                            let gen_greater_than_one_less_ts = |content_ts: &dyn ToTokens|quote!{
                                 match #import_path::NotEmptyUniqueVec::try_new({
                                     let mut acc_f95ec4f2 = vec![];
                                     for el_ba78af60 in create.0.0 {

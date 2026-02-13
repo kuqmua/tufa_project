@@ -1,5 +1,5 @@
 use proc_macro2::TokenStream as Ts2;
-use quote::quote;
+use quote::{ToTokens, quote};
 const REGEX_VALUE: &str = "^[a-zA-Z]+$";
 #[proc_macro]
 pub fn gen_upper_camel_and_sc_str_and_ts(
@@ -64,7 +64,7 @@ pub fn gen_upper_camel_and_sc_str_and_ts(
                     .parse::<Ts2>()
                     .expect("0cc47b2e-03e2-48b8-8df3-7bbbe09de244")
             };
-            let gen_struct_declaration = |struct_name_ts: &dyn quote::ToTokens| {
+            let gen_struct_declaration = |struct_name_ts: &dyn ToTokens| {
                 quote! {
                     #[derive(Debug)]
                     pub struct #struct_name_ts;
@@ -73,7 +73,7 @@ pub fn gen_upper_camel_and_sc_str_and_ts(
             let ucc_struct_declaration_ts = gen_struct_declaration(&phrase_part_ucc_ucc_ts);
             let sc_struct_declaration_ts = gen_struct_declaration(&phrase_part_sc_ucc_ts);
             let gen_display_implementation_ts =
-                |struct_name_ts: &dyn quote::ToTokens, write_content_ts: &dyn quote::ToTokens| {
+                |struct_name_ts: &dyn ToTokens, write_content_ts: &dyn ToTokens| {
                     quote! {
                         impl std::fmt::Display for #struct_name_ts {
                             fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -91,9 +91,9 @@ pub fn gen_upper_camel_and_sc_str_and_ts(
                 &phrase_part_sc_double_quotes_ts,
             );
             let gen_to_tokens_implementation_ts =
-                |struct_name_ts: &dyn quote::ToTokens, quote_content_ts: &dyn quote::ToTokens| {
+                |struct_name_ts: &dyn ToTokens, quote_content_ts: &dyn ToTokens| {
                     quote! {
-                        impl quote::ToTokens for #struct_name_ts {
+                        impl ToTokens for #struct_name_ts {
                             fn to_tokens(&self, tokens: &mut Ts2) {
                                 quote!{#quote_content_ts}.to_tokens(tokens);
                             }
@@ -199,7 +199,7 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(
                 trait_sc_token_ucc_ts,
             )
         };
-        let gen_struct_ts = |elements_concat_value_case_double_quotes_ts: &dyn quote::ToTokens, is_ucc: bool, trait_ident_ts: &dyn quote::ToTokens| {
+        let gen_struct_ts = |elements_concat_value_case_double_quotes_ts: &dyn ToTokens, is_ucc: bool, trait_ident_ts: &dyn ToTokens| {
             let struct_ident_ts = if is_ucc {
                 quote! {#struct_ucc_ucc_ts}
             } else {
@@ -223,10 +223,10 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(
                     pub fn from_display(value: &dyn std::fmt::Display) -> Self {
                         Self::wrap(&#casing_ts(&value.to_string()))
                     }
-                    pub fn from_tokens(value: &dyn quote::ToTokens) -> Self {
+                    pub fn from_tokens(value: &dyn ToTokens) -> Self {
                         Self::wrap(&#casing_ts(&{
                             let mut tokens = Ts2::new();
-                            quote::ToTokens::to_tokens(&value, &mut tokens);
+                            ToTokens::to_tokens(&value, &mut tokens);
                             tokens
                         }.to_string()))
                     }
@@ -253,7 +253,7 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(
                         write!(f, "{}", self.0)
                     }
                 }
-                impl quote::ToTokens for #struct_ident_ts {
+                impl ToTokens for #struct_ident_ts {
                     fn to_tokens(&self, tokens: &mut Ts2) {
                         let value_str = self.to_string();
                         let value_ts = value_str.parse::<Ts2>()
@@ -261,7 +261,7 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(
                         value_ts.to_tokens(tokens);
                     }
                 }
-                pub trait #trait_ident_ts: std::fmt::Display + quote::ToTokens {}
+                pub trait #trait_ident_ts: std::fmt::Display + ToTokens {}
                 impl #trait_ident_ts for #struct_ident_ts {}
             }
         };

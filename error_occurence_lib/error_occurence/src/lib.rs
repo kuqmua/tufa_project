@@ -3,7 +3,7 @@ use naming::{
     parameter::SelfWithSerializeDeserializeUcc,
 };
 use proc_macro2::TokenStream as Ts2;
-use quote::quote;
+use quote::{ToTokens, quote};
 
 #[proc_macro_derive(
     ErrorOccurence,
@@ -99,7 +99,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 .map(|el_4ee89bd7| quote! {#el_4ee89bd7: error_occurence_lib::ToStdStringString});
             quote! {<#(#value),*>}
         };
-    let gen_enum_ident_with_serialize_deserialize_ts = |variants_ts: &dyn quote::ToTokens| {
+    let gen_enum_ident_with_serialize_deserialize_ts = |variants_ts: &dyn ToTokens| {
         quote! {
             #[derive(Debug, thiserror::Error, serde::Serialize, serde::Deserialize)]
             pub enum #ident_with_serialize_deserialize_ucc #maybe_generic_parameters_ts {
@@ -107,7 +107,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             }
         }
     };
-    let gen_impl_ident_into_serialize_deserialize_version_ts = |variants: &dyn quote::ToTokens| {
+    let gen_impl_ident_into_serialize_deserialize_version_ts = |variants: &dyn ToTokens| {
         quote! {
             impl #maybe_generic_parameters_ts #ident #maybe_generic_parameters_ts {
                 pub fn #into_serialize_deserialize_version_sc_ts(self) -> #ident_with_serialize_deserialize_ucc #maybe_generic_parameters_ts {

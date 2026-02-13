@@ -21,7 +21,7 @@ use naming::{
     },
 };
 use postgres_crud_macros_common::NotNullOrNullable;
-use quote::quote;
+use quote::{ToTokens, quote};
 use rayon::iter::{IntoParallelRefIterator as _, ParallelIterator as _};
 use std::{
     fmt::{Display, Formatter, Result as StdFmtResult},
@@ -257,7 +257,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
             }
         }
     }
-    impl quote::ToTokens for PostgresType {
+    impl ToTokens for PostgresType {
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
             self.to_string()
                 .parse::<proc_macro2::TokenStream>()
@@ -333,7 +333,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
             )
         }
     }
-    impl quote::ToTokens for PostgresTypeRange {
+    impl ToTokens for PostgresTypeRange {
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
             self.to_string()
                 .parse::<proc_macro2::TokenStream>()
@@ -999,8 +999,8 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
             SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
             SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range,
         }
-        type Handle<'lifetime> = (&'lifetime dyn quote::ToTokens, &'lifetime dyn quote::ToTokens);
-        fn gen_pg_range_conversion_ts(match_content_ts: &dyn quote::ToTokens, input_ts: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+        type Handle<'lifetime> = (&'lifetime dyn ToTokens, &'lifetime dyn ToTokens);
+        fn gen_pg_range_conversion_ts(match_content_ts: &dyn ToTokens, input_ts: &dyn ToTokens) -> proc_macro2::TokenStream {
             quote! {
                 sqlx::postgres::types::PgRange {
                     start: match #match_content_ts.start {
@@ -1045,7 +1045,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
         let import_path_non_primary_key_postgres_type_read_only_ids_ts = quote! {#import_path::NonPrimaryKeyPostgresTypeReadOnlyIds};
         let none_ts = quote!{None};
         let dot_clone_ts = quote!{.clone()};
-        let maybe_dot_clone_ts: &dyn quote::ToTokens = if matches!(&postgres_type_pattern, PostgresTypePattern::Standart) &&
+        let maybe_dot_clone_ts: &dyn ToTokens = if matches!(&postgres_type_pattern, PostgresTypePattern::Standart) &&
             matches!(&not_null_or_nullable, NotNullOrNullable::NotNull)
         {
             match &postgres_type {
@@ -1080,7 +1080,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
             &dot_clone_ts
         };
 
-        let gen_import_path_value_initialization_ts = |content_ts: &dyn quote::ToTokens| postgres_crud_macros_common::gen_value_initialization_ts(&import_path, &content_ts);
+        let gen_import_path_value_initialization_ts = |content_ts: &dyn ToTokens| postgres_crud_macros_common::gen_value_initialization_ts(&import_path, &content_ts);
 
         let gen_ident_str = |
             current_postgres_type: &PostgresType,
@@ -1127,15 +1127,15 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
             },
         );
-        let gen_ts = |content_ts: &dyn quote::ToTokens, postgres_type_or_postgres_type_test_cases: &PostgresTypeOrPostgresTypeTestCases| {
+        let gen_ts = |content_ts: &dyn ToTokens, postgres_type_or_postgres_type_test_cases: &PostgresTypeOrPostgresTypeTestCases| {
             let trait_ts = match &postgres_type_or_postgres_type_test_cases {
                 PostgresTypeOrPostgresTypeTestCases::PostgresType => quote! {PostgresType},
                 PostgresTypeOrPostgresTypeTestCases::PostgresTypeTestCases => quote! {PostgresTypeTestCases},
             };
             quote! {<#content_ts as #import_path::#trait_ts>}
         };
-        let gen_as_postgres_type_ts = |content_ts: &dyn quote::ToTokens| gen_ts(&content_ts, &PostgresTypeOrPostgresTypeTestCases::PostgresType);
-        let gen_as_postgres_type_test_cases_ts = |content_ts: &dyn quote::ToTokens| gen_ts(&content_ts, &PostgresTypeOrPostgresTypeTestCases::PostgresTypeTestCases);
+        let gen_as_postgres_type_ts = |content_ts: &dyn ToTokens| gen_ts(&content_ts, &PostgresTypeOrPostgresTypeTestCases::PostgresType);
+        let gen_as_postgres_type_test_cases_ts = |content_ts: &dyn ToTokens| gen_ts(&content_ts, &PostgresTypeOrPostgresTypeTestCases::PostgresTypeTestCases);
         let self_as_postgres_type_ts = gen_as_postgres_type_ts(&SelfUcc);
         let ident_standart_not_null_as_postgres_type_ts = gen_as_postgres_type_ts(&ident_standart_not_null_ucc);
         let ident_standart_nullable_as_postgres_type_ts = gen_as_postgres_type_ts(&ident_standart_nullable_ucc);
@@ -1214,7 +1214,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
             value.parse::<proc_macro2::TokenStream>().expect("2555843f-283f-4bc8-8c93-48e6fe68ae6a")
         };
         let gen_current_ident_origin_non_wrapping = |current_postgres_type_pattern: &PostgresTypePattern, current_not_null_or_nullable: &NotNullOrNullable| SelfOriginUcc::from_tokens(&gen_ident_ts(postgres_type, current_not_null_or_nullable, current_postgres_type_pattern));
-        let field_type_handle: &dyn quote::ToTokens = {
+        let field_type_handle: &dyn ToTokens = {
             let gen_current_ident_origin = |current_postgres_type_pattern: &PostgresTypePattern, current_not_null_or_nullable: &NotNullOrNullable| {
                 let value = gen_current_ident_origin_non_wrapping(current_postgres_type_pattern, current_not_null_or_nullable);
                 match &not_null_or_nullable {
@@ -1236,7 +1236,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 },
             }
         };
-        let gen_typical_query_bind_ts = |content_ts: &dyn quote::ToTokens| match &not_null_or_nullable {
+        let gen_typical_query_bind_ts = |content_ts: &dyn ToTokens| match &not_null_or_nullable {
             NotNullOrNullable::NotNull => quote! {
                 if let Err(er) = #QuerySc.try_bind(#content_ts) {
                     return Err(er.to_string());
@@ -1337,7 +1337,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
             let parameter_number_four = ParameterNumber::Four;
             let ident_standart_not_null_double_quotes_ts = gen_quotes::double_quotes_ts(&ident_standart_not_null_ucc);
             let ident_standart_not_null_origin_double_quotes_ts = gen_quotes::double_quotes_ts(&ident_standart_not_null_origin_ucc);
-            let gen_std_ops_bound_ts = |type_ts: &dyn quote::ToTokens| {
+            let gen_std_ops_bound_ts = |type_ts: &dyn ToTokens| {
                 quote! {std::ops::Bound<#type_ts>}
             };
             let std_ops_bound_std_primitive_i32_ts = gen_std_ops_bound_ts(&std_primitive_i32_ts);
@@ -1346,7 +1346,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
             let std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ts = gen_std_ops_bound_ts(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc);
             let std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts = gen_std_ops_bound_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc);
             let serde_serialize_derive_or_impl = {
-                let gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens = |content_ts: &dyn quote::ToTokens| {
+                let gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens = |content_ts: &dyn ToTokens| {
                     quote! {
                         #[allow(unused_qualifications)]
                         #[allow(clippy::absolute_paths)]
@@ -1366,7 +1366,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                         };
                     }
                 };
-                let gen_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4 = |value_ts: &dyn quote::ToTokens| {
+                let gen_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4 = |value_ts: &dyn ToTokens| {
                     quote! {_serde::Serializer::serialize_newtype_struct(__serializer, #ident_standart_not_null_origin_double_quotes_ts, &#self_dot_zero_ts #value_ts)}
                 };
                 let gen_serde_state_initialization_ts = |parameter_number: &ParameterNumber| {
@@ -1381,13 +1381,13 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 let serde_state_initialization_two_fields_ts = gen_serde_state_initialization_ts(&parameter_number_two);
                 let serde_state_initialization_three_fields_ts = gen_serde_state_initialization_ts(&parameter_number_three);
                 let serde_state_initialization_four_fields_ts = gen_serde_state_initialization_ts(&parameter_number_four);
-                let gen_serialize_field_ts = |field_name: &dyn Display, third_parameter_ts: &dyn quote::ToTokens| {
+                let gen_serialize_field_ts = |field_name: &dyn Display, third_parameter_ts: &dyn ToTokens| {
                     let field_name_double_quotes_ts = gen_quotes::double_quotes_ts(&field_name);
                     quote! {_serde::ser::SerializeStruct::serialize_field(&mut __serde_state, #field_name_double_quotes_ts, #third_parameter_ts)?;}
                 };
                 let serde_ser_serialize_struct_end_ts = quote! {_serde::ser::SerializeStruct::end(__serde_state)};
                 let serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_ts = {
-                    let gen_self_zero_tokens_ts = |value_ts: &dyn quote::ToTokens| {
+                    let gen_self_zero_tokens_ts = |value_ts: &dyn ToTokens| {
                         quote! {&#self_dot_zero_ts.#value_ts}
                     };
                     let start_serialize_field_ts = gen_serialize_field_ts(&StartSc, &gen_self_zero_tokens_ts(&StartSc));
@@ -1401,7 +1401,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 };
                 let impl_serde_serialize_for_postgres_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_ts = gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_ts);
                 let impl_serde_serialize_for_uuid_uuid_ts = gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&gen_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote! {.to_string()}));
-                let gen_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens = |current_ident_ts: &dyn quote::ToTokens| {
+                let gen_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens = |current_ident_ts: &dyn ToTokens| {
                     let gen_serialize_field_match_std_ops_bound_ts = |start_or_end: &StartOrEnd| {
                         let start_or_end_ts = gen_start_or_end_sc(start_or_end);
                         gen_serialize_field_ts(
@@ -1440,7 +1440,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                     | PostgresType::SqlxTypesIpnetworkIpNetworkAsInet => postgres_crud_macros_common::DeriveOrImpl::Derive,
                     PostgresType::SqlxPostgresTypesPgMoneyAsMoney => postgres_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&gen_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote! {.0}))),
                     PostgresType::SqlxTypesChronoNaiveTimeAsTime => postgres_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
-                        let gen_field_inner_type_standart_not_null_ts_as_chrono_timelike_ts = |content_ts: &dyn quote::ToTokens| {
+                        let gen_field_inner_type_standart_not_null_ts_as_chrono_timelike_ts = |content_ts: &dyn ToTokens| {
                             quote! {&(<#inner_type_standart_not_null_ts as chrono::Timelike>::#content_ts)}
                         };
                         let hour_serialize_field_ts = gen_serialize_field_ts(&HourSc, &gen_field_inner_type_standart_not_null_ts_as_chrono_timelike_ts(&quote! {hour(&self.0)}));
@@ -1500,7 +1500,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                                 DateOrTime::Time => &TimeSc,
                             };
                             gen_serialize_field_ts(&date_or_time_ts, &{
-                                let current_ident_ts: &dyn quote::ToTokens = match &date_or_time {
+                                let current_ident_ts: &dyn ToTokens = match &date_or_time {
                                     DateOrTime::Date => &sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc,
                                     DateOrTime::Time => &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc,
                                 };
@@ -1534,7 +1534,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                                 DateNaiveOrTime::Time => &TimeSc,
                             };
                             gen_serialize_field_ts(&date_naive_or_time_ts, &{
-                                let current_ident_ts: &dyn quote::ToTokens = match &date_naive_or_time {
+                                let current_ident_ts: &dyn ToTokens = match &date_naive_or_time {
                                     DateNaiveOrTime::Date => &sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc,
                                     DateNaiveOrTime::Time => &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc,
                                 };
@@ -1601,7 +1601,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                         },
                     )
                 };
-                let gen_impl_serde_deserialize_for_tokens_ts = |content_ts: &dyn quote::ToTokens| {
+                let gen_impl_serde_deserialize_for_tokens_ts = |content_ts: &dyn ToTokens| {
                     quote! {
                         #[allow(unused_qualifications)]
                         #[allow(clippy::absolute_paths)]
@@ -1643,7 +1643,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                     (gen_enum_field_ts(&parameter_number_two), gen_enum_field_ts(&parameter_number_three), gen_enum_field_ts(&parameter_number_four))
                 };
                 let (fn_expecting_struct_ident_double_quotes_ts, fn_expecting_tuple_struct_ident_double_quotes_ts, fn_expecting_field_identifier_ts) = {
-                    let gen_fn_expecting_ts = |content_ts: &dyn quote::ToTokens| {
+                    let gen_fn_expecting_ts = |content_ts: &dyn ToTokens| {
                         quote! {
                             fn expecting(&self, __f: &mut serde::__private228::Formatter<'_>) -> serde::__private228::fmt::Result {
                                 serde::__private228::Formatter::write_str(__f, #content_ts)
@@ -1653,10 +1653,10 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                     (gen_fn_expecting_ts(&struct_ident_double_quotes_ts), gen_fn_expecting_ts(&tuple_struct_ident_double_quotes_ts), gen_fn_expecting_ts(&quote! {"field identifier"}))
                 };
                 let field_0_value_ts = gen_field_index_value_ts(parameter_number_one.get_index());
-                let gen_serde_private_ok_ts = |content_ts: &dyn quote::ToTokens| {
+                let gen_serde_private_ok_ts = |content_ts: &dyn ToTokens| {
                     quote! {Ok(#content_ts)}
                 };
-                let gen_serde_private_ok_postgres_type_ts = |content_ts: &dyn quote::ToTokens| gen_serde_private_ok_ts(&quote! {#ident_standart_not_null_origin_ucc(#content_ts)});
+                let gen_serde_private_ok_postgres_type_ts = |content_ts: &dyn ToTokens| gen_serde_private_ok_ts(&quote! {#ident_standart_not_null_origin_ucc(#content_ts)});
                 let match_uuid_uuid_field_type_try_parse_ts = quote! {match #inner_type_standart_not_null_ts::try_parse(&#field_0_value_ts) {
                     Ok(value_3c0b34fb) => value_3c0b34fb,
                     Err(error) => {
@@ -1696,7 +1696,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                     (gen_origin_new_for_deserialize_ts(2), gen_origin_new_for_deserialize_ts(3))
                 };
                 let (fn_visit_newtype_struct_pg_money_ts, fn_visit_newtype_struct_uuid_ts, fn_visit_newtype_struct_mac_address_ts, fn_visit_newtype_struct_text_ts, fn_visit_newtype_struct_sqlx_types_chrono_naive_date_ts) = {
-                    let gen_fn_visit_newtype_struct_ts = |type_ts: &dyn quote::ToTokens, serde_private_ok_ts: &dyn quote::ToTokens| {
+                    let gen_fn_visit_newtype_struct_ts = |type_ts: &dyn ToTokens, serde_private_ok_ts: &dyn ToTokens| {
                         quote! {
                             #[inline]
                             fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
@@ -1716,7 +1716,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                         gen_fn_visit_newtype_struct_ts(&inner_type_standart_not_null_ts, &match_origin_try_new_for_deserialize_one_ts),
                     )
                 };
-                let gen_fields_serde_de_seq_access_next_el_initialization_ts = |vec_ts: &[&dyn quote::ToTokens]| {
+                let gen_fields_serde_de_seq_access_next_el_initialization_ts = |vec_ts: &[&dyn ToTokens]| {
                     let error_message_ts = postgres_crud_macros_common::gen_struct_ident_with_number_elements_double_quotes_ts(&ident_standart_not_null_origin_ucc, vec_ts.len());
                     let fields_initialization_ts = vec_ts.iter().enumerate().map(|(index_70b4dabd, el_9dc7f312)| {
                         let field_index_value_ts = gen_field_index_value_ts(index_70b4dabd);
@@ -1746,7 +1746,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                     fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i64_ts,
                     fn_visit_seq_sqlx_postgres_types_pg_interval_ts,
                 ) = {
-                    let gen_fn_visit_seq_ts = |content_ts: &dyn quote::ToTokens| {
+                    let gen_fn_visit_seq_ts = |content_ts: &dyn ToTokens| {
                         quote! {
                             #[inline]
                             fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
@@ -1978,7 +1978,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                     fn_visit_map_sqlx_postgres_types_pg_range_sqlx_postgres_types_pg_range_std_primitive_i64_ts,
                     fn_visit_map_sqlx_postgres_types_pg_interval_ts,
                 ) = {
-                    let gen_fn_visit_map_ts = |field_option_none_initialization_ts: &dyn quote::ToTokens, while_some_next_key_field_ts: &dyn quote::ToTokens, match_field_initialization_ts: &dyn quote::ToTokens, serde_private_ok_ts: &dyn quote::ToTokens| {
+                    let gen_fn_visit_map_ts = |field_option_none_initialization_ts: &dyn ToTokens, while_some_next_key_field_ts: &dyn ToTokens, match_field_initialization_ts: &dyn ToTokens, serde_private_ok_ts: &dyn ToTokens| {
                         quote! {
                             #[inline]
                             fn visit_map<__A>(self, mut __map: __A) -> Result<Self::Value, __A::Error>
@@ -2004,7 +2004,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                         field_option_none_initialization_sqlx_postgres_types_pg_range_std_primitive_i64_ts,
                         field_option_none_initialization_sqlx_postgres_types_pg_interval_ts,
                     ) = {
-                        let gen_field_option_none_initialization_ts = |vec_ts: &[&dyn quote::ToTokens]| {
+                        let gen_field_option_none_initialization_ts = |vec_ts: &[&dyn ToTokens]| {
                             let fields_initialization_ts = vec_ts.iter().enumerate().map(|(index_d9ee264a, el_de75f565)| {
                                 let field_index_name_ts = gen_field_index_ts(index_d9ee264a);
                                 quote! {let mut #field_index_name_ts: Option<#el_de75f565> = None;}
@@ -2036,7 +2036,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                         while_some_next_key_field_sqlx_postgres_types_pg_range_std_primitive_i64_ts,
                         while_some_next_key_field_sqlx_postgres_types_pg_interval_ts,
                     ) = {
-                        let gen_while_some_next_key_field_ts = |vec_ts: &[(&dyn Display, &dyn quote::ToTokens)]| {
+                        let gen_while_some_next_key_field_ts = |vec_ts: &[(&dyn Display, &dyn ToTokens)]| {
                             let fields_initialization_ts = vec_ts.iter().enumerate().map(|(index_2b1736c7, el_692238ce)| {
                                 let field_name_double_quotes_ts = gen_quotes::double_quotes_str(&el_692238ce.0);
                                 let field_type_ts = &el_692238ce.1;
@@ -2183,8 +2183,8 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 };
                 let gen_impl_serde_de_visitor_for_tokens_ts = |
                     should_add_de_lifetime: ShouldAddDeLifetime,
-                    current_ident_ts: &dyn quote::ToTokens,
-                    content_ts: &dyn quote::ToTokens
+                    current_ident_ts: &dyn ToTokens,
+                    content_ts: &dyn ToTokens
                 | {
                     let (
                         maybe_impl_lifetime_ts,
@@ -2222,7 +2222,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                     impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_std_primitive_i64_ts,
                     impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_interval_ts,
                 ) = {
-                    let gen_impl_serde_de_visitor_for_visitor_ts = |zero_ts: &dyn quote::ToTokens, first_ts: &dyn quote::ToTokens, second_ts: &dyn quote::ToTokens| {
+                    let gen_impl_serde_de_visitor_for_visitor_ts = |zero_ts: &dyn ToTokens, first_ts: &dyn ToTokens, second_ts: &dyn ToTokens| {
                         gen_impl_serde_de_visitor_for_tokens_ts(
                             ShouldAddDeLifetime::True,
                             &quote! {__Visitor<'de>},
@@ -2266,7 +2266,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                     impl_serde_de_visitor_for_field_visitor_ts_8c733fe0_c816_4a0e_bb13_4c2d0cd2ded6,
                     impl_serde_de_visitor_for_field_visitor_ts_f702a411_b02b_4c90_aa7f_962a698612e7,
                 ) = {
-                    let gen_impl_serde_de_visitor_for_field_visitor_ts = |content_ts: &dyn quote::ToTokens| {
+                    let gen_impl_serde_de_visitor_for_field_visitor_ts = |content_ts: &dyn ToTokens| {
                         let impl_serde_de_visitor_for_tokens_ts = gen_impl_serde_de_visitor_for_tokens_ts(
                             ShouldAddDeLifetime::False,
                             &field_visitor_ts,
@@ -2469,19 +2469,19 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote! {#std_primitive_i64_ts},
             }
         };
-        let gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts = |content_ts: &dyn quote::ToTokens| {
+        let gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts = |content_ts: &dyn ToTokens| {
             quote! {sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
                 #content_ts,
                 sqlx::types::chrono::Utc
             )}
         };
-        let gen_sqlx_types_chrono_naive_date_time_new_ts = |content_ts: &dyn quote::ToTokens| {
+        let gen_sqlx_types_chrono_naive_date_time_new_ts = |content_ts: &dyn ToTokens| {
             quote! {sqlx::types::chrono::NaiveDateTime::#NewSc(#content_ts)}
         };
-        let gen_sqlx_types_time_time_from_hms_micro_unwrap_ts = |content_ts: &dyn quote::ToTokens| {
+        let gen_sqlx_types_time_time_from_hms_micro_unwrap_ts = |content_ts: &dyn ToTokens| {
             quote! {sqlx::types::time::Time::from_hms_micro(#content_ts).expect("7a1a18fa-c0cf-45e4-8b52-60f58a793c36")}
         };
-        let gen_pub_const_new_or_pub_try_new_ts = |current_ident: &dyn quote::ToTokens| {
+        let gen_pub_const_new_or_pub_try_new_ts = |current_ident: &dyn ToTokens| {
             let pub_fn_new_or_try_new_ts = if postgres_type_initialization_try_new_try_from_postgres_type.is_ok() {
                 &macros_helpers::gen_pub_try_new_ts(
                     &value_ident_inner_type_ts,
@@ -2586,8 +2586,8 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 }
                 let gen_inner_type_ts = |
                     is_const: IsConst,
-                    name_ts: &dyn quote::ToTokens,
-                    content_ts: &dyn quote::ToTokens
+                    name_ts: &dyn ToTokens,
+                    content_ts: &dyn ToTokens
                 |{
                     let maybe_const_ts = match is_const {
                         IsConst::False => proc_macro2::TokenStream::new(),
@@ -2602,7 +2602,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 let maybe_min_inner_type_ts = {
                     let gen_inner_type_ts_67fc7980 = |
                         is_const: IsConst,
-                        content_ts_1ca2df79: &dyn quote::ToTokens
+                        content_ts_1ca2df79: &dyn ToTokens
                     |gen_inner_type_ts(
                         is_const,
                         &quote!{min_inner_type},
@@ -2655,7 +2655,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 let maybe_slightly_more_than_min_inner_type_ts = {
                     let gen_inner_type_ts_6d89728a = |
                         is_const: IsConst,
-                        content_ts_dcc22544: &dyn quote::ToTokens
+                        content_ts_dcc22544: &dyn ToTokens
                     |gen_inner_type_ts(
                         is_const,
                         &quote!{slightly_more_than_min_inner_type},
@@ -2708,7 +2708,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 let maybe_middle_inner_type_ts = {
                     let gen_inner_type_ts_23368199 = |
                         is_const: IsConst,
-                        content_ts_645cff79: &dyn quote::ToTokens
+                        content_ts_645cff79: &dyn ToTokens
                     |gen_inner_type_ts(
                         is_const,
                         &quote!{middle_inner_type},
@@ -2768,7 +2768,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 let maybe_slightly_more_than_middle_inner_type_ts = {
                     let gen_inner_type_ts_3a61c0b0 = |
                         is_const: IsConst,
-                        content_ts_e09b85a8: &dyn quote::ToTokens
+                        content_ts_e09b85a8: &dyn ToTokens
                     |gen_inner_type_ts(
                         is_const,
                         &quote!{slightly_more_than_middle_inner_type},
@@ -2821,7 +2821,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 let maybe_max_inner_type_ts = {
                     let gen_inner_type_ts_32acb388 = |
                         is_const: IsConst,
-                        content_ts_385694da: &dyn quote::ToTokens
+                        content_ts_385694da: &dyn ToTokens
                     |gen_inner_type_ts(
                         is_const,
                         &quote!{max_inner_type},
@@ -2874,7 +2874,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 let maybe_slightly_less_than_max_inner_type_ts = {
                     let gen_inner_type_ts_ddf0f630 = |
                         is_const: IsConst,
-                        content_ts_5ca08aea: &dyn quote::ToTokens
+                        content_ts_5ca08aea: &dyn ToTokens
                     |gen_inner_type_ts(
                         is_const,
                         &quote!{slightly_less_than_max_inner_type},
@@ -3177,7 +3177,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                     .build_enum(
                         &ident_standart_not_null_origin_try_new_error_named_ucc,
                         &{
-                            let gen_start_end_ts = |content_ts: &dyn quote::ToTokens| {
+                            let gen_start_end_ts = |content_ts: &dyn ToTokens| {
                                 let (start_variant_ts, end_variant_ts) = {
                                     let gen_variant_ts = |start_or_end: &StartOrEnd| {
                                         let start_or_end_ucc = gen_start_or_end_ucc(start_or_end);
@@ -3196,7 +3196,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                                     #end_variant_ts,
                                 }
                             };
-                            let content_ts: &dyn quote::ToTokens = match &postgres_type_initialization_try_new {
+                            let content_ts: &dyn ToTokens = match &postgres_type_initialization_try_new {
                                 PostgresTypeInitializationTryNew::StdStringStringAsText => &std_string_string_as_text_try_new_error_named_variants_ts,
                                 PostgresTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime | PostgresTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => &nanosecond_precision_is_not_supported_variant_try_new_ts,
                                 PostgresTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_error_named_variants_ts,
@@ -3264,7 +3264,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                             .build_enum(
                                 &ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc,
                                 &{
-                                    let content_ts: &dyn quote::ToTokens = match &postgres_type_impl_try_new_for_deserialize {
+                                    let content_ts: &dyn ToTokens = match &postgres_type_impl_try_new_for_deserialize {
                                         PostgresTypeImplTryNewForDeserialize::StdStringStringAsText => &std_string_string_as_text_try_new_error_named_variants_ts,
                                         PostgresTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => &quote! {
                                             #InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
@@ -3318,10 +3318,10 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 |()| {
                     let content_ts = {
                         let content_ts = {
-                            let gen_match_option_ts = |type_ts: &dyn quote::ToTokens| {
+                            let gen_match_option_ts = |type_ts: &dyn ToTokens| {
                                 quote! {value.map(#type_ts::#NewSc)}
                             };
-                            let gen_array_dimensions_initialization_ts = |type_ts: &dyn quote::ToTokens| match &not_null_or_nullable {
+                            let gen_array_dimensions_initialization_ts = |type_ts: &dyn ToTokens| match &not_null_or_nullable {
                                 NotNullOrNullable::NotNull => quote! {value.into_iter().map(#type_ts::#NewSc).collect()},
                                 NotNullOrNullable::Nullable => gen_match_option_ts(&type_ts),
                             };
@@ -3374,7 +3374,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 },
                 |postgres_type_initialization_try_new| {
                     let content_ts = {
-                        let gen_match_option_ts = |type_ts: &dyn quote::ToTokens| {
+                        let gen_match_option_ts = |type_ts: &dyn ToTokens| {
                             quote! {Ok(Self(match #ValueSc {
                                 Some(value_989d943e) => Some(match #type_ts::#TryNewSc(value_989d943e) {
                                     Ok(value_ea2a4a8c) => value_ea2a4a8c,
@@ -3385,7 +3385,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                                 None => None
                             }))}
                         };
-                        let gen_array_dimensions_initialization_ts = |type_ts: &dyn quote::ToTokens| match &not_null_or_nullable {
+                        let gen_array_dimensions_initialization_ts = |type_ts: &dyn ToTokens| match &not_null_or_nullable {
                             NotNullOrNullable::NotNull => quote! {
                                 Ok(Self({
                                     let mut acc_4ce2782a = Vec::new();
@@ -3484,7 +3484,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                                             Ok(Self(sqlx::postgres::types::PgRange { #StartSc, #EndSc }))
                                         }
                                     };
-                                    let gen_ok_self_sqlx_postgres_types_pg_range_ts = |current_ident_ts: &dyn quote::ToTokens| quote! {
+                                    let gen_ok_self_sqlx_postgres_types_pg_range_ts = |current_ident_ts: &dyn ToTokens| quote! {
                                         Ok(Self(sqlx::postgres::types::PgRange {
                                             #StartSc: match #ValueSc.#StartSc {
                                                 std::ops::Bound::Included(included_value) => match #current_ident_ts::#TryNewSc(included_value) {
@@ -3655,7 +3655,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                             PostgresTypeDeserialize::ImplNewForDeserializeOrTryNewForDeserialize(postgres_type_impl_new_for_deserialize_or_try_new_for_deserialize) => match &postgres_type_impl_new_for_deserialize_or_try_new_for_deserialize {
                                 PostgresTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(postgres_type_impl_new_for_deserialize) => {
                                     let parameters_ts = {
-                                        let gen_start_end_std_std_ops_bound_ts = |current_ident_ts: &dyn quote::ToTokens| {
+                                        let gen_start_end_std_std_ops_bound_ts = |current_ident_ts: &dyn ToTokens| {
                                             quote! {
                                                 #StartSc: std::ops::Bound<#current_ident_ts>,
                                                 #EndSc: std::ops::Bound<#current_ident_ts>
@@ -3761,7 +3761,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                                         }
                                     };
                                     let content_ts = {
-                                        let gen_self_match_try_new_ts = |current_parameters_ts: &dyn quote::ToTokens, match_error_variants_ts: &dyn quote::ToTokens| {
+                                        let gen_self_match_try_new_ts = |current_parameters_ts: &dyn ToTokens, match_error_variants_ts: &dyn ToTokens| {
                                             quote! {
                                                 match Self::#TryNewSc(#current_parameters_ts) {
                                                     Ok(value_b318fc86) => Ok(value_b318fc86),
@@ -3930,9 +3930,9 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 let content_ts = {
                     let value_dot_zero = quote! {#ValueSc.0};
                     let gen_match_ts = |
-                        match_content_ts: &dyn quote::ToTokens,
-                        some_content_ts: &dyn quote::ToTokens,
-                        some_value_ts: &dyn quote::ToTokens,
+                        match_content_ts: &dyn ToTokens,
+                        some_content_ts: &dyn ToTokens,
+                        some_value_ts: &dyn ToTokens,
                     | quote! {
                         #match_content_ts.map(|#some_value_ts|#some_value_ts.0#some_content_ts)
                     };
@@ -4039,7 +4039,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                                     end: std::ops::Bound::Excluded(#core_default_default_default_ts),
                                 }
                             };
-                            let gen_as_default_option_some_vec_one_el_call_ts = |current_ident_ts: &dyn quote::ToTokens| {
+                            let gen_as_default_option_some_vec_one_el_call_ts = |current_ident_ts: &dyn ToTokens| {
                                 quote! {
                                     <
                                         #current_ident_ts
@@ -4048,7 +4048,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                                     >::default_option_some_vec_one_el()
                                 }
                             };
-                            let gen_sqlx_postgres_types_pg_range_default_option_some_vec_one_el_ts = |current_ident_ts: &dyn quote::ToTokens| {
+                            let gen_sqlx_postgres_types_pg_range_default_option_some_vec_one_el_ts = |current_ident_ts: &dyn ToTokens| {
                                 let current_ident_as_default_option_some_vec_one_el_call_ts = gen_as_default_option_some_vec_one_el_call_ts(&current_ident_ts);
                                 quote! {
                                     sqlx::postgres::types::PgRange {
@@ -4063,7 +4063,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                             };
                             let sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_option_some_vec_one_el_call_ts = gen_as_default_option_some_vec_one_el_call_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc);
                             let sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_option_some_vec_one_el_call_ts = gen_as_default_option_some_vec_one_el_call_ts(&sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc);
-                            let initialization_ts: &dyn quote::ToTokens = match &postgres_type {
+                            let initialization_ts: &dyn ToTokens = match &postgres_type {
                                 PostgresType::StdPrimitiveI16AsInt2
                                 | PostgresType::StdPrimitiveI32AsInt4
                                 | PostgresType::StdPrimitiveI64AsInt8
@@ -4194,7 +4194,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 #maybe_impl_std_convert_from_ident_read_for_ident_origin_ts
             }
         };
-        let gen_pub_struct_tokens_ts = |current_ident_ts: &dyn quote::ToTokens, content_ts: &dyn quote::ToTokens, derive_default: macros_helpers::DeriveDefault| {
+        let gen_pub_struct_tokens_ts = |current_ident_ts: &dyn ToTokens, content_ts: &dyn ToTokens, derive_default: macros_helpers::DeriveDefault| {
             macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
@@ -4335,7 +4335,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
             };
             let impl_default_option_some_vec_one_el_for_ident_create_ts = postgres_crud_macros_common::gen_impl_postgres_crud_common_default_option_some_vec_one_el_ts(&ident_create_ucc, &{
-                let content_ts: &dyn quote::ToTokens = match &can_be_primary_key {
+                let content_ts: &dyn ToTokens = match &can_be_primary_key {
                     CanBePrimaryKey::False => &postgres_crud_common_default_option_some_vec_one_el_call_ts,
                     CanBePrimaryKey::True => &quote! {()},
                 };
@@ -4380,7 +4380,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 let gen_default_content_ts = |default_some_one_or_default_some_one_with_max_page_size: &postgres_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize| match &postgres_type_pattern {
                     PostgresTypePattern::Standart => quote! {Self},
                     PostgresTypePattern::ArrayDimension1 { .. } => {
-                        let content_ts: &dyn quote::ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
+                        let content_ts: &dyn ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
                             postgres_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &postgres_crud_common_default_option_some_vec_one_el_call_ts,
                             postgres_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &postgres_crud_common_default_option_some_vec_one_el_max_page_size_call_ts,
                         };
@@ -4899,7 +4899,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
             }
         };
         let impl_postgres_type_for_ident_ts = {
-            let gen_ok_std_string_string_from_tokens_ts = |content_ts: &dyn quote::ToTokens| {
+            let gen_ok_std_string_string_from_tokens_ts = |content_ts: &dyn ToTokens| {
                 quote! {Ok(#std_string_string_ts::from(#content_ts))}
             };
             let ok_std_string_string_from_default_ts = gen_ok_std_string_string_from_tokens_ts(&quote! {"default"});
@@ -5089,7 +5089,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 &ident_where_ucc,
                 &ident_read_ucc,
                 &{
-                    let gen_ident_read_ident_origin_ts = |content_ts: &dyn quote::ToTokens| {
+                    let gen_ident_read_ident_origin_ts = |content_ts: &dyn ToTokens| {
                         quote! {#ident_read_ucc(#ident_origin_ucc(#content_ts))}
                     };
                     match &postgres_type_pattern {
@@ -5098,7 +5098,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                                 PostgresTypeRange::try_from(postgres_type).as_ref().map_or_else(
                                     |()| quote! {#ValueSc},
                                     |postgres_type_range| {
-                                        let gen_sqlx_postgres_types_pg_range_ts = |start_ts: &dyn quote::ToTokens, end_ts: &dyn quote::ToTokens| {
+                                        let gen_sqlx_postgres_types_pg_range_ts = |start_ts: &dyn ToTokens, end_ts: &dyn ToTokens| {
                                             quote! {
                                                 sqlx::postgres::types::PgRange{
                                                     #StartSc: std::ops::Bound::#start_ts,
@@ -5117,14 +5117,14 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                                         let sqlx_postgres_types_pg_range_included_excluded_ts = gen_sqlx_postgres_types_pg_range_ts(&included_start_ts, &excluded_end_ts);
                                         let sqlx_postgres_types_pg_range_unbounded_unbounded_ts = gen_sqlx_postgres_types_pg_range_ts(&UnboundedUcc, &UnboundedUcc);
                                         let gen_range_match_ts = |
-                                            included_included_ts: &dyn quote::ToTokens,
-                                            included_excluded_ts: &dyn quote::ToTokens,
-                                            included_unbounded_ts: &dyn quote::ToTokens,
-                                            excluded_included_ts: &dyn quote::ToTokens,
-                                            excluded_excluded_ts: &dyn quote::ToTokens,
-                                            excluded_unbounded_ts: &dyn quote::ToTokens,
-                                            unbounded_included_ts: &dyn quote::ToTokens,
-                                            unbounded_excluded_ts: &dyn quote::ToTokens
+                                            included_included_ts: &dyn ToTokens,
+                                            included_excluded_ts: &dyn ToTokens,
+                                            included_unbounded_ts: &dyn ToTokens,
+                                            excluded_included_ts: &dyn ToTokens,
+                                            excluded_excluded_ts: &dyn ToTokens,
+                                            excluded_unbounded_ts: &dyn ToTokens,
+                                            unbounded_included_ts: &dyn ToTokens,
+                                            unbounded_excluded_ts: &dyn ToTokens
                                         | {
                                             quote! {
                                                 #ident_standart_not_null_read_ucc(#ident_standart_not_null_origin_ucc(match (
@@ -5159,7 +5159,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                                                 }))
                                             }
                                         };
-                                        let gen_if_start_end_equal_ts = |true_ts: &dyn quote::ToTokens, false_ts: &dyn quote::ToTokens| {
+                                        let gen_if_start_end_equal_ts = |true_ts: &dyn ToTokens, false_ts: &dyn ToTokens| {
                                             quote! {
                                                 if #StartSc == #EndSc {
                                                     #true_ts
@@ -5174,7 +5174,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                                                 included_start_checked_add_ts,
                                                 excluded_end_checked_add_ts
                                             ) = {
-                                                let gen_checked_add_one_expect_ts = |first_ts: &dyn quote::ToTokens, second_ts: &dyn quote::ToTokens| {
+                                                let gen_checked_add_one_expect_ts = |first_ts: &dyn ToTokens, second_ts: &dyn ToTokens| {
                                                     quote! {#first_ts(#second_ts.checked_add(1).expect("0ec0992f-1d63-443f-b528-7fabfff31423"))}
                                                 };
                                                 (
@@ -5330,7 +5330,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 &select_only_ids_and_select_only_updated_ids_query_common_ts,
                 &ident_read_inner_ucc,
                 &{
-                    let gen_ident_standart_not_null_into_inner_ident_standart_not_null_read_ts = |content_ts: &dyn quote::ToTokens| {
+                    let gen_ident_standart_not_null_into_inner_ident_standart_not_null_read_ts = |content_ts: &dyn ToTokens| {
                         quote! {
                             #ident_standart_not_null_as_postgres_type_ts::into_inner(
                                 #ident_standart_not_null_read_ucc(#content_ts)
@@ -5439,7 +5439,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
             };
             let gen_standart_not_null_test_case_handle_ts = |is_need_to_use_into: &IsNeedToUseInto| {
                 let gen_range_read_only_ids_to_two_dimensional_vec_read_inner_ts =
-                    |min_ts: &dyn quote::ToTokens, negative_less_typical_ts: &dyn quote::ToTokens, negative_more_typical_ts: &dyn quote::ToTokens, near_zero_ts: &dyn quote::ToTokens, positive_less_typical_ts: &dyn quote::ToTokens, positive_more_typical_ts: &dyn quote::ToTokens, max_ts: &dyn quote::ToTokens| {
+                    |min_ts: &dyn ToTokens, negative_less_typical_ts: &dyn ToTokens, negative_more_typical_ts: &dyn ToTokens, near_zero_ts: &dyn ToTokens, positive_less_typical_ts: &dyn ToTokens, positive_more_typical_ts: &dyn ToTokens, max_ts: &dyn ToTokens| {
                         quote! {{
                             let min = #min_ts;
                             let negative_less_typical = #negative_less_typical_ts;
@@ -5511,8 +5511,8 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 };
                 let empty_vec_ts = quote! {Vec::new()};
                 let gen_ident_standart_not_null_function_ts = |
-                    ident_8b874ea5: &dyn quote::ToTokens,
-                    content_ts: &dyn quote::ToTokens
+                    ident_8b874ea5: &dyn ToTokens,
+                    content_ts: &dyn ToTokens
                 |quote!{#ident_8b874ea5::#content_ts()};
                 let (
                     ident_sqlx_types_chrono_naive_time_min_ts,
@@ -5521,7 +5521,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                     ident_sqlx_types_chrono_naive_time_max_ts
                 ) = {
                     let gen_sqlx_types_chrono_naive_time_as_time_standart_not_null_function_ts = |
-                        content_ts_fd88ca39: &dyn quote::ToTokens
+                        content_ts_fd88ca39: &dyn ToTokens
                     |gen_ident_standart_not_null_function_ts(
                         &gen_ident_standart_not_null_ts(&PostgresType::SqlxTypesChronoNaiveTimeAsTime),
                         &content_ts_fd88ca39
@@ -5552,7 +5552,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                     ident_sqlx_types_chrono_naive_date_max_pred_opt_expect_ts,
                 ) = {
                     let sqlx_types_chrono_naive_date_as_date_standart_not_null_function_ts = |
-                        content_ts_7c66f815: &dyn quote::ToTokens
+                        content_ts_7c66f815: &dyn ToTokens
                     |gen_ident_standart_not_null_function_ts(
                         &gen_ident_standart_not_null_ts(&PostgresType::SqlxTypesChronoNaiveDateAsDate),
                         &content_ts_7c66f815
@@ -5619,7 +5619,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_positive_less_typical_ts = gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&sqlx_types_chrono_naive_date_time_positive_less_typical_ts);
                 let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_positive_more_typical_ts = gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&sqlx_types_chrono_naive_date_time_positive_more_typical_ts);
                 let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_max_ts = gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&sqlx_types_chrono_naive_date_time_max_ts);
-                let gen_typical_test_cases_vec_ts = |value: &dyn quote::ToTokens| {
+                let gen_typical_test_cases_vec_ts = |value: &dyn ToTokens| {
                     let content_ts = match &is_need_to_use_into {
                         IsNeedToUseInto::True => quote! {.into()},
                         IsNeedToUseInto::False => proc_macro2::TokenStream::new(),
@@ -5653,7 +5653,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                             self_sqlx_types_chrono_naive_time_twenty_ts,
                             self_sqlx_types_chrono_naive_time_max_ts,
                         ) = {
-                            let gen_self_sqlx_types_chrono_naive_time_standart_not_null_function_ts = |content_ts_9d2b411e: &dyn quote::ToTokens|gen_ident_standart_not_null_function_ts(
+                            let gen_self_sqlx_types_chrono_naive_time_standart_not_null_function_ts = |content_ts_9d2b411e: &dyn ToTokens|gen_ident_standart_not_null_function_ts(
                                 &SelfUcc,
                                 &content_ts_9d2b411e
                             );
@@ -5688,7 +5688,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                         let max_ts = quote! {MAX};
                         let std_primitive_i32_min_ts = quote! {#std_primitive_i32_ts::#min_ts};
                         let std_primitive_i32_max_ts = quote! {#std_primitive_i32_ts::#max_ts};
-                        let gen_sqlx_postgres_types_pg_interval_ts = |months_ts: &dyn quote::ToTokens, days_ts: &dyn quote::ToTokens, microseconds_ts: &dyn quote::ToTokens| {
+                        let gen_sqlx_postgres_types_pg_interval_ts = |months_ts: &dyn ToTokens, days_ts: &dyn ToTokens, microseconds_ts: &dyn ToTokens| {
                             quote! {sqlx::postgres::types::PgInterval {
                                 months: #months_ts,
                                 days: #days_ts,
@@ -5712,7 +5712,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                             sqlx_types_chrono_naive_date_positive_more_typical_ts,
                             sqlx_types_chrono_naive_date_max_ts
                         ) = {
-                            let gen_self_sqlx_types_chrono_naive_date_standart_not_null_function_ts = |content_ts_16bc2a50: &dyn quote::ToTokens|gen_ident_standart_not_null_function_ts(
+                            let gen_self_sqlx_types_chrono_naive_date_standart_not_null_function_ts = |content_ts_16bc2a50: &dyn ToTokens|gen_ident_standart_not_null_function_ts(
                                 &SelfUcc,
                                 &content_ts_16bc2a50
                             );
@@ -5813,8 +5813,8 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
             let option_vec_create_ts = {
                 let gen_some_acc_content_ts = |
                     current_not_null_or_nullable: &NotNullOrNullable,
-                    current_ident_ts: &dyn quote::ToTokens,
-                    additonal_content_ts: &dyn quote::ToTokens
+                    current_ident_ts: &dyn ToTokens,
+                    additonal_content_ts: &dyn ToTokens
                 | {
                     let (new_or_try_new_content_ts, maybe_acc_push_none_ts) = match (&current_not_null_or_nullable, postgres_type_initialization_try_new_try_from_postgres_type.is_ok()) {
                         (NotNullOrNullable::NotNull, true) => (quote! {try_new(vec![el_0fd5865b.0.into()]).expect("adbae6b3-1542-4f81-89bf-48a9b895b488")}, proc_macro2::TokenStream::new()),
@@ -5878,12 +5878,12 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                         ),
                         &match &not_null_or_nullable {
                             NotNullOrNullable::NotNull => {
-                                let content_ts: &dyn quote::ToTokens = match &dimension1_not_null_or_nullable {
+                                let content_ts: &dyn ToTokens = match &dimension1_not_null_or_nullable {
                                     NotNullOrNullable::NotNull => &ident_standart_not_null_as_postgres_type_test_cases_ts,
                                     NotNullOrNullable::Nullable => &ident_standart_nullable_as_postgres_type_test_cases_ts,
                                 };
                                 let (first_ts, second_ts, third_ts) = {
-                                    let gen_new_or_try_new_ts = |current_content_ts: &dyn quote::ToTokens| {
+                                    let gen_new_or_try_new_ts = |current_content_ts: &dyn ToTokens| {
                                         if postgres_type_initialization_try_new_try_from_postgres_type.is_ok() {
                                             quote! {try_new(#current_content_ts).expect("75ad9383-b257-4a0b-bd8d-c931950bf745")}
                                         } else {
@@ -5893,7 +5893,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                                     let gen_vec_value_clone_zero_into_number_ts = |value: usize| {
                                         let number_ts = value.to_string().parse::<proc_macro2::TokenStream>().expect("50c87202-4038-4b27-85bd-c0593552bb89");
                                         //todo maybe correlate with .derive_copy_if()
-                                        let current_maybe_dot_clone_ts: &dyn quote::ToTokens = match &postgres_type {
+                                        let current_maybe_dot_clone_ts: &dyn ToTokens = match &postgres_type {
                                             PostgresType::StdPrimitiveI16AsInt2 |
                                             PostgresType::StdPrimitiveI32AsInt4 |
                                             PostgresType::StdPrimitiveI64AsInt8 |
@@ -6167,7 +6167,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
             let read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts = {
                 //todo that is not correct for array of generated by postgres primary keys but maybe just need to remove this variants and thats it?
                 let value_initialization_ts = gen_import_path_value_initialization_ts(&{
-                    let content_ts: &dyn quote::ToTokens = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
+                    let content_ts: &dyn ToTokens = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
                         &quote! {#ValueSc.0 #maybe_dot_clone_ts}
                     } else {
                         &postgres_crud_common_default_option_some_vec_one_el_call_ts
@@ -6232,12 +6232,12 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
             let create_into_postgres_type_option_vec_where_dimension_one_equal_ts = match &postgres_type_pattern {
                 PostgresTypePattern::Standart => none_ts.clone(),
                 PostgresTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
-                    let ident_standart_not_null_or_nullable_table_type_declaration_ucc: &dyn quote::ToTokens = match &dimension1_not_null_or_nullable {
+                    let ident_standart_not_null_or_nullable_table_type_declaration_ucc: &dyn ToTokens = match &dimension1_not_null_or_nullable {
                         NotNullOrNullable::NotNull => &ident_standart_not_null_table_type_declaration_ucc,
                         NotNullOrNullable::Nullable => &ident_standart_nullable_table_type_declaration_ucc,
                     };
                     let some_ts = {
-                        let content_ts: &dyn quote::ToTokens = match &not_null_or_nullable {
+                        let content_ts: &dyn ToTokens = match &not_null_or_nullable {
                             NotNullOrNullable::NotNull => &quote! {#CreateSc.0.0},
                             NotNullOrNullable::Nullable => &quote! {value_09152b2e.0},
                         };
@@ -6286,7 +6286,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 let greater_than = postgres_crud_common_and_macros_common::PostgresTypeGreaterThanVariant::GreaterThan;
                 let not_greater_than = postgres_crud_common_and_macros_common::PostgresTypeGreaterThanVariant::NotGreaterThan;
                 let equal_not_greater_than = postgres_crud_common_and_macros_common::PostgresTypeGreaterThanVariant::EqualNotGreaterThan;
-                let gen_greater_than_test_ts = |greater_than_variant_ts: &postgres_crud_common_and_macros_common::PostgresTypeGreaterThanVariant, create_content_ts: &dyn quote::ToTokens, table_type_declaration_content_ts: &dyn quote::ToTokens| {
+                let gen_greater_than_test_ts = |greater_than_variant_ts: &postgres_crud_common_and_macros_common::PostgresTypeGreaterThanVariant, create_content_ts: &dyn ToTokens, table_type_declaration_content_ts: &dyn ToTokens| {
                     quote! {
                         #import_path::PostgresTypeGreaterThanTest {
                             variant: #import_path::PostgresTypeGreaterThanVariant::#greater_than_variant_ts,
@@ -6296,8 +6296,8 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                     }
                 };
                 let gen_greater_than_test_new_new_ts =
-                    |greater_than_variant_ts: &postgres_crud_common_and_macros_common::PostgresTypeGreaterThanVariant, create_ts: &dyn quote::ToTokens, greater_than_ts: &dyn quote::ToTokens| gen_greater_than_test_ts(greater_than_variant_ts, &quote! {new(#create_ts)}, &quote! {new(#greater_than_ts)});
-                let gen_greater_than_test_try_new_try_new_ts = |greater_than_variant_ts: &postgres_crud_common_and_macros_common::PostgresTypeGreaterThanVariant, create_ts: &dyn quote::ToTokens, greater_than_ts: &dyn quote::ToTokens| {
+                    |greater_than_variant_ts: &postgres_crud_common_and_macros_common::PostgresTypeGreaterThanVariant, create_ts: &dyn ToTokens, greater_than_ts: &dyn ToTokens| gen_greater_than_test_ts(greater_than_variant_ts, &quote! {new(#create_ts)}, &quote! {new(#greater_than_ts)});
+                let gen_greater_than_test_try_new_try_new_ts = |greater_than_variant_ts: &postgres_crud_common_and_macros_common::PostgresTypeGreaterThanVariant, create_ts: &dyn ToTokens, greater_than_ts: &dyn ToTokens| {
                     gen_greater_than_test_ts(
                         greater_than_variant_ts,
                         &quote! {try_new(#create_ts).expect("8327c651-9a52-470f-b5ab-dd2680b2f5e1")},
@@ -6305,10 +6305,10 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                     )
                 };
                 let gen_greater_than_test_new_new_vec_ts = |
-                    less_ts: &dyn quote::ToTokens,
-                    less_with_more_ts: &dyn quote::ToTokens,
-                    zero_ts: &dyn quote::ToTokens,
-                    one_ts: &dyn quote::ToTokens, more_ts: &dyn quote::ToTokens, more_with_less_ts: &dyn quote::ToTokens| {
+                    less_ts: &dyn ToTokens,
+                    less_with_more_ts: &dyn ToTokens,
+                    zero_ts: &dyn ToTokens,
+                    one_ts: &dyn ToTokens, more_ts: &dyn ToTokens, more_with_less_ts: &dyn ToTokens| {
                     let greater_than_less_ts = gen_greater_than_test_new_new_ts(&greater_than, &less_with_more_ts, &less_ts);
                     let greater_than_zero_ts = gen_greater_than_test_new_new_ts(&greater_than, &one_ts, &zero_ts);
                     let greater_than_more_ts = gen_greater_than_test_new_new_ts(&greater_than, &more_ts, &more_with_less_ts);
@@ -6331,12 +6331,12 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                     }
                 };
                 let gen_greater_than_test_try_new_try_new_vec_ts = |
-                    less_ts: &dyn quote::ToTokens,
-                    less_with_more_ts: &dyn quote::ToTokens,
-                    zero_ts: &dyn quote::ToTokens,
-                    one_ts: &dyn quote::ToTokens,
-                    more_ts: &dyn quote::ToTokens,
-                    more_with_less_ts: &dyn quote::ToTokens
+                    less_ts: &dyn ToTokens,
+                    less_with_more_ts: &dyn ToTokens,
+                    zero_ts: &dyn ToTokens,
+                    one_ts: &dyn ToTokens,
+                    more_ts: &dyn ToTokens,
+                    more_with_less_ts: &dyn ToTokens
                 | {
                     let greater_than_less_ts = gen_greater_than_test_try_new_try_new_ts(&greater_than, &less_with_more_ts, &less_ts);
                     let greater_than_zero_ts = gen_greater_than_test_try_new_try_new_ts(&greater_than, &one_ts, &zero_ts);
@@ -6362,7 +6362,7 @@ pub fn gen_postgres_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::T
                 match &postgres_type_pattern {
                     PostgresTypePattern::Standart => match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => {
-                            let wrap_into_not_empty_unique_vec_ts = |content_ts: &dyn quote::ToTokens| quote! {Some(
+                            let wrap_into_not_empty_unique_vec_ts = |content_ts: &dyn ToTokens| quote! {Some(
                                 #import_path::NotEmptyUniqueVec::try_new(vec![#content_ts]).expect("3ad4b6bf-ba8c-4b14-8745-b0d658e2bdd6")
                             )};
                             let sqlx_types_chrono_naive_time_as_time_standart_not_null_ts = &gen_ident_ts(

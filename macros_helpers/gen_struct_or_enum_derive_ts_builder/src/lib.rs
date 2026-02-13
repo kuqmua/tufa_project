@@ -1,5 +1,5 @@
 use proc_macro2::TokenStream as Ts2;
-use quote::quote;
+use quote::{ToTokens, quote};
 #[proc_macro]
 pub fn gen_struct_or_enum_derive_ts_builder(
     input_ts: proc_macro::TokenStream,
@@ -68,7 +68,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(
         })
         .collect::<Vec<Element>>();
     let (make_pub_pub_enum_ts, pub_enum_derive_vec_ts) = {
-        fn gen_pun_enum_ts(ident: &dyn quote::ToTokens) -> Ts2 {
+        fn gen_pun_enum_ts(ident: &dyn ToTokens) -> Ts2 {
             quote! {
                 #[derive(Debug, Clone, Copy)]
                 pub enum #ident {
@@ -85,7 +85,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(
         )
     };
     let (make_pub_derive_trait_name_bool_ts, field_vec_ts) = {
-        fn gen_derive_trait_name_bool_ts(ident: &dyn quote::ToTokens) -> Ts2 {
+        fn gen_derive_trait_name_bool_ts(ident: &dyn ToTokens) -> Ts2 {
             quote! {#ident: bool,}
         }
         (
@@ -139,6 +139,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(
     });
     let struct_or_enum_derive_ts_builder_ucc = quote! {StructOrEnumDeriveTokenStreamBuilder};
     let struct_or_enum_ucc = quote! {StructOrEnum};
+    let quote_to_tokens_ts = quote! {quote::ToTokens};
     let generated: Ts2 = quote! {
         #make_pub_pub_enum_ts
         #(#pub_enum_derive_vec_ts)*
@@ -161,8 +162,8 @@ pub fn gen_struct_or_enum_derive_ts_builder(
             fn build_handle(
                 self,
                 struct_or_enum: #struct_or_enum_ucc,
-                current_ident: &dyn quote::ToTokens,
-                content_ts: &dyn quote::ToTokens,
+                current_ident: &dyn #quote_to_tokens_ts,
+                content_ts: &dyn #quote_to_tokens_ts,
             ) -> Ts2 {
                 let maybe_pub_ts = self.#make_pub_sc_ts.then(|| quote::quote!{pub});
                 let derive_ts = {
@@ -213,7 +214,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(
                                                 ::quote::__private::push_comma(&mut _s);
                                             }
                                             _i += 1;
-                                            ::quote::ToTokens::to_tokens(&derive_ts, &mut _s);
+                                            ::#quote_to_tokens_ts::to_tokens(&derive_ts, &mut _s);
                                         }
                                     }
                                     _s
@@ -222,24 +223,24 @@ pub fn gen_struct_or_enum_derive_ts_builder(
                             _s
                         },
                     );
-                    ::quote::ToTokens::to_tokens(&maybe_pub_ts, &mut _s);
-                    ::quote::ToTokens::to_tokens(&struct_or_enum_ts, &mut _s);
-                    ::quote::ToTokens::to_tokens(&current_ident, &mut _s);
-                    ::quote::ToTokens::to_tokens(&content_ts, &mut _s);
+                    ::#quote_to_tokens_ts::to_tokens(&maybe_pub_ts, &mut _s);
+                    ::#quote_to_tokens_ts::to_tokens(&struct_or_enum_ts, &mut _s);
+                    ::#quote_to_tokens_ts::to_tokens(&current_ident, &mut _s);
+                    ::#quote_to_tokens_ts::to_tokens(&content_ts, &mut _s);
                     _s
                 }
             }
             pub fn build_struct(
                 self,
-                current_ident: &dyn quote::ToTokens,
-                content_ts: &dyn quote::ToTokens,
+                current_ident: &dyn #quote_to_tokens_ts,
+                content_ts: &dyn #quote_to_tokens_ts,
             ) -> Ts2 {
                 self.build_handle(#struct_or_enum_ucc::Struct, current_ident, content_ts)
             }
             pub fn build_enum(
                 self,
-                current_ident: &dyn quote::ToTokens,
-                content_ts: &dyn quote::ToTokens,
+                current_ident: &dyn #quote_to_tokens_ts,
+                content_ts: &dyn #quote_to_tokens_ts,
             ) -> Ts2 {
                 self.build_handle(#struct_or_enum_ucc::Enum, current_ident, content_ts)
             }

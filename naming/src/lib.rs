@@ -1,7 +1,7 @@
 pub mod parameter;
 
 use proc_macro2::TokenStream as Ts2;
-use quote::quote;
+use quote::{ToTokens, quote};
 use std::fmt::{Display, Formatter, Result as FmtResult};
 
 pub use naming_common::{
@@ -1320,7 +1320,7 @@ impl Display for HashMapUcc {
         write!(f, "HashMap")
     }
 }
-impl quote::ToTokens for HashMapUcc {
+impl ToTokens for HashMapUcc {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {HashMap}.to_tokens(tokens);
     }
@@ -1332,14 +1332,14 @@ impl Display for HashMapSc {
         write!(f, "hashmap")
     }
 }
-impl quote::ToTokens for HashMapSc {
+impl ToTokens for HashMapSc {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {hashmap}.to_tokens(tokens);
     }
 }
 
-pub trait StdFmtDisplayPlusQuoteToTokens: Display + quote::ToTokens {}
-impl<T> StdFmtDisplayPlusQuoteToTokens for T where T: Display + quote::ToTokens {}
+pub trait StdFmtDisplayPlusQuoteToTokens: Display + ToTokens {}
+impl<T> StdFmtDisplayPlusQuoteToTokens for T where T: Display + ToTokens {}
 
 pub trait SwaggerUrlPathSelfQuotesStr {
     fn swagger_url_path_self_quotes_str(&self, table_name_str: &str) -> String;

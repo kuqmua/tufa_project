@@ -1,10 +1,6 @@
-use quote::quote;
-
 use proc_macro2::TokenStream as Ts2;
-pub fn gen_if_write_is_err_ts(
-    parameters_ts: &dyn quote::ToTokens,
-    content_ts: &dyn quote::ToTokens,
-) -> Ts2 {
+use quote::{ToTokens, quote};
+pub fn gen_if_write_is_err_ts(parameters_ts: &dyn ToTokens, content_ts: &dyn ToTokens) -> Ts2 {
     quote! {
         if {
             use std::fmt::Write as _;
@@ -15,9 +11,8 @@ pub fn gen_if_write_is_err_ts(
     }
 }
 pub fn gen_if_write_is_err_curly_braces_ts(
-    parameters_ts: &dyn quote::ToTokens,
-    content_ts: &dyn quote::ToTokens,
+    parameters_ts: &dyn ToTokens,
+    content_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let ts = gen_if_write_is_err_ts(parameters_ts, content_ts);
-    quote! {#ts}
+    gen_if_write_is_err_ts(parameters_ts, content_ts)
 }

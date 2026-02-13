@@ -38,7 +38,7 @@ use naming::{
     },
 };
 use proc_macro2::TokenStream as Ts2;
-use quote::quote;
+use quote::{ToTokens, quote};
 use std::iter::repeat_with;
 use syn::token::{Colon, Pub};
 //todo gen authorization rights enum for json fields
@@ -198,7 +198,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                 Update,
                 UpdateForQuery,
             }
-            impl quote::ToTokens for PostgresJsonTypeSubtype {
+            impl ToTokens for PostgresJsonTypeSubtype {
                 fn to_tokens(&self, tokens: &mut Ts2) {
                     self.to_string().parse::<Ts2>().expect("43ac0b62-551a-421e-aee0-9bf3dfffa3cc").to_tokens(tokens);
                 }
@@ -214,7 +214,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                 // ReadInner,
                 Update,
             }
-            impl quote::ToTokens for PostgresTypeSubtype {
+            impl ToTokens for PostgresTypeSubtype {
                 fn to_tokens(&self, tokens: &mut Ts2) {
                     self.to_string().parse::<Ts2>().expect("5825d4b7-dd55-41e4-b54e-7b31557181b6").to_tokens(tokens);
                 }
@@ -316,7 +316,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
             let must_use_ts = token_patterns::MustUse;
             let allow_clippy_arbitrary_source_item_ordering_ts = token_patterns::AllowClippyArbitrarySourceItemOrdering;
 
-            let gen_import_path_value_initialization_ts = |content_ts: &dyn quote::ToTokens|{
+            let gen_import_path_value_initialization_ts = |content_ts: &dyn ToTokens|{
                 postgres_crud_macros_common::gen_value_initialization_ts(
                     &import_path,
                     &content_ts
@@ -334,12 +334,12 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                 #import_path::#default_option_some_vec_one_el_ucc::#default_option_some_vec_one_el_sc
             };
             let default_but_option_is_some_call_ts = quote!{#default_but_option_is_some_ts()};
-            let gen_ident_as_default_but_option_is_some_call_ts = |ident_ts: &dyn quote::ToTokens, |{
+            let gen_ident_as_default_but_option_is_some_call_ts = |ident_ts: &dyn ToTokens, |{
                 quote!{
                     <#ident_ts as #import_path::#default_option_some_vec_one_el_ucc>::#default_option_some_vec_one_el_sc()
                 }
             };
-            let gen_ident_as_default_but_option_is_some_ts = |ident_ts_2e6aba01: &dyn quote::ToTokens|quote!{
+            let gen_ident_as_default_but_option_is_some_ts = |ident_ts_2e6aba01: &dyn ToTokens|quote!{
                 <
                     #ident_ts_2e6aba01
                     as
@@ -347,10 +347,10 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                 >::#default_option_some_vec_one_el_sc
             };
             let import_path_value_ts = quote!{#import_path::#value_ucc};
-            let wrap_into_value_declaration_ts = |ident_ts: &dyn quote::ToTokens|{
+            let wrap_into_value_declaration_ts = |ident_ts: &dyn ToTokens|{
                 quote!{#import_path_value_ts<#ident_ts>}
             };
-            let wrap_into_value_initialization_ts = |content_ts: &dyn quote::ToTokens|{
+            let wrap_into_value_initialization_ts = |content_ts: &dyn ToTokens|{
                 quote!{#import_path_value_ts { #value_sc: #content_ts }}
             };
 
@@ -405,10 +405,10 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
             let ident_with_id_standart_not_null_ucc = &gen_ident_ucc(&IdentPattern::StandartNotNullWithId);
             let ident_with_id_array_not_null_ucc = &gen_ident_ucc(&IdentPattern::ArrayNotNullWithId);
             let is_standart_not_null = matches!((&not_null_or_nullable, pattern), (postgres_crud_macros_common::NotNullOrNullable::NotNull, Pattern::Standart));
-            let gen_type_as_import_path_ts = |first_type_ts: &dyn quote::ToTokens, second_type_ts: &dyn quote::ToTokens|{
+            let gen_type_as_import_path_ts = |first_type_ts: &dyn ToTokens, second_type_ts: &dyn ToTokens|{
                 quote! {<#first_type_ts as #import_path::#second_type_ts>}
             };
-            let gen_type_as_postgres_json_type_ts = |type_ts: &dyn quote::ToTokens| {
+            let gen_type_as_postgres_json_type_ts = |type_ts: &dyn ToTokens| {
                 gen_type_as_import_path_ts(&type_ts, &postgres_json_type_ucc)
             };
             let ident_as_import_path_postgres_json_type_ts = gen_type_as_postgres_json_type_ts(&ident);
@@ -469,13 +469,13 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                     IsStandartWithId::True => &vec_syn_field_with_id,
                 }
             };
-            let gen_type_as_postgres_type_ts = |type_ts: &dyn quote::ToTokens| {
+            let gen_type_as_postgres_type_ts = |type_ts: &dyn ToTokens| {
                 gen_type_as_import_path_ts(&type_ts, &PostgresTypeUcc)
             };
-            let gen_type_as_postgres_json_type_test_cases_ts = |type_ts: &dyn quote::ToTokens| {
+            let gen_type_as_postgres_json_type_test_cases_ts = |type_ts: &dyn ToTokens| {
                 gen_type_as_import_path_ts(&type_ts, &PostgresJsonTypeTestCasesUcc)
             };
-            let gen_type_as_postgres_type_test_cases_ts = |type_ts: &dyn quote::ToTokens| {
+            let gen_type_as_postgres_type_test_cases_ts = |type_ts: &dyn ToTokens| {
                 gen_type_as_import_path_ts(&type_ts, &PostgresTypeTestCasesUcc)
             };
             let self_as_postgres_json_type_test_cases_ts = gen_type_as_postgres_json_type_test_cases_ts(&self_ucc);
@@ -491,7 +491,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
             let ident_with_id_standart_not_null_read_only_ids_ucc = SelfReadOnlyIdsUcc::from_tokens(&ident_with_id_standart_not_null_ucc);
             let ident_with_id_standart_not_null_where_ucc = SelfWhereUcc::from_tokens(&ident_with_id_standart_not_null_ucc);
             let ident_ts = {
-                let gen_struct_ident_ts = |current_ident: &dyn quote::ToTokens| macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                let gen_struct_ident_ts = |current_ident: &dyn ToTokens| macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
@@ -510,9 +510,9 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                             &ident_with_id_standart_not_null_where_ucc,
                             &{
                                 let gen_ts = |
-                                    field_ident: &dyn quote::ToTokens,
-                                    field_type: &dyn quote::ToTokens,
-                                    second_argument_ts: &dyn quote::ToTokens,
+                                    field_ident: &dyn ToTokens,
+                                    field_type: &dyn ToTokens,
+                                    second_argument_ts: &dyn ToTokens,
                                 |{
                                     let field_type_as_postgres_json_type_test_cases_ts = gen_type_as_postgres_json_type_test_cases_ts(&field_type);
                                     quote!{
@@ -553,9 +553,9 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                             &ident_with_id_standart_not_null_where_ucc,
                             &{
                                 let gen_ts = |
-                                    field_ident: &dyn quote::ToTokens,
-                                    field_type: &dyn quote::ToTokens,
-                                    second_argument_ts: &dyn quote::ToTokens,
+                                    field_ident: &dyn ToTokens,
+                                    field_type: &dyn ToTokens,
+                                    second_argument_ts: &dyn ToTokens,
                                 |{
                                     let field_ident_ucc = ToTokensToUccTs::case_or_panic(&field_ident);
                                     let field_type_as_postgres_json_type_test_cases_ts = gen_type_as_postgres_json_type_test_cases_ts(&field_type);
@@ -599,9 +599,9 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                             &ident_with_id_standart_not_null_where_ucc,
                             &{
                                 let gen_ts = |
-                                    field_ident: &dyn quote::ToTokens,
-                                    field_type: &dyn quote::ToTokens,
-                                    second_argument_ts: &dyn quote::ToTokens,
+                                    field_ident: &dyn ToTokens,
+                                    field_type: &dyn ToTokens,
+                                    second_argument_ts: &dyn ToTokens,
                                 |{
                                     let field_ident_ucc = ToTokensToUccTs::case_or_panic(&field_ident);
                                     let field_type_as_postgres_json_type_test_cases_ts = gen_type_as_postgres_json_type_test_cases_ts(&field_type);
@@ -672,11 +672,11 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
             let postgres_json_type_subtype_read_inner = PostgresJsonTypeSubtype::ReadInner;
             let postgres_json_type_subtype_update = PostgresJsonTypeSubtype::Update;
             let postgres_json_type_subtype_update_for_query = PostgresJsonTypeSubtype::UpdateForQuery;
-            let gen_type_as_postgres_json_type_subtype_ts = |type_ts: &dyn quote::ToTokens, postgres_json_type_subtype: &PostgresJsonTypeSubtype| {
+            let gen_type_as_postgres_json_type_subtype_ts = |type_ts: &dyn ToTokens, postgres_json_type_subtype: &PostgresJsonTypeSubtype| {
                 let type_as_postgres_json_type_ts = gen_type_as_postgres_json_type_ts(&type_ts);
                 quote! {#type_as_postgres_json_type_ts::#postgres_json_type_subtype}
             };
-            let gen_type_as_postgres_type_subtype_ts = |type_ts: &dyn quote::ToTokens, postgres_type_subtype: &PostgresTypeSubtype| {
+            let gen_type_as_postgres_type_subtype_ts = |type_ts: &dyn ToTokens, postgres_type_subtype: &PostgresTypeSubtype| {
                 let type_as_postgres_type_ts = gen_type_as_postgres_type_ts(&type_ts);
                 quote! {#type_as_postgres_type_ts::#postgres_type_subtype}
             };
@@ -685,7 +685,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
             | gen_type_as_postgres_json_type_ts(
                 &syn_field_wrapper.field_type
             );
-            let gen_gen_impl_error_occurence_lib_to_std_string_string_wrapper_ts = |current_ident_ts: &dyn quote::ToTokens| macros_helpers::gen_impl_error_occurence_lib_to_std_string_string_ts(
+            let gen_gen_impl_error_occurence_lib_to_std_string_string_wrapper_ts = |current_ident_ts: &dyn ToTokens| macros_helpers::gen_impl_error_occurence_lib_to_std_string_string_ts(
                 &Ts2::new(),
                 &current_ident_ts,
                 &Ts2::new(),
@@ -700,7 +700,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
             let ident_array_not_null_update_for_query_ucc = SelfUpdateForQueryUcc::from_tokens(&ident_array_not_null_ucc);
             let ident_standart_not_null_read_inner_ucc = SelfReadInnerUcc::from_tokens(&ident_standart_not_null_ucc);
             let ident_with_id_standart_not_null_create_for_query_ucc = SelfCreateForQueryUcc::from_tokens(&ident_with_id_standart_not_null_ucc);
-            let wrap_into_scopes_ts = |content: &dyn quote::ToTokens| {
+            let wrap_into_scopes_ts = |content: &dyn ToTokens| {
                 quote! {(#content);}
             };
             let gen_ident_table_type_declaration_or_ident_create_common_ts = |postgres_json_type_subtype_table_type_declaration_or_create: &PostgresJsonTypeSubtypeTableTypeDeclarationOrCreate| {
@@ -709,9 +709,9 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                     PostgresJsonTypeSubtypeTableTypeDeclarationOrCreate::Create => &ident_create_ucc,
                 };
                 let gen_ident_table_type_declaration_or_create_ts = |
-                    attributes_ts: &dyn quote::ToTokens,
-                    current_ident_ts: &dyn quote::ToTokens,
-                    content_ts: &dyn quote::ToTokens
+                    attributes_ts: &dyn ToTokens,
+                    current_ident_ts: &dyn ToTokens,
+                    content_ts: &dyn ToTokens
                 | {
                     let content_ts_44f35e48 = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
@@ -752,8 +752,8 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                         NewTypeOrStructDeclaration::NewType => fields_content_ts,
                     }
                 };
-                let gen_tokens_table_type_declaration_or_create_ts = |tokens: &dyn quote::ToTokens| {
-                    let value: &dyn quote::ToTokens = match &postgres_json_type_subtype_table_type_declaration_or_create {
+                let gen_tokens_table_type_declaration_or_create_ts = |tokens: &dyn ToTokens| {
+                    let value: &dyn ToTokens = match &postgres_json_type_subtype_table_type_declaration_or_create {
                         PostgresJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration => &SelfTableTypeDeclarationUcc::from_tokens(&tokens),
                         PostgresJsonTypeSubtypeTableTypeDeclarationOrCreate::Create => &SelfCreateUcc::from_tokens(&tokens),
                     };
@@ -784,7 +784,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                 };
                 let impl_pub_new_for_ident_table_type_declaration_or_ident_create_ts = {
                     let parameters_ts = {
-                        let gen_wrap_into_value_parameter_ts = |type_ts: &dyn quote::ToTokens| {
+                        let gen_wrap_into_value_parameter_ts = |type_ts: &dyn ToTokens| {
                             quote! {value: #type_ts}
                         };
                         match &pattern {
@@ -831,8 +831,8 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                     }
                 };
                 let gen_impl_postgres_crud_default_option_some_vec_one_el_for_ident_table_type_declaration_or_create_ts = |
-                    current_ident_ts: &dyn quote::ToTokens,
-                    content_ts: &dyn quote::ToTokens
+                    current_ident_ts: &dyn ToTokens,
+                    content_ts: &dyn ToTokens
                 | postgres_crud_macros_common::gen_impl_postgres_crud_default_option_some_vec_one_el_ts(
                     &current_ident_ts,
                     &Ts2::new(),
@@ -921,11 +921,11 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                     #ident_table_type_declaration_common_ts
                 }
             };
-            let gen_type_as_postgres_json_type_create_ts = |type_ts: &dyn quote::ToTokens| gen_type_as_postgres_json_type_subtype_ts(&type_ts, &postgres_json_type_subtype_create);
-            let gen_type_as_postgres_json_type_create_for_query_ts = |type_ts: &dyn quote::ToTokens| gen_type_as_postgres_json_type_subtype_ts(&type_ts, &postgres_json_type_subtype_create_for_query);
+            let gen_type_as_postgres_json_type_create_ts = |type_ts: &dyn ToTokens| gen_type_as_postgres_json_type_subtype_ts(&type_ts, &postgres_json_type_subtype_create);
+            let gen_type_as_postgres_json_type_create_for_query_ts = |type_ts: &dyn ToTokens| gen_type_as_postgres_json_type_subtype_ts(&type_ts, &postgres_json_type_subtype_create_for_query);
             let ident_create_ts = {
                 let ident_create_common_ts = gen_ident_table_type_declaration_or_ident_create_common_ts(&PostgresJsonTypeSubtypeTableTypeDeclarationOrCreate::Create);
-                let gen_impl_std_fmt_display_for_ident_create_ts = |current_ident_ts: &dyn quote::ToTokens| macros_helpers::gen_impl_std_fmt_display_ts(
+                let gen_impl_std_fmt_display_for_ident_create_ts = |current_ident_ts: &dyn ToTokens| macros_helpers::gen_impl_std_fmt_display_ts(
                     &Ts2::new(),
                     &current_ident_ts, &Ts2::new(),
                     &quote! {write!(f, "{self:?}")}
@@ -956,9 +956,9 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
             let ident_array_not_null_as_postgres_json_type_test_cases_ts = gen_type_as_postgres_json_type_test_cases_ts(&ident_array_not_null_ucc);
             let postgres_crud_path_postgres_json_type_uuid_uuid_create_for_query_ts = gen_type_as_postgres_json_type_create_for_query_ts(&uuid_uuid_as_not_null_jsonb_string_ts);
             let gen_debug_clone_partialeq_serialize_pub_struct_ts = |
-                attributes_ts: &dyn quote::ToTokens,
-                current_ident_ts: &dyn quote::ToTokens,
-                content_ts_153ac202: &dyn quote::ToTokens
+                attributes_ts: &dyn ToTokens,
+                current_ident_ts: &dyn ToTokens,
+                content_ts_153ac202: &dyn ToTokens
             | {
                 let content_ts_6ea2da58 = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
@@ -1045,7 +1045,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                                     )},
                                 },
                                 postgres_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    let content_ts: &dyn quote::ToTokens = match &pattern {
+                                    let content_ts: &dyn ToTokens = match &pattern {
                                         Pattern::Standart => &ident_standart_not_null_as_postgres_json_type_create_for_query_ts,
                                         Pattern::Array => &ident_array_not_null_as_postgres_json_type_create_for_query_ts,
                                     };
@@ -1098,24 +1098,24 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                     #maybe_ident_with_id_standart_not_null_create_for_query_ts
                 }
             };
-            let gen_sqlx_types_json_type_declaration_wrapper_ts = |current_ident_ts: &dyn quote::ToTokens| postgres_crud_macros_common::gen_impl_sqlx_type_sqlx_postgres_for_ident_ts(
+            let gen_sqlx_types_json_type_declaration_wrapper_ts = |current_ident_ts: &dyn ToTokens| postgres_crud_macros_common::gen_impl_sqlx_type_sqlx_postgres_for_ident_ts(
                 &current_ident_ts,
                 &postgres_crud_macros_common::gen_sqlx_types_json_type_declaration_ts(&self_ucc)
             );
-            let gen_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_ts = |current_ident_ts: &dyn quote::ToTokens| postgres_crud_macros_common::gen_impl_sqlx_decode_sqlx_postgres_for_ident_ts(
+            let gen_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_ts = |current_ident_ts: &dyn ToTokens| postgres_crud_macros_common::gen_impl_sqlx_decode_sqlx_postgres_for_ident_ts(
                 &current_ident_ts,
                 &postgres_crud_macros_common::gen_sqlx_types_json_type_declaration_ts(&self_ucc),
                 &quote! {Ok(value_147c3532.0)}
             );
-            let gen_value_type_ts = |type_ts: &dyn quote::ToTokens| {
+            let gen_value_type_ts = |type_ts: &dyn ToTokens| {
                 quote! {#value_sc: #type_ts}
             };
-            let gen_pub_const_new_value_type_content_self_value_ts = |content_ts: &dyn quote::ToTokens|macros_helpers::gen_pub_const_new_ts(
+            let gen_pub_const_new_value_type_content_self_value_ts = |content_ts: &dyn ToTokens|macros_helpers::gen_pub_const_new_ts(
                 &must_use_ts,
                 &gen_value_type_ts(&content_ts),
                 &self_value_ts
             );
-            let gen_unique_vec_wrapper_ts = |type_ts: &dyn quote::ToTokens| {
+            let gen_unique_vec_wrapper_ts = |type_ts: &dyn ToTokens| {
                 quote! {#import_path::NotEmptyUniqueVec<#type_ts>}
             };
             let self_some_postgres_crud_default_option_some_vec_one_el_call_ts = quote! {
@@ -1124,12 +1124,12 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
             let self_some_postgres_crud_default_option_some_vec_one_el_max_page_size_call_ts = quote! {
                 Self(Some(#postgres_crud_default_option_some_vec_one_el_max_page_size_call_ts))
             };
-            let wrap_content_into_scopes_dot_comma_ts = |content_ts: &dyn quote::ToTokens| {
+            let wrap_content_into_scopes_dot_comma_ts = |content_ts: &dyn ToTokens| {
                 let scopes_content_ts = postgres_crud_macros_common::wrap_content_into_scopes_ts(&content_ts);
                 quote! {#scopes_content_ts;}
             };
-            let gen_type_as_postgres_json_type_update_ts = |type_ts: &dyn quote::ToTokens| gen_type_as_postgres_json_type_subtype_ts(&type_ts, &postgres_json_type_subtype_update);
-            let gen_type_as_postgres_json_type_update_for_query_ts = |type_ts: &dyn quote::ToTokens| gen_type_as_postgres_json_type_subtype_ts(&type_ts, &postgres_json_type_subtype_update_for_query);
+            let gen_type_as_postgres_json_type_update_ts = |type_ts: &dyn ToTokens| gen_type_as_postgres_json_type_subtype_ts(&type_ts, &postgres_json_type_subtype_update);
+            let gen_type_as_postgres_json_type_update_for_query_ts = |type_ts: &dyn ToTokens| gen_type_as_postgres_json_type_subtype_ts(&type_ts, &postgres_json_type_subtype_update_for_query);
             let self_as_postgres_json_type_ts = gen_type_as_postgres_json_type_ts(&self_ucc);
             let self_as_postgres_json_type_update_ts = gen_type_as_postgres_json_type_update_ts(&self_ucc);
             let self_as_postgres_json_type_create_for_query_ts = gen_type_as_postgres_json_type_create_for_query_ts(&self_ucc);
@@ -1137,7 +1137,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
             let postgres_crud_path_postgres_json_type_uuid_uuid_update_for_query_ts = gen_type_as_postgres_json_type_update_for_query_ts(&uuid_uuid_as_not_null_jsonb_string_ts);
             let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
             let ident_with_id_standart_not_null_select_ucc = SelfSelectUcc::from_tokens(&ident_with_id_standart_not_null_ucc);
-            let gen_type_as_postgres_json_type_select_ts = |type_ts: &dyn quote::ToTokens| gen_type_as_postgres_json_type_subtype_ts(&type_ts, &postgres_json_type_subtype_select);
+            let gen_type_as_postgres_json_type_select_ts = |type_ts: &dyn ToTokens| gen_type_as_postgres_json_type_subtype_ts(&type_ts, &postgres_json_type_subtype_select);
             let ident_standart_not_null_as_postgres_json_type_select_ts = gen_type_as_postgres_json_type_select_ts(&ident_standart_not_null_ucc);
             let ident_with_id_array_not_null_as_postgres_json_type_select_ts = gen_type_as_postgres_json_type_select_ts(&ident_with_id_array_not_null_ucc);
             let ident_with_id_standart_not_null_select_sc = SelfSelectSc::from_tokens(&ident_with_id_standart_not_null_ucc);
@@ -1145,18 +1145,18 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
             let ident_standart_not_null_select_el_ucc = SelfSelectElementUcc::from_tokens(&ident_standart_not_null_ucc);
             let ident_with_id_standart_not_null_select_el_ucc = SelfSelectElementUcc::from_tokens(&ident_with_id_standart_not_null_ucc);
             let gen_select_query_part_for_loop_ts = |
-                acc_ts: &dyn quote::ToTokens,
+                acc_ts: &dyn ToTokens,
                 is_standart_with_id: &IsStandartWithId,
-                in_ts: &dyn quote::ToTokens,
-                column_name_and_maybe_field_getter_field_ident_ts: &dyn quote::ToTokens,
-                column_name_and_maybe_field_getter_for_error_message_field_ident_ts: &dyn quote::ToTokens,
+                in_ts: &dyn ToTokens,
+                column_name_and_maybe_field_getter_field_ident_ts: &dyn ToTokens,
+                column_name_and_maybe_field_getter_for_error_message_field_ident_ts: &dyn ToTokens,
             |{
                 let content_ts = get_vec_syn_field(is_standart_with_id).iter().map(|el_f3a1af0f| {
                     let field_ident_str = el_f3a1af0f.field_ident.to_string();
-                    let variant_name_ts: &dyn quote::ToTokens = &AsRefStrToUccTs::case_or_panic(&field_ident_str);
-                    let field_ident_double_quotes_ts: &dyn quote::ToTokens = &gen_quotes::double_quotes_ts(&field_ident_str);
+                    let variant_name_ts: &dyn ToTokens = &AsRefStrToUccTs::case_or_panic(&field_ident_str);
+                    let field_ident_double_quotes_ts: &dyn ToTokens = &gen_quotes::double_quotes_ts(&field_ident_str);
                     let field_type_as_crud_postgres_json_type_from_field_ts = gen_type_as_postgres_json_type_ts(&el_f3a1af0f.field_type);
-                    let ident_or_ident_with_id_standart_not_null_select_el_ucc: &dyn quote::ToTokens = match &is_standart_with_id {
+                    let ident_or_ident_with_id_standart_not_null_select_el_ucc: &dyn ToTokens = match &is_standart_with_id {
                         IsStandartWithId::False => &ident_standart_not_null_select_el_ucc,
                         IsStandartWithId::True => &ident_with_id_standart_not_null_select_el_ucc,
                     };
@@ -1193,9 +1193,9 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
             };
             let ident_select_ts = {
                 let gen_pub_struct_ident_select_ts = |
-                    attributes_ts: &dyn quote::ToTokens,
-                    current_ident_ts: &dyn quote::ToTokens,
-                    content_ts_fc7ad384: &dyn quote::ToTokens
+                    attributes_ts: &dyn ToTokens,
+                    current_ident_ts: &dyn ToTokens,
+                    content_ts_fc7ad384: &dyn ToTokens
                 | {
                     let content_ts_83d3ad18 = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
@@ -1445,8 +1445,8 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                                         ident_with_id_standart_not_null_select_content_ts,
                                         dimension1_pagination_content_ts
                                     ): (
-                                        &dyn quote::ToTokens,
-                                        &dyn quote::ToTokens
+                                        &dyn ToTokens,
+                                        &dyn ToTokens
                                     ) = match &default_some_one_or_default_some_one_with_max_page_size {
                                         postgres_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => (
                                             &postgres_crud_default_option_some_vec_one_el_call_ts,
@@ -1485,7 +1485,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                     )
                 };
                 let gen_ident_select_el_or_ident_with_id_standart_not_null_select_el_ts = |is_standart_with_id: &IsStandartWithId| {
-                    let ident_select_el_or_ident_with_id_select_el_ucc: &dyn quote::ToTokens = match &is_standart_with_id {
+                    let ident_select_el_or_ident_with_id_select_el_ucc: &dyn ToTokens = match &is_standart_with_id {
                         IsStandartWithId::False => &ident_standart_not_null_select_el_ucc,
                         IsStandartWithId::True => &ident_with_id_standart_not_null_select_el_ucc,
                     };
@@ -1527,7 +1527,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                     ) = {
                         let gen_default_some_one_content_ts = |default_some_one_or_default_some_one_with_max_page_size: &postgres_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
                             let vec_content_ts = {
-                                let content_ts: &dyn quote::ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
+                                let content_ts: &dyn ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
                                     postgres_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &postgres_crud_default_option_some_vec_one_el_call_ts,
                                     postgres_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &postgres_crud_default_option_some_vec_one_el_max_page_size_call_ts,
                                 };
@@ -1631,9 +1631,9 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                         quote! {#(#variants_ts),*}
                     };
                     let gen_ident_where_ts = |
-                        attributes_ts: &dyn quote::ToTokens,
-                        current_ident_ts: &dyn quote::ToTokens,
-                        content_ts_e1af2d89: &dyn quote::ToTokens
+                        attributes_ts: &dyn ToTokens,
+                        current_ident_ts: &dyn ToTokens,
+                        content_ts_e1af2d89: &dyn ToTokens
                     | {
                         let content_ts_60d5d187 = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                         .make_pub()
@@ -1666,7 +1666,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                         #self_ucc::#equal_ucc(#value_sc) => #postgres_type_where_filter_query_bind_value_query_ts
                     };
                     let maybe_ident_where_ts = {
-                        let gen_ident_where_wrapper_ts = |content_ts: &dyn quote::ToTokens| gen_ident_where_ts(
+                        let gen_ident_where_wrapper_ts = |content_ts: &dyn ToTokens| gen_ident_where_ts(
                             &allow_clippy_arbitrary_source_item_ordering_ts,
                             &ident_where_ucc,
                             &content_ts
@@ -1757,10 +1757,10 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                         quote! {#(#query_bind_variants_ts),*}
                     };
                     let gen_impl_postgres_type_where_filter_ts = |
-                        current_ident_ts: &dyn quote::ToTokens,
-                        query_part_content_ts: &dyn quote::ToTokens,
+                        current_ident_ts: &dyn ToTokens,
+                        query_part_content_ts: &dyn ToTokens,
                         is_query_bind_mutable: postgres_crud_macros_common::IsQueryBindMutable,
-                        query_bind_content_ts: &dyn quote::ToTokens
+                        query_bind_content_ts: &dyn ToTokens
                     | {
                         postgres_crud_macros_common::impl_postgres_type_where_filter_for_ident_ts(
                             &quote! {<'lifetime>},
@@ -1776,7 +1776,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                         )
                     };
                     let maybe_impl_postgres_crud_postgres_type_postgres_type_where_filter_for_ident_where_ts = {
-                        let gen_impl_postgres_type_where_filter_for_ident_ts = |query_part_content_ts: &dyn quote::ToTokens, is_query_bind_mutable: postgres_crud_macros_common::IsQueryBindMutable, query_bind_content_ts: &dyn quote::ToTokens| gen_impl_postgres_type_where_filter_ts(&ident_where_ucc, &query_part_content_ts, is_query_bind_mutable, &query_bind_content_ts);
+                        let gen_impl_postgres_type_where_filter_for_ident_ts = |query_part_content_ts: &dyn ToTokens, is_query_bind_mutable: postgres_crud_macros_common::IsQueryBindMutable, query_bind_content_ts: &dyn ToTokens| gen_impl_postgres_type_where_filter_ts(&ident_where_ucc, &query_part_content_ts, is_query_bind_mutable, &query_bind_content_ts);
                         match &pattern {
                             Pattern::Standart => match &not_null_or_nullable {
                                 NotNullOrNullable::NotNull => gen_impl_postgres_type_where_filter_for_ident_ts(
@@ -1920,7 +1920,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                         gen_gen_impl_error_occurence_lib_to_std_string_string_wrapper_ts(&ident_where_ucc)
                     };
                     let gen_impl_postgres_crud_all_variants_default_option_some_vec_one_el_content_standart_not_null_where = |is_standart_with_id: &IsStandartWithId| {
-                        let gen_self_variant_default_some_one_ts = |content_ts: &dyn quote::ToTokens|quote!{
+                        let gen_self_variant_default_some_one_ts = |content_ts: &dyn ToTokens|quote!{
                             Self::#content_ts(#postgres_crud_default_option_some_vec_one_el_call_ts)
                         };
                         let variants_ts = get_vec_syn_field(is_standart_with_id).iter().map(|el_7f3524bc| {
@@ -2037,8 +2037,8 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
             let gen_field_ident_double_quotes_ts = |value: &macros_helpers::SynFieldWrapper| {
                 gen_quotes::double_quotes_ts(&value.field_ident)
             };
-            let gen_type_as_postgres_json_type_read_ts = |type_ts: &dyn quote::ToTokens| gen_type_as_postgres_json_type_subtype_ts(&type_ts, &postgres_json_type_subtype_read);
-            let gen_type_as_postgres_json_type_read_inner_ts = |type_ts: &dyn quote::ToTokens| gen_type_as_postgres_json_type_subtype_ts(&type_ts, &postgres_json_type_subtype_read_inner);
+            let gen_type_as_postgres_json_type_read_ts = |type_ts: &dyn ToTokens| gen_type_as_postgres_json_type_subtype_ts(&type_ts, &postgres_json_type_subtype_read);
+            let gen_type_as_postgres_json_type_read_inner_ts = |type_ts: &dyn ToTokens| gen_type_as_postgres_json_type_subtype_ts(&type_ts, &postgres_json_type_subtype_read_inner);
             let gen_ident_or_ident_with_id_read_or_read_inner_fields_declaration_ts = |
                 is_standart_with_id: &IsStandartWithId,
                 read_with_or_without_annotation_or_inner: &ReadWithOrWithoutAnnotationOrInner
@@ -2079,8 +2079,8 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                 let ident_standart_not_null_as_postgres_json_type_read_ts = gen_type_as_postgres_json_type_read_ts(&ident_standart_not_null_ucc);
                 let ident_with_id_array_not_null_as_postgres_json_type_read_ts = gen_type_as_postgres_json_type_read_ts(&ident_with_id_array_not_null_ucc);
                 let gen_ident_read_ts = |
-                    current_ident_ts: &dyn quote::ToTokens,
-                    content_ts_1c85ea2c: &dyn quote::ToTokens,
+                    current_ident_ts: &dyn ToTokens,
+                    content_ts_1c85ea2c: &dyn ToTokens,
                     derive_serde_deserialize: macros_helpers::DeriveSerdeDeserialize
                 | {
                     let content_ts_3a67b41f = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
@@ -2124,7 +2124,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                     gen_ident_read_ts(&ident_read_ucc, &content_ts, derive_serde_deserialize)
                 };
                 let all_fields_are_none_ucc = AllFieldsAreNoneUcc;
-                let gen_ident_read_try_from_error_named_ts = |current_ident_ts: &dyn quote::ToTokens|macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                let gen_ident_read_try_from_error_named_ts = |current_ident_ts: &dyn ToTokens|macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_serde_serialize()
@@ -2151,7 +2151,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                     IsStandartWithId::True => &ident_with_id_standart_not_null_read_ucc,
                 };
                 let gen_pub_try_new_for_ident_read_or_ident_with_id_standart_not_null_read_ts = |is_standart_with_id: &IsStandartWithId| {
-                    let ident_read_try_from_error_named_or_ident_with_id_standart_not_null_read_try_from_error_named_ucc: &dyn quote::ToTokens = match &is_standart_with_id {
+                    let ident_read_try_from_error_named_or_ident_with_id_standart_not_null_read_try_from_error_named_ucc: &dyn ToTokens = match &is_standart_with_id {
                         IsStandartWithId::False => &ident_read_try_from_error_named_ucc,
                         IsStandartWithId::True => &ident_with_id_standart_not_null_read_try_from_error_named_ucc,
                     };
@@ -2185,7 +2185,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                             };
                             let check_if_all_fields_are_none_ts = {
                                 let current_vec_syn_field_len = current_vec_syn_field.len();
-                                let maybe_wrap_into_braces_handle_ts = |content_ts: &dyn quote::ToTokens| postgres_crud_macros_common::maybe_wrap_into_braces_ts(
+                                let maybe_wrap_into_braces_handle_ts = |content_ts: &dyn ToTokens| postgres_crud_macros_common::maybe_wrap_into_braces_ts(
                                     content_ts,
                                     current_vec_syn_field_len > 1
                                 );
@@ -2379,21 +2379,21 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                 });
                 quote! {{#(#content_ts),*}}
             };
-            let gen_impl_sqlx_decode_ts = |current_ident_ts: &dyn quote::ToTokens|{
+            let gen_impl_sqlx_decode_ts = |current_ident_ts: &dyn ToTokens|{
                 postgres_crud_macros_common::gen_impl_sqlx_decode_sqlx_postgres_for_ident_ts(
                     &current_ident_ts,
                     &quote!{sqlx::types::Json<Self>},
                     &quote!{Ok(value_147c3532.0)}
                 )
             };
-            let gen_impl_sqlx_type_ts = |current_ident_ts: &dyn quote::ToTokens|{
+            let gen_impl_sqlx_type_ts = |current_ident_ts: &dyn ToTokens|{
                 postgres_crud_macros_common::gen_impl_sqlx_type_sqlx_postgres_for_ident_ts(
                     &current_ident_ts,
                     &quote!{sqlx::types::Json<Self>}
                 )
             };
-            let gen_fields_read_only_ids_into_option_value_read_inner_ts = |is_standart_with_id: &IsStandartWithId, parameters_ts: &dyn quote::ToTokens|{
-                let current_ident_ts: &dyn quote::ToTokens = match &is_standart_with_id {
+            let gen_fields_read_only_ids_into_option_value_read_inner_ts = |is_standart_with_id: &IsStandartWithId, parameters_ts: &dyn ToTokens|{
+                let current_ident_ts: &dyn ToTokens = match &is_standart_with_id {
                     IsStandartWithId::False => &ident_standart_not_null_read_inner_ucc,
                     IsStandartWithId::True => &ident_with_id_standart_not_null_read_inner_ucc,
                 };
@@ -2574,7 +2574,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                     }
                 };
                 let ident_read_inner_ts = {
-                    let gen_pub_type_ident_read_inner_alias_ts = |content_ts: &dyn quote::ToTokens| macros_helpers::gen_pub_type_alias_ts(&ident_read_inner_ucc, &content_ts);
+                    let gen_pub_type_ident_read_inner_alias_ts = |content_ts: &dyn ToTokens| macros_helpers::gen_pub_type_alias_ts(&ident_read_inner_ucc, &content_ts);
                     match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
                             postgres_crud_macros_common::NotNullOrNullable::NotNull => gen_ident_read_inner_or_ident_with_id_standart_not_null_read_inner_ts(&IsStandartWithId::False),
@@ -2632,9 +2632,9 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
             };
             let gen_create_update_delete_fields_ts_043c4057 = |
                 should_add_serde_skip_serializing_if_vec_is_empty_annotation: &ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation,
-                create_ts: &dyn quote::ToTokens,
-                update_ts: &dyn quote::ToTokens,
-                delete_ts: &dyn quote::ToTokens
+                create_ts: &dyn ToTokens,
+                update_ts: &dyn ToTokens,
+                delete_ts: &dyn ToTokens
             | {
                 let maybe_serde_skip_serializing_if_vec_is_empty_ts = match &should_add_serde_skip_serializing_if_vec_is_empty_annotation {
                     ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::False => Ts2::new(),
@@ -2670,7 +2670,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                     )
                 };
                 let ident_update_ts = {
-                    let gen_std_option_option_ident_type_ts = |current_ident_ts: &dyn quote::ToTokens| wrap_content_into_scopes_dot_comma_ts(
+                    let gen_std_option_option_ident_type_ts = |current_ident_ts: &dyn ToTokens| wrap_content_into_scopes_dot_comma_ts(
                         &postgres_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&current_ident_ts)
                     );
                     let (
@@ -2799,9 +2799,9 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                                             }
                                             let gen_uuid_as_postgres_json_type_update_to_std_string_string_ts = |
                                                 update_or_delete: &UpdateOrDelete,
-                                                el_ts: &dyn quote::ToTokens,
+                                                el_ts: &dyn ToTokens,
                                             |{
-                                                let content_ts: &dyn quote::ToTokens = match &update_or_delete {
+                                                let content_ts: &dyn ToTokens = match &update_or_delete {
                                                     UpdateOrDelete::Update => &quote!{&#el_ts.#id_sc},
                                                     UpdateOrDelete::Delete => &el_ts
                                                 };
@@ -3227,14 +3227,14 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
             let ident_update_for_query_ucc = SelfUpdateForQueryUcc::from_tokens(&ident);
             let ident_update_for_query_ts = {
                 let ident_update_for_query_ts = {
-                    let gen_ident_update_for_query_ts = |content_ts: &dyn quote::ToTokens| {
+                    let gen_ident_update_for_query_ts = |content_ts: &dyn ToTokens| {
                         gen_debug_clone_partialeq_serialize_pub_struct_ts(
                             &allow_clippy_arbitrary_source_item_ordering_ts,
                             &ident_update_for_query_ucc,
                             &content_ts
                         )
                     };
-                    let gen_std_option_option_ident_type_ts = |current_ident_ts: &dyn quote::ToTokens| wrap_content_into_scopes_dot_comma_ts(
+                    let gen_std_option_option_ident_type_ts = |current_ident_ts: &dyn ToTokens| wrap_content_into_scopes_dot_comma_ts(
                         &postgres_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&current_ident_ts)
                     );
                     let gen_ident_update_for_query_standart_not_null_content_ts = |is_standart_with_id: &IsStandartWithId| {
@@ -3564,7 +3564,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                             }
                         },
                         postgres_crud_macros_common::NotNullOrNullable::Nullable => {
-                            let content_ts: &dyn quote::ToTokens = match &pattern {
+                            let content_ts: &dyn ToTokens = match &pattern {
                                 Pattern::Standart => &ident_standart_not_null_as_import_path_postgres_json_type_ts,
                                 Pattern::Array => &ident_array_not_null_as_import_path_postgres_json_type_ts
                             };
@@ -3699,7 +3699,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                         }
                     }
                 };
-                let gen_update_delete_create_array_ts = |format_handle_ts: &dyn quote::ToTokens|{
+                let gen_update_delete_create_array_ts = |format_handle_ts: &dyn ToTokens|{
                     let if_write_is_err_ts = macros_helpers::gen_if_write_is_err_ts(
                         &quote!{acc_2e2ad041, "{value_8333f8f4}"},
                         &return_err_query_part_error_named_write_into_buffer_ts
@@ -3968,7 +3968,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                             quote! {Ok(#content_ts)}
                         },
                         postgres_crud_macros_common::NotNullOrNullable::Nullable => {
-                            let content_ts: &dyn quote::ToTokens = match &pattern {
+                            let content_ts: &dyn ToTokens = match &pattern {
                                 Pattern::Standart => &ident_standart_not_null_as_postgres_json_type_ts,
                                 Pattern::Array => &ident_with_id_array_not_null_as_postgres_json_type_ts,
                             };
@@ -3985,11 +3985,11 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                     },
                     &ident_read_inner_ucc,
                     &{
-                        let gen_into_inner_ts = |current_ident_ts: &dyn quote::ToTokens, parameters_ts: &dyn quote::ToTokens|{
+                        let gen_into_inner_ts = |current_ident_ts: &dyn ToTokens, parameters_ts: &dyn ToTokens|{
                             quote!{#current_ident_ts::into_inner(#parameters_ts)}
                         };
                         let gen_impl_into_inner_for_ident_read_or_ident_with_id_standart_not_null_read_ts = |is_standart_with_id: &IsStandartWithId| {
-                            let current_ident_ts: &dyn quote::ToTokens = match &is_standart_with_id {
+                            let current_ident_ts: &dyn ToTokens = match &is_standart_with_id {
                                 IsStandartWithId::False => &ident_read_inner_ucc,
                                 IsStandartWithId::True => &ident_with_id_standart_not_null_read_inner_ucc,
                             };
@@ -3999,7 +3999,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                                     &gen_type_as_postgres_json_type_ts(&el_d2c28655.field_type),
                                     &quote!{value_6e5af985.#value_sc},
                                 ));
-                                let parameter_ts: &dyn quote::ToTokens = match &is_standart_with_id {
+                                let parameter_ts: &dyn ToTokens = match &is_standart_with_id {
                                     IsStandartWithId::False => &value_sc,
                                     IsStandartWithId::True => &quote!{el_34d57236},
                                 };
@@ -4803,7 +4803,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
             let (impl_postgres_json_type_test_cases_for_ident_ts, impl_postgres_type_test_cases_for_ident_ts) = {
                 let gen_dimension_equal_ts = |dimension: &postgres_crud_macros_common::Dimension|{
                     let read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_dimension_number_equal_sc = dimension.read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_dimension_number_equal_sc();
-                    let gen_nullable_ts = |content_ts: &dyn quote::ToTokens|quote! {
+                    let gen_nullable_ts = |content_ts: &dyn ToTokens|quote! {
                         match #import_path::NotEmptyUniqueVec::try_new(
                             match (#read_only_ids_sc.0.#value_sc, #create_sc.0) {
                                 (Some(read_only_ids_cdcb6239), Some(create_fdd53941)) => match <
@@ -5060,7 +5060,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 }
                                                 let gen_parameters_ts = |
                                                     should_add_dot_clone: ShouldAddDotClone,
-                                                    el_ts: &dyn quote::ToTokens,
+                                                    el_ts: &dyn ToTokens,
                                                 |{
                                                     vec_syn_field.iter().map(|el_value| {
                                                         let current_field_ident = &el_value.field_ident;
@@ -5144,8 +5144,8 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                                         current_ident_not_null_as_postgres_json_type_test_cases_ts,
                                         content_ts
                                     ): (
-                                        &dyn quote::ToTokens,
-                                        &dyn quote::ToTokens
+                                        &dyn ToTokens,
+                                        &dyn ToTokens
                                     ) = match &pattern {
                                         Pattern::Standart => (
                                             &ident_standart_not_null_as_postgres_json_type_test_cases_ts,
@@ -5215,7 +5215,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                                             let current_field_ident = &el_value.field_ident;
                                             let current_field_ident_current_sc = SelfCurrentSc::from_display(&current_field_ident);
                                             let current_field_ident_last_sc = SelfLastSc::from_display(&current_field_ident);
-                                            let content_ts: &dyn quote::ToTokens = if field_ident == current_field_ident {
+                                            let content_ts: &dyn ToTokens = if field_ident == current_field_ident {
                                                 &current_field_ident_current_sc
                                             } else {
                                                 &current_field_ident_last_sc
@@ -5754,7 +5754,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                             });
-                            let gen_struct_initialization_ts = |function: &dyn Fn(&dyn quote::ToTokens) -> Ts2|{//content_ts: &dyn quote::ToTokens
+                            let gen_struct_initialization_ts = |function: &dyn Fn(&dyn ToTokens) -> Ts2|{//content_ts: &dyn ToTokens
                                 let ts = vec_syn_field.iter().map(|el_96e0a086| {
                                     let field_ident = &el_96e0a086.field_ident;
                                     let value_initialization_ts = gen_import_path_value_initialization_ts(&{
@@ -5796,7 +5796,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                             match &not_null_or_nullable {
                                 postgres_crud_macros_common::NotNullOrNullable::NotNull => match &pattern {
                                     Pattern::Standart => {
-                                        let struct_initializattion_ts = gen_struct_initialization_ts(&|content_ts: &dyn quote::ToTokens|{
+                                        let struct_initializattion_ts = gen_struct_initialization_ts(&|content_ts: &dyn ToTokens|{
                                             quote!{
                                                 #read_sc.#content_ts.expect("a2d26e36-48f9-4739-aabe-adc0f0593570").#value_sc
                                             }
@@ -5819,7 +5819,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                                         }
                                     },
                                     Pattern::Array => {
-                                        let struct_initializattion_ts = gen_struct_initialization_ts(&|content_ts: &dyn quote::ToTokens|{
+                                        let struct_initializattion_ts = gen_struct_initialization_ts(&|content_ts: &dyn ToTokens|{
                                             quote!{
                                                 found_read_element.#content_ts.expect("2e8229f7-38d6-48c1-93c9-e77631a3e155").#value_sc
                                             }
@@ -5864,7 +5864,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                             }
                         };
                         let read_only_ids_merged_with_create_into_read_ts = {
-                            let gen_nullable_ts = |current_ident_ts: &dyn quote::ToTokens, content_ts: &dyn quote::ToTokens|{
+                            let gen_nullable_ts = |current_ident_ts: &dyn ToTokens, content_ts: &dyn ToTokens|{
                                 let current_ident_as_postgres_json_type_test_cases_ts = gen_type_as_postgres_json_type_test_cases_ts(&current_ident_ts);
                                 quote! {
                                     #ident_read_ucc::new(
@@ -5910,7 +5910,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                                 },
                                 Pattern::Array => match &not_null_or_nullable {
                                     postgres_crud_macros_common::NotNullOrNullable::NotNull => {
-                                        let gen_parameter_ts = |field_type: &dyn quote::ToTokens, field_ident: &dyn quote::ToTokens, content_ts: &dyn quote::ToTokens|{
+                                        let gen_parameter_ts = |field_type: &dyn ToTokens, field_ident: &dyn ToTokens, content_ts: &dyn ToTokens|{
                                             let field_type_as_postgres_json_type_test_cases_ts = gen_type_as_postgres_json_type_test_cases_ts(&field_type);
                                             quote! {
                                                 #field_type_as_postgres_json_type_test_cases_ts::#read_only_ids_merged_with_create_into_option_value_read_sc(
@@ -5963,7 +5963,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                             quote!{Some(#value_initialization_ts)}
                         };
                         let read_only_ids_merged_with_create_into_table_type_declaration_ts = {
-                            let gen_nullable_ts = |current_ident_ts: &dyn quote::ToTokens, content_ts: &dyn quote::ToTokens|{
+                            let gen_nullable_ts = |current_ident_ts: &dyn ToTokens, content_ts: &dyn ToTokens|{
                                 let current_ident_as_postgres_json_type_test_cases_ts = gen_type_as_postgres_json_type_test_cases_ts(&current_ident_ts);
                                 quote! {
                                     #ident_table_type_declaration_ucc::new(
@@ -6009,7 +6009,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                                 },
                                 Pattern::Array => match &not_null_or_nullable {
                                     postgres_crud_macros_common::NotNullOrNullable::NotNull => {
-                                        let gen_parameter_ts = |field_type: &dyn quote::ToTokens, field_ident: &dyn quote::ToTokens, content_ts: &dyn quote::ToTokens|{
+                                        let gen_parameter_ts = |field_type: &dyn ToTokens, field_ident: &dyn ToTokens, content_ts: &dyn ToTokens|{
                                             let field_type_as_postgres_json_type_test_cases_ts = gen_type_as_postgres_json_type_test_cases_ts(&field_type);
                                             quote! {
                                                 #field_type_as_postgres_json_type_test_cases_ts::#read_only_ids_merged_with_create_into_table_type_declaration_sc(
@@ -6078,9 +6078,9 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                                 },
                                 Pattern::Array => {
                                     let gen_read_only_ids_merged_with_create_into_table_type_declaration_ts = |
-                                        field_ident: &dyn quote::ToTokens,
-                                        field_type: &dyn quote::ToTokens,
-                                        content_ts: &dyn quote::ToTokens
+                                        field_ident: &dyn ToTokens,
+                                        field_type: &dyn ToTokens,
+                                        content_ts: &dyn ToTokens
                                     |{
                                         let field_type_as_postgres_json_type_test_cases_ts = gen_type_as_postgres_json_type_test_cases_ts(&field_type);
                                         quote!{
@@ -6181,9 +6181,9 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                                     },
                                     Pattern::Array => {
                                         let gen_read_only_ids_merged_with_create_into_table_type_declaration_ts = |
-                                            field_ident: &dyn quote::ToTokens,
-                                            field_type: &dyn quote::ToTokens,
-                                            content_ts: &dyn quote::ToTokens
+                                            field_ident: &dyn ToTokens,
+                                            field_type: &dyn ToTokens,
+                                            content_ts: &dyn ToTokens
                                         |{
                                             let field_type_as_postgres_json_type_test_cases_ts = gen_type_as_postgres_json_type_test_cases_ts(&field_type);
                                             quote!{
@@ -6332,7 +6332,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                         let read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_dimension_three_equal_ts = gen_dimension_equal_ts(&postgres_crud_macros_common::Dimension::Three);
                         let read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_dimension_four_equal_ts = gen_dimension_equal_ts(&postgres_crud_macros_common::Dimension::Four);
                         let create_into_postgres_json_type_option_vec_where_length_equal_ts = {
-                            let gen_nullable_ts = |content_ts: &dyn quote::ToTokens|quote! {
+                            let gen_nullable_ts = |content_ts: &dyn ToTokens|quote! {
                                 match #import_path::NotEmptyUniqueVec::try_new(
                                     match #create_sc.0 {
                                         Some(create_09a81dae) => match <
@@ -6489,7 +6489,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                             }
                         };
                         let create_into_postgres_json_type_option_vec_where_length_greater_than_ts = {
-                            let gen_nullable_ts = |content_ts: &dyn quote::ToTokens|quote! {
+                            let gen_nullable_ts = |content_ts: &dyn ToTokens|quote! {
                                 #create_sc.0.map_or_else(|| None, |create_612f2a61| <
                                     #content_ts
                                     as
@@ -6646,7 +6646,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                             read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_contains_el_greater_than_ts,
                             read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_contains_el_regular_expression_ts
                         ) = {
-                            let gen_read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_filter_ts = |method_name_ts: &dyn quote::ToTokens|match &not_null_or_nullable {
+                            let gen_read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_filter_ts = |method_name_ts: &dyn ToTokens|match &not_null_or_nullable {
                                 postgres_crud_macros_common::NotNullOrNullable::NotNull => match &pattern {
                                     Pattern::Standart => {
                                         let content_ts = vec_syn_field.iter().map(|el_59346ba9| {
