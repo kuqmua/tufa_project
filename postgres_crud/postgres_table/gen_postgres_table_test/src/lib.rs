@@ -4,6 +4,7 @@ mod tests {
     fn clippy() {
         use proc_macro2::TokenStream as Ts2;
         use quote::quote;
+        use token_patterns::AllowClippyArbitrarySourceItemOrdering;
         macro_clippy_check_common::clippy_check(
             "gen_postgres_table_test_content",
             "../postgres_crud/postgres_table/",
@@ -40,7 +41,7 @@ server_config = {path = "../../../server_config"}"#,
                 let gen_table_example_ts = |
                     should_add_gen_postgres_table_primary_key: ShouldAddGenPostgresTablePrimaryKey
                 |{
-                    let allow_clippy_arbitrary_source_item_ordering_ts = token_patterns::AllowClippyArbitrarySourceItemOrdering;
+                    let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
                     let maybe_gen_postgres_table_primary_key_ts = match should_add_gen_postgres_table_primary_key {
                         ShouldAddGenPostgresTablePrimaryKey::False => Ts2::new(),
                         ShouldAddGenPostgresTablePrimaryKey::True => quote!{#[gen_postgres_table_primary_key]},

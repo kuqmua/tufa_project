@@ -3,6 +3,7 @@ use naming::{CodeOccurenceSc, HashMapUcc, WithSerializeDeserializeUcc};
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use std::str::FromStr;
+use token_patterns::StdStringString;
 
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
@@ -111,14 +112,14 @@ pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &syn::Varia
     } else {
         panic!("79b0f231-02b9-4770-8052-5f6cc3debf97");
     };
-    let std_string_string = token_patterns::StdStringString;
+    let std_string_string = StdStringString;
     let code_occurence_sc = CodeOccurenceSc;
     let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_ts = fields.iter()
     .filter(|el_5782b638| *el_5782b638.ident.as_ref().expect("3078fd99-5fac-4d57-83ec-93f808b7444b") != *code_occurence_sc.to_string())
     .map(|el_c25b655e| {
         fn get_type_path_third_segment_second_argument_check_if_hashmap(
             value: &syn::Field,
-            std_string_string: token_patterns::StdStringString
+            std_string_string: StdStringString
         ) -> &syn::GenericArgument {
             let segments = if let syn::Type::Path(syn_type_path) = &value.ty {
                 &syn_type_path.path.segments

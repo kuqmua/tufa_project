@@ -47,6 +47,19 @@ use naming::{
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use std::fmt::Display;
+use token_patterns::{
+    AllowClippyArbitrarySourceItemOrdering, CrateAllEnumVariantsArrayDefaultOptionSomeVecOneEl,
+    CrateAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize, CrateDefaultOptionSomeVecOneEl,
+    CrateDefaultOptionSomeVecOneElMaxPageSize,
+    PostgresCrudAllEnumVariantsArrayDefaultOptionSomeVecOneEl,
+    PostgresCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize,
+    PostgresCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneEl,
+    PostgresCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize,
+    PostgresCrudCommonDefaultOptionSomeVecOneEl, PostgresCrudCommonDefaultOptionSomeVecOneElCall,
+    PostgresCrudCommonDefaultOptionSomeVecOneElMaxPageSize, PostgresCrudDefaultOptionSomeVecOneEl,
+    PostgresCrudDefaultOptionSomeVecOneElMaxPageSize, RefStdPrimitiveStr, StdFmtDisplay,
+    StdPrimitiveBool, StdPrimitiveU64, StdStringString,
+};
 
 #[derive(Debug, Clone)]
 pub enum DeriveOrImpl {
@@ -116,38 +129,36 @@ pub enum ImportPath {
 impl ImportPath {
     fn all_variants_default_option_some_vec_one_el(&self) -> &dyn ToTokens {
         match &self {
-            Self::Crate => &token_patterns::CrateAllEnumVariantsArrayDefaultOptionSomeVecOneEl,
-            Self::PostgresCrud => {
-                &token_patterns::PostgresCrudAllEnumVariantsArrayDefaultOptionSomeVecOneEl
-            }
+            Self::Crate => &CrateAllEnumVariantsArrayDefaultOptionSomeVecOneEl,
+            Self::PostgresCrud => &PostgresCrudAllEnumVariantsArrayDefaultOptionSomeVecOneEl,
             Self::PostgresCrudCommon => {
-                &token_patterns::PostgresCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneEl
+                &PostgresCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneEl
             }
         }
     }
     fn all_variants_default_option_some_vec_one_el_max_page_size(&self) -> &dyn ToTokens {
         match &self {
-            Self::Crate => &token_patterns::CrateAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize,
-            Self::PostgresCrud => &token_patterns::PostgresCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize,
-            Self::PostgresCrudCommon => &token_patterns::PostgresCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize,
+            Self::Crate => &CrateAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize,
+            Self::PostgresCrud => {
+                &PostgresCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize
+            }
+            Self::PostgresCrudCommon => {
+                &PostgresCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize
+            }
         }
     }
     fn default_option_some_vec_one_el(&self) -> &dyn ToTokens {
         match &self {
-            Self::Crate => &token_patterns::CrateDefaultOptionSomeVecOneEl,
-            Self::PostgresCrud => &token_patterns::PostgresCrudDefaultOptionSomeVecOneEl,
-            Self::PostgresCrudCommon => {
-                &token_patterns::PostgresCrudCommonDefaultOptionSomeVecOneEl
-            }
+            Self::Crate => &CrateDefaultOptionSomeVecOneEl,
+            Self::PostgresCrud => &PostgresCrudDefaultOptionSomeVecOneEl,
+            Self::PostgresCrudCommon => &PostgresCrudCommonDefaultOptionSomeVecOneEl,
         }
     }
     fn default_option_some_vec_one_el_max_page_size(&self) -> &dyn ToTokens {
         match &self {
-            Self::Crate => &token_patterns::CrateDefaultOptionSomeVecOneElMaxPageSize,
-            Self::PostgresCrud => &token_patterns::PostgresCrudDefaultOptionSomeVecOneElMaxPageSize,
-            Self::PostgresCrudCommon => {
-                &token_patterns::PostgresCrudCommonDefaultOptionSomeVecOneElMaxPageSize
-            }
+            Self::Crate => &CrateDefaultOptionSomeVecOneElMaxPageSize,
+            Self::PostgresCrud => &PostgresCrudDefaultOptionSomeVecOneElMaxPageSize,
+            Self::PostgresCrudCommon => &PostgresCrudCommonDefaultOptionSomeVecOneElMaxPageSize,
         }
     }
     #[must_use]
@@ -673,7 +684,7 @@ pub fn gen_postgres_type_where_ts(
             let variants_ts = variants.iter().map(|el_b9724130| {
                 let el_ucc = el_b9724130.ucc();
                 let default_option_some_vec_one_el_call_ts =
-                    token_patterns::PostgresCrudCommonDefaultOptionSomeVecOneElCall;
+                    PostgresCrudCommonDefaultOptionSomeVecOneElCall;
                 quote! {
                     Self::#el_ucc(#default_option_some_vec_one_el_call_ts)
                 }
@@ -788,20 +799,19 @@ pub fn gen_impl_postgres_json_type_ts(
     let select_only_created_ids_query_part_sc = SelectOnlyCreatedIdsQueryPartSc;
     let select_only_created_ids_query_bind_sc = SelectOnlyCreatedIdsQueryBindSc;
     let query_part_error_named_ucc = QueryPartErrorNamedUcc;
-    let reference_std_primitive_str_ts = token_patterns::RefStdPrimitiveStr;
-    let std_primitive_bool_ts = token_patterns::StdPrimitiveBool;
+    let reference_std_primitive_str_ts = RefStdPrimitiveStr;
+    let std_primitive_bool_ts = StdPrimitiveBool;
     let reference_mut_std_primitive_u64_ts = {
-        let std_primitive_u64_ts = token_patterns::StdPrimitiveU64;
+        let std_primitive_u64_ts = StdPrimitiveU64;
         quote! {&mut #std_primitive_u64_ts}
     };
-    let std_string_string_ts = token_patterns::StdStringString;
-    let std_primitive_u64_ts = token_patterns::StdPrimitiveU64;
+    let std_string_string_ts = StdStringString;
+    let std_primitive_u64_ts = StdPrimitiveU64;
     let query_postgres_arguments_ts =
         quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
     let query_lifetime_postgres_arguments_ts =
         quote! {sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>};
-    let allow_clippy_arbitrary_source_item_ordering_ts =
-        token_patterns::AllowClippyArbitrarySourceItemOrdering;
+    let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
     //todo maybe reexport sqlx?
     quote! {
         #allow_clippy_arbitrary_source_item_ordering_ts
@@ -1037,16 +1047,15 @@ pub fn impl_postgres_type_where_filter_for_ident_ts(
     query_bind_content_ts: &dyn ToTokens,
     import_path: &ImportPath,
 ) -> Ts2 {
-    let std_primitive_u64_ts = token_patterns::StdPrimitiveU64;
-    let std_fmt_display_ts = token_patterns::StdFmtDisplay;
-    let std_primitive_bool_ts = token_patterns::StdPrimitiveBool;
-    let std_string_string_ts = token_patterns::StdStringString;
+    let std_primitive_u64_ts = StdPrimitiveU64;
+    let std_fmt_display_ts = StdFmtDisplay;
+    let std_primitive_bool_ts = StdPrimitiveBool;
+    let std_string_string_ts = StdStringString;
     let query_part_error_named_ucc = QueryPartErrorNamedUcc;
     let query_part_sc = QueryPartSc;
     let query_bind_sc = QueryBindSc;
     let postgres_type_where_filter_ucc = PostgresTypeWhereFilterUcc;
-    let allow_clippy_arbitrary_source_item_ordering_ts =
-        token_patterns::AllowClippyArbitrarySourceItemOrdering;
+    let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
     quote! {
         #allow_clippy_arbitrary_source_item_ordering_ts
         impl #impl_generic_ts #import_path ::#postgres_type_where_filter_ucc<'lifetime> for #ident_ts #ident_generic_ts {
@@ -1173,15 +1182,14 @@ pub fn gen_impl_postgres_type_ts(
     let select_only_updated_ids_query_part_sc = SelectOnlyUpdatedIdsQueryPartSc;
     let select_only_updated_ids_query_bind_sc = SelectOnlyUpdatedIdsQueryBindSc;
     let query_part_error_named_ucc = QueryPartErrorNamedUcc;
-    let std_string_string_ts = token_patterns::StdStringString;
-    let std_primitive_u64_ts = token_patterns::StdPrimitiveU64;
-    let reference_std_primitive_str_ts = token_patterns::RefStdPrimitiveStr;
+    let std_string_string_ts = StdStringString;
+    let std_primitive_u64_ts = StdPrimitiveU64;
+    let reference_std_primitive_str_ts = RefStdPrimitiveStr;
     let query_postgres_arguments_ts =
         quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
-    let std_fmt_display_ts = token_patterns::StdFmtDisplay;
-    let std_primitive_bool_ts = token_patterns::StdPrimitiveBool;
-    let allow_clippy_arbitrary_source_item_ordering_ts =
-        token_patterns::AllowClippyArbitrarySourceItemOrdering;
+    let std_fmt_display_ts = StdFmtDisplay;
+    let std_primitive_bool_ts = StdPrimitiveBool;
+    let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
     quote! {
         #allow_clippy_arbitrary_source_item_ordering_ts
         impl #import_path :: #postgres_type_ucc for #ident {
@@ -1272,8 +1280,7 @@ pub fn gen_impl_postgres_type_not_primary_key_for_ident_ts(
     let postgres_type_ucc = PostgresTypeUcc;
     let create_ucc = CreateUcc;
     let ident_create_ucc = SelfCreateUcc::from_tokens(&ident);
-    let allow_clippy_arbitrary_source_item_ordering_ts =
-        token_patterns::AllowClippyArbitrarySourceItemOrdering;
+    let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
     quote! {
         #allow_clippy_arbitrary_source_item_ordering_ts
         impl #import_path::#postgres_type_not_primary_key_ucc for #ident {
@@ -1826,8 +1833,7 @@ pub fn gen_impl_postgres_type_test_cases_for_ident_ts(
         quote! {#self_postgres_type_as_postgres_type_ts::#create_ucc};
     let self_postgres_type_as_postgres_type_where_ts =
         quote! {#self_postgres_type_as_postgres_type_ts::#where_ucc};
-    let allow_clippy_arbitrary_source_item_ordering_ts =
-        token_patterns::AllowClippyArbitrarySourceItemOrdering;
+    let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
     let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
     let option_vec_create_content_ts = gen_option_vec_create_ts(
         &self_postgres_type_as_postgres_type_ts,
@@ -2068,8 +2074,7 @@ pub fn gen_impl_postgres_json_type_test_cases_for_ident_ts(
     read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_contains_el_greater_than_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_contains_el_regular_expression_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let allow_clippy_arbitrary_source_item_ordering_ts =
-        token_patterns::AllowClippyArbitrarySourceItemOrdering;
+    let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
     let value_ucc = ValueUcc;
     let value_sc = ValueSc;
     let postgres_json_type_ucc = PostgresJsonTypeUcc;
@@ -2332,8 +2337,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         let field_index_ts = gen_underscore_underscore_field_index_ts(index);
         quote! {#field_name_double_quotes_ts => Ok(__Field::#field_index_ts)}
     }
-    let allow_clippy_arbitrary_source_item_ordering_ts =
-        token_patterns::AllowClippyArbitrarySourceItemOrdering;
+    let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
     let vec_ident = vec_ident_type
         .iter()
         .map(|el_00a99fdb| el_00a99fdb.0)

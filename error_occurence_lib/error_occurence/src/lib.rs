@@ -4,7 +4,7 @@ use naming::{
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
-
+use token_patterns::StdStringString;
 #[proc_macro_derive(
     ErrorOccurence,
     attributes(
@@ -81,7 +81,6 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         all_equal.expect("b9da972a-f38b-4217-939c-54ffd56f0301")
     };
     let value_sc = ValueSc;
-    let std_string_string = token_patterns::StdStringString;
     let code_occurence_sc = CodeOccurenceSc;
     let code_occurence_sc_str = code_occurence_sc.to_string();
     let into_serialize_deserialize_version_sc_ts = IntoSerializeDeserializeVersionSc;
@@ -169,7 +168,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 let if_write_is_err_ts = macros_helpers::gen_if_write_is_err_ts(&quote! {acc_52e70d22, "\n {element}"}, &quote! {panic!("c751d54a-b008-493f-a97d-2f8e381780d5");});
                                 quote! {
                                     #current_ident.to_string().lines().fold(
-                                        #std_string_string::new(),
+                                        #StdStringString::new(),
                                         |mut acc_52e70d22, element| {
                                             #if_write_is_err_ts
                                             acc_52e70d22
@@ -181,13 +180,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 let if_write_is_err_ts = macros_helpers::gen_if_write_is_err_ts(&quote! {acc_a9ba7521, "\n {el_6e4f53ad}"}, &quote! {panic!("b35ed9f5-525b-4287-9d6e-0be1d72a0874");});
                                 quote! {
                                     #current_ident.iter().fold(
-                                        #std_string_string::new(),
+                                        #StdStringString::new(),
                                         |mut acc_ac447c4b, el_36630fcf| {
                                             acc_ac447c4b.push_str(
                                                 &error_occurence_lib::ToStdStringString::to_std_string_string(el_36630fcf)
                                                 .lines()
                                                 .fold(
-                                                    #std_string_string::new(),
+                                                    #StdStringString::new(),
                                                     |mut acc_a9ba7521, el_6e4f53ad| {
                                                         #if_write_is_err_ts
                                                         acc_a9ba7521
@@ -203,10 +202,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 let if_write_is_err_ts = macros_helpers::gen_if_write_is_err_ts(&quote! {acc_1bbd5ef3, "\n {el_3f2fe01d}"}, &quote! {panic!("4dfdd18d-5fca-41ba-b556-36ceb1b18b60");});
                                 quote! {
                                     #current_ident.iter().fold(
-                                        #std_string_string::new(),
+                                        #StdStringString::new(),
                                         |mut acc_c5adba93, el_37c46c8a| {
                                             acc_c5adba93.push_str(&el_37c46c8a.to_string().lines().fold(
-                                                #std_string_string::new(),
+                                                #StdStringString::new(),
                                                 |mut acc_1bbd5ef3, el_3f2fe01d| {
                                                     #if_write_is_err_ts
                                                     acc_1bbd5ef3
@@ -221,7 +220,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 let if_write_is_err_ts = macros_helpers::gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {key}: {}", &error_occurence_lib::ToStdStringString::to_std_string_string(#value_sc)}, &quote! {panic!("d030580a-6c03-4913-9088-b77316b9f285");});
                                 quote! {
                                     #current_ident.iter().fold(
-                                        #std_string_string::new(),
+                                        #StdStringString::new(),
                                         |mut acc_06473093, (key, #value_sc)| {
                                             #if_write_is_err_ts
                                             acc_06473093
@@ -237,7 +236,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             acc_a47e1ba7,
                                             "\n {key}: {}",
                                             #value_sc.to_string().lines().fold(
-                                                #std_string_string::new(),
+                                                #StdStringString::new(),
                                                 |mut acc_addfc699, el_8b8f577e| {
                                                     #if_write_is_err_ts
                                                     acc_addfc699
@@ -249,7 +248,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 );
                                 quote! {
                                     #current_ident.iter().fold(
-                                        #std_string_string::new(),
+                                        #StdStringString::new(),
                                         |mut acc_a47e1ba7, (key, #value_sc)| {
                                             #if_write_is_err_ts
                                             acc_a47e1ba7

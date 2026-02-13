@@ -1,5 +1,6 @@
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
+use token_patterns::StdStringString;
 const REGEX_VALUE: &str = "^[a-zA-Z]+$";
 #[proc_macro]
 pub fn gen_upper_camel_and_sc_str_and_ts(
@@ -298,7 +299,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(
     let syn::Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("d26bf85e-20cf-4ee1-97bc-d61f59eb11bc")
     };
-    let std_string_string_ts = token_patterns::StdStringString;
+    let std_string_string_ts = StdStringString;
     let variants_matching_values_ts = data_enum
         .variants
         .iter()
@@ -346,7 +347,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(
     let syn::Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("ed6efe2e-ded2-4b61-807d-7b14ba0e2031");
     };
-    let std_string_string_ts = token_patterns::StdStringString;
+    let std_string_string_ts = StdStringString;
     let variants_matching_values_ts = data_enum
         .variants
         .iter()
@@ -393,7 +394,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(
     let syn::Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("b2263e7e-0e5e-48ef-8d91-32864281d4aa");
     };
-    let std_string_string = token_patterns::StdStringString;
+    let std_string_string = StdStringString;
     let variants_matching_values_ts = data_enum
         .variants
         .iter()

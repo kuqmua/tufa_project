@@ -22,6 +22,13 @@ use std::{
     fmt::{Display, Formatter, Result as StdFmtResult},
     iter::once,
 };
+use token_patterns::{
+    AllowClippyArbitrarySourceItemOrdering, MustUse, PostgresCrudCommonDefaultOptionSomeVecOneEl,
+    PostgresCrudCommonDefaultOptionSomeVecOneElCall,
+    PostgresCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall, StdPrimitiveBool, StdPrimitiveF32,
+    StdPrimitiveF64, StdPrimitiveI8, StdPrimitiveI16, StdPrimitiveI32, StdPrimitiveI64,
+    StdPrimitiveU8, StdPrimitiveU16, StdPrimitiveU32, StdPrimitiveU64, StdStringString, UuidUuid,
+};
 
 #[must_use]
 pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
@@ -645,28 +652,27 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
         let read_only_ids_merged_with_create_into_where_equal_sc = ReadOnlyIdsMergedWithCreateIntoWhereEqualSc;
         let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_sc = ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc;
 
-        let std_primitive_i8_ts = token_patterns::StdPrimitiveI8;
-        let std_primitive_i16_ts = token_patterns::StdPrimitiveI16;
-        let std_primitive_i32_ts = token_patterns::StdPrimitiveI32;
-        let std_primitive_i64_ts = token_patterns::StdPrimitiveI64;
-        let std_primitive_u8_ts = token_patterns::StdPrimitiveU8;
-        let std_primitive_u16_ts = token_patterns::StdPrimitiveU16;
-        let std_primitive_u32_ts = token_patterns::StdPrimitiveU32;
-        let std_primitive_u64_ts = token_patterns::StdPrimitiveU64;
-        let std_primitive_f32_ts = token_patterns::StdPrimitiveF32;
-        let std_primitive_f64_ts = token_patterns::StdPrimitiveF64;
-        let std_primitive_bool_ts = token_patterns::StdPrimitiveBool;
-        let std_string_string_ts = token_patterns::StdStringString;
-        let uuid_uuid_ts = token_patterns::UuidUuid;
-        // let schemars_json_schema_ts = token_patterns::SchemarsJsonSchema;
+        let std_primitive_i8_ts = StdPrimitiveI8;
+        let std_primitive_i16_ts = StdPrimitiveI16;
+        let std_primitive_i32_ts = StdPrimitiveI32;
+        let std_primitive_i64_ts = StdPrimitiveI64;
+        let std_primitive_u8_ts = StdPrimitiveU8;
+        let std_primitive_u16_ts = StdPrimitiveU16;
+        let std_primitive_u32_ts = StdPrimitiveU32;
+        let std_primitive_u64_ts = StdPrimitiveU64;
+        let std_primitive_f32_ts = StdPrimitiveF32;
+        let std_primitive_f64_ts = StdPrimitiveF64;
+        let std_primitive_bool_ts = StdPrimitiveBool;
+        let std_string_string_ts = StdStringString;
+        let uuid_uuid_ts = UuidUuid;
+        // let schemars_json_schema_ts = SchemarsJsonSchema;
 
         let none_ts = quote! {None};
-        let must_use_ts = token_patterns::MustUse;
-        let allow_clippy_arbitrary_source_item_ordering_ts = token_patterns::AllowClippyArbitrarySourceItemOrdering;
-
-        let postgres_crud_common_default_option_some_vec_one_el_ts = token_patterns::PostgresCrudCommonDefaultOptionSomeVecOneEl;
-        let postgres_crud_common_default_option_some_vec_one_el_call_ts = token_patterns::PostgresCrudCommonDefaultOptionSomeVecOneElCall;
-        let postgres_crud_common_default_option_some_vec_one_el_max_page_size_call_ts = token_patterns::PostgresCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall;
+        let must_use_ts = MustUse;
+        let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
+        let postgres_crud_common_default_option_some_vec_one_el_ts = PostgresCrudCommonDefaultOptionSomeVecOneEl;
+        let postgres_crud_common_default_option_some_vec_one_el_call_ts = PostgresCrudCommonDefaultOptionSomeVecOneElCall;
+        let postgres_crud_common_default_option_some_vec_one_el_max_page_size_call_ts = PostgresCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall;
 
         let gen_import_path_value_initialization_ts = |content_ts: &dyn ToTokens| postgres_crud_macros_common::gen_value_initialization_ts(&import_path, &content_ts);
         let gen_ident_ts = |current_not_null_or_nullable: &NotNullOrNullable, current_postgres_json_type_pattern: &PostgresJsonTypePattern| {
