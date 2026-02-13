@@ -220,8 +220,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "array", "change"
     ],
     [
-        "self", "option", "to", "update", "try", "gen", "postgres", "json", "type", "error",
-        "named"
+        "self", "option", "to", "update", "try", "gen", "pg", "json", "type", "error", "named"
     ],
     [
         "self",
@@ -230,7 +229,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "update",
         "try",
         "gen",
-        "postgres",
+        "pg",
         "json",
         "type",
         "error",
@@ -248,7 +247,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ],
     ["self", "field", "to", "update"],
     [
-        "self", "gen", "postgres", "json", "type", "to", "read", "error", "named"
+        "self", "gen", "pg", "json", "type", "to", "read", "error", "named"
     ],
     [
         "self",
@@ -281,7 +280,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "std", "vec", "vec", "object", "with", "id", "self", "read", "try", "new", "error", "named"
     ],
     [
-        "self", "gen", "postgres", "json", "type", "to", "read", "from", "vec", "error", "named"
+        "self", "gen", "pg", "json", "type", "to", "read", "from", "vec", "error", "named"
     ],
     [
         "std", "option", "option", "object", "self", "option", "to", "update", "try", "new",
@@ -318,7 +317,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "update",
         "try",
         "gen",
-        "postgres",
+        "pg",
         "json",
         "type",
         "error",
@@ -333,11 +332,11 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ],
     [
         "std", "vec", "vec", "object", "with", "id", "self", "option", "to", "update", "try",
-        "gen", "postgres", "json", "type", "error", "named"
+        "gen", "pg", "json", "type", "error", "named"
     ],
     [
         "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "option",
-        "to", "update", "try", "gen", "postgres", "json", "type", "error", "named"
+        "to", "update", "try", "gen", "pg", "json", "type", "error", "named"
     ],
     ["self", "with", "serialize", "deserialize"],
     ["self", "try", "from", "env", "error", "named"],
@@ -387,7 +386,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     [
         "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "column"
     ],
-    ["postgres", "json", "type", "self", "to", "create"],
+    ["pg", "json", "type", "self", "to", "create"],
     ["object", "self", "create"],
     ["std", "option", "option", "object", "self", "create"],
     [
@@ -396,41 +395,41 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     [
         "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "create"
     ],
-    ["postgres", "json", "type", "self", "select"],
-    ["postgres", "json", "type", "object", "self", "select"],
+    ["pg", "json", "type", "self", "select"],
+    ["pg", "json", "type", "object", "self", "select"],
     [
-        "postgres", "json", "type", "std", "option", "option", "object", "self", "select"
+        "pg", "json", "type", "std", "option", "option", "object", "self", "select"
     ],
     [
-        "postgres", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "select"
+        "pg", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "select"
     ],
     [
-        "postgres", "json", "type", "std", "option", "option", "std", "vec", "vec", "object",
-        "with", "id", "self", "select"
+        "pg", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with",
+        "id", "self", "select"
     ],
     [
-        "postgres", "json", "type", "self", "select", "try", "new", "error", "named"
+        "pg", "json", "type", "self", "select", "try", "new", "error", "named"
     ],
     [
-        "postgres", "json", "type", "object", "self", "select", "try", "new", "error", "named"
+        "pg", "json", "type", "object", "self", "select", "try", "new", "error", "named"
     ],
     [
-        "postgres", "json", "type", "std", "option", "option", "object", "self", "select", "try",
+        "pg", "json", "type", "std", "option", "option", "object", "self", "select", "try", "new",
+        "error", "named"
+    ],
+    [
+        "pg", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "select", "try",
         "new", "error", "named"
     ],
     [
-        "postgres", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "select",
-        "try", "new", "error", "named"
+        "pg", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with",
+        "id", "self", "select", "try", "new", "error", "named"
     ],
-    [
-        "postgres", "json", "type", "std", "option", "option", "std", "vec", "vec", "object",
-        "with", "id", "self", "select", "try", "new", "error", "named"
-    ],
-    ["postgres", "json", "type", "self", "read"],
-    ["postgres", "json", "type", "self", "read", "without", "id"],
-    ["postgres", "json", "type", "self", "read", "with", "id"],
+    ["pg", "json", "type", "self", "read"],
+    ["pg", "json", "type", "self", "read", "without", "id"],
+    ["pg", "json", "type", "self", "read", "with", "id"],
     ["self", "update", "element"],
-    ["postgres", "json", "type", "self", "option", "to", "update"],
+    ["pg", "json", "type", "self", "option", "to", "update"],
     ["self", "update", "error", "named"],
     ["self", "update", "try", "new", "error", "named"],
     ["object", "self", "update"],
@@ -446,12 +445,12 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "gen", "error", "named"
     ],
     [
-        "postgres", "json", "type", "std", "option", "option", "std", "vec", "vec", "object",
-        "with", "id", "self", "option", "to", "update", "try", "gen", "postgres", "json", "type",
-        "error", "named"
+        "pg", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with",
+        "id", "self", "option", "to", "update", "try", "gen", "pg", "json", "type", "error",
+        "named"
     ],
     [
-        "postgres",
+        "pg",
         "json",
         "type",
         "object",
@@ -461,7 +460,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "update",
         "try",
         "gen",
-        "postgres",
+        "pg",
         "json",
         "type",
         "error",
@@ -471,7 +470,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "deserialize"
     ],
     [
-        "postgres",
+        "pg",
         "json",
         "type",
         "self",
@@ -480,7 +479,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "update",
         "try",
         "gen",
-        "postgres",
+        "pg",
         "json",
         "type",
         "error",
@@ -490,147 +489,145 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "deserialize"
     ],
     [
-        "postgres", "json", "type", "self", "read", "with", "or", "without", "id", "try", "from",
+        "pg", "json", "type", "self", "read", "with", "or", "without", "id", "try", "from",
         "error", "named"
     ],
-    ["postgres", "type", "object", "self"],
+    ["pg", "type", "object", "self"],
+    ["pg", "type", "std", "option", "option", "object", "self"],
     [
-        "postgres", "type", "std", "option", "option", "object", "self"
+        "pg", "type", "std", "vec", "vec", "object", "with", "id", "self"
     ],
     [
-        "postgres", "type", "std", "vec", "vec", "object", "with", "id", "self"
-    ],
-    [
-        "postgres", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id",
+        "pg", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id",
         "self"
     ],
-    ["postgres", "type", "object", "self", "to", "create"],
+    ["pg", "type", "object", "self", "to", "create"],
     [
-        "postgres", "type", "std", "option", "option", "object", "self", "to", "create"
+        "pg", "type", "std", "option", "option", "object", "self", "to", "create"
     ],
     [
-        "postgres", "type", "std", "vec", "vec", "object", "with", "id", "self", "to", "create"
+        "pg", "type", "std", "vec", "vec", "object", "with", "id", "self", "to", "create"
     ],
     [
-        "postgres", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id",
+        "pg", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id",
         "self", "to", "create"
     ],
-    ["postgres", "type", "object", "self", "to", "read"],
+    ["pg", "type", "object", "self", "to", "read"],
     [
-        "postgres", "type", "std", "option", "option", "object", "self", "to", "read"
+        "pg", "type", "std", "option", "option", "object", "self", "to", "read"
     ],
     [
-        "postgres", "type", "std", "vec", "vec", "object", "with", "id", "self", "to", "read"
+        "pg", "type", "std", "vec", "vec", "object", "with", "id", "self", "to", "read"
     ],
     [
-        "postgres", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id",
+        "pg", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id",
         "self", "to", "read"
     ],
-    ["postgres", "type", "object", "self", "to", "update"],
+    ["pg", "type", "object", "self", "to", "update"],
     [
-        "postgres", "type", "std", "option", "option", "object", "self", "to", "update"
+        "pg", "type", "std", "option", "option", "object", "self", "to", "update"
     ],
     [
-        "postgres", "type", "std", "vec", "vec", "object", "with", "id", "self", "to", "update"
+        "pg", "type", "std", "vec", "vec", "object", "with", "id", "self", "to", "update"
     ],
     [
-        "postgres", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id",
+        "pg", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id",
         "self", "to", "update"
     ],
-    ["postgres", "type", "object", "self", "where"],
+    ["pg", "type", "object", "self", "where"],
     [
-        "postgres", "type", "std", "option", "option", "object", "self", "where"
+        "pg", "type", "std", "option", "option", "object", "self", "where"
     ],
     [
-        "postgres", "type", "std", "vec", "vec", "object", "with", "id", "self", "where"
+        "pg", "type", "std", "vec", "vec", "object", "with", "id", "self", "where"
     ],
     [
-        "postgres", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id",
+        "pg", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id",
         "self", "where"
     ],
-    ["postgres", "type", "self", "column"],
-    ["postgres", "type", "self", "to", "create"],
-    ["postgres", "type", "self", "to", "read"],
-    ["postgres", "type", "self", "to", "update"],
-    ["postgres", "type", "self", "where"],
-    ["postgres", "type", "self", "to", "delete"],
+    ["pg", "type", "self", "column"],
+    ["pg", "type", "self", "to", "create"],
+    ["pg", "type", "self", "to", "read"],
+    ["pg", "type", "self", "to", "update"],
+    ["pg", "type", "self", "where"],
+    ["pg", "type", "self", "to", "delete"],
     ["self", "as", "json"],
     ["self", "as", "json", "not", "null"],
     ["self", "as", "jsonb"],
     ["self", "as", "jsonb", "not", "null"],
-    ["postgres", "json", "type", "object", "self"],
+    ["pg", "json", "type", "object", "self"],
     [
-        "postgres", "json", "type", "std", "option", "option", "object", "self"
+        "pg", "json", "type", "std", "option", "option", "object", "self"
     ],
     [
-        "postgres", "json", "type", "std", "vec", "vec", "object", "with", "id", "self"
+        "pg", "json", "type", "std", "vec", "vec", "object", "with", "id", "self"
     ],
     [
-        "postgres", "json", "type", "std", "option", "option", "std", "vec", "vec", "object",
-        "with", "id", "self"
+        "pg", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with",
+        "id", "self"
     ],
     [
-        "postgres", "json", "type", "object", "self", "read", "try", "new", "error", "named"
+        "pg", "json", "type", "object", "self", "read", "try", "new", "error", "named"
     ],
     [
-        "postgres", "json", "type", "std", "option", "option", "object", "self", "read", "try",
+        "pg", "json", "type", "std", "option", "option", "object", "self", "read", "try", "new",
+        "error", "named"
+    ],
+    [
+        "pg", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "read", "try",
         "new", "error", "named"
     ],
     [
-        "postgres", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "read",
-        "try", "new", "error", "named"
+        "pg", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with",
+        "id", "self", "read", "try", "new", "error", "named"
+    ],
+    ["pg", "json", "type", "object", "self", "reader"],
+    [
+        "pg", "json", "type", "std", "option", "option", "object", "self", "reader"
     ],
     [
-        "postgres", "json", "type", "std", "option", "option", "std", "vec", "vec", "object",
-        "with", "id", "self", "read", "try", "new", "error", "named"
-    ],
-    ["postgres", "json", "type", "object", "self", "reader"],
-    [
-        "postgres", "json", "type", "std", "option", "option", "object", "self", "reader"
+        "pg", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "reader"
     ],
     [
-        "postgres", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "reader"
+        "pg", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with",
+        "id", "self", "reader"
     ],
     [
-        "postgres", "json", "type", "std", "option", "option", "std", "vec", "vec", "object",
-        "with", "id", "self", "reader"
+        "pg", "type", "self", "to", "update", "query", "part", "error", "named"
     ],
     [
-        "postgres", "type", "self", "to", "update", "query", "part", "error", "named"
+        "pg", "type", "self", "as", "json", "to", "update", "query", "part", "error", "named"
     ],
     [
-        "postgres", "type", "self", "as", "json", "to", "update", "query", "part", "error", "named"
-    ],
-    [
-        "postgres", "type", "self", "as", "json", "not", "null", "to", "update", "query", "part",
+        "pg", "type", "self", "as", "json", "not", "null", "to", "update", "query", "part",
         "error", "named"
     ],
     ["self", "where", "try", "new", "error", "named"],
-    ["postgres", "type", "self", "where", "equal"],
-    ["postgres", "type", "self", "where", "greater", "than"],
-    ["postgres", "type", "self", "where", "between"],
+    ["pg", "type", "self", "where", "equal"],
+    ["pg", "type", "self", "where", "greater", "than"],
+    ["pg", "type", "self", "where", "between"],
     [
-        "postgres", "type", "self", "where", "between", "try", "new", "error", "named"
+        "pg", "type", "self", "where", "between", "try", "new", "error", "named"
     ],
-    ["postgres", "type", "self", "where", "in"],
+    ["pg", "type", "self", "where", "in"],
     [
-        "postgres", "type", "self", "where", "in", "try", "new", "error", "named"
-    ],
-    [
-        "postgres", "type", "std", "option", "option", "self", "where", "equal"
+        "pg", "type", "self", "where", "in", "try", "new", "error", "named"
     ],
     [
-        "postgres", "type", "std", "option", "option", "self", "where", "greater", "than"
+        "pg", "type", "std", "option", "option", "self", "where", "equal"
     ],
     [
-        "postgres", "type", "std", "option", "option", "self", "where", "between"
+        "pg", "type", "std", "option", "option", "self", "where", "greater", "than"
     ],
     [
-        "postgres", "type", "std", "option", "option", "self", "where", "in"
+        "pg", "type", "std", "option", "option", "self", "where", "between"
+    ],
+    [
+        "pg", "type", "std", "option", "option", "self", "where", "in"
     ],
     ["std", "option", "option", "self", "where"],
     [
-        "postgres",
+        "pg",
         "type",
         "self",
         "where",
@@ -640,7 +637,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "expression"
     ],
     [
-        "postgres",
+        "pg",
         "type",
         "std",
         "option",
@@ -653,7 +650,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "expression"
     ],
     [
-        "postgres",
+        "pg",
         "type",
         "std",
         "option",
@@ -666,7 +663,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "expression"
     ],
     [
-        "postgres",
+        "pg",
         "type",
         "self",
         "where",
@@ -676,7 +673,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "expression"
     ],
     [
-        "postgres",
+        "pg",
         "type",
         "std",
         "option",
@@ -688,7 +685,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "equal"
     ],
     [
-        "postgres",
+        "pg",
         "type",
         "self",
         "where",
@@ -696,18 +693,15 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "notation",
         "equal"
     ],
+    ["pg", "type", "self", "where", "length", "greater", "than"],
     [
-        "postgres", "type", "self", "where", "length", "greater", "than"
+        "pg", "type", "std", "option", "option", "self", "where", "length", "greater", "than"
     ],
     [
-        "postgres", "type", "std", "option", "option", "self", "where", "length", "greater", "than"
+        "pg", "type", "self", "where", "length", "greater", "than", "try", "new", "error", "named"
     ],
     [
-        "postgres", "type", "self", "where", "length", "greater", "than", "try", "new", "error",
-        "named"
-    ],
-    [
-        "postgres",
+        "pg",
         "type",
         "self",
         "where",
@@ -718,7 +712,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "representation"
     ],
     [
-        "postgres",
+        "pg",
         "type",
         "std",
         "option",
@@ -732,7 +726,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "representation"
     ],
     [
-        "postgres",
+        "pg",
         "type",
         "self",
         "where",
@@ -743,7 +737,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "range"
     ],
     [
-        "postgres",
+        "pg",
         "type",
         "std",
         "option",
@@ -757,31 +751,30 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "range"
     ],
     [
-        "postgres", "type", "self", "where", "contains", "another", "range"
+        "pg", "type", "self", "where", "contains", "another", "range"
     ],
     [
-        "postgres", "type", "std", "option", "option", "self", "where", "contains", "another",
-        "range"
+        "pg", "type", "std", "option", "option", "self", "where", "contains", "another", "range"
     ],
     [
-        "postgres", "type", "std", "option", "option", "self", "where", "is", "null"
+        "pg", "type", "std", "option", "option", "self", "where", "is", "null"
     ],
-    ["postgres", "type", "self", "where", "named"],
+    ["pg", "type", "self", "where", "named"],
     [
         "self", "where", "range", "length", "try", "new", "error", "named"
     ],
     ["self", "where", "range", "length"],
     ["self", "nullable"],
     ["self", "not", "null"],
-    ["postgres", "type", "self", "not", "null", "to", "create"],
-    ["postgres", "type", "self", "not", "null", "to", "read"],
-    ["postgres", "type", "self", "not", "null", "to", "update"],
-    ["postgres", "type", "self", "not", "null", "to", "delete"],
+    ["pg", "type", "self", "not", "null", "to", "create"],
+    ["pg", "type", "self", "not", "null", "to", "read"],
+    ["pg", "type", "self", "not", "null", "to", "update"],
+    ["pg", "type", "self", "not", "null", "to", "delete"],
     ["self", "not", "null", "to", "delete"],
     [
-        "postgres", "type", "self", "where", "position", "equals", "try", "new", "error", "named"
+        "pg", "type", "self", "where", "position", "equals", "try", "new", "error", "named"
     ],
-    ["postgres", "type", "self", "where", "position", "equals"],
+    ["pg", "type", "self", "where", "position", "equals"],
     ["self", "as", "json", "nullable"],
     ["self", "as", "jsonb", "nullable"],
     ["object", "self", "where"],
@@ -790,18 +783,18 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     [
         "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "where"
     ],
-    ["postgres", "json", "type", "self", "where"],
-    ["postgres", "json", "type", "self", "where", "equal"],
-    ["postgres", "json", "type", "self", "where", "between"],
+    ["pg", "json", "type", "self", "where"],
+    ["pg", "json", "type", "self", "where", "equal"],
+    ["pg", "json", "type", "self", "where", "between"],
     [
-        "postgres", "json", "type", "self", "where", "between", "try", "new", "error", "named"
+        "pg", "json", "type", "self", "where", "between", "try", "new", "error", "named"
     ],
-    ["postgres", "json", "type", "self", "where", "in"],
+    ["pg", "json", "type", "self", "where", "in"],
     [
-        "postgres", "json", "type", "self", "where", "in", "try", "new", "error", "named"
+        "pg", "json", "type", "self", "where", "in", "try", "new", "error", "named"
     ],
     [
-        "postgres",
+        "pg",
         "type",
         "self",
         "where",
@@ -815,7 +808,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "named"
     ],
     [
-        "postgres",
+        "pg",
         "json",
         "type",
         "self",
@@ -826,7 +819,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "expression"
     ],
     [
-        "postgres",
+        "pg",
         "json",
         "type",
         "self",
@@ -841,7 +834,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "named"
     ],
     [
-        "postgres",
+        "pg",
         "type",
         "self",
         "where",
@@ -855,7 +848,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "named"
     ],
     [
-        "postgres",
+        "pg",
         "json",
         "type",
         "self",
@@ -870,7 +863,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "named"
     ],
     [
-        "postgres",
+        "pg",
         "json",
         "type",
         "self",
@@ -881,187 +874,182 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "expression"
     ],
     [
-        "postgres", "json", "type", "std", "option", "option", "self", "where", "is", "null"
+        "pg", "json", "type", "std", "option", "option", "self", "where", "is", "null"
     ],
-    ["postgres", "json", "type", "self", "where", "is", "null"],
+    ["pg", "json", "type", "self", "where", "is", "null"],
     [
-        "postgres", "json", "type", "std", "option", "option", "self", "to", "create"
-    ],
-    [
-        "postgres", "json", "type", "std", "option", "option", "self", "select"
+        "pg", "json", "type", "std", "option", "option", "self", "to", "create"
     ],
     [
-        "postgres", "json", "type", "std", "option", "option", "self", "read"
+        "pg", "json", "type", "std", "option", "option", "self", "select"
     ],
     [
-        "postgres", "json", "type", "std", "option", "option", "self", "where"
+        "pg", "json", "type", "std", "option", "option", "self", "read"
     ],
     [
-        "postgres", "json", "type", "self", "where", "length", "greater", "than", "try", "new",
-        "error", "named"
+        "pg", "json", "type", "std", "option", "option", "self", "where"
     ],
     [
-        "postgres", "json", "type", "self", "where", "length", "greater", "than"
-    ],
-    [
-        "postgres", "json", "type", "self", "where", "position", "equals", "try", "new", "error",
+        "pg", "json", "type", "self", "where", "length", "greater", "than", "try", "new", "error",
         "named"
     ],
     [
-        "postgres", "json", "type", "self", "where", "position", "equals"
+        "pg", "json", "type", "self", "where", "length", "greater", "than"
     ],
     [
-        "postgres", "type", "self", "where", "bit", "vec", "position", "equals", "try", "new",
+        "pg", "json", "type", "self", "where", "position", "equals", "try", "new", "error", "named"
+    ],
+    ["pg", "json", "type", "self", "where", "position", "equals"],
+    [
+        "pg", "type", "self", "where", "bit", "vec", "position", "equals", "try", "new", "error",
+        "named"
+    ],
+    [
+        "pg", "json", "type", "self", "where", "bit", "vec", "position", "equals"
+    ],
+    [
+        "pg", "json", "type", "self", "where", "bit", "vec", "position", "equals", "try", "new",
         "error", "named"
     ],
     [
-        "postgres", "json", "type", "self", "where", "bit", "vec", "position", "equals"
+        "pg", "type", "self", "where", "bit", "vec", "position", "equals"
     ],
     [
-        "postgres", "json", "type", "self", "where", "bit", "vec", "position", "equals", "try",
+        "pg", "type", "self", "where", "position", "greater", "than", "try", "new", "error",
+        "named"
+    ],
+    [
+        "pg", "json", "type", "self", "where", "position", "greater", "than", "try", "new",
+        "error", "named"
+    ],
+    ["pg", "type", "self", "where", "position", "greater", "than"],
+    [
+        "pg", "json", "type", "self", "where", "position", "greater", "than"
+    ],
+    [
+        "pg", "json", "type", "self", "where", "try", "new", "error", "named"
+    ],
+    [
+        "pg",
+        "type",
+        "self",
+        "where",
+        "position",
+        "case",
+        "sensitive",
+        "regular",
+        "expression"
+    ],
+    [
+        "pg",
+        "json",
+        "type",
+        "self",
+        "where",
+        "position",
+        "case",
+        "sensitive",
+        "regular",
+        "expression"
+    ],
+    [
+        "pg",
+        "type",
+        "self",
+        "where",
+        "position",
+        "case",
+        "sensitive",
+        "regular",
+        "expression",
+        "try",
+        "new",
+        "error",
+        "named"
+    ],
+    [
+        "pg",
+        "json",
+        "type",
+        "self",
+        "where",
+        "position",
+        "case",
+        "sensitive",
+        "regular",
+        "expression",
+        "try",
+        "new",
+        "error",
+        "named"
+    ],
+    [
+        "pg",
+        "type",
+        "self",
+        "where",
+        "position",
+        "case",
+        "insensitive",
+        "regular",
+        "expression"
+    ],
+    [
+        "pg",
+        "json",
+        "type",
+        "self",
+        "where",
+        "position",
+        "case",
+        "insensitive",
+        "regular",
+        "expression"
+    ],
+    [
+        "pg",
+        "type",
+        "self",
+        "where",
+        "position",
+        "case",
+        "insensitive",
+        "regular",
+        "expression",
+        "try",
+        "new",
+        "error",
+        "named"
+    ],
+    [
+        "pg",
+        "json",
+        "type",
+        "self",
+        "where",
+        "position",
+        "case",
+        "insensitive",
+        "regular",
+        "expression",
+        "try",
+        "new",
+        "error",
+        "named"
+    ],
+    [
+        "pg", "type", "self", "where", "contains", "all", "elements", "of", "array", "try", "new",
+        "error", "named"
+    ],
+    [
+        "pg", "json", "type", "self", "where", "contains", "all", "elements", "of", "array", "try",
         "new", "error", "named"
     ],
     [
-        "postgres", "type", "self", "where", "bit", "vec", "position", "equals"
+        "pg", "type", "self", "where", "contains", "all", "elements", "of", "array"
     ],
     [
-        "postgres", "type", "self", "where", "position", "greater", "than", "try", "new", "error",
-        "named"
-    ],
-    [
-        "postgres", "json", "type", "self", "where", "position", "greater", "than", "try", "new",
-        "error", "named"
-    ],
-    [
-        "postgres", "type", "self", "where", "position", "greater", "than"
-    ],
-    [
-        "postgres", "json", "type", "self", "where", "position", "greater", "than"
-    ],
-    [
-        "postgres", "json", "type", "self", "where", "try", "new", "error", "named"
-    ],
-    [
-        "postgres",
-        "type",
-        "self",
-        "where",
-        "position",
-        "case",
-        "sensitive",
-        "regular",
-        "expression"
-    ],
-    [
-        "postgres",
-        "json",
-        "type",
-        "self",
-        "where",
-        "position",
-        "case",
-        "sensitive",
-        "regular",
-        "expression"
-    ],
-    [
-        "postgres",
-        "type",
-        "self",
-        "where",
-        "position",
-        "case",
-        "sensitive",
-        "regular",
-        "expression",
-        "try",
-        "new",
-        "error",
-        "named"
-    ],
-    [
-        "postgres",
-        "json",
-        "type",
-        "self",
-        "where",
-        "position",
-        "case",
-        "sensitive",
-        "regular",
-        "expression",
-        "try",
-        "new",
-        "error",
-        "named"
-    ],
-    [
-        "postgres",
-        "type",
-        "self",
-        "where",
-        "position",
-        "case",
-        "insensitive",
-        "regular",
-        "expression"
-    ],
-    [
-        "postgres",
-        "json",
-        "type",
-        "self",
-        "where",
-        "position",
-        "case",
-        "insensitive",
-        "regular",
-        "expression"
-    ],
-    [
-        "postgres",
-        "type",
-        "self",
-        "where",
-        "position",
-        "case",
-        "insensitive",
-        "regular",
-        "expression",
-        "try",
-        "new",
-        "error",
-        "named"
-    ],
-    [
-        "postgres",
-        "json",
-        "type",
-        "self",
-        "where",
-        "position",
-        "case",
-        "insensitive",
-        "regular",
-        "expression",
-        "try",
-        "new",
-        "error",
-        "named"
-    ],
-    [
-        "postgres", "type", "self", "where", "contains", "all", "elements", "of", "array", "try",
-        "new", "error", "named"
-    ],
-    [
-        "postgres", "json", "type", "self", "where", "contains", "all", "elements", "of", "array",
-        "try", "new", "error", "named"
-    ],
-    [
-        "postgres", "type", "self", "where", "contains", "all", "elements", "of", "array"
-    ],
-    [
-        "postgres", "json", "type", "self", "where", "contains", "all", "elements", "of", "array"
+        "pg", "json", "type", "self", "where", "contains", "all", "elements", "of", "array"
     ],
     [
         "self", "where", "bit", "vec", "position", "equals", "try", "new", "error", "named"
@@ -1077,19 +1065,19 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "self", "option", "to", "update", "try", "gen", "error", "named"
     ],
     [
-        "postgres", "json", "type", "std", "option", "option", "std", "vec", "vec", "object",
-        "with", "id", "self", "option", "to", "update"
+        "pg", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with",
+        "id", "self", "option", "to", "update"
     ],
     [
         "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "option",
         "to", "update", "try", "gen", "error", "named"
     ],
-    ["postgres", "type", "where", "self"],
+    ["pg", "type", "where", "self"],
     [
-        "postgres", "type", "where", "self", "try", "new", "error", "named"
+        "pg", "type", "where", "self", "try", "new", "error", "named"
     ],
     [
-        "postgres",
+        "pg",
         "type",
         "where",
         "self",
@@ -1101,12 +1089,12 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "serialize",
         "deserialize"
     ],
-    ["postgres", "json", "type", "where", "self"],
+    ["pg", "json", "type", "where", "self"],
     [
-        "postgres", "json", "type", "where", "self", "try", "new", "error", "named"
+        "pg", "json", "type", "where", "self", "try", "new", "error", "named"
     ],
     [
-        "postgres",
+        "pg",
         "json",
         "type",
         "where",
@@ -1132,7 +1120,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ["self", "nullable", "origin"],
     ["self", "origin"],
     ["self", "vec"],
-    ["self", "postgres", "type"],
+    ["self", "pg", "type"],
     ["self", "with", "id"],
     ["self", "select", "element"],
     ["self", "with", "id", "select", "element"],
@@ -1140,13 +1128,13 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ["self", "with", "id", "where"],
     ["self", "read", "try", "from", "error", "named"],
     ["element", "self"],
-    ["self", "prepare", "postgres", "error", "named"],
+    ["self", "prepare", "pg", "error", "named"],
     ["self", "where", "many"],
     ["self", "where", "many", "try", "new", "error", "named"],
     ["std", "option", "option", "self", "where", "many"],
     [
-        "try", "from", "sqlx", "postgres", "pg", "row", "with", "not", "empty", "unique", "vec",
-        "self", "select"
+        "try", "from", "sqlx", "pg", "pg", "row", "with", "not", "empty", "unique", "vec", "self",
+        "select"
     ],
     ["update", "query", "part", "self"],
     ["self", "tests"],
@@ -1217,6 +1205,6 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "inner",
         "acc"
     ],
-    ["self", "gen", "postgres", "json", "object", "type", "mod"],
-    ["self", "gen", "postgres", "table", "mod"]
+    ["self", "gen", "pg", "json", "object", "type", "mod"],
+    ["self", "gen", "pg", "table", "mod"]
 ]);

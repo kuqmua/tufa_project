@@ -1,0 +1,21 @@
+[package]
+name = "gen_pg_json_types"
+version = "0.1.0"
+edition = "2024"
+description = "description"
+repository = "repository"
+readme = "readme"
+license = "license"
+keywords = ["keyword"]
+categories = ["category"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+proc-macro = true
+
+[dependencies]
+gen_pg_json_types_source = {path = "../gen_pg_json_types_source"}
+
+[lints]
+workspace = true

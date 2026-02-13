@@ -20,7 +20,7 @@ sqlx.workspace = true
 utoipa.workspace = true
 git_info = {path = "../git_info"}
 error_occurence_lib = {path = "../error_occurence_lib"}
-postgres_crud = {path = "../postgres_crud", features = ["test-utils"]}
+pg_crud = {path = "../pg_crud", features = ["test-utils"]}
 server_types = {path = "../server_types"}
 
 [dev-dependencies]
@@ -40,4 +40,4 @@ server_config = {path = "../server_config"}
 workspace = true
 
 [features]
-test-utils = ["postgres_crud/test-utils"]
+test-utils = ["pg_crud/test-utils"]

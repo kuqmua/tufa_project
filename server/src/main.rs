@@ -19,14 +19,14 @@ fn main() {
         .expect("5995c954-bb76-4620-b819-2b26f4b8f728")
         .block_on(async {
             let config = Config::try_from_env().expect("d74a6e5f-069a-49ea-9bac-19512e7b2bc5");
-            let postgres_pool = PgPoolOptions::new()
+            let pg_pool = PgPoolOptions::new()
                 .max_connections(50)
                 .connect(ExposeSecret::expose_secret(
                     GetDatabaseUrl::get_database_url(&config),
                 ))
                 .await
                 .expect("8b72f688-be7d-4f5c-9185-44a27290a9d0");
-            TableExample::prepare_postgres(&postgres_pool)
+            TableExample::prepare_pg(&pg_pool)
                 .await
                 .expect("647fa499-c465-432d-ba4a-498f3e943ada");
             let tcp_listener =
@@ -34,7 +34,7 @@ fn main() {
                     .await
                     .expect("3f294e7c-3386-497f-b76c-c0364d59a60d");
             let app_state = Arc::new(ServerAppState {
-                postgres_pool,
+                pg_pool,
                 config,
                 project_git_info: &PROJECT_GIT_INFO,
             });
@@ -79,57 +79,57 @@ fn main() {
                     //     //                 error_occurence_lib::code_occurence::StdTimeDuration,
                     //     //                 error_occurence_lib::code_occurence::CodeOccurence,
                     //     //                 //
-                    //     //                 // postgres_crud::TimeMonth,
-                    //     //                 // postgres_crud::SqlxTypesTimeUtcOffset,
-                    //     //                 // postgres_crud::NumBigintSign,
-                    //     //                 // postgres_crud::NumBigintBigInt,
-                    //     //                 // postgres_crud::StdPrimitiveBool,
-                    //     //                 // postgres_crud::StdPrimitiveI16,
-                    //     //                 // postgres_crud::StdPrimitiveI32,
-                    //     //                 // postgres_crud::StdPrimitiveI64,
-                    //     //                 // postgres_crud::StdPrimitiveF32,
-                    //     //                 // postgres_crud::StdPrimitiveF64,
-                    //     //                 // postgres_crud::StdStringString,
-                    //     //                 // postgres_crud::StdVecVecStdPrimitiveU8,
-                    //     //                 // postgres_crud::SqlxPostgresTypesPgInterval,
-                    //     //                 // postgres_crud::SqlxPostgresTypesPgRangeStdPrimitiveI64,
-                    //     //                 // postgres_crud::SqlxPostgresTypesPgRangeStdPrimitiveI32,
-                    //     //                 // postgres_crud::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
-                    //     //                 // postgres_crud::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
+                    //     //                 // pg_crud::TimeMonth,
+                    //     //                 // pg_crud::SqlxTypesTimeUtcOffset,
+                    //     //                 // pg_crud::NumBigintSign,
+                    //     //                 // pg_crud::NumBigintBigInt,
+                    //     //                 // pg_crud::StdPrimitiveBool,
+                    //     //                 // pg_crud::StdPrimitiveI16,
+                    //     //                 // pg_crud::StdPrimitiveI32,
+                    //     //                 // pg_crud::StdPrimitiveI64,
+                    //     //                 // pg_crud::StdPrimitiveF32,
+                    //     //                 // pg_crud::StdPrimitiveF64,
+                    //     //                 // pg_crud::StdStringString,
+                    //     //                 // pg_crud::StdVecVecStdPrimitiveU8,
+                    //     //                 // pg_crud::SqlxPgTypesPgInterval,
+                    //     //                 // pg_crud::SqlxPgTypesPgRangeStdPrimitiveI64,
+                    //     //                 // pg_crud::SqlxPgTypesPgRangeStdPrimitiveI32,
+                    //     //                 // pg_crud::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+                    //     //                 // pg_crud::SqlxPgTypesPgRangeSqlxTypesTimePrimitiveDateTime,
                     //     //                 // //todo check all types and type decl order
-                    //     //                 // postgres_crud::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
-                    //     //                 // postgres_crud::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
-                    //     //                 // postgres_crud::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
-                    //     //                 // postgres_crud::SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
-                    //     //                 // postgres_crud::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
-                    //     //                 // postgres_crud::SqlxPostgresTypesPgRangeSqlxTypesDecimal,
-                    //     //                 // postgres_crud::SqlxPostgresTypesPgMoney,
-                    //     //                 // postgres_crud::SqlxPostgresTypesPgCiText,
-                    //     //                 // postgres_crud::SqlxTypesBigDecimal,
-                    //     //                 // postgres_crud::SqlxTypesDecimal,
+                    //     //                 // pg_crud::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+                    //     //                 // pg_crud::SqlxPgTypesPgRangeSqlxTypesTimeOffsetDateTime,
+                    //     //                 // pg_crud::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDate,
+                    //     //                 // pg_crud::SqlxPgTypesPgRangeSqlxTypesTimeDate,
+                    //     //                 // pg_crud::SqlxPgTypesPgRangeSqlxTypesBigDecimal,
+                    //     //                 // pg_crud::SqlxPgTypesPgRangeSqlxTypesDecimal,
+                    //     //                 // pg_crud::SqlxPgTypesPgMoney,
+                    //     //                 // pg_crud::SqlxPgTypesPgCiText,
+                    //     //                 // pg_crud::SqlxTypesBigDecimal,
+                    //     //                 // pg_crud::SqlxTypesDecimal,
                     //     //                 // //todo
-                    //     //                 // postgres_crud::SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
-                    //     //                 // postgres_crud::SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
-                    //     //                 // postgres_crud::SqlxTypesChronoNaiveDateTime,
-                    //     //                 // postgres_crud::SqlxTypesChronoNaiveDate,
-                    //     //                 // postgres_crud::SqlxTypesChronoNaiveTime,
-                    //     //                 // postgres_crud::SqlxPostgresTypesPgTimeTz,
-                    //     //                 // postgres_crud::SqlxTypesTimePrimitiveDateTime,
-                    //     //                 // postgres_crud::SqlxTypesTimeOffsetDateTime,
-                    //     //                 // postgres_crud::SqlxTypesTimeDate,
-                    //     //                 // postgres_crud::SqlxTypesTimeTime,
-                    //     //                 // postgres_crud::SqlxTypesUuidUuid,
-                    //     //                 // postgres_crud::SqlxTypesIpnetworkIpNetwork,
-                    //     //                 // postgres_crud::StdNetIpAddr,
-                    //     //                 // postgres_crud::SqlxTypesMacAddressMacAddress,
-                    //     //                 // postgres_crud::SqlxTypesBitVec,
-                    //     //                 // // postgres_crud::SqlxTypesJson,//todo what to do with generics?
-                    //     //                 // postgres_crud::SerdeJsonValue,
+                    //     //                 // pg_crud::SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+                    //     //                 // pg_crud::SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+                    //     //                 // pg_crud::SqlxTypesChronoNaiveDateTime,
+                    //     //                 // pg_crud::SqlxTypesChronoNaiveDate,
+                    //     //                 // pg_crud::SqlxTypesChronoNaiveTime,
+                    //     //                 // pg_crud::SqlxPgTypesPgTimeTz,
+                    //     //                 // pg_crud::SqlxTypesTimePrimitiveDateTime,
+                    //     //                 // pg_crud::SqlxTypesTimeOffsetDateTime,
+                    //     //                 // pg_crud::SqlxTypesTimeDate,
+                    //     //                 // pg_crud::SqlxTypesTimeTime,
+                    //     //                 // pg_crud::SqlxTypesUuidUuid,
+                    //     //                 // pg_crud::SqlxTypesIpnetworkIpNetwork,
+                    //     //                 // pg_crud::StdNetIpAddr,
+                    //     //                 // pg_crud::SqlxTypesMacAddressMacAddress,
+                    //     //                 // pg_crud::SqlxTypesBitVec,
+                    //     //                 // // pg_crud::SqlxTypesJson,//todo what to do with generics?
+                    //     //                 // pg_crud::SerdeJsonValue,
                     //     //             )
                     //     //     ),
                     //     //     modifiers(&SecurityAddon),
                     //     //     tags((name = "server", description = "server api"))
-                    //     // )] //todo - this thing actually using builder pattern. maybe gen builder in GenPostgresTable then merge it together?
+                    //     // )] //todo - this thing actually using builder pattern. maybe gen builder in GenPgTable then merge it together?
                     //     struct ApiDoc;
                     //     struct SecurityAddon;
                     //     impl utoipa::Modify for SecurityAddon {

@@ -1,0 +1,28 @@
+[package]
+name = "where_filters"
+version = "0.1.0"
+edition = "2024"
+description = "description"
+repository = "repository"
+readme = "readme"
+license = "license"
+keywords = ["keyword"]
+categories = ["category"]
+
+[dependencies]
+sqlx.workspace = true
+serde.workspace = true
+schemars.workspace = true
+utoipa.workspace = true
+regex.workspace = true
+thiserror.workspace = true
+gen_where_filters = {path = "./gen_where_filters"}
+error_occurence_lib = {path = "../../error_occurence_lib"}
+pg_crud_common = {path = "../pg_crud_common", features = ["test-utils"]}
+
+
+[lints]
+workspace = true
+
+[features]
+test-utils = ["pg_crud_common/test-utils"]

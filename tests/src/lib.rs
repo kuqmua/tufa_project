@@ -449,7 +449,7 @@ mod tests {
     fn all_files_are_english_only() {
         let mut errors = Vec::new();
         let exceptions = [
-            "../postgres_crud/postgres_crud_common/src/lib.rs", //contain utf-8 String test
+            "../pg_crud/pg_crud_common/src/lib.rs", //contain utf-8 String test
         ];
         for el_d87f0495 in project_directory()
             .into_iter()
@@ -503,7 +503,7 @@ mod tests {
     fn workspace_crates_must_use_workspace_dependencies() {
         let exceptions = [
             "../Cargo.toml",               //workspace
-            "../pg_jsonschema/Cargo.toml", //need just for postgres extension
+            "../pg_jsonschema/Cargo.toml", //need just for pg extension
         ];
         for el_bebb7b9d in project_directory()
             .into_iter()

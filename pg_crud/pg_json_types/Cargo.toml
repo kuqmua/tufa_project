@@ -1,0 +1,29 @@
+[package]
+name = "pg_json_types"
+version = "0.1.0"
+edition = "2024"
+description = "description"
+repository = "repository"
+readme = "readme"
+license = "license"
+keywords = ["keyword"]
+categories = ["category"]
+
+[dependencies]
+uuid.workspace = true
+utoipa.workspace = true
+sqlx.workspace = true
+serde.workspace = true
+schemars.workspace = true
+regex.workspace = true
+gen_pg_json_types = {path = "./gen_pg_json_types"}
+error_occurence_lib = {path = "../../error_occurence_lib"}
+pg_crud_common = {path = "../pg_crud_common", features = ["test-utils"]}
+where_filters = {path = "../where_filters"}
+gen_pg_json_types_common = {path = "./gen_pg_json_types_common"}
+
+[lints]
+workspace = true
+
+[features]
+test-utils = ["pg_crud_common/test-utils"]

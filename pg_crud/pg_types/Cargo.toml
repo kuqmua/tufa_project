@@ -1,0 +1,28 @@
+[package]
+name = "pg_types"
+version = "0.1.0"
+edition = "2024"
+description = "description"
+repository = "repository"
+readme = "readme"
+license = "license"
+keywords = ["keyword"]
+categories = ["category"]
+
+[dependencies]
+sqlx.workspace = true
+uuid.workspace = true
+serde.workspace = true
+chrono.workspace = true
+thiserror.workspace = true
+gen_pg_types = {path = "./gen_pg_types"}
+pg_types_common = {path = "./pg_types_common"}
+pg_crud_common = {path = "../pg_crud_common", features = ["test-utils"]}
+error_occurence_lib = {path = "../../error_occurence_lib"}
+where_filters = {path = "../where_filters"}
+
+[lints]
+workspace = true
+
+[features]
+test-utils = ["pg_crud_common/test-utils"]

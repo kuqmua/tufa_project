@@ -3,11 +3,11 @@ use config_lib::types::SourcePlaceType;
 #[derive(Debug)]
 pub struct ServerAppState<'lifetime> {
     pub config: server_config::Config,
-    pub postgres_pool: sqlx::PgPool,
+    pub pg_pool: sqlx::PgPool,
     pub project_git_info: &'lifetime git_info::ProjectGitInfo<'lifetime>,
 }
 impl common_routes::CommonRoutesParameters for ServerAppState<'_> {}
-impl postgres_crud::CombinationOfAppStateLogicTraits for ServerAppState<'_> {}
+impl pg_crud::CombinationOfAppStateLogicTraits for ServerAppState<'_> {}
 impl app_state::GetEnableApiGitCommitCheck for ServerAppState<'_> {
     fn get_enable_api_git_commit_check(&self) -> &bool {
         self.config.get_enable_api_git_commit_check()
@@ -28,9 +28,9 @@ impl app_state::GetMaximumSizeOfHttpBodyInBytes for ServerAppState<'_> {
         self.config.get_maximum_size_of_http_body_in_bytes()
     }
 }
-impl app_state::GetPostgresPool for ServerAppState<'_> {
-    fn get_postgres_pool(&self) -> &sqlx::PgPool {
-        &self.postgres_pool
+impl app_state::GetPgPool for ServerAppState<'_> {
+    fn get_pg_pool(&self) -> &sqlx::PgPool {
+        &self.pg_pool
     }
 }
 impl git_info::GetGitCommitLink for ServerAppState<'_> {

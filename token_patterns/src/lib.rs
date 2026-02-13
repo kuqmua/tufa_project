@@ -380,53 +380,52 @@ impl ToTokens for CrateDefaultOptionSomeVecOneElCall {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresCrudDefaultOptionSomeVecOneEl;
-impl ToTokens for PostgresCrudDefaultOptionSomeVecOneEl {
+pub struct PgCrudDefaultOptionSomeVecOneEl;
+impl ToTokens for PgCrudDefaultOptionSomeVecOneEl {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let postgres_crud = postgres_crud();
+        let pg_crud = pg_crud();
         let default_option_some_vec_one_el_ucc = default_option_some_vec_one_el_ucc();
         quote! {
-            #postgres_crud
+            #pg_crud
             #default_option_some_vec_one_el_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresCrudDefaultOptionSomeVecOneElCall;
-impl ToTokens for PostgresCrudDefaultOptionSomeVecOneElCall {
+pub struct PgCrudDefaultOptionSomeVecOneElCall;
+impl ToTokens for PgCrudDefaultOptionSomeVecOneElCall {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let postgres_crud_default_option_some_vec_one_el = PostgresCrudDefaultOptionSomeVecOneEl;
+        let pg_crud_default_option_some_vec_one_el = PgCrudDefaultOptionSomeVecOneEl;
         let path_default_option_some_vec_one_el_call = path_default_option_some_vec_one_el_call();
         quote! {
-            #postgres_crud_default_option_some_vec_one_el
+            #pg_crud_default_option_some_vec_one_el
             #path_default_option_some_vec_one_el_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresCrudCommonDefaultOptionSomeVecOneEl;
-impl ToTokens for PostgresCrudCommonDefaultOptionSomeVecOneEl {
+pub struct PgCrudCommonDefaultOptionSomeVecOneEl;
+impl ToTokens for PgCrudCommonDefaultOptionSomeVecOneEl {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let postgres_crud_common = postgres_crud_common();
+        let pg_crud_common = pg_crud_common();
         let default_option_some_vec_one_el_ucc = default_option_some_vec_one_el_ucc();
         quote! {
-            #postgres_crud_common
+            #pg_crud_common
             #default_option_some_vec_one_el_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresCrudCommonDefaultOptionSomeVecOneElCall;
-impl ToTokens for PostgresCrudCommonDefaultOptionSomeVecOneElCall {
+pub struct PgCrudCommonDefaultOptionSomeVecOneElCall;
+impl ToTokens for PgCrudCommonDefaultOptionSomeVecOneElCall {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let postgres_crud_common_default_option_some_vec_one_el =
-            PostgresCrudCommonDefaultOptionSomeVecOneEl;
+        let pg_crud_common_default_option_some_vec_one_el = PgCrudCommonDefaultOptionSomeVecOneEl;
         let path_default_option_some_vec_one_el_call = path_default_option_some_vec_one_el_call();
         quote! {
-            #postgres_crud_common_default_option_some_vec_one_el
+            #pg_crud_common_default_option_some_vec_one_el
             #path_default_option_some_vec_one_el_call
         }
         .to_tokens(tokens);
@@ -462,58 +461,58 @@ impl ToTokens for CrateAllEnumVariantsArrayDefaultOptionSomeVecOneElCall {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresCrudAllEnumVariantsArrayDefaultOptionSomeVecOneEl;
-impl ToTokens for PostgresCrudAllEnumVariantsArrayDefaultOptionSomeVecOneEl {
+pub struct PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneEl;
+impl ToTokens for PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneEl {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let postgres_crud = postgres_crud();
+        let pg_crud = pg_crud();
         let all_variants_default_option_some_vec_one_el_ucc =
             all_variants_default_option_some_vec_one_el_ucc();
         quote! {
-            #postgres_crud
+            #pg_crud
             #all_variants_default_option_some_vec_one_el_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElCall;
-impl ToTokens for PostgresCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElCall {
+pub struct PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElCall;
+impl ToTokens for PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElCall {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let postgres_crud_all_variants_default_option_some_vec_one_el =
-            PostgresCrudAllEnumVariantsArrayDefaultOptionSomeVecOneEl;
+        let pg_crud_all_variants_default_option_some_vec_one_el =
+            PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneEl;
         let path_all_variants_default_option_some_vec_one_el_call =
             path_all_variants_default_option_some_vec_one_el_call();
         quote! {
-            #postgres_crud_all_variants_default_option_some_vec_one_el
+            #pg_crud_all_variants_default_option_some_vec_one_el
             #path_all_variants_default_option_some_vec_one_el_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneEl;
-impl ToTokens for PostgresCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneEl {
+pub struct PgCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneEl;
+impl ToTokens for PgCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneEl {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let postgres_crud_common = postgres_crud_common();
+        let pg_crud_common = pg_crud_common();
         let all_variants_default_option_some_vec_one_el_ucc =
             all_variants_default_option_some_vec_one_el_ucc();
         quote! {
-            #postgres_crud_common
+            #pg_crud_common
             #all_variants_default_option_some_vec_one_el_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElCall;
-impl ToTokens for PostgresCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElCall {
+pub struct PgCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElCall;
+impl ToTokens for PgCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElCall {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let postgres_crud_common_all_variants_default_option_some_vec_one_el =
-            PostgresCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneEl;
+        let pg_crud_common_all_variants_default_option_some_vec_one_el =
+            PgCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneEl;
         let path_all_variants_default_option_some_vec_one_el_call =
             path_all_variants_default_option_some_vec_one_el_call();
         quote! {
-            #postgres_crud_common_all_variants_default_option_some_vec_one_el
+            #pg_crud_common_all_variants_default_option_some_vec_one_el
             #path_all_variants_default_option_some_vec_one_el_call
         }
         .to_tokens(tokens);
@@ -551,58 +550,58 @@ impl ToTokens for CrateDefaultOptionSomeVecOneElMaxPageSizeCall {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresCrudDefaultOptionSomeVecOneElMaxPageSize;
-impl ToTokens for PostgresCrudDefaultOptionSomeVecOneElMaxPageSize {
+pub struct PgCrudDefaultOptionSomeVecOneElMaxPageSize;
+impl ToTokens for PgCrudDefaultOptionSomeVecOneElMaxPageSize {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let postgres_crud = postgres_crud();
+        let pg_crud = pg_crud();
         let default_option_some_vec_one_el_max_page_size_ucc =
             default_option_some_vec_one_el_max_page_size_ucc();
         quote! {
-            #postgres_crud
+            #pg_crud
             #default_option_some_vec_one_el_max_page_size_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresCrudDefaultOptionSomeVecOneElMaxPageSizeCall;
-impl ToTokens for PostgresCrudDefaultOptionSomeVecOneElMaxPageSizeCall {
+pub struct PgCrudDefaultOptionSomeVecOneElMaxPageSizeCall;
+impl ToTokens for PgCrudDefaultOptionSomeVecOneElMaxPageSizeCall {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let postgres_crud_default_option_some_vec_one_el_max_page_size =
-            PostgresCrudDefaultOptionSomeVecOneElMaxPageSize;
+        let pg_crud_default_option_some_vec_one_el_max_page_size =
+            PgCrudDefaultOptionSomeVecOneElMaxPageSize;
         let path_default_option_some_vec_one_el_max_page_size_call =
             path_default_option_some_vec_one_el_max_page_size_call();
         quote! {
-            #postgres_crud_default_option_some_vec_one_el_max_page_size
+            #pg_crud_default_option_some_vec_one_el_max_page_size
             #path_default_option_some_vec_one_el_max_page_size_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresCrudCommonDefaultOptionSomeVecOneElMaxPageSize;
-impl ToTokens for PostgresCrudCommonDefaultOptionSomeVecOneElMaxPageSize {
+pub struct PgCrudCommonDefaultOptionSomeVecOneElMaxPageSize;
+impl ToTokens for PgCrudCommonDefaultOptionSomeVecOneElMaxPageSize {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let postgres_crud_common = postgres_crud_common();
+        let pg_crud_common = pg_crud_common();
         let default_option_some_vec_one_el_max_page_size_ucc =
             default_option_some_vec_one_el_max_page_size_ucc();
         quote! {
-            #postgres_crud_common
+            #pg_crud_common
             #default_option_some_vec_one_el_max_page_size_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall;
-impl ToTokens for PostgresCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall {
+pub struct PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall;
+impl ToTokens for PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let postgres_crud_common_default_option_some_vec_one_el_max_page_size =
-            PostgresCrudCommonDefaultOptionSomeVecOneElMaxPageSize;
+        let pg_crud_common_default_option_some_vec_one_el_max_page_size =
+            PgCrudCommonDefaultOptionSomeVecOneElMaxPageSize;
         let path_default_option_some_vec_one_el_max_page_size_call =
             path_default_option_some_vec_one_el_max_page_size_call();
         quote! {
-            #postgres_crud_common_default_option_some_vec_one_el_max_page_size
+            #pg_crud_common_default_option_some_vec_one_el_max_page_size
             #path_default_option_some_vec_one_el_max_page_size_call
         }
         .to_tokens(tokens);
@@ -638,60 +637,58 @@ impl ToTokens for CrateAllEnumVariantsArrayDefaultOptionSomeVecOneElCallWithMaxP
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize;
-impl ToTokens for PostgresCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize {
+pub struct PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize;
+impl ToTokens for PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let postgres_crud = postgres_crud();
+        let pg_crud = pg_crud();
         let all_variants_default_option_some_vec_one_el_max_page_size_ucc =
             all_variants_default_option_some_vec_one_el_max_page_size_ucc();
         quote! {
-            #postgres_crud
+            #pg_crud
             #all_variants_default_option_some_vec_one_el_max_page_size_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElCallWithMaxPageSize;
-impl ToTokens for PostgresCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElCallWithMaxPageSize {
+pub struct PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElCallWithMaxPageSize;
+impl ToTokens for PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElCallWithMaxPageSize {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let postgres_crud_all_variants_default_option_some_vec_one_el_max_page_size =
-            PostgresCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize;
+        let pg_crud_all_variants_default_option_some_vec_one_el_max_page_size =
+            PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize;
         let path_all_variants_default_option_some_vec_one_el_max_page_size_call =
             path_all_variants_default_option_some_vec_one_el_max_page_size_call();
         quote! {
-            #postgres_crud_all_variants_default_option_some_vec_one_el_max_page_size
+            #pg_crud_all_variants_default_option_some_vec_one_el_max_page_size
             #path_all_variants_default_option_some_vec_one_el_max_page_size_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize;
-impl ToTokens for PostgresCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize {
+pub struct PgCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize;
+impl ToTokens for PgCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let postgres_crud_common = postgres_crud_common();
+        let pg_crud_common = pg_crud_common();
         let all_variants_default_option_some_vec_one_el_max_page_size_ucc =
             all_variants_default_option_some_vec_one_el_max_page_size_ucc();
         quote! {
-            #postgres_crud_common
+            #pg_crud_common
             #all_variants_default_option_some_vec_one_el_max_page_size_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PostgresCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElCallWithMaxPageSize;
-impl ToTokens
-    for PostgresCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElCallWithMaxPageSize
-{
+pub struct PgCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElCallWithMaxPageSize;
+impl ToTokens for PgCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElCallWithMaxPageSize {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let postgres_crud_common_all_variants_default_option_some_vec_one_el_max_page_size =
-            PostgresCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize;
+        let pg_crud_common_all_variants_default_option_some_vec_one_el_max_page_size =
+            PgCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize;
         let path_all_variants_default_option_some_vec_one_el_max_page_size_call =
             path_all_variants_default_option_some_vec_one_el_max_page_size_call();
         quote! {
-            #postgres_crud_common_all_variants_default_option_some_vec_one_el_max_page_size
+            #pg_crud_common_all_variants_default_option_some_vec_one_el_max_page_size
             #path_all_variants_default_option_some_vec_one_el_max_page_size_call
         }
         .to_tokens(tokens);
@@ -720,11 +717,11 @@ fn default_option_some_vec_one_el_max_page_size_ucc() -> Ts2 {
 fn crate_path_ts() -> Ts2 {
     quote! {crate::}
 }
-fn postgres_crud() -> Ts2 {
-    quote! {postgres_crud::}
+fn pg_crud() -> Ts2 {
+    quote! {pg_crud::}
 }
-fn postgres_crud_common() -> Ts2 {
-    quote! {postgres_crud_common::}
+fn pg_crud_common() -> Ts2 {
+    quote! {pg_crud_common::}
 }
 fn default_option_some_vec_one_el_ucc() -> Ts2 {
     quote! {DefaultOptionSomeVecOneEl}

@@ -1,0 +1,15 @@
+[package]
+name = "gen_pg_json_types_common"
+version = "0.1.0"
+edition = "2024"
+description = "description"
+repository = "repository"
+readme = "readme"
+license = "license"
+keywords = ["keyword"]
+categories = ["category"]
+
+[dependencies]
+
+[lints]
+workspace = true

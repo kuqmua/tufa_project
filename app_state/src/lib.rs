@@ -4,6 +4,6 @@ pub use config_lib::{
     GetTracingLevel, types::SourcePlaceType, types::TracingLevel,
 };
 
-pub trait GetPostgresPool {
-    fn get_postgres_pool(&self) -> &sqlx::PgPool;
+pub trait GetPgPool {
+    fn get_pg_pool(&self) -> &sqlx::PgPool;
 }
