@@ -3821,7 +3821,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                 &read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_contains_el_regular_expression_ts,
             )
         };
-        let gend = quote! {
+        let generated = quote! {
             #ident_ts
             #ident_origin_ts
             #ident_table_type_declaration_ts
@@ -3843,7 +3843,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
                 let field_ident = format!("field_{index}").parse::<Ts2>().expect("f992f797-a4df-40d0-9984-3a3a3ad439d7");
                 quote! {pub #field_ident: #ident,}.to_string()
             },
-            gend.to_string(),
+            generated.to_string(),
         )
     })
     .collect::<(Vec<String>, Vec<String>)>();
@@ -3863,7 +3863,7 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
         },
         &macros_helpers::FormatWithCargofmt::True
     );
-    let gend = {
+    let generated = {
         let gen_postgres_json_types_mod_sc = GenPostgresJsonTypesModSc;
         let content_ts = postgres_json_type_array
             .into_iter()
@@ -3885,8 +3885,8 @@ pub fn gen_postgres_json_types(input_ts: &Ts2) -> Ts2 {
     macros_helpers::maybe_write_ts_into_file(
         gen_postgres_json_types_config.whole_content_write_into_gen_postgres_json_types,
         "gen_postgres_json_types",
-        &gend,
+        &generated,
         &macros_helpers::FormatWithCargofmt::True,
     );
-    gend
+    generated
 }

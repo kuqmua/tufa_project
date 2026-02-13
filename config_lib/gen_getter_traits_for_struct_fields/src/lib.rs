@@ -13,7 +13,7 @@ pub fn gen_getter_traits_for_struct_fields(
         syn::Data::Struct(value) => value,
         syn::Data::Enum(_) | syn::Data::Union(_) => panic!("15cd72a2-2f8c-4d47-91b8-e86530856966"),
     };
-    let gend_traits_implementations = datastruct.fields.into_iter().map(|field| {
+    let generated_traits_implementations = datastruct.fields.into_iter().map(|field| {
         let (field_ident, ucc_field_ident) = {
             let field_ident = field
                 .ident
@@ -41,10 +41,10 @@ pub fn gen_getter_traits_for_struct_fields(
             }
         }
     });
-    let gend = quote! {
-        #(#gend_traits_implementations)*
+    let generated = quote! {
+        #(#generated_traits_implementations)*
     };
-    gend.into()
+    generated.into()
 }
 
 #[proc_macro_derive(GenGetterTrait)]
@@ -73,11 +73,11 @@ pub fn gen_getter_trait(input: proc_macro::TokenStream) -> proc_macro::TokenStre
     let first_field_unnamed_type = &first_field_unnamed.ty;
     let get_ident_ucc = GetSelfUcc::from_tokens(&ident);
     let get_ident_sc = GetSelfSc::from_tokens(&ident);
-    let gend = quote! {
+    let generated = quote! {
         pub trait #get_ident_ucc {
             fn #get_ident_sc(&self) -> &#first_field_unnamed_type;
         }
     };
-    // println!("{gend}");
-    gend.into()
+    // println!("{generated}");
+    generated.into()
 }

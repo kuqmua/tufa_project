@@ -18,13 +18,13 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
             let variant_ident = el_f0467eb6.ident;
             match el_f0467eb6.fields {
                 syn::Fields::Named(fields_named) => {
-                    let gend = fields_named.named.into_iter().map(|field| {
+                    let generated = fields_named.named.into_iter().map(|field| {
                         let field_ident = field.ident; //todo maybe unwrap_or_else panic?
                         quote! { #field_ident: Default::default() }
                     });
                     quote! {
                        #variant_ident {
-                           #(#gend),*
+                           #(#generated),*
                        }
                     }
                 }
@@ -37,7 +37,7 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
         }
     };
     let ident = &syn_derive_input.ident;
-    let gend = quote! {
+    let generated = quote! {
         impl #ident {
             pub fn get_length() -> usize {
                 #len
@@ -87,7 +87,7 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
         }
     };
     // if name == "" {
-    //     println!("{gend}");
+    //     println!("{generated}");
     // }
-    gend.into()
+    generated.into()
 }

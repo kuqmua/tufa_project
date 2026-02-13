@@ -386,7 +386,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["read", "inner"],
     ["logic"],
     ["extraction"],
-    ["gend"],
+    ["generated"],
     ["route"],
     ["body"],
     ["env"],

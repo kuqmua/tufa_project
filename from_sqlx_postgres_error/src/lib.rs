@@ -110,7 +110,7 @@
 //         column!(),
 //         &proc_macro_name_ucc_ident_str,
 //     );
-//     let gend = quote! {
+//     let generated = quote! {
 //         impl From<sqlx::Error> for #ident {
 //             fn from(val: sqlx::Error) -> Self {
 //                 match val {

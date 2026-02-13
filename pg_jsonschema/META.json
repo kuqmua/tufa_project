@@ -32,7 +32,7 @@
          "type": "git"
       }
    },
-   "gend_by": "David E. Wheeler",
+   "generated_by": "David E. Wheeler",
    "meta-spec": {
       "version": "1.0.0",
       "url": "https://pgxn.org/meta/spec.txt"

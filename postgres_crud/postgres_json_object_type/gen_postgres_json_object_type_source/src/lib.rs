@@ -7080,7 +7080,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                 )
             };
             let impl_postgres_type_not_primary_key_for_ident_ts = postgres_crud_macros_common::gen_impl_postgres_type_not_primary_key_for_ident_ts(&import_path, &ident);
-            let gend = quote! {
+            let generated = quote! {
                 #ident_ts
                 #ident_table_type_declaration_ts
                 #ident_create_ts
@@ -7105,7 +7105,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
                         pub #field_ident: #ident,
                     }
                 },
-                gend,
+                generated,
             )
         })
         .collect::<(Vec<Ts2>, Vec<Ts2>)>();
@@ -7120,7 +7120,7 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
         },
         &macros_helpers::FormatWithCargofmt::True,
     );
-    let gend: Ts2 = {
+    let generated: Ts2 = {
         let ident_gen_postgres_json_object_type_mod =
             SelfGenPostgresJsonObjectTypeModSc::from_tokens(&syn_derive_input.ident);
         quote! {
@@ -7135,8 +7135,8 @@ pub fn gen_postgres_json_object_type(input_ts: Ts2) -> Ts2 {
     macros_helpers::maybe_write_ts_into_file(
         gen_postgres_json_object_type_config.whole_content_write_into_gen_postgres_json_object_type,
         "gen_postgres_json_object_type",
-        &gend,
+        &generated,
         &macros_helpers::FormatWithCargofmt::True,
     );
-    gend
+    generated
 }

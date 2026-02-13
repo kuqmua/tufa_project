@@ -19,9 +19,9 @@ pub fn server_port_try_from_u16(input: proc_macro::TokenStream) -> proc_macro::T
     .to_string()
     .parse::<Ts2>()
     .expect("dda46f3a-0e3b-43e4-90e7-3d63977f226c");
-    let gend = quote! {
+    let generated = quote! {
         ServerPort::try_from(#valid_port_ts).expect("575a501d-fcca-4091-92c2-8ca5128bf314")
     };
-    // println!("{gend}");
-    gend.into()
+    // println!("{generated}");
+    generated.into()
 }

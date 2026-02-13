@@ -55,7 +55,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             .parse::<Ts2>()
             .expect("1b778757-4118-4419-bb33-a2f677afa169")
     };
-    let gend = quote! {
+    let generated = quote! {
         impl std::str::FromStr for #ident {
             type Err = String;
             fn from_str(value: &str) -> Result<Self, Self::Err> {
@@ -67,7 +67,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         }
     };
     // if ident == "" {
-    //    println!("{gend}");
+    //    println!("{generated}");
     // }
-    gend.into()
+    generated.into()
 }

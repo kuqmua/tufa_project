@@ -94,8 +94,8 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ],
     ["try", "self", "with", "serialize", "deserialize"],
     ["tvfrr", "extraction", "logic", "try", "self"],
-    ["try", "self", "gend", "logic", "error", "named"],
-    ["try", "self", "gend", "logic", "desirable"],
+    ["try", "self", "generated", "logic", "error", "named"],
+    ["try", "self", "generated", "logic", "desirable"],
     ["try", "self", "logic"],
     ["try", "self", "logic", "response", "variants"],
     ["try", "self", "logic", "error", "named"],
@@ -103,7 +103,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     [
         "try",
         "self",
-        "gend",
+        "generated",
         "logic",
         "error",
         "named",
@@ -240,8 +240,8 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ],
     ["self", "json", "array", "change"],
     ["self", "to", "create", "origin"],
-    ["self", "to", "create", "with", "gend", "id"],
-    ["self", "to", "create", "without", "gend", "id"],
+    ["self", "to", "create", "with", "generated", "id"],
+    ["self", "to", "create", "without", "generated", "id"],
     [
         "self", "json", "array", "change", "try", "gen", "error", "named"
     ],

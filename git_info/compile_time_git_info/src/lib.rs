@@ -29,10 +29,10 @@ pub fn compile_time_project_git_info(
     let commit_id_ts = format!("\"{hash}\"")
         .parse::<Ts2>()
         .expect("842e75e8-1c25-44af-bb71-f15ee1c0c67d");
-    let gend = quote! {
+    let generated = quote! {
         ProjectGitInfo {
             commit: #commit_id_ts,
         }
     };
-    gend.into()
+    generated.into()
 }

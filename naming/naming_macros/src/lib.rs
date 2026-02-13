@@ -113,9 +113,9 @@ pub fn gen_upper_camel_and_sc_str_and_ts(
                 #snake_to_tokens_implementation_ts
             }
         });
-    let gend = quote! {#(#implementations_ts)*};
-    // println!("{gend}");
-    gend.into()
+    let generated = quote! {#(#implementations_ts)*};
+    // println!("{generated}");
+    generated.into()
 }
 
 #[proc_macro]
@@ -272,9 +272,9 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(
             #pub_struct_sc_ts
         }
     });
-    let gend = quote! {#(#implementations_ts)*};
-    // println!("{gend}");
-    gend.into()
+    let generated = quote! {#(#implementations_ts)*};
+    // println!("{generated}");
+    generated.into()
 }
 
 ////////////////////
@@ -313,7 +313,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(
         })
         .collect::<Vec<Ts2>>();
     let trait_path_ts = trait_path_ts();
-    let gend = quote! {
+    let generated = quote! {
         impl #trait_path_ts::AsRefStrToUccStr for #ident {
             fn case(&self) -> #std_string_string_ts {//todo maybe write duplicate Trait with &str instead of String
                 match self {
@@ -322,8 +322,8 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(
             }
         }
     };
-    // println!("{gend}");
-    gend.into()
+    // println!("{generated}");
+    generated.into()
 }
 
 /*
@@ -361,7 +361,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(
         })
         .collect::<Vec<Ts2>>();
     let trait_path_ts = trait_path_ts();
-    let gend = quote! {
+    let generated = quote! {
         impl #trait_path_ts::AsRefStrToScStr for #ident {
             fn case(&self) -> #std_string_string_ts {
                 match self {
@@ -370,8 +370,8 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(
             }
         }
     };
-    // println!("{gend}");
-    gend.into()
+    // println!("{generated}");
+    generated.into()
 }
 /*
 only works if all enum variants without fields like this
@@ -408,7 +408,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(
         })
         .collect::<Vec<Ts2>>();
     let trait_path_ts = trait_path_ts();
-    let gend = quote! {
+    let generated = quote! {
         impl #trait_path_ts::ToUpperScStr for #ident {
             fn case(&self) -> #std_string_string {
                 match self {
@@ -417,8 +417,8 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(
             }
         }
     };
-    // println!("{gend}");
-    gend.into()
+    // println!("{generated}");
+    generated.into()
 }
 
 fn trait_path_ts() -> Ts2 {

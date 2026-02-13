@@ -138,7 +138,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(
     });
     let struct_or_enum_derive_ts_builder_ucc = quote::quote! {StructOrEnumDeriveTokenStreamBuilder};
     let struct_or_enum_ucc = quote::quote! {StructOrEnum};
-    let gend: Ts2 = quote::quote! {
+    let generated: Ts2 = quote::quote! {
         #make_pub_pub_enum_ts
         #(#pub_enum_derive_vec_ts)*
         #[derive(Debug, Clone, Copy)]
@@ -244,5 +244,5 @@ pub fn gen_struct_or_enum_derive_ts_builder(
             }
         }
     };
-    gend.into()
+    generated.into()
 }

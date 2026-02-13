@@ -493,15 +493,15 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             }
         }
     };
-    let gend = quote! {#tokens};
-    // println!("{gend} ");
+    let generated = quote! {#tokens};
+    // println!("{generated} ");
     // if ident == "" {
     //     macros_helpers::maybe_write_ts_into_file(
     //         macros_helpers::ShouldWriteTokenStreamIntoFile::True,
     //         "error_occurence",
-    //         &gend,
+    //         &generated,
     //         &macros_helpers::FormatWithCargofmt::True
     //     );
     // }
-    gend.into()
+    generated.into()
 }
