@@ -299,24 +299,25 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(
     let syn::Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("d26bf85e-20cf-4ee1-97bc-d61f59eb11bc")
     };
-    let std_string_string_ts = StdStringString;
     let variants_matching_values_ts = data_enum
         .variants
         .iter()
-        .map(|variant| match variant.fields {
+        .map(|el| match el.fields {
             syn::Fields::Unit => {
-                let variant_ident = &variant.ident;
-                let variant_ident_ucc_str = naming_common::ToTokensToUccStr::case(&variant_ident);
-                let variant_ident_ucc_double_quotes_ts = gen_quotes::double_quotes_ts(&variant_ident_ucc_str);
-                quote! {Self::#variant_ident => #std_string_string_ts::from(#variant_ident_ucc_double_quotes_ts)}
+                let el_ident = &el.ident;
+                let el_ident_ucc_str = naming_common::ToTokensToUccStr::case(&el_ident);
+                let el_ident_ucc_double_quotes_ts = gen_quotes::double_quotes_ts(&el_ident_ucc_str);
+                quote! {Self::#el_ident => #StdStringString::from(#el_ident_ucc_double_quotes_ts)}
             }
-            syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("4955c50d-3db7-4881-a085-64b08a1ef413"),
+            syn::Fields::Named(_) | syn::Fields::Unnamed(_) => {
+                panic!("4955c50d-3db7-4881-a085-64b08a1ef413")
+            }
         })
         .collect::<Vec<Ts2>>();
     let trait_path_ts = trait_path_ts();
     let generated = quote! {
         impl #trait_path_ts::AsRefStrToUccStr for #ident {
-            fn case(&self) -> #std_string_string_ts {//todo maybe write duplicate Trait with &str instead of String
+            fn case(&self) -> #StdStringString {//todo maybe write duplicate Trait with &str instead of String
                 match self {
                     #(#variants_matching_values_ts),*
                 }
@@ -347,24 +348,25 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(
     let syn::Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("ed6efe2e-ded2-4b61-807d-7b14ba0e2031");
     };
-    let std_string_string_ts = StdStringString;
     let variants_matching_values_ts = data_enum
         .variants
         .iter()
-        .map(|variant| match variant.fields {
+        .map(|el| match el.fields {
             syn::Fields::Unit => {
-                let variant_ident = &variant.ident;
-                let variant_ident_sc_str = naming_common::ToTokensToScStr::case(&variant_ident);
-                let variant_ident_sc_double_quotes_ts = gen_quotes::double_quotes_ts(&variant_ident_sc_str);
-                quote! {Self::#variant_ident => #std_string_string_ts::from(#variant_ident_sc_double_quotes_ts)}
+                let el_ident = &el.ident;
+                let el_ident_sc_str = naming_common::ToTokensToScStr::case(&el_ident);
+                let el_ident_sc_double_quotes_ts = gen_quotes::double_quotes_ts(&el_ident_sc_str);
+                quote! {Self::#el_ident => #StdStringString::from(#el_ident_sc_double_quotes_ts)}
             }
-            syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("b3ef2657-22f2-4df6-a58c-263a50e3c247"),
+            syn::Fields::Named(_) | syn::Fields::Unnamed(_) => {
+                panic!("b3ef2657-22f2-4df6-a58c-263a50e3c247")
+            }
         })
         .collect::<Vec<Ts2>>();
     let trait_path_ts = trait_path_ts();
     let generated = quote! {
         impl #trait_path_ts::AsRefStrToScStr for #ident {
-            fn case(&self) -> #std_string_string_ts {
+            fn case(&self) -> #StdStringString {
                 match self {
                     #(#variants_matching_values_ts),*
                 }

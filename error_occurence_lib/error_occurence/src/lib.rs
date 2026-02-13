@@ -80,7 +80,6 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             });
         all_equal.expect("b9da972a-f38b-4217-939c-54ffd56f0301")
     };
-    let into_serialize_deserialize_version_sc_ts = IntoSerializeDeserializeVersionSc;
     let maybe_generic_parameters_ts = if generic_parameters.is_empty() {
         Ts2::new()
     } else {
@@ -106,7 +105,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let gen_impl_ident_into_serialize_deserialize_version_ts = |variants: &dyn ToTokens| {
         quote! {
             impl #maybe_generic_parameters_ts #ident #maybe_generic_parameters_ts {
-                pub fn #into_serialize_deserialize_version_sc_ts(self) -> #ident_with_serialize_deserialize_ucc #maybe_generic_parameters_ts {
+                pub fn #IntoSerializeDeserializeVersionSc(self) -> #ident_with_serialize_deserialize_ucc #maybe_generic_parameters_ts {
                     #[allow(clippy::redundant_closure_for_method_calls)]
                     match self {
                         #variants
@@ -436,7 +435,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     let el_ident = &el_0e2b2f9c.ident;
                     quote! {
                         Self::#el_ident(value) => #ident_with_serialize_deserialize_ucc::#el_ident(
-                            value.#into_serialize_deserialize_version_sc_ts(),
+                            value.#IntoSerializeDeserializeVersionSc(),
                         )
                     }
                 });

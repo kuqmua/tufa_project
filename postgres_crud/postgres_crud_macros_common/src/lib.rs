@@ -436,12 +436,11 @@ pub enum EqualOperatorHandle {
 impl EqualOperatorHandle {
     #[must_use]
     pub fn to_tokens_path(&self, import_path: &ImportPath) -> Ts2 {
-        let equal_operator_ucc = EqualOperatorUcc;
         let content_ts = match &self {
             Self::Equal => quote! {Equal},
             Self::IsNull => quote! {IsNull},
         };
-        quote! {#import_path::#equal_operator_ucc::#content_ts}
+        quote! {#import_path::#EqualOperatorUcc::#content_ts}
     }
 }
 //todo maybe reuse with other structs
@@ -605,11 +604,6 @@ pub fn gen_postgres_type_where_ts(
     is_query_bind_mutable: &IsQueryBindMutable,
 ) -> Ts2 {
     let ident = SelfWhereUcc::from_tokens(&prefix);
-    let value_sc = ValueSc;
-    let column_sc = ColumnSc;
-    let increment_sc = IncrementSc;
-    let query_sc = QuerySc;
-    let is_need_to_add_logical_operator_sc = IsNeedToAddLogicalOperatorSc;
     let postgres_type_tokens_where_ts = {
         let variants_ts = variants.iter().map(|el_a9dc0e35| {
             let el_ucc = el_a9dc0e35.ucc();
@@ -639,11 +633,11 @@ pub fn gen_postgres_type_where_ts(
                 let variants_ts = variants.iter().map(|el_8bf490d9| {
                 let el_ucc = el_8bf490d9.ucc();
                 quote! {
-                    Self::#el_ucc(#value_sc) => postgres_crud_common::PostgresTypeWhereFilter::query_part(
-                        #value_sc,
-                        #increment_sc,
-                        #column_sc,
-                        #is_need_to_add_logical_operator_sc,
+                    Self::#el_ucc(#ValueSc) => postgres_crud_common::PostgresTypeWhereFilter::query_part(
+                        #ValueSc,
+                        #IncrementSc,
+                        #ColumnSc,
+                        #IsNeedToAddLogicalOperatorSc,
                     )
                 }
             });
@@ -658,9 +652,9 @@ pub fn gen_postgres_type_where_ts(
                 let variants_ts = variants.iter().map(|el_93e5c1bc| {
                 let el_ucc = el_93e5c1bc.ucc();
                 quote! {
-                    Self::#el_ucc(#value_sc) => postgres_crud_common::PostgresTypeWhereFilter::query_bind(
-                        #value_sc,
-                        #query_sc
+                    Self::#el_ucc(#ValueSc) => postgres_crud_common::PostgresTypeWhereFilter::query_bind(
+                        #ValueSc,
+                        #QuerySc
                     )
                 }
             });
@@ -700,8 +694,7 @@ pub fn gen_postgres_type_where_ts(
 }
 #[must_use]
 pub fn postgres_crud_common_query_part_error_named_ts() -> Ts2 {
-    let query_part_error_named_ucc = QueryPartErrorNamedUcc;
-    quote! {postgres_crud_common::#query_part_error_named_ucc}
+    quote! {postgres_crud_common::#QueryPartErrorNamedUcc}
 }
 pub fn gen_struct_ident_double_quotes_ts(value: &dyn Display) -> Ts2 {
     gen_quotes::double_quotes_ts(&format!("struct {value}"))
@@ -772,119 +765,84 @@ pub fn gen_impl_postgres_json_type_ts(
     select_only_created_ids_query_bind_ts: &dyn ToTokens,
 ) -> Ts2 {
     let path_ts = quote! {#import_path ::};
-    let table_type_declaration_ucc = TableTypeDeclarationUcc;
-    let create_ucc = CreateUcc;
-    let create_for_query_ucc = CreateForQueryUcc;
-    let value_sc = ValueSc;
-    let select_ucc = SelectUcc;
-    let read_ucc = ReadUcc;
-    let read_only_ids_ucc = ReadOnlyIdsUcc;
-    let select_only_ids_query_part_sc = SelectOnlyIdsQueryPartSc;
-    let read_inner_ucc = ReadInnerUcc;
-    let where_ucc = WhereUcc;
-    let update_ucc = UpdateUcc;
-    let update_for_query_ucc = UpdateForQueryUcc;
-    let increment_sc = IncrementSc;
-    let postgres_json_type_ucc = PostgresJsonTypeUcc;
-    let query_sc = QuerySc;
-    let field_ident_sc = FieldIdentSc;
-    let column_name_and_maybe_field_getter_sc = ColumnNameAndMaybeFieldGetterSc;
-    let jsonb_set_accumulator_sc = JsonbSetAccumulatorSc;
-    let jsonb_set_path_sc = JsonbSetPathSc;
-    let select_query_part_sc = SelectQueryPartSc;
-    let update_query_part_sc = UpdateQueryPartSc;
-    let update_query_bind_sc = UpdateQueryBindSc;
-    let select_only_updated_ids_query_part_sc = SelectOnlyUpdatedIdsQueryPartSc;
-    let select_only_updated_ids_query_bind_sc = SelectOnlyUpdatedIdsQueryBindSc;
-    let select_only_created_ids_query_part_sc = SelectOnlyCreatedIdsQueryPartSc;
-    let select_only_created_ids_query_bind_sc = SelectOnlyCreatedIdsQueryBindSc;
-    let query_part_error_named_ucc = QueryPartErrorNamedUcc;
-    let reference_std_primitive_str_ts = RefStdPrimitiveStr;
-    let std_primitive_bool_ts = StdPrimitiveBool;
-    let reference_mut_std_primitive_u64_ts = {
-        let std_primitive_u64_ts = StdPrimitiveU64;
-        quote! {&mut #std_primitive_u64_ts}
-    };
-    let std_string_string_ts = StdStringString;
-    let std_primitive_u64_ts = StdPrimitiveU64;
+    let reference_mut_std_primitive_u64_ts = quote! {&mut #StdPrimitiveU64};
     let query_postgres_arguments_ts =
         quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
     let query_lifetime_postgres_arguments_ts =
         quote! {sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>};
-    let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
     //todo maybe reexport sqlx?
     quote! {
-        #allow_clippy_arbitrary_source_item_ordering_ts
-        impl #path_ts #postgres_json_type_ucc for #ident {
-            type #table_type_declaration_ucc = #table_type_declaration_type_ts;
-            type #create_ucc = #create_type_ts;
-            type #create_for_query_ucc = #create_for_query_type_ts;
-            type #select_ucc = #select_type_ts;
-            fn #select_query_part_sc(
-                #is_select_query_part_self_select_used: &Self::#select_ucc,
-                #field_ident_sc: #reference_std_primitive_str_ts,
-                #column_name_and_maybe_field_getter_sc: #reference_std_primitive_str_ts,
-                #is_select_query_part_column_name_and_maybe_field_getter_for_error_message_used: #reference_std_primitive_str_ts,
-                #is_select_query_part_is_postgres_type_used: #std_primitive_bool_ts,
-            ) -> Result<#std_string_string_ts, #path_ts #query_part_error_named_ucc> {
+        #AllowClippyArbitrarySourceItemOrdering
+        impl #path_ts #PostgresJsonTypeUcc for #ident {
+            type #TableTypeDeclarationUcc = #table_type_declaration_type_ts;
+            type #CreateUcc = #create_type_ts;
+            type #CreateForQueryUcc = #create_for_query_type_ts;
+            type #SelectUcc = #select_type_ts;
+            fn #SelectQueryPartSc(
+                #is_select_query_part_self_select_used: &Self::#SelectUcc,
+                #FieldIdentSc: #RefStdPrimitiveStr,
+                #ColumnNameAndMaybeFieldGetterSc: #RefStdPrimitiveStr,
+                #is_select_query_part_column_name_and_maybe_field_getter_for_error_message_used: #RefStdPrimitiveStr,
+                #is_select_query_part_is_postgres_type_used: #StdPrimitiveBool,
+            ) -> Result<#StdStringString, #path_ts #QueryPartErrorNamedUcc> {
                 #select_query_part_ts
             }
-            type #where_ucc = #where_type_ts;
-            type #read_ucc = #read_type_ts;
-            type #read_only_ids_ucc = #read_only_ids_type_ts;
-            fn #select_only_ids_query_part_sc(
-                #column_name_and_maybe_field_getter_sc: #reference_std_primitive_str_ts,
-            ) -> Result<#std_string_string_ts, #import_path ::#query_part_error_named_ucc> {
+            type #WhereUcc = #where_type_ts;
+            type #ReadUcc = #read_type_ts;
+            type #ReadOnlyIdsUcc = #read_only_ids_type_ts;
+            fn #SelectOnlyIdsQueryPartSc(
+                #ColumnNameAndMaybeFieldGetterSc: #RefStdPrimitiveStr,
+            ) -> Result<#StdStringString, #import_path ::#QueryPartErrorNamedUcc> {
                 #select_only_ids_query_part_ts
             }
-            type #read_inner_ucc = #read_inner_type_ts;
-            fn into_inner(#value_sc: Self::#read_ucc) -> Self::#read_inner_ucc {
+            type #ReadInnerUcc = #read_inner_type_ts;
+            fn into_inner(#ValueSc: Self::#ReadUcc) -> Self::#ReadInnerUcc {
                 #into_inner_ts
             }
-            type #update_ucc = #update_type_ts;
-            type #update_for_query_ucc = #update_type_for_query_ts;
-            fn #update_query_part_sc(
-                #is_update_query_part_self_update_used: &Self::#update_for_query_ucc,
-                #jsonb_set_accumulator_sc: #reference_std_primitive_str_ts,
-                #is_update_query_part_jsonb_set_target_used: #reference_std_primitive_str_ts,
-                #jsonb_set_path_sc: #reference_std_primitive_str_ts,
-                #increment_sc: #reference_mut_std_primitive_u64_ts,
-            ) -> Result<#std_string_string_ts, #path_ts #query_part_error_named_ucc> {
+            type #UpdateUcc = #update_type_ts;
+            type #UpdateForQueryUcc = #update_type_for_query_ts;
+            fn #UpdateQueryPartSc(
+                #is_update_query_part_self_update_used: &Self::#UpdateForQueryUcc,
+                #JsonbSetAccumulatorSc: #RefStdPrimitiveStr,
+                #is_update_query_part_jsonb_set_target_used: #RefStdPrimitiveStr,
+                #JsonbSetPathSc: #RefStdPrimitiveStr,
+                #IncrementSc: #reference_mut_std_primitive_u64_ts,
+            ) -> Result<#StdStringString, #path_ts #QueryPartErrorNamedUcc> {
                 #update_query_part_ts
             }
-            fn #update_query_bind_sc(
-                #value_sc: Self::#update_for_query_ucc,
-                #is_update_query_bind_mutable #query_sc: #query_postgres_arguments_ts
-            ) -> Result<#query_postgres_arguments_ts, #std_string_string_ts> {
+            fn #UpdateQueryBindSc(
+                #ValueSc: Self::#UpdateForQueryUcc,
+                #is_update_query_bind_mutable #QuerySc: #query_postgres_arguments_ts
+            ) -> Result<#query_postgres_arguments_ts, #StdStringString> {
                 #update_query_bind_ts
             }
-            fn #select_only_updated_ids_query_part_sc(
-                #value_sc: &Self::#update_for_query_ucc,
-                #field_ident_sc: #reference_std_primitive_str_ts,
-                #column_name_and_maybe_field_getter_sc: #reference_std_primitive_str_ts,
-                #increment_sc: &mut #std_primitive_u64_ts
-            ) -> Result<#std_string_string_ts, #import_path ::#query_part_error_named_ucc> {
+            fn #SelectOnlyUpdatedIdsQueryPartSc(
+                #ValueSc: &Self::#UpdateForQueryUcc,
+                #FieldIdentSc: #RefStdPrimitiveStr,
+                #ColumnNameAndMaybeFieldGetterSc: #RefStdPrimitiveStr,
+                #IncrementSc: &mut #StdPrimitiveU64
+            ) -> Result<#StdStringString, #import_path ::#QueryPartErrorNamedUcc> {
                 #select_only_updated_ids_query_part_ts
             }
-            fn #select_only_updated_ids_query_bind_sc<'lifetime>(
-                #value_sc: &'lifetime Self::#update_for_query_ucc,
-                #is_select_only_updated_ids_query_bind_mutable #query_sc: #query_lifetime_postgres_arguments_ts
-            ) -> Result<#query_lifetime_postgres_arguments_ts, #std_string_string_ts> {
+            fn #SelectOnlyUpdatedIdsQueryBindSc<'lifetime>(
+                #ValueSc: &'lifetime Self::#UpdateForQueryUcc,
+                #is_select_only_updated_ids_query_bind_mutable #QuerySc: #query_lifetime_postgres_arguments_ts
+            ) -> Result<#query_lifetime_postgres_arguments_ts, #StdStringString> {
                 #select_only_updated_ids_query_bind_ts
             }
 
-            fn #select_only_created_ids_query_part_sc(
-                #value_sc: &Self::#create_for_query_ucc,
-                #field_ident_sc: #reference_std_primitive_str_ts,
-                #column_name_and_maybe_field_getter_sc: #reference_std_primitive_str_ts,
-                #increment_sc: &mut #std_primitive_u64_ts
-            ) -> Result<#std_string_string_ts, #import_path ::#query_part_error_named_ucc> {
+            fn #SelectOnlyCreatedIdsQueryPartSc(
+                #ValueSc: &Self::#CreateForQueryUcc,
+                #FieldIdentSc: #RefStdPrimitiveStr,
+                #ColumnNameAndMaybeFieldGetterSc: #RefStdPrimitiveStr,
+                #IncrementSc: &mut #StdPrimitiveU64
+            ) -> Result<#StdStringString, #import_path ::#QueryPartErrorNamedUcc> {
                 #select_only_created_ids_query_part_ts
             }
-            fn #select_only_created_ids_query_bind_sc<'lifetime>(
-                #value_sc: &'lifetime Self::#create_for_query_ucc,
-                #is_select_only_created_ids_query_bind_mutable #query_sc: #query_lifetime_postgres_arguments_ts
-            ) -> Result<#query_lifetime_postgres_arguments_ts, #std_string_string_ts> {
+            fn #SelectOnlyCreatedIdsQueryBindSc<'lifetime>(
+                #ValueSc: &'lifetime Self::#CreateForQueryUcc,
+                #is_select_only_created_ids_query_bind_mutable #QuerySc: #query_lifetime_postgres_arguments_ts
+            ) -> Result<#query_lifetime_postgres_arguments_ts, #StdStringString> {
                 #select_only_created_ids_query_bind_ts
             }
         }
@@ -1047,27 +1005,18 @@ pub fn impl_postgres_type_where_filter_for_ident_ts(
     query_bind_content_ts: &dyn ToTokens,
     import_path: &ImportPath,
 ) -> Ts2 {
-    let std_primitive_u64_ts = StdPrimitiveU64;
-    let std_fmt_display_ts = StdFmtDisplay;
-    let std_primitive_bool_ts = StdPrimitiveBool;
-    let std_string_string_ts = StdStringString;
-    let query_part_error_named_ucc = QueryPartErrorNamedUcc;
-    let query_part_sc = QueryPartSc;
-    let query_bind_sc = QueryBindSc;
-    let postgres_type_where_filter_ucc = PostgresTypeWhereFilterUcc;
-    let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
     quote! {
-        #allow_clippy_arbitrary_source_item_ordering_ts
-        impl #impl_generic_ts #import_path ::#postgres_type_where_filter_ucc<'lifetime> for #ident_ts #ident_generic_ts {
-            fn #query_part_sc(
+        #AllowClippyArbitrarySourceItemOrdering
+        impl #impl_generic_ts #import_path ::#PostgresTypeWhereFilterUcc<'lifetime> for #ident_ts #ident_generic_ts {
+            fn #QueryPartSc(
                 &self,
-                #increment_parameter_underscore: &mut #std_primitive_u64_ts,
-                #column_parameter_underscore: &dyn #std_fmt_display_ts,
-                #is_need_to_add_logical_operator_underscore: #std_primitive_bool_ts
-            ) -> Result<#std_string_string_ts, #import_path::#query_part_error_named_ucc> {
+                #increment_parameter_underscore: &mut #StdPrimitiveU64,
+                #column_parameter_underscore: &dyn #StdFmtDisplay,
+                #is_need_to_add_logical_operator_underscore: #StdPrimitiveBool
+            ) -> Result<#StdStringString, #import_path::#QueryPartErrorNamedUcc> {
                 #query_part_content_ts
             }
-            fn #query_bind_sc(self, #is_query_bind_mutable query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+            fn #QueryBindSc(self, #is_query_bind_mutable query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
                 sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
                 String
             > {
@@ -1094,11 +1043,10 @@ pub fn gen_impl_sqlx_decode_sqlx_postgres_for_ident_ts(
     type_ts: &dyn ToTokens,
     ok_value_match_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let value_sc = ValueSc;
     quote! {
         impl sqlx::Decode<'_, sqlx::Postgres> for #ident_ts {
-            fn decode(#value_sc: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-                match <#type_ts as sqlx::Decode<sqlx::Postgres>>::decode(#value_sc) {
+            fn decode(#ValueSc: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+                match <#type_ts as sqlx::Decode<sqlx::Postgres>>::decode(#ValueSc) {
                     Ok(value_147c3532) => #ok_value_match_ts,
                     Err(error) => Err(error),
                 }
@@ -1157,114 +1105,83 @@ pub fn gen_impl_postgres_type_ts(
     is_select_only_updated_ids_query_bind_mutable: &IsSelectOnlyUpdatedIdsQueryBindMutable,
     select_only_updated_ids_query_bind_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let postgres_type_ucc = PostgresTypeUcc;
-    let table_type_declaration_ucc = TableTypeDeclarationUcc;
-    let create_table_column_query_part_sc = CreateTableColumnQueryPartSc;
-    let create_ucc = CreateUcc;
-    let create_query_part_sc = CreateQueryPartSc;
-    let create_query_bind_sc = CreateQueryBindSc;
-    let select_ucc = SelectUcc;
-    let select_query_part_sc = SelectQueryPartSc;
-    let where_ucc = WhereUcc;
-    let read_ucc = ReadUcc;
-    let read_only_ids_ucc = ReadOnlyIdsUcc;
-    let select_only_ids_query_part_sc = SelectOnlyIdsQueryPartSc;
-    let normalize_sc = NormalizeSc;
-    let read_inner_ucc = ReadInnerUcc;
-    let update_ucc = UpdateUcc;
-    let update_for_query_ucc = UpdateForQueryUcc;
-    let update_query_part_sc = UpdateQueryPartSc;
-    let update_query_bind_sc = UpdateQueryBindSc;
-    let value_sc = ValueSc;
-    let increment_sc = IncrementSc;
-    let query_sc = QuerySc;
-    let column_sc = ColumnSc;
-    let select_only_updated_ids_query_part_sc = SelectOnlyUpdatedIdsQueryPartSc;
-    let select_only_updated_ids_query_bind_sc = SelectOnlyUpdatedIdsQueryBindSc;
-    let query_part_error_named_ucc = QueryPartErrorNamedUcc;
-    let std_string_string_ts = StdStringString;
-    let std_primitive_u64_ts = StdPrimitiveU64;
-    let reference_std_primitive_str_ts = RefStdPrimitiveStr;
     let query_postgres_arguments_ts =
         quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
-    let std_fmt_display_ts = StdFmtDisplay;
-    let std_primitive_bool_ts = StdPrimitiveBool;
-    let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
     quote! {
-        #allow_clippy_arbitrary_source_item_ordering_ts
-        impl #import_path :: #postgres_type_ucc for #ident {
-            type #table_type_declaration_ucc = #ident_table_type_declaration_ucc;
-            fn #create_table_column_query_part_sc(#column_sc: &dyn #std_fmt_display_ts, #is_primary_key_underscore: #std_primitive_bool_ts) -> impl #std_fmt_display_ts {
+        #AllowClippyArbitrarySourceItemOrdering
+        impl #import_path :: #PostgresTypeUcc for #ident {
+            type #TableTypeDeclarationUcc = #ident_table_type_declaration_ucc;
+            fn #CreateTableColumnQueryPartSc(#ColumnSc: &dyn #StdFmtDisplay, #is_primary_key_underscore: #StdPrimitiveBool) -> impl #StdFmtDisplay {
                 #create_table_column_query_part_ts
             }
-            type #create_ucc = #ident_create_ucc;
-            fn #create_query_part_sc(
-                #create_query_part_value_underscore: &Self::#create_ucc,
-                #create_query_part_increment_underscore: &mut #std_primitive_u64_ts
-            ) -> Result<#std_string_string_ts, #import_path ::#query_part_error_named_ucc> {
+            type #CreateUcc = #ident_create_ucc;
+            fn #CreateQueryPartSc(
+                #create_query_part_value_underscore: &Self::#CreateUcc,
+                #create_query_part_increment_underscore: &mut #StdPrimitiveU64
+            ) -> Result<#StdStringString, #import_path ::#QueryPartErrorNamedUcc> {
                 #create_query_part_content_ts
             }
-            fn #create_query_bind_sc(
-                #create_query_bind_value_underscore: Self::#create_ucc,
-                #is_create_query_bind_mutable #query_sc: #query_postgres_arguments_ts
+            fn #CreateQueryBindSc(
+                #create_query_bind_value_underscore: Self::#CreateUcc,
+                #is_create_query_bind_mutable #QuerySc: #query_postgres_arguments_ts
             ) -> Result<
                 #query_postgres_arguments_ts,
                 String
             > {
                 #create_query_bind_content_ts
             }
-            type #select_ucc = #ident_select_ucc;
-            fn #select_query_part_sc(
-                #select_query_part_value_underscore: &Self::#select_ucc,
-                #column_sc: #reference_std_primitive_str_ts,
-            ) -> Result<#std_string_string_ts, #import_path ::#query_part_error_named_ucc> {
+            type #SelectUcc = #ident_select_ucc;
+            fn #SelectQueryPartSc(
+                #select_query_part_value_underscore: &Self::#SelectUcc,
+                #ColumnSc: #RefStdPrimitiveStr,
+            ) -> Result<#StdStringString, #import_path ::#QueryPartErrorNamedUcc> {
                 #select_query_part_content_ts
             }
-            type #where_ucc = #ident_where_ucc;
-            type #read_ucc = #ident_read_ucc;
-            fn #normalize_sc(#value_sc: Self::#read_ucc) -> Self::#read_ucc {
+            type #WhereUcc = #ident_where_ucc;
+            type #ReadUcc = #ident_read_ucc;
+            fn #NormalizeSc(#ValueSc: Self::#ReadUcc) -> Self::#ReadUcc {
                 #normalize_ts
             }
-            type #read_only_ids_ucc = #read_only_ids_ts;
-            fn #select_only_ids_query_part_sc(
-                #column_sc: #reference_std_primitive_str_ts
-            ) -> Result<#std_string_string_ts, #import_path ::#query_part_error_named_ucc> {
+            type #ReadOnlyIdsUcc = #read_only_ids_ts;
+            fn #SelectOnlyIdsQueryPartSc(
+                #ColumnSc: #RefStdPrimitiveStr
+            ) -> Result<#StdStringString, #import_path ::#QueryPartErrorNamedUcc> {
                 #select_only_ids_query_part_ts
             }
-            type #read_inner_ucc = #ident_read_inner_ucc;
-            fn into_inner(#value_sc: Self::#read_ucc) -> Self::#read_inner_ucc {
+            type #ReadInnerUcc = #ident_read_inner_ucc;
+            fn into_inner(#ValueSc: Self::#ReadUcc) -> Self::#ReadInnerUcc {
                 #into_inner_ts
             }
-            type #update_ucc = #ident_update_ucc;
-            type #update_for_query_ucc = #ident_update_for_query_ucc;
-            fn #update_query_part_sc(
-                #update_query_part_value_underscore: &Self::#update_for_query_ucc,
-                #update_query_part_jsonb_set_accumulator_underscore: #reference_std_primitive_str_ts,
-                #update_query_part_jsonb_set_target_underscore: #reference_std_primitive_str_ts,
-                #update_query_part_jsonb_set_path_underscore: #reference_std_primitive_str_ts,
-                #increment_sc: &mut #std_primitive_u64_ts
-            ) -> Result<#std_string_string_ts, #import_path ::#query_part_error_named_ucc> {
+            type #UpdateUcc = #ident_update_ucc;
+            type #UpdateForQueryUcc = #ident_update_for_query_ucc;
+            fn #UpdateQueryPartSc(
+                #update_query_part_value_underscore: &Self::#UpdateForQueryUcc,
+                #update_query_part_jsonb_set_accumulator_underscore: #RefStdPrimitiveStr,
+                #update_query_part_jsonb_set_target_underscore: #RefStdPrimitiveStr,
+                #update_query_part_jsonb_set_path_underscore: #RefStdPrimitiveStr,
+                #IncrementSc: &mut #StdPrimitiveU64
+            ) -> Result<#StdStringString, #import_path ::#QueryPartErrorNamedUcc> {
                 #update_query_part_content_ts
             }
-            fn #update_query_bind_sc(
-                #value_sc: Self::#update_for_query_ucc,
-                #is_update_query_bind_mutable #query_sc: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+            fn #UpdateQueryBindSc(
+                #ValueSc: Self::#UpdateForQueryUcc,
+                #is_update_query_bind_mutable #QuerySc: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> Result<
                 sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
                 String
             > {
                 #update_query_bind_content_ts
             }
-            fn #select_only_updated_ids_query_part_sc(
-                #value_sc: &Self::#update_for_query_ucc,
-                #column_sc: #reference_std_primitive_str_ts,
-                #increment_sc: &mut #std_primitive_u64_ts,
-            ) -> Result<#std_string_string_ts, #import_path ::#query_part_error_named_ucc> {
+            fn #SelectOnlyUpdatedIdsQueryPartSc(
+                #ValueSc: &Self::#UpdateForQueryUcc,
+                #ColumnSc: #RefStdPrimitiveStr,
+                #IncrementSc: &mut #StdPrimitiveU64,
+            ) -> Result<#StdStringString, #import_path ::#QueryPartErrorNamedUcc> {
                 #select_only_updated_ids_query_part_ts
             }
-            fn #select_only_updated_ids_query_bind_sc<'lifetime>(
-                #value_sc: &'lifetime Self::#update_for_query_ucc,
-                #is_select_only_updated_ids_query_bind_mutable #query_sc: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>
+            fn #SelectOnlyUpdatedIdsQueryBindSc<'lifetime>(
+                #ValueSc: &'lifetime Self::#UpdateForQueryUcc,
+                #is_select_only_updated_ids_query_bind_mutable #QuerySc: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
                 #select_only_updated_ids_query_bind_ts
             }
@@ -1276,16 +1193,12 @@ pub fn gen_impl_postgres_type_not_primary_key_for_ident_ts(
     import_path: &ImportPath,
     ident: &dyn ToTokens,
 ) -> Ts2 {
-    let postgres_type_not_primary_key_ucc = PostgresTypeNotPrimaryKeyUcc;
-    let postgres_type_ucc = PostgresTypeUcc;
-    let create_ucc = CreateUcc;
     let ident_create_ucc = SelfCreateUcc::from_tokens(&ident);
-    let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
     quote! {
-        #allow_clippy_arbitrary_source_item_ordering_ts
-        impl #import_path::#postgres_type_not_primary_key_ucc for #ident {
-            type #postgres_type_ucc = Self;
-            type #create_ucc = #ident_create_ucc;
+        #AllowClippyArbitrarySourceItemOrdering
+        impl #import_path::#PostgresTypeNotPrimaryKeyUcc for #ident {
+            type #PostgresTypeUcc = Self;
+            type #CreateUcc = #ident_create_ucc;
         }
     }
 }
@@ -1308,24 +1221,22 @@ pub fn gen_impl_postgres_type_not_primary_key_for_ident_ts(
 //             PostgresTypeOrPostgresJsonType::PostgresJsonType => &PostgresJsonTypeUcc,
 //         };
 //         quote! {
-//             <#self_ucc::#postgres_type_or_postgres_json_type_ts as #import_path::#postgres_type_or_postgres_json_type_ts>
+//             <#SelfUcc::#postgres_type_or_postgres_json_type_ts as #import_path::#postgres_type_or_postgres_json_type_ts>
 //         }
 //     };
 //     quote!{
 //         fn #method_name_ts(
-//             #read_only_ids_sc: #self_postgres_type_or_postgres_json_type_as_postgres_json_type_ts::#read_only_ids_ucc,
-//             #create_sc: #self_postgres_type_or_postgres_json_type_as_postgres_json_type_ts::#create_ucc
-//         ) -> Vec<#self_postgres_type_or_postgres_json_type_as_postgres_json_type_ts::#where_ucc> {
+//             #ReadOnlyIdsSc: #self_postgres_type_or_postgres_json_type_as_postgres_json_type_ts::#ReadOnlyIdsUcc,
+//             #CreateSc: #self_postgres_type_or_postgres_json_type_as_postgres_json_type_ts::#CreateUcc
+//         ) -> Vec<#self_postgres_type_or_postgres_json_type_as_postgres_json_type_ts::#WhereUcc> {
 //             #content_ts
 //         }
 //     }
 // }
 
 fn gen_option_vec_create_ts(path_ts: &dyn ToTokens, content_ts: &dyn ToTokens) -> Ts2 {
-    let option_vec_create_sc = OptionVecCreateSc;
-    let create_ucc = CreateUcc;
     quote! {
-        fn #option_vec_create_sc() -> Option<Vec<#path_ts::#create_ucc>> {
+        fn #OptionVecCreateSc() -> Option<Vec<#path_ts::#CreateUcc>> {
             #content_ts
         }
     }
@@ -1334,15 +1245,10 @@ fn gen_read_only_ids_to_two_dimensional_vec_read_inner_ts(
     path_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let read_only_ids_to_two_dimensional_vec_read_inner_sc =
-        ReadOnlyIdsToTwoDimensionalVecReadInnerSc;
-    let read_only_ids_ucc = ReadOnlyIdsUcc;
-    let read_inner_ucc = ReadInnerUcc;
-    let read_only_ids_sc = ReadOnlyIdsSc;
     quote! {
-        fn #read_only_ids_to_two_dimensional_vec_read_inner_sc(
-            #read_only_ids_sc: &#path_ts::#read_only_ids_ucc
-        ) -> Vec<Vec<#path_ts::#read_inner_ucc>> {
+        fn #ReadOnlyIdsToTwoDimensionalVecReadInnerSc(
+            #ReadOnlyIdsSc: &#path_ts::#ReadOnlyIdsUcc
+        ) -> Vec<Vec<#path_ts::#ReadInnerUcc>> {
             #content_ts
         }
     }
@@ -1352,14 +1258,10 @@ fn gen_read_inner_into_read_with_new_or_try_new_unwraped_ts(
     path_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let read_inner_into_read_with_new_or_try_new_unwraped_sc =
-        ReadInnerIntoReadWithNewOrTryNewUnwrapedSc;
-    let value_sc = ValueSc;
-    let read_ucc = ReadUcc;
     quote! {
-        fn #read_inner_into_read_with_new_or_try_new_unwraped_sc(
-            #value_sc: #type_ts
-        ) -> #path_ts::#read_ucc {
+        fn #ReadInnerIntoReadWithNewOrTryNewUnwrapedSc(
+            #ValueSc: #type_ts
+        ) -> #path_ts::#ReadUcc {
             #content_ts
         }
     }
@@ -1369,25 +1271,17 @@ fn gen_read_inner_into_update_with_new_or_try_new_unwraped_ts(
     path_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let read_inner_into_update_with_new_or_try_new_unwraped_sc =
-        ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc;
-    let update_ucc = UpdateUcc;
-    let value_sc = ValueSc;
     quote! {
-        fn #read_inner_into_update_with_new_or_try_new_unwraped_sc(#value_sc: #type_ts) -> #path_ts::#update_ucc {
+        fn #ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc(#ValueSc: #type_ts) -> #path_ts::#UpdateUcc {
             #content_ts
         }
     }
 }
 fn gen_update_to_read_only_ids_ts(path_ts: &dyn ToTokens, content_ts: &dyn ToTokens) -> Ts2 {
-    let update_to_read_only_ids_sc = UpdateToReadOnlyIdsSc;
-    let update_ucc = UpdateUcc;
-    let read_only_ids_ucc = ReadOnlyIdsUcc;
-    let value_sc = ValueSc;
     quote! {
-        fn #update_to_read_only_ids_sc(
-            #value_sc: &#path_ts::#update_ucc
-        ) -> #path_ts::#read_only_ids_ucc {
+        fn #UpdateToReadOnlyIdsSc(
+            #ValueSc: &#path_ts::#UpdateUcc
+        ) -> #path_ts::#ReadOnlyIdsUcc {
             #content_ts
         }
     }
@@ -1397,16 +1291,10 @@ fn gen_read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts(
     path_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let read_only_ids_to_option_value_read_default_option_some_vec_one_el_sc =
-        ReadOnlyIdsToOptionValueReadDefaultOptionSomeVecOneElSc;
-    let value_ucc = ValueUcc;
-    let value_sc = ValueSc;
-    let read_ucc = ReadUcc;
-    let read_only_ids_ucc = ReadOnlyIdsUcc;
     quote! {
-        fn #read_only_ids_to_option_value_read_default_option_some_vec_one_el_sc(
-            #value_sc: &#path_ts::#read_only_ids_ucc
-        ) -> Option<#import_path::#value_ucc<#path_ts::#read_ucc>> {
+        fn #ReadOnlyIdsToOptionValueReadDefaultOptionSomeVecOneElSc(
+            #ValueSc: &#path_ts::#ReadOnlyIdsUcc
+        ) -> Option<#import_path::#ValueUcc<#path_ts::#ReadUcc>> {
             #content_ts
         }
     }
@@ -1415,17 +1303,11 @@ fn gen_previous_read_merged_with_option_update_into_read_ts(
     path_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let previous_read_merged_with_option_update_into_read_sc =
-        PreviousReadMergedWithOptionUpdateIntoReadSc;
-    let read_ucc = ReadUcc;
-    let read_sc = ReadSc;
-    let update_ucc = UpdateUcc;
-    let option_update_sc = OptionUpdateSc;
     quote! {
-        fn #previous_read_merged_with_option_update_into_read_sc(
-            #read_sc: #path_ts::#read_ucc,
-            #option_update_sc: Option<#path_ts::#update_ucc>,
-        ) -> #path_ts::#read_ucc {
+        fn #PreviousReadMergedWithOptionUpdateIntoReadSc(
+            #ReadSc: #path_ts::#ReadUcc,
+            #OptionUpdateSc: Option<#path_ts::#UpdateUcc>,
+        ) -> #path_ts::#ReadUcc {
             #content_ts
         }
     }
@@ -1434,17 +1316,11 @@ fn gen_read_only_ids_merged_with_create_into_read_ts(
     path_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let read_only_ids_merged_with_create_into_read_sc = ReadOnlyIdsMergedWithCreateIntoReadSc;
-    let read_only_ids_ucc = ReadOnlyIdsUcc;
-    let read_only_ids_sc = ReadOnlyIdsSc;
-    let create_ucc = CreateUcc;
-    let create_sc = CreateSc;
-    let read_ucc = ReadUcc;
     quote! {
-        fn #read_only_ids_merged_with_create_into_read_sc(
-            #read_only_ids_sc: #path_ts::#read_only_ids_ucc,
-            #create_sc: #path_ts::#create_ucc
-        ) -> #path_ts::#read_ucc {
+        fn #ReadOnlyIdsMergedWithCreateIntoReadSc(
+            #ReadOnlyIdsSc: #path_ts::#ReadOnlyIdsUcc,
+            #CreateSc: #path_ts::#CreateUcc
+        ) -> #path_ts::#ReadUcc {
             #content_ts
         }
     }
@@ -1454,19 +1330,11 @@ fn gen_read_only_ids_merged_with_create_into_option_value_read_ts(
     path_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let read_only_ids_merged_with_create_into_option_value_read_sc =
-        ReadOnlyIdsMergedWithCreateIntoOptionValueReadSc;
-    let read_only_ids_ucc = ReadOnlyIdsUcc;
-    let read_only_ids_sc = ReadOnlyIdsSc;
-    let create_ucc = CreateUcc;
-    let create_sc = CreateSc;
-    let value_ucc = ValueUcc;
-    let read_ucc = ReadUcc;
     quote! {
-        fn #read_only_ids_merged_with_create_into_option_value_read_sc(
-            #read_only_ids_sc: #path_ts::#read_only_ids_ucc,
-            #create_sc: #path_ts::#create_ucc
-        ) -> Option<#import_path::#value_ucc<#path_ts::#read_ucc>> {
+        fn #ReadOnlyIdsMergedWithCreateIntoOptionValueReadSc(
+            #ReadOnlyIdsSc: #path_ts::#ReadOnlyIdsUcc,
+            #CreateSc: #path_ts::#CreateUcc
+        ) -> Option<#import_path::#ValueUcc<#path_ts::#ReadUcc>> {
             #content_ts
         }
     }
@@ -1475,18 +1343,11 @@ fn gen_read_only_ids_merged_with_create_into_table_type_declaration_ts(
     path_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let read_only_ids_merged_with_create_into_table_type_declaration_sc =
-        ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSc;
-    let read_only_ids_ucc = ReadOnlyIdsUcc;
-    let read_only_ids_sc = ReadOnlyIdsSc;
-    let create_ucc = CreateUcc;
-    let create_sc = CreateSc;
-    let table_type_declaration_ucc = TableTypeDeclarationUcc;
     quote! {
-        fn #read_only_ids_merged_with_create_into_table_type_declaration_sc(
-            #read_only_ids_sc: #path_ts::#read_only_ids_ucc,
-            #create_sc: #path_ts::#create_ucc
-        ) -> #path_ts::#table_type_declaration_ucc {
+        fn #ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSc(
+            #ReadOnlyIdsSc: #path_ts::#ReadOnlyIdsUcc,
+            #CreateSc: #path_ts::#CreateUcc
+        ) -> #path_ts::#TableTypeDeclarationUcc {
             #content_ts
         }
     }
@@ -1498,14 +1359,10 @@ pub fn gen_read_only_ids_merged_with_create_into_where_equal_ts(
     where_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let read_only_ids_merged_with_create_into_where_equal_sc =
-        ReadOnlyIdsMergedWithCreateIntoWhereEqualSc;
-    let read_only_ids_sc = ReadOnlyIdsSc;
-    let create_sc = CreateSc;
     quote! {
-        fn #read_only_ids_merged_with_create_into_where_equal_sc(
-            #read_only_ids_sc: #read_only_ids_ts,
-            #create_sc: #create_ts
+        fn #ReadOnlyIdsMergedWithCreateIntoWhereEqualSc(
+            #ReadOnlyIdsSc: #read_only_ids_ts,
+            #CreateSc: #create_ts
         ) -> #where_ts {
             #content_ts
         }
@@ -1518,14 +1375,10 @@ pub fn gen_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts
     where_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_sc =
-        ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc;
-    let read_only_ids_sc = ReadOnlyIdsSc;
-    let create_sc = CreateSc;
     quote! {
-        fn #read_only_ids_merged_with_create_into_vec_where_equal_using_fields_sc(
-            #read_only_ids_sc: #read_only_ids_ts,
-            #create_sc: #create_ts
+        fn #ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc(
+            #ReadOnlyIdsSc: #read_only_ids_ts,
+            #CreateSc: #create_ts
         ) -> #import_path::NotEmptyUniqueVec<#where_ts> {
             #content_ts
         }
@@ -1540,8 +1393,6 @@ fn gen_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_to_js
     content_ts: &dyn ToTokens,
     postgres_type_or_postgres_json_type: PostgresTypeOrPostgresJsonType,
 ) -> Ts2 {
-    let read_only_ids_sc = ReadOnlyIdsSc;
-    let create_sc = CreateSc;
     let return_type_ts = {
         let return_type_handle_ts = quote! {#import_path::NotEmptyUniqueVec<#where_ts>};
         match &postgres_type_or_postgres_json_type {
@@ -1561,8 +1412,8 @@ fn gen_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_to_js
     };
     quote! {
         fn #name_ts(
-            #read_only_ids_sc: #read_only_ids_ts,
-            #create_sc: #create_ts
+            #ReadOnlyIdsSc: #read_only_ids_ts,
+            #CreateSc: #create_ts
         ) -> #return_type_ts {
             #content_ts
         }
@@ -1590,16 +1441,11 @@ fn gen_read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where
     path_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let read_only_ids_ucc = ReadOnlyIdsUcc;
-    let read_only_ids_sc = ReadOnlyIdsSc;
-    let create_ucc = CreateUcc;
-    let create_sc = CreateSc;
-    let where_ucc = WhereUcc;
     quote! {
         fn #name_ts(
-            #read_only_ids_sc: #path_ts::#read_only_ids_ucc,
-            #create_sc: #path_ts::#create_ucc
-        ) -> Option<#import_path::NotEmptyUniqueVec<#path_ts::#where_ucc>> {
+            #ReadOnlyIdsSc: #path_ts::#ReadOnlyIdsUcc,
+            #CreateSc: #path_ts::#CreateUcc
+        ) -> Option<#import_path::NotEmptyUniqueVec<#path_ts::#WhereUcc>> {
             #content_ts
         }
     }
@@ -1657,15 +1503,10 @@ fn gen_create_into_postgres_json_type_option_vec_where_length_equal_ts(
     path_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let create_into_postgres_json_type_option_vec_where_length_equal_sc =
-        CreateIntoPostgresJsonTypeOptionVecWhereLengthEqualSc;
-    let create_ucc = CreateUcc;
-    let create_sc = CreateSc;
-    let where_ucc = WhereUcc;
     quote! {
-        fn #create_into_postgres_json_type_option_vec_where_length_equal_sc(
-            #create_sc: #path_ts::#create_ucc
-        ) -> Option<#import_path::NotEmptyUniqueVec<#path_ts::#where_ucc>> {
+        fn #CreateIntoPostgresJsonTypeOptionVecWhereLengthEqualSc(
+            #CreateSc: #path_ts::#CreateUcc
+        ) -> Option<#import_path::NotEmptyUniqueVec<#path_ts::#WhereUcc>> {
             #content_ts
         }
     }
@@ -1675,15 +1516,10 @@ fn gen_create_into_postgres_json_type_option_vec_where_length_greater_than_ts(
     path_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let create_into_postgres_json_type_option_vec_where_length_greater_than_sc =
-        CreateIntoPostgresJsonTypeOptionVecWhereLengthGreaterThanSc;
-    let create_ucc = CreateUcc;
-    let create_sc = CreateSc;
-    let where_ucc = WhereUcc;
     quote! {
-        fn #create_into_postgres_json_type_option_vec_where_length_greater_than_sc(
-            #create_sc: #path_ts::#create_ucc
-        ) -> Option<#import_path::NotEmptyUniqueVec<#path_ts::#where_ucc>> {
+        fn #CreateIntoPostgresJsonTypeOptionVecWhereLengthGreaterThanSc(
+            #CreateSc: #path_ts::#CreateUcc
+        ) -> Option<#import_path::NotEmptyUniqueVec<#path_ts::#WhereUcc>> {
             #content_ts
         }
     }
@@ -1694,16 +1530,11 @@ fn gen_read_only_ids_merged_with_create_into_postgres_json_type_option_not_empty
     path_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let read_only_ids_ucc = ReadOnlyIdsUcc;
-    let read_only_ids_sc = ReadOnlyIdsSc;
-    let create_ucc = CreateUcc;
-    let create_sc = CreateSc;
-    let where_ucc = WhereUcc;
     quote! {
         fn #method_name_ts(
-            #read_only_ids_sc: #path_ts::#read_only_ids_ucc,
-            #create_sc: #path_ts::#create_ucc
-        ) -> Option<#import_path::NotEmptyUniqueVec<#import_path::SingleOrMultiple<#path_ts::#where_ucc>>> {
+            #ReadOnlyIdsSc: #path_ts::#ReadOnlyIdsUcc,
+            #CreateSc: #path_ts::#CreateUcc
+        ) -> Option<#import_path::NotEmptyUniqueVec<#import_path::SingleOrMultiple<#path_ts::#WhereUcc>>> {
             #content_ts
         }
     }
@@ -1814,26 +1645,14 @@ pub fn gen_impl_postgres_type_test_cases_for_ident_ts(
     read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_contains_el_greater_than_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_contains_el_regular_expression_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let postgres_type_ucc = PostgresTypeUcc;
-    let postgres_type_test_cases_ucc = PostgresTypeTestCasesUcc;
-    let table_type_declaration_ucc = TableTypeDeclarationUcc;
-    let table_type_declaration_sc = TableTypeDeclarationSc;
-    let self_ucc = SelfUcc;
-    let select_ucc = SelectUcc;
-    let read_only_ids_ucc = ReadOnlyIdsUcc;
-    let read_only_ids_sc = ReadOnlyIdsSc;
-    let where_ucc = WhereUcc;
-    let create_ucc = CreateUcc;
-    let create_sc = CreateSc;
     let self_postgres_type_as_postgres_type_ts =
-        quote! {<#self_ucc::#postgres_type_ucc as #import_path::#postgres_type_ucc>};
+        quote! {<#SelfUcc::#PostgresTypeUcc as #import_path::#PostgresTypeUcc>};
     let self_postgres_type_as_postgres_type_read_only_ids_ts =
-        quote! {#self_postgres_type_as_postgres_type_ts::#read_only_ids_ucc};
+        quote! {#self_postgres_type_as_postgres_type_ts::#ReadOnlyIdsUcc};
     let self_postgres_type_as_postgres_type_create_ts =
-        quote! {#self_postgres_type_as_postgres_type_ts::#create_ucc};
+        quote! {#self_postgres_type_as_postgres_type_ts::#CreateUcc};
     let self_postgres_type_as_postgres_type_where_ts =
-        quote! {#self_postgres_type_as_postgres_type_ts::#where_ucc};
-    let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
+        quote! {#self_postgres_type_as_postgres_type_ts::#WhereUcc};
     let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
     let option_vec_create_content_ts = gen_option_vec_create_ts(
         &self_postgres_type_as_postgres_type_ts,
@@ -1987,12 +1806,12 @@ pub fn gen_impl_postgres_type_test_cases_for_ident_ts(
     quote! {
         #[allow(unused_qualifications)]
         #[allow(clippy::absolute_paths)]
-        #allow_clippy_arbitrary_source_item_ordering_ts
+        #AllowClippyArbitrarySourceItemOrdering
         #cfg_ts
         #[allow(clippy::float_arithmetic)]
-        impl #import_path::#postgres_type_test_cases_ucc for #ident {
-            type #postgres_type_ucc = #self_ucc;
-            type #select_ucc = #ident_select_ucc;
+        impl #import_path::#PostgresTypeTestCasesUcc for #ident {
+            type #PostgresTypeUcc = #SelfUcc;
+            type #SelectUcc = #ident_select_ucc;
             #option_vec_create_content_ts
             #read_only_ids_to_two_dimensional_vec_read_inner_content_ts
             #read_inner_into_read_with_new_or_try_new_unwraped_content_ts
@@ -2007,14 +1826,14 @@ pub fn gen_impl_postgres_type_test_cases_for_ident_ts(
             #read_only_ids_merged_with_create_into_vec_where_equal_using_fields_content_ts
             #read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_content_ts
             fn #create_into_postgres_type_option_vec_where_dimension_one_equal_sc(
-                #create_sc: #self_postgres_type_as_postgres_type_ts::#create_ucc
-            ) -> Option<#import_path::NotEmptyUniqueVec<#self_postgres_type_as_postgres_type_ts::#where_ucc>> {
+                #CreateSc: #self_postgres_type_as_postgres_type_ts::#CreateUcc
+            ) -> Option<#import_path::NotEmptyUniqueVec<#self_postgres_type_as_postgres_type_ts::#WhereUcc>> {
                 #create_into_postgres_type_option_vec_where_dimension_one_equal_ts
             }
             fn #postgres_type_option_vec_where_greater_than_test_sc() -> Option<
                 #import_path::NotEmptyUniqueVec<
                     #import_path::PostgresTypeGreaterThanTest<
-                        #self_ucc::#postgres_type_ucc
+                        #SelfUcc::#PostgresTypeUcc
                     >
                 >
             > {
@@ -2022,9 +1841,9 @@ pub fn gen_impl_postgres_type_test_cases_for_ident_ts(
             }
             fn #read_only_ids_merged_with_table_type_declaration_into_postgres_type_option_where_greater_than_sc(
                 greater_than_variant: #import_path::PostgresTypeGreaterThanVariant,
-                #read_only_ids_sc: #self_postgres_type_as_postgres_type_ts::#read_only_ids_ucc,
-                #table_type_declaration_sc: #self_postgres_type_as_postgres_type_ts::#table_type_declaration_ucc,
-            ) -> Option<#self_postgres_type_as_postgres_type_ts::#where_ucc> {
+                #ReadOnlyIdsSc: #self_postgres_type_as_postgres_type_ts::#ReadOnlyIdsUcc,
+                #TableTypeDeclarationSc: #self_postgres_type_as_postgres_type_ts::#TableTypeDeclarationUcc,
+            ) -> Option<#self_postgres_type_as_postgres_type_ts::#WhereUcc> {
                 #read_only_ids_merged_with_table_type_declaration_into_postgres_type_option_where_greater_than_ts
             }
             #read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_dimension_one_equal_content_ts
@@ -2074,26 +1893,14 @@ pub fn gen_impl_postgres_json_type_test_cases_for_ident_ts(
     read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_contains_el_greater_than_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_postgres_json_type_option_vec_where_contains_el_regular_expression_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
-    let value_ucc = ValueUcc;
-    let value_sc = ValueSc;
-    let postgres_json_type_ucc = PostgresJsonTypeUcc;
-    let postgres_json_type_test_cases_ucc = PostgresJsonTypeTestCasesUcc;
-    let read_inner_ucc = ReadInnerUcc;
-    let self_ucc = SelfUcc;
-    let read_only_ids_ucc = ReadOnlyIdsUcc;
-    let read_only_ids_into_option_value_read_inner_sc = ReadOnlyIdsIntoOptionValueReadInnerSc;
-    let create_ucc = CreateUcc;
-    let select_ucc = SelectUcc;
-    let where_ucc = WhereUcc;
     let self_postgres_json_type_as_postgres_json_type_ts =
-        quote! {<#self_ucc::#postgres_json_type_ucc as #import_path::#postgres_json_type_ucc>};
+        quote! {<#SelfUcc::#PostgresJsonTypeUcc as #import_path::#PostgresJsonTypeUcc>};
     let self_postgres_json_type_as_postgres_json_type_read_only_ids_ts =
-        quote! {#self_postgres_json_type_as_postgres_json_type_ts::#read_only_ids_ucc};
+        quote! {#self_postgres_json_type_as_postgres_json_type_ts::#ReadOnlyIdsUcc};
     let self_postgres_json_type_as_postgres_json_type_create_ts =
-        quote! {#self_postgres_json_type_as_postgres_json_type_ts::#create_ucc};
+        quote! {#self_postgres_json_type_as_postgres_json_type_ts::#CreateUcc};
     let self_postgres_json_type_as_postgres_json_type_where_ts =
-        quote! {#self_postgres_json_type_as_postgres_json_type_ts::#where_ucc};
+        quote! {#self_postgres_json_type_as_postgres_json_type_ts::#WhereUcc};
     let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
     let option_vec_create_content_ts = gen_option_vec_create_ts(
         &self_postgres_json_type_as_postgres_json_type_ts,
@@ -2242,19 +2049,19 @@ pub fn gen_impl_postgres_json_type_test_cases_for_ident_ts(
     quote! {
         #[allow(unused_qualifications)]
         #[allow(clippy::absolute_paths)]
-        #allow_clippy_arbitrary_source_item_ordering_ts
+        #AllowClippyArbitrarySourceItemOrdering
         #cfg_ts
         #[allow(clippy::float_arithmetic)]
-        impl #import_path::#postgres_json_type_test_cases_ucc for #ident {
-            type #postgres_json_type_ucc = #self_ucc;
-            type #select_ucc = #ident_select_ucc;
+        impl #import_path::#PostgresJsonTypeTestCasesUcc for #ident {
+            type #PostgresJsonTypeUcc = #SelfUcc;
+            type #SelectUcc = #ident_select_ucc;
             #option_vec_create_content_ts
             #read_only_ids_to_two_dimensional_vec_read_inner_content_ts
             #read_inner_into_read_with_new_or_try_new_unwraped_content_ts
             #read_inner_into_update_with_new_or_try_new_unwraped_content_ts
-            fn #read_only_ids_into_option_value_read_inner_sc(
-                #value_sc: #self_postgres_json_type_as_postgres_json_type_ts::#read_only_ids_ucc
-            ) -> Option<#import_path::#value_ucc<#self_postgres_json_type_as_postgres_json_type_ts::#read_inner_ucc>> {
+            fn #ReadOnlyIdsIntoOptionValueReadInnerSc(
+                #ValueSc: #self_postgres_json_type_as_postgres_json_type_ts::#ReadOnlyIdsUcc
+            ) -> Option<#import_path::#ValueUcc<#self_postgres_json_type_as_postgres_json_type_ts::#ReadInnerUcc>> {
                 #read_only_ids_into_option_value_read_inner_ts
             }
             #update_to_read_only_ids_content_ts
@@ -2337,7 +2144,6 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         let field_index_ts = gen_underscore_underscore_field_index_ts(index);
         quote! {#field_name_double_quotes_ts => Ok(__Field::#field_index_ts)}
     }
-    let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
     let vec_ident = vec_ident_type
         .iter()
         .map(|el_00a99fdb| el_00a99fdb.0)
@@ -2471,7 +2277,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
     quote! {
         #[allow(unused_qualifications)]
         #[allow(clippy::absolute_paths)]
-        #allow_clippy_arbitrary_source_item_ordering_ts
+        #AllowClippyArbitrarySourceItemOrdering
         const _: () = {
             #[allow(unused_extern_crates, clippy::useless_attribute)]
             extern crate serde as _serde;
@@ -2635,19 +2441,16 @@ pub fn maybe_wrap_into_braces_ts(content_ts: &dyn ToTokens, std_primitive_bool: 
     }
 }
 pub fn gen_value_initialization_ts(import_path: &ImportPath, content_ts: &dyn ToTokens) -> Ts2 {
-    let value_sc = ValueSc;
-    quote! {#import_path::Value { #value_sc: #content_ts }}
+    quote! {#import_path::Value { #ValueSc: #content_ts }}
 }
 pub fn impl_postgres_type_equal_operator_for_ident_ts(
     import_path: &ImportPath,
     ident: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let postgres_type_equal_operator_ucc = PostgresTypeEqualOperatorUcc;
-    let equal_operator_ucc = EqualOperatorUcc;
     quote! {
-        impl #import_path::#postgres_type_equal_operator_ucc for #ident {
-            fn operator(&self) -> #import_path::#equal_operator_ucc {
+        impl #import_path::#PostgresTypeEqualOperatorUcc for #ident {
+            fn operator(&self) -> #import_path::#EqualOperatorUcc {
                 #content_ts
             }
         }
