@@ -8,12 +8,12 @@ pub fn gen_upper_camel_and_sc_str_and_ts(
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let implementations_ts = serde_json::from_str::<Vec<Vec<String>>>(&input_ts.to_string())
-        .expect("90e5793b-d813-44aa-a124-c738772030c2")
+        .expect("90e5793b")
         .into_iter()
         .map(|el_020a8657| {
             {
                 let regex =
-                    regex::Regex::new(REGEX_VALUE).expect("20948d87-2c38-4896-96b6-239d9c9a0a38");
+                    regex::Regex::new(REGEX_VALUE).expect("20948d87");
                 for el_d68254e8 in &el_020a8657 {
                     assert!(
                         regex.is_match(el_d68254e8),
@@ -49,21 +49,21 @@ pub fn gen_upper_camel_and_sc_str_and_ts(
             let phrase_part_sc_double_quotes_ts = gen_quotes::double_quotes_ts(&phrase_part_sc_str);
             let phrase_part_ucc_ts = phrase_part_ucc_str
                 .parse::<Ts2>()
-                .expect("7cf3ffc0-e9c9-4d91-b42f-beb77350d743");
+                .expect("7cf3ffc0");
             let phrase_part_sc_ts = phrase_part_sc_str
                 .parse::<Ts2>()
-                .expect("114a573a-3df3-4e4a-96c4-043eed3a358c");
+                .expect("114a573a");
             let phrase_part_ucc_ucc_ts = {
                 let value = format!("{phrase_part_ucc_str}Ucc");
                 value
                     .parse::<Ts2>()
-                    .expect("4ab6a54c-892b-4f8f-a6b6-aead9c3671fe")
+                    .expect("4ab6a54c")
             };
             let phrase_part_sc_ucc_ts = {
                 let value = format!("{phrase_part_ucc_str}Sc");
                 value
                     .parse::<Ts2>()
-                    .expect("0cc47b2e-03e2-48b8-8df3-7bbbe09de244")
+                    .expect("0cc47b2e")
             };
             let gen_struct_declaration = |struct_name_ts: &dyn ToTokens| {
                 quote! {
@@ -124,9 +124,9 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(
     input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let implementations_ts = serde_json::from_str::<Vec<Vec<String>>>(&input_ts.to_string()).expect("9d6a20af-a7b3-4fce-b11f-92b57a8fdb57").into_iter().map(|el_a5ccbaa7| {
+    let implementations_ts = serde_json::from_str::<Vec<Vec<String>>>(&input_ts.to_string()).expect("9d6a20af").into_iter().map(|el_a5ccbaa7| {
         {
-            let regex = regex::Regex::new(REGEX_VALUE).expect("cba1b5fb-6833-416b-96d9-b64b7a308008");
+            let regex = regex::Regex::new(REGEX_VALUE).expect("cba1b5fb");
             for el_6d4f29dd in &el_a5ccbaa7 {
                 assert!(regex.is_match(el_6d4f29dd), "4a12d90f-6428-4494-8305-40c149a1509a");
             }
@@ -173,21 +173,21 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(
             });
             let struct_ucc_ucc_ts = {
                 let value = format!("{elements_concat_ucc_str}{ucc_ucc_str}");
-                value.parse::<Ts2>().expect("82f4ac08-08bd-4152-9633-7fb0ad2f59a9")
+                value.parse::<Ts2>().expect("82f4ac08")
             };
             let struct_sc_token_ucc_ts = {
                 let value = format!("{elements_concat_ucc_str}{sc_ucc_str}");
-                value.parse::<Ts2>().expect("21044eba-c2c2-4c48-b84a-f7af8777436f")
+                value.parse::<Ts2>().expect("21044eba")
             };
             let (trait_ucc_ucc_ts, trait_sc_token_ucc_ts) = {
                 let trait_ucc_str = "Trait";
                 let trait_ucc_ucc_ts = {
                     let value = format!("{elements_concat_ucc_str}{ucc_ucc_str}{trait_ucc_str}");
-                    value.parse::<Ts2>().expect("1066857a-b509-4b94-937f-8a72af6482fe")
+                    value.parse::<Ts2>().expect("1066857a")
                 };
                 let trait_sc_token_ucc_ts = {
                     let value = format!("{elements_concat_ucc_str}{sc_ucc_str}{trait_ucc_str}");
-                    value.parse::<Ts2>().expect("8db74cfd-cc35-4e38-83fa-3e0497504821")
+                    value.parse::<Ts2>().expect("8db74cfd")
                 };
                 (trait_ucc_ucc_ts, trait_sc_token_ucc_ts)
             };
@@ -234,18 +234,18 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(
                     pub fn from_type_last_segment(value: &syn::Type) -> Self {
                         if let syn::Type::Path(type_path) = value {
                             let path_before_str = type_path.path.segments.iter().take(
-                                type_path.path.segments.len().checked_sub(1).expect("e1f5a332-80ab-4a8a-8cbe-882e658185b7")
+                                type_path.path.segments.len().checked_sub(1).expect("e1f5a332")
                             )
                             .fold(String::new(), |mut acc_f0a77378, el_2b05e58f| {
                                 use std::fmt::Write as _;
                                 assert!(write!(acc_f0a77378, "{}::", el_2b05e58f.ident).is_ok(), "67c90ce9-beea-4a81-99a2-874b8f04aa0a");
                                 acc_f0a77378
                             });
-                            let last = type_path.path.segments.iter().last().expect("19f6e1a6-2e06-4043-8732-03f3807d58c4");
+                            let last = type_path.path.segments.iter().last().expect("19f6e1a6");
                             Self(format!("{path_before_str}{}", Self::format(&#casing_ts(&last.ident.to_string()))))
                         }
                         else {
-                            panic!("518933f8-c5b4-4452-908d-0fff899e7a25");
+                            panic!("518933f8");
                         }
                     }
                 }
@@ -258,7 +258,7 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(
                     fn to_tokens(&self, tokens: &mut Ts2) {
                         let value_str = self.to_string();
                         let value_ts = value_str.parse::<Ts2>()
-                            .expect("71c8d26b-18c4-4bbe-a07e-3114a15932d2");
+                            .expect("71c8d26b");
                         value_ts.to_tokens(tokens);
                     }
                 }
@@ -294,10 +294,10 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput =
-        syn::parse(input_ts).expect("a8f22481-4162-4372-97ef-91a012d80a8c");
+        syn::parse(input_ts).expect("a8f22481");
     let ident = &syn_derive_input.ident;
     let syn::Data::Enum(data_enum) = syn_derive_input.data else {
-        panic!("d26bf85e-20cf-4ee1-97bc-d61f59eb11bc")
+        panic!("d26bf85e")
     };
     let variants_matching_values_ts = data_enum
         .variants
@@ -310,7 +310,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(
                 quote! {Self::#el_ident => #StdStringString::from(#el_ident_ucc_double_quotes_ts)}
             }
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => {
-                panic!("4955c50d-3db7-4881-a085-64b08a1ef413")
+                panic!("4955c50d")
             }
         })
         .collect::<Vec<Ts2>>();
@@ -343,10 +343,10 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput =
-        syn::parse(input_ts).expect("dea5cbcf-77f9-4861-9993-6ea53e01020b");
+        syn::parse(input_ts).expect("dea5cbcf");
     let ident = &syn_derive_input.ident;
     let syn::Data::Enum(data_enum) = syn_derive_input.data else {
-        panic!("ed6efe2e-ded2-4b61-807d-7b14ba0e2031");
+        panic!("ed6efe2e");
     };
     let variants_matching_values_ts = data_enum
         .variants
@@ -359,7 +359,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(
                 quote! {Self::#el_ident => #StdStringString::from(#el_ident_sc_double_quotes_ts)}
             }
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => {
-                panic!("b3ef2657-22f2-4df6-a58c-263a50e3c247")
+                panic!("b3ef2657")
             }
         })
         .collect::<Vec<Ts2>>();
@@ -391,10 +391,10 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput =
-        syn::parse(input_ts).expect("edabbc24-fdff-40d6-a83e-5b6a108689f6");
+        syn::parse(input_ts).expect("edabbc24");
     let ident = &syn_derive_input.ident;
     let syn::Data::Enum(data_enum) = syn_derive_input.data else {
-        panic!("b2263e7e-0e5e-48ef-8d91-32864281d4aa");
+        panic!("b2263e7e");
     };
     let std_string_string = StdStringString;
     let variants_matching_values_ts = data_enum
@@ -407,7 +407,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(
                 let variant_ident_sc_double_quotes_ts = gen_quotes::double_quotes_ts(&variant_ident_sc_str);
                 quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_sc_double_quotes_ts)}
             }
-            syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("b6fedcff-1a88-455f-bd93-219ec45a1fce"),
+            syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("b6fedcff"),
         })
         .collect::<Vec<Ts2>>();
     let trait_path_ts = trait_path_ts();

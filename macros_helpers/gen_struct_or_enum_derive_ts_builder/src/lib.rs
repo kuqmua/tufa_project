@@ -16,7 +16,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(
     let make_pub_if_sc_ts = quote! {make_pub_if};
     let make_pub_ucc_ts = quote! {MakePub};
     let el_vec = serde_json::from_str::<Vec<String>>(&input_ts.to_string())
-        .expect("c5d09740-51b2-4c11-9b66-931622d1a053")
+        .expect("c5d09740")
         .into_iter()
         .map(|el_4f4a2c74| {
             let sc = {
@@ -63,7 +63,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(
                 },
                 trait_type: el_4f4a2c74
                     .parse::<Ts2>()
-                    .expect("8672240f-97b3-40f5-bf14-dc4b13af528f"),
+                    .expect("8672240f"),
             }
         })
         .collect::<Vec<Element>>();

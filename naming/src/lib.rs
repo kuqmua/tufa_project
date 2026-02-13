@@ -1359,6 +1359,6 @@ where
         let value = self.swagger_url_path_self_quotes_str(table_name_str);
         value
             .parse::<Ts2>()
-            .expect("f292686b-7b16-4f33-a085-e67b4091f266")
+            .expect("f292686b")
     }
 }

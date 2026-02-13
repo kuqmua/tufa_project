@@ -803,7 +803,7 @@ impl<T: Debug + PartialEq + Clone + AllEnumVariantsArrayDefaultOptionSomeVecOneE
             logical_operator: DefaultOptionSomeVecOneEl::default_option_some_vec_one_el(),
             value: NotEmptyUniqueVec::try_new(
                 AllEnumVariantsArrayDefaultOptionSomeVecOneEl::all_variants_default_option_some_vec_one_el()
-            ).expect("a918b427-2d74-4096-915c-2f97314cc05f"),
+            ).expect("a918b427"),
         }
     }
 }
@@ -876,7 +876,7 @@ impl PaginationBase {
     pub const fn end(&self) -> i64 {
         self.offset
             .checked_add(self.limit)
-            .expect("8a297b66-4f42-4b48-8e18-cc1f35302e0a")
+            .expect("8a297b66")
     }
     #[must_use]
     pub const fn new_unchecked(limit: i64, offset: i64) -> Self {

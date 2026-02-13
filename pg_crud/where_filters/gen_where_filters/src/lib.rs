@@ -68,7 +68,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
             self.dimension_std_primitive_u8()
                 .to_string()
                 .parse::<Ts2>()
-                .expect("18c32bc0-2e55-4b4d-a6a8-b8680e5fe463")
+                .expect("18c32bc0")
         }
     }
     enum KindOfUnsignedPartOfStdPrimitiveI32 {
@@ -110,7 +110,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
     panic_location::panic_location();
     let gen_where_filters_config =
         serde_json::from_str::<GenWhereFiltersConfig>(&input_ts.to_string())
-            .expect("1217b73b-456c-4a3e-8a5a-5d5b8b8c3452");
+            .expect("1217b73b");
     let import_path = ImportPath::PgCrudCommon;
     let t_ts = quote! {T};
     let t_annotation_generic_ts = quote! {<#t_ts>};
@@ -536,7 +536,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                             ));
                             let if_write_is_err_ts = macros_helpers::gen_if_write_is_err_ts(
                                 &quote! {acc_14596a52, "${value_daedba9c},"},
-                                &quote! {panic!("87f47f75-b2db-4d88-a0f0-e254ac7d14a3");},
+                                &quote! {panic!("87f47f75");},
                             );
                             quote! {
                                 #maybe_dimensions_indexes_initialization_ts

@@ -12,7 +12,7 @@ pub fn get_macro_attribute<'attributes_litime>(
             stringified_path
         }
     });
-    option_attribute.expect("68acaa15-abdc-4ede-b38a-4cf744512136")
+    option_attribute.expect("68acaa15")
 }
 
 #[must_use]
@@ -30,10 +30,10 @@ pub fn get_macro_attribute_meta_list_ts<'attributes_lifetime>(
             }
         })
         .clone();
-    let attribute = option_attribute.expect("9d057161-4c8e-4cf5-bee3-12c0020d5b95");
+    let attribute = option_attribute.expect("9d057161");
     if let syn::Meta::List(value) = &attribute.meta {
         &value.tokens
     } else {
-        panic!("985dc2d5-f743-4f1e-a6f3-25c96c2af323")
+        panic!("985dc2d5")
     }
 }

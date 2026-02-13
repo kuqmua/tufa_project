@@ -27,7 +27,7 @@ pub fn gen_simple_syn_punctuated_punctuated(
         }
         handle
     } else {
-        panic!("f68497cc-bd58-497e-ae49-9ee22e07b45e");
+        panic!("f68497cc");
     }
 }
 

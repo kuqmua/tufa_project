@@ -442,7 +442,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
 
     // let pg_crud_all_variants_default_option_some_vec_one_el_call_ts = token_patterns::PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElCall;
     let syn_derive_input: syn::DeriveInput =
-        syn::parse2(input).expect("991c614f-5cf9-4a53-873a-5280b62e2dfa");
+        syn::parse2(input).expect("991c614f");
     let gen_pg_table_config = serde_json::from_str::<GenPgTableConfig>(
         &macros_helpers::get_macro_attribute_meta_list_ts(
             &syn_derive_input.attrs,
@@ -453,7 +453,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         )
         .to_string(),
     )
-    .expect("1b6adf7e-7da9-4e2d-82e6-e8bb48ba8ee6");
+    .expect("1b6adf7e");
     let ident = &syn_derive_input.ident;
     let ident_sc_str = ToTokensToScStr::case(&ident);
     let ident_sc_double_quotes_ts = gen_quotes::double_quotes_ts(&ident_sc_str);
@@ -468,7 +468,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     let field_ident = el_2e7b44a3
                         .ident
                         .clone()
-                        .expect("915ef2ce-d4d5-4943-997a-a2a004807452");
+                        .expect("915ef2ce");
                     let field_ident_len = field_ident.to_string().len();
                     let max_pg_column_length = 63;
                     //todo write runtime check
@@ -489,13 +489,13 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                     .path()
                                     .segments
                                     .first()
-                                    .expect("a9c3b38b-0a8d-43b1-a33e-bf3858394ea5")
+                                    .expect("a9c3b38b")
                                     .ident;
                                 let gen_pg_table_primary_key_sc_str =
                                     GenPgTablePrimaryKeySc.to_string();
                                 if first_segment_ident == &gen_pg_table_primary_key_sc_str {
                                     if option_primary_key_field.is_some() {
-                                        panic!("1a75cea1-9961-4f01-a54a-5b4acc08547c");
+                                        panic!("1a75cea1");
                                     } else {
                                         option_primary_key_field =
                                             Some(macros_helpers::SynFieldWrapper {
@@ -520,15 +520,15 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 // explicitly not supporting number of columns more than 100 so its less possibility to cause stack overflow or build process exit
                 // assert!((fields.len() <= 100), "d9963f32-0811-48d1-bb60-e6b365a529eb");
                 (
-                    option_primary_key_field.expect("6a529a99-e9ba-43d6-a6d6-511209caa8b6"),
+                    option_primary_key_field.expect("6a529a99"),
                     fields,
                     fields_without_primary_key,
                 )
             } else {
-                panic!("7f31872d-1867-48e0-a1ef-0de268f357a2");
+                panic!("7f31872d");
             }
         } else {
-            panic!("bd4718d0-4e14-4b22-ad88-b3575bb24eab");
+            panic!("bd4718d0");
         };
     let fields_len = fields.len();
     let fields_len_without_primary_key = fields_without_primary_key.len();
@@ -835,12 +835,12 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
     let gen_ident_operation_error_named_ucc = |operation: &Operation| {
         format!("{ident}{operation}ErrorNamed")
             .parse::<proc_macro2::TokenStream>()
-            .expect("79ab147e-f603-4cb7-81af-2e35344780fe")
+            .expect("79ab147e")
     };
     let gen_ident_operation_response_variants_ucc = |operation: &Operation| {
         format!("{ident}{operation}ResponseVariants")
             .parse::<proc_macro2::TokenStream>()
-            .expect("f386c0d4-6704-475a-8045-91431f1da815")
+            .expect("f386c0d4")
     };
     let gen_initialization_ts = |syn_variant_wrapper: &SynVariantWrapper,
                                  file: &'static str,
@@ -853,7 +853,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 let field_ident = &element.ident;
                 if *field_ident
                     .as_ref()
-                    .expect("edbbd08a-ab4b-4553-ae90-e97c714f7908")
+                    .expect("edbbd08a")
                     == CodeOccurenceSc.to_string()
                 {
                     macros_helpers::gen_field_code_occurence_new_ts(file, line, column)
@@ -863,7 +863,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 }
             })
         } else {
-            panic!("10773d36-d47f-4563-98f2-118d9ac519fc");
+            panic!("10773d36");
         };
         quote! {
             #variant_ident {
@@ -884,7 +884,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 gen_initialization_ts(syn_variant_wrapper, file, line, column);
             let status_code_ts = syn_variant_wrapper
                 .get_option_status_code()
-                .expect("81efa954-1175-4f89-a343-c79f8184e19b")
+                .expect("81efa954")
                 .to_axum_http_status_code_ts();
             let wraped_into_axum_response_ts = wrap_into_axum_response_ts(
                 &quote! {#ident_operation_response_variants_ucc::#FromHandleSc(#ErrorSc)},
@@ -1822,14 +1822,14 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
     let gen_ident_try_operation_error_named_ucc = |operation: &Operation| {
         format!("{ident}Try{operation}ErrorNamed")
             .parse::<proc_macro2::TokenStream>()
-            .expect("6a5468b2-c8d6-4c5e-88a6-adce2bfe7467")
+            .expect("6a5468b2")
     };
     let ident_try_read_many_error_named_ucc =
         gen_ident_try_operation_error_named_ucc(&Operation::ReadMany);
     let gen_ident_operation_error_named_with_serialize_deserialize_ucc = |operation: &Operation| {
         format!("{ident}{operation}ErrorNamedWithSerializeDeserialize")
             .parse::<proc_macro2::TokenStream>()
-            .expect("f9e053d1-c5ce-4a8e-ac79-6cc30ba19bb9")
+            .expect("f9e053d1")
     };
     let pg_crud_order_by_ts = quote! {#PgCrudSc::#OrderByUcc};
     let ident_update_ucc = SelfUpdateUcc::from_tokens(&ident);
@@ -1844,7 +1844,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 let value = format!("{PgCrudSc}::{ValueUcc}");
                 value
                     .parse::<proc_macro2::TokenStream>()
-                    .expect("dbdbb7f2-7801-49e7-917e-f7daa9b4dd91")
+                    .expect("dbdbb7f2")
             };
             let syn_type_as_pg_type_update_ts = gen_as_pg_type_update_ts(&syn_type);
             gen_std_option_option_tokens_declaration_ts(
@@ -2002,7 +2002,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                         let option_value_field_type_as_pg_type_update_for_query_ts = {
                             let path_value_ts = {
                                 let value = format!("{PgCrudSc}::{ValueUcc}");
-                                value.parse::<proc_macro2::TokenStream>().expect("2b09d4ae-757c-4c6b-a9ba-edd2ea95128a")
+                                value.parse::<proc_macro2::TokenStream>().expect("2b09d4ae")
                             };
                             let syn_type_as_pg_type_update_for_query_ts = gen_as_pg_type_update_for_query_ts(&element.field_type);
                             gen_std_option_option_tokens_declaration_ts(&quote! {#path_value_ts<#syn_type_as_pg_type_update_for_query_ts>})
@@ -2302,7 +2302,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             );
         let value: syn::DeriveInput =
             syn::parse2((*common_additional_error_variants_attribute_ts).clone())
-                .expect("1b80783d-f818-4ba3-ba17-3c7831d16530");
+                .expect("1b80783d");
         let value_ident_str = value.ident.to_string();
         assert!(
             value_ident_str == gen_pg_table_attribute_str,
@@ -2311,7 +2311,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         let variants = if let syn::Data::Enum(data_enum) = value.data {
             data_enum.variants
         } else {
-            panic!("f3ddc78c-27f7-443c-a892-e64b9654a425");
+            panic!("f3ddc78c");
         };
         variants.into_iter().collect()
     };
@@ -2509,13 +2509,13 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         |error_variant: &syn::Variant| -> proc_macro2::TokenStream {
             let variant_ident = &error_variant.ident;
             let syn::Fields::Named(fields_named) = &error_variant.fields else {
-                panic!("2acd4725-3fc0-4903-812c-d75f22e3f713");
+                panic!("2acd4725");
             };
             let fields_mapped_into_ts = fields_named.named.iter().map(|field| {
                 let field_ident = field
                     .ident
                     .as_ref()
-                    .expect("a21dc807-77ad-4b05-a9ae-e1f17216b490");
+                    .expect("a21dc807");
                 let error_occurence_attribute = if *field_ident == *CodeOccurenceSc.to_string() {
                     proc_macro2::TokenStream::new()
                 } else {
@@ -2526,14 +2526,14 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 .path()
                                 .segments
                                 .first()
-                                .expect("5bd7ed8d-d28d-4614-8f3d-add4046df76a");
+                                .expect("5bd7ed8d");
                             if let Ok(value) = {
                                 <ErrorOccurenceFieldAttribute as FromStr>::from_str(
                                     &segment.ident.to_string(),
                                 )
                             } {
                                 if error_occurence_attribute.is_some() {
-                                    panic!("9a469d36-1b5b-4f2e-8ed4-c8713c60fb39")
+                                    panic!("9a469d36")
                                 } else {
                                     error_occurence_attribute = Some(value);
                                 }
@@ -2541,7 +2541,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                         }
                     }
                     error_occurence_attribute
-                        .expect("d1003b2e-b108-4807-a769-9c2611284713")
+                        .expect("d1003b2e")
                         .to_attribute_view_ts()
                 };
                 let field_type = &field.ty;
@@ -2582,7 +2582,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     let variants_ts = type_variants_from_request_response_syn_variants.iter().map(|el_d80f0707| {
                     let variant_ident = &el_d80f0707.ident;
                     let syn::Fields::Named(fields_named) = &el_d80f0707.fields else {
-                        panic!("10764d2b-48db-47c4-bc8c-12e13d6b9621");
+                        panic!("10764d2b");
                     };
                     let fields_mapped_into_ts = {
                         let fields_ts = fields_named.named.iter().map(|field| &field.ident);
@@ -2637,12 +2637,12 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         | Operation::DeleteMany
         | Operation::DeleteOne => format!("{ident}{operation}{PayloadUcc}")
             .parse::<proc_macro2::TokenStream>()
-            .expect("c042f504-5275-4388-80cc-a141c066daf8"),
+            .expect("c042f504"),
     };
     let gen_ident_operation_parameters_ucc = |operation: &Operation| {
         format!("{ident}{operation}Parameters")
             .parse::<proc_macro2::TokenStream>()
-            .expect("c1203fc6-3dbd-4a37-a407-f9913aa7964d")
+            .expect("c1203fc6")
     };
     let gen_parameters_pattern_ts = |operation: &Operation,
                                      payload_ts: proc_macro2::TokenStream|
@@ -2796,10 +2796,10 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 //             "HttpBody::size_hint {value} byte or {} kilobyte or {} megabyte",
                 //             value
                 //                 .checked_div(1024)
-                //                 .expect("111fd01a-cfef-47f0-bc0b-661da0d8371b"),
+                //                 .expect("111fd01a"),
                 //             value
                 //                 .checked_div(1_048_576)
-                //                 .expect("efbe0db4-2196-4998-b11f-8844ce5fcf18"), //(1024*1024)
+                //                 .expect("efbe0db4"), //(1024*1024)
                 //         );
                 //     }
                 //     None => {
@@ -3009,7 +3009,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     let fields_idents = fields_named.named.iter().map(|field| &field.ident);
                     quote! {#(#fields_idents),*}
                 } else {
-                    panic!("8dcafc1c-2fc8-4d85-b0ba-cc7725b313a0");
+                    panic!("8dcafc1c");
                 };
                 quote! {
                     #ident_operation_response_variants_ucc::#variant_ident {
@@ -3902,7 +3902,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             let ident_operation_payload_try_new_error_named_ucc =
                 format!("{ident}{operation}PayloadTryNewErrorNamed")
                     .parse::<proc_macro2::TokenStream>()
-                    .expect("3da248bb-84ba-48c9-9b7c-e0853198e0aa");
+                    .expect("3da248bb");
             let not_unique_primary_key_ucc = NotUniquePrimaryKeyUcc;
             let not_unique_primary_key_sc = NotUniquePrimaryKeySc;
             let ident_operation_payload_try_new_error_named_ts =
@@ -4854,7 +4854,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                         #import_path::PgTypeWhere::try_new(
                             #logical_operator_ts,
                             #content_ts
-                        ).expect("6b0491b2-1555-4f1c-81f7-5b22d7d353fb"),
+                        ).expect("6b0491b2"),
                     )
                 }
             };
@@ -4868,7 +4868,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             #import_path::PgTypeWhere::try_new(
                 logical_operator,
                 vec
-            ).expect("fd20ad6d-fb4c-4da7-96b5-43fce0cdb94c")
+            ).expect("fd20ad6d")
         };
         let ident_create_default_fields_initialization_without_primary_key_ts =
             gen_fields_named_without_primary_key_with_comma_ts(
@@ -4913,7 +4913,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             quote! {
                 let select_default_all_with_max_page_size = pg_crud::NotEmptyUniqueVec::try_new(vec![
                     #content_ts
-                ]).expect("5e82ac66-c7d7-4e1c-8800-b2bb75b0d0cc");
+                ]).expect("5e82ac66");
             }
         };
         let gen_primary_key_field_type_as_pg_type_primary_key_method_call_ts =
@@ -5003,7 +5003,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                             };
                             quote! {
                                 #current_field_ident: <#current_field_type as pg_crud::PgTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(
-                                    #read_only_ids_content_ts.#current_field_ident #maybe_dot_clone_ts.expect("f967434c-f45a-47f9-a289-36ef99d80e33"),
+                                    #read_only_ids_content_ts.#current_field_ident #maybe_dot_clone_ts.expect("f967434c"),
                                     #create_content_ts.#current_field_ident #maybe_dot_clone_ts
                                 )
                             }
@@ -5066,7 +5066,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                             &table_initialization
                         )
                         .await
-                        .expect("36b95e96-8f97-4088-86e3-c521adf8b199"),
+                        .expect("36b95e96"),
                         "3d9f2ec0-e374-48d2-a36b-486f5598b0b4"
                     );
                     assert_eq!(
@@ -5074,7 +5074,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                             &url,
                             #primary_key_read_clone_ts,
                             &table_initialization,
-                        ).await.expect("4d96d385-1ff8-4cc4-a8af-b2c8c6118ad4"),
+                        ).await.expect("4d96d385"),
                         #primary_key_read_clone_ts,
                         "26e2058b-4bc1-42da-8f35-0ab993904de5"
                     );
@@ -5115,7 +5115,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         let gen_table_test_name_field_ident_ts = |test_name: &str, field_ident: &syn::Ident| {
             format!("table_{test_name}_{field_ident}")
                 .parse::<proc_macro2::TokenStream>()
-                .expect("eb30c1e4-d208-4fe5-bb73-0c8cbac8b1fd")
+                .expect("eb30c1e4")
         };
         let mut table_field_idents_initialization_vec_ts = Vec::new();
         let mut table_test_name_field_idents_vec_ts = Vec::new();
@@ -5124,7 +5124,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 let gen_initialization_variable_name_ts = |field_ident: &syn::Ident| {
                     format!("table_{el_8f39799f}_{field_ident}")
                         .parse::<proc_macro2::TokenStream>()
-                        .expect("2003ad9f-013a-48ba-b0ef-d2d48774d60c")
+                        .expect("2003ad9f")
                 };
                 table_field_idents_initialization_vec_ts.push(gen_fields_named_without_primary_key_without_comma_ts(&|el_51b56762: &macros_helpers::SynFieldWrapper| {
                     let field_ident = &el_51b56762.field_ident;
@@ -5273,7 +5273,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                         payload: #ident_create_many_payload_ucc(el_8e425cb1)
                                     },
                                     current_table
-                                ).await.expect("38a24e7a-5b0e-4237-b686-3f03ab332efd") }))
+                                ).await.expect("38a24e7a") }))
                             ),
                             5
                         )
@@ -5296,7 +5296,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                             }),
                             |first, second| match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
                                 (Some(first_handle), Some(second_handle)) => first_handle.#ValueSc.cmp(&second_handle.#ValueSc),
-                                _ => panic!("0f1d45ed-b6e3-4fbd-bd41-bcbe61739f83"),
+                                _ => panic!("0f1d45ed"),
                             }
                         ).collect::<Vec<#ident_read_ucc>>(),
                         itertools::Itertools::sorted_by(
@@ -5323,11 +5323,11 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 current_table
                             )
                             .await
-                            .expect("097d5e7d-41c6-41f4-8847-720647f2d6ea")
+                            .expect("097d5e7d")
                             .into_iter(),
                             |first, second| match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
                                 (Some(first_handle), Some(second_handle)) => first_handle.#ValueSc.cmp(&second_handle.#ValueSc),
-                                _ => panic!("51e477ea-0a01-46f0-89fb-967bb8e4e131"),
+                                _ => panic!("51e477ea"),
                             }
                         )
                         .collect::<Vec<#ident_read_ucc>>(),
@@ -5368,7 +5368,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                         #PayloadSc: #ident_create_many_payload_ucc(ident_vec_create.clone())
                                     },
                                     &table_create_many_cloned.clone()
-                                ).await.expect("5eecedc4-bb02-454a-acd9-0af758f30b2e");
+                                ).await.expect("5eecedc4");
                                 assert_eq!(
                                     gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create(
                                         read_only_ids_from_try_create_many.clone(),
@@ -5398,7 +5398,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                         ),
                                         #select_default_all_with_max_page_size_cloned_clone_ts,
                                         &table_create_many_cloned
-                                    ).await.expect("bdb72341-016f-4d85-8ce8-abe7e97666ca"),
+                                    ).await.expect("bdb72341"),
                                     "d19bbbf6-f64c-4151-8b5b-998a93e13af5"
                                 );
                                 let read_only_ids_from_try_delete_many = itertools::Itertools::sorted(
@@ -5420,7 +5420,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                         &table_create_many_cloned
                                     )
                                     .await
-                                    .expect("716e470e-d738-4642-adfc-df1f9b945d27")
+                                    .expect("716e470e")
                                     .into_iter()
                                 ).collect::<Vec<<#primary_key_field_type as pg_crud::PgType>::Read>>();
                                 assert_eq!(
@@ -5459,7 +5459,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                         #select_default_all_with_max_page_size_cloned_clone_ts,
                                         &table_create_many_cloned
                                     ).await
-                                    .expect("24ab86d6-15c9-47f1-a43f-c5fac4b38188")
+                                    .expect("24ab86d6")
                                     .is_empty(),
                                     "4e88679a-0d23-418f-8767-4e9b7531429c"
                                 );
@@ -5504,7 +5504,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                         &table_create_one_cloned
                                     )
                                     .await
-                                    .expect("f8e1cb88-93ef-440d-9888-49fef60182d6"),
+                                    .expect("f8e1cb88"),
                                     "5f2adbed-f716-440e-a990-4f1c258808b1"
                                 );
                                 assert_eq!(
@@ -5512,7 +5512,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                         &url_cloned,
                                         #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_ts,
                                         &table_create_one_cloned
-                                    ).await.expect("20d5a40a-8467-481c-9715-f9b8fef63fbd"),
+                                    ).await.expect("20d5a40a"),
                                     #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_ts,
                                     "4f563faf-1d9b-4ef3-8636-f93fde8ef235"
                                 );
@@ -5541,7 +5541,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                         &url_cloned,
                         #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_ts,
                         &current_table
-                    ).await.expect("93b4bf61-3a98-42ea-ab66-015c5d211622");
+                    ).await.expect("93b4bf61");
                     gen_check_no_rows_returned_from_ident_try_read_one_handle_primary_key(
                         &url_cloned,
                         #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_ts,
@@ -5578,7 +5578,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 select_default_all_with_max_page_size_cloned.clone(),
                                 &current_table
                             ).await
-                            .expect("e661c49b-2288-4548-8783-35495e193976")
+                            .expect("e661c49b")
                             .is_empty(),
                             "06df4025-e2d1-4128-b819-c06613c6ae3f"
                         );
@@ -5608,7 +5608,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 payload: #ident_create_many_payload_ucc(ident_vec_create.clone())
                             },
                             &current_table
-                        ).await.expect("d775179f-f7b1-41d3-9c83-4ca8bd1abeec");
+                        ).await.expect("d775179f");
                         assert_eq!(
                             gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create(
                                 read_only_ids_from_try_create_many.clone(),
@@ -5637,7 +5637,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 ),
                                 select_default_all_with_max_page_size_cloned.clone(),
                                 &current_table
-                            ).await.expect("b8efe770-153c-4e4a-ab0e-6484a8dc5343"),
+                            ).await.expect("b8efe770"),
                             "error 3b2cf1f5-2c4e-4908-ba66-f4af84fe0893"
                         );
                         let read_only_ids_from_try_delete_many = itertools::Itertools::sorted(
@@ -5656,7 +5656,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 &current_table
                             )
                             .await
-                            .expect("d5c23a9d-eb02-44e4-8654-e2a3d7752f51")
+                            .expect("d5c23a9d")
                             .into_iter()
                         ).collect::<Vec<<#primary_key_field_type as pg_crud::PgType>::Read>>();
                         assert_eq!(
@@ -5697,7 +5697,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 select_default_all_with_max_page_size_cloned.clone(),
                                 &current_table
                             ).await
-                            .expect("1f079962-06af-4d21-a837-c88b0e7db265")
+                            .expect("1f079962")
                             .is_empty(),
                             "d79c0af3-5e2e-4891-a7ff-d1007b573e77"
                         );
@@ -5733,10 +5733,10 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                             ],
                             gen_try_read_many_order_by_primary_key_with_big_pagination(
                                 &url_cloned,
-                                #ident_where_many_ucc::try_new(#ident_where_many_try_new_parameters_content_ts).expect("83c2d430-9ca6-4131-8ca0-8ce8ecf6af1a"),
+                                #ident_where_many_ucc::try_new(#ident_where_many_try_new_parameters_content_ts).expect("83c2d430"),
                                 #select_default_all_with_max_page_size_cloned_clone_ts,
                                 &current_table
-                            ).await.expect("c3e316c0-e6da-4790-a97b-4ff09fe87a0f"),
+                            ).await.expect("c3e316c0"),
                             "ee8d232d-98f2-4449-ad30-0e36ca2e7094"
                         );
                     }
@@ -5832,7 +5832,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                             &current_table
                                         )
                                         .await
-                                        .expect("338bcf89-0c3d-49d7-ac51-b73af98a32b0")
+                                        .expect("338bcf89")
                                         .into_iter()
                                     ).collect::<Vec<<#primary_key_field_type as pg_crud::PgType>::Read>>();
                                     assert_eq!(
@@ -5863,7 +5863,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                             #select_default_all_with_max_page_size_cloned_clone_ts,
                                             &current_table
                                         ).await
-                                        .expect("1817b67a-c6c5-4fea-8ca7-23581c1888a3")
+                                        .expect("1817b67a")
                                         .is_empty(),
                                         "38187925-c136-41de-940d-eba75efc3a39"
                                     );
@@ -5913,7 +5913,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                         };
                                                     quote! {
                                                         <#current_field_type as pg_crud::PgTypeTestCases>::#method_ts(
-                                                            read_only_ids_returned_from_create_one.#current_field_ident.clone().expect("11c3740b-7c3c-4dd5-b468-71bfa2f10892"),
+                                                            read_only_ids_returned_from_create_one.#current_field_ident.clone().expect("11c3740b"),
                                                             ident_create.#current_field_ident.clone()
                                                         )
                                                     }
@@ -5964,7 +5964,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 }));
                 quote! {
                     if let Some(value_d5cd3c70) = <#field_type as pg_crud::PgTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoOptionVecWhereEqualToJsonFieldSc(
-                        read_only_ids_returned_from_create_one.#field_ident.clone().expect("65cef584-1427-482f-9c42-574630badedf"),
+                        read_only_ids_returned_from_create_one.#field_ident.clone().expect("65cef584"),
                         ident_create.#field_ident.clone()
                     ) {
                         for el_48a3d976 in value_d5cd3c70.into_vec() {
@@ -6032,7 +6032,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     quote! {
                         if let Some(value_60baba1f) = <#field_type as pg_crud::PgTypeTestCases>::#ReadOnlyIdsMergedWithTableTypeDeclarationIntoPgTypeOptionWhereGreaterThanSc(
                             #ElementSc.variant,
-                            read_only_ids_returned_from_create_one.#field_ident.clone().expect("c8d34556-5a81-4c63-8e26-c79021eb876c"),
+                            read_only_ids_returned_from_create_one.#field_ident.clone().expect("c8d34556"),
                             #ElementSc.greater_than,
                         ) {
                             #assert_eq_ts
@@ -6065,7 +6065,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                         }));
                         quote! {
                             if let Some(value_bb67b871) = <#field_type as pg_crud::PgTypeTestCases>::#read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_number_equal_sc(
-                                read_only_ids_returned_from_create_one.#field_ident.clone().expect("2ed000a5-cf70-4df1-903a-c1f6d224e926"),
+                                read_only_ids_returned_from_create_one.#field_ident.clone().expect("2ed000a5"),
                                 ident_create.#field_ident.clone()
                             ) {
                                 for el_3efa0bb4 in value_bb67b871.into_vec() {
@@ -6185,7 +6185,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                         );
                         quote!{
                             if let Some(value_0b85c066) = <#field_type as pg_crud::PgTypeTestCases>::#method_ts(
-                                read_only_ids_returned_from_create_one.#field_ident.clone().expect("df01c8ac-63e3-42f7-aae4-018c7958c00d"),
+                                read_only_ids_returned_from_create_one.#field_ident.clone().expect("df01c8ac"),
                                 ident_create.#field_ident.clone()
                             ) {
                                 for el_feacc53b in value_0b85c066.into_vec() {
@@ -6298,12 +6298,12 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                             &table_update_many_cloned
                                         )
                                         .await
-                                        .expect("540ec737-dea7-4d50-a42a-45ea1f81d6c1")
+                                        .expect("540ec737")
                                         .into_iter(),
                                         |first, second| {
                                             match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
                                                 (Some(first_handle), Some(second_handle)) => first_handle.#ValueSc.cmp(&second_handle.#ValueSc),
-                                                _ => panic!("99ba9dc3-ca32-4462-b9b4-b1202265beee"),
+                                                _ => panic!("99ba9dc3"),
                                             }
                                         }
                                     );
@@ -6354,8 +6354,8 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                                 quote! {
                                                     <#current_field_type as pg_crud::PgTypeTestCases>::previous_read_merged_with_option_update_into_read(
                                                         <#current_field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_option_value_read_default_option_some_vec_one_el(
-                                                            &read_only_ids_current_element.#current_field_ident.clone().expect("96213542-59eb-4767-b120-d9ba575087c8")
-                                                        ).expect("bf0d6f55-7457-4ec1-8b79-50efad297ccb").#ValueSc,
+                                                            &read_only_ids_current_element.#current_field_ident.clone().expect("96213542")
+                                                        ).expect("bf0d6f55").#ValueSc,
                                                         Some(#UpdateSc.clone())
                                                     )
                                                 }
@@ -6410,7 +6410,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                         let mut index_e0c50b3e: usize = 0;
                                         let mut option_test_case = None;
                                         for el_76abae3a in <#field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(
-                                            &read_only_ids_current_element.#field_ident.clone().expect("af7d979d-0d43-47e9-bbf6-07282cae7eff")
+                                            &read_only_ids_current_element.#field_ident.clone().expect("af7d979d")
                                         ) {
                                             let mut should_break = false;
                                             for el_72f5ad12 in el_76abae3a {
@@ -6419,13 +6419,13 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                                     should_break = true;
                                                     break;
                                                 }
-                                                index_e0c50b3e = index_e0c50b3e.checked_add(1).expect("0968dda6-4c3a-42b6-8aa1-83058a928dde");
+                                                index_e0c50b3e = index_e0c50b3e.checked_add(1).expect("0968dda6");
                                             }
                                             if should_break {
                                                 break;
                                             }
                                         }
-                                        option_test_case.expect("769983ba-3992-4298-97ab-9a3721c32359")
+                                        option_test_case.expect("769983ba")
                                     });
                                     assert_eq!(
                                         vec![
@@ -6441,11 +6441,11 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                                     #ident_update_ucc::try_new(
                                                         #primary_key_field_type_as_pg_type_update_as_pg_type_primary_key_read_only_ids_into_update_ts,
                                                         #ident_update_parameters_initialization_without_primary_key_ts
-                                                    ).expect("42dc87b3-2ac4-4e66-8287-91aeb13f0ee8")
-                                                ]).expect("69e1bd8a-fe78-4301-85ca-f4f3958d7493")
+                                                    ).expect("42dc87b3")
+                                                ]).expect("69e1bd8a")
                                             },
                                             &table_update_many_cloned
-                                        ).await.expect("d2de0bd6-1b01-4ef2-b074-a60878241b52"),
+                                        ).await.expect("d2de0bd6"),
                                         "34bfb3c7-7a53-479e-9d4f-0856003573e1"
                                     );
                                     assert_eq!(
@@ -6478,11 +6478,11 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                                 &table_update_many_cloned
                                             )
                                             .await
-                                            .expect("25c561e2-6b39-4982-8fe7-4473d12b3271")
+                                            .expect("25c561e2")
                                             .into_iter(),
                                             |first, second| match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
                                                 (Some(first_handle), Some(second_handle)) => first_handle.#ValueSc.cmp(&second_handle.#ValueSc),
-                                                _ => panic!("3c827ad6-30bb-49db-8f49-8c903a236040"),
+                                                _ => panic!("3c827ad6"),
                                             }
                                         ).collect::<Vec<#ident_read_ucc>>(),
                                         "ae2a2da5-3697-4fd7-9ad2-4a535618fbc3"
@@ -6508,7 +6508,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                     #select_default_all_with_max_page_size_cloned_clone_ts,
                                     &table_update_one_cloned
                                 )
-                                .await.expect("e6998b47-c593-449e-89fd-3888de9f84a6");
+                                .await.expect("e6998b47");
                             }
                         } else {
                             proc_macro2::TokenStream::new()
@@ -6562,8 +6562,8 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                                         as
                                                         pg_crud::PgTypeTestCases
                                                     >::read_only_ids_to_option_value_read_default_option_some_vec_one_el(
-                                                        &read_only_ids_current_element.#current_field_ident.clone().expect("4f19d0d2-a23f-4b77-a2bc-c7b04db7a129")
-                                                    ).expect("c7685b19-9bca-47bc-a3a5-8fc543b174a5").#ValueSc,
+                                                        &read_only_ids_current_element.#current_field_ident.clone().expect("4f19d0d2")
+                                                    ).expect("c7685b19").#ValueSc,
                                                     Some(#UpdateSc.clone())
                                                 )
                                             });
@@ -6598,7 +6598,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                         let mut index_e0d2f9db: usize = 0;
                                         let mut option_test_case = None;
                                         for el_3a9a65ee in <#field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(
-                                            &read_only_ids_current_element.#field_ident.clone().expect("c4d98a71-f30f-410e-b410-a75f4672f2f7")
+                                            &read_only_ids_current_element.#field_ident.clone().expect("c4d98a71")
                                         ) {
                                             let mut should_break = false;
                                             for el_bb734c11 in el_3a9a65ee {
@@ -6607,13 +6607,13 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                                     should_break = true;
                                                     break;
                                                 }
-                                                index_e0d2f9db = index_e0d2f9db.checked_add(1).expect("326274d1-199d-4c43-89b3-c61c8ecdfd77");
+                                                index_e0d2f9db = index_e0d2f9db.checked_add(1).expect("326274d1");
                                             }
                                             if should_break {
                                                 break;
                                             }
                                         }
-                                        option_test_case.expect("bd79056e-bd30-4eda-b913-2afffaf1bfc3")
+                                        option_test_case.expect("bd79056e")
                                     });
                                     assert_eq!(
                                         #ident_read_only_ids_ucc {
@@ -6626,10 +6626,10 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                                 payload: #ident_update_ucc::try_new(
                                                     #primary_key_field_type_as_pg_type_update_as_pg_type_primary_key_read_only_ids_into_update_ts,
                                                     #ident_update_parameters_initialization_without_primary_key_ts
-                                                ).expect("0e5d65a5-12c8-4c48-a24c-0f1fe376ada2")//todo add column ident
+                                                ).expect("0e5d65a5")//todo add column ident
                                             },
                                             &table_update_one_cloned
-                                        ).await.expect("4d755542-e3e3-4c68-a3a2-beb654cf5b80"),
+                                        ).await.expect("4d755542"),
                                         "564de31c-3664-4c62-85fc-e03793372f8f"
                                     );
                                     assert_eq!(
@@ -6643,7 +6643,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                             select_default_all_with_max_page_size_cloned,
                                             &table_update_one_cloned
                                         )
-                                        .await.expect("75894c76-88f5-406e-ab46-c27b1c7d4212"),
+                                        .await.expect("75894c76"),
                                         "d5dec823-b1f9-49b2-9c24-bf788f08cd8c"
                                     );
                                 }));
@@ -6684,7 +6684,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                             &current_table
                         )
                         .await
-                        .expect("0d5dec47-8b2e-4f02-909b-3a58b65bc6a5")
+                        .expect("0d5dec47")
                         .is_empty(),
                         "51d14103-5122-4d96-a45c-4dd958ab3adc"
                     );
@@ -6716,7 +6716,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 )
                             },
                             &current_table
-                        ).await.expect("b8695890-65fb-469b-a6f9-be481d648eb9");
+                        ).await.expect("b8695890");
                         let read_only_ids_from_try_delete_many = #ident::try_delete_many_handle(
                             &url_cloned,
                             #ident_delete_many_parameters_ucc {
@@ -6738,14 +6738,14 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 },
                             },
                             &current_table
-                        ).await.expect("b80b91b8-7de1-4ea2-97cf-1987a5f7cc57");
+                        ).await.expect("b80b91b8");
                         assert_eq!(
                             read_only_ids_from_try_delete_many,
                             {
                                 read_only_ids_from_try_create_many.iter().map(|el_ba0f6b1c|
                                     <#primary_key_field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_option_value_read_default_option_some_vec_one_el(
                                         &el_ba0f6b1c.#primary_key_field_ident
-                                    ).expect("3ee5ee86-05dc-4dc8-9262-8ffa1855d5e4").#ValueSc
+                                    ).expect("3ee5ee86").#ValueSc
                                 ).collect::<Vec<#primary_key_field_type_as_pg_type_read_ts>>()
                             },
                             "db5e88a6-c75b-421b-acfb-56931b97ba3b"
@@ -6769,7 +6769,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 select_default_all_with_max_page_size_cloned.clone(),
                                 &current_table
                             ).await
-                            .expect("bcb79917-ee81-416e-82a3-f43a823266a3")
+                            .expect("bcb79917")
                             .is_empty(),
                             "77f038b0-6f39-4b5b-a402-a1b6142acd0d"
                         );
@@ -6815,13 +6815,13 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 } = delete_one_error_named_with_serialize_deserialize {
                                     assert!(pg == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row(), "c9261bb8-d391-4c4b-9707-3a2c4278ad90");
                                 } else {
-                                    panic!("e63b27a3-f3e3-4f19-998a-88ce798b08cc");
+                                    panic!("e63b27a3");
                                 }
                             } else {
-                                panic!("47a8e0d9-1f95-4fa7-91dc-a94955195204")
+                                panic!("47a8e0d9")
                             }
                         } else {
-                            panic!("9be62f9f-31d9-493c-bb0f-b83b6ecb0026")
+                            panic!("9be62f9f")
                         }
                         let read_only_ids_returned_from_create_one = gen_read_only_ids_from_try_create_one_default(&url, &table_delete_one_cloned).await;
                         assert_eq!(
@@ -6835,7 +6835,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 #select_default_all_with_max_page_size_cloned_clone_ts,
                                 &table_delete_one_cloned
                             )
-                            .await.expect("c8c44c89-aeb0-43d3-ae72-02b7a5979f5a"),
+                            .await.expect("c8c44c89"),
                             "86ef08ae-4356-4417-9490-1d13eb2af71f"
                         );
                         assert_eq!(
@@ -6843,7 +6843,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 &url,
                                 #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_ts,
                                 &table_delete_one_cloned
-                            ).await.expect("7e1d1a70-8f93-43b9-9cfe-37fc240ca7ba"),
+                            ).await.expect("7e1d1a70"),
                             #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_ts,
                             "99f81971-dc80-46db-b466-4f309b215a8c"
                         );
@@ -6874,7 +6874,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                             option_pg_type_where,
                             #fields_named_without_primary_key_with_comma_none_ts
                         )
-                        .expect("5fb2b219-8bd7-4edd-9722-b475826707f5")
+                        .expect("5fb2b219")
                     }
                     fn gen_pg_type_where_try_new_primary_key(
                         logical_operator: #import_path::LogicalOperator,
@@ -6919,7 +6919,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                         ),
                                         order: Some(#import_path::Order::Asc)
                                     },
-                                    pagination: #import_path::PaginationStartsWithZero::try_new(10000, 0).expect("b0cdf0cb-1e31-4a7e-9e53-d2ff71efb983"),
+                                    pagination: #import_path::PaginationStartsWithZero::try_new(10000, 0).expect("b0cdf0cb"),
                                 }
                             },
                             table
@@ -6963,13 +6963,13 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 if let #ident_read_one_error_named_with_serialize_deserialize_ucc::Pg { pg, .. } = read_one_error_named_with_serialize_deserialize {
                                     assert!(pg == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row(), "58b9a6a4-cf9b-49f3-a20f-7007deea40fd");
                                 } else {
-                                    panic!("0ad0117b-a2e0-4629-99d0-71935cd93d15");
+                                    panic!("0ad0117b");
                                 }
                             } else {
-                                panic!("c6695392-4b5f-4482-86aa-b2f19c33a746")
+                                panic!("c6695392")
                             }
                         } else {
-                            panic!("67e43b7a-d3ec-4a3b-a3f1-8c11499fd090")
+                            panic!("67e43b7a")
                         }
                     }
                     fn ident_create_default() -> #ident_create_ucc {
@@ -6988,7 +6988,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 #PayloadSc
                             },
                             table
-                        ).await.expect("32e30b87-b46a-4f39-aeb0-39694fc52d30")
+                        ).await.expect("32e30b87")
                     }
                     async fn gen_read_only_ids_from_try_create_one_default(
                         #UrlSc: &str,
@@ -7036,42 +7036,42 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                             if let (Some(first_handle), Some(second_handle)) = (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
                                 first_handle.#ValueSc.cmp(&second_handle.#ValueSc)
                             } else {
-                                panic!("d760ffa3-e9df-4628-92cd-d52c1ae1f91a");
+                                panic!("d760ffa3");
                             }
                         });
                         acc_1debe8fb
                     }
                     #gen_read_only_ids_current_elements_ts
                     tracing_subscriber::fmt::init();
-                    tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("38823c21-1879-449c-9b60-ce7293709959").block_on(async {
+                    tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("38823c21").block_on(async {
                         //todo maybe refactor
                         let #ConfigSc = #config_path_ts {
                             service_socket_address: <config_lib::ServiceSocketAddress as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
                                 "127.0.0.1:8080".to_owned()
-                            ).expect("b5b3915a-0e18-4815-a614-6b0e9a00d73f").0,
+                            ).expect("b5b3915a").0,
                             database_url: <config_lib::DatabaseUrl as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
                                 "postgres://postgres:postgres@127.0.0.1:5432/postgres?connect_timeout=10".to_owned()
-                            ).expect("f9c20f05-3cdf-46ae-b6d3-5943c627f0df").0,
+                            ).expect("f9c20f05").0,
                             timezone: <config_lib::Timezone as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
                                 "10800".to_owned()
-                            ).expect("d00d8998-52f9-45c1-a4b0-c93bc95a313e").0,
+                            ).expect("d00d8998").0,
                             tracing_level: <config_lib::TracingLevel as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
                                 "error".to_owned()
-                            ).expect("957178c9-4d92-4110-b524-9dc21d147a7c").0,
+                            ).expect("957178c9").0,
                             source_place_type: <config_lib::SourcePlaceType as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
                                 "source".to_owned()
-                            ).expect("bec0950e-e9de-42f3-b3a2-67d9d98ae8a6").0,
+                            ).expect("bec0950e").0,
                             enable_api_git_commit_check: <config_lib::EnableApiGitCommitCheck as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
                                 "true".to_owned()
-                            ).expect("31f02640-d62b-41ca-837d-d61b707d4baf").0,
+                            ).expect("31f02640").0,
                             maximum_size_of_http_body_in_bytes: <config_lib::MaximumSizeOfHttpBodyInBytes as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
                                 "1048576000".to_owned()
-                            ).expect("93b2f818-18be-4bb6-8a02-53c6e55ded2d").0,
+                            ).expect("93b2f818").0,
                         };
                         let #PgPoolSc = sqlx::postgres::PgPoolOptions::new()
                         .max_connections(50)
                         .connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&#ConfigSc)))
-                        .await.expect("e3044bb9-7b76-4c0c-bc5f-eb34da05a103");
+                        .await.expect("e3044bb9");
                         let #UrlSc = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&#ConfigSc));
                         let table = #ident_double_quotes_ts;
 
@@ -7116,28 +7116,28 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 })
                             )
                             .await
-                            .expect("b9c1eb2e-4ead-449b-abb8-0a160cf68efd");
+                            .expect("b9c1eb2e");
                         };
                         drop_all_test_tables().await;
-                        #ident::prepare_extensions(&#PgPoolSc).await.expect("0633ff48-ebc4-460f-a282-d750511f5d78");
+                        #ident::prepare_extensions(&#PgPoolSc).await.expect("0633ff48");
                         //do not make it concurrent. would be pg error: "duplicate key value violates unique constraint \"pg_class_relname_nsp_index\""
                         for el_dac43b91 in table_names {
                             #ident::prepare_pg_table(
                                 &#PgPoolSc,
                                 el_dac43b91,
-                            ).await.expect("c7952247-dc94-441b-9aef-368b8fdc593c");
+                            ).await.expect("c7952247");
                         }
                         let #PgPoolForTokioSpawnSyncMoveSc = #PgPoolSc.clone();
                         let table_names_cloned = table_names.iter().map(|el_26b304d1| (*el_26b304d1).to_owned()).collect::<Vec<String>>();
                         let (started_tx, started_rx) = tokio::sync::oneshot::channel();
                         let #underscore_unused_ts = tokio::spawn(async move {
-                            let tcp_listener = tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&#ConfigSc)).await.expect("663ae29e-bc00-4ea1-a7e9-4dddceb5b53a");
+                            let tcp_listener = tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&#ConfigSc)).await.expect("663ae29e");
                             let #AppStateSc = std::sync::Arc::new(server_app_state::ServerAppState {
                                 #PgPoolSc: #PgPoolForTokioSpawnSyncMoveSc.clone(),
                                 #ConfigSc,
                                 project_git_info: &git_info::PROJECT_GIT_INFO,
                             });
-                            started_tx.send(()).expect("431a6f8d-3fbb-4eb2-86f6-1b9cfd57e32e");
+                            started_tx.send(()).expect("431a6f8d");
                             axum::serve(
                                 tcp_listener,
                                 {
@@ -7150,15 +7150,15 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 },
                             )
                             .await
-                            .expect("71c1bc30-2f27-4fb4-8545-bc1bf21bc1ea");
+                            .expect("71c1bc30");
                         });
-                        started_rx.await.expect("87003141-43a4-4975-8ddf-273148add50f");
+                        started_rx.await.expect("87003141");
                         let #SelectPrimaryKeySc = pg_crud::NotEmptyUniqueVec::try_new(vec![
                             #ident_select_ucc::#primary_key_field_ident_ucc_ts(
                                 #primary_key_field_type_as_pg_type_select_ts::default(),
                             )
                         ])
-                        .expect("0776170e-4dd6-4c14-a412-ce10b0c746f1");
+                        .expect("0776170e");
                         let #IdentCreateDefaultSc = ident_create_default();
                         #select_default_all_with_max_page_size_not_empty_unique_vec_ts
                         #common_read_only_ids_returned_from_create_one_ts

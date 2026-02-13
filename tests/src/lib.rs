@@ -35,26 +35,26 @@ mod tests {
         Panic,
     }
     fn toml_value_from_from_cargo_toml_workspace() -> Value {
-        let mut file = File::open("../Cargo.toml").expect("39a0d238-d776-4b4e-ac2a-62f76a60f527");
+        let mut file = File::open("../Cargo.toml").expect("39a0d238");
         let mut contents = String::new();
         let _: usize = Read::read_to_string(&mut file, &mut contents)
-            .expect("2f5914f2-bff0-40d3-9948-07f2c562779b");
+            .expect("2f5914f2");
         let table = contents
             .parse::<TomlTable>()
-            .expect("beb11586-c73d-4686-9ae2-a219f3a3ef4a");
+            .expect("beb11586");
         table
             .get("workspace")
-            .expect("f728192d-b3e6-470a-b304-8c58adabada5")
+            .expect("f728192d")
             .clone()
     }
     fn lints_vec_from_cargo_toml_workspace(rust_or_clippy: RustOrClippy) -> Vec<String> {
         let workspace = toml_value_from_from_cargo_toml_workspace();
         let lints = workspace
             .get("lints")
-            .expect("82eaea37-3726-4e28-837f-a3063ff3d3fc");
+            .expect("82eaea37");
         let toml_value_table = match lints
             .get(rust_or_clippy.name())
-            .expect("dbd02f72-2647-4e41-a26f-a04cef447957")
+            .expect("dbd02f72")
             .clone()
         {
             Value::Table(value) => value,
@@ -63,7 +63,7 @@ mod tests {
             | Value::Float(_)
             | Value::Boolean(_)
             | Value::Datetime(_)
-            | Value::Array(_) => panic!("cae226cd-1876-4aa2-a46e-8de0698d15bb"),
+            | Value::Array(_) => panic!("cae226cd"),
         };
         toml_value_table.keys().cloned().collect::<Vec<String>>()
     }
@@ -121,18 +121,15 @@ mod tests {
                         }) = i
                             .args
                             .get(0)
-                            .expect("d5ad7bff-2125-4fe2-a132-d7f6446a1710")
+                            .expect("d5ad7bff")
                             .clone()
                         {
                             let value = lit_str.value();
-                            match Uuid::parse_str(&value) {
-                                Ok(uuid) if uuid.get_version() == Some(uuid::Version::Random) => {
-                                    self.uuids.push(value);
-                                }
-                                _ => {
-                                    self.errors
-                                        .push(format!("arg is not valid UUID v4: {value}"));
-                                }
+                            if value.len() == 8 {
+                                self.uuids.push(value);
+                            }
+                            else {
+                                self.errors .push(format!("arg len is not 8: {value}"));
                             }
                         } else {
                             self.errors.push("arg is not string literal".to_owned());
@@ -161,7 +158,7 @@ mod tests {
             let Ok(content) = read_to_string(el_fcc35079.path()) else {
                 continue;
             };
-            let ast = parse_file(&content).expect("5e7a83eb-2556-47b7-8677-66f8612242ad");
+            let ast = parse_file(&content).expect("5e7a83eb");
             let mut visitor = ExpectVisitor {
                 expect_or_panic,
                 uuids: Vec::new(),
@@ -188,7 +185,7 @@ mod tests {
         }
         assert!(
             all_errors.is_empty(),
-            "6062a9e9-c12b-4961-89d2-f52a0ea344b4",
+            "6062a9e9-c12b-4961-89d2-f52a0ea344b4 {all_errors:#?}",
         );
     }
     fn project_directory() -> WalkDir {
@@ -203,7 +200,7 @@ mod tests {
                 .args(["-W", "help"])
                 .stdout(Stdio::piped())
                 .output()
-                .expect("7c939ff3-1c10-4188-afe8-36bb5c769ea2");
+                .expect("7c939ff3");
             assert!(
                 output.status.success(),
                 "0c000f24-afad-4397-88a4-913d0c113a34"
@@ -217,7 +214,7 @@ mod tests {
             };
             let stdout = String::from_utf8_lossy(&output.stdout);
             Regex::new(r"(?m)^\s*([a-z0-9][a-z0-9_-]+)\s+(allow|warn|deny|forbid)\b")
-                .expect("60d99c87-273a-48ac-8daa-4f0a853d16bd")
+                .expect("60d99c87")
                 .captures_iter(&stdout)
                 .map(|el_70833f93| el_70833f93[1].to_string().replace('-', "_").to_lowercase())
                 .collect::<Vec<String>>()
@@ -252,36 +249,36 @@ mod tests {
         let clippy_lints_from_docs = {
             let document = Html::parse_document(
                 &blocking::get("https://rust-lang.github.io/rust-clippy/master/index.html")
-                    .expect("d1a0544a-566e-4bf4-a37e-7dac73be02fd")
+                    .expect("d1a0544a")
                     .text()
-                    .expect("012e3328-53a4-4266-b403-24ac3b8dcbf3"),
+                    .expect("012e3328"),
             );
             let mut ids = Vec::new();
             for el_c17d8a0b in document
-                .select(&Selector::parse("html").expect("80427609-cfed-4b38-bdea-0794535ef84a"))
+                .select(&Selector::parse("html").expect("80427609"))
             {
                 for el_e19e3742 in el_c17d8a0b
-                    .select(&Selector::parse("body").expect("620c597c-0faa-408f-b9bc-29059d179951"))
+                    .select(&Selector::parse("body").expect("620c597c"))
                 {
                     for el_3cd4b8b2 in el_e19e3742.select(
                         &Selector::parse(r#"div[class="container"]"#)
-                            .expect("eb483b13-e70e-40f4-b83a-3eeb00413d57"),
+                            .expect("eb483b13"),
                     ) {
                         for el_fda975ef in el_3cd4b8b2.select(
                             &Selector::parse("article")
-                                .expect("d21dbe55-6f9f-4695-bf08-78da4f2424ea"),
+                                .expect("d21dbe55"),
                         ) {
                             let mut is_deprecated = false;
                             for el_ae33b117 in el_fda975ef.select(
                                 &Selector::parse("label")
-                                    .expect("fe3d9f11-f3b0-4e54-a54a-842fabe3d8a7"),
+                                    .expect("fe3d9f11"),
                             ) {
                                 if is_deprecated {
                                     break;
                                 }
                                 for el_87a06075 in el_ae33b117.select(
                                     &Selector::parse(r#"h2[class="lint-title"]"#)
-                                        .expect("f1473d4e-e26a-491d-9980-e1874301a6b2"),
+                                        .expect("f1473d4e"),
                                 ) {
                                     if is_deprecated {
                                         break;
@@ -289,7 +286,7 @@ mod tests {
                                     if el_87a06075.select(
                                         &Selector::parse(
                                             r#"span[class="label label-default lint-group group-deprecated"]"#,
-                                        ).expect("e86d5496-f62b-428c-ac6c-d533e0f6f775")
+                                        ).expect("e86d5496")
                                     ).next().is_some() {
                                         is_deprecated = true;
                                         break;
@@ -318,7 +315,7 @@ mod tests {
     fn check_workspace_dependencies_having_exact_version() {
         for (_, value_5c36cb98) in match toml_value_from_from_cargo_toml_workspace()
             .get("dependencies")
-            .expect("2376f58e-394d-4759-96c1-e5379fdbb0b1")
+            .expect("2376f58e")
             .clone()
         {
             Value::Table(value_270f9bd5) => value_270f9bd5,
@@ -327,7 +324,7 @@ mod tests {
             | Value::Float(_)
             | Value::Boolean(_)
             | Value::Datetime(_)
-            | Value::Array(_) => panic!("e117fa5a-cc55-4ca8-a885-3d0c275592ea"),
+            | Value::Array(_) => panic!("e117fa5a"),
         } {
             let value_table = match value_5c36cb98 {
                 Value::Table(value_31495eb6) => value_31495eb6,
@@ -336,12 +333,12 @@ mod tests {
                 | Value::Float(_)
                 | Value::Boolean(_)
                 | Value::Datetime(_)
-                | Value::Array(_) => panic!("cb693a3f-ff75-47ba-b747-94361925e2e6"),
+                | Value::Array(_) => panic!("cb693a3f"),
             };
             let value_table_len = value_table.len();
             let check_version = |value_df993c3d: &Table| match value_df993c3d
                 .get("version")
-                .expect("d5b2b269-d832-4c94-887b-ec44a7e2045f")
+                .expect("d5b2b269")
                 .clone()
             {
                 Value::String(version_string) => {
@@ -357,18 +354,18 @@ mod tests {
                         Some(())
                     }
                     check_version_string(&version_string)
-                        .expect("6640b9bf-8fd4-4a00-8c88-72087ba83f60");
+                        .expect("6640b9bf");
                 }
                 Value::Table(_)
                 | Value::Integer(_)
                 | Value::Float(_)
                 | Value::Boolean(_)
                 | Value::Datetime(_)
-                | Value::Array(_) => panic!("a3410a37-d6f8-4a5d-acb6-8449b02181ab"),
+                | Value::Array(_) => panic!("a3410a37"),
             };
             let check_features = |value_121eb307: &Table| match value_121eb307
                 .get("features")
-                .expect("473577d5-0482-4460-b211-60131d9b7c2a")
+                .expect("473577d5")
             {
                 &Value::Array(_) => (),
                 &Value::String(_)
@@ -377,7 +374,7 @@ mod tests {
                 | &Value::Float(_)
                 | &Value::Boolean(_)
                 | &Value::Datetime(_) => {
-                    panic!("38ba32e9-fe34-4628-8505-414b937c645f")
+                    panic!("38ba32e9")
                 }
             };
             if value_table_len == 1 {
@@ -390,7 +387,7 @@ mod tests {
                 check_features(&value_table);
                 match value_table
                     .get("default-features")
-                    .expect("847a138f-421b-47e5-a658-3789a8281b5c")
+                    .expect("847a138f")
                 {
                     &Value::Boolean(_) => (),
                     &Value::String(_)
@@ -398,10 +395,10 @@ mod tests {
                     | &Value::Integer(_)
                     | &Value::Float(_)
                     | &Value::Datetime(_)
-                    | &Value::Array(_) => panic!("b320164b-7082-45f0-9f89-1f5f28f6b779"),
+                    | &Value::Array(_) => panic!("b320164b"),
                 }
             } else {
-                panic!("f1139378-0a18-4195-9b90-f3248a63253e {value_table:#?}")
+                panic!("f1139378 {value_table:#?}")
             }
         }
     }
@@ -417,7 +414,7 @@ mod tests {
     fn check_rs_files_contains_only_unique_uuid_v4() {
         let regex = Regex::new(
             r"\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\b"
-        ).expect("e098a1ff-0e70-44f5-a75e-ffe6042ee9f5");
+        ).expect("e098a1ff");
         let mut seen = HashSet::new();
         for el_44a8aa56 in project_directory()
             .into_iter()
@@ -436,7 +433,7 @@ mod tests {
             };
             for el_714b3d9c in regex.find_iter(&content) {
                 let uuid = Uuid::parse_str(el_714b3d9c.as_str())
-                    .expect("c9711efd-eb37-4b10-b689-831fa916cb82");
+                    .expect("c9711efd");
                 assert!(
                     uuid.get_version_num() == 4,
                     "49b49b21-0cc6-4aee-8c28-3003492f2a80"
@@ -514,13 +511,13 @@ mod tests {
             if exceptions.contains(&path.display().to_string().as_str()) {
                 continue;
             }
-            let mut file = File::open(path).expect("bbb0d1fe-e503-4c46-8f2b-954d42090f41");
+            let mut file = File::open(path).expect("bbb0d1fe");
             let mut content = String::new();
             let _: usize = Read::read_to_string(&mut file, &mut content)
-                .expect("8952ff62-d903-4b93-b46a-85ae5177f98d");
+                .expect("8952ff62");
             let parsed: Table = content
                 .parse()
-                .expect("49012f1f-e721-40b5-8167-5258d206196b");
+                .expect("49012f1f");
             for el_3c618c8f in ["dependencies", "dev-dependencies", "build-dependencies"] {
                 if let Some(deps) = parsed
                     .get(el_3c618c8f)

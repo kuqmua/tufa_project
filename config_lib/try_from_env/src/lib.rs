@@ -9,17 +9,17 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     };
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput =
-        syn::parse(input).expect("e45f75c2-92ea-4f80-9962-a2438ac0b3fe");
+        syn::parse(input).expect("e45f75c2");
     let ident = &syn_derive_input.ident;
     let ident_try_from_env_error_named_ucc = SelfTryFromEnvErrorNamedUcc::from_tokens(&ident);
     let data_struct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
-        syn::Data::Enum(_) | syn::Data::Union(_) => panic!("54289ad5-e5f5-4062-bead-69242ae601a4"),
+        syn::Data::Enum(_) | syn::Data::Union(_) => panic!("54289ad5"),
     };
     let fields_named = match data_struct.fields {
         syn::Fields::Named(value) => value.named,
         syn::Fields::Unnamed(_) | syn::Fields::Unit => {
-            panic!("330b2512-2672-4aab-a447-27aa15a56f1c")
+            panic!("330b2512")
         }
     };
     let dotenv_ucc = DotenvUcc;
@@ -33,7 +33,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             let el_ident = &el_f931deb2
                 .ident
                 .as_ref()
-                .expect("2ecb63c1-675f-489a-af65-a6a17c778bd6");
+                .expect("2ecb63c1");
             let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
             let try_from_std_env_var_ok_self_error_named_ucc =
                 TryFromStdEnvVarOkSelfErrorNamedUcc::from_tokens(&el_ident);
@@ -62,7 +62,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             let el_ident = &el_f931deb2
                 .ident
                 .as_ref()
-                .expect("8b79a379-2073-4415-82c6-bf7ea4b05165");
+                .expect("8b79a379");
             let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
             quote! {
                 Self::#el_ident_ucc_ts { #el_ident } => write!(f, "{}", #el_ident)
@@ -91,7 +91,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             let el_ident = &el_0b2240f0
                 .ident
                 .as_ref()
-                .expect("ebf4e1b2-f07a-40ee-b885-fc8be3444d9a");
+                .expect("ebf4e1b2");
             let el_ident_quotes_upper_sc_string =
                 syn::LitStr::new(&ToTokensToUpperScStr::case(&el_ident), ident.span());
             let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);

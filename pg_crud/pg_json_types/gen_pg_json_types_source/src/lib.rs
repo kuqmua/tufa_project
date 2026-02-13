@@ -155,7 +155,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         fn to_tokens(&self, tokens: &mut Ts2) {
             self.to_string()
                 .parse::<Ts2>()
-                .expect("eb6cafe0-ad0d-4108-8b0e-c062b155efbb")
+                .expect("eb6cafe0")
                 .to_tokens(tokens);
         }
     }
@@ -355,7 +355,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     panic_location::panic_location();
     let gen_pg_json_types_config =
         serde_json::from_str::<GenPgJsonTypesConfig>(&input_ts.to_string())
-            .expect("1123f78f-9c84-4001-b619-b534dd55a835");
+            .expect("1123f78f");
     let (fields_ts, pg_json_type_array) = {
         {
             let gen_standart = |acc_29796d99: &mut Vec<PgJsonTypeRecord>, pg_json_type: PgJsonType|{
@@ -537,11 +537,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         }),
                         (NotNullOrNullable::NotNull, PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable }) => gen_vec(PgJsonTypeRecordHandle {
                             not_null_or_nullable: *dimension1_not_null_or_nullable,
-                            pg_json_type_pattern: pg_json_type_record_handle.pg_json_type_pattern.down_by_1().expect("0e970a4f-eeec-421e-aa30-f90fc536d388"),
+                            pg_json_type_pattern: pg_json_type_record_handle.pg_json_type_pattern.down_by_1().expect("0e970a4f"),
                         }),
                         (NotNullOrNullable::NotNull, PgJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, .. }) => gen_vec(PgJsonTypeRecordHandle {
                             not_null_or_nullable: *dimension1_not_null_or_nullable,
-                            pg_json_type_pattern: pg_json_type_record_handle.pg_json_type_pattern.down_by_1().expect("85f8ed83-aa1f-4f52-8f8f-80aeb86f8083"),
+                            pg_json_type_pattern: pg_json_type_record_handle.pg_json_type_pattern.down_by_1().expect("85f8ed83"),
                         }),
                         (
                             NotNullOrNullable::NotNull,
@@ -702,7 +702,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     )
                 }
             };
-            format!("{not_null_or_nullable_rust}{rust_part}{AsUcc}{current_not_null_or_nullable}{pg_part}").parse::<Ts2>().expect("998d1471-be98-4669-8bd3-ca6c4a1a5853")
+            format!("{not_null_or_nullable_rust}{rust_part}{AsUcc}{current_not_null_or_nullable}{pg_part}").parse::<Ts2>().expect("998d1471")
         };
         let ident = &gen_ident_ts(not_null_or_nullable, pg_json_type_pattern);
         let ident_standart_not_null_ucc = &gen_ident_ts(&NotNullOrNullable::NotNull, &PgJsonTypePattern::Standart);
@@ -949,28 +949,28 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 },
                                 PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
                                     let (current_not_null_or_nullable, current_pg_json_type_pattern): (&NotNullOrNullable, &PgJsonTypePattern) = match &not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("e994797d-7334-4e30-b180-af24c16b68b1")),
+                                        NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("e994797d")),
                                         NotNullOrNullable::Nullable => (&NotNullOrNullable::NotNull, pg_json_type_pattern),
                                     };
                                     gen_current_ident_origin(current_not_null_or_nullable, current_pg_json_type_pattern)
                                 },
                                 PgJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, .. } => &{
                                     let (current_not_null_or_nullable, current_pg_json_type_pattern): (&NotNullOrNullable, &PgJsonTypePattern) = match &not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("76eb44e3-3099-4c9a-a935-da3e6f6e4210")),
+                                        NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("76eb44e3")),
                                         NotNullOrNullable::Nullable => (&NotNullOrNullable::NotNull, pg_json_type_pattern),
                                     };
                                     gen_current_ident_origin(current_not_null_or_nullable, current_pg_json_type_pattern)
                                 },
                                 PgJsonTypePattern::ArrayDimension3 { dimension1_not_null_or_nullable, .. } => &{
                                     let (current_not_null_or_nullable, current_pg_json_type_pattern): (&NotNullOrNullable, &PgJsonTypePattern) = match &not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("1b996c86-0b08-476a-b963-373dd6838496")),
+                                        NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("1b996c86")),
                                         NotNullOrNullable::Nullable => (&NotNullOrNullable::NotNull, pg_json_type_pattern),
                                     };
                                     gen_current_ident_origin(current_not_null_or_nullable, current_pg_json_type_pattern)
                                 },
                                 PgJsonTypePattern::ArrayDimension4 { dimension1_not_null_or_nullable, .. } => &{
                                     let (current_not_null_or_nullable, current_pg_json_type_pattern): (&NotNullOrNullable, &PgJsonTypePattern) = match &not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("d24b7481-27d9-40c0-8476-344a16d08f27")),
+                                        NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("d24b7481")),
                                         NotNullOrNullable::Nullable => (&NotNullOrNullable::NotNull, pg_json_type_pattern),
                                     };
                                     gen_current_ident_origin(current_not_null_or_nullable, current_pg_json_type_pattern)
@@ -993,28 +993,28 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     },
                     PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => gen_array_dimensions_initialization_ts(&{
                         let (current_pg_json_type_pattern, current_not_null_or_nullable): (&PgJsonTypePattern, &NotNullOrNullable) = match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => (&pg_json_type_pattern.down_by_1().expect("1160d3df-2e2b-4a33-a297-6b48546b9ca8"), dimension1_not_null_or_nullable),
+                            NotNullOrNullable::NotNull => (&pg_json_type_pattern.down_by_1().expect("1160d3df"), dimension1_not_null_or_nullable),
                             NotNullOrNullable::Nullable => (pg_json_type_pattern, &NotNullOrNullable::NotNull),
                         };
                         gen_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_pg_json_type_pattern)
                     }),
                     PgJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, .. } => gen_array_dimensions_initialization_ts(&{
                         let (current_pg_json_type_pattern, current_not_null_or_nullable): (&PgJsonTypePattern, &NotNullOrNullable) = match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => (&pg_json_type_pattern.down_by_1().expect("8ab62f4e-611b-4228-a295-3e731e934b9c"), dimension1_not_null_or_nullable),
+                            NotNullOrNullable::NotNull => (&pg_json_type_pattern.down_by_1().expect("8ab62f4e"), dimension1_not_null_or_nullable),
                             NotNullOrNullable::Nullable => (pg_json_type_pattern, &NotNullOrNullable::NotNull),
                         };
                         gen_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_pg_json_type_pattern)
                     }),
                     PgJsonTypePattern::ArrayDimension3 { dimension1_not_null_or_nullable, .. } => gen_array_dimensions_initialization_ts(&{
                         let (current_pg_json_type_pattern, current_not_null_or_nullable): (&PgJsonTypePattern, &NotNullOrNullable) = match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => (&pg_json_type_pattern.down_by_1().expect("ed64919d-4679-45da-9d14-22ddee84716b"), dimension1_not_null_or_nullable),
+                            NotNullOrNullable::NotNull => (&pg_json_type_pattern.down_by_1().expect("ed64919d"), dimension1_not_null_or_nullable),
                             NotNullOrNullable::Nullable => (pg_json_type_pattern, &NotNullOrNullable::NotNull),
                         };
                         gen_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_pg_json_type_pattern)
                     }),
                     PgJsonTypePattern::ArrayDimension4 { dimension1_not_null_or_nullable, .. } => gen_array_dimensions_initialization_ts(&{
                         let (current_pg_json_type_pattern, current_not_null_or_nullable): (&PgJsonTypePattern, &NotNullOrNullable) = match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => (&pg_json_type_pattern.down_by_1().expect("25646d29-5a30-49fb-b91a-7b49ed8c5b0a"), dimension1_not_null_or_nullable),
+                            NotNullOrNullable::NotNull => (&pg_json_type_pattern.down_by_1().expect("25646d29"), dimension1_not_null_or_nullable),
                             NotNullOrNullable::Nullable => (pg_json_type_pattern, &NotNullOrNullable::NotNull),
                         };
                         gen_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_pg_json_type_pattern)
@@ -1328,7 +1328,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             let mut arguments_ts = Vec::new();
                             for el_419a74e5 in 1..=array_dimension.to_usize() {
                                 let dimension_number_pagination_ts = format!("dimension{el_419a74e5}_pagination").parse::<Ts2>()
-                                .expect("2ad1faf7-57a8-4cfb-8b71-0082b06436ea");
+                                .expect("2ad1faf7");
                                 arguments_ts.push(quote! {
                                     #dimension_number_pagination_ts: #import_path::PaginationStartsWithZero
                                 });
@@ -1347,7 +1347,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         };
                         let mut arguments_ts = Vec::new();
                         for el_d56aec99 in 1..=array_dimension.to_usize() {
-                            let dimension_number_pagination_ts = format!("dimension{el_d56aec99}_pagination").parse::<Ts2>().expect("26ca29fb-fd98-466a-a380-974a6c5d4166");
+                            let dimension_number_pagination_ts = format!("dimension{el_d56aec99}_pagination").parse::<Ts2>().expect("26ca29fb");
                             arguments_ts.push(quote! {
                                 #dimension_number_pagination_ts: #content_ts
                             });
@@ -1427,7 +1427,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         }
                         PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                             let array_dimension1_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("21eaebaf-cd7a-4625-9232-0e23788a5432")));
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("21eaebaf")));
                                 quote! {#value}
                             };
                             let common_array_dimension1_pg_json_type_filters = {
@@ -1482,11 +1482,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         }
                         PgJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
                             let array_dimension1_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("0c4491c4-8364-4c27-9478-227aefadb086")));
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("0c4491c4")));
                                 quote! {#value}
                             };
                             let array_dimension2_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension2_not_null_or_nullable, &pg_json_type_pattern.down_by_2().expect("2d4ee5d4-490e-4503-91a7-ed29f73e6219")));
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension2_not_null_or_nullable, &pg_json_type_pattern.down_by_2().expect("2d4ee5d4")));
                                 quote! {#value}
                             };
                             let common_array_dimension2_pg_json_type_filters = {
@@ -1556,15 +1556,15 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             dimension3_not_null_or_nullable,
                         } => {
                             let array_dimension1_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("3450bef4-e5f3-4bcd-b2de-4e4c67143336")));
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("3450bef4")));
                                 quote! {#value}
                             };
                             let array_dimension2_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension2_not_null_or_nullable, &pg_json_type_pattern.down_by_2().expect("3c0d10f4-6d7d-45d0-b929-5e307c7d79b1")));
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension2_not_null_or_nullable, &pg_json_type_pattern.down_by_2().expect("3c0d10f4")));
                                 quote! {#value}
                             };
                             let array_dimension3_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension3_not_null_or_nullable, &pg_json_type_pattern.down_by_3().expect("9aaf9e82-0a92-4848-bfd4-de49013972a5")));
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension3_not_null_or_nullable, &pg_json_type_pattern.down_by_3().expect("9aaf9e82")));
                                 quote! {#value}
                             };
                             let common_array_dimension3_pg_json_type_filters = {
@@ -1646,19 +1646,19 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             dimension4_not_null_or_nullable,
                         } => {
                             let array_dimension1_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("550d313b-e925-496d-8a57-87931c573155")));
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("550d313b")));
                                 quote! {#value}
                             };
                             let array_dimension2_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension2_not_null_or_nullable, &pg_json_type_pattern.down_by_2().expect("7bda1424-64c0-402e-9bf8-44d5fb3b9903")));
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension2_not_null_or_nullable, &pg_json_type_pattern.down_by_2().expect("7bda1424")));
                                 quote! {#value}
                             };
                             let array_dimension3_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension3_not_null_or_nullable, &pg_json_type_pattern.down_by_3().expect("b43aa5bd-9bba-4f3e-b93b-a41f108262ff")));
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension3_not_null_or_nullable, &pg_json_type_pattern.down_by_3().expect("b43aa5bd")));
                                 quote! {#value}
                             };
                             let array_dimension4_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension4_not_null_or_nullable, &pg_json_type_pattern.down_by_4().expect("a246885a-ca72-4e37-a396-b7220e237c7e")));
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension4_not_null_or_nullable, &pg_json_type_pattern.down_by_4().expect("a246885a")));
                                 quote! {#value}
                             };
                             let common_array_dimension4_pg_json_type_filters = {
@@ -2182,7 +2182,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                                 }
                                                 .into_iter()
                                                 .fold(gen_dot_value(&gen_d_number_elem(current_usize_value)), |mut acc_64e08e3a, current_not_null_or_nullable| {
-                                                    let current_usize_value_minus_one = current_usize_value.checked_sub(one).expect("a35e873e-a2a1-4a25-8de1-c35dbb0b65af");
+                                                    let current_usize_value_minus_one = current_usize_value.checked_sub(one).expect("a35e873e");
                                                     let d_usize_minus_one_elem_value = gen_dot_value(&gen_d_number_elem(current_usize_value_minus_one));
                                                     let value = gen_jsonb_agg(
                                                         &acc_64e08e3a,
@@ -2218,18 +2218,18 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             let dimension_number_start_ts =
                                 gen_dimension_number_start_str(el_8d56d66d)
                                     .parse::<Ts2>()
-                                    .expect("77ec13b9-710a-460f-9239-ac9c3680244d");
+                                    .expect("77ec13b9");
                             let dimension_number_end_ts =
                                 gen_dimension_number_end_str(el_8d56d66d)
                                     .parse::<Ts2>()
-                                    .expect("24acbb5e-c0fe-4257-b299-8746887ce198");
+                                    .expect("24acbb5e");
                             let dimension_number_pagination_ts =
                                 format!(
                                     "{}_pagination",
                                     gen_dimension_number_str(el_8d56d66d)
                                 )
                                 .parse::<Ts2>()
-                                .expect("745c99b3-4e24-46c2-a671-9c7b4dce76f4");
+                                .expect("745c99b3");
                             quote! {
                                 let #dimension_number_start_ts = #ValueSc.#dimension_number_pagination_ts.start();
                                 let #dimension_number_end_ts = #ValueSc.#dimension_number_pagination_ts.end();
@@ -2437,7 +2437,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         }
                     )
                     .parse::<Ts2>()
-                    .expect("f1bcde08-085f-4c98-9a1e-1fb583c9fb6e");
+                    .expect("f1bcde08");
                     let type_ts: &dyn ToTokens = match &create_for_query_or_update_for_query {
                         CreateForQueryOrUpdateForQuery::CreateForQuery => &CreateForQueryUcc,
                         CreateForQueryOrUpdateForQuery::UpdateForQuery => &UpdateForQueryUcc,
@@ -2511,8 +2511,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 let gen_dimension_index_number_ts = |not_null_or_nullable_vec: &[&NotNullOrNullable]|{
                     assert!(!not_null_or_nullable_vec.is_empty(), "c1a5939d-3235-4bcd-88fc-bfdf2101dffd");
                     let content_ts_c85923bd = {
-                        let gen_index_number_ts = |index_c1128a3e: usize|format!("index_{index_c1128a3e}").parse::<Ts2>().expect("afbe7252-745f-40ad-9bf4-1bb20377b5a5");
-                        let gen_value_number_ts = |index_0abe6039: usize|format!("value{index_0abe6039}").parse::<Ts2>().expect("568d8eb6-df23-4f57-afdd-ef392e3b7f72");
+                        let gen_index_number_ts = |index_c1128a3e: usize|format!("index_{index_c1128a3e}").parse::<Ts2>().expect("afbe7252");
+                        let gen_value_number_ts = |index_0abe6039: usize|format!("value{index_0abe6039}").parse::<Ts2>().expect("568d8eb6");
                         let gen_for_in_ts = |
                             index_ts: &dyn ToTokens,
                             value_ts: &dyn ToTokens,
@@ -2558,7 +2558,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 .iter()
                                 .filter(|el_bf28b242| matches!(el_bf28b242, NotNullOrNullable::Nullable))
                                 .count()
-                            ).expect("de4c4116-b645-4a8f-b097-1d7772aecc19")
+                            ).expect("de4c4116")
                         };
                         let mut content_ts_4c106eea = {
                             let content_ts_f1ffd3b2 = {
@@ -2580,16 +2580,16 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     DimensionIndexNumber::Two => "Three",
                                     DimensionIndexNumber::Three => "Four",
                                 };
-                                let dimension_number_starting_with_one_equal_ts = format!("Dimension{}Equal", to_number_starting_with_one_word_str(&dimension_index_number_max)).parse::<Ts2>().expect("52fa34ac-5cd1-4ae9-8a1d-832e73a505d7");
-                                let pg_json_type_where_dimension_number_starting_with_one_equal_ts = format!("PgJsonTypeWhereDimension{}Equal", to_number_starting_with_one_word_str(&dimension_index_number_max)).parse::<Ts2>().expect("15d769b0-0767-473c-a2c5-3d0f6e221ced");
+                                let dimension_number_starting_with_one_equal_ts = format!("Dimension{}Equal", to_number_starting_with_one_word_str(&dimension_index_number_max)).parse::<Ts2>().expect("52fa34ac");
+                                let pg_json_type_where_dimension_number_starting_with_one_equal_ts = format!("PgJsonTypeWhereDimension{}Equal", to_number_starting_with_one_word_str(&dimension_index_number_max)).parse::<Ts2>().expect("15d769b0");
                                 let current_where_ident_where_ucc = SelfWhereUcc::from_tokens(&gen_ident_ts(&NotNullOrNullable::NotNull, pg_json_type_pattern));
                                 let current_value_ident_table_type_declaration_ucc = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(
-                                    not_null_or_nullable_vec.last().expect("1221f6ec-8865-4456-bd18-ebeff15439f6"),
+                                    not_null_or_nullable_vec.last().expect("1221f6ec"),
                                     &match dimension_index_number_max {
-                                        DimensionIndexNumber::Zero => pg_json_type_pattern.down_by_1().expect("1a47af86-470b-41dd-aee1-01dfccef56a1"),
-                                        DimensionIndexNumber::One => pg_json_type_pattern.down_by_2().expect("d8260225-71af-4ea5-a354-075432088e96"),
-                                        DimensionIndexNumber::Two => pg_json_type_pattern.down_by_3().expect("473ac422-6c8c-417f-a115-8a7c0743ca08"),
-                                        DimensionIndexNumber::Three => pg_json_type_pattern.down_by_4().expect("6a143218-a98e-4893-ad2b-ed028a20ef39"),
+                                        DimensionIndexNumber::Zero => pg_json_type_pattern.down_by_1().expect("1a47af86"),
+                                        DimensionIndexNumber::One => pg_json_type_pattern.down_by_2().expect("d8260225"),
+                                        DimensionIndexNumber::Two => pg_json_type_pattern.down_by_3().expect("473ac422"),
+                                        DimensionIndexNumber::Three => pg_json_type_pattern.down_by_4().expect("6a143218"),
                                     }
                                 ));
                                 let vec_content_ts = {
@@ -2604,12 +2604,12 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     .map(|el_db559599| {
                                         let index_number_ts = format!("index_{el_db559599}")
                                             .parse::<Ts2>()
-                                            .expect("f0ce7e73-6d15-4de8-8f15-ce00334ed410");
+                                            .expect("f0ce7e73");
                                         quote! {
                                             pg_crud_common::UnsignedPartOfStdPrimitiveI32::try_from(
                                                 i32::try_from(#index_number_ts)
-                                                    .expect("5a1818e7-3865-4222-bf6b-31486bd721d2")
-                                            ).expect("ad1ab73f-fd3b-4162-adb0-bb09a19d31a0")
+                                                    .expect("5a1818e7")
+                                            ).expect("ad1ab73f")
                                         }
                                     }).collect::<Vec<Ts2>>();
                                     quote! {#(#content_ts_0dc5a500),*}
@@ -2620,7 +2620,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                             logical_operator: #import_path::LogicalOperator::And,
                                             dimensions: where_filters::BoundedStdVecVec::try_from(
                                                 vec![#vec_content_ts]
-                                            ).expect("82cc0a3c-3e8d-47c4-b317-2795362a9b37"),
+                                            ).expect("82cc0a3c"),
                                             #ValueSc: #current_value_ident_table_type_declaration_ucc::new(#value_index_ts.into()),
                                         }
                                     )
@@ -2635,7 +2635,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                         },
                                         Err(error) => match error {
                                             #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => (),
-                                            #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("2f5f648a-4dc6-4699-8656-33870b2c629f")
+                                            #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("2f5f648a")
                                         }
                                     }
                                 },
@@ -2647,7 +2647,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             .take(
                                 not_null_or_nullable_vec
                                     .len()
-                                    .saturating_sub(index_ef936914.checked_add(1).expect("75d5ed28-131b-4387-a064-8c77841894fd")),
+                                    .saturating_sub(index_ef936914.checked_add(1).expect("75d5ed28")),
                             )
                             .copied()
                             .collect::<Vec<&NotNullOrNullable>>();
@@ -2664,8 +2664,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                             .copied(),
                                     ).collect::<Vec<&NotNullOrNullable>>()
                                 );
-                                let index_74ae6d77_increment_by_1 = index_74ae6d77.checked_add(1).expect("96e90e72-bf43-4c6c-8ab6-b496953e88ec");
-                                match &not_null_or_nullable_vec_e7e7f6f8.last().expect("88548240-8588-4ee8-b166-5dacfd997088") {
+                                let index_74ae6d77_increment_by_1 = index_74ae6d77.checked_add(1).expect("96e90e72");
+                                match &not_null_or_nullable_vec_e7e7f6f8.last().expect("88548240") {
                                     NotNullOrNullable::NotNull => gen_for_value_index_dot_zero_into_iter_enumerate_ts(
                                         not_null_or_nullable_vec_e7e7f6f8_len,
                                         index_74ae6d77_increment_by_1,
@@ -2677,7 +2677,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                         index_74ae6d77,
                                         &gen_for_value_index_dot_zero_into_iter_enumerate_ts(
                                             not_null_or_nullable_vec_e7e7f6f8_len,
-                                            index_74ae6d77.checked_add(2).expect("00da046c-1486-4de1-990b-258b2cd90e2c"),
+                                            index_74ae6d77.checked_add(2).expect("00da046c"),
                                             index_74ae6d77_increment_by_1,
                                             &content_ts_4c106eea,
                                         )
@@ -2710,7 +2710,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             let mut acc_049ff0b3 = Vec::new();
                             #content_ts_c85923bd
                             acc_049ff0b3
-                        }).expect("e99ecd08-0aec-4a25-931d-163319bb8179"))
+                        }).expect("e99ecd08"))
                     }
                 };
                 match &pg_json_type_pattern {
@@ -2850,28 +2850,28 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => gen_some_acc_content_ts(
                         not_null_or_nullable,
                         &match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("dec468c0-09fd-4db3-98e7-7fa9cd565909")),
+                            NotNullOrNullable::NotNull => gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("dec468c0")),
                             NotNullOrNullable::Nullable => gen_ident_ts(&NotNullOrNullable::NotNull, pg_json_type_pattern),
                         },
                     ),
                     PgJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, .. } => gen_some_acc_content_ts(
                         not_null_or_nullable,
                         &match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("4010ebf7-d6e2-4d6e-a562-a299201c92ec")),
+                            NotNullOrNullable::NotNull => gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("4010ebf7")),
                             NotNullOrNullable::Nullable => gen_ident_ts(&NotNullOrNullable::NotNull, pg_json_type_pattern),
                         },
                     ),
                     PgJsonTypePattern::ArrayDimension3 { dimension1_not_null_or_nullable, .. } => gen_some_acc_content_ts(
                         not_null_or_nullable,
                         &match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("acdbb564-b169-40db-9815-2653c0150a4c")),
+                            NotNullOrNullable::NotNull => gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("acdbb564")),
                             NotNullOrNullable::Nullable => gen_ident_ts(&NotNullOrNullable::NotNull, pg_json_type_pattern),
                         },
                     ),
                     PgJsonTypePattern::ArrayDimension4 { dimension1_not_null_or_nullable, .. } => gen_some_acc_content_ts(
                         not_null_or_nullable,
                         &match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("5abf9504-cde0-4c6c-adb9-145b385918a5")),
+                            NotNullOrNullable::NotNull => gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("5abf9504")),
                             NotNullOrNullable::Nullable => gen_ident_ts(&NotNullOrNullable::NotNull, pg_json_type_pattern),
                         },
                     ),
@@ -3005,15 +3005,15 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         },
                     },
                     PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => gen_acc_content_handle_ts(
-                        &gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("d6f89137-9a47-4f74-afce-0e1959d3dc59")),
+                        &gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("d6f89137")),
                         &match &dimension1_not_null_or_nullable {
                             NotNullOrNullable::NotNull => &has_len_greater_than_one_for_for_ts,
                             NotNullOrNullable::Nullable => &has_len_greater_than_one_ts,
                         },
                     ),
-                    PgJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, .. } => gen_acc_content_handle_ts(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("38774398-d485-4c14-84e8-92e06c36c23b")), &has_len_greater_than_one_ts),
-                    PgJsonTypePattern::ArrayDimension3 { dimension1_not_null_or_nullable, .. } => gen_acc_content_handle_ts(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("053f4bab-0a8e-457f-9176-50e519b312bb")), &has_len_greater_than_one_ts),
-                    PgJsonTypePattern::ArrayDimension4 { dimension1_not_null_or_nullable, .. } => gen_acc_content_handle_ts(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("860f8f15-72ac-4557-a2c6-87b1aa958eb4")), &has_len_greater_than_one_ts),
+                    PgJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, .. } => gen_acc_content_handle_ts(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("38774398")), &has_len_greater_than_one_ts),
+                    PgJsonTypePattern::ArrayDimension3 { dimension1_not_null_or_nullable, .. } => gen_acc_content_handle_ts(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("053f4bab")), &has_len_greater_than_one_ts),
+                    PgJsonTypePattern::ArrayDimension4 { dimension1_not_null_or_nullable, .. } => gen_acc_content_handle_ts(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("860f8f15")), &has_len_greater_than_one_ts),
                 };
                 match &pg_json_type {
                     PgJsonType::StdPrimitiveI8AsJsonbNumber
@@ -3100,7 +3100,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     NotNullOrNullable::Nullable => NotNullOrNullable::NotNull,
                                 },
                                 &match &not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => pg_json_type_pattern.down_by_1().expect("e84064c3-5c31-4fa6-8dbc-ba454128c9da"),
+                                    NotNullOrNullable::NotNull => pg_json_type_pattern.down_by_1().expect("e84064c3"),
                                     NotNullOrNullable::Nullable => pg_json_type_pattern.clone(),
                                 },
                             ),
@@ -3114,7 +3114,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     NotNullOrNullable::Nullable => NotNullOrNullable::NotNull,
                                 },
                                 &match &not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => pg_json_type_pattern.down_by_1().expect("226c6318-6be3-4b85-b2cd-c0b53a2d6bf9"),
+                                    NotNullOrNullable::NotNull => pg_json_type_pattern.down_by_1().expect("226c6318"),
                                     NotNullOrNullable::Nullable => pg_json_type_pattern.clone(),
                                 },
                             ),
@@ -3128,7 +3128,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     NotNullOrNullable::Nullable => NotNullOrNullable::NotNull,
                                 },
                                 &match &not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => pg_json_type_pattern.down_by_1().expect("3ae1e9f8-84ec-4369-a633-eca188d9b10a"),
+                                    NotNullOrNullable::NotNull => pg_json_type_pattern.down_by_1().expect("3ae1e9f8"),
                                     NotNullOrNullable::Nullable => pg_json_type_pattern.clone(),
                                 },
                             ),
@@ -3142,7 +3142,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     NotNullOrNullable::Nullable => NotNullOrNullable::NotNull,
                                 },
                                 &match &not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => pg_json_type_pattern.down_by_1().expect("44d51dc5-1b15-4807-ad63-c4fcfb01251c"),
+                                    NotNullOrNullable::NotNull => pg_json_type_pattern.down_by_1().expect("44d51dc5"),
                                     NotNullOrNullable::Nullable => pg_json_type_pattern.clone(),
                                 },
                             ),
@@ -3212,7 +3212,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             #import_path::NullableJsonObjectPgTypeWhereFilter(
                                 #CreateSc.0.0.map(|value_18544acf| pg_crud_common::NotEmptyUniqueVec::try_new(
                                     vec![#current_ident_where_ucc::#EqualUcc(#equal_ts)]
-                                ).expect("88bfa095-a3ab-4d0c-be71-af63c3acd50f"))
+                                ).expect("88bfa095"))
                             )
                         }
                     }
@@ -3224,7 +3224,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         #ReadOnlyIdsSc,
                         #CreateSc
                     )
-                ]).expect("56eb9ad4-8f4f-4833-9618-7327f42b0014")
+                ]).expect("56eb9ad4")
             };
             let read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts = quote! {<Self as #import_path::PgJsonTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc(
                 #ReadOnlyIdsSc,
@@ -3249,8 +3249,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     where_filters::PgJsonTypeWhereLengthEqual {
                                         logical_operator: #import_path::LogicalOperator::Or,
                                         #ValueSc: pg_crud_common::UnsignedPartOfStdPrimitiveI32::try_from(
-                                            i32::try_from(#content_ts.len()).expect("64d3424f-86fb-4b44-a437-75aea9997f47")
-                                        ).expect("081f4463-0430-4901-8a76-83afcfb3f856"),
+                                            i32::try_from(#content_ts.len()).expect("64d3424f")
+                                        ).expect("081f4463"),
                                     }
                                 )
                             }
@@ -3270,7 +3270,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                                     #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => {
                                                         return None;
                                                     },
-                                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("3d7ce854-db39-493c-bde3-a3dec5a8a9c3")
+                                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("3d7ce854")
                                                 }
                                             },
                                             None => None,
@@ -3287,7 +3287,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             Ok(value_e196e86d) => Some(value_e196e86d),
                             Err(error) => match error {
                                 #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
-                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("e9f9b021-e884-412e-bc02-7c1dafd35fdc")
+                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("e9f9b021")
                             }
                         }
                     }
@@ -3349,7 +3349,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                                 #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => {
                                                     return None;
                                                 },
-                                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("584f801e-e26d-486b-8814-758cd421bee4")
+                                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("584f801e")
                                             }
                                         },
                                         None => None,
@@ -3363,7 +3363,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             Ok(value_cee8d0ab) => Some(value_cee8d0ab),
                             Err(error) => match error {
                                 #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
-                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("497359a5-49fb-4152-a9f4-5d1bbda2f926")
+                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("497359a5")
                             },
                         }
                     }
@@ -3423,7 +3423,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             Ok(value_6f3e23b5) => Some(value_6f3e23b5),
                             Err(error) => match error {
                                 #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty { .. } => None,
-                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique { .. } => panic!("11287f54-f840-4076-a16b-1a59a74e6dee"),
+                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique { .. } => panic!("11287f54"),
                             },
                         }
                     };
@@ -3490,7 +3490,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     Ok(value_41af48fb) => Some(value_41af48fb),
                                     Err(error) => match error {
                                         #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
-                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("5edabfcc-fcbe-419c-a2be-5bd7e961e6e0")
+                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("5edabfcc")
                                     }
                                 },
                                 Err(error) => None
@@ -3562,7 +3562,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                             logical_operator: #import_path::LogicalOperator::Or,
                                             value: where_filters::PgJsonTypeNotEmptyUniqueVec::try_new(
                                                 vec![#ident_table_type_declaration_ucc::new(#CreateSc.0.0)]
-                                            ).expect("2737c0ed-cf4a-4aba-b749-dc7c4e37ff2e")
+                                            ).expect("2737c0ed")
                                         }
                                     ),
                                 )
@@ -3570,7 +3570,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 Ok(value_1c4f89a4) => Some(value_1c4f89a4),
                                 Err(error) => match error {
                                     #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
-                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("16ae359d-3869-421b-b37d-85b0b24835bd")
+                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("16ae359d")
                                 }
                             }
                         }
@@ -3606,7 +3606,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     where_filters::PgJsonTypeWhereRegularExpression {
                                         logical_operator: #import_path::LogicalOperator::Or,
                                         regular_expression_case: where_filters::RegularExpressionCase::Sensitive,
-                                        value: where_filters::RegexRegex(regex::Regex::new(&format!("^{}$", regex::escape(&#CreateSc.0.0))).expect("3814ff38-0e4d-4173-bf0e-971372b888f6")),
+                                        value: where_filters::RegexRegex(regex::Regex::new(&format!("^{}$", regex::escape(&#CreateSc.0.0))).expect("3814ff38")),
                                     }
                                 ),
                             )
@@ -3614,7 +3614,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             Ok(value_75ae8964) => Some(value_75ae8964),
                             Err(error) => match error {
                                 #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
-                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("b9713787-7160-4a8b-b82c-72617d446184")
+                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("b9713787")
                             }
                         }
                     },
@@ -3665,7 +3665,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     Ok(value_69c93ec5) => Some(value_69c93ec5),
                                     Err(error) => match error {
                                         #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
-                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("47e44ecd-d1c9-4d2b-9d9e-4191cad34be9")
+                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("47e44ecd")
                                     }
                                 }
                             };
@@ -3742,7 +3742,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                                         "^{}$",
                                                         regex::escape(&el_590fca71.0)
                                                     ))
-                                                    .expect("7d01653a-e82f-4615-bbef-a8c899491f34"),
+                                                    .expect("7d01653a"),
                                                 ),
                                             },
                                         ),
@@ -3752,7 +3752,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     Ok(value_0363f494) => Some(value_0363f494),
                                     Err(error) => match error {
                                         #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
-                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("415a73d9-3665-4dde-9120-662a51626586")
+                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("415a73d9")
                                     }
                                 }
                             }
@@ -3819,7 +3819,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         };
         (
             {
-                let field_ident = format!("field_{index}").parse::<Ts2>().expect("f992f797-a4df-40d0-9984-3a3a3ad439d7");
+                let field_ident = format!("field_{index}").parse::<Ts2>().expect("f992f797");
                 quote! {pub #field_ident: #ident,}.to_string()
             },
             generated.to_string(),
@@ -3836,7 +3836,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 .map(|el_7ec253fa| {
                     el_7ec253fa
                         .parse::<Ts2>()
-                        .expect("1d8cd8e4-5f51-4aed-a626-79d759d86ebf")
+                        .expect("1d8cd8e4")
                 })
                 .collect::<Vec<Ts2>>();
             quote! {
@@ -3854,7 +3854,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             .map(|el_af9caefa| {
                 el_af9caefa
                     .parse::<Ts2>()
-                    .expect("84e21b40-b5a4-4f4c-86d3-8f6ecfbe1f6e")
+                    .expect("84e21b40")
             })
             .collect::<Vec<Ts2>>();
         quote! {

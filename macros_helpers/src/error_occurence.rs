@@ -98,9 +98,7 @@ impl ErrorOccurenceFieldAttribute {
     #[must_use]
     pub fn to_attribute_view_ts(&self) -> Ts2 {
         let value = format!("#[{}]", AttributeIdentStr::attribute_ident_str(self));
-        value
-            .parse::<Ts2>()
-            .expect("147c39e9-4e64-4080-9426-f66520a414d6")
+        value.parse::<Ts2>().expect("147c39e9")
     }
 }
 
@@ -110,41 +108,41 @@ pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &syn::Varia
     let fields = if let syn::Fields::Named(fields) = &value.fields {
         &fields.named
     } else {
-        panic!("79b0f231-02b9-4770-8052-5f6cc3debf97");
+        panic!("79b0f231");
     };
     let code_occurence_sc = CodeOccurenceSc;
     let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_ts = fields.iter()
-    .filter(|el_5782b638| *el_5782b638.ident.as_ref().expect("3078fd99-5fac-4d57-83ec-93f808b7444b") != *code_occurence_sc.to_string())
+    .filter(|el_5782b638| *el_5782b638.ident.as_ref().expect("3078fd99") != *code_occurence_sc.to_string())
     .map(|el_c25b655e| {
         let get_type_path_third_segment_second_argument_check_if_hashmap = ||{
             let segments = if let syn::Type::Path(syn_type_path) = &el_c25b655e.ty {
                 &syn_type_path.path.segments
             } else {
-                panic!("55136128-fe0b-4599-978d-8577ae049c98");
+                panic!("55136128");
             };
-            assert!(segments.len() == 1, "114c28f3-61af-4602-bc2f-c3688050e7cd");
-            let first_segment = segments.iter().next().expect("a037b0ba-efa7-42ea-b024-fb446c16ebc1");
+            assert!(segments.len() == 1, "114c28f3");
+            let first_segment = segments.iter().next().expect("a037b0ba");
             {
                 let hashmap_ucc = HashMapUcc;
-                assert!(first_segment.ident == hashmap_ucc.to_string(), "5e1bc6b1-d997-489a-b903-cfc7f8618fe9");
+                assert!(first_segment.ident == hashmap_ucc.to_string(), "5e1bc6b1");
             };
             let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) = &first_segment.arguments else {
-                panic!("f464b7a1-e00e-4d99-8ca3-3fdc93be3d26");
+                panic!("f464b7a1");
             };
-            assert!(args.len() == 2, "47cde1b8-93d7-4945-935d-6cb710bb2b0b");
+            assert!(args.len() == 2, "47cde1b8");
             let first_argument_str = {
-                let first_argument = args.iter().next().expect("f9d97146-c9ba-48f6-9f80-3540f7f7aa60");
+                let first_argument = args.iter().next().expect("f9d97146");
                 quote! {#first_argument}.to_string()
             };
-            assert!(quote! {#StdStringString}.to_string() == first_argument_str, "bbdda4ab-809d-45c7-92f4-245f23318458");
-            args.iter().nth(1).expect("f4e88416-5417-405a-9c0d-6035f815bbdd")
+            assert!(quote! {#StdStringString}.to_string() == first_argument_str, "bbdda4ab");
+            args.iter().nth(1).expect("f4e88416")
         };
-        let el_c25b655e_ident = el_c25b655e.ident.as_ref().expect("438aa90e-d1f3-4b89-a61a-e2d9f6a7e653");
+        let el_c25b655e_ident = el_c25b655e.ident.as_ref().expect("438aa90e");
         let el_type_ts = {
             let el_type = &el_c25b655e.ty;
             quote! {#el_type}
         };
-        let el_type_with_serialize_deserialize_ts = match ErrorOccurenceFieldAttribute::try_from(el_c25b655e).expect("2db209a8-2f57-4474-a9c6-9743aaaed57d") {
+        let el_type_with_serialize_deserialize_ts = match ErrorOccurenceFieldAttribute::try_from(el_c25b655e).expect("2db209a8") {
             ErrorOccurenceFieldAttribute::EoToStdStringString => {
                 quote! {
                     #StdStringString
@@ -153,7 +151,7 @@ pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &syn::Varia
             ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize | ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => el_type_ts,
             ErrorOccurenceFieldAttribute::EoErrorOccurence => format!(
                 "{el_type_ts}{WithSerializeDeserializeUcc}"
-            ).parse::<Ts2>().expect("201dc0a4-4563-4e51-a228-ba085b767775"),
+            ).parse::<Ts2>().expect("201dc0a4"),
             ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
                 quote! {
                     Vec<#StdStringString>
@@ -163,22 +161,22 @@ pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &syn::Varia
                 let segments = if let syn::Type::Path(path_value) = &el_c25b655e.ty {
                     &path_value.path.segments
                 } else {
-                    panic!("8d93bf20-5034-4dcb-9dcc-0d7056278dae");
+                    panic!("8d93bf20");
                 };
-                assert!(segments.len() == 1, "0c65bbaa-59bd-4abd-9967-bea844983ee0");
-                let first_segment = segments.iter().next().expect("595050cf-f859-49c8-b57c-35c322c25da8");
+                assert!(segments.len() == 1, "0c65bbaa");
+                let first_segment = segments.iter().next().expect("595050cf");
                 let el_vec_type_with_serialize_deserialize_ts = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) = &first_segment.arguments {
-                    assert!(args.len() == 1, "572a9da8-209f-42d0-9fac-da7e42e3829d");
+                    assert!(args.len() == 1, "572a9da8");
                     format!(
                         "{}{}",
                         {
-                            let first_arg = args.iter().next().expect("e9b33787-870e-4520-a364-816c0f47f508");
+                            let first_arg = args.iter().next().expect("e9b33787");
                             quote! {#first_arg}
                         },
                         WithSerializeDeserializeUcc,
-                    ).parse::<Ts2>().expect("22c364b9-c645-46ec-984e-cf0b911feb84")
+                    ).parse::<Ts2>().expect("22c364b9")
                 } else {
-                    panic!("07c6ab44-5e5e-4fca-96a8-5786fb2d2f48");
+                    panic!("07c6ab44");
                 };
                 quote! {
                     Vec<#el_vec_type_with_serialize_deserialize_ts>
@@ -200,7 +198,7 @@ pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &syn::Varia
                     "{}{}",
                     quote! {#second_argument},
                     WithSerializeDeserializeUcc
-                ).parse::<Ts2>().expect("86307dbc-484e-4012-ac70-2d593b1f99e6");
+                ).parse::<Ts2>().expect("86307dbc");
                 quote! {
                     std::collections::HashMap<#StdStringString, #el_hashmap_value_type_with_serialize_deserialize_ts>
                 }

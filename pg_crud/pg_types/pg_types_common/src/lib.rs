@@ -276,7 +276,7 @@ impl pg_crud_common::DefaultOptionSomeVecOneElMaxPageSize for PaginationStartsWi
         Self(pg_crud_common::PaginationBase::new_unchecked(
             i32::MAX
                 .checked_sub(one)
-                .expect("c0f03c51-d565-4377-ad4e-f38ee636909b")
+                .expect("c0f03c51")
                 .into(),
             one.into(),
         ))

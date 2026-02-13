@@ -176,7 +176,7 @@ impl ToTokens for ImportPath {
     fn to_tokens(&self, tokens: &mut Ts2) {
         self.sc_std_primitive_str()
             .parse::<Ts2>()
-            .expect("d8636ee5-942b-472d-a025-c6e0700e1b59")
+            .expect("d8636ee5")
             .to_tokens(tokens);
     }
 }
@@ -2107,7 +2107,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
     fn gen_underscore_underscore_field_index_ts(index: usize) -> Ts2 {
         gen_underscore_underscore_field_index_str(index)
             .parse::<Ts2>()
-            .expect("ff7433a3-459b-45f4-a41f-01bf7ce46757")
+            .expect("ff7433a3")
     }
     fn gen_underscore_underscore_field_index_handle_ts(index: usize) -> Ts2 {
         format!(
@@ -2115,7 +2115,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
             gen_underscore_underscore_field_index_str(index)
         )
         .parse::<Ts2>()
-        .expect("09a0c518-28da-455b-bce8-fb6defae8a3b")
+        .expect("09a0c518")
     }
     fn gen_field_ident_double_quotes_serde_private_ok_field_ts(
         field_name_double_quotes_ts: &dyn ToTokens,
@@ -2133,7 +2133,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
             .map(|i| {
                 format!("__{FieldSc}{i}")
                     .parse::<Ts2>()
-                    .expect("c46314b0-baee-41c8-b9c6-54b888310ca8")
+                    .expect("c46314b0")
             })
             .collect::<Vec<Ts2>>();
         quote! {#(#field_enum_variants_ts),*}
@@ -2144,7 +2144,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                 let value = format!("{index}u64");
                 value
                     .parse::<Ts2>()
-                    .expect("828ff7b4-5b7c-4109-8739-c6aa240f0f66")
+                    .expect("828ff7b4")
             };
             let field_index_ts = gen_underscore_underscore_field_index_ts(index);
             quote! {#index_u64_ts => Ok(__Field::#field_index_ts)}
@@ -2171,7 +2171,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                     let value = format!("b{el_ident_double_quotes_str}");
                     value
                         .parse::<Ts2>()
-                        .expect("9e33625e-5f3d-4110-9641-204910c7f08e")
+                        .expect("9e33625e")
                 };
                 gen_field_ident_double_quotes_serde_private_ok_field_ts(
                     &b_field_name_double_quotes_ts,

@@ -23,9 +23,9 @@ pub fn maybe_write_ts_into_file(
         let path_string = format!("{file_name}.rs");
         let path = Path::new(&path_string);
         {
-            let mut file = File::create(path).expect("933f96b3-61ac-4344-a6aa-9be79a8dec9e");
+            let mut file = File::create(path).expect("933f96b3");
             Write::write_all(&mut file, ts.to_string().as_bytes())
-                .expect("a503bf88-06d7-4b34-a764-c8074607ddf8");
+                .expect("a503bf88");
         };
         //no other way to format only one file. it formats all files in project
         if matches!(format_with_cargofmt, FormatWithCargofmt::True) {
@@ -34,7 +34,7 @@ pub fn maybe_write_ts_into_file(
                 .arg("--")
                 .arg(path)
                 .status()
-                .expect("5ecc3880-989b-487c-bce7-125b30de73fd");
+                .expect("5ecc3880");
             assert!(status.success(), "cargo fmt failed for {}", path.display());
         }
     }

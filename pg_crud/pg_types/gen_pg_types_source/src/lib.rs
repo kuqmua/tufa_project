@@ -261,7 +261,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
             self.to_string()
                 .parse::<proc_macro2::TokenStream>()
-                .expect("cfefbb95-b0f4-44de-ba94-3e77e88daf0f")
+                .expect("cfefbb95")
                 .to_tokens(tokens);
         }
     }
@@ -331,7 +331,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
             self.to_string()
                 .parse::<proc_macro2::TokenStream>()
-                .expect("798ccb5a-e65b-4ae9-88cd-48c8e22d79d0")
+                .expect("798ccb5a")
                 .to_tokens(tokens);
         }
     }
@@ -816,7 +816,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
     panic_location::panic_location();
     let gen_pg_json_types_config =
         serde_json::from_str::<GenPgJsonTypesConfig>(&input_ts.to_string())
-            .expect("80485f71-4e21-4166-94df-722326c36a29");
+            .expect("80485f71");
     let (columns_ts, pg_type_array) = {
         let acc_5464fefe = match gen_pg_json_types_config.variant {
             GenPgTypesConfigVariant::All => PgType::into_array().into_iter().fold(Vec::new(), |mut acc_4351207e, el_a897c529| {
@@ -883,7 +883,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             let mut check_acc = Vec::new();
             for el_03c535a8 in &acc_5464fefe {
                 if check_acc.contains(&el_03c535a8) {
-                    panic!("536036f9-2511-4247-8463-6defbeb72f5c");
+                    panic!("536036f9");
                 } else {
                     check_acc.push(el_03c535a8);
                 }
@@ -1095,7 +1095,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             current_pg_type,
             current_not_null_or_nullable,
             current_pg_type_pattern
-        ).parse::<proc_macro2::TokenStream>().expect("ff3eb7a6-8369-46fd-82f5-2afdf752365f");
+        ).parse::<proc_macro2::TokenStream>().expect("ff3eb7a6");
         let ident = &gen_ident_ts(pg_type, not_null_or_nullable, pg_type_pattern);
         let gen_ident_standart_not_null_ts = |current_pg_type: &PgType| gen_ident_ts(current_pg_type, &NotNullOrNullable::NotNull, &PgTypePattern::Standart);
         let ident_standart_not_null_ucc = gen_ident_standart_not_null_ts(pg_type);
@@ -1198,7 +1198,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => wrap_into_sqlx_pg_types_pg_range_str(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_str),
                 }
             };
-            value.parse::<proc_macro2::TokenStream>().expect("2555843f-283f-4bc8-8c93-48e6fe68ae6a")
+            value.parse::<proc_macro2::TokenStream>().expect("2555843f")
         };
         let gen_current_ident_origin_non_wrapping = |current_pg_type_pattern: &PgTypePattern, current_not_null_or_nullable: &NotNullOrNullable| SelfOriginUcc::from_tokens(&gen_ident_ts(pg_type, current_not_null_or_nullable, current_pg_type_pattern));
         let field_type_handle: &dyn ToTokens = {
@@ -1436,7 +1436,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         let micro_serialize_field_ts = gen_serialize_field_ts(
                             &MicroSc,
                             &gen_field_inner_type_standart_not_null_ts_as_chrono_timelike_ts(&quote! {
-                                #NanosecondSc(&self.0).checked_div(1000).expect("aea037b7-95ef-4616-b018-6f2ed1651928")
+                                #NanosecondSc(&self.0).checked_div(1000).expect("aea037b7")
                             }),
                         );
                         quote! {
@@ -1610,8 +1610,8 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         };
                     }
                 };
-                let gen_field_index_ts = |index_52391f7d: usize| format!("__field{index_52391f7d}").parse::<proc_macro2::TokenStream>().expect("a4e1a63f-821b-4d35-823a-0a99efa9d1dc");
-                let gen_field_index_value_ts = |index_7ef2fc7d: usize| format!("__field{index_7ef2fc7d}_value").parse::<proc_macro2::TokenStream>().expect("fa97be6c-6985-44f3-aec9-04adaf71dc8f");
+                let gen_field_index_ts = |index_52391f7d: usize| format!("__field{index_52391f7d}").parse::<proc_macro2::TokenStream>().expect("a4e1a63f");
+                let gen_field_index_value_ts = |index_7ef2fc7d: usize| format!("__field{index_7ef2fc7d}_value").parse::<proc_macro2::TokenStream>().expect("fa97be6c");
                 let (enum_field_two_ts, enum_field_three_ts, enum_field_four_ts) = {
                     let gen_enum_field_ts = |parameter_number: &ParameterNumber| {
                         let fields_ts = {
@@ -1707,7 +1707,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     let error_message_ts = pg_crud_macros_common::gen_struct_ident_with_number_elements_double_quotes_ts(&ident_standart_not_null_origin_ucc, vec_ts.len());
                     let fields_initialization_ts = vec_ts.iter().enumerate().map(|(index_70b4dabd, el_9dc7f312)| {
                         let field_index_value_ts = gen_field_index_value_ts(index_70b4dabd);
-                        let index_usize_ts = format!("{index_70b4dabd}usize").parse::<proc_macro2::TokenStream>().expect("ce15e6bf-cf71-42c3-9f6d-94d0f7ec6ede");
+                        let index_usize_ts = format!("{index_70b4dabd}usize").parse::<proc_macro2::TokenStream>().expect("ce15e6bf");
                         quote! {
                             let Some(#field_index_value_ts) = serde::de::SeqAccess::next_element::<#el_9dc7f312>(&mut __seq)? else {
                                 return Err(serde::de::Error::invalid_length(#index_usize_ts, &#error_message_ts));
@@ -1859,7 +1859,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     let gen_fn_visit_u64_ts = |parameter_number: &ParameterNumber| {
                         let fields_ts = {
                             parameter_number.get_vec_from_index_starting_with_zero().into_iter().map(|el_7298ebde| {
-                                let index_variant_ts = format!("{el_7298ebde}u64").parse::<proc_macro2::TokenStream>().expect("5aee0393-2f04-42ca-87d6-bb4209d41ee1");
+                                let index_variant_ts = format!("{el_7298ebde}u64").parse::<proc_macro2::TokenStream>().expect("5aee0393");
                                 let field_index_ts = gen_field_index_ts(el_7298ebde);
                                 quote! {#index_variant_ts => Ok(__Field::#field_index_ts)}
                             })
@@ -1912,7 +1912,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 let (fn_visit_bytes_start_end_ts, fn_visit_bytes_hour_min_sec_micro_ts, fn_visit_bytes_hour_minute_second_microsecond_ts, fn_visit_bytes_date_time_ts, fn_visit_bytes_date_naive_time_ts, fn_visit_bytes_months_days_microseconds_ts) = {
                     let gen_fn_visit_bytes_ts = |vec_ts: &[&dyn StdFmtDisplayPlusQuoteToTokens]| {
                         let fields_ts = vec_ts.iter().enumerate().map(|(index_545c3b1e, el_1dbc37ab)| {
-                            let b_el_double_quotes_ts = format!("b{}", gen_quotes::double_quotes_str(&el_1dbc37ab)).parse::<proc_macro2::TokenStream>().expect("c76c976b-9009-43d2-8d4b-1ec559b76008");
+                            let b_el_double_quotes_ts = format!("b{}", gen_quotes::double_quotes_str(&el_1dbc37ab)).parse::<proc_macro2::TokenStream>().expect("c76c976b");
                             let field_index_name_ts = gen_field_index_ts(index_545c3b1e);
                             quote! {#b_el_double_quotes_ts => Ok(__Field::#field_index_name_ts)}
                         });
@@ -2466,7 +2466,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             quote! {sqlx::types::chrono::NaiveDateTime::#NewSc(#content_ts)}
         };
         let gen_sqlx_types_time_time_from_hms_micro_unwrap_ts = |content_ts: &dyn ToTokens| {
-            quote! {sqlx::types::time::Time::from_hms_micro(#content_ts).expect("7a1a18fa-c0cf-45e4-8b52-60f58a793c36")}
+            quote! {sqlx::types::time::Time::from_hms_micro(#content_ts).expect("7a1a18fa")}
         };
         let gen_pub_const_new_or_pub_try_new_ts = |current_ident: &dyn ToTokens| {
             let pub_fn_new_or_try_new_ts = if pg_type_initialization_try_new_try_from_pg_type.is_ok() {
@@ -2600,7 +2600,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             gen_inner_type_ts_67fc7980(
                                 IsConst::True,
                                 &quote!{
-                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).expect("000ddcc2-7057-4310-bbee-81c5fe6323c3")
+                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).expect("000ddcc2")
                                 }
                             )
                         ),
@@ -2608,7 +2608,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             gen_inner_type_ts_67fc7980(
                                 IsConst::False,
                                 &quote!{
-                                    sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).expect("f065e2b1-0e7b-4bc8-8fa6-49843c90ff7c")
+                                    sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).expect("f065e2b1")
                                 }
                             )
                         ),
@@ -2653,7 +2653,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             gen_inner_type_ts_6d89728a(
                                 IsConst::True,
                                 &quote!{
-                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).expect("9545a47c-6795-43a3-b8be-d92ab1cd6e40")
+                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).expect("9545a47c")
                                 }
                             )
                         ),
@@ -2661,7 +2661,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             gen_inner_type_ts_6d89728a(
                                 IsConst::False,
                                 &quote!{
-                                    sqlx::types::time::Time::from_hms_micro(0, 0, 0, 1).expect("03f9561a-aee1-4bf9-8b36-3ba9440af108")
+                                    sqlx::types::time::Time::from_hms_micro(0, 0, 0, 1).expect("03f9561a")
                                 }
                             )
                         ),
@@ -2706,7 +2706,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             gen_inner_type_ts_23368199(
                                 IsConst::True,
                                 &quote!{
-                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).expect("0dafc3fc-83a1-40fe-965b-e3fba46a18c9")
+                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).expect("0dafc3fc")
                                 }
                             )
                         ),
@@ -2714,7 +2714,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             gen_inner_type_ts_23368199(
                                 IsConst::False,
                                 &quote!{
-                                    sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).expect("d2ec329f-15ac-45b1-bbdc-51c08a23ad93")
+                                    sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).expect("d2ec329f")
                                 }
                             )
                         ),
@@ -2722,7 +2722,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             gen_inner_type_ts_23368199(
                                 IsConst::True,
                                 &quote!{
-                                    sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).expect("a2f306ea-bf67-4743-9274-fbdcab3b8e22")
+                                    sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).expect("a2f306ea")
                                 }
                             )
                         ),
@@ -2766,7 +2766,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             gen_inner_type_ts_3a61c0b0(
                                 IsConst::True,
                                 &quote!{
-                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).expect("235276a7-7f04-4f8f-b4f2-084694243bf0")
+                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).expect("235276a7")
                                 }
                             )
                         ),
@@ -2774,7 +2774,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             gen_inner_type_ts_3a61c0b0(
                                 IsConst::False,
                                 &quote!{
-                                    sqlx::types::time::Time::from_hms_micro(0, 0, 0, 1).expect("6a3dbcaa-5004-4cc4-a53c-8b65cdfa064c")
+                                    sqlx::types::time::Time::from_hms_micro(0, 0, 0, 1).expect("6a3dbcaa")
                                 }
                             )
                         ),
@@ -2819,7 +2819,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             gen_inner_type_ts_32acb388(
                                 IsConst::True,
                                 &quote!{
-                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_999).expect("b217e3bf-f8d6-425d-85f9-f9610cc3ce3f")
+                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_999).expect("b217e3bf")
                                 }
                             )
                         ),
@@ -2872,7 +2872,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             gen_inner_type_ts_ddf0f630(
                                 IsConst::True,
                                 &quote!{
-                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_998).expect("5d6cf475-56c8-4abf-a754-43f24caaafa5")
+                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_998).expect("5d6cf475")
                                 }
                             )
                         ),
@@ -2947,7 +2947,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                 (&sqlx_types_chrono_naive_time_max_function_ts, &quote!{23,59,59,999_999}),
                             ].iter().map(|(name_ts, parameters_ts)| quote! {
                                 const fn #name_ts() -> #ident_inner_type_ts {
-                                    #ident_inner_type_ts::from_hms_micro_opt(#parameters_ts).expect("149e01cc-429b-4783-bfc1-2908db0b801f")
+                                    #ident_inner_type_ts::from_hms_micro_opt(#parameters_ts).expect("149e01cc")
                                 }
                             }).collect::<Vec<proc_macro2::TokenStream>>();
                             quote!{#(#content_ts_80e0683c)*}
@@ -2968,7 +2968,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                     ),
                                     gen_function_ts(
                                         &sqlx_types_chrono_naive_date_max_pred_opt_expect_function_ts,
-                                        &quote!{Self::#sqlx_types_chrono_naive_date_max_function_ts().pred_opt().expect("b7e16bf1-9e73-4a34-98b0-4e6e9e3d45fb")}
+                                        &quote!{Self::#sqlx_types_chrono_naive_date_max_function_ts().pred_opt().expect("b7e16bf1")}
                                     )
                                 ]
                                 .into_iter()
@@ -2987,7 +2987,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                             name_ts,
                                             &quote! {
                                                 from_ymd_opt(#parameters_ts)
-                                                    .expect("d25ee0e9-4a6b-4b20-b8e3-3f703e121088")
+                                                    .expect("d25ee0e9")
                                             }
                                         )
                                     })
@@ -3529,7 +3529,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                             }
                                         },
                                         PgTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime => quote! {
-                                            if <#inner_type_standart_not_null_ts as chrono::Timelike>::nanosecond(&#ValueSc).checked_rem(1000).expect("7c8b4e12-8509-41e4-8769-0fe10aafd930") != 0 {
+                                            if <#inner_type_standart_not_null_ts as chrono::Timelike>::nanosecond(&#ValueSc).checked_rem(1000).expect("7c8b4e12") != 0 {
                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#NanosecondPrecisionIsNotSupportedUcc {
                                                     #ValueSc: #ValueSc.to_string(),
                                                     code_occurence: error_occurence_lib::code_occurence!(),
@@ -3538,7 +3538,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                             Ok(Self(#ValueSc))
                                         },
                                         PgTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => quote! {
-                                            if #ValueSc.nanosecond().checked_rem(1000).expect("ce47524f-de07-4a01-a4c5-78d39398b922") != 0 {
+                                            if #ValueSc.nanosecond().checked_rem(1000).expect("ce47524f") != 0 {
                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#NanosecondPrecisionIsNotSupportedUcc {
                                                     #ValueSc: #ValueSc.to_string(),
                                                     code_occurence: error_occurence_lib::code_occurence!(),
@@ -3547,7 +3547,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                             Ok(Self(#ValueSc))
                                         },
                                         PgTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => quote! {
-                                            let #EarliestSupportedDateSc = #inner_type_standart_not_null_ts::from_ymd_opt(-4713, 12, 31).expect("9f6241e5-a3ce-4ade-b33c-37432d4cafd3");
+                                            let #EarliestSupportedDateSc = #inner_type_standart_not_null_ts::from_ymd_opt(-4713, 12, 31).expect("9f6241e5");
                                             if #ValueSc >= #EarliestSupportedDateSc {
                                                 Ok(Self(#ValueSc))
                                             }
@@ -3830,7 +3830,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                                         #MicroSc,
                                                     ) {
                                                         Some(value_b143b9e1) => {
-                                                            if <#inner_type_standart_not_null_ts as chrono::Timelike>::nanosecond(&value_b143b9e1).checked_rem(1000).expect("c0514180-cfe0-44e2-9dcf-ab41df7e11f3") != 0 {
+                                                            if <#inner_type_standart_not_null_ts as chrono::Timelike>::nanosecond(&value_b143b9e1).checked_rem(1000).expect("c0514180") != 0 {
                                                                 return Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#NanosecondPrecisionIsNotSupportedUcc {
                                                                     #ValueSc: value_b143b9e1.to_string(),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
@@ -3857,7 +3857,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                                         #MicrosecondSc,
                                                     ) {
                                                         Ok(value_9932d535) => {
-                                                            if value_9932d535.nanosecond().checked_rem(1000).expect("0def33ce-99c1-4969-9f1d-6923319ccc5b") != 0 {
+                                                            if value_9932d535.nanosecond().checked_rem(1000).expect("0def33ce") != 0 {
                                                                 return Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#NanosecondPrecisionIsNotSupportedUcc {
                                                                     #ValueSc: value_9932d535.to_string(),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
@@ -4083,7 +4083,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                     #sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_option_some_vec_one_el_call_ts.0,
                                 })),
                                 PgType::SqlxTypesIpnetworkIpNetworkAsInet => &quote! {
-                                    sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSc(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default_ts).expect("9e9c9b57-1a39-4674-a112-5e009fcbab0f"))
+                                    sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSc(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default_ts).expect("9e9c9b57"))
                                 },
                                 PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range | PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => &pg_range_int_default_initialization_ts,
                                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &gen_sqlx_pg_types_pg_range_default_option_some_vec_one_el_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc),
@@ -4353,7 +4353,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     PgTypePattern::ArrayDimension1 { .. } => {
                         let mut arguments_ts = Vec::new();
                         for el_9f432ae3 in 1..=array_dimensions_number {
-                            let dimension_number_pagination_ts = format!("dimension{el_9f432ae3}_pagination").parse::<proc_macro2::TokenStream>().expect("af86f2d1-b00d-49ab-9ced-97a488d9dc5f");
+                            let dimension_number_pagination_ts = format!("dimension{el_9f432ae3}_pagination").parse::<proc_macro2::TokenStream>().expect("af86f2d1");
                             arguments_ts.push(quote! {
                                 #dimension_number_pagination_ts: pg_types_common::PaginationStartsWithOne
                             });
@@ -4373,7 +4373,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         };
                         let mut arguments_ts = Vec::new();
                         for el_a227c2ba in 1..=array_dimensions_number {
-                            let dimension_number_pagination_ts = format!("dimension{el_a227c2ba}_pagination").parse::<proc_macro2::TokenStream>().expect("e5250a98-89d6-4a58-90ea-39b04a708c1c");
+                            let dimension_number_pagination_ts = format!("dimension{el_a227c2ba}_pagination").parse::<proc_macro2::TokenStream>().expect("e5250a98");
                             arguments_ts.push(quote! {
                                 #dimension_number_pagination_ts: #content_ts
                             });
@@ -5059,7 +5059,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             .map(|el_268f0f14| {
                                 let dimension_number_pagination_ts = format!("dimension{el_268f0f14}_pagination")
                                 .parse::<proc_macro2::TokenStream>()
-                                .expect("6f2305ee-85e9-4dce-9a14-9e299586668a");
+                                .expect("6f2305ee");
                                 quote! {
                                     #ValueSc.#dimension_number_pagination_ts.start(),
                                     #ValueSc.#dimension_number_pagination_ts.end(),
@@ -5162,7 +5162,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                                 excluded_end_checked_add_ts
                                             ) = {
                                                 let gen_checked_add_one_expect_ts = |first_ts: &dyn ToTokens, second_ts: &dyn ToTokens| {
-                                                    quote! {#first_ts(#second_ts.checked_add(1).expect("0ec0992f-1d63-443f-b528-7fabfff31423"))}
+                                                    quote! {#first_ts(#second_ts.checked_add(1).expect("0ec0992f"))}
                                                 };
                                                 (
                                                     gen_checked_add_one_expect_ts(&IncludedUcc, &StartSc),
@@ -5213,7 +5213,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                                     quote! {#ExcludedUcc(#EndSc #dot_succ_opt_expect_ts)}
                                                 };
                                                 gen_range_match_ts(
-                                                    &gen_sqlx_pg_types_pg_range_ts(&included_start_ts, &quote! {#ExcludedUcc(#EndSc.succ_opt().expect("9ebce3b4-4ca7-4ff5-8b7a-a3539125bba0"))}),
+                                                    &gen_sqlx_pg_types_pg_range_ts(&included_start_ts, &quote! {#ExcludedUcc(#EndSc.succ_opt().expect("9ebce3b4"))}),
                                                     &if_equal_unbounded_unbounded_or_included_excluded_ts,
                                                     &sqlx_pg_types_pg_range_included_unbounded_ts,
                                                     &gen_if_start_end_equal_ts(
@@ -5416,7 +5416,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             let gen_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts = |read_or_update: &pg_crud_macros_common::ReadOrUpdate| {
                 let read_or_update_ucc = read_or_update.ucc();
                 let content_ts = if pg_type_initialization_try_new_try_from_pg_type.is_ok() {
-                    quote! {#TryNewSc(#ValueSc).expect("69477d2f-1c78-4a08-bdb7-c84022352dee")}
+                    quote! {#TryNewSc(#ValueSc).expect("69477d2f")}
                 } else {
                     quote! {#NewSc(#ValueSc)}
                 };
@@ -5746,17 +5746,17 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         sqlx::types::Uuid::new_v4()
                     ]},
                     PgType::SqlxTypesIpnetworkIpNetworkAsInet => quote! {vec![
-                        <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("192.168.0.0/24").expect("478dbded-0912-4cb9-88e4-caddf5106628"),
-                        <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("10.0.0.0/8").expect("8af9e27e-8491-477d-821a-facc6e6344e3"),
-                        <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("172.16.0.0/12").expect("ba86505f-24fd-4f23-b2d0-3d873c357058"),
-                        <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("127.0.0.1/32").expect("32c744a0-38d5-45b6-a0b8-f744d7c7947e"),
-                        <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("::1/128").expect("560815f8-60a6-42e2-9c9d-0edcbcc22457"),
-                        <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("2001:db8::/32").expect("793db0ef-c8ea-4683-9782-34e304730d02"),
-                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSc(std::net::Ipv4Addr::#NewSc(192, 168, 0, 0), 24).expect("c44934f2-335e-44b7-bb4d-0a91374b4a85")),
-                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSc(std::net::Ipv4Addr::#NewSc(10, 0, 0, 0), 8).expect("39e588d9-b32b-4611-a2f3-3ce500b93db0")),
-                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSc(std::net::Ipv4Addr::LOCALHOST, 32).expect("43fb25bd-03cd-44fe-bde8-dc92d8bafc71")),
-                        sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::#NewSc(std::net::Ipv6Addr::LOCALHOST, 128).expect("b443be46-1805-4fda-b24b-71dba8d8b9d4")),
-                        sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::#NewSc("2001:db8::".parse().expect("d4e6df27-fdb6-4e66-898c-abcfc41c5e49"), 32).expect("a7486c5e-6577-4b80-a3ec-097002698431")),
+                        <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("192.168.0.0/24").expect("478dbded"),
+                        <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("10.0.0.0/8").expect("8af9e27e"),
+                        <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("172.16.0.0/12").expect("ba86505f"),
+                        <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("127.0.0.1/32").expect("32c744a0"),
+                        <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("::1/128").expect("560815f8"),
+                        <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("2001:db8::/32").expect("793db0ef"),
+                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSc(std::net::Ipv4Addr::#NewSc(192, 168, 0, 0), 24).expect("c44934f2")),
+                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSc(std::net::Ipv4Addr::#NewSc(10, 0, 0, 0), 8).expect("39e588d9")),
+                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSc(std::net::Ipv4Addr::LOCALHOST, 32).expect("43fb25bd")),
+                        sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::#NewSc(std::net::Ipv6Addr::LOCALHOST, 128).expect("b443be46")),
+                        sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::#NewSc("2001:db8::".parse().expect("d4e6df27"), 32).expect("a7486c5e")),
                     ]},
                     PgType::SqlxTypesMacAddressMacAddressAsMacAddr => quote! {vec![
                         sqlx::types::mac_address::MacAddress::#NewSc([0x00, 0x00, 0x00, 0x00, 0x00, 0x00]), // All zeros
@@ -5804,11 +5804,11 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     additonal_content_ts: &dyn ToTokens
                 | {
                     let (new_or_try_new_content_ts, maybe_acc_push_none_ts) = match (&current_not_null_or_nullable, pg_type_initialization_try_new_try_from_pg_type.is_ok()) {
-                        (NotNullOrNullable::NotNull, true) => (quote! {try_new(vec![el_0fd5865b.0.into()]).expect("adbae6b3-1542-4f81-89bf-48a9b895b488")}, proc_macro2::TokenStream::new()),
+                        (NotNullOrNullable::NotNull, true) => (quote! {try_new(vec![el_0fd5865b.0.into()]).expect("adbae6b3")}, proc_macro2::TokenStream::new()),
                         (NotNullOrNullable::NotNull, false) => (quote! {new(vec![el_0fd5865b.0.into()])}, proc_macro2::TokenStream::new()),
                         (NotNullOrNullable::Nullable, true) => (
-                            quote! {try_new(Some(el_0fd5865b.0.into())).expect("b244d498-527d-4332-98c9-770d27e7af35")},
-                            quote! {acc_0b59a062.push(#self_as_pg_type_ts::Create::try_new(None).expect("31878971-17fc-4526-ab01-42c8332e641f"));},
+                            quote! {try_new(Some(el_0fd5865b.0.into())).expect("b244d498")},
+                            quote! {acc_0b59a062.push(#self_as_pg_type_ts::Create::try_new(None).expect("31878971"));},
                         ),
                         (NotNullOrNullable::Nullable, false) => (quote! {new(Some(el_0fd5865b.0.into()))}, quote! {acc_0b59a062.push(#self_as_pg_type_ts::Create::new(None));}),
                     };
@@ -5834,7 +5834,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                         quote! {
                                             |el_043a7d30|#self_as_pg_type_create_ts::try_new(
                                                 el_043a7d30
-                                            ).expect("941bd15c-a751-45e7-8266-f17df4ee00aa")
+                                            ).expect("941bd15c")
                                         }
                                     } else {
                                         quote! {#self_as_pg_type_create_ts::#NewSc}
@@ -5872,13 +5872,13 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                 let (first_ts, second_ts, third_ts) = {
                                     let gen_new_or_try_new_ts = |current_content_ts: &dyn ToTokens| {
                                         if pg_type_initialization_try_new_try_from_pg_type.is_ok() {
-                                            quote! {try_new(#current_content_ts).expect("75ad9383-b257-4a0b-bd8d-c931950bf745")}
+                                            quote! {try_new(#current_content_ts).expect("75ad9383")}
                                         } else {
                                             quote! {new(#current_content_ts)}
                                         }
                                     };
                                     let gen_vec_value_clone_zero_into_number_ts = |value: usize| {
-                                        let number_ts = value.to_string().parse::<proc_macro2::TokenStream>().expect("50c87202-4038-4b27-85bd-c0593552bb89");
+                                        let number_ts = value.to_string().parse::<proc_macro2::TokenStream>().expect("50c87202");
                                         //todo maybe correlate with .derive_copy_if()
                                         let current_maybe_dot_clone_ts: &dyn ToTokens = match &pg_type {
                                             PgType::StdPrimitiveI16AsInt2 |
@@ -6213,7 +6213,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts = quote! {
                 #import_path::NotEmptyUniqueVec::try_new(vec![
                     #read_only_ids_merged_with_create_into_where_equal_ts
-                ]).expect("4c08b551-1df7-4e5b-ae92-a700e0aded65")
+                ]).expect("4c08b551")
             };
             let read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_ts = none_ts.clone();
             let create_into_pg_type_option_vec_where_dimension_one_equal_ts = match &pg_type_pattern {
@@ -6239,10 +6239,10 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                                 dimensions: where_filters::BoundedStdVecVec::try_from(
                                                     vec![
                                                         pg_crud_common::NotZeroUnsignedPartOfStdPrimitiveI32::try_from(
-                                                            i32::try_from(index_7702518c.checked_add(1)?).expect("5954966c-571a-4744-ba04-9806fc7e63c9")
-                                                        ).expect("8d269b8f-41db-4fd9-b33a-e0c532593163")
+                                                            i32::try_from(index_7702518c.checked_add(1)?).expect("5954966c")
+                                                        ).expect("8d269b8f")
                                                     ]
-                                                ).expect("fe1e037f-70ce-4744-b34b-0413754e6fb0"),
+                                                ).expect("fe1e037f"),
                                                 #ValueSc: #ident_standart_not_null_or_nullable_table_type_declaration_ucc(el_081d735b),
                                             }
                                         )
@@ -6253,7 +6253,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                 Ok(value_2218be19) => Some(value_2218be19),
                                 Err(error) => match error {
                                     #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
-                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("45c8de3c-965b-44a9-b1fd-b7148531da9e")
+                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("45c8de3c")
                                 }
                             }
                         }
@@ -6287,8 +6287,8 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 let gen_greater_than_test_try_new_try_new_ts = |greater_than_variant_ts: &pg_crud_common_and_macros_common::PgTypeGreaterThanVariant, create_ts: &dyn ToTokens, greater_than_ts: &dyn ToTokens| {
                     gen_greater_than_test_ts(
                         greater_than_variant_ts,
-                        &quote! {try_new(#create_ts).expect("8327c651-9a52-470f-b5ab-dd2680b2f5e1")},
-                        &quote! {try_new(#greater_than_ts).expect("c369e6ea-4420-4087-b09a-88f0bbfcb2fe")},
+                        &quote! {try_new(#create_ts).expect("8327c651")},
+                        &quote! {try_new(#greater_than_ts).expect("c369e6ea")},
                     )
                 };
                 let gen_greater_than_test_new_new_vec_ts = |
@@ -6350,7 +6350,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     PgTypePattern::Standart => match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => {
                             let wrap_into_not_empty_unique_vec_ts = |content_ts: &dyn ToTokens| quote! {Some(
-                                #import_path::NotEmptyUniqueVec::try_new(vec![#content_ts]).expect("3ad4b6bf-ba8c-4b14-8745-b0d658e2bdd6")
+                                #import_path::NotEmptyUniqueVec::try_new(vec![#content_ts]).expect("3ad4b6bf")
                             )};
                             let sqlx_types_chrono_naive_time_as_time_standart_not_null_ts = &gen_ident_ts(
                                 &PgType::SqlxTypesChronoNaiveTimeAsTime,
@@ -6417,8 +6417,8 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                     &quote!{Self::slightly_more_than_min_inner_type()},
                                     &quote!{Self::middle_inner_type()},
                                     &quote!{Self::slightly_more_than_middle_inner_type()},
-                                    &quote!{sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_999).expect("f3d895bb-64a0-47c5-819d-f31b9b5f4ba3")},
-                                    &quote!{sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_998).expect("1e71f8c6-49a0-47cd-80e4-a4f92666af78")},
+                                    &quote!{sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_999).expect("f3d895bb")},
+                                    &quote!{sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_998).expect("1e71f8c6")},
                                 )),
                                 PgType::SqlxTypesChronoNaiveDateAsDate => wrap_into_not_empty_unique_vec_ts(&gen_greater_than_test_try_new_try_new_vec_ts(
                                     &quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 30)?},//todo not sure about this values. maybe reuse
@@ -6487,7 +6487,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                         greater_than: #ident_table_type_declaration_ucc(#ident_origin_ucc(Some(el_504739e6.greater_than.0))),
                                     })
                                     .collect()
-                                ).expect("63ce5df3-2b2b-4b2d-be70-0041e6a1cad2")
+                                ).expect("63ce5df3")
                             )
                         },
                     },
@@ -6666,7 +6666,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         };
         (
             {
-                let field_ident = format!("column_{index}").parse::<proc_macro2::TokenStream>().expect("2e15af68-48bd-4192-bd45-aacf8086d76b");
+                let field_ident = format!("column_{index}").parse::<proc_macro2::TokenStream>().expect("2e15af68");
                 quote! {
                     pub #field_ident: pg_crud::pg_type:: #ident,
                 }
@@ -6686,7 +6686,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 .map(|el_2e3fc869| {
                     el_2e3fc869
                         .parse::<proc_macro2::TokenStream>()
-                        .expect("79ee6381-c845-4762-a6f6-1c6b38806535")
+                        .expect("79ee6381")
                 })
                 .collect::<Vec<proc_macro2::TokenStream>>();
             quote! {
@@ -6704,7 +6704,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             .map(|el_f9569807| {
                 el_f9569807
                     .parse::<proc_macro2::TokenStream>()
-                    .expect("e0c9257d-e554-4147-8174-b431c364c1ac")
+                    .expect("e0c9257d")
             })
             .collect::<Vec<proc_macro2::TokenStream>>();
         quote! {

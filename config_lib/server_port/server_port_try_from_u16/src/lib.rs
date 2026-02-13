@@ -7,20 +7,20 @@ pub fn server_port_try_from_u16(input: proc_macro::TokenStream) -> proc_macro::T
         let possible_port = input
             .to_string()
             .parse::<u16>()
-            .expect("310a948a-cfd7-4b2c-9e62-1c25cd61b891");
+            .expect("310a948a");
         if possible_port < server_port_common::SERVER_PORT_MIN_VALUE {
-            panic!("8d1c94bc-89bf-4743-9ff8-0d838c1bbc79");
+            panic!("8d1c94bc");
         } else if possible_port <= server_port_common::SERVER_PORT_MAX_VALUE {
             possible_port
         } else {
-            panic!("bfb64c71-219e-414f-a65c-bd857a57a103");
+            panic!("bfb64c71");
         }
     }
     .to_string()
     .parse::<Ts2>()
-    .expect("dda46f3a-0e3b-43e4-90e7-3d63977f226c");
+    .expect("dda46f3a");
     let generated = quote! {
-        ServerPort::try_from(#valid_port_ts).expect("575a501d-fcca-4091-92c2-8ca5128bf314")
+        ServerPort::try_from(#valid_port_ts).expect("575a501d")
     };
     // println!("{generated}");
     generated.into()

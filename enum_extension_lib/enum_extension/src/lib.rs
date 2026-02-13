@@ -5,12 +5,12 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
     panic_location::panic_location();
     //it only supported for enums without values
     let syn_derive_input: syn::DeriveInput =
-        syn::parse(input).expect("c6b8e80e-a5f9-447c-9b7c-91aa98b185b9");
+        syn::parse(input).expect("c6b8e80e");
     //todo to implement into_array() and into_vec - must implement Default for all inner variant types
     let len = match syn_derive_input.data.clone() {
         syn::Data::Enum(enum_item) => enum_item.variants.len(),
         syn::Data::Struct(_) | syn::Data::Union(_) => {
-            panic!("bcbaca28-a41f-4689-8853-c9caa3cbd665")
+            panic!("bcbaca28")
         }
     };
     let variants = match syn_derive_input.data {
@@ -33,7 +33,7 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
             }
         }),
         syn::Data::Struct(_) | syn::Data::Union(_) => {
-            panic!("4ba8c781-483d-4d33-b414-0aa92d9a40c7")
+            panic!("4ba8c781")
         }
     };
     let ident = &syn_derive_input.ident;

@@ -207,7 +207,7 @@ fn to_ts_or_panic(value: &dyn Display) -> Ts2 {
     value
         .to_string()
         .parse::<Ts2>()
-        .expect("753ce6dd-aa0f-4836-8e74-20a7c4f88f60")
+        .expect("753ce6dd")
 }
 fn to_ucc_str<T: AsRef<str>>(value: &T) -> String
 where

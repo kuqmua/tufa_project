@@ -354,9 +354,7 @@ impl StatusCode {
     #[must_use]
     pub fn to_proc_macro_attribute_view_ts(&self) -> Ts2 {
         let value = format!("#[{self}]");
-        value
-            .parse::<Ts2>()
-            .expect("48ab5b45-d715-4872-a5e3-aa17c1012898")
+        value.parse::<Ts2>().expect("48ab5b45")
     }
     #[must_use]
     pub fn to_status_code_description_ts(&self) -> Ts2 {
@@ -635,19 +633,15 @@ pub fn get_only_one(variant: &syn::Variant) -> StatusCode {
     let mut option_self = None;
     variant.attrs.iter().for_each(|attr| {
         if attr.path().segments.len() == 1 {
-            let value = attr
-                .path()
-                .segments
-                .first()
-                .expect("9deb71d1-ea77-4e80-9f23-b91f9ab70003");
+            let value = attr.path().segments.first().expect("9deb71d1");
             if let Ok(named_attribute) = StatusCode::try_from(&value.ident.to_string()) {
                 if option_self.is_some() {
-                    panic!("07286cf0-dfaf-43fa-9c1f-d1a1cc28894e");
+                    panic!("07286cf0");
                 } else {
                     option_self = Some(named_attribute);
                 }
             }
         }
     });
-    option_self.expect("19fc6512-3877-4498-827d-0bfbc2fb2199")
+    option_self.expect("19fc6512")
 }

@@ -9,13 +9,13 @@ pub fn gen_field_code_occurence_new_ts(file: &'static str, line: u32, column: u3
             let line_str = line.to_string();
             line_str
                 .parse::<Ts2>()
-                .expect("1d6812d7-2296-4d38-b3ea-bff1e625eaf5")
+                .expect("1d6812d7")
         };
         let column_ts = {
             let column_str = column.to_string();
             column_str
                 .parse::<Ts2>()
-                .expect("105a4e62-7574-4b1e-bd5f-eed440d72e89")
+                .expect("105a4e62")
         };
         quote! {
             error_occurence_lib::code_occurence::CodeOccurence::new(

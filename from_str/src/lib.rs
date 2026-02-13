@@ -4,10 +4,10 @@ use quote::quote;
 pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput =
-        syn::parse(input).expect("f83fcd2d-667d-4bdc-872f-e8a0afcb4388");
+        syn::parse(input).expect("f83fcd2d");
     let ident = &syn_derive_input.ident;
     let syn::Data::Enum(data_enum) = syn_derive_input.data else {
-        panic!("d35db256-2db6-42d9-8ac9-24aebe6b7ec4");
+        panic!("d35db256");
     };
     let variant_idents = data_enum
         .variants
@@ -15,7 +15,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         .map(|variant| match variant.fields {
             syn::Fields::Unit => variant.ident,
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => {
-                panic!("23575b02-186f-4f9f-84bb-3973c3952d66")
+                panic!("23575b02")
             }
         })
         .collect::<Vec<syn::Ident>>();
@@ -27,7 +27,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             );
             variant_ident_sc_str
                 .parse::<Ts2>()
-                .expect("791603c1-e547-4486-898e-631abb15afc5")
+                .expect("791603c1")
         };
         quote! {
             #variant_ident_sc_ts => Ok(Self::#variant_ident),
@@ -53,7 +53,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             format!("\"Invalid {ident}, expected one of {error_variants_str} found {{value}}\"");
         error_str
             .parse::<Ts2>()
-            .expect("1b778757-4118-4419-bb33-a2f677afa169")
+            .expect("1b778757")
     };
     let generated = quote! {
         impl std::str::FromStr for #ident {
