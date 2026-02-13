@@ -80,9 +80,6 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             });
         all_equal.expect("b9da972a-f38b-4217-939c-54ffd56f0301")
     };
-    let value_sc = ValueSc;
-    let code_occurence_sc = CodeOccurenceSc;
-    let code_occurence_sc_str = code_occurence_sc.to_string();
     let into_serialize_deserialize_version_sc_ts = IntoSerializeDeserializeVersionSc;
     let maybe_generic_parameters_ts = if generic_parameters.is_empty() {
         Ts2::new()
@@ -120,6 +117,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     };
     let tokens = match supported_enum_variant {
         SuportedEnumVariant::Named => {
+            let code_occurence_sc_str = CodeOccurenceSc.to_string();
             //todo maybe impl display was a bad idea. .to_string() casts is dangerous
             let impl_std_fmt_display_handle_content_ts = {
                 let variants_ts = data_enum.variants.iter().map(|el_f497ea11| {
@@ -217,11 +215,11 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 }
                             }
                             macros_helpers::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString | macros_helpers::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
-                                let if_write_is_err_ts = macros_helpers::gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {key}: {}", &error_occurence_lib::ToStdStringString::to_std_string_string(#value_sc)}, &quote! {panic!("d030580a-6c03-4913-9088-b77316b9f285");});
+                                let if_write_is_err_ts = macros_helpers::gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {key}: {}", &error_occurence_lib::ToStdStringString::to_std_string_string(#ValueSc)}, &quote! {panic!("d030580a-6c03-4913-9088-b77316b9f285");});
                                 quote! {
                                     #current_ident.iter().fold(
                                         #StdStringString::new(),
-                                        |mut acc_06473093, (key, #value_sc)| {
+                                        |mut acc_06473093, (key, #ValueSc)| {
                                             #if_write_is_err_ts
                                             acc_06473093
                                         }
@@ -235,7 +233,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         quote! {
                                             acc_a47e1ba7,
                                             "\n {key}: {}",
-                                            #value_sc.to_string().lines().fold(
+                                            #ValueSc.to_string().lines().fold(
                                                 #StdStringString::new(),
                                                 |mut acc_addfc699, el_8b8f577e| {
                                                     #if_write_is_err_ts
@@ -249,7 +247,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 quote! {
                                     #current_ident.iter().fold(
                                         #StdStringString::new(),
-                                        |mut acc_a47e1ba7, (key, #value_sc)| {
+                                        |mut acc_a47e1ba7, (key, #ValueSc)| {
                                             #if_write_is_err_ts
                                             acc_a47e1ba7
                                         }
@@ -280,14 +278,14 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             if index == 0 {
                                 quote! {
                                     Self::#el_ident {
-                                        #code_occurence_sc,
+                                        #CodeOccurenceSc,
                                         ..
                                     }
                                 }
                             } else {
                                 quote! {
                                     | Self::#el_ident {
-                                        #code_occurence_sc,
+                                        #CodeOccurenceSc,
                                         ..
                                     }
                                 }
@@ -302,7 +300,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         },
                         match self {
                             #(#code_occurence_variants_ts)*
-                            => #code_occurence_sc
+                            => #CodeOccurenceSc
                         }
                     )
                 }
@@ -386,7 +384,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             #(#fields_idents_ts),*
                         } => #ident_with_serialize_deserialize_ucc::#el_ident {
                             #(#fields_into_serialize_deserialize_version_excluding_code_occurence_ts)*
-                            #code_occurence_sc,
+                            #CodeOccurenceSc,
                         }
                     }
                 });

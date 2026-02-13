@@ -112,16 +112,12 @@ pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &syn::Varia
     } else {
         panic!("79b0f231-02b9-4770-8052-5f6cc3debf97");
     };
-    let std_string_string = StdStringString;
     let code_occurence_sc = CodeOccurenceSc;
     let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_ts = fields.iter()
     .filter(|el_5782b638| *el_5782b638.ident.as_ref().expect("3078fd99-5fac-4d57-83ec-93f808b7444b") != *code_occurence_sc.to_string())
     .map(|el_c25b655e| {
-        fn get_type_path_third_segment_second_argument_check_if_hashmap(
-            value: &syn::Field,
-            std_string_string: StdStringString
-        ) -> &syn::GenericArgument {
-            let segments = if let syn::Type::Path(syn_type_path) = &value.ty {
+        let get_type_path_third_segment_second_argument_check_if_hashmap = ||{
+            let segments = if let syn::Type::Path(syn_type_path) = &el_c25b655e.ty {
                 &syn_type_path.path.segments
             } else {
                 panic!("55136128-fe0b-4599-978d-8577ae049c98");
@@ -140,9 +136,9 @@ pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &syn::Varia
                 let first_argument = args.iter().next().expect("f9d97146-c9ba-48f6-9f80-3540f7f7aa60");
                 quote! {#first_argument}.to_string()
             };
-            assert!(quote! {#std_string_string}.to_string() == first_argument_str, "bbdda4ab-809d-45c7-92f4-245f23318458");
+            assert!(quote! {#StdStringString}.to_string() == first_argument_str, "bbdda4ab-809d-45c7-92f4-245f23318458");
             args.iter().nth(1).expect("f4e88416-5417-405a-9c0d-6035f815bbdd")
-        }
+        };
         let el_c25b655e_ident = el_c25b655e.ident.as_ref().expect("438aa90e-d1f3-4b89-a61a-e2d9f6a7e653");
         let el_type_ts = {
             let el_type = &el_c25b655e.ty;
@@ -151,7 +147,7 @@ pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &syn::Varia
         let el_type_with_serialize_deserialize_ts = match ErrorOccurenceFieldAttribute::try_from(el_c25b655e).expect("2db209a8-2f57-4474-a9c6-9743aaaed57d") {
             ErrorOccurenceFieldAttribute::EoToStdStringString => {
                 quote! {
-                    #std_string_string
+                    #StdStringString
                 }
             }
             ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize | ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => el_type_ts,
@@ -160,7 +156,7 @@ pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &syn::Varia
             ).parse::<Ts2>().expect("201dc0a4-4563-4e51-a228-ba085b767775"),
             ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
                 quote! {
-                    Vec<#std_string_string>
+                    Vec<#StdStringString>
                 }
             }
             ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
@@ -189,24 +185,24 @@ pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &syn::Varia
                 }
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
-                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(el_c25b655e, std_string_string);
+                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap();
                 quote! {
-                    std::collections::HashMap<#std_string_string, #std_string_string>
+                    std::collections::HashMap<#StdStringString, #StdStringString>
                 }
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
-                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(el_c25b655e, std_string_string);
+                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap();
                 el_type_ts
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
-                let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap(el_c25b655e, std_string_string);
+                let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap();
                 let el_hashmap_value_type_with_serialize_deserialize_ts = format!(
                     "{}{}",
                     quote! {#second_argument},
                     WithSerializeDeserializeUcc
                 ).parse::<Ts2>().expect("86307dbc-484e-4012-ac70-2d593b1f99e6");
                 quote! {
-                    std::collections::HashMap<#std_string_string, #el_hashmap_value_type_with_serialize_deserialize_ts>
+                    std::collections::HashMap<#StdStringString, #el_hashmap_value_type_with_serialize_deserialize_ts>
                 }
             }
         };
