@@ -3,6 +3,12 @@ use naming::{
     ValueSc,
     parameter::{PgJsonTypeWhereSelfUcc, PgTypeWhereSelfUcc},
 };
+use pg_crud_macros_common::{
+    ColumnParameterUnderscore, ImportPath, IncrementParameterUnderscore,
+    IsNeedToAddLogicalOperatorUnderscore, IsQueryBindMutable, PgJsonTypeFilter, PgTypeFilter,
+    PgTypeOrPgJsonType, gen_impl_default_option_some_vec_one_el_ts,
+    impl_pg_type_where_filter_for_ident_ts,
+};
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use std::fmt::Display;
@@ -105,7 +111,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
     let gen_where_filters_config =
         serde_json::from_str::<GenWhereFiltersConfig>(&input_ts.to_string())
             .expect("1217b73b-456c-4a3e-8a5a-5d5b8b8c3452");
-    let import_path = pg_crud_macros_common::ImportPath::PgCrudCommon;
+    let import_path = ImportPath::PgCrudCommon;
     let t_ts = quote! {T};
     let t_annotation_generic_ts = quote! {<#t_ts>};
     let proc_macro2_ts_new = Ts2::new();
@@ -144,7 +150,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
         }
     };
     let gen_impl_default_option_some_vec_one_el_ts = |should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn quote::ToTokens, impl_default_option_some_vec_one_el_additional_fields_ts: &dyn quote::ToTokens| {
-        pg_crud_macros_common::gen_impl_default_option_some_vec_one_el_ts(
+        gen_impl_default_option_some_vec_one_el_ts(
             &match &should_add_declaration_of_struct_ident_generic {
                 ShouldAddDeclarationOfStructIdentGeneric::False => Ts2::new(),
                 ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_ts } => {
@@ -154,7 +160,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                     )
                 }
             },
-            &pg_crud_macros_common::ImportPath::PgCrudCommon,
+            &ImportPath::PgCrudCommon,
             &ident,
             match &should_add_declaration_of_struct_ident_generic {
                 ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_ts_new,
@@ -172,13 +178,13 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
         filter_type: &FilterType,
         should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric,
         ident: &dyn quote::ToTokens,
-        increment_parameter_underscore: &pg_crud_macros_common::IncrementParameterUnderscore,
-        is_need_to_add_logical_operator_underscore: &pg_crud_macros_common::IsNeedToAddLogicalOperatorUnderscore,
+        increment_parameter_underscore: &IncrementParameterUnderscore,
+        is_need_to_add_logical_operator_underscore: &IsNeedToAddLogicalOperatorUnderscore,
         query_part_content_ts: &dyn quote::ToTokens,
-        is_query_bind_mutable: &pg_crud_macros_common::IsQueryBindMutable,
+        is_query_bind_mutable: &IsQueryBindMutable,
         query_bind_content_ts: &dyn quote::ToTokens
     | {
-        pg_crud_macros_common::impl_pg_type_where_filter_for_ident_ts(
+        impl_pg_type_where_filter_for_ident_ts(
             &{
                 let maybe_t_additional_traits_for_pg_type_where_filter_ts: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
                     ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_ts_new,
@@ -202,12 +208,12 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                 ShouldAddDeclarationOfStructIdentGeneric::True { .. } => &t_annotation_generic_ts,
             },
             increment_parameter_underscore,
-            &pg_crud_macros_common::ColumnParameterUnderscore::False,
+            &ColumnParameterUnderscore::False,
             is_need_to_add_logical_operator_underscore,
             &query_part_content_ts,
             is_query_bind_mutable,
             &query_bind_content_ts,
-            &pg_crud_macros_common::ImportPath::PgCrudCommon,
+            &ImportPath::PgCrudCommon,
         )
     };
     let regular_expression_case_and_value_declaration_ts = quote! {
@@ -333,8 +339,8 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                 #value_default_option_some_vec_one_el_ts
             }
         };
-    let is_query_bind_mutable_true = pg_crud_macros_common::IsQueryBindMutable::True;
-    let is_query_bind_mutable_false = pg_crud_macros_common::IsQueryBindMutable::False;
+    let is_query_bind_mutable_true = IsQueryBindMutable::True;
+    let is_query_bind_mutable_false = IsQueryBindMutable::False;
     let gen_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_ts =
         |dimension_number: &DimensionNumber| {
             let pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_ts =
@@ -355,21 +361,21 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
         };
     let gen_pg_type_dimensions_helpers =
         |pg_type_pattern_handle: &PgTypePatternHandle,
-         pg_type_or_pg_json_type: &pg_crud_macros_common::PgTypeOrPgJsonType| {
+         pg_type_or_pg_json_type: &PgTypeOrPgJsonType| {
             DimensionNumber::try_from(pg_type_pattern_handle).map_or_else(
             |()| (Ts2::new(),Ts2::new(), Ts2::new(), PgTypeKind::Standart, Ts2::new(), Ts2::new()),
             |dimension_number| (
                 match &pg_type_or_pg_json_type {
-                    pg_crud_macros_common::PgTypeOrPgJsonType::PgType => gen_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_ts(&dimension_number),
-                    pg_crud_macros_common::PgTypeOrPgJsonType::PgJsonType => gen_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_ts(&dimension_number),
+                    PgTypeOrPgJsonType::PgType => gen_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_ts(&dimension_number),
+                    PgTypeOrPgJsonType::PgJsonType => gen_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_ts(&dimension_number),
                 },
                 dimensions_default_initialization_comma_ts.clone(),
                 gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(
                     &DimensionsIndexesSc,
                     &DimensionsSc,
                     &match &pg_type_or_pg_json_type {
-                        pg_crud_macros_common::PgTypeOrPgJsonType::PgType => quote! {pg_type_query_part},
-                        pg_crud_macros_common::PgTypeOrPgJsonType::PgJsonType => quote! {pg_json_type_query_part},
+                        PgTypeOrPgJsonType::PgType => quote! {pg_type_query_part},
+                        PgTypeOrPgJsonType::PgJsonType => quote! {pg_json_type_query_part},
                     },
                 ),
                 PgTypeKind::ArrayDimension,
@@ -379,7 +385,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
         )
         };
     let pg_type_ts = {
-        let gen_filters_ts = |filter: &pg_crud_macros_common::PgTypeFilter| {
+        let gen_filters_ts = |filter: &PgTypeFilter| {
             let ident = PgTypeWhereSelfUcc::from_display(&filter);
             let (
                 should_add_declaration_of_struct_ident_generic,
@@ -401,7 +407,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                     |pg_type_pattern_handle: &PgTypePatternHandle| {
                         gen_pg_type_dimensions_helpers(
                             pg_type_pattern_handle,
-                            &pg_crud_macros_common::PgTypeOrPgJsonType::PgType,
+                            &PgTypeOrPgJsonType::PgType,
                         )
                     };
                 let gen_32abfefc_c087_480b_b502_cb78533dafb0_ts =
@@ -423,7 +429,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                             gen_maybe_dimensions_default_initialization_value_default_ts(
                                 &maybe_dimensions_default_initialization_ts,
                             ),
-                            pg_crud_macros_common::IncrementParameterUnderscore::False,
+                            IncrementParameterUnderscore::False,
                             {
                                 let format_handle_ts = gen_quotes::double_quotes_ts(
                                     &gen_format_handle_str(&pg_type_kind),
@@ -478,7 +484,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                             #pub_value_between_t_ts
                         },
                         gen_maybe_dimensions_default_initialization_value_default_ts(&maybe_dimensions_default_initialization_ts),
-                        pg_crud_macros_common::IncrementParameterUnderscore::False,
+                        IncrementParameterUnderscore::False,
                         {
                             let format_handle_ts = gen_quotes::double_quotes_ts(&format!("{{}}({{}}{} {{}})", pg_type_kind.format_argument()));
                             quote! {
@@ -522,7 +528,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                         gen_maybe_dimensions_default_initialization_value_default_ts(
                             &maybe_dimensions_default_initialization_ts,
                         ),
-                        pg_crud_macros_common::IncrementParameterUnderscore::False,
+                        IncrementParameterUnderscore::False,
                         {
                             let format_handle_ts = gen_quotes::double_quotes_ts(&format!(
                                 "{{}}({{}}{} in ({{}}))",
@@ -589,7 +595,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                             #maybe_dimensions_default_initialization_ts
                             #regular_expression_case_and_value_default_initialization_ts
                         },
-                        pg_crud_macros_common::IncrementParameterUnderscore::False,
+                        IncrementParameterUnderscore::False,
                         {
                             let format_handle_ts = gen_quotes::double_quotes_ts(&format!(
                                 "{{}}({{}}{} {{}} ${{}})",
@@ -632,7 +638,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                         gen_maybe_dimensions_default_initialization_value_default_ts(
                             &maybe_dimensions_default_initialization_ts,
                         ),
-                        pg_crud_macros_common::IncrementParameterUnderscore::False,
+                        IncrementParameterUnderscore::False,
                         {
                             let format_handle_ts = gen_quotes::double_quotes_ts(&format!(
                                 "{{}}({{}}{} < ${{}})",
@@ -672,14 +678,12 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                             maybe_dimensions_declaration_ts,
                             maybe_dimensions_default_initialization_ts,
                             match &pg_type_pattern_handle {
-                                PgTypePatternHandle::Standart => {
-                                    pg_crud_macros_common::IncrementParameterUnderscore::True
-                                }
+                                PgTypePatternHandle::Standart => IncrementParameterUnderscore::True,
                                 PgTypePatternHandle::ArrayDimension1
                                 | PgTypePatternHandle::ArrayDimension2
                                 | PgTypePatternHandle::ArrayDimension3
                                 | PgTypePatternHandle::ArrayDimension4 => {
-                                    pg_crud_macros_common::IncrementParameterUnderscore::False
+                                    IncrementParameterUnderscore::False
                                 }
                             },
                             {
@@ -773,7 +777,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                                 encode_format: #pg_crud_common_default_option_some_vec_one_el_call_ts,
                                 encoded_string_representation: #core_default_default_default_ts
                             },
-                            pg_crud_macros_common::IncrementParameterUnderscore::False,
+                            IncrementParameterUnderscore::False,
                             {
                                 let format_handle_ts = gen_quotes::double_quotes_ts(&format!(
                                     "{{}}(encode({{}}{}, '{{}}') = ${{}})",
@@ -830,7 +834,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                         pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts
                             .clone(),
                         value_default_option_some_vec_one_el_ts.clone(),
-                        pg_crud_macros_common::IncrementParameterUnderscore::False,
+                        IncrementParameterUnderscore::False,
                         {
                             let format_handle_ts = gen_quotes::double_quotes_ts(&format!(
                                 "{{}}(array_length({{}}, 1) {operator} ${{}})"
@@ -940,7 +944,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                         gen_maybe_dimensions_default_initialization_value_default_ts(
                             &maybe_dimensions_default_initialization_ts,
                         ),
-                        pg_crud_macros_common::IncrementParameterUnderscore::False,
+                        IncrementParameterUnderscore::False,
                         {
                             let format_handle_ts = gen_quotes::double_quotes_ts(&format!(
                                 "{{}}(upper({{}}{}) - lower({{}}{}) = ${{}})",
@@ -967,15 +971,30 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                     )
                 };
                 match &filter {
-                    pg_crud_macros_common::PgTypeFilter::Equal { .. } => {
-                        let (maybe_dimensions_declaration_ts, maybe_dimensions_default_initialization_ts, maybe_dimensions_indexes_initialization_ts, _, _, maybe_dimensions_query_bind_content_ts) = gen_pg_type_dimensions_helpers_pg_type(&pg_type_pattern_handle_standart);
+                    PgTypeFilter::Equal { .. } => {
+                        let (
+                            maybe_dimensions_declaration_ts,
+                            maybe_dimensions_default_initialization_ts,
+                            maybe_dimensions_indexes_initialization_ts,
+                            _,
+                            _,
+                            maybe_dimensions_query_bind_content_ts,
+                        ) = gen_pg_type_dimensions_helpers_pg_type(
+                            &pg_type_pattern_handle_standart,
+                        );
                         (
                             ShouldAddDeclarationOfStructIdentGeneric::True {
-                                maybe_additional_traits_ts: Some(quote! {#sqlx_type_pg_encode_ts + pg_crud_common::PgTypeEqualOperator}),
+                                maybe_additional_traits_ts: Some(
+                                    quote! {#sqlx_type_pg_encode_ts + pg_crud_common::PgTypeEqualOperator},
+                                ),
                             },
-                            gen_maybe_dimensions_declaration_pub_value_t_ts(&maybe_dimensions_declaration_ts),
-                            gen_maybe_dimensions_default_initialization_value_default_ts(&maybe_dimensions_default_initialization_ts),
-                            pg_crud_macros_common::IncrementParameterUnderscore::False,
+                            gen_maybe_dimensions_declaration_pub_value_t_ts(
+                                &maybe_dimensions_declaration_ts,
+                            ),
+                            gen_maybe_dimensions_default_initialization_value_default_ts(
+                                &maybe_dimensions_default_initialization_ts,
+                            ),
+                            IncrementParameterUnderscore::False,
                             quote! {
                                 #maybe_dimensions_indexes_initialization_ts
                                 let operator = <T as pg_crud_common::PgTypeEqualOperator>::operator(&#SelfSc.#ValueSc);
@@ -999,15 +1018,30 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                             },
                         )
                     }
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneEqual { .. } => {
-                        let (maybe_dimensions_declaration_ts, maybe_dimensions_default_initialization_ts, maybe_dimensions_indexes_initialization_ts, _, _, maybe_dimensions_query_bind_content_ts) = gen_pg_type_dimensions_helpers_pg_type(&pg_type_pattern_handle_array_dimension1);
+                    PgTypeFilter::DimensionOneEqual { .. } => {
+                        let (
+                            maybe_dimensions_declaration_ts,
+                            maybe_dimensions_default_initialization_ts,
+                            maybe_dimensions_indexes_initialization_ts,
+                            _,
+                            _,
+                            maybe_dimensions_query_bind_content_ts,
+                        ) = gen_pg_type_dimensions_helpers_pg_type(
+                            &pg_type_pattern_handle_array_dimension1,
+                        );
                         (
                             ShouldAddDeclarationOfStructIdentGeneric::True {
-                                maybe_additional_traits_ts: Some(quote! {#sqlx_type_pg_encode_ts + pg_crud_common::PgTypeEqualOperator}),
+                                maybe_additional_traits_ts: Some(
+                                    quote! {#sqlx_type_pg_encode_ts + pg_crud_common::PgTypeEqualOperator},
+                                ),
                             },
-                            gen_maybe_dimensions_declaration_pub_value_t_ts(&maybe_dimensions_declaration_ts),
-                            gen_maybe_dimensions_default_initialization_value_default_ts(&maybe_dimensions_default_initialization_ts),
-                            pg_crud_macros_common::IncrementParameterUnderscore::False,
+                            gen_maybe_dimensions_declaration_pub_value_t_ts(
+                                &maybe_dimensions_declaration_ts,
+                            ),
+                            gen_maybe_dimensions_default_initialization_value_default_ts(
+                                &maybe_dimensions_default_initialization_ts,
+                            ),
+                            IncrementParameterUnderscore::False,
                             quote! {
                                 #maybe_dimensions_indexes_initialization_ts
                                 let operator = <T as pg_crud_common::PgTypeEqualOperator>::operator(&#SelfSc.#ValueSc);
@@ -1033,54 +1067,160 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                             },
                         )
                     }
-                    pg_crud_macros_common::PgTypeFilter::GreaterThan { .. } => gen_greater_than_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneGreaterThan { .. } => gen_greater_than_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::Between { .. } => gen_between_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneBetween { .. } => gen_between_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::In { .. } => gen_in_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneIn { .. } => gen_in_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::RegularExpression => gen_regular_expression_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneRegularExpression => gen_regular_expression_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::Before { .. } => gen_before_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneBefore { .. } => gen_before_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::CurrentDate => gen_current_date_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneCurrentDate => gen_current_date_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::GreaterThanCurrentDate => gen_greater_than_current_date_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneGreaterThanCurrentDate => gen_greater_than_current_date_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::CurrentTimestamp => gen_current_timestamp_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneCurrentTimestamp => gen_current_timestamp_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::GreaterThanCurrentTimestamp => gen_greater_than_current_timestamp_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneGreaterThanCurrentTimestamp => gen_greater_than_current_timestamp_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::CurrentTime => gen_current_time_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneCurrentTime => gen_current_time_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::GreaterThanCurrentTime => gen_greater_than_current_time_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneGreaterThanCurrentTime => gen_greater_than_current_time_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneLengthEqual => gen_length_filter_pattern_ts(&"="),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneLengthGreaterThan => gen_length_filter_pattern_ts(&">"),
-                    pg_crud_macros_common::PgTypeFilter::EqualToEncodedStringRepresentation => gen_equal_to_encoded_string_representation_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneEqualToEncodedStringRepresentation => gen_equal_to_encoded_string_representation_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::FindRangesWithinGivenRange { .. } => gen_find_ranges_within_given_range_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneFindRangesWithinGivenRange { .. } => gen_find_ranges_within_given_range_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::FindRangesThatFullyContainTheGivenRange { .. } => gen_find_ranges_that_fully_contain_the_given_range_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneFindRangesThatFullyContainTheGivenRange { .. } => gen_find_ranges_that_fully_contain_the_given_range_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::StrictlyToLeftOfRange { .. } => gen_strictly_to_left_of_range_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneStrictlyToLeftOfRange { .. } => gen_strictly_to_left_of_range_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::StrictlyToRightOfRange { .. } => gen_strictly_to_right_of_range_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneStrictlyToRightOfRange { .. } => gen_strictly_to_right_of_range_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::IncludedLowerBound { .. } => gen_included_lower_bound_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneIncludedLowerBound { .. } => gen_included_lower_bound_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::ExcludedUpperBound { .. } => gen_excluded_upper_bound_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneExcludedUpperBound { .. } => gen_excluded_upper_bound_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::GreaterThanIncludedLowerBound { .. } => gen_greater_than_included_lower_bound_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneGreaterThanIncludedLowerBound { .. } => gen_greater_than_included_lower_bound_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::GreaterThanExcludedUpperBound { .. } => gen_greater_than_excluded_upper_bound_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneGreaterThanExcludedUpperBound { .. } => gen_greater_than_excluded_upper_bound_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::OverlapWithRange { .. } => gen_overlap_with_range_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneOverlapWithRange { .. } => gen_overlap_with_range_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::AdjacentWithRange { .. } => gen_adjacent_with_range_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneAdjacentWithRange { .. } => gen_adjacent_with_range_ts(&pg_type_pattern_handle_array_dimension1),
-                    pg_crud_macros_common::PgTypeFilter::RangeLength => gen_range_length_ts(&pg_type_pattern_handle_standart),
-                    pg_crud_macros_common::PgTypeFilter::DimensionOneRangeLength => gen_range_length_ts(&pg_type_pattern_handle_array_dimension1),
+                    PgTypeFilter::GreaterThan { .. } => {
+                        gen_greater_than_ts(&pg_type_pattern_handle_standart)
+                    }
+                    PgTypeFilter::DimensionOneGreaterThan { .. } => {
+                        gen_greater_than_ts(&pg_type_pattern_handle_array_dimension1)
+                    }
+                    PgTypeFilter::Between { .. } => {
+                        gen_between_ts(&pg_type_pattern_handle_standart)
+                    }
+                    PgTypeFilter::DimensionOneBetween { .. } => {
+                        gen_between_ts(&pg_type_pattern_handle_array_dimension1)
+                    }
+                    PgTypeFilter::In { .. } => gen_in_ts(&pg_type_pattern_handle_standart),
+                    PgTypeFilter::DimensionOneIn { .. } => {
+                        gen_in_ts(&pg_type_pattern_handle_array_dimension1)
+                    }
+                    PgTypeFilter::RegularExpression => {
+                        gen_regular_expression_ts(&pg_type_pattern_handle_standart)
+                    }
+                    PgTypeFilter::DimensionOneRegularExpression => {
+                        gen_regular_expression_ts(&pg_type_pattern_handle_array_dimension1)
+                    }
+                    PgTypeFilter::Before { .. } => gen_before_ts(&pg_type_pattern_handle_standart),
+                    PgTypeFilter::DimensionOneBefore { .. } => {
+                        gen_before_ts(&pg_type_pattern_handle_array_dimension1)
+                    }
+                    PgTypeFilter::CurrentDate => {
+                        gen_current_date_ts(&pg_type_pattern_handle_standart)
+                    }
+                    PgTypeFilter::DimensionOneCurrentDate => {
+                        gen_current_date_ts(&pg_type_pattern_handle_array_dimension1)
+                    }
+                    PgTypeFilter::GreaterThanCurrentDate => {
+                        gen_greater_than_current_date_ts(&pg_type_pattern_handle_standart)
+                    }
+                    PgTypeFilter::DimensionOneGreaterThanCurrentDate => {
+                        gen_greater_than_current_date_ts(&pg_type_pattern_handle_array_dimension1)
+                    }
+                    PgTypeFilter::CurrentTimestamp => {
+                        gen_current_timestamp_ts(&pg_type_pattern_handle_standart)
+                    }
+                    PgTypeFilter::DimensionOneCurrentTimestamp => {
+                        gen_current_timestamp_ts(&pg_type_pattern_handle_array_dimension1)
+                    }
+                    PgTypeFilter::GreaterThanCurrentTimestamp => {
+                        gen_greater_than_current_timestamp_ts(&pg_type_pattern_handle_standart)
+                    }
+                    PgTypeFilter::DimensionOneGreaterThanCurrentTimestamp => {
+                        gen_greater_than_current_timestamp_ts(
+                            &pg_type_pattern_handle_array_dimension1,
+                        )
+                    }
+                    PgTypeFilter::CurrentTime => {
+                        gen_current_time_ts(&pg_type_pattern_handle_standart)
+                    }
+                    PgTypeFilter::DimensionOneCurrentTime => {
+                        gen_current_time_ts(&pg_type_pattern_handle_array_dimension1)
+                    }
+                    PgTypeFilter::GreaterThanCurrentTime => {
+                        gen_greater_than_current_time_ts(&pg_type_pattern_handle_standart)
+                    }
+                    PgTypeFilter::DimensionOneGreaterThanCurrentTime => {
+                        gen_greater_than_current_time_ts(&pg_type_pattern_handle_array_dimension1)
+                    }
+                    PgTypeFilter::DimensionOneLengthEqual => gen_length_filter_pattern_ts(&"="),
+                    PgTypeFilter::DimensionOneLengthGreaterThan => {
+                        gen_length_filter_pattern_ts(&">")
+                    }
+                    PgTypeFilter::EqualToEncodedStringRepresentation => {
+                        gen_equal_to_encoded_string_representation_ts(
+                            &pg_type_pattern_handle_standart,
+                        )
+                    }
+                    PgTypeFilter::DimensionOneEqualToEncodedStringRepresentation => {
+                        gen_equal_to_encoded_string_representation_ts(
+                            &pg_type_pattern_handle_array_dimension1,
+                        )
+                    }
+                    PgTypeFilter::FindRangesWithinGivenRange { .. } => {
+                        gen_find_ranges_within_given_range_ts(&pg_type_pattern_handle_standart)
+                    }
+                    PgTypeFilter::DimensionOneFindRangesWithinGivenRange { .. } => {
+                        gen_find_ranges_within_given_range_ts(
+                            &pg_type_pattern_handle_array_dimension1,
+                        )
+                    }
+                    PgTypeFilter::FindRangesThatFullyContainTheGivenRange { .. } => {
+                        gen_find_ranges_that_fully_contain_the_given_range_ts(
+                            &pg_type_pattern_handle_standart,
+                        )
+                    }
+                    PgTypeFilter::DimensionOneFindRangesThatFullyContainTheGivenRange {
+                        ..
+                    } => gen_find_ranges_that_fully_contain_the_given_range_ts(
+                        &pg_type_pattern_handle_array_dimension1,
+                    ),
+                    PgTypeFilter::StrictlyToLeftOfRange { .. } => {
+                        gen_strictly_to_left_of_range_ts(&pg_type_pattern_handle_standart)
+                    }
+                    PgTypeFilter::DimensionOneStrictlyToLeftOfRange { .. } => {
+                        gen_strictly_to_left_of_range_ts(&pg_type_pattern_handle_array_dimension1)
+                    }
+                    PgTypeFilter::StrictlyToRightOfRange { .. } => {
+                        gen_strictly_to_right_of_range_ts(&pg_type_pattern_handle_standart)
+                    }
+                    PgTypeFilter::DimensionOneStrictlyToRightOfRange { .. } => {
+                        gen_strictly_to_right_of_range_ts(&pg_type_pattern_handle_array_dimension1)
+                    }
+                    PgTypeFilter::IncludedLowerBound { .. } => {
+                        gen_included_lower_bound_ts(&pg_type_pattern_handle_standart)
+                    }
+                    PgTypeFilter::DimensionOneIncludedLowerBound { .. } => {
+                        gen_included_lower_bound_ts(&pg_type_pattern_handle_array_dimension1)
+                    }
+                    PgTypeFilter::ExcludedUpperBound { .. } => {
+                        gen_excluded_upper_bound_ts(&pg_type_pattern_handle_standart)
+                    }
+                    PgTypeFilter::DimensionOneExcludedUpperBound { .. } => {
+                        gen_excluded_upper_bound_ts(&pg_type_pattern_handle_array_dimension1)
+                    }
+                    PgTypeFilter::GreaterThanIncludedLowerBound { .. } => {
+                        gen_greater_than_included_lower_bound_ts(&pg_type_pattern_handle_standart)
+                    }
+                    PgTypeFilter::DimensionOneGreaterThanIncludedLowerBound { .. } => {
+                        gen_greater_than_included_lower_bound_ts(
+                            &pg_type_pattern_handle_array_dimension1,
+                        )
+                    }
+                    PgTypeFilter::GreaterThanExcludedUpperBound { .. } => {
+                        gen_greater_than_excluded_upper_bound_ts(&pg_type_pattern_handle_standart)
+                    }
+                    PgTypeFilter::DimensionOneGreaterThanExcludedUpperBound { .. } => {
+                        gen_greater_than_excluded_upper_bound_ts(
+                            &pg_type_pattern_handle_array_dimension1,
+                        )
+                    }
+                    PgTypeFilter::OverlapWithRange { .. } => {
+                        gen_overlap_with_range_ts(&pg_type_pattern_handle_standart)
+                    }
+                    PgTypeFilter::DimensionOneOverlapWithRange { .. } => {
+                        gen_overlap_with_range_ts(&pg_type_pattern_handle_array_dimension1)
+                    }
+                    PgTypeFilter::AdjacentWithRange { .. } => {
+                        gen_adjacent_with_range_ts(&pg_type_pattern_handle_standart)
+                    }
+                    PgTypeFilter::DimensionOneAdjacentWithRange { .. } => {
+                        gen_adjacent_with_range_ts(&pg_type_pattern_handle_array_dimension1)
+                    }
+                    PgTypeFilter::RangeLength => {
+                        gen_range_length_ts(&pg_type_pattern_handle_standart)
+                    }
+                    PgTypeFilter::DimensionOneRangeLength => {
+                        gen_range_length_ts(&pg_type_pattern_handle_array_dimension1)
+                    }
                 }
             };
             let struct_ts = gen_struct_ts(
@@ -1099,7 +1239,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                 &should_add_declaration_of_struct_ident_generic,
                 &ident,
                 &increment_parameter_underscore,
-                &pg_crud_macros_common::IsNeedToAddLogicalOperatorUnderscore::False,
+                &IsNeedToAddLogicalOperatorUnderscore::False,
                 &query_part_content_ts,
                 &is_query_bind_mutable,
                 &query_bind_content_ts,
@@ -1111,8 +1251,8 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
             };
             gend
         };
-        let filter_array_ts = pg_crud_macros_common::PgTypeFilter::into_array()
-            .map(|el_7cfb1929| gen_filters_ts(&el_7cfb1929));
+        let filter_array_ts =
+            PgTypeFilter::into_array().map(|el_7cfb1929| gen_filters_ts(&el_7cfb1929));
         let gend = quote! {#(#filter_array_ts)*};
         macros_helpers::maybe_write_ts_into_file(
             gen_where_filters_config.pg_types_content_write_into_gen_where_filters_pg_types,
@@ -1123,7 +1263,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
         gend
     };
     let pg_json_type_ts = {
-        let gen_filters_ts = |filter: &pg_crud_macros_common::PgJsonTypeFilter| {
+        let gen_filters_ts = |filter: &PgJsonTypeFilter| {
             let ident = PgJsonTypeWhereSelfUcc::from_display(&filter);
             let pub_value_pg_json_type_not_empty_unique_vec_t_ts = quote! {
                 pub #ValueSc: PgJsonTypeNotEmptyUniqueVec<T>
@@ -1138,7 +1278,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                 |pg_type_pattern_handle: &PgTypePatternHandle| {
                     gen_pg_type_dimensions_helpers(
                         pg_type_pattern_handle,
-                        &pg_crud_macros_common::PgTypeOrPgJsonType::PgJsonType,
+                        &PgTypeOrPgJsonType::PgJsonType,
                     )
                 };
             let gen_1763ccf3_10be_4527_912b_363d8ea05f4b_ts =
@@ -1662,84 +1802,220 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                 )
             };
             let (
-                    should_add_declaration_of_struct_ident_generic,
-                    struct_additional_fields_ts,
-                    impl_default_option_some_vec_one_el_additional_fields_ts,
-                    query_part_content_ts,
-                    is_query_bind_mutable,
-                    query_bind_content_ts
-                ) = match &filter {
-                pg_crud_macros_common::PgJsonTypeFilter::Equal { .. } => gen_equal_ts(&pg_type_pattern_handle_standart),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionOneEqual { .. } => gen_equal_ts(&pg_type_pattern_handle_array_dimension1),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionTwoEqual { .. } => gen_equal_ts(&pg_type_pattern_handle_array_dimension2),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionThreeEqual { .. } => gen_equal_ts(&pg_type_pattern_handle_array_dimension3),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionFourEqual { .. } => gen_equal_ts(&pg_type_pattern_handle_array_dimension4),
-                pg_crud_macros_common::PgJsonTypeFilter::AllElementsEqual { .. } => gen_all_elements_equal_ts(&pg_type_pattern_handle_standart),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionOneAllElementsEqual { .. } => gen_all_elements_equal_ts(&pg_type_pattern_handle_array_dimension1),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionTwoAllElementsEqual { .. } => gen_all_elements_equal_ts(&pg_type_pattern_handle_array_dimension2),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionThreeAllElementsEqual { .. } => gen_all_elements_equal_ts(&pg_type_pattern_handle_array_dimension3),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionFourAllElementsEqual { .. } => gen_all_elements_equal_ts(&pg_type_pattern_handle_array_dimension4),
-                pg_crud_macros_common::PgJsonTypeFilter::LengthEqual => gen_length_equal_ts(&pg_type_pattern_handle_standart),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionOneLengthEqual => gen_length_equal_ts(&pg_type_pattern_handle_array_dimension1),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionTwoLengthEqual => gen_length_equal_ts(&pg_type_pattern_handle_array_dimension2),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionThreeLengthEqual => gen_length_equal_ts(&pg_type_pattern_handle_array_dimension3),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionFourLengthEqual => gen_length_equal_ts(&pg_type_pattern_handle_array_dimension4),
-                pg_crud_macros_common::PgJsonTypeFilter::LengthGreaterThan => gen_length_greater_than_ts(&pg_type_pattern_handle_standart),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionOneLengthGreaterThan => gen_length_greater_than_ts(&pg_type_pattern_handle_array_dimension1),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionTwoLengthGreaterThan => gen_length_greater_than_ts(&pg_type_pattern_handle_array_dimension2),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionThreeLengthGreaterThan => gen_length_greater_than_ts(&pg_type_pattern_handle_array_dimension3),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionFourLengthGreaterThan => gen_length_greater_than_ts(&pg_type_pattern_handle_array_dimension4),
-                pg_crud_macros_common::PgJsonTypeFilter::GreaterThan { .. } => gen_greater_than_ts(&pg_type_pattern_handle_standart),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionOneGreaterThan { .. } => gen_greater_than_ts(&pg_type_pattern_handle_array_dimension1),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionTwoGreaterThan { .. } => gen_greater_than_ts(&pg_type_pattern_handle_array_dimension2),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionThreeGreaterThan { .. } => gen_greater_than_ts(&pg_type_pattern_handle_array_dimension3),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionFourGreaterThan { .. } => gen_greater_than_ts(&pg_type_pattern_handle_array_dimension4),
-                pg_crud_macros_common::PgJsonTypeFilter::ContainsElGreaterThan { .. } => gen_contains_el_greater_than_ts(&pg_type_pattern_handle_standart),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionOneContainsElGreaterThan { .. } => gen_contains_el_greater_than_ts(&pg_type_pattern_handle_array_dimension1),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionTwoContainsElGreaterThan { .. } => gen_contains_el_greater_than_ts(&pg_type_pattern_handle_array_dimension2),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionThreeContainsElGreaterThan { .. } => gen_contains_el_greater_than_ts(&pg_type_pattern_handle_array_dimension3),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionFourContainsElGreaterThan { .. } => gen_contains_el_greater_than_ts(&pg_type_pattern_handle_array_dimension4),
-                pg_crud_macros_common::PgJsonTypeFilter::AllElementsGreaterThan { .. } => gen_all_elements_greater_than_ts(&pg_type_pattern_handle_standart),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionOneAllElementsGreaterThan { .. } => gen_all_elements_greater_than_ts(&pg_type_pattern_handle_array_dimension1),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionTwoAllElementsGreaterThan { .. } => gen_all_elements_greater_than_ts(&pg_type_pattern_handle_array_dimension2),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionThreeAllElementsGreaterThan { .. } => gen_all_elements_greater_than_ts(&pg_type_pattern_handle_array_dimension3),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionFourAllElementsGreaterThan { .. } => gen_all_elements_greater_than_ts(&pg_type_pattern_handle_array_dimension4),
-                pg_crud_macros_common::PgJsonTypeFilter::Between { .. } => gen_between_ts(&pg_type_pattern_handle_standart),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionOneBetween { .. } => gen_between_ts(&pg_type_pattern_handle_array_dimension1),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionTwoBetween { .. } => gen_between_ts(&pg_type_pattern_handle_array_dimension2),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionThreeBetween { .. } => gen_between_ts(&pg_type_pattern_handle_array_dimension3),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionFourBetween { .. } => gen_between_ts(&pg_type_pattern_handle_array_dimension4),
-                pg_crud_macros_common::PgJsonTypeFilter::In { .. } => gen_in_ts(&pg_type_pattern_handle_standart),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionOneIn { .. } => gen_in_ts(&pg_type_pattern_handle_array_dimension1),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionTwoIn { .. } => gen_in_ts(&pg_type_pattern_handle_array_dimension2),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionThreeIn { .. } => gen_in_ts(&pg_type_pattern_handle_array_dimension3),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionFourIn { .. } => gen_in_ts(&pg_type_pattern_handle_array_dimension4),
-                pg_crud_macros_common::PgJsonTypeFilter::RegularExpression => gen_regular_expression_ts(&pg_type_pattern_handle_standart),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionOneRegularExpression => gen_regular_expression_ts(&pg_type_pattern_handle_array_dimension1),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionTwoRegularExpression => gen_regular_expression_ts(&pg_type_pattern_handle_array_dimension2),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionThreeRegularExpression => gen_regular_expression_ts(&pg_type_pattern_handle_array_dimension3),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionFourRegularExpression => gen_regular_expression_ts(&pg_type_pattern_handle_array_dimension4),
-                pg_crud_macros_common::PgJsonTypeFilter::ContainsElRegularExpression => gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_standart),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionOneContainsElRegularExpression => gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_array_dimension1),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionTwoContainsElRegularExpression => gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_array_dimension2),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionThreeContainsElRegularExpression => gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_array_dimension3),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionFourContainsElRegularExpression => gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_array_dimension4),
-                pg_crud_macros_common::PgJsonTypeFilter::AllElementsRegularExpression => gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_standart),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionOneAllElementsRegularExpression => gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_array_dimension1),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionTwoAllElementsRegularExpression => gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_array_dimension2),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionThreeAllElementsRegularExpression => gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_array_dimension3),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionFourAllElementsRegularExpression => gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_array_dimension4),
-                pg_crud_macros_common::PgJsonTypeFilter::ContainsAllElementsOfArray { .. } => gen_contains_all_elements_of_array_ts(&pg_type_pattern_handle_standart),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionOneContainsAllElementsOfArray { .. } => gen_contains_all_elements_of_array_ts(&pg_type_pattern_handle_array_dimension1),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionTwoContainsAllElementsOfArray { .. } => gen_contains_all_elements_of_array_ts(&pg_type_pattern_handle_array_dimension2),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionThreeContainsAllElementsOfArray { .. } => gen_contains_all_elements_of_array_ts(&pg_type_pattern_handle_array_dimension3),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionFourContainsAllElementsOfArray { .. } => gen_contains_all_elements_of_array_ts(&pg_type_pattern_handle_array_dimension4),
-                // pg_crud_macros_common::PgJsonTypeFilter::ContainedInArray => todo!(),
-                pg_crud_macros_common::PgJsonTypeFilter::OverlapsWithArray { .. } => gen_overlaps_with_array_ts(&pg_type_pattern_handle_standart),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionOneOverlapsWithArray { .. } => gen_overlaps_with_array_ts(&pg_type_pattern_handle_array_dimension1),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionTwoOverlapsWithArray { .. } => gen_overlaps_with_array_ts(&pg_type_pattern_handle_array_dimension2),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionThreeOverlapsWithArray { .. } => gen_overlaps_with_array_ts(&pg_type_pattern_handle_array_dimension3),
-                pg_crud_macros_common::PgJsonTypeFilter::DimensionFourOverlapsWithArray { .. } => gen_overlaps_with_array_ts(&pg_type_pattern_handle_array_dimension4),
+                should_add_declaration_of_struct_ident_generic,
+                struct_additional_fields_ts,
+                impl_default_option_some_vec_one_el_additional_fields_ts,
+                query_part_content_ts,
+                is_query_bind_mutable,
+                query_bind_content_ts,
+            ) = match &filter {
+                PgJsonTypeFilter::Equal { .. } => gen_equal_ts(&pg_type_pattern_handle_standart),
+                PgJsonTypeFilter::DimensionOneEqual { .. } => {
+                    gen_equal_ts(&pg_type_pattern_handle_array_dimension1)
+                }
+                PgJsonTypeFilter::DimensionTwoEqual { .. } => {
+                    gen_equal_ts(&pg_type_pattern_handle_array_dimension2)
+                }
+                PgJsonTypeFilter::DimensionThreeEqual { .. } => {
+                    gen_equal_ts(&pg_type_pattern_handle_array_dimension3)
+                }
+                PgJsonTypeFilter::DimensionFourEqual { .. } => {
+                    gen_equal_ts(&pg_type_pattern_handle_array_dimension4)
+                }
+                PgJsonTypeFilter::AllElementsEqual { .. } => {
+                    gen_all_elements_equal_ts(&pg_type_pattern_handle_standart)
+                }
+                PgJsonTypeFilter::DimensionOneAllElementsEqual { .. } => {
+                    gen_all_elements_equal_ts(&pg_type_pattern_handle_array_dimension1)
+                }
+                PgJsonTypeFilter::DimensionTwoAllElementsEqual { .. } => {
+                    gen_all_elements_equal_ts(&pg_type_pattern_handle_array_dimension2)
+                }
+                PgJsonTypeFilter::DimensionThreeAllElementsEqual { .. } => {
+                    gen_all_elements_equal_ts(&pg_type_pattern_handle_array_dimension3)
+                }
+                PgJsonTypeFilter::DimensionFourAllElementsEqual { .. } => {
+                    gen_all_elements_equal_ts(&pg_type_pattern_handle_array_dimension4)
+                }
+                PgJsonTypeFilter::LengthEqual => {
+                    gen_length_equal_ts(&pg_type_pattern_handle_standart)
+                }
+                PgJsonTypeFilter::DimensionOneLengthEqual => {
+                    gen_length_equal_ts(&pg_type_pattern_handle_array_dimension1)
+                }
+                PgJsonTypeFilter::DimensionTwoLengthEqual => {
+                    gen_length_equal_ts(&pg_type_pattern_handle_array_dimension2)
+                }
+                PgJsonTypeFilter::DimensionThreeLengthEqual => {
+                    gen_length_equal_ts(&pg_type_pattern_handle_array_dimension3)
+                }
+                PgJsonTypeFilter::DimensionFourLengthEqual => {
+                    gen_length_equal_ts(&pg_type_pattern_handle_array_dimension4)
+                }
+                PgJsonTypeFilter::LengthGreaterThan => {
+                    gen_length_greater_than_ts(&pg_type_pattern_handle_standart)
+                }
+                PgJsonTypeFilter::DimensionOneLengthGreaterThan => {
+                    gen_length_greater_than_ts(&pg_type_pattern_handle_array_dimension1)
+                }
+                PgJsonTypeFilter::DimensionTwoLengthGreaterThan => {
+                    gen_length_greater_than_ts(&pg_type_pattern_handle_array_dimension2)
+                }
+                PgJsonTypeFilter::DimensionThreeLengthGreaterThan => {
+                    gen_length_greater_than_ts(&pg_type_pattern_handle_array_dimension3)
+                }
+                PgJsonTypeFilter::DimensionFourLengthGreaterThan => {
+                    gen_length_greater_than_ts(&pg_type_pattern_handle_array_dimension4)
+                }
+                PgJsonTypeFilter::GreaterThan { .. } => {
+                    gen_greater_than_ts(&pg_type_pattern_handle_standart)
+                }
+                PgJsonTypeFilter::DimensionOneGreaterThan { .. } => {
+                    gen_greater_than_ts(&pg_type_pattern_handle_array_dimension1)
+                }
+                PgJsonTypeFilter::DimensionTwoGreaterThan { .. } => {
+                    gen_greater_than_ts(&pg_type_pattern_handle_array_dimension2)
+                }
+                PgJsonTypeFilter::DimensionThreeGreaterThan { .. } => {
+                    gen_greater_than_ts(&pg_type_pattern_handle_array_dimension3)
+                }
+                PgJsonTypeFilter::DimensionFourGreaterThan { .. } => {
+                    gen_greater_than_ts(&pg_type_pattern_handle_array_dimension4)
+                }
+                PgJsonTypeFilter::ContainsElGreaterThan { .. } => {
+                    gen_contains_el_greater_than_ts(&pg_type_pattern_handle_standart)
+                }
+                PgJsonTypeFilter::DimensionOneContainsElGreaterThan { .. } => {
+                    gen_contains_el_greater_than_ts(&pg_type_pattern_handle_array_dimension1)
+                }
+                PgJsonTypeFilter::DimensionTwoContainsElGreaterThan { .. } => {
+                    gen_contains_el_greater_than_ts(&pg_type_pattern_handle_array_dimension2)
+                }
+                PgJsonTypeFilter::DimensionThreeContainsElGreaterThan { .. } => {
+                    gen_contains_el_greater_than_ts(&pg_type_pattern_handle_array_dimension3)
+                }
+                PgJsonTypeFilter::DimensionFourContainsElGreaterThan { .. } => {
+                    gen_contains_el_greater_than_ts(&pg_type_pattern_handle_array_dimension4)
+                }
+                PgJsonTypeFilter::AllElementsGreaterThan { .. } => {
+                    gen_all_elements_greater_than_ts(&pg_type_pattern_handle_standart)
+                }
+                PgJsonTypeFilter::DimensionOneAllElementsGreaterThan { .. } => {
+                    gen_all_elements_greater_than_ts(&pg_type_pattern_handle_array_dimension1)
+                }
+                PgJsonTypeFilter::DimensionTwoAllElementsGreaterThan { .. } => {
+                    gen_all_elements_greater_than_ts(&pg_type_pattern_handle_array_dimension2)
+                }
+                PgJsonTypeFilter::DimensionThreeAllElementsGreaterThan { .. } => {
+                    gen_all_elements_greater_than_ts(&pg_type_pattern_handle_array_dimension3)
+                }
+                PgJsonTypeFilter::DimensionFourAllElementsGreaterThan { .. } => {
+                    gen_all_elements_greater_than_ts(&pg_type_pattern_handle_array_dimension4)
+                }
+                PgJsonTypeFilter::Between { .. } => {
+                    gen_between_ts(&pg_type_pattern_handle_standart)
+                }
+                PgJsonTypeFilter::DimensionOneBetween { .. } => {
+                    gen_between_ts(&pg_type_pattern_handle_array_dimension1)
+                }
+                PgJsonTypeFilter::DimensionTwoBetween { .. } => {
+                    gen_between_ts(&pg_type_pattern_handle_array_dimension2)
+                }
+                PgJsonTypeFilter::DimensionThreeBetween { .. } => {
+                    gen_between_ts(&pg_type_pattern_handle_array_dimension3)
+                }
+                PgJsonTypeFilter::DimensionFourBetween { .. } => {
+                    gen_between_ts(&pg_type_pattern_handle_array_dimension4)
+                }
+                PgJsonTypeFilter::In { .. } => gen_in_ts(&pg_type_pattern_handle_standart),
+                PgJsonTypeFilter::DimensionOneIn { .. } => {
+                    gen_in_ts(&pg_type_pattern_handle_array_dimension1)
+                }
+                PgJsonTypeFilter::DimensionTwoIn { .. } => {
+                    gen_in_ts(&pg_type_pattern_handle_array_dimension2)
+                }
+                PgJsonTypeFilter::DimensionThreeIn { .. } => {
+                    gen_in_ts(&pg_type_pattern_handle_array_dimension3)
+                }
+                PgJsonTypeFilter::DimensionFourIn { .. } => {
+                    gen_in_ts(&pg_type_pattern_handle_array_dimension4)
+                }
+                PgJsonTypeFilter::RegularExpression => {
+                    gen_regular_expression_ts(&pg_type_pattern_handle_standart)
+                }
+                PgJsonTypeFilter::DimensionOneRegularExpression => {
+                    gen_regular_expression_ts(&pg_type_pattern_handle_array_dimension1)
+                }
+                PgJsonTypeFilter::DimensionTwoRegularExpression => {
+                    gen_regular_expression_ts(&pg_type_pattern_handle_array_dimension2)
+                }
+                PgJsonTypeFilter::DimensionThreeRegularExpression => {
+                    gen_regular_expression_ts(&pg_type_pattern_handle_array_dimension3)
+                }
+                PgJsonTypeFilter::DimensionFourRegularExpression => {
+                    gen_regular_expression_ts(&pg_type_pattern_handle_array_dimension4)
+                }
+                PgJsonTypeFilter::ContainsElRegularExpression => {
+                    gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_standart)
+                }
+                PgJsonTypeFilter::DimensionOneContainsElRegularExpression => {
+                    gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_array_dimension1)
+                }
+                PgJsonTypeFilter::DimensionTwoContainsElRegularExpression => {
+                    gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_array_dimension2)
+                }
+                PgJsonTypeFilter::DimensionThreeContainsElRegularExpression => {
+                    gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_array_dimension3)
+                }
+                PgJsonTypeFilter::DimensionFourContainsElRegularExpression => {
+                    gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_array_dimension4)
+                }
+                PgJsonTypeFilter::AllElementsRegularExpression => {
+                    gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_standart)
+                }
+                PgJsonTypeFilter::DimensionOneAllElementsRegularExpression => {
+                    gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_array_dimension1)
+                }
+                PgJsonTypeFilter::DimensionTwoAllElementsRegularExpression => {
+                    gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_array_dimension2)
+                }
+                PgJsonTypeFilter::DimensionThreeAllElementsRegularExpression => {
+                    gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_array_dimension3)
+                }
+                PgJsonTypeFilter::DimensionFourAllElementsRegularExpression => {
+                    gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_array_dimension4)
+                }
+                PgJsonTypeFilter::ContainsAllElementsOfArray { .. } => {
+                    gen_contains_all_elements_of_array_ts(&pg_type_pattern_handle_standart)
+                }
+                PgJsonTypeFilter::DimensionOneContainsAllElementsOfArray { .. } => {
+                    gen_contains_all_elements_of_array_ts(&pg_type_pattern_handle_array_dimension1)
+                }
+                PgJsonTypeFilter::DimensionTwoContainsAllElementsOfArray { .. } => {
+                    gen_contains_all_elements_of_array_ts(&pg_type_pattern_handle_array_dimension2)
+                }
+                PgJsonTypeFilter::DimensionThreeContainsAllElementsOfArray { .. } => {
+                    gen_contains_all_elements_of_array_ts(&pg_type_pattern_handle_array_dimension3)
+                }
+                PgJsonTypeFilter::DimensionFourContainsAllElementsOfArray { .. } => {
+                    gen_contains_all_elements_of_array_ts(&pg_type_pattern_handle_array_dimension4)
+                }
+                // PgJsonTypeFilter::ContainedInArray => todo!(),
+                PgJsonTypeFilter::OverlapsWithArray { .. } => {
+                    gen_overlaps_with_array_ts(&pg_type_pattern_handle_standart)
+                }
+                PgJsonTypeFilter::DimensionOneOverlapsWithArray { .. } => {
+                    gen_overlaps_with_array_ts(&pg_type_pattern_handle_array_dimension1)
+                }
+                PgJsonTypeFilter::DimensionTwoOverlapsWithArray { .. } => {
+                    gen_overlaps_with_array_ts(&pg_type_pattern_handle_array_dimension2)
+                }
+                PgJsonTypeFilter::DimensionThreeOverlapsWithArray { .. } => {
+                    gen_overlaps_with_array_ts(&pg_type_pattern_handle_array_dimension3)
+                }
+                PgJsonTypeFilter::DimensionFourOverlapsWithArray { .. } => {
+                    gen_overlaps_with_array_ts(&pg_type_pattern_handle_array_dimension4)
+                }
             };
             let struct_ts = gen_struct_ts(
                 false,
@@ -1756,8 +2032,8 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                 &FilterType::PgJsonType,
                 &should_add_declaration_of_struct_ident_generic,
                 &ident,
-                &pg_crud_macros_common::IncrementParameterUnderscore::False,
-                &pg_crud_macros_common::IsNeedToAddLogicalOperatorUnderscore::False,
+                &IncrementParameterUnderscore::False,
+                &IsNeedToAddLogicalOperatorUnderscore::False,
                 &query_part_content_ts,
                 &is_query_bind_mutable,
                 &query_bind_content_ts,
@@ -1769,8 +2045,8 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
             };
             gend
         };
-        let filter_array_ts = pg_crud_macros_common::PgJsonTypeFilter::into_array()
-            .map(|el_6a4ac539| gen_filters_ts(&el_6a4ac539));
+        let filter_array_ts =
+            PgJsonTypeFilter::into_array().map(|el_6a4ac539| gen_filters_ts(&el_6a4ac539));
         let gend = quote! {#(#filter_array_ts)*};
         macros_helpers::maybe_write_ts_into_file(
             gen_where_filters_config

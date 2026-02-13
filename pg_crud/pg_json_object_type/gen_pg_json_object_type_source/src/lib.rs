@@ -37,6 +37,35 @@ use naming::{
         SelfUpdateUcc, SelfWhereUcc,
     },
 };
+use pg_crud_macros_common::{
+    ColumnParameterUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrementUnderscore,
+    CreateQueryPartValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dimension,
+    ImportPath, IncrementParameterUnderscore, IsCreateQueryBindMutable,
+    IsNeedToAddLogicalOperatorUnderscore, IsPrimaryKeyUnderscore, IsQueryBindMutable,
+    IsSelectOnlyCreatedIdsQueryBindMutable, IsSelectOnlyUpdatedIdsQueryBindMutable,
+    IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed,
+    IsSelectQueryPartIsPgTypeUsed, IsSelectQueryPartSelfSelectUsed, IsUpdateQueryBindMutable,
+    IsUpdateQueryPartJsonbSetTargetUsed, IsUpdateQueryPartSelfUpdateUsed, NotNullOrNullable,
+    PgTypeOrPgJsonType, SelectQueryPartValueUnderscore,
+    UpdateQueryPartJsonbSetAccumulatorUnderscore, UpdateQueryPartJsonbSetPathUnderscore,
+    UpdateQueryPartJsonbSetTargetUnderscore, UpdateQueryPartValueUnderscore,
+    gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_max_page_size_ts,
+    gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_ts,
+    gen_impl_pg_crud_default_option_some_vec_one_el_max_page_size_ts,
+    gen_impl_pg_crud_default_option_some_vec_one_el_ts,
+    gen_impl_pg_json_type_test_cases_for_ident_ts, gen_impl_pg_json_type_ts,
+    gen_impl_pg_type_not_primary_key_for_ident_ts, gen_impl_pg_type_test_cases_for_ident_ts,
+    gen_impl_pg_type_ts, gen_impl_serde_deserialize_for_struct_ts,
+    gen_impl_sqlx_decode_sqlx_pg_for_ident_ts, gen_impl_sqlx_encode_sqlx_pg_for_ident_ts,
+    gen_impl_sqlx_type_sqlx_pg_for_ident_ts, gen_match_try_new_in_deserialize_ts,
+    gen_read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts,
+    gen_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts,
+    gen_read_only_ids_merged_with_create_into_where_equal_ts,
+    gen_return_err_query_part_error_named_write_into_buffer_ts,
+    gen_sqlx_types_json_type_declaration_ts, gen_std_option_option_tokens_declaration_ts,
+    gen_std_vec_vec_tokens_declaration_ts, gen_value_initialization_ts,
+    impl_pg_type_where_filter_for_ident_ts, maybe_wrap_into_braces_ts, wrap_content_into_scopes_ts,
+};
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use std::iter::repeat_with;
@@ -71,7 +100,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
     }
     #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
     struct PgJsonObjectTypeRecord {
-        not_null_or_nullable: pg_crud_macros_common::NotNullOrNullable,
+        not_null_or_nullable: NotNullOrNullable,
         pattern: Pattern,
         trait_gen: TraitGen,
     }
@@ -86,7 +115,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput =
         syn::parse2(input_ts).expect("e5f0e27b-e1fc-4d4d-b1f6-dbd56501ad66");
-    let import_path = pg_crud_macros_common::ImportPath::PgCrud;
+    let import_path = ImportPath::PgCrud;
     let gen_pg_json_object_type_config = serde_json::from_str::<GenPgJsonTypesConfig>(
         &macros_helpers::get_macro_attribute_meta_list_ts(
             &syn_derive_input.attrs,
@@ -101,29 +130,29 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
     let pg_json_object_type_record_vec = {
         let pg_json_object_type_record = gen_pg_json_object_type_config.variant;
         match (&pg_json_object_type_record.not_null_or_nullable, &pg_json_object_type_record.pattern) {
-            (pg_crud_macros_common::NotNullOrNullable::NotNull, Pattern::Standart) => vec![pg_json_object_type_record],
-            (pg_crud_macros_common::NotNullOrNullable::Nullable, Pattern::Standart) |
-            (pg_crud_macros_common::NotNullOrNullable::NotNull, Pattern::Array) => vec![
+            (NotNullOrNullable::NotNull, Pattern::Standart) => vec![pg_json_object_type_record],
+            (NotNullOrNullable::Nullable, Pattern::Standart) |
+            (NotNullOrNullable::NotNull, Pattern::Array) => vec![
                 PgJsonObjectTypeRecord {
-                    not_null_or_nullable: pg_crud_macros_common::NotNullOrNullable::NotNull,
+                    not_null_or_nullable: NotNullOrNullable::NotNull,
                     pattern: Pattern::Standart,
                     trait_gen: pg_json_object_type_record.trait_gen.clone(),
                 },
                 pg_json_object_type_record
             ],
-            (pg_crud_macros_common::NotNullOrNullable::Nullable, Pattern::Array) => vec![
+            (NotNullOrNullable::Nullable, Pattern::Array) => vec![
                 PgJsonObjectTypeRecord {
-                    not_null_or_nullable: pg_crud_macros_common::NotNullOrNullable::NotNull,
+                    not_null_or_nullable: NotNullOrNullable::NotNull,
                     pattern: Pattern::Standart,
                     trait_gen: pg_json_object_type_record.trait_gen.clone(),
                 },
                 PgJsonObjectTypeRecord {
-                    not_null_or_nullable: pg_crud_macros_common::NotNullOrNullable::Nullable,
+                    not_null_or_nullable: NotNullOrNullable::Nullable,
                     pattern: Pattern::Standart,
                     trait_gen: pg_json_object_type_record.trait_gen.clone(),
                 },
                 PgJsonObjectTypeRecord {
-                    not_null_or_nullable: pg_crud_macros_common::NotNullOrNullable::NotNull,
+                    not_null_or_nullable: NotNullOrNullable::NotNull,
                     pattern: Pattern::Array,
                     trait_gen: pg_json_object_type_record.trait_gen.clone(),
                 },
@@ -133,7 +162,6 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
     }
     // .into_iter()
     // .filter(|el_2f2d1e6c| {
-    //     use pg_crud_macros_common::NotNullOrNullable;
     //     let not_null_or_nullable_filter = match &el_2f2d1e6c.not_null_or_nullable {
     //         NotNullOrNullable::NotNull => true,
     //         NotNullOrNullable::Nullable => true,
@@ -314,12 +342,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
 
             let self_field_vec_ts = quote! {.0.to_vec()};
             let cfg_feature_test_utils = quote! {#[cfg(feature = "test-utils")]};
-            let return_err_query_part_error_named_write_into_buffer_ts = pg_crud_macros_common::gen_return_err_query_part_error_named_write_into_buffer_ts(import_path);
+            let return_err_query_part_error_named_write_into_buffer_ts = gen_return_err_query_part_error_named_write_into_buffer_ts(import_path);
             let none_ts = quote!{None};
             let must_use_ts = MustUse;
 
             let gen_import_path_value_initialization_ts = |content_ts: &dyn ToTokens|{
-                pg_crud_macros_common::gen_value_initialization_ts(
+                gen_value_initialization_ts(
                     &import_path,
                     &content_ts
                 )
@@ -382,29 +410,29 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 let syn_derive_input_ident_str = syn_derive_input_ident.to_string();
                 let jsonb_object_ucc_str = jsonb_object_ucc.to_string();
                 let vec_of_syn_derive_input_ident_with_id = format!("{vec_of_ucc}{syn_derive_input_ident}{with_id_ucc}");
-                let array_of_not_null_jsonb_object_with_id = format!("{array_of_ucc}{}{jsonb_object_ucc}{with_id_ucc}", pg_crud_macros_common::NotNullOrNullable::NotNull);
+                let array_of_not_null_jsonb_object_with_id = format!("{array_of_ucc}{}{jsonb_object_ucc}{with_id_ucc}", NotNullOrNullable::NotNull);
                 let (rust_part, pg_part, current_not_null_or_nullable) = match &ident_pattern {
-                    IdentPattern::StandartNotNullWithoutId => (syn_derive_input_ident_str, jsonb_object_ucc_str, pg_crud_macros_common::NotNullOrNullable::NotNull),
-                    IdentPattern::StandartNotNullWithId => (format!("{syn_derive_input_ident}{with_id_ucc}"), format!("{jsonb_object_ucc}{with_id_ucc}"), pg_crud_macros_common::NotNullOrNullable::NotNull),
-                    IdentPattern::StandartNullableWithoutId => (syn_derive_input_ident_str, jsonb_object_ucc_str, pg_crud_macros_common::NotNullOrNullable::Nullable),
-                    IdentPattern::ArrayNotNullWithId => (vec_of_syn_derive_input_ident_with_id, array_of_not_null_jsonb_object_with_id, pg_crud_macros_common::NotNullOrNullable::NotNull),
-                    IdentPattern::ArrayNullableWithIdentifier => (vec_of_syn_derive_input_ident_with_id, array_of_not_null_jsonb_object_with_id, pg_crud_macros_common::NotNullOrNullable::Nullable),
+                    IdentPattern::StandartNotNullWithoutId => (syn_derive_input_ident_str, jsonb_object_ucc_str, NotNullOrNullable::NotNull),
+                    IdentPattern::StandartNotNullWithId => (format!("{syn_derive_input_ident}{with_id_ucc}"), format!("{jsonb_object_ucc}{with_id_ucc}"), NotNullOrNullable::NotNull),
+                    IdentPattern::StandartNullableWithoutId => (syn_derive_input_ident_str, jsonb_object_ucc_str, NotNullOrNullable::Nullable),
+                    IdentPattern::ArrayNotNullWithId => (vec_of_syn_derive_input_ident_with_id, array_of_not_null_jsonb_object_with_id, NotNullOrNullable::NotNull),
+                    IdentPattern::ArrayNullableWithIdentifier => (vec_of_syn_derive_input_ident_with_id, array_of_not_null_jsonb_object_with_id, NotNullOrNullable::Nullable),
                 };
                 let current_not_null_or_nullable_rust = current_not_null_or_nullable.rust();
                 format!("{current_not_null_or_nullable_rust}{rust_part}{as_ucc}{current_not_null_or_nullable}{pg_part}").parse::<Ts2>().expect("43784dd3-f37a-438d-8bc8-d17f63feac66")
             };
 
             let ident = &gen_ident_ucc(&match (&not_null_or_nullable, &pattern) {
-                (pg_crud_macros_common::NotNullOrNullable::NotNull, Pattern::Standart) => IdentPattern::StandartNotNullWithoutId,
-                (pg_crud_macros_common::NotNullOrNullable::NotNull, Pattern::Array) => IdentPattern::ArrayNotNullWithId,
-                (pg_crud_macros_common::NotNullOrNullable::Nullable, Pattern::Standart) => IdentPattern::StandartNullableWithoutId,
-                (pg_crud_macros_common::NotNullOrNullable::Nullable, Pattern::Array) => IdentPattern::ArrayNullableWithIdentifier,
+                (NotNullOrNullable::NotNull, Pattern::Standart) => IdentPattern::StandartNotNullWithoutId,
+                (NotNullOrNullable::NotNull, Pattern::Array) => IdentPattern::ArrayNotNullWithId,
+                (NotNullOrNullable::Nullable, Pattern::Standart) => IdentPattern::StandartNullableWithoutId,
+                (NotNullOrNullable::Nullable, Pattern::Array) => IdentPattern::ArrayNullableWithIdentifier,
             });
             let ident_standart_not_null_ucc = &gen_ident_ucc(&IdentPattern::StandartNotNullWithoutId);
             let ident_array_not_null_ucc = &gen_ident_ucc(&IdentPattern::ArrayNotNullWithId);
             let ident_with_id_standart_not_null_ucc = &gen_ident_ucc(&IdentPattern::StandartNotNullWithId);
             let ident_with_id_array_not_null_ucc = &gen_ident_ucc(&IdentPattern::ArrayNotNullWithId);
-            let is_standart_not_null = matches!((&not_null_or_nullable, pattern), (pg_crud_macros_common::NotNullOrNullable::NotNull, Pattern::Standart));
+            let is_standart_not_null = matches!((&not_null_or_nullable, pattern), (NotNullOrNullable::NotNull, Pattern::Standart));
             let gen_type_as_import_path_ts = |first_type_ts: &dyn ToTokens, second_type_ts: &dyn ToTokens|{
                 quote! {<#first_type_ts as #import_path::#second_type_ts>}
             };
@@ -504,7 +532,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 let maybe_ident_with_id_standart_not_null_ts = if is_standart_not_null {
                     let ident_with_id_standart_not_null_ts = gen_struct_ident_ts(&ident_with_id_standart_not_null_ucc);
                     let cfg_feature_test_utils_impl_ident_with_id_standart_not_null_ts = {
-                        let read_only_ids_merged_with_create_into_where_equal_ts = pg_crud_macros_common::gen_read_only_ids_merged_with_create_into_where_equal_ts(
+                        let read_only_ids_merged_with_create_into_where_equal_ts = gen_read_only_ids_merged_with_create_into_where_equal_ts(
                             &ident_with_id_standart_not_null_read_only_ids_ucc,
                             &ident_with_id_standart_not_null_create_ucc,
                             &ident_with_id_standart_not_null_where_ucc,
@@ -546,7 +574,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 }
                             },
                         );
-                        let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts = pg_crud_macros_common::gen_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts(
+                        let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts = gen_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts(
                             &import_path,
                             &ident_with_id_standart_not_null_read_only_ids_ucc,
                             &ident_with_id_standart_not_null_create_ucc,
@@ -592,7 +620,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 }
                             },
                         );
-                        let read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts = pg_crud_macros_common::gen_read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts(
+                        let read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts = gen_read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts(
                             import_path,
                             &ident_with_id_standart_not_null_read_only_ids_ucc,
                             &ident_with_id_standart_not_null_create_ucc,
@@ -767,14 +795,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &ident_table_type_declaration_or_ident_create_ucc,
                     &match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => gen_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_ts(&is_standart_with_id_false, pg_json_type_subtype_table_type_declaration_or_create, &new_type_or_struct_declaration_struct_declaration),
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => wrap_into_scopes_ts(&pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(ident_standart_not_null_ucc))),
+                            NotNullOrNullable::NotNull => gen_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_ts(&is_standart_with_id_false, pg_json_type_subtype_table_type_declaration_or_create, &new_type_or_struct_declaration_struct_declaration),
+                            NotNullOrNullable::Nullable => wrap_into_scopes_ts(&gen_std_option_option_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(ident_standart_not_null_ucc))),
                         },
                         Pattern::Array => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => wrap_into_scopes_ts(&pg_crud_macros_common::gen_std_vec_vec_tokens_declaration_ts(
+                            NotNullOrNullable::NotNull => wrap_into_scopes_ts(&gen_std_vec_vec_tokens_declaration_ts(
                                 &gen_tokens_table_type_declaration_or_create_ts(&ident_with_id_standart_not_null_ucc)
                             )),
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => wrap_into_scopes_ts(&pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(&ident_with_id_array_not_null_ucc))),
+                            NotNullOrNullable::Nullable => wrap_into_scopes_ts(&gen_std_option_option_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(&ident_with_id_array_not_null_ucc))),
                         },
                     }
                 );
@@ -789,12 +817,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         };
                         match &pattern {
                             Pattern::Standart => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => gen_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_ts(&is_standart_with_id_false, pg_json_type_subtype_table_type_declaration_or_create, &new_type_or_struct_declaration_new_type),
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => gen_wrap_into_value_parameter_ts(&pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(ident_standart_not_null_ucc))),
+                                NotNullOrNullable::NotNull => gen_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_ts(&is_standart_with_id_false, pg_json_type_subtype_table_type_declaration_or_create, &new_type_or_struct_declaration_new_type),
+                                NotNullOrNullable::Nullable => gen_wrap_into_value_parameter_ts(&gen_std_option_option_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(ident_standart_not_null_ucc))),
                             },
                             Pattern::Array => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => gen_wrap_into_value_parameter_ts(&pg_crud_macros_common::gen_std_vec_vec_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(&ident_with_id_standart_not_null_ucc))),
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => gen_wrap_into_value_parameter_ts(&pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&pg_crud_macros_common::gen_std_vec_vec_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(
+                                NotNullOrNullable::NotNull => gen_wrap_into_value_parameter_ts(&gen_std_vec_vec_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(&ident_with_id_standart_not_null_ucc))),
+                                NotNullOrNullable::Nullable => gen_wrap_into_value_parameter_ts(&gen_std_option_option_tokens_declaration_ts(&gen_std_vec_vec_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(
                                     &ident_with_id_standart_not_null_ucc,
                                 )))),
                             },
@@ -802,18 +830,18 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     };
                     let content_ts = match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => gen_self_content_for_ident_or_ident_with_id_table_type_declaration_or_create_ts(&is_standart_with_id_false),
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => self_value_ts.clone(),
+                            NotNullOrNullable::NotNull => gen_self_content_for_ident_or_ident_with_id_table_type_declaration_or_create_ts(&is_standart_with_id_false),
+                            NotNullOrNullable::Nullable => self_value_ts.clone(),
                         },
                         Pattern::Array => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => self_value_ts.clone(),
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                            NotNullOrNullable::NotNull => self_value_ts.clone(),
+                            NotNullOrNullable::Nullable => {
                                 let ident_array_not_null_with_id_postfix_ucc = gen_tokens_table_type_declaration_or_create_ts(&gen_ident_ucc(&IdentPattern::ArrayNotNullWithId));
                                 quote! {Self(#value_sc.map(#ident_array_not_null_with_id_postfix_ucc::new))}
                             }
                         },
                     };
-                    if matches!(&pattern, Pattern::Array) && matches!(&not_null_or_nullable, pg_crud_macros_common::NotNullOrNullable::Nullable) {
+                    if matches!(&pattern, Pattern::Array) && matches!(&not_null_or_nullable, NotNullOrNullable::Nullable) {
                         macros_helpers::gen_impl_pub_new_for_ident_ts(
                             &ident_table_type_declaration_or_ident_create_ucc,
                             &must_use_ts,
@@ -833,7 +861,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 let gen_impl_pg_crud_default_option_some_vec_one_el_for_ident_table_type_declaration_or_create_ts = |
                     current_ident_ts: &dyn ToTokens,
                     content_ts: &dyn ToTokens
-                | pg_crud_macros_common::gen_impl_pg_crud_default_option_some_vec_one_el_ts(
+                | gen_impl_pg_crud_default_option_some_vec_one_el_ts(
                     &current_ident_ts,
                     &Ts2::new(),
                     &quote! {Self #content_ts}
@@ -855,18 +883,18 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 let impl_pg_crud_default_option_some_vec_one_el_for_ident_table_type_declaration_or_ident_create_ts = gen_impl_pg_crud_default_option_some_vec_one_el_for_ident_table_type_declaration_or_create_ts(
                     &ident_table_type_declaration_or_ident_create_ucc,
                     match &not_null_or_nullable {
-                        pg_crud_macros_common::NotNullOrNullable::NotNull => match &pattern {
+                        NotNullOrNullable::NotNull => match &pattern {
                             Pattern::Standart => &impl_pg_crud_default_option_some_vec_one_el_for_ident_table_type_declaration_or_create_standart_not_null_content_ts,
                             Pattern::Array => &scopes_vec_pg_crud_default_option_some_vec_one_el_call_ts,
                         },
-                        pg_crud_macros_common::NotNullOrNullable::Nullable => &scopes_some_pg_crud_default_option_some_vec_one_el_call_ts,
+                        NotNullOrNullable::Nullable => &scopes_some_pg_crud_default_option_some_vec_one_el_call_ts,
                     },
                 );
-                let impl_sqlx_encode_sqlx_pg_for_ident_table_type_declaration_or_ident_create_ts = pg_crud_macros_common::gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(
+                let impl_sqlx_encode_sqlx_pg_for_ident_table_type_declaration_or_ident_create_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(
                     &ident_table_type_declaration_or_ident_create_ucc,
                     &quote!{sqlx::types::Json(#self_sc)}
                 );
-                let impl_sqlx_type_sqlx_pg_for_ident_table_type_declaration_or_ident_create_ts = pg_crud_macros_common::gen_impl_sqlx_type_sqlx_pg_for_ident_ts(
+                let impl_sqlx_type_sqlx_pg_for_ident_table_type_declaration_or_ident_create_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(
                     &ident_table_type_declaration_or_ident_create_ucc,
                     &quote!{sqlx::types::Json<#self_ucc>}
                 );
@@ -1004,10 +1032,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &ident_create_for_query_ucc,
                         &match &pattern {
                             Pattern::Standart => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => gen_struct_standart_not_null_content_ts(&is_standart_with_id_false),
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                                NotNullOrNullable::NotNull => gen_struct_standart_not_null_content_ts(&is_standart_with_id_false),
+                                NotNullOrNullable::Nullable => {
                                     wrap_into_scopes_ts(
-                                        &pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(
+                                        &gen_std_option_option_tokens_declaration_ts(
                                             &gen_type_as_pg_json_type_subtype_ts(
                                                 &ident_standart_not_null_ucc,
                                                 &pg_json_type_subtype_create_for_query,
@@ -1017,13 +1045,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 },
                             },
                             Pattern::Array => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => wrap_into_scopes_ts(
-                                    &pg_crud_macros_common::gen_std_vec_vec_tokens_declaration_ts(
+                                NotNullOrNullable::NotNull => wrap_into_scopes_ts(
+                                    &gen_std_vec_vec_tokens_declaration_ts(
                                         &ident_with_id_standart_not_null_create_for_query_ucc
                                     )
                                 ),
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => wrap_into_scopes_ts(
-                                    &pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(
+                                NotNullOrNullable::Nullable => wrap_into_scopes_ts(
+                                    &gen_std_option_option_tokens_declaration_ts(
                                         &gen_type_as_pg_json_type_subtype_ts(
                                             &ident_array_not_null_ucc,
                                             &pg_json_type_subtype_create_for_query,
@@ -1038,13 +1066,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &ident_create_for_query_ucc,
                         &{
                             let content_ts = match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => match &pattern {
+                                NotNullOrNullable::NotNull => match &pattern {
                                     Pattern::Standart => quote! {{#impl_std_convert_from_standart_not_null_without_id_content_ts}},
                                     Pattern::Array => quote!{(
                                         #value_sc.0.into_iter().map(#ident_with_id_standart_not_null_create_for_query_ucc::from).collect()
                                     )},
                                 },
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                                NotNullOrNullable::Nullable => {
                                     let content_ts: &dyn ToTokens = match &pattern {
                                         Pattern::Standart => &ident_standart_not_null_as_pg_json_type_create_for_query_ts,
                                         Pattern::Array => &ident_array_not_null_as_pg_json_type_create_for_query_ts,
@@ -1055,11 +1083,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             quote! {Self #content_ts}
                         }
                     );
-                    let impl_sqlx_encode_sqlx_pg_for_ident_create_for_query_ts = pg_crud_macros_common::gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(
+                    let impl_sqlx_encode_sqlx_pg_for_ident_create_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(
                         &ident_create_for_query_ucc,
                         &quote!{sqlx::types::Json(#self_sc)}
                     );
-                    let impl_sqlx_type_sqlx_pg_for_ident_create_for_query_ts = pg_crud_macros_common::gen_impl_sqlx_type_sqlx_pg_for_ident_ts(
+                    let impl_sqlx_type_sqlx_pg_for_ident_create_for_query_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(
                         &ident_create_for_query_ucc,
                         &quote!{sqlx::types::Json<#self_ucc>}
                     );
@@ -1098,13 +1126,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     #maybe_ident_with_id_standart_not_null_create_for_query_ts
                 }
             };
-            let gen_sqlx_types_json_type_declaration_wrapper_ts = |current_ident_ts: &dyn ToTokens| pg_crud_macros_common::gen_impl_sqlx_type_sqlx_pg_for_ident_ts(
+            let gen_sqlx_types_json_type_declaration_wrapper_ts = |current_ident_ts: &dyn ToTokens| gen_impl_sqlx_type_sqlx_pg_for_ident_ts(
                 &current_ident_ts,
-                &pg_crud_macros_common::gen_sqlx_types_json_type_declaration_ts(&self_ucc)
+                &gen_sqlx_types_json_type_declaration_ts(&self_ucc)
             );
-            let gen_impl_sqlx_decode_sqlx_pg_for_ident_wrapper_ts = |current_ident_ts: &dyn ToTokens| pg_crud_macros_common::gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
+            let gen_impl_sqlx_decode_sqlx_pg_for_ident_wrapper_ts = |current_ident_ts: &dyn ToTokens| gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
                 &current_ident_ts,
-                &pg_crud_macros_common::gen_sqlx_types_json_type_declaration_ts(&self_ucc),
+                &gen_sqlx_types_json_type_declaration_ts(&self_ucc),
                 &quote! {Ok(value_147c3532.0)}
             );
             let gen_value_type_ts = |type_ts: &dyn ToTokens| {
@@ -1125,7 +1153,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 Self(Some(#PgCrudDefaultOptionSomeVecOneElMaxPageSizeCall))
             };
             let wrap_content_into_scopes_dot_comma_ts = |content_ts: &dyn ToTokens| {
-                let scopes_content_ts = pg_crud_macros_common::wrap_content_into_scopes_ts(&content_ts);
+                let scopes_content_ts = wrap_content_into_scopes_ts(&content_ts);
                 quote! {#scopes_content_ts;}
             };
             let gen_type_as_pg_json_type_update_ts = |type_ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&type_ts, &pg_json_type_subtype_update);
@@ -1231,7 +1259,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 };
                 let import_path_pagination_ts = quote! {#import_path::PaginationStartsWithZero};
                 let ident_select_ts = match &not_null_or_nullable {
-                    pg_crud_macros_common::NotNullOrNullable::NotNull => match &pattern {
+                    NotNullOrNullable::NotNull => match &pattern {
                         Pattern::Standart => gen_ident_select_standart_not_null_ts(&is_standart_with_id_false),
                         Pattern::Array => gen_pub_struct_ident_select_ts(
                             &AllowClippyArbitrarySourceItemOrdering,
@@ -1242,10 +1270,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             }},
                         ),
                     },
-                    pg_crud_macros_common::NotNullOrNullable::Nullable => gen_pub_struct_ident_select_ts(
+                    NotNullOrNullable::Nullable => gen_pub_struct_ident_select_ts(
                         &AllowClippyArbitrarySourceItemOrdering,
                         &ident_select_ucc,
-                        &wrap_content_into_scopes_dot_comma_ts(&pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&match &pattern {
+                        &wrap_content_into_scopes_dot_comma_ts(&gen_std_option_option_tokens_declaration_ts(&match &pattern {
                             Pattern::Standart => &ident_standart_not_null_as_pg_json_type_select_ts,
                             Pattern::Array => &ident_with_id_array_not_null_as_pg_json_type_select_ts,
                         })),
@@ -1257,36 +1285,36 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             let unique_vec_ident_select_el_standart_not_null_ts = gen_unique_vec_wrapper_ts(&ident_standart_not_null_select_el_ucc);
                             match &pattern {
                                 Pattern::Standart => match &not_null_or_nullable {
-                                    pg_crud_macros_common::NotNullOrNullable::NotNull => gen_value_type_ts(&unique_vec_ident_select_el_standart_not_null_ts),
-                                    pg_crud_macros_common::NotNullOrNullable::Nullable => gen_value_type_ts(&pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&unique_vec_ident_select_el_standart_not_null_ts)),
+                                    NotNullOrNullable::NotNull => gen_value_type_ts(&unique_vec_ident_select_el_standart_not_null_ts),
+                                    NotNullOrNullable::Nullable => gen_value_type_ts(&gen_std_option_option_tokens_declaration_ts(&unique_vec_ident_select_el_standart_not_null_ts)),
                                 },
                                 Pattern::Array => match &not_null_or_nullable {
-                                    pg_crud_macros_common::NotNullOrNullable::NotNull => quote! {
+                                    NotNullOrNullable::NotNull => quote! {
                                         #ident_with_id_standart_not_null_select_sc: #ident_with_id_standart_not_null_select_ucc,
                                         #dimension1_pagination_ts: #import_path_pagination_ts
                                     },
-                                    pg_crud_macros_common::NotNullOrNullable::Nullable => gen_value_type_ts(&pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&ident_with_id_array_not_null_as_pg_json_type_select_ts)),
+                                    NotNullOrNullable::Nullable => gen_value_type_ts(&gen_std_option_option_tokens_declaration_ts(&ident_with_id_array_not_null_as_pg_json_type_select_ts)),
                                 },
                             }
                         };
                         let content_ts = match &pattern {
                             Pattern::Standart => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => self_value_ts.clone(),
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => quote! {
+                                NotNullOrNullable::NotNull => self_value_ts.clone(),
+                                NotNullOrNullable::Nullable => quote! {
                                     Self(#value_sc.map(#ident_standart_not_null_as_pg_json_type_select_ts::new))
                                 },
                             },
                             Pattern::Array => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                NotNullOrNullable::NotNull => {
                                     quote! {Self {
                                         #ident_with_id_standart_not_null_select_sc,
                                         #dimension1_pagination_ts,
                                     }}
                                 }
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => self_value_ts.clone(),
+                                NotNullOrNullable::Nullable => self_value_ts.clone(),
                             },
                         };
-                        if matches!(&pattern, Pattern::Standart) && matches!(&not_null_or_nullable, pg_crud_macros_common::NotNullOrNullable::Nullable) {
+                        if matches!(&pattern, Pattern::Standart) && matches!(&not_null_or_nullable, NotNullOrNullable::Nullable) {
                             macros_helpers::gen_pub_new_ts(
                                 &must_use_ts,
                                 &parameters_ts,
@@ -1302,7 +1330,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         }
                     };
                     let maybe_select_query_part_ts = if matches!(&pattern, Pattern::Standart) &&
-                    matches!(&not_null_or_nullable, pg_crud_macros_common::NotNullOrNullable::NotNull) {
+                    matches!(&not_null_or_nullable, NotNullOrNullable::NotNull) {
                         let acc_ac57d097_ts = quote!{acc_ac57d097};
                         let select_query_part_for_loop_ts = gen_select_query_part_for_loop_ts(
                             &acc_ac57d097_ts,
@@ -1331,13 +1359,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     let select_query_part_pg_type_ts = {
                         let content_ts = match &pattern {
                             Pattern::Standart => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => quote! {
+                                NotNullOrNullable::NotNull => quote! {
                                     #self_sc.#select_query_part_sc(
                                         #column_sc,
                                         #column_sc,
                                     )
                                 },
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                                NotNullOrNullable::Nullable => {
                                     let ident_740c9034 = match &pattern {
                                         Pattern::Standart => &ident_standart_not_null_as_pg_json_type_select_ts,
                                         Pattern::Array => &ident_with_id_array_not_null_as_pg_json_type_select_ts,
@@ -1355,7 +1383,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 },
                             },
                             Pattern::Array => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                NotNullOrNullable::NotNull => {
                                     let acc_399d9786_ts = quote!{acc_399d9786};
                                     let select_query_part_for_loop_ts = gen_select_query_part_for_loop_ts(
                                         &acc_399d9786_ts,
@@ -1380,7 +1408,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         Ok(format!(#format_handle_ts))
                                     }
                                 }
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                                NotNullOrNullable::Nullable => {
                                     let format_handle_ts = gen_quotes::double_quotes_ts(&"case when jsonb_typeof({column}) = 'null' then 'null'::jsonb else ({value_c2ca032e}) end");
                                     let ident_with_id_array_not_null_as_pg_json_type_select_as_default_but_option_is_some_ts = gen_ident_as_default_but_option_is_some_ts(
                                         &ident_with_id_array_not_null_as_pg_json_type_select_ts
@@ -1427,20 +1455,20 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     impl_pg_crud_default_option_some_vec_one_el_for_ident_select_ts,
                     impl_pg_crud_default_option_some_vec_one_el_max_page_size_for_ident_select_ts
                 ) = {
-                    let gen_default_some_one_content_ts = |default_some_one_or_default_some_one_with_max_page_size: &pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
+                    let gen_default_some_one_content_ts = |default_some_one_or_default_some_one_with_max_page_size: &DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
                         match &pattern {
                             Pattern::Standart => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => match &default_some_one_or_default_some_one_with_max_page_size {
-                                    pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => quote! {#impl_pg_crud_default_option_some_vec_one_el_standart_not_null_content_ts},
-                                    pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => quote! {#impl_pg_crud_default_option_some_vec_one_el_max_page_size_standart_not_null_content_ts},
+                                NotNullOrNullable::NotNull => match &default_some_one_or_default_some_one_with_max_page_size {
+                                    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => quote! {#impl_pg_crud_default_option_some_vec_one_el_standart_not_null_content_ts},
+                                    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => quote! {#impl_pg_crud_default_option_some_vec_one_el_max_page_size_standart_not_null_content_ts},
                                 },
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => match &default_some_one_or_default_some_one_with_max_page_size {
-                                    pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => self_some_pg_crud_default_option_some_vec_one_el_call_ts.clone(),
-                                    pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => self_some_pg_crud_default_option_some_vec_one_el_max_page_size_call_ts.clone(),
+                                NotNullOrNullable::Nullable => match &default_some_one_or_default_some_one_with_max_page_size {
+                                    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => self_some_pg_crud_default_option_some_vec_one_el_call_ts.clone(),
+                                    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => self_some_pg_crud_default_option_some_vec_one_el_max_page_size_call_ts.clone(),
                                 },
                             },
                             Pattern::Array => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                NotNullOrNullable::NotNull => {
                                     let (
                                         ident_with_id_standart_not_null_select_content_ts,
                                         dimension1_pagination_content_ts
@@ -1448,11 +1476,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         &dyn ToTokens,
                                         &dyn ToTokens
                                     ) = match &default_some_one_or_default_some_one_with_max_page_size {
-                                        pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => (
+                                        DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => (
                                             &PgCrudDefaultOptionSomeVecOneElCall,
                                             &PgCrudDefaultOptionSomeVecOneElCall
                                         ),
-                                        pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => (
+                                        DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => (
                                             &PgCrudDefaultOptionSomeVecOneElMaxPageSizeCall,
                                             &PgCrudDefaultOptionSomeVecOneElMaxPageSizeCall
                                         ),
@@ -1464,23 +1492,23 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         }
                                     }
                                 },
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => match &default_some_one_or_default_some_one_with_max_page_size {
-                                    pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => self_some_pg_crud_default_option_some_vec_one_el_call_ts.clone(),
-                                    pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => self_some_pg_crud_default_option_some_vec_one_el_max_page_size_call_ts.clone(),
+                                NotNullOrNullable::Nullable => match &default_some_one_or_default_some_one_with_max_page_size {
+                                    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => self_some_pg_crud_default_option_some_vec_one_el_call_ts.clone(),
+                                    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => self_some_pg_crud_default_option_some_vec_one_el_max_page_size_call_ts.clone(),
                                 },
                             },
                         }
                     };
                     (
-                        pg_crud_macros_common::gen_impl_pg_crud_default_option_some_vec_one_el_ts(
+                        gen_impl_pg_crud_default_option_some_vec_one_el_ts(
                             &ident_select_ucc,
                             &Ts2::new(),
-                            &gen_default_some_one_content_ts(&pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)
+                            &gen_default_some_one_content_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)
                         ),
-                        pg_crud_macros_common::gen_impl_pg_crud_default_option_some_vec_one_el_max_page_size_ts(
+                        gen_impl_pg_crud_default_option_some_vec_one_el_max_page_size_ts(
                             &ident_select_ucc,
                             &Ts2::new(),
-                            &gen_default_some_one_content_ts(&pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)
+                            &gen_default_some_one_content_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)
                         )
                     )
                 };
@@ -1525,11 +1553,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         impl_pg_crud_all_variants_default_option_some_vec_one_el_for_ident_select_el_or_ident_with_id_standart_not_null_select_el_ts,
                         impl_pg_crud_all_variants_default_option_some_vec_one_el_for_ident_select_el_or_ident_with_id_standart_not_null_select_el_with_max_page_size_ts
                     ) = {
-                        let gen_default_some_one_content_ts = |default_some_one_or_default_some_one_with_max_page_size: &pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
+                        let gen_default_some_one_content_ts = |default_some_one_or_default_some_one_with_max_page_size: &DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
                             let vec_content_ts = {
                                 let content_ts: &dyn ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
-                                    pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudDefaultOptionSomeVecOneElCall,
-                                    pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudDefaultOptionSomeVecOneElMaxPageSizeCall,
+                                    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudDefaultOptionSomeVecOneElCall,
+                                    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudDefaultOptionSomeVecOneElMaxPageSizeCall,
                                 };
                                 let elements_ts = get_vec_syn_field(is_standart_with_id).iter().map(|el_20fc16d2| {
                                     let field_ident = &el_20fc16d2.field_ident;
@@ -1543,13 +1571,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             ]}
                         };
                         (
-                            pg_crud_macros_common::gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_ts(
+                            gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_ts(
                                 &ident_select_el_or_ident_with_id_select_el_ucc,
-                                &gen_default_some_one_content_ts(&pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)
+                                &gen_default_some_one_content_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)
                             ),
-                            pg_crud_macros_common::gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_max_page_size_ts(
+                            gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_max_page_size_ts(
                                 &ident_select_el_or_ident_with_id_select_el_ucc,
-                                &gen_default_some_one_content_ts(&pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)
+                                &gen_default_some_one_content_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)
                             )
                         )
                     };
@@ -1577,12 +1605,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     };
                     let impl_sqlx_type_sqlx_pg_for_ident_with_id_standart_not_null_select_ts = gen_sqlx_types_json_type_declaration_wrapper_ts(&ident_with_id_standart_not_null_select_ucc);
                     let impl_sqlx_decode_sqlx_pg_for_ident_with_id_standart_not_null_select_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_wrapper_ts(&ident_with_id_standart_not_null_select_ucc);
-                    let impl_pg_crud_default_option_some_vec_one_el_for_ident_with_id_standart_not_null_select_ts = pg_crud_macros_common::gen_impl_pg_crud_default_option_some_vec_one_el_ts(
+                    let impl_pg_crud_default_option_some_vec_one_el_for_ident_with_id_standart_not_null_select_ts = gen_impl_pg_crud_default_option_some_vec_one_el_ts(
                         &ident_with_id_standart_not_null_select_ucc,
                         &Ts2::new(),
                         &impl_pg_crud_default_option_some_vec_one_el_standart_not_null_content_ts
                     );
-                    let impl_pg_crud_default_option_some_vec_one_el_max_page_size_for_ident_with_id_standart_not_null_select_ts = pg_crud_macros_common::gen_impl_pg_crud_default_option_some_vec_one_el_max_page_size_ts(
+                    let impl_pg_crud_default_option_some_vec_one_el_max_page_size_for_ident_with_id_standart_not_null_select_ts = gen_impl_pg_crud_default_option_some_vec_one_el_max_page_size_ts(
                         &ident_with_id_standart_not_null_select_ucc,
                         &Ts2::new(),
                         &impl_pg_crud_default_option_some_vec_one_el_max_page_size_standart_not_null_content_ts
@@ -1613,8 +1641,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             };
             let ident_where_ucc = SelfWhereUcc::from_tokens(&ident);
             let ident_where_ts = match &not_null_or_nullable {
-                pg_crud_macros_common::NotNullOrNullable::NotNull => {
-                    use pg_crud_macros_common::NotNullOrNullable;
+                NotNullOrNullable::NotNull => {
                     let gen_ident_where_field_variants_ts = |is_standart_with_id: &IsStandartWithId| {
                         let variants_ts = get_vec_syn_field(is_standart_with_id).iter().map(|el_622d1e96| {
                             let field_ident_ucc_ts = AsRefStrToUccTs::case_or_panic(&el_622d1e96.field_ident.to_string());
@@ -1759,24 +1786,24 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     let gen_impl_pg_type_where_filter_ts = |
                         current_ident_ts: &dyn ToTokens,
                         query_part_content_ts: &dyn ToTokens,
-                        is_query_bind_mutable: pg_crud_macros_common::IsQueryBindMutable,
+                        is_query_bind_mutable: IsQueryBindMutable,
                         query_bind_content_ts: &dyn ToTokens
                     | {
-                        pg_crud_macros_common::impl_pg_type_where_filter_for_ident_ts(
+                        impl_pg_type_where_filter_for_ident_ts(
                             &quote! {<'lifetime>},
                             &current_ident_ts,
                             &Ts2::new(),
-                            &pg_crud_macros_common::IncrementParameterUnderscore::False,
-                            &pg_crud_macros_common::ColumnParameterUnderscore::False,
-                            &pg_crud_macros_common::IsNeedToAddLogicalOperatorUnderscore::False,
+                            &IncrementParameterUnderscore::False,
+                            &ColumnParameterUnderscore::False,
+                            &IsNeedToAddLogicalOperatorUnderscore::False,
                             &query_part_content_ts,
                             &is_query_bind_mutable,
                             &query_bind_content_ts,
-                            &pg_crud_macros_common::ImportPath::PgCrud,
+                            &ImportPath::PgCrud,
                         )
                     };
                     let maybe_impl_pg_crud_pg_type_pg_type_where_filter_for_ident_where_ts = {
-                        let gen_impl_pg_type_where_filter_for_ident_ts = |query_part_content_ts: &dyn ToTokens, is_query_bind_mutable: pg_crud_macros_common::IsQueryBindMutable, query_bind_content_ts: &dyn ToTokens| gen_impl_pg_type_where_filter_ts(&ident_where_ucc, &query_part_content_ts, is_query_bind_mutable, &query_bind_content_ts);
+                        let gen_impl_pg_type_where_filter_for_ident_ts = |query_part_content_ts: &dyn ToTokens, is_query_bind_mutable: IsQueryBindMutable, query_bind_content_ts: &dyn ToTokens| gen_impl_pg_type_where_filter_ts(&ident_where_ucc, &query_part_content_ts, is_query_bind_mutable, &query_bind_content_ts);
                         match &pattern {
                             Pattern::Standart => match &not_null_or_nullable {
                                 NotNullOrNullable::NotNull => gen_impl_pg_type_where_filter_for_ident_ts(
@@ -1789,7 +1816,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             }
                                         }
                                     },
-                                    pg_crud_macros_common::IsQueryBindMutable::False,
+                                    IsQueryBindMutable::False,
                                     &{
                                         let fields_content_ts = gen_where_filter_query_bind_fields_content_standart_not_null_ts(&is_standart_with_id_false);
                                         quote!{
@@ -1890,7 +1917,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         }
                                     }
                                 },
-                                pg_crud_macros_common::IsQueryBindMutable::False,
+                                IsQueryBindMutable::False,
                                 &{
                                     let el_filters_ts = vec_syn_field_with_id.iter().map(|el_9956277c| {
                                         let field_ident = &el_9956277c.field_ident;
@@ -1934,10 +1961,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     };
                     let maybe_impl_pg_crud_all_variants_default_option_some_vec_one_el_for_ident_where_ts = match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => pg_crud_macros_common::gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_ts(&ident_where_ucc, &gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_content_standart_not_null_where(&is_standart_with_id_false)),
+                            NotNullOrNullable::NotNull => gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_ts(&ident_where_ucc, &gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_content_standart_not_null_where(&is_standart_with_id_false)),
                             NotNullOrNullable::Nullable => Ts2::new(),
                         },
-                        Pattern::Array => pg_crud_macros_common::gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_ts(&ident_where_ucc, &{
+                        Pattern::Array => gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_ts(&ident_where_ucc, &{
                             let el_filters_ts = vec_syn_field_with_id.iter().map(|el_a3184731| {
                                 let field_ident = &el_a3184731.field_ident;
                                 let el_field_ident_ucc = ElementSelfUcc::from_tokens(&field_ident);
@@ -1986,7 +2013,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                             },
-                            pg_crud_macros_common::IsQueryBindMutable::False,
+                            IsQueryBindMutable::False,
                             &{
                                 let fields_content_ts = gen_where_filter_query_bind_fields_content_standart_not_null_ts(&is_standart_with_id_true);
                                 quote!{
@@ -1998,7 +2025,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             },
                         );
                         let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_standart_not_null_where_ts = gen_gen_impl_error_occurence_lib_to_std_string_string_wrapper_ts(&ident_with_id_standart_not_null_where_ucc);
-                        let impl_pg_crud_all_variants_default_option_some_vec_one_el_for_ident_with_id_standart_not_null_where_ts = pg_crud_macros_common::gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_ts(
+                        let impl_pg_crud_all_variants_default_option_some_vec_one_el_for_ident_with_id_standart_not_null_where_ts = gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_ts(
                             &ident_with_id_standart_not_null_where_ucc,
                             &gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_content_standart_not_null_where(&is_standart_with_id_true)
                         );
@@ -2019,7 +2046,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         #maybe_ident_with_id_standart_not_null_where_ts
                     }
                 }
-                pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                NotNullOrNullable::Nullable => {
                     let ident_standart_or_ident_with_id_array_as_pg_json_type_where_ts = gen_type_as_pg_json_type_subtype_ts(
                         &match &pattern {
                             Pattern::Standart => &ident_standart_not_null_ucc,
@@ -2059,7 +2086,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             &el_274293a0.field_type
                         ),
                     };
-                    let std_option_option_value_field_type_as_json_type_read_ts = pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(
+                    let std_option_option_value_field_type_as_json_type_read_ts = gen_std_option_option_tokens_declaration_ts(
                         &wrap_into_value_declaration_ts(&field_type_as_json_type_read_ts)
                     );
                     quote! {
@@ -2104,7 +2131,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 let ident_read_ts = {
                     let (content_ts, derive_serde_deserialize) = match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => (
+                            NotNullOrNullable::NotNull => (
                                 {
                                     let content_ts = gen_ident_or_ident_with_id_read_or_read_inner_fields_declaration_ts(
                                         &is_standart_with_id_false,
@@ -2114,11 +2141,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 },
                                 macros_helpers::DeriveSerdeDeserialize::False,
                             ),
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => (wrap_content_into_scopes_dot_comma_ts(&pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&ident_standart_not_null_as_pg_json_type_read_ts)), macros_helpers::DeriveSerdeDeserialize::True),
+                            NotNullOrNullable::Nullable => (wrap_content_into_scopes_dot_comma_ts(&gen_std_option_option_tokens_declaration_ts(&ident_standart_not_null_as_pg_json_type_read_ts)), macros_helpers::DeriveSerdeDeserialize::True),
                         },
                         Pattern::Array => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => (wrap_content_into_scopes_dot_comma_ts(&pg_crud_macros_common::gen_std_vec_vec_tokens_declaration_ts(&ident_with_id_standart_not_null_read_ucc)), macros_helpers::DeriveSerdeDeserialize::True),
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => (wrap_content_into_scopes_dot_comma_ts(&pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&ident_with_id_array_not_null_as_pg_json_type_read_ts)), macros_helpers::DeriveSerdeDeserialize::True),
+                            NotNullOrNullable::NotNull => (wrap_content_into_scopes_dot_comma_ts(&gen_std_vec_vec_tokens_declaration_ts(&ident_with_id_standart_not_null_read_ucc)), macros_helpers::DeriveSerdeDeserialize::True),
+                            NotNullOrNullable::Nullable => (wrap_content_into_scopes_dot_comma_ts(&gen_std_option_option_tokens_declaration_ts(&ident_with_id_array_not_null_as_pg_json_type_read_ts)), macros_helpers::DeriveSerdeDeserialize::True),
                         },
                     };
                     gen_ident_read_ts(&ident_read_ucc, &content_ts, derive_serde_deserialize)
@@ -2141,8 +2168,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     );
                 let maybe_ident_read_try_from_error_named_ts = match &pattern {
                     Pattern::Standart => match &not_null_or_nullable {
-                        pg_crud_macros_common::NotNullOrNullable::NotNull => gen_ident_read_try_from_error_named_ts(&ident_read_try_from_error_named_ucc),
-                        pg_crud_macros_common::NotNullOrNullable::Nullable => Ts2::new(),
+                        NotNullOrNullable::NotNull => gen_ident_read_try_from_error_named_ts(&ident_read_try_from_error_named_ucc),
+                        NotNullOrNullable::Nullable => Ts2::new(),
                     },
                     Pattern::Array => Ts2::new(),
                 };
@@ -2185,7 +2212,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             };
                             let check_if_all_fields_are_none_ts = {
                                 let current_vec_syn_field_len = current_vec_syn_field.len();
-                                let maybe_wrap_into_braces_handle_ts = |content_ts: &dyn ToTokens| pg_crud_macros_common::maybe_wrap_into_braces_ts(
+                                let maybe_wrap_into_braces_handle_ts = |content_ts: &dyn ToTokens| maybe_wrap_into_braces_ts(
                                     content_ts,
                                     current_vec_syn_field_len > 1
                                 );
@@ -2218,14 +2245,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 };
                 let impl_ident_read_ts = {
                     let pub_new_or_try_new_ts = {
-                        let std_vec_vec_ident_with_id_standart_not_null_read_ts = pg_crud_macros_common::gen_std_vec_vec_tokens_declaration_ts(&ident_with_id_standart_not_null_read_ucc);
+                        let std_vec_vec_ident_with_id_standart_not_null_read_ts = gen_std_vec_vec_tokens_declaration_ts(&ident_with_id_standart_not_null_read_ucc);
                         match &pattern {
                             Pattern::Standart => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => gen_pub_try_new_for_ident_read_or_ident_with_id_standart_not_null_read_ts(&is_standart_with_id_false),
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::gen_pub_const_new_ts(
+                                NotNullOrNullable::NotNull => gen_pub_try_new_for_ident_read_or_ident_with_id_standart_not_null_read_ts(&is_standart_with_id_false),
+                                NotNullOrNullable::Nullable => macros_helpers::gen_pub_const_new_ts(
                                     &must_use_ts,
                                     &gen_value_type_ts(
-                                        &pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(
+                                        &gen_std_option_option_tokens_declaration_ts(
                                             &ident_standart_not_null_as_pg_json_type_read_ts
                                         )
                                     ),
@@ -2233,17 +2260,17 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 ),
                             },
                             Pattern::Array => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::gen_pub_const_new_ts(
+                                NotNullOrNullable::NotNull => macros_helpers::gen_pub_const_new_ts(
                                     &must_use_ts,
                                     &gen_value_type_ts(
                                         &std_vec_vec_ident_with_id_standart_not_null_read_ts
                                     ),
                                     &self_value_ts
                                 ),
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::gen_pub_new_ts(
+                                NotNullOrNullable::Nullable => macros_helpers::gen_pub_new_ts(
                                     &must_use_ts,
                                     &gen_value_type_ts(
-                                        &pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(
+                                        &gen_std_option_option_tokens_declaration_ts(
                                             &std_vec_vec_ident_with_id_standart_not_null_read_ts
                                         )
                                     ),
@@ -2260,7 +2287,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 };
                 let gen_impl_serde_deserialize_for_ident_read_or_ident_with_id_standart_not_null_read_ts = |is_standart_with_id: &IsStandartWithId| {
                     let current_vec_syn_field = get_vec_syn_field(is_standart_with_id);
-                    pg_crud_macros_common::gen_impl_serde_deserialize_for_struct_ts(
+                    gen_impl_serde_deserialize_for_struct_ts(
                         &gen_ident_read_or_ident_with_id_standart_not_null_read_ucc(is_standart_with_id),
                         &current_vec_syn_field.iter().map(|el_00a75629|
                             (&el_00a75629.field_ident, &el_00a75629.field_type)
@@ -2268,7 +2295,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         current_vec_syn_field.len(),
                         &|_: &syn::Ident, syn_type: &syn::Type| {
                             let type_read_ts = gen_type_as_pg_json_type_read_ts(&syn_type);
-                            pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(
+                            gen_std_option_option_tokens_declaration_ts(
                                 &wrap_into_value_declaration_ts(&type_read_ts)
                             )
                         }
@@ -2276,13 +2303,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 };
                 let maybe_impl_serde_deserialize_for_ident_read_or_ident_with_id_standart_not_null_read_ts = match &pattern {
                     Pattern::Standart => match &not_null_or_nullable {
-                        pg_crud_macros_common::NotNullOrNullable::NotNull => gen_impl_serde_deserialize_for_ident_read_or_ident_with_id_standart_not_null_read_ts(&is_standart_with_id_false),
-                        pg_crud_macros_common::NotNullOrNullable::Nullable => Ts2::new(),
+                        NotNullOrNullable::NotNull => gen_impl_serde_deserialize_for_ident_read_or_ident_with_id_standart_not_null_read_ts(&is_standart_with_id_false),
+                        NotNullOrNullable::Nullable => Ts2::new(),
                     },
                     Pattern::Array => Ts2::new(),
                 };
                 let gen_impl_pg_crud_default_option_some_vec_one_el_for_ident_read_or_ident_with_id_standart_not_null_read_ts = |is_standart_with_id: &IsStandartWithId| {
-                    pg_crud_macros_common::gen_impl_pg_crud_default_option_some_vec_one_el_ts(&gen_ident_read_or_ident_with_id_standart_not_null_read_ucc(is_standart_with_id), &Ts2::new(), &{
+                    gen_impl_pg_crud_default_option_some_vec_one_el_ts(&gen_ident_read_or_ident_with_id_standart_not_null_read_ucc(is_standart_with_id), &Ts2::new(), &{
                         let fields_ts = get_vec_syn_field(is_standart_with_id).iter().map(|el_6a2035df| {
                             let field_ident = &el_6a2035df.field_ident;
                             let value_content_ts = wrap_into_value_initialization_ts(
@@ -2295,22 +2322,22 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 };
                 let impl_pg_crud_default_option_some_vec_one_el_for_ident_read_or_ident_with_id_standart_not_null_read_ts = match &pattern {
                     Pattern::Standart => match &not_null_or_nullable {
-                        pg_crud_macros_common::NotNullOrNullable::NotNull => gen_impl_pg_crud_default_option_some_vec_one_el_for_ident_read_or_ident_with_id_standart_not_null_read_ts(&is_standart_with_id_false),
-                        pg_crud_macros_common::NotNullOrNullable::Nullable => pg_crud_macros_common::gen_impl_pg_crud_default_option_some_vec_one_el_ts(&ident_read_ucc, &Ts2::new(), &self_some_pg_crud_default_option_some_vec_one_el_call_ts),
+                        NotNullOrNullable::NotNull => gen_impl_pg_crud_default_option_some_vec_one_el_for_ident_read_or_ident_with_id_standart_not_null_read_ts(&is_standart_with_id_false),
+                        NotNullOrNullable::Nullable => gen_impl_pg_crud_default_option_some_vec_one_el_ts(&ident_read_ucc, &Ts2::new(), &self_some_pg_crud_default_option_some_vec_one_el_call_ts),
                     },
                     Pattern::Array => match &not_null_or_nullable {
-                        pg_crud_macros_common::NotNullOrNullable::NotNull => pg_crud_macros_common::gen_impl_pg_crud_default_option_some_vec_one_el_ts(
+                        NotNullOrNullable::NotNull => gen_impl_pg_crud_default_option_some_vec_one_el_ts(
                             &ident_read_ucc,
                             &Ts2::new(),
                             &quote! {
                                 Self(#vec_pg_crud_default_option_some_vec_one_el_call_ts)
                             },
                         ),
-                        pg_crud_macros_common::NotNullOrNullable::Nullable => pg_crud_macros_common::gen_impl_pg_crud_default_option_some_vec_one_el_ts(&ident_read_ucc, &Ts2::new(), &self_some_pg_crud_default_option_some_vec_one_el_call_ts),
+                        NotNullOrNullable::Nullable => gen_impl_pg_crud_default_option_some_vec_one_el_ts(&ident_read_ucc, &Ts2::new(), &self_some_pg_crud_default_option_some_vec_one_el_call_ts),
                     },
                 };
                 let impl_sqlx_type_sqlx_pg_for_ident_read_ts = gen_sqlx_types_json_type_declaration_wrapper_ts(&ident_read_ucc);
-                let impl_sqlx_encode_sqlx_pg_for_ident_read_ts = pg_crud_macros_common::gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(
+                let impl_sqlx_encode_sqlx_pg_for_ident_read_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(
                     &ident_read_ucc,
                     &quote!{sqlx::types::Json(#self_sc)}
                 );
@@ -2380,14 +2407,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 quote! {{#(#content_ts),*}}
             };
             let gen_impl_sqlx_decode_ts = |current_ident_ts: &dyn ToTokens|{
-                pg_crud_macros_common::gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
+                gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
                     &current_ident_ts,
                     &quote!{sqlx::types::Json<Self>},
                     &quote!{Ok(value_147c3532.0)}
                 )
             };
             let gen_impl_sqlx_type_ts = |current_ident_ts: &dyn ToTokens|{
-                pg_crud_macros_common::gen_impl_sqlx_type_sqlx_pg_for_ident_ts(
+                gen_impl_sqlx_type_sqlx_pg_for_ident_ts(
                     &current_ident_ts,
                     &quote!{sqlx::types::Json<Self>}
                 )
@@ -2457,12 +2484,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &ident_read_only_ids_ucc,
                         &match &pattern {
                             Pattern::Standart => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                NotNullOrNullable::NotNull => {
                                     let value_ident_read_only_ids_handle_ucc_ts = wrap_into_value_declaration_ts(&ident_read_only_ids_handle_ucc);
                                     quote! {(#value_ident_read_only_ids_handle_ucc_ts);}
                                 },
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    let value_std_option_option_ident_read_only_ids_standart_not_null_ts = wrap_into_value_declaration_ts(&pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(
+                                NotNullOrNullable::Nullable => {
+                                    let value_std_option_option_ident_read_only_ids_standart_not_null_ts = wrap_into_value_declaration_ts(&gen_std_option_option_tokens_declaration_ts(
                                         &ident_standart_not_null_read_only_ids_ucc
                                     ));
                                     quote! {
@@ -2471,16 +2498,16 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 }
                             },
                             Pattern::Array => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => {
-                                    let value_std_vec_vec_ident_with_id_standart_not_null_read_only_ids_ts = wrap_into_value_declaration_ts(&pg_crud_macros_common::gen_std_vec_vec_tokens_declaration_ts(
+                                NotNullOrNullable::NotNull => {
+                                    let value_std_vec_vec_ident_with_id_standart_not_null_read_only_ids_ts = wrap_into_value_declaration_ts(&gen_std_vec_vec_tokens_declaration_ts(
                                         &ident_with_id_standart_not_null_read_only_ids_ucc
                                     ));
                                     quote! {
                                         (#value_std_vec_vec_ident_with_id_standart_not_null_read_only_ids_ts);
                                     }
                                 },
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    let value_std_option_option_ident_with_id_read_only_ids_array_not_null_ts = wrap_into_value_declaration_ts(&pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(
+                                NotNullOrNullable::Nullable => {
+                                    let value_std_option_option_ident_with_id_read_only_ids_array_not_null_ts = wrap_into_value_declaration_ts(&gen_std_option_option_tokens_declaration_ts(
                                         &SelfReadOnlyIdsUcc::from_tokens(&gen_ident_ucc(&IdentPattern::ArrayNotNullWithId))
                                     ));
                                     quote! {(#value_std_option_option_ident_with_id_read_only_ids_array_not_null_ts);}
@@ -2577,14 +2604,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     let gen_pub_type_ident_read_inner_alias_ts = |content_ts: &dyn ToTokens| macros_helpers::gen_pub_type_alias_ts(&ident_read_inner_ucc, &content_ts);
                     match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => gen_ident_read_inner_or_ident_with_id_standart_not_null_read_inner_ts(&IsStandartWithId::False),
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => gen_pub_type_ident_read_inner_alias_ts(&pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&gen_type_as_pg_json_type_read_inner_ts(&ident_standart_not_null_ucc))),
+                            NotNullOrNullable::NotNull => gen_ident_read_inner_or_ident_with_id_standart_not_null_read_inner_ts(&IsStandartWithId::False),
+                            NotNullOrNullable::Nullable => gen_pub_type_ident_read_inner_alias_ts(&gen_std_option_option_tokens_declaration_ts(&gen_type_as_pg_json_type_read_inner_ts(&ident_standart_not_null_ucc))),
                         },
                         Pattern::Array => gen_pub_type_ident_read_inner_alias_ts(&match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => pg_crud_macros_common::gen_std_vec_vec_tokens_declaration_ts(
+                            NotNullOrNullable::NotNull => gen_std_vec_vec_tokens_declaration_ts(
                                 &ident_with_id_standart_not_null_read_inner_ucc
                             ),
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&gen_type_as_pg_json_type_read_inner_ts(&ident_with_id_array_not_null_ucc)),
+                            NotNullOrNullable::Nullable => gen_std_option_option_tokens_declaration_ts(&gen_type_as_pg_json_type_read_inner_ts(&ident_with_id_array_not_null_ucc)),
                         }),
                     }
                 };
@@ -2655,10 +2682,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         IsStandartWithId::True => &ident_with_id_standart_not_null_update_el_ucc,
                     })
                 };
-                let std_vec_vec_ident_with_id_standart_not_null_create_ts = pg_crud_macros_common::gen_std_vec_vec_tokens_declaration_ts(
+                let std_vec_vec_ident_with_id_standart_not_null_create_ts = gen_std_vec_vec_tokens_declaration_ts(
                     &ident_with_id_standart_not_null_create_ucc
                 );
-                let std_vec_vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts = pg_crud_macros_common::gen_std_vec_vec_tokens_declaration_ts(
+                let std_vec_vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts = gen_std_vec_vec_tokens_declaration_ts(
                     &pg_crud_path_pg_json_type_uuid_uuid_update_ts
                 );
                 let gen_create_update_delete_fields_ts_ffcbdaf0 = |should_add_serde_skip_serializing_if_vec_is_empty_annotation: &ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation| {
@@ -2671,33 +2698,33 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 };
                 let ident_update_ts = {
                     let gen_std_option_option_ident_type_ts = |current_ident_ts: &dyn ToTokens| wrap_content_into_scopes_dot_comma_ts(
-                        &pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&current_ident_ts)
+                        &gen_std_option_option_tokens_declaration_ts(&current_ident_ts)
                     );
                     let (
                         derive_serde_deserialize,
                         content_ts_975df5c5
                     ) = match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => (
+                            NotNullOrNullable::NotNull => (
                                 macros_helpers::DeriveSerdeDeserialize::True,
                                 &wrap_content_into_scopes_dot_comma_ts(
                                     &gen_ident_update_standart_not_null_content_ts(&is_standart_with_id_false)
                                 )
                             ),
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => (
+                            NotNullOrNullable::Nullable => (
                                 macros_helpers::DeriveSerdeDeserialize::True,
                                 &gen_std_option_option_ident_type_ts(&ident_standart_not_null_as_pg_json_type_update_ts)
                             ),
                         },
                         Pattern::Array => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => (
+                            NotNullOrNullable::NotNull => (
                                 macros_helpers::DeriveSerdeDeserialize::False,
                                 &{
                                     let fields_ts = gen_create_update_delete_fields_ts_ffcbdaf0(&ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::True);
                                     quote! {{#fields_ts}}
                                 }
                             ),
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => (
+                            NotNullOrNullable::Nullable => (
                                 macros_helpers::DeriveSerdeDeserialize::True,
                                 &gen_std_option_option_ident_type_ts(&ident_with_id_array_not_null_as_pg_json_type_update_ts)
                             ),
@@ -2729,7 +2756,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 let maybe_ident_update_try_new_error_named_ts = match &pattern {
                     Pattern::Standart => Ts2::new(),
                     Pattern::Array => match &not_null_or_nullable {
-                        pg_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                        NotNullOrNullable::NotNull => macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                             .make_pub()
                             .derive_debug()
                             .derive_serde_serialize()
@@ -2759,7 +2786,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     },
                                 }}
                             ),
-                        pg_crud_macros_common::NotNullOrNullable::Nullable => Ts2::new(),
+                        NotNullOrNullable::Nullable => Ts2::new(),
                     },
                 };
                 let impl_ident_update_ts = {
@@ -2767,13 +2794,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         Pattern::Standart => macros_helpers::gen_pub_const_new_ts(
                             &must_use_ts,
                             &gen_value_type_ts(&match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => gen_unique_vec_wrapper_ts(&ident_standart_not_null_update_el_ucc),
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&ident_standart_not_null_as_pg_json_type_update_ts)
+                                NotNullOrNullable::NotNull => gen_unique_vec_wrapper_ts(&ident_standart_not_null_update_el_ucc),
+                                NotNullOrNullable::Nullable => gen_std_option_option_tokens_declaration_ts(&ident_standart_not_null_as_pg_json_type_update_ts)
                             }),
                             &self_value_ts
                         ),
                         Pattern::Array => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::gen_pub_try_new_ts(
+                            NotNullOrNullable::NotNull => macros_helpers::gen_pub_try_new_ts(
                                 &gen_create_update_delete_fields_ts_ffcbdaf0(&ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::False),
                                 &ident_update_try_new_error_named_ucc,
                                 &{
@@ -2911,8 +2938,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                             ),
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => gen_pub_const_new_value_type_content_self_value_ts(
-                                &pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(
+                            NotNullOrNullable::Nullable => gen_pub_const_new_value_type_content_self_value_ts(
+                                &gen_std_option_option_tokens_declaration_ts(
                                     &ident_with_id_array_not_null_as_pg_json_type_update_ts
                                 )
                             )
@@ -2927,11 +2954,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 let maybe_impl_serde_deserialize_for_ident_update_ts = match &pattern {
                     Pattern::Standart => Ts2::new(),
                     Pattern::Array => match &not_null_or_nullable {
-                        pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                        NotNullOrNullable::NotNull => {
                             //todo maybe reuse?
                             let tuple_struct_ident_update_double_quotes_ts = gen_quotes::double_quotes_ts(&format!("tuple struct {ident_update_ucc}"));
                             let ident_update_double_quotes_ts = gen_quotes::double_quotes_ts(&ident_update_ucc);
-                            let match_try_new_in_deserialize_ts = pg_crud_macros_common::gen_match_try_new_in_deserialize_ts(
+                            let match_try_new_in_deserialize_ts = gen_match_try_new_in_deserialize_ts(
                                 &ident_update_ucc,
                                 &quote! {__field0_value, __field1_value, __field2_value}
                             );
@@ -3075,22 +3102,22 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 }
                             }
                         }
-                        pg_crud_macros_common::NotNullOrNullable::Nullable => Ts2::new(),
+                        NotNullOrNullable::Nullable => Ts2::new(),
                     },
                 };
-                let impl_pg_crud_default_option_some_vec_one_el_for_ident_update_ts = pg_crud_macros_common::gen_impl_pg_crud_default_option_some_vec_one_el_ts(&ident_update_ucc, &Ts2::new(), &{
+                let impl_pg_crud_default_option_some_vec_one_el_for_ident_update_ts = gen_impl_pg_crud_default_option_some_vec_one_el_ts(&ident_update_ucc, &Ts2::new(), &{
                     let value = match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => quote! {(#PgCrudDefaultOptionSomeVecOneElCall)},
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => quote! {(Some(#PgCrudDefaultOptionSomeVecOneElCall))},
+                            NotNullOrNullable::NotNull => quote! {(#PgCrudDefaultOptionSomeVecOneElCall)},
+                            NotNullOrNullable::Nullable => quote! {(Some(#PgCrudDefaultOptionSomeVecOneElCall))},
                         },
                         Pattern::Array => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => quote! {{
+                            NotNullOrNullable::NotNull => quote! {{
                                 #create_sc: #vec_pg_crud_default_option_some_vec_one_el_call_ts,
                                 #update_sc: #PgCrudDefaultOptionSomeVecOneElCall,
                                 #delete_sc: #vec_pg_crud_default_option_some_vec_one_el_call_ts,
                             }},
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => quote! {
+                            NotNullOrNullable::Nullable => quote! {
                                 (Some(#PgCrudDefaultOptionSomeVecOneElCall))
                             },
                         },
@@ -3131,7 +3158,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             #content_ts_b258e2eb
                         }
                     };
-                    let impl_pg_crud_all_variants_default_option_some_vec_one_el_for_ident_update_el_ts = pg_crud_macros_common::gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_ts(&ident_standart_not_null_update_el_ucc, &{
+                    let impl_pg_crud_all_variants_default_option_some_vec_one_el_for_ident_update_el_ts = gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_ts(&ident_standart_not_null_update_el_ucc, &{
                         let elements_ts = vec_syn_field.iter().map(|el_2080bd7e| {
                             let field_ident = &el_2080bd7e.field_ident;
                             let variant_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&field_ident);
@@ -3198,7 +3225,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             #fields_sc
                         }},
                     );
-                    let impl_pg_crud_default_option_some_vec_one_el_for_ident_with_standart_not_null_update_el_ts = pg_crud_macros_common::gen_impl_pg_crud_default_option_some_vec_one_el_ts(
+                    let impl_pg_crud_default_option_some_vec_one_el_for_ident_with_standart_not_null_update_el_ts = gen_impl_pg_crud_default_option_some_vec_one_el_ts(
                         &ident_with_id_standart_not_null_update_el_ucc,
                         &Ts2::new(),
                         &quote! {Self {
@@ -3235,7 +3262,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         )
                     };
                     let gen_std_option_option_ident_type_ts = |current_ident_ts: &dyn ToTokens| wrap_content_into_scopes_dot_comma_ts(
-                        &pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&current_ident_ts)
+                        &gen_std_option_option_tokens_declaration_ts(&current_ident_ts)
                     );
                     let gen_ident_update_for_query_standart_not_null_content_ts = |is_standart_with_id: &IsStandartWithId| {
                         gen_unique_vec_wrapper_ts(match &is_standart_with_id {
@@ -3243,29 +3270,29 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             IsStandartWithId::True => &ident_with_id_standart_not_null_update_for_query_el_ucc,
                         })
                     };
-                    let std_vec_vec_ident_with_id_standart_not_null_create_for_query_ts = pg_crud_macros_common::gen_std_vec_vec_tokens_declaration_ts(
+                    let std_vec_vec_ident_with_id_standart_not_null_create_for_query_ts = gen_std_vec_vec_tokens_declaration_ts(
                         &ident_with_id_standart_not_null_create_for_query_ucc
                     );
-                    let std_vec_vec_pg_crud_path_pg_json_type_uuid_uuid_update_for_query_ts = pg_crud_macros_common::gen_std_vec_vec_tokens_declaration_ts(
+                    let std_vec_vec_pg_crud_path_pg_json_type_uuid_uuid_update_for_query_ts = gen_std_vec_vec_tokens_declaration_ts(
                         &pg_crud_path_pg_json_type_uuid_uuid_update_for_query_ts
                     );
                     match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => gen_ident_update_for_query_ts(
+                            NotNullOrNullable::NotNull => gen_ident_update_for_query_ts(
                                 &wrap_content_into_scopes_dot_comma_ts(
                                     &gen_ident_update_for_query_standart_not_null_content_ts(
                                         &is_standart_with_id_false
                                     )
                                 )
                             ),
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => gen_ident_update_for_query_ts(
+                            NotNullOrNullable::Nullable => gen_ident_update_for_query_ts(
                                 &gen_std_option_option_ident_type_ts(
                                     &ident_standart_not_null_as_pg_json_type_update_for_query_ts
                                 )
                             ),
                         },
                         Pattern::Array => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => gen_ident_update_for_query_ts(
+                            NotNullOrNullable::NotNull => gen_ident_update_for_query_ts(
                                 &{
                                     let fields_ts = gen_create_update_delete_fields_ts_043c4057(
                                         &ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::True,
@@ -3276,7 +3303,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     quote! {{#fields_ts}}
                                 }
                             ),
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => gen_ident_update_for_query_ts(
+                            NotNullOrNullable::Nullable => gen_ident_update_for_query_ts(
                                 &gen_std_option_option_ident_type_ts(&ident_with_id_array_not_null_as_pg_json_type_update_for_query_ts)
                             ),
                         },
@@ -3286,7 +3313,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     let select_only_updated_ids_query_part_ts = {
                         let content_ts = match &pattern {
                             Pattern::Standart => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                NotNullOrNullable::NotNull => {
                                     let match_variants_ts = vec_syn_field.iter().map(|el_bca06812| {
                                         let field_ident = &el_bca06812.field_ident;
                                         let field_ident_ucc = ToTokensToUccTs::case_or_panic(&field_ident);
@@ -3327,7 +3354,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         Ok(acc_8e628eaf)
                                     }
                                 },
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                                NotNullOrNullable::Nullable => {
                                     let match_content_ts = vec_syn_field.iter().map(|el_a8f45572| {
                                         let field_ident = &el_a8f45572.field_ident;
                                         let field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&field_ident);
@@ -3375,7 +3402,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 },
                             },
                             Pattern::Array => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                NotNullOrNullable::NotNull => {
                                     let match_variants_ts = vec_syn_field.iter().map(|el_74643094| {
                                         let field_ident = &el_74643094.field_ident;
                                         let field_ident_ucc = ToTokensToUccTs::case_or_panic(&field_ident);
@@ -3510,7 +3537,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         ))
                                     }
                                 },
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => quote!{
+                                NotNullOrNullable::Nullable => quote!{
                                     Ok(match &self.0 {
                                         Some(value_bc509c9a) => format!(
                                             "jsonb_build_object('value',{})",
@@ -3551,7 +3578,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &quote!{#ident_as_import_path_pg_json_type_ts::Update},
                     &quote!{#ident_as_import_path_pg_json_type_ts::UpdateForQuery},
                     &match &not_null_or_nullable {
-                        pg_crud_macros_common::NotNullOrNullable::NotNull => match &pattern {
+                        NotNullOrNullable::NotNull => match &pattern {
                             Pattern::Standart => quote!{
                                 Self(#import_path::NotEmptyUniqueVec::from_t1_impl_from_t2(#value_sc.0))
                             },
@@ -3563,7 +3590,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 }
                             }
                         },
-                        pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                        NotNullOrNullable::Nullable => {
                             let content_ts: &dyn ToTokens = match &pattern {
                                 Pattern::Standart => &ident_standart_not_null_as_import_path_pg_json_type_ts,
                                 Pattern::Array => &ident_array_not_null_as_import_path_pg_json_type_ts
@@ -3676,12 +3703,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 }
             };
             let (impl_pg_crud_pg_json_type_for_ident_ts, maybe_impl_pg_crud_pg_types_pg_type_pg_type_ts) = {
-                let pg_type_or_pg_json_type_pg_type = pg_crud_macros_common::PgTypeOrPgJsonType::PgType;
-                let pg_type_or_pg_json_type_pg_json_type = pg_crud_macros_common::PgTypeOrPgJsonType::PgJsonType;
-                let gen_update_query_part_standart_nullable_ts = |pg_type_or_pg_json_type: &pg_crud_macros_common::PgTypeOrPgJsonType|{
+                let pg_type_or_pg_json_type_pg_type = PgTypeOrPgJsonType::PgType;
+                let pg_type_or_pg_json_type_pg_json_type = PgTypeOrPgJsonType::PgJsonType;
+                let gen_update_query_part_standart_nullable_ts = |pg_type_or_pg_json_type: &PgTypeOrPgJsonType|{
                     let format_handle_ts = gen_quotes::double_quotes_ts(&match &pg_type_or_pg_json_type {
-                        pg_crud_macros_common::PgTypeOrPgJsonType::PgType => format!("jsonb_set({{{jsonb_set_accumulator_sc}}},'{{{{{{{jsonb_set_path_sc}}}}}}}',${{value_27b8537f}})"),
-                        pg_crud_macros_common::PgTypeOrPgJsonType::PgJsonType => "${value_27b8537f}".to_owned(),
+                        PgTypeOrPgJsonType::PgType => format!("jsonb_set({{{jsonb_set_accumulator_sc}}},'{{{{{{{jsonb_set_path_sc}}}}}}}',${{value_27b8537f}})"),
+                        PgTypeOrPgJsonType::PgJsonType => "${value_27b8537f}".to_owned(),
                     });
                     quote! {
                         match &#value_sc.0 {
@@ -3791,29 +3818,29 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         Ok (format!(#format_handle_ts))
                     }
                 };
-                let gen_update_query_part_array_not_null_ts = |pg_type_or_pg_json_type: &pg_crud_macros_common::PgTypeOrPgJsonType|{
+                let gen_update_query_part_array_not_null_ts = |pg_type_or_pg_json_type: &PgTypeOrPgJsonType|{
                     let content_ts_c75c3cd1 = gen_update_delete_create_array_ts(&gen_quotes::double_quotes_ts(&match &pg_type_or_pg_json_type {
-                        pg_crud_macros_common::PgTypeOrPgJsonType::PgType => "jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',case when jsonb_typeof({jsonb_set_target}) = 'null' then '[]'::jsonb else (select coalesce((select jsonb_agg({update_query_part_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {maybe_where}),'[]'::jsonb)) end {maybe_jsonb_build_array})",
-                        pg_crud_macros_common::PgTypeOrPgJsonType::PgJsonType => "((select coalesce((select jsonb_agg({update_query_part_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {maybe_where}),'[]'::jsonb)) {maybe_jsonb_build_array})",
+                        PgTypeOrPgJsonType::PgType => "jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',case when jsonb_typeof({jsonb_set_target}) = 'null' then '[]'::jsonb else (select coalesce((select jsonb_agg({update_query_part_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {maybe_where}),'[]'::jsonb)) end {maybe_jsonb_build_array})",
+                        PgTypeOrPgJsonType::PgJsonType => "((select coalesce((select jsonb_agg({update_query_part_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {maybe_where}),'[]'::jsonb)) {maybe_jsonb_build_array})",
                     }));
                     quote!{
                         let value_58d685d3 = #value_sc;
                         #content_ts_c75c3cd1
                     }
                 };
-                let impl_pg_crud_pg_json_type_for_ident_ts = pg_crud_macros_common::gen_impl_pg_json_type_ts(
-                    &pg_crud_macros_common::ImportPath::PgCrud,
+                let impl_pg_crud_pg_json_type_for_ident_ts = gen_impl_pg_json_type_ts(
+                    &ImportPath::PgCrud,
                     &ident,
                     &ident_table_type_declaration_ucc,
                     &ident_create_ucc,
                     &ident_create_for_query_ucc,
                     &ident_select_ucc,
-                    &pg_crud_macros_common::IsSelectQueryPartSelfSelectUsed::True,
-                    &pg_crud_macros_common::IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed::True,
-                    &pg_crud_macros_common::IsSelectQueryPartIsPgTypeUsed::True,
+                    &IsSelectQueryPartSelfSelectUsed::True,
+                    &IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed::True,
+                    &IsSelectQueryPartIsPgTypeUsed::True,
                     &match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => quote! {
+                            NotNullOrNullable::NotNull => quote! {
                                 match #value_sc.#select_query_part_sc(
                                     &if is_pg_type {
                                         column_name_and_maybe_field_getter.to_owned()
@@ -3832,7 +3859,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     Err(#error_sc) => Err(#error_sc)
                                 }
                             },
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                            NotNullOrNullable::Nullable => {
                                 let ident_standart_not_null_as_pg_json_type_select_as_default_but_option_is_some_ts = gen_ident_as_default_but_option_is_some_ts(
                                     &ident_standart_not_null_as_pg_json_type_select_ts
                                 );
@@ -3858,7 +3885,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             },
                         },
                         Pattern::Array => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                            NotNullOrNullable::NotNull => {
                                 let acc_41dea548_ts = quote!{acc_41dea548};
                                 let select_query_part_for_loop_ts = {
                                     let value_double_quotes_ts = gen_quotes::double_quotes_ts(&value_sc);
@@ -3886,7 +3913,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     Ok(format!(#format_handle_ts))
                                 }
                             }
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                            NotNullOrNullable::Nullable => {
                                 let format_handle_ts = gen_quotes::double_quotes_ts(
                                     &"case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value','null'::jsonb)) else ({value_d7bbd03c}) end"
                                 );
@@ -3916,7 +3943,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &ident_read_ucc,
                     &ident_read_only_ids_ucc,
                     &match &not_null_or_nullable {
-                        pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                        NotNullOrNullable::NotNull => {
                             let content_ts = {
                                 let content_ts = {
                                     let acc_push_ts = get_vec_syn_field(match &pattern {
@@ -3967,7 +3994,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             };
                             quote! {Ok(#content_ts)}
                         },
-                        pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                        NotNullOrNullable::Nullable => {
                             let content_ts: &dyn ToTokens = match &pattern {
                                 Pattern::Standart => &ident_standart_not_null_as_pg_json_type_ts,
                                 Pattern::Array => &ident_with_id_array_not_null_as_pg_json_type_ts,
@@ -4012,14 +4039,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             }
                         };
                         match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => match &pattern {
+                            NotNullOrNullable::NotNull => match &pattern {
                                 Pattern::Standart => gen_impl_into_inner_for_ident_read_or_ident_with_id_standart_not_null_read_ts(&IsStandartWithId::False),
                                 Pattern::Array => {
                                     let content_ts = gen_impl_into_inner_for_ident_read_or_ident_with_id_standart_not_null_read_ts(&IsStandartWithId::True);
                                     quote! {#value_sc.0.into_iter().map(|el_34d57236|#content_ts).collect()}
                                 },
                             },
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                            NotNullOrNullable::Nullable => {
                                 let current_ident = gen_type_as_pg_json_type_ts(&match &pattern {
                                     Pattern::Standart => ident_standart_not_null_ucc,
                                     Pattern::Array => ident_array_not_null_ucc,
@@ -4032,7 +4059,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &ident_update_for_query_ucc,
                     &match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                            NotNullOrNullable::NotNull => {
                                 let object_acc_sc = StdOptionOptionObjectAccSc;
                                 let format_handle_ts = gen_quotes::double_quotes_ts(&format!("jsonb_set({{{jsonb_set_accumulator_sc}}},'{{{{{{{jsonb_set_path_sc}}}}}}}',{{{object_acc_sc}}})"));
                                 let query_part_variants_ts = vec_syn_field.iter().map(|el_ebd92dbf| {
@@ -4075,15 +4102,15 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                             },
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => gen_update_query_part_standart_nullable_ts(
+                            NotNullOrNullable::Nullable => gen_update_query_part_standart_nullable_ts(
                                 &pg_type_or_pg_json_type_pg_type
                             )
                         },
                         Pattern::Array => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => gen_update_query_part_array_not_null_ts(
+                            NotNullOrNullable::NotNull => gen_update_query_part_array_not_null_ts(
                                 &pg_type_or_pg_json_type_pg_type
                             ),
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => quote! {
+                            NotNullOrNullable::Nullable => quote! {
                                 match &#value_sc.0 {
                                     Some(value_3245b79f) => #ident_array_not_null_as_pg_json_type_ts::#update_query_part_sc(
                                         value_3245b79f,
@@ -4100,12 +4127,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             },
                         },
                     },
-                    &pg_crud_macros_common::IsUpdateQueryPartSelfUpdateUsed::True,
-                    &pg_crud_macros_common::IsUpdateQueryPartJsonbSetTargetUsed::True,
-                    &pg_crud_macros_common::IsUpdateQueryBindMutable::True,
+                    &IsUpdateQueryPartSelfUpdateUsed::True,
+                    &IsUpdateQueryPartJsonbSetTargetUsed::True,
+                    &IsUpdateQueryBindMutable::True,
                     &match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                            NotNullOrNullable::NotNull => {
                                 let update_query_bind_variants_ts = vec_syn_field.iter().map(|el_9968a29b| {
                                     let variant_ident_ucc_ts = AsRefStrToUccTs::case_or_panic(&el_9968a29b.field_ident.to_string());
                                     let field_type_as_crud_pg_json_type_from_field_ts = gen_field_type_as_crud_pg_json_type_from_field_ts(
@@ -4136,7 +4163,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     Ok(#query_sc)
                                 }
                             },
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => quote! {
+                            NotNullOrNullable::Nullable => quote! {
                                 match #value_sc.0 {
                                     Some(value_269a0d34) => #ident_standart_not_null_as_pg_json_type_ts::update_query_bind(
                                         value_269a0d34,
@@ -4152,7 +4179,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             }
                         },
                         Pattern::Array => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => quote! {
+                            NotNullOrNullable::NotNull => quote! {
                                 for el_30541f69 in #value_sc.#update_sc.into_vec() {
                                     match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_object_vec_el_id_ts::query_bind_string_as_pg_text_update_for_query(
                                         el_30541f69.#id_sc,
@@ -4197,7 +4224,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 }
                                 Ok(#query_sc)
                             },
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => quote! {
+                            NotNullOrNullable::Nullable => quote! {
                                 match #value_sc.0 {
                                     Some(value_a2156b3e) => #ident_array_not_null_as_pg_json_type_ts::update_query_bind(
                                         value_a2156b3e,
@@ -4222,10 +4249,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             Err(#error_sc) => Err(#error_sc)
                         }
                     },
-                    &pg_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::True,
+                    &IsSelectOnlyUpdatedIdsQueryBindMutable::True,
                     &match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                            NotNullOrNullable::NotNull => {
                                 let match_content_ts = vec_syn_field.iter().map(|el_e3bd5731| {
                                     let field_ident = &el_e3bd5731.field_ident;
                                     let field_type_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el_e3bd5731.field_type);
@@ -4255,7 +4282,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     Ok(#query_sc)
                                 }
                             },
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => quote!{
+                            NotNullOrNullable::Nullable => quote!{
                                 if let Some(value_6334d77d) = &#value_sc.0 {
                                     match #ident_standart_not_null_as_pg_json_type_ts::#select_only_updated_ids_query_bind_sc(value_6334d77d, #query_sc) {
                                         Ok(value_0bd3ba6f) => {
@@ -4270,7 +4297,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             },
                         },
                         Pattern::Array => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                            NotNullOrNullable::NotNull => {
                                 let select_only_created_ids_query_bind_content_ts = vec_syn_field_with_id.iter().map(|el_27e0de74| {
                                     let field_ident = &el_27e0de74.field_ident;
                                     let field_type_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el_27e0de74.field_type);
@@ -4345,7 +4372,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     Ok(#query_sc)
                                 }
                             },
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => quote!{
+                            NotNullOrNullable::Nullable => quote!{
                                 if let Some(value_107e6639) = &#value_sc.0 {
                                     match #ident_array_not_null_as_pg_json_type_ts::#select_only_updated_ids_query_bind_sc(value_107e6639, #query_sc) {
                                         Ok(value_ecf1b8de) => {
@@ -4362,7 +4389,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     },
                     &match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                            NotNullOrNullable::NotNull => {
                                 let content_ts = vec_syn_field.iter().map(|el_6bcf3221| {
                                     let field_ident = &el_6bcf3221.field_ident;
                                     let field_type_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el_6bcf3221.field_type);
@@ -4404,7 +4431,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     ))
                                 }
                             },
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                            NotNullOrNullable::Nullable => {
                                 let content_ts = vec_syn_field.iter().map(|el_88c65ca5| {
                                     let field_ident = &el_88c65ca5.field_ident;
                                     let field_type_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el_88c65ca5.field_type);
@@ -4454,7 +4481,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             },
                         },
                         Pattern::Array => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                            NotNullOrNullable::NotNull => {
                                 let content_ts = vec_syn_field_with_id.iter().map(|el_bfecacfd| {
                                     let field_ident = &el_bfecacfd.field_ident;
                                     let field_type_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el_bfecacfd.field_type);
@@ -4515,7 +4542,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     ))
                                 }
                             },
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                            NotNullOrNullable::Nullable => {
                                 let content_ts = vec_syn_field_with_id.iter().map(|el_76f33159| {
                                     let field_ident = &el_76f33159.field_ident;
                                     let field_type_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el_76f33159.field_type);
@@ -4584,10 +4611,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             },
                         },
                     },
-                    &pg_crud_macros_common::IsSelectOnlyCreatedIdsQueryBindMutable::True,
+                    &IsSelectOnlyCreatedIdsQueryBindMutable::True,
                     &match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                            NotNullOrNullable::NotNull => {
                                 let content_ts = vec_syn_field.iter().map(|el_9d72fe6e| {
                                     let field_ident = &el_9d72fe6e.field_ident;
                                     let field_type_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el_9d72fe6e.field_type);
@@ -4610,7 +4637,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     Ok(#query_sc)
                                 }
                             },
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                            NotNullOrNullable::Nullable => {
                                 quote!{
                                     if let Some(value_a1ccd526) = &#value_sc.0 {
                                         match #ident_standart_not_null_as_import_path_pg_json_type_ts::#select_only_created_ids_query_bind_sc(
@@ -4630,7 +4657,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             },
                         },
                         Pattern::Array => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                            NotNullOrNullable::NotNull => {
                                 let content_ts = vec_syn_field_with_id.iter().map(|el_43b720bb| {
                                     let field_ident = &el_43b720bb.field_ident;
                                     let field_type_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el_43b720bb.field_type);
@@ -4665,7 +4692,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     Ok(#query_sc)
                                 }
                             },
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                            NotNullOrNullable::Nullable => {
                                 quote!{
                                     if let Some(value_0b55a65a) = &#value_sc.0 {
                                         match #ident_array_not_null_as_import_path_pg_json_type_ts::#select_only_created_ids_query_bind_sc(value_0b55a65a, #query_sc) {
@@ -4683,11 +4710,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         },
                     },
                 );
-                let impl_pg_crud_pg_types_pg_type_pg_type_ts = pg_crud_macros_common::gen_impl_pg_type_ts(
-                    &pg_crud_macros_common::ImportPath::PgCrud,
+                let impl_pg_crud_pg_types_pg_type_pg_type_ts = gen_impl_pg_type_ts(
+                    &ImportPath::PgCrud,
                     &ident,
                     &ident_table_type_declaration_ucc,
-                    &pg_crud_macros_common::IsPrimaryKeyUnderscore::True,
+                    &IsPrimaryKeyUnderscore::True,
                     &{
                         let format_handle_ts = gen_quotes::double_quotes_ts(&"{column} jsonb not null check (jsonb_matches_schema('{}', {column}))".to_owned());
                         quote! {
@@ -4695,16 +4722,16 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         }
                     },
                     &ident_create_ucc,
-                    &pg_crud_macros_common::CreateQueryPartValueUnderscore::True,
-                    &pg_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
+                    &CreateQueryPartValueUnderscore::True,
+                    &CreateQueryPartIncrementUnderscore::False,
                     &quote!{
                         match #import_path::increment_checked_add_one_returning_increment(#increment_sc) {
                             Ok(value_7df9eb00) => Ok(format!("${value_7df9eb00}")),
                             Err(#error_sc) => Err(#error_sc)
                         }
                     },
-                    &pg_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                    &pg_crud_macros_common::IsCreateQueryBindMutable::True,
+                    &CreateQueryBindValueUnderscore::False,
+                    &IsCreateQueryBindMutable::True,
                     &quote!{
                         if let Err(#error_sc) = #query_sc.try_bind(
                             #self_as_pg_json_type_create_for_query_ts::from(#value_sc)
@@ -4714,7 +4741,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         Ok(#query_sc)
                     },
                     &ident_select_ucc,
-                    &pg_crud_macros_common::SelectQueryPartValueUnderscore::False,
+                    &SelectQueryPartValueUnderscore::False,
                     &quote! {
                         match #value_sc.#select_query_part_pg_type_sc(#column_sc) {
                             Ok(value_d91c19a6) => Ok(format!("{value_d91c19a6} as {column}")),
@@ -4735,28 +4762,28 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &quote!{#self_as_pg_json_type_ts::into_inner(#value_sc)},
                     &ident_update_ucc,
                     &ident_update_for_query_ucc,
-                    &pg_crud_macros_common::UpdateQueryPartValueUnderscore::False,
-                    &pg_crud_macros_common::UpdateQueryPartJsonbSetAccumulatorUnderscore::False,
-                    &pg_crud_macros_common::UpdateQueryPartJsonbSetTargetUnderscore::False,
-                    &pg_crud_macros_common::UpdateQueryPartJsonbSetPathUnderscore::False,
+                    &UpdateQueryPartValueUnderscore::False,
+                    &UpdateQueryPartJsonbSetAccumulatorUnderscore::False,
+                    &UpdateQueryPartJsonbSetTargetUnderscore::False,
+                    &UpdateQueryPartJsonbSetPathUnderscore::False,
                     &match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => quote!{#self_as_pg_json_type_ts::#update_query_part_sc(
+                            NotNullOrNullable::NotNull => quote!{#self_as_pg_json_type_ts::#update_query_part_sc(
                                 value,
                                 jsonb_set_accumulator,
                                 jsonb_set_target,
                                 jsonb_set_path,
                                 increment
                             )},
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => gen_update_query_part_standart_nullable_ts(
+                            NotNullOrNullable::Nullable => gen_update_query_part_standart_nullable_ts(
                                 &pg_type_or_pg_json_type_pg_json_type
                             )
                         },
                         Pattern::Array => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => gen_update_query_part_array_not_null_ts(
+                            NotNullOrNullable::NotNull => gen_update_query_part_array_not_null_ts(
                                 &pg_type_or_pg_json_type_pg_json_type
                             ),
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                            NotNullOrNullable::Nullable => {
                                 let content_ts = gen_update_delete_create_array_ts(&quote!{
                                     "(case when jsonb_typeof({jsonb_set_target}) = 'null' then '[]'::jsonb else (select coalesce((select jsonb_agg({update_query_part_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {maybe_where}),'[]'::jsonb)) end {maybe_jsonb_build_array})"
                                 });
@@ -4774,7 +4801,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             },
                         },
                     },
-                    &pg_crud_macros_common::IsUpdateQueryBindMutable::False,
+                    &IsUpdateQueryBindMutable::False,
                     &quote!{#self_as_pg_json_type_ts::#update_query_bind_sc(
                         #value_sc,
                         #query_sc
@@ -4788,7 +4815,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             Err(#error_sc) => Err(#error_sc)
                         }
                     },
-                    &pg_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::False,
+                    &IsSelectOnlyUpdatedIdsQueryBindMutable::False,
                     &quote!{#self_as_pg_json_type_ts::#select_only_updated_ids_query_bind_sc(
                         #value_sc,
                         #query_sc
@@ -4801,7 +4828,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             };
             let self_pg_json_type_ts = quote!{#self_ucc::#pg_json_type_ucc};
             let (impl_pg_json_type_test_cases_for_ident_ts, impl_pg_type_test_cases_for_ident_ts) = {
-                let gen_dimension_equal_ts = |dimension: &pg_crud_macros_common::Dimension|{
+                let gen_dimension_equal_ts = |dimension: &Dimension|{
                     let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_number_equal_sc = dimension.read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_number_equal_sc();
                     let gen_nullable_ts = |content_ts: &dyn ToTokens|quote! {
                         match #import_path::NotEmptyUniqueVec::try_new(
@@ -4855,7 +4882,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     };
                     match &pattern {
                         Pattern::Standart => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                            NotNullOrNullable::NotNull => {
                                 let content_ts = vec_syn_field.iter().map(|el_3a1eac56| {
                                     let field_ident = &el_3a1eac56.field_ident;
                                     let field_ident_ucc = &ToTokensToUccTs::case_or_panic(&field_ident);
@@ -4901,10 +4928,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                             }
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => gen_nullable_ts(&ident_standart_not_null_ucc)
+                            NotNullOrNullable::Nullable => gen_nullable_ts(&ident_standart_not_null_ucc)
                         },
                         Pattern::Array => match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                            NotNullOrNullable::NotNull => {
                                 let content_ts_f0710cd9 = {
                                     let content_ts_57d244f8 = vec_syn_field.iter().map(|el_18682ae5| {
                                         let field_ident = &el_18682ae5.field_ident;
@@ -4941,7 +4968,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     quote!{#(#content_ts_57d244f8)*}
                                 };
                                 let content_ts_2cc4a40e = match &dimension {
-                                    pg_crud_macros_common::Dimension::One => {
+                                    Dimension::One => {
                                         let dimension_one_ts = {
                                             let content_ts_91a09fe2 = vec_syn_field.iter().map(|el_a83927c8| {
                                                 let field_ident = &el_a83927c8.field_ident;
@@ -4983,9 +5010,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             }
                                         }
                                     },
-                                    pg_crud_macros_common::Dimension::Two |
-                                    pg_crud_macros_common::Dimension::Three |
-                                    pg_crud_macros_common::Dimension::Four => quote!{
+                                    Dimension::Two |
+                                    Dimension::Three |
+                                    Dimension::Four => quote!{
                                         for (read_only_ids_420d38ca, create_76f032c1) in #read_only_ids_sc.0.#value_sc.into_iter()
                                             .zip(#create_sc.0.into_iter())
                                         {
@@ -5007,7 +5034,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                             }
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => gen_nullable_ts(&ident_array_not_null_ucc)
+                            NotNullOrNullable::Nullable => gen_nullable_ts(&ident_array_not_null_ucc)
                         },
                     }
                 };
@@ -5015,7 +5042,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     {
                         let option_vec_create_ts = {
                             let content_ts = match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => match &pattern {
+                                NotNullOrNullable::NotNull => match &pattern {
                                     Pattern::Standart => {
                                         let content_ts = vec_syn_field.iter().map(|el_4f2f70d2| {
                                             let field_ident = &el_4f2f70d2.field_ident;
@@ -5139,7 +5166,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         quote! {#(#content_ts)*}
                                     },
                                 },
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                                NotNullOrNullable::Nullable => {
                                     let (
                                         current_ident_not_null_as_pg_json_type_test_cases_ts,
                                         content_ts
@@ -5182,7 +5209,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         };
                         let read_only_ids_to_two_dimensional_vec_read_inner_ts = match &pattern {
                             Pattern::Standart => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                NotNullOrNullable::NotNull => {
                                     let fields_last_initialization_ts = {
                                         if vec_syn_field.len() == 1 {
                                             Ts2::new()
@@ -5247,7 +5274,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         acc_ef081dc3
                                     }
                                 }
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                                NotNullOrNullable::Nullable => {
                                     quote! {
                                         #read_only_ids_sc.0.#value_sc.as_ref().into_iter().flat_map(|value_5fa0668c| {
                                             #ident_standart_not_null_as_pg_json_type_test_cases_ts::
@@ -5263,7 +5290,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 }
                             },
                             Pattern::Array => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                NotNullOrNullable::NotNull => {
                                     let content_ts = vec_syn_field.iter().map(|el_bb247316| {
                                         let field_ident = &el_bb247316.field_ident;
                                         let fields_ts = vec_syn_field.iter().map(|el_value| {
@@ -5310,7 +5337,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         .collect()
                                     }
                                 }
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                                NotNullOrNullable::Nullable => {
                                     quote! {
                                         let mut acc_fb5111f1 = Vec::new();
                                         if let Some(value_6ee5750e) = &#read_only_ids_sc.0.#value_sc {
@@ -5328,7 +5355,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         };
                         let read_inner_into_read_with_new_or_try_new_unwraped_ts = match &pattern {
                             Pattern::Standart => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                NotNullOrNullable::NotNull => {
                                     let self_el_as_pg_type_read_ts = gen_type_as_pg_type_subtype_ts(&self_pg_json_type_ts, &PgTypeSubtype::Read);
                                     let parameters_ts = vec_syn_field.iter().map(|el_13640e7f| {
                                         let field_ident = &el_13640e7f.field_ident;
@@ -5340,7 +5367,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     });
                                     quote! {#self_el_as_pg_type_read_ts::try_new(#(#parameters_ts),*).expect("3aeeabba-3ffc-4df2-a3bf-e389c40ec566")}
                                 }
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                                NotNullOrNullable::Nullable => {
                                     let self_el_as_pg_type_read_ts = gen_type_as_pg_type_subtype_ts(&self_pg_json_type_ts, &PgTypeSubtype::Read);
                                     quote! {
                                         #self_el_as_pg_type_read_ts::new(
@@ -5350,7 +5377,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 }
                             },
                             Pattern::Array => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                NotNullOrNullable::NotNull => {
                                     let content_ts = vec_syn_field_with_id.iter().map(|el_96f7b50a| {
                                         let field_ident = &el_96f7b50a.field_ident;
                                         let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el_96f7b50a.field_type);
@@ -5367,7 +5394,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         )
                                     }
                                 }
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                                NotNullOrNullable::Nullable => {
                                     let content_ts = vec_syn_field_with_id.iter().map(|el_e47b9709| {
                                         let field_ident = &el_e47b9709.field_ident;
                                         let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el_e47b9709.field_type);
@@ -5404,7 +5431,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             },
                         };
                         let read_inner_into_update_with_new_or_try_new_unwraped_ts = match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => match &pattern {
+                            NotNullOrNullable::NotNull => match &pattern {
                                 Pattern::Standart => {
                                     let self_el_as_pg_type_update_ts = gen_type_as_pg_type_subtype_ts(&self_pg_json_type_ts, &PgTypeSubtype::Update);
                                     let parameters_ts = vec_syn_field.iter().map(|el_cefffeeb| {
@@ -5456,7 +5483,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                             },
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                            NotNullOrNullable::Nullable => {
                                 let content_ts = gen_type_as_pg_type_test_cases_ts(match &pattern {
                                     Pattern::Standart => &ident_standart_not_null_ucc,
                                     Pattern::Array => &ident_with_id_array_not_null_ucc,
@@ -5471,8 +5498,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         };
                         let read_only_ids_into_option_value_read_inner_ts = match &pattern {
                             Pattern::Standart => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => gen_fields_read_only_ids_into_option_value_read_inner_ts(&is_standart_with_id_false, &value_sc),
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                                NotNullOrNullable::NotNull => gen_fields_read_only_ids_into_option_value_read_inner_ts(&is_standart_with_id_false, &value_sc),
+                                NotNullOrNullable::Nullable => {
                                     let value_content_ts = wrap_into_value_initialization_ts(&quote!{
                                         #value_sc.0.#value_sc.and_then(|value_5d7e3961| match #ident_standart_not_null_as_pg_json_type_test_cases_ts::read_only_ids_into_option_value_read_inner(
                                             value_5d7e3961
@@ -5485,7 +5512,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 }
                             },
                             Pattern::Array => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                NotNullOrNullable::NotNull => {
                                     let value_content_ts = wrap_into_value_initialization_ts(&{
                                         let content_ts = vec_syn_field_with_id.iter().map(|el_3ebdd830| {
                                             let field_ident = &el_3ebdd830.field_ident;
@@ -5516,7 +5543,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     });
                                     quote! {Some(#value_content_ts)}
                                 }
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                                NotNullOrNullable::Nullable => {
                                     let value_content_ts = wrap_into_value_initialization_ts(&quote!{
                                         #value_sc.0.#value_sc.and_then(|value_f816032d| match #ident_array_not_null_as_pg_json_type_test_cases_ts::#read_only_ids_into_option_value_read_inner_sc(
                                             value_f816032d
@@ -5531,7 +5558,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         };
                         let update_to_read_only_ids_ts = match &pattern {
                             Pattern::Standart => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                NotNullOrNullable::NotNull => {
                                     let fields_initialization_content_ts = vec_syn_field.iter().map(|el_3f07f901| {
                                         let field_ident = &el_3f07f901.field_ident;
                                         quote! {let mut #field_ident = None;}
@@ -5565,7 +5592,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         #ident_read_only_ids_ucc(#value_content_ts)
                                     }
                                 }
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                                NotNullOrNullable::Nullable => {
                                     let value_content_ts = wrap_into_value_initialization_ts(&{
                                         quote!{
                                             #value_sc.0.as_ref().map(#ident_standart_not_null_as_pg_json_type_test_cases_ts::#update_to_read_only_ids_sc)
@@ -5575,7 +5602,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 }
                             },
                             Pattern::Array => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                NotNullOrNullable::NotNull => {
                                     let value_content_ts = wrap_into_value_initialization_ts(&{
                                         let initialization_ts = vec_syn_field.iter().map(|el_09cee28c| {
                                             let field_ident = &el_09cee28c.field_ident;
@@ -5652,7 +5679,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     });
                                     quote! {#ident_read_only_ids_ucc(#value_content_ts)}
                                 }
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                                NotNullOrNullable::Nullable => {
                                     let value_content_ts = wrap_into_value_initialization_ts(&quote!{
                                         #value_sc.0.as_ref().map(#ident_array_not_null_as_pg_json_type_test_cases_ts::#update_to_read_only_ids_sc)
                                     });
@@ -5663,7 +5690,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         let read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts = {
                             let value_initialization_ts = gen_import_path_value_initialization_ts(&match &pattern {
                                 Pattern::Standart => match &not_null_or_nullable {
-                                    pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    NotNullOrNullable::NotNull => {
                                         let parameters_ts = vec_syn_field.iter().map(|el_2b018c89| {
                                             let field_ident = &el_2b018c89.field_ident;
                                             let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el_2b018c89.field_type);
@@ -5679,7 +5706,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             ).expect("57820868-38ac-4f77-aa0f-dc734399d8b2")
                                         }
                                     }
-                                    pg_crud_macros_common::NotNullOrNullable::Nullable => quote! {
+                                    NotNullOrNullable::Nullable => quote! {
                                         #ident_read_ucc::new(
                                             #value_sc.0.#value_sc.as_ref().and_then(|value_dfa7815e| match #ident_standart_not_null_as_pg_json_type_test_cases_ts::read_only_ids_to_option_value_read_default_option_some_vec_one_el(
                                                 value_dfa7815e
@@ -5691,7 +5718,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 },
                                 Pattern::Array => match &not_null_or_nullable {
-                                    pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    NotNullOrNullable::NotNull => {
                                         let parameters_ts = vec_syn_field_with_id.iter().map(|el_f4599b96| {
                                             let field_ident = &el_f4599b96.field_ident;
                                             let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el_f4599b96.field_type);
@@ -5726,7 +5753,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             })
                                         }
                                     }
-                                    pg_crud_macros_common::NotNullOrNullable::Nullable => quote! {
+                                    NotNullOrNullable::Nullable => quote! {
                                         #ident_read_ucc::new(
                                             #value_sc.0.#value_sc.as_ref().and_then(|value_16ab4136| match #ident_array_not_null_as_pg_json_type_test_cases_ts::read_only_ids_to_option_value_read_default_option_some_vec_one_el(
                                                 value_16ab4136
@@ -5794,7 +5821,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 }
                             };
                             match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => match &pattern {
+                                NotNullOrNullable::NotNull => match &pattern {
                                     Pattern::Standart => {
                                         let struct_initializattion_ts = gen_struct_initialization_ts(&|content_ts: &dyn ToTokens|{
                                             quote!{
@@ -5860,7 +5887,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         }
                                     },
                                 },
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => gen_option_ts(pattern)
+                                NotNullOrNullable::Nullable => gen_option_ts(pattern)
                             }
                         };
                         let read_only_ids_merged_with_create_into_read_ts = {
@@ -5886,7 +5913,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             };
                             match &pattern {
                                 Pattern::Standart => match &not_null_or_nullable {
-                                    pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    NotNullOrNullable::NotNull => {
                                         let parameters_ts = vec_syn_field.iter().map(|el_9bdce5ca| {
                                             let field_ident = &el_9bdce5ca.field_ident;
                                             let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el_9bdce5ca.field_type);
@@ -5903,13 +5930,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             ).expect("52ad3994-8392-4fc5-8427-4ca42d87d726")
                                         }
                                     }
-                                    pg_crud_macros_common::NotNullOrNullable::Nullable => gen_nullable_ts(
+                                    NotNullOrNullable::Nullable => gen_nullable_ts(
                                         &ident_standart_not_null_ucc,
                                         &Ts2::new()
                                     )
                                 },
                                 Pattern::Array => match &not_null_or_nullable {
-                                    pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    NotNullOrNullable::NotNull => {
                                         let gen_parameter_ts = |field_type: &dyn ToTokens, field_ident: &dyn ToTokens, content_ts: &dyn ToTokens|{
                                             let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&field_type);
                                             quote! {
@@ -5946,7 +5973,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             })
                                         }
                                     }
-                                    pg_crud_macros_common::NotNullOrNullable::Nullable => gen_nullable_ts(
+                                    NotNullOrNullable::Nullable => gen_nullable_ts(
                                         &ident_array_not_null_ucc,
                                         &quote!{.0}
                                     )
@@ -5985,7 +6012,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             };
                             match &pattern {
                                 Pattern::Standart => match &not_null_or_nullable {
-                                    pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    NotNullOrNullable::NotNull => {
                                         let parameters_ts = vec_syn_field.iter().map(|el_ca3a96db| {
                                             let field_ident = &el_ca3a96db.field_ident;
                                             let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el_ca3a96db.field_type);
@@ -6002,13 +6029,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             )
                                         }
                                     }
-                                    pg_crud_macros_common::NotNullOrNullable::Nullable => gen_nullable_ts(
+                                    NotNullOrNullable::Nullable => gen_nullable_ts(
                                         &ident_standart_not_null_ucc,
                                         &Ts2::new()
                                     )
                                 },
                                 Pattern::Array => match &not_null_or_nullable {
-                                    pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    NotNullOrNullable::NotNull => {
                                         let gen_parameter_ts = |field_type: &dyn ToTokens, field_ident: &dyn ToTokens, content_ts: &dyn ToTokens|{
                                             let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&field_type);
                                             quote! {
@@ -6045,7 +6072,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             })
                                         }
                                     }
-                                    pg_crud_macros_common::NotNullOrNullable::Nullable => gen_nullable_ts(
+                                    NotNullOrNullable::Nullable => gen_nullable_ts(
                                         &ident_array_not_null_ucc,
                                         &quote!{.0}
                                     )
@@ -6053,7 +6080,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             }
                         };
                         let read_only_ids_merged_with_create_into_where_equal_ts = match &not_null_or_nullable {
-                            pg_crud_macros_common::NotNullOrNullable::NotNull => match &pattern {
+                            NotNullOrNullable::NotNull => match &pattern {
                                 Pattern::Standart => {
                                     let parameters_ts = vec_syn_field.iter().map(|el_9990b32d| {
                                         let field_ident = &el_9990b32d.field_ident;
@@ -6124,7 +6151,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                             },
-                            pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                            NotNullOrNullable::Nullable => {
                                 let content_ts = {
                                     let current_ident_ts = gen_type_as_pg_json_type_test_cases_ts(&gen_ident_ucc(&match &pattern {
                                         Pattern::Standart => IdentPattern::StandartNotNullWithoutId,
@@ -6159,7 +6186,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         };
                         let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts = {
                             let content_ts = match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => match &pattern {
+                                NotNullOrNullable::NotNull => match &pattern {
                                     Pattern::Standart => {
                                         let elements_ts = vec_syn_field.iter().map(|el_23a78055| {
                                             let field_ident = &el_23a78055.field_ident;
@@ -6227,7 +6254,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         }
                                     }
                                 },
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                                NotNullOrNullable::Nullable => {
                                     let content_ts = {
                                         let current_ident_ts = gen_type_as_pg_json_type_test_cases_ts(&gen_ident_ucc(&match &pattern {
                                             Pattern::Standart => IdentPattern::StandartNotNullWithoutId,
@@ -6260,7 +6287,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         };
                         let read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts = match &pattern {
                             Pattern::Standart => match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                NotNullOrNullable::NotNull => {
                                     let content_ts = vec_syn_field.iter().map(|el_459c3da8| {
                                         let field_ident = &el_459c3da8.field_ident;
                                         let field_ident_ucc = &ToTokensToUccTs::case_or_panic(&field_ident);
@@ -6290,7 +6317,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         }).expect("9c50391c-001e-4a4f-aac0-14bb614de456")
                                     }
                                 },
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => quote!{
+                                NotNullOrNullable::Nullable => quote!{
                                     #import_path::NotEmptyUniqueVec::try_new({
                                         let mut acc_12b6f16d = Vec::new();
                                         match (#read_only_ids_sc.0.#value_sc, #create_sc.0) {
@@ -6327,10 +6354,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 )
                             }
                         };
-                        let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_one_equal_ts = gen_dimension_equal_ts(&pg_crud_macros_common::Dimension::One);
-                        let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_two_equal_ts = gen_dimension_equal_ts(&pg_crud_macros_common::Dimension::Two);
-                        let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_three_equal_ts = gen_dimension_equal_ts(&pg_crud_macros_common::Dimension::Three);
-                        let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_four_equal_ts = gen_dimension_equal_ts(&pg_crud_macros_common::Dimension::Four);
+                        let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_one_equal_ts = gen_dimension_equal_ts(&Dimension::One);
+                        let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_two_equal_ts = gen_dimension_equal_ts(&Dimension::Two);
+                        let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_three_equal_ts = gen_dimension_equal_ts(&Dimension::Three);
+                        let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_four_equal_ts = gen_dimension_equal_ts(&Dimension::Four);
                         let create_into_pg_json_type_option_vec_where_length_equal_ts = {
                             let gen_nullable_ts = |content_ts: &dyn ToTokens|quote! {
                                 match #import_path::NotEmptyUniqueVec::try_new(
@@ -6379,7 +6406,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             };
                             match &pattern {
                                 Pattern::Standart => match &not_null_or_nullable {
-                                    pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    NotNullOrNullable::NotNull => {
                                         let content_ts = vec_syn_field.iter().map(|el_d41dce84| {
                                             let field_ident = &el_d41dce84.field_ident;
                                             let field_ident_ucc = &ToTokensToUccTs::case_or_panic(&field_ident);
@@ -6424,10 +6451,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             }
                                         }
                                     }
-                                    pg_crud_macros_common::NotNullOrNullable::Nullable => gen_nullable_ts(&ident_standart_not_null_ucc)
+                                    NotNullOrNullable::Nullable => gen_nullable_ts(&ident_standart_not_null_ucc)
                                 },
                                 Pattern::Array => match &not_null_or_nullable {
-                                    pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    NotNullOrNullable::NotNull => {
                                         let content_ts = vec_syn_field.iter().map(|el_c776b608| {
                                             let field_ident = &el_c776b608.field_ident;
                                             let el_field_ident_ucc = ElementSelfUcc::from_tokens(&field_ident);
@@ -6484,7 +6511,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             }
                                         }
                                     }
-                                    pg_crud_macros_common::NotNullOrNullable::Nullable => gen_nullable_ts(&ident_array_not_null_ucc)
+                                    NotNullOrNullable::Nullable => gen_nullable_ts(&ident_array_not_null_ucc)
                                 },
                             }
                         };
@@ -6525,7 +6552,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             };
                             match &pattern {
                                 Pattern::Standart => match &not_null_or_nullable {
-                                    pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    NotNullOrNullable::NotNull => {
                                         let content_ts = vec_syn_field.iter().map(|el_9d0245f1| {
                                             let field_ident = &el_9d0245f1.field_ident;
                                             let field_ident_ucc = &ToTokensToUccTs::case_or_panic(&field_ident);
@@ -6570,10 +6597,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             }
                                         }
                                     }
-                                    pg_crud_macros_common::NotNullOrNullable::Nullable => gen_nullable_ts(&ident_standart_not_null_ucc)
+                                    NotNullOrNullable::Nullable => gen_nullable_ts(&ident_standart_not_null_ucc)
                                 },
                                 Pattern::Array => match &not_null_or_nullable {
-                                    pg_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    NotNullOrNullable::NotNull => {
                                         let content_ts = vec_syn_field.iter().map(|el_47c8f26c| {
                                             let field_ident = &el_47c8f26c.field_ident;
                                             let el_field_ident_ucc = ElementSelfUcc::from_tokens(&field_ident);
@@ -6634,7 +6661,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             }
                                         }
                                     }
-                                    pg_crud_macros_common::NotNullOrNullable::Nullable => gen_nullable_ts(&ident_array_not_null_ucc)
+                                    NotNullOrNullable::Nullable => gen_nullable_ts(&ident_array_not_null_ucc)
                                 },
                             }
                         };
@@ -6647,7 +6674,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_regular_expression_ts
                         ) = {
                             let gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_filter_ts = |method_name_ts: &dyn ToTokens|match &not_null_or_nullable {
-                                pg_crud_macros_common::NotNullOrNullable::NotNull => match &pattern {
+                                NotNullOrNullable::NotNull => match &pattern {
                                     Pattern::Standart => {
                                         let content_ts = vec_syn_field.iter().map(|el_59346ba9| {
                                             let field_ident = &el_59346ba9.field_ident;
@@ -6859,7 +6886,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         }
                                     }
                                 },
-                                pg_crud_macros_common::NotNullOrNullable::Nullable => {
+                                NotNullOrNullable::Nullable => {
                                     let current_ident_ts = gen_type_as_pg_json_type_test_cases_ts(&gen_ident_ucc(&match &pattern {
                                         Pattern::Standart => IdentPattern::StandartNotNullWithoutId,
                                         Pattern::Array => IdentPattern::ArrayNotNullWithId,
@@ -6923,7 +6950,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 )
                             )
                         };
-                        pg_crud_macros_common::gen_impl_pg_json_type_test_cases_for_ident_ts(
+                        gen_impl_pg_json_type_test_cases_for_ident_ts(
                             &cfg_feature_test_utils,
                             &import_path,
                             &ident_read_inner_ucc,
@@ -6998,7 +7025,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_three_equal_ts,
                             read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_four_equal_ts
                         ) = {
-                            let gen_dimension_equal_handle_ts = |dimension: &pg_crud_macros_common::Dimension|{
+                            let gen_dimension_equal_handle_ts = |dimension: &Dimension|{
                                 let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_number_equal_sc = dimension.read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_number_equal_sc();
                                 quote!{#self_as_pg_json_type_test_cases_ts::#read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_number_equal_sc(
                                     #read_only_ids_sc,
@@ -7006,10 +7033,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 )}
                             };
                             (
-                                gen_dimension_equal_handle_ts(&pg_crud_macros_common::Dimension::One),
-                                gen_dimension_equal_handle_ts(&pg_crud_macros_common::Dimension::Two),
-                                gen_dimension_equal_handle_ts(&pg_crud_macros_common::Dimension::Three),
-                                gen_dimension_equal_handle_ts(&pg_crud_macros_common::Dimension::Four)
+                                gen_dimension_equal_handle_ts(&Dimension::One),
+                                gen_dimension_equal_handle_ts(&Dimension::Two),
+                                gen_dimension_equal_handle_ts(&Dimension::Three),
+                                gen_dimension_equal_handle_ts(&Dimension::Four)
                             )
                         };
                         let create_into_pg_json_type_option_vec_where_length_equal_ts = quote!{#self_as_pg_json_type_test_cases_ts::#create_into_pg_json_type_option_vec_where_length_equal_sc(
@@ -7042,7 +7069,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             #read_only_ids_sc,
                             #create_sc
                         )};
-                        pg_crud_macros_common::gen_impl_pg_type_test_cases_for_ident_ts(
+                        gen_impl_pg_type_test_cases_for_ident_ts(
                             &cfg_feature_test_utils,
                             &import_path,
                             &ident_read_inner_ucc,
@@ -7079,7 +7106,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     },
                 )
             };
-            let impl_pg_type_not_primary_key_for_ident_ts = pg_crud_macros_common::gen_impl_pg_type_not_primary_key_for_ident_ts(&import_path, &ident);
+            let impl_pg_type_not_primary_key_for_ident_ts = gen_impl_pg_type_not_primary_key_for_ident_ts(&import_path, &ident);
             let generated = quote! {
                 #ident_ts
                 #ident_table_type_declaration_ts
