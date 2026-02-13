@@ -1,4 +1,5 @@
 use proc_macro2::TokenStream as Ts2;
+use quote::quote;
 #[proc_macro]
 pub fn gen_struct_or_enum_derive_ts_builder(
     input_ts: proc_macro::TokenStream,
@@ -11,9 +12,9 @@ pub fn gen_struct_or_enum_derive_ts_builder(
         derive_trait_name_ucc: Ts2,
         trait_type: Ts2,
     }
-    let make_pub_sc_ts = quote::quote! {make_pub};
-    let make_pub_if_sc_ts = quote::quote! {make_pub_if};
-    let make_pub_ucc_ts = quote::quote! {MakePub};
+    let make_pub_sc_ts = quote! {make_pub};
+    let make_pub_if_sc_ts = quote! {make_pub_if};
+    let make_pub_ucc_ts = quote! {MakePub};
     let el_vec = serde_json::from_str::<Vec<String>>(&input_ts.to_string())
         .expect("c5d09740-51b2-4c11-9b66-931622d1a053")
         .into_iter()
@@ -50,15 +51,15 @@ pub fn gen_struct_or_enum_derive_ts_builder(
             Element {
                 derive_trait_name_ucc: {
                     let value = DeriveSelfUcc::from_display(&sc);
-                    quote::quote! {#value}
+                    quote! {#value}
                 },
                 derive_trait_name_sc: {
                     let value = DeriveSelfSc::from_display(&sc);
-                    quote::quote! {#value}
+                    quote! {#value}
                 },
                 derive_trait_name_if_sc: {
                     let value = DeriveSelfIfSc::from_display(&sc);
-                    quote::quote! {#value}
+                    quote! {#value}
                 },
                 trait_type: el_4f4a2c74
                     .parse::<Ts2>()
@@ -68,7 +69,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(
         .collect::<Vec<Element>>();
     let (make_pub_pub_enum_ts, pub_enum_derive_vec_ts) = {
         fn gen_pun_enum_ts(ident: &dyn quote::ToTokens) -> Ts2 {
-            quote::quote! {
+            quote! {
                 #[derive(Debug, Clone, Copy)]
                 pub enum #ident {
                     True,
@@ -85,7 +86,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(
     };
     let (make_pub_derive_trait_name_bool_ts, field_vec_ts) = {
         fn gen_derive_trait_name_bool_ts(ident: &dyn quote::ToTokens) -> Ts2 {
-            quote::quote! {#ident: bool,}
+            quote! {#ident: bool,}
         }
         (
             gen_derive_trait_name_bool_ts(&make_pub_sc_ts),
@@ -96,7 +97,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(
     };
     let (make_pub_derive_and_derive_if_ts, derive_and_derive_if_vec_ts) = {
         (
-            quote::quote! {
+            quote! {
                 pub const fn #make_pub_sc_ts(mut self) -> Self {
                     self.#make_pub_sc_ts = true;
                     self
@@ -112,7 +113,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(
                 let derive_trait_name_ucc = &el_09fab389.derive_trait_name_ucc;
                 let derive_trait_name_sc = &el_09fab389.derive_trait_name_sc;
                 let derive_trait_name_if_sc = &el_09fab389.derive_trait_name_if_sc;
-                quote::quote!{
+                quote!{
                     pub const fn #derive_trait_name_sc(mut self) -> Self {
                         self.#derive_trait_name_sc = true;
                         self
@@ -130,15 +131,15 @@ pub fn gen_struct_or_enum_derive_ts_builder(
     let if_self_derive_acc_push_vec_ts = el_vec.iter().map(|el_09bcde51| {
         let derive_trait_name_sc = &el_09bcde51.derive_trait_name_sc;
         let trait_type = &el_09bcde51.trait_type;
-        quote::quote! {
+        quote! {
             if self.#derive_trait_name_sc {
                 acc_2a71375c.push(quote::quote!{#trait_type});
             }
         }
     });
-    let struct_or_enum_derive_ts_builder_ucc = quote::quote! {StructOrEnumDeriveTokenStreamBuilder};
-    let struct_or_enum_ucc = quote::quote! {StructOrEnum};
-    let generated: Ts2 = quote::quote! {
+    let struct_or_enum_derive_ts_builder_ucc = quote! {StructOrEnumDeriveTokenStreamBuilder};
+    let struct_or_enum_ucc = quote! {StructOrEnum};
+    let generated: Ts2 = quote! {
         #make_pub_pub_enum_ts
         #(#pub_enum_derive_vec_ts)*
         #[derive(Debug, Clone, Copy)]
