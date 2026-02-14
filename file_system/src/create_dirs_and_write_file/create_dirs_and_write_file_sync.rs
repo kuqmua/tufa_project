@@ -8,7 +8,7 @@ use std::{
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum CreateDirsAndWriteFileSyncErrorNamed {
     StdIo {
-        #[eo_to_std_string_string]
+        #[eo_to_err_string]
         error: IoError,
         code_occurence: CodeOccurence,
     },

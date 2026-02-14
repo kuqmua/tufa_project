@@ -5,7 +5,7 @@ members = [
   "common_routes",
   "config_lib",
   "constants",
-  "to_std_string_string",
+  "to_err_string",
   "enum_extension_lib/enum_extension",
   "enum_extension_lib",
   "error_occurence_lib",

@@ -3,7 +3,7 @@ use macros_helpers::{
     DeriveCopy, DeriveDefault, DeriveEq, DeriveOrd, DerivePartialOrd, DeriveSerdeDeserialize,
     DeriveSerdeSerialize, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
     StructOrEnumDeriveTokenStreamBuilder, gen_const_new_ts, gen_if_write_is_err_ts,
-    gen_impl_error_occurence_lib_to_std_string_string_ts, gen_impl_std_convert_from_ts,
+    gen_impl_error_occurence_lib_to_err_string_ts, gen_impl_std_convert_from_ts,
     gen_impl_std_fmt_display_ts, gen_new_ts, gen_pub_const_new_ts, gen_pub_new_ts,
     gen_pub_try_new_ts, maybe_write_ts_into_file,
 };
@@ -20,7 +20,7 @@ use naming::{
     ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsSc,
     ReadOnlyIdsToTwoDimensionalVecReadInnerSc, ReadOnlyIdsUcc, ReadSc, ReadUcc, SecSc, SecondSc,
     SelfSc, SelfUcc, StartSc, StartUcc, StdFmtDisplayPlusQuoteToTokens, TableTypeDeclarationSc,
-    TableTypeDeclarationUcc, TimeSc, TimeUcc, ToStdStringStringSc, TryNewForDeserializeSc,
+    TableTypeDeclarationUcc, TimeSc, TimeUcc, ToErrStringSc, TryNewForDeserializeSc,
     TryNewSc, UnboundedUcc, UpdateUcc, ValueSc, VecOfUcc,
     parameter::{
         SelfCreateUcc, SelfNotNullUcc, SelfOriginTryNewErrorNamedUcc,
@@ -3118,35 +3118,35 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 let range_inner_type_ts = int_range_type_to_range_inner_type_ts(int_range_type);
                 quote! {
                     #IncludedStartGreaterThanIncludedEndUcc {
-                        #[eo_to_std_string_string_serialize_deserialize]
+                        #[eo_to_err_string_serialize_deserialize]
                         #StartSc: #range_inner_type_ts,
-                        #[eo_to_std_string_string_serialize_deserialize]
+                        #[eo_to_err_string_serialize_deserialize]
                         #EndSc: #range_inner_type_ts,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
                     #IncludedStartGreaterThanExcludedEndUcc {
-                        #[eo_to_std_string_string_serialize_deserialize]
+                        #[eo_to_err_string_serialize_deserialize]
                         #StartSc: #range_inner_type_ts,
-                        #[eo_to_std_string_string_serialize_deserialize]
+                        #[eo_to_err_string_serialize_deserialize]
                         #EndSc: #range_inner_type_ts,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
                     #ExcludedStartGreaterThanIncludedEndUcc {
-                        #[eo_to_std_string_string_serialize_deserialize]
+                        #[eo_to_err_string_serialize_deserialize]
                         #StartSc: #range_inner_type_ts,
-                        #[eo_to_std_string_string_serialize_deserialize]
+                        #[eo_to_err_string_serialize_deserialize]
                         #EndSc: #range_inner_type_ts,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
                     #ExcludedStartGreaterThanExcludedEndUcc {
-                        #[eo_to_std_string_string_serialize_deserialize]
+                        #[eo_to_err_string_serialize_deserialize]
                         #StartSc: #range_inner_type_ts,
-                        #[eo_to_std_string_string_serialize_deserialize]
+                        #[eo_to_err_string_serialize_deserialize]
                         #EndSc: #range_inner_type_ts,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
                     #IncludedEndCannotBeMaxUcc {
-                        #[eo_to_std_string_string_serialize_deserialize]
+                        #[eo_to_err_string_serialize_deserialize]
                         #EndSc: #range_inner_type_ts,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
@@ -3154,23 +3154,23 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             };
             let nanosecond_precision_is_not_supported_variant_try_new_ts = quote! {
                 #NanosecondPrecisionIsNotSupportedUcc {
-                    #[eo_to_std_string_string_serialize_deserialize]
+                    #[eo_to_err_string_serialize_deserialize]
                     #ValueSc: #std_string_string_ts,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
             };
             let sqlx_types_chrono_naive_date_as_date_try_new_error_named_variants_ts = quote! {
                 #EarlierDateNotSupportedUcc {
-                    #[eo_to_std_string_string_serialize_deserialize]
+                    #[eo_to_err_string_serialize_deserialize]
                     #ValueSc: #std_string_string_ts,
-                    #[eo_to_std_string_string_serialize_deserialize]
+                    #[eo_to_err_string_serialize_deserialize]
                     #EarliestSupportedDateSc: #std_string_string_ts,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
             };
             let std_string_string_as_text_try_new_error_named_variants_ts = quote! {
                 #ContainsNullByteUcc {
-                    #[eo_to_std_string_string_serialize_deserialize]
+                    #[eo_to_err_string_serialize_deserialize]
                     #ValueSc: #ident_inner_type_ts,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
@@ -3279,13 +3279,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         PgTypeImplTryNewForDeserialize::StdStringStringAsText => &std_string_string_as_text_try_new_error_named_variants_ts,
                                         PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => &quote! {
                                             #InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
-                                                #[eo_to_std_string_string_serialize_deserialize]
+                                                #[eo_to_err_string_serialize_deserialize]
                                                 #HourSc: #u32_ts,
-                                                #[eo_to_std_string_string_serialize_deserialize]
+                                                #[eo_to_err_string_serialize_deserialize]
                                                 #MinSc: #u32_ts,
-                                                #[eo_to_std_string_string_serialize_deserialize]
+                                                #[eo_to_err_string_serialize_deserialize]
                                                 #SecSc: #u32_ts,
-                                                #[eo_to_std_string_string_serialize_deserialize]
+                                                #[eo_to_err_string_serialize_deserialize]
                                                 #MicroSc: #u32_ts,
                                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                             },
@@ -3293,15 +3293,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         },
                                         PgTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => &quote! {
                                             #InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
-                                                #[eo_to_std_string_string_serialize_deserialize]
+                                                #[eo_to_err_string_serialize_deserialize]
                                                 #HourSc: #u8_ts,
-                                                #[eo_to_std_string_string_serialize_deserialize]
+                                                #[eo_to_err_string_serialize_deserialize]
                                                 #MinuteSc: #u8_ts,
-                                                #[eo_to_std_string_string_serialize_deserialize]
+                                                #[eo_to_err_string_serialize_deserialize]
                                                 #SecondSc: #u8_ts,
-                                                #[eo_to_std_string_string_serialize_deserialize]
+                                                #[eo_to_err_string_serialize_deserialize]
                                                 #MicrosecondSc: #u32_ts,
-                                                #[eo_to_std_string_string_serialize_deserialize]
+                                                #[eo_to_err_string_serialize_deserialize]
                                                 #ErrorSc: #std_string_string_ts,
                                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                             },
@@ -4039,7 +4039,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 DeriveOrImpl::Impl(value) => value,
             };
             let impl_std_fmt_display_for_ident_origin_ts = gen_impl_std_fmt_display_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
-            let impl_error_occurence_lib_to_std_string_string_for_ident_origin_ts = gen_impl_error_occurence_lib_to_std_string_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {self.to_string()});
+            let impl_error_occurence_lib_to_err_string_for_ident_origin_ts = gen_impl_error_occurence_lib_to_err_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {self.to_string()});
             let impl_default_option_some_vec_one_el_for_ident_origin_ts = gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_origin_ucc, &{
                 let content_ts = match &pg_type_pattern {
                     PgTypePattern::Standart => match &not_null_or_nullable {
@@ -4196,7 +4196,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #maybe_impl_serde_serialize_for_ident_standart_not_null_origin_ts
                 #maybe_impl_serde_deserialize_for_ident_standart_not_null_origin_ts
                 #impl_std_fmt_display_for_ident_origin_ts
-                #impl_error_occurence_lib_to_std_string_string_for_ident_origin_ts
+                #impl_error_occurence_lib_to_err_string_for_ident_origin_ts
                 #impl_default_option_some_vec_one_el_for_ident_origin_ts
                 #impl_sqlx_type_sqlx_pg_for_ident_origin_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_origin_ts
@@ -4787,7 +4787,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     )
             };
             let impl_ident_read_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_read_ucc);
-            let impl_error_occurence_lib_to_std_string_string_for_ident_read_ts = gen_impl_error_occurence_lib_to_std_string_string_ts(&Ts2::new(), &ident_read_ucc, &Ts2::new(), &quote! {self.0.to_string()});
+            let impl_error_occurence_lib_to_err_string_for_ident_read_ts = gen_impl_error_occurence_lib_to_err_string_ts(&Ts2::new(), &ident_read_ucc, &Ts2::new(), &quote! {self.0.to_string()});
             let impl_crate_default_option_some_vec_one_el_for_ident_read_ts =
                 gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_read_ucc, &quote! {Self(#pg_crud_common_default_option_some_vec_one_el_call_ts)});
             let impl_sqlx_encode_sqlx_pg_for_ident_origin_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_read_ucc, &quote! {#SelfSc.0});
@@ -4821,7 +4821,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             quote! {
                 #ident_read_ts
                 #impl_ident_read_ts
-                #impl_error_occurence_lib_to_std_string_string_for_ident_read_ts
+                #impl_error_occurence_lib_to_err_string_for_ident_read_ts
                 #impl_crate_default_option_some_vec_one_el_for_ident_read_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_origin_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_read_ts
@@ -4877,12 +4877,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let impl_ident_update_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_update_ucc);
             let impl_default_option_some_vec_one_el_for_ident_update_ts =
                 gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_update_ucc, &quote! {Self(#pg_crud_common_default_option_some_vec_one_el_call_ts)});
-            let impl_error_occurence_lib_to_std_string_string_for_ident_update_ts = gen_impl_error_occurence_lib_to_std_string_string_ts(&Ts2::new(), &ident_update_ucc, &Ts2::new(), &quote! {self.0.#ToStdStringStringSc()});
+            let impl_error_occurence_lib_to_err_string_for_ident_update_ts = gen_impl_error_occurence_lib_to_err_string_ts(&Ts2::new(), &ident_update_ucc, &Ts2::new(), &quote! {self.0.#ToErrStringSc()});
             quote! {
                 #ident_update_ts
                 #impl_ident_update_ts
                 #impl_default_option_some_vec_one_el_for_ident_update_ts
-                #impl_error_occurence_lib_to_std_string_string_for_ident_update_ts
+                #impl_error_occurence_lib_to_err_string_for_ident_update_ts
             }
         };
         let ident_update_for_query_ucc = SelfUpdateForQueryUcc::from_tokens(&ident);

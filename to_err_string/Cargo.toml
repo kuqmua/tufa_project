@@ -1,5 +1,5 @@
 [package]
-name = "to_std_string_string"
+name = "to_err_string"
 version = "0.1.0"
 edition = "2024"
 description = "description"

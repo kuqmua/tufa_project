@@ -24,22 +24,22 @@ pub enum ErrorOccurenceFieldAttribute {
 impl FromStr for ErrorOccurenceFieldAttribute {
     type Err = ();
     fn from_str(value: &str) -> Result<Self, Self::Err> {
-        if value == "eo_to_std_string_string" {
+        if value == "eo_to_err_string" {
             Ok(Self::EoToStdStringString)
-        } else if value == "eo_to_std_string_string_serialize_deserialize" {
+        } else if value == "eo_to_err_string_serialize_deserialize" {
             Ok(Self::EoToStdStringStringSerializeDeserialize)
         } else if value == "eo_error_occurence" {
             Ok(Self::EoErrorOccurence)
-        } else if value == "eo_vec_to_std_string_string" {
+        } else if value == "eo_vec_to_err_string" {
             Ok(Self::EoVecToStdStringString)
-        } else if value == "eo_vec_to_std_string_string_serialize_deserialize" {
+        } else if value == "eo_vec_to_err_string_serialize_deserialize" {
             Ok(Self::EoVecToStdStringStringSerializeDeserialize)
         } else if value == "eo_vec_error_occurence" {
             Ok(Self::EoVecErrorOccurence)
-        } else if value == "eo_hashmap_key_std_string_string_value_to_std_string_string" {
+        } else if value == "eo_hashmap_key_std_string_string_value_to_err_string" {
             Ok(Self::EoHashMapKeyStdStringStringValueToStdStringString)
         } else if value
-            == "eo_hashmap_key_std_string_string_value_to_std_string_string_serialize_deserialize"
+            == "eo_hashmap_key_std_string_string_value_to_err_string_serialize_deserialize"
         {
             Ok(Self::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize)
         } else if value == "eo_hashmap_key_std_string_string_value_error_occurence" {
@@ -75,21 +75,21 @@ impl TryFrom<&Field> for ErrorOccurenceFieldAttribute {
 impl AttributeIdentStr for ErrorOccurenceFieldAttribute {
     fn attribute_ident_str(&self) -> &str {
         match *self {
-            Self::EoToStdStringString => "eo_to_std_string_string",
+            Self::EoToStdStringString => "eo_to_err_string",
             Self::EoToStdStringStringSerializeDeserialize => {
-                "eo_to_std_string_string_serialize_deserialize"
+                "eo_to_err_string_serialize_deserialize"
             }
             Self::EoErrorOccurence => "eo_error_occurence",
-            Self::EoVecToStdStringString => "eo_vec_to_std_string_string",
+            Self::EoVecToStdStringString => "eo_vec_to_err_string",
             Self::EoVecToStdStringStringSerializeDeserialize => {
-                "eo_vec_to_std_string_string_serialize_deserialize"
+                "eo_vec_to_err_string_serialize_deserialize"
             }
             Self::EoVecErrorOccurence => "eo_vec_error_occurence",
             Self::EoHashMapKeyStdStringStringValueToStdStringString => {
-                "eo_hashmap_key_std_string_string_value_to_std_string_string"
+                "eo_hashmap_key_std_string_string_value_to_err_string"
             }
             Self::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
-                "eo_hashmap_key_std_string_string_value_to_std_string_string_serialize_deserialize"
+                "eo_hashmap_key_std_string_string_value_to_err_string_serialize_deserialize"
             }
             Self::EoHashMapKeyStdStringStringValueErrorOccurence => {
                 "eo_hashmap_key_std_string_string_value_error_occurence"

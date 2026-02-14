@@ -9,19 +9,19 @@ use naming::CommitSc;
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum ErrorNamed {
     CommitNotEqual {
-        #[eo_to_std_string_string_serialize_deserialize]
+        #[eo_to_err_string_serialize_deserialize]
         commit_not_equal: String,
-        #[eo_to_std_string_string_serialize_deserialize]
+        #[eo_to_err_string_serialize_deserialize]
         commit_to_use: String,
         code_occurence: CodeOccurence,
     },
     CommitToStrConversion {
-        #[eo_to_std_string_string]
+        #[eo_to_err_string]
         commit_to_str_conversion: ToStrError,
         code_occurence: CodeOccurence,
     },
     NoCommitHeader {
-        #[eo_to_std_string_string_serialize_deserialize]
+        #[eo_to_err_string_serialize_deserialize]
         no_commit_header: String,
         code_occurence: CodeOccurence,
     },

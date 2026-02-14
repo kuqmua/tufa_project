@@ -5,7 +5,7 @@ use tokio::{fs::File, io::AsyncWriteExt};
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum CreateDirsAndWriteFileTokioAsyncErrorNamed {
     StdIoError {
-        #[eo_to_std_string_string]
+        #[eo_to_err_string]
         error: IoError,
         code_occurence: CodeOccurence,
     },

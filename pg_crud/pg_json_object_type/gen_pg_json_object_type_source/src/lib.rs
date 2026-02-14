@@ -1,7 +1,7 @@
 use macros_helpers::{
     DeriveSerdeDeserialize, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
     StructOrEnumDeriveTokenStreamBuilder, SynFieldWrapper, gen_if_write_is_err_curly_braces_ts,
-    gen_if_write_is_err_ts, gen_impl_error_occurence_lib_to_std_string_string_ts,
+    gen_if_write_is_err_ts, gen_impl_error_occurence_lib_to_err_string_ts,
     gen_impl_pub_const_new_for_ident_ts, gen_impl_pub_new_for_ident_ts,
     gen_impl_std_convert_from_ts, gen_impl_std_fmt_display_ts, gen_pub_const_new_ts,
     gen_pub_new_ts, gen_pub_try_new_ts, gen_pub_type_alias_ts,
@@ -663,7 +663,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             | gen_type_as_pg_json_type_ts(
                 &syn_field_wrapper.field_type
             );
-            let gen_gen_impl_error_occurence_lib_to_std_string_string_wrapper_ts = |current_ident_ts: &dyn ToTokens| gen_impl_error_occurence_lib_to_std_string_string_ts(
+            let gen_gen_impl_error_occurence_lib_to_err_string_wrapper_ts = |current_ident_ts: &dyn ToTokens| gen_impl_error_occurence_lib_to_err_string_ts(
                 &Ts2::new(),
                 &current_ident_ts,
                 &Ts2::new(),
@@ -909,13 +909,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &quote! {write!(f, "{self:?}")}
                 );
                 let impl_std_fmt_display_for_ident_create_ts = gen_impl_std_fmt_display_for_ident_create_ts(&ident_create_ucc);
-                let impl_error_occurence_lib_to_std_string_string_for_ident_create_ts = gen_gen_impl_error_occurence_lib_to_std_string_string_wrapper_ts(&ident_create_ucc);
+                let impl_error_occurence_lib_to_err_string_for_ident_create_ts = gen_gen_impl_error_occurence_lib_to_err_string_wrapper_ts(&ident_create_ucc);
                 let maybe_ident_with_id_create_standart_not_null_ts = if is_standart_not_null {
                     let impl_std_fmt_display_for_ident_with_id_create_standart_not_null_ts = gen_impl_std_fmt_display_for_ident_create_ts(&ident_with_id_standart_not_null_create_ucc);
-                    let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_create_standart_not_null_ts = gen_gen_impl_error_occurence_lib_to_std_string_string_wrapper_ts(&ident_with_id_standart_not_null_create_ucc);
+                    let impl_error_occurence_lib_to_err_string_for_ident_with_id_create_standart_not_null_ts = gen_gen_impl_error_occurence_lib_to_err_string_wrapper_ts(&ident_with_id_standart_not_null_create_ucc);
                     quote! {
                         #impl_std_fmt_display_for_ident_with_id_create_standart_not_null_ts
-                        #impl_error_occurence_lib_to_std_string_string_for_ident_with_id_create_standart_not_null_ts
+                        #impl_error_occurence_lib_to_err_string_for_ident_with_id_create_standart_not_null_ts
                     }
                 } else {
                     Ts2::new()
@@ -923,7 +923,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 quote! {
                     #ident_create_common_ts
                     #impl_std_fmt_display_for_ident_create_ts
-                    #impl_error_occurence_lib_to_std_string_string_for_ident_create_ts
+                    #impl_error_occurence_lib_to_err_string_for_ident_create_ts
                     #maybe_ident_with_id_create_standart_not_null_ts
                 }
             };
@@ -1498,7 +1498,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             #content_ts_bf3bd19e
                         }
                     };
-                    let impl_error_occurence_lib_to_std_string_string_for_ident_select_el_or_ident_with_id_standart_not_null_select_el_ts = gen_gen_impl_error_occurence_lib_to_std_string_string_wrapper_ts(&ident_select_el_or_ident_with_id_select_el_ucc);
+                    let impl_error_occurence_lib_to_err_string_for_ident_select_el_or_ident_with_id_standart_not_null_select_el_ts = gen_gen_impl_error_occurence_lib_to_err_string_wrapper_ts(&ident_select_el_or_ident_with_id_select_el_ucc);
                     let (
                         impl_pg_crud_all_variants_default_option_some_vec_one_el_for_ident_select_el_or_ident_with_id_standart_not_null_select_el_ts,
                         impl_pg_crud_all_variants_default_option_some_vec_one_el_for_ident_select_el_or_ident_with_id_standart_not_null_select_el_with_max_page_size_ts
@@ -1533,7 +1533,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     };
                     quote! {
                         #ident_select_el_or_ident_with_id_standart_not_null_select_el_ts
-                        #impl_error_occurence_lib_to_std_string_string_for_ident_select_el_or_ident_with_id_standart_not_null_select_el_ts
+                        #impl_error_occurence_lib_to_err_string_for_ident_select_el_or_ident_with_id_standart_not_null_select_el_ts
                         #impl_pg_crud_all_variants_default_option_some_vec_one_el_for_ident_select_el_or_ident_with_id_standart_not_null_select_el_ts
                         #impl_pg_crud_all_variants_default_option_some_vec_one_el_for_ident_select_el_or_ident_with_id_standart_not_null_select_el_with_max_page_size_ts
                     }
@@ -1891,10 +1891,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             ),
                         }
                     };
-                    let maybe_impl_error_occurence_lib_to_std_string_string_for_ident_where_ts = if matches!((&pattern, &not_null_or_nullable), (Pattern::Standart, NotNullOrNullable::Nullable)) {
+                    let maybe_impl_error_occurence_lib_to_err_string_for_ident_where_ts = if matches!((&pattern, &not_null_or_nullable), (Pattern::Standart, NotNullOrNullable::Nullable)) {
                         Ts2::new()
                     } else {
-                        gen_gen_impl_error_occurence_lib_to_std_string_string_wrapper_ts(&ident_where_ucc)
+                        gen_gen_impl_error_occurence_lib_to_err_string_wrapper_ts(&ident_where_ucc)
                     };
                     let gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_content_standart_not_null_where = |is_standart_with_id: &IsStandartWithId| {
                         let gen_self_variant_default_some_one_ts = |content_ts: &dyn ToTokens|quote!{
@@ -1974,7 +1974,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 }
                             },
                         );
-                        let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_standart_not_null_where_ts = gen_gen_impl_error_occurence_lib_to_std_string_string_wrapper_ts(&ident_with_id_standart_not_null_where_ucc);
+                        let impl_error_occurence_lib_to_err_string_for_ident_with_id_standart_not_null_where_ts = gen_gen_impl_error_occurence_lib_to_err_string_wrapper_ts(&ident_with_id_standart_not_null_where_ucc);
                         let impl_pg_crud_all_variants_default_option_some_vec_one_el_for_ident_with_id_standart_not_null_where_ts = gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_ts(
                             &ident_with_id_standart_not_null_where_ucc,
                             &gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_content_standart_not_null_where(&is_standart_with_id_true)
@@ -1982,7 +1982,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         quote! {
                             #ident_with_id_standart_not_null_where_ts
                             #impl_pg_crud_pg_type_pg_type_where_filter_for_ident_with_id_standart_not_null_where_ts
-                            #impl_error_occurence_lib_to_std_string_string_for_ident_with_id_standart_not_null_where_ts
+                            #impl_error_occurence_lib_to_err_string_for_ident_with_id_standart_not_null_where_ts
                             #impl_pg_crud_all_variants_default_option_some_vec_one_el_for_ident_with_id_standart_not_null_where_ts
                         }
                     } else {
@@ -1991,7 +1991,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     quote! {
                         #maybe_ident_where_ts
                         #maybe_impl_pg_crud_pg_type_pg_type_where_filter_for_ident_where_ts
-                        #maybe_impl_error_occurence_lib_to_std_string_string_for_ident_where_ts
+                        #maybe_impl_error_occurence_lib_to_err_string_for_ident_where_ts
                         #maybe_impl_pg_crud_all_variants_default_option_some_vec_one_el_for_ident_where_ts
                         #maybe_ident_with_id_standart_not_null_where_ts
                     }
@@ -2720,17 +2720,17 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
                                     #ids_are_not_unique_uppper_camel_case {
-                                        #[eo_to_std_string_string_serialize_deserialize]
+                                        #[eo_to_err_string_serialize_deserialize]
                                         duplicate: #StdStringString,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
                                     #not_unique_id_in_json_delete_array_ucc {
-                                        #[eo_to_std_string_string_serialize_deserialize]
+                                        #[eo_to_err_string_serialize_deserialize]
                                         error: #StdStringString,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
                                     #not_unique_id_in_json_update_and_delete_arrays_ucc {
-                                        #[eo_to_std_string_string_serialize_deserialize]
+                                        #[eo_to_err_string_serialize_deserialize]
                                         error: #StdStringString,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
@@ -2766,15 +2766,15 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     };
                                     let check_if_ids_are_unique_ts = {
                                         let (
-                                            uuid_as_pg_json_type_update_to_std_string_string_el_id_ts,
-                                            uuid_as_pg_json_type_update_to_std_string_string_el_ts,
+                                            uuid_as_pg_json_type_update_to_err_string_el_id_ts,
+                                            uuid_as_pg_json_type_update_to_err_string_el_ts,
                                         ) = {
                                             #[allow(clippy::arbitrary_source_item_ordering)]
                                             enum UpdateOrDelete {
                                                 Update,
                                                 Delete
                                             }
-                                            let gen_uuid_as_pg_json_type_update_to_std_string_string_ts = |
+                                            let gen_uuid_as_pg_json_type_update_to_err_string_ts = |
                                                 update_or_delete: &UpdateOrDelete,
                                                 el_ts: &dyn ToTokens,
                                             |{
@@ -2783,17 +2783,17 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                     UpdateOrDelete::Delete => &el_ts
                                                 };
                                                 quote!{
-                                                    <#uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_update_ts as error_occurence_lib::ToStdStringString>::to_std_string_string(
+                                                    <#uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_update_ts as error_occurence_lib::ToStdStringString>::to_err_string(
                                                         #content_ts
                                                     )
                                                 }
                                             };
                                             (
-                                                gen_uuid_as_pg_json_type_update_to_std_string_string_ts(
+                                                gen_uuid_as_pg_json_type_update_to_err_string_ts(
                                                     &UpdateOrDelete::Update,
                                                     &quote!{el_dff7634c}
                                                 ),
-                                                gen_uuid_as_pg_json_type_update_to_std_string_string_ts(
+                                                gen_uuid_as_pg_json_type_update_to_err_string_ts(
                                                     &UpdateOrDelete::Delete,
                                                     &quote!{el_2b0181e6}
                                                 )
@@ -2804,7 +2804,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             for el_dff7634c in update.to_vec() {
                                                 if acc_2bf4e098.contains(&&el_dff7634c.#IdSc) {
                                                     return Err(#ident_update_try_new_error_named_ucc::#ids_are_not_unique_uppper_camel_case {
-                                                        duplicate: #uuid_as_pg_json_type_update_to_std_string_string_el_id_ts,
+                                                        duplicate: #uuid_as_pg_json_type_update_to_err_string_el_id_ts,
                                                         code_occurence: error_occurence_lib::code_occurence!()
                                                     });
                                                 }
@@ -2813,7 +2813,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             for el_2b0181e6 in &delete {
                                                 if acc_2bf4e098.contains(&el_2b0181e6) {
                                                     return Err(#ident_update_try_new_error_named_ucc::#ids_are_not_unique_uppper_camel_case {
-                                                        duplicate: #uuid_as_pg_json_type_update_to_std_string_string_el_ts,
+                                                        duplicate: #uuid_as_pg_json_type_update_to_err_string_el_ts,
                                                         code_occurence: error_occurence_lib::code_occurence!()
                                                     });
                                                 }

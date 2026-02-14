@@ -16,21 +16,21 @@ pub enum ErrorNamedOne {
     //todo even for String in serialize deserialize version of error must be using ToStdStringString impl instead of std::fmt::Display
     //todo test on using only code_occurence as pnly field in named variant
     Variant {
-        #[eo_to_std_string_string]
+        #[eo_to_err_string]
         eo_display_field: DisplayStruct, //IN SERIALIZE DESERIALIZE String
-        #[eo_to_std_string_string_serialize_deserialize]
+        #[eo_to_err_string_serialize_deserialize]
         eo_serde: SerializeDeserializeStruct,
         #[eo_error_occurence]
         eo_error_occurence_field: ErrorNamedTwo, //IN SERIALIZE DESERIALIZE nested
-        #[eo_vec_to_std_string_string] //todo remove wrapper under Vec
+        #[eo_vec_to_err_string] //todo remove wrapper under Vec
         eo_vec_display_field: Vec<DisplayStruct>, //IN SERIALIZE DESERIALIZE Vec<String>
-        #[eo_vec_to_std_string_string_serialize_deserialize]
+        #[eo_vec_to_err_string_serialize_deserialize]
         eo_vec_serde: Vec<SerializeDeserializeStruct>,
         #[eo_vec_error_occurence]
         eo_vec_error_occurence_field: Vec<ErrorUnnamedOne>, //IN SERIALIZE DESERIALIZE Vec<nested>
-        #[eo_hashmap_key_std_string_string_value_to_std_string_string]
+        #[eo_hashmap_key_std_string_string_value_to_err_string]
         hashmap_string_string: HashMap<String, DisplayStruct>,
-        #[eo_hashmap_key_std_string_string_value_to_std_string_string_serialize_deserialize]
+        #[eo_hashmap_key_std_string_string_value_to_err_string_serialize_deserialize]
         hashmap_string_serde: HashMap<String, SerializeDeserializeStruct>,
         #[eo_hashmap_key_std_string_string_value_error_occurence]
         hashmap_string_error_occurence: HashMap<String, ErrorUnnamedOne>,
@@ -42,12 +42,12 @@ pub enum ErrorNamedOne {
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum ErrorNamedTwo {
     Another {
-        #[eo_to_std_string_string_serialize_deserialize]
+        #[eo_to_err_string_serialize_deserialize]
         sdasdasd: String,
         code_occurence: CodeOccurence,
     },
     Variant {
-        #[eo_to_std_string_string_serialize_deserialize]
+        #[eo_to_err_string_serialize_deserialize]
         eo_display_with_serialize_deserialize_field: String,
         code_occurence: CodeOccurence,
     },
@@ -66,7 +66,7 @@ pub struct DisplayStruct {
 
 //todo or maybe two different traits - display foreign type and convert into serializable and deserializable type
 impl error_occurence_lib::ToStdStringString for DisplayStruct {
-    fn to_std_string_string(&self) -> String {
+    fn to_err_string(&self) -> String {
         format!("{self:?}")
     }
 }
@@ -79,7 +79,7 @@ pub struct SerializeDeserializeStruct {
 }
 
 impl error_occurence_lib::ToStdStringString for SerializeDeserializeStruct {
-    fn to_std_string_string(&self) -> String {
+    fn to_err_string(&self) -> String {
         format!("{self:?}")
     }
 }

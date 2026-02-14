@@ -3,7 +3,7 @@ mod code_occurence_syn_field;
 mod error_occurence;
 mod gen_field_code_occurence_new_ts;
 mod gen_if_write_is_err_ts;
-mod gen_impl_error_occurence_lib_to_std_string_string_ts;
+mod gen_impl_error_occurence_lib_to_err_string_ts;
 mod gen_impl_std_convert_from_ts;
 mod gen_impl_std_convert_try_from_ts;
 mod gen_impl_std_fmt_display_ts;
@@ -27,7 +27,7 @@ pub use error_occurence::{
 };
 pub use gen_field_code_occurence_new_ts::gen_field_code_occurence_new_ts;
 pub use gen_if_write_is_err_ts::{gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts};
-pub use gen_impl_error_occurence_lib_to_std_string_string_ts::gen_impl_error_occurence_lib_to_std_string_string_ts;
+pub use gen_impl_error_occurence_lib_to_err_string_ts::gen_impl_error_occurence_lib_to_err_string_ts;
 pub use gen_impl_std_convert_from_ts::gen_impl_std_convert_from_ts;
 pub use gen_impl_std_convert_try_from_ts::gen_impl_std_convert_try_from_ts;
 pub use gen_impl_std_fmt_display_ts::gen_impl_std_fmt_display_ts;

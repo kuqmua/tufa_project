@@ -400,9 +400,9 @@ where
 )]
 pub enum BetweenTryNewErrorNamed<T> {
     StartMoreOrEqualToEnd {
-        #[eo_to_std_string_string_serialize_deserialize]
+        #[eo_to_err_string_serialize_deserialize]
         start: T,
-        #[eo_to_std_string_string_serialize_deserialize]
+        #[eo_to_err_string_serialize_deserialize]
         end: T,
         code_occurence: CodeOccurence,
     },
@@ -801,9 +801,9 @@ pub struct BoundedStdVecVec<T, const LENGTH: usize>(Vec<T>);
 )]
 pub enum BoundedStdVecVecTryNewErrorNamed {
     LengthIsNotCorrect {
-        #[eo_to_std_string_string_serialize_deserialize]
+        #[eo_to_err_string_serialize_deserialize]
         wrong_length: usize,
-        #[eo_to_std_string_string_serialize_deserialize]
+        #[eo_to_err_string_serialize_deserialize]
         expected: usize,
         code_occurence: CodeOccurence,
     },

@@ -1,6 +1,6 @@
 use macros_helpers::{
     ErrorOccurenceFieldAttribute, gen_if_write_is_err_ts,
-    gen_impl_error_occurence_lib_to_std_string_string_ts, gen_impl_std_fmt_display_ts,
+    gen_impl_error_occurence_lib_to_err_string_ts, gen_impl_std_fmt_display_ts,
     gen_serialize_deserialize_version_of_named_syn_variant,
 };
 use naming::{
@@ -14,14 +14,14 @@ use token_patterns::StdStringString;
 #[proc_macro_derive(
     ErrorOccurence,
     attributes(
-        eo_to_std_string_string,
-        eo_to_std_string_string_serialize_deserialize,
+        eo_to_err_string,
+        eo_to_err_string_serialize_deserialize,
         eo_error_occurence,
-        eo_vec_to_std_string_string,
-        eo_vec_to_std_string_string_serialize_deserialize,
+        eo_vec_to_err_string,
+        eo_vec_to_err_string_serialize_deserialize,
         eo_vec_error_occurence,
-        eo_hashmap_key_std_string_string_value_to_std_string_string,
-        eo_hashmap_key_std_string_string_value_to_std_string_string_serialize_deserialize,
+        eo_hashmap_key_std_string_string_value_to_err_string,
+        eo_hashmap_key_std_string_string_value_to_err_string_serialize_deserialize,
         eo_hashmap_key_std_string_string_value_error_occurence,
     )
 )]
@@ -87,7 +87,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     } else {
         quote! {<#(#generic_parameters),*>}
     };
-    let maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts =
+    let maybe_generic_parameters_error_occurence_lib_to_err_string_annotations_ts =
         if generic_parameters.is_empty() {
             Ts2::new()
         } else {
@@ -160,7 +160,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         match ErrorOccurenceFieldAttribute::try_from(el_f00312fe).expect("8ff56aeb") {
                             ErrorOccurenceFieldAttribute::EoToStdStringString | ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize => {
                                 quote! {
-                                    error_occurence_lib::ToStdStringString::to_std_string_string(#current_ident)
+                                    error_occurence_lib::ToStdStringString::to_err_string(#current_ident)
                                 }
                             }
                             ErrorOccurenceFieldAttribute::EoErrorOccurence => {
@@ -182,7 +182,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         #StdStringString::new(),
                                         |mut acc_ac447c4b, el_36630fcf| {
                                             acc_ac447c4b.push_str(
-                                                &error_occurence_lib::ToStdStringString::to_std_string_string(el_36630fcf)
+                                                &error_occurence_lib::ToStdStringString::to_err_string(el_36630fcf)
                                                 .lines()
                                                 .fold(
                                                     #StdStringString::new(),
@@ -216,7 +216,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 }
                             }
                             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString | ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
-                                let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {key}: {}", &error_occurence_lib::ToStdStringString::to_std_string_string(#ValueSc)}, &quote! {panic!("d030580a");});
+                                let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {key}: {}", &error_occurence_lib::ToStdStringString::to_err_string(#ValueSc)}, &quote! {panic!("d030580a");});
                                 quote! {
                                     #current_ident.iter().fold(
                                         #StdStringString::new(),
@@ -307,7 +307,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 }
             };
             let impl_std_fmt_display_for_ident_ts = gen_impl_std_fmt_display_ts(
-                &maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts,
+                &maybe_generic_parameters_error_occurence_lib_to_err_string_annotations_ts,
                 &ident,
                 &maybe_generic_parameters_ts,
                 &impl_std_fmt_display_handle_content_ts,
@@ -329,7 +329,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             ErrorOccurenceFieldAttribute::EoToStdStringString => {
                                 quote! {
                                     #current_ident: {
-                                        error_occurence_lib::ToStdStringString::to_std_string_string(&#current_ident)
+                                        error_occurence_lib::ToStdStringString::to_err_string(&#current_ident)
                                     }
                                 }
                             }
@@ -348,7 +348,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
                                 quote! {
                                     #current_ident: {
-                                        #current_ident.into_iter().map(|el_3c145d8e|error_occurence_lib::ToStdStringString::to_std_string_string(&el_3c145d8e)).collect()
+                                        #current_ident.into_iter().map(|el_3c145d8e|error_occurence_lib::ToStdStringString::to_err_string(&el_3c145d8e)).collect()
                                     }
                                 }
                             }
@@ -363,7 +363,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 quote! {
                                     #current_ident: {
                                         #current_ident.into_iter().map(|(key, value)|
-                                            (key, error_occurence_lib::ToStdStringString::to_std_string_string(&value))
+                                            (key, error_occurence_lib::ToStdStringString::to_err_string(&value))
                                         ).collect()
                                     }
                                 }
@@ -398,15 +398,26 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     .map(gen_serialize_deserialize_version_of_named_syn_variant);
                 gen_enum_ident_with_serialize_deserialize_ts(&quote! {#(#variants_ts),*})
             };
-            let impl_std_fmt_display_for_ident_with_serialize_deserialize_ts = gen_impl_std_fmt_display_ts(&maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts, &ident_with_serialize_deserialize_ucc, &maybe_generic_parameters_ts, &impl_std_fmt_display_handle_content_ts);
-            let impl_error_occurence_lib_to_std_string_string_to_std_string_string_for_ident_with_serialize_deserialize_ts =
-                gen_impl_error_occurence_lib_to_std_string_string_ts(&maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts, &ident_with_serialize_deserialize_ucc, &maybe_generic_parameters_ts, &quote! {format!("{self}")});
+            let impl_std_fmt_display_for_ident_with_serialize_deserialize_ts =
+                gen_impl_std_fmt_display_ts(
+                    &maybe_generic_parameters_error_occurence_lib_to_err_string_annotations_ts,
+                    &ident_with_serialize_deserialize_ucc,
+                    &maybe_generic_parameters_ts,
+                    &impl_std_fmt_display_handle_content_ts,
+                );
+            let impl_error_occurence_lib_to_err_string_to_err_string_for_ident_with_serialize_deserialize_ts =
+                gen_impl_error_occurence_lib_to_err_string_ts(
+                    &maybe_generic_parameters_error_occurence_lib_to_err_string_annotations_ts,
+                    &ident_with_serialize_deserialize_ucc,
+                    &maybe_generic_parameters_ts,
+                    &quote! {format!("{self}")},
+                );
             quote! {
                 #impl_std_fmt_display_for_ident_ts
                 #impl_ident_into_serialize_deserialize_version_ts
                 #enum_ident_with_serialize_deserialize_ts
                 #impl_std_fmt_display_for_ident_with_serialize_deserialize_ts
-                #impl_error_occurence_lib_to_std_string_string_to_std_string_string_for_ident_with_serialize_deserialize_ts
+                #impl_error_occurence_lib_to_err_string_to_err_string_for_ident_with_serialize_deserialize_ts
             }
         }
         SuportedEnumVariant::Unnamed => {
@@ -418,7 +429,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 quote! {match self { #(#variants_ts),* }}
             };
             let impl_std_fmt_display_for_ident_ts = gen_impl_std_fmt_display_ts(
-                &maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts,
+                &maybe_generic_parameters_error_occurence_lib_to_err_string_annotations_ts,
                 &ident,
                 &maybe_generic_parameters_ts,
                 &{
@@ -468,16 +479,22 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 });
                 gen_enum_ident_with_serialize_deserialize_ts(&quote! {#(#variants_ts),*})
             };
-            let impl_std_fmt_display_for_ident_with_serialize_deserialize_ts = gen_impl_std_fmt_display_ts(&maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts, &ident_with_serialize_deserialize_ucc, &maybe_generic_parameters_ts, &{
-                let display_formatter_unnamed_ts = gen_display_formatter_unnamed_ts();
-                quote! {
-                    write!(
-                        f,
-                        "{}",
-                        #display_formatter_unnamed_ts
-                    )
-                }
-            });
+            let impl_std_fmt_display_for_ident_with_serialize_deserialize_ts =
+                gen_impl_std_fmt_display_ts(
+                    &maybe_generic_parameters_error_occurence_lib_to_err_string_annotations_ts,
+                    &ident_with_serialize_deserialize_ucc,
+                    &maybe_generic_parameters_ts,
+                    &{
+                        let display_formatter_unnamed_ts = gen_display_formatter_unnamed_ts();
+                        quote! {
+                            write!(
+                                f,
+                                "{}",
+                                #display_formatter_unnamed_ts
+                            )
+                        }
+                    },
+                );
             //todo maybe make a trait?
             quote! {
                 #impl_std_fmt_display_for_ident_ts
@@ -489,12 +506,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     };
     let generated = quote! {#tokens};
     // println!("{generated} ");
-    // if ident == "" {
-    //     maybe_write_ts_into_file(
-    //         ShouldWriteTokenStreamIntoFile::True,
+    // if ident == "ErrorNamed" {
+    //     macros_helpers::maybe_write_ts_into_file(
+    //         macros_helpers::ShouldWriteTokenStreamIntoFile::True,
     //         "error_occurence",
     //         &generated,
-    //         &FormatWithCargofmt::True
+    //         &macros_helpers::FormatWithCargofmt::True,
     //     );
     // }
     generated.into()

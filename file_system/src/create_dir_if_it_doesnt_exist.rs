@@ -6,7 +6,7 @@ use std::{fs, io::Error as IoError, path::Path};
 #[derive(Debug, thiserror::Error, ErrorOccurence)]
 pub enum CreateDirIfItDoesntExistErrorNamed {
     CreateDirAll {
-        #[eo_to_std_string_string]
+        #[eo_to_err_string]
         error: IoError,
         code_occurence: CodeOccurence,
     },

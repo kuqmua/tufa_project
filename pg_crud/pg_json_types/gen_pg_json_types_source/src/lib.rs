@@ -1,7 +1,7 @@
 use enum_extension_lib::EnumExtension;
 use macros_helpers::{
     DeriveCopy, DeriveSchemarsJsonSchema, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
-    StructOrEnumDeriveTokenStreamBuilder, gen_impl_error_occurence_lib_to_std_string_string_ts,
+    StructOrEnumDeriveTokenStreamBuilder, gen_impl_error_occurence_lib_to_err_string_ts,
     gen_impl_std_convert_from_ts, gen_impl_std_fmt_display_ts, gen_pub_const_new_ts,
     gen_pub_new_ts, maybe_write_ts_into_file,
 };
@@ -1149,7 +1149,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 Ts2::new()
             };
             let impl_std_fmt_display_for_ident_origin_ts = gen_impl_std_fmt_display_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
-            let impl_error_occurence_lib_to_std_string_string_for_ident_origin_ts = gen_impl_error_occurence_lib_to_std_string_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {format!("{self:#?}")});
+            let impl_error_occurence_lib_to_err_string_for_ident_origin_ts = gen_impl_error_occurence_lib_to_err_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {format!("{self:#?}")});
             let impl_default_option_some_vec_one_el_for_ident_origin_ts = gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_origin_ucc, &{
                 let content_ts = match &pg_json_type_pattern {
                     PgJsonTypePattern::Standart => match &not_null_or_nullable {
@@ -1187,7 +1187,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 #maybe_impl_schemars_json_schema_for_ident_origin_ts
                 #maybe_impl_is_string_empty_for_ident_origin_ts
                 #impl_std_fmt_display_for_ident_origin_ts
-                #impl_error_occurence_lib_to_std_string_string_for_ident_origin_ts
+                #impl_error_occurence_lib_to_err_string_for_ident_origin_ts
                 #impl_default_option_some_vec_one_el_for_ident_origin_ts
                 #impl_sqlx_type_sqlx_pg_for_ident_origin_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_origin_ts
@@ -1984,8 +1984,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let impl_error_occurence_lib_to_std_string_string_for_ident_update_ts = if matches!(&is_standart_not_null_uuid, IsStandartNotNullUuid::True) {
-                gen_impl_error_occurence_lib_to_std_string_string_ts(&Ts2::new(), &ident_update_ucc, &Ts2::new(), &quote! {format!("{self:?}")})
+            let impl_error_occurence_lib_to_err_string_for_ident_update_ts = if matches!(&is_standart_not_null_uuid, IsStandartNotNullUuid::True) {
+                gen_impl_error_occurence_lib_to_err_string_ts(&Ts2::new(), &ident_update_ucc, &Ts2::new(), &quote! {format!("{self:?}")})
             } else {
                 Ts2::new()
             };
@@ -1994,7 +1994,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             quote! {
                 #ident_update_ts
                 #impl_ident_update_ts
-                #impl_error_occurence_lib_to_std_string_string_for_ident_update_ts
+                #impl_error_occurence_lib_to_err_string_for_ident_update_ts
                 #impl_default_option_some_vec_one_el_for_ident_update_ts
             }
         };

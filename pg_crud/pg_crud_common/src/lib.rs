@@ -505,7 +505,7 @@ where
         + for<'t_lifetime> PgTypeWhereFilter<'t_lifetime>
         + AllEnumVariantsArrayDefaultOptionSomeVecOneEl,
 {
-    fn to_std_string_string(&self) -> String {
+    fn to_err_string(&self) -> String {
         format!("{self:#?}")
     }
 }
@@ -951,19 +951,19 @@ pub struct PaginationStartsWithZero(PaginationBase);
 )]
 pub enum PaginationStartsWithZeroTryNewErrorNamed {
     LimitIsLessThanOrEqualToZero {
-        #[eo_to_std_string_string_serialize_deserialize]
+        #[eo_to_err_string_serialize_deserialize]
         limit: i64,
         code_occurence: CodeOccurence,
     },
     OffsetIsLessThanZero {
-        #[eo_to_std_string_string_serialize_deserialize]
+        #[eo_to_err_string_serialize_deserialize]
         offset: i64,
         code_occurence: CodeOccurence,
     },
     OffsetPlusLimitIsIntOverflow {
-        #[eo_to_std_string_string_serialize_deserialize]
+        #[eo_to_err_string_serialize_deserialize]
         limit: i64,
-        #[eo_to_std_string_string_serialize_deserialize]
+        #[eo_to_err_string_serialize_deserialize]
         offset: i64,
         code_occurence: CodeOccurence,
     },
@@ -1217,7 +1217,7 @@ pub enum NotEmptyUniqueVecTryNewErrorNamed<T> {
         code_occurence: CodeOccurence,
     },
     NotUnique {
-        #[eo_to_std_string_string_serialize_deserialize]
+        #[eo_to_err_string_serialize_deserialize]
         value: T,
         code_occurence: CodeOccurence,
     },
@@ -1468,7 +1468,7 @@ pub struct UnsignedPartOfI32(i32); //todo why exactly i32? maybe different types
 )]
 pub enum UnsignedPartOfI32TryFromI32ErrorNamed {
     LessThanZero {
-        #[eo_to_std_string_string_serialize_deserialize]
+        #[eo_to_err_string_serialize_deserialize]
         value: i32,
         code_occurence: CodeOccurence,
     },
@@ -1552,7 +1552,7 @@ const _: () = {
     }
 };
 impl error_occurence_lib::ToStdStringString for UnsignedPartOfI32 {
-    fn to_std_string_string(&self) -> String {
+    fn to_err_string(&self) -> String {
         self.0.to_string()
     }
 }
@@ -1695,8 +1695,8 @@ const _: () = {
     }
 };
 impl error_occurence_lib::ToStdStringString for NotZeroUnsignedPartOfI32 {
-    fn to_std_string_string(&self) -> String {
-        self.0.to_std_string_string()
+    fn to_err_string(&self) -> String {
+        self.0.to_err_string()
     }
 }
 impl Type<Postgres> for NotZeroUnsignedPartOfI32 {

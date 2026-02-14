@@ -637,7 +637,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let impl_ident_ts = {
         let ident_prepare_pg_error_named_ucc = SelfPreparePgErrorNamedUcc::from_tokens(&ident);
         let content_ts = quote! {
-            #[eo_to_std_string_string]
+            #[eo_to_err_string]
             error: sqlx::Error,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
         };
@@ -1203,7 +1203,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &ident_where_many_try_new_error_named_ucc,
                     &quote! {{
                         #NoFieldsProvidedUcc {
-                            #[eo_to_std_string_string]
+                            #[eo_to_err_string]
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                         }
                     }},
@@ -1407,14 +1407,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             }
         };
-    let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string_serialize_deserialize =
+    let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string_serialize_deserialize =
         ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize;
     let string_syn_punctuated_punctuated =
         macros_helpers::gen_simple_syn_punctuated_punctuated(&["String"]);
     let try_bind_syn_variant_wrapper = new_syn_variant_wrapper(
         &TryBindUcc,
         Some(macros_helpers::StatusCode::InternalServerError500),
-        vec![(macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string_serialize_deserialize, &TryBindSc, string_syn_punctuated_punctuated.clone())],
+        vec![(macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string_serialize_deserialize, &TryBindSc, string_syn_punctuated_punctuated.clone())],
     );
     let gen_query_pg_type_where_filter_query_bind_parameters_payload_where_many_query_ts =
         |operation: &Operation| {
@@ -1441,13 +1441,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         TryFromSqlxPgPgRowWithNotEmptyUniqueVecSelfSelectSc::from_display(&ident);
     let sqlx_error_syn_punctuated_punctuated =
         macros_helpers::gen_simple_syn_punctuated_punctuated(&["sqlx", "Error"]);
-    let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string =
+    let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string =
         ErrorOccurenceFieldAttribute::EoToStdStringString;
     let pg_syn_variant_wrapper = new_syn_variant_wrapper(
         &PgUcc,
         Some(macros_helpers::StatusCode::InternalServerError500),
         vec![(
-            macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string,
+            macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
             &PgSc,
             sqlx_error_syn_punctuated_punctuated.clone(),
         )],
@@ -1509,8 +1509,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &Ts2::new(),
             &quote! {write!(f, "{}", serde_json::to_string(&self).unwrap_or_else(|el_2636212f|format!("cannot serialize into json: {el_2636212f:?}")))},
         );
-        let impl_error_occurence_lib_to_std_string_string_for_ident_select_ts =
-            macros_helpers::gen_impl_error_occurence_lib_to_std_string_string_ts(
+        let impl_error_occurence_lib_to_err_string_for_ident_select_ts =
+            macros_helpers::gen_impl_error_occurence_lib_to_err_string_ts(
                 &Ts2::new(),
                 &ident_select_ucc,
                 &Ts2::new(),
@@ -1532,7 +1532,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         quote! {
             #ident_select_ts
             #impl_std_fmt_display_for_ident_select_ts
-            #impl_error_occurence_lib_to_std_string_string_for_ident_select_ts
+            #impl_error_occurence_lib_to_err_string_for_ident_select_ts
             #impl_pg_crud_all_variants_default_option_some_vec_one_el_for_ident_select_ts
         }
     };
@@ -1876,7 +1876,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &ident_update_try_new_error_named_ucc,
                     &quote! {{
                         #NoFieldsProvidedUcc {
-                            #[eo_to_std_string_string]
+                            #[eo_to_err_string]
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                         }
                     }},
@@ -2162,8 +2162,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &RowAndRollbackUcc,
         Some(macros_helpers::StatusCode::InternalServerError500),
         vec![
-            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &RowSc, sqlx_error_syn_punctuated_punctuated.clone()),
-            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &RollbackSc, sqlx_error_syn_punctuated_punctuated),
+            (
+                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
+                &RowSc,
+                sqlx_error_syn_punctuated_punctuated.clone(),
+            ),
+            (
+                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
+                &RollbackSc,
+                sqlx_error_syn_punctuated_punctuated,
+            ),
         ],
     );
     let sqlx_query_sqlx_pg_ts = quote! {sqlx::query::<sqlx::Postgres>};
@@ -2181,7 +2189,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &NotUniqueFieldUcc,
         Some(macros_helpers::StatusCode::BadRequest400),
         vec![(
-            macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string_serialize_deserialize,
+            macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string_serialize_deserialize,
             &NotUniqueFieldSc,
             macros_helpers::gen_simple_syn_punctuated_punctuated(&[&ident_select_ucc.to_string()]),
         )],
@@ -2190,7 +2198,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &SerdeJsonToStringUcc,
         None,
         vec![(
-            macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string,
+            macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
             &SerdeJsonToStringSc,
             macros_helpers::gen_simple_syn_punctuated_punctuated(&["serde_json", "Error"]),
         )],
@@ -2199,34 +2207,46 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &FailedToGetResponseTextUcc,
         Some(macros_helpers::StatusCode::BadRequest400),
         vec![
-            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &StatusCodeSc, macros_helpers::gen_simple_syn_punctuated_punctuated(&["reqwest", "StatusCode"])),
             (
-                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string,
-                &HeadersSc,
-                macros_helpers::gen_simple_syn_punctuated_punctuated(&["reqwest", "header", "HeaderMap"]),
+                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
+                &StatusCodeSc,
+                macros_helpers::gen_simple_syn_punctuated_punctuated(&["reqwest", "StatusCode"]),
             ),
-            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &ReqwestSc, macros_helpers::gen_simple_syn_punctuated_punctuated(&["reqwest", "Error"])),
+            (
+                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
+                &HeadersSc,
+                macros_helpers::gen_simple_syn_punctuated_punctuated(&[
+                    "reqwest",
+                    "header",
+                    "HeaderMap",
+                ]),
+            ),
+            (
+                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
+                &ReqwestSc,
+                macros_helpers::gen_simple_syn_punctuated_punctuated(&["reqwest", "Error"]),
+            ),
         ],
     );
     let deserialize_response_syn_variant_wrapper = new_syn_variant_wrapper(
         &DeserializeResponseUcc,
         None,
         vec![
-            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &StatusCodeSc, macros_helpers::gen_simple_syn_punctuated_punctuated(&["reqwest", "StatusCode"])),
+            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string, &StatusCodeSc, macros_helpers::gen_simple_syn_punctuated_punctuated(&["reqwest", "StatusCode"])),
             (
-                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string,
+                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
                 &HeadersSc,
                 macros_helpers::gen_simple_syn_punctuated_punctuated(&["reqwest", "header", "HeaderMap"]),
             ),
-            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string_serialize_deserialize, &ResponseTextSc, string_syn_punctuated_punctuated),
-            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &SerdeSc, macros_helpers::gen_simple_syn_punctuated_punctuated(&["serde_json", "Error"])),
+            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string_serialize_deserialize, &ResponseTextSc, string_syn_punctuated_punctuated),
+            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string, &SerdeSc, macros_helpers::gen_simple_syn_punctuated_punctuated(&["serde_json", "Error"])),
         ],
     );
     let reqwest_syn_variant_wrapper = new_syn_variant_wrapper(
         &ReqwestUcc,
         None,
         vec![(
-            macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string,
+            macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
             &ReqwestSc,
             macros_helpers::gen_simple_syn_punctuated_punctuated(&["reqwest", "Error"]),
         )],
@@ -2248,7 +2268,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &SerdeJsonUcc,
         Some(macros_helpers::StatusCode::BadRequest400),
         vec![(
-            macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string,
+            macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
             &SerdeJsonSc,
             macros_helpers::gen_simple_syn_punctuated_punctuated(&["serde_json", "Error"]),
         )],
@@ -2688,41 +2708,40 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
             type_variants_from_request_response_syn_variants
         };
-    let gen_ident_try_operation_error_named_ts = |operation: &Operation,
-                                                  syn_variants: &Vec<Variant>|
-     -> Ts2 {
-        let ident_try_operation_error_named_ucc =
-            gen_ident_try_operation_error_named_ucc(operation);
-        let variants = syn_variants
-        .iter()
-        .cloned()
-        .chain(once({
-            let ident_operation_error_named_with_serialize_deserialize_ucc =
-                gen_ident_operation_error_named_with_serialize_deserialize_ucc(operation);
-            new_syn_variant_wrapper(
-                &ident_operation_error_named_with_serialize_deserialize_ucc,
-                None,
-                vec![(
-                    macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string,
+    let gen_ident_try_operation_error_named_ts =
+        |operation: &Operation, syn_variants: &Vec<Variant>| -> Ts2 {
+            let ident_try_operation_error_named_ucc =
+                gen_ident_try_operation_error_named_ucc(operation);
+            let variants = syn_variants
+                .iter()
+                .cloned()
+                .chain(once({
+                    let ident_operation_error_named_with_serialize_deserialize_ucc =
+                        gen_ident_operation_error_named_with_serialize_deserialize_ucc(operation);
+                    new_syn_variant_wrapper(
+                        &ident_operation_error_named_with_serialize_deserialize_ucc,
+                        None,
+                        vec![(
+                    macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
                     &operation.operation_error_named_with_serialize_deserialize_sc(),
                     macros_helpers::gen_simple_syn_punctuated_punctuated(&[
                         &ident_operation_error_named_with_serialize_deserialize_ucc.to_string(),
                     ]),
                 )],
-            )
-            .get_syn_variant()
-            .clone()
-        }))
-        .collect::<Vec<Variant>>();
-        let variants_ts = variants.iter().map(gen_error_occurence_variant_ts);
-        quote! {
-            #allow_clippy_arbitrary_source_item_ordering_ts
-            #derive_debug_thiserror_error_occurence
-            pub enum #ident_try_operation_error_named_ucc {
-                #(#variants_ts),*
+                    )
+                    .get_syn_variant()
+                    .clone()
+                }))
+                .collect::<Vec<Variant>>();
+            let variants_ts = variants.iter().map(gen_error_occurence_variant_ts);
+            quote! {
+                #allow_clippy_arbitrary_source_item_ordering_ts
+                #derive_debug_thiserror_error_occurence
+                pub enum #ident_try_operation_error_named_ucc {
+                    #(#variants_ts),*
+                }
             }
-        }
-    };
+        };
     let std_sync_arc_combination_of_app_state_logic_traits_ts =
         quote! {std::sync::Arc<dyn #PgCrudSc::CombinationOfAppStateLogicTraits>};
     let gen_operation_ts = |operation: &Operation,
@@ -3887,9 +3906,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &ident_operation_payload_try_new_error_named_ucc,
                         &quote! {{
                             #not_unique_primary_key_ucc {
-                                #[eo_to_std_string_string]
+                                #[eo_to_err_string]
                                 #not_unique_primary_key_sc: #primary_key_field_type_update_ts,
-                                #[eo_to_std_string_string]
+                                #[eo_to_err_string]
                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                             }
                         }},

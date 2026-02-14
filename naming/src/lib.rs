@@ -1301,7 +1301,8 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ],
     ["executor", "acquire"],
     ["gen", "pg", "json", "types", "mod"],
-    ["gen", "pg", "types", "mod"]
+    ["gen", "pg", "types", "mod"],
+    ["to", "err", "string"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

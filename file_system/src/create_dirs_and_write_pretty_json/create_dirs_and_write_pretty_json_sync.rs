@@ -5,7 +5,7 @@ use std::path::Path;
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum CreateDirsAndWritePrettyJsonSyncErrorNamed {
     SerdeJson {
-        #[eo_to_std_string_string]
+        #[eo_to_err_string]
         error: SerdeJsonError,
         code_occurence: CodeOccurence,
     },
