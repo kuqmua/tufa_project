@@ -37,6 +37,7 @@ use pg_crud_macros_common::{
     gen_std_option_option_tokens_declaration_ts, gen_std_vec_vec_tokens_declaration_ts,
     gen_value_initialization_ts,
 };
+use gen_quotes::double_quotes_ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use rayon::iter::{IntoParallelRefIterator as _, ParallelIterator as _};
@@ -799,7 +800,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 current_not_null_or_nullable: &NotNullOrNullable,
                 current_pg_json_type_pattern: &PgJsonTypePattern
             | SelfOriginUcc::from_tokens(&gen_ident_ts(current_not_null_or_nullable, current_pg_json_type_pattern));
-            // let schema_name_format_handle_ts = gen_quotes::double_quotes_ts(&ident_origin_ucc);
+            // let schema_name_format_handle_ts = double_quotes_ts(&ident_origin_ucc);
             //todo json schema logic
             // let metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_ts = quote! {
             //     Some(Box::new(schemars::schema::Metadata {
@@ -1032,10 +1033,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             let maybe_impl_schemars_json_schema_for_ident_origin_ts = if matches!(&is_standart_not_null, IsStandartNotNull::True) {
                 match &pg_json_type {
                     PgJsonType::UuidUuidAsJsonbString => {
-                        let ident_standart_not_null_origin_double_quotes_ts = gen_quotes::double_quotes_ts(
+                        let ident_standart_not_null_origin_double_quotes_ts = double_quotes_ts(
                             &ident_standart_not_null_origin_ucc
                         );
-                        let text_ident_standart_not_null_origin_double_quotes_ts = gen_quotes::double_quotes_ts(
+                        let text_ident_standart_not_null_origin_double_quotes_ts = double_quotes_ts(
                             &format!("tests::{ident_standart_not_null_origin_ucc}")
                         );
                         quote!{
@@ -1081,7 +1082,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             // match &schemars_json_schema {
             //     SchemarsJsonSchema::Derive => &Ts2::new(),
             //     SchemarsJsonSchema::Impl(schema_object_ts) => &{
-            //         let schema_id_format_handle_ts = gen_quotes::double_quotes_ts(&format!("pg_crud::postgersql_json_type::{ident_origin_ucc}"));
+            //         let schema_id_format_handle_ts = double_quotes_ts(&format!("pg_crud::postgersql_json_type::{ident_origin_ucc}"));
             //         let metadata_ts = &schema_object_ts.metadata;
             //         let instance_type_ts = &schema_object_ts.instance_type;
             //         let format_ts = &schema_object_ts.format;
@@ -2225,7 +2226,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             }
                         })
                     });
-                    let format_handle_ts = gen_quotes::double_quotes_ts(&format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value',({format_handle})))"));
+                    let format_handle_ts = double_quotes_ts(&format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value',({format_handle})))"));
                     quote! {
                         #(#maybe_dimensions_start_end_initialization)*
                         Ok(format!(#format_handle_ts))
@@ -2378,7 +2379,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &ident_update_for_query_ucc,
                 &{
                     let jsonb_set_accumulator_sc = JsonbSetAccumulatorSc;
-                    let format_handle_ts = gen_quotes::double_quotes_ts(&format!("jsonb_set({{{jsonb_set_accumulator_sc}}},'{{{{{{jsonb_set_path}}}}}}',${{value_26526e0f}})"));
+                    let format_handle_ts = double_quotes_ts(&format!("jsonb_set({{{jsonb_set_accumulator_sc}}},'{{{{{{jsonb_set_path}}}}}}',${{value_26526e0f}})"));
                     quote! {
                         match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
                             Ok(value_26526e0f) => Ok(format!(#format_handle_ts)),

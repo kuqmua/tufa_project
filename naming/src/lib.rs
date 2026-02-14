@@ -3,6 +3,7 @@ pub mod parameter;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use std::fmt::{Display, Formatter, Result as FmtResult};
+use gen_quotes::double_quotes_str;
 
 pub use naming_common::{
     AsRefStrToScStr, AsRefStrToScTs, AsRefStrToUccStr, AsRefStrToUccTs, AsRefStrToUpperScStr,
@@ -1344,7 +1345,7 @@ where
     T: AsRefStrToScStr,
 {
     fn swagger_url_path_self_quotes_str(&self, table_name_str: &str) -> String {
-        gen_quotes::double_quotes_str(&format!("/{}/{}", table_name_str, self.case(),))
+        double_quotes_str(&format!("/{}/{}", table_name_str, self.case(),))
     }
 }
 

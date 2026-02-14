@@ -4,6 +4,7 @@ use quote::{ToTokens, quote};
 #[allow(unused_imports)]
 use syn::{Data, DeriveInput, Fields, Ident, Type, parse};
 use token_patterns::StdStringString;
+use gen_quotes::double_quotes_ts;
 const REGEX_VALUE: &str = "^[a-zA-Z]+$";
 #[proc_macro]
 pub fn gen_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
@@ -39,8 +40,8 @@ pub fn gen_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 },
             );
             let phrase_part_ucc_double_quotes_ts =
-                gen_quotes::double_quotes_ts(&phrase_part_ucc_str);
-            let phrase_part_sc_double_quotes_ts = gen_quotes::double_quotes_ts(&phrase_part_sc_str);
+                double_quotes_ts(&phrase_part_ucc_str);
+            let phrase_part_sc_double_quotes_ts = double_quotes_ts(&phrase_part_sc_str);
             let phrase_part_ucc_ts = phrase_part_ucc_str.parse::<Ts2>().expect("7cf3ffc0");
             let phrase_part_sc_ts = phrase_part_sc_str.parse::<Ts2>().expect("114a573a");
             let phrase_part_ucc_ucc_ts = {
@@ -133,7 +134,7 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 acc_34997d76.push_str(&naming_common::AsRefStrToUccStr::case(el_98881b7d));
                 acc_34997d76
             });
-            let elements_concat_value_ucc_double_quotes_ts = gen_quotes::double_quotes_ts(&el_a5ccbaa7.iter().fold(String::new(), |mut acc_ae77cbd3, el_626f2b61| {
+            let elements_concat_value_ucc_double_quotes_ts = double_quotes_ts(&el_a5ccbaa7.iter().fold(String::new(), |mut acc_ae77cbd3, el_626f2b61| {
                 if el_626f2b61 == "self" {
                     acc_ae77cbd3.push_str("{value}");
                 } else {
@@ -141,7 +142,7 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 }
                 acc_ae77cbd3
             }));
-            let elements_concat_value_sc_double_quotes_ts = gen_quotes::double_quotes_ts(&{
+            let elements_concat_value_sc_double_quotes_ts = double_quotes_ts(&{
                 let mut value = el_a5ccbaa7.iter().fold(String::new(), |mut acc_cbcae5e1, el_73b0c851| {
                     use std::fmt::Write as _;
                     let symbol = '_';
@@ -287,7 +288,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(input_ts: Ts) -> Ts {
             Fields::Unit => {
                 let el_ident = &el.ident;
                 let el_ident_ucc_str = naming_common::ToTokensToUccStr::case(&el_ident);
-                let el_ident_ucc_double_quotes_ts = gen_quotes::double_quotes_ts(&el_ident_ucc_str);
+                let el_ident_ucc_double_quotes_ts = double_quotes_ts(&el_ident_ucc_str);
                 quote! {Self::#el_ident => #StdStringString::from(#el_ident_ucc_double_quotes_ts)}
             }
             Fields::Named(_) | Fields::Unnamed(_) => {
@@ -333,7 +334,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(input_ts: Ts) -> Ts {
             Fields::Unit => {
                 let el_ident = &el.ident;
                 let el_ident_sc_str = naming_common::ToTokensToScStr::case(&el_ident);
-                let el_ident_sc_double_quotes_ts = gen_quotes::double_quotes_ts(&el_ident_sc_str);
+                let el_ident_sc_double_quotes_ts = double_quotes_ts(&el_ident_sc_str);
                 quote! {Self::#el_ident => #StdStringString::from(#el_ident_sc_double_quotes_ts)}
             }
             Fields::Named(_) | Fields::Unnamed(_) => {
@@ -379,7 +380,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(input_ts: Ts) -> Ts {
             Fields::Unit => {
                 let variant_ident = &variant.ident;
                 let variant_ident_sc_str = naming_common::ToTokensToUpperScStr::case(&variant_ident);
-                let variant_ident_sc_double_quotes_ts = gen_quotes::double_quotes_ts(&variant_ident_sc_str);
+                let variant_ident_sc_double_quotes_ts = double_quotes_ts(&variant_ident_sc_str);
                 quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_sc_double_quotes_ts)}
             }
             Fields::Named(_) | Fields::Unnamed(_) => panic!("b6fedcff"),

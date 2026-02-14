@@ -83,6 +83,7 @@ use pg_crud_macros_common::{
     gen_std_option_option_tokens_declaration_ts, gen_std_vec_vec_tokens_declaration_ts,
     gen_value_initialization_ts, impl_pg_type_where_filter_for_ident_ts, maybe_wrap_into_braces_ts,
 };
+use gen_quotes::double_quotes_ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use std::{
@@ -453,7 +454,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     .expect("1b6adf7e");
     let ident = &syn_derive_input.ident;
     let ident_sc_str = ToTokensToScStr::case(&ident);
-    let ident_sc_double_quotes_ts = gen_quotes::double_quotes_ts(&ident_sc_str);
+    let ident_sc_double_quotes_ts = double_quotes_ts(&ident_sc_str);
     let self_table_name_call_ts = quote! {Self::#TableNameSc()};
     let (primary_key_field, fields, fields_without_primary_key) =
         if let Data::Struct(data_struct) = &syn_derive_input.data {
@@ -655,7 +656,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let fn_primary_key_ts = {
             let primary_key_field_ident_double_quotes_ts =
-                gen_quotes::double_quotes_ts(&primary_key_field_ident);
+                double_quotes_ts(&primary_key_field_ident);
             quote! {
                 const fn #PrimaryKeySc() -> &'static str {
                     #primary_key_field_ident_double_quotes_ts
@@ -680,7 +681,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let pub_async_fn_prepare_pg_table_ts = {
-            let prepare_pg_double_quotes_ts = gen_quotes::double_quotes_ts(&format!(
+            let prepare_pg_double_quotes_ts = double_quotes_ts(&format!(
                 "create table if not exists {{table}} ({})",
                 fields.iter().map(|_| "{}").collect::<Vec<&str>>().join(",")
             ));
@@ -690,7 +691,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let is_primary_key_ts: &dyn ToTokens =
                             if is_primary_key { &TrueSc } else { &FalseSc };
                         let field_ident_double_quotes_ts =
-                            gen_quotes::double_quotes_ts(&field_ident);
+                            double_quotes_ts(&field_ident);
                         let field_type_pg_type_ts = gen_as_pg_type_ts(&field_type);
                         quote! {
                             #field_type_pg_type_ts #CreateTableColumnQueryPartSc(&#field_ident_double_quotes_ts, #is_primary_key_ts)
@@ -750,7 +751,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&element.field_ident);
                 let initialization_ts = {
                     let field_ident_string_double_quotes_ts =
-                        gen_quotes::double_quotes_ts(&element.field_ident);
+                        double_quotes_ts(&element.field_ident);
                     let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&element.field_type);
                     quote! {
                         => match #as_pg_crud_pg_type_pg_type_ts #SelectQueryPartSc(
@@ -1301,7 +1302,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &{
                     let additional_parameters_modification_ts = fields.iter().enumerate().map(|(index, element)| {
                     let field_ident = &element.field_ident;
-                    let field_ident_double_quotes_ts = gen_quotes::double_quotes_ts(&field_ident);
+                    let field_ident_double_quotes_ts = double_quotes_ts(&field_ident);
                     let maybe_is_first_push_to_additional_parameters_already_happend_true_ts = if index == fields_len_without_primary_key {
                         Ts2::new()
                     } else {
@@ -1485,7 +1486,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &ident_select_ucc,
                 &{
                     let variants = gen_fields_named_with_comma_ts(&|element: &SynFieldWrapper| {
-                        let serialize_deserialize_ident_ts = gen_quotes::double_quotes_ts(&element.field_ident);
+                        let serialize_deserialize_ident_ts = double_quotes_ts(&element.field_ident);
                         let field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&element.field_ident);
                         let el_syn_field_ty_as_pg_type_select_ts = gen_as_pg_type_select_ts(&element.field_type);
                         quote! {
@@ -1604,7 +1605,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 //todo reuse code?
                 let assignment_variant_primary_key_ts = {
                     let primary_key_field_ident_string_double_quotes_ts =
-                        gen_quotes::double_quotes_ts(&primary_key_field_ident);
+                        double_quotes_ts(&primary_key_field_ident);
                     quote! {
                         #ident_select_ucc::#primary_key_field_ident_ucc_ts(_) => match sqlx::Row::try_get::<
                             #primary_key_field_type_as_pg_type_read_ucc,
@@ -1627,7 +1628,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     .map(|el_3ce946f9| {
                         let field_ident = &el_3ce946f9.field_ident;
                         let field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_3ce946f9.field_ident);
-                        let field_ident_string_double_quotes_ts = gen_quotes::double_quotes_ts(&el_3ce946f9.field_ident);
+                        let field_ident_string_double_quotes_ts = double_quotes_ts(&el_3ce946f9.field_ident);
                         let el_syn_field_ty_as_pg_type_read_ts = gen_as_pg_type_read_ts(&el_3ce946f9.field_type);
                         quote! {
                             #ident_select_ucc::#field_ident_ucc_ts(_) => match sqlx::Row::try_get::<
@@ -1751,7 +1752,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let el_syn_field_ty_as_pg_type_read_only_ids_ts =
                     gen_as_pg_type_read_only_ids_ts(&primary_key_field_type);
                 let field_ident_double_quotes_ts =
-                    gen_quotes::double_quotes_ts(&primary_key_field_ident);
+                    double_quotes_ts(&primary_key_field_ident);
                 quote! {
                     let #primary_key_field_ident = match sqlx::Row::try_get::<#el_syn_field_ty_as_pg_type_read_only_ids_ts, &str>(
                         #undescore_underscore_row,
@@ -1769,7 +1770,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let field_ident = &element.field_ident;
                     let field_type = &element.field_type;
                     let field_ident_double_quotes_ts =
-                        gen_quotes::double_quotes_ts(&quote! {#field_ident});
+                        double_quotes_ts(&quote! {#field_ident});
                     let el_syn_field_ty_as_pg_type_read_only_ids_ts =
                         gen_as_pg_type_read_only_ids_ts(&field_type);
                     quote! {
@@ -2017,7 +2018,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let update_query_part_fields_ts = gen_fields_named_without_primary_key_without_comma_ts(
                 &|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
-                    let field_ident_double_quotes_ts = gen_quotes::double_quotes_ts(&field_ident);
+                    let field_ident_double_quotes_ts = double_quotes_ts(&field_ident);
                     let update_query_part_field_ident_sc =
                         UpdateQueryPartSelfSc::from_tokens(&field_ident);
                     let field_type_as_pg_crud_pg_type_pg_type_ts =
@@ -2044,7 +2045,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let select_only_updated_ids_query_part_ts = {
                 let primary_key_content_ts = {
                     let primary_key_field_ident_double_quotes_ts =
-                        gen_quotes::double_quotes_ts(&primary_key_field_ident);
+                        double_quotes_ts(&primary_key_field_ident);
                     quote! {
                         acc_88c91f52.push_str(&match <#primary_key_field_type as pg_crud::PgType>::#SelectOnlyUpdatedIdsQueryPartSc(
                             &self.#primary_key_field_ident,
@@ -2060,7 +2061,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 let content_ts = fields_without_primary_key.iter().map(|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
-                    let field_ident_double_quotes_ts = gen_quotes::double_quotes_ts(&field_ident);
+                    let field_ident_double_quotes_ts = double_quotes_ts(&field_ident);
                     let field_type_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&element.field_type);
                     quote! {
                         if let Some(value_90f79b11) = &self.#field_ident {
@@ -2912,7 +2913,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let url_ts = {
-            let format_handle_ts = gen_quotes::double_quotes_ts(&format!("{{endpoint_location}}/{{table}}/{}", operation.self_sc_str()));
+            let format_handle_ts = double_quotes_ts(&format!("{{endpoint_location}}/{{table}}/{}", operation.self_sc_str()));
             quote! {let #UrlSc = format!(#format_handle_ts);}
         };
         let future_ts = {
@@ -2923,7 +2924,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     git_info::PROJECT_GIT_INFO.commit,
                 )
             };
-            let application_json_double_quotes_ts = gen_quotes::double_quotes_ts(&"application/json");
+            let application_json_double_quotes_ts = double_quotes_ts(&"application/json");
             let content_type_application_json_header_addition_ts = quote! {
                 .header(reqwest::header::CONTENT_TYPE, #application_json_double_quotes_ts)
             };
@@ -3159,11 +3160,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let _: Option<char> = value.pop();
         value
     };
-    let column_names_double_quotes_ts = gen_quotes::double_quotes_ts(&column_names);
+    let column_names_double_quotes_ts = double_quotes_ts(&column_names);
     let gen_select_only_ids_query_part_ts = |operation: &Operation| {
         let select_only_ids_query_part_initialization_ts = fields.iter().map(|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
-            let field_ident_double_quotes_ts = gen_quotes::double_quotes_ts(&field_ident);
+            let field_ident_double_quotes_ts = double_quotes_ts(&field_ident);
             let field_type_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&element.field_type);
             let content_ts_00878df8 = gen_operation_error_initialization_eprintln_response_creation_ts(operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
             quote! {
@@ -3535,7 +3536,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &ReadManyOrDeleteMany::ReadMany,
                         );
                     let additional_parameters_order_by_handle_ts =
-                        gen_quotes::double_quotes_ts(&format!("{{}}{OrderSc} {BySc} {{}} {{}}"));
+                        double_quotes_ts(&format!("{{}}{OrderSc} {BySc} {{}} {{}}"));
                     let content_ts_0ec756e2 =
                         gen_operation_error_initialization_eprintln_response_creation_ts(
                             &operation,
@@ -3549,7 +3550,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let field_ident_ucc =
                                 ToTokensToUccTs::case_or_panic(&element.field_ident);
                             let field_ident_double_quotes_ts =
-                                gen_quotes::double_quotes_ts(&element.field_ident);
+                                double_quotes_ts(&element.field_ident);
                             quote! {
                                 #ident_select_ucc::#field_ident_ucc(_) => #field_ident_double_quotes_ts
                             }
@@ -3917,11 +3918,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             );
             let impl_serde_deserialize_for_ident_update_many_payload_ts = {
                 let tuple_struct_ident_operation_payload_double_quotes_ts =
-                    gen_quotes::double_quotes_ts(&format!(
+                    double_quotes_ts(&format!(
                         "tuple struct {ident_operation_payload_ucc}"
                     ));
                 let tuple_struct_ident_operation_payload_with_1_el_double_quotes_ts =
-                    gen_quotes::double_quotes_ts(&format!(
+                    double_quotes_ts(&format!(
                         "tuple struct {ident_operation_payload_ucc} with 1 element"
                     ));
                 let match_ident_update_many_payload_try_new_field0_ts =
@@ -3930,7 +3931,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote! {__field0},
                     );
                 let ident_operation_payload_double_quotes_ts =
-                    gen_quotes::double_quotes_ts(&ident_operation_payload_ucc);
+                    double_quotes_ts(&ident_operation_payload_ucc);
                 quote! {
                     #[allow(unused_qualifications)]
                     #[allow(clippy::absolute_paths)]
@@ -4047,7 +4048,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &|element: &SynFieldWrapper| {
                                 let field_ident = &element.field_ident;
                                 let field_ident_double_quotes_ts =
-                                    gen_quotes::double_quotes_ts(&field_ident);
+                                    double_quotes_ts(&field_ident);
                                 let is_field_ident_update_exists_sc =
                                     IsSelfUpdateExistSc::from_tokens(&field_ident);
                                 let update_query_part_field_ident_sc =
@@ -4316,7 +4317,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &|element: &SynFieldWrapper| {
                                 let field_ident = &element.field_ident;
                                 let field_ident_double_quotes_ts =
-                                    gen_quotes::double_quotes_ts(&field_ident);
+                                    double_quotes_ts(&field_ident);
                                 let content_ts_9ec6b359 = gen_operation_error_initialization_eprintln_response_creation_ts(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                                 let gen_column_queals_value_comma_update_one_query_part_sc =
                                     GenColumnQuealsValueCommaUpdateOneQueryPartSc;
@@ -4764,7 +4765,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 ) = {
                     let gen_slash_route_double_quotes_ts = |
                         value: &dyn Display
-                    | gen_quotes::double_quotes_ts(&format!("/{value}"));
+                    | double_quotes_ts(&format!("/{value}"));
                     (
                         gen_slash_route_double_quotes_ts(&operation.self_sc_str()),
                         gen_slash_route_double_quotes_ts(&operation_payload_example_sc)
@@ -4805,7 +4806,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     });
     let ident_tests_ts = {
         let ident_tests_sc = SelfTestsSc::from_display(&ident);
-        let ident_double_quotes_ts = gen_quotes::double_quotes_ts(&DisplayToScStr::case(&ident));
+        let ident_double_quotes_ts = double_quotes_ts(&DisplayToScStr::case(&ident));
         let ident_create_many_parameters_ucc =
             gen_ident_operation_parameters_ucc(&Operation::CreateMany);
         let ident_read_many_parameters_ucc =
@@ -5094,7 +5095,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 table_field_idents_initialization_vec_ts.push(gen_fields_named_without_primary_key_without_comma_ts(&|el_51b56762: &SynFieldWrapper| {
                     let field_ident = &el_51b56762.field_ident;
                     let initialization_variable_name_ts = gen_initialization_variable_name_ts(field_ident);
-                    let format_content_ts = gen_quotes::double_quotes_ts(&format!("{el_8f39799f}_{field_ident}"));
+                    let format_content_ts = double_quotes_ts(&format!("{el_8f39799f}_{field_ident}"));
                     quote! {
                         let #initialization_variable_name_ts = add_table_postfix(#format_content_ts);
                     }
