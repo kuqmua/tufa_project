@@ -57,10 +57,7 @@ pub fn gen_getter_trait(input: proc_macro::TokenStream) -> proc_macro::TokenStre
         syn::Fields::Unnamed(value) => value.unnamed,
         syn::Fields::Named(_) | syn::Fields::Unit => panic!("577cb86a"),
     };
-    assert!(
-        fields_unnamed.len() == 1,
-        "1e82dc7e-724c-4599-93aa-442b262cbcf5"
-    );
+    assert!(fields_unnamed.len() == 1, "1e82dc7e");
     let first_field_unnamed = fields_unnamed.iter().next().expect("7c2531fd");
     let first_field_unnamed_type = &first_field_unnamed.ty;
     let get_ident_ucc = GetSelfUcc::from_tokens(&ident);

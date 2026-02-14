@@ -499,7 +499,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 acc_d97120ed
                     .iter()
                     .all(|el_8ef63a77| seen.insert(el_8ef63a77)),
-                "c2d37017-229c-4259-bcee-c434852dca1b"
+                "c2d37017"
             );
             acc_d97120ed
         }.into_iter().fold(Vec::new(), |mut acc_5e43269c, el_c4f9bf8f| {
@@ -2493,7 +2493,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             let gen_array_dimension_equal_ts = |dimension: &Dimension| {
                 let dimension_index_number_max = DimensionIndexNumber::from(dimension);
                 let gen_dimension_index_number_ts = |not_null_or_nullable_vec: &[&NotNullOrNullable]|{
-                    assert!(!not_null_or_nullable_vec.is_empty(), "c1a5939d-3235-4bcd-88fc-bfdf2101dffd");
+                    assert!(!not_null_or_nullable_vec.is_empty(), "c1a5939d");
                     let content_ts_c85923bd = {
                         let gen_index_number_ts = |index_c1128a3e: usize|format!("index_{index_c1128a3e}").parse::<Ts2>().expect("afbe7252");
                         let gen_value_number_ts = |index_0abe6039: usize|format!("value{index_0abe6039}").parse::<Ts2>().expect("568d8eb6");

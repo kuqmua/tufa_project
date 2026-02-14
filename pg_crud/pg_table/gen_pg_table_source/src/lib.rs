@@ -468,10 +468,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     let field_ident_len = field_ident.to_string().len();
                     let max_pg_column_length = 63;
                     //todo write runtime check
-                    assert!(
-                        field_ident_len <= max_pg_column_length,
-                        "1266ae5a-aaef-43a7-a724-c9532e01c7e9"
-                    );
+                    assert!(field_ident_len <= max_pg_column_length, "1266ae5a");
                     fields.push(macros_helpers::SynFieldWrapper {
                         field_visibility: el_2e7b44a3.vis.clone(),
                         field_ident: field_ident.clone(),
@@ -510,7 +507,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     }
                 }
                 // explicitly not supporting number of columns more than 100 so its less possibility to cause stack overflow or build process exit
-                // assert!((fields.len() <= 100), "d9963f32-0811-48d1-bb60-e6b365a529eb");
+                // assert!((fields.len() <= 100), "d9963f32");
                 (
                     option_primary_key_field.expect("6a529a99"),
                     fields,
@@ -2290,10 +2287,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             syn::parse2((*common_additional_error_variants_attribute_ts).clone())
                 .expect("1b80783d");
         let value_ident_str = value.ident.to_string();
-        assert!(
-            value_ident_str == gen_pg_table_attribute_str,
-            "8a66c852-43a7-4c1c-ad6a-ac0a232d2215"
-        );
+        assert!(value_ident_str == gen_pg_table_attribute_str, "8a66c852");
         let variants = if let syn::Data::Enum(data_enum) = value.data {
             data_enum.variants
         } else {
@@ -3154,7 +3148,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 use std::fmt::Write as _;
                 assert!(
                     write!(acc_b2600a1f, "{}", &element.field_ident).is_ok(),
-                    "b9fe50dc-69a2-4af1-801d-69b7839a1471"
+                    "b9fe50dc"
                 );
                 acc_b2600a1f.push(',');
                 acc_b2600a1f
@@ -5046,7 +5040,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                         )
                         .await
                         .expect("36b95e96"),
-                        "3d9f2ec0-e374-48d2-a36b-486f5598b0b4"
+                        "3d9f2ec0"
                     );
                     assert_eq!(
                         gen_try_delete_one_handle(
@@ -5055,7 +5049,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                             &table_initialization,
                         ).await.expect("4d96d385"),
                         #primary_key_read_clone_ts,
-                        "26e2058b-4bc1-42da-8f35-0ab993904de5"
+                        "26e2058b"
                     );
                     gen_check_no_rows_returned_from_ident_try_read_one_handle_primary_key(
                         &url,
@@ -5310,7 +5304,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                             }
                         )
                         .collect::<Vec<#ident_read_ucc>>(),
-                        "50198a7f-e65c-4e4e-8d7f-9881cfd42453"
+                        "50198a7f"
                     );
                     read_only_ids_current_elements
                 }
@@ -5378,7 +5372,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                         #select_default_all_with_max_page_size_cloned_clone_ts,
                                         &table_create_many_cloned
                                     ).await.expect("bdb72341"),
-                                    "d19bbbf6-f64c-4151-8b5b-998a93e13af5"
+                                    "d19bbbf6"
                                 );
                                 let read_only_ids_from_try_delete_many = itertools::Itertools::sorted(
                                     #ident::try_delete_many_handle(
@@ -5411,7 +5405,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                             #primary_key_field_type_read_only_ids_into_read_el_80a93892_primary_key_field_ident_ts
                                         })
                                     ).collect::<Vec<#primary_key_field_type_as_pg_type_read_ts>>(),
-                                    "f58f5572-4286-4a74-8006-0507339910d4"
+                                    "f58f5572"
                                 );
                                 assert!(
                                     gen_try_read_many_order_by_primary_key_with_big_pagination(
@@ -5440,7 +5434,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                     ).await
                                     .expect("24ab86d6")
                                     .is_empty(),
-                                    "4e88679a-0d23-418f-8767-4e9b7531429c"
+                                    "4e88679a"
                                 );
                             }));
                         }
@@ -5484,7 +5478,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                     )
                                     .await
                                     .expect("f8e1cb88"),
-                                    "5f2adbed-f716-440e-a990-4f1c258808b1"
+                                    "5f2adbed"
                                 );
                                 assert_eq!(
                                     gen_try_delete_one_handle(
@@ -5493,7 +5487,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                         &table_create_one_cloned
                                     ).await.expect("20d5a40a"),
                                     #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_ts,
-                                    "4f563faf-1d9b-4ef3-8636-f93fde8ef235"
+                                    "4f563faf"
                                 );
                                 gen_check_no_rows_returned_from_ident_try_read_one_handle_primary_key(
                                     &url_cloned,
@@ -5559,7 +5553,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                             ).await
                             .expect("e661c49b")
                             .is_empty(),
-                            "06df4025-e2d1-4128-b819-c06613c6ae3f"
+                            "06df4025"
                         );
                     }
                 });
@@ -5648,7 +5642,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 }).collect::<Vec<<#primary_key_field_type as pg_crud::PgType>::Read>>()
                                 .into_iter()
                             ).collect::<Vec<<#primary_key_field_type as pg_crud::PgType>::Read>>(),
-                            "ebbbea6e-c402-4637-9bab-02678c11926c"
+                            "ebbbea6e"
                         );
                         assert!(
                             gen_try_read_many_order_by_primary_key_with_big_pagination(
@@ -5678,7 +5672,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                             ).await
                             .expect("1f079962")
                             .is_empty(),
-                            "d79c0af3-5e2e-4891-a7ff-d1007b573e77"
+                            "d79c0af3"
                         );
                     }
                 });
@@ -5716,7 +5710,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 #select_default_all_with_max_page_size_cloned_clone_ts,
                                 &current_table
                             ).await.expect("c3e316c0"),
-                            "ee8d232d-98f2-4449-ad30-0e36ca2e7094"
+                            "ee8d232d"
                         );
                     }
                 };
@@ -5817,7 +5811,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                     assert_eq!(
                                         read_only_ids_from_try_delete_many,
                                         vec![#primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_ts],
-                                        "9fc29fa5-caba-403d-99da-ca9107d0c2e9"
+                                        "9fc29fa5"
                                     );
                                     assert!(
                                         gen_try_read_many_order_by_primary_key_with_big_pagination(
@@ -5844,7 +5838,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                         ).await
                                         .expect("1817b67a")
                                         .is_empty(),
-                                        "38187925-c136-41de-940d-eba75efc3a39"
+                                        "38187925"
                                     );
                                 }));
                             }
@@ -6425,7 +6419,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                             },
                                             &table_update_many_cloned
                                         ).await.expect("d2de0bd6"),
-                                        "34bfb3c7-7a53-479e-9d4f-0856003573e1"
+                                        "34bfb3c7"
                                     );
                                     assert_eq!(
                                         {
@@ -6464,7 +6458,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                                 _ => panic!("3c827ad6"),
                                             }
                                         ).collect::<Vec<#ident_read_ucc>>(),
-                                        "ae2a2da5-3697-4fd7-9ad2-4a535618fbc3"
+                                        "ae2a2da5"
                                     );
                                 }));
                             }
@@ -6609,7 +6603,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                             },
                                             &table_update_one_cloned
                                         ).await.expect("4d755542"),
-                                        "564de31c-3664-4c62-85fc-e03793372f8f"
+                                        "564de31c"
                                     );
                                     assert_eq!(
                                         #ident_read_ucc {
@@ -6623,7 +6617,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                             &table_update_one_cloned
                                         )
                                         .await.expect("75894c76"),
-                                        "d5dec823-b1f9-49b2-9c24-bf788f08cd8c"
+                                        "d5dec823"
                                     );
                                 }));
                             }
@@ -6665,7 +6659,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                         .await
                         .expect("0d5dec47")
                         .is_empty(),
-                        "51d14103-5122-4d96-a45c-4dd958ab3adc"
+                        "51d14103"
                     );
                 });
                 quote! {
@@ -6727,7 +6721,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                     ).expect("3ee5ee86").#ValueSc
                                 ).collect::<Vec<#primary_key_field_type_as_pg_type_read_ts>>()
                             },
-                            "db5e88a6-c75b-421b-acfb-56931b97ba3b"
+                            "db5e88a6"
                         );
                         assert!(
                             gen_try_read_many_order_by_primary_key_with_big_pagination(
@@ -6750,7 +6744,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                             ).await
                             .expect("bcb79917")
                             .is_empty(),
-                            "77f038b0-6f39-4b5b-a402-a1b6142acd0d"
+                            "77f038b0"
                         );
                     }
                 });
@@ -6792,7 +6786,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                     pg,
                                     ..
                                 } = delete_one_error_named_with_serialize_deserialize {
-                                    assert!(pg == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row(), "c9261bb8-d391-4c4b-9707-3a2c4278ad90");
+                                    assert!(pg == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row(), "c9261bb8");
                                 } else {
                                     panic!("e63b27a3");
                                 }
@@ -6815,7 +6809,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 &table_delete_one_cloned
                             )
                             .await.expect("c8c44c89"),
-                            "86ef08ae-4356-4417-9490-1d13eb2af71f"
+                            "86ef08ae"
                         );
                         assert_eq!(
                             gen_try_delete_one_handle(
@@ -6824,7 +6818,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 &table_delete_one_cloned
                             ).await.expect("7e1d1a70"),
                             #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_ts,
-                            "99f81971-dc80-46db-b466-4f309b215a8c"
+                            "99f81971"
                         );
                         gen_check_no_rows_returned_from_ident_try_read_one_handle_primary_key(
                             &url,
@@ -6940,7 +6934,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 ..
                             } = error {
                                 if let #ident_read_one_error_named_with_serialize_deserialize_ucc::Pg { pg, .. } = read_one_error_named_with_serialize_deserialize {
-                                    assert!(pg == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row(), "58b9a6a4-cf9b-49f3-a20f-7007deea40fd");
+                                    assert!(pg == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row(), "58b9a6a4");
                                 } else {
                                     panic!("0ad0117b");
                                 }
@@ -7002,7 +6996,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                         ident_vec_create: Vec<#ident_create_ucc>
                     ) -> Vec<#ident_read_ucc> {
                         let mut acc_1debe8fb = Vec::new();
-                        assert_eq!(read_only_ids_from_try_create_many.len(), ident_vec_create.len(), "88fb286c-a440-441f-9e36-83454d0c9f75");
+                        assert_eq!(read_only_ids_from_try_create_many.len(), ident_vec_create.len(), "88fb286c");
                         for (read_only_ids, create) in read_only_ids_from_try_create_many.into_iter().zip(ident_vec_create.into_iter()) {
                             acc_1debe8fb.push(#ident_read_ucc {
                                 #primary_key_field_ident: <#primary_key_field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_option_value_read_default_option_some_vec_one_el(
@@ -7056,7 +7050,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
 
                         let add_table_postfix = |postfix: &str|{
                             let value = format!("{table}_{postfix}");
-                            assert!(value.len() <= 63, "77f9bfb7-f7d8-4ba0-96d0-712d4246ecae");
+                            assert!(value.len() <= 63, "77f9bfb7");
                             value
                         };
                         let table_initialization = add_table_postfix("initialization");

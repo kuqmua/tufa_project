@@ -74,20 +74,14 @@ mod tests {
                 }
             }
         }
-        assert!(
-            lints_not_in_cargo_toml.is_empty(),
-            "d2b7ba9f-d133-496c-a29d-67503c3d9e8a"
-        );
+        assert!(lints_not_in_cargo_toml.is_empty(), "d2b7ba9f");
         let mut outdated_lints_in_file = Vec::new();
         for el_d3c0c904 in lints_vec_from_cargo_toml {
             if !lints_to_check.contains(el_d3c0c904) {
                 outdated_lints_in_file.push(el_d3c0c904);
             }
         }
-        assert!(
-            outdated_lints_in_file.is_empty(),
-            "93787d2d-47b8-4f26-ba5a-341d3c60ca15"
-        );
+        assert!(outdated_lints_in_file.is_empty(), "93787d2d");
     }
     fn check_expect_or_panic_contains_only_unique_uuid_v4(expect_or_panic: ExpectOrPanic) {
         struct ExpectVisitor {
@@ -166,10 +160,7 @@ mod tests {
         if !duplicates.is_empty() {
             all_errors.push(format!("duplicate UUIDs found: {duplicates:?}"));
         }
-        assert!(
-            all_errors.is_empty(),
-            "6062a9e9-c12b-4961-89d2-f52a0ea344b4 {all_errors:#?}",
-        );
+        assert!(all_errors.is_empty(), "6062a9e9 {all_errors:#?}",);
     }
     fn project_directory() -> WalkDir {
         WalkDir::new("../")
@@ -184,16 +175,10 @@ mod tests {
                 .stdout(Stdio::piped())
                 .output()
                 .expect("7c939ff3");
-            assert!(
-                output.status.success(),
-                "0c000f24-afad-4397-88a4-913d0c113a34"
-            );
+            assert!(output.status.success(), "0c000f24");
             {
                 let stderr = String::from_utf8_lossy(&output.stderr);
-                assert!(
-                    stderr.trim().is_empty(),
-                    "0a4b2082-a764-4080-9d72-61e009f03f27"
-                );
+                assert!(stderr.trim().is_empty(), "0a4b2082");
             };
             let stdout = String::from_utf8_lossy(&output.stdout);
             Regex::new(r"(?m)^\s*([a-z0-9][a-z0-9_-]+)\s+(allow|warn|deny|forbid)\b")
@@ -403,11 +388,8 @@ mod tests {
             };
             for el_714b3d9c in regex.find_iter(&content) {
                 let uuid = Uuid::parse_str(el_714b3d9c.as_str()).expect("c9711efd");
-                assert!(
-                    uuid.get_version_num() == 4,
-                    "49b49b21-0cc6-4aee-8c28-3003492f2a80"
-                );
-                assert!(seen.insert(uuid), "4cf9d239-d701-49bd-9f6b-8843c5a8814e");
+                assert!(uuid.get_version_num() == 4, "49b49b21");
+                assert!(seen.insert(uuid), "4cf9d239");
             }
         }
     }

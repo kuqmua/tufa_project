@@ -14,10 +14,7 @@ pub fn gen_upper_camel_and_sc_str_and_ts(
             {
                 let regex = regex::Regex::new(REGEX_VALUE).expect("20948d87");
                 for el_d68254e8 in &el_020a8657 {
-                    assert!(
-                        regex.is_match(el_d68254e8),
-                        "faadba8a-ff38-40f9-af05-e4f95bba896a"
-                    );
+                    assert!(regex.is_match(el_d68254e8), "faadba8a");
                 }
             }
             let phrase_part_ucc_str =
@@ -35,10 +32,7 @@ pub fn gen_upper_camel_and_sc_str_and_ts(
                         acc_7a8bd950.push_str(&el_sc_str);
                     } else {
                         use std::fmt::Write as _;
-                        assert!(
-                            write!(acc_7a8bd950, "_{el_sc_str}").is_ok(),
-                            "ef718915-7a99-45a6-b3c5-496262804976"
-                        );
+                        assert!(write!(acc_7a8bd950, "_{el_sc_str}").is_ok(), "ef718915");
                     }
                     acc_7a8bd950
                 },
@@ -119,7 +113,7 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(
         {
             let regex = regex::Regex::new(REGEX_VALUE).expect("cba1b5fb");
             for el_6d4f29dd in &el_a5ccbaa7 {
-                assert!(regex.is_match(el_6d4f29dd), "4a12d90f-6428-4494-8305-40c149a1509a");
+                assert!(regex.is_match(el_6d4f29dd), "4a12d90f");
             }
         }
         let self_match_name = "self";
@@ -131,7 +125,7 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(
                     break;
                 }
             }
-            assert!(is_self_exists_and_only_one, "5680dd63-c98d-4e98-a67e-e13a3710a7c2");
+            assert!(is_self_exists_and_only_one, "5680dd63");
         };
         let (elements_concat_value_ucc_double_quotes_ts, elements_concat_value_sc_double_quotes_ts, struct_ucc_ucc_ts, struct_sc_token_ucc_ts, trait_ucc_ucc_ts, trait_sc_token_ucc_ts) = {
             let ucc_ucc_str = "Ucc";
@@ -153,9 +147,9 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(
                     use std::fmt::Write as _;
                     let symbol = '_';
                     if el_73b0c851 == "self" {
-                        assert!(write!(acc_cbcae5e1, "{{value}}{symbol}").is_ok(), "6a02a2ff-1cb0-488d-85c0-32ea2d1291ac");
+                        assert!(write!(acc_cbcae5e1, "{{value}}{symbol}").is_ok(), "6a02a2ff");
                     } else {
-                        assert!(write!(acc_cbcae5e1, "{}{symbol}", naming_common::AsRefStrToScStr::case(el_73b0c851)).is_ok(), "d915980a-3aa3-4220-abfd-d5800927eef0");
+                        assert!(write!(acc_cbcae5e1, "{}{symbol}", naming_common::AsRefStrToScStr::case(el_73b0c851)).is_ok(), "d915980a");
                     }
                     acc_cbcae5e1
                 });
@@ -229,7 +223,7 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(
                             )
                             .fold(String::new(), |mut acc_f0a77378, el_2b05e58f| {
                                 use std::fmt::Write as _;
-                                assert!(write!(acc_f0a77378, "{}::", el_2b05e58f.ident).is_ok(), "67c90ce9-beea-4a81-99a2-874b8f04aa0a");
+                                assert!(write!(acc_f0a77378, "{}::", el_2b05e58f.ident).is_ok(), "67c90ce9");
                                 acc_f0a77378
                             });
                             let last = type_path.path.segments.iter().last().expect("19f6e1a6");

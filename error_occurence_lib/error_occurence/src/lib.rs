@@ -45,10 +45,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     };
     let supported_enum_variant = {
         let mut all_equal: Option<SuportedEnumVariant> = None;
-        assert!(
-            !data_enum.variants.is_empty(),
-            "27275ae6-f36d-4aa0-ac0b-6e678e1ccfe3"
-        );
+        assert!(!data_enum.variants.is_empty(), "27275ae6");
         data_enum
             .variants
             .iter()
@@ -57,7 +54,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     Some(supported_variant) => {
                         assert!(
                             !(*supported_variant == SuportedEnumVariant::Unnamed),
-                            "bf6be520-cc31-4c54-a5ee-707df114e247"
+                            "bf6be520"
                         );
                     }
                     None => {
@@ -68,7 +65,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     Some(supported_variant) => {
                         assert!(
                             !(*supported_variant == SuportedEnumVariant::Named),
-                            "02090d85-7ffb-41f2-9b8c-9ce6792bb3d4"
+                            "02090d85"
                         );
                     }
                     None => {
@@ -145,7 +142,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             |mut acc_924ab1b3, el_e405984a| {
                                 use std::fmt::Write as _;
                                 let current_ident = &el_e405984a.ident.as_ref().expect("2e7cd5fe");
-                                assert!(writeln!(acc_924ab1b3, "{current_ident}: {{}}").is_ok(), "ab44c70f-092e-46a0-8daa-56fe44395228");
+                                assert!(writeln!(acc_924ab1b3, "{current_ident}: {{}}").is_ok(), "ab44c70f");
                                 acc_924ab1b3
                             }
                         )
@@ -452,7 +449,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         format!(
                             "{}{}",
                             {
-                                assert!(fields.len() == 1, "d7a6b955-3795-4e0c-a990-b06734e9d923");
+                                assert!(fields.len() == 1, "d7a6b955");
                                 let field_type = &fields.iter().next().expect("8a80c36d").ty;
                                 quote! {#field_type}.to_string()
                             },

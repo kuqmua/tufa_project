@@ -46,10 +46,7 @@ workspace = true"#
         .args(["fmt"])
         .status()
     {
-        assert!(
-            value_90318089.success(),
-            "2a1deb01-ec64-4d13-94d5-47b647b2950d"
-        );
+        assert!(value_90318089.success(), "2a1deb01");
     } else {
         return_to_previous();
         panic!("8dc4f045");
@@ -66,10 +63,7 @@ workspace = true"#
         ])
         .status()
     {
-        assert!(
-            value_f263835c.success(),
-            "2c037283-420c-4076-8042-1eac09ba1a23"
-        );
+        assert!(value_f263835c.success(), "2c037283");
         return_to_previous();
     } else {
         return_to_previous();

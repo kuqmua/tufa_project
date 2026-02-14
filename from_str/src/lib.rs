@@ -38,7 +38,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                     Casing::to_case(&format!("{variant_ident}"), Case::Snake);
                 assert!(
                     write!(acc_d6966473, "\'{variant_ident_sc_str}\',").is_ok(),
-                    "09c49558-9d46-41d1-86a5-f76c1460a21e"
+                    "09c49558"
                 );
                 acc_d6966473
             });

@@ -5901,7 +5901,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         });
                                         quote! {
                                             #ident_read_ucc::new({
-                                                assert_eq!(#ReadOnlyIdsSc.0.#ValueSc.len(), #CreateSc.0.len(), "90d33ddd-e08d-488c-8577-c75febe97301");
+                                                assert_eq!(#ReadOnlyIdsSc.0.#ValueSc.len(), #CreateSc.0.len(), "90d33ddd");
                                                 let mut acc_37909420 = Vec::new();
                                                 for (read_only_ids_225e2b76, create_3c660445) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
                                                     acc_37909420.push(#ident_with_id_standart_not_null_read_ucc::try_new(
@@ -6000,7 +6000,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         });
                                         quote! {
                                             #ident_table_type_declaration_ucc::new({
-                                                assert_eq!(#ReadOnlyIdsSc.0.#ValueSc.len(), #CreateSc.0.len(), "7776a146-06a8-4972-8e16-371d41ee164c");
+                                                assert_eq!(#ReadOnlyIdsSc.0.#ValueSc.len(), #CreateSc.0.len(), "7776a146");
                                                 let mut acc_319e1fb1 = Vec::new();
                                                 for (read_only_ids_94b49496, create_24629087) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
                                                     acc_319e1fb1.push(#ident_with_id_standart_not_null_table_type_declaration_ucc::new(

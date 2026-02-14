@@ -10,10 +10,7 @@ pub fn compile_time_project_git_info(
         .args(["rev-parse", "HEAD"])
         .output()
         .expect("d6b0f81a");
-    assert!(
-        output.status.success(),
-        "f7185b72-c92e-4558-8615-1ae11bcaa131"
-    );
+    assert!(output.status.success(), "f7185b72");
     let hash = String::from_utf8(output.stdout)
         .expect("9a3f659d")
         .trim()
@@ -24,7 +21,7 @@ pub fn compile_time_project_git_info(
             && hash
                 .chars()
                 .all(|el_e7daeee7| el_e7daeee7.is_ascii_hexdigit()),
-        "093516ae-a89f-42df-8b01-9b2897111705"
+        "093516ae"
     );
     let commit_id_ts = format!("\"{hash}\"").parse::<Ts2>().expect("842e75e8");
     let generated = quote! {
