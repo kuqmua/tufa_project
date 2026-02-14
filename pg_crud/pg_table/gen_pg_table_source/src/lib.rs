@@ -87,6 +87,16 @@ use syn::{
     punctuated::Punctuated, token::Brace, token::Bracket, token::Colon, token::Comma,
     token::PathSep, token::Pound,
 };
+#[allow(unused_imports)]
+use token_patterns::{
+    AllowClippyArbitrarySourceItemOrdering, Bool, Char, CoreDefaultDefaultDefault,
+    DeriveDebugSerdeSerializeSerdeDeserialize, DeriveDebugThisErrorErrorOccurence,
+    DeriveDebugThiserrorErrorOccurence, Error0, Error1, Error2, Error3, F32, F64,
+    FieldAttributeSerdeSkipSerializingIfOptionIsNone, I8, I16, I32, I64, MustUse,
+    PgCrudCommonDefaultOptionSomeVecOneEl, PgCrudCommonDefaultOptionSomeVecOneElCall,
+    PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall, PgCrudDefaultOptionSomeVecOneElCall,
+    RefStr, SqlxAcquire, SqlxRow, StdStringString, U8, U16, U32, U64,
+};
 //todo decide where to do error log (maybe add in some places)
 //todo gen route what will return columns of the table and their rust and postgersql types
 //todo created at and updated at fields + created by + updated by
@@ -419,31 +429,27 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         whole_content_write_into_gen_pg_table: macros_helpers::ShouldWriteTokenStreamIntoFile,
     }
     panic_location::panic_location();
-    let error_0_ts = token_patterns::Error0;
-    let error_1_ts = token_patterns::Error1;
-    let error_2_ts = token_patterns::Error2;
-    let error_3_ts = token_patterns::Error3;
-    let derive_debug_thiserror_error_occurence = token_patterns::DeriveDebugThiserrorErrorOccurence;
-    let derive_debug_this_error_error_occurence =
-        token_patterns::DeriveDebugThisErrorErrorOccurence;
-    let sqlx_acquire = token_patterns::SqlxAcquire;
-    let derive_debug_serde_serialize_serde_deserialize =
-        token_patterns::DeriveDebugSerdeSerializeSerdeDeserialize;
-    let ref_str = token_patterns::RefStr;
+    let error_0_ts = Error0;
+    let error_1_ts = Error1;
+    let error_2_ts = Error2;
+    let error_3_ts = Error3;
+    let derive_debug_thiserror_error_occurence = DeriveDebugThiserrorErrorOccurence;
+    let derive_debug_this_error_error_occurence = DeriveDebugThisErrorErrorOccurence;
+    let sqlx_acquire = SqlxAcquire;
+    let derive_debug_serde_serialize_serde_deserialize = DeriveDebugSerdeSerializeSerdeDeserialize;
+    let ref_str = RefStr;
     let field_attribute_serde_skip_serializing_if_option_is_none_ts =
-        token_patterns::FieldAttributeSerdeSkipSerializingIfOptionIsNone;
-    let sqlx_row = token_patterns::SqlxRow;
-    let pg_crud_default_option_some_vec_one_el_call_ts =
-        token_patterns::PgCrudDefaultOptionSomeVecOneElCall;
-    let string_ts = token_patterns::StdStringString;
-    let must_use_ts = token_patterns::MustUse;
-    let allow_clippy_arbitrary_source_item_ordering_ts =
-        token_patterns::AllowClippyArbitrarySourceItemOrdering;
+        FieldAttributeSerdeSkipSerializingIfOptionIsNone;
+    let sqlx_row = SqlxRow;
+    let pg_crud_default_option_some_vec_one_el_call_ts = PgCrudDefaultOptionSomeVecOneElCall;
+    let string_ts = StdStringString;
+    let must_use_ts = MustUse;
+    let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
     let import_path = ImportPath::PgCrud;
     let return_err_query_part_error_named_write_into_buffer_ts =
         gen_return_err_query_part_error_named_write_into_buffer_ts(import_path);
 
-    // let pg_crud_all_variants_default_option_some_vec_one_el_call_ts = token_patterns::PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElCall;
+    // let pg_crud_all_variants_default_option_some_vec_one_el_call_ts = PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElCall;
     let syn_derive_input: DeriveInput = parse2(input).expect("991c614f");
     let gen_pg_table_config = serde_json::from_str::<GenPgTableConfig>(
         &macros_helpers::get_macro_attribute_meta_list_ts(
@@ -775,8 +781,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     };
                     quote! {#ident_select_ucc::#field_ident_ucc_ts(#ColumnSc) #initialization_ts}
                 });
-            let std_option_option_char_ts =
-                gen_std_option_option_tokens_declaration_ts(&token_patterns::Char);
+            let std_option_option_char_ts = gen_std_option_option_tokens_declaration_ts(&Char);
             quote! {
                 fn #GenSelectQueryPartSc(#select_borrow_pg_crud_not_empty_unique_vec_ident_select_ts) -> Result<#string_ts, #import_path ::#QueryPartErrorNamedUcc> {
                     let mut acc_37c883c3 = #string_ts::default();

@@ -16,6 +16,10 @@ use pg_crud_macros_common::{
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use std::fmt::Display;
+use token_patterns::{
+    CoreDefaultDefaultDefault, PgCrudCommonDefaultOptionSomeVecOneEl,
+    PgCrudCommonDefaultOptionSomeVecOneElCall,
+};
 
 #[proc_macro]
 pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -117,11 +121,10 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
     let t_ts = quote! {T};
     let t_annotation_generic_ts = quote! {<#t_ts>};
     let proc_macro2_ts_new = Ts2::new();
-    let core_default_default_default_ts = token_patterns::CoreDefaultDefaultDefault;
-    let pg_crud_common_default_option_some_vec_one_el_ts =
-        token_patterns::PgCrudCommonDefaultOptionSomeVecOneEl;
+    let core_default_default_default_ts = CoreDefaultDefaultDefault;
+    let pg_crud_common_default_option_some_vec_one_el_ts = PgCrudCommonDefaultOptionSomeVecOneEl;
     let pg_crud_common_default_option_some_vec_one_el_call_ts =
-        token_patterns::PgCrudCommonDefaultOptionSomeVecOneElCall;
+        PgCrudCommonDefaultOptionSomeVecOneElCall;
     let pub_value_t_ts = quote! {pub #ValueSc: T};
     let unsigned_part_of_i32_ts = quote! {pg_crud_common::UnsignedPartOfI32};
     let not_zero_unsigned_part_of_i32_ts = quote! {pg_crud_common::NotZeroUnsignedPartOfI32};

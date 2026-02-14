@@ -61,6 +61,11 @@ use std::{
     iter::{once, repeat_n},
 };
 use strum_macros::{Display as StrumDisplay, EnumIter};
+use token_patterns::{
+    AllowClippyArbitrarySourceItemOrdering, CoreDefaultDefaultDefault, F32, I16, I32, I64, MustUse,
+    PgCrudCommonDefaultOptionSomeVecOneElCall,
+    PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall, StdStringString, U8, U32,
+};
 #[must_use]
 pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
@@ -1033,19 +1038,19 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let pg_type_range_try_from_pg_type = PgTypeRange::try_from(pg_type);
         let pg_type_range_try_from_pg_type_is_ok = pg_type_range_try_from_pg_type.is_ok();
 
-        let u8_ts = token_patterns::U8;
-        let i16_ts = token_patterns::I16;
-        let u32_ts = token_patterns::U32;
-        let i32_ts = token_patterns::I32;
-        let i64_ts = token_patterns::I64;
-        let f32_ts = token_patterns::F32;
-        let std_string_string_ts = token_patterns::StdStringString;
+        let u8_ts = U8;
+        let i16_ts = I16;
+        let u32_ts = U32;
+        let i32_ts = I32;
+        let i64_ts = I64;
+        let f32_ts = F32;
+        let std_string_string_ts = StdStringString;
 
-        let core_default_default_default_ts = token_patterns::CoreDefaultDefaultDefault;
-        let pg_crud_common_default_option_some_vec_one_el_call_ts = token_patterns::PgCrudCommonDefaultOptionSomeVecOneElCall;
-        let pg_crud_common_default_option_some_vec_one_el_max_page_size_call_ts = token_patterns::PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall;
-        let must_use_ts = token_patterns::MustUse;
-        let allow_clippy_arbitrary_source_item_ordering_ts = token_patterns::AllowClippyArbitrarySourceItemOrdering;
+        let core_default_default_default_ts = CoreDefaultDefaultDefault;
+        let pg_crud_common_default_option_some_vec_one_el_call_ts = PgCrudCommonDefaultOptionSomeVecOneElCall;
+        let pg_crud_common_default_option_some_vec_one_el_max_page_size_call_ts = PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall;
+        let must_use_ts = MustUse;
+        let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
 
         let import_path = ImportPath::PgCrudCommon;
         let import_path_non_primary_key_pg_type_read_only_ids_ts = quote! {#import_path::NonPrimaryKeyPgTypeReadOnlyIds};
