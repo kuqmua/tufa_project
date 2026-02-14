@@ -5,8 +5,9 @@ use pg_crud_common::{
     PaginationBase, PgTypeWhereFilter, QueryPartErrorNamed,
 };
 use schemars::JsonSchema;
+use serde::de::{Error as SerdeError, IgnoredAny, MapAccess, SeqAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
-use sqlx::{postgres::PgArguments, query::Query};
+use sqlx::{Postgres, postgres::PgArguments, query::Query};
 use std::fmt::Display;
 use thiserror::Error;
 use utoipa::ToSchema;
@@ -91,7 +92,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
         }
         #[doc(hidden)]
         struct __FieldVisitor;
-        impl serde::de::Visitor<'_> for __FieldVisitor {
+        impl Visitor<'_> for __FieldVisitor {
             type Value = __Field;
             fn expecting(
                 &self,
@@ -121,7 +122,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
             }
             fn visit_bytes<__E>(self, __value: &[u8]) -> Result<Self::Value, __E>
             where
-                __E: serde::de::Error,
+                __E: SerdeError,
             {
                 match __value {
                     b"limit" => Ok(__Field::__field0),
@@ -144,7 +145,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
             marker: serde::__private228::PhantomData<PaginationStartsWithOne>,
             lifetime: serde::__private228::PhantomData<&'de ()>,
         }
-        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+        impl<'de> Visitor<'de> for __Visitor<'de> {
             type Value = PaginationStartsWithOne;
             fn expecting(
                 &self,
@@ -155,55 +156,48 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
             #[inline]
             fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
             where
-                __A: serde::de::SeqAccess<'de>,
+                __A: SeqAccess<'de>,
             {
-                let Some(__field0) = serde::de::SeqAccess::next_element::<i64>(&mut __seq)? else {
-                    return Err(serde::de::Error::invalid_length(
+                let Some(__field0) = SeqAccess::next_element::<i64>(&mut __seq)? else {
+                    return Err(SerdeError::invalid_length(
                         0usize,
                         &"struct PaginationStartsWithOne with 2 elements",
                     ));
                 };
-                let Some(__field1) = serde::de::SeqAccess::next_element::<i64>(&mut __seq)? else {
-                    return Err(serde::de::Error::invalid_length(
+                let Some(__field1) = SeqAccess::next_element::<i64>(&mut __seq)? else {
+                    return Err(SerdeError::invalid_length(
                         1usize,
                         &"struct PaginationStartsWithOne with 2 elements",
                     ));
                 };
                 match PaginationStartsWithOne::try_new(__field0, __field1) {
                     Ok(value) => Ok(value),
-                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                    Err(error) => Err(SerdeError::custom(format!("{error:?}"))),
                 }
             }
             #[inline]
             fn visit_map<__A>(self, mut __map: __A) -> Result<Self::Value, __A::Error>
             where
-                __A: serde::de::MapAccess<'de>,
+                __A: MapAccess<'de>,
             {
                 let mut __field0: Option<i64> = None;
                 let mut __field1: Option<i64> = None;
-                while let Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                while let Some(__key) = MapAccess::next_key::<__Field>(&mut __map)? {
                     match __key {
                         __Field::__field0 => {
                             if Option::is_some(&__field0) {
-                                return Err(<__A::Error as serde::de::Error>::duplicate_field(
-                                    "limit",
-                                ));
+                                return Err(<__A::Error as SerdeError>::duplicate_field("limit"));
                             }
-                            __field0 = Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
+                            __field0 = Some(MapAccess::next_value::<i64>(&mut __map)?);
                         }
                         __Field::__field1 => {
                             if Option::is_some(&__field1) {
-                                return Err(<__A::Error as serde::de::Error>::duplicate_field(
-                                    "offset",
-                                ));
+                                return Err(<__A::Error as SerdeError>::duplicate_field("offset"));
                             }
-                            __field1 = Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
+                            __field1 = Some(MapAccess::next_value::<i64>(&mut __map)?);
                         }
                         __Field::__ignore => {
-                            let _: serde::de::IgnoredAny =
-                                serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(
-                                    &mut __map,
-                                )?;
+                            let _: IgnoredAny = MapAccess::next_value::<IgnoredAny>(&mut __map)?;
                         }
                     }
                 }
@@ -217,7 +211,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
                 };
                 match PaginationStartsWithOne::try_new(__field0_value, __field1_value) {
                     Ok(value) => Ok(value),
-                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                    Err(error) => Err(SerdeError::custom(format!("{error:?}"))),
                 }
             }
         }
@@ -237,8 +231,8 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
 impl<'lifetime> PgTypeWhereFilter<'lifetime> for PaginationStartsWithOne {
     fn query_bind(
         self,
-        query: Query<'lifetime, sqlx::Postgres, PgArguments>,
-    ) -> Result<Query<'lifetime, sqlx::Postgres, PgArguments>, String> {
+        query: Query<'lifetime, Postgres, PgArguments>,
+    ) -> Result<Query<'lifetime, Postgres, PgArguments>, String> {
         self.0.query_bind(query)
     }
     fn query_part(

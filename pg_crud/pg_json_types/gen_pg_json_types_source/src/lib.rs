@@ -1,3 +1,4 @@
+use enum_extension_lib::EnumExtension;
 use naming::{
     ArrayOfUcc, AsUcc, BooleanUcc, ColumnNameAndMaybeFieldGetterSc, CreateForQueryUcc, CreateSc,
     EqualUcc, ErrorSc, GenPgJsonTypesModSc, IncrementSc, JsonbSetAccumulatorSc, NewSc, NumberUcc,
@@ -33,11 +34,13 @@ use pg_crud_macros_common::{
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use rayon::iter::{IntoParallelRefIterator as _, ParallelIterator as _};
+use serde::{Deserialize, Serialize};
 use std::{
     collections::HashSet,
     fmt::{Display, Formatter, Result as StdFmtResult},
     iter::once,
 };
+use strum_macros::{Display, EnumIter};
 use token_patterns::{
     AllowClippyArbitrarySourceItemOrdering, MustUse, PgCrudCommonDefaultOptionSomeVecOneEl,
     PgCrudCommonDefaultOptionSomeVecOneElCall,
@@ -49,7 +52,7 @@ use token_patterns::{
 #[must_use]
 pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, strum_macros::Display)]
+    #[derive(Debug, Display)]
     enum RustTypeName {
         StdPrimitiveI8,
         StdPrimitiveI16,
@@ -125,16 +128,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(
-        Debug,
-        Clone,
-        PartialEq,
-        Eq,
-        Hash,
-        serde::Serialize,
-        serde::Deserialize,
-        strum_macros::Display,
-        strum_macros::EnumIter,
-        enum_extension_lib::EnumExtension,
+        Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize, Display, EnumIter, EnumExtension,
     )]
     enum PgJsonType {
         StdPrimitiveI8AsJsonbNumber,
@@ -161,16 +155,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(
-        Debug,
-        Clone,
-        PartialEq,
-        Eq,
-        Hash,
-        serde::Serialize,
-        serde::Deserialize,
-        strum_macros::Display,
-        strum_macros::EnumIter,
-        enum_extension_lib::EnumExtension,
+        Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize, Display, EnumIter, EnumExtension,
     )]
     enum PgJsonTypePattern {
         Standart,
