@@ -450,8 +450,7 @@ mod tests {
     #[test]
     fn workspace_crates_must_use_workspace_dependencies() {
         let exceptions = [
-            "../Cargo.toml",               //workspace
-            "../pg_jsonschema/Cargo.toml", //need just for pg extension
+            "../Cargo.toml",//workspace
         ];
         for el_bebb7b9d in project_directory()
             .into_iter()
