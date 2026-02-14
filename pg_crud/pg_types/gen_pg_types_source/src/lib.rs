@@ -29,6 +29,7 @@ use naming::{
         SelfUpdateForQueryUcc, SelfUpdateUcc, SelfWhereUcc,
     },
 };
+use pg_crud_common_and_macros_common::PgTypeGreaterThanVariant;
 use pg_crud_macros_common::{
     ColumnParameterUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrementUnderscore,
     CreateQueryPartValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl,
@@ -43,9 +44,12 @@ use pg_crud_macros_common::{
     gen_impl_pg_crud_common_default_option_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_common_default_option_some_vec_one_el_ts,
     gen_impl_pg_type_not_primary_key_for_ident_ts, gen_impl_pg_type_test_cases_for_ident_ts,
+    gen_impl_pg_type_ts, gen_impl_sqlx_decode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_sqlx_pg_for_ident_ts,
-    gen_pg_type_where_ts, gen_std_option_option_tokens_declaration_ts,
-    gen_std_vec_vec_tokens_declaration_ts, gen_value_initialization_ts,
+    gen_pg_type_where_ts, gen_return_err_query_part_error_named_write_into_buffer_ts,
+    gen_std_option_option_tokens_declaration_ts, gen_std_vec_vec_tokens_declaration_ts,
+    gen_struct_ident_double_quotes_ts, gen_struct_ident_with_number_elements_double_quotes_ts,
+    gen_tuple_struct_ident_double_quotes_ts, gen_value_initialization_ts,
     impl_pg_type_equal_operator_for_ident_ts, impl_pg_type_where_filter_for_ident_ts,
 };
 use quote::{ToTokens, quote};
@@ -693,8 +697,8 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
     #[derive(Debug, serde::Deserialize)]
     struct GenPgJsonTypesConfig {
         pg_table_columns_content_write_into_pg_table_columns_using_pg_types:
-            macros_helpers::ShouldWriteTokenStreamIntoFile,
-        whole_content_write_into_gen_pg_types: macros_helpers::ShouldWriteTokenStreamIntoFile,
+            ShouldWriteTokenStreamIntoFile,
+        whole_content_write_into_gen_pg_types: ShouldWriteTokenStreamIntoFile,
         variant: GenPgTypesConfigVariant,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
@@ -1042,7 +1046,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         let must_use_ts = token_patterns::MustUse;
         let allow_clippy_arbitrary_source_item_ordering_ts = token_patterns::AllowClippyArbitrarySourceItemOrdering;
 
-        let import_path = pg_crud_macros_common::ImportPath::PgCrudCommon;
+        let import_path = ImportPath::PgCrudCommon;
         let import_path_non_primary_key_pg_type_read_only_ids_ts = quote! {#import_path::NonPrimaryKeyPgTypeReadOnlyIds};
         let none_ts = quote!{None};
         let dot_clone_ts = quote!{.clone()};
@@ -1081,7 +1085,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             &dot_clone_ts
         };
 
-        let gen_import_path_value_initialization_ts = |content_ts: &dyn ToTokens| pg_crud_macros_common::gen_value_initialization_ts(&import_path, &content_ts);
+        let gen_import_path_value_initialization_ts = |content_ts: &dyn ToTokens| gen_value_initialization_ts(&import_path, &content_ts);
 
         let gen_ident_str = |
             current_pg_type: &PgType,
@@ -1219,14 +1223,14 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             let gen_current_ident_origin = |current_pg_type_pattern: &PgTypePattern, current_not_null_or_nullable: &NotNullOrNullable| {
                 let value = gen_current_ident_origin_non_wrapping(current_pg_type_pattern, current_not_null_or_nullable);
                 match &not_null_or_nullable {
-                    NotNullOrNullable::NotNull => pg_crud_macros_common::gen_std_vec_vec_tokens_declaration_ts(&value),
-                    NotNullOrNullable::Nullable => pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&value),
+                    NotNullOrNullable::NotNull => gen_std_vec_vec_tokens_declaration_ts(&value),
+                    NotNullOrNullable::Nullable => gen_std_option_option_tokens_declaration_ts(&value),
                 }
             };
             match &pg_type_pattern {
                 PgTypePattern::Standart => match &not_null_or_nullable {
                     NotNullOrNullable::NotNull => &inner_type_standart_not_null_ts,
-                    NotNullOrNullable::Nullable => &pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&ident_standart_not_null_origin_ucc),
+                    NotNullOrNullable::Nullable => &gen_std_option_option_tokens_declaration_ts(&ident_standart_not_null_origin_ucc),
                 },
                 PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
                     let (current_pg_type_pattern, current_not_null_or_nullable): (&PgTypePattern, &NotNullOrNullable) = match &not_null_or_nullable {
@@ -1255,11 +1259,11 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         let ident_inner_type_ts = match &element.pg_type_pattern {
             PgTypePattern::Standart => match &not_null_or_nullable {
                 NotNullOrNullable::NotNull => &inner_type_standart_not_null_ts,
-                NotNullOrNullable::Nullable => &pg_crud_macros_common::gen_std_option_option_tokens_declaration_ts(&inner_type_standart_not_null_ts),
+                NotNullOrNullable::Nullable => &gen_std_option_option_tokens_declaration_ts(&inner_type_standart_not_null_ts),
             },
             PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
                 let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote! {#inner_type_standart_not_null_ts});
-                not_null_or_nullable.maybe_option_wrap(pg_crud_macros_common::gen_std_vec_vec_tokens_declaration_ts(&dimension1_type))
+                not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dimension1_type))
             },
         };
         let can_be_primary_key = match &pg_type {
@@ -1289,9 +1293,9 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             PgType::StdPrimitiveI16AsSmallSerialInitializedByPg | PgType::StdPrimitiveI32AsSerialInitializedByPg | PgType::StdPrimitiveI64AsBigSerialInitializedByPg | PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg => CanBePrimaryKey::True,
         };
         let is_standart_not_null = if matches!((&pg_type_pattern, &not_null_or_nullable), (PgTypePattern::Standart, NotNullOrNullable::NotNull)) {
-            pg_crud_macros_common::IsStandartNotNull::True
+            IsStandartNotNull::True
         } else {
-            pg_crud_macros_common::IsStandartNotNull::False
+            IsStandartNotNull::False
         };
         let is_not_null_standart_can_be_primary_key = if matches!((&not_null_or_nullable, &pg_type_pattern, &can_be_primary_key), (NotNullOrNullable::NotNull, PgTypePattern::Standart, CanBePrimaryKey::True)) {
             IsNotNullStandartCanBePrimaryKey::True
@@ -1310,7 +1314,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 StartOrEnd::Start => &StartSc,
             }
         };
-        let (serde_serialize_derive_or_impl, serde_deserialize_derive_or_impl) = if matches!(&is_standart_not_null, pg_crud_macros_common::IsStandartNotNull::True) {
+        let (serde_serialize_derive_or_impl, serde_deserialize_derive_or_impl) = if matches!(&is_standart_not_null, IsStandartNotNull::True) {
             #[allow(clippy::arbitrary_source_item_ordering)]
             enum ParameterNumber {
                 One,
@@ -1438,9 +1442,9 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     | PgType::StdStringStringAsText
                     | PgType::StdVecVecStdPrimitiveU8AsBytea
                     | PgType::SqlxTypesChronoNaiveDateAsDate
-                    | PgType::SqlxTypesIpnetworkIpNetworkAsInet => pg_crud_macros_common::DeriveOrImpl::Derive,
-                    PgType::SqlxPgTypesPgMoneyAsMoney => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&gen_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote! {.0}))),
-                    PgType::SqlxTypesChronoNaiveTimeAsTime => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
+                    | PgType::SqlxTypesIpnetworkIpNetworkAsInet => DeriveOrImpl::Derive,
+                    PgType::SqlxPgTypesPgMoneyAsMoney => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&gen_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote! {.0}))),
+                    PgType::SqlxTypesChronoNaiveTimeAsTime => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
                         let gen_field_inner_type_standart_not_null_ts_as_chrono_timelike_ts = |content_ts: &dyn ToTokens| {
                             quote! {&(<#inner_type_standart_not_null_ts as chrono::Timelike>::#content_ts)}
                         };
@@ -1462,7 +1466,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             #serde_ser_serialize_struct_end_ts
                         }
                     })),
-                    PgType::SqlxTypesTimeTimeAsTime => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
+                    PgType::SqlxTypesTimeTimeAsTime => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
                         let gen_serialize_field_self_zero_ts = |value: &dyn StdFmtDisplayPlusQuoteToTokens| gen_serialize_field_ts(&value, &quote! {&self.0.#value()});
                         let hour_serialize_field_ts = gen_serialize_field_self_zero_ts(&HourSc);
                         let minute_serialize_field_ts = gen_serialize_field_self_zero_ts(&MinuteSc);
@@ -1477,7 +1481,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             #serde_ser_serialize_struct_end_ts
                         }
                     })),
-                    PgType::SqlxPgTypesPgIntervalAsInterval => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
+                    PgType::SqlxPgTypesPgIntervalAsInterval => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
                         let gen_serialize_field_handle_ts = |value: &dyn StdFmtDisplayPlusQuoteToTokens| gen_serialize_field_ts(&value, &quote! {&#self_dot_zero_ts.#value});
                         let months_serialize_field_ts = gen_serialize_field_handle_ts(&MonthsSc);
                         let days_serialize_field_ts = gen_serialize_field_handle_ts(&DaysSc);
@@ -1490,7 +1494,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             #serde_ser_serialize_struct_end_ts
                         }
                     })),
-                    PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
+                    PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
                         enum DateOrTime {
                             Date,
                             Time,
@@ -1524,7 +1528,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             #serde_ser_serialize_struct_end_ts
                         }
                     })),
-                    PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
+                    PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
                         enum DateNaiveOrTime {
                             Date,
                             Time,
@@ -1551,12 +1555,12 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             #serde_ser_serialize_struct_end_ts
                         }
                     })),
-                    PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient => pg_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_uuid_uuid_ts),
-                    PgType::SqlxTypesMacAddressMacAddressAsMacAddr => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&gen_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote! {.bytes()}))),
-                    PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range | PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => pg_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_pg_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_ts),
-                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc)),
-                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc)),
-                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc)),
+                    PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient => DeriveOrImpl::Impl(impl_serde_serialize_for_uuid_uuid_ts),
+                    PgType::SqlxTypesMacAddressMacAddressAsMacAddr => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&gen_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote! {.bytes()}))),
+                    PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range | PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => DeriveOrImpl::Impl(impl_serde_serialize_for_pg_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_ts),
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc)),
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc)),
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc)),
                 }
             };
             let serde_deserialize_derive_or_impl = {
@@ -1564,8 +1568,8 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     False,
                     True,
                 }
-                let struct_ident_double_quotes_ts = pg_crud_macros_common::gen_struct_ident_double_quotes_ts(&ident_origin_ucc);
-                let tuple_struct_ident_double_quotes_ts = pg_crud_macros_common::gen_tuple_struct_ident_double_quotes_ts(&ident_origin_ucc);
+                let struct_ident_double_quotes_ts = gen_struct_ident_double_quotes_ts(&ident_origin_ucc);
+                let tuple_struct_ident_double_quotes_ts = gen_tuple_struct_ident_double_quotes_ts(&ident_origin_ucc);
                 let struct_visitor_ts = quote! {
                     #[doc(hidden)]
                     struct __Visitor<'de> {
@@ -1718,7 +1722,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     )
                 };
                 let gen_fields_serde_de_seq_access_next_el_initialization_ts = |vec_ts: &[&dyn ToTokens]| {
-                    let error_message_ts = pg_crud_macros_common::gen_struct_ident_with_number_elements_double_quotes_ts(&ident_standart_not_null_origin_ucc, vec_ts.len());
+                    let error_message_ts = gen_struct_ident_with_number_elements_double_quotes_ts(&ident_standart_not_null_origin_ucc, vec_ts.len());
                     let fields_initialization_ts = vec_ts.iter().enumerate().map(|(index_70b4dabd, el_9dc7f312)| {
                         let field_index_value_ts = gen_field_index_value_ts(index_70b4dabd);
                         let index_usize_ts = format!("{index_70b4dabd}usize").parse::<proc_macro2::TokenStream>().expect("ce15e6bf");
@@ -2342,18 +2346,18 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     | PgType::StdPrimitiveI64AsBigSerialInitializedByPg
                     | PgType::StdPrimitiveBoolAsBool
                     | PgType::StdVecVecStdPrimitiveU8AsBytea
-                    | PgType::SqlxTypesIpnetworkIpNetworkAsInet => pg_crud_macros_common::DeriveOrImpl::Derive,
-                    PgType::SqlxPgTypesPgMoneyAsMoney => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                    | PgType::SqlxTypesIpnetworkIpNetworkAsInet => DeriveOrImpl::Derive,
+                    PgType::SqlxPgTypesPgMoneyAsMoney => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
                         #struct_visitor_ts
                         #impl_serde_de_visitor_for_visitor_pg_money_ts
                         #serde_deserializer_deserialize_newtype_struct_ts
                     })),
-                    PgType::StdStringStringAsText => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                    PgType::StdStringStringAsText => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
                         #struct_visitor_ts
                         #impl_serde_de_visitor_for_visitor_std_string_string_ts
                         #serde_deserializer_deserialize_newtype_struct_ts
                     })),
-                    PgType::SqlxTypesChronoNaiveTimeAsTime => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                    PgType::SqlxTypesChronoNaiveTimeAsTime => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
                         #enum_field_four_ts
                         #impl_serde_de_visitor_for_field_visitor_ts_5a4f24ce_7a8e_4bcc_8f79_2494f79bcc08
                         #impl_serde_deserialize_for_field_ts
@@ -2362,7 +2366,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         #const_fields_sqlx_types_chrono_naive_time_ts
                         #serde_deserializer_deserialize_struct_visitor_ts
                     })),
-                    PgType::SqlxTypesTimeTimeAsTime => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                    PgType::SqlxTypesTimeTimeAsTime => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
                         #enum_field_four_ts
                         #impl_serde_de_visitor_for_field_visitor_ts_9b240c3e_a4af_4da1_a2ab_f1bab44b1df6
                         #impl_serde_deserialize_for_field_ts
@@ -2371,12 +2375,12 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         #const_fields_sqlx_types_time_time_ts
                         #serde_deserializer_deserialize_struct_visitor_ts
                     })),
-                    PgType::SqlxTypesChronoNaiveDateAsDate => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                    PgType::SqlxTypesChronoNaiveDateAsDate => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
                         #struct_visitor_ts
                         #impl_serde_de_visitor_for_visitor_sqlx_types_chrono_naive_date_ts
                         #serde_deserializer_deserialize_newtype_struct_ts
                     })),
-                    PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                    PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
                         #enum_field_two_ts
                         #impl_serde_de_visitor_for_field_visitor_ts_dc439ca1_8af1_4c4c_ab49_4e4fb15a41d3
                         #impl_serde_deserialize_for_field_ts
@@ -2385,7 +2389,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         #const_fields_sqlx_types_chrono_naive_date_time_ts
                         #serde_deserializer_deserialize_struct_visitor_ts
                     })),
-                    PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                    PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
                         #enum_field_two_ts
                         #impl_serde_de_visitor_for_field_visitor_ts_8c733fe0_c816_4a0e_bb13_4c2d0cd2ded6
                         #impl_serde_deserialize_for_field_ts
@@ -2394,13 +2398,13 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         #const_fields_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts
                         #serde_deserializer_deserialize_struct_visitor_ts
                     })),
-                    PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient => pg_crud_macros_common::DeriveOrImpl::Impl(impl_serde_deserialize_for_uuid_uuid_ts),
-                    PgType::SqlxTypesMacAddressMacAddressAsMacAddr => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                    PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient => DeriveOrImpl::Impl(impl_serde_deserialize_for_uuid_uuid_ts),
+                    PgType::SqlxTypesMacAddressMacAddressAsMacAddr => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
                         #struct_visitor_ts
                         #impl_serde_de_visitor_for_visitor_mac_address_mac_address_ts
                         #serde_deserializer_deserialize_newtype_struct_ts
                     })),
-                    PgType::SqlxPgTypesPgIntervalAsInterval => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                    PgType::SqlxPgTypesPgIntervalAsInterval => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
                         #enum_field_three_ts
                         #impl_serde_de_visitor_for_field_visitor_ts_f702a411_b02b_4c90_aa7f_962a698612e7
                         #impl_serde_deserialize_for_field_ts
@@ -2409,7 +2413,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         #const_fields_sqlx_pg_types_pg_interval_ts
                         #serde_deserializer_deserialize_struct_visitor_ts
                     })),
-                    PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                    PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
                         #enum_field_two_ts
                         #impl_serde_de_visitor_for_field_visitor_ts_f4d8cc33_bf35_4c13_a745_341364a68df6
                         #impl_serde_deserialize_for_field_ts
@@ -2418,7 +2422,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         #const_fields_start_end_ts
                         #serde_deserializer_deserialize_struct_visitor_ts
                     })),
-                    PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                    PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
                         #enum_field_two_ts
                         #impl_serde_de_visitor_for_field_visitor_ts_f4d8cc33_bf35_4c13_a745_341364a68df6
                         #impl_serde_deserialize_for_field_ts
@@ -2427,7 +2431,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         #const_fields_start_end_ts
                         #serde_deserializer_deserialize_struct_visitor_ts
                     })),
-                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
                         #enum_field_two_ts
                         #impl_serde_de_visitor_for_field_visitor_ts_f4d8cc33_bf35_4c13_a745_341364a68df6
                         #impl_serde_deserialize_for_field_ts
@@ -2436,7 +2440,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         #const_fields_start_end_ts
                         #serde_deserializer_deserialize_struct_visitor_ts
                     })),
-                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
                         #enum_field_two_ts
                         #impl_serde_de_visitor_for_field_visitor_ts_f4d8cc33_bf35_4c13_a745_341364a68df6
                         #impl_serde_deserialize_for_field_ts
@@ -2445,7 +2449,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         #const_fields_start_end_ts
                         #serde_deserializer_deserialize_struct_visitor_ts
                     })),
-                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => pg_crud_macros_common::DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
                         #enum_field_two_ts
                         #impl_serde_de_visitor_for_field_visitor_ts_f4d8cc33_bf35_4c13_a745_341364a68df6
                         #impl_serde_deserialize_for_field_ts
@@ -2458,7 +2462,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             };
             (serde_serialize_derive_or_impl, serde_deserialize_derive_or_impl)
         } else {
-            (pg_crud_macros_common::DeriveOrImpl::Derive, pg_crud_macros_common::DeriveOrImpl::Derive)
+            (DeriveOrImpl::Derive, DeriveOrImpl::Derive)
         };
         let value_ident_inner_type_ts = quote! {#ValueSc: #ident_inner_type_ts};
         let ident_standart_not_null_read_ucc = SelfReadUcc::from_tokens(&ident_standart_not_null_ucc);
@@ -2484,7 +2488,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         };
         let gen_pub_const_new_or_pub_try_new_ts = |current_ident: &dyn ToTokens| {
             let pub_fn_new_or_try_new_ts = if pg_type_initialization_try_new_try_from_pg_type.is_ok() {
-                &macros_helpers::gen_pub_try_new_ts(
+                &gen_pub_try_new_ts(
                     &value_ident_inner_type_ts,
                     &ident_standart_not_null_origin_try_new_error_named_ucc,
                     &quote! {
@@ -2500,13 +2504,13 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     if matches!(&pg_type_pattern, PgTypePattern::Standart)
                         && matches!(&not_null_or_nullable, NotNullOrNullable::NotNull)
                     {
-                        macros_helpers::gen_pub_const_new_ts(
+                        gen_pub_const_new_ts(
                             &must_use_ts,
                             &value_ident_inner_type_ts,
                             &self_ident_origin_new_value_ts
                         )
                     } else {
-                        macros_helpers::gen_pub_new_ts(
+                        gen_pub_new_ts(
                             &must_use_ts,
                             &value_ident_inner_type_ts,
                             &self_ident_origin_new_value_ts
@@ -2546,11 +2550,11 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range |
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
-                PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => macros_helpers::DeriveCopy::True,
+                PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DeriveCopy::True,
                 PgType::StdStringStringAsText |
-                PgType::StdVecVecStdPrimitiveU8AsBytea => macros_helpers::DeriveCopy::False,
+                PgType::StdVecVecStdPrimitiveU8AsBytea => DeriveCopy::False,
             },
-            PgTypePattern::ArrayDimension1 { .. } => macros_helpers::DeriveCopy::False,
+            PgTypePattern::ArrayDimension1 { .. } => DeriveCopy::False,
         };
         let sqlx_types_chrono_naive_time_min_function_ts = quote!{sqlx_types_chrono_naive_time_min};
         let sqlx_types_chrono_naive_time_ten_function_ts = quote!{sqlx_types_chrono_naive_time_ten};
@@ -2567,7 +2571,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         let sqlx_types_chrono_naive_date_max_pred_opt_expect_function_ts = quote!{sqlx_types_chrono_naive_date_max_pred_opt_expect};
 
         let ident_ts = {
-            let ident_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_ts = StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -3046,19 +3050,19 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         };
         let ident_update_ucc = SelfUpdateUcc::from_tokens(&ident);
         let ident_origin_ts = {
-            let ident_origin_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_origin_ts = StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
                 .derive_copy_if(derive_copy)
                 .derive_partial_eq()
                 .derive_eq_if(match &is_not_null_standart_can_be_primary_key {
-                    IsNotNullStandartCanBePrimaryKey::False => macros_helpers::DeriveEq::False,
-                    IsNotNullStandartCanBePrimaryKey::True => macros_helpers::DeriveEq::True,
+                    IsNotNullStandartCanBePrimaryKey::False => DeriveEq::False,
+                    IsNotNullStandartCanBePrimaryKey::True => DeriveEq::True,
                 })
                 .derive_partial_ord_if(match &is_standart_not_null {
-                    pg_crud_macros_common::IsStandartNotNull::False => macros_helpers::DerivePartialOrd::False,
-                    pg_crud_macros_common::IsStandartNotNull::True => match &pg_type {
+                    IsStandartNotNull::False => DerivePartialOrd::False,
+                    IsStandartNotNull::True => match &pg_type {
                         PgType::StdPrimitiveI16AsInt2
                         | PgType::StdPrimitiveI32AsInt4
                         | PgType::StdPrimitiveI64AsInt8
@@ -3075,7 +3079,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         | PgType::SqlxTypesChronoNaiveDateAsDate
                         | PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp
                         | PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz
-                        | PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg => macros_helpers::DerivePartialOrd::True,
+                        | PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg => DerivePartialOrd::True,
                         PgType::SqlxPgTypesPgMoneyAsMoney
                         | PgType::SqlxPgTypesPgIntervalAsInterval
                         | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient
@@ -3085,20 +3089,20 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         | PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
-                        | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => macros_helpers::DerivePartialOrd::False,
+                        | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DerivePartialOrd::False,
                     },
                 })
                 .derive_ord_if(match &is_not_null_standart_can_be_primary_key {
-                    IsNotNullStandartCanBePrimaryKey::False => macros_helpers::DeriveOrd::False,
-                    IsNotNullStandartCanBePrimaryKey::True => macros_helpers::DeriveOrd::True,
+                    IsNotNullStandartCanBePrimaryKey::False => DeriveOrd::False,
+                    IsNotNullStandartCanBePrimaryKey::True => DeriveOrd::True,
                 })
                 .derive_serde_serialize_if(match &serde_serialize_derive_or_impl {
-                    pg_crud_macros_common::DeriveOrImpl::Derive => macros_helpers::DeriveSerdeSerialize::True,
-                    pg_crud_macros_common::DeriveOrImpl::Impl(_) => macros_helpers::DeriveSerdeSerialize::False,
+                    DeriveOrImpl::Derive => DeriveSerdeSerialize::True,
+                    DeriveOrImpl::Impl(_) => DeriveSerdeSerialize::False,
                 })
                 .derive_serde_deserialize_if(match &serde_deserialize_derive_or_impl {
-                    pg_crud_macros_common::DeriveOrImpl::Derive => macros_helpers::DeriveSerdeDeserialize::True,
-                    pg_crud_macros_common::DeriveOrImpl::Impl(_) => macros_helpers::DeriveSerdeDeserialize::False,
+                    DeriveOrImpl::Derive => DeriveSerdeDeserialize::True,
+                    DeriveOrImpl::Impl(_) => DeriveSerdeDeserialize::False,
                 })
                 .build_struct(
                     &ident_origin_ucc,
@@ -3165,10 +3169,10 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
             };
-            let maybe_pub_enum_ident_standart_not_null_origin_try_new_error_named_ts = if matches!(&is_standart_not_null, pg_crud_macros_common::IsStandartNotNull::True)
+            let maybe_pub_enum_ident_standart_not_null_origin_try_new_error_named_ts = if matches!(&is_standart_not_null, IsStandartNotNull::True)
                 && let Ok(pg_type_initialization_try_new) = &pg_type_initialization_try_new_try_from_pg_type
             {
-                let content_ts_d57d5de2 = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                let content_ts_d57d5de2 = StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_serde_serialize()
@@ -3247,15 +3251,15 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             } else {
                 proc_macro2::TokenStream::new()
             };
-            let maybe_pub_enum_ident_standart_not_null_origin_try_new_for_deserialize_error_named_ts = if matches!(&is_standart_not_null, pg_crud_macros_common::IsStandartNotNull::True)
-                && let pg_crud_macros_common::DeriveOrImpl::Impl(_) = &serde_deserialize_derive_or_impl
+            let maybe_pub_enum_ident_standart_not_null_origin_try_new_for_deserialize_error_named_ts = if matches!(&is_standart_not_null, IsStandartNotNull::True)
+                && let DeriveOrImpl::Impl(_) = &serde_deserialize_derive_or_impl
             {
                 match &pg_type_deserialize {
                     PgTypeDeserialize::Derive => proc_macro2::TokenStream::new(),
                     PgTypeDeserialize::ImplNewForDeserializeOrTryNewForDeserialize(pg_type_impl_new_for_deserialize_or_try_new_for_deserialize) => match &pg_type_impl_new_for_deserialize_or_try_new_for_deserialize {
                         PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(_) => proc_macro2::TokenStream::new(),
                         PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(pg_type_impl_try_new_for_deserialize) => {
-                            let content_ts_026f2a24 = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                            let content_ts_026f2a24 = StructOrEnumDeriveTokenStreamBuilder::new()
                             .make_pub()
                             .derive_debug()
                             .derive_serde_serialize()
@@ -3355,18 +3359,18 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     };
                     match &pg_type_pattern {
                         PgTypePattern::Standart => match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => macros_helpers::gen_const_new_ts(
+                            NotNullOrNullable::NotNull => gen_const_new_ts(
                                 &must_use_ts,
                                 &value_ident_inner_type_ts,
                                 &content_ts
                             ),
-                            NotNullOrNullable::Nullable => macros_helpers::gen_new_ts(
+                            NotNullOrNullable::Nullable => gen_new_ts(
                                 &must_use_ts,
                                 &value_ident_inner_type_ts,
                                 &content_ts
                             ),
                         },
-                        PgTypePattern::ArrayDimension1 { .. } => macros_helpers::gen_new_ts(
+                        PgTypePattern::ArrayDimension1 { .. } => gen_new_ts(
                             &must_use_ts,
                             &value_ident_inner_type_ts,
                             &content_ts
@@ -3978,7 +3982,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     }
                 }
             };
-            let maybe_impl_is_string_empty_for_ident_origin_ts = if matches!(&is_standart_not_null, pg_crud_macros_common::IsStandartNotNull::True) {
+            let maybe_impl_is_string_empty_for_ident_origin_ts = if matches!(&is_standart_not_null, IsStandartNotNull::True) {
                 match &not_null_or_nullable {
                     NotNullOrNullable::NotNull => match &pg_type {
                         PgType::StdPrimitiveI16AsInt2
@@ -4004,13 +4008,13 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => proc_macro2::TokenStream::new(),
-                        PgType::StdStringStringAsText => pg_crud_macros_common::gen_impl_crate_is_string_empty_for_ident_content_ts(
+                        PgType::StdStringStringAsText => gen_impl_crate_is_string_empty_for_ident_content_ts(
                             &ident_origin_ucc,
                             &quote! {self.0.clone().is_empty()},
                         ),
                         PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg |
                         PgType::SqlxTypesUuidUuidAsUuidInitializedByClient |
-                        PgType::SqlxTypesMacAddressMacAddressAsMacAddr => pg_crud_macros_common::gen_impl_crate_is_string_empty_for_ident_content_ts(
+                        PgType::SqlxTypesMacAddressMacAddressAsMacAddr => gen_impl_crate_is_string_empty_for_ident_content_ts(
                             &ident_origin_ucc,
                             &quote! {self.0.to_string().is_empty()},
                         ),
@@ -4021,16 +4025,16 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 proc_macro2::TokenStream::new()
             };
             let maybe_impl_serde_serialize_for_ident_standart_not_null_origin_ts = match &serde_serialize_derive_or_impl {
-                pg_crud_macros_common::DeriveOrImpl::Derive => &proc_macro2::TokenStream::new(),
-                pg_crud_macros_common::DeriveOrImpl::Impl(value) => value,
+                DeriveOrImpl::Derive => &proc_macro2::TokenStream::new(),
+                DeriveOrImpl::Impl(value) => value,
             };
             let maybe_impl_serde_deserialize_for_ident_standart_not_null_origin_ts = match &serde_deserialize_derive_or_impl {
-                pg_crud_macros_common::DeriveOrImpl::Derive => &proc_macro2::TokenStream::new(),
-                pg_crud_macros_common::DeriveOrImpl::Impl(value) => value,
+                DeriveOrImpl::Derive => &proc_macro2::TokenStream::new(),
+                DeriveOrImpl::Impl(value) => value,
             };
-            let impl_std_fmt_display_for_ident_origin_ts = macros_helpers::gen_impl_std_fmt_display_ts(&proc_macro2::TokenStream::new(), &ident_origin_ucc, &proc_macro2::TokenStream::new(), &quote! {write!(f, "{self:?}")});
-            let impl_error_occurence_lib_to_std_string_string_for_ident_origin_ts = macros_helpers::gen_impl_error_occurence_lib_to_std_string_string_ts(&proc_macro2::TokenStream::new(), &ident_origin_ucc, &proc_macro2::TokenStream::new(), &quote! {self.to_string()});
-            let impl_default_option_some_vec_one_el_for_ident_origin_ts = pg_crud_macros_common::gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_origin_ucc, &{
+            let impl_std_fmt_display_for_ident_origin_ts = gen_impl_std_fmt_display_ts(&proc_macro2::TokenStream::new(), &ident_origin_ucc, &proc_macro2::TokenStream::new(), &quote! {write!(f, "{self:?}")});
+            let impl_error_occurence_lib_to_std_string_string_for_ident_origin_ts = gen_impl_error_occurence_lib_to_std_string_string_ts(&proc_macro2::TokenStream::new(), &ident_origin_ucc, &proc_macro2::TokenStream::new(), &quote! {self.to_string()});
+            let impl_default_option_some_vec_one_el_for_ident_origin_ts = gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_origin_ucc, &{
                 let content_ts = match &pg_type_pattern {
                     PgTypePattern::Standart => match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => {
@@ -4115,9 +4119,9 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 };
                 quote! {Self(#content_ts)}
             });
-            let impl_sqlx_type_sqlx_pg_for_ident_origin_ts = pg_crud_macros_common::gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_origin_ucc, &field_type_handle);
-            let impl_sqlx_encode_sqlx_pg_for_ident_origin_ts = pg_crud_macros_common::gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_origin_ucc, &quote! {#SelfSc.0});
-            let impl_sqlx_decode_sqlx_pg_for_ident_origin_ts = pg_crud_macros_common::gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(&ident_origin_ucc, &field_type_handle, &{
+            let impl_sqlx_type_sqlx_pg_for_ident_origin_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_origin_ucc, &field_type_handle);
+            let impl_sqlx_encode_sqlx_pg_for_ident_origin_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_origin_ucc, &quote! {#SelfSc.0});
+            let impl_sqlx_decode_sqlx_pg_for_ident_origin_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(&ident_origin_ucc, &field_type_handle, &{
                 let scopes_value_ts = quote! {(value_147c3532)};
                 let ok_self_scopes_value_ts = quote! {Ok(Self #scopes_value_ts)};
                 match &pg_type_pattern {
@@ -4170,7 +4174,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             };
             let maybe_impl_std_convert_from_ident_read_for_ident_origin_ts = match &is_not_null_standart_can_be_primary_key {
                 IsNotNullStandartCanBePrimaryKey::False => proc_macro2::TokenStream::new(),
-                IsNotNullStandartCanBePrimaryKey::True => macros_helpers::gen_impl_std_convert_from_ts(&ident_standart_not_null_read_ucc, &ident_origin_ucc, &{
+                IsNotNullStandartCanBePrimaryKey::True => gen_impl_std_convert_from_ts(&ident_standart_not_null_read_ucc, &ident_origin_ucc, &{
                     let ident_standart_not_null_as_crate_pg_type_ts = gen_as_pg_type_ts(&ident_standart_not_null_ucc);
                     quote! {Self::#NewSc(#ident_standart_not_null_as_crate_pg_type_ts::into_inner(#ValueSc))}
                 }),
@@ -4195,8 +4199,8 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 #maybe_impl_std_convert_from_ident_read_for_ident_origin_ts
             }
         };
-        let gen_pub_struct_tokens_ts = |current_ident_ts: &dyn ToTokens, content_ts: &dyn ToTokens, derive_default: macros_helpers::DeriveDefault| {
-            macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+        let gen_pub_struct_tokens_ts = |current_ident_ts: &dyn ToTokens, content_ts: &dyn ToTokens, derive_default: DeriveDefault| {
+            StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_default_if(derive_default)
@@ -4213,15 +4217,15 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         let ident_origin_struct_content_ts = quote!{(#ident_origin_ucc);};
         let ident_table_type_declaration_ucc = SelfTableTypeDeclarationUcc::from_tokens(&ident);
         let ident_table_type_declaration_ts = {
-            let ident_table_type_declaration_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_table_type_declaration_ts = StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
                 .derive_copy_if(derive_copy)
                 .derive_partial_eq()
                 .derive_partial_ord_if(match &is_standart_not_null {
-                    pg_crud_macros_common::IsStandartNotNull::False => macros_helpers::DerivePartialOrd::False,
-                    pg_crud_macros_common::IsStandartNotNull::True => match &pg_type {
+                    IsStandartNotNull::False => DerivePartialOrd::False,
+                    IsStandartNotNull::True => match &pg_type {
                         PgType::StdPrimitiveI16AsInt2
                         | PgType::StdPrimitiveI32AsInt4
                         | PgType::StdPrimitiveI64AsInt8
@@ -4238,7 +4242,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         | PgType::SqlxTypesChronoNaiveDateAsDate
                         | PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp
                         | PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz
-                        | PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg => macros_helpers::DerivePartialOrd::True,
+                        | PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg => DerivePartialOrd::True,
                         PgType::SqlxPgTypesPgMoneyAsMoney
                         | PgType::SqlxPgTypesPgIntervalAsInterval
                         | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient
@@ -4248,7 +4252,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         | PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
-                        | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => macros_helpers::DerivePartialOrd::False,
+                        | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DerivePartialOrd::False,
                     },
                 })
                 .derive_serde_serialize()
@@ -4259,18 +4263,18 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 );
             let impl_ident_table_type_declaration_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_table_type_declaration_ucc);
             let impl_default_option_some_vec_one_el_for_ident_table_type_declaration_ts =
-                pg_crud_macros_common::gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_table_type_declaration_ucc, &quote! {Self(#pg_crud_common_default_option_some_vec_one_el_call_ts)});
-            let impl_sqlx_type_sqlx_pg_for_ident_table_type_declaration_ts = pg_crud_macros_common::gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_table_type_declaration_ucc, &ident_origin_ucc);
-            let impl_sqlx_encode_sqlx_pg_for_ident_table_type_declaration_ts = pg_crud_macros_common::gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_table_type_declaration_ucc, &quote! {#SelfSc.0});
-            let impl_sqlx_decode_sqlx_pg_for_ident_table_type_declaration_ts = pg_crud_macros_common::gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(&ident_table_type_declaration_ucc, &ident_origin_ucc, &quote! {Ok(Self(value_147c3532))});
+                gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_table_type_declaration_ucc, &quote! {Self(#pg_crud_common_default_option_some_vec_one_el_call_ts)});
+            let impl_sqlx_type_sqlx_pg_for_ident_table_type_declaration_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_table_type_declaration_ucc, &ident_origin_ucc);
+            let impl_sqlx_encode_sqlx_pg_for_ident_table_type_declaration_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_table_type_declaration_ucc, &quote! {#SelfSc.0});
+            let impl_sqlx_decode_sqlx_pg_for_ident_table_type_declaration_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(&ident_table_type_declaration_ucc, &ident_origin_ucc, &quote! {Ok(Self(value_147c3532))});
             //todo rewrite as dependency of PgType trait?
-            let impl_pg_type_equal_operator_for_ident_table_type_declaration_ts = pg_crud_macros_common::impl_pg_type_equal_operator_for_ident_ts(
+            let impl_pg_type_equal_operator_for_ident_table_type_declaration_ts = impl_pg_type_equal_operator_for_ident_ts(
                 &import_path,
                 &ident_table_type_declaration_ucc,
                 //todo
                 &{
-                    let equal_ts = pg_crud_macros_common::EqualOperatorHandle::Equal.to_tokens_path(&import_path);
-                    let is_null_ts = pg_crud_macros_common::EqualOperatorHandle::IsNull.to_tokens_path(&import_path);
+                    let equal_ts = EqualOperatorHandle::Equal.to_tokens_path(&import_path);
+                    let is_null_ts = EqualOperatorHandle::IsNull.to_tokens_path(&import_path);
                     match &pg_type_pattern {
                         PgTypePattern::Standart => match &not_null_or_nullable {
                             NotNullOrNullable::NotNull => equal_ts,
@@ -4317,7 +4321,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         let ident_create_ucc = SelfCreateUcc::from_tokens(&ident);
         let ident_create_ts = {
             let ident_create_ts = match &can_be_primary_key {
-                CanBePrimaryKey::False => macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                CanBePrimaryKey::False => StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
@@ -4329,13 +4333,13 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         &ident_create_ucc,
                         &ident_origin_struct_content_ts
                     ),
-                CanBePrimaryKey::True => gen_pub_struct_tokens_ts(&ident_create_ucc, &quote! {(());}, macros_helpers::DeriveDefault::False),
+                CanBePrimaryKey::True => gen_pub_struct_tokens_ts(&ident_create_ucc, &quote! {(());}, DeriveDefault::False),
             };
             let maybe_impl_ident_create_ts = match &can_be_primary_key {
                 CanBePrimaryKey::False => gen_pub_const_new_or_pub_try_new_ts(&ident_create_ucc),
                 CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
             };
-            let impl_default_option_some_vec_one_el_for_ident_create_ts = pg_crud_macros_common::gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_create_ucc, &{
+            let impl_default_option_some_vec_one_el_for_ident_create_ts = gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_create_ucc, &{
                 let content_ts: &dyn ToTokens = match &can_be_primary_key {
                     CanBePrimaryKey::False => &pg_crud_common_default_option_some_vec_one_el_call_ts,
                     CanBePrimaryKey::True => &quote! {()},
@@ -4343,11 +4347,11 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 quote! {Self(#content_ts)}
             });
             let maybe_impl_sqlx_encode_sqlx_pg_for_ident_create_ts = match &can_be_primary_key {
-                CanBePrimaryKey::False => pg_crud_macros_common::gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_create_ucc, &quote! {#SelfSc.0}),
+                CanBePrimaryKey::False => gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_create_ucc, &quote! {#SelfSc.0}),
                 CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
             };
             let maybe_impl_sqlx_type_sqlx_pg_for_ident_create_ts = match &can_be_primary_key {
-                CanBePrimaryKey::False => pg_crud_macros_common::gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_create_ucc, &ident_origin_ucc),
+                CanBePrimaryKey::False => gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_create_ucc, &ident_origin_ucc),
                 CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
             };
             quote! {
@@ -4375,15 +4379,15 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         quote! {{#(#arguments_ts),*}}
                     }
                 },
-                macros_helpers::DeriveDefault::True,
+                DeriveDefault::True,
             );
             let (impl_default_option_some_vec_one_el_for_ident_select_ts, impl_default_option_some_vec_one_el_max_page_size_for_ident_select_ts) = {
-                let gen_default_content_ts = |default_some_one_or_default_some_one_with_max_page_size: &pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize| match &pg_type_pattern {
+                let gen_default_content_ts = |default_some_one_or_default_some_one_with_max_page_size: &DefaultSomeOneOrDefaultSomeOneWithMaxPageSize| match &pg_type_pattern {
                     PgTypePattern::Standart => quote! {Self},
                     PgTypePattern::ArrayDimension1 { .. } => {
                         let content_ts: &dyn ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
-                            pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &pg_crud_common_default_option_some_vec_one_el_call_ts,
-                            pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &pg_crud_common_default_option_some_vec_one_el_max_page_size_call_ts,
+                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &pg_crud_common_default_option_some_vec_one_el_call_ts,
+                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &pg_crud_common_default_option_some_vec_one_el_max_page_size_call_ts,
                         };
                         let mut arguments_ts = Vec::new();
                         for el_a227c2ba in 1..=array_dimensions_number {
@@ -4396,8 +4400,8 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     }
                 };
                 (
-                    pg_crud_macros_common::gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_select_ucc, &gen_default_content_ts(&pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)),
-                    pg_crud_macros_common::gen_impl_pg_crud_common_default_option_some_vec_one_el_max_page_size_ts(&ident_select_ucc, &gen_default_content_ts(&pg_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)),
+                    gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_select_ucc, &gen_default_content_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)),
+                    gen_impl_pg_crud_common_default_option_some_vec_one_el_max_page_size_ts(&ident_select_ucc, &gen_default_content_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)),
                 )
             };
             quote! {
@@ -4408,31 +4412,31 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         };
         let ident_read_ucc = SelfReadUcc::from_tokens(&ident);
         let ident_where_ucc = SelfWhereUcc::from_tokens(&ident);
-        let ident_where_ts = pg_crud_macros_common::gen_pg_type_where_ts(
+        let ident_where_ts = gen_pg_type_where_ts(
             &allow_clippy_arbitrary_source_item_ordering_ts,
             &{
-                let common_pg_type_filters = vec![pg_crud_macros_common::PgTypeFilter::Equal { ident: quote! {#ident_table_type_declaration_ucc} }];
+                let common_pg_type_filters = vec![PgTypeFilter::Equal { ident: quote! {#ident_table_type_declaration_ucc} }];
                 match &pg_type_pattern {
                     PgTypePattern::Standart => {
-                        let greater_than = pg_crud_macros_common::PgTypeFilter::GreaterThan {
+                        let greater_than = PgTypeFilter::GreaterThan {
                             ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                         };
-                        let between = pg_crud_macros_common::PgTypeFilter::Between {
+                        let between = PgTypeFilter::Between {
                             ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                         };
-                        let in_handle = pg_crud_macros_common::PgTypeFilter::In { ident: quote! {#ident_table_type_declaration_ucc} };
-                        let regular_expression = pg_crud_macros_common::PgTypeFilter::RegularExpression;
-                        let equal_to_encoded_string_representation = pg_crud_macros_common::PgTypeFilter::EqualToEncodedStringRepresentation;
-                        let current_date = pg_crud_macros_common::PgTypeFilter::CurrentDate;
-                        let greater_than_current_date = pg_crud_macros_common::PgTypeFilter::GreaterThanCurrentDate;
-                        let current_time = pg_crud_macros_common::PgTypeFilter::CurrentTime;
-                        let greater_than_current_time = pg_crud_macros_common::PgTypeFilter::GreaterThanCurrentTime;
-                        let current_timestamp = pg_crud_macros_common::PgTypeFilter::CurrentTimestamp;
-                        let greater_than_current_timestamp = pg_crud_macros_common::PgTypeFilter::GreaterThanCurrentTimestamp;
-                        let before = pg_crud_macros_common::PgTypeFilter::Before {
+                        let in_handle = PgTypeFilter::In { ident: quote! {#ident_table_type_declaration_ucc} };
+                        let regular_expression = PgTypeFilter::RegularExpression;
+                        let equal_to_encoded_string_representation = PgTypeFilter::EqualToEncodedStringRepresentation;
+                        let current_date = PgTypeFilter::CurrentDate;
+                        let greater_than_current_date = PgTypeFilter::GreaterThanCurrentDate;
+                        let current_time = PgTypeFilter::CurrentTime;
+                        let greater_than_current_time = PgTypeFilter::GreaterThanCurrentTime;
+                        let current_timestamp = PgTypeFilter::CurrentTimestamp;
+                        let greater_than_current_timestamp = PgTypeFilter::GreaterThanCurrentTimestamp;
+                        let before = PgTypeFilter::Before {
                             ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                         };
-                        // let bit_vec_position_equal = pg_crud_macros_common::PgTypeFilter::BitVecPositionEqual;
+                        // let bit_vec_position_equal = PgTypeFilter::BitVecPositionEqual;
                         let common_standart_pg_type_filters = { common_pg_type_filters };
                         let common_standart_pg_type_number_filters = {
                             let mut vec = common_standart_pg_type_filters.clone();
@@ -4450,37 +4454,37 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         ) = {
                             let ranges_common_filter_vec = {
                                 let mut vec = common_standart_pg_type_filters.clone();
-                                vec.push(pg_crud_macros_common::PgTypeFilter::FindRangesWithinGivenRange {
+                                vec.push(PgTypeFilter::FindRangesWithinGivenRange {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::FindRangesThatFullyContainTheGivenRange {
+                                vec.push(PgTypeFilter::FindRangesThatFullyContainTheGivenRange {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::StrictlyToLeftOfRange {
+                                vec.push(PgTypeFilter::StrictlyToLeftOfRange {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::StrictlyToRightOfRange {
+                                vec.push(PgTypeFilter::StrictlyToRightOfRange {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::IncludedLowerBound {
+                                vec.push(PgTypeFilter::IncludedLowerBound {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::ExcludedUpperBound {
+                                vec.push(PgTypeFilter::ExcludedUpperBound {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::GreaterThanIncludedLowerBound {
+                                vec.push(PgTypeFilter::GreaterThanIncludedLowerBound {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::GreaterThanExcludedUpperBound {
+                                vec.push(PgTypeFilter::GreaterThanExcludedUpperBound {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::OverlapWithRange {
+                                vec.push(PgTypeFilter::OverlapWithRange {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::AdjacentWithRange {
+                                vec.push(PgTypeFilter::AdjacentWithRange {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::RangeLength);
+                                vec.push(PgTypeFilter::RangeLength);
                                 vec
                             };
                             (ranges_common_filter_vec.clone(), ranges_common_filter_vec.clone(), ranges_common_filter_vec.clone(), ranges_common_filter_vec.clone(), ranges_common_filter_vec)
@@ -4564,28 +4568,28 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             });
                             quote! {#value}
                         };
-                        let dimension_one_greater_than = pg_crud_macros_common::PgTypeFilter::DimensionOneGreaterThan {
+                        let dimension_one_greater_than = PgTypeFilter::DimensionOneGreaterThan {
                             ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                         };
-                        let dimension_one_between = pg_crud_macros_common::PgTypeFilter::DimensionOneBetween {
+                        let dimension_one_between = PgTypeFilter::DimensionOneBetween {
                             ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                         };
-                        let dimension_one_in_handle = pg_crud_macros_common::PgTypeFilter::DimensionOneIn {
+                        let dimension_one_in_handle = PgTypeFilter::DimensionOneIn {
                             ident: ident_standart_not_null_or_nullable_if_can_be_nullable_table_type_declaration_ucc,
                         };
-                        let dimension_one_regular_expression = pg_crud_macros_common::PgTypeFilter::DimensionOneRegularExpression;
-                        let dimension_one_current_date = pg_crud_macros_common::PgTypeFilter::DimensionOneCurrentDate;
-                        let dimension_one_greater_than_current_date = pg_crud_macros_common::PgTypeFilter::DimensionOneGreaterThanCurrentDate;
-                        let dimension_one_current_time = pg_crud_macros_common::PgTypeFilter::DimensionOneCurrentTime;
-                        let dimension_one_greater_than_current_time = pg_crud_macros_common::PgTypeFilter::DimensionOneGreaterThanCurrentTime;
-                        let dimension_one_current_timestamp = pg_crud_macros_common::PgTypeFilter::DimensionOneCurrentTimestamp;
-                        let dimension_one_greater_than_current_timestamp = pg_crud_macros_common::PgTypeFilter::DimensionOneGreaterThanCurrentTimestamp;
-                        let dimension_one_before = pg_crud_macros_common::PgTypeFilter::DimensionOneBefore {
+                        let dimension_one_regular_expression = PgTypeFilter::DimensionOneRegularExpression;
+                        let dimension_one_current_date = PgTypeFilter::DimensionOneCurrentDate;
+                        let dimension_one_greater_than_current_date = PgTypeFilter::DimensionOneGreaterThanCurrentDate;
+                        let dimension_one_current_time = PgTypeFilter::DimensionOneCurrentTime;
+                        let dimension_one_greater_than_current_time = PgTypeFilter::DimensionOneGreaterThanCurrentTime;
+                        let dimension_one_current_timestamp = PgTypeFilter::DimensionOneCurrentTimestamp;
+                        let dimension_one_greater_than_current_timestamp = PgTypeFilter::DimensionOneGreaterThanCurrentTimestamp;
+                        let dimension_one_before = PgTypeFilter::DimensionOneBefore {
                             ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                         };
                         let common_array_dimension1_pg_type_filters = {
                             let mut vec = common_pg_type_filters;
-                            vec.push(pg_crud_macros_common::PgTypeFilter::DimensionOneEqual {
+                            vec.push(PgTypeFilter::DimensionOneEqual {
                                 ident: {
                                     let value = SelfTableTypeDeclarationUcc::from_tokens(&match &dimension1_not_null_or_nullable {
                                         NotNullOrNullable::NotNull => &ident_standart_not_null_ucc,
@@ -4594,8 +4598,8 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                     quote! {#value}
                                 },
                             });
-                            vec.push(pg_crud_macros_common::PgTypeFilter::DimensionOneLengthEqual);
-                            vec.push(pg_crud_macros_common::PgTypeFilter::DimensionOneLengthGreaterThan);
+                            vec.push(PgTypeFilter::DimensionOneLengthEqual);
+                            vec.push(PgTypeFilter::DimensionOneLengthGreaterThan);
                             vec
                         };
                         let common_array_dimension1_pg_type_number_filters = {
@@ -4620,37 +4624,37 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                     let range_el_ident_standart_not_null_as_crate_pg_type_ts = gen_as_pg_type_ts(&range_el_ident_standart_not_null_ts);
                                     quote! {#range_el_ident_standart_not_null_as_crate_pg_type_ts::Read}
                                 };
-                                vec.push(pg_crud_macros_common::PgTypeFilter::DimensionOneFindRangesWithinGivenRange {
+                                vec.push(PgTypeFilter::DimensionOneFindRangesWithinGivenRange {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::DimensionOneFindRangesThatFullyContainTheGivenRange {
+                                vec.push(PgTypeFilter::DimensionOneFindRangesThatFullyContainTheGivenRange {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::DimensionOneStrictlyToLeftOfRange {
+                                vec.push(PgTypeFilter::DimensionOneStrictlyToLeftOfRange {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::DimensionOneStrictlyToRightOfRange {
+                                vec.push(PgTypeFilter::DimensionOneStrictlyToRightOfRange {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::DimensionOneIncludedLowerBound {
+                                vec.push(PgTypeFilter::DimensionOneIncludedLowerBound {
                                     ident: range_el_ident_standart_not_null_as_crate_pg_type_read_ts.clone(),
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::DimensionOneExcludedUpperBound {
+                                vec.push(PgTypeFilter::DimensionOneExcludedUpperBound {
                                     ident: range_el_ident_standart_not_null_as_crate_pg_type_read_ts.clone(),
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::DimensionOneGreaterThanIncludedLowerBound {
+                                vec.push(PgTypeFilter::DimensionOneGreaterThanIncludedLowerBound {
                                     ident: range_el_ident_standart_not_null_as_crate_pg_type_read_ts.clone(),
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::DimensionOneGreaterThanExcludedUpperBound {
+                                vec.push(PgTypeFilter::DimensionOneGreaterThanExcludedUpperBound {
                                     ident: range_el_ident_standart_not_null_as_crate_pg_type_read_ts,
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::DimensionOneOverlapWithRange {
+                                vec.push(PgTypeFilter::DimensionOneOverlapWithRange {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::DimensionOneAdjacentWithRange {
+                                vec.push(PgTypeFilter::DimensionOneAdjacentWithRange {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(pg_crud_macros_common::PgTypeFilter::DimensionOneRangeLength);
+                                vec.push(PgTypeFilter::DimensionOneRangeLength);
                                 vec
                             };
                             (
@@ -4677,7 +4681,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             }
                             PgType::StdVecVecStdPrimitiveU8AsBytea => {
                                 let mut vec = common_array_dimension1_pg_type_filters;
-                                vec.push(pg_crud_macros_common::PgTypeFilter::DimensionOneEqualToEncodedStringRepresentation);
+                                vec.push(PgTypeFilter::DimensionOneEqualToEncodedStringRepresentation);
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveTimeAsTime | PgType::SqlxTypesTimeTimeAsTime => {
@@ -4733,14 +4737,14 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             }
             .iter()
             .map(|el_dde282a0| {
-                let el_dde282a0_handle: &dyn pg_crud_macros_common::PgFilter = el_dde282a0;
+                let el_dde282a0_handle: &dyn PgFilter = el_dde282a0;
                 el_dde282a0_handle
             })
             .collect(),
             &ident,
-            &pg_crud_macros_common::ShouldDeriveUtoipaToSchema::False,
-            &pg_crud_macros_common::ShouldDeriveSchemarsJsonSchema::False,
-            &pg_crud_macros_common::IsQueryBindMutable::False,
+            &ShouldDeriveUtoipaToSchema::False,
+            &ShouldDeriveSchemarsJsonSchema::False,
+            &IsQueryBindMutable::False,
         );
         let ident_read_ts = {
             let ident_read_ts = {
@@ -4750,17 +4754,17 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     derive_ord
                 ) = match &is_not_null_standart_can_be_primary_key {
                     IsNotNullStandartCanBePrimaryKey::False => (
-                        macros_helpers::DeriveEq::False,
-                        macros_helpers::DerivePartialOrd::False,
-                        macros_helpers::DeriveOrd::False
+                        DeriveEq::False,
+                        DerivePartialOrd::False,
+                        DeriveOrd::False
                     ),
                     IsNotNullStandartCanBePrimaryKey::True => (
-                        macros_helpers::DeriveEq::True,
-                        macros_helpers::DerivePartialOrd::True,
-                        macros_helpers::DeriveOrd::True
+                        DeriveEq::True,
+                        DerivePartialOrd::True,
+                        DeriveOrd::True
                     ),
                 };
-                macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
@@ -4777,31 +4781,31 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     )
             };
             let impl_ident_read_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_read_ucc);
-            let impl_error_occurence_lib_to_std_string_string_for_ident_read_ts = macros_helpers::gen_impl_error_occurence_lib_to_std_string_string_ts(&proc_macro2::TokenStream::new(), &ident_read_ucc, &proc_macro2::TokenStream::new(), &quote! {self.0.to_string()});
+            let impl_error_occurence_lib_to_std_string_string_for_ident_read_ts = gen_impl_error_occurence_lib_to_std_string_string_ts(&proc_macro2::TokenStream::new(), &ident_read_ucc, &proc_macro2::TokenStream::new(), &quote! {self.0.to_string()});
             let impl_crate_default_option_some_vec_one_el_for_ident_read_ts =
-                pg_crud_macros_common::gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_read_ucc, &quote! {Self(#pg_crud_common_default_option_some_vec_one_el_call_ts)});
-            let impl_sqlx_encode_sqlx_pg_for_ident_origin_ts = pg_crud_macros_common::gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_read_ucc, &quote! {#SelfSc.0});
-            let impl_sqlx_decode_sqlx_pg_for_ident_read_ts = pg_crud_macros_common::gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
+                gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_read_ucc, &quote! {Self(#pg_crud_common_default_option_some_vec_one_el_call_ts)});
+            let impl_sqlx_encode_sqlx_pg_for_ident_origin_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_read_ucc, &quote! {#SelfSc.0});
+            let impl_sqlx_decode_sqlx_pg_for_ident_read_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
                 &ident_read_ucc,
                 &ident_origin_ucc,
                 &quote! {Ok(Self(value_147c3532))}
             );
-            let impl_sqlx_type_sqlx_pg_for_ident_read_ts = pg_crud_macros_common::gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_read_ucc, &ident_origin_ucc);
+            let impl_sqlx_type_sqlx_pg_for_ident_read_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_read_ucc, &ident_origin_ucc);
             let maybe_impl_pg_type_where_filter_for_ident_read_if_can_be_primary_key_ts = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
-                pg_crud_macros_common::impl_pg_type_where_filter_for_ident_ts(
+                impl_pg_type_where_filter_for_ident_ts(
                     &quote! {<'lifetime>},
                     &ident_standart_not_null_read_ucc,
                     &proc_macro2::TokenStream::new(),
-                    &pg_crud_macros_common::IncrementParameterUnderscore::False,
-                    &pg_crud_macros_common::ColumnParameterUnderscore::False,
-                    &pg_crud_macros_common::IsNeedToAddLogicalOperatorUnderscore::True,
+                    &IncrementParameterUnderscore::False,
+                    &ColumnParameterUnderscore::False,
+                    &IsNeedToAddLogicalOperatorUnderscore::True,
                     &quote! {
                         match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
                             Ok(value_8da76391) => Ok(format!("({column} = ${value_8da76391})")),
                             Err(er) => Err(er)
                         }
                     },
-                    &pg_crud_macros_common::IsQueryBindMutable::True,
+                    &IsQueryBindMutable::True,
                     &gen_typical_query_bind_ts(&SelfSc),
                     &import_path,
                 )
@@ -4821,7 +4825,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         };
         let ident_read_only_ids_ucc = SelfReadOnlyIdsUcc::from_tokens(&ident);
         let ident_read_only_ids_ts = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
-            let ident_read_only_ids_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_read_only_ids_ts = StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -4833,12 +4837,12 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     &ident_read_only_ids_ucc,
                     &quote!{(#ident_read_ucc);},
                 );
-            let impl_sqlx_decode_sqlx_pg_for_ident_read_only_ids_ts = pg_crud_macros_common::gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
+            let impl_sqlx_decode_sqlx_pg_for_ident_read_only_ids_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
                 &ident_read_only_ids_ucc,
                 &ident_read_ucc,
                 &quote! {Ok(Self(value_147c3532))}
             );
-            let impl_sqlx_type_sqlx_pg_for_ident_read_only_ids_ts = pg_crud_macros_common::gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_read_only_ids_ucc, &ident_read_ucc);
+            let impl_sqlx_type_sqlx_pg_for_ident_read_only_ids_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_read_only_ids_ucc, &ident_read_ucc);
             quote! {
                 #ident_read_only_ids_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_read_only_ids_ts
@@ -4852,7 +4856,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             pub type #ident_read_inner_ucc = #ident_inner_type_ts;
         };
         let ident_update_ts = {
-            let ident_update_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_update_ts = StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -4866,8 +4870,8 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 );
             let impl_ident_update_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_update_ucc);
             let impl_default_option_some_vec_one_el_for_ident_update_ts =
-                pg_crud_macros_common::gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_update_ucc, &quote! {Self(#pg_crud_common_default_option_some_vec_one_el_call_ts)});
-            let impl_error_occurence_lib_to_std_string_string_for_ident_update_ts = macros_helpers::gen_impl_error_occurence_lib_to_std_string_string_ts(&proc_macro2::TokenStream::new(), &ident_update_ucc, &proc_macro2::TokenStream::new(), &quote! {self.0.#ToStdStringStringSc()});
+                gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_update_ucc, &quote! {Self(#pg_crud_common_default_option_some_vec_one_el_call_ts)});
+            let impl_error_occurence_lib_to_std_string_string_for_ident_update_ts = gen_impl_error_occurence_lib_to_std_string_string_ts(&proc_macro2::TokenStream::new(), &ident_update_ucc, &proc_macro2::TokenStream::new(), &quote! {self.0.#ToStdStringStringSc()});
             quote! {
                 #ident_update_ts
                 #impl_ident_update_ts
@@ -4877,7 +4881,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         };
         let ident_update_for_query_ucc = SelfUpdateForQueryUcc::from_tokens(&ident);
         let ident_update_for_query_ts = {
-            let ident_update_for_query_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_update_for_query_ts = StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -4889,9 +4893,9 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     &ident_update_for_query_ucc,
                     &ident_origin_struct_content_ts
                 );
-            let impl_sqlx_type_sqlx_pg_for_ident_update_for_query_ts = pg_crud_macros_common::gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_update_for_query_ucc, &ident_origin_ucc);
-            let impl_sqlx_encode_sqlx_pg_for_ident_update_for_query_ts = pg_crud_macros_common::gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_update_for_query_ucc, &quote! {#SelfSc.0});
-            let impl_std_convert_from_ident_update_for_ident_update_for_query_ts = macros_helpers::gen_impl_std_convert_from_ts(&ident_update_ucc, &ident_update_for_query_ucc, &quote! {Self(#ValueSc.0)});
+            let impl_sqlx_type_sqlx_pg_for_ident_update_for_query_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_update_for_query_ucc, &ident_origin_ucc);
+            let impl_sqlx_encode_sqlx_pg_for_ident_update_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_update_for_query_ucc, &quote! {#SelfSc.0});
+            let impl_std_convert_from_ident_update_for_ident_update_for_query_ts = gen_impl_std_convert_from_ts(&ident_update_ucc, &ident_update_for_query_ucc, &quote! {Self(#ValueSc.0)});
             quote! {
                 #ident_update_for_query_ts
                 #impl_sqlx_type_sqlx_pg_for_ident_update_for_query_ts
@@ -4906,9 +4910,9 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             let ok_std_string_string_from_default_ts = gen_ok_std_string_string_from_tokens_ts(&quote! {"default"});
             let ok_std_string_string_from_uuid_generate_v4_ts = gen_ok_std_string_string_from_tokens_ts(&quote! {"uuid_generate_v4()"});
             let typical_query_part_ts = {
-                let if_write_is_err_ts = macros_helpers::gen_if_write_is_err_ts(
+                let if_write_is_err_ts = gen_if_write_is_err_ts(
                     &quote! {acc_c7df00f5, "${value_ba581e0f}"},
-                    &pg_crud_macros_common::gen_return_err_query_part_error_named_write_into_buffer_ts(import_path)
+                    &gen_return_err_query_part_error_named_write_into_buffer_ts(import_path)
                 );
                 quote! {
                     let mut acc_c7df00f5 = String::default();
@@ -4962,13 +4966,13 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 });
                 quote! {Ok(format!(#format_handle_ts))}
             };
-            pg_crud_macros_common::gen_impl_pg_type_ts(
+            gen_impl_pg_type_ts(
                 &import_path,
                 &ident,
                 &ident_table_type_declaration_ucc,
                 &match &can_be_primary_key {
-                    CanBePrimaryKey::False => pg_crud_macros_common::IsPrimaryKeyUnderscore::True,
-                    CanBePrimaryKey::True => pg_crud_macros_common::IsPrimaryKeyUnderscore::False,
+                    CanBePrimaryKey::False => IsPrimaryKeyUnderscore::True,
+                    CanBePrimaryKey::True => IsPrimaryKeyUnderscore::False,
                 },
                 &{
                     let pg_query_type = match &pg_type {
@@ -5041,25 +5045,25 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     }
                 },
                 &ident_create_ucc,
-                &pg_crud_macros_common::CreateQueryPartValueUnderscore::True,
+                &CreateQueryPartValueUnderscore::True,
                 &match &can_be_primary_key {
-                    CanBePrimaryKey::False => pg_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                    CanBePrimaryKey::True => pg_crud_macros_common::CreateQueryPartIncrementUnderscore::True,
+                    CanBePrimaryKey::False => CreateQueryPartIncrementUnderscore::False,
+                    CanBePrimaryKey::True => CreateQueryPartIncrementUnderscore::True,
                 },
                 &query_part_create_ts,
                 &match &can_be_primary_key {
-                    CanBePrimaryKey::False => pg_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                    CanBePrimaryKey::True => pg_crud_macros_common::CreateQueryBindValueUnderscore::True,
+                    CanBePrimaryKey::False => CreateQueryBindValueUnderscore::False,
+                    CanBePrimaryKey::True => CreateQueryBindValueUnderscore::True,
                 },
                 &match &can_be_primary_key {
-                    CanBePrimaryKey::False => pg_crud_macros_common::IsCreateQueryBindMutable::True,
-                    CanBePrimaryKey::True => pg_crud_macros_common::IsCreateQueryBindMutable::False,
+                    CanBePrimaryKey::False => IsCreateQueryBindMutable::True,
+                    CanBePrimaryKey::True => IsCreateQueryBindMutable::False,
                 },
                 &bind_value_to_query_create_ts,
                 &ident_select_ucc,
                 &match &element.pg_type_pattern {
-                    PgTypePattern::Standart => pg_crud_macros_common::SelectQueryPartValueUnderscore::True,
-                    PgTypePattern::ArrayDimension1 { .. } => pg_crud_macros_common::SelectQueryPartValueUnderscore::False,
+                    PgTypePattern::Standart => SelectQueryPartValueUnderscore::True,
+                    PgTypePattern::ArrayDimension1 { .. } => SelectQueryPartValueUnderscore::False,
                 },
                 &{
                     let content_ts = match &pg_type_pattern {
@@ -5410,15 +5414,15 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 },
                 &ident_update_ucc,
                 &ident_update_for_query_ucc,
-                &pg_crud_macros_common::UpdateQueryPartValueUnderscore::True,
-                &pg_crud_macros_common::UpdateQueryPartJsonbSetAccumulatorUnderscore::True,
-                &pg_crud_macros_common::UpdateQueryPartJsonbSetTargetUnderscore::True,
-                &pg_crud_macros_common::UpdateQueryPartJsonbSetPathUnderscore::True,
+                &UpdateQueryPartValueUnderscore::True,
+                &UpdateQueryPartJsonbSetAccumulatorUnderscore::True,
+                &UpdateQueryPartJsonbSetTargetUnderscore::True,
+                &UpdateQueryPartJsonbSetPathUnderscore::True,
                 &typical_query_part_ts,
-                &pg_crud_macros_common::IsUpdateQueryBindMutable::True,
+                &IsUpdateQueryBindMutable::True,
                 &typical_query_bind_ts,
                 &select_only_ids_and_select_only_updated_ids_query_common_ts,
-                &pg_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::False,
+                &IsSelectOnlyUpdatedIdsQueryBindMutable::False,
                 &quote! {Ok(#QuerySc)},
             )
         };
@@ -5427,7 +5431,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 False,
                 True,
             }
-            let gen_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts = |read_or_update: &pg_crud_macros_common::ReadOrUpdate| {
+            let gen_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts = |read_or_update: &ReadOrUpdate| {
                 let read_or_update_ucc = read_or_update.ucc();
                 let content_ts = if pg_type_initialization_try_new_try_from_pg_type.is_ok() {
                     quote! {#TryNewSc(#ValueSc).expect("69477d2f")}
@@ -6153,8 +6157,8 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     },
                 }
             };
-            let read_inner_into_read_with_new_or_try_new_unwraped_ts = gen_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts(&pg_crud_macros_common::ReadOrUpdate::Read);
-            let read_inner_into_update_with_new_or_try_new_unwraped_ts = gen_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts(&pg_crud_macros_common::ReadOrUpdate::Update);
+            let read_inner_into_read_with_new_or_try_new_unwraped_ts = gen_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts(&ReadOrUpdate::Read);
+            let read_inner_into_update_with_new_or_try_new_unwraped_ts = gen_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts(&ReadOrUpdate::Update);
             let update_to_read_only_ids_ts = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
                 quote! {
                     #ident_read_only_ids_ucc(#ident_read_ucc(#ValueSc.0 #maybe_dot_clone_ts))//todo its not correct. must be only for primary key but it for all types what van be primary key
@@ -6284,10 +6288,10 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 }
             };
             let pg_type_option_vec_where_greater_than_test_ts = {
-                let greater_than = pg_crud_common_and_macros_common::PgTypeGreaterThanVariant::GreaterThan;
-                let not_greater_than = pg_crud_common_and_macros_common::PgTypeGreaterThanVariant::NotGreaterThan;
-                let equal_not_greater_than = pg_crud_common_and_macros_common::PgTypeGreaterThanVariant::EqualNotGreaterThan;
-                let gen_greater_than_test_ts = |greater_than_variant_ts: &pg_crud_common_and_macros_common::PgTypeGreaterThanVariant, create_content_ts: &dyn ToTokens, table_type_declaration_content_ts: &dyn ToTokens| {
+                let greater_than = PgTypeGreaterThanVariant::GreaterThan;
+                let not_greater_than = PgTypeGreaterThanVariant::NotGreaterThan;
+                let equal_not_greater_than = PgTypeGreaterThanVariant::EqualNotGreaterThan;
+                let gen_greater_than_test_ts = |greater_than_variant_ts: &PgTypeGreaterThanVariant, create_content_ts: &dyn ToTokens, table_type_declaration_content_ts: &dyn ToTokens| {
                     quote! {
                         #import_path::PgTypeGreaterThanTest {
                             variant: #import_path::PgTypeGreaterThanVariant::#greater_than_variant_ts,
@@ -6297,8 +6301,8 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     }
                 };
                 let gen_greater_than_test_new_new_ts =
-                    |greater_than_variant_ts: &pg_crud_common_and_macros_common::PgTypeGreaterThanVariant, create_ts: &dyn ToTokens, greater_than_ts: &dyn ToTokens| gen_greater_than_test_ts(greater_than_variant_ts, &quote! {new(#create_ts)}, &quote! {new(#greater_than_ts)});
-                let gen_greater_than_test_try_new_try_new_ts = |greater_than_variant_ts: &pg_crud_common_and_macros_common::PgTypeGreaterThanVariant, create_ts: &dyn ToTokens, greater_than_ts: &dyn ToTokens| {
+                    |greater_than_variant_ts: &PgTypeGreaterThanVariant, create_ts: &dyn ToTokens, greater_than_ts: &dyn ToTokens| gen_greater_than_test_ts(greater_than_variant_ts, &quote! {new(#create_ts)}, &quote! {new(#greater_than_ts)});
+                let gen_greater_than_test_try_new_try_new_ts = |greater_than_variant_ts: &PgTypeGreaterThanVariant, create_ts: &dyn ToTokens, greater_than_ts: &dyn ToTokens| {
                     gen_greater_than_test_ts(
                         greater_than_variant_ts,
                         &quote! {try_new(#create_ts).expect("8327c651")},
@@ -6594,7 +6598,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_regular_expression_ts = none_ts.clone();
             let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_greater_than_ts = none_ts.clone();
             let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_regular_expression_ts = none_ts;
-            pg_crud_macros_common::gen_impl_pg_type_test_cases_for_ident_ts(
+            gen_impl_pg_type_test_cases_for_ident_ts(
                 &quote! {#[cfg(feature = "test-utils")]},
                 &import_path,
                 &ident_inner_type_ts,
@@ -6659,7 +6663,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         let maybe_impl_pg_type_not_primary_key_for_ident_ts = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
             proc_macro2::TokenStream::new()
         } else {
-            pg_crud_macros_common::gen_impl_pg_type_not_primary_key_for_ident_ts(&import_path, &ident)
+            gen_impl_pg_type_not_primary_key_for_ident_ts(&import_path, &ident)
         };
         let generated = quote! {
             #ident_ts
@@ -6690,7 +6694,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         )
     })
     .collect::<(Vec<String>, Vec<String>)>();
-    macros_helpers::maybe_write_ts_into_file(
+    maybe_write_ts_into_file(
         gen_pg_json_types_config
             .pg_table_columns_content_write_into_pg_table_columns_using_pg_types,
         "pg_table_columns_using_pg_types",
@@ -6709,7 +6713,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 }
             }
         },
-        &macros_helpers::FormatWithCargofmt::True,
+        &FormatWithCargofmt::True,
     );
     let generated = {
         let gen_pg_types_mod_sc = GenPgTypesModSc;
@@ -6730,11 +6734,11 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             pub use #gen_pg_types_mod_sc::*;
         }
     };
-    macros_helpers::maybe_write_ts_into_file(
+    maybe_write_ts_into_file(
         gen_pg_json_types_config.whole_content_write_into_gen_pg_types,
         "gen_pg_types",
         &generated,
-        &macros_helpers::FormatWithCargofmt::True,
+        &FormatWithCargofmt::True,
     );
     generated
 }
