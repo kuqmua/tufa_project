@@ -1,7 +1,8 @@
+use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 #[proc_macro]
-pub fn server_port_try_from_u16(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn server_port_try_from_u16(input: Ts) -> Ts {
     panic_location::panic_location();
     let valid_port_ts = {
         let possible_port = input.to_string().parse::<u16>().expect("310a948a");

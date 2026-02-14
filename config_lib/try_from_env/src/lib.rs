@@ -4,11 +4,12 @@ use naming::{
     DotenvSc, DotenvUcc, EnvVarNameSc, StdEnvVarErrorSc, StdEnvVarErrorUcc, ToTokensToUccTs,
     ToTokensToUpperScStr, TryFromStdEnvVarOkUcc,
 };
+use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use syn::{Data, DeriveInput, Fields, LitStr, parse};
 #[proc_macro_derive(TryFromEnv)]
-pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn try_from_env(input: Ts) -> Ts {
     panic_location::panic_location();
     let syn_derive_input: DeriveInput = parse(input).expect("e45f75c2");
     let ident = &syn_derive_input.ident;

@@ -7,6 +7,7 @@ use naming::{
     CodeOccurenceSc, IntoSerializeDeserializeVersionSc, ValueSc, WithSerializeDeserializeUcc,
     parameter::SelfWithSerializeDeserializeUcc,
 };
+use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use syn::{Data, DeriveInput, Fields, GenericParam, Ident, parse};
@@ -25,7 +26,7 @@ use token_patterns::StdStringString;
         eo_hashmap_key_std_string_string_value_error_occurence,
     )
 )]
-pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn error_occurence(input: Ts) -> Ts {
     #[derive(Debug, Clone, Copy, PartialEq, Eq)]
     enum SuportedEnumVariant {
         Named,

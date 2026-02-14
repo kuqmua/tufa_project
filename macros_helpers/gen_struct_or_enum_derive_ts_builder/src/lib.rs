@@ -1,9 +1,8 @@
+use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 #[proc_macro]
-pub fn gen_struct_or_enum_derive_ts_builder(
-    input_ts: proc_macro::TokenStream,
-) -> proc_macro::TokenStream {
+pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
     use naming::parameter::{DeriveSelfIfSc, DeriveSelfSc, DeriveSelfUcc};
     #[derive(Clone)]
     struct Element {

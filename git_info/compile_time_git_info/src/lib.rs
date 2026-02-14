@@ -1,9 +1,8 @@
+use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 #[proc_macro]
-pub fn compile_time_project_git_info(
-    _input_ts: proc_macro::TokenStream,
-) -> proc_macro::TokenStream {
+pub fn compile_time_project_git_info(_input_ts: Ts) -> Ts {
     use std::process::Command;
     panic_location::panic_location();
     let output = Command::new("git")

@@ -1,5 +1,5 @@
 // #[proc_macro_derive(FromSqlxPgError)]
-// pub fn from_sqlx_pg_error(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+// pub fn from_sqlx_pg_error(input: Ts) -> Ts {
 //     panic_location::panic_location();
 //     let proc_macro_name_ucc = "FromSqlxPgError";
 //     let syn_derive_input: DeriveInput = parse(input).expect("cd5c05b1");

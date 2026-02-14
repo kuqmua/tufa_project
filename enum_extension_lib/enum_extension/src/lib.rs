@@ -1,8 +1,9 @@
+use proc_macro::TokenStream as Ts;
 use quote::quote;
 use syn::{Data, DeriveInput, Fields, parse};
 
 #[proc_macro_derive(EnumExtension)]
-pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn enum_extension(input: Ts) -> Ts {
     panic_location::panic_location();
     //it only supported for enums without values
     let syn_derive_input: DeriveInput = parse(input).expect("c6b8e80e");

@@ -1,3 +1,4 @@
+use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 #[allow(unused_imports)]
@@ -5,9 +6,7 @@ use syn::{Data, DeriveInput, Fields, Ident, Type, parse};
 use token_patterns::StdStringString;
 const REGEX_VALUE: &str = "^[a-zA-Z]+$";
 #[proc_macro]
-pub fn gen_upper_camel_and_sc_str_and_ts(
-    input_ts: proc_macro::TokenStream,
-) -> proc_macro::TokenStream {
+pub fn gen_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
     panic_location::panic_location();
     let implementations_ts = serde_json::from_str::<Vec<Vec<String>>>(&input_ts.to_string())
         .expect("90e5793b")
@@ -107,9 +106,7 @@ pub fn gen_upper_camel_and_sc_str_and_ts(
 }
 
 #[proc_macro]
-pub fn gen_self_upper_camel_and_sc_str_and_ts(
-    input_ts: proc_macro::TokenStream,
-) -> proc_macro::TokenStream {
+pub fn gen_self_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
     panic_location::panic_location();
     let implementations_ts = serde_json::from_str::<Vec<Vec<String>>>(&input_ts.to_string()).expect("9d6a20af").into_iter().map(|el_a5ccbaa7| {
         {
@@ -276,9 +273,7 @@ enum Operation {
 }
 */
 #[proc_macro_derive(AsRefStrEnumWithUnitFieldsToUccStr)]
-pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(
-    input_ts: proc_macro::TokenStream,
-) -> proc_macro::TokenStream {
+pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(input_ts: Ts) -> Ts {
     panic_location::panic_location();
     let syn_derive_input: DeriveInput = parse(input_ts).expect("a8f22481");
     let ident = &syn_derive_input.ident;
@@ -324,9 +319,7 @@ only works if all enum variants without fields like this
  }
 */
 #[proc_macro_derive(AsRefStrEnumWithUnitFieldsToScStr)]
-pub fn as_ref_str_enum_with_unit_fields_to_sc_str(
-    input_ts: proc_macro::TokenStream,
-) -> proc_macro::TokenStream {
+pub fn as_ref_str_enum_with_unit_fields_to_sc_str(input_ts: Ts) -> Ts {
     panic_location::panic_location();
     let syn_derive_input: DeriveInput = parse(input_ts).expect("dea5cbcf");
     let ident = &syn_derive_input.ident;
@@ -371,9 +364,7 @@ only works if all enum variants without fields like this
  }
 */
 #[proc_macro_derive(AsRefStrEnumWithUnitFieldsToUpperScStr)]
-pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(
-    input_ts: proc_macro::TokenStream,
-) -> proc_macro::TokenStream {
+pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(input_ts: Ts) -> Ts {
     panic_location::panic_location();
     let syn_derive_input: DeriveInput = parse(input_ts).expect("edabbc24");
     let ident = &syn_derive_input.ident;

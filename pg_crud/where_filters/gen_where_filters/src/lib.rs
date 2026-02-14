@@ -13,6 +13,7 @@ use pg_crud_macros_common::{
     PgTypeOrPgJsonType, gen_impl_default_option_some_vec_one_el_ts,
     impl_pg_type_where_filter_for_ident_ts,
 };
+use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use std::fmt::Display;
@@ -22,7 +23,7 @@ use token_patterns::{
 };
 
 #[proc_macro]
-pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn gen_where_filters(input_ts: Ts) -> Ts {
     #[derive(Clone)]
     enum ShouldAddDeclarationOfStructIdentGeneric {
         False,

@@ -1,9 +1,10 @@
 use convert_case::{Case, Casing};
+use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use syn::{Data, DeriveInput, Fields, Ident, parse};
 #[proc_macro_derive(FromStr)]
-pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn from_str(input: Ts) -> Ts {
     panic_location::panic_location();
     let syn_derive_input: DeriveInput = parse(input).expect("f83fcd2d");
     let ident = &syn_derive_input.ident;
