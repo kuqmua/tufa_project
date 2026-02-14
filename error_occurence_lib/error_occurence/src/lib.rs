@@ -4,6 +4,7 @@ use naming::{
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
+use syn::{Data, DeriveInput, Fields, GenericParam, Ident, parse};
 use token_patterns::StdStringString;
 #[proc_macro_derive(
     ErrorOccurence,
@@ -26,21 +27,21 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         Unnamed,
     }
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("d94f091a");
+    let syn_derive_input: DeriveInput = parse(input).expect("d94f091a");
     let ident = &syn_derive_input.ident;
     let generic_parameters = &syn_derive_input
         .generics
         .params
         .iter()
         .map(|el_a6a747c1| match &el_a6a747c1 {
-            syn::GenericParam::Type(value) => &value.ident,
-            syn::GenericParam::Lifetime(_) | syn::GenericParam::Const(_) => {
+            GenericParam::Type(value) => &value.ident,
+            GenericParam::Lifetime(_) | GenericParam::Const(_) => {
                 panic!("3ce82d11")
             }
         })
-        .collect::<Vec<&syn::Ident>>();
+        .collect::<Vec<&Ident>>();
     let ident_with_serialize_deserialize_ucc = SelfWithSerializeDeserializeUcc::from_tokens(&ident);
-    let syn::Data::Enum(data_enum) = syn_derive_input.data else {
+    let Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("d98214f7");
     };
     let supported_enum_variant = {
@@ -50,7 +51,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             .variants
             .iter()
             .for_each(|variant| match &variant.fields {
-                syn::Fields::Named(_) => match &all_equal {
+                Fields::Named(_) => match &all_equal {
                     Some(supported_variant) => {
                         assert!(
                             !(*supported_variant == SuportedEnumVariant::Unnamed),
@@ -61,7 +62,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         all_equal = Some(SuportedEnumVariant::Named);
                     }
                 },
-                syn::Fields::Unnamed(_) => match &all_equal {
+                Fields::Unnamed(_) => match &all_equal {
                     Some(supported_variant) => {
                         assert!(
                             !(*supported_variant == SuportedEnumVariant::Named),
@@ -72,7 +73,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         all_equal = Some(SuportedEnumVariant::Unnamed);
                     }
                 },
-                syn::Fields::Unit => panic!("2f2e9385"),
+                Fields::Unit => panic!("2f2e9385"),
             });
         all_equal.expect("b9da972a")
     };
@@ -117,7 +118,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let impl_std_fmt_display_handle_content_ts = {
                 let variants_ts = data_enum.variants.iter().map(|el_f497ea11| {
                     let el_ident = &el_f497ea11.ident;
-                    let fields = if let syn::Fields::Named(fields) = &el_f497ea11.fields {
+                    let fields = if let Fields::Named(fields) = &el_f497ea11.fields {
                         &fields.named
                     } else {
                         panic!("f64e0d21");
@@ -126,7 +127,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         let acc_ts = fields.iter()
                         .filter(|el_e26e2572| *el_e26e2572.ident.as_ref().expect("07504636") != *code_occurence_sc_str)
                         .map(|el_e4070354| el_e4070354.ident.as_ref().expect("971ace15"))
-                        .collect::<Vec<&syn::Ident>>();
+                        .collect::<Vec<&Ident>>();
                         if acc_ts.is_empty() {
                             Ts2::new()
                         }
@@ -309,7 +310,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let impl_ident_into_serialize_deserialize_version_ts = {
                 let variants_ts = data_enum.variants.iter().map(|el_7d5a4c39| {
                     let el_ident = &el_7d5a4c39.ident;
-                    let fields = if let syn::Fields::Named(fields) = &el_7d5a4c39.fields {
+                    let fields = if let Fields::Named(fields) = &el_7d5a4c39.fields {
                         &fields.named
                     } else {
                         panic!("238b402b");
@@ -440,7 +441,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let enum_ident_with_serialize_deserialize_ts = {
                 let variants_ts = data_enum.variants.iter().map(|el_0f06fa87| {
                     let el_ident = &el_0f06fa87.ident;
-                    let fields = if let syn::Fields::Unnamed(fields) = &el_0f06fa87.fields {
+                    let fields = if let Fields::Unnamed(fields) = &el_0f06fa87.fields {
                         &fields.unnamed
                     } else {
                         panic!("5749e920");

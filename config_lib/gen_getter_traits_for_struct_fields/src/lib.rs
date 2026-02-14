@@ -1,4 +1,5 @@
 use quote::quote;
+use syn::{Data, DeriveInput, Fields, parse};
 
 #[proc_macro_derive(GenGetterTraitsForStructFields)]
 pub fn gen_getter_traits_for_struct_fields(
@@ -6,11 +7,11 @@ pub fn gen_getter_traits_for_struct_fields(
 ) -> proc_macro::TokenStream {
     use naming::ToTokensToUccStr;
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("49780295");
+    let syn_derive_input: DeriveInput = parse(input).expect("49780295");
     let ident = &syn_derive_input.ident;
     let datastruct = match syn_derive_input.data {
-        syn::Data::Struct(value) => value,
-        syn::Data::Enum(_) | syn::Data::Union(_) => panic!("15cd72a2"),
+        Data::Struct(value) => value,
+        Data::Enum(_) | Data::Union(_) => panic!("15cd72a2"),
     };
     let generated_traits_implementations = datastruct.fields.into_iter().map(|field| {
         let (field_ident, ucc_field_ident) = {
@@ -47,15 +48,15 @@ pub fn gen_getter_traits_for_struct_fields(
 pub fn gen_getter_trait(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     use naming::parameter::{GetSelfSc, GetSelfUcc};
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("195b48f5");
+    let syn_derive_input: DeriveInput = parse(input).expect("195b48f5");
     let ident = &syn_derive_input.ident;
     let data_struct = match syn_derive_input.data {
-        syn::Data::Struct(value) => value,
-        syn::Data::Enum(_) | syn::Data::Union(_) => panic!("cd6bbc4e"),
+        Data::Struct(value) => value,
+        Data::Enum(_) | Data::Union(_) => panic!("cd6bbc4e"),
     };
     let fields_unnamed = match data_struct.fields {
-        syn::Fields::Unnamed(value) => value.unnamed,
-        syn::Fields::Named(_) | syn::Fields::Unit => panic!("577cb86a"),
+        Fields::Unnamed(value) => value.unnamed,
+        Fields::Named(_) | Fields::Unit => panic!("577cb86a"),
     };
     assert!(fields_unnamed.len() == 1, "1e82dc7e");
     let first_field_unnamed = fields_unnamed.iter().next().expect("7c2531fd");

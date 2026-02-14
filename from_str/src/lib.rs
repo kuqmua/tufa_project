@@ -1,24 +1,25 @@
 use convert_case::{Case, Casing};
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
+use syn::{Data, DeriveInput, Fields, Ident, parse};
 #[proc_macro_derive(FromStr)]
 pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("f83fcd2d");
+    let syn_derive_input: DeriveInput = parse(input).expect("f83fcd2d");
     let ident = &syn_derive_input.ident;
-    let syn::Data::Enum(data_enum) = syn_derive_input.data else {
+    let Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("d35db256");
     };
     let variant_idents = data_enum
         .variants
         .into_iter()
         .map(|variant| match variant.fields {
-            syn::Fields::Unit => variant.ident,
-            syn::Fields::Named(_) | syn::Fields::Unnamed(_) => {
+            Fields::Unit => variant.ident,
+            Fields::Named(_) | Fields::Unnamed(_) => {
                 panic!("23575b02")
             }
         })
-        .collect::<Vec<syn::Ident>>();
+        .collect::<Vec<Ident>>();
     let variants_ts = variant_idents.iter().map(|variant_ident| {
         let variant_ident_sc_ts = {
             let variant_ident_sc_str =

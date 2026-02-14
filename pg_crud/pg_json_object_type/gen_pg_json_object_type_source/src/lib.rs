@@ -70,6 +70,10 @@ use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use std::iter::repeat_with;
 use syn::token::{Colon, Pub};
+use syn::{
+    Data, DeriveInput, Field, FieldMutability, Fields, Ident, Path, Type, TypePath, Visibility,
+    parse2,
+};
 use token_patterns::{
     AllowClippyArbitrarySourceItemOrdering, MustUse, PgCrudDefaultOptionSomeVecOneElCall,
     PgCrudDefaultOptionSomeVecOneElMaxPageSizeCall, StdStringString,
@@ -113,7 +117,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             macros_helpers::ShouldWriteTokenStreamIntoFile,
     }
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse2(input_ts).expect("e5f0e27b");
+    let syn_derive_input: DeriveInput = parse2(input_ts).expect("e5f0e27b");
     let import_path = ImportPath::PgCrud;
     let gen_pg_json_object_type_config = serde_json::from_str::<GenPgJsonTypesConfig>(
         &macros_helpers::get_macro_attribute_meta_list_ts(
@@ -323,10 +327,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             };
 
             let syn_derive_input_ident = &syn_derive_input.ident;
-            let vec_syn_field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
-                if let syn::Fields::Named(fields_named) = &data_struct.fields {
+            let vec_syn_field = if let Data::Struct(data_struct) = &syn_derive_input.data {
+                if let Fields::Named(fields_named) = &data_struct.fields {
                     fields_named.named.iter()
-                    .collect::<Vec<&syn::Field>>()
+                    .collect::<Vec<&Field>>()
                     .iter()
                     .map(|el_f01f3f33|macros_helpers::SynFieldWrapper {
                         field_visibility: el_f01f3f33.vis.clone(),
@@ -405,15 +409,15 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 <#uuid_uuid_as_not_null_jsonb_string_ts as #import_path::PgJsonTypeObjectVecElementId>
             };
             let id_syn_field = {
-                let value = syn::Field {
+                let value = Field {
                     attrs: Vec::new(),
-                    vis: syn::Visibility::Public(Pub { span: proc_macro2::Span::call_site() }),
-                    mutability: syn::FieldMutability::None,
-                    ident: Some(syn::Ident::new(&IdSc.to_string(), proc_macro2::Span::call_site())),
+                    vis: Visibility::Public(Pub { span: proc_macro2::Span::call_site() }),
+                    mutability: FieldMutability::None,
+                    ident: Some(Ident::new(&IdSc.to_string(), proc_macro2::Span::call_site())),
                     colon_token: Some(Colon { spans: [proc_macro2::Span::call_site()] }),
-                    ty: syn::Type::Path(syn::TypePath {
+                    ty: Type::Path(TypePath {
                         qself: None,
-                        path: syn::Path {
+                        path: Path {
                             leading_colon: None,
                             segments: macros_helpers::gen_simple_syn_punctuated_punctuated(
                                 &[import_path.to_path(), &uuid_uuid_as_not_null_jsonb_string_ucc.to_string()]
@@ -2231,9 +2235,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &gen_ident_read_or_ident_with_id_standart_not_null_read_ucc(is_standart_with_id),
                         &current_vec_syn_field.iter().map(|el_00a75629|
                             (&el_00a75629.field_ident, &el_00a75629.field_type)
-                        ).collect::<Vec<(&syn::Ident, &syn::Type)>>(),
+                        ).collect::<Vec<(&Ident, &Type)>>(),
                         current_vec_syn_field.len(),
-                        &|_: &syn::Ident, syn_type: &syn::Type| {
+                        &|_: &Ident, syn_type: &Type| {
                             let type_read_ts = gen_type_as_pg_json_type_read_ts(&syn_type);
                             gen_std_option_option_tokens_declaration_ts(
                                 &wrap_into_value_declaration_ts(&type_read_ts)
@@ -6702,7 +6706,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         });
                                         let if_some_content_ts = {
                                             let (last, rest) = vec_syn_field.split_last().expect("a8e7b6d6");
-                                            let gen_field_ident_is_some_ts = |field_ident: &syn::Ident|quote!{#field_ident.is_some()};
+                                            let gen_field_ident_is_some_ts = |field_ident: &Ident|quote!{#field_ident.is_some()};
                                             let rest_ts = rest.iter().map(|el_cd54f3c6| {
                                                 let field_ident_is_some_ts = gen_field_ident_is_some_ts(&el_cd54f3c6.field_ident);
                                                 quote!{#field_ident_is_some_ts || }

@@ -49,6 +49,7 @@ use quote::{ToTokens, quote};
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 use strum_macros::{Display, EnumIter};
+use syn::{Ident, Type};
 use token_patterns::{
     AllowClippyArbitrarySourceItemOrdering, CrateAllEnumVariantsArrayDefaultOptionSomeVecOneEl,
     CrateAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize, CrateDefaultOptionSomeVecOneEl,
@@ -2100,9 +2101,9 @@ pub fn gen_match_try_new_in_deserialize_ts(
 }
 pub fn gen_impl_serde_deserialize_for_struct_ts(
     ident: &dyn StdFmtDisplayPlusQuoteToTokens,
-    vec_ident_type: &[(&syn::Ident, &syn::Type)],
+    vec_ident_type: &[(&Ident, &Type)],
     len: usize,
-    gen_type_ts: &dyn Fn(&syn::Ident, &syn::Type) -> Ts2,
+    gen_type_ts: &dyn Fn(&Ident, &Type) -> Ts2,
 ) -> Ts2 {
     fn gen_underscore_underscore_field_index_str(index: usize) -> String {
         format!("__field{index}")
@@ -2130,7 +2131,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
     let vec_ident = vec_ident_type
         .iter()
         .map(|el_00a99fdb| el_00a99fdb.0)
-        .collect::<Vec<&syn::Ident>>();
+        .collect::<Vec<&Ident>>();
     let field_enum_variants_ts = {
         let field_enum_variants_ts = (0..len)
             .map(|i| format!("__{FieldSc}{i}").parse::<Ts2>().expect("c46314b0"))

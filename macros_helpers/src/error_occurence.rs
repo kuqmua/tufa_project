@@ -3,6 +3,9 @@ use naming::{CodeOccurenceSc, HashMapUcc, WithSerializeDeserializeUcc};
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use std::str::FromStr;
+use syn::{
+    AngleBracketedGenericArguments, Field, Fields, GenericArgument, PathArguments, Type, Variant,
+};
 use token_patterns::StdStringString;
 
 #[allow(clippy::arbitrary_source_item_ordering)]
@@ -46,9 +49,9 @@ impl FromStr for ErrorOccurenceFieldAttribute {
         }
     }
 }
-impl TryFrom<&syn::Field> for ErrorOccurenceFieldAttribute {
+impl TryFrom<&Field> for ErrorOccurenceFieldAttribute {
     type Error = String;
-    fn try_from(syn_field: &syn::Field) -> Result<Self, Self::Error> {
+    fn try_from(syn_field: &Field) -> Result<Self, Self::Error> {
         let mut option_attribute = None;
         for el_adfb232c in &syn_field.attrs {
             if el_adfb232c.path().segments.len() == 1 {
@@ -103,9 +106,9 @@ impl ErrorOccurenceFieldAttribute {
 }
 
 #[must_use]
-pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &syn::Variant) -> Ts2 {
+pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &Variant) -> Ts2 {
     let el_ident = &value.ident;
-    let fields = if let syn::Fields::Named(fields) = &value.fields {
+    let fields = if let Fields::Named(fields) = &value.fields {
         &fields.named
     } else {
         panic!("79b0f231");
@@ -115,7 +118,7 @@ pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &syn::Varia
     .filter(|el_5782b638| *el_5782b638.ident.as_ref().expect("3078fd99") != *code_occurence_sc.to_string())
     .map(|el_c25b655e| {
         let get_type_path_third_segment_second_argument_check_if_hashmap = ||{
-            let segments = if let syn::Type::Path(syn_type_path) = &el_c25b655e.ty {
+            let segments = if let Type::Path(syn_type_path) = &el_c25b655e.ty {
                 &syn_type_path.path.segments
             } else {
                 panic!("55136128");
@@ -126,7 +129,7 @@ pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &syn::Varia
                 let hashmap_ucc = HashMapUcc;
                 assert!(first_segment.ident == hashmap_ucc.to_string(), "5e1bc6b1");
             };
-            let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) = &first_segment.arguments else {
+            let PathArguments::AngleBracketed(AngleBracketedGenericArguments { args, .. }) = &first_segment.arguments else {
                 panic!("f464b7a1");
             };
             assert!(args.len() == 2, "47cde1b8");
@@ -158,14 +161,14 @@ pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &syn::Varia
                 }
             }
             ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
-                let segments = if let syn::Type::Path(path_value) = &el_c25b655e.ty {
+                let segments = if let Type::Path(path_value) = &el_c25b655e.ty {
                     &path_value.path.segments
                 } else {
                     panic!("8d93bf20");
                 };
                 assert!(segments.len() == 1, "0c65bbaa");
                 let first_segment = segments.iter().next().expect("595050cf");
-                let el_vec_type_with_serialize_deserialize_ts = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) = &first_segment.arguments {
+                let el_vec_type_with_serialize_deserialize_ts = if let PathArguments::AngleBracketed(AngleBracketedGenericArguments { args, .. }) = &first_segment.arguments {
                     assert!(args.len() == 1, "572a9da8");
                     format!(
                         "{}{}",
@@ -183,13 +186,13 @@ pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &syn::Varia
                 }
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
-                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap();
+                let _: &GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap();
                 quote! {
                     std::collections::HashMap<#StdStringString, #StdStringString>
                 }
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
-                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap();
+                let _: &GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap();
                 el_type_ts
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {

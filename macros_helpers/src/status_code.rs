@@ -2,6 +2,7 @@ use naming::{AsRefStrEnumWithUnitFieldsToScStr, AsRefStrEnumWithUnitFieldsToUccS
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use strum_macros::Display;
+use syn::Variant;
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
     Debug,
@@ -629,7 +630,7 @@ impl TryFrom<&String> for StatusCode {
 }
 
 #[must_use]
-pub fn get_only_one(variant: &syn::Variant) -> StatusCode {
+pub fn get_only_one(variant: &Variant) -> StatusCode {
     let mut option_self = None;
     variant.attrs.iter().for_each(|attr| {
         if attr.path().segments.len() == 1 {

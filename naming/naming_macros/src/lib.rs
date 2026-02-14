@@ -1,5 +1,7 @@
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
+#[allow(unused_imports)]
+use syn::{Data, DeriveInput, Fields, Ident, Type, parse};
 use token_patterns::StdStringString;
 const REGEX_VALUE: &str = "^[a-zA-Z]+$";
 #[proc_macro]
@@ -278,22 +280,22 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(
     input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input_ts).expect("a8f22481");
+    let syn_derive_input: DeriveInput = parse(input_ts).expect("a8f22481");
     let ident = &syn_derive_input.ident;
-    let syn::Data::Enum(data_enum) = syn_derive_input.data else {
+    let Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("d26bf85e")
     };
     let variants_matching_values_ts = data_enum
         .variants
         .iter()
         .map(|el| match el.fields {
-            syn::Fields::Unit => {
+            Fields::Unit => {
                 let el_ident = &el.ident;
                 let el_ident_ucc_str = naming_common::ToTokensToUccStr::case(&el_ident);
                 let el_ident_ucc_double_quotes_ts = gen_quotes::double_quotes_ts(&el_ident_ucc_str);
                 quote! {Self::#el_ident => #StdStringString::from(#el_ident_ucc_double_quotes_ts)}
             }
-            syn::Fields::Named(_) | syn::Fields::Unnamed(_) => {
+            Fields::Named(_) | Fields::Unnamed(_) => {
                 panic!("4955c50d")
             }
         })
@@ -326,22 +328,22 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(
     input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input_ts).expect("dea5cbcf");
+    let syn_derive_input: DeriveInput = parse(input_ts).expect("dea5cbcf");
     let ident = &syn_derive_input.ident;
-    let syn::Data::Enum(data_enum) = syn_derive_input.data else {
+    let Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("ed6efe2e");
     };
     let variants_matching_values_ts = data_enum
         .variants
         .iter()
         .map(|el| match el.fields {
-            syn::Fields::Unit => {
+            Fields::Unit => {
                 let el_ident = &el.ident;
                 let el_ident_sc_str = naming_common::ToTokensToScStr::case(&el_ident);
                 let el_ident_sc_double_quotes_ts = gen_quotes::double_quotes_ts(&el_ident_sc_str);
                 quote! {Self::#el_ident => #StdStringString::from(#el_ident_sc_double_quotes_ts)}
             }
-            syn::Fields::Named(_) | syn::Fields::Unnamed(_) => {
+            Fields::Named(_) | Fields::Unnamed(_) => {
                 panic!("b3ef2657")
             }
         })
@@ -373,9 +375,9 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(
     input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input_ts).expect("edabbc24");
+    let syn_derive_input: DeriveInput = parse(input_ts).expect("edabbc24");
     let ident = &syn_derive_input.ident;
-    let syn::Data::Enum(data_enum) = syn_derive_input.data else {
+    let Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("b2263e7e");
     };
     let std_string_string = StdStringString;
@@ -383,13 +385,13 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(
         .variants
         .iter()
         .map(|variant| match variant.fields {
-            syn::Fields::Unit => {
+            Fields::Unit => {
                 let variant_ident = &variant.ident;
                 let variant_ident_sc_str = naming_common::ToTokensToUpperScStr::case(&variant_ident);
                 let variant_ident_sc_double_quotes_ts = gen_quotes::double_quotes_ts(&variant_ident_sc_str);
                 quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_sc_double_quotes_ts)}
             }
-            syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("b6fedcff"),
+            Fields::Named(_) | Fields::Unnamed(_) => panic!("b6fedcff"),
         })
         .collect::<Vec<Ts2>>();
     let trait_path_ts = trait_path_ts();

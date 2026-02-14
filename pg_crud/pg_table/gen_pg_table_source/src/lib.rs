@@ -81,6 +81,8 @@ use std::{
     str::FromStr,
 };
 use syn::{
+    AttrStyle, Attribute, Data, DeriveInput, Field, FieldMutability, Fields, FieldsNamed, Ident,
+    Meta, Path, PathArguments, PathSegment, Type, TypePath, Variant, Visibility, parse2,
     punctuated::Punctuated, token::Brace, token::Bracket, token::Colon, token::Comma,
     token::PathSep, token::Pound,
 };
@@ -116,13 +118,13 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
     #[derive(Debug)]
     struct SynVariantWrapper {
         status_code: Option<macros_helpers::StatusCode>,
-        variant: syn::Variant,
+        variant: Variant,
     }
     impl SynVariantWrapper {
         const fn get_option_status_code(&self) -> Option<&macros_helpers::StatusCode> {
             self.status_code.as_ref()
         }
-        const fn get_syn_variant(&self) -> &syn::Variant {
+        const fn get_syn_variant(&self) -> &Variant {
             &self.variant
         }
     }
@@ -441,7 +443,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         gen_return_err_query_part_error_named_write_into_buffer_ts(import_path);
 
     // let pg_crud_all_variants_default_option_some_vec_one_el_call_ts = token_patterns::PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElCall;
-    let syn_derive_input: syn::DeriveInput = syn::parse2(input).expect("991c614f");
+    let syn_derive_input: DeriveInput = parse2(input).expect("991c614f");
     let gen_pg_table_config = serde_json::from_str::<GenPgTableConfig>(
         &macros_helpers::get_macro_attribute_meta_list_ts(
             &syn_derive_input.attrs,
@@ -458,8 +460,8 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
     let ident_sc_double_quotes_ts = gen_quotes::double_quotes_ts(&ident_sc_str);
     let self_table_name_call_ts = quote! {Self::#TableNameSc()};
     let (primary_key_field, fields, fields_without_primary_key) =
-        if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
-            if let syn::Fields::Named(fields_named) = &data_struct.fields {
+        if let Data::Struct(data_struct) = &syn_derive_input.data {
+            if let Fields::Named(fields_named) = &data_struct.fields {
                 let mut option_primary_key_field: Option<macros_helpers::SynFieldWrapper> = None;
                 let mut fields = Vec::new();
                 let mut fields_without_primary_key = Vec::new();
@@ -695,7 +697,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             ));
             let serde_json_to_string_schemars_schema_for_generic_unwrap_ts = {
                 let gen_field_type_as_pg_crud_create_table_column_query_part_create_table_query_part_ts =
-                    |field_type: &syn::Type, field_ident: &syn::Ident, is_primary_key: bool| {
+                    |field_type: &Type, field_ident: &Ident, is_primary_key: bool| {
                         let is_primary_key_ts: &dyn ToTokens =
                             if is_primary_key { &TrueSc } else { &FalseSc };
                         let field_ident_double_quotes_ts =
@@ -837,7 +839,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                  column: u32|
      -> proc_macro2::TokenStream {
         let variant_ident = &syn_variant_wrapper.variant.ident;
-        let fields_ts = if let syn::Fields::Named(value) = &syn_variant_wrapper.variant.fields {
+        let fields_ts = if let Fields::Named(value) = &syn_variant_wrapper.variant.fields {
             value.named.iter().enumerate().map(|(index, element)| {
                 let field_ident = &element.ident;
                 if *field_ident.as_ref().expect("edbbd08a") == CodeOccurenceSc.to_string() {
@@ -887,29 +889,29 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                    current_fields: Vec<(
         ErrorOccurenceFieldAttribute,
         &dyn Display,
-        Punctuated<syn::PathSegment, PathSep>,
+        Punctuated<PathSegment, PathSep>,
     )>|
      -> SynVariantWrapper {
         SynVariantWrapper {
-            variant: syn::Variant {
+            variant: Variant {
                 attrs: {
                     let mut attributes = Vec::new();
                     if let Some(value) = status_code.as_ref() {
                         let mut segments = Punctuated::new();
-                        segments.push(syn::PathSegment {
-                            ident: proc_macro2::Ident::new(
+                        segments.push(PathSegment {
+                            ident: Ident::new(
                                 &AsRefStrToScStr::case(value),
                                 proc_macro2::Span::call_site(),
                             ),
-                            arguments: syn::PathArguments::None,
+                            arguments: PathArguments::None,
                         });
-                        attributes.push(syn::Attribute {
+                        attributes.push(Attribute {
                             pound_token: Pound {
                                 spans: [proc_macro2::Span::call_site()],
                             },
-                            style: syn::AttrStyle::Outer,
+                            style: AttrStyle::Outer,
                             bracket_token: Bracket::default(),
-                            meta: syn::Meta::Path(syn::Path {
+                            meta: Meta::Path(Path {
                                 leading_colon: None,
                                 segments,
                             }),
@@ -917,35 +919,35 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     }
                     attributes
                 },
-                ident: syn::Ident::new(&variant_name.to_string(), proc_macro2::Span::call_site()),
-                fields: syn::Fields::Named(syn::FieldsNamed {
+                ident: Ident::new(&variant_name.to_string(), proc_macro2::Span::call_site()),
+                fields: Fields::Named(FieldsNamed {
                     brace_token: Brace::default(),
                     named: {
                         let mut handle = current_fields.into_iter().fold(Punctuated::new(), |mut acc_37be2059, element| {
-                            acc_37be2059.push_value(syn::Field {
-                                attrs: vec![syn::Attribute {
+                            acc_37be2059.push_value(Field {
+                                attrs: vec![Attribute {
                                     pound_token: Pound { spans: [proc_macro2::Span::call_site()] },
-                                    style: syn::AttrStyle::Outer,
+                                    style: AttrStyle::Outer,
                                     bracket_token: Bracket::default(),
-                                    meta: syn::Meta::Path(syn::Path {
+                                    meta: Meta::Path(Path {
                                         leading_colon: None,
                                         segments: {
                                             let mut handle = Punctuated::new();
-                                            handle.push(syn::PathSegment {
-                                                ident: proc_macro2::Ident::new(macros_helpers::AttributeIdentStr::attribute_ident_str(&element.0), proc_macro2::Span::call_site()),
-                                                arguments: syn::PathArguments::None,
+                                            handle.push(PathSegment {
+                                                ident: Ident::new(macros_helpers::AttributeIdentStr::attribute_ident_str(&element.0), proc_macro2::Span::call_site()),
+                                                arguments: PathArguments::None,
                                             });
                                             handle
                                         },
                                     }),
                                 }],
-                                vis: syn::Visibility::Inherited,
-                                mutability: syn::FieldMutability::None,
-                                ident: Some(syn::Ident::new(&element.1.to_string(), proc_macro2::Span::call_site())),
+                                vis: Visibility::Inherited,
+                                mutability: FieldMutability::None,
+                                ident: Some(Ident::new(&element.1.to_string(), proc_macro2::Span::call_site())),
                                 colon_token: Some(Colon { spans: [proc_macro2::Span::call_site()] }),
-                                ty: syn::Type::Path(syn::TypePath {
+                                ty: Type::Path(TypePath {
                                     qself: None,
-                                    path: syn::Path { leading_colon: None, segments: element.2 },
+                                    path: Path { leading_colon: None, segments: element.2 },
                                 }),
                             });
                             acc_37be2059.push_punct(Comma { spans: [proc_macro2::Span::call_site()] });
@@ -1037,7 +1039,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             };
             let fn_create_query_part_ts = {
                 let gen_match_as_pg_crud_pg_type_pg_type_create_query_part_ts =
-                    |field_type: &syn::Type, content_ts: &dyn ToTokens| {
+                    |field_type: &Type, content_ts: &dyn ToTokens| {
                         let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&field_type);
                         let if_write_is_err_ts = macros_helpers::gen_if_write_is_err_ts(
                             &quote! {acc_a097110b, "{value_c3f0b59a},"},
@@ -1085,7 +1087,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             };
             let fn_create_query_bind_ts = {
                 let gen_query_as_pg_crud_pg_type_pg_type_create_query_bind_ts =
-                    |field_type: &syn::Type, content_ts: &dyn ToTokens| {
+                    |field_type: &Type, content_ts: &dyn ToTokens| {
                         let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&field_type);
                         quote! {
                             match #as_pg_crud_pg_type_pg_type_ts #CreateQueryBindSc(
@@ -1237,9 +1239,9 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 &fields
                     .iter()
                     .map(|el_3e09c5fb| (&el_3e09c5fb.field_ident, &el_3e09c5fb.field_type))
-                    .collect::<Vec<(&syn::Ident, &syn::Type)>>(),
+                    .collect::<Vec<(&Ident, &Type)>>(),
                 fields_len,
-                &|_: &syn::Ident, syn_type: &syn::Type| {
+                &|_: &Ident, syn_type: &Type| {
                     let syn_type_as_pg_type_where_ts = gen_as_pg_type_where_ts(&syn_type);
                     gen_std_option_option_tokens_declaration_ts(
                         &quote! {pg_crud::PgTypeWhere<#syn_type_as_pg_type_where_ts>},
@@ -1649,7 +1651,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 let fields_initiation_ts = &fields
                     .iter()
                     .map(|el_2bfe6afc| &el_2bfe6afc.field_ident)
-                    .collect::<Vec<&syn::Ident>>();
+                    .collect::<Vec<&Ident>>();
                 quote! {
                     fn #try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_sc(
                         #ValueSc: &sqlx::postgres::PgRow,
@@ -1824,7 +1826,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
     let ident_update_for_query_ucc = SelfUpdateForQueryUcc::from_tokens(&ident);
     let update_query_part_primary_key_sc = UpdateQueryPartPrimaryKeySc;
     let ident_update_ts = {
-        let gen_option_value_field_type_as_pg_type_update_ts = |syn_type: &syn::Type| {
+        let gen_option_value_field_type_as_pg_type_update_ts = |syn_type: &Type| {
             let path_value_ts = {
                 let value = format!("{PgCrudSc}::{ValueUcc}");
                 value.parse::<proc_macro2::TokenStream>().expect("dbdbb7f2")
@@ -1926,9 +1928,9 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             &fields
                 .iter()
                 .map(|el_2bfe6afc| (&el_2bfe6afc.field_ident, &el_2bfe6afc.field_type))
-                .collect::<Vec<(&syn::Ident, &syn::Type)>>(),
+                .collect::<Vec<(&Ident, &Type)>>(),
             fields_len,
-            &|syn_ident: &syn::Ident, syn_type: &syn::Type| {
+            &|syn_ident: &Ident, syn_type: &Type| {
                 if syn_ident == primary_key_field_ident {
                     quote! {#primary_key_field_type_update_ts}
                 } else {
@@ -2257,7 +2259,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             Vec::<(
                 ErrorOccurenceFieldAttribute,
                 &'static dyn Display,
-                Punctuated<syn::PathSegment, PathSep>,
+                Punctuated<PathSegment, PathSep>,
             )>::default(),
         );
     let common_http_request_syn_variants = {
@@ -2274,21 +2276,20 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             reqwest_syn_variant_wrapper.get_syn_variant().clone(),
         ]
     };
-    let gen_additional_error_variants = |current_syn_derive_input: &syn::DeriveInput,
+    let gen_additional_error_variants = |current_syn_derive_input: &DeriveInput,
                                          gen_pg_table_attribute: GenPgTableAttribute|
-     -> Vec<syn::Variant> {
+     -> Vec<Variant> {
         let gen_pg_table_attribute_str = gen_pg_table_attribute.to_string();
         let common_additional_error_variants_attribute_ts =
             macros_helpers::get_macro_attribute_meta_list_ts(
                 &current_syn_derive_input.attrs,
                 &gen_pg_table_attribute.gen_path_to_attribute(),
             );
-        let value: syn::DeriveInput =
-            syn::parse2((*common_additional_error_variants_attribute_ts).clone())
-                .expect("1b80783d");
+        let value: DeriveInput =
+            parse2((*common_additional_error_variants_attribute_ts).clone()).expect("1b80783d");
         let value_ident_str = value.ident.to_string();
         assert!(value_ident_str == gen_pg_table_attribute_str, "8a66c852");
-        let variants = if let syn::Data::Enum(data_enum) = value.data {
+        let variants = if let Data::Enum(data_enum) = value.data {
             data_enum.variants
         } else {
             panic!("f3ddc78c");
@@ -2485,54 +2486,53 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 #ValueSc
             }
         };
-    let gen_error_occurence_variant_ts =
-        |error_variant: &syn::Variant| -> proc_macro2::TokenStream {
-            let variant_ident = &error_variant.ident;
-            let syn::Fields::Named(fields_named) = &error_variant.fields else {
-                panic!("2acd4725");
-            };
-            let fields_mapped_into_ts = fields_named.named.iter().map(|field| {
-                let field_ident = field.ident.as_ref().expect("a21dc807");
-                let error_occurence_attribute = if *field_ident == *CodeOccurenceSc.to_string() {
-                    proc_macro2::TokenStream::new()
-                } else {
-                    let mut error_occurence_attribute: Option<ErrorOccurenceFieldAttribute> = None;
-                    for el_1c83e302 in &field.attrs {
-                        if el_1c83e302.path().segments.len() == 1 {
-                            let segment = el_1c83e302.path().segments.first().expect("5bd7ed8d");
-                            if let Ok(value) = {
-                                <ErrorOccurenceFieldAttribute as FromStr>::from_str(
-                                    &segment.ident.to_string(),
-                                )
-                            } {
-                                if error_occurence_attribute.is_some() {
-                                    panic!("9a469d36")
-                                } else {
-                                    error_occurence_attribute = Some(value);
-                                }
+    let gen_error_occurence_variant_ts = |error_variant: &Variant| -> proc_macro2::TokenStream {
+        let variant_ident = &error_variant.ident;
+        let Fields::Named(fields_named) = &error_variant.fields else {
+            panic!("2acd4725");
+        };
+        let fields_mapped_into_ts = fields_named.named.iter().map(|field| {
+            let field_ident = field.ident.as_ref().expect("a21dc807");
+            let error_occurence_attribute = if *field_ident == *CodeOccurenceSc.to_string() {
+                proc_macro2::TokenStream::new()
+            } else {
+                let mut error_occurence_attribute: Option<ErrorOccurenceFieldAttribute> = None;
+                for el_1c83e302 in &field.attrs {
+                    if el_1c83e302.path().segments.len() == 1 {
+                        let segment = el_1c83e302.path().segments.first().expect("5bd7ed8d");
+                        if let Ok(value) = {
+                            <ErrorOccurenceFieldAttribute as FromStr>::from_str(
+                                &segment.ident.to_string(),
+                            )
+                        } {
+                            if error_occurence_attribute.is_some() {
+                                panic!("9a469d36")
+                            } else {
+                                error_occurence_attribute = Some(value);
                             }
                         }
                     }
-                    error_occurence_attribute
-                        .expect("d1003b2e")
-                        .to_attribute_view_ts()
-                };
-                let field_type = &field.ty;
-                quote! {
-                    #error_occurence_attribute
-                    #field_ident: #field_type
                 }
-            });
+                error_occurence_attribute
+                    .expect("d1003b2e")
+                    .to_attribute_view_ts()
+            };
+            let field_type = &field.ty;
             quote! {
-                #variant_ident {
-                    #(#fields_mapped_into_ts),*
-                }
+                #error_occurence_attribute
+                #field_ident: #field_type
             }
-        };
+        });
+        quote! {
+            #variant_ident {
+                #(#fields_mapped_into_ts),*
+            }
+        }
+    };
     let gen_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_ts =
         |operation: &Operation,
          desirable_type_ts: &dyn ToTokens,
-         type_variants_from_request_response_syn_variants: &Vec<syn::Variant>|
+         type_variants_from_request_response_syn_variants: &Vec<Variant>|
          -> proc_macro2::TokenStream {
             let ident_operation_response_variants_ucc =
                 gen_ident_operation_response_variants_ucc(operation);
@@ -2554,7 +2554,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 let from_handle_ts = gen_from_handle_ts(&ident_operation_error_named_ucc, &{
                     let variants_ts = type_variants_from_request_response_syn_variants.iter().map(|el_d80f0707| {
                     let variant_ident = &el_d80f0707.ident;
-                    let syn::Fields::Named(fields_named) = &el_d80f0707.fields else {
+                    let Fields::Named(fields_named) = &el_d80f0707.fields else {
                         panic!("10764d2b");
                     };
                     let fields_mapped_into_ts = {
@@ -2676,7 +2676,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             }
         };
     let gen_type_variants_from_request_response_syn_variants =
-        |syn_variants: &Vec<&syn::Variant>, operation: &Operation| -> Vec<syn::Variant> {
+        |syn_variants: &Vec<&Variant>, operation: &Operation| -> Vec<Variant> {
             let mut type_variants_from_request_response_syn_variants = Vec::new();
             for el_21f2d46c in syn_variants {
                 type_variants_from_request_response_syn_variants.push((*el_21f2d46c).clone());
@@ -2690,7 +2690,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             type_variants_from_request_response_syn_variants
         };
     let gen_ident_try_operation_error_named_ts = |operation: &Operation,
-                                                  syn_variants: &Vec<syn::Variant>|
+                                                  syn_variants: &Vec<Variant>|
      -> proc_macro2::TokenStream {
         let ident_try_operation_error_named_ucc =
             gen_ident_try_operation_error_named_ucc(operation);
@@ -2714,7 +2714,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             .get_syn_variant()
             .clone()
         }))
-        .collect::<Vec<syn::Variant>>();
+        .collect::<Vec<Variant>>();
         let variants_ts = variants.iter().map(gen_error_occurence_variant_ts);
         quote! {
             #allow_clippy_arbitrary_source_item_ordering_ts
@@ -2890,7 +2890,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             };
         }
     };
-    let gen_try_operation_ts = |operation: &Operation, type_variants_from_request_response_syn_variants: &[syn::Variant], result_ok_type_ts: &dyn ToTokens, desirable_from_or_try_from_desirable_with_serialize_deserialize_ts: &dyn ToTokens| {
+    let gen_try_operation_ts = |operation: &Operation, type_variants_from_request_response_syn_variants: &[Variant], result_ok_type_ts: &dyn ToTokens, desirable_from_or_try_from_desirable_with_serialize_deserialize_ts: &dyn ToTokens| {
         let try_operation_sc_ts = operation.try_self_sc_ts();
         let try_operation_handle_sc_ts = operation.try_self_handle_sc_ts();
         let ident_try_operation_error_named_ucc = gen_ident_try_operation_error_named_ucc(operation);
@@ -2978,7 +2978,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         let try_operation_logic_error_named_with_serialize_deserialize_ts = {
             let try_operation_logic_response_variants_to_try_operation_logic_error_named_with_serialize_deserialize = type_variants_from_request_response_syn_variants.iter().map(|el_f83d5272| {
                 let variant_ident = &el_f83d5272.ident;
-                let fields_idents_ts = if let syn::Fields::Named(fields_named) = &el_f83d5272.fields {
+                let fields_idents_ts = if let Fields::Named(fields_named) = &el_f83d5272.fields {
                     let fields_idents = fields_named.named.iter().map(|field| &field.ident);
                     quote! {#(#fields_idents),*}
                 } else {
@@ -5061,7 +5061,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 };
             }
         };
-        let gen_ident_create_content_ts = |field_ident: &syn::Ident, content_ts: &dyn ToTokens| {
+        let gen_ident_create_content_ts = |field_ident: &Ident, content_ts: &dyn ToTokens| {
             gen_fields_named_without_primary_key_with_comma_ts(
                 &|element: &macros_helpers::SynFieldWrapper| {
                     let current_field_ident = &element.field_ident;
@@ -5080,12 +5080,12 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 },
             )
         };
-        let gen_ident_create_content_el_id_ts = |field_ident: &syn::Ident, el_ts: &dyn ToTokens| {
+        let gen_ident_create_content_el_id_ts = |field_ident: &Ident, el_ts: &dyn ToTokens| {
             gen_ident_create_content_ts(field_ident, &el_ts)
         };
         let gen_ident_create_content_el_ts =
-            |field_ident: &syn::Ident| gen_ident_create_content_ts(field_ident, &ElementSc);
-        let gen_table_test_name_field_ident_ts = |test_name: &str, field_ident: &syn::Ident| {
+            |field_ident: &Ident| gen_ident_create_content_ts(field_ident, &ElementSc);
+        let gen_table_test_name_field_ident_ts = |test_name: &str, field_ident: &Ident| {
             format!("table_{test_name}_{field_ident}")
                 .parse::<proc_macro2::TokenStream>()
                 .expect("eb30c1e4")
@@ -5094,7 +5094,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         let mut table_test_name_field_idents_vec_ts = Vec::new();
         let mut fill_table_field_idents_vec_ts = |test_names: Vec<&str>| {
             for el_8f39799f in test_names {
-                let gen_initialization_variable_name_ts = |field_ident: &syn::Ident| {
+                let gen_initialization_variable_name_ts = |field_ident: &Ident| {
                     format!("table_{el_8f39799f}_{field_ident}")
                         .parse::<proc_macro2::TokenStream>()
                         .expect("2003ad9f")
@@ -5714,14 +5714,13 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                         );
                     }
                 };
-            let gen_option_vec_create_call_unwrap_or_vec_ts =
-                |_: &syn::Ident, field_type: &syn::Type| {
-                    quote! {
-                        <#field_type as pg_crud::PgTypeTestCases>::#OptionVecCreateSc().unwrap_or(Vec::new())
-                    }
-                };
+            let gen_option_vec_create_call_unwrap_or_vec_ts = |_: &Ident, field_type: &Type| {
+                quote! {
+                    <#field_type as pg_crud::PgTypeTestCases>::#OptionVecCreateSc().unwrap_or(Vec::new())
+                }
+            };
             let gen_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_ts =
-                |field_ident: &syn::Ident, field_type: &syn::Type| {
+                |field_ident: &Ident, field_type: &Type| {
                     quote! {
                         <#field_type as pg_crud::PgTypeTestCases>::#OptionVecCreateSc()
                         .filter(|el_bba28182| !el_bba28182.is_empty())
@@ -5729,7 +5728,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     }
                 };
             let gen_pg_type_option_vec_where_greater_than_test_unwrap_or_else_vec_call_ts =
-                |_: &syn::Ident, field_type: &syn::Type| {
+                |_: &Ident, field_type: &Type| {
                     quote! {
                         <#field_type as #import_path::PgTypeTestCases>::#PgTypeOptionVecWhereGreaterThanTestSc()
                         .map_or_else(Vec::new, Into::into)
@@ -5737,12 +5736,12 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 };
             let gen_read_test_ts = |test_name: &str,
                                     gen_method_call_ts: &dyn Fn(
-                &syn::Ident,
-                &syn::Type,
+                &Ident,
+                &Type,
             )
                 -> proc_macro2::TokenStream,
                                     gen_create_content_ts: &dyn Fn(
-                &syn::Ident,
+                &Ident,
             )
                 -> proc_macro2::TokenStream,
                                     gen_content_ts: &dyn Fn(
@@ -5983,7 +5982,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             let read_only_ids_merged_with_table_type_declaration_into_pg_type_option_where_greater_than_ts = gen_read_test_ts(
                 table_read_only_ids_merged_with_table_type_declaration_into_pg_type_option_where_greater_than_name,
                 &gen_pg_type_option_vec_where_greater_than_test_unwrap_or_else_vec_call_ts,
-                &|field_ident: &syn::Ident| {
+                &|field_ident: &Ident| {
                     gen_ident_create_content_ts(
                         field_ident,
                         &quote! {#ElementSc.#CreateSc},

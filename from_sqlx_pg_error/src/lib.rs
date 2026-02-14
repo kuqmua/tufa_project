@@ -2,7 +2,7 @@
 // pub fn from_sqlx_pg_error(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
 //     panic_location::panic_location();
 //     let proc_macro_name_ucc = "FromSqlxPgError";
-//     let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("cd5c05b1");
+//     let syn_derive_input: DeriveInput = parse(input).expect("cd5c05b1");
 //     let ident = &syn_derive_input.ident;
 //     let proc_macro_name_ucc_ident_str =
 //         format!("{proc_macro_name_ucc} {ident}");
