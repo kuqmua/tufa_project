@@ -1,4 +1,4 @@
-use teloxide::{prelude::Requester, types::Message, utils::command::BotCommands};
+use teloxide::{Bot, prelude::Requester, repl, types::Message, utils::command::BotCommands};
 
 #[derive(BotCommands, Clone)]
 #[command(
@@ -18,9 +18,9 @@ enum Command {
 
 #[tokio::main]
 async fn main() {
-    Box::pin(teloxide::repl(
-        teloxide::Bot::from_env(),
-        async |bot: teloxide::Bot, msg: Message, cmd: Command| {
+    Box::pin(repl(
+        Bot::from_env(),
+        async |bot: Bot, msg: Message, cmd: Command| {
             log::info!("answer");
             let _unused = Requester::send_message(
                 &bot,
