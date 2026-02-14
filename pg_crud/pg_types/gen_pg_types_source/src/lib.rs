@@ -1,3 +1,12 @@
+use enum_extension_lib::EnumExtension;
+use macros_helpers::{
+    DeriveCopy, DeriveDefault, DeriveEq, DeriveOrd, DerivePartialOrd, DeriveSerdeDeserialize,
+    DeriveSerdeSerialize, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
+    StructOrEnumDeriveTokenStreamBuilder, gen_const_new_ts, gen_if_write_is_err_ts,
+    gen_impl_error_occurence_lib_to_std_string_string_ts, gen_impl_std_convert_from_ts,
+    gen_impl_std_fmt_display_ts, gen_new_ts, gen_pub_const_new_ts, gen_pub_new_ts,
+    gen_pub_try_new_ts, maybe_write_ts_into_file,
+};
 use naming::{
     ArrayOfUcc, AsUcc, ColumnSc, ContainsNullByteUcc, CreateSc, DateNaiveSc, DateNaiveUcc, DateSc,
     DateUcc, DaysSc, EarlierDateNotSupportedUcc, EarliestSupportedDateSc, EndSc, EndUcc, EqualUcc,
@@ -20,17 +29,37 @@ use naming::{
         SelfUpdateForQueryUcc, SelfUpdateUcc, SelfWhereUcc,
     },
 };
-use pg_crud_macros_common::NotNullOrNullable;
+use pg_crud_macros_common::{
+    ColumnParameterUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrementUnderscore,
+    CreateQueryPartValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl,
+    EqualOperatorHandle, ImportPath, IncrementParameterUnderscore, IsCreateQueryBindMutable,
+    IsNeedToAddLogicalOperatorUnderscore, IsPrimaryKeyUnderscore, IsQueryBindMutable,
+    IsSelectOnlyUpdatedIdsQueryBindMutable, IsStandartNotNull, IsUpdateQueryBindMutable,
+    NotNullOrNullable, PgFilter, PgTypeFilter, ReadOrUpdate, SelectQueryPartValueUnderscore,
+    ShouldDeriveSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
+    UpdateQueryPartJsonbSetAccumulatorUnderscore, UpdateQueryPartJsonbSetPathUnderscore,
+    UpdateQueryPartJsonbSetTargetUnderscore, UpdateQueryPartValueUnderscore,
+    gen_impl_crate_is_string_empty_for_ident_content_ts,
+    gen_impl_pg_crud_common_default_option_some_vec_one_el_max_page_size_ts,
+    gen_impl_pg_crud_common_default_option_some_vec_one_el_ts,
+    gen_impl_pg_type_not_primary_key_for_ident_ts, gen_impl_pg_type_test_cases_for_ident_ts,
+    gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_sqlx_pg_for_ident_ts,
+    gen_pg_type_where_ts, gen_std_option_option_tokens_declaration_ts,
+    gen_std_vec_vec_tokens_declaration_ts, gen_value_initialization_ts,
+    impl_pg_type_equal_operator_for_ident_ts, impl_pg_type_where_filter_for_ident_ts,
+};
 use quote::{ToTokens, quote};
 use rayon::iter::{IntoParallelRefIterator as _, ParallelIterator as _};
+use serde::{Deserialize, Serialize};
 use std::{
     fmt::{Display, Formatter, Result as StdFmtResult},
     iter::{once, repeat_n},
 };
+use strum_macros::{Display as StrumDisplay, EnumIter};
 #[must_use]
 pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenStream {
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, strum_macros::Display)]
+    #[derive(Debug, StrumDisplay)]
     enum RustTypeName {
         StdPrimitiveI16,
         StdPrimitiveI32,
@@ -86,7 +115,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, strum_macros::Display)]
+    #[derive(Debug, StrumDisplay)]
     enum PgTypeName {
         Int2,
         Int4,
@@ -149,14 +178,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(
-        Debug,
-        Clone,
-        PartialEq,
-        serde::Serialize,
-        serde::Deserialize,
-        strum_macros::Display,
-        strum_macros::EnumIter,
-        enum_extension_lib::EnumExtension,
+        Debug, Clone, PartialEq, Serialize, Deserialize, StrumDisplay, EnumIter, EnumExtension,
     )]
     enum PgType {
         StdPrimitiveI16AsInt2,
@@ -338,14 +360,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
     // todo reuse it(move to pg_macros_common) if sqlx devs will add nested array support
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(
-        Debug,
-        Clone,
-        PartialEq,
-        serde::Serialize,
-        serde::Deserialize,
-        strum_macros::Display,
-        strum_macros::EnumIter,
-        enum_extension_lib::EnumExtension,
+        Debug, Clone, PartialEq, Serialize, Deserialize, StrumDisplay, EnumIter, EnumExtension,
     )]
     enum PgTypePattern {
         Standart,
