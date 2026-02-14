@@ -507,11 +507,11 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let generated = quote! {#tokens};
     // println!("{generated} ");
     // if ident == "ErrorNamed" {
-    //     macros_helpers::maybe_write_ts_into_file(
-    //         macros_helpers::ShouldWriteTokenStreamIntoFile::True,
+    //     maybe_write_ts_into_file(
+    //         ShouldWriteTokenStreamIntoFile::True,
     //         "error_occurence",
     //         &generated,
-    //         &macros_helpers::FormatWithCargofmt::True,
+    //         &FormatWithCargofmt::True,
     //     );
     // }
     generated.into()

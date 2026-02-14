@@ -20,8 +20,8 @@ use naming::{
     ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsSc,
     ReadOnlyIdsToTwoDimensionalVecReadInnerSc, ReadOnlyIdsUcc, ReadSc, ReadUcc, SecSc, SecondSc,
     SelfSc, SelfUcc, StartSc, StartUcc, StdFmtDisplayPlusQuoteToTokens, TableTypeDeclarationSc,
-    TableTypeDeclarationUcc, TimeSc, TimeUcc, ToErrStringSc, TryNewForDeserializeSc,
-    TryNewSc, UnboundedUcc, UpdateUcc, ValueSc, VecOfUcc,
+    TableTypeDeclarationUcc, TimeSc, TimeUcc, ToErrStringSc, TryNewForDeserializeSc, TryNewSc,
+    UnboundedUcc, UpdateUcc, ValueSc, VecOfUcc,
     parameter::{
         SelfCreateUcc, SelfNotNullUcc, SelfOriginTryNewErrorNamedUcc,
         SelfOriginTryNewForDeserializeErrorNamedUcc, SelfOriginUcc, SelfReadInnerUcc,
