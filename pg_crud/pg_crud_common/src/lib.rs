@@ -1761,39 +1761,39 @@ pub fn increment_checked_add_one_returning_increment(
     )
 }
 #[must_use]
-pub const fn std_primitive_i8_test_cases_vec() -> [i8; 3] {
+pub const fn i8_test_cases_vec() -> [i8; 3] {
     [i8::MIN, 0, i8::MAX]
 }
 #[must_use]
-pub const fn std_primitive_i16_test_cases_vec() -> [i16; 3] {
+pub const fn i16_test_cases_vec() -> [i16; 3] {
     [i16::MIN, 0, i16::MAX]
 }
 #[must_use]
-pub const fn std_primitive_i32_test_cases_vec() -> [i32; 3] {
+pub const fn i32_test_cases_vec() -> [i32; 3] {
     [i32::MIN, 0, i32::MAX]
 }
 #[must_use]
-pub const fn std_primitive_i64_test_cases_vec() -> [i64; 3] {
+pub const fn i64_test_cases_vec() -> [i64; 3] {
     [i64::MIN, 0, i64::MAX]
 }
 #[must_use]
-pub const fn std_primitive_u8_test_cases_vec() -> [u8; 3] {
+pub const fn u8_test_cases_vec() -> [u8; 3] {
     [u8::MIN, 0, u8::MAX]
 }
 #[must_use]
-pub const fn std_primitive_u16_test_cases_vec() -> [u16; 3] {
+pub const fn u16_test_cases_vec() -> [u16; 3] {
     [u16::MIN, 0, u16::MAX]
 }
 #[must_use]
-pub const fn std_primitive_u32_test_cases_vec() -> [u32; 3] {
+pub const fn u32_test_cases_vec() -> [u32; 3] {
     [u32::MIN, 0, u32::MAX]
 }
 #[must_use]
-pub const fn std_primitive_u64_test_cases_vec() -> [u64; 3] {
+pub const fn u64_test_cases_vec() -> [u64; 3] {
     [u64::MIN, 0, u64::MAX]
 }
 #[must_use]
-pub const fn std_primitive_f32_test_cases_vec() -> [f32; 18] {
+pub const fn f32_test_cases_vec() -> [f32; 18] {
     [
         f32::EPSILON,
         f32::MAX,
@@ -1816,7 +1816,7 @@ pub const fn std_primitive_f32_test_cases_vec() -> [f32; 18] {
     ]
 }
 #[must_use]
-pub const fn std_primitive_f64_test_cases_vec() -> [f64; 18] {
+pub const fn f64_test_cases_vec() -> [f64; 18] {
     [
         f64::EPSILON,
         f64::MAX,
@@ -1839,7 +1839,7 @@ pub const fn std_primitive_f64_test_cases_vec() -> [f64; 18] {
     ]
 }
 #[must_use]
-pub const fn std_primitive_bool_test_cases_vec() -> [bool; 2] {
+pub const fn bool_test_cases_vec() -> [bool; 2] {
     [true, false]
 }
 #[must_use]

@@ -635,7 +635,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         };
         let import_path = ImportPath::PgCrudCommon;
         let none_ts = quote! {None};
-        let std_primitive_u64_ts = StdPrimitiveU64;
+        let u64_ts = StdPrimitiveU64;
         let std_string_string_ts = StdStringString;
         let gen_import_path_value_initialization_ts = |content_ts: &dyn ToTokens| gen_value_initialization_ts(&import_path, &content_ts);
         let gen_ident_ts = |current_not_null_or_nullable: &NotNullOrNullable, current_pg_json_type_pattern: &PgJsonTypePattern| {
@@ -727,7 +727,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 PgJsonType::StdPrimitiveU8AsJsonbNumber => &StdPrimitiveU8,
                 PgJsonType::StdPrimitiveU16AsJsonbNumber => &StdPrimitiveU16,
                 PgJsonType::StdPrimitiveU32AsJsonbNumber => &StdPrimitiveU32,
-                PgJsonType::StdPrimitiveU64AsJsonbNumber => &std_primitive_u64_ts,
+                PgJsonType::StdPrimitiveU64AsJsonbNumber => &u64_ts,
                 PgJsonType::StdPrimitiveF32AsJsonbNumber => &StdPrimitiveF32,
                 PgJsonType::StdPrimitiveF64AsJsonbNumber => &StdPrimitiveF64,
                 PgJsonType::StdPrimitiveBoolAsJsonbBoolean => &StdPrimitiveBool,
@@ -851,9 +851,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             //             subschemas: &none_ucc,
             //             number: &quote! {Some(Box::new(schemars::schema::NumberValidation {
             //                 multiple_of: None,
-            //                 maximum: Some(#ident_read_inner_standart_not_null_alias_ts ::MAX as #std_primitive_f64_ts),
+            //                 maximum: Some(#ident_read_inner_standart_not_null_alias_ts ::MAX as #f64_ts),
             //                 exclusive_maximum: None,
-            //                 minimum: Some(#ident_read_inner_standart_not_null_alias_ts ::MIN as #std_primitive_f64_ts),
+            //                 minimum: Some(#ident_read_inner_standart_not_null_alias_ts ::MIN as #f64_ts),
             //                 exclusive_minimum: None,
             //             }))},
             //             string: &none_ucc,
@@ -2461,7 +2461,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     fn get_inner(#ValueSc: &<Self::PgJsonType as #import_path::PgJsonType>::#CreateForQueryUcc) -> &Self::#ReadInnerUcc {
                         &#ValueSc.0.0
                     }
-                    fn increment_checked_add_one(#IncrementSc: &mut #std_primitive_u64_ts) -> Result<#std_primitive_u64_ts, #import_path::QueryPartErrorNamed> {
+                    fn increment_checked_add_one(#IncrementSc: &mut #u64_ts) -> Result<#u64_ts, #import_path::QueryPartErrorNamed> {
                         #import_path::increment_checked_add_one_returning_increment(#IncrementSc)
                     }
                 }
@@ -2482,17 +2482,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 >::#read_or_update_ucc::#NewSc(#ValueSc)}
             };
             let standart_not_null_test_cases_vec_name_ts = match &pg_json_type {
-                PgJsonType::StdPrimitiveI8AsJsonbNumber => quote! {std_primitive_i8_test_cases_vec},
-                PgJsonType::StdPrimitiveI16AsJsonbNumber => quote! {std_primitive_i16_test_cases_vec},
-                PgJsonType::StdPrimitiveI32AsJsonbNumber => quote! {std_primitive_i32_test_cases_vec},
-                PgJsonType::StdPrimitiveI64AsJsonbNumber => quote! {std_primitive_i64_test_cases_vec},
-                PgJsonType::StdPrimitiveU8AsJsonbNumber => quote! {std_primitive_u8_test_cases_vec},
-                PgJsonType::StdPrimitiveU16AsJsonbNumber => quote! {std_primitive_u16_test_cases_vec},
-                PgJsonType::StdPrimitiveU32AsJsonbNumber => quote! {std_primitive_u32_test_cases_vec},
-                PgJsonType::StdPrimitiveU64AsJsonbNumber => quote! {std_primitive_u64_test_cases_vec},
-                PgJsonType::StdPrimitiveF32AsJsonbNumber => quote! {std_primitive_f32_test_cases_vec},
-                PgJsonType::StdPrimitiveF64AsJsonbNumber => quote! {std_primitive_f64_test_cases_vec},
-                PgJsonType::StdPrimitiveBoolAsJsonbBoolean => quote! {std_primitive_bool_test_cases_vec},
+                PgJsonType::StdPrimitiveI8AsJsonbNumber => quote! {i8_test_cases_vec},
+                PgJsonType::StdPrimitiveI16AsJsonbNumber => quote! {i16_test_cases_vec},
+                PgJsonType::StdPrimitiveI32AsJsonbNumber => quote! {i32_test_cases_vec},
+                PgJsonType::StdPrimitiveI64AsJsonbNumber => quote! {i64_test_cases_vec},
+                PgJsonType::StdPrimitiveU8AsJsonbNumber => quote! {u8_test_cases_vec},
+                PgJsonType::StdPrimitiveU16AsJsonbNumber => quote! {u16_test_cases_vec},
+                PgJsonType::StdPrimitiveU32AsJsonbNumber => quote! {u32_test_cases_vec},
+                PgJsonType::StdPrimitiveU64AsJsonbNumber => quote! {u64_test_cases_vec},
+                PgJsonType::StdPrimitiveF32AsJsonbNumber => quote! {f32_test_cases_vec},
+                PgJsonType::StdPrimitiveF64AsJsonbNumber => quote! {f64_test_cases_vec},
+                PgJsonType::StdPrimitiveBoolAsJsonbBoolean => quote! {bool_test_cases_vec},
                 PgJsonType::StdStringStringAsJsonbString => quote! {std_string_string_test_cases_vec},
                 PgJsonType::UuidUuidAsJsonbString => quote! {uuid_uuid_test_cases_vec},
             };
