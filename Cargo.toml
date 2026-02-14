@@ -48,7 +48,6 @@ members = [
   "server",
   "server_app_state",
   "server_config",
-  "server_start",
   "server_table_example",
   "server_types",
   "telegram_bot",
