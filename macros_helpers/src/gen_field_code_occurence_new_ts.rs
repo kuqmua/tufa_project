@@ -1,6 +1,6 @@
+use gen_quotes::double_quotes_ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
-use gen_quotes::double_quotes_ts;
 #[must_use]
 pub fn gen_field_code_occurence_new_ts(file: &'static str, line: u32, column: u32) -> Ts2 {
     use naming::CodeOccurenceSc;

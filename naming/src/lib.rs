@@ -1,9 +1,9 @@
 pub mod parameter;
 
+use gen_quotes::double_quotes_str;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use std::fmt::{Display, Formatter, Result as FmtResult};
-use gen_quotes::double_quotes_str;
 
 pub use naming_common::{
     AsRefStrToScStr, AsRefStrToScTs, AsRefStrToUccStr, AsRefStrToUccTs, AsRefStrToUpperScStr,

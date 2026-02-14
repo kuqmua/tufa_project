@@ -4,8 +4,9 @@ use std::{
     io::{Error as IoError, Write},
     path::Path,
 };
+use thiserror::Error;
 
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, Error, error_occurence_lib::ErrorOccurence)]
 pub enum CreateDirsAndWriteFileSyncErrorNamed {
     StdIo {
         #[eo_to_err_string]

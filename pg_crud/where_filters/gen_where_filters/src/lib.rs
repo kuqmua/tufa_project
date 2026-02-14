@@ -1,3 +1,4 @@
+use gen_quotes::double_quotes_ts;
 use macros_helpers::{
     FormatWithCargofmt, ShouldWriteTokenStreamIntoFile, gen_if_write_is_err_ts,
     maybe_write_ts_into_file,
@@ -13,7 +14,6 @@ use pg_crud_macros_common::{
     PgTypeOrPgJsonType, gen_impl_default_option_some_vec_one_el_ts,
     impl_pg_type_where_filter_for_ident_ts,
 };
-use gen_quotes::double_quotes_ts;
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
@@ -436,9 +436,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             ),
                             IncrementParameterUnderscore::False,
                             {
-                                let format_handle_ts = double_quotes_ts(
-                                    &gen_format_handle_str(&pg_type_kind),
-                                );
+                                let format_handle_ts =
+                                    double_quotes_ts(&gen_format_handle_str(&pg_type_kind));
                                 quote! {
                                     #maybe_dimensions_indexes_initialization_ts
                                     #value_match_increment_checked_add_one_initialization_ts

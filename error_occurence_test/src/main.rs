@@ -9,8 +9,9 @@
 
 use error_occurence_lib::code_occurence::CodeOccurence;
 use std::collections::HashMap;
+use thiserror::Error;
 
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, Error, error_occurence_lib::ErrorOccurence)]
 pub enum ErrorNamedOne {
     //use ToStdStringString for hashmap keys instead of Display
     //todo even for String in serialize deserialize version of error must be using ToStdStringString impl instead of std::fmt::Display
@@ -39,7 +40,7 @@ pub enum ErrorNamedOne {
     },
 }
 
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, Error, error_occurence_lib::ErrorOccurence)]
 pub enum ErrorNamedTwo {
     Another {
         #[eo_to_err_string_serialize_deserialize]
@@ -53,7 +54,7 @@ pub enum ErrorNamedTwo {
     },
 }
 
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, Error, error_occurence_lib::ErrorOccurence)]
 pub enum ErrorUnnamedOne {
     Something(ErrorNamedTwo),
 }

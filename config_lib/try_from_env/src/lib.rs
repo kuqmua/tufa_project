@@ -37,7 +37,7 @@ pub fn try_from_env(input: Ts) -> Ts {
             }
         });
         quote! {
-            #[derive(Debug, thiserror::Error)]
+            #[derive(Debug, Error)]
             pub enum #ident_try_from_env_error_named_ucc {
                 #DotenvUcc {
                     #DotenvSc: dotenv::Error,

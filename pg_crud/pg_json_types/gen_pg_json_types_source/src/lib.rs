@@ -1,4 +1,5 @@
 use enum_extension_lib::EnumExtension;
+use gen_quotes::double_quotes_ts;
 use macros_helpers::{
     DeriveCopy, DeriveSchemarsJsonSchema, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
     StructOrEnumDeriveTokenStreamBuilder, gen_impl_error_occurence_lib_to_err_string_ts,
@@ -37,7 +38,6 @@ use pg_crud_macros_common::{
     gen_std_option_option_tokens_declaration_ts, gen_std_vec_vec_tokens_declaration_ts,
     gen_value_initialization_ts,
 };
-use gen_quotes::double_quotes_ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use rayon::iter::{IntoParallelRefIterator as _, ParallelIterator as _};

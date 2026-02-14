@@ -1,3 +1,4 @@
+use gen_quotes::double_quotes_ts;
 use macros_helpers::{
     DeriveSerdeDeserialize, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
     StructOrEnumDeriveTokenStreamBuilder, SynFieldWrapper, gen_if_write_is_err_curly_braces_ts,
@@ -76,7 +77,6 @@ use pg_crud_macros_common::{
     gen_std_vec_vec_tokens_declaration_ts, gen_value_initialization_ts,
     impl_pg_type_where_filter_for_ident_ts, maybe_wrap_into_braces_ts, wrap_content_into_scopes_ts,
 };
-use gen_quotes::double_quotes_ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use std::iter::repeat_with;

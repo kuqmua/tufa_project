@@ -18,6 +18,7 @@ use std::{
         Formatter, Result as StdFmtResult, {Debug, Display},
     },
 };
+use thiserror::Error;
 use utoipa::ToSchema;
 use uuid::Uuid;
 
@@ -525,14 +526,7 @@ where
 }
 
 #[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    Eq,
-    Serialize,
-    Deserialize,
-    thiserror::Error,
-    error_occurence_lib::ErrorOccurence,
+    Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, error_occurence_lib::ErrorOccurence,
 )]
 pub enum QueryPartErrorNamed {
     CheckedAdd { code_occurence: CodeOccurence },
@@ -943,11 +937,7 @@ impl Default for PaginationBase {
 )]
 pub struct PaginationStartsWithZero(PaginationBase);
 #[derive(
-    Debug,
-    serde::Serialize,
-    serde::Deserialize,
-    thiserror::Error,
-    error_occurence_lib::ErrorOccurence,
+    Debug, serde::Serialize, serde::Deserialize, Error, error_occurence_lib::ErrorOccurence,
 )]
 pub enum PaginationStartsWithZeroTryNewErrorNamed {
     LimitIsLessThanOrEqualToZero {
@@ -1206,11 +1196,7 @@ pub trait IsStringEmpty {
 }
 
 #[derive(
-    Debug,
-    serde::Serialize,
-    serde::Deserialize,
-    thiserror::Error,
-    error_occurence_lib::ErrorOccurence,
+    Debug, serde::Serialize, serde::Deserialize, Error, error_occurence_lib::ErrorOccurence,
 )]
 pub enum NotEmptyUniqueVecTryNewErrorNamed<T> {
     IsEmpty {
@@ -1462,7 +1448,7 @@ pub struct UnsignedPartOfI32(i32); //todo why exactly i32? maybe different types
     Eq,
     serde::Serialize,
     serde::Deserialize,
-    thiserror::Error,
+    Error,
     error_occurence_lib::ErrorOccurence,
     schemars::JsonSchema,
 )]
@@ -1595,7 +1581,7 @@ pub struct NotZeroUnsignedPartOfI32(UnsignedPartOfI32);
     Eq,
     serde::Serialize,
     serde::Deserialize,
-    thiserror::Error,
+    Error,
     error_occurence_lib::ErrorOccurence,
     schemars::JsonSchema,
 )]

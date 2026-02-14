@@ -7,6 +7,7 @@ use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use sqlx::{postgres::PgArguments, query::Query, types::Json};
 use std::fmt::{Display, Formatter, Result as StdFmtResult, Write as _};
+use thiserror::Error;
 use utoipa::ToSchema;
 gen_where_filters::gen_where_filters!({
     "pg_types_content_write_into_gen_where_filters_pg_types": "False",
@@ -391,12 +392,7 @@ where
     end: T,
 }
 #[derive(
-    Debug,
-    Clone,
-    serde::Serialize,
-    serde::Deserialize,
-    thiserror::Error,
-    error_occurence_lib::ErrorOccurence,
+    Debug, Clone, serde::Serialize, serde::Deserialize, Error, error_occurence_lib::ErrorOccurence,
 )]
 pub enum BetweenTryNewErrorNamed<T> {
     StartMoreOrEqualToEnd {
@@ -795,7 +791,7 @@ pub struct BoundedStdVecVec<T, const LENGTH: usize>(Vec<T>);
     Eq,
     Serialize,
     Deserialize,
-    thiserror::Error,
+    Error,
     error_occurence_lib::ErrorOccurence,
     JsonSchema,
 )]

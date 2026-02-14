@@ -1,10 +1,10 @@
+use gen_quotes::double_quotes_ts;
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 #[allow(unused_imports)]
 use syn::{Data, DeriveInput, Fields, Ident, Type, parse};
 use token_patterns::StdStringString;
-use gen_quotes::double_quotes_ts;
 const REGEX_VALUE: &str = "^[a-zA-Z]+$";
 #[proc_macro]
 pub fn gen_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
@@ -39,8 +39,7 @@ pub fn gen_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                     acc_7a8bd950
                 },
             );
-            let phrase_part_ucc_double_quotes_ts =
-                double_quotes_ts(&phrase_part_ucc_str);
+            let phrase_part_ucc_double_quotes_ts = double_quotes_ts(&phrase_part_ucc_str);
             let phrase_part_sc_double_quotes_ts = double_quotes_ts(&phrase_part_sc_str);
             let phrase_part_ucc_ts = phrase_part_ucc_str.parse::<Ts2>().expect("7cf3ffc0");
             let phrase_part_sc_ts = phrase_part_sc_str.parse::<Ts2>().expect("114a573a");

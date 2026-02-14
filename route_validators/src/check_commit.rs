@@ -5,8 +5,9 @@ use axum::http::{
 use error_occurence_lib::code_occurence::CodeOccurence;
 use http_logic::GetAxumHttpStatusCode;
 use naming::CommitSc;
+use thiserror::Error;
 
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, Error, error_occurence_lib::ErrorOccurence)]
 pub enum ErrorNamed {
     CommitNotEqual {
         #[eo_to_err_string_serialize_deserialize]

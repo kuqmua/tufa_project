@@ -1,3 +1,4 @@
+use gen_quotes::double_quotes_ts;
 use macros_helpers::{
     ErrorOccurenceFieldAttribute, gen_if_write_is_err_ts,
     gen_impl_error_occurence_lib_to_err_string_ts, gen_impl_std_fmt_display_ts,
@@ -7,7 +8,6 @@ use naming::{
     CodeOccurenceSc, IntoSerializeDeserializeVersionSc, ValueSc, WithSerializeDeserializeUcc,
     parameter::SelfWithSerializeDeserializeUcc,
 };
-use gen_quotes::double_quotes_ts;
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};

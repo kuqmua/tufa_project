@@ -6,8 +6,9 @@ use error_occurence_lib::code_occurence;
 use error_occurence_lib::code_occurence::CodeOccurence;
 use http_body::SizeHint;
 use http_logic::GetAxumHttpStatusCode;
+use thiserror::Error;
 
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, Error, error_occurence_lib::ErrorOccurence)]
 pub enum ErrorNamed {
     ReachedMaximumSizeOfBody {
         #[eo_to_err_string]

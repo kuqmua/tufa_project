@@ -3,6 +3,7 @@ mod filters;
 pub use filters::*;
 
 use enum_extension_lib::EnumExtension;
+use gen_quotes::{double_quotes_str, double_quotes_ts};
 use macros_helpers::gen_impl_error_occurence_lib_to_err_string_ts;
 use naming::{
     AllVariantsDefaultOptionSomeVecOneElMaxPageSizeSc, AllVariantsDefaultOptionSomeVecOneElSc,
@@ -45,7 +46,6 @@ use naming::{
     ValueSc, ValueUcc, WhereUcc,
     parameter::{SelfCreateUcc, SelfSelectUcc, SelfWhereUcc},
 };
-use gen_quotes::{double_quotes_ts, double_quotes_str};
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use serde::{Deserialize, Serialize};
@@ -2166,8 +2166,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         let visit_bytes_value_enum_variants_ts =
             vec_ident.iter().enumerate().map(|(index, element)| {
                 let b_field_name_double_quotes_ts = {
-                    let el_ident_double_quotes_str =
-                        double_quotes_str(&element.to_string());
+                    let el_ident_double_quotes_str = double_quotes_str(&element.to_string());
                     let value = format!("b{el_ident_double_quotes_str}");
                     value.parse::<Ts2>().expect("9e33625e")
                 };

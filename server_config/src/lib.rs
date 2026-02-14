@@ -1,5 +1,6 @@
 use config_lib::types::{SourcePlaceType, TracingLevel};
 use std::net::SocketAddr;
+use thiserror::Error;
 
 #[derive(Debug, config_lib::TryFromEnv, config_lib::GenGetterTraitsForStructFields)]
 pub struct Config {

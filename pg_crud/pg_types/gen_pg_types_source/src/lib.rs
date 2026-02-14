@@ -1,4 +1,5 @@
 use enum_extension_lib::EnumExtension;
+use gen_quotes::{double_quotes_str, double_quotes_ts};
 use macros_helpers::{
     DeriveCopy, DeriveDefault, DeriveEq, DeriveOrd, DerivePartialOrd, DeriveSerdeDeserialize,
     DeriveSerdeSerialize, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
@@ -52,7 +53,6 @@ use pg_crud_macros_common::{
     gen_tuple_struct_ident_double_quotes_ts, gen_value_initialization_ts,
     impl_pg_type_equal_operator_for_ident_ts, impl_pg_type_where_filter_for_ident_ts,
 };
-use gen_quotes::{double_quotes_ts, double_quotes_str};
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use rayon::iter::{IntoParallelRefIterator as _, ParallelIterator as _};
