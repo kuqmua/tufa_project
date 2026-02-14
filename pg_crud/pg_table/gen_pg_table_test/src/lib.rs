@@ -92,9 +92,9 @@ server_config = {path = "../../../server_config"}"#,
                             #maybe_gen_pg_table_primary_key_ts
                             pub primary_key_column:
                                 pg_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPg,
-                            pub column_0: pg_crud::StdPrimitiveI16AsNotNullInt2,
-                            pub column_1: pg_crud::OptionStdPrimitiveI16AsNullableInt2,
-                            pub column_2: pg_crud::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
+                            pub column_0: pg_crud::I16AsNotNullInt2,
+                            pub column_1: pg_crud::OptionI16AsNullableInt2,
+                            pub column_2: pg_crud::VecOfI16AsNotNullArrayOfNotNullInt2,
                         }
                     }
                 };

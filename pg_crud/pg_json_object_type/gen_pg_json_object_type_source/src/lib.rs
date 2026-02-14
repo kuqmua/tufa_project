@@ -4938,7 +4938,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                     logical_operator: #import_path::LogicalOperator::And,
                                                     dimensions: #import_path::BoundedStdVecVec::try_from(
                                                         vec![
-                                                            #import_path::UnsignedPartOfStdPrimitiveI32::try_from(
+                                                            #import_path::UnsignedPartOfI32::try_from(
                                                                 i32::try_from(index_47620dcf).expect("5341936f")
                                                             ).expect("76906f3c")
                                                         ]
@@ -6449,7 +6449,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 acc_480d72e5.push(#ident_where_ucc::LengthEqual(
                                                     #import_path::PgJsonTypeWhereLengthEqual {
                                                         logical_operator: #import_path::LogicalOperator::And,
-                                                        #ValueSc: #import_path::UnsignedPartOfStdPrimitiveI32::try_from(
+                                                        #ValueSc: #import_path::UnsignedPartOfI32::try_from(
                                                             i32::try_from(#CreateSc.0.len()).expect("1811faf7")
                                                         ).expect("a590f39b"),
                                                     }
@@ -6595,7 +6595,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 acc_acceb7eb.push(#ident_where_ucc::LengthGreaterThan(
                                                     #import_path::PgJsonTypeWhereLengthGreaterThan {
                                                         logical_operator: #import_path::LogicalOperator::And,
-                                                        #ValueSc: #import_path::UnsignedPartOfStdPrimitiveI32::try_from(
+                                                        #ValueSc: #import_path::UnsignedPartOfI32::try_from(
                                                             i32::try_from(
                                                                 #CreateSc.0.len().checked_sub(1).unwrap_or_else(|| {
                                                                     panic!("e411b8ca");

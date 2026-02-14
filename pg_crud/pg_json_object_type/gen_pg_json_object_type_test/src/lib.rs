@@ -34,9 +34,9 @@ test-utils = []"#,
                         }
                     }]
                     pub struct ObjectExample {
-                        pub field_0: pg_crud::StdPrimitiveI8AsNotNullJsonbNumber,
-                        pub field_1: pg_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
-                        pub field_2: pg_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
+                        pub field_0: pg_crud::I8AsNotNullJsonbNumber,
+                        pub field_1: pg_crud::OptionI8AsNullableJsonbNumber,
+                        pub field_2: pg_crud::VecOfI8AsNotNullArrayOfNotNullJsonbNumber,
                     }
                 };
                 let ts = gen_pg_json_object_type_source::gen_pg_json_object_type(object_example_ts.clone());

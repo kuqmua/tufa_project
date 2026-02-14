@@ -37,7 +37,7 @@ pub enum TryFromStdEnvVarOkTimezoneErrorNamed {
     ChronoFixedOffset {
         chrono_fixed_offset: String,
     },
-    StdPrimitiveI32Parsing {
+    I32Parsing {
         std_primitive_i32_parsing: ParseIntError,
     },
 }
@@ -47,7 +47,7 @@ impl TryFromStdEnvVarOk for Timezone {
         let Some(fixed_offset) = FixedOffset::east_opt(match value.parse::<i32>() {
             Ok(value_i32) => value_i32,
             Err(error) => {
-                return Err(Self::Error::StdPrimitiveI32Parsing {
+                return Err(Self::Error::I32Parsing {
                     std_primitive_i32_parsing: error,
                 });
             }
@@ -180,7 +180,7 @@ impl TryFromStdEnvVarOk for SourcePlaceType {
 pub struct EnableApiGitCommitCheck(pub bool);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed {
-    StdPrimitiveBoolParsing {
+    BoolParsing {
         std_primitive_bool_parsing: ParseBoolError,
     },
 }
@@ -190,7 +190,7 @@ impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
         Ok(Self(match value.parse::<bool>() {
             Ok(handle) => handle,
             Err(error) => {
-                return Err(Self::Error::StdPrimitiveBoolParsing {
+                return Err(Self::Error::BoolParsing {
                     std_primitive_bool_parsing: error,
                 });
             }
@@ -202,7 +202,7 @@ impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
 pub struct MaximumSizeOfHttpBodyInBytes(pub usize);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed {
-    StdPrimitiveUsizeParsing {
+    UsizeParsing {
         std_primitive_usize_parsing: ParseIntError,
     },
 }
@@ -212,7 +212,7 @@ impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
         Ok(Self(match value.parse::<usize>() {
             Ok(handle) => handle,
             Err(error) => {
-                return Err(Self::Error::StdPrimitiveUsizeParsing {
+                return Err(Self::Error::UsizeParsing {
                     std_primitive_usize_parsing: error,
                 });
             }

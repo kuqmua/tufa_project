@@ -48,11 +48,10 @@ use std::{
 };
 use strum_macros::{Display, EnumIter};
 use token_patterns::{
-    AllowClippyArbitrarySourceItemOrdering, MustUse, PgCrudCommonDefaultOptionSomeVecOneEl,
-    PgCrudCommonDefaultOptionSomeVecOneElCall,
-    PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall, StdPrimitiveBool, StdPrimitiveF32,
-    StdPrimitiveF64, StdPrimitiveI8, StdPrimitiveI16, StdPrimitiveI32, StdPrimitiveI64,
-    StdPrimitiveU8, StdPrimitiveU16, StdPrimitiveU32, StdPrimitiveU64, StdStringString, UuidUuid,
+    AllowClippyArbitrarySourceItemOrdering, Bool, F32, F64, I8, I16, I32, I64, MustUse,
+    PgCrudCommonDefaultOptionSomeVecOneEl, PgCrudCommonDefaultOptionSomeVecOneElCall,
+    PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall, StdStringString, U8, U16, U32, U64,
+    UuidUuid,
 };
 
 #[must_use]
@@ -60,34 +59,34 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, Display)]
     enum RustTypeName {
-        StdPrimitiveI8,
-        StdPrimitiveI16,
-        StdPrimitiveI32,
-        StdPrimitiveI64,
-        StdPrimitiveU8,
-        StdPrimitiveU16,
-        StdPrimitiveU32,
-        StdPrimitiveU64,
-        StdPrimitiveF32,
-        StdPrimitiveF64,
-        StdPrimitiveBool,
+        I8,
+        I16,
+        I32,
+        I64,
+        U8,
+        U16,
+        U32,
+        U64,
+        F32,
+        F64,
+        Bool,
         StdStringString,
         UuidUuid,
     }
     impl From<&PgJsonType> for RustTypeName {
         fn from(value: &PgJsonType) -> Self {
             match &value {
-                PgJsonType::StdPrimitiveI8AsJsonbNumber => Self::StdPrimitiveI8,
-                PgJsonType::StdPrimitiveI16AsJsonbNumber => Self::StdPrimitiveI16,
-                PgJsonType::StdPrimitiveI32AsJsonbNumber => Self::StdPrimitiveI32,
-                PgJsonType::StdPrimitiveI64AsJsonbNumber => Self::StdPrimitiveI64,
-                PgJsonType::StdPrimitiveU8AsJsonbNumber => Self::StdPrimitiveU8,
-                PgJsonType::StdPrimitiveU16AsJsonbNumber => Self::StdPrimitiveU16,
-                PgJsonType::StdPrimitiveU32AsJsonbNumber => Self::StdPrimitiveU32,
-                PgJsonType::StdPrimitiveU64AsJsonbNumber => Self::StdPrimitiveU64,
-                PgJsonType::StdPrimitiveF32AsJsonbNumber => Self::StdPrimitiveF32,
-                PgJsonType::StdPrimitiveF64AsJsonbNumber => Self::StdPrimitiveF64,
-                PgJsonType::StdPrimitiveBoolAsJsonbBoolean => Self::StdPrimitiveBool,
+                PgJsonType::I8AsJsonbNumber => Self::I8,
+                PgJsonType::I16AsJsonbNumber => Self::I16,
+                PgJsonType::I32AsJsonbNumber => Self::I32,
+                PgJsonType::I64AsJsonbNumber => Self::I64,
+                PgJsonType::U8AsJsonbNumber => Self::U8,
+                PgJsonType::U16AsJsonbNumber => Self::U16,
+                PgJsonType::U32AsJsonbNumber => Self::U32,
+                PgJsonType::U64AsJsonbNumber => Self::U64,
+                PgJsonType::F32AsJsonbNumber => Self::F32,
+                PgJsonType::F64AsJsonbNumber => Self::F64,
+                PgJsonType::BoolAsJsonbBoolean => Self::Bool,
                 PgJsonType::StdStringStringAsJsonbString => Self::StdStringString,
                 PgJsonType::UuidUuidAsJsonbString => Self::UuidUuid,
             }
@@ -115,17 +114,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     impl From<&PgJsonType> for PgJsonTypeName {
         fn from(value: &PgJsonType) -> Self {
             match &value {
-                PgJsonType::StdPrimitiveI8AsJsonbNumber
-                | PgJsonType::StdPrimitiveI16AsJsonbNumber
-                | PgJsonType::StdPrimitiveI32AsJsonbNumber
-                | PgJsonType::StdPrimitiveI64AsJsonbNumber
-                | PgJsonType::StdPrimitiveU8AsJsonbNumber
-                | PgJsonType::StdPrimitiveU16AsJsonbNumber
-                | PgJsonType::StdPrimitiveU32AsJsonbNumber
-                | PgJsonType::StdPrimitiveU64AsJsonbNumber
-                | PgJsonType::StdPrimitiveF32AsJsonbNumber
-                | PgJsonType::StdPrimitiveF64AsJsonbNumber => Self::Number,
-                PgJsonType::StdPrimitiveBoolAsJsonbBoolean => Self::Boolean,
+                PgJsonType::I8AsJsonbNumber
+                | PgJsonType::I16AsJsonbNumber
+                | PgJsonType::I32AsJsonbNumber
+                | PgJsonType::I64AsJsonbNumber
+                | PgJsonType::U8AsJsonbNumber
+                | PgJsonType::U16AsJsonbNumber
+                | PgJsonType::U32AsJsonbNumber
+                | PgJsonType::U64AsJsonbNumber
+                | PgJsonType::F32AsJsonbNumber
+                | PgJsonType::F64AsJsonbNumber => Self::Number,
+                PgJsonType::BoolAsJsonbBoolean => Self::Boolean,
                 PgJsonType::StdStringStringAsJsonbString | PgJsonType::UuidUuidAsJsonbString => {
                     Self::String
                 }
@@ -137,17 +136,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize, Display, EnumIter, EnumExtension,
     )]
     enum PgJsonType {
-        StdPrimitiveI8AsJsonbNumber,
-        StdPrimitiveI16AsJsonbNumber,
-        StdPrimitiveI32AsJsonbNumber,
-        StdPrimitiveI64AsJsonbNumber,
-        StdPrimitiveU8AsJsonbNumber,
-        StdPrimitiveU16AsJsonbNumber,
-        StdPrimitiveU32AsJsonbNumber,
-        StdPrimitiveU64AsJsonbNumber,
-        StdPrimitiveF32AsJsonbNumber,
-        StdPrimitiveF64AsJsonbNumber,
-        StdPrimitiveBoolAsJsonbBoolean,
+        I8AsJsonbNumber,
+        I16AsJsonbNumber,
+        I32AsJsonbNumber,
+        I64AsJsonbNumber,
+        U8AsJsonbNumber,
+        U16AsJsonbNumber,
+        U32AsJsonbNumber,
+        U64AsJsonbNumber,
+        F32AsJsonbNumber,
+        F64AsJsonbNumber,
+        BoolAsJsonbBoolean,
         StdStringStringAsJsonbString,
         UuidUuidAsJsonbString,
     }
@@ -635,7 +634,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         };
         let import_path = ImportPath::PgCrudCommon;
         let none_ts = quote! {None};
-        let u64_ts = StdPrimitiveU64;
+        let u64_ts = U64;
         let std_string_string_ts = StdStringString;
         let gen_import_path_value_initialization_ts = |content_ts: &dyn ToTokens| gen_value_initialization_ts(&import_path, &content_ts);
         let gen_ident_ts = |current_not_null_or_nullable: &NotNullOrNullable, current_pg_json_type_pattern: &PgJsonTypePattern| {
@@ -720,17 +719,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         let ident_origin_ucc = SelfOriginUcc::from_tokens(&ident);
         let ident_read_inner_standart_not_null_alias_ts = {
             let content_ts: &dyn ToTokens = match &pg_json_type {
-                PgJsonType::StdPrimitiveI8AsJsonbNumber => &StdPrimitiveI8,
-                PgJsonType::StdPrimitiveI16AsJsonbNumber => &StdPrimitiveI16,
-                PgJsonType::StdPrimitiveI32AsJsonbNumber => &StdPrimitiveI32,
-                PgJsonType::StdPrimitiveI64AsJsonbNumber => &StdPrimitiveI64,
-                PgJsonType::StdPrimitiveU8AsJsonbNumber => &StdPrimitiveU8,
-                PgJsonType::StdPrimitiveU16AsJsonbNumber => &StdPrimitiveU16,
-                PgJsonType::StdPrimitiveU32AsJsonbNumber => &StdPrimitiveU32,
-                PgJsonType::StdPrimitiveU64AsJsonbNumber => &u64_ts,
-                PgJsonType::StdPrimitiveF32AsJsonbNumber => &StdPrimitiveF32,
-                PgJsonType::StdPrimitiveF64AsJsonbNumber => &StdPrimitiveF64,
-                PgJsonType::StdPrimitiveBoolAsJsonbBoolean => &StdPrimitiveBool,
+                PgJsonType::I8AsJsonbNumber => &I8,
+                PgJsonType::I16AsJsonbNumber => &I16,
+                PgJsonType::I32AsJsonbNumber => &I32,
+                PgJsonType::I64AsJsonbNumber => &I64,
+                PgJsonType::U8AsJsonbNumber => &U8,
+                PgJsonType::U16AsJsonbNumber => &U16,
+                PgJsonType::U32AsJsonbNumber => &U32,
+                PgJsonType::U64AsJsonbNumber => &u64_ts,
+                PgJsonType::F32AsJsonbNumber => &F32,
+                PgJsonType::F64AsJsonbNumber => &F64,
+                PgJsonType::BoolAsJsonbBoolean => &Bool,
                 PgJsonType::StdStringStringAsJsonbString => &std_string_string_ts,
                 PgJsonType::UuidUuidAsJsonbString => &UuidUuid,
             };
@@ -776,17 +775,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         let ident_update_for_query_ucc = SelfUpdateForQueryUcc::from_tokens(&ident);
         let maybe_derive_copy = match &pg_json_type_pattern {
             PgJsonTypePattern::Standart => match &pg_json_type {
-                PgJsonType::StdPrimitiveI8AsJsonbNumber |
-                PgJsonType::StdPrimitiveI16AsJsonbNumber |
-                PgJsonType::StdPrimitiveI32AsJsonbNumber |
-                PgJsonType::StdPrimitiveI64AsJsonbNumber |
-                PgJsonType::StdPrimitiveU8AsJsonbNumber |
-                PgJsonType::StdPrimitiveU16AsJsonbNumber |
-                PgJsonType::StdPrimitiveU32AsJsonbNumber |
-                PgJsonType::StdPrimitiveU64AsJsonbNumber |
-                PgJsonType::StdPrimitiveF32AsJsonbNumber |
-                PgJsonType::StdPrimitiveF64AsJsonbNumber |
-                PgJsonType::StdPrimitiveBoolAsJsonbBoolean |
+                PgJsonType::I8AsJsonbNumber |
+                PgJsonType::I16AsJsonbNumber |
+                PgJsonType::I32AsJsonbNumber |
+                PgJsonType::I64AsJsonbNumber |
+                PgJsonType::U8AsJsonbNumber |
+                PgJsonType::U16AsJsonbNumber |
+                PgJsonType::U32AsJsonbNumber |
+                PgJsonType::U64AsJsonbNumber |
+                PgJsonType::F32AsJsonbNumber |
+                PgJsonType::F64AsJsonbNumber |
+                PgJsonType::BoolAsJsonbBoolean |
                 PgJsonType::UuidUuidAsJsonbString => DeriveCopy::True,
                 PgJsonType::StdStringStringAsJsonbString => DeriveCopy::False,
             },
@@ -835,14 +834,14 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             // };
             // let schemars_json_schema = if let IsStandartNotNull::True = &is_standart_not_null {
             //     match &pg_json_type {
-            //         PgJsonType::StdPrimitiveI8AsJsonbNumber
-            //         | PgJsonType::StdPrimitiveI16AsJsonbNumber
-            //         | PgJsonType::StdPrimitiveI32AsJsonbNumber
-            //         | PgJsonType::StdPrimitiveI64AsJsonbNumber
-            //         | PgJsonType::StdPrimitiveU8AsJsonbNumber
-            //         | PgJsonType::StdPrimitiveU16AsJsonbNumber
-            //         | PgJsonType::StdPrimitiveU32AsJsonbNumber
-            //         | PgJsonType::StdPrimitiveU64AsJsonbNumber => SchemarsJsonSchema::Impl(SchemaObjectTokenStream {
+            //         PgJsonType::I8AsJsonbNumber
+            //         | PgJsonType::I16AsJsonbNumber
+            //         | PgJsonType::I32AsJsonbNumber
+            //         | PgJsonType::I64AsJsonbNumber
+            //         | PgJsonType::U8AsJsonbNumber
+            //         | PgJsonType::U16AsJsonbNumber
+            //         | PgJsonType::U32AsJsonbNumber
+            //         | PgJsonType::U64AsJsonbNumber => SchemarsJsonSchema::Impl(SchemaObjectTokenStream {
             //             metadata: &metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_ts,
             //             instance_type: &instance_type_number_ts,
             //             format: &none_ucc,
@@ -862,7 +861,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             //             reference: &none_ucc,
             //             extensions: &extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_ts,
             //         }),
-            //         PgJsonType::StdPrimitiveF32AsJsonbNumber | PgJsonType::StdPrimitiveF64AsJsonbNumber | PgJsonType::StdPrimitiveBoolAsJsonbBoolean | PgJsonType::StdStringStringAsJsonbString => SchemarsJsonSchema::Derive,
+            //         PgJsonType::F32AsJsonbNumber | PgJsonType::F64AsJsonbNumber | PgJsonType::BoolAsJsonbBoolean | PgJsonType::StdStringStringAsJsonbString => SchemarsJsonSchema::Derive,
             //         PgJsonType::UuidUuidAsJsonbString => SchemarsJsonSchema::Impl(SchemaObjectTokenStream {
             //             metadata: &metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_ts,
             //             instance_type: &instance_type_string_ts,
@@ -904,17 +903,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     if matches!(&is_standart_not_null, IsStandartNotNull::True) {
                         match &pg_json_type {
                             PgJsonType::UuidUuidAsJsonbString => DeriveSchemarsJsonSchema::False,
-                            PgJsonType::StdPrimitiveI8AsJsonbNumber
-                            | PgJsonType::StdPrimitiveI16AsJsonbNumber
-                            | PgJsonType::StdPrimitiveI32AsJsonbNumber
-                            | PgJsonType::StdPrimitiveI64AsJsonbNumber
-                            | PgJsonType::StdPrimitiveU8AsJsonbNumber
-                            | PgJsonType::StdPrimitiveU16AsJsonbNumber
-                            | PgJsonType::StdPrimitiveU32AsJsonbNumber
-                            | PgJsonType::StdPrimitiveU64AsJsonbNumber
-                            | PgJsonType::StdPrimitiveF32AsJsonbNumber
-                            | PgJsonType::StdPrimitiveF64AsJsonbNumber
-                            | PgJsonType::StdPrimitiveBoolAsJsonbBoolean
+                            PgJsonType::I8AsJsonbNumber
+                            | PgJsonType::I16AsJsonbNumber
+                            | PgJsonType::I32AsJsonbNumber
+                            | PgJsonType::I64AsJsonbNumber
+                            | PgJsonType::U8AsJsonbNumber
+                            | PgJsonType::U16AsJsonbNumber
+                            | PgJsonType::U32AsJsonbNumber
+                            | PgJsonType::U64AsJsonbNumber
+                            | PgJsonType::F32AsJsonbNumber
+                            | PgJsonType::F64AsJsonbNumber
+                            | PgJsonType::BoolAsJsonbBoolean
                             | PgJsonType::StdStringStringAsJsonbString => DeriveSchemarsJsonSchema::True,
                         }
                     } else {
@@ -1063,17 +1062,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             };
                         }
                     },
-                    PgJsonType::StdPrimitiveI8AsJsonbNumber
-                    | PgJsonType::StdPrimitiveI16AsJsonbNumber
-                    | PgJsonType::StdPrimitiveI32AsJsonbNumber
-                    | PgJsonType::StdPrimitiveI64AsJsonbNumber
-                    | PgJsonType::StdPrimitiveU8AsJsonbNumber
-                    | PgJsonType::StdPrimitiveU16AsJsonbNumber
-                    | PgJsonType::StdPrimitiveU32AsJsonbNumber
-                    | PgJsonType::StdPrimitiveU64AsJsonbNumber
-                    | PgJsonType::StdPrimitiveF32AsJsonbNumber
-                    | PgJsonType::StdPrimitiveF64AsJsonbNumber
-                    | PgJsonType::StdPrimitiveBoolAsJsonbBoolean
+                    PgJsonType::I8AsJsonbNumber
+                    | PgJsonType::I16AsJsonbNumber
+                    | PgJsonType::I32AsJsonbNumber
+                    | PgJsonType::I64AsJsonbNumber
+                    | PgJsonType::U8AsJsonbNumber
+                    | PgJsonType::U16AsJsonbNumber
+                    | PgJsonType::U32AsJsonbNumber
+                    | PgJsonType::U64AsJsonbNumber
+                    | PgJsonType::F32AsJsonbNumber
+                    | PgJsonType::F64AsJsonbNumber
+                    | PgJsonType::BoolAsJsonbBoolean
                     | PgJsonType::StdStringStringAsJsonbString => Ts2::new(),
                 }
             } else {
@@ -1126,17 +1125,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             // };
             let maybe_impl_is_string_empty_for_ident_origin_ts = if matches!(&is_standart_not_null, IsStandartNotNull::True) {
                 match &pg_json_type {
-                    PgJsonType::StdPrimitiveI8AsJsonbNumber
-                    | PgJsonType::StdPrimitiveI16AsJsonbNumber
-                    | PgJsonType::StdPrimitiveI32AsJsonbNumber
-                    | PgJsonType::StdPrimitiveI64AsJsonbNumber
-                    | PgJsonType::StdPrimitiveU8AsJsonbNumber
-                    | PgJsonType::StdPrimitiveU16AsJsonbNumber
-                    | PgJsonType::StdPrimitiveU32AsJsonbNumber
-                    | PgJsonType::StdPrimitiveU64AsJsonbNumber
-                    | PgJsonType::StdPrimitiveF32AsJsonbNumber
-                    | PgJsonType::StdPrimitiveF64AsJsonbNumber
-                    | PgJsonType::StdPrimitiveBoolAsJsonbBoolean => Ts2::new(),
+                    PgJsonType::I8AsJsonbNumber
+                    | PgJsonType::I16AsJsonbNumber
+                    | PgJsonType::I32AsJsonbNumber
+                    | PgJsonType::I64AsJsonbNumber
+                    | PgJsonType::U8AsJsonbNumber
+                    | PgJsonType::U16AsJsonbNumber
+                    | PgJsonType::U32AsJsonbNumber
+                    | PgJsonType::U64AsJsonbNumber
+                    | PgJsonType::F32AsJsonbNumber
+                    | PgJsonType::F64AsJsonbNumber
+                    | PgJsonType::BoolAsJsonbBoolean => Ts2::new(),
                     PgJsonType::StdStringStringAsJsonbString => gen_impl_crate_is_string_empty_for_ident_content_ts(
                         &ident_origin_ucc,
                         &quote!{self.0.clone().is_empty()}
@@ -1155,17 +1154,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 let content_ts = match &pg_json_type_pattern {
                     PgJsonTypePattern::Standart => match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => match &pg_json_type {
-                            PgJsonType::StdPrimitiveI8AsJsonbNumber
-                            | PgJsonType::StdPrimitiveI16AsJsonbNumber
-                            | PgJsonType::StdPrimitiveI32AsJsonbNumber
-                            | PgJsonType::StdPrimitiveI64AsJsonbNumber
-                            | PgJsonType::StdPrimitiveU8AsJsonbNumber
-                            | PgJsonType::StdPrimitiveU16AsJsonbNumber
-                            | PgJsonType::StdPrimitiveU32AsJsonbNumber
-                            | PgJsonType::StdPrimitiveU64AsJsonbNumber
-                            | PgJsonType::StdPrimitiveF32AsJsonbNumber
-                            | PgJsonType::StdPrimitiveF64AsJsonbNumber
-                            | PgJsonType::StdPrimitiveBoolAsJsonbBoolean => quote! {Default::default()},
+                            PgJsonType::I8AsJsonbNumber
+                            | PgJsonType::I16AsJsonbNumber
+                            | PgJsonType::I32AsJsonbNumber
+                            | PgJsonType::I64AsJsonbNumber
+                            | PgJsonType::U8AsJsonbNumber
+                            | PgJsonType::U16AsJsonbNumber
+                            | PgJsonType::U32AsJsonbNumber
+                            | PgJsonType::U64AsJsonbNumber
+                            | PgJsonType::F32AsJsonbNumber
+                            | PgJsonType::F64AsJsonbNumber
+                            | PgJsonType::BoolAsJsonbBoolean => quote! {Default::default()},
                             PgJsonType::StdStringStringAsJsonbString => quote! {String::default()},
                             PgJsonType::UuidUuidAsJsonbString => quote! {uuid::Uuid::new_v4()},
                         },
@@ -1371,17 +1370,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     impl From<&PgJsonType> for PgJsonTypeSpecific {
                         fn from(value: &PgJsonType) -> Self {
                             match value {
-                                PgJsonType::StdPrimitiveI8AsJsonbNumber
-                                | PgJsonType::StdPrimitiveI16AsJsonbNumber
-                                | PgJsonType::StdPrimitiveI32AsJsonbNumber
-                                | PgJsonType::StdPrimitiveI64AsJsonbNumber
-                                | PgJsonType::StdPrimitiveU8AsJsonbNumber
-                                | PgJsonType::StdPrimitiveU16AsJsonbNumber
-                                | PgJsonType::StdPrimitiveU32AsJsonbNumber
-                                | PgJsonType::StdPrimitiveU64AsJsonbNumber
-                                | PgJsonType::StdPrimitiveF32AsJsonbNumber
-                                | PgJsonType::StdPrimitiveF64AsJsonbNumber => Self::Number,
-                                PgJsonType::StdPrimitiveBoolAsJsonbBoolean => Self::Bool,
+                                PgJsonType::I8AsJsonbNumber
+                                | PgJsonType::I16AsJsonbNumber
+                                | PgJsonType::I32AsJsonbNumber
+                                | PgJsonType::I64AsJsonbNumber
+                                | PgJsonType::U8AsJsonbNumber
+                                | PgJsonType::U16AsJsonbNumber
+                                | PgJsonType::U32AsJsonbNumber
+                                | PgJsonType::U64AsJsonbNumber
+                                | PgJsonType::F32AsJsonbNumber
+                                | PgJsonType::F64AsJsonbNumber => Self::Number,
+                                PgJsonType::BoolAsJsonbBoolean => Self::Bool,
                                 PgJsonType::StdStringStringAsJsonbString | PgJsonType::UuidUuidAsJsonbString => Self::String,
                             }
                         }
@@ -2482,17 +2481,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 >::#read_or_update_ucc::#NewSc(#ValueSc)}
             };
             let standart_not_null_test_cases_vec_name_ts = match &pg_json_type {
-                PgJsonType::StdPrimitiveI8AsJsonbNumber => quote! {i8_test_cases_vec},
-                PgJsonType::StdPrimitiveI16AsJsonbNumber => quote! {i16_test_cases_vec},
-                PgJsonType::StdPrimitiveI32AsJsonbNumber => quote! {i32_test_cases_vec},
-                PgJsonType::StdPrimitiveI64AsJsonbNumber => quote! {i64_test_cases_vec},
-                PgJsonType::StdPrimitiveU8AsJsonbNumber => quote! {u8_test_cases_vec},
-                PgJsonType::StdPrimitiveU16AsJsonbNumber => quote! {u16_test_cases_vec},
-                PgJsonType::StdPrimitiveU32AsJsonbNumber => quote! {u32_test_cases_vec},
-                PgJsonType::StdPrimitiveU64AsJsonbNumber => quote! {u64_test_cases_vec},
-                PgJsonType::StdPrimitiveF32AsJsonbNumber => quote! {f32_test_cases_vec},
-                PgJsonType::StdPrimitiveF64AsJsonbNumber => quote! {f64_test_cases_vec},
-                PgJsonType::StdPrimitiveBoolAsJsonbBoolean => quote! {bool_test_cases_vec},
+                PgJsonType::I8AsJsonbNumber => quote! {i8_test_cases_vec},
+                PgJsonType::I16AsJsonbNumber => quote! {i16_test_cases_vec},
+                PgJsonType::I32AsJsonbNumber => quote! {i32_test_cases_vec},
+                PgJsonType::I64AsJsonbNumber => quote! {i64_test_cases_vec},
+                PgJsonType::U8AsJsonbNumber => quote! {u8_test_cases_vec},
+                PgJsonType::U16AsJsonbNumber => quote! {u16_test_cases_vec},
+                PgJsonType::U32AsJsonbNumber => quote! {u32_test_cases_vec},
+                PgJsonType::U64AsJsonbNumber => quote! {u64_test_cases_vec},
+                PgJsonType::F32AsJsonbNumber => quote! {f32_test_cases_vec},
+                PgJsonType::F64AsJsonbNumber => quote! {f64_test_cases_vec},
+                PgJsonType::BoolAsJsonbBoolean => quote! {bool_test_cases_vec},
                 PgJsonType::StdStringStringAsJsonbString => quote! {std_string_string_test_cases_vec},
                 PgJsonType::UuidUuidAsJsonbString => quote! {uuid_uuid_test_cases_vec},
             };
@@ -2596,7 +2595,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                             .parse::<Ts2>()
                                             .expect("f0ce7e73");
                                         quote! {
-                                            pg_crud_common::UnsignedPartOfStdPrimitiveI32::try_from(
+                                            pg_crud_common::UnsignedPartOfI32::try_from(
                                                 i32::try_from(#index_number_ts)
                                                     .expect("5a1818e7")
                                             ).expect("ad1ab73f")
@@ -2795,17 +2794,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     // let maybe_dot_clone_ts = match &pg_json_type_pattern {
                     //     PgJsonTypePattern::Standart => match &not_null_or_nullable {
                     //         NotNullOrNullable::NotNull => match &pg_json_type {
-                    //             | PgJsonType::StdPrimitiveF32AsJsonbNumber
-                    //             | PgJsonType::StdPrimitiveF64AsJsonbNumber => Ts2::new(),
-                    //             PgJsonType::StdPrimitiveI8AsJsonbNumber
-                    //             | PgJsonType::StdPrimitiveI16AsJsonbNumber
-                    //             | PgJsonType::StdPrimitiveI32AsJsonbNumber
-                    //             | PgJsonType::StdPrimitiveI64AsJsonbNumber
-                    //             | PgJsonType::StdPrimitiveU8AsJsonbNumber
-                    //             | PgJsonType::StdPrimitiveU16AsJsonbNumber
-                    //             | PgJsonType::StdPrimitiveU32AsJsonbNumber
-                    //             | PgJsonType::StdPrimitiveU64AsJsonbNumber
-                    //             | PgJsonType::StdPrimitiveBoolAsJsonbBoolean
+                    //             | PgJsonType::F32AsJsonbNumber
+                    //             | PgJsonType::F64AsJsonbNumber => Ts2::new(),
+                    //             PgJsonType::I8AsJsonbNumber
+                    //             | PgJsonType::I16AsJsonbNumber
+                    //             | PgJsonType::I32AsJsonbNumber
+                    //             | PgJsonType::I64AsJsonbNumber
+                    //             | PgJsonType::U8AsJsonbNumber
+                    //             | PgJsonType::U16AsJsonbNumber
+                    //             | PgJsonType::U32AsJsonbNumber
+                    //             | PgJsonType::U64AsJsonbNumber
+                    //             | PgJsonType::BoolAsJsonbBoolean
                     //             | PgJsonType::StdStringStringAsJsonbString
                     //             | PgJsonType::UuidUuidAsJsonbString => quote!{.clone()},
                     //         }
@@ -2867,17 +2866,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     ),
                 };
                 match &pg_json_type {
-                    PgJsonType::StdPrimitiveI8AsJsonbNumber
-                    | PgJsonType::StdPrimitiveI16AsJsonbNumber
-                    | PgJsonType::StdPrimitiveI32AsJsonbNumber
-                    | PgJsonType::StdPrimitiveI64AsJsonbNumber
-                    | PgJsonType::StdPrimitiveU8AsJsonbNumber
-                    | PgJsonType::StdPrimitiveU16AsJsonbNumber
-                    | PgJsonType::StdPrimitiveU32AsJsonbNumber
-                    | PgJsonType::StdPrimitiveU64AsJsonbNumber
-                    | PgJsonType::StdPrimitiveF32AsJsonbNumber
-                    | PgJsonType::StdPrimitiveF64AsJsonbNumber
-                    | PgJsonType::StdPrimitiveBoolAsJsonbBoolean
+                    PgJsonType::I8AsJsonbNumber
+                    | PgJsonType::I16AsJsonbNumber
+                    | PgJsonType::I32AsJsonbNumber
+                    | PgJsonType::I64AsJsonbNumber
+                    | PgJsonType::U8AsJsonbNumber
+                    | PgJsonType::U16AsJsonbNumber
+                    | PgJsonType::U32AsJsonbNumber
+                    | PgJsonType::U64AsJsonbNumber
+                    | PgJsonType::F32AsJsonbNumber
+                    | PgJsonType::F64AsJsonbNumber
+                    | PgJsonType::BoolAsJsonbBoolean
                     | PgJsonType::StdStringStringAsJsonbString => content_ts,
                     PgJsonType::UuidUuidAsJsonbString => quote! {None},
                 }
@@ -3006,17 +3005,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     PgJsonTypePattern::ArrayDimension4 { dimension1_not_null_or_nullable, .. } => gen_acc_content_handle_ts(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("860f8f15")), &has_len_greater_than_one_ts),
                 };
                 match &pg_json_type {
-                    PgJsonType::StdPrimitiveI8AsJsonbNumber
-                    | PgJsonType::StdPrimitiveI16AsJsonbNumber
-                    | PgJsonType::StdPrimitiveI32AsJsonbNumber
-                    | PgJsonType::StdPrimitiveI64AsJsonbNumber
-                    | PgJsonType::StdPrimitiveU8AsJsonbNumber
-                    | PgJsonType::StdPrimitiveU16AsJsonbNumber
-                    | PgJsonType::StdPrimitiveU32AsJsonbNumber
-                    | PgJsonType::StdPrimitiveU64AsJsonbNumber
-                    | PgJsonType::StdPrimitiveF32AsJsonbNumber
-                    | PgJsonType::StdPrimitiveF64AsJsonbNumber
-                    | PgJsonType::StdPrimitiveBoolAsJsonbBoolean
+                    PgJsonType::I8AsJsonbNumber
+                    | PgJsonType::I16AsJsonbNumber
+                    | PgJsonType::I32AsJsonbNumber
+                    | PgJsonType::I64AsJsonbNumber
+                    | PgJsonType::U8AsJsonbNumber
+                    | PgJsonType::U16AsJsonbNumber
+                    | PgJsonType::U32AsJsonbNumber
+                    | PgJsonType::U64AsJsonbNumber
+                    | PgJsonType::F32AsJsonbNumber
+                    | PgJsonType::F64AsJsonbNumber
+                    | PgJsonType::BoolAsJsonbBoolean
                     | PgJsonType::StdStringStringAsJsonbString => content_ts,
                     PgJsonType::UuidUuidAsJsonbString => quote! {Vec::new()},
                 }
@@ -3238,7 +3237,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 ::LengthEqual(
                                     where_filters::PgJsonTypeWhereLengthEqual {
                                         logical_operator: #import_path::LogicalOperator::Or,
-                                        #ValueSc: pg_crud_common::UnsignedPartOfStdPrimitiveI32::try_from(
+                                        #ValueSc: pg_crud_common::UnsignedPartOfI32::try_from(
                                             i32::try_from(#content_ts.len()).expect("64d3424f")
                                         ).expect("081f4463"),
                                     }
@@ -3300,7 +3299,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 ::LengthGreaterThan(
                                     where_filters::PgJsonTypeWhereLengthGreaterThan {
                                         logical_operator: #import_path::LogicalOperator::Or,
-                                        #ValueSc: if let Ok(value_762dae1f) = pg_crud_common::UnsignedPartOfStdPrimitiveI32::try_from(
+                                        #ValueSc: if let Ok(value_762dae1f) = pg_crud_common::UnsignedPartOfI32::try_from(
                                             if let Ok(value_9dca0200) = i32::try_from(
                                                 //todo temp code. make it better checking all cases
                                                 match #content_ts.len().checked_sub(1) {
@@ -3433,17 +3432,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     )
                 };
                 match &pg_json_type {
-                    PgJsonType::StdPrimitiveI8AsJsonbNumber |
-                    PgJsonType::StdPrimitiveI16AsJsonbNumber |
-                    PgJsonType::StdPrimitiveI32AsJsonbNumber |
-                    PgJsonType::StdPrimitiveI64AsJsonbNumber |
-                    PgJsonType::StdPrimitiveU8AsJsonbNumber |
-                    PgJsonType::StdPrimitiveU16AsJsonbNumber |
-                    PgJsonType::StdPrimitiveU32AsJsonbNumber |
-                    PgJsonType::StdPrimitiveU64AsJsonbNumber => int_greater_than_one_less_ts,
-                    PgJsonType::StdPrimitiveF32AsJsonbNumber => float_32_greater_than_one_less_ts,
-                    PgJsonType::StdPrimitiveF64AsJsonbNumber => float_64_greater_than_one_less_ts,
-                    PgJsonType::StdPrimitiveBoolAsJsonbBoolean |
+                    PgJsonType::I8AsJsonbNumber |
+                    PgJsonType::I16AsJsonbNumber |
+                    PgJsonType::I32AsJsonbNumber |
+                    PgJsonType::I64AsJsonbNumber |
+                    PgJsonType::U8AsJsonbNumber |
+                    PgJsonType::U16AsJsonbNumber |
+                    PgJsonType::U32AsJsonbNumber |
+                    PgJsonType::U64AsJsonbNumber => int_greater_than_one_less_ts,
+                    PgJsonType::F32AsJsonbNumber => float_32_greater_than_one_less_ts,
+                    PgJsonType::F64AsJsonbNumber => float_64_greater_than_one_less_ts,
+                    PgJsonType::BoolAsJsonbBoolean |
                     PgJsonType::StdStringStringAsJsonbString |
                     PgJsonType::UuidUuidAsJsonbString => none_ts.clone(),
                 }
@@ -3511,17 +3510,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     )
                 };
                 match &pg_json_type {
-                    PgJsonType::StdPrimitiveI8AsJsonbNumber |
-                    PgJsonType::StdPrimitiveI16AsJsonbNumber |
-                    PgJsonType::StdPrimitiveI32AsJsonbNumber |
-                    PgJsonType::StdPrimitiveI64AsJsonbNumber |
-                    PgJsonType::StdPrimitiveU8AsJsonbNumber |
-                    PgJsonType::StdPrimitiveU16AsJsonbNumber |
-                    PgJsonType::StdPrimitiveU32AsJsonbNumber |
-                    PgJsonType::StdPrimitiveU64AsJsonbNumber => between_one_less_and_one_more_int_ts,
-                    PgJsonType::StdPrimitiveF32AsJsonbNumber |
-                    PgJsonType::StdPrimitiveF64AsJsonbNumber => between_one_less_and_one_more_float_ts,
-                    PgJsonType::StdPrimitiveBoolAsJsonbBoolean |
+                    PgJsonType::I8AsJsonbNumber |
+                    PgJsonType::I16AsJsonbNumber |
+                    PgJsonType::I32AsJsonbNumber |
+                    PgJsonType::I64AsJsonbNumber |
+                    PgJsonType::U8AsJsonbNumber |
+                    PgJsonType::U16AsJsonbNumber |
+                    PgJsonType::U32AsJsonbNumber |
+                    PgJsonType::U64AsJsonbNumber => between_one_less_and_one_more_int_ts,
+                    PgJsonType::F32AsJsonbNumber |
+                    PgJsonType::F64AsJsonbNumber => between_one_less_and_one_more_float_ts,
+                    PgJsonType::BoolAsJsonbBoolean |
                     PgJsonType::StdStringStringAsJsonbString |
                     PgJsonType::UuidUuidAsJsonbString => none_ts.clone()
                 }
@@ -3533,16 +3532,16 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 matches!(&not_null_or_nullable, NotNullOrNullable::NotNull)
             {
                 match &pg_json_type {
-                    PgJsonType::StdPrimitiveI8AsJsonbNumber |
-                    PgJsonType::StdPrimitiveI16AsJsonbNumber |
-                    PgJsonType::StdPrimitiveI32AsJsonbNumber |
-                    PgJsonType::StdPrimitiveI64AsJsonbNumber |
-                    PgJsonType::StdPrimitiveU8AsJsonbNumber |
-                    PgJsonType::StdPrimitiveU16AsJsonbNumber |
-                    PgJsonType::StdPrimitiveU32AsJsonbNumber |
-                    PgJsonType::StdPrimitiveU64AsJsonbNumber |
-                    PgJsonType::StdPrimitiveF32AsJsonbNumber |
-                    PgJsonType::StdPrimitiveF64AsJsonbNumber => {
+                    PgJsonType::I8AsJsonbNumber |
+                    PgJsonType::I16AsJsonbNumber |
+                    PgJsonType::I32AsJsonbNumber |
+                    PgJsonType::I64AsJsonbNumber |
+                    PgJsonType::U8AsJsonbNumber |
+                    PgJsonType::U16AsJsonbNumber |
+                    PgJsonType::U32AsJsonbNumber |
+                    PgJsonType::U64AsJsonbNumber |
+                    PgJsonType::F32AsJsonbNumber |
+                    PgJsonType::F64AsJsonbNumber => {
                         //todo additional variants to test
                         quote!{
                             match #import_path::NotEmptyUniqueVec::try_new(vec![
@@ -3565,7 +3564,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                     },
-                    PgJsonType::StdPrimitiveBoolAsJsonbBoolean |
+                    PgJsonType::BoolAsJsonbBoolean |
                     PgJsonType::StdStringStringAsJsonbString |
                     PgJsonType::UuidUuidAsJsonbString => none_ts.clone()
                 }
@@ -3577,17 +3576,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 matches!(&not_null_or_nullable, NotNullOrNullable::NotNull)
             {
                 match &pg_json_type {
-                    PgJsonType::StdPrimitiveI8AsJsonbNumber |
-                    PgJsonType::StdPrimitiveI16AsJsonbNumber |
-                    PgJsonType::StdPrimitiveI32AsJsonbNumber |
-                    PgJsonType::StdPrimitiveI64AsJsonbNumber |
-                    PgJsonType::StdPrimitiveU8AsJsonbNumber |
-                    PgJsonType::StdPrimitiveU16AsJsonbNumber |
-                    PgJsonType::StdPrimitiveU32AsJsonbNumber |
-                    PgJsonType::StdPrimitiveU64AsJsonbNumber |
-                    PgJsonType::StdPrimitiveF32AsJsonbNumber |
-                    PgJsonType::StdPrimitiveF64AsJsonbNumber |
-                    PgJsonType::StdPrimitiveBoolAsJsonbBoolean |
+                    PgJsonType::I8AsJsonbNumber |
+                    PgJsonType::I16AsJsonbNumber |
+                    PgJsonType::I32AsJsonbNumber |
+                    PgJsonType::I64AsJsonbNumber |
+                    PgJsonType::U8AsJsonbNumber |
+                    PgJsonType::U16AsJsonbNumber |
+                    PgJsonType::U32AsJsonbNumber |
+                    PgJsonType::U64AsJsonbNumber |
+                    PgJsonType::F32AsJsonbNumber |
+                    PgJsonType::F64AsJsonbNumber |
+                    PgJsonType::BoolAsJsonbBoolean |
                     PgJsonType::UuidUuidAsJsonbString => none_ts.clone(),
                     PgJsonType::StdStringStringAsJsonbString => quote!{
                         match #import_path::NotEmptyUniqueVec::try_new(vec![
@@ -3675,17 +3674,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             )
                         };
                         match &pg_json_type {
-                            PgJsonType::StdPrimitiveI8AsJsonbNumber |
-                            PgJsonType::StdPrimitiveI16AsJsonbNumber |
-                            PgJsonType::StdPrimitiveI32AsJsonbNumber |
-                            PgJsonType::StdPrimitiveI64AsJsonbNumber |
-                            PgJsonType::StdPrimitiveU8AsJsonbNumber |
-                            PgJsonType::StdPrimitiveU16AsJsonbNumber |
-                            PgJsonType::StdPrimitiveU32AsJsonbNumber |
-                            PgJsonType::StdPrimitiveU64AsJsonbNumber => int_greater_than_one_less_ts,
-                            PgJsonType::StdPrimitiveF32AsJsonbNumber => float_32_greater_than_one_less_ts,
-                            PgJsonType::StdPrimitiveF64AsJsonbNumber => float_64_greater_than_one_less_ts,
-                            PgJsonType::StdPrimitiveBoolAsJsonbBoolean |
+                            PgJsonType::I8AsJsonbNumber |
+                            PgJsonType::I16AsJsonbNumber |
+                            PgJsonType::I32AsJsonbNumber |
+                            PgJsonType::I64AsJsonbNumber |
+                            PgJsonType::U8AsJsonbNumber |
+                            PgJsonType::U16AsJsonbNumber |
+                            PgJsonType::U32AsJsonbNumber |
+                            PgJsonType::U64AsJsonbNumber => int_greater_than_one_less_ts,
+                            PgJsonType::F32AsJsonbNumber => float_32_greater_than_one_less_ts,
+                            PgJsonType::F64AsJsonbNumber => float_64_greater_than_one_less_ts,
+                            PgJsonType::BoolAsJsonbBoolean |
                             PgJsonType::StdStringStringAsJsonbString |
                             PgJsonType::UuidUuidAsJsonbString => none_ts.clone(),
                         }
@@ -3707,17 +3706,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         NotNullOrNullable::NotNull
                     )) {
                         match &pg_json_type {
-                            PgJsonType::StdPrimitiveI8AsJsonbNumber |
-                            PgJsonType::StdPrimitiveI16AsJsonbNumber |
-                            PgJsonType::StdPrimitiveI32AsJsonbNumber |
-                            PgJsonType::StdPrimitiveI64AsJsonbNumber |
-                            PgJsonType::StdPrimitiveU8AsJsonbNumber |
-                            PgJsonType::StdPrimitiveU16AsJsonbNumber |
-                            PgJsonType::StdPrimitiveU32AsJsonbNumber |
-                            PgJsonType::StdPrimitiveU64AsJsonbNumber |
-                            PgJsonType::StdPrimitiveF32AsJsonbNumber |
-                            PgJsonType::StdPrimitiveF64AsJsonbNumber |
-                            PgJsonType::StdPrimitiveBoolAsJsonbBoolean |
+                            PgJsonType::I8AsJsonbNumber |
+                            PgJsonType::I16AsJsonbNumber |
+                            PgJsonType::I32AsJsonbNumber |
+                            PgJsonType::I64AsJsonbNumber |
+                            PgJsonType::U8AsJsonbNumber |
+                            PgJsonType::U16AsJsonbNumber |
+                            PgJsonType::U32AsJsonbNumber |
+                            PgJsonType::U64AsJsonbNumber |
+                            PgJsonType::F32AsJsonbNumber |
+                            PgJsonType::F64AsJsonbNumber |
+                            PgJsonType::BoolAsJsonbBoolean |
                             PgJsonType::UuidUuidAsJsonbString => none_ts.clone(),
                             PgJsonType::StdStringStringAsJsonbString => quote!{
                                 match #import_path::NotEmptyUniqueVec::try_new(create.0.0.into_iter().map(|el_590fca71| {

@@ -92,15 +92,15 @@ impl ToTokens for ThiserrorError {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct StdPrimitiveChar;
-impl ToTokens for StdPrimitiveChar {
+pub struct Char;
+impl ToTokens for Char {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {char}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct RefStdPrimitiveStr;
-impl ToTokens for RefStdPrimitiveStr {
+pub struct RefStr;
+impl ToTokens for RefStr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {&str}.to_tokens(tokens);
     }
@@ -166,8 +166,8 @@ impl ToTokens for DeriveDebugThisErrorErrorOccurence {
 }
 
 #[derive(Debug, Clone, Copy)]
-pub struct StdPrimitiveStrSqlxColumnIndex;
-impl ToTokens for StdPrimitiveStrSqlxColumnIndex {
+pub struct StrSqlxColumnIndex;
+impl ToTokens for StrSqlxColumnIndex {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {&'lifetime str: sqlx::ColumnIndex<R>,}.to_tokens(tokens);
     }
@@ -260,78 +260,78 @@ impl ToTokens for FieldAttributeSerdeSkipSerializingIfOptionIsNone {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct StdPrimitiveBool;
-impl ToTokens for StdPrimitiveBool {
+pub struct Bool;
+impl ToTokens for Bool {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {bool}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct StdPrimitiveU8;
-impl ToTokens for StdPrimitiveU8 {
+pub struct U8;
+impl ToTokens for U8 {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {u8}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct StdPrimitiveU16;
-impl ToTokens for StdPrimitiveU16 {
+pub struct U16;
+impl ToTokens for U16 {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {u16}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct StdPrimitiveU32;
-impl ToTokens for StdPrimitiveU32 {
+pub struct U32;
+impl ToTokens for U32 {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {u32}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct StdPrimitiveU64;
-impl ToTokens for StdPrimitiveU64 {
+pub struct U64;
+impl ToTokens for U64 {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {u64}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct StdPrimitiveI8;
-impl ToTokens for StdPrimitiveI8 {
+pub struct I8;
+impl ToTokens for I8 {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {i8}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct StdPrimitiveI16;
-impl ToTokens for StdPrimitiveI16 {
+pub struct I16;
+impl ToTokens for I16 {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {i16}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct StdPrimitiveI32;
-impl ToTokens for StdPrimitiveI32 {
+pub struct I32;
+impl ToTokens for I32 {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {i32}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct StdPrimitiveI64;
-impl ToTokens for StdPrimitiveI64 {
+pub struct I64;
+impl ToTokens for I64 {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {i64}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct StdPrimitiveF32;
-impl ToTokens for StdPrimitiveF32 {
+pub struct F32;
+impl ToTokens for F32 {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {f32}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct StdPrimitiveF64;
-impl ToTokens for StdPrimitiveF64 {
+pub struct F64;
+impl ToTokens for F64 {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {f64}.to_tokens(tokens);
     }

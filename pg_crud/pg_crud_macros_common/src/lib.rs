@@ -52,7 +52,8 @@ use std::fmt::Display;
 use strum_macros::{Display, EnumIter};
 use syn::{Ident, Type};
 use token_patterns::{
-    AllowClippyArbitrarySourceItemOrdering, CrateAllEnumVariantsArrayDefaultOptionSomeVecOneEl,
+    AllowClippyArbitrarySourceItemOrdering, Bool,
+    CrateAllEnumVariantsArrayDefaultOptionSomeVecOneEl,
     CrateAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize, CrateDefaultOptionSomeVecOneEl,
     CrateDefaultOptionSomeVecOneElMaxPageSize, PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneEl,
     PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize,
@@ -60,8 +61,7 @@ use token_patterns::{
     PgCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize,
     PgCrudCommonDefaultOptionSomeVecOneEl, PgCrudCommonDefaultOptionSomeVecOneElCall,
     PgCrudCommonDefaultOptionSomeVecOneElMaxPageSize, PgCrudDefaultOptionSomeVecOneEl,
-    PgCrudDefaultOptionSomeVecOneElMaxPageSize, RefStdPrimitiveStr, StdFmtDisplay,
-    StdPrimitiveBool, StdPrimitiveU64, StdStringString,
+    PgCrudDefaultOptionSomeVecOneElMaxPageSize, RefStr, StdFmtDisplay, StdStringString, U64,
 };
 
 #[derive(Debug, Clone)]
@@ -764,7 +764,7 @@ pub fn gen_impl_pg_json_type_ts(
     select_only_created_ids_query_bind_ts: &dyn ToTokens,
 ) -> Ts2 {
     let path_ts = quote! {#import_path ::};
-    let reference_mut_std_primitive_u64_ts = quote! {&mut #StdPrimitiveU64};
+    let reference_mut_std_primitive_u64_ts = quote! {&mut #U64};
     let query_pg_arguments_ts =
         quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
     let query_lifetime_pg_arguments_ts =
@@ -779,10 +779,10 @@ pub fn gen_impl_pg_json_type_ts(
             type #SelectUcc = #select_type_ts;
             fn #SelectQueryPartSc(
                 #is_select_query_part_self_select_used: &Self::#SelectUcc,
-                #FieldIdentSc: #RefStdPrimitiveStr,
-                #ColumnNameAndMaybeFieldGetterSc: #RefStdPrimitiveStr,
-                #is_select_query_part_column_name_and_maybe_field_getter_for_error_message_used: #RefStdPrimitiveStr,
-                #is_select_query_part_is_pg_type_used: #StdPrimitiveBool,
+                #FieldIdentSc: #RefStr,
+                #ColumnNameAndMaybeFieldGetterSc: #RefStr,
+                #is_select_query_part_column_name_and_maybe_field_getter_for_error_message_used: #RefStr,
+                #is_select_query_part_is_pg_type_used: #Bool,
             ) -> Result<#StdStringString, #path_ts #QueryPartErrorNamedUcc> {
                 #select_query_part_ts
             }
@@ -790,7 +790,7 @@ pub fn gen_impl_pg_json_type_ts(
             type #ReadUcc = #read_type_ts;
             type #ReadOnlyIdsUcc = #read_only_ids_type_ts;
             fn #SelectOnlyIdsQueryPartSc(
-                #ColumnNameAndMaybeFieldGetterSc: #RefStdPrimitiveStr,
+                #ColumnNameAndMaybeFieldGetterSc: #RefStr,
             ) -> Result<#StdStringString, #import_path ::#QueryPartErrorNamedUcc> {
                 #select_only_ids_query_part_ts
             }
@@ -802,9 +802,9 @@ pub fn gen_impl_pg_json_type_ts(
             type #UpdateForQueryUcc = #update_type_for_query_ts;
             fn #UpdateQueryPartSc(
                 #is_update_query_part_self_update_used: &Self::#UpdateForQueryUcc,
-                #JsonbSetAccumulatorSc: #RefStdPrimitiveStr,
-                #is_update_query_part_jsonb_set_target_used: #RefStdPrimitiveStr,
-                #JsonbSetPathSc: #RefStdPrimitiveStr,
+                #JsonbSetAccumulatorSc: #RefStr,
+                #is_update_query_part_jsonb_set_target_used: #RefStr,
+                #JsonbSetPathSc: #RefStr,
                 #IncrementSc: #reference_mut_std_primitive_u64_ts,
             ) -> Result<#StdStringString, #path_ts #QueryPartErrorNamedUcc> {
                 #update_query_part_ts
@@ -817,9 +817,9 @@ pub fn gen_impl_pg_json_type_ts(
             }
             fn #SelectOnlyUpdatedIdsQueryPartSc(
                 #ValueSc: &Self::#UpdateForQueryUcc,
-                #FieldIdentSc: #RefStdPrimitiveStr,
-                #ColumnNameAndMaybeFieldGetterSc: #RefStdPrimitiveStr,
-                #IncrementSc: &mut #StdPrimitiveU64
+                #FieldIdentSc: #RefStr,
+                #ColumnNameAndMaybeFieldGetterSc: #RefStr,
+                #IncrementSc: &mut #U64
             ) -> Result<#StdStringString, #import_path ::#QueryPartErrorNamedUcc> {
                 #select_only_updated_ids_query_part_ts
             }
@@ -832,9 +832,9 @@ pub fn gen_impl_pg_json_type_ts(
 
             fn #SelectOnlyCreatedIdsQueryPartSc(
                 #ValueSc: &Self::#CreateForQueryUcc,
-                #FieldIdentSc: #RefStdPrimitiveStr,
-                #ColumnNameAndMaybeFieldGetterSc: #RefStdPrimitiveStr,
-                #IncrementSc: &mut #StdPrimitiveU64
+                #FieldIdentSc: #RefStr,
+                #ColumnNameAndMaybeFieldGetterSc: #RefStr,
+                #IncrementSc: &mut #U64
             ) -> Result<#StdStringString, #import_path ::#QueryPartErrorNamedUcc> {
                 #select_only_created_ids_query_part_ts
             }
@@ -1005,9 +1005,9 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
         impl #impl_generic_ts #import_path ::#PgTypeWhereFilterUcc<'lifetime> for #ident_ts #ident_generic_ts {
             fn #QueryPartSc(
                 &self,
-                #increment_parameter_underscore: &mut #StdPrimitiveU64,
+                #increment_parameter_underscore: &mut #U64,
                 #column_parameter_underscore: &dyn #StdFmtDisplay,
-                #is_need_to_add_logical_operator_underscore: #StdPrimitiveBool
+                #is_need_to_add_logical_operator_underscore: #Bool
             ) -> Result<#StdStringString, #import_path::#QueryPartErrorNamedUcc> {
                 #query_part_content_ts
             }
@@ -1106,13 +1106,13 @@ pub fn gen_impl_pg_type_ts(
         #AllowClippyArbitrarySourceItemOrdering
         impl #import_path :: #PgTypeUcc for #ident {
             type #TableTypeDeclarationUcc = #ident_table_type_declaration_ucc;
-            fn #CreateTableColumnQueryPartSc(#ColumnSc: &dyn #StdFmtDisplay, #is_primary_key_underscore: #StdPrimitiveBool) -> impl #StdFmtDisplay {
+            fn #CreateTableColumnQueryPartSc(#ColumnSc: &dyn #StdFmtDisplay, #is_primary_key_underscore: #Bool) -> impl #StdFmtDisplay {
                 #create_table_column_query_part_ts
             }
             type #CreateUcc = #ident_create_ucc;
             fn #CreateQueryPartSc(
                 #create_query_part_value_underscore: &Self::#CreateUcc,
-                #create_query_part_increment_underscore: &mut #StdPrimitiveU64
+                #create_query_part_increment_underscore: &mut #U64
             ) -> Result<#StdStringString, #import_path ::#QueryPartErrorNamedUcc> {
                 #create_query_part_content_ts
             }
@@ -1128,7 +1128,7 @@ pub fn gen_impl_pg_type_ts(
             type #SelectUcc = #ident_select_ucc;
             fn #SelectQueryPartSc(
                 #select_query_part_value_underscore: &Self::#SelectUcc,
-                #ColumnSc: #RefStdPrimitiveStr,
+                #ColumnSc: #RefStr,
             ) -> Result<#StdStringString, #import_path ::#QueryPartErrorNamedUcc> {
                 #select_query_part_content_ts
             }
@@ -1139,7 +1139,7 @@ pub fn gen_impl_pg_type_ts(
             }
             type #ReadOnlyIdsUcc = #read_only_ids_ts;
             fn #SelectOnlyIdsQueryPartSc(
-                #ColumnSc: #RefStdPrimitiveStr
+                #ColumnSc: #RefStr
             ) -> Result<#StdStringString, #import_path ::#QueryPartErrorNamedUcc> {
                 #select_only_ids_query_part_ts
             }
@@ -1151,10 +1151,10 @@ pub fn gen_impl_pg_type_ts(
             type #UpdateForQueryUcc = #ident_update_for_query_ucc;
             fn #UpdateQueryPartSc(
                 #update_query_part_value_underscore: &Self::#UpdateForQueryUcc,
-                #update_query_part_jsonb_set_accumulator_underscore: #RefStdPrimitiveStr,
-                #update_query_part_jsonb_set_target_underscore: #RefStdPrimitiveStr,
-                #update_query_part_jsonb_set_path_underscore: #RefStdPrimitiveStr,
-                #IncrementSc: &mut #StdPrimitiveU64
+                #update_query_part_jsonb_set_accumulator_underscore: #RefStr,
+                #update_query_part_jsonb_set_target_underscore: #RefStr,
+                #update_query_part_jsonb_set_path_underscore: #RefStr,
+                #IncrementSc: &mut #U64
             ) -> Result<#StdStringString, #import_path ::#QueryPartErrorNamedUcc> {
                 #update_query_part_content_ts
             }
@@ -1169,8 +1169,8 @@ pub fn gen_impl_pg_type_ts(
             }
             fn #SelectOnlyUpdatedIdsQueryPartSc(
                 #ValueSc: &Self::#UpdateForQueryUcc,
-                #ColumnSc: #RefStdPrimitiveStr,
-                #IncrementSc: &mut #StdPrimitiveU64,
+                #ColumnSc: #RefStr,
+                #IncrementSc: &mut #U64,
             ) -> Result<#StdStringString, #import_path ::#QueryPartErrorNamedUcc> {
                 #select_only_updated_ids_query_part_ts
             }

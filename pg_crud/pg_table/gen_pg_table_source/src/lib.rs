@@ -429,7 +429,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let sqlx_acquire = token_patterns::SqlxAcquire;
     let derive_debug_serde_serialize_serde_deserialize =
         token_patterns::DeriveDebugSerdeSerializeSerdeDeserialize;
-    let ref_std_primitive_str = token_patterns::RefStdPrimitiveStr;
+    let ref_std_primitive_str = token_patterns::RefStr;
     let field_attribute_serde_skip_serializing_if_option_is_none_ts =
         token_patterns::FieldAttributeSerdeSkipSerializingIfOptionIsNone;
     let sqlx_row = token_patterns::SqlxRow;
@@ -779,7 +779,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     quote! {#ident_select_ucc::#field_ident_ucc_ts(#ColumnSc) #initialization_ts}
                 });
             let std_option_option_std_primitive_char_ts =
-                gen_std_option_option_tokens_declaration_ts(&token_patterns::StdPrimitiveChar);
+                gen_std_option_option_tokens_declaration_ts(&token_patterns::Char);
             quote! {
                 fn #GenSelectQueryPartSc(#select_borrow_pg_crud_not_empty_unique_vec_ident_select_ts) -> Result<#string_ts, #import_path ::#QueryPartErrorNamedUcc> {
                     let mut acc_37c883c3 = #string_ts::default();

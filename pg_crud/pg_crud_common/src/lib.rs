@@ -324,14 +324,14 @@ pub struct PgTypeGreaterThanTest<T: PgType> {
 pub struct PgTypeLengthGreaterThanTest<T: PgType> {
     pub variant: PgJsonTypeLengthGreaterThanVariant,
     pub create: <T as PgType>::Create,
-    pub length_greater_than: UnsignedPartOfStdPrimitiveI32,
+    pub length_greater_than: UnsignedPartOfI32,
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug)]
 pub struct PgJsonTypeLengthGreaterThanTest<T: PgJsonType> {
     pub variant: PgJsonTypeLengthGreaterThanVariant,
     pub create: <T as PgJsonType>::Create,
-    pub length_greater_than: UnsignedPartOfStdPrimitiveI32,
+    pub length_greater_than: UnsignedPartOfI32,
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[cfg(feature = "test-utils")]
@@ -1454,7 +1454,7 @@ pub trait PgTypeEqualOperator {
 #[derive(
     Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema,
 )]
-pub struct UnsignedPartOfStdPrimitiveI32(i32); //todo why exactly i32? maybe different types for pg type and pg json type
+pub struct UnsignedPartOfI32(i32); //todo why exactly i32? maybe different types for pg type and pg json type
 #[derive(
     Debug,
     Clone,
@@ -1466,15 +1466,15 @@ pub struct UnsignedPartOfStdPrimitiveI32(i32); //todo why exactly i32? maybe dif
     error_occurence_lib::ErrorOccurence,
     schemars::JsonSchema,
 )]
-pub enum UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
+pub enum UnsignedPartOfI32TryFromI32ErrorNamed {
     LessThanZero {
         #[eo_to_std_string_string_serialize_deserialize]
         value: i32,
         code_occurence: CodeOccurence,
     },
 }
-impl TryFrom<i32> for UnsignedPartOfStdPrimitiveI32 {
-    type Error = UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed;
+impl TryFrom<i32> for UnsignedPartOfI32 {
+    type Error = UnsignedPartOfI32TryFromI32ErrorNamed;
     fn try_from(value: i32) -> Result<Self, Self::Error> {
         if value >= 0 {
             Ok(Self(value))
@@ -1492,24 +1492,24 @@ impl TryFrom<i32> for UnsignedPartOfStdPrimitiveI32 {
 const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de> _serde::Deserialize<'de> for UnsignedPartOfStdPrimitiveI32 {
+    impl<'de> _serde::Deserialize<'de> for UnsignedPartOfI32 {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
         {
             #[doc(hidden)]
             struct __Visitor<'de> {
-                marker: _serde::__private228::PhantomData<UnsignedPartOfStdPrimitiveI32>,
+                marker: _serde::__private228::PhantomData<UnsignedPartOfI32>,
                 lifetime: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                type Value = UnsignedPartOfStdPrimitiveI32;
+                type Value = UnsignedPartOfI32;
                 fn expecting(
                     &self,
                     __formatter: &mut Formatter<'_>,
                 ) -> _serde::__private228::fmt::Result {
-                    Formatter::write_str(__formatter, "tuple struct UnsignedPartOfStdPrimitiveI32")
+                    Formatter::write_str(__formatter, "tuple struct UnsignedPartOfI32")
                 }
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
@@ -1517,7 +1517,7 @@ const _: () = {
                     __E: _serde::Deserializer<'de>,
                 {
                     let __field0: i32 = <i32 as _serde::Deserialize>::deserialize(__e)?;
-                    match UnsignedPartOfStdPrimitiveI32::try_from(__field0) {
+                    match UnsignedPartOfI32::try_from(__field0) {
                         Ok(value) => Ok(value),
                         Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -1531,10 +1531,10 @@ const _: () = {
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
-                            &"tuple struct UnsignedPartOfStdPrimitiveI32 with 1 element",
+                            &"tuple struct UnsignedPartOfI32 with 1 element",
                         ));
                     };
-                    match UnsignedPartOfStdPrimitiveI32::try_from(__field0) {
+                    match UnsignedPartOfI32::try_from(__field0) {
                         Ok(value) => Ok(value),
                         Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -1542,7 +1542,7 @@ const _: () = {
             }
             _serde::Deserializer::deserialize_newtype_struct(
                 __deserializer,
-                "UnsignedPartOfStdPrimitiveI32",
+                "UnsignedPartOfI32",
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<Self>,
                     lifetime: _serde::__private228::PhantomData,
@@ -1551,12 +1551,12 @@ const _: () = {
         }
     }
 };
-impl error_occurence_lib::ToStdStringString for UnsignedPartOfStdPrimitiveI32 {
+impl error_occurence_lib::ToStdStringString for UnsignedPartOfI32 {
     fn to_std_string_string(&self) -> String {
         self.0.to_string()
     }
 }
-impl Type<Postgres> for UnsignedPartOfStdPrimitiveI32 {
+impl Type<Postgres> for UnsignedPartOfI32 {
     fn compatible(ty: &<Postgres as Database>::TypeInfo) -> bool {
         <i32 as Type<Postgres>>::compatible(ty)
     }
@@ -1564,7 +1564,7 @@ impl Type<Postgres> for UnsignedPartOfStdPrimitiveI32 {
         <i32 as Type<Postgres>>::type_info()
     }
 }
-impl Encode<'_, Postgres> for UnsignedPartOfStdPrimitiveI32 {
+impl Encode<'_, Postgres> for UnsignedPartOfI32 {
     fn encode_by_ref(
         &self,
         buf: &mut PgArgumentBuffer,
@@ -1572,13 +1572,13 @@ impl Encode<'_, Postgres> for UnsignedPartOfStdPrimitiveI32 {
         <i32 as Encode<Postgres>>::encode_by_ref(&self.0, buf)
     }
 }
-impl UnsignedPartOfStdPrimitiveI32 {
+impl UnsignedPartOfI32 {
     #[must_use]
     pub const fn get(&self) -> i32 {
         self.0
     }
 }
-impl DefaultOptionSomeVecOneEl for UnsignedPartOfStdPrimitiveI32 {
+impl DefaultOptionSomeVecOneEl for UnsignedPartOfI32 {
     fn default_option_some_vec_one_el() -> Self {
         Self(0)
     }
@@ -1587,7 +1587,7 @@ impl DefaultOptionSomeVecOneEl for UnsignedPartOfStdPrimitiveI32 {
 #[derive(
     Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema,
 )]
-pub struct NotZeroUnsignedPartOfStdPrimitiveI32(UnsignedPartOfStdPrimitiveI32);
+pub struct NotZeroUnsignedPartOfI32(UnsignedPartOfI32);
 #[derive(
     Debug,
     Clone,
@@ -1599,20 +1599,20 @@ pub struct NotZeroUnsignedPartOfStdPrimitiveI32(UnsignedPartOfStdPrimitiveI32);
     error_occurence_lib::ErrorOccurence,
     schemars::JsonSchema,
 )]
-pub enum NotZeroUnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
+pub enum NotZeroUnsignedPartOfI32TryFromI32ErrorNamed {
     IsZero {
         code_occurence: CodeOccurence,
     },
-    UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
+    UnsignedPartOfI32TryFromI32ErrorNamed {
         #[eo_error_occurence]
-        value: UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed,
+        value: UnsignedPartOfI32TryFromI32ErrorNamed,
         code_occurence: CodeOccurence,
     },
 }
-impl TryFrom<i32> for NotZeroUnsignedPartOfStdPrimitiveI32 {
-    type Error = NotZeroUnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed;
+impl TryFrom<i32> for NotZeroUnsignedPartOfI32 {
+    type Error = NotZeroUnsignedPartOfI32TryFromI32ErrorNamed;
     fn try_from(value: i32) -> Result<Self, Self::Error> {
-        match UnsignedPartOfStdPrimitiveI32::try_from(value) {
+        match UnsignedPartOfI32::try_from(value) {
             Ok(handle) => {
                 if handle.0 == 0 {
                     Err(Self::Error::IsZero {
@@ -1622,12 +1622,10 @@ impl TryFrom<i32> for NotZeroUnsignedPartOfStdPrimitiveI32 {
                     Ok(Self(handle))
                 }
             }
-            Err(error) => Err(
-                Self::Error::UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
-                    value: error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                },
-            ),
+            Err(error) => Err(Self::Error::UnsignedPartOfI32TryFromI32ErrorNamed {
+                value: error,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            }),
         }
     }
 }
@@ -1637,27 +1635,24 @@ impl TryFrom<i32> for NotZeroUnsignedPartOfStdPrimitiveI32 {
 const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de> _serde::Deserialize<'de> for NotZeroUnsignedPartOfStdPrimitiveI32 {
+    impl<'de> _serde::Deserialize<'de> for NotZeroUnsignedPartOfI32 {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
         {
             #[doc(hidden)]
             struct __Visitor<'de> {
-                marker: _serde::__private228::PhantomData<NotZeroUnsignedPartOfStdPrimitiveI32>,
+                marker: _serde::__private228::PhantomData<NotZeroUnsignedPartOfI32>,
                 lifetime: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                type Value = NotZeroUnsignedPartOfStdPrimitiveI32;
+                type Value = NotZeroUnsignedPartOfI32;
                 fn expecting(
                     &self,
                     __formatter: &mut Formatter<'_>,
                 ) -> _serde::__private228::fmt::Result {
-                    Formatter::write_str(
-                        __formatter,
-                        "tuple struct NotZeroUnsignedPartOfStdPrimitiveI32",
-                    )
+                    Formatter::write_str(__formatter, "tuple struct NotZeroUnsignedPartOfI32")
                 }
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
@@ -1665,7 +1660,7 @@ const _: () = {
                     __E: _serde::Deserializer<'de>,
                 {
                     let __field0: i32 = <i32 as _serde::Deserialize>::deserialize(__e)?;
-                    match NotZeroUnsignedPartOfStdPrimitiveI32::try_from(__field0) {
+                    match NotZeroUnsignedPartOfI32::try_from(__field0) {
                         Ok(value) => Ok(value),
                         Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -1679,10 +1674,10 @@ const _: () = {
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
-                            &"tuple struct NotZeroUnsignedPartOfStdPrimitiveI32 with 1 element",
+                            &"tuple struct NotZeroUnsignedPartOfI32 with 1 element",
                         ));
                     };
-                    match NotZeroUnsignedPartOfStdPrimitiveI32::try_from(__field0) {
+                    match NotZeroUnsignedPartOfI32::try_from(__field0) {
                         Ok(value) => Ok(value),
                         Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -1690,7 +1685,7 @@ const _: () = {
             }
             _serde::Deserializer::deserialize_newtype_struct(
                 __deserializer,
-                "NotZeroUnsignedPartOfStdPrimitiveI32",
+                "NotZeroUnsignedPartOfI32",
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<Self>,
                     lifetime: _serde::__private228::PhantomData,
@@ -1699,34 +1694,34 @@ const _: () = {
         }
     }
 };
-impl error_occurence_lib::ToStdStringString for NotZeroUnsignedPartOfStdPrimitiveI32 {
+impl error_occurence_lib::ToStdStringString for NotZeroUnsignedPartOfI32 {
     fn to_std_string_string(&self) -> String {
         self.0.to_std_string_string()
     }
 }
-impl Type<Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
+impl Type<Postgres> for NotZeroUnsignedPartOfI32 {
     fn compatible(ty: &<Postgres as Database>::TypeInfo) -> bool {
-        <UnsignedPartOfStdPrimitiveI32 as Type<Postgres>>::compatible(ty)
+        <UnsignedPartOfI32 as Type<Postgres>>::compatible(ty)
     }
     fn type_info() -> <Postgres as Database>::TypeInfo {
-        <UnsignedPartOfStdPrimitiveI32 as Type<Postgres>>::type_info()
+        <UnsignedPartOfI32 as Type<Postgres>>::type_info()
     }
 }
-impl Encode<'_, Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
+impl Encode<'_, Postgres> for NotZeroUnsignedPartOfI32 {
     fn encode_by_ref(
         &self,
         buf: &mut PgArgumentBuffer,
     ) -> Result<IsNull, Box<dyn StdErrorError + Send + Sync>> {
-        <UnsignedPartOfStdPrimitiveI32 as Encode<Postgres>>::encode_by_ref(&self.0, buf)
+        <UnsignedPartOfI32 as Encode<Postgres>>::encode_by_ref(&self.0, buf)
     }
 }
-impl NotZeroUnsignedPartOfStdPrimitiveI32 {
+impl NotZeroUnsignedPartOfI32 {
     #[must_use]
     pub const fn get(&self) -> i32 {
         self.0.get()
     }
 }
-impl DefaultOptionSomeVecOneEl for NotZeroUnsignedPartOfStdPrimitiveI32 {
+impl DefaultOptionSomeVecOneEl for NotZeroUnsignedPartOfI32 {
     fn default_option_some_vec_one_el() -> Self {
         Self(DefaultOptionSomeVecOneEl::default_option_some_vec_one_el())
     }

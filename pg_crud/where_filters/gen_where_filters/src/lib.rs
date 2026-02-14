@@ -75,16 +75,16 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                 .expect("18c32bc0")
         }
     }
-    enum KindOfUnsignedPartOfStdPrimitiveI32 {
+    enum KindOfUnsignedPartOfI32 {
         CanBeZero,
         CanNotBeZero,
     }
-    impl quote::ToTokens for KindOfUnsignedPartOfStdPrimitiveI32 {
+    impl quote::ToTokens for KindOfUnsignedPartOfI32 {
         fn to_tokens(&self, tokens: &mut Ts2) {
             match &self {
-                Self::CanBeZero => quote! {UnsignedPartOfStdPrimitiveI32}.to_tokens(tokens),
+                Self::CanBeZero => quote! {UnsignedPartOfI32}.to_tokens(tokens),
                 Self::CanNotBeZero => {
-                    quote! {NotZeroUnsignedPartOfStdPrimitiveI32}.to_tokens(tokens);
+                    quote! {NotZeroUnsignedPartOfI32}.to_tokens(tokens);
                 }
             }
         }
@@ -123,10 +123,9 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
     let pg_crud_common_default_option_some_vec_one_el_call_ts =
         token_patterns::PgCrudCommonDefaultOptionSomeVecOneElCall;
     let pub_value_t_ts = quote! {pub #ValueSc: T};
-    let unsigned_part_of_std_primitive_i32_ts =
-        quote! {pg_crud_common::UnsignedPartOfStdPrimitiveI32};
+    let unsigned_part_of_std_primitive_i32_ts = quote! {pg_crud_common::UnsignedPartOfI32};
     let not_zero_unsigned_part_of_std_primitive_i32_ts =
-        quote! {pg_crud_common::NotZeroUnsignedPartOfStdPrimitiveI32};
+        quote! {pg_crud_common::NotZeroUnsignedPartOfI32};
     let value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts =
         quote! {#ValueSc: #not_zero_unsigned_part_of_std_primitive_i32_ts};
     let pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts =
@@ -292,7 +291,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
     let pg_type_pattern_handle_array_dimension4 = PgTypePatternHandle::ArrayDimension4;
     let gen_pub_dimensions_bounded_vec_ts =
         |vec_length_ts: &dyn quote::ToTokens,
-         kind_of_unsigned_part_of_std_primitive_i32: &KindOfUnsignedPartOfStdPrimitiveI32| {
+         kind_of_unsigned_part_of_std_primitive_i32: &KindOfUnsignedPartOfI32| {
             quote! {pub #DimensionsSc: BoundedStdVecVec<pg_crud_common::#kind_of_unsigned_part_of_std_primitive_i32, #vec_length_ts>}
         };
     let value_match_increment_checked_add_one_initialization_ts =
@@ -348,7 +347,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
             let pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_ts =
                 gen_pub_dimensions_bounded_vec_ts(
                     &dimension_number.dimension_ts(),
-                    &KindOfUnsignedPartOfStdPrimitiveI32::CanNotBeZero,
+                    &KindOfUnsignedPartOfI32::CanNotBeZero,
                 );
             quote! {#pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_ts,}
         };
@@ -357,7 +356,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
             let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_ts =
                 gen_pub_dimensions_bounded_vec_ts(
                     &dimension_number.dimension_ts(),
-                    &KindOfUnsignedPartOfStdPrimitiveI32::CanBeZero,
+                    &KindOfUnsignedPartOfI32::CanBeZero,
                 );
             quote! {#pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_ts,}
         };

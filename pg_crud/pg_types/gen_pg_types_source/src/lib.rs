@@ -66,15 +66,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, StrumDisplay)]
     enum RustTypeName {
-        StdPrimitiveI16,
-        StdPrimitiveI32,
-        StdPrimitiveI64,
-        StdPrimitiveF32,
-        StdPrimitiveF64,
+        I16,
+        I32,
+        I64,
+        F32,
+        F64,
         SqlxPgTypesPgMoney,
-        StdPrimitiveBool,
+        Bool,
         StdStringString,
-        StdVecVecStdPrimitiveU8,
+        StdVecVecU8,
         SqlxTypesChronoNaiveTime,
         SqlxTypesTimeTime,
         SqlxPgTypesPgInterval,
@@ -84,8 +84,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         SqlxTypesUuidUuid,
         SqlxTypesIpnetworkIpNetwork,
         SqlxTypesMacAddressMacAddress,
-        SqlxPgTypesPgRangeStdPrimitiveI32,
-        SqlxPgTypesPgRangeStdPrimitiveI64,
+        SqlxPgTypesPgRangeI32,
+        SqlxPgTypesPgRangeI64,
         SqlxPgTypesPgRangeSqlxTypesChronoNaiveDate,
         SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTime,
         SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
@@ -93,15 +93,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     impl From<&PgType> for RustTypeName {
         fn from(value: &PgType) -> Self {
             match &value {
-                PgType::StdPrimitiveF32AsFloat4 => Self::StdPrimitiveF32,
-                PgType::StdPrimitiveF64AsFloat8 => Self::StdPrimitiveF64,
-                PgType::StdPrimitiveI16AsInt2 | PgType::StdPrimitiveI16AsSmallSerialInitializedByPg => Self::StdPrimitiveI16,
-                PgType::StdPrimitiveI32AsInt4 | PgType::StdPrimitiveI32AsSerialInitializedByPg => Self::StdPrimitiveI32,
-                PgType::StdPrimitiveI64AsInt8 | PgType::StdPrimitiveI64AsBigSerialInitializedByPg => Self::StdPrimitiveI64,
+                PgType::F32AsFloat4 => Self::F32,
+                PgType::F64AsFloat8 => Self::F64,
+                PgType::I16AsInt2 | PgType::I16AsSmallSerialInitializedByPg => Self::I16,
+                PgType::I32AsInt4 | PgType::I32AsSerialInitializedByPg => Self::I32,
+                PgType::I64AsInt8 | PgType::I64AsBigSerialInitializedByPg => Self::I64,
                 PgType::SqlxPgTypesPgMoneyAsMoney => Self::SqlxPgTypesPgMoney,
-                PgType::StdPrimitiveBoolAsBool => Self::StdPrimitiveBool,
+                PgType::BoolAsBool => Self::Bool,
                 PgType::StdStringStringAsText => Self::StdStringString,
-                PgType::StdVecVecStdPrimitiveU8AsBytea => Self::StdVecVecStdPrimitiveU8,
+                PgType::StdVecVecU8AsBytea => Self::StdVecVecU8,
                 PgType::SqlxTypesChronoNaiveTimeAsTime => Self::SqlxTypesChronoNaiveTime,
                 PgType::SqlxTypesTimeTimeAsTime => Self::SqlxTypesTimeTime,
                 PgType::SqlxPgTypesPgIntervalAsInterval => Self::SqlxPgTypesPgInterval,
@@ -111,8 +111,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient => Self::SqlxTypesUuidUuid,
                 PgType::SqlxTypesIpnetworkIpNetworkAsInet => Self::SqlxTypesIpnetworkIpNetwork,
                 PgType::SqlxTypesMacAddressMacAddressAsMacAddr => Self::SqlxTypesMacAddressMacAddress,
-                PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => Self::SqlxPgTypesPgRangeStdPrimitiveI32,
-                PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => Self::SqlxPgTypesPgRangeStdPrimitiveI64,
+                PgType::SqlxPgTypesPgRangeI32AsInt4Range => Self::SqlxPgTypesPgRangeI32,
+                PgType::SqlxPgTypesPgRangeI64AsInt8Range => Self::SqlxPgTypesPgRangeI64,
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Self::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDate,
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => Self::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTime,
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Self::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
@@ -152,18 +152,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     impl From<&PgType> for PgTypeName {
         fn from(value: &PgType) -> Self {
             match &value {
-                PgType::StdPrimitiveI16AsInt2 => Self::Int2,
-                PgType::StdPrimitiveI32AsInt4 => Self::Int4,
-                PgType::StdPrimitiveI64AsInt8 => Self::Int8,
-                PgType::StdPrimitiveF32AsFloat4 => Self::Float4,
-                PgType::StdPrimitiveF64AsFloat8 => Self::Float8,
-                PgType::StdPrimitiveI16AsSmallSerialInitializedByPg => Self::SmallSerialInitializedByPg,
-                PgType::StdPrimitiveI32AsSerialInitializedByPg => Self::SerialInitializedByPg,
-                PgType::StdPrimitiveI64AsBigSerialInitializedByPg => Self::BigSerialInitializedByPg,
+                PgType::I16AsInt2 => Self::Int2,
+                PgType::I32AsInt4 => Self::Int4,
+                PgType::I64AsInt8 => Self::Int8,
+                PgType::F32AsFloat4 => Self::Float4,
+                PgType::F64AsFloat8 => Self::Float8,
+                PgType::I16AsSmallSerialInitializedByPg => Self::SmallSerialInitializedByPg,
+                PgType::I32AsSerialInitializedByPg => Self::SerialInitializedByPg,
+                PgType::I64AsBigSerialInitializedByPg => Self::BigSerialInitializedByPg,
                 PgType::SqlxPgTypesPgMoneyAsMoney => Self::Money,
-                PgType::StdPrimitiveBoolAsBool => Self::Bool,
+                PgType::BoolAsBool => Self::Bool,
                 PgType::StdStringStringAsText => Self::Text,
-                PgType::StdVecVecStdPrimitiveU8AsBytea => Self::Bytea,
+                PgType::StdVecVecU8AsBytea => Self::Bytea,
                 PgType::SqlxTypesChronoNaiveTimeAsTime | PgType::SqlxTypesTimeTimeAsTime => Self::Time,
                 PgType::SqlxPgTypesPgIntervalAsInterval => Self::Interval,
                 PgType::SqlxTypesChronoNaiveDateAsDate => Self::Date,
@@ -173,8 +173,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 PgType::SqlxTypesUuidUuidAsUuidInitializedByClient => Self::UuidInitializedByClient,
                 PgType::SqlxTypesIpnetworkIpNetworkAsInet => Self::Inet,
                 PgType::SqlxTypesMacAddressMacAddressAsMacAddr => Self::MacAddr,
-                PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => Self::Int4Range,
-                PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => Self::Int8Range,
+                PgType::SqlxPgTypesPgRangeI32AsInt4Range => Self::Int4Range,
+                PgType::SqlxPgTypesPgRangeI64AsInt8Range => Self::Int8Range,
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Self::DateRange,
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => Self::TimestampRange,
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Self::TimestampTzRange,
@@ -186,19 +186,19 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         Debug, Clone, PartialEq, Serialize, Deserialize, StrumDisplay, EnumIter, EnumExtension,
     )]
     enum PgType {
-        StdPrimitiveI16AsInt2,
-        StdPrimitiveI32AsInt4,
-        StdPrimitiveI64AsInt8,
-        StdPrimitiveF32AsFloat4,
-        StdPrimitiveF64AsFloat8,
-        StdPrimitiveI16AsSmallSerialInitializedByPg,
-        StdPrimitiveI32AsSerialInitializedByPg,
-        StdPrimitiveI64AsBigSerialInitializedByPg,
+        I16AsInt2,
+        I32AsInt4,
+        I64AsInt8,
+        F32AsFloat4,
+        F64AsFloat8,
+        I16AsSmallSerialInitializedByPg,
+        I32AsSerialInitializedByPg,
+        I64AsBigSerialInitializedByPg,
         SqlxPgTypesPgMoneyAsMoney,
         // SqlxTypesBigDecimalAsNumeric, remove coz dont know how to deserialize with scale i64
-        StdPrimitiveBoolAsBool,
+        BoolAsBool,
         StdStringStringAsText,
-        StdVecVecStdPrimitiveU8AsBytea,
+        StdVecVecU8AsBytea,
         SqlxTypesChronoNaiveTimeAsTime,
         SqlxTypesTimeTimeAsTime,
         SqlxPgTypesPgIntervalAsInterval,
@@ -209,8 +209,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         SqlxTypesUuidUuidAsUuidInitializedByClient,
         SqlxTypesIpnetworkIpNetworkAsInet,
         SqlxTypesMacAddressMacAddressAsMacAddr,
-        SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range,
-        SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range,
+        SqlxPgTypesPgRangeI32AsInt4Range,
+        SqlxPgTypesPgRangeI64AsInt8Range,
         SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange,
         SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange,
         SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange,
@@ -229,15 +229,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     impl PgType {
         const fn can_be_an_array_element(&self) -> CanBeAnArrayElement {
             match &self {
-                Self::StdPrimitiveI16AsInt2
-                | Self::StdPrimitiveI32AsInt4
-                | Self::StdPrimitiveI64AsInt8
-                | Self::StdPrimitiveF32AsFloat4
-                | Self::StdPrimitiveF64AsFloat8
+                Self::I16AsInt2
+                | Self::I32AsInt4
+                | Self::I64AsInt8
+                | Self::F32AsFloat4
+                | Self::F64AsFloat8
                 | Self::SqlxPgTypesPgMoneyAsMoney
-                | Self::StdPrimitiveBoolAsBool
+                | Self::BoolAsBool
                 | Self::StdStringStringAsText
-                | Self::StdVecVecStdPrimitiveU8AsBytea
+                | Self::StdVecVecU8AsBytea
                 | Self::SqlxTypesChronoNaiveTimeAsTime
                 | Self::SqlxTypesTimeTimeAsTime
                 | Self::SqlxPgTypesPgIntervalAsInterval
@@ -247,25 +247,25 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 | Self::SqlxTypesUuidUuidAsUuidInitializedByClient
                 | Self::SqlxTypesIpnetworkIpNetworkAsInet
                 | Self::SqlxTypesMacAddressMacAddressAsMacAddr
-                | Self::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range
-                | Self::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range
+                | Self::SqlxPgTypesPgRangeI32AsInt4Range
+                | Self::SqlxPgTypesPgRangeI64AsInt8Range
                 | Self::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                 | Self::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
                 | Self::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBeAnArrayElement::True,
-                Self::StdPrimitiveI16AsSmallSerialInitializedByPg | Self::StdPrimitiveI32AsSerialInitializedByPg | Self::StdPrimitiveI64AsBigSerialInitializedByPg | Self::SqlxTypesUuidUuidAsUuidV4InitializedByPg => CanBeAnArrayElement::False,
+                Self::I16AsSmallSerialInitializedByPg | Self::I32AsSerialInitializedByPg | Self::I64AsBigSerialInitializedByPg | Self::SqlxTypesUuidUuidAsUuidV4InitializedByPg => CanBeAnArrayElement::False,
             }
         }
         const fn can_be_nullable(&self) -> CanBeNullable {
             match &self {
-                Self::StdPrimitiveI16AsInt2
-                | Self::StdPrimitiveI32AsInt4
-                | Self::StdPrimitiveI64AsInt8
-                | Self::StdPrimitiveF32AsFloat4
-                | Self::StdPrimitiveF64AsFloat8
+                Self::I16AsInt2
+                | Self::I32AsInt4
+                | Self::I64AsInt8
+                | Self::F32AsFloat4
+                | Self::F64AsFloat8
                 | Self::SqlxPgTypesPgMoneyAsMoney
-                | Self::StdPrimitiveBoolAsBool
+                | Self::BoolAsBool
                 | Self::StdStringStringAsText
-                | Self::StdVecVecStdPrimitiveU8AsBytea
+                | Self::StdVecVecU8AsBytea
                 | Self::SqlxTypesChronoNaiveTimeAsTime
                 | Self::SqlxTypesTimeTimeAsTime
                 | Self::SqlxPgTypesPgIntervalAsInterval
@@ -275,12 +275,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 | Self::SqlxTypesUuidUuidAsUuidInitializedByClient
                 | Self::SqlxTypesIpnetworkIpNetworkAsInet
                 | Self::SqlxTypesMacAddressMacAddressAsMacAddr
-                | Self::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range
-                | Self::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range
+                | Self::SqlxPgTypesPgRangeI32AsInt4Range
+                | Self::SqlxPgTypesPgRangeI64AsInt8Range
                 | Self::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                 | Self::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
                 | Self::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBeNullable::True,
-                Self::StdPrimitiveI16AsSmallSerialInitializedByPg | Self::StdPrimitiveI32AsSerialInitializedByPg | Self::StdPrimitiveI64AsBigSerialInitializedByPg | Self::SqlxTypesUuidUuidAsUuidV4InitializedByPg => CanBeNullable::False,
+                Self::I16AsSmallSerialInitializedByPg | Self::I32AsSerialInitializedByPg | Self::I64AsBigSerialInitializedByPg | Self::SqlxTypesUuidUuidAsUuidV4InitializedByPg => CanBeNullable::False,
             }
         }
     }
@@ -295,8 +295,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     impl From<&PgTypeRange> for PgType {
         fn from(value: &PgTypeRange) -> Self {
             match value {
-                PgTypeRange::StdPrimitiveI32AsInt4 => Self::StdPrimitiveI32AsInt4,
-                PgTypeRange::StdPrimitiveI64AsInt8 => Self::StdPrimitiveI64AsInt8,
+                PgTypeRange::I32AsInt4 => Self::I32AsInt4,
+                PgTypeRange::I64AsInt8 => Self::I64AsInt8,
                 PgTypeRange::SqlxTypesChronoNaiveDateAsDate => Self::SqlxTypesChronoNaiveDateAsDate,
                 PgTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
                     Self::SqlxTypesChronoNaiveDateTimeAsTimestamp
@@ -309,8 +309,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     enum PgTypeRange {
-        StdPrimitiveI32AsInt4,
-        StdPrimitiveI64AsInt8,
+        I32AsInt4,
+        I64AsInt8,
         SqlxTypesChronoNaiveDateAsDate,
         SqlxTypesChronoNaiveDateTimeAsTimestamp,
         SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz,
@@ -319,18 +319,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         type Error = ();
         fn try_from(value: &PgType) -> Result<Self, Self::Error> {
             match &value {
-                PgType::StdPrimitiveI16AsInt2
-                | PgType::StdPrimitiveI32AsInt4
-                | PgType::StdPrimitiveI64AsInt8
-                | PgType::StdPrimitiveF32AsFloat4
-                | PgType::StdPrimitiveF64AsFloat8
-                | PgType::StdPrimitiveI16AsSmallSerialInitializedByPg
-                | PgType::StdPrimitiveI32AsSerialInitializedByPg
-                | PgType::StdPrimitiveI64AsBigSerialInitializedByPg
+                PgType::I16AsInt2
+                | PgType::I32AsInt4
+                | PgType::I64AsInt8
+                | PgType::F32AsFloat4
+                | PgType::F64AsFloat8
+                | PgType::I16AsSmallSerialInitializedByPg
+                | PgType::I32AsSerialInitializedByPg
+                | PgType::I64AsBigSerialInitializedByPg
                 | PgType::SqlxPgTypesPgMoneyAsMoney
-                | PgType::StdPrimitiveBoolAsBool
+                | PgType::BoolAsBool
                 | PgType::StdStringStringAsText
-                | PgType::StdVecVecStdPrimitiveU8AsBytea
+                | PgType::StdVecVecU8AsBytea
                 | PgType::SqlxTypesChronoNaiveTimeAsTime
                 | PgType::SqlxTypesTimeTimeAsTime
                 | PgType::SqlxPgTypesPgIntervalAsInterval
@@ -341,8 +341,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient
                 | PgType::SqlxTypesIpnetworkIpNetworkAsInet
                 | PgType::SqlxTypesMacAddressMacAddressAsMacAddr => Err(()),
-                PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => Ok(Self::StdPrimitiveI32AsInt4),
-                PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => Ok(Self::StdPrimitiveI64AsInt8),
+                PgType::SqlxPgTypesPgRangeI32AsInt4Range => Ok(Self::I32AsInt4),
+                PgType::SqlxPgTypesPgRangeI64AsInt8Range => Ok(Self::I64AsInt8),
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Ok(Self::SqlxTypesChronoNaiveDateAsDate),
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => Ok(Self::SqlxTypesChronoNaiveDateTimeAsTimestamp),
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz),
@@ -711,8 +711,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         SqlxTypesChronoNaiveDateAsDate,
         SqlxTypesChronoNaiveDateTimeAsTimestamp,
         SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz,
-        SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range,
-        SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range,
+        SqlxPgTypesPgRangeI32AsInt4Range,
+        SqlxPgTypesPgRangeI64AsInt8Range,
         SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange,
         SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange,
         SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange,
@@ -721,17 +721,17 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         type Error = ();
         fn try_from(value: &PgType) -> Result<Self, Self::Error> {
             match value {
-                PgType::StdPrimitiveI16AsInt2
-                | PgType::StdPrimitiveI32AsInt4
-                | PgType::StdPrimitiveI64AsInt8
-                | PgType::StdPrimitiveF32AsFloat4
-                | PgType::StdPrimitiveF64AsFloat8
-                | PgType::StdPrimitiveI16AsSmallSerialInitializedByPg
-                | PgType::StdPrimitiveI32AsSerialInitializedByPg
-                | PgType::StdPrimitiveI64AsBigSerialInitializedByPg
+                PgType::I16AsInt2
+                | PgType::I32AsInt4
+                | PgType::I64AsInt8
+                | PgType::F32AsFloat4
+                | PgType::F64AsFloat8
+                | PgType::I16AsSmallSerialInitializedByPg
+                | PgType::I32AsSerialInitializedByPg
+                | PgType::I64AsBigSerialInitializedByPg
                 | PgType::SqlxPgTypesPgMoneyAsMoney
-                | PgType::StdPrimitiveBoolAsBool
-                | PgType::StdVecVecStdPrimitiveU8AsBytea
+                | PgType::BoolAsBool
+                | PgType::StdVecVecU8AsBytea
                 | PgType::SqlxPgTypesPgIntervalAsInterval
                 | PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg
                 | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient
@@ -743,8 +743,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 PgType::SqlxTypesChronoNaiveDateAsDate => Ok(Self::SqlxTypesChronoNaiveDateAsDate),
                 PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Ok(Self::SqlxTypesChronoNaiveDateTimeAsTimestamp),
                 PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz),
-                PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => Ok(Self::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range),
-                PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => Ok(Self::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range),
+                PgType::SqlxPgTypesPgRangeI32AsInt4Range => Ok(Self::SqlxPgTypesPgRangeI32AsInt4Range),
+                PgType::SqlxPgTypesPgRangeI64AsInt8Range => Ok(Self::SqlxPgTypesPgRangeI64AsInt8Range),
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Ok(Self::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange),
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => Ok(Self::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange),
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Ok(Self::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange),
@@ -760,8 +760,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 PgTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => Self::SqlxTypesChronoNaiveDateAsDate,
                 PgTypeInitializationTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => Self::SqlxTypesChronoNaiveDateTimeAsTimestamp,
                 PgTypeInitializationTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz,
-                PgTypeInitializationTryNew::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => Self::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range,
-                PgTypeInitializationTryNew::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => Self::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range,
+                PgTypeInitializationTryNew::SqlxPgTypesPgRangeI32AsInt4Range => Self::SqlxPgTypesPgRangeI32AsInt4Range,
+                PgTypeInitializationTryNew::SqlxPgTypesPgRangeI64AsInt8Range => Self::SqlxPgTypesPgRangeI64AsInt8Range,
                 PgTypeInitializationTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Self::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange,
                 PgTypeInitializationTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => Self::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange,
                 PgTypeInitializationTryNew::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Self::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange,
@@ -785,8 +785,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         SqlxTypesChronoNaiveTimeAsTime,
         SqlxTypesTimeTimeAsTime,
         SqlxTypesChronoNaiveDateAsDate,
-        SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range,
-        SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range,
+        SqlxPgTypesPgRangeI32AsInt4Range,
+        SqlxPgTypesPgRangeI64AsInt8Range,
     }
     #[derive(Debug)]
     enum PgTypeImplNewForDeserializeOrTryNewForDeserialize {
@@ -803,17 +803,17 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     impl From<&PgType> for PgTypeDeserialize {
         fn from(value: &PgType) -> Self {
             match value {
-                PgType::StdPrimitiveI16AsInt2
-                | PgType::StdPrimitiveI32AsInt4
-                | PgType::StdPrimitiveI64AsInt8
-                | PgType::StdPrimitiveF32AsFloat4
-                | PgType::StdPrimitiveF64AsFloat8
-                | PgType::StdPrimitiveI16AsSmallSerialInitializedByPg
-                | PgType::StdPrimitiveI32AsSerialInitializedByPg
-                | PgType::StdPrimitiveI64AsBigSerialInitializedByPg
+                PgType::I16AsInt2
+                | PgType::I32AsInt4
+                | PgType::I64AsInt8
+                | PgType::F32AsFloat4
+                | PgType::F64AsFloat8
+                | PgType::I16AsSmallSerialInitializedByPg
+                | PgType::I32AsSerialInitializedByPg
+                | PgType::I64AsBigSerialInitializedByPg
                 | PgType::SqlxPgTypesPgMoneyAsMoney
-                | PgType::StdPrimitiveBoolAsBool
-                | PgType::StdVecVecStdPrimitiveU8AsBytea
+                | PgType::BoolAsBool
+                | PgType::StdVecVecU8AsBytea
                 | PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg
                 | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient
                 | PgType::SqlxTypesIpnetworkIpNetworkAsInet
@@ -825,8 +825,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 PgType::SqlxTypesChronoNaiveDateAsDate => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate)),
                 PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PgTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp)),
                 PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PgTypeImplNewForDeserialize::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz)),
-                PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range)),
-                PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range)),
+                PgType::SqlxPgTypesPgRangeI32AsInt4Range => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI32AsInt4Range)),
+                PgType::SqlxPgTypesPgRangeI64AsInt8Range => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI64AsInt8Range)),
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange)),
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange)),
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange)),
@@ -1002,8 +1002,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             Start,
         }
         enum IntRangeType {
-            SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range,
-            SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range,
+            SqlxPgTypesPgRangeI32AsInt4Range,
+            SqlxPgTypesPgRangeI64AsInt8Range,
         }
         type Handle<'lifetime> = (&'lifetime dyn ToTokens, &'lifetime dyn ToTokens);
         fn gen_pg_range_conversion_ts(match_content_ts: &dyn ToTokens, input_ts: &dyn ToTokens) -> Ts2 {
@@ -1033,12 +1033,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let pg_type_range_try_from_pg_type = PgTypeRange::try_from(pg_type);
         let pg_type_range_try_from_pg_type_is_ok = pg_type_range_try_from_pg_type.is_ok();
 
-        let u8_ts = token_patterns::StdPrimitiveU8;
-        let i16_ts = token_patterns::StdPrimitiveI16;
-        let u32_ts = token_patterns::StdPrimitiveU32;
-        let i32_ts = token_patterns::StdPrimitiveI32;
-        let i64_ts = token_patterns::StdPrimitiveI64;
-        let f32_ts = token_patterns::StdPrimitiveF32;
+        let u8_ts = token_patterns::U8;
+        let i16_ts = token_patterns::I16;
+        let u32_ts = token_patterns::U32;
+        let i32_ts = token_patterns::I32;
+        let i64_ts = token_patterns::I64;
+        let f32_ts = token_patterns::F32;
         let std_string_string_ts = token_patterns::StdStringString;
 
         let core_default_default_default_ts = token_patterns::CoreDefaultDefaultDefault;
@@ -1055,16 +1055,16 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             matches!(&not_null_or_nullable, NotNullOrNullable::NotNull)
         {
             match &pg_type {
-                PgType::StdPrimitiveI16AsInt2 |
-                PgType::StdPrimitiveI32AsInt4 |
-                PgType::StdPrimitiveI64AsInt8 |
-                PgType::StdPrimitiveF32AsFloat4 |
-                PgType::StdPrimitiveF64AsFloat8 |
-                PgType::StdPrimitiveI16AsSmallSerialInitializedByPg |
-                PgType::StdPrimitiveI32AsSerialInitializedByPg |
-                PgType::StdPrimitiveI64AsBigSerialInitializedByPg |
+                PgType::I16AsInt2 |
+                PgType::I32AsInt4 |
+                PgType::I64AsInt8 |
+                PgType::F32AsFloat4 |
+                PgType::F64AsFloat8 |
+                PgType::I16AsSmallSerialInitializedByPg |
+                PgType::I32AsSerialInitializedByPg |
+                PgType::I64AsBigSerialInitializedByPg |
                 PgType::SqlxPgTypesPgMoneyAsMoney |
-                PgType::StdPrimitiveBoolAsBool |
+                PgType::BoolAsBool |
                 PgType::SqlxTypesChronoNaiveTimeAsTime | PgType::SqlxTypesTimeTimeAsTime |
                 PgType::SqlxPgTypesPgIntervalAsInterval |
                 PgType::SqlxTypesChronoNaiveDateAsDate |
@@ -1073,12 +1073,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient |
                 PgType::SqlxTypesIpnetworkIpNetworkAsInet |
                 PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
-                PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range |
-                PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range |
+                PgType::SqlxPgTypesPgRangeI32AsInt4Range |
+                PgType::SqlxPgTypesPgRangeI64AsInt8Range |
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &Ts2::new(),
-                PgType::StdVecVecStdPrimitiveU8AsBytea |
+                PgType::StdVecVecU8AsBytea |
                 PgType::StdStringStringAsText => &dot_clone_ts,
             }
         }
@@ -1192,15 +1192,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 let sqlx_types_ipnetwork_ip_network_str = "sqlx::types::ipnetwork::IpNetwork".to_owned();
                 let sqlx_types_mac_address_mac_address_str = "sqlx::types::mac_address::MacAddress".to_owned();
                 match &pg_type {
-                    PgType::StdPrimitiveF32AsFloat4 => f32_str,
-                    PgType::StdPrimitiveF64AsFloat8 => f64_str,
-                    PgType::StdPrimitiveI16AsInt2 | PgType::StdPrimitiveI16AsSmallSerialInitializedByPg => i16_str,
-                    PgType::StdPrimitiveI32AsInt4 | PgType::StdPrimitiveI32AsSerialInitializedByPg => i32_str,
-                    PgType::StdPrimitiveI64AsInt8 | PgType::StdPrimitiveI64AsBigSerialInitializedByPg => i64_str,
+                    PgType::F32AsFloat4 => f32_str,
+                    PgType::F64AsFloat8 => f64_str,
+                    PgType::I16AsInt2 | PgType::I16AsSmallSerialInitializedByPg => i16_str,
+                    PgType::I32AsInt4 | PgType::I32AsSerialInitializedByPg => i32_str,
+                    PgType::I64AsInt8 | PgType::I64AsBigSerialInitializedByPg => i64_str,
                     PgType::SqlxPgTypesPgMoneyAsMoney => sqlx_pg_types_pg_money_str,
-                    PgType::StdPrimitiveBoolAsBool => bool_str,
+                    PgType::BoolAsBool => bool_str,
                     PgType::StdStringStringAsText => std_string_string_str,
-                    PgType::StdVecVecStdPrimitiveU8AsBytea => std_vec_vec_u8_str,
+                    PgType::StdVecVecU8AsBytea => std_vec_vec_u8_str,
                     PgType::SqlxTypesChronoNaiveTimeAsTime => sqlx_types_chrono_naive_time_str,
                     PgType::SqlxTypesTimeTimeAsTime => sqlx_types_time_time_str,
                     PgType::SqlxPgTypesPgIntervalAsInterval => sqlx_pg_types_pg_interval_str,
@@ -1210,8 +1210,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient => uuid_uuid_str,
                     PgType::SqlxTypesIpnetworkIpNetworkAsInet => sqlx_types_ipnetwork_ip_network_str,
                     PgType::SqlxTypesMacAddressMacAddressAsMacAddr => sqlx_types_mac_address_mac_address_str,
-                    PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => wrap_into_sqlx_pg_types_pg_range_str(&i32_str),
-                    PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => wrap_into_sqlx_pg_types_pg_range_str(&i64_str),
+                    PgType::SqlxPgTypesPgRangeI32AsInt4Range => wrap_into_sqlx_pg_types_pg_range_str(&i32_str),
+                    PgType::SqlxPgTypesPgRangeI64AsInt8Range => wrap_into_sqlx_pg_types_pg_range_str(&i64_str),
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => wrap_into_sqlx_pg_types_pg_range_str(&sqlx_types_chrono_naive_date_str),
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => wrap_into_sqlx_pg_types_pg_range_str(&sqlx_types_chrono_naive_date_time_str),
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => wrap_into_sqlx_pg_types_pg_range_str(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_str),
@@ -1268,15 +1268,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             },
         };
         let can_be_primary_key = match &pg_type {
-            PgType::StdPrimitiveI16AsInt2
-            | PgType::StdPrimitiveI32AsInt4
-            | PgType::StdPrimitiveI64AsInt8
-            | PgType::StdPrimitiveF32AsFloat4
-            | PgType::StdPrimitiveF64AsFloat8
+            PgType::I16AsInt2
+            | PgType::I32AsInt4
+            | PgType::I64AsInt8
+            | PgType::F32AsFloat4
+            | PgType::F64AsFloat8
             | PgType::SqlxPgTypesPgMoneyAsMoney
-            | PgType::StdPrimitiveBoolAsBool
+            | PgType::BoolAsBool
             | PgType::StdStringStringAsText
-            | PgType::StdVecVecStdPrimitiveU8AsBytea
+            | PgType::StdVecVecU8AsBytea
             | PgType::SqlxTypesChronoNaiveTimeAsTime
             | PgType::SqlxTypesTimeTimeAsTime
             | PgType::SqlxPgTypesPgIntervalAsInterval
@@ -1286,12 +1286,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient
             | PgType::SqlxTypesIpnetworkIpNetworkAsInet
             | PgType::SqlxTypesMacAddressMacAddressAsMacAddr
-            | PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range
-            | PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range
+            | PgType::SqlxPgTypesPgRangeI32AsInt4Range
+            | PgType::SqlxPgTypesPgRangeI64AsInt8Range
             | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
             | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
             | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBePrimaryKey::False,
-            PgType::StdPrimitiveI16AsSmallSerialInitializedByPg | PgType::StdPrimitiveI32AsSerialInitializedByPg | PgType::StdPrimitiveI64AsBigSerialInitializedByPg | PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg => CanBePrimaryKey::True,
+            PgType::I16AsSmallSerialInitializedByPg | PgType::I32AsSerialInitializedByPg | PgType::I64AsBigSerialInitializedByPg | PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg => CanBePrimaryKey::True,
         };
         let is_standart_not_null = if matches!((&pg_type_pattern, &not_null_or_nullable), (PgTypePattern::Standart, NotNullOrNullable::NotNull)) {
             IsStandartNotNull::True
@@ -1431,17 +1431,17 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     })
                 };
                 match &pg_type {
-                    PgType::StdPrimitiveI16AsInt2
-                    | PgType::StdPrimitiveI32AsInt4
-                    | PgType::StdPrimitiveI64AsInt8
-                    | PgType::StdPrimitiveF32AsFloat4
-                    | PgType::StdPrimitiveF64AsFloat8
-                    | PgType::StdPrimitiveI16AsSmallSerialInitializedByPg
-                    | PgType::StdPrimitiveI32AsSerialInitializedByPg
-                    | PgType::StdPrimitiveI64AsBigSerialInitializedByPg
-                    | PgType::StdPrimitiveBoolAsBool
+                    PgType::I16AsInt2
+                    | PgType::I32AsInt4
+                    | PgType::I64AsInt8
+                    | PgType::F32AsFloat4
+                    | PgType::F64AsFloat8
+                    | PgType::I16AsSmallSerialInitializedByPg
+                    | PgType::I32AsSerialInitializedByPg
+                    | PgType::I64AsBigSerialInitializedByPg
+                    | PgType::BoolAsBool
                     | PgType::StdStringStringAsText
-                    | PgType::StdVecVecStdPrimitiveU8AsBytea
+                    | PgType::StdVecVecU8AsBytea
                     | PgType::SqlxTypesChronoNaiveDateAsDate
                     | PgType::SqlxTypesIpnetworkIpNetworkAsInet => DeriveOrImpl::Derive,
                     PgType::SqlxPgTypesPgMoneyAsMoney => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&gen_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote! {.0}))),
@@ -1558,7 +1558,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     })),
                     PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient => DeriveOrImpl::Impl(impl_serde_serialize_for_uuid_uuid_ts),
                     PgType::SqlxTypesMacAddressMacAddressAsMacAddr => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&gen_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote! {.bytes()}))),
-                    PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range | PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => DeriveOrImpl::Impl(impl_serde_serialize_for_pg_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_ts),
+                    PgType::SqlxPgTypesPgRangeI32AsInt4Range | PgType::SqlxPgTypesPgRangeI64AsInt8Range => DeriveOrImpl::Impl(impl_serde_serialize_for_pg_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_ts),
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc)),
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc)),
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc)),
@@ -2337,16 +2337,16 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 });
                 match &pg_type {
-                    PgType::StdPrimitiveI16AsInt2
-                    | PgType::StdPrimitiveI32AsInt4
-                    | PgType::StdPrimitiveI64AsInt8
-                    | PgType::StdPrimitiveF32AsFloat4
-                    | PgType::StdPrimitiveF64AsFloat8
-                    | PgType::StdPrimitiveI16AsSmallSerialInitializedByPg
-                    | PgType::StdPrimitiveI32AsSerialInitializedByPg
-                    | PgType::StdPrimitiveI64AsBigSerialInitializedByPg
-                    | PgType::StdPrimitiveBoolAsBool
-                    | PgType::StdVecVecStdPrimitiveU8AsBytea
+                    PgType::I16AsInt2
+                    | PgType::I32AsInt4
+                    | PgType::I64AsInt8
+                    | PgType::F32AsFloat4
+                    | PgType::F64AsFloat8
+                    | PgType::I16AsSmallSerialInitializedByPg
+                    | PgType::I32AsSerialInitializedByPg
+                    | PgType::I64AsBigSerialInitializedByPg
+                    | PgType::BoolAsBool
+                    | PgType::StdVecVecU8AsBytea
                     | PgType::SqlxTypesIpnetworkIpNetworkAsInet => DeriveOrImpl::Derive,
                     PgType::SqlxPgTypesPgMoneyAsMoney => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
                         #struct_visitor_ts
@@ -2414,7 +2414,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         #const_fields_sqlx_pg_types_pg_interval_ts
                         #serde_deserializer_deserialize_struct_visitor_ts
                     })),
-                    PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                    PgType::SqlxPgTypesPgRangeI32AsInt4Range => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
                         #enum_field_two_ts
                         #impl_serde_de_visitor_for_field_visitor_ts_f4d8cc33_bf35_4c13_a745_341364a68df6
                         #impl_serde_deserialize_for_field_ts
@@ -2423,7 +2423,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         #const_fields_start_end_ts
                         #serde_deserializer_deserialize_struct_visitor_ts
                     })),
-                    PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                    PgType::SqlxPgTypesPgRangeI64AsInt8Range => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
                         #enum_field_two_ts
                         #impl_serde_de_visitor_for_field_visitor_ts_f4d8cc33_bf35_4c13_a745_341364a68df6
                         #impl_serde_deserialize_for_field_ts
@@ -2471,8 +2471,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc = SelfOriginTryNewForDeserializeErrorNamedUcc::from_display(&ident_standart_not_null_ucc);
         let int_range_type_to_range_inner_type_ts = |int_range_type: &IntRangeType| -> Ts2 {
             match &int_range_type {
-                IntRangeType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => quote! {#i32_ts},
-                IntRangeType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => quote! {#i64_ts},
+                IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range => quote! {#i32_ts},
+                IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range => quote! {#i64_ts},
             }
         };
         let gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts = |content_ts: &dyn ToTokens| {
@@ -2527,16 +2527,16 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         };
         let derive_copy = match &pg_type_pattern {
             PgTypePattern::Standart => match &pg_type {
-                PgType::StdPrimitiveI16AsInt2 |
-                PgType::StdPrimitiveI32AsInt4 |
-                PgType::StdPrimitiveI64AsInt8 |
-                PgType::StdPrimitiveF32AsFloat4 |
-                PgType::StdPrimitiveF64AsFloat8 |
-                PgType::StdPrimitiveI16AsSmallSerialInitializedByPg |
-                PgType::StdPrimitiveI32AsSerialInitializedByPg |
-                PgType::StdPrimitiveI64AsBigSerialInitializedByPg |
+                PgType::I16AsInt2 |
+                PgType::I32AsInt4 |
+                PgType::I64AsInt8 |
+                PgType::F32AsFloat4 |
+                PgType::F64AsFloat8 |
+                PgType::I16AsSmallSerialInitializedByPg |
+                PgType::I32AsSerialInitializedByPg |
+                PgType::I64AsBigSerialInitializedByPg |
                 PgType::SqlxPgTypesPgMoneyAsMoney |
-                PgType::StdPrimitiveBoolAsBool |
+                PgType::BoolAsBool |
                 PgType::SqlxTypesChronoNaiveTimeAsTime |
                 PgType::SqlxTypesTimeTimeAsTime |
                 PgType::SqlxPgTypesPgIntervalAsInterval |
@@ -2547,13 +2547,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 PgType::SqlxTypesUuidUuidAsUuidInitializedByClient |
                 PgType::SqlxTypesIpnetworkIpNetworkAsInet |
                 PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
-                PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range |
-                PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range |
+                PgType::SqlxPgTypesPgRangeI32AsInt4Range |
+                PgType::SqlxPgTypesPgRangeI64AsInt8Range |
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DeriveCopy::True,
                 PgType::StdStringStringAsText |
-                PgType::StdVecVecStdPrimitiveU8AsBytea => DeriveCopy::False,
+                PgType::StdVecVecU8AsBytea => DeriveCopy::False,
             },
             PgTypePattern::ArrayDimension1 { .. } => DeriveCopy::False,
         };
@@ -2631,18 +2631,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             )
                         ),
-                        PgType::StdPrimitiveI16AsInt2 |
-                        PgType::StdPrimitiveI32AsInt4 |
-                        PgType::StdPrimitiveI64AsInt8 |
-                        PgType::StdPrimitiveF32AsFloat4 |
-                        PgType::StdPrimitiveF64AsFloat8 |
-                        PgType::StdPrimitiveI16AsSmallSerialInitializedByPg |
-                        PgType::StdPrimitiveI32AsSerialInitializedByPg |
-                        PgType::StdPrimitiveI64AsBigSerialInitializedByPg |
+                        PgType::I16AsInt2 |
+                        PgType::I32AsInt4 |
+                        PgType::I64AsInt8 |
+                        PgType::F32AsFloat4 |
+                        PgType::F64AsFloat8 |
+                        PgType::I16AsSmallSerialInitializedByPg |
+                        PgType::I32AsSerialInitializedByPg |
+                        PgType::I64AsBigSerialInitializedByPg |
                         PgType::SqlxPgTypesPgMoneyAsMoney |
-                        PgType::StdPrimitiveBoolAsBool |
+                        PgType::BoolAsBool |
                         PgType::StdStringStringAsText |
-                        PgType::StdVecVecStdPrimitiveU8AsBytea |
+                        PgType::StdVecVecU8AsBytea |
                         PgType::SqlxPgTypesPgIntervalAsInterval |
                         PgType::SqlxTypesChronoNaiveDateAsDate |
                         PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
@@ -2651,8 +2651,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::SqlxTypesUuidUuidAsUuidInitializedByClient |
                         PgType::SqlxTypesIpnetworkIpNetworkAsInet |
                         PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
-                        PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range |
-                        PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range |
+                        PgType::SqlxPgTypesPgRangeI32AsInt4Range |
+                        PgType::SqlxPgTypesPgRangeI64AsInt8Range |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => None,
@@ -2684,18 +2684,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             )
                         ),
-                        PgType::StdPrimitiveI16AsInt2 |
-                        PgType::StdPrimitiveI32AsInt4 |
-                        PgType::StdPrimitiveI64AsInt8 |
-                        PgType::StdPrimitiveF32AsFloat4 |
-                        PgType::StdPrimitiveF64AsFloat8 |
-                        PgType::StdPrimitiveI16AsSmallSerialInitializedByPg |
-                        PgType::StdPrimitiveI32AsSerialInitializedByPg |
-                        PgType::StdPrimitiveI64AsBigSerialInitializedByPg |
+                        PgType::I16AsInt2 |
+                        PgType::I32AsInt4 |
+                        PgType::I64AsInt8 |
+                        PgType::F32AsFloat4 |
+                        PgType::F64AsFloat8 |
+                        PgType::I16AsSmallSerialInitializedByPg |
+                        PgType::I32AsSerialInitializedByPg |
+                        PgType::I64AsBigSerialInitializedByPg |
                         PgType::SqlxPgTypesPgMoneyAsMoney |
-                        PgType::StdPrimitiveBoolAsBool |
+                        PgType::BoolAsBool |
                         PgType::StdStringStringAsText |
-                        PgType::StdVecVecStdPrimitiveU8AsBytea |
+                        PgType::StdVecVecU8AsBytea |
                         PgType::SqlxPgTypesPgIntervalAsInterval |
                         PgType::SqlxTypesChronoNaiveDateAsDate |
                         PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
@@ -2704,8 +2704,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::SqlxTypesUuidUuidAsUuidInitializedByClient |
                         PgType::SqlxTypesIpnetworkIpNetworkAsInet |
                         PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
-                        PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range |
-                        PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range |
+                        PgType::SqlxPgTypesPgRangeI32AsInt4Range |
+                        PgType::SqlxPgTypesPgRangeI64AsInt8Range |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => None,
@@ -2745,18 +2745,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             )
                         ),
-                        PgType::StdPrimitiveI16AsInt2 |
-                        PgType::StdPrimitiveI32AsInt4 |
-                        PgType::StdPrimitiveI64AsInt8 |
-                        PgType::StdPrimitiveF32AsFloat4 |
-                        PgType::StdPrimitiveF64AsFloat8 |
-                        PgType::StdPrimitiveI16AsSmallSerialInitializedByPg |
-                        PgType::StdPrimitiveI32AsSerialInitializedByPg |
-                        PgType::StdPrimitiveI64AsBigSerialInitializedByPg |
+                        PgType::I16AsInt2 |
+                        PgType::I32AsInt4 |
+                        PgType::I64AsInt8 |
+                        PgType::F32AsFloat4 |
+                        PgType::F64AsFloat8 |
+                        PgType::I16AsSmallSerialInitializedByPg |
+                        PgType::I32AsSerialInitializedByPg |
+                        PgType::I64AsBigSerialInitializedByPg |
                         PgType::SqlxPgTypesPgMoneyAsMoney |
-                        PgType::StdPrimitiveBoolAsBool |
+                        PgType::BoolAsBool |
                         PgType::StdStringStringAsText |
-                        PgType::StdVecVecStdPrimitiveU8AsBytea |
+                        PgType::StdVecVecU8AsBytea |
                         PgType::SqlxPgTypesPgIntervalAsInterval |
                         PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
                         PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
@@ -2764,8 +2764,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::SqlxTypesUuidUuidAsUuidInitializedByClient |
                         PgType::SqlxTypesIpnetworkIpNetworkAsInet |
                         PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
-                        PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range |
-                        PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range |
+                        PgType::SqlxPgTypesPgRangeI32AsInt4Range |
+                        PgType::SqlxPgTypesPgRangeI64AsInt8Range |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => None,
@@ -2797,18 +2797,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             )
                         ),
-                        PgType::StdPrimitiveI16AsInt2 |
-                        PgType::StdPrimitiveI32AsInt4 |
-                        PgType::StdPrimitiveI64AsInt8 |
-                        PgType::StdPrimitiveF32AsFloat4 |
-                        PgType::StdPrimitiveF64AsFloat8 |
-                        PgType::StdPrimitiveI16AsSmallSerialInitializedByPg |
-                        PgType::StdPrimitiveI32AsSerialInitializedByPg |
-                        PgType::StdPrimitiveI64AsBigSerialInitializedByPg |
+                        PgType::I16AsInt2 |
+                        PgType::I32AsInt4 |
+                        PgType::I64AsInt8 |
+                        PgType::F32AsFloat4 |
+                        PgType::F64AsFloat8 |
+                        PgType::I16AsSmallSerialInitializedByPg |
+                        PgType::I32AsSerialInitializedByPg |
+                        PgType::I64AsBigSerialInitializedByPg |
                         PgType::SqlxPgTypesPgMoneyAsMoney |
-                        PgType::StdPrimitiveBoolAsBool |
+                        PgType::BoolAsBool |
                         PgType::StdStringStringAsText |
-                        PgType::StdVecVecStdPrimitiveU8AsBytea |
+                        PgType::StdVecVecU8AsBytea |
                         PgType::SqlxPgTypesPgIntervalAsInterval |
                         PgType::SqlxTypesChronoNaiveDateAsDate |
                         PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
@@ -2817,8 +2817,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::SqlxTypesUuidUuidAsUuidInitializedByClient |
                         PgType::SqlxTypesIpnetworkIpNetworkAsInet |
                         PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
-                        PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range |
-                        PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range |
+                        PgType::SqlxPgTypesPgRangeI32AsInt4Range |
+                        PgType::SqlxPgTypesPgRangeI64AsInt8Range |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => None,
@@ -2850,18 +2850,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             )
                         ),
-                        PgType::StdPrimitiveI16AsInt2 |
-                        PgType::StdPrimitiveI32AsInt4 |
-                        PgType::StdPrimitiveI64AsInt8 |
-                        PgType::StdPrimitiveF32AsFloat4 |
-                        PgType::StdPrimitiveF64AsFloat8 |
-                        PgType::StdPrimitiveI16AsSmallSerialInitializedByPg |
-                        PgType::StdPrimitiveI32AsSerialInitializedByPg |
-                        PgType::StdPrimitiveI64AsBigSerialInitializedByPg |
+                        PgType::I16AsInt2 |
+                        PgType::I32AsInt4 |
+                        PgType::I64AsInt8 |
+                        PgType::F32AsFloat4 |
+                        PgType::F64AsFloat8 |
+                        PgType::I16AsSmallSerialInitializedByPg |
+                        PgType::I32AsSerialInitializedByPg |
+                        PgType::I64AsBigSerialInitializedByPg |
                         PgType::SqlxPgTypesPgMoneyAsMoney |
-                        PgType::StdPrimitiveBoolAsBool |
+                        PgType::BoolAsBool |
                         PgType::StdStringStringAsText |
-                        PgType::StdVecVecStdPrimitiveU8AsBytea |
+                        PgType::StdVecVecU8AsBytea |
                         PgType::SqlxTypesTimeTimeAsTime |
                         PgType::SqlxPgTypesPgIntervalAsInterval |
                         PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
@@ -2870,8 +2870,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::SqlxTypesUuidUuidAsUuidInitializedByClient |
                         PgType::SqlxTypesIpnetworkIpNetworkAsInet |
                         PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
-                        PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range |
-                        PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range |
+                        PgType::SqlxPgTypesPgRangeI32AsInt4Range |
+                        PgType::SqlxPgTypesPgRangeI64AsInt8Range |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => None,
@@ -2895,18 +2895,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             )
                         ),
-                        PgType::StdPrimitiveI16AsInt2 |
-                        PgType::StdPrimitiveI32AsInt4 |
-                        PgType::StdPrimitiveI64AsInt8 |
-                        PgType::StdPrimitiveF32AsFloat4 |
-                        PgType::StdPrimitiveF64AsFloat8 |
-                        PgType::StdPrimitiveI16AsSmallSerialInitializedByPg |
-                        PgType::StdPrimitiveI32AsSerialInitializedByPg |
-                        PgType::StdPrimitiveI64AsBigSerialInitializedByPg |
+                        PgType::I16AsInt2 |
+                        PgType::I32AsInt4 |
+                        PgType::I64AsInt8 |
+                        PgType::F32AsFloat4 |
+                        PgType::F64AsFloat8 |
+                        PgType::I16AsSmallSerialInitializedByPg |
+                        PgType::I32AsSerialInitializedByPg |
+                        PgType::I64AsBigSerialInitializedByPg |
                         PgType::SqlxPgTypesPgMoneyAsMoney |
-                        PgType::StdPrimitiveBoolAsBool |
+                        PgType::BoolAsBool |
                         PgType::StdStringStringAsText |
-                        PgType::StdVecVecStdPrimitiveU8AsBytea |
+                        PgType::StdVecVecU8AsBytea |
                         PgType::SqlxTypesTimeTimeAsTime |
                         PgType::SqlxPgTypesPgIntervalAsInterval |
                         PgType::SqlxTypesChronoNaiveDateAsDate |
@@ -2916,8 +2916,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::SqlxTypesUuidUuidAsUuidInitializedByClient |
                         PgType::SqlxTypesIpnetworkIpNetworkAsInet |
                         PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
-                        PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range |
-                        PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range |
+                        PgType::SqlxPgTypesPgRangeI32AsInt4Range |
+                        PgType::SqlxPgTypesPgRangeI64AsInt8Range |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => None,
@@ -2933,18 +2933,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     };
                     match &pg_type {
-                        PgType::StdPrimitiveI16AsInt2 |
-                        PgType::StdPrimitiveI32AsInt4 |
-                        PgType::StdPrimitiveI64AsInt8 |
-                        PgType::StdPrimitiveF32AsFloat4 |
-                        PgType::StdPrimitiveF64AsFloat8 |
-                        PgType::StdPrimitiveI16AsSmallSerialInitializedByPg |
-                        PgType::StdPrimitiveI32AsSerialInitializedByPg |
-                        PgType::StdPrimitiveI64AsBigSerialInitializedByPg |
+                        PgType::I16AsInt2 |
+                        PgType::I32AsInt4 |
+                        PgType::I64AsInt8 |
+                        PgType::F32AsFloat4 |
+                        PgType::F64AsFloat8 |
+                        PgType::I16AsSmallSerialInitializedByPg |
+                        PgType::I32AsSerialInitializedByPg |
+                        PgType::I64AsBigSerialInitializedByPg |
                         PgType::SqlxPgTypesPgMoneyAsMoney |
-                        PgType::StdPrimitiveBoolAsBool |
+                        PgType::BoolAsBool |
                         PgType::StdStringStringAsText |
-                        PgType::StdVecVecStdPrimitiveU8AsBytea |
+                        PgType::StdVecVecU8AsBytea |
                         PgType::SqlxTypesTimeTimeAsTime |
                         PgType::SqlxPgTypesPgIntervalAsInterval |
                         PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
@@ -2953,8 +2953,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::SqlxTypesUuidUuidAsUuidInitializedByClient |
                         PgType::SqlxTypesIpnetworkIpNetworkAsInet |
                         PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
-                        PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range |
-                        PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range |
+                        PgType::SqlxPgTypesPgRangeI32AsInt4Range |
+                        PgType::SqlxPgTypesPgRangeI64AsInt8Range |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => None,
@@ -3064,17 +3064,17 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .derive_partial_ord_if(match &is_standart_not_null {
                     IsStandartNotNull::False => DerivePartialOrd::False,
                     IsStandartNotNull::True => match &pg_type {
-                        PgType::StdPrimitiveI16AsInt2
-                        | PgType::StdPrimitiveI32AsInt4
-                        | PgType::StdPrimitiveI64AsInt8
-                        | PgType::StdPrimitiveF32AsFloat4
-                        | PgType::StdPrimitiveF64AsFloat8
-                        | PgType::StdPrimitiveI16AsSmallSerialInitializedByPg
-                        | PgType::StdPrimitiveI32AsSerialInitializedByPg
-                        | PgType::StdPrimitiveI64AsBigSerialInitializedByPg
-                        | PgType::StdPrimitiveBoolAsBool
+                        PgType::I16AsInt2
+                        | PgType::I32AsInt4
+                        | PgType::I64AsInt8
+                        | PgType::F32AsFloat4
+                        | PgType::F64AsFloat8
+                        | PgType::I16AsSmallSerialInitializedByPg
+                        | PgType::I32AsSerialInitializedByPg
+                        | PgType::I64AsBigSerialInitializedByPg
+                        | PgType::BoolAsBool
                         | PgType::StdStringStringAsText
-                        | PgType::StdVecVecStdPrimitiveU8AsBytea
+                        | PgType::StdVecVecU8AsBytea
                         | PgType::SqlxTypesChronoNaiveTimeAsTime
                         | PgType::SqlxTypesTimeTimeAsTime
                         | PgType::SqlxTypesChronoNaiveDateAsDate
@@ -3086,8 +3086,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient
                         | PgType::SqlxTypesIpnetworkIpNetworkAsInet
                         | PgType::SqlxTypesMacAddressMacAddressAsMacAddr
-                        | PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range
-                        | PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range
+                        | PgType::SqlxPgTypesPgRangeI32AsInt4Range
+                        | PgType::SqlxPgTypesPgRangeI64AsInt8Range
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DerivePartialOrd::False,
@@ -3230,8 +3230,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
                                 },
-                                PgTypeInitializationTryNew::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => &gen_int_range_type_error_variants_ts(&IntRangeType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range),
-                                PgTypeInitializationTryNew::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => &gen_int_range_type_error_variants_ts(&IntRangeType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range),
+                                PgTypeInitializationTryNew::SqlxPgTypesPgRangeI32AsInt4Range => &gen_int_range_type_error_variants_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
+                                PgTypeInitializationTryNew::SqlxPgTypesPgRangeI64AsInt8Range => &gen_int_range_type_error_variants_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
                                 PgTypeInitializationTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &gen_start_end_ts(
                                     &sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_ucc
                                 ),
@@ -3303,8 +3303,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             #nanosecond_precision_is_not_supported_variant_try_new_ts
                                         },
                                         PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_error_named_variants_ts,
-                                        PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => &gen_int_range_type_error_variants_ts(&IntRangeType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range),
-                                        PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => &gen_int_range_type_error_variants_ts(&IntRangeType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range),
+                                        PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI32AsInt4Range => &gen_int_range_type_error_variants_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
+                                        PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI64AsInt8Range => &gen_int_range_type_error_variants_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
                                     };
                                     quote!{{#content_ts}}
                                 }
@@ -3630,8 +3630,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 Ok(Self(#sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts))
                                             }
                                         }
-                                        PgTypeInitializationTryNew::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => gen_int_range_check_ts(&IntRangeType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range),
-                                        PgTypeInitializationTryNew::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => gen_int_range_check_ts(&IntRangeType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range),
+                                        PgTypeInitializationTryNew::SqlxPgTypesPgRangeI32AsInt4Range => gen_int_range_check_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
+                                        PgTypeInitializationTryNew::SqlxPgTypesPgRangeI64AsInt8Range => gen_int_range_check_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
                                         PgTypeInitializationTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => gen_ok_self_sqlx_pg_types_pg_range_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc),
                                         PgTypeInitializationTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => gen_ok_self_sqlx_pg_types_pg_range_ts(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc),
                                         PgTypeInitializationTryNew::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => gen_ok_self_sqlx_pg_types_pg_range_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc),
@@ -3762,8 +3762,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                     #MicrosecondSc: #u32_ts
                                                 }
                                             }
-                                            PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => gen_value_pg_range_int_type_ts(&IntRangeType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range),
-                                            PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => gen_value_pg_range_int_type_ts(&IntRangeType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range),
+                                            PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI32AsInt4Range => gen_value_pg_range_int_type_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
+                                            PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI64AsInt8Range => gen_value_pg_range_int_type_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
                                         }
                                     };
                                     let content_ts = {
@@ -3909,7 +3909,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                     }),
                                                 },
                                             ),
-                                            PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range | PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => try_new_convert_pg_range_int_content_ts,
+                                            PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI32AsInt4Range | PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI64AsInt8Range => try_new_convert_pg_range_int_content_ts,
                                         }
                                     };
                                     quote! {
@@ -3986,17 +3986,17 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let maybe_impl_is_string_empty_for_ident_origin_ts = if matches!(&is_standart_not_null, IsStandartNotNull::True) {
                 match &not_null_or_nullable {
                     NotNullOrNullable::NotNull => match &pg_type {
-                        PgType::StdPrimitiveI16AsInt2
-                        | PgType::StdPrimitiveI32AsInt4
-                        | PgType::StdPrimitiveI64AsInt8
-                        | PgType::StdPrimitiveF32AsFloat4
-                        | PgType::StdPrimitiveF64AsFloat8
-                        | PgType::StdPrimitiveI16AsSmallSerialInitializedByPg
-                        | PgType::StdPrimitiveI32AsSerialInitializedByPg
-                        | PgType::StdPrimitiveI64AsBigSerialInitializedByPg
+                        PgType::I16AsInt2
+                        | PgType::I32AsInt4
+                        | PgType::I64AsInt8
+                        | PgType::F32AsFloat4
+                        | PgType::F64AsFloat8
+                        | PgType::I16AsSmallSerialInitializedByPg
+                        | PgType::I32AsSerialInitializedByPg
+                        | PgType::I64AsBigSerialInitializedByPg
                         | PgType::SqlxPgTypesPgMoneyAsMoney
-                        | PgType::StdPrimitiveBoolAsBool
-                        | PgType::StdVecVecStdPrimitiveU8AsBytea
+                        | PgType::BoolAsBool
+                        | PgType::StdVecVecU8AsBytea
                         | PgType::SqlxTypesChronoNaiveTimeAsTime
                         | PgType::SqlxTypesTimeTimeAsTime
                         | PgType::SqlxPgTypesPgIntervalAsInterval
@@ -4004,8 +4004,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         | PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp
                         | PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz
                         | PgType::SqlxTypesIpnetworkIpNetworkAsInet
-                        | PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range
-                        | PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range
+                        | PgType::SqlxPgTypesPgRangeI32AsInt4Range
+                        | PgType::SqlxPgTypesPgRangeI64AsInt8Range
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Ts2::new(),
@@ -4070,15 +4070,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             let sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_option_some_vec_one_el_call_ts = gen_as_default_option_some_vec_one_el_call_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc);
                             let sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_option_some_vec_one_el_call_ts = gen_as_default_option_some_vec_one_el_call_ts(&sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc);
                             let initialization_ts: &dyn ToTokens = match &pg_type {
-                                PgType::StdPrimitiveI16AsInt2
-                                | PgType::StdPrimitiveI32AsInt4
-                                | PgType::StdPrimitiveI64AsInt8
-                                | PgType::StdPrimitiveF32AsFloat4
-                                | PgType::StdPrimitiveF64AsFloat8
-                                | PgType::StdPrimitiveI16AsSmallSerialInitializedByPg
-                                | PgType::StdPrimitiveI32AsSerialInitializedByPg
-                                | PgType::StdPrimitiveI64AsBigSerialInitializedByPg
-                                | PgType::StdPrimitiveBoolAsBool
+                                PgType::I16AsInt2
+                                | PgType::I32AsInt4
+                                | PgType::I64AsInt8
+                                | PgType::F32AsFloat4
+                                | PgType::F64AsFloat8
+                                | PgType::I16AsSmallSerialInitializedByPg
+                                | PgType::I32AsSerialInitializedByPg
+                                | PgType::I64AsBigSerialInitializedByPg
+                                | PgType::BoolAsBool
                                 | PgType::StdStringStringAsText
                                 | PgType::SqlxTypesChronoNaiveDateAsDate
                                 | PgType::SqlxTypesChronoNaiveTimeAsTime
@@ -4086,7 +4086,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 | PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg => &quote! {#field_type_handle::default()},
                                 PgType::SqlxTypesUuidUuidAsUuidInitializedByClient => &quote! {#ident_inner_type_ts::default()},
                                 PgType::SqlxPgTypesPgMoneyAsMoney => &quote! {#inner_type_standart_not_null_ts(#core_default_default_default_ts)},
-                                PgType::StdVecVecStdPrimitiveU8AsBytea => &quote! {vec![#core_default_default_default_ts]},
+                                PgType::StdVecVecU8AsBytea => &quote! {vec![#core_default_default_default_ts]},
                                 PgType::SqlxTypesTimeTimeAsTime => &gen_sqlx_types_time_time_from_hms_micro_unwrap_ts(&quote! {0,0,0,0}),
                                 PgType::SqlxPgTypesPgIntervalAsInterval => &quote! {#inner_type_standart_not_null_ts {
                                     #MonthsSc: #core_default_default_default_ts,
@@ -4104,7 +4104,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 PgType::SqlxTypesIpnetworkIpNetworkAsInet => &quote! {
                                     sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSc(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default_ts).expect("9e9c9b57"))
                                 },
-                                PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range | PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => &pg_range_int_default_initialization_ts,
+                                PgType::SqlxPgTypesPgRangeI32AsInt4Range | PgType::SqlxPgTypesPgRangeI64AsInt8Range => &pg_range_int_default_initialization_ts,
                                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &gen_sqlx_pg_types_pg_range_default_option_some_vec_one_el_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc),
                                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &gen_sqlx_pg_types_pg_range_default_option_some_vec_one_el_ts(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc),
                                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &gen_sqlx_pg_types_pg_range_default_option_some_vec_one_el_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc),
@@ -4128,18 +4128,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 match &pg_type_pattern {
                     PgTypePattern::Standart => match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => match &pg_type {
-                            PgType::StdPrimitiveI16AsInt2
-                            | PgType::StdPrimitiveI32AsInt4
-                            | PgType::StdPrimitiveI64AsInt8
-                            | PgType::StdPrimitiveF32AsFloat4
-                            | PgType::StdPrimitiveF64AsFloat8
-                            | PgType::StdPrimitiveI16AsSmallSerialInitializedByPg
-                            | PgType::StdPrimitiveI32AsSerialInitializedByPg
-                            | PgType::StdPrimitiveI64AsBigSerialInitializedByPg
+                            PgType::I16AsInt2
+                            | PgType::I32AsInt4
+                            | PgType::I64AsInt8
+                            | PgType::F32AsFloat4
+                            | PgType::F64AsFloat8
+                            | PgType::I16AsSmallSerialInitializedByPg
+                            | PgType::I32AsSerialInitializedByPg
+                            | PgType::I64AsBigSerialInitializedByPg
                             | PgType::SqlxPgTypesPgMoneyAsMoney
-                            | PgType::StdPrimitiveBoolAsBool
+                            | PgType::BoolAsBool
                             | PgType::StdStringStringAsText
-                            | PgType::StdVecVecStdPrimitiveU8AsBytea
+                            | PgType::StdVecVecU8AsBytea
                             | PgType::SqlxTypesChronoNaiveTimeAsTime
                             | PgType::SqlxTypesTimeTimeAsTime
                             | PgType::SqlxPgTypesPgIntervalAsInterval
@@ -4152,7 +4152,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                             | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
                             | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => ok_self_scopes_value_ts,
-                            PgType::SqlxTypesChronoNaiveDateAsDate | PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range | PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => quote! {
+                            PgType::SqlxTypesChronoNaiveDateAsDate | PgType::SqlxPgTypesPgRangeI32AsInt4Range | PgType::SqlxPgTypesPgRangeI64AsInt8Range => quote! {
                                 match Self::#TryNewSc #scopes_value_ts {
                                     Ok(value_93eb5329) => Ok(value_93eb5329),
                                     Err(er) => Err(Box::#NewSc(er)),
@@ -4227,17 +4227,17 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .derive_partial_ord_if(match &is_standart_not_null {
                     IsStandartNotNull::False => DerivePartialOrd::False,
                     IsStandartNotNull::True => match &pg_type {
-                        PgType::StdPrimitiveI16AsInt2
-                        | PgType::StdPrimitiveI32AsInt4
-                        | PgType::StdPrimitiveI64AsInt8
-                        | PgType::StdPrimitiveF32AsFloat4
-                        | PgType::StdPrimitiveF64AsFloat8
-                        | PgType::StdPrimitiveI16AsSmallSerialInitializedByPg
-                        | PgType::StdPrimitiveI32AsSerialInitializedByPg
-                        | PgType::StdPrimitiveI64AsBigSerialInitializedByPg
-                        | PgType::StdPrimitiveBoolAsBool
+                        PgType::I16AsInt2
+                        | PgType::I32AsInt4
+                        | PgType::I64AsInt8
+                        | PgType::F32AsFloat4
+                        | PgType::F64AsFloat8
+                        | PgType::I16AsSmallSerialInitializedByPg
+                        | PgType::I32AsSerialInitializedByPg
+                        | PgType::I64AsBigSerialInitializedByPg
+                        | PgType::BoolAsBool
                         | PgType::StdStringStringAsText
-                        | PgType::StdVecVecStdPrimitiveU8AsBytea
+                        | PgType::StdVecVecU8AsBytea
                         | PgType::SqlxTypesChronoNaiveTimeAsTime
                         | PgType::SqlxTypesTimeTimeAsTime
                         | PgType::SqlxTypesChronoNaiveDateAsDate
@@ -4249,8 +4249,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient
                         | PgType::SqlxTypesIpnetworkIpNetworkAsInet
                         | PgType::SqlxTypesMacAddressMacAddressAsMacAddr
-                        | PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range
-                        | PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range
+                        | PgType::SqlxPgTypesPgRangeI32AsInt4Range
+                        | PgType::SqlxPgTypesPgRangeI64AsInt8Range
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DerivePartialOrd::False,
@@ -4491,20 +4491,20 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             (ranges_common_filter_vec.clone(), ranges_common_filter_vec.clone(), ranges_common_filter_vec.clone(), ranges_common_filter_vec.clone(), ranges_common_filter_vec)
                         };
                         match &pg_type {
-                            PgType::StdPrimitiveI16AsInt2
-                            | PgType::StdPrimitiveI32AsInt4
-                            | PgType::StdPrimitiveI64AsInt8
-                            | PgType::StdPrimitiveF32AsFloat4
-                            | PgType::StdPrimitiveF64AsFloat8
-                            | PgType::StdPrimitiveI16AsSmallSerialInitializedByPg
-                            | PgType::StdPrimitiveI32AsSerialInitializedByPg
-                            | PgType::StdPrimitiveI64AsBigSerialInitializedByPg => common_standart_pg_type_number_filters,
+                            PgType::I16AsInt2
+                            | PgType::I32AsInt4
+                            | PgType::I64AsInt8
+                            | PgType::F32AsFloat4
+                            | PgType::F64AsFloat8
+                            | PgType::I16AsSmallSerialInitializedByPg
+                            | PgType::I32AsSerialInitializedByPg
+                            | PgType::I64AsBigSerialInitializedByPg => common_standart_pg_type_number_filters,
                             PgType::SqlxPgTypesPgMoneyAsMoney => {
                                 let mut vec = common_standart_pg_type_filters;
                                 vec.push(in_handle);
                                 vec
                             }
-                            PgType::StdVecVecStdPrimitiveU8AsBytea => {
+                            PgType::StdVecVecU8AsBytea => {
                                 let mut vec = common_standart_pg_type_filters;
                                 vec.push(equal_to_encoded_string_representation);
                                 vec
@@ -4544,15 +4544,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec.push(regular_expression);
                                 vec
                             }
-                            PgType::StdPrimitiveBoolAsBool | PgType::SqlxPgTypesPgIntervalAsInterval | PgType::SqlxTypesIpnetworkIpNetworkAsInet => common_standart_pg_type_filters,
+                            PgType::BoolAsBool | PgType::SqlxPgTypesPgIntervalAsInterval | PgType::SqlxTypesIpnetworkIpNetworkAsInet => common_standart_pg_type_filters,
                             PgType::SqlxTypesMacAddressMacAddressAsMacAddr => {
                                 let mut vec = common_standart_pg_type_filters;
                                 vec.push(greater_than);
                                 vec.push(regular_expression);
                                 vec
                             }
-                            PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => where_sqlx_pg_types_pg_range_i32_ts,
-                            PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => where_sqlx_pg_types_pg_range_i64_ts,
+                            PgType::SqlxPgTypesPgRangeI32AsInt4Range => where_sqlx_pg_types_pg_range_i32_ts,
+                            PgType::SqlxPgTypesPgRangeI64AsInt8Range => where_sqlx_pg_types_pg_range_i64_ts,
                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => where_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => where_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => where_sqlx_pg_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
@@ -4659,28 +4659,28 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec
                             };
                             (
-                                gen_where_sqlx_pg_types_pg_range_filter_ts(PgTypeRange::StdPrimitiveI32AsInt4),
-                                gen_where_sqlx_pg_types_pg_range_filter_ts(PgTypeRange::StdPrimitiveI64AsInt8),
+                                gen_where_sqlx_pg_types_pg_range_filter_ts(PgTypeRange::I32AsInt4),
+                                gen_where_sqlx_pg_types_pg_range_filter_ts(PgTypeRange::I64AsInt8),
                                 gen_where_sqlx_pg_types_pg_range_filter_ts(PgTypeRange::SqlxTypesChronoNaiveDateAsDate),
                                 gen_where_sqlx_pg_types_pg_range_filter_ts(PgTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp),
                                 gen_where_sqlx_pg_types_pg_range_filter_ts(PgTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz),
                             )
                         };
                         match &pg_type {
-                            PgType::StdPrimitiveI16AsInt2
-                            | PgType::StdPrimitiveI32AsInt4
-                            | PgType::StdPrimitiveI64AsInt8
-                            | PgType::StdPrimitiveF32AsFloat4
-                            | PgType::StdPrimitiveF64AsFloat8
-                            | PgType::StdPrimitiveI16AsSmallSerialInitializedByPg
-                            | PgType::StdPrimitiveI32AsSerialInitializedByPg
-                            | PgType::StdPrimitiveI64AsBigSerialInitializedByPg => common_array_dimension1_pg_type_number_filters,
+                            PgType::I16AsInt2
+                            | PgType::I32AsInt4
+                            | PgType::I64AsInt8
+                            | PgType::F32AsFloat4
+                            | PgType::F64AsFloat8
+                            | PgType::I16AsSmallSerialInitializedByPg
+                            | PgType::I32AsSerialInitializedByPg
+                            | PgType::I64AsBigSerialInitializedByPg => common_array_dimension1_pg_type_number_filters,
                             PgType::SqlxPgTypesPgMoneyAsMoney => {
                                 let mut vec = common_array_dimension1_pg_type_filters;
                                 vec.push(dimension_one_in_handle);
                                 vec
                             }
-                            PgType::StdVecVecStdPrimitiveU8AsBytea => {
+                            PgType::StdVecVecU8AsBytea => {
                                 let mut vec = common_array_dimension1_pg_type_filters;
                                 vec.push(PgTypeFilter::DimensionOneEqualToEncodedStringRepresentation);
                                 vec
@@ -4720,15 +4720,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec.push(dimension_one_regular_expression);
                                 vec
                             }
-                            PgType::StdPrimitiveBoolAsBool | PgType::SqlxPgTypesPgIntervalAsInterval | PgType::SqlxTypesIpnetworkIpNetworkAsInet => common_array_dimension1_pg_type_filters,
+                            PgType::BoolAsBool | PgType::SqlxPgTypesPgIntervalAsInterval | PgType::SqlxTypesIpnetworkIpNetworkAsInet => common_array_dimension1_pg_type_filters,
                             PgType::SqlxTypesMacAddressMacAddressAsMacAddr => {
                                 let mut vec = common_array_dimension1_pg_type_filters;
                                 vec.push(dimension_one_greater_than);
                                 vec.push(dimension_one_regular_expression);
                                 vec
                             }
-                            PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => where_sqlx_pg_types_pg_range_i32_ts,
-                            PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => where_sqlx_pg_types_pg_range_i64_ts,
+                            PgType::SqlxPgTypesPgRangeI32AsInt4Range => where_sqlx_pg_types_pg_range_i32_ts,
+                            PgType::SqlxPgTypesPgRangeI64AsInt8Range => where_sqlx_pg_types_pg_range_i64_ts,
                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => where_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => where_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => where_sqlx_pg_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
@@ -4933,15 +4933,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 let typical: Handle<'_> = { (&typical_query_part_ts, &typical_query_bind_ts) };
                 let default_initialized_by_pg: Handle<'_> = (&ok_std_string_string_from_default_ts, &ok_query_ts);
                 match &pg_type {
-                    PgType::StdPrimitiveI16AsInt2
-                    | PgType::StdPrimitiveI32AsInt4
-                    | PgType::StdPrimitiveI64AsInt8
-                    | PgType::StdPrimitiveF32AsFloat4
-                    | PgType::StdPrimitiveF64AsFloat8
+                    PgType::I16AsInt2
+                    | PgType::I32AsInt4
+                    | PgType::I64AsInt8
+                    | PgType::F32AsFloat4
+                    | PgType::F64AsFloat8
                     | PgType::SqlxPgTypesPgMoneyAsMoney
-                    | PgType::StdPrimitiveBoolAsBool
+                    | PgType::BoolAsBool
                     | PgType::StdStringStringAsText
-                    | PgType::StdVecVecStdPrimitiveU8AsBytea
+                    | PgType::StdVecVecU8AsBytea
                     | PgType::SqlxTypesChronoNaiveTimeAsTime
                     | PgType::SqlxTypesTimeTimeAsTime
                     | PgType::SqlxPgTypesPgIntervalAsInterval
@@ -4951,12 +4951,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient
                     | PgType::SqlxTypesIpnetworkIpNetworkAsInet
                     | PgType::SqlxTypesMacAddressMacAddressAsMacAddr
-                    | PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range
-                    | PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range
+                    | PgType::SqlxPgTypesPgRangeI32AsInt4Range
+                    | PgType::SqlxPgTypesPgRangeI64AsInt8Range
                     | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                     | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
                     | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => typical,
-                    PgType::StdPrimitiveI16AsSmallSerialInitializedByPg | PgType::StdPrimitiveI32AsSerialInitializedByPg | PgType::StdPrimitiveI64AsBigSerialInitializedByPg => default_initialized_by_pg,
+                    PgType::I16AsSmallSerialInitializedByPg | PgType::I32AsSerialInitializedByPg | PgType::I64AsBigSerialInitializedByPg => default_initialized_by_pg,
                     PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg => (&ok_std_string_string_from_uuid_generate_v4_ts, &ok_query_ts),
                 }
             };
@@ -4977,18 +4977,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 },
                 &{
                     let pg_query_type = match &pg_type {
-                        PgType::StdPrimitiveI16AsInt2 => "int2",
-                        PgType::StdPrimitiveI32AsInt4 => "int4",
-                        PgType::StdPrimitiveI64AsInt8 => "int8",
-                        PgType::StdPrimitiveF32AsFloat4 => "float4",
-                        PgType::StdPrimitiveF64AsFloat8 => "float8",
-                        PgType::StdPrimitiveI16AsSmallSerialInitializedByPg => "smallserial",
-                        PgType::StdPrimitiveI32AsSerialInitializedByPg => "serial",
-                        PgType::StdPrimitiveI64AsBigSerialInitializedByPg => "bigserial",
+                        PgType::I16AsInt2 => "int2",
+                        PgType::I32AsInt4 => "int4",
+                        PgType::I64AsInt8 => "int8",
+                        PgType::F32AsFloat4 => "float4",
+                        PgType::F64AsFloat8 => "float8",
+                        PgType::I16AsSmallSerialInitializedByPg => "smallserial",
+                        PgType::I32AsSerialInitializedByPg => "serial",
+                        PgType::I64AsBigSerialInitializedByPg => "bigserial",
                         PgType::SqlxPgTypesPgMoneyAsMoney => "money",
-                        PgType::StdPrimitiveBoolAsBool => "bool",
+                        PgType::BoolAsBool => "bool",
                         PgType::StdStringStringAsText => "text",
-                        PgType::StdVecVecStdPrimitiveU8AsBytea => "bytea",
+                        PgType::StdVecVecU8AsBytea => "bytea",
                         PgType::SqlxTypesChronoNaiveTimeAsTime | PgType::SqlxTypesTimeTimeAsTime => "time",
                         PgType::SqlxPgTypesPgIntervalAsInterval => "interval",
                         PgType::SqlxTypesChronoNaiveDateAsDate => "date",
@@ -4997,8 +4997,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient => "uuid",
                         PgType::SqlxTypesIpnetworkIpNetworkAsInet => "inet",
                         PgType::SqlxTypesMacAddressMacAddressAsMacAddr => "macaddr",
-                        PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => "int4range",
-                        PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => "int8range",
+                        PgType::SqlxPgTypesPgRangeI32AsInt4Range => "int4range",
+                        PgType::SqlxPgTypesPgRangeI64AsInt8Range => "int8range",
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => "daterange",
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => "tsrange",
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => "tstzrange",
@@ -5217,7 +5217,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             &sqlx_pg_types_pg_range_unbounded_excluded_ts,
                                         );
                                         match &pg_type_range {
-                                            PgTypeRange::StdPrimitiveI32AsInt4 | PgTypeRange::StdPrimitiveI64AsInt8 => int_range_normalize_ts,
+                                            PgTypeRange::I32AsInt4 | PgTypeRange::I64AsInt8 => int_range_normalize_ts,
                                             PgTypeRange::SqlxTypesChronoNaiveDateAsDate => {
                                                 let gen_dot_succ_opt_expect_ts = |id: &dyn Display| {
                                                     let id_double_quotes_ts = gen_quotes::double_quotes_ts(&id);
@@ -5633,20 +5633,20 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     quote! {#import_path::#value()#content_ts}
                 };
                 match &pg_type {
-                    PgType::StdPrimitiveI16AsInt2 => gen_typical_test_cases_vec_ts(&quote! {i16_test_cases_vec}),
-                    PgType::StdPrimitiveI32AsInt4 => gen_typical_test_cases_vec_ts(&quote! {i32_test_cases_vec}),
-                    PgType::StdPrimitiveI64AsInt8 => gen_typical_test_cases_vec_ts(&quote! {i64_test_cases_vec}),
-                    PgType::StdPrimitiveF32AsFloat4 => gen_typical_test_cases_vec_ts(&quote! {f32_test_cases_vec}),
-                    PgType::StdPrimitiveF64AsFloat8 => gen_typical_test_cases_vec_ts(&quote! {f64_test_cases_vec}),
-                    PgType::StdPrimitiveI16AsSmallSerialInitializedByPg | PgType::StdPrimitiveI32AsSerialInitializedByPg | PgType::StdPrimitiveI64AsBigSerialInitializedByPg => empty_vec_ts,
+                    PgType::I16AsInt2 => gen_typical_test_cases_vec_ts(&quote! {i16_test_cases_vec}),
+                    PgType::I32AsInt4 => gen_typical_test_cases_vec_ts(&quote! {i32_test_cases_vec}),
+                    PgType::I64AsInt8 => gen_typical_test_cases_vec_ts(&quote! {i64_test_cases_vec}),
+                    PgType::F32AsFloat4 => gen_typical_test_cases_vec_ts(&quote! {f32_test_cases_vec}),
+                    PgType::F64AsFloat8 => gen_typical_test_cases_vec_ts(&quote! {f64_test_cases_vec}),
+                    PgType::I16AsSmallSerialInitializedByPg | PgType::I32AsSerialInitializedByPg | PgType::I64AsBigSerialInitializedByPg => empty_vec_ts,
                     PgType::SqlxPgTypesPgMoneyAsMoney => quote! {
                         #import_path::i64_test_cases_vec().into_iter().map(
                             #inner_type_standart_not_null_ts
                         ).collect::<Vec<#inner_type_standart_not_null_ts>>()
                     },
-                    PgType::StdPrimitiveBoolAsBool => gen_typical_test_cases_vec_ts(&quote! {bool_test_cases_vec}),
+                    PgType::BoolAsBool => gen_typical_test_cases_vec_ts(&quote! {bool_test_cases_vec}),
                     PgType::StdStringStringAsText => gen_typical_test_cases_vec_ts(&quote! {std_string_string_test_cases_vec}),
-                    PgType::StdVecVecStdPrimitiveU8AsBytea => quote! {vec![
+                    PgType::StdVecVecU8AsBytea => quote! {vec![
                         Vec::new(),
                         (0u8..=255).collect(),
                         vec![0; 1024],
@@ -5785,8 +5785,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         sqlx::types::mac_address::MacAddress::#NewSc([0x01, 0x00, 0x5E, 0x00, 0x00, 0xFB]), // Multicast address
                         sqlx::types::mac_address::MacAddress::#NewSc([0xDE, 0xAD, 0xBE, 0xEF, 0xCA, 0xFE]), // Random valid MAC
                     ]},
-                    PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => gen_int_pgrange_read_only_ids_to_two_dimensional_vec_read_inner_ts(&IntRangeType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range),
-                    PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => gen_int_pgrange_read_only_ids_to_two_dimensional_vec_read_inner_ts(&IntRangeType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range),
+                    PgType::SqlxPgTypesPgRangeI32AsInt4Range => gen_int_pgrange_read_only_ids_to_two_dimensional_vec_read_inner_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
+                    PgType::SqlxPgTypesPgRangeI64AsInt8Range => gen_int_pgrange_read_only_ids_to_two_dimensional_vec_read_inner_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => gen_range_read_only_ids_to_two_dimensional_vec_read_inner_ts(
                         &ident_sqlx_types_chrono_naive_date_min_ts,
                         &ident_sqlx_types_chrono_naive_date_negative_less_typical_ts,
@@ -5900,16 +5900,16 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         let number_ts = value.to_string().parse::<Ts2>().expect("50c87202");
                                         //todo maybe correlate with .derive_copy_if()
                                         let current_maybe_dot_clone_ts: &dyn ToTokens = match &pg_type {
-                                            PgType::StdPrimitiveI16AsInt2 |
-                                            PgType::StdPrimitiveI32AsInt4 |
-                                            PgType::StdPrimitiveI64AsInt8 |
-                                            PgType::StdPrimitiveF32AsFloat4 |
-                                            PgType::StdPrimitiveF64AsFloat8 |
-                                            PgType::StdPrimitiveI16AsSmallSerialInitializedByPg |
-                                            PgType::StdPrimitiveI32AsSerialInitializedByPg |
-                                            PgType::StdPrimitiveI64AsBigSerialInitializedByPg |
+                                            PgType::I16AsInt2 |
+                                            PgType::I32AsInt4 |
+                                            PgType::I64AsInt8 |
+                                            PgType::F32AsFloat4 |
+                                            PgType::F64AsFloat8 |
+                                            PgType::I16AsSmallSerialInitializedByPg |
+                                            PgType::I32AsSerialInitializedByPg |
+                                            PgType::I64AsBigSerialInitializedByPg |
                                             PgType::SqlxPgTypesPgMoneyAsMoney |
-                                            PgType::StdPrimitiveBoolAsBool |
+                                            PgType::BoolAsBool |
                                             PgType::SqlxTypesChronoNaiveTimeAsTime | PgType::SqlxTypesTimeTimeAsTime |
                                             PgType::SqlxPgTypesPgIntervalAsInterval |
                                             PgType::SqlxTypesChronoNaiveDateAsDate |
@@ -5918,12 +5918,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient |
                                             PgType::SqlxTypesIpnetworkIpNetworkAsInet |
                                             PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
-                                            PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range |
-                                            PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range |
+                                            PgType::SqlxPgTypesPgRangeI32AsInt4Range |
+                                            PgType::SqlxPgTypesPgRangeI64AsInt8Range |
                                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &Ts2::new(),
-                                            PgType::StdVecVecStdPrimitiveU8AsBytea |
+                                            PgType::StdVecVecU8AsBytea |
                                             PgType::StdStringStringAsText => &dot_clone_ts,
                                         };
                                         quote! {vec![value_6465e8ae #current_maybe_dot_clone_ts.0.into(); #number_ts]}
@@ -5954,16 +5954,16 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             };
             let read_only_ids_to_two_dimensional_vec_read_inner_ts = {
                 let gen_star_or_dot_clone_ts = |content_ts|match &pg_type {
-                    PgType::StdPrimitiveI16AsInt2 |
-                    PgType::StdPrimitiveI32AsInt4 |
-                    PgType::StdPrimitiveI64AsInt8 |
-                    PgType::StdPrimitiveF32AsFloat4 |
-                    PgType::StdPrimitiveF64AsFloat8 |
-                    PgType::StdPrimitiveI16AsSmallSerialInitializedByPg |
-                    PgType::StdPrimitiveI32AsSerialInitializedByPg |
-                    PgType::StdPrimitiveI64AsBigSerialInitializedByPg |
+                    PgType::I16AsInt2 |
+                    PgType::I32AsInt4 |
+                    PgType::I64AsInt8 |
+                    PgType::F32AsFloat4 |
+                    PgType::F64AsFloat8 |
+                    PgType::I16AsSmallSerialInitializedByPg |
+                    PgType::I32AsSerialInitializedByPg |
+                    PgType::I64AsBigSerialInitializedByPg |
                     PgType::SqlxPgTypesPgMoneyAsMoney |
-                    PgType::StdPrimitiveBoolAsBool |
+                    PgType::BoolAsBool |
                     PgType::SqlxTypesChronoNaiveTimeAsTime |
                     PgType::SqlxTypesTimeTimeAsTime |
                     PgType::SqlxPgTypesPgIntervalAsInterval |
@@ -5973,12 +5973,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient |
                     PgType::SqlxTypesIpnetworkIpNetworkAsInet |
                     PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
-                    PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range |
-                    PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range |
+                    PgType::SqlxPgTypesPgRangeI32AsInt4Range |
+                    PgType::SqlxPgTypesPgRangeI64AsInt8Range |
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => quote!{*#content_ts},
-                    PgType::StdVecVecStdPrimitiveU8AsBytea |
+                    PgType::StdVecVecU8AsBytea |
                     PgType::StdStringStringAsText => quote!{#content_ts.clone()}
                 };
                 match &pg_type_pattern {
@@ -6257,7 +6257,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 logical_operator: #import_path::LogicalOperator::Or,
                                                 dimensions: where_filters::BoundedStdVecVec::try_from(
                                                     vec![
-                                                        pg_crud_common::NotZeroUnsignedPartOfStdPrimitiveI32::try_from(
+                                                        pg_crud_common::NotZeroUnsignedPartOfI32::try_from(
                                                             i32::try_from(index_7702518c.checked_add(1)?).expect("5954966c")
                                                         ).expect("8d269b8f")
                                                     ]
@@ -6382,7 +6382,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 &PgTypePattern::Standart
                             );
                             match &pg_type {
-                                PgType::StdPrimitiveI16AsInt2 => wrap_into_not_empty_unique_vec_ts(&gen_greater_than_test_new_new_vec_ts(
+                                PgType::I16AsInt2 => wrap_into_not_empty_unique_vec_ts(&gen_greater_than_test_new_new_vec_ts(
                                     &quote!{#i16_ts::MIN},
                                     &quote!{#i16_ts::MIN + 1},
                                     &quote!{0},
@@ -6390,7 +6390,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     &quote!{#i16_ts::MAX},
                                     &quote!{#i16_ts::MAX - 1}
                                 )),
-                                PgType::StdPrimitiveI32AsInt4 => wrap_into_not_empty_unique_vec_ts(&gen_greater_than_test_new_new_vec_ts(
+                                PgType::I32AsInt4 => wrap_into_not_empty_unique_vec_ts(&gen_greater_than_test_new_new_vec_ts(
                                     &quote!{#i32_ts::MIN},
                                     &quote!{#i32_ts::MIN + 1},
                                     &quote!{0},
@@ -6398,7 +6398,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     &quote!{#i32_ts::MAX},
                                     &quote!{#i32_ts::MAX - 1}
                                 )),
-                                PgType::StdPrimitiveI64AsInt8 => wrap_into_not_empty_unique_vec_ts(&gen_greater_than_test_new_new_vec_ts(
+                                PgType::I64AsInt8 => wrap_into_not_empty_unique_vec_ts(&gen_greater_than_test_new_new_vec_ts(
                                     &quote!{#i64_ts::MIN},
                                     &quote!{#i64_ts::MIN + 1},
                                     &quote!{0},
@@ -6406,7 +6406,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     &quote!{#i64_ts::MAX},
                                     &quote!{#i64_ts::MAX - 1}
                                 )),
-                                PgType::StdPrimitiveF32AsFloat4 => wrap_into_not_empty_unique_vec_ts(&gen_greater_than_test_new_new_vec_ts(
+                                PgType::F32AsFloat4 => wrap_into_not_empty_unique_vec_ts(&gen_greater_than_test_new_new_vec_ts(
                                     &quote!{#f32_ts::MIN},
                                     &quote!{#f32_ts::MIN.next_up()},
                                     &quote!{0.0},
@@ -6414,7 +6414,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     &quote!{#f32_ts::MAX},
                                     &quote!{#f32_ts::MAX.next_down()}
                                 )),
-                                PgType::StdPrimitiveF64AsFloat8 => wrap_into_not_empty_unique_vec_ts(&gen_greater_than_test_new_new_vec_ts(
+                                PgType::F64AsFloat8 => wrap_into_not_empty_unique_vec_ts(&gen_greater_than_test_new_new_vec_ts(
                                 //todo rust f64 != pg float8
                                     &quote!{-2.0},
                                     &quote!{-2.0 + 1.0},
@@ -6473,21 +6473,21 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         #sqlx_types_chrono_naive_time_as_time_standart_not_null_ts::slightly_less_than_max_inner_type()
                                     )},
                                 )),
-                                PgType::StdPrimitiveI16AsSmallSerialInitializedByPg |//todo diffrent test logic for autogenerated?
-                                PgType::StdPrimitiveI32AsSerialInitializedByPg |//todo diffrent test logic for autogenerated?
-                                PgType::StdPrimitiveI64AsBigSerialInitializedByPg |//todo diffrent test logic for autogenerated?
+                                PgType::I16AsSmallSerialInitializedByPg |//todo diffrent test logic for autogenerated?
+                                PgType::I32AsSerialInitializedByPg |//todo diffrent test logic for autogenerated?
+                                PgType::I64AsBigSerialInitializedByPg |//todo diffrent test logic for autogenerated?
                                 PgType::SqlxPgTypesPgMoneyAsMoney |
-                                PgType::StdPrimitiveBoolAsBool |
+                                PgType::BoolAsBool |
                                 PgType::StdStringStringAsText |
-                                PgType::StdVecVecStdPrimitiveU8AsBytea |
+                                PgType::StdVecVecU8AsBytea |
                                 PgType::SqlxPgTypesPgIntervalAsInterval |
                                 PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
                                 PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg |
                                 PgType::SqlxTypesUuidUuidAsUuidInitializedByClient |
                                 PgType::SqlxTypesIpnetworkIpNetworkAsInet |
                                 PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
-                                PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range |
-                                PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range |
+                                PgType::SqlxPgTypesPgRangeI32AsInt4Range |
+                                PgType::SqlxPgTypesPgRangeI64AsInt8Range |
                                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => none_ts.clone(),
@@ -6525,30 +6525,30 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         ReadOnlyIds,
                     }
                     let is_need_to_impl_greater_than_test = match &pg_type {
-                        PgType::StdPrimitiveI16AsInt2 |
-                        PgType::StdPrimitiveI32AsInt4 |
-                        PgType::StdPrimitiveI64AsInt8 |
-                        PgType::StdPrimitiveF32AsFloat4 |
-                        PgType::StdPrimitiveF64AsFloat8 |
+                        PgType::I16AsInt2 |
+                        PgType::I32AsInt4 |
+                        PgType::I64AsInt8 |
+                        PgType::F32AsFloat4 |
+                        PgType::F64AsFloat8 |
                         PgType::SqlxTypesChronoNaiveTimeAsTime |
                         PgType::SqlxTypesTimeTimeAsTime |
                         PgType::SqlxTypesChronoNaiveDateAsDate |
                         PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => IsNeedToImplPgTypeGreaterThanTest::TrueFromCreate,
-                        PgType::StdPrimitiveI16AsSmallSerialInitializedByPg |
-                        PgType::StdPrimitiveI32AsSerialInitializedByPg |
-                        PgType::StdPrimitiveI64AsBigSerialInitializedByPg => IsNeedToImplPgTypeGreaterThanTest::TrueFromReadOnlyIds,
+                        PgType::I16AsSmallSerialInitializedByPg |
+                        PgType::I32AsSerialInitializedByPg |
+                        PgType::I64AsBigSerialInitializedByPg => IsNeedToImplPgTypeGreaterThanTest::TrueFromReadOnlyIds,
                         PgType::SqlxPgTypesPgMoneyAsMoney |//todo why no support?
-                        PgType::StdPrimitiveBoolAsBool |
+                        PgType::BoolAsBool |
                         PgType::StdStringStringAsText |
-                        PgType::StdVecVecStdPrimitiveU8AsBytea |
+                        PgType::StdVecVecU8AsBytea |
                         PgType::SqlxPgTypesPgIntervalAsInterval |
                         PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |//todo why no support?
                         PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg |
                         PgType::SqlxTypesUuidUuidAsUuidInitializedByClient |
                         PgType::SqlxTypesIpnetworkIpNetworkAsInet |
                         PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
-                        PgType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range |
-                        PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range |
+                        PgType::SqlxPgTypesPgRangeI32AsInt4Range |
+                        PgType::SqlxPgTypesPgRangeI64AsInt8Range |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => IsNeedToImplPgTypeGreaterThanTest::False,
