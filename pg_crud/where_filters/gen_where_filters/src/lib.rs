@@ -1,3 +1,7 @@
+use macros_helpers::{
+    FormatWithCargofmt, ShouldWriteTokenStreamIntoFile, gen_if_write_is_err_ts,
+    maybe_write_ts_into_file,
+};
 use naming::{
     ColumnSc, DimensionsIndexesSc, DimensionsSc, ErrorSc, IncrementSc, PubSc, QuerySc, SelfSc,
     ValueSc,
@@ -101,11 +105,10 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, serde::Deserialize)]
     struct GenWhereFiltersConfig {
-        pg_types_content_write_into_gen_where_filters_pg_types:
-            macros_helpers::ShouldWriteTokenStreamIntoFile,
+        pg_types_content_write_into_gen_where_filters_pg_types: ShouldWriteTokenStreamIntoFile,
         pg_json_types_content_write_into_gen_where_filters_pg_json_types:
-            macros_helpers::ShouldWriteTokenStreamIntoFile,
-        whole_content_write_into_gen_where_filters: macros_helpers::ShouldWriteTokenStreamIntoFile,
+            ShouldWriteTokenStreamIntoFile,
+        whole_content_write_into_gen_where_filters: ShouldWriteTokenStreamIntoFile,
     }
     panic_location::panic_location();
     let gen_where_filters_config =
@@ -533,7 +536,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                                 "{{}}({{}}{} in ({{}}))",
                                 pg_type_kind.format_argument()
                             ));
-                            let if_write_is_err_ts = macros_helpers::gen_if_write_is_err_ts(
+                            let if_write_is_err_ts = gen_if_write_is_err_ts(
                                 &quote! {acc_14596a52, "${value_daedba9c},"},
                                 &quote! {panic!("87f47f75");},
                             );
@@ -1253,11 +1256,11 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
         let filter_array_ts =
             PgTypeFilter::into_array().map(|el_7cfb1929| gen_filters_ts(&el_7cfb1929));
         let gend = quote! {#(#filter_array_ts)*};
-        macros_helpers::maybe_write_ts_into_file(
+        maybe_write_ts_into_file(
             gen_where_filters_config.pg_types_content_write_into_gen_where_filters_pg_types,
             "gen_where_filters_pg_types",
             &gend,
-            &macros_helpers::FormatWithCargofmt::True,
+            &FormatWithCargofmt::True,
         );
         gend
     };
@@ -2047,12 +2050,12 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
         let filter_array_ts =
             PgJsonTypeFilter::into_array().map(|el_6a4ac539| gen_filters_ts(&el_6a4ac539));
         let gend = quote! {#(#filter_array_ts)*};
-        macros_helpers::maybe_write_ts_into_file(
+        maybe_write_ts_into_file(
             gen_where_filters_config
                 .pg_json_types_content_write_into_gen_where_filters_pg_json_types,
             "gen_where_filters_pg_json_types",
             &gend,
-            &macros_helpers::FormatWithCargofmt::True,
+            &FormatWithCargofmt::True,
         );
         gend
     };
@@ -2060,11 +2063,11 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
         #pg_type_ts
         #pg_json_type_ts
     };
-    macros_helpers::maybe_write_ts_into_file(
+    maybe_write_ts_into_file(
         gen_where_filters_config.whole_content_write_into_gen_where_filters,
         "gen_where_filters",
         &gend,
-        &macros_helpers::FormatWithCargofmt::True,
+        &FormatWithCargofmt::True,
     );
     gend.into()
 }

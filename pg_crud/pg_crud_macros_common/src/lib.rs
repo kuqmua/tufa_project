@@ -3,6 +3,7 @@ mod filters;
 pub use filters::*;
 
 use enum_extension_lib::EnumExtension;
+use macros_helpers::gen_impl_error_occurence_lib_to_std_string_string_ts;
 use naming::{
     AllVariantsDefaultOptionSomeVecOneElMaxPageSizeSc, AllVariantsDefaultOptionSomeVecOneElSc,
     ColumnNameAndMaybeFieldGetterForErrorMessageSc, ColumnNameAndMaybeFieldGetterSc, ColumnSc,
@@ -665,7 +666,7 @@ pub fn gen_pg_type_where_ts(
             &ImportPath::PgCrudCommon,
         );
     let impl_error_occurence_lib_to_std_string_string_for_pg_type_tokens_where_ts =
-        macros_helpers::gen_impl_error_occurence_lib_to_std_string_string_ts(
+        gen_impl_error_occurence_lib_to_std_string_string_ts(
             &Ts2::new(),
             &ident,
             &Ts2::new(),

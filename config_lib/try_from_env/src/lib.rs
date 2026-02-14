@@ -1,3 +1,4 @@
+use macros_helpers::gen_impl_std_fmt_display_ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use syn::{Data, DeriveInput, Fields, LitStr, parse};
@@ -62,7 +63,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 Self::#el_ident_ucc_ts { #el_ident } => write!(f, "{}", #el_ident)
             }
         });
-        macros_helpers::gen_impl_std_fmt_display_ts(
+        gen_impl_std_fmt_display_ts(
             &Ts2::new(),
             &ident_try_from_env_error_named_ucc,
             &Ts2::new(),

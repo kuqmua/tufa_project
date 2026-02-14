@@ -1,3 +1,8 @@
+use macros_helpers::{
+    ErrorOccurenceFieldAttribute, gen_if_write_is_err_ts,
+    gen_impl_error_occurence_lib_to_std_string_string_ts, gen_impl_std_fmt_display_ts,
+    gen_serialize_deserialize_version_of_named_syn_variant,
+};
 use naming::{
     CodeOccurenceSc, IntoSerializeDeserializeVersionSc, ValueSc, WithSerializeDeserializeUcc,
     parameter::SelfWithSerializeDeserializeUcc,
@@ -152,14 +157,14 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     .filter(|el_48337db8| *el_48337db8.ident.as_ref().expect("f6f6fb24") != *code_occurence_sc_str)
                     .map(|el_f00312fe| {
                         let current_ident = &el_f00312fe.ident.as_ref().expect("e97b25b9");
-                        match macros_helpers::ErrorOccurenceFieldAttribute::try_from(el_f00312fe).expect("8ff56aeb") {
-                            macros_helpers::ErrorOccurenceFieldAttribute::EoToStdStringString | macros_helpers::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize => {
+                        match ErrorOccurenceFieldAttribute::try_from(el_f00312fe).expect("8ff56aeb") {
+                            ErrorOccurenceFieldAttribute::EoToStdStringString | ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize => {
                                 quote! {
                                     error_occurence_lib::ToStdStringString::to_std_string_string(#current_ident)
                                 }
                             }
-                            macros_helpers::ErrorOccurenceFieldAttribute::EoErrorOccurence => {
-                                let if_write_is_err_ts = macros_helpers::gen_if_write_is_err_ts(&quote! {acc_52e70d22, "\n {element}"}, &quote! {panic!("c751d54a");});
+                            ErrorOccurenceFieldAttribute::EoErrorOccurence => {
+                                let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_52e70d22, "\n {element}"}, &quote! {panic!("c751d54a");});
                                 quote! {
                                     #current_ident.to_string().lines().fold(
                                         #StdStringString::new(),
@@ -170,8 +175,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     )
                                 }
                             }
-                            macros_helpers::ErrorOccurenceFieldAttribute::EoVecToStdStringString | macros_helpers::ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
-                                let if_write_is_err_ts = macros_helpers::gen_if_write_is_err_ts(&quote! {acc_a9ba7521, "\n {el_6e4f53ad}"}, &quote! {panic!("b35ed9f5");});
+                            ErrorOccurenceFieldAttribute::EoVecToStdStringString | ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
+                                let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_a9ba7521, "\n {el_6e4f53ad}"}, &quote! {panic!("b35ed9f5");});
                                 quote! {
                                     #current_ident.iter().fold(
                                         #StdStringString::new(),
@@ -192,8 +197,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     )
                                 }
                             }
-                            macros_helpers::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
-                                let if_write_is_err_ts = macros_helpers::gen_if_write_is_err_ts(&quote! {acc_1bbd5ef3, "\n {el_3f2fe01d}"}, &quote! {panic!("4dfdd18d");});
+                            ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
+                                let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_1bbd5ef3, "\n {el_3f2fe01d}"}, &quote! {panic!("4dfdd18d");});
                                 quote! {
                                     #current_ident.iter().fold(
                                         #StdStringString::new(),
@@ -210,8 +215,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     )
                                 }
                             }
-                            macros_helpers::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString | macros_helpers::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
-                                let if_write_is_err_ts = macros_helpers::gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {key}: {}", &error_occurence_lib::ToStdStringString::to_std_string_string(#ValueSc)}, &quote! {panic!("d030580a");});
+                            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString | ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
+                                let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {key}: {}", &error_occurence_lib::ToStdStringString::to_std_string_string(#ValueSc)}, &quote! {panic!("d030580a");});
                                 quote! {
                                     #current_ident.iter().fold(
                                         #StdStringString::new(),
@@ -222,10 +227,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     )
                                 }
                             }
-                            macros_helpers::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
-                                let if_write_is_err_ts = macros_helpers::gen_if_write_is_err_ts(
+                            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
+                                let if_write_is_err_ts = gen_if_write_is_err_ts(
                                     &{
-                                        let if_write_is_err_ts = macros_helpers::gen_if_write_is_err_ts(&quote! {acc_addfc699, "\n  {el_8b8f577e}"}, &quote! {panic!("d0492fbf");});
+                                        let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_addfc699, "\n  {el_8b8f577e}"}, &quote! {panic!("d0492fbf");});
                                         quote! {
                                             acc_a47e1ba7,
                                             "\n {key}: {}",
@@ -301,7 +306,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     )
                 }
             };
-            let impl_std_fmt_display_for_ident_ts = macros_helpers::gen_impl_std_fmt_display_ts(
+            let impl_std_fmt_display_for_ident_ts = gen_impl_std_fmt_display_ts(
                 &maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts,
                 &ident,
                 &maybe_generic_parameters_ts,
@@ -320,41 +325,41 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     .filter(|el_6a54951c| *el_6a54951c.ident.as_ref().expect("0488fc4c") != *code_occurence_sc_str)
                     .map(|el_d7e120a3| {
                         let current_ident = &el_d7e120a3.ident.as_ref().expect("9a672ac2");
-                        let conversion_ts = match macros_helpers::ErrorOccurenceFieldAttribute::try_from(el_d7e120a3).expect("449c3781") {
-                            macros_helpers::ErrorOccurenceFieldAttribute::EoToStdStringString => {
+                        let conversion_ts = match ErrorOccurenceFieldAttribute::try_from(el_d7e120a3).expect("449c3781") {
+                            ErrorOccurenceFieldAttribute::EoToStdStringString => {
                                 quote! {
                                     #current_ident: {
                                         error_occurence_lib::ToStdStringString::to_std_string_string(&#current_ident)
                                     }
                                 }
                             }
-                            macros_helpers::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize | macros_helpers::ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize | macros_helpers::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
+                            ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize | ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize | ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
                                 quote! {
                                     #current_ident
                                 }
                             }
-                            macros_helpers::ErrorOccurenceFieldAttribute::EoErrorOccurence => {
+                            ErrorOccurenceFieldAttribute::EoErrorOccurence => {
                                 quote! {
                                     #current_ident: {
                                         #current_ident.into_serialize_deserialize_version()
                                     }
                                 }
                             }
-                            macros_helpers::ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
+                            ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
                                 quote! {
                                     #current_ident: {
                                         #current_ident.into_iter().map(|el_3c145d8e|error_occurence_lib::ToStdStringString::to_std_string_string(&el_3c145d8e)).collect()
                                     }
                                 }
                             }
-                            macros_helpers::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
+                            ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
                                 quote! {
                                     #current_ident: {
                                         #current_ident.into_iter().map(|el_607695c6|el_607695c6.into_serialize_deserialize_version()).collect()
                                     }
                                 }
                             }
-                            macros_helpers::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
+                            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
                                 quote! {
                                     #current_ident: {
                                         #current_ident.into_iter().map(|(key, value)|
@@ -363,7 +368,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     }
                                 }
                             }
-                            macros_helpers::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
+                            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
                                 quote! {
                                     #current_ident: {
                                         #current_ident.into_iter().map(
@@ -390,12 +395,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 let variants_ts = data_enum
                     .variants
                     .iter()
-                    .map(macros_helpers::gen_serialize_deserialize_version_of_named_syn_variant);
+                    .map(gen_serialize_deserialize_version_of_named_syn_variant);
                 gen_enum_ident_with_serialize_deserialize_ts(&quote! {#(#variants_ts),*})
             };
-            let impl_std_fmt_display_for_ident_with_serialize_deserialize_ts = macros_helpers::gen_impl_std_fmt_display_ts(&maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts, &ident_with_serialize_deserialize_ucc, &maybe_generic_parameters_ts, &impl_std_fmt_display_handle_content_ts);
+            let impl_std_fmt_display_for_ident_with_serialize_deserialize_ts = gen_impl_std_fmt_display_ts(&maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts, &ident_with_serialize_deserialize_ucc, &maybe_generic_parameters_ts, &impl_std_fmt_display_handle_content_ts);
             let impl_error_occurence_lib_to_std_string_string_to_std_string_string_for_ident_with_serialize_deserialize_ts =
-                macros_helpers::gen_impl_error_occurence_lib_to_std_string_string_ts(&maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts, &ident_with_serialize_deserialize_ucc, &maybe_generic_parameters_ts, &quote! {format!("{self}")});
+                gen_impl_error_occurence_lib_to_std_string_string_ts(&maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts, &ident_with_serialize_deserialize_ucc, &maybe_generic_parameters_ts, &quote! {format!("{self}")});
             quote! {
                 #impl_std_fmt_display_for_ident_ts
                 #impl_ident_into_serialize_deserialize_version_ts
@@ -412,7 +417,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 });
                 quote! {match self { #(#variants_ts),* }}
             };
-            let impl_std_fmt_display_for_ident_ts = macros_helpers::gen_impl_std_fmt_display_ts(
+            let impl_std_fmt_display_for_ident_ts = gen_impl_std_fmt_display_ts(
                 &maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts,
                 &ident,
                 &maybe_generic_parameters_ts,
@@ -463,7 +468,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 });
                 gen_enum_ident_with_serialize_deserialize_ts(&quote! {#(#variants_ts),*})
             };
-            let impl_std_fmt_display_for_ident_with_serialize_deserialize_ts = macros_helpers::gen_impl_std_fmt_display_ts(&maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts, &ident_with_serialize_deserialize_ucc, &maybe_generic_parameters_ts, &{
+            let impl_std_fmt_display_for_ident_with_serialize_deserialize_ts = gen_impl_std_fmt_display_ts(&maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_ts, &ident_with_serialize_deserialize_ucc, &maybe_generic_parameters_ts, &{
                 let display_formatter_unnamed_ts = gen_display_formatter_unnamed_ts();
                 quote! {
                     write!(
@@ -485,11 +490,11 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let generated = quote! {#tokens};
     // println!("{generated} ");
     // if ident == "" {
-    //     macros_helpers::maybe_write_ts_into_file(
-    //         macros_helpers::ShouldWriteTokenStreamIntoFile::True,
+    //     maybe_write_ts_into_file(
+    //         ShouldWriteTokenStreamIntoFile::True,
     //         "error_occurence",
     //         &generated,
-    //         &macros_helpers::FormatWithCargofmt::True
+    //         &FormatWithCargofmt::True
     //     );
     // }
     generated.into()

@@ -1,4 +1,10 @@
 use enum_extension_lib::EnumExtension;
+use macros_helpers::{
+    DeriveCopy, DeriveSchemarsJsonSchema, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
+    StructOrEnumDeriveTokenStreamBuilder, gen_impl_error_occurence_lib_to_std_string_string_ts,
+    gen_impl_std_convert_from_ts, gen_impl_std_fmt_display_ts, gen_pub_const_new_ts,
+    gen_pub_new_ts, maybe_write_ts_into_file,
+};
 use naming::{
     ArrayOfUcc, AsUcc, BooleanUcc, ColumnNameAndMaybeFieldGetterSc, CreateForQueryUcc, CreateSc,
     EqualUcc, ErrorSc, GenPgJsonTypesModSc, IncrementSc, JsonbSetAccumulatorSc, NewSc, NumberUcc,
@@ -333,8 +339,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     #[derive(Debug, serde::Deserialize)]
     struct GenPgJsonTypesConfig {
         pg_table_columns_content_write_into_pg_table_columns_using_pg_json_types:
-            macros_helpers::ShouldWriteTokenStreamIntoFile,
-        whole_content_write_into_gen_pg_json_types: macros_helpers::ShouldWriteTokenStreamIntoFile,
+            ShouldWriteTokenStreamIntoFile,
+        whole_content_write_into_gen_pg_json_types: ShouldWriteTokenStreamIntoFile,
         variant: GenPgJsonTypesConfigVariant,
     }
     panic_location::panic_location();
@@ -697,7 +703,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         let ident_read_only_ids_ucc = SelfReadOnlyIdsUcc::from_tokens(&ident);
         let ident_not_null_ts = gen_ident_ts(&NotNullOrNullable::NotNull, pg_json_type_pattern);
         let ident_ts = {
-            let ident_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_ts = StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -732,12 +738,12 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         };
         let ident_read_inner_ucc = SelfReadInnerUcc::from_tokens(&ident);
         let value_ident_read_inner_ts = quote! {#ValueSc: #ident_read_inner_ucc};
-        let gen_pub_fn_new_value_ident_read_inner_content_ts = |content_ts: &dyn ToTokens| macros_helpers::gen_pub_new_ts(
+        let gen_pub_fn_new_value_ident_read_inner_content_ts = |content_ts: &dyn ToTokens| gen_pub_new_ts(
             &MustUse,
             &value_ident_read_inner_ts,
             &content_ts
         );
-        let gen_pub_const_fn_new_value_ident_read_inner_content_ts = |content_ts: &dyn ToTokens| macros_helpers::gen_pub_const_new_ts(
+        let gen_pub_const_fn_new_value_ident_read_inner_content_ts = |content_ts: &dyn ToTokens| gen_pub_const_new_ts(
             &MustUse,
             &value_ident_read_inner_ts,
             &content_ts
@@ -781,13 +787,13 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 PgJsonType::StdPrimitiveF32AsJsonbNumber |
                 PgJsonType::StdPrimitiveF64AsJsonbNumber |
                 PgJsonType::StdPrimitiveBoolAsJsonbBoolean |
-                PgJsonType::UuidUuidAsJsonbString => macros_helpers::DeriveCopy::True,
-                PgJsonType::StdStringStringAsJsonbString => macros_helpers::DeriveCopy::False,
+                PgJsonType::UuidUuidAsJsonbString => DeriveCopy::True,
+                PgJsonType::StdStringStringAsJsonbString => DeriveCopy::False,
             },
             PgJsonTypePattern::ArrayDimension1 {..} |
             PgJsonTypePattern::ArrayDimension2 {..} |
             PgJsonTypePattern::ArrayDimension3 {..} |
-            PgJsonTypePattern::ArrayDimension4 {..} => macros_helpers::DeriveCopy::False,
+            PgJsonTypePattern::ArrayDimension4 {..} => DeriveCopy::False,
         };
         let ident_origin_ts = {
             let gen_current_ident_origin_non_wrapping = |
@@ -879,7 +885,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             // } else {
             //     SchemarsJsonSchema::Derive
             // };
-            let ident_origin_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_origin_ts = StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -892,12 +898,12 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 .derive_schemars_json_schema_if(
                     //todo
                     // match &schemars_json_schema {
-                    //     SchemarsJsonSchema::Derive => macros_helpers::DeriveSchemarsJsonSchema::True,
-                    //     SchemarsJsonSchema::Impl(_) => macros_helpers::DeriveSchemarsJsonSchema::False,
+                    //     SchemarsJsonSchema::Derive => DeriveSchemarsJsonSchema::True,
+                    //     SchemarsJsonSchema::Impl(_) => DeriveSchemarsJsonSchema::False,
                     // }
                     if matches!(&is_standart_not_null, IsStandartNotNull::True) {
                         match &pg_json_type {
-                            PgJsonType::UuidUuidAsJsonbString => macros_helpers::DeriveSchemarsJsonSchema::False,
+                            PgJsonType::UuidUuidAsJsonbString => DeriveSchemarsJsonSchema::False,
                             PgJsonType::StdPrimitiveI8AsJsonbNumber
                             | PgJsonType::StdPrimitiveI16AsJsonbNumber
                             | PgJsonType::StdPrimitiveI32AsJsonbNumber
@@ -909,10 +915,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             | PgJsonType::StdPrimitiveF32AsJsonbNumber
                             | PgJsonType::StdPrimitiveF64AsJsonbNumber
                             | PgJsonType::StdPrimitiveBoolAsJsonbBoolean
-                            | PgJsonType::StdStringStringAsJsonbString => macros_helpers::DeriveSchemarsJsonSchema::True,
+                            | PgJsonType::StdStringStringAsJsonbString => DeriveSchemarsJsonSchema::True,
                         }
                     } else {
-                        macros_helpers::DeriveSchemarsJsonSchema::True
+                        DeriveSchemarsJsonSchema::True
                     }
                 )
                 .build_struct(
@@ -1021,8 +1027,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let impl_std_convert_from_ident_create_for_ident_origin_ts = macros_helpers::gen_impl_std_convert_from_ts(&ident_create_ucc, &ident_origin_ucc, &quote! {#ValueSc.0});
-            let impl_std_convert_from_ident_update_for_ident_origin_ts = macros_helpers::gen_impl_std_convert_from_ts(&ident_update_ucc, &ident_origin_ucc, &quote! {#ValueSc.0});
+            let impl_std_convert_from_ident_create_for_ident_origin_ts = gen_impl_std_convert_from_ts(&ident_create_ucc, &ident_origin_ucc, &quote! {#ValueSc.0});
+            let impl_std_convert_from_ident_update_for_ident_origin_ts = gen_impl_std_convert_from_ts(&ident_update_ucc, &ident_origin_ucc, &quote! {#ValueSc.0});
             //todo
             let maybe_impl_schemars_json_schema_for_ident_origin_ts = if matches!(&is_standart_not_null, IsStandartNotNull::True) {
                 match &pg_json_type {
@@ -1143,8 +1149,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             } else {
                 Ts2::new()
             };
-            let impl_std_fmt_display_for_ident_origin_ts = macros_helpers::gen_impl_std_fmt_display_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
-            let impl_error_occurence_lib_to_std_string_string_for_ident_origin_ts = macros_helpers::gen_impl_error_occurence_lib_to_std_string_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {format!("{self:#?}")});
+            let impl_std_fmt_display_for_ident_origin_ts = gen_impl_std_fmt_display_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
+            let impl_error_occurence_lib_to_std_string_string_for_ident_origin_ts = gen_impl_error_occurence_lib_to_std_string_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {format!("{self:#?}")});
             let impl_default_option_some_vec_one_el_for_ident_origin_ts = gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_origin_ucc, &{
                 let content_ts = match &pg_json_type_pattern {
                     PgJsonTypePattern::Standart => match &not_null_or_nullable {
@@ -1190,7 +1196,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         };
         let ident_origin_struct_content_ts = quote!{(#ident_origin_ucc);};
         let ident_table_type_declaration_ts = {
-            let ident_table_type_declaration_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_table_type_declaration_ts = StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -1227,7 +1233,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             }
         };
         let ident_create_ts = {
-            let ident_create_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_create_ts = StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -1257,7 +1263,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             }
         };
         let ident_create_for_query_ts = {
-            let ident_create_for_query_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_create_for_query_ts = StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -1277,9 +1283,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             };
             let impl_sqlx_encode_sqlx_pg_for_ident_create_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_create_for_query_ucc, &quote! {sqlx::types::Json(&#SelfSc.0)});
             let impl_sqlx_type_sqlx_pg_for_ident_create_for_query_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_create_for_query_ucc, &ident_origin_ucc);
-            let impl_std_convert_from_ident_create_for_ident_create_for_query_ts = macros_helpers::gen_impl_std_convert_from_ts(&ident_create_ucc, &ident_create_for_query_ucc, &quote! {Self(#ValueSc.0)});
+            let impl_std_convert_from_ident_create_for_ident_create_for_query_ts = gen_impl_std_convert_from_ts(&ident_create_ucc, &ident_create_for_query_ucc, &quote! {Self(#ValueSc.0)});
             let maybe_impl_std_convert_from_ident_update_for_ident_create_for_query_ts = if matches!(&is_standart_not_null_uuid, IsStandartNotNullUuid::True) {
-                macros_helpers::gen_impl_std_convert_from_ts(&ident_update_ucc, &ident_create_for_query_ucc, &quote! {Self(#ValueSc.0)})
+                gen_impl_std_convert_from_ts(&ident_update_ucc, &ident_create_for_query_ucc, &quote! {Self(#ValueSc.0)})
             } else {
                 Ts2::new()
             };
@@ -1294,7 +1300,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         };
         let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
         let ident_select_ts = {
-            let ident_select_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_select_ts = StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -1750,7 +1756,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         //exists because need to implement .into_inner() for fields (only for read subtype)
         let ident_read_ts = {
             //todo maybe add some derive\impl to trait
-            let ident_read_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_read_ts = StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -1785,7 +1791,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             }
         };
         let ident_read_only_ids_standart_not_null_ucc = SelfReadOnlyIdsUcc::from_tokens(&ident_standart_not_null_ucc);
-        let ident_read_only_ids_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+        let ident_read_only_ids_ts = StructOrEnumDeriveTokenStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_clone()
@@ -1958,7 +1964,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             }
         };
         let ident_update_ts = {
-            let ident_update_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_update_ts = StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -1980,7 +1986,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 }
             };
             let impl_error_occurence_lib_to_std_string_string_for_ident_update_ts = if matches!(&is_standart_not_null_uuid, IsStandartNotNullUuid::True) {
-                macros_helpers::gen_impl_error_occurence_lib_to_std_string_string_ts(&Ts2::new(), &ident_update_ucc, &Ts2::new(), &quote! {format!("{self:?}")})
+                gen_impl_error_occurence_lib_to_std_string_string_ts(&Ts2::new(), &ident_update_ucc, &Ts2::new(), &quote! {format!("{self:?}")})
             } else {
                 Ts2::new()
             };
@@ -1994,7 +2000,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             }
         };
         let ident_update_for_query_ts = {
-            let ident_update_for_query_ts = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_update_for_query_ts = StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -2012,7 +2018,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let impl_std_convert_from_ident_update_for_ident_update_for_query_ts = macros_helpers::gen_impl_std_convert_from_ts(&ident_update_ucc, &ident_update_for_query_ucc, &quote! {Self(#ValueSc.0)});
+            let impl_std_convert_from_ident_update_for_ident_update_for_query_ts = gen_impl_std_convert_from_ts(&ident_update_ucc, &ident_update_for_query_ucc, &quote! {Self(#ValueSc.0)});
             //its only for primitive json types
             let impl_sqlx_encode_sqlx_pg_for_ident_update_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_update_for_query_ucc, &quote! {sqlx::types::Json(&#SelfSc.0)});
             let impl_sqlx_type_sqlx_pg_for_ident_update_for_query_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_update_for_query_ucc, &ident_origin_ucc);
@@ -3810,7 +3816,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         )
     })
     .collect::<(Vec<String>, Vec<String>)>();
-    macros_helpers::maybe_write_ts_into_file(
+    maybe_write_ts_into_file(
         gen_pg_json_types_config
             .pg_table_columns_content_write_into_pg_table_columns_using_pg_json_types,
         "pg_table_columns_using_pg_json_types",
@@ -3825,7 +3831,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 }
             }
         },
-        &macros_helpers::FormatWithCargofmt::True,
+        &FormatWithCargofmt::True,
     );
     let generated = {
         let gen_pg_json_types_mod_sc = GenPgJsonTypesModSc;
@@ -3842,11 +3848,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             pub use #gen_pg_json_types_mod_sc::*;
         }
     };
-    macros_helpers::maybe_write_ts_into_file(
+    maybe_write_ts_into_file(
         gen_pg_json_types_config.whole_content_write_into_gen_pg_json_types,
         "gen_pg_json_types",
         &generated,
-        &macros_helpers::FormatWithCargofmt::True,
+        &FormatWithCargofmt::True,
     );
     generated
 }
