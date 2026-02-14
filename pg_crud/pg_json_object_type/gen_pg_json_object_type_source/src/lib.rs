@@ -131,10 +131,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
     let gen_pg_json_object_type_config = serde_json::from_str::<GenPgJsonTypesConfig>(
         &get_macro_attribute_meta_list_ts(
             &syn_derive_input.attrs,
-            &format!(
-                "{}::pg_json_object_type_config",
-                import_path.sc_std_primitive_str()
-            ),
+            &format!("{}::pg_json_object_type_config", import_path.sc_str()),
         )
         .to_string(),
     )

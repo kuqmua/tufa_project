@@ -60,19 +60,19 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
         Four,
     }
     impl DimensionNumber {
-        const fn dimension_std_primitive_u8(&self) -> u8 {
+        fn dimension_ts(&self) -> Ts2 {
+            self.dimension_u8()
+                .to_string()
+                .parse::<Ts2>()
+                .expect("18c32bc0")
+        }
+        const fn dimension_u8(&self) -> u8 {
             match &self {
                 Self::One => 1,
                 Self::Two => 2,
                 Self::Three => 3,
                 Self::Four => 4,
             }
-        }
-        fn dimension_ts(&self) -> Ts2 {
-            self.dimension_std_primitive_u8()
-                .to_string()
-                .parse::<Ts2>()
-                .expect("18c32bc0")
         }
     }
     enum KindOfUnsignedPartOfI32 {
@@ -123,13 +123,12 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
     let pg_crud_common_default_option_some_vec_one_el_call_ts =
         token_patterns::PgCrudCommonDefaultOptionSomeVecOneElCall;
     let pub_value_t_ts = quote! {pub #ValueSc: T};
-    let unsigned_part_of_std_primitive_i32_ts = quote! {pg_crud_common::UnsignedPartOfI32};
-    let not_zero_unsigned_part_of_std_primitive_i32_ts =
-        quote! {pg_crud_common::NotZeroUnsignedPartOfI32};
-    let value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts =
-        quote! {#ValueSc: #not_zero_unsigned_part_of_std_primitive_i32_ts};
-    let pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts =
-        quote! {pub #value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts};
+    let unsigned_part_of_i32_ts = quote! {pg_crud_common::UnsignedPartOfI32};
+    let not_zero_unsigned_part_of_i32_ts = quote! {pg_crud_common::NotZeroUnsignedPartOfI32};
+    let value_not_zero_unsigned_part_of_i32_declaration_ts =
+        quote! {#ValueSc: #not_zero_unsigned_part_of_i32_ts};
+    let pub_value_not_zero_unsigned_part_of_i32_declaration_ts =
+        quote! {pub #value_not_zero_unsigned_part_of_i32_declaration_ts};
     let value_default_option_some_vec_one_el_ts = quote! {
         #ValueSc: #pg_crud_common_default_option_some_vec_one_el_call_ts
     };
@@ -291,8 +290,8 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
     let pg_type_pattern_handle_array_dimension4 = PgTypePatternHandle::ArrayDimension4;
     let gen_pub_dimensions_bounded_vec_ts =
         |vec_length_ts: &dyn quote::ToTokens,
-         kind_of_unsigned_part_of_std_primitive_i32: &KindOfUnsignedPartOfI32| {
-            quote! {pub #DimensionsSc: BoundedStdVecVec<pg_crud_common::#kind_of_unsigned_part_of_std_primitive_i32, #vec_length_ts>}
+         kind_of_unsigned_part_of_i32: &KindOfUnsignedPartOfI32| {
+            quote! {pub #DimensionsSc: BoundedStdVecVec<pg_crud_common::#kind_of_unsigned_part_of_i32, #vec_length_ts>}
         };
     let value_match_increment_checked_add_one_initialization_ts =
         gen_match_increment_checked_add_one_initialization_ts(&ValueSc);
@@ -342,23 +341,23 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
         };
     let is_query_bind_mutable_true = IsQueryBindMutable::True;
     let is_query_bind_mutable_false = IsQueryBindMutable::False;
-    let gen_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_ts =
+    let gen_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts =
         |dimension_number: &DimensionNumber| {
-            let pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_ts =
+            let pub_dimensions_bounded_vec_not_zero_unsigned_part_of_i32_ts =
                 gen_pub_dimensions_bounded_vec_ts(
                     &dimension_number.dimension_ts(),
                     &KindOfUnsignedPartOfI32::CanNotBeZero,
                 );
-            quote! {#pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_ts,}
+            quote! {#pub_dimensions_bounded_vec_not_zero_unsigned_part_of_i32_ts,}
         };
-    let gen_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_ts =
+    let gen_pub_dimensions_bounded_vec_unsigned_part_of_i32_comma_ts =
         |dimension_number: &DimensionNumber| {
-            let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_ts =
+            let pub_dimensions_bounded_vec_unsigned_part_of_i32_ts =
                 gen_pub_dimensions_bounded_vec_ts(
                     &dimension_number.dimension_ts(),
                     &KindOfUnsignedPartOfI32::CanBeZero,
                 );
-            quote! {#pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_ts,}
+            quote! {#pub_dimensions_bounded_vec_unsigned_part_of_i32_ts,}
         };
     let gen_pg_type_dimensions_helpers =
         |pg_type_pattern_handle: &PgTypePatternHandle,
@@ -367,8 +366,8 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
             |()| (Ts2::new(),Ts2::new(), Ts2::new(), PgTypeKind::Standart, Ts2::new(), Ts2::new()),
             |dimension_number| (
                 match &pg_type_or_pg_json_type {
-                    PgTypeOrPgJsonType::PgType => gen_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_ts(&dimension_number),
-                    PgTypeOrPgJsonType::PgJsonType => gen_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_ts(&dimension_number),
+                    PgTypeOrPgJsonType::PgType => gen_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(&dimension_number),
+                    PgTypeOrPgJsonType::PgJsonType => gen_pub_dimensions_bounded_vec_unsigned_part_of_i32_comma_ts(&dimension_number),
                 },
                 dimensions_default_initialization_comma_ts.clone(),
                 gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(
@@ -832,8 +831,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                 let gen_length_filter_pattern_ts = |operator: &dyn Display| {
                     (
                         should_add_declaration_of_struct_ident_generic_false.clone(),
-                        pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts
-                            .clone(),
+                        pub_value_not_zero_unsigned_part_of_i32_declaration_ts.clone(),
                         value_default_option_some_vec_one_el_ts.clone(),
                         IncrementParameterUnderscore::False,
                         {
@@ -907,7 +905,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                     ) = DimensionNumber::try_from(pg_type_pattern_handle).map_or_else(
                         |()| (Ts2::new(), Ts2::new(), Ts2::new(), PgTypeKind::Standart, quote! {#ColumnSc,}, Ts2::new()),
                         |dimension_number| (
-                            gen_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_ts(&dimension_number),
+                            gen_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(&dimension_number),
                             dimensions_default_initialization_comma_ts.clone(),
                             {
                                 let dimensions_indexes1_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&quote! {dimensions_indexes1}, &DimensionsSc, &quote! {pg_type_query_part});
@@ -940,7 +938,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                         ShouldAddDeclarationOfStructIdentGeneric::False,
                         quote! {
                             #maybe_dimensions_declaration_ts
-                            #pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_ts
+                            #pub_value_not_zero_unsigned_part_of_i32_declaration_ts
                         },
                         gen_maybe_dimensions_default_initialization_value_default_ts(
                             &maybe_dimensions_default_initialization_ts,
@@ -1365,7 +1363,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                         should_add_declaration_of_struct_ident_generic_false.clone(),
                         quote! {
                             #maybe_dimensions_declaration_ts
-                            pub #ValueSc: #unsigned_part_of_std_primitive_i32_ts
+                            pub #ValueSc: #unsigned_part_of_i32_ts
                         },
                         quote! {
                             #maybe_dimensions_default_initialization_ts
@@ -1563,7 +1561,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
                 ) = DimensionNumber::try_from(pg_type_pattern_handle).map_or_else(
                     |()| (Ts2::new(), Ts2::new(), Ts2::new(), PgTypeKind::Standart, Ts2::new(), Ts2::new()),
                     |dimension_number| (
-                        gen_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_ts(&dimension_number),
+                        gen_pub_dimensions_bounded_vec_unsigned_part_of_i32_comma_ts(&dimension_number),
                         dimensions_default_initialization_comma_ts.clone(),
                         {
                             let dimensions_indexes_initialization_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&DimensionsIndexesSc, &DimensionsSc, &quote! {pg_json_type_query_part_minus_one});

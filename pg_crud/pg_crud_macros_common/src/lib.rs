@@ -161,7 +161,7 @@ impl ImportPath {
         }
     }
     #[must_use]
-    pub const fn sc_std_primitive_str(&self) -> &'static str {
+    pub const fn sc_str(&self) -> &'static str {
         match &self {
             Self::Crate => "crate",
             Self::PgCrud => "pg_crud",
@@ -179,7 +179,7 @@ impl ImportPath {
 }
 impl ToTokens for ImportPath {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        self.sc_std_primitive_str()
+        self.sc_str()
             .parse::<Ts2>()
             .expect("d8636ee5")
             .to_tokens(tokens);
@@ -764,7 +764,7 @@ pub fn gen_impl_pg_json_type_ts(
     select_only_created_ids_query_bind_ts: &dyn ToTokens,
 ) -> Ts2 {
     let path_ts = quote! {#import_path ::};
-    let reference_mut_std_primitive_u64_ts = quote! {&mut #U64};
+    let reference_mut_u64_ts = quote! {&mut #U64};
     let query_pg_arguments_ts =
         quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
     let query_lifetime_pg_arguments_ts =
@@ -805,7 +805,7 @@ pub fn gen_impl_pg_json_type_ts(
                 #JsonbSetAccumulatorSc: #RefStr,
                 #is_update_query_part_jsonb_set_target_used: #RefStr,
                 #JsonbSetPathSc: #RefStr,
-                #IncrementSc: #reference_mut_std_primitive_u64_ts,
+                #IncrementSc: #reference_mut_u64_ts,
             ) -> Result<#StdStringString, #path_ts #QueryPartErrorNamedUcc> {
                 #update_query_part_ts
             }
@@ -2410,8 +2410,8 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
 pub fn wrap_content_into_scopes_ts(content_ts: &dyn ToTokens) -> Ts2 {
     quote! {(#content_ts)}
 }
-pub fn maybe_wrap_into_braces_ts(content_ts: &dyn ToTokens, std_primitive_bool: bool) -> Ts2 {
-    if std_primitive_bool {
+pub fn maybe_wrap_into_braces_ts(content_ts: &dyn ToTokens, bool: bool) -> Ts2 {
+    if bool {
         wrap_content_into_scopes_ts(&content_ts)
     } else {
         quote! {#content_ts}

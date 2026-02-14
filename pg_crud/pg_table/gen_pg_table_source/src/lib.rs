@@ -429,7 +429,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let sqlx_acquire = token_patterns::SqlxAcquire;
     let derive_debug_serde_serialize_serde_deserialize =
         token_patterns::DeriveDebugSerdeSerializeSerdeDeserialize;
-    let ref_std_primitive_str = token_patterns::RefStr;
+    let ref_str = token_patterns::RefStr;
     let field_attribute_serde_skip_serializing_if_option_is_none_ts =
         token_patterns::FieldAttributeSerdeSkipSerializingIfOptionIsNone;
     let sqlx_row = token_patterns::SqlxRow;
@@ -448,10 +448,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let gen_pg_table_config = serde_json::from_str::<GenPgTableConfig>(
         &macros_helpers::get_macro_attribute_meta_list_ts(
             &syn_derive_input.attrs,
-            &format!(
-                "{}::gen_pg_table_config",
-                import_path.sc_std_primitive_str()
-            ),
+            &format!("{}::gen_pg_table_config", import_path.sc_str()),
         )
         .to_string(),
     )
@@ -778,7 +775,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     };
                     quote! {#ident_select_ucc::#field_ident_ucc_ts(#ColumnSc) #initialization_ts}
                 });
-            let std_option_option_std_primitive_char_ts =
+            let std_option_option_char_ts =
                 gen_std_option_option_tokens_declaration_ts(&token_patterns::Char);
             quote! {
                 fn #GenSelectQueryPartSc(#select_borrow_pg_crud_not_empty_unique_vec_ident_select_ts) -> Result<#string_ts, #import_path ::#QueryPartErrorNamedUcc> {
@@ -789,7 +786,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         });
                         acc_37c883c3.push(',');
                     }
-                    let _: #std_option_option_std_primitive_char_ts = acc_37c883c3.pop();
+                    let _: #std_option_option_char_ts = acc_37c883c3.pop();
                     Ok(acc_37c883c3)
                 }
             }
@@ -1608,7 +1605,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     quote! {
                         #ident_select_ucc::#primary_key_field_ident_ucc_ts(_) => match sqlx::Row::try_get::<
                             #primary_key_field_type_as_pg_type_read_ucc,
-                            #ref_std_primitive_str
+                            #ref_str
                         >(
                             value,
                             #primary_key_field_ident_string_double_quotes_ts
@@ -1632,7 +1629,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         quote! {
                             #ident_select_ucc::#field_ident_ucc_ts(_) => match sqlx::Row::try_get::<
                                 #el_syn_field_ty_as_pg_type_read_ts,
-                                #ref_std_primitive_str
+                                #ref_str
                             >(
                                 value,
                                 #field_ident_string_double_quotes_ts
@@ -2434,7 +2431,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             quote! {
                 match #sqlx_row::try_get::<
                     #sqlx_row_try_get_type_ts,
-                    #ref_std_primitive_str
+                    #ref_str
                 >(&value_b27d7d79, Self::#PrimaryKeySc()) {
                     Ok(value_69ecb6a9) => #ok_ts,
                     Err(#error_0_ts) => {
@@ -3008,7 +3005,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         quote! {
             #[allow(clippy::single_call_fn)]
             async fn #try_operation_handle_sc_ts(
-                #EndpointLocationSc: #ref_std_primitive_str,
+                #EndpointLocationSc: #ref_str,
                 #ParametersSc: #ident_operation_parameters_ucc,
                 #TableSc: &str,
             ) -> Result<#result_ok_type_ts, #ident_try_operation_error_named_ucc> {
@@ -3024,7 +3021,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #return_error_ts
             }
             pub async fn #try_operation_sc_ts(
-                #EndpointLocationSc: #ref_std_primitive_str,
+                #EndpointLocationSc: #ref_str,
                 #ParametersSc: #ident_operation_parameters_ucc
             ) -> Result<#result_ok_type_ts, #ident_try_operation_error_named_ucc> {
                 Self::#try_operation_handle_sc_ts(
