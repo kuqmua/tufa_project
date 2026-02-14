@@ -1,14 +1,14 @@
 use macros_helpers::gen_impl_std_fmt_display_ts;
+use naming::parameter::{SelfTryFromEnvErrorNamedUcc, TryFromStdEnvVarOkSelfErrorNamedUcc};
+use naming::{
+    DotenvSc, DotenvUcc, EnvVarNameSc, StdEnvVarErrorSc, StdEnvVarErrorUcc, ToTokensToUccTs,
+    ToTokensToUpperScStr, TryFromStdEnvVarOkUcc,
+};
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use syn::{Data, DeriveInput, Fields, LitStr, parse};
 #[proc_macro_derive(TryFromEnv)]
 pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    use naming::parameter::{SelfTryFromEnvErrorNamedUcc, TryFromStdEnvVarOkSelfErrorNamedUcc};
-    use naming::{
-        DotenvSc, DotenvUcc, EnvVarNameSc, StdEnvVarErrorSc, StdEnvVarErrorUcc, ToTokensToUccTs,
-        ToTokensToUpperScStr, TryFromStdEnvVarOkUcc,
-    };
     panic_location::panic_location();
     let syn_derive_input: DeriveInput = parse(input).expect("e45f75c2");
     let ident = &syn_derive_input.ident;
@@ -23,12 +23,6 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             panic!("330b2512")
         }
     };
-    let dotenv_ucc = DotenvUcc;
-    let dotenv_sc = DotenvSc;
-    let std_env_var_error_ucc = StdEnvVarErrorUcc;
-    let std_env_var_error_sc = StdEnvVarErrorSc;
-    let env_var_name_sc = EnvVarNameSc;
-    let try_from_std_env_var_ok_ucc = TryFromStdEnvVarOkUcc;
     let error_named_ts = {
         let variants_ts = fields_named.iter().map(|el_f931deb2| {
             let el_ident = &el_f931deb2.ident.as_ref().expect("2ecb63c1");
@@ -44,11 +38,11 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         quote! {
             #[derive(Debug, thiserror::Error)]
             pub enum #ident_try_from_env_error_named_ucc {
-                #dotenv_ucc {
-                    #dotenv_sc: dotenv::Error,
+                #DotenvUcc {
+                    #DotenvSc: dotenv::Error,
                 },
-                #std_env_var_error_ucc {
-                    #std_env_var_error_sc: std::env::VarError,
+                #StdEnvVarErrorUcc {
+                    #StdEnvVarErrorSc: std::env::VarError,
                     env_var_name: String,
                 },
                 #(#variants_ts),*
@@ -69,13 +63,13 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             &Ts2::new(),
             &quote! {
                 match self {
-                    Self::#dotenv_ucc {
-                        #dotenv_sc
-                    } => write!(f, "{}", #dotenv_sc),
-                    Self::#std_env_var_error_ucc {
-                        #std_env_var_error_sc,
+                    Self::#DotenvUcc {
+                        #DotenvSc
+                    } => write!(f, "{}", #DotenvSc),
+                    Self::#StdEnvVarErrorUcc {
+                        #StdEnvVarErrorSc,
                         env_var_name
-                    } => write!(f, "{} {}", #std_env_var_error_sc, env_var_name),
+                    } => write!(f, "{} {}", #StdEnvVarErrorSc, env_var_name),
                     #(#variants_ts),*
                 }
             },
@@ -93,14 +87,14 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                     let env_var_name = String::from(#el_ident_quotes_upper_sc_string);
                     match std::env::var(&env_var_name) {
                         Err(error) => {
-                            return Err(#ident_try_from_env_error_named_ucc::#std_env_var_error_ucc {
-                                #std_env_var_error_sc: error,
-                                #env_var_name_sc,
+                            return Err(#ident_try_from_env_error_named_ucc::#StdEnvVarErrorUcc {
+                                #StdEnvVarErrorSc: error,
+                                #EnvVarNameSc,
                             });
                         }
                         Ok(value) => match <
                             config_lib::#el_ident_wrapper_ucc_ts as
-                            config_lib::#try_from_std_env_var_ok_ucc
+                            config_lib::#TryFromStdEnvVarOkUcc
                         >::try_from_std_env_var_ok(value) {
                             Err(error) => {
                                 return Err(#ident_try_from_env_error_named_ucc::#el_ident_ucc_ts {
@@ -118,8 +112,8 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             impl #ident {
                 pub fn try_from_env() -> Result<Self, #ident_try_from_env_error_named_ucc> {
                     if let Err(error) = dotenv::dotenv() {
-                        return Err(#ident_try_from_env_error_named_ucc::#dotenv_ucc {
-                            #dotenv_sc: error,
+                        return Err(#ident_try_from_env_error_named_ucc::#DotenvUcc {
+                            #DotenvSc: error,
                         });
                     }
                     #(#fields_initialization_ts)*
