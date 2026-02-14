@@ -19,6 +19,7 @@ use std::{
     },
 };
 use utoipa::ToSchema;
+use uuid::Uuid;
 
 macro_rules! trait_alias {
     ($name:ident = $($bounds:tt)+) => {
@@ -1860,8 +1861,8 @@ pub fn std_string_string_test_cases_vec() -> [String; 12] {
     ]
 }
 #[must_use]
-pub fn uuid_uuid_test_cases_vec() -> [uuid::Uuid; 1] {
-    [uuid::Uuid::new_v4()]
+pub fn uuid_uuid_test_cases_vec() -> [Uuid; 1] {
+    [Uuid::new_v4()]
 }
 #[must_use]
 pub fn wrap_into_jsonb_build_object(field: &str, value: &str) -> String {

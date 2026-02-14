@@ -3,6 +3,7 @@ use axum::http::{
     header::{HeaderValue, ToStrError},
 };
 use error_occurence_lib::code_occurence::CodeOccurence;
+use http_logic::GetAxumHttpStatusCode;
 use naming::CommitSc;
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -26,7 +27,7 @@ pub enum ErrorNamed {
     },
 }
 
-impl http_logic::GetAxumHttpStatusCode for ErrorNamed {
+impl GetAxumHttpStatusCode for ErrorNamed {
     fn get_axum_http_status_code(&self) -> StatusCode {
         match self {
             Self::CommitNotEqual { .. }

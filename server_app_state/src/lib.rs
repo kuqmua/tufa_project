@@ -1,39 +1,49 @@
+use app_state::{
+    GetEnableApiGitCommitCheck, GetMaximumSizeOfHttpBodyInBytes, GetPgPool, GetSourcePlaceType,
+    GetTimezone,
+};
+use chrono::FixedOffset;
+use common_routes::CommonRoutesParameters;
 use config_lib::types::SourcePlaceType;
+use git_info::{GetGitCommitLink, ProjectGitInfo};
+use pg_crud::CombinationOfAppStateLogicTraits;
+use server_config::Config;
+use sqlx::PgPool;
 
 #[derive(Debug)]
 pub struct ServerAppState<'lifetime> {
-    pub config: server_config::Config,
-    pub pg_pool: sqlx::PgPool,
-    pub project_git_info: &'lifetime git_info::ProjectGitInfo<'lifetime>,
+    pub config: Config,
+    pub pg_pool: PgPool,
+    pub project_git_info: &'lifetime ProjectGitInfo<'lifetime>,
 }
-impl common_routes::CommonRoutesParameters for ServerAppState<'_> {}
-impl pg_crud::CombinationOfAppStateLogicTraits for ServerAppState<'_> {}
-impl app_state::GetEnableApiGitCommitCheck for ServerAppState<'_> {
+impl CommonRoutesParameters for ServerAppState<'_> {}
+impl CombinationOfAppStateLogicTraits for ServerAppState<'_> {}
+impl GetEnableApiGitCommitCheck for ServerAppState<'_> {
     fn get_enable_api_git_commit_check(&self) -> &bool {
         self.config.get_enable_api_git_commit_check()
     }
 }
-impl app_state::GetSourcePlaceType for ServerAppState<'_> {
+impl GetSourcePlaceType for ServerAppState<'_> {
     fn get_source_place_type(&self) -> &SourcePlaceType {
         self.config.get_source_place_type()
     }
 }
-impl app_state::GetTimezone for ServerAppState<'_> {
-    fn get_timezone(&self) -> &chrono::FixedOffset {
+impl GetTimezone for ServerAppState<'_> {
+    fn get_timezone(&self) -> &FixedOffset {
         self.config.get_timezone()
     }
 }
-impl app_state::GetMaximumSizeOfHttpBodyInBytes for ServerAppState<'_> {
+impl GetMaximumSizeOfHttpBodyInBytes for ServerAppState<'_> {
     fn get_maximum_size_of_http_body_in_bytes(&self) -> &usize {
         self.config.get_maximum_size_of_http_body_in_bytes()
     }
 }
-impl app_state::GetPgPool for ServerAppState<'_> {
-    fn get_pg_pool(&self) -> &sqlx::PgPool {
+impl GetPgPool for ServerAppState<'_> {
+    fn get_pg_pool(&self) -> &PgPool {
         &self.pg_pool
     }
 }
-impl git_info::GetGitCommitLink for ServerAppState<'_> {
+impl GetGitCommitLink for ServerAppState<'_> {
     fn get_git_commit_link(&self) -> String {
         self.project_git_info.get_git_commit_link()
     }
