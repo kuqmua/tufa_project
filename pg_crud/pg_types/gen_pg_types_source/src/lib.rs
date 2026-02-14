@@ -52,6 +52,7 @@ use pg_crud_macros_common::{
     gen_tuple_struct_ident_double_quotes_ts, gen_value_initialization_ts,
     impl_pg_type_equal_operator_for_ident_ts, impl_pg_type_where_filter_for_ident_ts,
 };
+use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use rayon::iter::{IntoParallelRefIterator as _, ParallelIterator as _};
 use serde::{Deserialize, Serialize};
@@ -61,7 +62,7 @@ use std::{
 };
 use strum_macros::{Display as StrumDisplay, EnumIter};
 #[must_use]
-pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenStream {
+pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, StrumDisplay)]
     enum RustTypeName {
@@ -284,9 +285,9 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         }
     }
     impl ToTokens for PgType {
-        fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        fn to_tokens(&self, tokens: &mut Ts2) {
             self.to_string()
-                .parse::<proc_macro2::TokenStream>()
+                .parse::<Ts2>()
                 .expect("cfefbb95")
                 .to_tokens(tokens);
         }
@@ -354,9 +355,9 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         }
     }
     impl ToTokens for PgTypeRange {
-        fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        fn to_tokens(&self, tokens: &mut Ts2) {
             self.to_string()
-                .parse::<proc_macro2::TokenStream>()
+                .parse::<Ts2>()
                 .expect("798ccb5a")
                 .to_tokens(tokens);
         }
@@ -1005,7 +1006,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range,
         }
         type Handle<'lifetime> = (&'lifetime dyn ToTokens, &'lifetime dyn ToTokens);
-        fn gen_pg_range_conversion_ts(match_content_ts: &dyn ToTokens, input_ts: &dyn ToTokens) -> proc_macro2::TokenStream {
+        fn gen_pg_range_conversion_ts(match_content_ts: &dyn ToTokens, input_ts: &dyn ToTokens) -> Ts2 {
             quote! {
                 sqlx::postgres::types::PgRange {
                     start: match #match_content_ts.start {
@@ -1076,7 +1077,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range |
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
-                PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &proc_macro2::TokenStream::new(),
+                PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &Ts2::new(),
                 PgType::StdVecVecStdPrimitiveU8AsBytea |
                 PgType::StdStringStringAsText => &dot_clone_ts,
             }
@@ -1113,7 +1114,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             current_pg_type,
             current_not_null_or_nullable,
             current_pg_type_pattern
-        ).parse::<proc_macro2::TokenStream>().expect("ff3eb7a6");
+        ).parse::<Ts2>().expect("ff3eb7a6");
         let ident = &gen_ident_ts(pg_type, not_null_or_nullable, pg_type_pattern);
         let gen_ident_standart_not_null_ts = |current_pg_type: &PgType| gen_ident_ts(current_pg_type, &NotNullOrNullable::NotNull, &PgTypePattern::Standart);
         let ident_standart_not_null_ucc = gen_ident_standart_not_null_ts(pg_type);
@@ -1216,7 +1217,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => wrap_into_sqlx_pg_types_pg_range_str(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_str),
                 }
             };
-            value.parse::<proc_macro2::TokenStream>().expect("2555843f")
+            value.parse::<Ts2>().expect("2555843f")
         };
         let gen_current_ident_origin_non_wrapping = |current_pg_type_pattern: &PgTypePattern, current_not_null_or_nullable: &NotNullOrNullable| SelfOriginUcc::from_tokens(&gen_ident_ts(pg_type, current_not_null_or_nullable, current_pg_type_pattern));
         let field_type_handle: &dyn ToTokens = {
@@ -1628,8 +1629,8 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         };
                     }
                 };
-                let gen_field_index_ts = |index_52391f7d: usize| format!("__field{index_52391f7d}").parse::<proc_macro2::TokenStream>().expect("a4e1a63f");
-                let gen_field_index_value_ts = |index_7ef2fc7d: usize| format!("__field{index_7ef2fc7d}_value").parse::<proc_macro2::TokenStream>().expect("fa97be6c");
+                let gen_field_index_ts = |index_52391f7d: usize| format!("__field{index_52391f7d}").parse::<Ts2>().expect("a4e1a63f");
+                let gen_field_index_value_ts = |index_7ef2fc7d: usize| format!("__field{index_7ef2fc7d}_value").parse::<Ts2>().expect("fa97be6c");
                 let (enum_field_two_ts, enum_field_three_ts, enum_field_four_ts) = {
                     let gen_enum_field_ts = |parameter_number: &ParameterNumber| {
                         let fields_ts = {
@@ -1725,7 +1726,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     let error_message_ts = gen_struct_ident_with_number_elements_double_quotes_ts(&ident_standart_not_null_origin_ucc, vec_ts.len());
                     let fields_initialization_ts = vec_ts.iter().enumerate().map(|(index_70b4dabd, el_9dc7f312)| {
                         let field_index_value_ts = gen_field_index_value_ts(index_70b4dabd);
-                        let index_usize_ts = format!("{index_70b4dabd}usize").parse::<proc_macro2::TokenStream>().expect("ce15e6bf");
+                        let index_usize_ts = format!("{index_70b4dabd}usize").parse::<Ts2>().expect("ce15e6bf");
                         quote! {
                             let Some(#field_index_value_ts) = serde::de::SeqAccess::next_element::<#el_9dc7f312>(&mut __seq)? else {
                                 return Err(serde::de::Error::invalid_length(#index_usize_ts, &#error_message_ts));
@@ -1877,7 +1878,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     let gen_fn_visit_u64_ts = |parameter_number: &ParameterNumber| {
                         let fields_ts = {
                             parameter_number.get_vec_from_index_starting_with_zero().into_iter().map(|el_7298ebde| {
-                                let index_variant_ts = format!("{el_7298ebde}u64").parse::<proc_macro2::TokenStream>().expect("5aee0393");
+                                let index_variant_ts = format!("{el_7298ebde}u64").parse::<Ts2>().expect("5aee0393");
                                 let field_index_ts = gen_field_index_ts(el_7298ebde);
                                 quote! {#index_variant_ts => Ok(__Field::#field_index_ts)}
                             })
@@ -1930,7 +1931,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 let (fn_visit_bytes_start_end_ts, fn_visit_bytes_hour_min_sec_micro_ts, fn_visit_bytes_hour_minute_second_microsecond_ts, fn_visit_bytes_date_time_ts, fn_visit_bytes_date_naive_time_ts, fn_visit_bytes_months_days_microseconds_ts) = {
                     let gen_fn_visit_bytes_ts = |vec_ts: &[&dyn StdFmtDisplayPlusQuoteToTokens]| {
                         let fields_ts = vec_ts.iter().enumerate().map(|(index_545c3b1e, el_1dbc37ab)| {
-                            let b_el_double_quotes_ts = format!("b{}", gen_quotes::double_quotes_str(&el_1dbc37ab)).parse::<proc_macro2::TokenStream>().expect("c76c976b");
+                            let b_el_double_quotes_ts = format!("b{}", gen_quotes::double_quotes_str(&el_1dbc37ab)).parse::<Ts2>().expect("c76c976b");
                             let field_index_name_ts = gen_field_index_ts(index_545c3b1e);
                             quote! {#b_el_double_quotes_ts => Ok(__Field::#field_index_name_ts)}
                         });
@@ -2196,7 +2197,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         maybe_visitor_lifetime_ts
                     ) = match should_add_de_lifetime{
                         ShouldAddDeLifetime::False => (
-                            proc_macro2::TokenStream::new(),
+                            Ts2::new(),
                             quote!{<'_>},
                         ),
                         ShouldAddDeLifetime::True => (
@@ -2468,7 +2469,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         let ident_standart_not_null_read_ucc = SelfReadUcc::from_tokens(&ident_standart_not_null_ucc);
         let ident_standart_not_null_origin_try_new_error_named_ucc = SelfOriginTryNewErrorNamedUcc::from_display(&ident_standart_not_null_ucc);
         let ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc = SelfOriginTryNewForDeserializeErrorNamedUcc::from_display(&ident_standart_not_null_ucc);
-        let int_range_type_to_range_inner_type_ts = |int_range_type: &IntRangeType| -> proc_macro2::TokenStream {
+        let int_range_type_to_range_inner_type_ts = |int_range_type: &IntRangeType| -> Ts2 {
             match &int_range_type {
                 IntRangeType::SqlxPgTypesPgRangeStdPrimitiveI32AsInt4Range => quote! {#std_primitive_i32_ts},
                 IntRangeType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range => quote! {#std_primitive_i64_ts},
@@ -2595,7 +2596,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     content_ts: &dyn ToTokens
                 |{
                     let maybe_const_ts = match is_const {
-                        IsConst::False => proc_macro2::TokenStream::new(),
+                        IsConst::False => Ts2::new(),
                         IsConst::True => quote!{const},
                     };
                     quote!{
@@ -2924,8 +2925,8 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 };
                 let maybe_read_inner_initializations_ts = {
                     let gen_function_ts = |
-                        name_ts: &proc_macro2::TokenStream,
-                        content_ts_5dfcb210: &proc_macro2::TokenStream
+                        name_ts: &Ts2,
+                        content_ts_5dfcb210: &Ts2
                     |quote!{
                         const fn #name_ts() -> #ident_inner_type_ts {
                             #content_ts_5dfcb210
@@ -2967,14 +2968,14 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                 const fn #name_ts() -> #ident_inner_type_ts {
                                     #ident_inner_type_ts::from_hms_micro_opt(#parameters_ts).expect("149e01cc")
                                 }
-                            }).collect::<Vec<proc_macro2::TokenStream>>();
+                            }).collect::<Vec<Ts2>>();
                             quote!{#(#content_ts_80e0683c)*}
                         }),
                         PgType::SqlxTypesChronoNaiveDateAsDate => Some({
                             let content_ts_80e0683c = {
                                 let gen_function_ident_inner_type_ts = |
-                                    name_ts: &proc_macro2::TokenStream,
-                                    content_ts_a29ab1c6: &proc_macro2::TokenStream
+                                    name_ts: &Ts2,
+                                    content_ts_a29ab1c6: &Ts2
                                 |gen_function_ts(
                                     name_ts,
                                     &quote!{#ident_inner_type_ts::#content_ts_a29ab1c6}
@@ -3009,7 +3010,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                             }
                                         )
                                     })
-                                ).collect::<Vec<proc_macro2::TokenStream>>()
+                                ).collect::<Vec<Ts2>>()
                             };
                             quote!{#(#content_ts_80e0683c)*}
                         }),
@@ -3037,11 +3038,11 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     }
                 }
                 else {
-                    proc_macro2::TokenStream::new()
+                    Ts2::new()
                 }
             }
             else {
-                proc_macro2::TokenStream::new()
+                Ts2::new()
             };
             quote!{
                 #ident_ts
@@ -3249,15 +3250,15 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     #content_ts_d57d5de2
                 }
             } else {
-                proc_macro2::TokenStream::new()
+                Ts2::new()
             };
             let maybe_pub_enum_ident_standart_not_null_origin_try_new_for_deserialize_error_named_ts = if matches!(&is_standart_not_null, IsStandartNotNull::True)
                 && let DeriveOrImpl::Impl(_) = &serde_deserialize_derive_or_impl
             {
                 match &pg_type_deserialize {
-                    PgTypeDeserialize::Derive => proc_macro2::TokenStream::new(),
+                    PgTypeDeserialize::Derive => Ts2::new(),
                     PgTypeDeserialize::ImplNewForDeserializeOrTryNewForDeserialize(pg_type_impl_new_for_deserialize_or_try_new_for_deserialize) => match &pg_type_impl_new_for_deserialize_or_try_new_for_deserialize {
-                        PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(_) => proc_macro2::TokenStream::new(),
+                        PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(_) => Ts2::new(),
                         PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(pg_type_impl_try_new_for_deserialize) => {
                             let content_ts_026f2a24 = StructOrEnumDeriveTokenStreamBuilder::new()
                             .make_pub()
@@ -3316,7 +3317,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     },
                 }
             } else {
-                proc_macro2::TokenStream::new()
+                Ts2::new()
             };
             let impl_ident_origin_ts = {
                 let fn_new_or_try_new_ts = pg_type_initialization_try_new_try_from_pg_type.as_ref().map_or_else(
@@ -3656,7 +3657,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 let maybe_fn_new_or_try_new_for_deserialize_token = match &pg_type_pattern {
                     PgTypePattern::Standart => match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => match &pg_type_deserialize {
-                            PgTypeDeserialize::Derive => proc_macro2::TokenStream::new(),
+                            PgTypeDeserialize::Derive => Ts2::new(),
                             PgTypeDeserialize::ImplNewForDeserializeOrTryNewForDeserialize(pg_type_impl_new_for_deserialize_or_try_new_for_deserialize) => match &pg_type_impl_new_for_deserialize_or_try_new_for_deserialize {
                                 PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(pg_type_impl_new_for_deserialize) => {
                                     let parameters_ts = {
@@ -3919,9 +3920,9 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                 }
                             },
                         },
-                        NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                        NotNullOrNullable::Nullable => Ts2::new(),
                     },
-                    PgTypePattern::ArrayDimension1 { .. } => proc_macro2::TokenStream::new(),
+                    PgTypePattern::ArrayDimension1 { .. } => Ts2::new(),
                 };
                 quote! {
                     #allow_clippy_arbitrary_source_item_ordering_ts
@@ -3946,7 +3947,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             NotNullOrNullable::NotNull => value_dot_zero,
                             NotNullOrNullable::Nullable => gen_match_ts(
                                 &value_dot_zero,
-                                &proc_macro2::TokenStream::new(),
+                                &Ts2::new(),
                                 &quote!{value_6bfd70fa}
                             ),
                         },
@@ -3956,7 +3957,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                 NotNullOrNullable::NotNull => el_dot_zero_ts,
                                 NotNullOrNullable::Nullable => gen_match_ts(
                                     &el_dot_zero_ts,
-                                    &proc_macro2::TokenStream::new(),
+                                    &Ts2::new(),
                                     &quote!{value_1b8cbd77}
                                 ),
                             };
@@ -4007,7 +4008,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         | PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
-                        | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => proc_macro2::TokenStream::new(),
+                        | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Ts2::new(),
                         PgType::StdStringStringAsText => gen_impl_crate_is_string_empty_for_ident_content_ts(
                             &ident_origin_ucc,
                             &quote! {self.0.clone().is_empty()},
@@ -4019,21 +4020,21 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             &quote! {self.0.to_string().is_empty()},
                         ),
                     },
-                    NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                    NotNullOrNullable::Nullable => Ts2::new(),
                 }
             } else {
-                proc_macro2::TokenStream::new()
+                Ts2::new()
             };
             let maybe_impl_serde_serialize_for_ident_standart_not_null_origin_ts = match &serde_serialize_derive_or_impl {
-                DeriveOrImpl::Derive => &proc_macro2::TokenStream::new(),
+                DeriveOrImpl::Derive => &Ts2::new(),
                 DeriveOrImpl::Impl(value) => value,
             };
             let maybe_impl_serde_deserialize_for_ident_standart_not_null_origin_ts = match &serde_deserialize_derive_or_impl {
-                DeriveOrImpl::Derive => &proc_macro2::TokenStream::new(),
+                DeriveOrImpl::Derive => &Ts2::new(),
                 DeriveOrImpl::Impl(value) => value,
             };
-            let impl_std_fmt_display_for_ident_origin_ts = gen_impl_std_fmt_display_ts(&proc_macro2::TokenStream::new(), &ident_origin_ucc, &proc_macro2::TokenStream::new(), &quote! {write!(f, "{self:?}")});
-            let impl_error_occurence_lib_to_std_string_string_for_ident_origin_ts = gen_impl_error_occurence_lib_to_std_string_string_ts(&proc_macro2::TokenStream::new(), &ident_origin_ucc, &proc_macro2::TokenStream::new(), &quote! {self.to_string()});
+            let impl_std_fmt_display_for_ident_origin_ts = gen_impl_std_fmt_display_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
+            let impl_error_occurence_lib_to_std_string_string_for_ident_origin_ts = gen_impl_error_occurence_lib_to_std_string_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {self.to_string()});
             let impl_default_option_some_vec_one_el_for_ident_origin_ts = gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_origin_ucc, &{
                 let content_ts = match &pg_type_pattern {
                     PgTypePattern::Standart => match &not_null_or_nullable {
@@ -4173,7 +4174,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 }
             };
             let maybe_impl_std_convert_from_ident_read_for_ident_origin_ts = match &is_not_null_standart_can_be_primary_key {
-                IsNotNullStandartCanBePrimaryKey::False => proc_macro2::TokenStream::new(),
+                IsNotNullStandartCanBePrimaryKey::False => Ts2::new(),
                 IsNotNullStandartCanBePrimaryKey::True => gen_impl_std_convert_from_ts(&ident_standart_not_null_read_ucc, &ident_origin_ucc, &{
                     let ident_standart_not_null_as_crate_pg_type_ts = gen_as_pg_type_ts(&ident_standart_not_null_ucc);
                     quote! {Self::#NewSc(#ident_standart_not_null_as_crate_pg_type_ts::into_inner(#ValueSc))}
@@ -4337,7 +4338,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             };
             let maybe_impl_ident_create_ts = match &can_be_primary_key {
                 CanBePrimaryKey::False => gen_pub_const_new_or_pub_try_new_ts(&ident_create_ucc),
-                CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
+                CanBePrimaryKey::True => Ts2::new(),
             };
             let impl_default_option_some_vec_one_el_for_ident_create_ts = gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_create_ucc, &{
                 let content_ts: &dyn ToTokens = match &can_be_primary_key {
@@ -4348,11 +4349,11 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             });
             let maybe_impl_sqlx_encode_sqlx_pg_for_ident_create_ts = match &can_be_primary_key {
                 CanBePrimaryKey::False => gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_create_ucc, &quote! {#SelfSc.0}),
-                CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
+                CanBePrimaryKey::True => Ts2::new(),
             };
             let maybe_impl_sqlx_type_sqlx_pg_for_ident_create_ts = match &can_be_primary_key {
                 CanBePrimaryKey::False => gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_create_ucc, &ident_origin_ucc),
-                CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
+                CanBePrimaryKey::True => Ts2::new(),
             };
             quote! {
                 #ident_create_ts
@@ -4371,7 +4372,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     PgTypePattern::ArrayDimension1 { .. } => {
                         let mut arguments_ts = Vec::new();
                         for el_9f432ae3 in 1..=array_dimensions_number {
-                            let dimension_number_pagination_ts = format!("dimension{el_9f432ae3}_pagination").parse::<proc_macro2::TokenStream>().expect("af86f2d1");
+                            let dimension_number_pagination_ts = format!("dimension{el_9f432ae3}_pagination").parse::<Ts2>().expect("af86f2d1");
                             arguments_ts.push(quote! {
                                 #dimension_number_pagination_ts: pg_types_common::PaginationStartsWithOne
                             });
@@ -4391,7 +4392,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                         };
                         let mut arguments_ts = Vec::new();
                         for el_a227c2ba in 1..=array_dimensions_number {
-                            let dimension_number_pagination_ts = format!("dimension{el_a227c2ba}_pagination").parse::<proc_macro2::TokenStream>().expect("e5250a98");
+                            let dimension_number_pagination_ts = format!("dimension{el_a227c2ba}_pagination").parse::<Ts2>().expect("e5250a98");
                             arguments_ts.push(quote! {
                                 #dimension_number_pagination_ts: #content_ts
                             });
@@ -4781,7 +4782,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     )
             };
             let impl_ident_read_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_read_ucc);
-            let impl_error_occurence_lib_to_std_string_string_for_ident_read_ts = gen_impl_error_occurence_lib_to_std_string_string_ts(&proc_macro2::TokenStream::new(), &ident_read_ucc, &proc_macro2::TokenStream::new(), &quote! {self.0.to_string()});
+            let impl_error_occurence_lib_to_std_string_string_for_ident_read_ts = gen_impl_error_occurence_lib_to_std_string_string_ts(&Ts2::new(), &ident_read_ucc, &Ts2::new(), &quote! {self.0.to_string()});
             let impl_crate_default_option_some_vec_one_el_for_ident_read_ts =
                 gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_read_ucc, &quote! {Self(#pg_crud_common_default_option_some_vec_one_el_call_ts)});
             let impl_sqlx_encode_sqlx_pg_for_ident_origin_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_read_ucc, &quote! {#SelfSc.0});
@@ -4795,7 +4796,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 impl_pg_type_where_filter_for_ident_ts(
                     &quote! {<'lifetime>},
                     &ident_standart_not_null_read_ucc,
-                    &proc_macro2::TokenStream::new(),
+                    &Ts2::new(),
                     &IncrementParameterUnderscore::False,
                     &ColumnParameterUnderscore::False,
                     &IsNeedToAddLogicalOperatorUnderscore::True,
@@ -4810,7 +4811,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     &import_path,
                 )
             } else {
-                proc_macro2::TokenStream::new()
+                Ts2::new()
             };
             quote! {
                 #ident_read_ts
@@ -4849,7 +4850,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 #impl_sqlx_type_sqlx_pg_for_ident_read_only_ids_ts
             }
         } else {
-            proc_macro2::TokenStream::new()
+            Ts2::new()
         };
         let ident_read_inner_ucc = SelfReadInnerUcc::from_tokens(&ident);
         let ident_read_inner_ts = quote! {
@@ -4871,7 +4872,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
             let impl_ident_update_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_update_ucc);
             let impl_default_option_some_vec_one_el_for_ident_update_ts =
                 gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_update_ucc, &quote! {Self(#pg_crud_common_default_option_some_vec_one_el_call_ts)});
-            let impl_error_occurence_lib_to_std_string_string_for_ident_update_ts = gen_impl_error_occurence_lib_to_std_string_string_ts(&proc_macro2::TokenStream::new(), &ident_update_ucc, &proc_macro2::TokenStream::new(), &quote! {self.0.#ToStdStringStringSc()});
+            let impl_error_occurence_lib_to_std_string_string_for_ident_update_ts = gen_impl_error_occurence_lib_to_std_string_string_ts(&Ts2::new(), &ident_update_ucc, &Ts2::new(), &quote! {self.0.#ToStdStringStringSc()});
             quote! {
                 #ident_update_ts
                 #impl_ident_update_ts
@@ -5076,7 +5077,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             let arguments_ts = (1..=array_dimensions_number)
                             .map(|el_268f0f14| {
                                 let dimension_number_pagination_ts = format!("dimension{el_268f0f14}_pagination")
-                                .parse::<proc_macro2::TokenStream>()
+                                .parse::<Ts2>()
                                 .expect("6f2305ee");
                                 quote! {
                                     #ValueSc.#dimension_number_pagination_ts.start(),
@@ -5627,7 +5628,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 let gen_typical_test_cases_vec_ts = |value: &dyn ToTokens| {
                     let content_ts = match &is_need_to_use_into {
                         IsNeedToUseInto::True => quote! {.into()},
-                        IsNeedToUseInto::False => proc_macro2::TokenStream::new(),
+                        IsNeedToUseInto::False => Ts2::new(),
                     };
                     quote! {#import_path::#value()#content_ts}
                 };
@@ -5822,8 +5823,8 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                     additonal_content_ts: &dyn ToTokens
                 | {
                     let (new_or_try_new_content_ts, maybe_acc_push_none_ts) = match (&current_not_null_or_nullable, pg_type_initialization_try_new_try_from_pg_type.is_ok()) {
-                        (NotNullOrNullable::NotNull, true) => (quote! {try_new(vec![el_0fd5865b.0.into()]).expect("adbae6b3")}, proc_macro2::TokenStream::new()),
-                        (NotNullOrNullable::NotNull, false) => (quote! {new(vec![el_0fd5865b.0.into()])}, proc_macro2::TokenStream::new()),
+                        (NotNullOrNullable::NotNull, true) => (quote! {try_new(vec![el_0fd5865b.0.into()]).expect("adbae6b3")}, Ts2::new()),
+                        (NotNullOrNullable::NotNull, false) => (quote! {new(vec![el_0fd5865b.0.into()])}, Ts2::new()),
                         (NotNullOrNullable::Nullable, true) => (
                             quote! {try_new(Some(el_0fd5865b.0.into())).expect("b244d498")},
                             quote! {acc_0b59a062.push(#self_as_pg_type_ts::Create::try_new(None).expect("31878971"));},
@@ -5866,7 +5867,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                             }
                             CanBePrimaryKey::True => none_ts.clone(),
                         },
-                        NotNullOrNullable::Nullable => gen_some_acc_content_ts(not_null_or_nullable, &gen_ident_ts(pg_type, &NotNullOrNullable::NotNull, &PgTypePattern::Standart), &proc_macro2::TokenStream::new()),
+                        NotNullOrNullable::Nullable => gen_some_acc_content_ts(not_null_or_nullable, &gen_ident_ts(pg_type, &NotNullOrNullable::NotNull, &PgTypePattern::Standart), &Ts2::new()),
                     },
                     PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => gen_some_acc_content_ts(
                         not_null_or_nullable,
@@ -5896,7 +5897,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                         }
                                     };
                                     let gen_vec_value_clone_zero_into_number_ts = |value: usize| {
-                                        let number_ts = value.to_string().parse::<proc_macro2::TokenStream>().expect("50c87202");
+                                        let number_ts = value.to_string().parse::<Ts2>().expect("50c87202");
                                         //todo maybe correlate with .derive_copy_if()
                                         let current_maybe_dot_clone_ts: &dyn ToTokens = match &pg_type {
                                             PgType::StdPrimitiveI16AsInt2 |
@@ -5921,7 +5922,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                             PgType::SqlxPgTypesPgRangeStdPrimitiveI64AsInt8Range |
                                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
-                                            PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &proc_macro2::TokenStream::new(),
+                                            PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &Ts2::new(),
                                             PgType::StdVecVecStdPrimitiveU8AsBytea |
                                             PgType::StdStringStringAsText => &dot_clone_ts,
                                         };
@@ -5946,7 +5947,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                                     }
                                 }
                             }
-                            NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                            NotNullOrNullable::Nullable => Ts2::new(),
                         },
                     ),
                 }
@@ -6658,10 +6659,10 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
                 }
             }
         } else {
-            proc_macro2::TokenStream::new()
+            Ts2::new()
         };
         let maybe_impl_pg_type_not_primary_key_for_ident_ts = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
-            proc_macro2::TokenStream::new()
+            Ts2::new()
         } else {
             gen_impl_pg_type_not_primary_key_for_ident_ts(&import_path, &ident)
         };
@@ -6684,7 +6685,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         };
         (
             {
-                let field_ident = format!("column_{index}").parse::<proc_macro2::TokenStream>().expect("2e15af68");
+                let field_ident = format!("column_{index}").parse::<Ts2>().expect("2e15af68");
                 quote! {
                     pub #field_ident: pg_crud::pg_type:: #ident,
                 }
@@ -6701,12 +6702,8 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         &{
             let content_ts = columns_ts
                 .into_iter()
-                .map(|el_2e3fc869| {
-                    el_2e3fc869
-                        .parse::<proc_macro2::TokenStream>()
-                        .expect("79ee6381")
-                })
-                .collect::<Vec<proc_macro2::TokenStream>>();
+                .map(|el_2e3fc869| el_2e3fc869.parse::<Ts2>().expect("79ee6381"))
+                .collect::<Vec<Ts2>>();
             quote! {
                 struct PgTableColumnsUsingPgTypes {
                     #(#content_ts)*
@@ -6719,12 +6716,8 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
         let gen_pg_types_mod_sc = GenPgTypesModSc;
         let content_ts = pg_type_array
             .into_iter()
-            .map(|el_f9569807| {
-                el_f9569807
-                    .parse::<proc_macro2::TokenStream>()
-                    .expect("e0c9257d")
-            })
-            .collect::<Vec<proc_macro2::TokenStream>>();
+            .map(|el_f9569807| el_f9569807.parse::<Ts2>().expect("e0c9257d"))
+            .collect::<Vec<Ts2>>();
         quote! {
             #[allow(unused_qualifications)]
             #[allow(clippy::absolute_paths)]

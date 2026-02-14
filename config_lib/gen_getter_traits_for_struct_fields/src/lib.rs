@@ -1,6 +1,6 @@
+use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use syn::{Data, DeriveInput, Fields, parse};
-
 #[proc_macro_derive(GenGetterTraitsForStructFields)]
 pub fn gen_getter_traits_for_struct_fields(
     input: proc_macro::TokenStream,
@@ -20,10 +20,10 @@ pub fn gen_getter_traits_for_struct_fields(
         };
         let field_type = field.ty;
         let path_trait_ident = format!("app_state::Get{ucc_field_ident}")
-            .parse::<proc_macro2::TokenStream>()
+            .parse::<Ts2>()
             .expect("8fb2cb27");
         let function_name_ident = format!("get_{field_ident}")
-            .parse::<proc_macro2::TokenStream>()
+            .parse::<Ts2>()
             .expect("a349efd0");
         quote! {
             impl #path_trait_ident for #ident {

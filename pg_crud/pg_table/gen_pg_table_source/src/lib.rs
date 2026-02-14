@@ -74,6 +74,7 @@ use pg_crud_macros_common::{
     gen_std_option_option_tokens_declaration_ts, gen_std_vec_vec_tokens_declaration_ts,
     gen_value_initialization_ts, impl_pg_type_where_filter_for_ident_ts, maybe_wrap_into_braces_ts,
 };
+use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use std::{
     fmt::{Display, Formatter, Result as StdFmtResult},
@@ -114,7 +115,7 @@ use syn::{
 //* write json schema in pg
 //* validate insert json field with json schema
 #[must_use]
-pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream {
+pub fn gen_pg_table(input: Ts2) -> Ts2 {
     #[derive(Debug)]
     struct SynVariantWrapper {
         status_code: Option<macros_helpers::StatusCode>,
@@ -133,9 +134,9 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         True,
     }
     impl ToTokens for ShouldAddBorrow {
-        fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        fn to_tokens(&self, tokens: &mut Ts2) {
             match &self {
-                Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+                Self::False => Ts2::new().to_tokens(tokens),
                 Self::True => quote! {&}.to_tokens(tokens),
             }
         }
@@ -231,21 +232,21 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         fn operation_payload_example_sc(self) -> impl StdFmtDisplayPlusQuoteToTokens {
             SelfPayloadExampleSc::from_display(&self)
         }
-        fn self_handle_sc_ts(self) -> proc_macro2::TokenStream {
+        fn self_handle_sc_ts(self) -> Ts2 {
             let value = SelfHandleSc::from_tokens(&self.self_sc_ts());
             quote! {#value}
         }
         fn self_sc_str(self) -> String {
             AsRefStrToScStr::case(&self.to_string())
         }
-        fn self_sc_ts(self) -> proc_macro2::TokenStream {
+        fn self_sc_ts(self) -> Ts2 {
             AsRefStrToScTs::case_or_panic(&self.to_string())
         }
-        fn try_self_handle_sc_ts(self) -> proc_macro2::TokenStream {
+        fn try_self_handle_sc_ts(self) -> Ts2 {
             let value = TrySelfHandleSc::from_tokens(&self.self_sc_ts());
             quote! {#value}
         }
-        fn try_self_sc_ts(self) -> proc_macro2::TokenStream {
+        fn try_self_sc_ts(self) -> Ts2 {
             let value = TrySelfSc::from_tokens(&self.self_sc_ts());
             quote! {#value}
         }
@@ -600,35 +601,34 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
     let pub_select_pg_crud_not_empty_unique_vec_ident_select_ts = {
         quote! {pub #select_pg_crud_not_empty_unique_vec_ident_select_ts}
     };
-    let gen_fields_named_with_comma_ts = |function: &dyn Fn(
-        &macros_helpers::SynFieldWrapper,
-    ) -> proc_macro2::TokenStream|
-     -> proc_macro2::TokenStream {
-        let fields_ts = fields.iter().map(function);
-        quote! {#(#fields_ts),*}
-    };
-    let gen_fields_named_without_comma_ts = |function: &dyn Fn(
-        &macros_helpers::SynFieldWrapper,
-    ) -> proc_macro2::TokenStream|
-     -> proc_macro2::TokenStream {
-        let fields_ts = fields.iter().map(function);
-        quote! {#(#fields_ts)*}
-    };
-    let gen_fields_named_without_primary_key_with_comma_ts = |function: &dyn Fn(&macros_helpers::SynFieldWrapper) -> proc_macro2::TokenStream| -> proc_macro2::TokenStream {
-        let fields_ts = fields_without_primary_key.iter().map(function);
-        quote! {#(#fields_ts),*}
-    };
-    let gen_fields_named_without_primary_key_without_comma_ts = |function: &dyn Fn(&macros_helpers::SynFieldWrapper) -> proc_macro2::TokenStream| -> proc_macro2::TokenStream {
-        let fields_ts = fields_without_primary_key.iter().map(function);
-        quote! {#(#fields_ts)*}
-    };
+    let gen_fields_named_with_comma_ts =
+        |function: &dyn Fn(&macros_helpers::SynFieldWrapper) -> Ts2| -> Ts2 {
+            let fields_ts = fields.iter().map(function);
+            quote! {#(#fields_ts),*}
+        };
+    let gen_fields_named_without_comma_ts =
+        |function: &dyn Fn(&macros_helpers::SynFieldWrapper) -> Ts2| -> Ts2 {
+            let fields_ts = fields.iter().map(function);
+            quote! {#(#fields_ts)*}
+        };
+    let gen_fields_named_without_primary_key_with_comma_ts =
+        |function: &dyn Fn(&macros_helpers::SynFieldWrapper) -> Ts2| -> Ts2 {
+            let fields_ts = fields_without_primary_key.iter().map(function);
+            quote! {#(#fields_ts),*}
+        };
+    let gen_fields_named_without_primary_key_without_comma_ts =
+        |function: &dyn Fn(&macros_helpers::SynFieldWrapper) -> Ts2| -> Ts2 {
+            let fields_ts = fields_without_primary_key.iter().map(function);
+            quote! {#(#fields_ts)*}
+        };
     let none_ts = quote! {None};
-    let fields_named_with_comma_none_ts = gen_fields_named_with_comma_ts(
-        &|_: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream { none_ts.clone() },
-    );
+    let fields_named_with_comma_none_ts =
+        gen_fields_named_with_comma_ts(&|_: &macros_helpers::SynFieldWrapper| -> Ts2 {
+            none_ts.clone()
+        });
     let fields_named_without_primary_key_with_comma_none_ts =
         gen_fields_named_without_primary_key_with_comma_ts(
-            &|_: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream { none_ts.clone() },
+            &|_: &macros_helpers::SynFieldWrapper| -> Ts2 { none_ts.clone() },
         );
     let mut impl_ident_vec_ts = Vec::new();
     let impl_ident_ts = {
@@ -720,7 +720,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                         &el_e48e222c.field_ident,
                         false,
                     )
-                })).collect::<Vec<proc_macro2::TokenStream>>()
+                })).collect::<Vec<Ts2>>()
             };
             quote! {
                 pub async fn #PreparePgTableSc(#PoolSc: &sqlx::Pool<sqlx::Postgres>, table: &str) -> Result<(), #ident_prepare_pg_error_named_ucc> {
@@ -825,19 +825,19 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         };
     let gen_ident_operation_error_named_ucc = |operation: &Operation| {
         format!("{ident}{operation}ErrorNamed")
-            .parse::<proc_macro2::TokenStream>()
+            .parse::<Ts2>()
             .expect("79ab147e")
     };
     let gen_ident_operation_response_variants_ucc = |operation: &Operation| {
         format!("{ident}{operation}ResponseVariants")
-            .parse::<proc_macro2::TokenStream>()
+            .parse::<Ts2>()
             .expect("f386c0d4")
     };
     let gen_initialization_ts = |syn_variant_wrapper: &SynVariantWrapper,
                                  file: &'static str,
                                  line: u32,
                                  column: u32|
-     -> proc_macro2::TokenStream {
+     -> Ts2 {
         let variant_ident = &syn_variant_wrapper.variant.ident;
         let fields_ts = if let Fields::Named(value) = &syn_variant_wrapper.variant.fields {
             value.named.iter().enumerate().map(|(index, element)| {
@@ -1001,7 +1001,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         |current_ident: &dyn ToTokens, content_ts: &dyn ToTokens| {
             gen_impl_pg_crud_default_option_some_vec_one_el_ts(
                 &current_ident,
-                &proc_macro2::TokenStream::new(),
+                &Ts2::new(),
                 &content_ts,
             )
         };
@@ -1165,8 +1165,8 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
     let ident_where_many_try_new_error_named_ucc =
         SelfWhereManyTryNewErrorNamedUcc::from_tokens(&ident);
     let ident_where_many_ts = {
-        let fields_declaration_ts = gen_fields_named_with_comma_ts(
-            &|element: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream {
+        let fields_declaration_ts =
+            gen_fields_named_with_comma_ts(&|element: &macros_helpers::SynFieldWrapper| -> Ts2 {
                 let field_ident = &element.field_ident;
                 let el_syn_field_ty_as_pg_type_where_ts =
                     gen_as_pg_type_where_ts(&element.field_type);
@@ -1177,8 +1177,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 quote! {
                     #field_ident: #std_option_option_pg_type_where_syn_field_ty_as_pg_type_where_ts
                 }
-            },
-        );
+            });
         let ident_where_many_ts = {
             let content_ts_2ecd6da8 = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
@@ -1215,7 +1214,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 &{
                     let gen_fields_ts = |should_add_borrow: ShouldAddBorrow| {
                         gen_fields_named_with_comma_ts(
-                            &|element: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream {
+                            &|element: &macros_helpers::SynFieldWrapper| -> Ts2 {
                                 let field_ident = &element.field_ident;
                                 quote! {#should_add_borrow #field_ident}
                             },
@@ -1294,7 +1293,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             impl_pg_type_where_filter_for_ident_ts(
                 &quote! {<'lifetime>},
                 &std_option_option_ident_where_many_ucc,
-                &proc_macro2::TokenStream::new(),
+                &Ts2::new(),
                 &IncrementParameterUnderscore::False,
                 &ColumnParameterUnderscore::True,
                 &IsNeedToAddLogicalOperatorUnderscore::True,
@@ -1303,7 +1302,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     let field_ident = &element.field_ident;
                     let field_ident_double_quotes_ts = gen_quotes::double_quotes_ts(&field_ident);
                     let maybe_is_first_push_to_additional_parameters_already_happend_true_ts = if index == fields_len_without_primary_key {
-                        proc_macro2::TokenStream::new()
+                        Ts2::new()
                     } else {
                         quote! {is_first_push_to_additional_parameters_already_happend = true;}
                     };
@@ -1503,16 +1502,16 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             }
         };
         let impl_std_fmt_display_for_ident_select_ts = macros_helpers::gen_impl_std_fmt_display_ts(
-            &proc_macro2::TokenStream::new(),
+            &Ts2::new(),
             &ident_select_ucc,
-            &proc_macro2::TokenStream::new(),
+            &Ts2::new(),
             &quote! {write!(f, "{}", serde_json::to_string(&self).unwrap_or_else(|el_2636212f|format!("cannot serialize into json: {el_2636212f:?}")))},
         );
         let impl_error_occurence_lib_to_std_string_string_for_ident_select_ts =
             macros_helpers::gen_impl_error_occurence_lib_to_std_string_string_ts(
-                &proc_macro2::TokenStream::new(),
+                &Ts2::new(),
                 &ident_select_ucc,
-                &proc_macro2::TokenStream::new(),
+                &Ts2::new(),
                 &quote! {format!("{self}")},
             );
         let impl_pg_crud_all_variants_default_option_some_vec_one_el_for_ident_select_ts =
@@ -1556,7 +1555,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                             pub #primary_key_field_ident: #std_option_option_value_primary_key_field_type_as_pg_type_read_ts
                         }
                     };
-                    let fields_options_without_primary_key_ts = gen_fields_named_without_primary_key_with_comma_ts(&|element: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream {
+                    let fields_options_without_primary_key_ts = gen_fields_named_without_primary_key_with_comma_ts(&|element: &macros_helpers::SynFieldWrapper| -> Ts2 {
                         let field_visibility = &element.field_visibility;
                         let field_ident = &element.field_ident;
                         let std_option_option_value_field_type_as_pg_type_read_ts = gen_std_option_option_tokens_declaration_ts(&gen_value_declaration_ts(&gen_as_pg_type_read_ts(&element.field_type)));
@@ -1647,7 +1646,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                             }
                         }
                     })
-                    .collect::<Vec<proc_macro2::TokenStream>>();
+                    .collect::<Vec<Ts2>>();
                 let fields_initiation_ts = &fields
                     .iter()
                     .map(|el_2bfe6afc| &el_2bfe6afc.field_ident)
@@ -1808,14 +1807,14 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
     // println!("{ident_read_only_ids_ts}");
     let gen_ident_try_operation_error_named_ucc = |operation: &Operation| {
         format!("{ident}Try{operation}ErrorNamed")
-            .parse::<proc_macro2::TokenStream>()
+            .parse::<Ts2>()
             .expect("6a5468b2")
     };
     let ident_try_read_many_error_named_ucc =
         gen_ident_try_operation_error_named_ucc(&Operation::ReadMany);
     let gen_ident_operation_error_named_with_serialize_deserialize_ucc = |operation: &Operation| {
         format!("{ident}{operation}ErrorNamedWithSerializeDeserialize")
-            .parse::<proc_macro2::TokenStream>()
+            .parse::<Ts2>()
             .expect("f9e053d1")
     };
     let pg_crud_order_by_ts = quote! {#PgCrudSc::#OrderByUcc};
@@ -1829,7 +1828,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         let gen_option_value_field_type_as_pg_type_update_ts = |syn_type: &Type| {
             let path_value_ts = {
                 let value = format!("{PgCrudSc}::{ValueUcc}");
-                value.parse::<proc_macro2::TokenStream>().expect("dbdbb7f2")
+                value.parse::<Ts2>().expect("dbdbb7f2")
             };
             let syn_type_as_pg_type_update_ts = gen_as_pg_type_update_ts(&syn_type);
             gen_std_option_option_tokens_declaration_ts(
@@ -1839,7 +1838,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         let fields_declaration_ts = {
             let fields_named_without_primary_key_ts =
                 gen_fields_named_without_primary_key_with_comma_ts(
-                    &|element: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream {
+                    &|element: &macros_helpers::SynFieldWrapper| -> Ts2 {
                         let field_ident = &element.field_ident;
                         let option_value_field_type_as_pg_type_update_ts =
                             gen_option_value_field_type_as_pg_type_update_ts(&element.field_type);
@@ -1896,7 +1895,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                         (
                             maybe_wrap_into_braces_handle_ts(
                                 &gen_fields_named_without_primary_key_with_comma_ts(
-                                    &|element: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream {
+                                    &|element: &macros_helpers::SynFieldWrapper| -> Ts2 {
                                         let field_ident = &element.field_ident;
                                         quote! {&#field_ident}
                                     },
@@ -1908,7 +1907,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                         )
                     };
                     let fields_inialization_ts = gen_fields_named_with_comma_ts(
-                        &|element: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream {
+                        &|element: &macros_helpers::SynFieldWrapper| -> Ts2 {
                             let field_ident = &element.field_ident;
                             quote! {#field_ident}
                         },
@@ -1982,12 +1981,12 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             .build_struct(
                 &ident_update_for_query_ucc,
                 &{
-                    let fields_named_without_primary_key_ts = gen_fields_named_without_primary_key_with_comma_ts(&|element: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream {
+                    let fields_named_without_primary_key_ts = gen_fields_named_without_primary_key_with_comma_ts(&|element: &macros_helpers::SynFieldWrapper| -> Ts2 {
                         let field_ident = &element.field_ident;
                         let option_value_field_type_as_pg_type_update_for_query_ts = {
                             let path_value_ts = {
                                 let value = format!("{PgCrudSc}::{ValueUcc}");
-                                value.parse::<proc_macro2::TokenStream>().expect("2b09d4ae")
+                                value.parse::<Ts2>().expect("2b09d4ae")
                             };
                             let syn_type_as_pg_type_update_for_query_ts = gen_as_pg_type_update_for_query_ts(&element.field_type);
                             gen_std_option_option_tokens_declaration_ts(&quote! {#path_value_ts<#syn_type_as_pg_type_update_for_query_ts>})
@@ -2100,7 +2099,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     gen_as_pg_type_update_for_query_ts(&primary_key_field_type);
                 let fields_named_without_primary_key_ts =
                     gen_fields_named_without_primary_key_with_comma_ts(
-                        &|element: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream {
+                        &|element: &macros_helpers::SynFieldWrapper| -> Ts2 {
                             let field_ident = &element.field_ident;
                             let value_initialization_ts = gen_import_path_value_initialization_ts(
                                 &{
@@ -2320,7 +2319,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         if is_pub {
             quote! {pub}
         } else {
-            proc_macro2::TokenStream::new()
+            Ts2::new()
         }
     };
     let gen_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_ts =
@@ -2486,7 +2485,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 #ValueSc
             }
         };
-    let gen_error_occurence_variant_ts = |error_variant: &Variant| -> proc_macro2::TokenStream {
+    let gen_error_occurence_variant_ts = |error_variant: &Variant| -> Ts2 {
         let variant_ident = &error_variant.ident;
         let Fields::Named(fields_named) = &error_variant.fields else {
             panic!("2acd4725");
@@ -2494,7 +2493,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         let fields_mapped_into_ts = fields_named.named.iter().map(|field| {
             let field_ident = field.ident.as_ref().expect("a21dc807");
             let error_occurence_attribute = if *field_ident == *CodeOccurenceSc.to_string() {
-                proc_macro2::TokenStream::new()
+                Ts2::new()
             } else {
                 let mut error_occurence_attribute: Option<ErrorOccurenceFieldAttribute> = None;
                 for el_1c83e302 in &field.attrs {
@@ -2533,7 +2532,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         |operation: &Operation,
          desirable_type_ts: &dyn ToTokens,
          type_variants_from_request_response_syn_variants: &Vec<Variant>|
-         -> proc_macro2::TokenStream {
+         -> Ts2 {
             let ident_operation_response_variants_ucc =
                 gen_ident_operation_response_variants_ucc(operation);
             let ident_try_operation_logic_response_variants_ts = {
@@ -2609,17 +2608,15 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         | Operation::UpdateMany
         | Operation::DeleteMany
         | Operation::DeleteOne => format!("{ident}{operation}{PayloadUcc}")
-            .parse::<proc_macro2::TokenStream>()
+            .parse::<Ts2>()
             .expect("c042f504"),
     };
     let gen_ident_operation_parameters_ucc = |operation: &Operation| {
         format!("{ident}{operation}Parameters")
-            .parse::<proc_macro2::TokenStream>()
+            .parse::<Ts2>()
             .expect("c1203fc6")
     };
-    let gen_parameters_pattern_ts = |operation: &Operation,
-                                     payload_ts: proc_macro2::TokenStream|
-     -> proc_macro2::TokenStream {
+    let gen_parameters_pattern_ts = |operation: &Operation, payload_ts: Ts2| -> Ts2 {
         let parameters_ts = {
             let (derive_clone, derive_copy) = operation.derive_clone_and_copy();
             let content_ts_0d032fce = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
@@ -2691,7 +2688,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         };
     let gen_ident_try_operation_error_named_ts = |operation: &Operation,
                                                   syn_variants: &Vec<Variant>|
-     -> proc_macro2::TokenStream {
+     -> Ts2 {
         let ident_try_operation_error_named_ucc =
             gen_ident_try_operation_error_named_ucc(operation);
         let variants = syn_variants
@@ -2733,7 +2730,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                             query_string_ts: &dyn ToTokens,
                             binded_query_ts: &dyn ToTokens,
                             pg_logic_ts: &dyn ToTokens|
-     -> proc_macro2::TokenStream {
+     -> Ts2 {
         let operation_handle_sc_ts = operation.self_handle_sc_ts();
         let operation_sc_ts = operation.self_sc_ts();
         let request_parts_preparation_ts = {
@@ -2865,7 +2862,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             }
         }
     };
-    let gen_parameters_logic_ts = |operation: &Operation| -> proc_macro2::TokenStream {
+    let gen_parameters_logic_ts = |operation: &Operation| -> Ts2 {
         let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
         let serde_json_syn_variant_wrapper_error_initialization_eprintln_response_creation_ts =
             gen_operation_error_initialization_eprintln_response_creation_ts(
@@ -3304,7 +3301,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     &operation,
                     &common_additional_logic_ts,
                     &parameters_logic_ts,
-                    &proc_macro2::TokenStream::new(),
+                    &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
                     &pg_logic_ts,
@@ -3355,7 +3352,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     .collect(),
                 &operation,
             );
-        let parameters_ts = gen_parameters_pattern_ts(&operation, proc_macro2::TokenStream::new());
+        let parameters_ts = gen_parameters_pattern_ts(&operation, Ts2::new());
         let operation_ts = {
             let try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_ts =
                 gen_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_ts(&operation, &ident_read_only_ids_ucc, &type_variants_from_request_response_syn_variants);
@@ -3443,7 +3440,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     &operation,
                     &common_additional_logic_ts,
                     &parameters_logic_ts,
-                    &proc_macro2::TokenStream::new(),
+                    &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
                     &pg_logic_ts,
@@ -3649,7 +3646,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     &operation,
                     &common_additional_logic_ts,
                     &parameters_logic_ts,
-                    &proc_macro2::TokenStream::new(),
+                    &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
                     &pg_logic_ts,
@@ -3800,7 +3797,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     &operation,
                     &common_additional_logic_ts,
                     &parameters_logic_ts,
-                    &proc_macro2::TokenStream::new(),
+                    &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
                     &pg_logic_ts,
@@ -3874,7 +3871,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     );
             let ident_operation_payload_try_new_error_named_ucc =
                 format!("{ident}{operation}PayloadTryNewErrorNamed")
-                    .parse::<proc_macro2::TokenStream>()
+                    .parse::<Ts2>()
                     .expect("3da248bb");
             let not_unique_primary_key_ucc = NotUniquePrimaryKeyUcc;
             let not_unique_primary_key_sc = NotUniquePrimaryKeySc;
@@ -4246,7 +4243,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     &operation,
                     &common_additional_logic_ts,
                     &parameters_logic_ts,
-                    &proc_macro2::TokenStream::new(),
+                    &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
                     &pg_logic_ts,
@@ -4297,7 +4294,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     .collect(),
                 &operation,
             );
-        let parameters_ts = gen_parameters_pattern_ts(&operation, proc_macro2::TokenStream::new());
+        let parameters_ts = gen_parameters_pattern_ts(&operation, Ts2::new());
         let operation_ts = {
             let try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_ts =
                 gen_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_ts(&operation, &ident_read_only_ids_ucc, &type_variants_from_request_response_syn_variants);
@@ -4486,7 +4483,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     &operation,
                     &common_additional_logic_ts,
                     &parameters_logic_ts,
-                    &proc_macro2::TokenStream::new(),
+                    &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
                     &pg_logic_ts,
@@ -4581,7 +4578,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     &operation,
                     &common_additional_logic_ts,
                     &parameters_logic_ts,
-                    &proc_macro2::TokenStream::new(),
+                    &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
                     &pg_logic_ts,
@@ -4694,7 +4691,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     &operation,
                     &common_additional_logic_ts,
                     &parameters_logic_ts,
-                    &proc_macro2::TokenStream::new(),
+                    &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
                     &pg_logic_ts,
@@ -4971,7 +4968,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                             let current_field_ident = &element.field_ident;
                             let current_field_type = &element.field_type;
                             let maybe_dot_clone_ts = match &should_add_dot_clone {
-                                ShouldAddDotClone::False => proc_macro2::TokenStream::new(),
+                                ShouldAddDotClone::False => Ts2::new(),
                                 ShouldAddDotClone::True => quote! {.clone()},
                             };
                             quote! {
@@ -5087,7 +5084,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             |field_ident: &Ident| gen_ident_create_content_ts(field_ident, &ElementSc);
         let gen_table_test_name_field_ident_ts = |test_name: &str, field_ident: &Ident| {
             format!("table_{test_name}_{field_ident}")
-                .parse::<proc_macro2::TokenStream>()
+                .parse::<Ts2>()
                 .expect("eb30c1e4")
         };
         let mut table_field_idents_initialization_vec_ts = Vec::new();
@@ -5096,7 +5093,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
             for el_8f39799f in test_names {
                 let gen_initialization_variable_name_ts = |field_ident: &Ident| {
                     format!("table_{el_8f39799f}_{field_ident}")
-                        .parse::<proc_macro2::TokenStream>()
+                        .parse::<Ts2>()
                         .expect("2003ad9f")
                 };
                 table_field_idents_initialization_vec_ts.push(gen_fields_named_without_primary_key_without_comma_ts(&|el_51b56762: &macros_helpers::SynFieldWrapper| {
@@ -5197,7 +5194,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                         }
                                     }
                                 } else {
-                                    proc_macro2::TokenStream::new()
+                                    Ts2::new()
                                 }
                             },
                         );
@@ -5735,19 +5732,11 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     }
                 };
             let gen_read_test_ts = |test_name: &str,
-                                    gen_method_call_ts: &dyn Fn(
-                &Ident,
-                &Type,
-            )
-                -> proc_macro2::TokenStream,
-                                    gen_create_content_ts: &dyn Fn(
-                &Ident,
-            )
-                -> proc_macro2::TokenStream,
+                                    gen_method_call_ts: &dyn Fn(&Ident, &Type) -> Ts2,
+                                    gen_create_content_ts: &dyn Fn(&Ident) -> Ts2,
                                     gen_content_ts: &dyn Fn(
                 &macros_helpers::SynFieldWrapper,
-            )
-                -> proc_macro2::TokenStream| {
+            ) -> Ts2| {
                 gen_fields_named_without_primary_key_without_comma_ts(
                     &|element: &macros_helpers::SynFieldWrapper| {
                         let field_ident = &element.field_ident;
@@ -6281,7 +6270,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                     );
                                 }
                             } else {
-                                proc_macro2::TokenStream::new()
+                                Ts2::new()
                             };
                         let field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_sc =
                             SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSc::from_tokens(
@@ -6483,7 +6472,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                                 .await.expect("e6998b47");
                             }
                         } else {
-                            proc_macro2::TokenStream::new()
+                            Ts2::new()
                         };
                         let field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_sc =
                             SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSc::from_tokens(
