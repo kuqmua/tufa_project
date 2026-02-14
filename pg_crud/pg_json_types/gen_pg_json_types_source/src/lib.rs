@@ -354,8 +354,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     }
     panic_location::panic_location();
     let gen_pg_json_types_config =
-        serde_json::from_str::<GenPgJsonTypesConfig>(&input_ts.to_string())
-            .expect("1123f78f");
+        serde_json::from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("1123f78f");
     let (fields_ts, pg_json_type_array) = {
         {
             let gen_standart = |acc_29796d99: &mut Vec<PgJsonTypeRecord>, pg_json_type: PgJsonType|{
@@ -3833,11 +3832,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         &{
             let fields_content_ts = fields_ts
                 .into_iter()
-                .map(|el_7ec253fa| {
-                    el_7ec253fa
-                        .parse::<Ts2>()
-                        .expect("1d8cd8e4")
-                })
+                .map(|el_7ec253fa| el_7ec253fa.parse::<Ts2>().expect("1d8cd8e4"))
                 .collect::<Vec<Ts2>>();
             quote! {
                 pub struct PgTableColumnsUsingPgJsonTypes {
@@ -3851,11 +3846,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         let gen_pg_json_types_mod_sc = GenPgJsonTypesModSc;
         let content_ts = pg_json_type_array
             .into_iter()
-            .map(|el_af9caefa| {
-                el_af9caefa
-                    .parse::<Ts2>()
-                    .expect("84e21b40")
-            })
+            .map(|el_af9caefa| el_af9caefa.parse::<Ts2>().expect("84e21b40"))
             .collect::<Vec<Ts2>>();
         quote! {
             #[allow(unused_qualifications)]

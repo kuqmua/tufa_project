@@ -1,23 +1,20 @@
 use error_occurence_lib::code_occurence::CodeOccurence;
+use pg_crud_common::{
+    DefaultOptionSomeVecOneEl, NotEmptyUniqueVecTryNewErrorNamed, PgTypeWhereFilter,
+    QueryPartErrorNamed, increment_checked_add_one_returning_increment,
+};
+use schemars::JsonSchema;
+use serde::{Deserialize, Serialize};
 use sqlx::{postgres::PgArguments, query::Query, types::Json};
 use std::fmt::{Display, Formatter, Result as StdFmtResult, Write as _};
+use utoipa::ToSchema;
 gen_where_filters::gen_where_filters!({
     "pg_types_content_write_into_gen_where_filters_pg_types": "False",
     "pg_json_types_content_write_into_gen_where_filters_pg_json_types": "False",
     "whole_content_write_into_gen_where_filters": "False"
 });
 
-#[derive(
-    Debug,
-    Default,
-    Clone,
-    Copy,
-    PartialEq,
-    Eq,
-    serde::Serialize,
-    serde::Deserialize,
-    schemars::JsonSchema,
-)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub enum EncodeFormat {
     #[default]
     Base64,
@@ -33,7 +30,7 @@ impl Display for EncodeFormat {
         }
     }
 }
-impl pg_crud_common::DefaultOptionSomeVecOneEl for EncodeFormat {
+impl DefaultOptionSomeVecOneEl for EncodeFormat {
     fn default_option_some_vec_one_el() -> Self {
         Self::default()
     }
@@ -51,11 +48,9 @@ impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
-    pub fn try_new(
-        value: Vec<T>,
-    ) -> Result<Self, pg_crud_common::NotEmptyUniqueVecTryNewErrorNamed<T>> {
+    pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewErrorNamed<T>> {
         if value.is_empty() {
-            return Err(pg_crud_common::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {
+            return Err(NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {
                 code_occurence: error_occurence_lib::code_occurence!(),
             });
         }
@@ -63,12 +58,10 @@ impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
             let mut acc_72940a4c = Vec::new();
             for el_7721a8da in &value {
                 if acc_72940a4c.contains(&el_7721a8da) {
-                    return Err(
-                        pg_crud_common::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
-                            value: el_7721a8da.clone(),
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        },
-                    );
+                    return Err(NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
+                        value: el_7721a8da.clone(),
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
                 }
                 acc_72940a4c.push(el_7721a8da);
             }
@@ -76,7 +69,7 @@ impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
         Ok(Self(value))
     }
 }
-impl<T: PartialEq + Clone + serde::Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
+impl<T: PartialEq + Clone + Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
     pub fn query_bind_one_by_one<'query_lifetime>(
         self,
         mut query: Query<'query_lifetime, sqlx::Postgres, PgArguments>,
@@ -96,13 +89,13 @@ impl<T: PartialEq + Clone + serde::Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
         increment: &mut u64,
         _: &dyn Display,
         _is_need_to_add_logical_operator: bool,
-    ) -> Result<String, pg_crud_common::QueryPartErrorNamed> {
+    ) -> Result<String, QueryPartErrorNamed> {
         let mut acc_ecd78d3a = String::default();
         for _ in self.to_vec() {
-            match pg_crud_common::increment_checked_add_one_returning_increment(increment) {
+            match increment_checked_add_one_returning_increment(increment) {
                 Ok(value) => {
                     if write!(acc_ecd78d3a, "${value},").is_err() {
-                        return Err(pg_crud_common::QueryPartErrorNamed::WriteIntoBuffer {
+                        return Err(QueryPartErrorNamed::WriteIntoBuffer {
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
@@ -189,12 +182,10 @@ const _: () = {
         }
     }
 };
-impl<T: pg_crud_common::DefaultOptionSomeVecOneEl> pg_crud_common::DefaultOptionSomeVecOneEl
-    for PgJsonTypeNotEmptyUniqueVec<T>
-{
+impl<T: DefaultOptionSomeVecOneEl> DefaultOptionSomeVecOneEl for PgJsonTypeNotEmptyUniqueVec<T> {
     fn default_option_some_vec_one_el() -> Self {
         Self(vec![
-            pg_crud_common::DefaultOptionSomeVecOneEl::default_option_some_vec_one_el(),
+            DefaultOptionSomeVecOneEl::default_option_some_vec_one_el(),
         ])
     }
 }
@@ -208,9 +199,9 @@ impl<T> From<PgJsonTypeNotEmptyUniqueVec<T>> for Vec<T> {
         value.0
     }
 }
-impl<'lifetime, T> pg_crud_common::PgTypeWhereFilter<'lifetime> for PgJsonTypeNotEmptyUniqueVec<T>
+impl<'lifetime, T> PgTypeWhereFilter<'lifetime> for PgJsonTypeNotEmptyUniqueVec<T>
 where
-    T: serde::Serialize + 'lifetime,
+    T: Serialize + 'lifetime,
 {
     fn query_bind(
         self,
@@ -226,8 +217,8 @@ where
         increment: &mut u64,
         _: &dyn Display,
         _is_need_to_add_logical_operator: bool,
-    ) -> Result<String, pg_crud_common::QueryPartErrorNamed> {
-        match pg_crud_common::increment_checked_add_one_returning_increment(increment) {
+    ) -> Result<String, QueryPartErrorNamed> {
+        match increment_checked_add_one_returning_increment(increment) {
             Ok(value) => Ok(format!("${value}")),
             Err(error) => Err(error),
         }
@@ -365,20 +356,18 @@ impl Display for RegexRegex {
         write!(f, "{}", self.0)
     }
 }
-impl pg_crud_common::DefaultOptionSomeVecOneEl for RegexRegex {
+impl DefaultOptionSomeVecOneEl for RegexRegex {
     fn default_option_some_vec_one_el() -> Self {
         Self(regex::Regex::new("[a-z]+").expect("22a9eda5"))
     }
 }
 
-#[derive(
-    Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, schemars::JsonSchema,
-)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub enum RegularExpressionCase {
     Insensitive,
     Sensitive,
 }
-impl pg_crud_common::DefaultOptionSomeVecOneEl for RegularExpressionCase {
+impl DefaultOptionSomeVecOneEl for RegularExpressionCase {
     fn default_option_some_vec_one_el() -> Self {
         Self::Sensitive
     }
@@ -393,7 +382,7 @@ impl RegularExpressionCase {
     }
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, schemars::JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, JsonSchema)]
 pub struct Between<T>
 where
     T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
@@ -622,22 +611,22 @@ const _: () = {
     }
 };
 impl<
-    T: pg_crud_common::DefaultOptionSomeVecOneEl
+    T: DefaultOptionSomeVecOneEl
         + sqlx::Type<sqlx::Postgres>
         + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
-> pg_crud_common::DefaultOptionSomeVecOneEl for Between<T>
+> DefaultOptionSomeVecOneEl for Between<T>
 {
     fn default_option_some_vec_one_el() -> Self {
         Self {
-            start: pg_crud_common::DefaultOptionSomeVecOneEl::default_option_some_vec_one_el(),
-            end: pg_crud_common::DefaultOptionSomeVecOneEl::default_option_some_vec_one_el(),
+            start: DefaultOptionSomeVecOneEl::default_option_some_vec_one_el(),
+            end: DefaultOptionSomeVecOneEl::default_option_some_vec_one_el(),
         }
     }
 }
 impl<
     'lifetime,
     T: Send + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'lifetime,
-> pg_crud_common::PgTypeWhereFilter<'lifetime> for Between<T>
+> PgTypeWhereFilter<'lifetime> for Between<T>
 {
     fn query_bind(
         self,
@@ -656,34 +645,30 @@ impl<
         increment: &mut u64,
         _: &dyn Display,
         _: bool,
-    ) -> Result<String, pg_crud_common::QueryPartErrorNamed> {
-        let start_increment =
-            match pg_crud_common::increment_checked_add_one_returning_increment(increment) {
-                Ok(value) => value,
-                Err(error) => {
-                    return Err(error);
-                }
-            };
-        let end_increment =
-            match pg_crud_common::increment_checked_add_one_returning_increment(increment) {
-                Ok(value) => value,
-                Err(error) => {
-                    return Err(error);
-                }
-            };
+    ) -> Result<String, QueryPartErrorNamed> {
+        let start_increment = match increment_checked_add_one_returning_increment(increment) {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(error);
+            }
+        };
+        let end_increment = match increment_checked_add_one_returning_increment(increment) {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(error);
+            }
+        };
         Ok(format!("between ${start_increment} and ${end_increment}"))
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
 pub struct PgTypeNotEmptyUniqueVec<T>(Vec<T>);
 #[allow(clippy::arbitrary_source_item_ordering)]
 impl<T: PartialEq + Clone> PgTypeNotEmptyUniqueVec<T> {
-    pub fn try_new(
-        value: Vec<T>,
-    ) -> Result<Self, pg_crud_common::NotEmptyUniqueVecTryNewErrorNamed<T>> {
+    pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewErrorNamed<T>> {
         if value.is_empty() {
-            return Err(pg_crud_common::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {
+            return Err(NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {
                 code_occurence: error_occurence_lib::code_occurence!(),
             });
         }
@@ -691,12 +676,10 @@ impl<T: PartialEq + Clone> PgTypeNotEmptyUniqueVec<T> {
             let mut acc_6be6ccee = Vec::new();
             for el_b3d83e60 in &value {
                 if acc_6be6ccee.contains(&el_b3d83e60) {
-                    return Err(
-                        pg_crud_common::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
-                            value: el_b3d83e60.clone(),
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        },
-                    );
+                    return Err(NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
+                        value: el_b3d83e60.clone(),
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
                 }
                 acc_6be6ccee.push(el_b3d83e60);
             }
@@ -785,12 +768,10 @@ const _: () = {
         }
     }
 };
-impl<T: pg_crud_common::DefaultOptionSomeVecOneEl> pg_crud_common::DefaultOptionSomeVecOneEl
-    for PgTypeNotEmptyUniqueVec<T>
-{
+impl<T: DefaultOptionSomeVecOneEl> DefaultOptionSomeVecOneEl for PgTypeNotEmptyUniqueVec<T> {
     fn default_option_some_vec_one_el() -> Self {
         Self(vec![
-            pg_crud_common::DefaultOptionSomeVecOneEl::default_option_some_vec_one_el(),
+            DefaultOptionSomeVecOneEl::default_option_some_vec_one_el(),
         ])
     }
 }
@@ -805,20 +786,18 @@ impl<T> From<PgTypeNotEmptyUniqueVec<T>> for Vec<T> {
     }
 }
 
-#[derive(
-    Debug, Default, Clone, PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema,
-)]
+#[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, Serialize, JsonSchema)]
 pub struct BoundedStdVecVec<T, const LENGTH: usize>(Vec<T>);
 #[derive(
     Debug,
     Clone,
     PartialEq,
     Eq,
-    serde::Serialize,
-    serde::Deserialize,
+    Serialize,
+    Deserialize,
     thiserror::Error,
     error_occurence_lib::ErrorOccurence,
-    schemars::JsonSchema,
+    JsonSchema,
 )]
 pub enum BoundedStdVecVecTryNewErrorNamed {
     LengthIsNotCorrect {
@@ -852,7 +831,7 @@ impl<
         increment: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
-    ) -> Result<String, pg_crud_common::QueryPartErrorNamed> {
+    ) -> Result<String, QueryPartErrorNamed> {
         self.query_part(
             increment,
             column,
@@ -866,7 +845,7 @@ impl<
         increment: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
-    ) -> Result<String, pg_crud_common::QueryPartErrorNamed> {
+    ) -> Result<String, QueryPartErrorNamed> {
         self.query_part(
             increment,
             column,
@@ -880,7 +859,7 @@ impl<
         increment: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
-    ) -> Result<String, pg_crud_common::QueryPartErrorNamed> {
+    ) -> Result<String, QueryPartErrorNamed> {
         self.query_part(
             increment,
             column,
@@ -894,7 +873,7 @@ impl<
         increment: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
-    ) -> Result<String, pg_crud_common::QueryPartErrorNamed> {
+    ) -> Result<String, QueryPartErrorNamed> {
         self.query_part(
             increment,
             column,
@@ -921,14 +900,14 @@ impl<
         _is_need_to_add_logical_operator: bool,
         pg_type_or_pg_json_type: &PgTypeOrPgJsonType,
         variant: &Variant,
-    ) -> Result<String, pg_crud_common::QueryPartErrorNamed> {
+    ) -> Result<String, QueryPartErrorNamed> {
         let mut acc_24eb25aa = String::new();
         let current_len = match &variant {
             Variant::MinusOne => self.0.len().saturating_sub(1),
             Variant::Normal => self.0.len(),
         };
         for _ in 0..current_len {
-            match pg_crud_common::increment_checked_add_one_returning_increment(increment) {
+            match increment_checked_add_one_returning_increment(increment) {
                 Ok(value) => {
                     if write!(
                         acc_24eb25aa,
@@ -942,7 +921,7 @@ impl<
                     )
                     .is_err()
                     {
-                        return Err(pg_crud_common::QueryPartErrorNamed::WriteIntoBuffer {
+                        return Err(QueryPartErrorNamed::WriteIntoBuffer {
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
@@ -1051,12 +1030,12 @@ const _: () = {
         }
     }
 };
-impl<T: Clone + pg_crud_common::DefaultOptionSomeVecOneEl, const LENGTH: usize>
-    pg_crud_common::DefaultOptionSomeVecOneEl for BoundedStdVecVec<T, LENGTH>
+impl<T: Clone + DefaultOptionSomeVecOneEl, const LENGTH: usize> DefaultOptionSomeVecOneEl
+    for BoundedStdVecVec<T, LENGTH>
 {
     fn default_option_some_vec_one_el() -> Self {
         Self(vec![
-                <T as pg_crud_common::DefaultOptionSomeVecOneEl>::default_option_some_vec_one_el();
+                <T as DefaultOptionSomeVecOneEl>::default_option_some_vec_one_el();
                 LENGTH
             ])
     }

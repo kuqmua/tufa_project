@@ -4,10 +4,7 @@ use quote::quote;
 pub fn server_port_try_from_u16(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let valid_port_ts = {
-        let possible_port = input
-            .to_string()
-            .parse::<u16>()
-            .expect("310a948a");
+        let possible_port = input.to_string().parse::<u16>().expect("310a948a");
         if possible_port < server_port_common::SERVER_PORT_MIN_VALUE {
             panic!("8d1c94bc");
         } else if possible_port <= server_port_common::SERVER_PORT_MAX_VALUE {

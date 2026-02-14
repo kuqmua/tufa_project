@@ -6,8 +6,7 @@ pub fn gen_getter_traits_for_struct_fields(
 ) -> proc_macro::TokenStream {
     use naming::ToTokensToUccStr;
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput =
-        syn::parse(input).expect("49780295");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("49780295");
     let ident = &syn_derive_input.ident;
     let datastruct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
@@ -15,10 +14,7 @@ pub fn gen_getter_traits_for_struct_fields(
     };
     let generated_traits_implementations = datastruct.fields.into_iter().map(|field| {
         let (field_ident, ucc_field_ident) = {
-            let field_ident = field
-                .ident
-                .as_ref()
-                .expect("e5c23c45");
+            let field_ident = field.ident.as_ref().expect("e5c23c45");
             (field_ident, ToTokensToUccStr::case(&field_ident))
         };
         let field_type = field.ty;
@@ -51,8 +47,7 @@ pub fn gen_getter_traits_for_struct_fields(
 pub fn gen_getter_trait(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     use naming::parameter::{GetSelfSc, GetSelfUcc};
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput =
-        syn::parse(input).expect("195b48f5");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("195b48f5");
     let ident = &syn_derive_input.ident;
     let data_struct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
@@ -66,10 +61,7 @@ pub fn gen_getter_trait(input: proc_macro::TokenStream) -> proc_macro::TokenStre
         fields_unnamed.len() == 1,
         "1e82dc7e-724c-4599-93aa-442b262cbcf5"
     );
-    let first_field_unnamed = fields_unnamed
-        .iter()
-        .next()
-        .expect("7c2531fd");
+    let first_field_unnamed = fields_unnamed.iter().next().expect("7c2531fd");
     let first_field_unnamed_type = &first_field_unnamed.ty;
     let get_ident_ucc = GetSelfUcc::from_tokens(&ident);
     let get_ident_sc = GetSelfSc::from_tokens(&ident);

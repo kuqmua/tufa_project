@@ -1,6 +1,8 @@
 use naming::{AndSc, NotSc, OrSc};
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
+use schemars::JsonSchema;
+use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter, Result as StdFmtResult};
 
 pub trait DefaultOptionSomeVecOneEl: Sized {
@@ -16,17 +18,7 @@ pub trait AllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize: Sized {
     fn all_variants_default_option_some_vec_one_el_max_page_size() -> Vec<Self>;
 }
 
-#[derive(
-    Debug,
-    Default,
-    Clone,
-    Copy,
-    serde::Serialize,
-    serde::Deserialize,
-    Eq,
-    PartialEq,
-    schemars::JsonSchema,
-)]
+#[derive(Debug, Default, Clone, Copy, Serialize, Deserialize, Eq, PartialEq, JsonSchema)]
 pub enum LogicalOperator {
     And,
     AndNot,

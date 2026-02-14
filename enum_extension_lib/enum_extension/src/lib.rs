@@ -4,8 +4,7 @@ use quote::quote;
 pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     //it only supported for enums without values
-    let syn_derive_input: syn::DeriveInput =
-        syn::parse(input).expect("c6b8e80e");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("c6b8e80e");
     //todo to implement into_array() and into_vec - must implement Default for all inner variant types
     let len = match syn_derive_input.data.clone() {
         syn::Data::Enum(enum_item) => enum_item.variants.len(),

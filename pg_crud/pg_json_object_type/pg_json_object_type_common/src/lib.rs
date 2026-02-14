@@ -1,12 +1,13 @@
+use error_occurence_lib::ErrorOccurence;
+use error_occurence_lib::code_occurence;
 use error_occurence_lib::code_occurence::CodeOccurence;
+use pg_crud_common::DefaultOptionSomeVecOneEl;
+use schemars::JsonSchema;
+use serde::{Deserialize, Serialize};
+use thiserror::Error;
+use utoipa::ToSchema;
 
-#[derive(
-    Debug,
-    serde::Serialize,
-    serde::Deserialize,
-    thiserror::Error,
-    error_occurence_lib::ErrorOccurence,
-)]
+#[derive(Debug, Serialize, Deserialize, Error, ErrorOccurence)]
 pub enum UniqueVecTryNewErrorNamed<T> {
     NotUnique {
         #[eo_to_std_string_string_serialize_deserialize]
@@ -14,7 +15,7 @@ pub enum UniqueVecTryNewErrorNamed<T> {
         code_occurence: CodeOccurence,
     },
 }
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
 pub struct UniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> UniqueVec<T> {
     #[must_use]
@@ -35,7 +36,7 @@ impl<T: PartialEq + Clone> UniqueVec<T> {
             if acc_4855bea7.contains(&el_4dddc7c0) {
                 return Err(UniqueVecTryNewErrorNamed::NotUnique {
                     value: el_4dddc7c0.clone(),
-                    code_occurence: error_occurence_lib::code_occurence!(),
+                    code_occurence: code_occurence!(),
                 });
             }
             acc_4855bea7.push(el_4dddc7c0);
@@ -118,12 +119,10 @@ const _: () = {
         }
     }
 };
-impl<T: pg_crud_common::DefaultOptionSomeVecOneEl> pg_crud_common::DefaultOptionSomeVecOneEl
-    for UniqueVec<T>
-{
+impl<T: DefaultOptionSomeVecOneEl> DefaultOptionSomeVecOneEl for UniqueVec<T> {
     fn default_option_some_vec_one_el() -> Self {
         Self(vec![
-            pg_crud_common::DefaultOptionSomeVecOneEl::default_option_some_vec_one_el(),
+            DefaultOptionSomeVecOneEl::default_option_some_vec_one_el(),
         ])
     }
 }

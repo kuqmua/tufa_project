@@ -113,8 +113,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             macros_helpers::ShouldWriteTokenStreamIntoFile,
     }
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput =
-        syn::parse2(input_ts).expect("e5f0e27b");
+    let syn_derive_input: syn::DeriveInput = syn::parse2(input_ts).expect("e5f0e27b");
     let import_path = ImportPath::PgCrud;
     let gen_pg_json_object_type_config = serde_json::from_str::<GenPgJsonTypesConfig>(
         &macros_helpers::get_macro_attribute_meta_list_ts(

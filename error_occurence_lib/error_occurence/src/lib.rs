@@ -26,8 +26,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         Unnamed,
     }
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput =
-        syn::parse(input).expect("d94f091a");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("d94f091a");
     let ident = &syn_derive_input.ident;
     let generic_parameters = &syn_derive_input
         .generics
@@ -454,11 +453,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             "{}{}",
                             {
                                 assert!(fields.len() == 1, "d7a6b955-3795-4e0c-a990-b06734e9d923");
-                                let field_type = &fields
-                                    .iter()
-                                    .next()
-                                    .expect("8a80c36d")
-                                    .ty;
+                                let field_type = &fields.iter().next().expect("8a80c36d").ty;
                                 quote! {#field_type}.to_string()
                             },
                             WithSerializeDeserializeUcc

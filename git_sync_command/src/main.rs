@@ -2,22 +2,20 @@ fn main() {
     use std::{env, fs, path::PathBuf, process::Command};
     let _unused = dotenv::dotenv().expect("0964b79a");
     let gitmodules_path_env_name = "GITMODULES_PATH";
-    let string_path =
-        env::var(gitmodules_path_env_name).expect("25f5388e");
+    let string_path = env::var(gitmodules_path_env_name).expect("25f5388e");
     let parent_dir_pathbuf = PathBuf::from(string_path);
     let parent_dir_pathbuf_as_string = parent_dir_pathbuf
         .clone()
         .into_os_string()
         .into_string()
         .expect("c46bf30c");
-    let canonicalize_pathbuf =
-        fs::canonicalize(&parent_dir_pathbuf).expect("2bcd326b");
+    let canonicalize_pathbuf = fs::canonicalize(&parent_dir_pathbuf).expect("2bcd326b");
     let canonicalize_pathbuf_as_string = canonicalize_pathbuf
         .into_os_string()
         .into_string()
         .expect("9ce61c06");
-    let contents = fs::read_to_string(format!("{parent_dir_pathbuf_as_string}.gitmodules"))
-        .expect("c6dd3528");
+    let contents =
+        fs::read_to_string(format!("{parent_dir_pathbuf_as_string}.gitmodules")).expect("c6dd3528");
     let _unused_git_version = Command::new("git")
         .args(["version"])
         .output()
@@ -28,11 +26,7 @@ fn main() {
         .filter_map(|el_0731ade5| {
             el_0731ade5.find("path = ").map(|index| {
                 el_0731ade5
-                    .get(
-                        index
-                            .checked_add(substring_value.len())
-                            .expect("62d029a8")..,
-                    )
+                    .get(index.checked_add(substring_value.len()).expect("62d029a8")..)
                     .expect("dde185ef")
                     .to_owned()
             })

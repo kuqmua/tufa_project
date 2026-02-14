@@ -1,4 +1,9 @@
 use serde::de::Error as SerdeError;
+use serde::{Deserialize, Serialize};
+use server_port_common::{
+    SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE,
+    SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE, SERVER_PORT_MAX_VALUE, SERVER_PORT_MIN_VALUE,
+};
 use std::{
     error::Error,
     fmt::{Display, Formatter, Result as FmtResult},
@@ -6,14 +11,14 @@ use std::{
 
 pub use server_port_try_from_u16::server_port_try_from_u16;
 
-#[derive(Debug, Clone, Copy, serde::Serialize)]
+#[derive(Debug, Clone, Copy, Serialize)]
 pub struct ServerPort(u16);
 impl Display for ServerPort {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         write!(f, "{}", self.0)
     }
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct ServerPortErrorNamed {
     message: String,
     server_port_max_value: u16,
@@ -33,31 +38,27 @@ impl Error for ServerPortErrorNamed {}
 impl TryFrom<u16> for ServerPort {
     type Error = ServerPortErrorNamed;
     fn try_from(value: u16) -> Result<Self, Self::Error> {
-        if value < server_port_common::SERVER_PORT_MIN_VALUE {
+        if value < SERVER_PORT_MIN_VALUE {
             Err(Self::Error {
-                server_port_min_value: server_port_common::SERVER_PORT_MIN_VALUE,
-                server_port_max_value: server_port_common::SERVER_PORT_MAX_VALUE,
+                server_port_min_value: SERVER_PORT_MIN_VALUE,
+                server_port_max_value: SERVER_PORT_MAX_VALUE,
                 value,
-                message: String::from(
-                    server_port_common::SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE,
-                ),
+                message: String::from(SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE),
             })
-        } else if value <= server_port_common::SERVER_PORT_MAX_VALUE {
+        } else if value <= SERVER_PORT_MAX_VALUE {
             Ok(Self(value))
         } else {
             Err(Self::Error {
-                server_port_min_value: server_port_common::SERVER_PORT_MIN_VALUE,
-                server_port_max_value: server_port_common::SERVER_PORT_MAX_VALUE,
+                server_port_min_value: SERVER_PORT_MIN_VALUE,
+                server_port_max_value: SERVER_PORT_MAX_VALUE,
                 value,
-                message: String::from(
-                    server_port_common::SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE,
-                ),
+                message: String::from(SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE),
             })
         }
     }
 }
 #[allow(clippy::absolute_paths)]
-impl<'de> serde::Deserialize<'de> for ServerPort {
+impl<'de> Deserialize<'de> for ServerPort {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,

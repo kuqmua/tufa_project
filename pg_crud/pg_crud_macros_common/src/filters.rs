@@ -1,3 +1,4 @@
+use enum_extension_lib::EnumExtension;
 use naming::{
     AdjacentWithRangeUcc, AllElementsEqualUcc, AllElementsGreaterThanUcc,
     AllElementsRegularExpressionUcc, BeforeUcc, BetweenUcc, ContainsAllElementsOfArrayUcc,
@@ -47,11 +48,10 @@ use naming::{
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
+use strum_macros::{Display, EnumIter};
 
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(
-    Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension,
-)]
+#[derive(Debug, Clone, Display, EnumIter, EnumExtension)]
 pub enum PgTypeFilter {
     Equal { ident: Ts2 },
     DimensionOneEqual { ident: Ts2 },
@@ -237,9 +237,7 @@ impl PgFilter for PgTypeFilter {
 }
 
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(
-    Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension,
-)]
+#[derive(Debug, Clone, Display, EnumIter, EnumExtension)]
 pub enum PgJsonTypeFilter {
     Equal { ident: Ts2 },
     DimensionOneEqual { ident: Ts2 },

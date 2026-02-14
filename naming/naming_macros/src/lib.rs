@@ -12,8 +12,7 @@ pub fn gen_upper_camel_and_sc_str_and_ts(
         .into_iter()
         .map(|el_020a8657| {
             {
-                let regex =
-                    regex::Regex::new(REGEX_VALUE).expect("20948d87");
+                let regex = regex::Regex::new(REGEX_VALUE).expect("20948d87");
                 for el_d68254e8 in &el_020a8657 {
                     assert!(
                         regex.is_match(el_d68254e8),
@@ -47,23 +46,15 @@ pub fn gen_upper_camel_and_sc_str_and_ts(
             let phrase_part_ucc_double_quotes_ts =
                 gen_quotes::double_quotes_ts(&phrase_part_ucc_str);
             let phrase_part_sc_double_quotes_ts = gen_quotes::double_quotes_ts(&phrase_part_sc_str);
-            let phrase_part_ucc_ts = phrase_part_ucc_str
-                .parse::<Ts2>()
-                .expect("7cf3ffc0");
-            let phrase_part_sc_ts = phrase_part_sc_str
-                .parse::<Ts2>()
-                .expect("114a573a");
+            let phrase_part_ucc_ts = phrase_part_ucc_str.parse::<Ts2>().expect("7cf3ffc0");
+            let phrase_part_sc_ts = phrase_part_sc_str.parse::<Ts2>().expect("114a573a");
             let phrase_part_ucc_ucc_ts = {
                 let value = format!("{phrase_part_ucc_str}Ucc");
-                value
-                    .parse::<Ts2>()
-                    .expect("4ab6a54c")
+                value.parse::<Ts2>().expect("4ab6a54c")
             };
             let phrase_part_sc_ucc_ts = {
                 let value = format!("{phrase_part_ucc_str}Sc");
-                value
-                    .parse::<Ts2>()
-                    .expect("0cc47b2e")
+                value.parse::<Ts2>().expect("0cc47b2e")
             };
             let gen_struct_declaration = |struct_name_ts: &dyn ToTokens| {
                 quote! {
@@ -293,8 +284,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(
     input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput =
-        syn::parse(input_ts).expect("a8f22481");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input_ts).expect("a8f22481");
     let ident = &syn_derive_input.ident;
     let syn::Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("d26bf85e")
@@ -342,8 +332,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(
     input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput =
-        syn::parse(input_ts).expect("dea5cbcf");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input_ts).expect("dea5cbcf");
     let ident = &syn_derive_input.ident;
     let syn::Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("ed6efe2e");
@@ -390,8 +379,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(
     input_ts: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput =
-        syn::parse(input_ts).expect("edabbc24");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input_ts).expect("edabbc24");
     let ident = &syn_derive_input.ident;
     let syn::Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("b2263e7e");

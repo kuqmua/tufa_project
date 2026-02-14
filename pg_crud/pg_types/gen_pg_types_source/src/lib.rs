@@ -815,8 +815,7 @@ pub fn gen_pg_types(input_ts: &proc_macro2::TokenStream) -> proc_macro2::TokenSt
     }
     panic_location::panic_location();
     let gen_pg_json_types_config =
-        serde_json::from_str::<GenPgJsonTypesConfig>(&input_ts.to_string())
-            .expect("80485f71");
+        serde_json::from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("80485f71");
     let (columns_ts, pg_type_array) = {
         let acc_5464fefe = match gen_pg_json_types_config.variant {
             GenPgTypesConfigVariant::All => PgType::into_array().into_iter().fold(Vec::new(), |mut acc_4351207e, el_a897c529| {

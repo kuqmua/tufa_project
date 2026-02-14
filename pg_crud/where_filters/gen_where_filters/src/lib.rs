@@ -109,8 +109,7 @@ pub fn gen_where_filters(input_ts: proc_macro::TokenStream) -> proc_macro::Token
     }
     panic_location::panic_location();
     let gen_where_filters_config =
-        serde_json::from_str::<GenWhereFiltersConfig>(&input_ts.to_string())
-            .expect("1217b73b");
+        serde_json::from_str::<GenWhereFiltersConfig>(&input_ts.to_string()).expect("1217b73b");
     let import_path = ImportPath::PgCrudCommon;
     let t_ts = quote! {T};
     let t_annotation_generic_ts = quote! {<#t_ts>};

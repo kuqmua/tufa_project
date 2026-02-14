@@ -26,9 +26,7 @@ fn main() {
                 ))
                 .await
                 .expect("8b72f688");
-            TableExample::prepare_pg(&pg_pool)
-                .await
-                .expect("647fa499");
+            TableExample::prepare_pg(&pg_pool).await.expect("647fa499");
             let tcp_listener =
                 TcpListener::bind(GetServiceSocketAddress::get_service_socket_address(&config))
                     .await
@@ -53,9 +51,7 @@ fn main() {
                             //     http::Method::PATCH,
                             //     http::Method::DELETE,
                             // ])
-                            .allow_origin(["http://127.0.0.1"
-                                .parse()
-                                .expect("2a0b7c30")]),
+                            .allow_origin(["http://127.0.0.1".parse().expect("2a0b7c30")]),
                     )
                     //todo partialy move to gen postresql crud implementation (except git_info route)
                     // .merge(utoipa_swagger_ui::SwaggerUi::new(constants::SLASH_SWAGGER_UI).url("/api-docs/openapi.json", {

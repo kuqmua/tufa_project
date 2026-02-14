@@ -37,26 +37,14 @@ mod tests {
     fn toml_value_from_from_cargo_toml_workspace() -> Value {
         let mut file = File::open("../Cargo.toml").expect("39a0d238");
         let mut contents = String::new();
-        let _: usize = Read::read_to_string(&mut file, &mut contents)
-            .expect("2f5914f2");
-        let table = contents
-            .parse::<TomlTable>()
-            .expect("beb11586");
-        table
-            .get("workspace")
-            .expect("f728192d")
-            .clone()
+        let _: usize = Read::read_to_string(&mut file, &mut contents).expect("2f5914f2");
+        let table = contents.parse::<TomlTable>().expect("beb11586");
+        table.get("workspace").expect("f728192d").clone()
     }
     fn lints_vec_from_cargo_toml_workspace(rust_or_clippy: RustOrClippy) -> Vec<String> {
         let workspace = toml_value_from_from_cargo_toml_workspace();
-        let lints = workspace
-            .get("lints")
-            .expect("82eaea37");
-        let toml_value_table = match lints
-            .get(rust_or_clippy.name())
-            .expect("dbd02f72")
-            .clone()
-        {
+        let lints = workspace.get("lints").expect("82eaea37");
+        let toml_value_table = match lints.get(rust_or_clippy.name()).expect("dbd02f72").clone() {
             Value::Table(value) => value,
             Value::String(_)
             | Value::Integer(_)
@@ -118,18 +106,13 @@ mod tests {
                         if let Expr::Lit(ExprLit {
                             lit: Lit::Str(lit_str),
                             ..
-                        }) = i
-                            .args
-                            .get(0)
-                            .expect("d5ad7bff")
-                            .clone()
+                        }) = i.args.get(0).expect("d5ad7bff").clone()
                         {
                             let value = lit_str.value();
                             if value.len() == 8 {
                                 self.uuids.push(value);
-                            }
-                            else {
-                                self.errors .push(format!("arg len is not 8: {value}"));
+                            } else {
+                                self.errors.push(format!("arg len is not 8: {value}"));
                             }
                         } else {
                             self.errors.push("arg is not string literal".to_owned());
@@ -254,25 +237,18 @@ mod tests {
                     .expect("012e3328"),
             );
             let mut ids = Vec::new();
-            for el_c17d8a0b in document
-                .select(&Selector::parse("html").expect("80427609"))
-            {
-                for el_e19e3742 in el_c17d8a0b
-                    .select(&Selector::parse("body").expect("620c597c"))
-                {
-                    for el_3cd4b8b2 in el_e19e3742.select(
-                        &Selector::parse(r#"div[class="container"]"#)
-                            .expect("eb483b13"),
-                    ) {
-                        for el_fda975ef in el_3cd4b8b2.select(
-                            &Selector::parse("article")
-                                .expect("d21dbe55"),
-                        ) {
+            for el_c17d8a0b in document.select(&Selector::parse("html").expect("80427609")) {
+                for el_e19e3742 in el_c17d8a0b.select(&Selector::parse("body").expect("620c597c")) {
+                    for el_3cd4b8b2 in el_e19e3742
+                        .select(&Selector::parse(r#"div[class="container"]"#).expect("eb483b13"))
+                    {
+                        for el_fda975ef in
+                            el_3cd4b8b2.select(&Selector::parse("article").expect("d21dbe55"))
+                        {
                             let mut is_deprecated = false;
-                            for el_ae33b117 in el_fda975ef.select(
-                                &Selector::parse("label")
-                                    .expect("fe3d9f11"),
-                            ) {
+                            for el_ae33b117 in
+                                el_fda975ef.select(&Selector::parse("label").expect("fe3d9f11"))
+                            {
                                 if is_deprecated {
                                     break;
                                 }
@@ -353,8 +329,7 @@ mod tests {
                         }
                         Some(())
                     }
-                    check_version_string(&version_string)
-                        .expect("6640b9bf");
+                    check_version_string(&version_string).expect("6640b9bf");
                 }
                 Value::Table(_)
                 | Value::Integer(_)
@@ -363,20 +338,18 @@ mod tests {
                 | Value::Datetime(_)
                 | Value::Array(_) => panic!("a3410a37"),
             };
-            let check_features = |value_121eb307: &Table| match value_121eb307
-                .get("features")
-                .expect("473577d5")
-            {
-                &Value::Array(_) => (),
-                &Value::String(_)
-                | &Value::Table(_)
-                | &Value::Integer(_)
-                | &Value::Float(_)
-                | &Value::Boolean(_)
-                | &Value::Datetime(_) => {
-                    panic!("38ba32e9")
-                }
-            };
+            let check_features =
+                |value_121eb307: &Table| match value_121eb307.get("features").expect("473577d5") {
+                    &Value::Array(_) => (),
+                    &Value::String(_)
+                    | &Value::Table(_)
+                    | &Value::Integer(_)
+                    | &Value::Float(_)
+                    | &Value::Boolean(_)
+                    | &Value::Datetime(_) => {
+                        panic!("38ba32e9")
+                    }
+                };
             if value_table_len == 1 {
                 check_version(&value_table);
             } else if value_table_len == 2 {
@@ -385,10 +358,7 @@ mod tests {
             } else if value_table_len == 3 {
                 check_version(&value_table);
                 check_features(&value_table);
-                match value_table
-                    .get("default-features")
-                    .expect("847a138f")
-                {
+                match value_table.get("default-features").expect("847a138f") {
                     &Value::Boolean(_) => (),
                     &Value::String(_)
                     | &Value::Table(_)
@@ -432,8 +402,7 @@ mod tests {
                 continue;
             };
             for el_714b3d9c in regex.find_iter(&content) {
-                let uuid = Uuid::parse_str(el_714b3d9c.as_str())
-                    .expect("c9711efd");
+                let uuid = Uuid::parse_str(el_714b3d9c.as_str()).expect("c9711efd");
                 assert!(
                     uuid.get_version_num() == 4,
                     "49b49b21-0cc6-4aee-8c28-3003492f2a80"
@@ -513,11 +482,8 @@ mod tests {
             }
             let mut file = File::open(path).expect("bbb0d1fe");
             let mut content = String::new();
-            let _: usize = Read::read_to_string(&mut file, &mut content)
-                .expect("8952ff62");
-            let parsed: Table = content
-                .parse()
-                .expect("49012f1f");
+            let _: usize = Read::read_to_string(&mut file, &mut content).expect("8952ff62");
+            let parsed: Table = content.parse().expect("49012f1f");
             for el_3c618c8f in ["dependencies", "dev-dependencies", "build-dependencies"] {
                 if let Some(deps) = parsed
                     .get(el_3c618c8f)

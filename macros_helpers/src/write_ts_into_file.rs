@@ -1,11 +1,12 @@
 use proc_macro2::TokenStream as Ts2;
+use serde::Deserialize;
 use std::{fs::File, io::Write, path::Path, process::Command};
 #[derive(Debug, Clone, Copy)]
 pub enum FormatWithCargofmt {
     False,
     True,
 }
-#[derive(Debug, Copy, Clone, serde::Deserialize)]
+#[derive(Debug, Copy, Clone, Deserialize)]
 pub enum ShouldWriteTokenStreamIntoFile {
     False,
     True,
@@ -24,8 +25,7 @@ pub fn maybe_write_ts_into_file(
         let path = Path::new(&path_string);
         {
             let mut file = File::create(path).expect("933f96b3");
-            Write::write_all(&mut file, ts.to_string().as_bytes())
-                .expect("a503bf88");
+            Write::write_all(&mut file, ts.to_string().as_bytes()).expect("a503bf88");
         };
         //no other way to format only one file. it formats all files in project
         if matches!(format_with_cargofmt, FormatWithCargofmt::True) {

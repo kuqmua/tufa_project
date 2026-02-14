@@ -1,21 +1,15 @@
+use enum_extension_lib::EnumExtension;
+use serde::{Deserialize, Serialize};
 use std::{
     env,
     fmt::{Display, Formatter, Result as FmtResult},
     str::FromStr,
 };
+use strum_macros::{Display as StrumDisplay, EnumIter};
 
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
-    Debug,
-    Default,
-    Clone,
-    Copy,
-    strum_macros::EnumIter,
-    enum_extension_lib::EnumExtension,
-    serde::Serialize,
-    serde::Deserialize,
-    PartialEq,
-    Eq,
+    Debug, Default, Clone, Copy, EnumIter, EnumExtension, Serialize, Deserialize, PartialEq, Eq,
 )]
 pub enum TracingLevel {
     Trace,
@@ -44,17 +38,7 @@ impl Display for TracingLevel {
     }
 }
 
-#[derive(
-    Debug,
-    Default,
-    Clone,
-    Copy,
-    PartialEq,
-    Eq,
-    strum_macros::Display,
-    serde::Serialize,
-    serde::Deserialize,
-)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, StrumDisplay, Serialize, Deserialize)]
 pub enum SourcePlaceType {
     #[default]
     Github,

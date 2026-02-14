@@ -2,6 +2,7 @@ mod filters;
 
 pub use filters::*;
 
+use enum_extension_lib::EnumExtension;
 use naming::{
     AllVariantsDefaultOptionSomeVecOneElMaxPageSizeSc, AllVariantsDefaultOptionSomeVecOneElSc,
     ColumnNameAndMaybeFieldGetterForErrorMessageSc, ColumnNameAndMaybeFieldGetterSc, ColumnSc,
@@ -45,7 +46,9 @@ use naming::{
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
+use serde::{Deserialize, Serialize};
 use std::fmt::Display;
+use strum_macros::{Display, EnumIter};
 use token_patterns::{
     AllowClippyArbitrarySourceItemOrdering, CrateAllEnumVariantsArrayDefaultOptionSomeVecOneEl,
     CrateAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize, CrateDefaultOptionSomeVecOneEl,
@@ -77,11 +80,11 @@ pub enum IsStandartNotNull {
     PartialEq,
     Eq,
     Hash,
-    serde::Serialize,
-    serde::Deserialize,
-    strum_macros::Display,
-    strum_macros::EnumIter,
-    enum_extension_lib::EnumExtension,
+    Serialize,
+    Deserialize,
+    Display,
+    EnumIter,
+    EnumExtension,
 )]
 pub enum NotNullOrNullable {
     #[default]
@@ -2130,11 +2133,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         .collect::<Vec<&syn::Ident>>();
     let field_enum_variants_ts = {
         let field_enum_variants_ts = (0..len)
-            .map(|i| {
-                format!("__{FieldSc}{i}")
-                    .parse::<Ts2>()
-                    .expect("c46314b0")
-            })
+            .map(|i| format!("__{FieldSc}{i}").parse::<Ts2>().expect("c46314b0"))
             .collect::<Vec<Ts2>>();
         quote! {#(#field_enum_variants_ts),*}
     };
@@ -2142,9 +2141,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         let visit_u64_value_enum_variants_ts = (0..len).map(|index| {
             let index_u64_ts = {
                 let value = format!("{index}u64");
-                value
-                    .parse::<Ts2>()
-                    .expect("828ff7b4")
+                value.parse::<Ts2>().expect("828ff7b4")
             };
             let field_index_ts = gen_underscore_underscore_field_index_ts(index);
             quote! {#index_u64_ts => Ok(__Field::#field_index_ts)}
@@ -2169,9 +2166,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                     let el_ident_double_quotes_str =
                         gen_quotes::double_quotes_str(&element.to_string());
                     let value = format!("b{el_ident_double_quotes_str}");
-                    value
-                        .parse::<Ts2>()
-                        .expect("9e33625e")
+                    value.parse::<Ts2>().expect("9e33625e")
                 };
                 gen_field_ident_double_quotes_serde_private_ok_field_ts(
                     &b_field_name_double_quotes_ts,

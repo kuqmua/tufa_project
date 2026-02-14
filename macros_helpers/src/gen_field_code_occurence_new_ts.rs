@@ -7,15 +7,11 @@ pub fn gen_field_code_occurence_new_ts(file: &'static str, line: u32, column: u3
         let file_ts = gen_quotes::double_quotes_ts(&file);
         let line_ts = {
             let line_str = line.to_string();
-            line_str
-                .parse::<Ts2>()
-                .expect("1d6812d7")
+            line_str.parse::<Ts2>().expect("1d6812d7")
         };
         let column_ts = {
             let column_str = column.to_string();
-            column_str
-                .parse::<Ts2>()
-                .expect("105a4e62")
+            column_str.parse::<Ts2>().expect("105a4e62")
         };
         quote! {
             error_occurence_lib::code_occurence::CodeOccurence::new(

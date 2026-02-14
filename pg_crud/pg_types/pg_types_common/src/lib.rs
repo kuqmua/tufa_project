@@ -1,26 +1,19 @@
 use error_occurence_lib::code_occurence::CodeOccurence;
+use error_occurence_lib::{ErrorOccurence, code_occurence};
+use pg_crud_common::{
+    DEFAULT_PAGINATION_LIMIT, DefaultOptionSomeVecOneEl, DefaultOptionSomeVecOneElMaxPageSize,
+    PaginationBase, PgTypeWhereFilter, QueryPartErrorNamed,
+};
+use schemars::JsonSchema;
+use serde::{Deserialize, Deserializer, Serialize};
 use sqlx::{postgres::PgArguments, query::Query};
 use std::fmt::Display;
+use thiserror::Error;
+use utoipa::ToSchema;
 
-#[derive(
-    Debug,
-    Clone,
-    Copy,
-    PartialEq,
-    Eq,
-    Default,
-    serde::Serialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
-)]
-pub struct PaginationStartsWithOne(pg_crud_common::PaginationBase);
-#[derive(
-    Debug,
-    serde::Serialize,
-    serde::Deserialize,
-    thiserror::Error,
-    error_occurence_lib::ErrorOccurence,
-)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, ToSchema, JsonSchema)]
+pub struct PaginationStartsWithOne(PaginationBase);
+#[derive(Debug, Serialize, Deserialize, Error, ErrorOccurence)]
 pub enum PaginationStartsWithOneTryNewErrorNamed {
     LimitIsLessThanOrEqualToZero {
         #[eo_to_std_string_string_serialize_deserialize]
@@ -58,27 +51,25 @@ impl PaginationStartsWithOne {
                 Err(
                     PaginationStartsWithOneTryNewErrorNamed::LimitIsLessThanOrEqualToZero {
                         limit,
-                        code_occurence: error_occurence_lib::code_occurence!(),
+                        code_occurence: code_occurence!(),
                     },
                 )
             } else {
                 Err(
                     PaginationStartsWithOneTryNewErrorNamed::OffsetIsLessThanOne {
                         offset,
-                        code_occurence: error_occurence_lib::code_occurence!(),
+                        code_occurence: code_occurence!(),
                     },
                 )
             }
         } else if offset.checked_add(limit).is_some() {
-            Ok(Self(pg_crud_common::PaginationBase::new_unchecked(
-                limit, offset,
-            )))
+            Ok(Self(PaginationBase::new_unchecked(limit, offset)))
         } else {
             Err(
                 PaginationStartsWithOneTryNewErrorNamed::OffsetPlusLimitIsIntOverflow {
                     limit,
                     offset,
-                    code_occurence: error_occurence_lib::code_occurence!(),
+                    code_occurence: code_occurence!(),
                 },
             )
         }
@@ -86,10 +77,10 @@ impl PaginationStartsWithOne {
 }
 #[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
-impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
+impl<'de> Deserialize<'de> for PaginationStartsWithOne {
     fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
     where
-        __D: serde::Deserializer<'de>,
+        __D: Deserializer<'de>,
     {
         #[expect(non_camel_case_types)]
         #[doc(hidden)]
@@ -139,13 +130,13 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
                 }
             }
         }
-        impl<'de> serde::Deserialize<'de> for __Field {
+        impl<'de> Deserialize<'de> for __Field {
             #[inline]
             fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
             where
-                __D: serde::Deserializer<'de>,
+                __D: Deserializer<'de>,
             {
-                serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
+                Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
             }
         }
         #[doc(hidden)]
@@ -232,7 +223,7 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
         }
         #[doc(hidden)]
         const FIELDS: &[&str] = &["limit", "offset"];
-        serde::Deserializer::deserialize_struct(
+        Deserializer::deserialize_struct(
             __deserializer,
             "PaginationStartsWithOne",
             FIELDS,
@@ -243,7 +234,7 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
         )
     }
 }
-impl<'lifetime> pg_crud_common::PgTypeWhereFilter<'lifetime> for PaginationStartsWithOne {
+impl<'lifetime> PgTypeWhereFilter<'lifetime> for PaginationStartsWithOne {
     fn query_bind(
         self,
         query: Query<'lifetime, sqlx::Postgres, PgArguments>,
@@ -255,29 +246,23 @@ impl<'lifetime> pg_crud_common::PgTypeWhereFilter<'lifetime> for PaginationStart
         increment: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
-    ) -> Result<String, pg_crud_common::QueryPartErrorNamed> {
+    ) -> Result<String, QueryPartErrorNamed> {
         self.0
             .query_part(increment, column, is_need_to_add_logical_operator)
     }
 }
-impl pg_crud_common::DefaultOptionSomeVecOneEl for PaginationStartsWithOne {
+impl DefaultOptionSomeVecOneEl for PaginationStartsWithOne {
     #[inline]
     fn default_option_some_vec_one_el() -> Self {
-        Self(pg_crud_common::PaginationBase::new_unchecked(
-            pg_crud_common::DEFAULT_PAGINATION_LIMIT,
-            1,
-        ))
+        Self(PaginationBase::new_unchecked(DEFAULT_PAGINATION_LIMIT, 1))
     }
 }
-impl pg_crud_common::DefaultOptionSomeVecOneElMaxPageSize for PaginationStartsWithOne {
+impl DefaultOptionSomeVecOneElMaxPageSize for PaginationStartsWithOne {
     #[inline]
     fn default_option_some_vec_one_el_max_page_size() -> Self {
         let one: i32 = 1;
-        Self(pg_crud_common::PaginationBase::new_unchecked(
-            i32::MAX
-                .checked_sub(one)
-                .expect("c0f03c51")
-                .into(),
+        Self(PaginationBase::new_unchecked(
+            i32::MAX.checked_sub(one).expect("c0f03c51").into(),
             one.into(),
         ))
     }

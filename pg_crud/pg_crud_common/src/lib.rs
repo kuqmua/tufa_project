@@ -2,13 +2,15 @@ pub use pg_crud_common_and_macros_common::*;
 
 use error_occurence_lib::code_occurence::CodeOccurence;
 use naming::{AscUcc, DescUcc, DisplayToScStr, DisplayToUccStr};
+use schemars::JsonSchema;
+use serde::{Deserialize, Serialize};
 use sqlx::{
     encode::IsNull,
     error::BoxDynError,
     postgres::{PgArgumentBuffer, PgArguments, PgValueRef},
     query::Query,
     types::Json,
-    {Decode, Postgres, Type},
+    {Database, Decode, Encode, Postgres, Type},
 };
 use std::{
     error::Error as StdErrorError,
@@ -16,6 +18,7 @@ use std::{
         Formatter, Result as StdFmtResult, {Debug, Display},
     },
 };
+use utoipa::ToSchema;
 
 macro_rules! trait_alias {
     ($name:ident = $($bounds:tt)+) => {
@@ -27,14 +30,14 @@ macro_rules! trait_alias {
 pub const DEFAULT_PAGINATION_LIMIT: i64 = 5;
 
 trait_alias!(DebugClonePartialEqAlias = Debug + Clone + PartialEq);
-trait_alias!(DebugClonePartialEqSerializeAlias = DebugClonePartialEqAlias + serde::Serialize);
-trait_alias!(DebugClonePartialEqSerializeDeserializeAlias = DebugClonePartialEqSerializeAlias + for<'__> serde::Deserialize<'__>);
+trait_alias!(DebugClonePartialEqSerializeAlias = DebugClonePartialEqAlias + Serialize);
+trait_alias!(DebugClonePartialEqSerializeDeserializeAlias = DebugClonePartialEqSerializeAlias + for<'__> Deserialize<'__>);
 trait_alias!(
     DebugClonePartialEqSerializeDeserializeDefaultSomeOneAlias =
         DebugClonePartialEqSerializeDeserializeAlias + DefaultOptionSomeVecOneEl
 );
-trait_alias!(SqlxEncodePgSqlxTypePgAlias = for<'__> sqlx::Encode<'__, Postgres> + Type<Postgres>);
-trait_alias!(UtoipaToSchemaAndSchemarsJsonSchemaAlias = for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema);
+trait_alias!(SqlxEncodePgSqlxTypePgAlias = for<'__> Encode<'__, Postgres> + Type<Postgres>);
+trait_alias!(UtoipaToSchemaAndSchemarsJsonSchemaAlias = for<'__> ToSchema<'__> + JsonSchema);
 
 trait_alias!(
     TableTypeDeclarationAlias = DebugClonePartialEqSerializeDeserializeDefaultSomeOneAlias
@@ -525,8 +528,8 @@ where
     Clone,
     PartialEq,
     Eq,
-    serde::Serialize,
-    serde::Deserialize,
+    Serialize,
+    Deserialize,
     thiserror::Error,
     error_occurence_lib::ErrorOccurence,
 )]
@@ -874,9 +877,7 @@ pub struct PaginationBase {
 impl PaginationBase {
     #[must_use]
     pub const fn end(&self) -> i64 {
-        self.offset
-            .checked_add(self.limit)
-            .expect("8a297b66")
+        self.offset.checked_add(self.limit).expect("8a297b66")
     }
     #[must_use]
     pub const fn new_unchecked(limit: i64, offset: i64) -> Self {
@@ -1193,16 +1194,7 @@ impl DefaultOptionSomeVecOneElMaxPageSize for PaginationStartsWithZero {
 }
 
 //this needed coz serde Option<Option<T>> #[serde(skip_serializing_if = "Option::is_none")] - if both options: inner and parent is null then it skip - its not correct
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    Eq,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
-)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema)]
 pub struct Value<T> {
     pub value: T,
 }
@@ -1230,7 +1222,7 @@ pub enum NotEmptyUniqueVecTryNewErrorNamed<T> {
     },
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
 pub struct NotEmptyUniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
     #[must_use]
@@ -1428,10 +1420,10 @@ impl Decode<'_, Postgres> for NonPrimaryKeyPgTypeReadOnlyIds {
     }
 }
 impl Type<Postgres> for NonPrimaryKeyPgTypeReadOnlyIds {
-    fn compatible(ty: &<Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<Postgres as Database>::TypeInfo) -> bool {
         <Json<Self> as Type<Postgres>>::compatible(ty)
     }
-    fn type_info() -> <Postgres as sqlx::Database>::TypeInfo {
+    fn type_info() -> <Postgres as Database>::TypeInfo {
         <Json<Self> as Type<Postgres>>::type_info()
     }
 }
@@ -1564,19 +1556,19 @@ impl error_occurence_lib::ToStdStringString for UnsignedPartOfStdPrimitiveI32 {
     }
 }
 impl Type<Postgres> for UnsignedPartOfStdPrimitiveI32 {
-    fn compatible(ty: &<Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<Postgres as Database>::TypeInfo) -> bool {
         <i32 as Type<Postgres>>::compatible(ty)
     }
-    fn type_info() -> <Postgres as sqlx::Database>::TypeInfo {
+    fn type_info() -> <Postgres as Database>::TypeInfo {
         <i32 as Type<Postgres>>::type_info()
     }
 }
-impl sqlx::Encode<'_, Postgres> for UnsignedPartOfStdPrimitiveI32 {
+impl Encode<'_, Postgres> for UnsignedPartOfStdPrimitiveI32 {
     fn encode_by_ref(
         &self,
         buf: &mut PgArgumentBuffer,
     ) -> Result<IsNull, Box<dyn StdErrorError + Send + Sync>> {
-        <i32 as sqlx::Encode<Postgres>>::encode_by_ref(&self.0, buf)
+        <i32 as Encode<Postgres>>::encode_by_ref(&self.0, buf)
     }
 }
 impl UnsignedPartOfStdPrimitiveI32 {
@@ -1712,19 +1704,19 @@ impl error_occurence_lib::ToStdStringString for NotZeroUnsignedPartOfStdPrimitiv
     }
 }
 impl Type<Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
-    fn compatible(ty: &<Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<Postgres as Database>::TypeInfo) -> bool {
         <UnsignedPartOfStdPrimitiveI32 as Type<Postgres>>::compatible(ty)
     }
-    fn type_info() -> <Postgres as sqlx::Database>::TypeInfo {
+    fn type_info() -> <Postgres as Database>::TypeInfo {
         <UnsignedPartOfStdPrimitiveI32 as Type<Postgres>>::type_info()
     }
 }
-impl sqlx::Encode<'_, Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
+impl Encode<'_, Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
     fn encode_by_ref(
         &self,
         buf: &mut PgArgumentBuffer,
     ) -> Result<IsNull, Box<dyn StdErrorError + Send + Sync>> {
-        <UnsignedPartOfStdPrimitiveI32 as sqlx::Encode<Postgres>>::encode_by_ref(&self.0, buf)
+        <UnsignedPartOfStdPrimitiveI32 as Encode<Postgres>>::encode_by_ref(&self.0, buf)
     }
 }
 impl NotZeroUnsignedPartOfStdPrimitiveI32 {

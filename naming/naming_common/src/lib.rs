@@ -1,3 +1,4 @@
+use convert_case::{Case, Casing};
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use std::fmt::Display;
@@ -204,26 +205,23 @@ where
     }
 }
 fn to_ts_or_panic(value: &dyn Display) -> Ts2 {
-    value
-        .to_string()
-        .parse::<Ts2>()
-        .expect("753ce6dd")
+    value.to_string().parse::<Ts2>().expect("753ce6dd")
 }
 fn to_ucc_str<T: AsRef<str>>(value: &T) -> String
 where
     String: PartialEq<T>,
 {
-    convert_case::Casing::to_case(value, convert_case::Case::UpperCamel)
+    Casing::to_case(value, Case::UpperCamel)
 }
 fn to_sc_str<T: AsRef<str>>(value: &T) -> String
 where
     String: PartialEq<T>,
 {
-    convert_case::Casing::to_case(value, convert_case::Case::Snake)
+    Casing::to_case(value, Case::Snake)
 }
 fn to_upper_sc_str<T: AsRef<str>>(value: &T) -> String
 where
     String: PartialEq<T>,
 {
-    convert_case::Casing::to_case(value, convert_case::Case::UpperSnake)
+    Casing::to_case(value, Case::UpperSnake)
 }

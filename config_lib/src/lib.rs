@@ -1,4 +1,6 @@
 pub mod types;
+use chrono::FixedOffset;
+use secrecy::SecretBox;
 use std::{
     net::{AddrParseError, SocketAddr},
     num::ParseIntError,
@@ -29,7 +31,7 @@ impl TryFromStdEnvVarOk for ServiceSocketAddress {
     }
 }
 #[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait)]
-pub struct Timezone(pub chrono::FixedOffset);
+pub struct Timezone(pub FixedOffset);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkTimezoneErrorNamed {
     ChronoFixedOffset {
@@ -42,7 +44,7 @@ pub enum TryFromStdEnvVarOkTimezoneErrorNamed {
 impl TryFromStdEnvVarOk for Timezone {
     type Error = TryFromStdEnvVarOkTimezoneErrorNamed;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        let Some(fixed_offset) = chrono::FixedOffset::east_opt(match value.parse::<i32>() {
+        let Some(fixed_offset) = FixedOffset::east_opt(match value.parse::<i32>() {
             Ok(value_i32) => value_i32,
             Err(error) => {
                 return Err(Self::Error::StdPrimitiveI32Parsing {
@@ -58,7 +60,7 @@ impl TryFromStdEnvVarOk for Timezone {
     }
 }
 #[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait)]
-pub struct RedisUrl(pub secrecy::SecretBox<String>);
+pub struct RedisUrl(pub SecretBox<String>);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkRedisUrlErrorNamed {
     IsEmpty { is_empty: String },
@@ -71,12 +73,12 @@ impl TryFromStdEnvVarOk for RedisUrl {
                 is_empty: String::from("is empty"),
             });
         } else {
-            secrecy::SecretBox::new(Box::new(value))
+            SecretBox::new(Box::new(value))
         }))
     }
 }
 #[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait)]
-pub struct MongoUrl(pub secrecy::SecretBox<String>);
+pub struct MongoUrl(pub SecretBox<String>);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkMongoUrlErrorNamed {
     IsEmpty { is_empty: String },
@@ -89,12 +91,12 @@ impl TryFromStdEnvVarOk for MongoUrl {
                 is_empty: String::from("is empty"),
             });
         } else {
-            secrecy::SecretBox::new(Box::new(value))
+            SecretBox::new(Box::new(value))
         }))
     }
 }
 #[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait)]
-pub struct DatabaseUrl(pub secrecy::SecretBox<String>);
+pub struct DatabaseUrl(pub SecretBox<String>);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkDatabaseUrlErrorNamed {
     IsEmpty { is_empty: String },
@@ -107,7 +109,7 @@ impl TryFromStdEnvVarOk for DatabaseUrl {
                 is_empty: String::from("is empty"),
             });
         } else {
-            secrecy::SecretBox::new(Box::new(value))
+            SecretBox::new(Box::new(value))
         }))
     }
 }

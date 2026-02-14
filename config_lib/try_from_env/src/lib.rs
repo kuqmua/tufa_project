@@ -8,8 +8,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         ToTokensToUpperScStr, TryFromStdEnvVarOkUcc,
     };
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput =
-        syn::parse(input).expect("e45f75c2");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("e45f75c2");
     let ident = &syn_derive_input.ident;
     let ident_try_from_env_error_named_ucc = SelfTryFromEnvErrorNamedUcc::from_tokens(&ident);
     let data_struct = match syn_derive_input.data {
@@ -30,10 +29,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let try_from_std_env_var_ok_ucc = TryFromStdEnvVarOkUcc;
     let error_named_ts = {
         let variants_ts = fields_named.iter().map(|el_f931deb2| {
-            let el_ident = &el_f931deb2
-                .ident
-                .as_ref()
-                .expect("2ecb63c1");
+            let el_ident = &el_f931deb2.ident.as_ref().expect("2ecb63c1");
             let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
             let try_from_std_env_var_ok_self_error_named_ucc =
                 TryFromStdEnvVarOkSelfErrorNamedUcc::from_tokens(&el_ident);
@@ -59,10 +55,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     };
     let display_error_named_ts = {
         let variants_ts = fields_named.iter().map(|el_f931deb2| {
-            let el_ident = &el_f931deb2
-                .ident
-                .as_ref()
-                .expect("8b79a379");
+            let el_ident = &el_f931deb2.ident.as_ref().expect("8b79a379");
             let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
             quote! {
                 Self::#el_ident_ucc_ts { #el_ident } => write!(f, "{}", #el_ident)
@@ -88,10 +81,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     };
     let try_from_env_ts = {
         let fields_initialization_ts = fields_named.iter().map(|el_0b2240f0| {
-            let el_ident = &el_0b2240f0
-                .ident
-                .as_ref()
-                .expect("ebf4e1b2");
+            let el_ident = &el_0b2240f0.ident.as_ref().expect("ebf4e1b2");
             let el_ident_quotes_upper_sc_string =
                 syn::LitStr::new(&ToTokensToUpperScStr::case(&el_ident), ident.span());
             let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);

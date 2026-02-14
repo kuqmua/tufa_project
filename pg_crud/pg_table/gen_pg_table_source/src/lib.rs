@@ -441,8 +441,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         gen_return_err_query_part_error_named_write_into_buffer_ts(import_path);
 
     // let pg_crud_all_variants_default_option_some_vec_one_el_call_ts = token_patterns::PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElCall;
-    let syn_derive_input: syn::DeriveInput =
-        syn::parse2(input).expect("991c614f");
+    let syn_derive_input: syn::DeriveInput = syn::parse2(input).expect("991c614f");
     let gen_pg_table_config = serde_json::from_str::<GenPgTableConfig>(
         &macros_helpers::get_macro_attribute_meta_list_ts(
             &syn_derive_input.attrs,
@@ -465,10 +464,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 let mut fields = Vec::new();
                 let mut fields_without_primary_key = Vec::new();
                 for el_2e7b44a3 in &fields_named.named {
-                    let field_ident = el_2e7b44a3
-                        .ident
-                        .clone()
-                        .expect("915ef2ce");
+                    let field_ident = el_2e7b44a3.ident.clone().expect("915ef2ce");
                     let field_ident_len = field_ident.to_string().len();
                     let max_pg_column_length = 63;
                     //todo write runtime check
@@ -485,12 +481,8 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                     {
                         for el_f4d3785c in &el_2e7b44a3.attrs {
                             if el_f4d3785c.path().segments.len() == 1 {
-                                let first_segment_ident = &el_f4d3785c
-                                    .path()
-                                    .segments
-                                    .first()
-                                    .expect("a9c3b38b")
-                                    .ident;
+                                let first_segment_ident =
+                                    &el_f4d3785c.path().segments.first().expect("a9c3b38b").ident;
                                 let gen_pg_table_primary_key_sc_str =
                                     GenPgTablePrimaryKeySc.to_string();
                                 if first_segment_ident == &gen_pg_table_primary_key_sc_str {
@@ -851,11 +843,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         let fields_ts = if let syn::Fields::Named(value) = &syn_variant_wrapper.variant.fields {
             value.named.iter().enumerate().map(|(index, element)| {
                 let field_ident = &element.ident;
-                if *field_ident
-                    .as_ref()
-                    .expect("edbbd08a")
-                    == CodeOccurenceSc.to_string()
-                {
+                if *field_ident.as_ref().expect("edbbd08a") == CodeOccurenceSc.to_string() {
                     macros_helpers::gen_field_code_occurence_new_ts(file, line, column)
                 } else {
                     let error_increment_sc = ErrorSelfSc::from_display(&index);
@@ -1842,9 +1830,7 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
         let gen_option_value_field_type_as_pg_type_update_ts = |syn_type: &syn::Type| {
             let path_value_ts = {
                 let value = format!("{PgCrudSc}::{ValueUcc}");
-                value
-                    .parse::<proc_macro2::TokenStream>()
-                    .expect("dbdbb7f2")
+                value.parse::<proc_macro2::TokenStream>().expect("dbdbb7f2")
             };
             let syn_type_as_pg_type_update_ts = gen_as_pg_type_update_ts(&syn_type);
             gen_std_option_option_tokens_declaration_ts(
@@ -2512,21 +2498,14 @@ pub fn gen_pg_table(input: proc_macro2::TokenStream) -> proc_macro2::TokenStream
                 panic!("2acd4725");
             };
             let fields_mapped_into_ts = fields_named.named.iter().map(|field| {
-                let field_ident = field
-                    .ident
-                    .as_ref()
-                    .expect("a21dc807");
+                let field_ident = field.ident.as_ref().expect("a21dc807");
                 let error_occurence_attribute = if *field_ident == *CodeOccurenceSc.to_string() {
                     proc_macro2::TokenStream::new()
                 } else {
                     let mut error_occurence_attribute: Option<ErrorOccurenceFieldAttribute> = None;
                     for el_1c83e302 in &field.attrs {
                         if el_1c83e302.path().segments.len() == 1 {
-                            let segment = el_1c83e302
-                                .path()
-                                .segments
-                                .first()
-                                .expect("5bd7ed8d");
+                            let segment = el_1c83e302.path().segments.first().expect("5bd7ed8d");
                             if let Ok(value) = {
                                 <ErrorOccurenceFieldAttribute as FromStr>::from_str(
                                     &segment.ident.to_string(),

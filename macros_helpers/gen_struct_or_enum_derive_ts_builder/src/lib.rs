@@ -61,9 +61,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(
                     let value = DeriveSelfIfSc::from_display(&sc);
                     quote! {#value}
                 },
-                trait_type: el_4f4a2c74
-                    .parse::<Ts2>()
-                    .expect("8672240f"),
+                trait_type: el_4f4a2c74.parse::<Ts2>().expect("8672240f"),
             }
         })
         .collect::<Vec<Element>>();

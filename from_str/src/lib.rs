@@ -1,10 +1,10 @@
+use convert_case::{Case, Casing};
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 #[proc_macro_derive(FromStr)]
 pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput =
-        syn::parse(input).expect("f83fcd2d");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("f83fcd2d");
     let ident = &syn_derive_input.ident;
     let syn::Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("d35db256");
@@ -21,13 +21,9 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         .collect::<Vec<syn::Ident>>();
     let variants_ts = variant_idents.iter().map(|variant_ident| {
         let variant_ident_sc_ts = {
-            let variant_ident_sc_str = convert_case::Casing::to_case(
-                &format!("\"{variant_ident}\""),
-                convert_case::Case::Snake,
-            );
-            variant_ident_sc_str
-                .parse::<Ts2>()
-                .expect("791603c1")
+            let variant_ident_sc_str =
+                Casing::to_case(&format!("\"{variant_ident}\""), Case::Snake);
+            variant_ident_sc_str.parse::<Ts2>().expect("791603c1")
         };
         quote! {
             #variant_ident_sc_ts => Ok(Self::#variant_ident),
@@ -38,10 +34,8 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             .iter()
             .fold(String::default(), |mut acc_d6966473, variant_ident| {
                 use std::fmt::Write as _;
-                let variant_ident_sc_str = convert_case::Casing::to_case(
-                    &format!("{variant_ident}"),
-                    convert_case::Case::Snake,
-                );
+                let variant_ident_sc_str =
+                    Casing::to_case(&format!("{variant_ident}"), Case::Snake);
                 assert!(
                     write!(acc_d6966473, "\'{variant_ident_sc_str}\',").is_ok(),
                     "09c49558-9d46-41d1-86a5-f76c1460a21e"
@@ -51,9 +45,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let error_ts = {
         let error_str =
             format!("\"Invalid {ident}, expected one of {error_variants_str} found {{value}}\"");
-        error_str
-            .parse::<Ts2>()
-            .expect("1b778757")
+        error_str.parse::<Ts2>().expect("1b778757")
     };
     let generated = quote! {
         impl std::str::FromStr for #ident {

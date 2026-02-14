@@ -1357,8 +1357,6 @@ where
 {
     fn swagger_url_path_self_quotes_ts(&self, table_name_str: &str) -> Ts2 {
         let value = self.swagger_url_path_self_quotes_str(table_name_str);
-        value
-            .parse::<Ts2>()
-            .expect("f292686b")
+        value.parse::<Ts2>().expect("f292686b")
     }
 }
