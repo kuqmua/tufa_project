@@ -2,10 +2,10 @@ use gen_quotes::double_quotes_ts;
 use macros_helpers::{
     ErrorOccurenceFieldAttribute, gen_if_write_is_err_ts,
     gen_impl_error_occurence_lib_to_err_string_ts, gen_impl_std_fmt_display_ts,
-    gen_serialize_deserialize_version_of_named_syn_variant,
+    gen_serde_version_of_named_syn_variant,
 };
 use naming::{
-    CodeOccurenceSc, IntoSerializeDeserializeVersionSc, ValueSc, WithSerializeDeserializeUcc,
+    CodeOccurenceSc, IntoSerdeVersionSc, ValueSc, WithSerializeDeserializeUcc,
     parameter::SelfWithSerializeDeserializeUcc,
 };
 use proc_macro::TokenStream as Ts;
@@ -106,10 +106,10 @@ pub fn error_occurence(input: Ts) -> Ts {
             }
         }
     };
-    let gen_impl_ident_into_serialize_deserialize_version_ts = |variants: &dyn ToTokens| {
+    let gen_impl_ident_into_serde_version_ts = |variants: &dyn ToTokens| {
         quote! {
             impl #maybe_generic_parameters_ts #ident #maybe_generic_parameters_ts {
-                pub fn #IntoSerializeDeserializeVersionSc(self) -> #ident_with_serialize_deserialize_ucc #maybe_generic_parameters_ts {
+                pub fn #IntoSerdeVersionSc(self) -> #ident_with_serialize_deserialize_ucc #maybe_generic_parameters_ts {
                     #[allow(clippy::redundant_closure_for_method_calls)]
                     match self {
                         #variants
@@ -314,7 +314,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                 &maybe_generic_parameters_ts,
                 &impl_std_fmt_display_handle_content_ts,
             );
-            let impl_ident_into_serialize_deserialize_version_ts = {
+            let impl_ident_into_serde_version_ts = {
                 let variants_ts = data_enum.variants.iter().map(|el_7d5a4c39| {
                     let el_ident = &el_7d5a4c39.ident;
                     let fields = if let Fields::Named(fields) = &el_7d5a4c39.fields {
@@ -323,7 +323,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                         panic!("238b402b");
                     };
                     let fields_idents_ts = fields.iter().map(|el_cddf556e| &el_cddf556e.ident);
-                    let fields_into_serialize_deserialize_version_excluding_code_occurence_ts = fields.iter()
+                    let fields_into_serde_version_excluding_code_occurence_ts = fields.iter()
                     .filter(|el_6a54951c| *el_6a54951c.ident.as_ref().expect("0488fc4c") != *code_occurence_sc_str)
                     .map(|el_d7e120a3| {
                         let current_ident = &el_d7e120a3.ident.as_ref().expect("9a672ac2");
@@ -343,7 +343,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                             ErrorOccurenceFieldAttribute::EoErrorOccurence => {
                                 quote! {
                                     #current_ident: {
-                                        #current_ident.into_serialize_deserialize_version()
+                                        #current_ident.into_serde_version()
                                     }
                                 }
                             }
@@ -357,7 +357,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                             ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
                                 quote! {
                                     #current_ident: {
-                                        #current_ident.into_iter().map(|el_607695c6|el_607695c6.into_serialize_deserialize_version()).collect()
+                                        #current_ident.into_iter().map(|el_607695c6|el_607695c6.into_serde_version()).collect()
                                     }
                                 }
                             }
@@ -374,7 +374,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                                 quote! {
                                     #current_ident: {
                                         #current_ident.into_iter().map(
-                                            |(key, value)|(key, value.into_serialize_deserialize_version())
+                                            |(key, value)|(key, value.into_serde_version())
                                         ).collect()
                                     }
                                 }
@@ -386,18 +386,18 @@ pub fn error_occurence(input: Ts) -> Ts {
                         Self::#el_ident {
                             #(#fields_idents_ts),*
                         } => #ident_with_serialize_deserialize_ucc::#el_ident {
-                            #(#fields_into_serialize_deserialize_version_excluding_code_occurence_ts)*
+                            #(#fields_into_serde_version_excluding_code_occurence_ts)*
                             #CodeOccurenceSc,
                         }
                     }
                 });
-                gen_impl_ident_into_serialize_deserialize_version_ts(&quote! {#(#variants_ts),*})
+                gen_impl_ident_into_serde_version_ts(&quote! {#(#variants_ts),*})
             };
             let enum_ident_with_serialize_deserialize_ts = {
                 let variants_ts = data_enum
                     .variants
                     .iter()
-                    .map(gen_serialize_deserialize_version_of_named_syn_variant);
+                    .map(gen_serde_version_of_named_syn_variant);
                 gen_enum_ident_with_serialize_deserialize_ts(&quote! {#(#variants_ts),*})
             };
             let impl_std_fmt_display_for_ident_with_serialize_deserialize_ts =
@@ -416,7 +416,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                 );
             quote! {
                 #impl_std_fmt_display_for_ident_ts
-                #impl_ident_into_serialize_deserialize_version_ts
+                #impl_ident_into_serde_version_ts
                 #enum_ident_with_serialize_deserialize_ts
                 #impl_std_fmt_display_for_ident_with_serialize_deserialize_ts
                 #impl_error_occurence_lib_to_err_string_to_err_string_for_ident_with_serialize_deserialize_ts
@@ -445,16 +445,16 @@ pub fn error_occurence(input: Ts) -> Ts {
                     }
                 },
             );
-            let impl_ident_into_serialize_deserialize_version_ts = {
+            let impl_ident_into_serde_version_ts = {
                 let variants_ts = data_enum.variants.iter().map(|el_0e2b2f9c| {
                     let el_ident = &el_0e2b2f9c.ident;
                     quote! {
                         Self::#el_ident(value) => #ident_with_serialize_deserialize_ucc::#el_ident(
-                            value.#IntoSerializeDeserializeVersionSc(),
+                            value.#IntoSerdeVersionSc(),
                         )
                     }
                 });
-                gen_impl_ident_into_serialize_deserialize_version_ts(&quote! {#(#variants_ts),*})
+                gen_impl_ident_into_serde_version_ts(&quote! {#(#variants_ts),*})
             };
             let enum_ident_with_serialize_deserialize_ts = {
                 let variants_ts = data_enum.variants.iter().map(|el_0f06fa87| {
@@ -500,7 +500,7 @@ pub fn error_occurence(input: Ts) -> Ts {
             //todo maybe make a trait?
             quote! {
                 #impl_std_fmt_display_for_ident_ts
-                #impl_ident_into_serialize_deserialize_version_ts
+                #impl_ident_into_serde_version_ts
                 #enum_ident_with_serialize_deserialize_ts
                 #impl_std_fmt_display_for_ident_with_serialize_deserialize_ts
             }

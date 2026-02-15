@@ -22,9 +22,7 @@ mod write_ts_into_file;
 
 pub use attribute_ident_str::AttributeIdentStr;
 pub use code_occurence_syn_field::code_occurence_syn_field;
-pub use error_occurence::{
-    ErrorOccurenceFieldAttribute, gen_serialize_deserialize_version_of_named_syn_variant,
-};
+pub use error_occurence::{ErrorOccurenceFieldAttribute, gen_serde_version_of_named_syn_variant};
 pub use gen_field_code_occurence_new_ts::gen_field_code_occurence_new_ts;
 pub use gen_if_write_is_err_ts::{gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts};
 pub use gen_impl_error_occurence_lib_to_err_string_ts::gen_impl_error_occurence_lib_to_err_string_ts;

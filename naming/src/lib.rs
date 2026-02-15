@@ -64,7 +64,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["response", "variants"],
     ["tvfrr", "extraction", "logic"],
     ["bind", "query"],
-    ["into", "serialize", "deserialize", "version"],
+    ["into", "serde", "version"],
     ["checked", "add"],
     ["primary", "key", "from", "row", "and", "rollback"],
     ["non", "existing", "primary", "keys"],

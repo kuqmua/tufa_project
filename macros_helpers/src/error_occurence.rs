@@ -104,7 +104,7 @@ impl ErrorOccurenceFieldAttribute {
 }
 
 #[must_use]
-pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &Variant) -> Ts2 {
+pub fn gen_serde_version_of_named_syn_variant(value: &Variant) -> Ts2 {
     let el_ident = &value.ident;
     let fields = if let Fields::Named(fields) = &value.fields {
         &fields.named

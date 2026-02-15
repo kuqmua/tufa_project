@@ -5,7 +5,7 @@ use macros_helpers::{
     SynFieldWrapper, code_occurence_syn_field, gen_field_code_occurence_new_ts,
     gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts,
     gen_impl_error_occurence_lib_to_err_string_ts, gen_impl_pub_try_new_for_ident_ts,
-    gen_impl_std_fmt_display_ts, gen_serialize_deserialize_version_of_named_syn_variant,
+    gen_impl_std_fmt_display_ts, gen_serde_version_of_named_syn_variant,
     gen_simple_syn_punctuated_punctuated, get_macro_attribute_meta_list_ts,
     maybe_write_ts_into_file,
 };
@@ -29,7 +29,7 @@ use naming::{
     FromHandleSc, FutureSc, GenColumnQuealsValueCommaUpdateOneQueryPartSc, GenPgTablePrimaryKeySc,
     GenSelectQueryPartSc, GenWhenColumnIdThenValueUpdateManyQueryPartSc,
     HeaderContentTypeApplicationJsonNotFoundUcc, HeadersSc, IdentCreateDefaultSc, IncrementSc,
-    IntoSerializeDeserializeVersionSc, NoFieldsProvidedUcc, NotUniqueFieldSc, NotUniqueFieldUcc,
+    IntoSerdeVersionSc, NoFieldsProvidedUcc, NotUniqueFieldSc, NotUniqueFieldUcc,
     NotUniquePrimaryKeySc, NotUniquePrimaryKeyUcc, OptionVecCreateSc, OrderBySc, OrderByUcc,
     OrderSc, PaginationSc, ParametersSc, PayloadSc, PayloadUcc, PgCrudSc,
     PgPoolForTokioSpawnSyncMoveSc, PgPoolSc, PgSc, PgTypeOptionVecWhereGreaterThanTestSc,
@@ -2547,7 +2547,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let ident_try_operation_logic_response_variants_ts = {
                 let variants_ts = type_variants_from_request_response_syn_variants
                     .iter()
-                    .map(gen_serialize_deserialize_version_of_named_syn_variant);
+                    .map(gen_serde_version_of_named_syn_variant);
                 quote! {
                     #allow_clippy_arbitrary_source_item_ordering_ts
                     #derive_debug_serde_serialize_serde_deserialize
@@ -2579,7 +2579,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 });
                     quote! {
-                        match #ValueSc.#IntoSerializeDeserializeVersionSc() {
+                        match #ValueSc.#IntoSerdeVersionSc() {
                             #(#variants_ts),*
                         }
                     }
