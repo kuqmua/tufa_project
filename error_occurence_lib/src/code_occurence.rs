@@ -5,11 +5,12 @@ use std::{
     sync::OnceLock,
     time::{Duration, SystemTime, UNIX_EPOCH},
 };
+use utoipa::ToSchema;
 
 static SOURCE_PLACE_TYPE: OnceLock<app_state::SourcePlaceType> = OnceLock::new();
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
-    Debug, PartialEq, Eq, Clone, serde::Serialize, serde::Deserialize, utoipa::ToSchema, JsonSchema,
+    Debug, PartialEq, Eq, Clone, serde::Serialize, serde::Deserialize, ToSchema, JsonSchema,
 )]
 pub struct MacroOccurence {
     pub file: String,
@@ -18,7 +19,7 @@ pub struct MacroOccurence {
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
-    Debug, PartialEq, Eq, Clone, serde::Serialize, serde::Deserialize, utoipa::ToSchema, JsonSchema,
+    Debug, PartialEq, Eq, Clone, serde::Serialize, serde::Deserialize, ToSchema, JsonSchema,
 )]
 pub struct CodeOccurence {
     #[allow(clippy::arbitrary_source_item_ordering)]
@@ -51,7 +52,7 @@ impl CodeOccurence {
     }
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, utoipa::ToSchema)] //todo check somehow what its equal to std::time::Duration
+#[derive(Debug, Clone, Copy, ToSchema)] //todo check somehow what its equal to std::time::Duration
 pub struct StdTimeDuration {
     pub secs: u64,
     pub nanos: u32,

@@ -39,7 +39,7 @@ impl DefaultOptionSomeVecOneEl for EncodeFormat {
 }
 
 //difference between NotEmptyUniqueVec and PgJsonTypeNotEmptyUniqueVec only in pg_crud_common::DefaultOptionSomeVecOneEl impl with different generic requirement and PgTypeWhereFilter
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, ToSchema, JsonSchema)]
 pub struct PgJsonTypeNotEmptyUniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
     #[must_use]

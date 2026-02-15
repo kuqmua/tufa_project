@@ -451,7 +451,7 @@ pub trait PgTypeWhereFilter<'query_lifetime> {
 }
 //todo custom deserialization - must not contain more than one element
 #[derive(
-    Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, JsonSchema,
+    Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, ToSchema, JsonSchema,
 )]
 pub struct NullableJsonObjectPgTypeWhereFilter<
     T: Debug
@@ -525,7 +525,7 @@ pub enum QueryPartErrorNamed {
     WriteIntoBuffer { code_occurence: CodeOccurence },
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, ToSchema, JsonSchema)]
 pub struct PgTypeWhere<T> {
     logical_operator: LogicalOperator,
     value: NotEmptyUniqueVec<T>,
@@ -847,15 +847,7 @@ pub struct OrderBy<ColumnGeneric> {
 }
 
 #[derive(
-    Debug,
-    Clone,
-    Copy,
-    PartialEq,
-    Eq,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-    JsonSchema,
+    Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, ToSchema, JsonSchema,
 )]
 pub struct PaginationBase {
     limit: i64,
@@ -916,9 +908,7 @@ impl Default for PaginationBase {
         Self::new_unchecked(DEFAULT_PAGINATION_LIMIT, 0)
     }
 }
-#[derive(
-    Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, utoipa::ToSchema, JsonSchema,
-)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, ToSchema, JsonSchema)]
 pub struct PaginationStartsWithZero(PaginationBase);
 #[derive(Debug, serde::Serialize, serde::Deserialize, Error, ErrorOccurence)]
 pub enum PaginationStartsWithZeroTryNewErrorNamed {
@@ -1689,7 +1679,7 @@ impl DefaultOptionSomeVecOneEl for NotZeroUnsignedPartOfI32 {
     }
 }
 #[derive(
-    Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, JsonSchema,
+    Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, ToSchema, JsonSchema,
 )]
 pub enum SingleOrMultiple<T: Debug + PartialEq + Clone> {
     Multiple(NotEmptyUniqueVec<T>),
