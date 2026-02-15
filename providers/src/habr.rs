@@ -1,13 +1,10 @@
-#[derive(
-    Default, Debug, Clone, PartialEq, Eq, serde_derive::Serialize, serde_derive::Deserialize,
-)]
+use serde_derive::{Deserialize, Serialize};
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Data {
     #[serde(rename = "item", default)]
     pub items: Vec<DataElement>,
 }
-#[derive(
-    Default, Debug, Clone, PartialEq, Eq, serde_derive::Serialize, serde_derive::Deserialize,
-)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct DataElement {
     pub category: Option<Vec<String>>,
     pub creator: Option<String>,
