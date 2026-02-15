@@ -2,12 +2,13 @@ use axum::http::{
     HeaderMap, StatusCode,
     header::{HeaderValue, ToStrError},
 };
+use error_occurence_lib::ErrorOccurence;
 use error_occurence_lib::code_occurence::CodeOccurence;
 use http_logic::GetAxumHttpStatusCode;
 use naming::CommitSc;
 use thiserror::Error;
 
-#[derive(Debug, Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, Error, ErrorOccurence)]
 pub enum ErrorNamed {
     CommitNotEqual {
         #[eo_to_err_string_serialize_deserialize]

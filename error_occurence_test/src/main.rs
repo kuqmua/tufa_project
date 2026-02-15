@@ -7,11 +7,12 @@
 // eo_error_occurence_field
 // https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/error_occurence_test/src/main.rs#L85 2024-05-06 09:17:23
 
+use error_occurence_lib::ErrorOccurence;
 use error_occurence_lib::code_occurence::CodeOccurence;
 use std::collections::HashMap;
 use thiserror::Error;
 
-#[derive(Debug, Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, Error, ErrorOccurence)]
 pub enum ErrorNamedOne {
     //use ToStdStringString for hashmap keys instead of Display
     //todo even for String in serialize deserialize version of error must be using ToStdStringString impl instead of std::fmt::Display
@@ -40,7 +41,7 @@ pub enum ErrorNamedOne {
     },
 }
 
-#[derive(Debug, Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, Error, ErrorOccurence)]
 pub enum ErrorNamedTwo {
     Another {
         #[eo_to_err_string_serialize_deserialize]
@@ -54,7 +55,7 @@ pub enum ErrorNamedTwo {
     },
 }
 
-#[derive(Debug, Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, Error, ErrorOccurence)]
 pub enum ErrorUnnamedOne {
     Something(ErrorNamedTwo),
 }

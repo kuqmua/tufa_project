@@ -1,5 +1,6 @@
 pub use pg_crud_common_and_macros_common::*;
 
+use error_occurence_lib::ErrorOccurence;
 use error_occurence_lib::code_occurence::CodeOccurence;
 use naming::{AscUcc, DescUcc, DisplayToScStr, DisplayToUccStr};
 use schemars::JsonSchema;
@@ -525,9 +526,7 @@ where
     }
 }
 
-#[derive(
-    Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, error_occurence_lib::ErrorOccurence,
-)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, ErrorOccurence)]
 pub enum QueryPartErrorNamed {
     CheckedAdd { code_occurence: CodeOccurence },
     WriteIntoBuffer { code_occurence: CodeOccurence },
@@ -936,9 +935,7 @@ impl Default for PaginationBase {
     schemars::JsonSchema,
 )]
 pub struct PaginationStartsWithZero(PaginationBase);
-#[derive(
-    Debug, serde::Serialize, serde::Deserialize, Error, error_occurence_lib::ErrorOccurence,
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize, Error, ErrorOccurence)]
 pub enum PaginationStartsWithZeroTryNewErrorNamed {
     LimitIsLessThanOrEqualToZero {
         #[eo_to_err_string_serialize_deserialize]
@@ -1195,9 +1192,7 @@ pub trait IsStringEmpty {
     fn is_string_empty(&self) -> bool;
 }
 
-#[derive(
-    Debug, serde::Serialize, serde::Deserialize, Error, error_occurence_lib::ErrorOccurence,
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize, Error, ErrorOccurence)]
 pub enum NotEmptyUniqueVecTryNewErrorNamed<T> {
     IsEmpty {
         code_occurence: CodeOccurence,
@@ -1449,7 +1444,7 @@ pub struct UnsignedPartOfI32(i32); //todo why exactly i32? maybe different types
     serde::Serialize,
     serde::Deserialize,
     Error,
-    error_occurence_lib::ErrorOccurence,
+    ErrorOccurence,
     schemars::JsonSchema,
 )]
 pub enum UnsignedPartOfI32TryFromI32ErrorNamed {
@@ -1582,7 +1577,7 @@ pub struct NotZeroUnsignedPartOfI32(UnsignedPartOfI32);
     serde::Serialize,
     serde::Deserialize,
     Error,
-    error_occurence_lib::ErrorOccurence,
+    ErrorOccurence,
     schemars::JsonSchema,
 )]
 pub enum NotZeroUnsignedPartOfI32TryFromI32ErrorNamed {

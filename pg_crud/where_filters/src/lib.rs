@@ -1,3 +1,4 @@
+use error_occurence_lib::ErrorOccurence;
 use error_occurence_lib::code_occurence::CodeOccurence;
 use pg_crud_common::{
     DefaultOptionSomeVecOneEl, NotEmptyUniqueVecTryNewErrorNamed, PgTypeWhereFilter,
@@ -391,9 +392,7 @@ where
     start: T,
     end: T,
 }
-#[derive(
-    Debug, Clone, serde::Serialize, serde::Deserialize, Error, error_occurence_lib::ErrorOccurence,
-)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Error, ErrorOccurence)]
 pub enum BetweenTryNewErrorNamed<T> {
     StartMoreOrEqualToEnd {
         #[eo_to_err_string_serialize_deserialize]
@@ -785,15 +784,7 @@ impl<T> From<PgTypeNotEmptyUniqueVec<T>> for Vec<T> {
 #[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, Serialize, JsonSchema)]
 pub struct BoundedStdVecVec<T, const LENGTH: usize>(Vec<T>);
 #[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    Eq,
-    Serialize,
-    Deserialize,
-    Error,
-    error_occurence_lib::ErrorOccurence,
-    JsonSchema,
+    Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, ErrorOccurence, JsonSchema,
 )]
 pub enum BoundedStdVecVecTryNewErrorNamed {
     LengthIsNotCorrect {

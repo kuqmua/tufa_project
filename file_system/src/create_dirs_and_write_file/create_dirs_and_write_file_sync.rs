@@ -1,3 +1,4 @@
+use error_occurence_lib::ErrorOccurence;
 use error_occurence_lib::code_occurence::CodeOccurence;
 use std::{
     fs::{self, File},
@@ -6,7 +7,7 @@ use std::{
 };
 use thiserror::Error;
 
-#[derive(Debug, Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, Error, ErrorOccurence)]
 pub enum CreateDirsAndWriteFileSyncErrorNamed {
     StdIo {
         #[eo_to_err_string]

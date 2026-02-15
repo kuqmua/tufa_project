@@ -2,13 +2,14 @@ use axum::{
     body::{Body, HttpBody, to_bytes},
     http::StatusCode,
 };
+use error_occurence_lib::ErrorOccurence;
 use error_occurence_lib::code_occurence;
 use error_occurence_lib::code_occurence::CodeOccurence;
 use http_body::SizeHint;
 use http_logic::GetAxumHttpStatusCode;
 use thiserror::Error;
 
-#[derive(Debug, Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, Error, ErrorOccurence)]
 pub enum ErrorNamed {
     ReachedMaximumSizeOfBody {
         #[eo_to_err_string]

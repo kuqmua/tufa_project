@@ -1,9 +1,10 @@
+use error_occurence_lib::ErrorOccurence;
 use error_occurence_lib::code_occurence::CodeOccurence;
 use serde_json::{Error as SerdeJsonError, Value as SerdeJsonValue};
 use std::path::Path;
 use thiserror::Error;
 
-#[derive(Debug, Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, Error, ErrorOccurence)]
 pub enum CreateDirsAndWritePrettyJsonTokioAsyncErrorNamed {
     SerdeJson {
         #[eo_to_err_string]
