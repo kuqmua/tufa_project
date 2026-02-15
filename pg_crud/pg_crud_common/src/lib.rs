@@ -1,7 +1,8 @@
 pub use pg_crud_common_and_macros_common::*;
 
-use error_occurence_lib::ErrorOccurence;
-use error_occurence_lib::code_occurence::CodeOccurence;
+use error_occurence_lib::{
+    ErrorOccurence, ToStdStringString, code_occurence, code_occurence::CodeOccurence,
+};
 use naming::{AscUcc, DescUcc, DisplayToScStr, DisplayToUccStr};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -118,7 +119,7 @@ pub trait PgJsonType {
     type Where: WhereAlias
         + UtoipaToSchemaAndSchemarsJsonSchemaAlias
         + AllEnumVariantsArrayDefaultOptionSomeVecOneEl
-        + error_occurence_lib::ToStdStringString;
+        + ToStdStringString;
     //todo impl get fields from read
     //todo maybe add Decode trait here and Type
     type Read: ReadAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + DefaultOptionSomeVecOneEl;
@@ -190,9 +191,7 @@ pub trait PgJsonTypeObjectVecElementId {
     type CreateForQuery: CreateForQueryAlias
         + From<<Self::PgJsonType as PgJsonType>::Create>
         + From<<Self::PgJsonType as PgJsonType>::Update>;
-    type Update: UpdateAlias
-        + UtoipaToSchemaAndSchemarsJsonSchemaAlias
-        + error_occurence_lib::ToStdStringString;
+    type Update: UpdateAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + ToStdStringString;
     type ReadInner: ReadInnerAlias;
     fn query_bind_string_as_pg_text_create_for_query(
         value: <Self::PgJsonType as PgJsonType>::CreateForQuery,
@@ -492,7 +491,7 @@ where
         )
     }
 }
-impl<T> error_occurence_lib::ToStdStringString for NullableJsonObjectPgTypeWhereFilter<T>
+impl<T> ToStdStringString for NullableJsonObjectPgTypeWhereFilter<T>
 where
     T: Debug
         + PartialEq
@@ -766,7 +765,7 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
                     use std::fmt::Write as _;
                     if write!(acc_cc6d18f7, "{value} ").is_err() {
                         return Err(QueryPartErrorNamed::WriteIntoBuffer {
-                            code_occurence: error_occurence_lib::code_occurence!(),
+                            code_occurence: code_occurence!(),
                         });
                     }
                     is_need_to_add_logical_operator_inner_handle = true;
@@ -948,14 +947,14 @@ impl PaginationStartsWithZero {
                 Err(
                     PaginationStartsWithZeroTryNewErrorNamed::LimitIsLessThanOrEqualToZero {
                         limit,
-                        code_occurence: error_occurence_lib::code_occurence!(),
+                        code_occurence: code_occurence!(),
                     },
                 )
             } else {
                 Err(
                     PaginationStartsWithZeroTryNewErrorNamed::OffsetIsLessThanZero {
                         offset,
-                        code_occurence: error_occurence_lib::code_occurence!(),
+                        code_occurence: code_occurence!(),
                     },
                 )
             }
@@ -966,7 +965,7 @@ impl PaginationStartsWithZero {
                 PaginationStartsWithZeroTryNewErrorNamed::OffsetPlusLimitIsIntOverflow {
                     limit,
                     offset,
-                    code_occurence: error_occurence_lib::code_occurence!(),
+                    code_occurence: code_occurence!(),
                 },
             )
         }
@@ -1193,7 +1192,7 @@ impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
     pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewErrorNamed<T>> {
         if value.is_empty() {
             return Err(NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {
-                code_occurence: error_occurence_lib::code_occurence!(),
+                code_occurence: code_occurence!(),
             });
         }
         {
@@ -1202,7 +1201,7 @@ impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
                 if acc_11fac69e.contains(&el_db9bd5a0) {
                     return Err(NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
                         value: el_db9bd5a0.clone(),
-                        code_occurence: error_occurence_lib::code_occurence!(),
+                        code_occurence: code_occurence!(),
                     });
                 }
                 acc_11fac69e.push(el_db9bd5a0);
@@ -1435,7 +1434,7 @@ impl TryFrom<i32> for UnsignedPartOfI32 {
         } else {
             Err(Self::Error::LessThanZero {
                 value,
-                code_occurence: error_occurence_lib::code_occurence!(),
+                code_occurence: code_occurence!(),
             })
         }
     }
@@ -1505,7 +1504,7 @@ const _: () = {
         }
     }
 };
-impl error_occurence_lib::ToStdStringString for UnsignedPartOfI32 {
+impl ToStdStringString for UnsignedPartOfI32 {
     fn to_err_string(&self) -> String {
         self.0.to_string()
     }
@@ -1568,7 +1567,7 @@ impl TryFrom<i32> for NotZeroUnsignedPartOfI32 {
             Ok(handle) => {
                 if handle.0 == 0 {
                     Err(Self::Error::IsZero {
-                        code_occurence: error_occurence_lib::code_occurence!(),
+                        code_occurence: code_occurence!(),
                     })
                 } else {
                     Ok(Self(handle))
@@ -1576,7 +1575,7 @@ impl TryFrom<i32> for NotZeroUnsignedPartOfI32 {
             }
             Err(error) => Err(Self::Error::UnsignedPartOfI32TryFromI32ErrorNamed {
                 value: error,
-                code_occurence: error_occurence_lib::code_occurence!(),
+                code_occurence: code_occurence!(),
             }),
         }
     }
@@ -1646,7 +1645,7 @@ const _: () = {
         }
     }
 };
-impl error_occurence_lib::ToStdStringString for NotZeroUnsignedPartOfI32 {
+impl ToStdStringString for NotZeroUnsignedPartOfI32 {
     fn to_err_string(&self) -> String {
         self.0.to_err_string()
     }
@@ -1691,7 +1690,7 @@ pub fn increment_checked_add_one_returning_increment(
     increment.checked_add(1).map_or_else(
         || {
             Err(QueryPartErrorNamed::CheckedAdd {
-                code_occurence: error_occurence_lib::code_occurence!(),
+                code_occurence: code_occurence!(),
             })
         },
         |value_d25735be| {

@@ -6,13 +6,10 @@
 // impl display like this this
 // eo_error_occurence_field
 // https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/error_occurence_test/src/main.rs#L85 2024-05-06 09:17:23
-
-use error_occurence_lib::ErrorOccurence;
-use error_occurence_lib::code_occurence::CodeOccurence;
+use error_occurence_lib::{ToStdStringString, ErrorOccurence, code_occurence, code_occurence::CodeOccurence};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use thiserror::Error;
-
 #[derive(Debug, Error, ErrorOccurence)]
 pub enum ErrorNamedOne {
     //use ToStdStringString for hashmap keys instead of Display
@@ -68,7 +65,7 @@ pub struct DisplayStruct {
 }
 
 //todo or maybe two different traits - display foreign type and convert into serializable and deserializable type
-impl error_occurence_lib::ToStdStringString for DisplayStruct {
+impl ToStdStringString for DisplayStruct {
     fn to_err_string(&self) -> String {
         format!("{self:?}")
     }
@@ -81,7 +78,7 @@ pub struct SerializeDeserializeStruct {
     pub three: u32,
 }
 
-impl error_occurence_lib::ToStdStringString for SerializeDeserializeStruct {
+impl ToStdStringString for SerializeDeserializeStruct {
     fn to_err_string(&self) -> String {
         format!("{self:?}")
     }
@@ -100,7 +97,7 @@ fn main() {
         },
         eo_error_occurence_field: ErrorNamedTwo::Variant {
             eo_display_with_serialize_deserialize_field: String::from("value"),
-            code_occurence: error_occurence_lib::code_occurence!(),
+            code_occurence: code_occurence!(),
         },
         eo_vec_display_field: vec![
             DisplayStruct {
@@ -127,11 +124,11 @@ fn main() {
         eo_vec_error_occurence_field: vec![
             ErrorUnnamedOne::Something(ErrorNamedTwo::Variant {
                 eo_display_with_serialize_deserialize_field: String::from("value"),
-                code_occurence: error_occurence_lib::code_occurence!(),
+                code_occurence: code_occurence!(),
             }),
             ErrorUnnamedOne::Something(ErrorNamedTwo::Variant {
                 eo_display_with_serialize_deserialize_field: String::from("123"),
-                code_occurence: error_occurence_lib::code_occurence!(),
+                code_occurence: code_occurence!(),
             }),
         ],
         hashmap_string_string: HashMap::from([
@@ -173,19 +170,18 @@ fn main() {
                 String::from("ksdfgadsfgsdfgdfgey"),
                 ErrorUnnamedOne::Something(ErrorNamedTwo::Variant {
                     eo_display_with_serialize_deserialize_field: String::from("vasdfgdgdfglue"),
-                    code_occurence: error_occurence_lib::code_occurence!(),
+                    code_occurence: code_occurence!(),
                 }),
             ),
             (
                 String::from("kesdfgsdgfdfgy"),
                 ErrorUnnamedOne::Something(ErrorNamedTwo::Variant {
                     eo_display_with_serialize_deserialize_field: String::from("valsdfgdsafgdsgue"),
-                    code_occurence: error_occurence_lib::code_occurence!(),
+                    code_occurence: code_occurence!(),
                 }),
             ),
         ]),
-
-        code_occurence: error_occurence_lib::code_occurence!(),
+        code_occurence: code_occurence!(),
     };
     println!("{error:?}");
 }

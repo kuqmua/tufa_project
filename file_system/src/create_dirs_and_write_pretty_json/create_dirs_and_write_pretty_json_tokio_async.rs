@@ -1,5 +1,4 @@
-use error_occurence_lib::ErrorOccurence;
-use error_occurence_lib::code_occurence::CodeOccurence;
+use error_occurence_lib::{ErrorOccurence, code_occurence, code_occurence::CodeOccurence};
 use serde_json::{Error as SerdeJsonError, Value as SerdeJsonValue};
 use std::path::Path;
 use thiserror::Error;
@@ -28,7 +27,7 @@ pub async fn create_dirs_and_write_pretty_json_tokio_async(
                 Err(error) => Err(
                     CreateDirsAndWritePrettyJsonTokioAsyncErrorNamed::WriteBytesIntoFile {
                         error,
-                        code_occurence: error_occurence_lib::code_occurence!(),
+                        code_occurence: code_occurence!(),
                     },
                 ),
                 Ok(()) => Ok(()),
@@ -37,7 +36,7 @@ pub async fn create_dirs_and_write_pretty_json_tokio_async(
         Err(error) => Err(
             CreateDirsAndWritePrettyJsonTokioAsyncErrorNamed::SerdeJson {
                 error,
-                code_occurence: error_occurence_lib::code_occurence!(),
+                code_occurence: code_occurence!(),
             },
         ),
     }

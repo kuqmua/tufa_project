@@ -1,6 +1,4 @@
-use error_occurence_lib::ErrorOccurence;
-use error_occurence_lib::code_occurence;
-use error_occurence_lib::code_occurence::CodeOccurence;
+use error_occurence_lib::{ErrorOccurence, code_occurence, code_occurence::CodeOccurence};
 use pg_crud_common::DefaultOptionSomeVecOneEl;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};

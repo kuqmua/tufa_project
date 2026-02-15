@@ -1,12 +1,10 @@
-use error_occurence_lib::ErrorOccurence;
-use error_occurence_lib::code_occurence::CodeOccurence;
+use error_occurence_lib::{ErrorOccurence, code_occurence, code_occurence::CodeOccurence};
 use std::{
     fs::{self, File},
     io::{Error as IoError, Write},
     path::Path,
 };
 use thiserror::Error;
-
 #[derive(Debug, Error, ErrorOccurence)]
 pub enum CreateDirsAndWriteFileSyncErrorNamed {
     StdIo {
@@ -15,7 +13,6 @@ pub enum CreateDirsAndWriteFileSyncErrorNamed {
         code_occurence: CodeOccurence,
     },
 }
-
 pub fn create_dirs_and_write_file_sync(
     path: &Path,
     bytes: &[u8],
@@ -25,7 +22,7 @@ pub fn create_dirs_and_write_file_sync(
     {
         return Err(CreateDirsAndWriteFileSyncErrorNamed::StdIo {
             error,
-            code_occurence: error_occurence_lib::code_occurence!(),
+            code_occurence: code_occurence!(),
         });
     }
     match File::create(path) {
@@ -33,20 +30,20 @@ pub fn create_dirs_and_write_file_sync(
             if let Err(error) = Write::write_all(&mut file, bytes) {
                 return Err(CreateDirsAndWriteFileSyncErrorNamed::StdIo {
                     error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
+                    code_occurence: code_occurence!(),
                 });
             }
             if let Err(error) = file.sync_all() {
                 return Err(CreateDirsAndWriteFileSyncErrorNamed::StdIo {
                     error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
+                    code_occurence: code_occurence!(),
                 });
             }
             Ok(())
         }
         Err(error) => Err(CreateDirsAndWriteFileSyncErrorNamed::StdIo {
             error,
-            code_occurence: error_occurence_lib::code_occurence!(),
+            code_occurence: code_occurence!(),
         }),
     }
 }

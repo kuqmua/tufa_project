@@ -1,5 +1,4 @@
-use error_occurence_lib::ErrorOccurence;
-use error_occurence_lib::code_occurence::CodeOccurence;
+use error_occurence_lib::{ErrorOccurence, code_occurence, code_occurence::CodeOccurence};
 use pg_crud_common::{
     DefaultOptionSomeVecOneEl, NotEmptyUniqueVecTryNewErrorNamed, PgTypeWhereFilter,
     QueryPartErrorNamed, increment_checked_add_one_returning_increment,
@@ -15,7 +14,6 @@ gen_where_filters::gen_where_filters!({
     "pg_json_types_content_write_into_gen_where_filters_pg_json_types": "False",
     "whole_content_write_into_gen_where_filters": "False"
 });
-
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub enum EncodeFormat {
     #[default]
@@ -37,7 +35,6 @@ impl DefaultOptionSomeVecOneEl for EncodeFormat {
         Self::default()
     }
 }
-
 //difference between NotEmptyUniqueVec and PgJsonTypeNotEmptyUniqueVec only in pg_crud_common::DefaultOptionSomeVecOneEl impl with different generic requirement and PgTypeWhereFilter
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, ToSchema, JsonSchema)]
 pub struct PgJsonTypeNotEmptyUniqueVec<T>(Vec<T>);
@@ -53,7 +50,7 @@ impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
     pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewErrorNamed<T>> {
         if value.is_empty() {
             return Err(NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {
-                code_occurence: error_occurence_lib::code_occurence!(),
+                code_occurence: code_occurence!(),
             });
         }
         {
@@ -62,7 +59,7 @@ impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
                 if acc_72940a4c.contains(&el_7721a8da) {
                     return Err(NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
                         value: el_7721a8da.clone(),
-                        code_occurence: error_occurence_lib::code_occurence!(),
+                        code_occurence: code_occurence!(),
                     });
                 }
                 acc_72940a4c.push(el_7721a8da);
@@ -98,7 +95,7 @@ impl<T: PartialEq + Clone + Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
                 Ok(value) => {
                     if write!(acc_ecd78d3a, "${value},").is_err() {
                         return Err(QueryPartErrorNamed::WriteIntoBuffer {
-                            code_occurence: error_occurence_lib::code_occurence!(),
+                            code_occurence: code_occurence!(),
                         });
                     }
                 }
@@ -226,7 +223,6 @@ where
         }
     }
 }
-
 #[derive(Debug, Clone)]
 pub struct RegexRegex(pub regex::Regex);
 // #[automatically_derived]
@@ -363,7 +359,6 @@ impl DefaultOptionSomeVecOneEl for RegexRegex {
         Self(regex::Regex::new("[a-z]+").expect("22a9eda5"))
     }
 }
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub enum RegularExpressionCase {
     Insensitive,
@@ -412,7 +407,7 @@ impl<T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> 
             Err(BetweenTryNewErrorNamed::StartMoreOrEqualToEnd {
                 start,
                 end,
-                code_occurence: error_occurence_lib::code_occurence!(),
+                code_occurence: code_occurence!(),
             })
         }
     }
@@ -664,7 +659,7 @@ impl<T: PartialEq + Clone> PgTypeNotEmptyUniqueVec<T> {
     pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewErrorNamed<T>> {
         if value.is_empty() {
             return Err(NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {
-                code_occurence: error_occurence_lib::code_occurence!(),
+                code_occurence: code_occurence!(),
             });
         }
         {
@@ -673,7 +668,7 @@ impl<T: PartialEq + Clone> PgTypeNotEmptyUniqueVec<T> {
                 if acc_6be6ccee.contains(&el_b3d83e60) {
                     return Err(NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
                         value: el_b3d83e60.clone(),
-                        code_occurence: error_occurence_lib::code_occurence!(),
+                        code_occurence: code_occurence!(),
                     });
                 }
                 acc_6be6ccee.push(el_b3d83e60);
@@ -780,7 +775,6 @@ impl<T> From<PgTypeNotEmptyUniqueVec<T>> for Vec<T> {
         value.0
     }
 }
-
 #[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, Serialize, JsonSchema)]
 pub struct BoundedStdVecVec<T, const LENGTH: usize>(Vec<T>);
 #[derive(
@@ -909,7 +903,7 @@ impl<
                     .is_err()
                     {
                         return Err(QueryPartErrorNamed::WriteIntoBuffer {
-                            code_occurence: error_occurence_lib::code_occurence!(),
+                            code_occurence: code_occurence!(),
                         });
                     }
                 }
@@ -935,7 +929,7 @@ impl<T, const LENGTH: usize> TryFrom<Vec<T>> for BoundedStdVecVec<T, LENGTH> {
             Err(BoundedStdVecVecTryNewErrorNamed::LengthIsNotCorrect {
                 wrong_length: len,
                 expected: LENGTH,
-                code_occurence: error_occurence_lib::code_occurence!(),
+                code_occurence: code_occurence!(),
             })
         }
     }
@@ -1027,4 +1021,3 @@ impl<T: Clone + DefaultOptionSomeVecOneEl, const LENGTH: usize> DefaultOptionSom
             ])
     }
 }
-////////////////
