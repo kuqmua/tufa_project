@@ -1,6 +1,7 @@
 use app_state::{GetDatabaseUrl, GetServiceSocketAddress};
 use common_routes::common_routes;
 use git_info::PROJECT_GIT_INFO;
+use num_cpus::get;
 use secrecy::ExposeSecret;
 use server_app_state::ServerAppState;
 use server_config::Config;
@@ -13,7 +14,7 @@ use tracing_subscriber::fmt::init;
 fn main() {
     init();
     Builder::new_multi_thread()
-        .worker_threads(num_cpus::get())
+        .worker_threads(get())
         .enable_all()
         .build()
         .expect("5995c954")
