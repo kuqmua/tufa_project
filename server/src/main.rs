@@ -1,4 +1,5 @@
 use app_state::{GetDatabaseUrl, GetServiceSocketAddress};
+use axum::{Router, serve};
 use common_routes::common_routes;
 use git_info::PROJECT_GIT_INFO;
 use num_cpus::get;
@@ -37,9 +38,9 @@ fn main() {
                 config,
                 project_git_info: &PROJECT_GIT_INFO,
             });
-            axum::serve(
+            serve(
                 tcp_listener,
-                axum::Router::new()
+                Router::new()
                     .merge(common_routes(Arc::<ServerAppState<'_>>::clone(&app_state)))
                     .merge(TableExample::routes(Arc::<ServerAppState<'_>>::clone(
                         &app_state,

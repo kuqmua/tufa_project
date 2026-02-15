@@ -6,7 +6,9 @@
 // impl display like this this
 // eo_error_occurence_field
 // https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/error_occurence_test/src/main.rs#L85 2024-05-06 09:17:23
-use error_occurence_lib::{ToStdStringString, ErrorOccurence, code_occurence, code_occurence::CodeOccurence};
+use error_occurence_lib::{
+    ErrorOccurence, ToStdStringString, code_occurence, code_occurence::CodeOccurence,
+};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use thiserror::Error;

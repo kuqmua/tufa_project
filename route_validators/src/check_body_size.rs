@@ -1,4 +1,5 @@
 use axum::{
+    Error,
     body::{Body, HttpBody, to_bytes},
     http::StatusCode,
 };
@@ -11,7 +12,7 @@ use thiserror::Error;
 pub enum ErrorNamed {
     ReachedMaximumSizeOfBody {
         #[eo_to_err_string]
-        axum_error: axum::Error,
+        axum_error: Error,
         #[eo_to_err_string_serialize_deserialize]
         maximum_size_of_body_limit_in_bytes: usize,
         #[eo_to_err_string]

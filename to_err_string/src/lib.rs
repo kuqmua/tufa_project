@@ -1,5 +1,9 @@
-use axum::extract::rejection::{JsonDataError, JsonRejection, JsonSyntaxError};
+use axum::{
+    Error,
+    extract::rejection::{JsonDataError, JsonRejection, JsonSyntaxError},
+};
 use http::header::ToStrError;
+use http_body::SizeHint;
 use reqwest::header::HeaderMap;
 use sqlx::{
     migrate::MigrateError,
@@ -11,7 +15,6 @@ use sqlx::{
 use std::io::Error as IoError;
 use time::error::ComponentRange;
 use tracing::{dispatcher::SetGlobalDefaultError, log::SetLoggerError};
-
 pub trait ToStdStringString {
     fn to_err_string(&self) -> String;
 }
@@ -135,7 +138,7 @@ impl ToStdStringString for HeaderMap {
         format!("{self:#?}")
     }
 }
-impl ToStdStringString for http_body::SizeHint {
+impl ToStdStringString for SizeHint {
     fn to_err_string(&self) -> String {
         format!("{self:#?}")
     }
@@ -145,7 +148,7 @@ impl ToStdStringString for ToStrError {
         format!("{self}")
     }
 }
-impl ToStdStringString for axum::Error {
+impl ToStdStringString for Error {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }

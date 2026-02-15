@@ -6,7 +6,6 @@ use error_occurence_lib::{ErrorOccurence, code_occurence, code_occurence::CodeOc
 use http_logic::GetAxumHttpStatusCode;
 use naming::CommitSc;
 use thiserror::Error;
-
 #[derive(Debug, Error, ErrorOccurence)]
 pub enum ErrorNamed {
     CommitNotEqual {
@@ -27,7 +26,6 @@ pub enum ErrorNamed {
         code_occurence: CodeOccurence,
     },
 }
-
 impl GetAxumHttpStatusCode for ErrorNamed {
     fn get_axum_http_status_code(&self) -> StatusCode {
         match self {
@@ -37,7 +35,6 @@ impl GetAxumHttpStatusCode for ErrorNamed {
         }
     }
 }
-
 pub fn check_commit(
     // app_state: &dyn app_state::GetEnableApiGitCommitCheck,
     enable_api_git_commit_check: bool,
