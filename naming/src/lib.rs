@@ -399,7 +399,6 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["upper"],
     ["snake"],
     ["camel"],
-    ["stringified"],
     ["token"],
     ["stream"],
     ["done"],

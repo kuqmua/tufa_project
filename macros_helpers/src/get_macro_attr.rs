@@ -8,9 +8,9 @@ pub fn get_macro_attr<'attrs_litime>(
 ) -> &'attrs_litime Attribute {
     let option_attr = attrs.iter().find(|attr| {
         *attr_path == {
-            let mut stringified_path = ToTokens::to_token_stream(&attr.path()).to_string();
-            stringified_path.retain(|value_3b43b8ea| !value_3b43b8ea.is_whitespace());
-            stringified_path
+            let mut str_path = ToTokens::to_token_stream(&attr.path()).to_string();
+            str_path.retain(|value_3b43b8ea| !value_3b43b8ea.is_whitespace());
+            str_path
         }
     });
     option_attr.expect("68acaa15")
@@ -25,9 +25,9 @@ pub fn get_macro_attr_meta_list_ts<'attrs_lifetime>(
         .iter()
         .find(|attr| {
             *attr_path == {
-                let mut stringified_path = ToTokens::to_token_stream(&attr.path()).to_string();
-                stringified_path.retain(|value_e5eda357| !value_e5eda357.is_whitespace());
-                stringified_path
+                let mut str_path = ToTokens::to_token_stream(&attr.path()).to_string();
+                str_path.retain(|value_e5eda357| !value_e5eda357.is_whitespace());
+                str_path
             }
         })
         .clone();
