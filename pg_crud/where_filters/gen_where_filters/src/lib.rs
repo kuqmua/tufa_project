@@ -16,7 +16,7 @@ use pg_crud_macros_common::{
 };
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
-use quote::quote;
+use quote::{ToTokens, quote};
 use std::fmt::Display;
 use token_patterns::{
     CoreDefaultDefaultDefault, PgCrudCommonDefaultOptionSomeVecOneEl,
@@ -85,7 +85,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         CanBeZero,
         CanNotBeZero,
     }
-    impl quote::ToTokens for KindOfUnsignedPartOfI32 {
+    impl ToTokens for KindOfUnsignedPartOfI32 {
         fn to_tokens(&self, tokens: &mut Ts2) {
             match &self {
                 Self::CanBeZero => quote! {UnsignedPartOfI32}.to_tokens(tokens),
@@ -137,10 +137,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     let value_default_option_some_vec_one_el_ts = quote! {
         #ValueSc: #pg_crud_common_default_option_some_vec_one_el_call_ts
     };
-    let gen_struct_ts = |filter_initialized_with_try_new_result_is_ok: bool, should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn quote::ToTokens, struct_additional_fields_ts: &dyn quote::ToTokens| {
-        let maybe_pub_ts: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_ts_new } else { &PubSc };
-        let maybe_derive_serde_deserialize_ts: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_ts_new } else { &quote! {serde::Deserialize,} };
-        let maybe_declaration_of_struct_ident_generic_ts: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
+    let gen_struct_ts = |filter_initialized_with_try_new_result_is_ok: bool, should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn ToTokens, struct_additional_fields_ts: &dyn ToTokens| {
+        let maybe_pub_ts: &dyn ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_ts_new } else { &PubSc };
+        let maybe_derive_serde_deserialize_ts: &dyn ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_ts_new } else { &quote! {serde::Deserialize,} };
+        let maybe_declaration_of_struct_ident_generic_ts: &dyn ToTokens = match &should_add_declaration_of_struct_ident_generic {
             ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_ts_new,
             ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_ts } => {
                 &maybe_additional_traits_ts.as_ref().map_or_else(|| quote! {<#t_ts>}, |value_d05f3d4f| quote! {<#t_ts: #value_d05f3d4f>})
@@ -154,7 +154,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             }
         }
     };
-    let gen_impl_default_option_some_vec_one_el_ts = |should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn quote::ToTokens, impl_default_option_some_vec_one_el_additional_fields_ts: &dyn quote::ToTokens| {
+    let gen_impl_default_option_some_vec_one_el_ts = |should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn ToTokens, impl_default_option_some_vec_one_el_additional_fields_ts: &dyn ToTokens| {
         gen_impl_default_option_some_vec_one_el_ts(
             &match &should_add_declaration_of_struct_ident_generic {
                 ShouldAddDeclarationOfStructIdentGeneric::False => Ts2::new(),
@@ -182,16 +182,16 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     let gen_impl_pg_type_where_filter_ts = |
         filter_type: &FilterType,
         should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric,
-        ident: &dyn quote::ToTokens,
+        ident: &dyn ToTokens,
         increment_parameter_underscore: &IncrementParameterUnderscore,
         is_need_to_add_logical_operator_underscore: &IsNeedToAddLogicalOperatorUnderscore,
-        query_part_content_ts: &dyn quote::ToTokens,
+        query_part_content_ts: &dyn ToTokens,
         is_query_bind_mutable: &IsQueryBindMutable,
-        query_bind_content_ts: &dyn quote::ToTokens
+        query_bind_content_ts: &dyn ToTokens
     | {
         impl_pg_type_where_filter_for_ident_ts(
             &{
-                let maybe_t_additional_traits_for_pg_type_where_filter_ts: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
+                let maybe_t_additional_traits_for_pg_type_where_filter_ts: &dyn ToTokens = match &should_add_declaration_of_struct_ident_generic {
                     ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_ts_new,
                     ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_ts } => {
                         let send_and_lifetime_ts = quote! {Send + 'lifetime};
@@ -250,7 +250,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         ShouldAddDeclarationOfStructIdentGeneric::True {
             maybe_additional_traits_ts: None,
         };
-    let gen_match_increment_checked_add_one_initialization_ts = |ident_ts: &dyn quote::ToTokens| {
+    let gen_match_increment_checked_add_one_initialization_ts = |ident_ts: &dyn ToTokens| {
         quote! {
             let #ident_ts = match pg_crud_common::increment_checked_add_one_returning_increment(#IncrementSc) {
                 Ok(value_25d59e01) => value_25d59e01,
@@ -294,16 +294,13 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     let pg_type_pattern_handle_array_dimension3 = PgTypePatternHandle::ArrayDimension3;
     let pg_type_pattern_handle_array_dimension4 = PgTypePatternHandle::ArrayDimension4;
     let gen_pub_dimensions_bounded_vec_ts =
-        |vec_length_ts: &dyn quote::ToTokens,
-         kind_of_unsigned_part_of_i32: &KindOfUnsignedPartOfI32| {
+        |vec_length_ts: &dyn ToTokens, kind_of_unsigned_part_of_i32: &KindOfUnsignedPartOfI32| {
             quote! {pub #DimensionsSc: BoundedStdVecVec<pg_crud_common::#kind_of_unsigned_part_of_i32, #vec_length_ts>}
         };
     let value_match_increment_checked_add_one_initialization_ts =
         gen_match_increment_checked_add_one_initialization_ts(&ValueSc);
     let gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts =
-        |ident_ts: &dyn quote::ToTokens,
-         field_ts: &dyn quote::ToTokens,
-         function_ts: &dyn quote::ToTokens| {
+        |ident_ts: &dyn ToTokens, field_ts: &dyn ToTokens, function_ts: &dyn ToTokens| {
             quote! {
                 let #ident_ts = match self.#field_ts.#function_ts(#IncrementSc, #ColumnSc, is_need_to_add_logical_operator) {
                     Ok(value_0a22ee9a) => value_0a22ee9a,
@@ -331,14 +328,14 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     };
     let dimensions_indexes_comma_ts = quote! {#DimensionsIndexesSc,};
     let gen_maybe_dimensions_declaration_pub_value_t_ts =
-        |maybe_dimensions_declaration_ts: &dyn quote::ToTokens| {
+        |maybe_dimensions_declaration_ts: &dyn ToTokens| {
             quote! {
                 #maybe_dimensions_declaration_ts
                 #pub_value_t_ts
             }
         };
     let gen_maybe_dimensions_default_initialization_value_default_ts =
-        |maybe_dimensions_default_initialization_ts: &dyn quote::ToTokens| {
+        |maybe_dimensions_default_initialization_ts: &dyn ToTokens| {
             quote! {
                 #maybe_dimensions_default_initialization_ts
                 #value_default_option_some_vec_one_el_ts
@@ -1446,7 +1443,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                     gen_maybe_dimensions_default_initialization_value_default_ts(&maybe_dimensions_default_initialization_ts),
                     {
-                        let content_ts: &dyn quote::ToTokens = match pg_type_pattern_handle {
+                        let content_ts: &dyn ToTokens = match pg_type_pattern_handle {
                             PgTypePatternHandle::Standart => &quote!{
                                 let value = match self.value.query_part(
                                     increment,
@@ -1479,7 +1476,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                     is_query_bind_mutable_true,
                     {
-                        let content_ts: &dyn quote::ToTokens = match pg_type_pattern_handle {
+                        let content_ts: &dyn ToTokens = match pg_type_pattern_handle {
                             PgTypePatternHandle::Standart => &quote!{
                                 match self.value.query_bind(query) {
                                     Ok(value) => {
