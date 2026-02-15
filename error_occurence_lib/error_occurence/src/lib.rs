@@ -95,7 +95,7 @@ pub fn error_occurence(input: Ts) -> Ts {
         } else {
             let value = generic_parameters
                 .iter()
-                .map(|el_4ee89bd7| quote! {#el_4ee89bd7: error_occurence_lib::ToStdStringString});
+                .map(|el_4ee89bd7| quote! {#el_4ee89bd7: error_occurence_lib::ToErrString});
             quote! {<#(#value),*>}
         };
     let gen_enum_ident_with_serialize_deserialize_ts = |variants_ts: &dyn ToTokens| {
@@ -160,9 +160,9 @@ pub fn error_occurence(input: Ts) -> Ts {
                     .map(|el_f00312fe| {
                         let current_ident = &el_f00312fe.ident.as_ref().expect("e97b25b9");
                         match ErrorOccurenceFieldAttribute::try_from(el_f00312fe).expect("8ff56aeb") {
-                            ErrorOccurenceFieldAttribute::EoToStdStringString | ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize => {
+                            ErrorOccurenceFieldAttribute::EoToErrString | ErrorOccurenceFieldAttribute::EoToErrStringSerializeDeserialize => {
                                 quote! {
-                                    error_occurence_lib::ToStdStringString::to_err_string(#current_ident)
+                                    error_occurence_lib::ToErrString::to_err_string(#current_ident)
                                 }
                             }
                             ErrorOccurenceFieldAttribute::EoErrorOccurence => {
@@ -177,14 +177,14 @@ pub fn error_occurence(input: Ts) -> Ts {
                                     )
                                 }
                             }
-                            ErrorOccurenceFieldAttribute::EoVecToStdStringString | ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
+                            ErrorOccurenceFieldAttribute::EoVecToErrString | ErrorOccurenceFieldAttribute::EoVecToErrStringSerializeDeserialize => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_a9ba7521, "\n {el_6e4f53ad}"}, &quote! {panic!("b35ed9f5");});
                                 quote! {
                                     #current_ident.iter().fold(
                                         #StdStringString::new(),
                                         |mut acc_ac447c4b, el_36630fcf| {
                                             acc_ac447c4b.push_str(
-                                                &error_occurence_lib::ToStdStringString::to_err_string(el_36630fcf)
+                                                &error_occurence_lib::ToErrString::to_err_string(el_36630fcf)
                                                 .lines()
                                                 .fold(
                                                     #StdStringString::new(),
@@ -217,8 +217,8 @@ pub fn error_occurence(input: Ts) -> Ts {
                                     )
                                 }
                             }
-                            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString | ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
-                                let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {key}: {}", &error_occurence_lib::ToStdStringString::to_err_string(#ValueSc)}, &quote! {panic!("d030580a");});
+                            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToErrString | ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToErrStringSerializeDeserialize => {
+                                let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {key}: {}", &error_occurence_lib::ToErrString::to_err_string(#ValueSc)}, &quote! {panic!("d030580a");});
                                 quote! {
                                     #current_ident.iter().fold(
                                         #StdStringString::new(),
@@ -328,14 +328,14 @@ pub fn error_occurence(input: Ts) -> Ts {
                     .map(|el_d7e120a3| {
                         let current_ident = &el_d7e120a3.ident.as_ref().expect("9a672ac2");
                         let conversion_ts = match ErrorOccurenceFieldAttribute::try_from(el_d7e120a3).expect("449c3781") {
-                            ErrorOccurenceFieldAttribute::EoToStdStringString => {
+                            ErrorOccurenceFieldAttribute::EoToErrString => {
                                 quote! {
                                     #current_ident: {
-                                        error_occurence_lib::ToStdStringString::to_err_string(&#current_ident)
+                                        error_occurence_lib::ToErrString::to_err_string(&#current_ident)
                                     }
                                 }
                             }
-                            ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize | ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize | ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
+                            ErrorOccurenceFieldAttribute::EoToErrStringSerializeDeserialize | ErrorOccurenceFieldAttribute::EoVecToErrStringSerializeDeserialize | ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToErrStringSerializeDeserialize => {
                                 quote! {
                                     #current_ident
                                 }
@@ -347,10 +347,10 @@ pub fn error_occurence(input: Ts) -> Ts {
                                     }
                                 }
                             }
-                            ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
+                            ErrorOccurenceFieldAttribute::EoVecToErrString => {
                                 quote! {
                                     #current_ident: {
-                                        #current_ident.into_iter().map(|el_3c145d8e|error_occurence_lib::ToStdStringString::to_err_string(&el_3c145d8e)).collect()
+                                        #current_ident.into_iter().map(|el_3c145d8e|error_occurence_lib::ToErrString::to_err_string(&el_3c145d8e)).collect()
                                     }
                                 }
                             }
@@ -361,11 +361,11 @@ pub fn error_occurence(input: Ts) -> Ts {
                                     }
                                 }
                             }
-                            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
+                            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToErrString => {
                                 quote! {
                                     #current_ident: {
                                         #current_ident.into_iter().map(|(key, value)|
-                                            (key, error_occurence_lib::ToStdStringString::to_err_string(&value))
+                                            (key, error_occurence_lib::ToErrString::to_err_string(&value))
                                         ).collect()
                                     }
                                 }

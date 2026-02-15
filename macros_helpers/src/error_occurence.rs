@@ -11,37 +11,37 @@ use token_patterns::StdStringString;
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum ErrorOccurenceFieldAttribute {
-    EoToStdStringString,
-    EoToStdStringStringSerializeDeserialize,
+    EoToErrString,
+    EoToErrStringSerializeDeserialize,
     EoErrorOccurence,
-    EoVecToStdStringString,
-    EoVecToStdStringStringSerializeDeserialize,
+    EoVecToErrString,
+    EoVecToErrStringSerializeDeserialize,
     EoVecErrorOccurence,
-    EoHashMapKeyStdStringStringValueToStdStringString,
-    EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize,
+    EoHashMapKeyStdStringStringValueToErrString,
+    EoHashMapKeyStdStringStringValueToErrStringSerializeDeserialize,
     EoHashMapKeyStdStringStringValueErrorOccurence,
 }
 impl FromStr for ErrorOccurenceFieldAttribute {
     type Err = ();
     fn from_str(value: &str) -> Result<Self, Self::Err> {
         if value == "eo_to_err_string" {
-            Ok(Self::EoToStdStringString)
+            Ok(Self::EoToErrString)
         } else if value == "eo_to_err_string_serialize_deserialize" {
-            Ok(Self::EoToStdStringStringSerializeDeserialize)
+            Ok(Self::EoToErrStringSerializeDeserialize)
         } else if value == "eo_error_occurence" {
             Ok(Self::EoErrorOccurence)
         } else if value == "eo_vec_to_err_string" {
-            Ok(Self::EoVecToStdStringString)
+            Ok(Self::EoVecToErrString)
         } else if value == "eo_vec_to_err_string_serialize_deserialize" {
-            Ok(Self::EoVecToStdStringStringSerializeDeserialize)
+            Ok(Self::EoVecToErrStringSerializeDeserialize)
         } else if value == "eo_vec_error_occurence" {
             Ok(Self::EoVecErrorOccurence)
         } else if value == "eo_hashmap_key_std_string_string_value_to_err_string" {
-            Ok(Self::EoHashMapKeyStdStringStringValueToStdStringString)
+            Ok(Self::EoHashMapKeyStdStringStringValueToErrString)
         } else if value
             == "eo_hashmap_key_std_string_string_value_to_err_string_serialize_deserialize"
         {
-            Ok(Self::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize)
+            Ok(Self::EoHashMapKeyStdStringStringValueToErrStringSerializeDeserialize)
         } else if value == "eo_hashmap_key_std_string_string_value_error_occurence" {
             Ok(Self::EoHashMapKeyStdStringStringValueErrorOccurence)
         } else {
@@ -75,20 +75,20 @@ impl TryFrom<&Field> for ErrorOccurenceFieldAttribute {
 impl AttributeIdentStr for ErrorOccurenceFieldAttribute {
     fn attribute_ident_str(&self) -> &str {
         match *self {
-            Self::EoToStdStringString => "eo_to_err_string",
-            Self::EoToStdStringStringSerializeDeserialize => {
+            Self::EoToErrString => "eo_to_err_string",
+            Self::EoToErrStringSerializeDeserialize => {
                 "eo_to_err_string_serialize_deserialize"
             }
             Self::EoErrorOccurence => "eo_error_occurence",
-            Self::EoVecToStdStringString => "eo_vec_to_err_string",
-            Self::EoVecToStdStringStringSerializeDeserialize => {
+            Self::EoVecToErrString => "eo_vec_to_err_string",
+            Self::EoVecToErrStringSerializeDeserialize => {
                 "eo_vec_to_err_string_serialize_deserialize"
             }
             Self::EoVecErrorOccurence => "eo_vec_error_occurence",
-            Self::EoHashMapKeyStdStringStringValueToStdStringString => {
+            Self::EoHashMapKeyStdStringStringValueToErrString => {
                 "eo_hashmap_key_std_string_string_value_to_err_string"
             }
-            Self::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
+            Self::EoHashMapKeyStdStringStringValueToErrStringSerializeDeserialize => {
                 "eo_hashmap_key_std_string_string_value_to_err_string_serialize_deserialize"
             }
             Self::EoHashMapKeyStdStringStringValueErrorOccurence => {
@@ -146,16 +146,16 @@ pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &Variant) -
             quote! {#el_type}
         };
         let el_type_with_serialize_deserialize_ts = match ErrorOccurenceFieldAttribute::try_from(el_c25b655e).expect("2db209a8") {
-            ErrorOccurenceFieldAttribute::EoToStdStringString => {
+            ErrorOccurenceFieldAttribute::EoToErrString => {
                 quote! {
                     #StdStringString
                 }
             }
-            ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize | ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => el_type_ts,
+            ErrorOccurenceFieldAttribute::EoToErrStringSerializeDeserialize | ErrorOccurenceFieldAttribute::EoVecToErrStringSerializeDeserialize => el_type_ts,
             ErrorOccurenceFieldAttribute::EoErrorOccurence => format!(
                 "{el_type_ts}{WithSerializeDeserializeUcc}"
             ).parse::<Ts2>().expect("201dc0a4"),
-            ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
+            ErrorOccurenceFieldAttribute::EoVecToErrString => {
                 quote! {
                     Vec<#StdStringString>
                 }
@@ -185,13 +185,13 @@ pub fn gen_serialize_deserialize_version_of_named_syn_variant(value: &Variant) -
                     Vec<#el_vec_type_with_serialize_deserialize_ts>
                 }
             }
-            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
+            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToErrString => {
                 let _: &GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap();
                 quote! {
                     std::collections::HashMap<#StdStringString, #StdStringString>
                 }
             }
-            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
+            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToErrStringSerializeDeserialize => {
                 let _: &GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap();
                 el_type_ts
             }

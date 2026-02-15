@@ -2785,7 +2785,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                     UpdateOrDelete::Delete => &el_ts
                                                 };
                                                 quote!{
-                                                    <#uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_update_ts as error_occurence_lib::ToStdStringString>::to_err_string(
+                                                    <#uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_update_ts as error_occurence_lib::ToErrString>::to_err_string(
                                                         #content_ts
                                                     )
                                                 }

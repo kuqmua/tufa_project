@@ -7,15 +7,15 @@
 // eo_error_occurence_field
 // https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/error_occurence_test/src/main.rs#L85 2024-05-06 09:17:23
 use error_occurence_lib::{
-    ErrorOccurence, ToStdStringString, code_occurence, code_occurence::CodeOccurence,
+    ErrorOccurence, ToErrString, code_occurence, code_occurence::CodeOccurence,
 };
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use thiserror::Error;
 #[derive(Debug, Error, ErrorOccurence)]
 pub enum ErrorNamedOne {
-    //use ToStdStringString for hashmap keys instead of Display
-    //todo even for String in serialize deserialize version of error must be using ToStdStringString impl instead of std::fmt::Display
+    //use ToErrString for hashmap keys instead of Display
+    //todo even for String in serialize deserialize version of error must be using ToErrString impl instead of std::fmt::Display
     //todo test on using only code_occurence as pnly field in named variant
     Variant {
         #[eo_to_err_string]
@@ -40,7 +40,6 @@ pub enum ErrorNamedOne {
         code_occurence: CodeOccurence,
     },
 }
-
 #[derive(Debug, Error, ErrorOccurence)]
 pub enum ErrorNamedTwo {
     Another {
@@ -54,20 +53,17 @@ pub enum ErrorNamedTwo {
         code_occurence: CodeOccurence,
     },
 }
-
 #[derive(Debug, Error, ErrorOccurence)]
 pub enum ErrorUnnamedOne {
     Something(ErrorNamedTwo),
 }
-
 #[derive(Debug)]
 pub struct DisplayStruct {
     pub display: String,
     pub something: bool,
 }
-
 //todo or maybe two different traits - display foreign type and convert into serializable and deserializable type
-impl ToStdStringString for DisplayStruct {
+impl ToErrString for DisplayStruct {
     fn to_err_string(&self) -> String {
         format!("{self:?}")
     }
@@ -79,13 +75,11 @@ pub struct SerializeDeserializeStruct {
     pub two: bool,
     pub three: u32,
 }
-
-impl ToStdStringString for SerializeDeserializeStruct {
+impl ToErrString for SerializeDeserializeStruct {
     fn to_err_string(&self) -> String {
         format!("{self:?}")
     }
 }
-
 fn main() {
     let error = ErrorNamedOne::Variant {
         eo_display_field: DisplayStruct {
@@ -187,4 +181,3 @@ fn main() {
     };
     println!("{error:?}");
 }
-// ///////////

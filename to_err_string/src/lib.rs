@@ -16,246 +16,236 @@ use sqlx::{
 use std::io::Error as IoError;
 use time::error::ComponentRange;
 use tracing::{dispatcher::SetGlobalDefaultError, log::SetLoggerError};
-pub trait ToStdStringString {
+pub trait ToErrString {
     fn to_err_string(&self) -> String;
 }
-impl ToStdStringString for String {
+impl ToErrString for String {
     fn to_err_string(&self) -> String {
         self.clone()
     }
 }
-impl ToStdStringString for i8 {
+impl ToErrString for i8 {
     fn to_err_string(&self) -> String {
         self.to_string()
     }
 }
-impl ToStdStringString for i16 {
+impl ToErrString for i16 {
     fn to_err_string(&self) -> String {
         self.to_string()
     }
 }
-impl ToStdStringString for i32 {
+impl ToErrString for i32 {
     fn to_err_string(&self) -> String {
         self.to_string()
     }
 }
-impl ToStdStringString for i64 {
+impl ToErrString for i64 {
     fn to_err_string(&self) -> String {
         self.to_string()
     }
 }
-impl ToStdStringString for u8 {
+impl ToErrString for u8 {
     fn to_err_string(&self) -> String {
         self.to_string()
     }
 }
-impl ToStdStringString for u16 {
+impl ToErrString for u16 {
     fn to_err_string(&self) -> String {
         self.to_string()
     }
 }
-impl ToStdStringString for u32 {
+impl ToErrString for u32 {
     fn to_err_string(&self) -> String {
         self.to_string()
     }
 }
-impl ToStdStringString for u64 {
+impl ToErrString for u64 {
     fn to_err_string(&self) -> String {
         self.to_string()
     }
 }
-impl ToStdStringString for f32 {
+impl ToErrString for f32 {
     fn to_err_string(&self) -> String {
         self.to_string()
     }
 }
-impl ToStdStringString for f64 {
+impl ToErrString for f64 {
     fn to_err_string(&self) -> String {
         self.to_string()
     }
 }
-impl ToStdStringString for Option<i8> {
+impl ToErrString for Option<i8> {
     fn to_err_string(&self) -> String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for Option<i16> {
+impl ToErrString for Option<i16> {
     fn to_err_string(&self) -> String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for Option<i32> {
+impl ToErrString for Option<i32> {
     fn to_err_string(&self) -> String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for Option<i64> {
+impl ToErrString for Option<i64> {
     fn to_err_string(&self) -> String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for Option<u8> {
+impl ToErrString for Option<u8> {
     fn to_err_string(&self) -> String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for Option<u16> {
+impl ToErrString for Option<u16> {
     fn to_err_string(&self) -> String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for Option<u32> {
+impl ToErrString for Option<u32> {
     fn to_err_string(&self) -> String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for Option<u64> {
+impl ToErrString for Option<u64> {
     fn to_err_string(&self) -> String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for Option<f32> {
+impl ToErrString for Option<f32> {
     fn to_err_string(&self) -> String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for Option<f64> {
+impl ToErrString for Option<f64> {
     fn to_err_string(&self) -> String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for SetGlobalDefaultError {
+impl ToErrString for SetGlobalDefaultError {
     fn to_err_string(&self) -> String {
         String::from("tracing::dispatcher::SetGlobalDefaultError")
     }
 }
-impl ToStdStringString for SetLoggerError {
+impl ToErrString for SetLoggerError {
     fn to_err_string(&self) -> String {
         String::from("tracing::log::SetLoggerError")
     }
 }
-impl ToStdStringString for HeaderMap {
+impl ToErrString for HeaderMap {
     fn to_err_string(&self) -> String {
         format!("{self:#?}")
     }
 }
-impl ToStdStringString for SizeHint {
+impl ToErrString for SizeHint {
     fn to_err_string(&self) -> String {
         format!("{self:#?}")
     }
 }
-impl ToStdStringString for ToStrError {
+impl ToErrString for ToStrError {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for AxumError {
+impl ToErrString for AxumError {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for usize {
+impl ToErrString for usize {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for ComponentRange {
+impl ToErrString for ComponentRange {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for UuidError {
+impl ToErrString for UuidError {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for IoError {
+impl ToErrString for IoError {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for SqlxError {
+impl ToErrString for SqlxError {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for serde_json::Error {
+impl ToErrString for serde_json::Error {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for reqwest::Error {
+impl ToErrString for reqwest::Error {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for reqwest::StatusCode {
+impl ToErrString for reqwest::StatusCode {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for JsonDataError {
+impl ToErrString for JsonDataError {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for MigrateError {
+impl ToErrString for MigrateError {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for JsonSyntaxError {
+impl ToErrString for JsonSyntaxError {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for JsonRejection {
+impl ToErrString for JsonRejection {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for NaiveTime {
+impl ToErrString for NaiveTime {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for NaiveDate {
+impl ToErrString for NaiveDate {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for NaiveDateTime {
+impl ToErrString for NaiveDateTime {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for Time {
+impl ToErrString for Time {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for PrimitiveDateTime {
+impl ToErrString for PrimitiveDateTime {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for Decimal {
+impl ToErrString for Decimal {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToStdStringString for BigDecimal {
+impl ToErrString for BigDecimal {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-// impl ToStdStringString for  {
-//     fn to_err_string(&self) -> String {
-//         format!("{self}")
-//     }
-// }
-// impl ToStdStringString for  {
-//     fn to_err_string(&self) -> String {
-//         format!("{self}")
-//     }
-// }

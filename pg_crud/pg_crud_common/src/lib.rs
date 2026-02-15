@@ -1,7 +1,7 @@
 pub use pg_crud_common_and_macros_common::*;
 
 use error_occurence_lib::{
-    ErrorOccurence, ToStdStringString, code_occurence, code_occurence::CodeOccurence,
+    ErrorOccurence, ToErrString, code_occurence, code_occurence::CodeOccurence,
 };
 use naming::{AscUcc, DescUcc, DisplayToScStr, DisplayToUccStr};
 use schemars::JsonSchema;
@@ -119,7 +119,7 @@ pub trait PgJsonType {
     type Where: WhereAlias
         + UtoipaToSchemaAndSchemarsJsonSchemaAlias
         + AllEnumVariantsArrayDefaultOptionSomeVecOneEl
-        + ToStdStringString;
+        + ToErrString;
     //todo impl get fields from read
     //todo maybe add Decode trait here and Type
     type Read: ReadAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + DefaultOptionSomeVecOneEl;
@@ -191,7 +191,7 @@ pub trait PgJsonTypeObjectVecElementId {
     type CreateForQuery: CreateForQueryAlias
         + From<<Self::PgJsonType as PgJsonType>::Create>
         + From<<Self::PgJsonType as PgJsonType>::Update>;
-    type Update: UpdateAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + ToStdStringString;
+    type Update: UpdateAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + ToErrString;
     type ReadInner: ReadInnerAlias;
     fn query_bind_string_as_pg_text_create_for_query(
         value: <Self::PgJsonType as PgJsonType>::CreateForQuery,
@@ -491,7 +491,7 @@ where
         )
     }
 }
-impl<T> ToStdStringString for NullableJsonObjectPgTypeWhereFilter<T>
+impl<T> ToErrString for NullableJsonObjectPgTypeWhereFilter<T>
 where
     T: Debug
         + PartialEq
@@ -1504,7 +1504,7 @@ const _: () = {
         }
     }
 };
-impl ToStdStringString for UnsignedPartOfI32 {
+impl ToErrString for UnsignedPartOfI32 {
     fn to_err_string(&self) -> String {
         self.0.to_string()
     }
@@ -1645,7 +1645,7 @@ const _: () = {
         }
     }
 };
-impl ToStdStringString for NotZeroUnsignedPartOfI32 {
+impl ToErrString for NotZeroUnsignedPartOfI32 {
     fn to_err_string(&self) -> String {
         self.0.to_err_string()
     }

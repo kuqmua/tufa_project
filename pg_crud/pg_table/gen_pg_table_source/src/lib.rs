@@ -1409,7 +1409,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
     let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string_serialize_deserialize =
-        ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize;
+        ErrorOccurenceFieldAttribute::EoToErrStringSerializeDeserialize;
     let string_syn_punctuated_punctuated = gen_simple_syn_punctuated_punctuated(&["String"]);
     let try_bind_syn_variant_wrapper = new_syn_variant_wrapper(
         &TryBindUcc,
@@ -1442,7 +1442,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let sqlx_error_syn_punctuated_punctuated =
         gen_simple_syn_punctuated_punctuated(&["sqlx", "Error"]);
     let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string =
-        ErrorOccurenceFieldAttribute::EoToStdStringString;
+        ErrorOccurenceFieldAttribute::EoToErrString;
     let pg_syn_variant_wrapper = new_syn_variant_wrapper(
         &PgUcc,
         Some(StatusCode::InternalServerError500),
