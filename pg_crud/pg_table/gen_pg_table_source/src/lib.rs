@@ -4,7 +4,7 @@ use macros_helpers::{
     ShouldWriteTokenStreamIntoFile, StatusCode, StructOrEnumDeriveTokenStreamBuilder,
     SynFieldWrapper, code_occurence_syn_field, gen_field_code_occurence_new_ts,
     gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts, gen_impl_display_ts,
-    gen_impl_error_occurence_lib_to_err_string_ts, gen_impl_pub_try_new_for_ident_ts,
+    gen_impl_pub_try_new_for_ident_ts, gen_impl_to_err_string_ts,
     gen_serde_version_of_named_syn_variant, gen_simple_syn_punctuated_punctuated,
     get_macro_attr_meta_list_ts, maybe_write_ts_into_file,
 };
@@ -1508,13 +1508,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &Ts2::new(),
             &quote! {write!(f, "{}", serde_json::to_string(&self).unwrap_or_else(|el_2636212f|format!("cannot serialize into json: {el_2636212f:?}")))},
         );
-        let impl_error_occurence_lib_to_err_string_for_ident_select_ts =
-            gen_impl_error_occurence_lib_to_err_string_ts(
-                &Ts2::new(),
-                &ident_select_ucc,
-                &Ts2::new(),
-                &quote! {format!("{self}")},
-            );
+        let impl_error_occurence_lib_to_err_string_for_ident_select_ts = gen_impl_to_err_string_ts(
+            &Ts2::new(),
+            &ident_select_ucc,
+            &Ts2::new(),
+            &quote! {format!("{self}")},
+        );
         let impl_pg_crud_all_variants_default_option_some_vec_one_el_for_ident_select_ts =
             gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_ts(&ident_select_ucc, &{
                 let elements_ts = gen_fields_named_with_comma_ts(

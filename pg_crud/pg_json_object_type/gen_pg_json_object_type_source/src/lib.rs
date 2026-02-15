@@ -3,8 +3,8 @@ use gen_quotes::double_quotes_ts;
 use macros_helpers::{
     DeriveSerdeDeserialize, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
     StructOrEnumDeriveTokenStreamBuilder, SynFieldWrapper, gen_if_write_is_err_curly_braces_ts,
-    gen_if_write_is_err_ts, gen_impl_display_ts, gen_impl_error_occurence_lib_to_err_string_ts,
-    gen_impl_from_ts, gen_impl_pub_const_new_for_ident_ts, gen_impl_pub_new_for_ident_ts,
+    gen_if_write_is_err_ts, gen_impl_display_ts, gen_impl_from_ts,
+    gen_impl_pub_const_new_for_ident_ts, gen_impl_pub_new_for_ident_ts, gen_impl_to_err_string_ts,
     gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts, gen_pub_type_alias_ts,
     gen_simple_syn_punctuated_punctuated, get_macro_attr_meta_list_ts, maybe_write_ts_into_file,
 };
@@ -657,7 +657,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             | gen_type_as_pg_json_type_ts(
                 &syn_field_wrapper.field_type
             );
-            let gen_gen_impl_error_occurence_lib_to_err_string_wrapper_ts = |current_ident_ts: &dyn ToTokens| gen_impl_error_occurence_lib_to_err_string_ts(
+            let gen_gen_impl_error_occurence_lib_to_err_string_wrapper_ts = |current_ident_ts: &dyn ToTokens| gen_impl_to_err_string_ts(
                 &Ts2::new(),
                 &current_ident_ts,
                 &Ts2::new(),

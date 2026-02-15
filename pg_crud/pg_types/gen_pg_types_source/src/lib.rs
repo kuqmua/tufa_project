@@ -4,7 +4,7 @@ use macros_helpers::{
     DeriveCopy, DeriveDefault, DeriveEq, DeriveOrd, DerivePartialOrd, DeriveSerdeDeserialize,
     DeriveSerdeSerialize, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
     StructOrEnumDeriveTokenStreamBuilder, gen_const_new_ts, gen_if_write_is_err_ts,
-    gen_impl_display_ts, gen_impl_error_occurence_lib_to_err_string_ts, gen_impl_from_ts,
+    gen_impl_display_ts, gen_impl_to_err_string_ts, gen_impl_from_ts,
     gen_new_ts, gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts, maybe_write_ts_into_file,
 };
 use naming::{
@@ -4042,7 +4042,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 DeriveOrImpl::Impl(value) => value,
             };
             let impl_display_for_ident_origin_ts = gen_impl_display_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
-            let impl_error_occurence_lib_to_err_string_for_ident_origin_ts = gen_impl_error_occurence_lib_to_err_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {self.to_string()});
+            let impl_error_occurence_lib_to_err_string_for_ident_origin_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {self.to_string()});
             let impl_default_option_some_vec_one_el_for_ident_origin_ts = gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_origin_ucc, &{
                 let content_ts = match &pg_type_pattern {
                     PgTypePattern::Standart => match &not_null_or_nullable {
@@ -4790,7 +4790,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     )
             };
             let impl_ident_read_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_read_ucc);
-            let impl_error_occurence_lib_to_err_string_for_ident_read_ts = gen_impl_error_occurence_lib_to_err_string_ts(&Ts2::new(), &ident_read_ucc, &Ts2::new(), &quote! {self.0.to_string()});
+            let impl_error_occurence_lib_to_err_string_for_ident_read_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_read_ucc, &Ts2::new(), &quote! {self.0.to_string()});
             let impl_crate_default_option_some_vec_one_el_for_ident_read_ts =
                 gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_read_ucc, &quote! {Self(#pg_crud_common_default_option_some_vec_one_el_call_ts)});
             let impl_sqlx_encode_sqlx_pg_for_ident_origin_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_read_ucc, &quote! {#SelfSc.0});
@@ -4880,7 +4880,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let impl_ident_update_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_update_ucc);
             let impl_default_option_some_vec_one_el_for_ident_update_ts =
                 gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_update_ucc, &quote! {Self(#pg_crud_common_default_option_some_vec_one_el_call_ts)});
-            let impl_error_occurence_lib_to_err_string_for_ident_update_ts = gen_impl_error_occurence_lib_to_err_string_ts(&Ts2::new(), &ident_update_ucc, &Ts2::new(), &quote! {self.0.#ToErrStringSc()});
+            let impl_error_occurence_lib_to_err_string_for_ident_update_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_update_ucc, &Ts2::new(), &quote! {self.0.#ToErrStringSc()});
             quote! {
                 #ident_update_ts
                 #impl_ident_update_ts

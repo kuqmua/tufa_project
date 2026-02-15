@@ -4,7 +4,7 @@ pub use filters::*;
 
 use enum_extension_lib::EnumExtension;
 use gen_quotes::{double_quotes_str, double_quotes_ts};
-use macros_helpers::gen_impl_error_occurence_lib_to_err_string_ts;
+use macros_helpers::gen_impl_to_err_string_ts;
 use naming::{
     AllVariantsDefaultOptionSomeVecOneElMaxPageSizeSc, AllVariantsDefaultOptionSomeVecOneElSc,
     ColumnNameAndMaybeFieldGetterForErrorMessageSc, ColumnNameAndMaybeFieldGetterSc, ColumnSc,
@@ -666,7 +666,7 @@ pub fn gen_pg_type_where_ts(
             &ImportPath::PgCrudCommon,
         );
     let impl_error_occurence_lib_to_err_string_for_pg_type_tokens_where_ts =
-        gen_impl_error_occurence_lib_to_err_string_ts(
+        gen_impl_to_err_string_ts(
             &Ts2::new(),
             &ident,
             &Ts2::new(),

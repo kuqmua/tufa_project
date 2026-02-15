@@ -1,7 +1,7 @@
 use gen_quotes::double_quotes_ts;
 use macros_helpers::{
     ErrorOccurenceFieldAttr, gen_if_write_is_err_ts, gen_impl_display_ts,
-    gen_impl_error_occurence_lib_to_err_string_ts, gen_serde_version_of_named_syn_variant,
+    gen_impl_to_err_string_ts, gen_serde_version_of_named_syn_variant,
 };
 use naming::{
     CodeOccurenceSc, IntoSerdeVersionSc, ValueSc, WithSerializeDeserializeUcc,
@@ -406,7 +406,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                 &impl_display_handle_content_ts,
             );
             let impl_error_occurence_lib_to_err_string_to_err_string_for_ident_with_serialize_deserialize_ts =
-                gen_impl_error_occurence_lib_to_err_string_ts(
+                gen_impl_to_err_string_ts(
                     &maybe_generic_parameters_error_occurence_lib_to_err_string_annotations_ts,
                     &ident_with_serialize_deserialize_ucc,
                     &maybe_generic_parameters_ts,
