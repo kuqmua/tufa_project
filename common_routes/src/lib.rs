@@ -5,6 +5,7 @@ use axum::{
     http::{StatusCode, Uri},
     routing::get,
 };
+use serde::Serialize;
 use std::sync::Arc;
 type DynArcCommonRoutesParametersSendSync = Arc<dyn CommonRoutesParameters>;
 pub trait CommonRoutesParameters: git_info::GetGitCommitLink + Send + Sync {}
@@ -20,7 +21,7 @@ pub fn common_routes(app_state_b9fc2d94: DynArcCommonRoutesParametersSendSync) -
                 async |State(app_state_76fb2013): State<
                     DynArcCommonRoutesParametersSendSync,
                 >| {
-                    #[derive(Debug, serde::Serialize)]
+                    #[derive(Debug, Serialize)]
                     struct GitInfo {
                         commit: String,
                     }
@@ -41,7 +42,7 @@ pub fn common_routes(app_state_b9fc2d94: DynArcCommonRoutesParametersSendSync) -
                    State(app_state_19103bd5): State<
                 DynArcCommonRoutesParametersSendSync,
             >| {
-                #[derive(Debug, serde::Serialize)]
+                #[derive(Debug, Serialize)]
                 struct NotFoundHandle {
                     commit: String,
                     message: String,

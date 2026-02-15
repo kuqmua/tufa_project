@@ -1,5 +1,4 @@
-use serde::de::Error as SerdeError;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, de::Error as SerdeError};
 use server_port_common::{
     SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE,
     SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE, SERVER_PORT_MAX_VALUE, SERVER_PORT_MIN_VALUE,
@@ -61,7 +60,7 @@ impl TryFrom<u16> for ServerPort {
 impl<'de> Deserialize<'de> for ServerPort {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
-        D: serde::Deserializer<'de>,
+        D: Deserializer<'de>,
     {
         match Self::try_from(match u16::deserialize(deserializer) {
             Ok(value) => value,

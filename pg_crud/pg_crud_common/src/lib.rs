@@ -5,7 +5,7 @@ use error_occurence_lib::{
 };
 use naming::{AscUcc, DescUcc, DisplayToScStr, DisplayToUccStr};
 use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize};
 use sqlx::{
     encode::IsNull,
     error::BoxDynError,
@@ -449,9 +449,7 @@ pub trait PgTypeWhereFilter<'query_lifetime> {
     ) -> Result<String, QueryPartErrorNamed>;
 }
 //todo custom deserialization - must not contain more than one element
-#[derive(
-    Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, ToSchema, JsonSchema,
-)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema)]
 pub struct NullableJsonObjectPgTypeWhereFilter<
     T: Debug
         + PartialEq
@@ -524,7 +522,7 @@ pub enum QueryPartErrorNamed {
     WriteIntoBuffer { code_occurence: CodeOccurence },
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, ToSchema, JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
 pub struct PgTypeWhere<T> {
     logical_operator: LogicalOperator,
     value: NotEmptyUniqueVec<T>,
@@ -562,12 +560,10 @@ const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de>
-        for PgTypeWhere<T>
-    {
+    impl<'de, T: Debug + PartialEq + Clone + Deserialize<'de>> Deserialize<'de> for PgTypeWhere<T> {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
-            __D: _serde::Deserializer<'de>,
+            __D: Deserializer<'de>,
         {
             #[expect(non_camel_case_types)]
             #[doc(hidden)]
@@ -614,13 +610,13 @@ const _: () = {
                     }
                 }
             }
-            impl<'de> _serde::Deserialize<'de> for __Field {
+            impl<'de> Deserialize<'de> for __Field {
                 #[inline]
                 fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
                 where
-                    __D: _serde::Deserializer<'de>,
+                    __D: Deserializer<'de>,
                 {
-                    _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
+                    Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
                 }
             }
             #[doc(hidden)]
@@ -628,8 +624,8 @@ const _: () = {
                 marker: _serde::__private228::PhantomData<PgTypeWhere>,
                 lifetime: _serde::__private228::PhantomData<&'de ()>,
             }
-            impl<'de, T: Debug + PartialEq + Clone + _serde::Deserialize<'de>>
-                _serde::de::Visitor<'de> for __Visitor<'de, T>
+            impl<'de, T: Debug + PartialEq + Clone + Deserialize<'de>> _serde::de::Visitor<'de>
+                for __Visitor<'de, T>
             {
                 type Value = PgTypeWhere<T>;
                 fn expecting(&self, __f: &mut Formatter<'_>) -> _serde::__private228::fmt::Result {
@@ -715,7 +711,7 @@ const _: () = {
             }
             #[doc(hidden)]
             const FIELDS: &[&str] = &["logical_operator", "value"];
-            _serde::Deserializer::deserialize_struct(
+            Deserializer::deserialize_struct(
                 __deserializer,
                 "PgTypeWhere",
                 FIELDS,
@@ -797,17 +793,7 @@ impl<T: Debug + PartialEq + Clone + AllEnumVariantsArrayDefaultOptionSomeVecOneE
     }
 }
 
-#[derive(
-    Debug,
-    Default,
-    Clone,
-    Copy,
-    serde::Serialize,
-    serde::Deserialize,
-    PartialEq,
-    Eq,
-    from_str::FromStr,
-)]
+#[derive(Debug, Default, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, from_str::FromStr)]
 pub enum Order {
     #[serde(rename(serialize = "asc", deserialize = "asc"))]
     #[default]
@@ -839,15 +825,13 @@ impl Order {
     }
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct OrderBy<ColumnGeneric> {
     pub column: ColumnGeneric,
     pub order: Option<Order>,
 }
 
-#[derive(
-    Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, ToSchema, JsonSchema,
-)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema)]
 pub struct PaginationBase {
     limit: i64,
     offset: i64,
@@ -907,9 +891,9 @@ impl Default for PaginationBase {
         Self::new_unchecked(DEFAULT_PAGINATION_LIMIT, 0)
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, ToSchema, JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, ToSchema, JsonSchema)]
 pub struct PaginationStartsWithZero(PaginationBase);
-#[derive(Debug, serde::Serialize, serde::Deserialize, Error, ErrorOccurence)]
+#[derive(Debug, Serialize, Deserialize, Error, ErrorOccurence)]
 pub enum PaginationStartsWithZeroTryNewErrorNamed {
     LimitIsLessThanOrEqualToZero {
         #[eo_to_err_string_serialize_deserialize]
@@ -974,10 +958,10 @@ impl PaginationStartsWithZero {
 #[allow(unused_qualifications)]
 #[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
-impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
+impl<'de> Deserialize<'de> for PaginationStartsWithZero {
     fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
     where
-        __D: serde::Deserializer<'de>,
+        __D: Deserializer<'de>,
     {
         #[expect(non_camel_case_types)]
         #[doc(hidden)]
@@ -1024,13 +1008,13 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
                 }
             }
         }
-        impl<'de> serde::Deserialize<'de> for __Field {
+        impl<'de> Deserialize<'de> for __Field {
             #[inline]
             fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
             where
-                __D: serde::Deserializer<'de>,
+                __D: Deserializer<'de>,
             {
-                serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
+                Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
             }
         }
         #[doc(hidden)]
@@ -1114,7 +1098,7 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
         }
         #[doc(hidden)]
         const FIELDS: &[&str] = &["limit", "offset"];
-        serde::Deserializer::deserialize_struct(
+        Deserializer::deserialize_struct(
             __deserializer,
             "PaginationStartsWithZero",
             FIELDS,
@@ -1166,7 +1150,7 @@ pub trait IsStringEmpty {
     fn is_string_empty(&self) -> bool;
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize, Error, ErrorOccurence)]
+#[derive(Debug, Serialize, Deserialize, Error, ErrorOccurence)]
 pub enum NotEmptyUniqueVecTryNewErrorNamed<T> {
     IsEmpty {
         code_occurence: CodeOccurence,
@@ -1217,24 +1201,24 @@ const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de>
+    impl<'de, T: Debug + PartialEq + Clone + Deserialize<'de>> Deserialize<'de>
         for NotEmptyUniqueVec<T>
     {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
-            __D: _serde::Deserializer<'de>,
+            __D: Deserializer<'de>,
         {
             #[doc(hidden)]
             struct __Visitor<'de, T>
             where
-                T: _serde::Deserialize<'de>,
+                T: Deserialize<'de>,
             {
                 marker: _serde::__private228::PhantomData<NotEmptyUniqueVec<T>>,
                 lifetime: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
-            impl<'de, T: Debug + PartialEq + Clone + _serde::Deserialize<'de>>
-                _serde::de::Visitor<'de> for __Visitor<'de, T>
+            impl<'de, T: Debug + PartialEq + Clone + Deserialize<'de>> _serde::de::Visitor<'de>
+                for __Visitor<'de, T>
             {
                 type Value = NotEmptyUniqueVec<T>;
                 fn expecting(&self, __f: &mut Formatter<'_>) -> _serde::__private228::fmt::Result {
@@ -1243,9 +1227,9 @@ const _: () = {
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
                 where
-                    __E: _serde::Deserializer<'de>,
+                    __E: Deserializer<'de>,
                 {
-                    let __field0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
+                    let __field0: Vec<T> = <Vec<T> as Deserialize>::deserialize(__e)?;
                     Ok(NotEmptyUniqueVec(__field0))
                 }
                 #[inline]
@@ -1266,7 +1250,7 @@ const _: () = {
                     }
                 }
             }
-            _serde::Deserializer::deserialize_newtype_struct(
+            Deserializer::deserialize_newtype_struct(
                 __deserializer,
                 "NotEmptyUniqueVec",
                 __Visitor {
@@ -1359,13 +1343,13 @@ where
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub struct JsonFieldRights {
     can_create: bool,
     can_read: bool,
     can_update: bool,
 }
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct NonPrimaryKeyPgTypeReadOnlyIds(pub Value<Option<()>>);
 impl Decode<'_, Postgres> for NonPrimaryKeyPgTypeReadOnlyIds {
     fn decode(value: PgValueRef<'_>) -> Result<Self, BoxDynError> {
@@ -1406,18 +1390,10 @@ pub trait PgTypeEqualOperator {
     fn operator(&self) -> EqualOperator;
 }
 
-#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, serde::Serialize, JsonSchema)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Serialize, JsonSchema)]
 pub struct UnsignedPartOfI32(i32); //todo why exactly i32? maybe different types for pg type and pg json type
 #[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    Eq,
-    serde::Serialize,
-    serde::Deserialize,
-    Error,
-    ErrorOccurence,
-    JsonSchema,
+    Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, ErrorOccurence, JsonSchema,
 )]
 pub enum UnsignedPartOfI32TryFromI32ErrorNamed {
     LessThanZero {
@@ -1445,10 +1421,10 @@ impl TryFrom<i32> for UnsignedPartOfI32 {
 const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de> _serde::Deserialize<'de> for UnsignedPartOfI32 {
+    impl<'de> Deserialize<'de> for UnsignedPartOfI32 {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
-            __D: _serde::Deserializer<'de>,
+            __D: Deserializer<'de>,
         {
             #[doc(hidden)]
             struct __Visitor<'de> {
@@ -1467,9 +1443,9 @@ const _: () = {
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
                 where
-                    __E: _serde::Deserializer<'de>,
+                    __E: Deserializer<'de>,
                 {
-                    let __field0: i32 = <i32 as _serde::Deserialize>::deserialize(__e)?;
+                    let __field0: i32 = <i32 as Deserialize>::deserialize(__e)?;
                     match UnsignedPartOfI32::try_from(__field0) {
                         Ok(value) => Ok(value),
                         Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
@@ -1493,7 +1469,7 @@ const _: () = {
                     }
                 }
             }
-            _serde::Deserializer::deserialize_newtype_struct(
+            Deserializer::deserialize_newtype_struct(
                 __deserializer,
                 "UnsignedPartOfI32",
                 __Visitor {
@@ -1537,18 +1513,10 @@ impl DefaultOptionSomeVecOneEl for UnsignedPartOfI32 {
     }
 }
 
-#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, serde::Serialize, JsonSchema)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Serialize, JsonSchema)]
 pub struct NotZeroUnsignedPartOfI32(UnsignedPartOfI32);
 #[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    Eq,
-    serde::Serialize,
-    serde::Deserialize,
-    Error,
-    ErrorOccurence,
-    JsonSchema,
+    Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, ErrorOccurence, JsonSchema,
 )]
 pub enum NotZeroUnsignedPartOfI32TryFromI32ErrorNamed {
     IsZero {
@@ -1586,10 +1554,10 @@ impl TryFrom<i32> for NotZeroUnsignedPartOfI32 {
 const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de> _serde::Deserialize<'de> for NotZeroUnsignedPartOfI32 {
+    impl<'de> Deserialize<'de> for NotZeroUnsignedPartOfI32 {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
-            __D: _serde::Deserializer<'de>,
+            __D: Deserializer<'de>,
         {
             #[doc(hidden)]
             struct __Visitor<'de> {
@@ -1608,9 +1576,9 @@ const _: () = {
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
                 where
-                    __E: _serde::Deserializer<'de>,
+                    __E: Deserializer<'de>,
                 {
-                    let __field0: i32 = <i32 as _serde::Deserialize>::deserialize(__e)?;
+                    let __field0: i32 = <i32 as Deserialize>::deserialize(__e)?;
                     match NotZeroUnsignedPartOfI32::try_from(__field0) {
                         Ok(value) => Ok(value),
                         Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
@@ -1634,7 +1602,7 @@ const _: () = {
                     }
                 }
             }
-            _serde::Deserializer::deserialize_newtype_struct(
+            Deserializer::deserialize_newtype_struct(
                 __deserializer,
                 "NotZeroUnsignedPartOfI32",
                 __Visitor {
@@ -1677,9 +1645,7 @@ impl DefaultOptionSomeVecOneEl for NotZeroUnsignedPartOfI32 {
         Self(DefaultOptionSomeVecOneEl::default_option_some_vec_one_el())
     }
 }
-#[derive(
-    Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, ToSchema, JsonSchema,
-)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema)]
 pub enum SingleOrMultiple<T: Debug + PartialEq + Clone> {
     Multiple(NotEmptyUniqueVec<T>),
     Single(T),

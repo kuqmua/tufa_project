@@ -79,6 +79,7 @@ use pg_crud_macros_common::{
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
+use serde::{Deserialize, Serialize};
 use serde_json::from_str;
 use std::iter::repeat_with;
 use strum_macros::{Display, EnumIter};
@@ -95,7 +96,7 @@ use token_patterns::{
 //todo bug in update if updating array and creating element in jsonb array without anything - read_only_ids generation logic of vec returns wrong query part
 #[must_use]
 pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
-    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+    #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
     enum TraitGen {
         PgJsonType,
         PgTypeAndPgJsonType,
@@ -105,8 +106,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         Debug,
         Clone,
         PartialEq,
-        serde::Serialize,
-        serde::Deserialize,
+        Serialize,
+        Deserialize,
         Display,
         EnumIter,
         enum_extension_lib::EnumExtension,
@@ -115,13 +116,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         Standart,
         Array,
     }
-    #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+    #[derive(Debug, PartialEq, Serialize, Deserialize)]
     struct PgJsonObjectTypeRecord {
         not_null_or_nullable: NotNullOrNullable,
         pattern: Pattern,
         trait_gen: TraitGen,
     }
-    #[derive(Debug, serde::Deserialize)]
+    #[derive(Debug, Deserialize)]
     struct GenPgJsonTypesConfig {
         pg_table_columns_content_write_into_pg_table_columns_using_pg_json_object_types:
             ShouldWriteTokenStreamIntoFile,

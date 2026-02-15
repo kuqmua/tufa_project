@@ -86,6 +86,7 @@ use pg_crud_macros_common::{
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
+use serde::Deserialize;
 use serde_json::from_str;
 use std::{
     fmt::{Display, Formatter, Result as StdFmtResult},
@@ -409,7 +410,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         Delete,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, serde::Deserialize)]
+    #[derive(Debug, Deserialize)]
     struct GenPgTableConfig {
         create_many_content_write_into_gen_pg_table_create_many: ShouldWriteTokenStreamIntoFile,
         create_one_content_write_into_gen_pg_table_create_one: ShouldWriteTokenStreamIntoFile,

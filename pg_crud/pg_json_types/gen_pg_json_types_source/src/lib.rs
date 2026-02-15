@@ -319,14 +319,14 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+    #[derive(Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
     struct PgJsonTypeRecord {
         pg_json_type: PgJsonType,
         not_null_or_nullable: NotNullOrNullable,
         pg_json_type_pattern: PgJsonTypePattern,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, serde::Deserialize)]
+    #[derive(Debug, Deserialize)]
     enum GenPgJsonTypesConfigVariant {
         All,
         WithoutDimensions,
@@ -337,7 +337,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         Concrete(Vec<PgJsonTypeRecord>),
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, serde::Deserialize)]
+    #[derive(Debug, Deserialize)]
     struct GenPgJsonTypesConfig {
         pg_table_columns_content_write_into_pg_table_columns_using_pg_json_types:
             ShouldWriteTokenStreamIntoFile,

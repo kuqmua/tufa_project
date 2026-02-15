@@ -405,7 +405,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, PartialEq, serde::Serialize)]
+    #[derive(Debug, PartialEq, Serialize)]
     struct PgTypeRecord {
         pg_type: PgType,
         not_null_or_nullable: NotNullOrNullable,
