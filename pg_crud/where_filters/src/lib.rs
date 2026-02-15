@@ -3,6 +3,7 @@ use pg_crud_common::{
     DefaultOptionSomeVecOneEl, NotEmptyUniqueVecTryNewErrorNamed, PgTypeWhereFilter,
     QueryPartErrorNamed, increment_checked_add_one_returning_increment,
 };
+use regex::Regex;
 use schemars::{_private::alloc::borrow, JsonSchema, Schema, SchemaGenerator};
 use serde::{Deserialize, Serialize};
 use sqlx::{Encode, Postgres, Type, postgres::PgArguments, query::Query, types::Json};
@@ -224,7 +225,7 @@ where
     }
 }
 #[derive(Debug, Clone)]
-pub struct RegexRegex(pub regex::Regex);
+pub struct RegexRegex(pub Regex);
 // #[automatically_derived]
 // impl ::core::marker::StructuralPartialEq for RegexRegex {}
 // #[automatically_derived]
@@ -289,7 +290,7 @@ const _: () = {
                     __E: _serde::Deserializer<'de>,
                 {
                     let __field0: String = <String as _serde::Deserialize>::deserialize(__e)?;
-                    Ok(RegexRegex(match regex::Regex::new(&__field0) {
+                    Ok(RegexRegex(match Regex::new(&__field0) {
                         Ok(value) => value,
                         Err(error) => {
                             return Err(serde::de::Error::custom(format!("{error:?}")));
@@ -308,7 +309,7 @@ const _: () = {
                             &"tuple struct RegexRegex with 1 element",
                         ));
                     };
-                    Ok(RegexRegex(match regex::Regex::new(&__field0) {
+                    Ok(RegexRegex(match Regex::new(&__field0) {
                         Ok(value) => value,
                         Err(error) => {
                             return Err(serde::de::Error::custom(format!("{error:?}")));
@@ -356,7 +357,7 @@ impl Display for RegexRegex {
 }
 impl DefaultOptionSomeVecOneEl for RegexRegex {
     fn default_option_some_vec_one_el() -> Self {
-        Self(regex::Regex::new("[a-z]+").expect("22a9eda5"))
+        Self(Regex::new("[a-z]+").expect("22a9eda5"))
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]

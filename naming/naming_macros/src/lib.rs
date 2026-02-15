@@ -2,6 +2,7 @@ use gen_quotes::double_quotes_ts;
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
+use regex::Regex;
 #[allow(unused_imports)]
 use syn::{Data, DeriveInput, Fields, Ident, Type, parse};
 use token_patterns::StdStringString;
@@ -14,7 +15,7 @@ pub fn gen_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
         .into_iter()
         .map(|el_020a8657| {
             {
-                let regex = regex::Regex::new(REGEX_VALUE).expect("20948d87");
+                let regex = Regex::new(REGEX_VALUE).expect("20948d87");
                 for el_d68254e8 in &el_020a8657 {
                     assert!(regex.is_match(el_d68254e8), "faadba8a");
                 }
@@ -104,13 +105,12 @@ pub fn gen_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
     // println!("{generated}");
     generated.into()
 }
-
 #[proc_macro]
 pub fn gen_self_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
     panic_location::panic_location();
     let implementations_ts = serde_json::from_str::<Vec<Vec<String>>>(&input_ts.to_string()).expect("9d6a20af").into_iter().map(|el_a5ccbaa7| {
         {
-            let regex = regex::Regex::new(REGEX_VALUE).expect("cba1b5fb");
+            let regex = Regex::new(REGEX_VALUE).expect("cba1b5fb");
             for el_6d4f29dd in &el_a5ccbaa7 {
                 assert!(regex.is_match(el_6d4f29dd), "4a12d90f");
             }
@@ -261,8 +261,6 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
     // println!("{generated}");
     generated.into()
 }
-
-////////////////////
 /*
 only works if all enum variants without fields like this
 #[derive(macros_assistants::AsRefStrToUccStr)]
@@ -308,7 +306,6 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(input_ts: Ts) -> Ts {
     // println!("{generated}");
     generated.into()
 }
-
 /*
 only works if all enum variants without fields like this
  #[derive(macros_assistants::AsRefStrToScStr)]
@@ -398,7 +395,6 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(input_ts: Ts) -> Ts {
     // println!("{generated}");
     generated.into()
 }
-
 fn trait_path_ts() -> Ts2 {
     quote! {naming}
 }
