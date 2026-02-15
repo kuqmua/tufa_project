@@ -1,6 +1,7 @@
 use chrono::{DateTime, FixedOffset, Utc};
 use naming::GITHUB_URL;
 use schemars::JsonSchema;
+use serde::{Deserialize, Serialize};
 use std::{
     fmt::{Display, Formatter, Result as FmtResult},
     sync::OnceLock,
@@ -10,18 +11,14 @@ use utoipa::ToSchema;
 
 static SOURCE_PLACE_TYPE: OnceLock<app_state::SourcePlaceType> = OnceLock::new();
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(
-    Debug, PartialEq, Eq, Clone, serde::Serialize, serde::Deserialize, ToSchema, JsonSchema,
-)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, ToSchema, JsonSchema)]
 pub struct MacroOccurence {
     pub file: String,
     pub line: u32,
     pub column: u32,
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(
-    Debug, PartialEq, Eq, Clone, serde::Serialize, serde::Deserialize, ToSchema, JsonSchema,
-)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, ToSchema, JsonSchema)]
 pub struct CodeOccurence {
     #[allow(clippy::arbitrary_source_item_ordering)]
     file: String,

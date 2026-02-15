@@ -9,6 +9,7 @@
 
 use error_occurence_lib::ErrorOccurence;
 use error_occurence_lib::code_occurence::CodeOccurence;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use thiserror::Error;
 
@@ -73,7 +74,7 @@ impl error_occurence_lib::ToStdStringString for DisplayStruct {
     }
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct SerializeDeserializeStruct {
     pub one: String,
     pub two: bool,
