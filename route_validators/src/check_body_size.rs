@@ -2,13 +2,13 @@ use axum::{
     body::{Body, HttpBody, to_bytes},
     http::StatusCode,
 };
+use bytes::Bytes;
 use error_occurence_lib::ErrorOccurence;
 use error_occurence_lib::code_occurence;
 use error_occurence_lib::code_occurence::CodeOccurence;
 use http_body::SizeHint;
 use http_logic::GetAxumHttpStatusCode;
 use thiserror::Error;
-
 #[derive(Debug, Error, ErrorOccurence)]
 pub enum ErrorNamed {
     ReachedMaximumSizeOfBody {
@@ -28,7 +28,7 @@ impl GetAxumHttpStatusCode for ErrorNamed {
         }
     }
 }
-pub async fn check_body_size(body: Body, limit: usize) -> Result<bytes::Bytes, ErrorNamed> {
+pub async fn check_body_size(body: Body, limit: usize) -> Result<Bytes, ErrorNamed> {
     let size_hint = HttpBody::size_hint(&body);
     match to_bytes(body, limit).await {
         Ok(value) => Ok(value),

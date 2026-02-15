@@ -451,14 +451,7 @@ pub trait PgTypeWhereFilter<'query_lifetime> {
 }
 //todo custom deserialization - must not contain more than one element
 #[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    Eq,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
+    Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, JsonSchema,
 )]
 pub struct NullableJsonObjectPgTypeWhereFilter<
     T: Debug
@@ -532,7 +525,7 @@ pub enum QueryPartErrorNamed {
     WriteIntoBuffer { code_occurence: CodeOccurence },
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, JsonSchema)]
 pub struct PgTypeWhere<T> {
     logical_operator: LogicalOperator,
     value: NotEmptyUniqueVec<T>,
@@ -862,7 +855,7 @@ pub struct OrderBy<ColumnGeneric> {
     serde::Serialize,
     serde::Deserialize,
     utoipa::ToSchema,
-    schemars::JsonSchema,
+    JsonSchema,
 )]
 pub struct PaginationBase {
     limit: i64,
@@ -924,15 +917,7 @@ impl Default for PaginationBase {
     }
 }
 #[derive(
-    Debug,
-    Clone,
-    Copy,
-    PartialEq,
-    Eq,
-    Default,
-    serde::Serialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
+    Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, utoipa::ToSchema, JsonSchema,
 )]
 pub struct PaginationStartsWithZero(PaginationBase);
 #[derive(Debug, serde::Serialize, serde::Deserialize, Error, ErrorOccurence)]
@@ -1432,9 +1417,7 @@ pub trait PgTypeEqualOperator {
     fn operator(&self) -> EqualOperator;
 }
 
-#[derive(
-    Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema,
-)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, serde::Serialize, JsonSchema)]
 pub struct UnsignedPartOfI32(i32); //todo why exactly i32? maybe different types for pg type and pg json type
 #[derive(
     Debug,
@@ -1445,7 +1428,7 @@ pub struct UnsignedPartOfI32(i32); //todo why exactly i32? maybe different types
     serde::Deserialize,
     Error,
     ErrorOccurence,
-    schemars::JsonSchema,
+    JsonSchema,
 )]
 pub enum UnsignedPartOfI32TryFromI32ErrorNamed {
     LessThanZero {
@@ -1565,9 +1548,7 @@ impl DefaultOptionSomeVecOneEl for UnsignedPartOfI32 {
     }
 }
 
-#[derive(
-    Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema,
-)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, serde::Serialize, JsonSchema)]
 pub struct NotZeroUnsignedPartOfI32(UnsignedPartOfI32);
 #[derive(
     Debug,
@@ -1578,7 +1559,7 @@ pub struct NotZeroUnsignedPartOfI32(UnsignedPartOfI32);
     serde::Deserialize,
     Error,
     ErrorOccurence,
-    schemars::JsonSchema,
+    JsonSchema,
 )]
 pub enum NotZeroUnsignedPartOfI32TryFromI32ErrorNamed {
     IsZero {
@@ -1708,14 +1689,7 @@ impl DefaultOptionSomeVecOneEl for NotZeroUnsignedPartOfI32 {
     }
 }
 #[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    Eq,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
+    Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, JsonSchema,
 )]
 pub enum SingleOrMultiple<T: Debug + PartialEq + Clone> {
     Multiple(NotEmptyUniqueVec<T>),

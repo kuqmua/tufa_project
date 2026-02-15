@@ -1,4 +1,5 @@
 use naming::GITHUB_URL;
+use schemars::JsonSchema;
 use std::{
     fmt::{Display, Formatter, Result as FmtResult},
     sync::OnceLock,
@@ -8,14 +9,7 @@ use std::{
 static SOURCE_PLACE_TYPE: OnceLock<app_state::SourcePlaceType> = OnceLock::new();
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
-    Debug,
-    PartialEq,
-    Eq,
-    Clone,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
+    Debug, PartialEq, Eq, Clone, serde::Serialize, serde::Deserialize, utoipa::ToSchema, JsonSchema,
 )]
 pub struct MacroOccurence {
     pub file: String,
@@ -24,14 +18,7 @@ pub struct MacroOccurence {
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
-    Debug,
-    PartialEq,
-    Eq,
-    Clone,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
+    Debug, PartialEq, Eq, Clone, serde::Serialize, serde::Deserialize, utoipa::ToSchema, JsonSchema,
 )]
 pub struct CodeOccurence {
     #[allow(clippy::arbitrary_source_item_ordering)]

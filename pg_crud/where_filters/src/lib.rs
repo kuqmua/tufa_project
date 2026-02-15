@@ -4,7 +4,7 @@ use pg_crud_common::{
     DefaultOptionSomeVecOneEl, NotEmptyUniqueVecTryNewErrorNamed, PgTypeWhereFilter,
     QueryPartErrorNamed, increment_checked_add_one_returning_increment,
 };
-use schemars::JsonSchema;
+use schemars::{_private::alloc::borrow, JsonSchema, Schema, SchemaGenerator};
 use serde::{Deserialize, Serialize};
 use sqlx::{postgres::PgArguments, query::Query, types::Json};
 use std::fmt::{Display, Formatter, Result as StdFmtResult, Write as _};
@@ -39,7 +39,7 @@ impl DefaultOptionSomeVecOneEl for EncodeFormat {
 }
 
 //difference between NotEmptyUniqueVec and PgJsonTypeNotEmptyUniqueVec only in pg_crud_common::DefaultOptionSomeVecOneEl impl with different generic requirement and PgTypeWhereFilter
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, JsonSchema)]
 pub struct PgJsonTypeNotEmptyUniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
     #[must_use]
@@ -338,14 +338,14 @@ const _: () = {
 const _: () = {
     #[automatically_derived]
     #[allow(unused_braces)]
-    impl schemars::JsonSchema for RegexRegex {
-        fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-            schemars::_private::alloc::borrow::Cow::Borrowed("RegexRegex")
+    impl JsonSchema for RegexRegex {
+        fn schema_name() -> borrow::Cow<'static, str> {
+            borrow::Cow::Borrowed("RegexRegex")
         }
-        fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-            schemars::_private::alloc::borrow::Cow::Borrowed("tests::RegexRegex")
+        fn schema_id() -> borrow::Cow<'static, str> {
+            borrow::Cow::Borrowed("tests::RegexRegex")
         }
-        fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
+        fn json_schema(generator: &mut SchemaGenerator) -> Schema {
             { generator.subschema_for::<String>() }
         }
         fn inline_schema() -> bool {
