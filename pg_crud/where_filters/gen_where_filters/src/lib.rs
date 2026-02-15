@@ -4,8 +4,7 @@ use macros_helpers::{
     maybe_write_ts_into_file,
 };
 use naming::{
-    ColumnSc, DimensionsIndexesSc, DimensionsSc, ErrorSc, IncrementSc, PubSc, QuerySc, SelfSc,
-    ValueSc,
+    ColumnSc, DimsIndexesSc, DimsSc, ErrorSc, IncrementSc, PubSc, QuerySc, SelfSc, ValueSc,
     parameter::{PgJsonTypeWhereSelfUcc, PgTypeWhereSelfUcc},
 };
 use panic_location::panic_location;
@@ -42,39 +41,36 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     #[derive(Clone)]
     enum PgTypePatternHandle {
         Standart,
-        ArrayDimension1,
-        ArrayDimension2,
-        ArrayDimension3,
-        ArrayDimension4,
+        ArrayDim1,
+        ArrayDim2,
+        ArrayDim3,
+        ArrayDim4,
     }
-    impl TryFrom<&PgTypePatternHandle> for DimensionNumber {
+    impl TryFrom<&PgTypePatternHandle> for DimNumber {
         type Error = ();
         fn try_from(value: &PgTypePatternHandle) -> Result<Self, Self::Error> {
             match &value {
                 PgTypePatternHandle::Standart => Err(()),
-                PgTypePatternHandle::ArrayDimension1 => Ok(Self::One),
-                PgTypePatternHandle::ArrayDimension2 => Ok(Self::Two),
-                PgTypePatternHandle::ArrayDimension3 => Ok(Self::Three),
-                PgTypePatternHandle::ArrayDimension4 => Ok(Self::Four),
+                PgTypePatternHandle::ArrayDim1 => Ok(Self::One),
+                PgTypePatternHandle::ArrayDim2 => Ok(Self::Two),
+                PgTypePatternHandle::ArrayDim3 => Ok(Self::Three),
+                PgTypePatternHandle::ArrayDim4 => Ok(Self::Four),
             }
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Clone)]
-    enum DimensionNumber {
+    enum DimNumber {
         One,
         Two,
         Three,
         Four,
     }
-    impl DimensionNumber {
-        fn dimension_ts(&self) -> Ts2 {
-            self.dimension_u8()
-                .to_string()
-                .parse::<Ts2>()
-                .expect("18c32bc0")
+    impl DimNumber {
+        fn dim_ts(&self) -> Ts2 {
+            self.dim_u8().to_string().parse::<Ts2>().expect("18c32bc0")
         }
-        const fn dimension_u8(&self) -> u8 {
+        const fn dim_u8(&self) -> u8 {
             match &self {
                 Self::One => 1,
                 Self::Two => 2,
@@ -100,13 +96,13 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     #[allow(clippy::arbitrary_source_item_ordering)]
     enum PgTypeKind {
         Standart,
-        ArrayDimension,
+        ArrayDim,
     }
     impl PgTypeKind {
         const fn format_argument(&self) -> &'static str {
             match &self {
                 Self::Standart => "",
-                Self::ArrayDimension => "{}",
+                Self::ArrayDim => "{}",
             }
         }
     }
@@ -292,13 +288,13 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         Ok(#QuerySc)
     };
     let pg_type_pattern_handle_standart = PgTypePatternHandle::Standart;
-    let pg_type_pattern_handle_array_dimension1 = PgTypePatternHandle::ArrayDimension1;
-    let pg_type_pattern_handle_array_dimension2 = PgTypePatternHandle::ArrayDimension2;
-    let pg_type_pattern_handle_array_dimension3 = PgTypePatternHandle::ArrayDimension3;
-    let pg_type_pattern_handle_array_dimension4 = PgTypePatternHandle::ArrayDimension4;
-    let gen_pub_dimensions_bounded_vec_ts =
+    let pg_type_pattern_handle_array_dim1 = PgTypePatternHandle::ArrayDim1;
+    let pg_type_pattern_handle_array_dim2 = PgTypePatternHandle::ArrayDim2;
+    let pg_type_pattern_handle_array_dim3 = PgTypePatternHandle::ArrayDim3;
+    let pg_type_pattern_handle_array_dim4 = PgTypePatternHandle::ArrayDim4;
+    let gen_pub_dims_bounded_vec_ts =
         |vec_length_ts: &dyn ToTokens, kind_of_unsigned_part_of_i32: &KindOfUnsignedPartOfI32| {
-            quote! {pub #DimensionsSc: BoundedStdVecVec<pg_crud_common::#kind_of_unsigned_part_of_i32, #vec_length_ts>}
+            quote! {pub #DimsSc: BoundedStdVecVec<pg_crud_common::#kind_of_unsigned_part_of_i32, #vec_length_ts>}
         };
     let value_match_increment_checked_add_one_initialization_ts =
         gen_match_increment_checked_add_one_initialization_ts(&ValueSc);
@@ -314,13 +310,12 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             }
         };
     let value_match_self_value_query_part_initialization_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&ValueSc, &ValueSc, &quote! {query_part});
-    let dimensions_default_initialization_ts = quote! {
-        #DimensionsSc: #pg_crud_common_default_option_some_vec_one_el_call_ts
+    let dims_default_initialization_ts = quote! {
+        #DimsSc: #pg_crud_common_default_option_some_vec_one_el_call_ts
     };
-    let dimensions_default_initialization_comma_ts =
-        quote! {#dimensions_default_initialization_ts,};
-    let query_self_dimensions_query_bind_query_ts = quote! {
-        match #SelfSc.#DimensionsSc.query_bind(#QuerySc) {
+    let dims_default_initialization_comma_ts = quote! {#dims_default_initialization_ts,};
+    let query_self_dims_query_bind_query_ts = quote! {
+        match #SelfSc.#DimsSc.query_bind(#QuerySc) {
             Ok(value_ed6f1157) => {
                 #QuerySc = value_ed6f1157;
             }
@@ -329,63 +324,57 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             }
         }
     };
-    let dimensions_indexes_comma_ts = quote! {#DimensionsIndexesSc,};
-    let gen_maybe_dimensions_declaration_pub_value_t_ts =
-        |maybe_dimensions_declaration_ts: &dyn ToTokens| {
+    let dims_indexes_comma_ts = quote! {#DimsIndexesSc,};
+    let gen_maybe_dims_declaration_pub_value_t_ts = |maybe_dims_declaration_ts: &dyn ToTokens| {
+        quote! {
+            #maybe_dims_declaration_ts
+            #pub_value_t_ts
+        }
+    };
+    let gen_maybe_dims_default_initialization_value_default_ts =
+        |maybe_dims_default_initialization_ts: &dyn ToTokens| {
             quote! {
-                #maybe_dimensions_declaration_ts
-                #pub_value_t_ts
-            }
-        };
-    let gen_maybe_dimensions_default_initialization_value_default_ts =
-        |maybe_dimensions_default_initialization_ts: &dyn ToTokens| {
-            quote! {
-                #maybe_dimensions_default_initialization_ts
+                #maybe_dims_default_initialization_ts
                 #value_default_option_some_vec_one_el_ts
             }
         };
     let is_query_bind_mutable_true = IsQueryBindMutable::True;
     let is_query_bind_mutable_false = IsQueryBindMutable::False;
-    let gen_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts =
-        |dimension_number: &DimensionNumber| {
-            let pub_dimensions_bounded_vec_not_zero_unsigned_part_of_i32_ts =
-                gen_pub_dimensions_bounded_vec_ts(
-                    &dimension_number.dimension_ts(),
-                    &KindOfUnsignedPartOfI32::CanNotBeZero,
-                );
-            quote! {#pub_dimensions_bounded_vec_not_zero_unsigned_part_of_i32_ts,}
+    let gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts =
+        |dim_number: &DimNumber| {
+            let pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_ts = gen_pub_dims_bounded_vec_ts(
+                &dim_number.dim_ts(),
+                &KindOfUnsignedPartOfI32::CanNotBeZero,
+            );
+            quote! {#pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_ts,}
         };
-    let gen_pub_dimensions_bounded_vec_unsigned_part_of_i32_comma_ts =
-        |dimension_number: &DimensionNumber| {
-            let pub_dimensions_bounded_vec_unsigned_part_of_i32_ts =
-                gen_pub_dimensions_bounded_vec_ts(
-                    &dimension_number.dimension_ts(),
-                    &KindOfUnsignedPartOfI32::CanBeZero,
-                );
-            quote! {#pub_dimensions_bounded_vec_unsigned_part_of_i32_ts,}
-        };
-    let gen_pg_type_dimensions_helpers =
+    let gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts = |dim_number: &DimNumber| {
+        let pub_dims_bounded_vec_unsigned_part_of_i32_ts =
+            gen_pub_dims_bounded_vec_ts(&dim_number.dim_ts(), &KindOfUnsignedPartOfI32::CanBeZero);
+        quote! {#pub_dims_bounded_vec_unsigned_part_of_i32_ts,}
+    };
+    let gen_pg_type_dims_helpers =
         |pg_type_pattern_handle: &PgTypePatternHandle,
          pg_type_or_pg_json_type: &PgTypeOrPgJsonType| {
-            DimensionNumber::try_from(pg_type_pattern_handle).map_or_else(
+            DimNumber::try_from(pg_type_pattern_handle).map_or_else(
             |()| (Ts2::new(),Ts2::new(), Ts2::new(), PgTypeKind::Standart, Ts2::new(), Ts2::new()),
-            |dimension_number| (
+            |dim_number| (
                 match &pg_type_or_pg_json_type {
-                    PgTypeOrPgJsonType::PgType => gen_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(&dimension_number),
-                    PgTypeOrPgJsonType::PgJsonType => gen_pub_dimensions_bounded_vec_unsigned_part_of_i32_comma_ts(&dimension_number),
+                    PgTypeOrPgJsonType::PgType => gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(&dim_number),
+                    PgTypeOrPgJsonType::PgJsonType => gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts(&dim_number),
                 },
-                dimensions_default_initialization_comma_ts.clone(),
+                dims_default_initialization_comma_ts.clone(),
                 gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(
-                    &DimensionsIndexesSc,
-                    &DimensionsSc,
+                    &DimsIndexesSc,
+                    &DimsSc,
                     &match &pg_type_or_pg_json_type {
                         PgTypeOrPgJsonType::PgType => quote! {pg_type_query_part},
                         PgTypeOrPgJsonType::PgJsonType => quote! {pg_json_type_query_part},
                     },
                 ),
-                PgTypeKind::ArrayDimension,
-                dimensions_indexes_comma_ts.clone(),
-                query_self_dimensions_query_bind_query_ts.clone(),
+                PgTypeKind::ArrayDim,
+                dims_indexes_comma_ts.clone(),
+                query_self_dims_query_bind_query_ts.clone(),
             )
         )
         };
@@ -408,9 +397,9 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     };
                 let pub_value_pg_type_not_empty_unique_vec_t_ts =
                     quote! {pub #ValueSc: PgTypeNotEmptyUniqueVec<T>};
-                let gen_pg_type_dimensions_helpers_pg_type =
+                let gen_pg_type_dims_helpers_pg_type =
                     |pg_type_pattern_handle: &PgTypePatternHandle| {
-                        gen_pg_type_dimensions_helpers(
+                        gen_pg_type_dims_helpers(
                             pg_type_pattern_handle,
                             &PgTypeOrPgJsonType::PgType,
                         )
@@ -419,27 +408,25 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     |pg_type_pattern_handle: &PgTypePatternHandle,
                      gen_format_handle_str: &dyn Fn(&PgTypeKind) -> String| {
                         let (
-                            maybe_dimensions_declaration_ts,
-                            maybe_dimensions_default_initialization_ts,
-                            maybe_dimensions_indexes_initialization_ts,
+                            maybe_dims_declaration_ts,
+                            maybe_dims_default_initialization_ts,
+                            maybe_dims_indexes_initialization_ts,
                             pg_type_kind,
                             maybe_additional_parameters_ts,
-                            maybe_dimensions_query_bind_content_ts,
-                        ) = gen_pg_type_dimensions_helpers_pg_type(pg_type_pattern_handle);
+                            maybe_dims_query_bind_content_ts,
+                        ) = gen_pg_type_dims_helpers_pg_type(pg_type_pattern_handle);
                         (
                             should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
-                            gen_maybe_dimensions_declaration_pub_value_t_ts(
-                                &maybe_dimensions_declaration_ts,
-                            ),
-                            gen_maybe_dimensions_default_initialization_value_default_ts(
-                                &maybe_dimensions_default_initialization_ts,
+                            gen_maybe_dims_declaration_pub_value_t_ts(&maybe_dims_declaration_ts),
+                            gen_maybe_dims_default_initialization_value_default_ts(
+                                &maybe_dims_default_initialization_ts,
                             ),
                             IncrementParameterUnderscore::False,
                             {
                                 let format_handle_ts =
                                     double_quotes_ts(&gen_format_handle_str(&pg_type_kind));
                                 quote! {
-                                    #maybe_dimensions_indexes_initialization_ts
+                                    #maybe_dims_indexes_initialization_ts
                                     #value_match_increment_checked_add_one_initialization_ts
                                     Ok(format!(
                                         #format_handle_ts,
@@ -452,7 +439,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             },
                             is_query_bind_mutable_true,
                             quote! {
-                                #maybe_dimensions_query_bind_content_ts
+                                #maybe_dims_query_bind_content_ts
                                 #query_bind_one_value_ts
                             },
                         )
@@ -474,25 +461,25 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 };
                 let gen_between_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
-                        maybe_dimensions_declaration_ts,
-                        maybe_dimensions_default_initialization_ts,
-                        maybe_dimensions_indexes_initialization_ts,
+                        maybe_dims_declaration_ts,
+                        maybe_dims_default_initialization_ts,
+                        maybe_dims_indexes_initialization_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
-                        maybe_dimensions_query_bind_content_ts,
-                    ) = gen_pg_type_dimensions_helpers_pg_type(pg_type_pattern_handle);
+                        maybe_dims_query_bind_content_ts,
+                    ) = gen_pg_type_dims_helpers_pg_type(pg_type_pattern_handle);
                     (
                         should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
                         quote! {
-                            #maybe_dimensions_declaration_ts
+                            #maybe_dims_declaration_ts
                             #pub_value_between_t_ts
                         },
-                        gen_maybe_dimensions_default_initialization_value_default_ts(&maybe_dimensions_default_initialization_ts),
+                        gen_maybe_dims_default_initialization_value_default_ts(&maybe_dims_default_initialization_ts),
                         IncrementParameterUnderscore::False,
                         {
                             let format_handle_ts = double_quotes_ts(&format!("{{}}({{}}{} {{}})", pg_type_kind.format_argument()));
                             quote! {
-                                #maybe_dimensions_indexes_initialization_ts
+                                #maybe_dims_indexes_initialization_ts
                                 #value_match_self_value_query_part_initialization_ts
                                 Ok(format!(
                                     #format_handle_ts,
@@ -505,20 +492,20 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                         is_query_bind_mutable_true,
                         quote! {
-                            #maybe_dimensions_query_bind_content_ts
+                            #maybe_dims_query_bind_content_ts
                             #query_self_value_query_bind_ts
                         },
                     )
                 };
                 let gen_in_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
-                        maybe_dimensions_declaration_ts,
-                        maybe_dimensions_default_initialization_ts,
-                        maybe_dimensions_indexes_initialization_ts,
+                        maybe_dims_declaration_ts,
+                        maybe_dims_default_initialization_ts,
+                        maybe_dims_indexes_initialization_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
-                        maybe_dimensions_query_bind_content_ts,
-                    ) = gen_pg_type_dimensions_helpers_pg_type(pg_type_pattern_handle);
+                        maybe_dims_query_bind_content_ts,
+                    ) = gen_pg_type_dims_helpers_pg_type(pg_type_pattern_handle);
                     (
                         ShouldAddDeclarationOfStructIdentGeneric::True {
                             maybe_additional_traits_ts: Some(
@@ -526,11 +513,11 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             ),
                         },
                         quote! {
-                            #maybe_dimensions_declaration_ts
+                            #maybe_dims_declaration_ts
                             #pub_value_pg_type_not_empty_unique_vec_t_ts
                         },
-                        gen_maybe_dimensions_default_initialization_value_default_ts(
-                            &maybe_dimensions_default_initialization_ts,
+                        gen_maybe_dims_default_initialization_value_default_ts(
+                            &maybe_dims_default_initialization_ts,
                         ),
                         IncrementParameterUnderscore::False,
                         {
@@ -543,7 +530,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 &quote! {panic!("87f47f75");},
                             );
                             quote! {
-                                #maybe_dimensions_indexes_initialization_ts
+                                #maybe_dims_indexes_initialization_ts
                                 let #ValueSc = {
                                     let mut acc_14596a52 = String::default();
                                     for _ in #SelfSc.#ValueSc.to_vec() {
@@ -570,7 +557,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                         is_query_bind_mutable_true,
                         quote! {
-                            #maybe_dimensions_query_bind_content_ts
+                            #maybe_dims_query_bind_content_ts
                             for el_ea865d8c in #SelfSc.#ValueSc.into_vec() {
                                 if let Err(#ErrorSc) = #QuerySc.try_bind(el_ea865d8c) {
                                     return Err(#ErrorSc.to_string());
@@ -582,21 +569,21 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 };
                 let gen_regular_expression_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
-                        maybe_dimensions_declaration_ts,
-                        maybe_dimensions_default_initialization_ts,
-                        maybe_dimensions_indexes_initialization_ts,
+                        maybe_dims_declaration_ts,
+                        maybe_dims_default_initialization_ts,
+                        maybe_dims_indexes_initialization_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
-                        maybe_dimensions_query_bind_content_ts,
-                    ) = gen_pg_type_dimensions_helpers_pg_type(pg_type_pattern_handle);
+                        maybe_dims_query_bind_content_ts,
+                    ) = gen_pg_type_dims_helpers_pg_type(pg_type_pattern_handle);
                     (
                         should_add_declaration_of_struct_ident_generic_false.clone(),
                         quote! {
-                            #maybe_dimensions_declaration_ts
+                            #maybe_dims_declaration_ts
                             #regular_expression_case_and_value_declaration_ts
                         },
                         quote! {
-                            #maybe_dimensions_default_initialization_ts
+                            #maybe_dims_default_initialization_ts
                             #regular_expression_case_and_value_default_initialization_ts
                         },
                         IncrementParameterUnderscore::False,
@@ -606,7 +593,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 pg_type_kind.format_argument()
                             ));
                             quote! {
-                                #maybe_dimensions_indexes_initialization_ts
+                                #maybe_dims_indexes_initialization_ts
                                 #value_match_increment_checked_add_one_initialization_ts
                                 Ok(format!(
                                     #format_handle_ts,
@@ -620,27 +607,25 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                         is_query_bind_mutable_true,
                         quote! {
-                            #maybe_dimensions_query_bind_content_ts
+                            #maybe_dims_query_bind_content_ts
                             #if_let_err_query_try_bind_self_value_to_string_ts
                         },
                     )
                 };
                 let gen_before_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
-                        maybe_dimensions_declaration_ts,
-                        maybe_dimensions_default_initialization_ts,
-                        maybe_dimensions_indexes_initialization_ts,
+                        maybe_dims_declaration_ts,
+                        maybe_dims_default_initialization_ts,
+                        maybe_dims_indexes_initialization_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
-                        maybe_dimensions_query_bind_content_ts,
-                    ) = gen_pg_type_dimensions_helpers_pg_type(pg_type_pattern_handle);
+                        maybe_dims_query_bind_content_ts,
+                    ) = gen_pg_type_dims_helpers_pg_type(pg_type_pattern_handle);
                     (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
-                        gen_maybe_dimensions_declaration_pub_value_t_ts(
-                            &maybe_dimensions_declaration_ts,
-                        ),
-                        gen_maybe_dimensions_default_initialization_value_default_ts(
-                            &maybe_dimensions_default_initialization_ts,
+                        gen_maybe_dims_declaration_pub_value_t_ts(&maybe_dims_declaration_ts),
+                        gen_maybe_dims_default_initialization_value_default_ts(
+                            &maybe_dims_default_initialization_ts,
                         ),
                         IncrementParameterUnderscore::False,
                         {
@@ -649,7 +634,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 pg_type_kind.format_argument()
                             ));
                             quote! {
-                                #maybe_dimensions_indexes_initialization_ts
+                                #maybe_dims_indexes_initialization_ts
                                 #value_match_increment_checked_add_one_initialization_ts
                                 Ok(format!(
                                     #format_handle_ts,
@@ -662,7 +647,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                         is_query_bind_mutable_true,
                         quote! {
-                            #maybe_dimensions_query_bind_content_ts
+                            #maybe_dims_query_bind_content_ts
                             #query_bind_one_value_ts
                         },
                     )
@@ -670,23 +655,23 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 let gen_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_ts =
                     |pg_type_pattern_handle: &PgTypePatternHandle, pg_syntax: &dyn Display| {
                         let (
-                            maybe_dimensions_declaration_ts,
-                            maybe_dimensions_default_initialization_ts,
-                            maybe_dimensions_indexes_initialization_ts,
+                            maybe_dims_declaration_ts,
+                            maybe_dims_default_initialization_ts,
+                            maybe_dims_indexes_initialization_ts,
                             pg_type_kind,
                             maybe_additional_parameters_ts,
-                            maybe_dimensions_query_bind_content_ts,
-                        ) = gen_pg_type_dimensions_helpers_pg_type(pg_type_pattern_handle);
+                            maybe_dims_query_bind_content_ts,
+                        ) = gen_pg_type_dims_helpers_pg_type(pg_type_pattern_handle);
                         (
                             should_add_declaration_of_struct_ident_generic_false.clone(),
-                            maybe_dimensions_declaration_ts,
-                            maybe_dimensions_default_initialization_ts,
+                            maybe_dims_declaration_ts,
+                            maybe_dims_default_initialization_ts,
                             match &pg_type_pattern_handle {
                                 PgTypePatternHandle::Standart => IncrementParameterUnderscore::True,
-                                PgTypePatternHandle::ArrayDimension1
-                                | PgTypePatternHandle::ArrayDimension2
-                                | PgTypePatternHandle::ArrayDimension3
-                                | PgTypePatternHandle::ArrayDimension4 => {
+                                PgTypePatternHandle::ArrayDim1
+                                | PgTypePatternHandle::ArrayDim2
+                                | PgTypePatternHandle::ArrayDim3
+                                | PgTypePatternHandle::ArrayDim4 => {
                                     IncrementParameterUnderscore::False
                                 }
                             },
@@ -696,7 +681,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     pg_type_kind.format_argument()
                                 ));
                                 quote! {
-                                    #maybe_dimensions_indexes_initialization_ts
+                                    #maybe_dims_indexes_initialization_ts
                                     Ok(format!(
                                         #format_handle_ts,
                                         &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -707,15 +692,13 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             },
                             match &pg_type_pattern_handle {
                                 PgTypePatternHandle::Standart => is_query_bind_mutable_false,
-                                PgTypePatternHandle::ArrayDimension1
-                                | PgTypePatternHandle::ArrayDimension2
-                                | PgTypePatternHandle::ArrayDimension3
-                                | PgTypePatternHandle::ArrayDimension4 => {
-                                    is_query_bind_mutable_true
-                                }
+                                PgTypePatternHandle::ArrayDim1
+                                | PgTypePatternHandle::ArrayDim2
+                                | PgTypePatternHandle::ArrayDim3
+                                | PgTypePatternHandle::ArrayDim4 => is_query_bind_mutable_true,
                             },
                             quote! {
-                                #maybe_dimensions_query_bind_content_ts
+                                #maybe_dims_query_bind_content_ts
                                 Ok(#QuerySc)
                             },
                         )
@@ -762,22 +745,22 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 let gen_equal_to_encoded_string_representation_ts =
                     |pg_type_pattern_handle: &PgTypePatternHandle| {
                         let (
-                            maybe_dimensions_declaration_ts,
-                            maybe_dimensions_default_initialization_ts,
-                            maybe_dimensions_indexes_initialization_ts,
+                            maybe_dims_declaration_ts,
+                            maybe_dims_default_initialization_ts,
+                            maybe_dims_indexes_initialization_ts,
                             pg_type_kind,
                             maybe_additional_parameters_ts,
-                            maybe_dimensions_query_bind_content_ts,
-                        ) = gen_pg_type_dimensions_helpers_pg_type(pg_type_pattern_handle);
+                            maybe_dims_query_bind_content_ts,
+                        ) = gen_pg_type_dims_helpers_pg_type(pg_type_pattern_handle);
                         (
                             should_add_declaration_of_struct_ident_generic_false.clone(),
                             quote! {
-                                #maybe_dimensions_declaration_ts
+                                #maybe_dims_declaration_ts
                                 pub encode_format: EncodeFormat,
                                 pub encoded_string_representation: String,
                             },
                             quote! {
-                                #maybe_dimensions_default_initialization_ts
+                                #maybe_dims_default_initialization_ts
                                 encode_format: #pg_crud_common_default_option_some_vec_one_el_call_ts,
                                 encoded_string_representation: #core_default_default_default_ts
                             },
@@ -788,7 +771,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     pg_type_kind.format_argument()
                                 ));
                                 quote! {
-                                    #maybe_dimensions_indexes_initialization_ts
+                                    #maybe_dims_indexes_initialization_ts
                                     #value_match_increment_checked_add_one_initialization_ts
                                     Ok(format!(
                                         #format_handle_ts,
@@ -802,7 +785,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             },
                             is_query_bind_mutable_true,
                             quote! {
-                                #maybe_dimensions_query_bind_content_ts
+                                #maybe_dims_query_bind_content_ts
                                 if let Err(#ErrorSc) = #QuerySc.try_bind(self.encoded_string_representation) {
                                     return Err(#ErrorSc.to_string());
                                 }
@@ -901,32 +884,32 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     };
                 let gen_range_length_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
-                        maybe_dimensions_declaration_ts, maybe_dimensions_default_initialization_ts,
-                        maybe_dimensions_indexes_initialization_ts,
+                        maybe_dims_declaration_ts, maybe_dims_default_initialization_ts,
+                        maybe_dims_indexes_initialization_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
-                        maybe_dimensions_query_bind_content_ts
-                    ) = DimensionNumber::try_from(pg_type_pattern_handle).map_or_else(
+                        maybe_dims_query_bind_content_ts
+                    ) = DimNumber::try_from(pg_type_pattern_handle).map_or_else(
                         |()| (Ts2::new(), Ts2::new(), Ts2::new(), PgTypeKind::Standart, quote! {#ColumnSc,}, Ts2::new()),
-                        |dimension_number| (
-                            gen_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(&dimension_number),
-                            dimensions_default_initialization_comma_ts.clone(),
+                        |dim_number| (
+                            gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(&dim_number),
+                            dims_default_initialization_comma_ts.clone(),
                             {
-                                let dimensions_indexes1_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&quote! {dimensions_indexes1}, &DimensionsSc, &quote! {pg_type_query_part});
-                                let dimensions_indexes2_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&quote! {dimensions_indexes2}, &DimensionsSc, &quote! {pg_type_query_part});
+                                let dims_indexes1_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&quote! {dims_indexes1}, &DimsSc, &quote! {pg_type_query_part});
+                                let dims_indexes2_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&quote! {dims_indexes2}, &DimsSc, &quote! {pg_type_query_part});
                                 quote! {
-                                    #dimensions_indexes1_ts
-                                    #dimensions_indexes2_ts
+                                    #dims_indexes1_ts
+                                    #dims_indexes2_ts
                                 }
                             },
-                            PgTypeKind::ArrayDimension,
+                            PgTypeKind::ArrayDim,
                             quote! {
-                                dimensions_indexes1,
+                                dims_indexes1,
                                 column,
-                                dimensions_indexes2,
+                                dims_indexes2,
                             },
                             quote! {
-                                match #SelfSc.#DimensionsSc.clone().query_bind(#QuerySc) {
+                                match #SelfSc.#DimsSc.clone().query_bind(#QuerySc) {
                                     Ok(value_6cb14cdc) => {
                                         #QuerySc = value_6cb14cdc;
                                     },
@@ -934,18 +917,18 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                         return Err(#ErrorSc);
                                     }
                                 }
-                                #query_self_dimensions_query_bind_query_ts
+                                #query_self_dims_query_bind_query_ts
                             },
                         )
                     );
                     (
                         ShouldAddDeclarationOfStructIdentGeneric::False,
                         quote! {
-                            #maybe_dimensions_declaration_ts
+                            #maybe_dims_declaration_ts
                             #pub_value_not_zero_unsigned_part_of_i32_declaration_ts
                         },
-                        gen_maybe_dimensions_default_initialization_value_default_ts(
-                            &maybe_dimensions_default_initialization_ts,
+                        gen_maybe_dims_default_initialization_value_default_ts(
+                            &maybe_dims_default_initialization_ts,
                         ),
                         IncrementParameterUnderscore::False,
                         {
@@ -955,7 +938,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 pg_type_kind.format_argument(),
                             ));
                             quote! {
-                                #maybe_dimensions_indexes_initialization_ts
+                                #maybe_dims_indexes_initialization_ts
                                 #value_match_increment_checked_add_one_initialization_ts
                                 Ok(format!(
                                     #format_handle_ts,
@@ -968,7 +951,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                         is_query_bind_mutable_true,
                         quote! {
-                            #maybe_dimensions_query_bind_content_ts
+                            #maybe_dims_query_bind_content_ts
                             #query_bind_one_value_ts
                         },
                     )
@@ -976,30 +959,26 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 match &filter {
                     PgTypeFilter::Equal { .. } => {
                         let (
-                            maybe_dimensions_declaration_ts,
-                            maybe_dimensions_default_initialization_ts,
-                            maybe_dimensions_indexes_initialization_ts,
+                            maybe_dims_declaration_ts,
+                            maybe_dims_default_initialization_ts,
+                            maybe_dims_indexes_initialization_ts,
                             _,
                             _,
-                            maybe_dimensions_query_bind_content_ts,
-                        ) = gen_pg_type_dimensions_helpers_pg_type(
-                            &pg_type_pattern_handle_standart,
-                        );
+                            maybe_dims_query_bind_content_ts,
+                        ) = gen_pg_type_dims_helpers_pg_type(&pg_type_pattern_handle_standart);
                         (
                             ShouldAddDeclarationOfStructIdentGeneric::True {
                                 maybe_additional_traits_ts: Some(
                                     quote! {#sqlx_type_pg_encode_ts + pg_crud_common::PgTypeEqualOperator},
                                 ),
                             },
-                            gen_maybe_dimensions_declaration_pub_value_t_ts(
-                                &maybe_dimensions_declaration_ts,
-                            ),
-                            gen_maybe_dimensions_default_initialization_value_default_ts(
-                                &maybe_dimensions_default_initialization_ts,
+                            gen_maybe_dims_declaration_pub_value_t_ts(&maybe_dims_declaration_ts),
+                            gen_maybe_dims_default_initialization_value_default_ts(
+                                &maybe_dims_default_initialization_ts,
                             ),
                             IncrementParameterUnderscore::False,
                             quote! {
-                                #maybe_dimensions_indexes_initialization_ts
+                                #maybe_dims_indexes_initialization_ts
                                 let operator = <T as pg_crud_common::PgTypeEqualOperator>::operator(&#SelfSc.#ValueSc);
                                 let operator_query_str = operator.to_query_str();
                                 let content = match operator {
@@ -1013,7 +992,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             },
                             is_query_bind_mutable_true,
                             quote! {
-                                #maybe_dimensions_query_bind_content_ts
+                                #maybe_dims_query_bind_content_ts
                                 if let pg_crud_common::EqualOperator::Equal = &<T as pg_crud_common::PgTypeEqualOperator>::operator(&#SelfSc.#ValueSc) {
                                     #if_let_err_query_try_bind_self_value_ts
                                 }
@@ -1021,32 +1000,28 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             },
                         )
                     }
-                    PgTypeFilter::DimensionOneEqual { .. } => {
+                    PgTypeFilter::DimOneEqual { .. } => {
                         let (
-                            maybe_dimensions_declaration_ts,
-                            maybe_dimensions_default_initialization_ts,
-                            maybe_dimensions_indexes_initialization_ts,
+                            maybe_dims_declaration_ts,
+                            maybe_dims_default_initialization_ts,
+                            maybe_dims_indexes_initialization_ts,
                             _,
                             _,
-                            maybe_dimensions_query_bind_content_ts,
-                        ) = gen_pg_type_dimensions_helpers_pg_type(
-                            &pg_type_pattern_handle_array_dimension1,
-                        );
+                            maybe_dims_query_bind_content_ts,
+                        ) = gen_pg_type_dims_helpers_pg_type(&pg_type_pattern_handle_array_dim1);
                         (
                             ShouldAddDeclarationOfStructIdentGeneric::True {
                                 maybe_additional_traits_ts: Some(
                                     quote! {#sqlx_type_pg_encode_ts + pg_crud_common::PgTypeEqualOperator},
                                 ),
                             },
-                            gen_maybe_dimensions_declaration_pub_value_t_ts(
-                                &maybe_dimensions_declaration_ts,
-                            ),
-                            gen_maybe_dimensions_default_initialization_value_default_ts(
-                                &maybe_dimensions_default_initialization_ts,
+                            gen_maybe_dims_declaration_pub_value_t_ts(&maybe_dims_declaration_ts),
+                            gen_maybe_dims_default_initialization_value_default_ts(
+                                &maybe_dims_default_initialization_ts,
                             ),
                             IncrementParameterUnderscore::False,
                             quote! {
-                                #maybe_dimensions_indexes_initialization_ts
+                                #maybe_dims_indexes_initialization_ts
                                 let operator = <T as pg_crud_common::PgTypeEqualOperator>::operator(&#SelfSc.#ValueSc);
                                 let operator_query_str = operator.to_query_str();
                                 let content = match operator {
@@ -1056,11 +1031,11 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     }
                                     pg_crud_common::EqualOperator::IsNull => operator_query_str.to_owned(),
                                 };
-                                Ok(format!("{}({}{dimensions_indexes} {content})", &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator), #ColumnSc))
+                                Ok(format!("{}({}{dims_indexes} {content})", &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator), #ColumnSc))
                             },
                             is_query_bind_mutable_true,
                             quote! {
-                                #maybe_dimensions_query_bind_content_ts
+                                #maybe_dims_query_bind_content_ts
                                 if let pg_crud_common::EqualOperator::Equal = &<T as pg_crud_common::PgTypeEqualOperator>::operator(
                                     &#SelfSc.#ValueSc
                                 ) {
@@ -1073,156 +1048,144 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     PgTypeFilter::GreaterThan { .. } => {
                         gen_greater_than_ts(&pg_type_pattern_handle_standart)
                     }
-                    PgTypeFilter::DimensionOneGreaterThan { .. } => {
-                        gen_greater_than_ts(&pg_type_pattern_handle_array_dimension1)
+                    PgTypeFilter::DimOneGreaterThan { .. } => {
+                        gen_greater_than_ts(&pg_type_pattern_handle_array_dim1)
                     }
                     PgTypeFilter::Between { .. } => {
                         gen_between_ts(&pg_type_pattern_handle_standart)
                     }
-                    PgTypeFilter::DimensionOneBetween { .. } => {
-                        gen_between_ts(&pg_type_pattern_handle_array_dimension1)
+                    PgTypeFilter::DimOneBetween { .. } => {
+                        gen_between_ts(&pg_type_pattern_handle_array_dim1)
                     }
                     PgTypeFilter::In { .. } => gen_in_ts(&pg_type_pattern_handle_standart),
-                    PgTypeFilter::DimensionOneIn { .. } => {
-                        gen_in_ts(&pg_type_pattern_handle_array_dimension1)
-                    }
+                    PgTypeFilter::DimOneIn { .. } => gen_in_ts(&pg_type_pattern_handle_array_dim1),
                     PgTypeFilter::RegularExpression => {
                         gen_regular_expression_ts(&pg_type_pattern_handle_standart)
                     }
-                    PgTypeFilter::DimensionOneRegularExpression => {
-                        gen_regular_expression_ts(&pg_type_pattern_handle_array_dimension1)
+                    PgTypeFilter::DimOneRegularExpression => {
+                        gen_regular_expression_ts(&pg_type_pattern_handle_array_dim1)
                     }
                     PgTypeFilter::Before { .. } => gen_before_ts(&pg_type_pattern_handle_standart),
-                    PgTypeFilter::DimensionOneBefore { .. } => {
-                        gen_before_ts(&pg_type_pattern_handle_array_dimension1)
+                    PgTypeFilter::DimOneBefore { .. } => {
+                        gen_before_ts(&pg_type_pattern_handle_array_dim1)
                     }
                     PgTypeFilter::CurrentDate => {
                         gen_current_date_ts(&pg_type_pattern_handle_standart)
                     }
-                    PgTypeFilter::DimensionOneCurrentDate => {
-                        gen_current_date_ts(&pg_type_pattern_handle_array_dimension1)
+                    PgTypeFilter::DimOneCurrentDate => {
+                        gen_current_date_ts(&pg_type_pattern_handle_array_dim1)
                     }
                     PgTypeFilter::GreaterThanCurrentDate => {
                         gen_greater_than_current_date_ts(&pg_type_pattern_handle_standart)
                     }
-                    PgTypeFilter::DimensionOneGreaterThanCurrentDate => {
-                        gen_greater_than_current_date_ts(&pg_type_pattern_handle_array_dimension1)
+                    PgTypeFilter::DimOneGreaterThanCurrentDate => {
+                        gen_greater_than_current_date_ts(&pg_type_pattern_handle_array_dim1)
                     }
                     PgTypeFilter::CurrentTimestamp => {
                         gen_current_timestamp_ts(&pg_type_pattern_handle_standart)
                     }
-                    PgTypeFilter::DimensionOneCurrentTimestamp => {
-                        gen_current_timestamp_ts(&pg_type_pattern_handle_array_dimension1)
+                    PgTypeFilter::DimOneCurrentTimestamp => {
+                        gen_current_timestamp_ts(&pg_type_pattern_handle_array_dim1)
                     }
                     PgTypeFilter::GreaterThanCurrentTimestamp => {
                         gen_greater_than_current_timestamp_ts(&pg_type_pattern_handle_standart)
                     }
-                    PgTypeFilter::DimensionOneGreaterThanCurrentTimestamp => {
-                        gen_greater_than_current_timestamp_ts(
-                            &pg_type_pattern_handle_array_dimension1,
-                        )
+                    PgTypeFilter::DimOneGreaterThanCurrentTimestamp => {
+                        gen_greater_than_current_timestamp_ts(&pg_type_pattern_handle_array_dim1)
                     }
                     PgTypeFilter::CurrentTime => {
                         gen_current_time_ts(&pg_type_pattern_handle_standart)
                     }
-                    PgTypeFilter::DimensionOneCurrentTime => {
-                        gen_current_time_ts(&pg_type_pattern_handle_array_dimension1)
+                    PgTypeFilter::DimOneCurrentTime => {
+                        gen_current_time_ts(&pg_type_pattern_handle_array_dim1)
                     }
                     PgTypeFilter::GreaterThanCurrentTime => {
                         gen_greater_than_current_time_ts(&pg_type_pattern_handle_standart)
                     }
-                    PgTypeFilter::DimensionOneGreaterThanCurrentTime => {
-                        gen_greater_than_current_time_ts(&pg_type_pattern_handle_array_dimension1)
+                    PgTypeFilter::DimOneGreaterThanCurrentTime => {
+                        gen_greater_than_current_time_ts(&pg_type_pattern_handle_array_dim1)
                     }
-                    PgTypeFilter::DimensionOneLengthEqual => gen_length_filter_pattern_ts(&"="),
-                    PgTypeFilter::DimensionOneLengthGreaterThan => {
-                        gen_length_filter_pattern_ts(&">")
-                    }
+                    PgTypeFilter::DimOneLengthEqual => gen_length_filter_pattern_ts(&"="),
+                    PgTypeFilter::DimOneLengthGreaterThan => gen_length_filter_pattern_ts(&">"),
                     PgTypeFilter::EqualToEncodedStringRepresentation => {
                         gen_equal_to_encoded_string_representation_ts(
                             &pg_type_pattern_handle_standart,
                         )
                     }
-                    PgTypeFilter::DimensionOneEqualToEncodedStringRepresentation => {
+                    PgTypeFilter::DimOneEqualToEncodedStringRepresentation => {
                         gen_equal_to_encoded_string_representation_ts(
-                            &pg_type_pattern_handle_array_dimension1,
+                            &pg_type_pattern_handle_array_dim1,
                         )
                     }
                     PgTypeFilter::FindRangesWithinGivenRange { .. } => {
                         gen_find_ranges_within_given_range_ts(&pg_type_pattern_handle_standart)
                     }
-                    PgTypeFilter::DimensionOneFindRangesWithinGivenRange { .. } => {
-                        gen_find_ranges_within_given_range_ts(
-                            &pg_type_pattern_handle_array_dimension1,
-                        )
+                    PgTypeFilter::DimOneFindRangesWithinGivenRange { .. } => {
+                        gen_find_ranges_within_given_range_ts(&pg_type_pattern_handle_array_dim1)
                     }
                     PgTypeFilter::FindRangesThatFullyContainTheGivenRange { .. } => {
                         gen_find_ranges_that_fully_contain_the_given_range_ts(
                             &pg_type_pattern_handle_standart,
                         )
                     }
-                    PgTypeFilter::DimensionOneFindRangesThatFullyContainTheGivenRange {
-                        ..
-                    } => gen_find_ranges_that_fully_contain_the_given_range_ts(
-                        &pg_type_pattern_handle_array_dimension1,
-                    ),
+                    PgTypeFilter::DimOneFindRangesThatFullyContainTheGivenRange { .. } => {
+                        gen_find_ranges_that_fully_contain_the_given_range_ts(
+                            &pg_type_pattern_handle_array_dim1,
+                        )
+                    }
                     PgTypeFilter::StrictlyToLeftOfRange { .. } => {
                         gen_strictly_to_left_of_range_ts(&pg_type_pattern_handle_standart)
                     }
-                    PgTypeFilter::DimensionOneStrictlyToLeftOfRange { .. } => {
-                        gen_strictly_to_left_of_range_ts(&pg_type_pattern_handle_array_dimension1)
+                    PgTypeFilter::DimOneStrictlyToLeftOfRange { .. } => {
+                        gen_strictly_to_left_of_range_ts(&pg_type_pattern_handle_array_dim1)
                     }
                     PgTypeFilter::StrictlyToRightOfRange { .. } => {
                         gen_strictly_to_right_of_range_ts(&pg_type_pattern_handle_standart)
                     }
-                    PgTypeFilter::DimensionOneStrictlyToRightOfRange { .. } => {
-                        gen_strictly_to_right_of_range_ts(&pg_type_pattern_handle_array_dimension1)
+                    PgTypeFilter::DimOneStrictlyToRightOfRange { .. } => {
+                        gen_strictly_to_right_of_range_ts(&pg_type_pattern_handle_array_dim1)
                     }
                     PgTypeFilter::IncludedLowerBound { .. } => {
                         gen_included_lower_bound_ts(&pg_type_pattern_handle_standart)
                     }
-                    PgTypeFilter::DimensionOneIncludedLowerBound { .. } => {
-                        gen_included_lower_bound_ts(&pg_type_pattern_handle_array_dimension1)
+                    PgTypeFilter::DimOneIncludedLowerBound { .. } => {
+                        gen_included_lower_bound_ts(&pg_type_pattern_handle_array_dim1)
                     }
                     PgTypeFilter::ExcludedUpperBound { .. } => {
                         gen_excluded_upper_bound_ts(&pg_type_pattern_handle_standart)
                     }
-                    PgTypeFilter::DimensionOneExcludedUpperBound { .. } => {
-                        gen_excluded_upper_bound_ts(&pg_type_pattern_handle_array_dimension1)
+                    PgTypeFilter::DimOneExcludedUpperBound { .. } => {
+                        gen_excluded_upper_bound_ts(&pg_type_pattern_handle_array_dim1)
                     }
                     PgTypeFilter::GreaterThanIncludedLowerBound { .. } => {
                         gen_greater_than_included_lower_bound_ts(&pg_type_pattern_handle_standart)
                     }
-                    PgTypeFilter::DimensionOneGreaterThanIncludedLowerBound { .. } => {
-                        gen_greater_than_included_lower_bound_ts(
-                            &pg_type_pattern_handle_array_dimension1,
-                        )
+                    PgTypeFilter::DimOneGreaterThanIncludedLowerBound { .. } => {
+                        gen_greater_than_included_lower_bound_ts(&pg_type_pattern_handle_array_dim1)
                     }
                     PgTypeFilter::GreaterThanExcludedUpperBound { .. } => {
                         gen_greater_than_excluded_upper_bound_ts(&pg_type_pattern_handle_standart)
                     }
-                    PgTypeFilter::DimensionOneGreaterThanExcludedUpperBound { .. } => {
-                        gen_greater_than_excluded_upper_bound_ts(
-                            &pg_type_pattern_handle_array_dimension1,
-                        )
+                    PgTypeFilter::DimOneGreaterThanExcludedUpperBound { .. } => {
+                        gen_greater_than_excluded_upper_bound_ts(&pg_type_pattern_handle_array_dim1)
                     }
                     PgTypeFilter::OverlapWithRange { .. } => {
                         gen_overlap_with_range_ts(&pg_type_pattern_handle_standart)
                     }
-                    PgTypeFilter::DimensionOneOverlapWithRange { .. } => {
-                        gen_overlap_with_range_ts(&pg_type_pattern_handle_array_dimension1)
+                    PgTypeFilter::DimOneOverlapWithRange { .. } => {
+                        gen_overlap_with_range_ts(&pg_type_pattern_handle_array_dim1)
                     }
                     PgTypeFilter::AdjacentWithRange { .. } => {
                         gen_adjacent_with_range_ts(&pg_type_pattern_handle_standart)
                     }
-                    PgTypeFilter::DimensionOneAdjacentWithRange { .. } => {
-                        gen_adjacent_with_range_ts(&pg_type_pattern_handle_array_dimension1)
+                    PgTypeFilter::DimOneAdjacentWithRange { .. } => {
+                        gen_adjacent_with_range_ts(&pg_type_pattern_handle_array_dim1)
                     }
                     PgTypeFilter::RangeLength => {
                         gen_range_length_ts(&pg_type_pattern_handle_standart)
                     }
-                    PgTypeFilter::DimensionOneRangeLength => {
-                        gen_range_length_ts(&pg_type_pattern_handle_array_dimension1)
+                    PgTypeFilter::DimOneRangeLength => {
+                        gen_range_length_ts(&pg_type_pattern_handle_array_dim1)
                     }
                 }
             };
@@ -1277,39 +1240,35 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 }
                 Ok(#QuerySc)
             };
-            let gen_pg_json_type_dimensions_helpers =
-                |pg_type_pattern_handle: &PgTypePatternHandle| {
-                    gen_pg_type_dimensions_helpers(
-                        pg_type_pattern_handle,
-                        &PgTypeOrPgJsonType::PgJsonType,
-                    )
-                };
+            let gen_pg_json_type_dims_helpers = |pg_type_pattern_handle: &PgTypePatternHandle| {
+                gen_pg_type_dims_helpers(pg_type_pattern_handle, &PgTypeOrPgJsonType::PgJsonType)
+            };
             let gen_1763ccf3_10be_4527_912b_363d8ea05f4b_ts =
                 |pg_type_pattern_handle: &PgTypePatternHandle,
                  gen_format_handle_str: &dyn Fn(&PgTypeKind) -> String| {
                     let (
-                        maybe_dimensions_declaration_ts,
-                        maybe_dimensions_default_initialization_ts,
-                        maybe_dimensions_indexes_initialization_ts,
+                        maybe_dims_declaration_ts,
+                        maybe_dims_default_initialization_ts,
+                        maybe_dims_indexes_initialization_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
-                        maybe_dimensions_query_bind_content_ts,
-                    ) = gen_pg_json_type_dimensions_helpers(pg_type_pattern_handle);
+                        maybe_dims_query_bind_content_ts,
+                    ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
                     (
                         should_add_declaration_of_struct_ident_generic_true_none.clone(),
                         quote! {
-                            #maybe_dimensions_declaration_ts
+                            #maybe_dims_declaration_ts
                             #pub_value_t_ts
                         },
                         quote! {
-                            #maybe_dimensions_default_initialization_ts
+                            #maybe_dims_default_initialization_ts
                             #value_default_option_some_vec_one_el_ts
                         },
                         {
                             let format_handle_ts =
                                 double_quotes_ts(&gen_format_handle_str(&pg_type_kind));
                             quote! {
-                                #maybe_dimensions_indexes_initialization_ts
+                                #maybe_dims_indexes_initialization_ts
                                 #value_match_increment_checked_add_one_initialization_ts
                                 Ok(format!(
                                     #format_handle_ts,
@@ -1322,7 +1281,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                         is_query_bind_mutable_true,
                         quote! {
-                            #maybe_dimensions_query_bind_content_ts
+                            #maybe_dims_query_bind_content_ts
                             #query_bind_sqlx_types_json_self_value_ts
                         },
                     )
@@ -1356,21 +1315,21 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_ae2fa44d_9035_49fd_ba20_eed1bd4680d4_ts =
                 |pg_type_pattern_handle: &PgTypePatternHandle, operation: &dyn Display| {
                     let (
-                        maybe_dimensions_declaration_ts,
-                        maybe_dimensions_default_initialization_ts,
-                        maybe_dimensions_indexes_initialization_ts,
+                        maybe_dims_declaration_ts,
+                        maybe_dims_default_initialization_ts,
+                        maybe_dims_indexes_initialization_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
-                        maybe_dimensions_query_bind_content_ts,
-                    ) = gen_pg_json_type_dimensions_helpers(pg_type_pattern_handle);
+                        maybe_dims_query_bind_content_ts,
+                    ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
                     (
                         should_add_declaration_of_struct_ident_generic_false.clone(),
                         quote! {
-                            #maybe_dimensions_declaration_ts
+                            #maybe_dims_declaration_ts
                             pub #ValueSc: #unsigned_part_of_i32_ts
                         },
                         quote! {
-                            #maybe_dimensions_default_initialization_ts
+                            #maybe_dims_default_initialization_ts
                             #ValueSc: #core_default_default_default_ts
                         },
                         {
@@ -1379,7 +1338,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 pg_type_kind.format_argument()
                             ));
                             quote! {
-                                #maybe_dimensions_indexes_initialization_ts
+                                #maybe_dims_indexes_initialization_ts
                                 #value_match_increment_checked_add_one_initialization_ts
                                 Ok(format!(
                                     #format_handle_ts,
@@ -1392,7 +1351,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                         is_query_bind_mutable_true,
                         quote! {
-                            #maybe_dimensions_query_bind_content_ts
+                            #maybe_dims_query_bind_content_ts
                             #query_bind_one_value_ts
                         },
                     )
@@ -1431,20 +1390,20 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 };
             let gen_between_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 let (
-                    maybe_dimensions_declaration_ts,
-                    maybe_dimensions_default_initialization_ts,
-                    maybe_dimensions_indexes_initialization_ts,
+                    maybe_dims_declaration_ts,
+                    maybe_dims_default_initialization_ts,
+                    maybe_dims_indexes_initialization_ts,
                     pg_type_kind,
                     maybe_additional_parameters_ts,
-                    maybe_dimensions_query_bind_content_ts,
-                ) = gen_pg_json_type_dimensions_helpers(pg_type_pattern_handle);
+                    maybe_dims_query_bind_content_ts,
+                ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
                     quote! {
-                        #maybe_dimensions_declaration_ts
+                        #maybe_dims_declaration_ts
                         #pub_value_between_t_ts
                     },
-                    gen_maybe_dimensions_default_initialization_value_default_ts(&maybe_dimensions_default_initialization_ts),
+                    gen_maybe_dims_default_initialization_value_default_ts(&maybe_dims_default_initialization_ts),
                     {
                         let content_ts: &dyn ToTokens = match pg_type_pattern_handle {
                             PgTypePatternHandle::Standart => &quote!{
@@ -1459,14 +1418,14 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     }
                                 };
                             },
-                            PgTypePatternHandle::ArrayDimension1 |
-                            PgTypePatternHandle::ArrayDimension2 |
-                            PgTypePatternHandle::ArrayDimension3 |
-                            PgTypePatternHandle::ArrayDimension4 => &value_match_increment_checked_add_one_initialization_ts
+                            PgTypePatternHandle::ArrayDim1 |
+                            PgTypePatternHandle::ArrayDim2 |
+                            PgTypePatternHandle::ArrayDim3 |
+                            PgTypePatternHandle::ArrayDim4 => &value_match_increment_checked_add_one_initialization_ts
                         };
                         let format_handle_ts = double_quotes_ts(&format!("{{}}({{}}{} {{}})", pg_type_kind.format_argument()));
                         quote! {
-                            #maybe_dimensions_indexes_initialization_ts
+                            #maybe_dims_indexes_initialization_ts
                             #content_ts
                             Ok(format!(
                                 #format_handle_ts,
@@ -1491,13 +1450,13 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 }
                                 Ok(query)
                             },
-                            PgTypePatternHandle::ArrayDimension1 |
-                            PgTypePatternHandle::ArrayDimension2 |
-                            PgTypePatternHandle::ArrayDimension3 |
-                            PgTypePatternHandle::ArrayDimension4 => &query_bind_sqlx_types_json_self_value_ts
+                            PgTypePatternHandle::ArrayDim1 |
+                            PgTypePatternHandle::ArrayDim2 |
+                            PgTypePatternHandle::ArrayDim3 |
+                            PgTypePatternHandle::ArrayDim4 => &query_bind_sqlx_types_json_self_value_ts
                         };
                         quote! {
-                            #maybe_dimensions_query_bind_content_ts
+                            #maybe_dims_query_bind_content_ts
                             #content_ts
                         }
                     },
@@ -1505,22 +1464,22 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             };
             let gen_in_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 let (
-                    maybe_dimensions_declaration_ts,
-                    maybe_dimensions_default_initialization_ts,
-                    maybe_dimensions_indexes_initialization_ts,
+                    maybe_dims_declaration_ts,
+                    maybe_dims_default_initialization_ts,
+                    maybe_dims_indexes_initialization_ts,
                     pg_type_kind,
                     maybe_additional_parameters_ts,
-                    maybe_dimensions_query_bind_content_ts,
-                ) = gen_pg_json_type_dimensions_helpers(pg_type_pattern_handle);
+                    maybe_dims_query_bind_content_ts,
+                ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone
                         .clone(),
                     quote! {
-                        #maybe_dimensions_declaration_ts
+                        #maybe_dims_declaration_ts
                         #pub_value_pg_json_type_not_empty_unique_vec_t_ts
                     },
-                    gen_maybe_dimensions_default_initialization_value_default_ts(
-                        &maybe_dimensions_default_initialization_ts,
+                    gen_maybe_dims_default_initialization_value_default_ts(
+                        &maybe_dims_default_initialization_ts,
                     ),
                     {
                         let format_handle_ts = double_quotes_ts(&format!(
@@ -1529,7 +1488,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         ));
                         let value_initialization_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&ValueSc, &ValueSc, &quote! {query_part_one_by_one});
                         quote! {
-                            #maybe_dimensions_indexes_initialization_ts
+                            #maybe_dims_indexes_initialization_ts
                             #value_initialization_ts
                             Ok(format!(
                                 #format_handle_ts,
@@ -1542,7 +1501,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                     is_query_bind_mutable_true,
                     quote! {
-                        #maybe_dimensions_query_bind_content_ts
+                        #maybe_dims_query_bind_content_ts
                         match #SelfSc.#ValueSc.query_bind_one_by_one(#QuerySc) {
                             Ok(value_c79b2256) => {
                                 #QuerySc = value_c79b2256;
@@ -1557,40 +1516,40 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             };
             let gen_regular_expression_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 let (
-                    maybe_dimensions_declaration_ts,
-                    maybe_dimensions_default_initialization_ts,
-                    maybe_dimensions_indexes_initialization_ts,
+                    maybe_dims_declaration_ts,
+                    maybe_dims_default_initialization_ts,
+                    maybe_dims_indexes_initialization_ts,
                     pg_type_kind, maybe_additional_parameters_ts,
-                    maybe_dimensions_query_bind_content_ts
-                ) = DimensionNumber::try_from(pg_type_pattern_handle).map_or_else(
+                    maybe_dims_query_bind_content_ts
+                ) = DimNumber::try_from(pg_type_pattern_handle).map_or_else(
                     |()| (Ts2::new(), Ts2::new(), Ts2::new(), PgTypeKind::Standart, Ts2::new(), Ts2::new()),
-                    |dimension_number| (
-                        gen_pub_dimensions_bounded_vec_unsigned_part_of_i32_comma_ts(&dimension_number),
-                        dimensions_default_initialization_comma_ts.clone(),
+                    |dim_number| (
+                        gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts(&dim_number),
+                        dims_default_initialization_comma_ts.clone(),
                         {
-                            let dimensions_indexes_initialization_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&DimensionsIndexesSc, &DimensionsSc, &quote! {pg_json_type_query_part_minus_one});
-                            let last_dimensions_index_intialization_ts = gen_match_increment_checked_add_one_initialization_ts(&quote! {last_dimensions_index});
+                            let dims_indexes_initialization_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&DimsIndexesSc, &DimsSc, &quote! {pg_json_type_query_part_minus_one});
+                            let last_dims_index_intialization_ts = gen_match_increment_checked_add_one_initialization_ts(&quote! {last_dims_index});
                             quote! {
-                                #dimensions_indexes_initialization_ts
-                                #last_dimensions_index_intialization_ts
+                                #dims_indexes_initialization_ts
+                                #last_dims_index_intialization_ts
                             }
                         },
-                        PgTypeKind::ArrayDimension,
+                        PgTypeKind::ArrayDim,
                         quote! {
-                            last_dimensions_index,
-                            #DimensionsIndexesSc,
+                            last_dims_index,
+                            #DimsIndexesSc,
                         },
-                        query_self_dimensions_query_bind_query_ts.clone(),
+                        query_self_dims_query_bind_query_ts.clone(),
                     )
                 );
                 (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     quote! {
-                        #maybe_dimensions_declaration_ts
+                        #maybe_dims_declaration_ts
                         #regular_expression_case_and_value_declaration_ts
                     },
                     quote! {
-                        #maybe_dimensions_default_initialization_ts
+                        #maybe_dims_default_initialization_ts
                         #regular_expression_case_and_value_default_initialization_ts
                     },
                     {
@@ -1598,11 +1557,11 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             "{{}}(trim(both '\\\"' from ({{}}{})::text) {{}} ${{}})",
                             match &pg_type_kind {
                                 PgTypeKind::Standart => "",
-                                PgTypeKind::ArrayDimension => "{}->>${}",
+                                PgTypeKind::ArrayDim => "{}->>${}",
                             }
                         ));
                         quote! {
-                            #maybe_dimensions_indexes_initialization_ts
+                            #maybe_dims_indexes_initialization_ts
                             #value_match_increment_checked_add_one_initialization_ts
                             Ok(format!(
                                 #format_handle_ts,
@@ -1616,7 +1575,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                     is_query_bind_mutable_true,
                     quote! {
-                        #maybe_dimensions_query_bind_content_ts
+                        #maybe_dims_query_bind_content_ts
                         #if_let_err_query_try_bind_self_value_to_string_ts
                     },
                 )
@@ -1624,21 +1583,21 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_contains_el_regular_expression_ts =
                 |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
-                        maybe_dimensions_declaration_ts,
-                        maybe_dimensions_default_initialization_ts,
-                        maybe_dimensions_indexes_initialization_ts,
+                        maybe_dims_declaration_ts,
+                        maybe_dims_default_initialization_ts,
+                        maybe_dims_indexes_initialization_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
-                        maybe_dimensions_query_bind_content_ts,
-                    ) = gen_pg_json_type_dimensions_helpers(pg_type_pattern_handle);
+                        maybe_dims_query_bind_content_ts,
+                    ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
                     (
                         should_add_declaration_of_struct_ident_generic_false.clone(),
                         quote! {
-                            #maybe_dimensions_declaration_ts
+                            #maybe_dims_declaration_ts
                             #regular_expression_case_and_value_declaration_ts
                         },
                         quote! {
-                            #maybe_dimensions_default_initialization_ts
+                            #maybe_dims_default_initialization_ts
                             #regular_expression_case_and_value_default_initialization_ts
                         },
                         {
@@ -1649,7 +1608,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 pg_type_kind.format_argument()
                             ));
                             quote! {
-                                #maybe_dimensions_indexes_initialization_ts
+                                #maybe_dims_indexes_initialization_ts
                                 #value_match_increment_checked_add_one_initialization_ts
                                 Ok(format!(
                                     #format_handle_ts,
@@ -1663,7 +1622,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                         is_query_bind_mutable_true,
                         quote! {
-                            #maybe_dimensions_query_bind_content_ts
+                            #maybe_dims_query_bind_content_ts
                             #if_let_err_query_try_bind_self_value_to_string_ts
                         },
                     )
@@ -1671,21 +1630,21 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_all_elements_regular_expression_ts =
                 |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
-                        maybe_dimensions_declaration_ts,
-                        maybe_dimensions_default_initialization_ts,
-                        maybe_dimensions_indexes_initialization_ts,
+                        maybe_dims_declaration_ts,
+                        maybe_dims_default_initialization_ts,
+                        maybe_dims_indexes_initialization_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
-                        maybe_dimensions_query_bind_content_ts,
-                    ) = gen_pg_json_type_dimensions_helpers(pg_type_pattern_handle);
+                        maybe_dims_query_bind_content_ts,
+                    ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
                     (
                         should_add_declaration_of_struct_ident_generic_false.clone(),
                         quote! {
-                            #maybe_dimensions_declaration_ts
+                            #maybe_dims_declaration_ts
                             #regular_expression_case_and_value_declaration_ts
                         },
                         quote! {
-                            #maybe_dimensions_default_initialization_ts
+                            #maybe_dims_default_initialization_ts
                             #regular_expression_case_and_value_default_initialization_ts
                         },
                         {
@@ -1696,7 +1655,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 pg_type_kind.format_argument()
                             ));
                             quote! {
-                                #maybe_dimensions_indexes_initialization_ts
+                                #maybe_dims_indexes_initialization_ts
                                 #value_match_increment_checked_add_one_initialization_ts
                                 Ok(format!(
                                     #format_handle_ts,
@@ -1710,7 +1669,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                         is_query_bind_mutable_true,
                         quote! {
-                            #maybe_dimensions_query_bind_content_ts
+                            #maybe_dims_query_bind_content_ts
                             #if_let_err_query_try_bind_self_value_to_string_ts
                         },
                     )
@@ -1718,22 +1677,22 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_contains_all_elements_of_array_ts =
                 |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
-                        maybe_dimensions_declaration_ts,
-                        maybe_dimensions_default_initialization_ts,
-                        maybe_dimensions_indexes_initialization_ts,
+                        maybe_dims_declaration_ts,
+                        maybe_dims_default_initialization_ts,
+                        maybe_dims_indexes_initialization_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
-                        maybe_dimensions_query_bind_content_ts,
-                    ) = gen_pg_json_type_dimensions_helpers(pg_type_pattern_handle);
+                        maybe_dims_query_bind_content_ts,
+                    ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
                     (
                         should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone
                             .clone(),
                         quote! {
-                            #maybe_dimensions_declaration_ts
+                            #maybe_dims_declaration_ts
                             #pub_value_pg_json_type_not_empty_unique_vec_t_ts
                         },
                         quote! {
-                            #maybe_dimensions_default_initialization_ts
+                            #maybe_dims_default_initialization_ts
                             #value_default_option_some_vec_one_el_ts
                         },
                         {
@@ -1742,7 +1701,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 pg_type_kind.format_argument()
                             ));
                             quote! {
-                                #maybe_dimensions_indexes_initialization_ts
+                                #maybe_dims_indexes_initialization_ts
                                 #value_match_self_value_query_part_initialization_ts
                                 Ok(format!(
                                     #format_handle_ts,
@@ -1755,29 +1714,29 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                         is_query_bind_mutable_true,
                         quote! {
-                            #maybe_dimensions_query_bind_content_ts
+                            #maybe_dims_query_bind_content_ts
                             #query_bind_sqlx_types_json_self_value_ts
                         },
                     )
                 };
             let gen_overlaps_with_array_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 let (
-                    maybe_dimensions_declaration_ts,
-                    maybe_dimensions_default_initialization_ts,
-                    maybe_dimensions_indexes_initialization_ts,
+                    maybe_dims_declaration_ts,
+                    maybe_dims_default_initialization_ts,
+                    maybe_dims_indexes_initialization_ts,
                     pg_type_kind,
                     maybe_additional_parameters_ts,
-                    maybe_dimensions_query_bind_content_ts,
-                ) = gen_pg_json_type_dimensions_helpers(pg_type_pattern_handle);
+                    maybe_dims_query_bind_content_ts,
+                ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone
                         .clone(),
                     quote! {
-                        #maybe_dimensions_declaration_ts
+                        #maybe_dims_declaration_ts
                         #pub_value_pg_json_type_not_empty_unique_vec_t_ts
                     },
                     quote! {
-                        #maybe_dimensions_default_initialization_ts
+                        #maybe_dims_default_initialization_ts
                         #value_default_option_some_vec_one_el_ts
                     },
                     {
@@ -1786,7 +1745,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             pg_type_kind.format_argument()
                         ));
                         quote! {
-                            #maybe_dimensions_indexes_initialization_ts
+                            #maybe_dims_indexes_initialization_ts
                             #value_match_self_value_query_part_initialization_ts
                             Ok(format!(
                                 #format_handle_ts,
@@ -1799,7 +1758,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                     is_query_bind_mutable_true,
                     quote! {
-                        #maybe_dimensions_query_bind_content_ts
+                        #maybe_dims_query_bind_content_ts
                         #query_bind_sqlx_types_json_self_value_ts
                     },
                 )
@@ -1813,211 +1772,205 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 query_bind_content_ts,
             ) = match &filter {
                 PgJsonTypeFilter::Equal { .. } => gen_equal_ts(&pg_type_pattern_handle_standart),
-                PgJsonTypeFilter::DimensionOneEqual { .. } => {
-                    gen_equal_ts(&pg_type_pattern_handle_array_dimension1)
+                PgJsonTypeFilter::DimOneEqual { .. } => {
+                    gen_equal_ts(&pg_type_pattern_handle_array_dim1)
                 }
-                PgJsonTypeFilter::DimensionTwoEqual { .. } => {
-                    gen_equal_ts(&pg_type_pattern_handle_array_dimension2)
+                PgJsonTypeFilter::DimTwoEqual { .. } => {
+                    gen_equal_ts(&pg_type_pattern_handle_array_dim2)
                 }
-                PgJsonTypeFilter::DimensionThreeEqual { .. } => {
-                    gen_equal_ts(&pg_type_pattern_handle_array_dimension3)
+                PgJsonTypeFilter::DimThreeEqual { .. } => {
+                    gen_equal_ts(&pg_type_pattern_handle_array_dim3)
                 }
-                PgJsonTypeFilter::DimensionFourEqual { .. } => {
-                    gen_equal_ts(&pg_type_pattern_handle_array_dimension4)
+                PgJsonTypeFilter::DimFourEqual { .. } => {
+                    gen_equal_ts(&pg_type_pattern_handle_array_dim4)
                 }
                 PgJsonTypeFilter::AllElementsEqual { .. } => {
                     gen_all_elements_equal_ts(&pg_type_pattern_handle_standart)
                 }
-                PgJsonTypeFilter::DimensionOneAllElementsEqual { .. } => {
-                    gen_all_elements_equal_ts(&pg_type_pattern_handle_array_dimension1)
+                PgJsonTypeFilter::DimOneAllElementsEqual { .. } => {
+                    gen_all_elements_equal_ts(&pg_type_pattern_handle_array_dim1)
                 }
-                PgJsonTypeFilter::DimensionTwoAllElementsEqual { .. } => {
-                    gen_all_elements_equal_ts(&pg_type_pattern_handle_array_dimension2)
+                PgJsonTypeFilter::DimTwoAllElementsEqual { .. } => {
+                    gen_all_elements_equal_ts(&pg_type_pattern_handle_array_dim2)
                 }
-                PgJsonTypeFilter::DimensionThreeAllElementsEqual { .. } => {
-                    gen_all_elements_equal_ts(&pg_type_pattern_handle_array_dimension3)
+                PgJsonTypeFilter::DimThreeAllElementsEqual { .. } => {
+                    gen_all_elements_equal_ts(&pg_type_pattern_handle_array_dim3)
                 }
-                PgJsonTypeFilter::DimensionFourAllElementsEqual { .. } => {
-                    gen_all_elements_equal_ts(&pg_type_pattern_handle_array_dimension4)
+                PgJsonTypeFilter::DimFourAllElementsEqual { .. } => {
+                    gen_all_elements_equal_ts(&pg_type_pattern_handle_array_dim4)
                 }
                 PgJsonTypeFilter::LengthEqual => {
                     gen_length_equal_ts(&pg_type_pattern_handle_standart)
                 }
-                PgJsonTypeFilter::DimensionOneLengthEqual => {
-                    gen_length_equal_ts(&pg_type_pattern_handle_array_dimension1)
+                PgJsonTypeFilter::DimOneLengthEqual => {
+                    gen_length_equal_ts(&pg_type_pattern_handle_array_dim1)
                 }
-                PgJsonTypeFilter::DimensionTwoLengthEqual => {
-                    gen_length_equal_ts(&pg_type_pattern_handle_array_dimension2)
+                PgJsonTypeFilter::DimTwoLengthEqual => {
+                    gen_length_equal_ts(&pg_type_pattern_handle_array_dim2)
                 }
-                PgJsonTypeFilter::DimensionThreeLengthEqual => {
-                    gen_length_equal_ts(&pg_type_pattern_handle_array_dimension3)
+                PgJsonTypeFilter::DimThreeLengthEqual => {
+                    gen_length_equal_ts(&pg_type_pattern_handle_array_dim3)
                 }
-                PgJsonTypeFilter::DimensionFourLengthEqual => {
-                    gen_length_equal_ts(&pg_type_pattern_handle_array_dimension4)
+                PgJsonTypeFilter::DimFourLengthEqual => {
+                    gen_length_equal_ts(&pg_type_pattern_handle_array_dim4)
                 }
                 PgJsonTypeFilter::LengthGreaterThan => {
                     gen_length_greater_than_ts(&pg_type_pattern_handle_standart)
                 }
-                PgJsonTypeFilter::DimensionOneLengthGreaterThan => {
-                    gen_length_greater_than_ts(&pg_type_pattern_handle_array_dimension1)
+                PgJsonTypeFilter::DimOneLengthGreaterThan => {
+                    gen_length_greater_than_ts(&pg_type_pattern_handle_array_dim1)
                 }
-                PgJsonTypeFilter::DimensionTwoLengthGreaterThan => {
-                    gen_length_greater_than_ts(&pg_type_pattern_handle_array_dimension2)
+                PgJsonTypeFilter::DimTwoLengthGreaterThan => {
+                    gen_length_greater_than_ts(&pg_type_pattern_handle_array_dim2)
                 }
-                PgJsonTypeFilter::DimensionThreeLengthGreaterThan => {
-                    gen_length_greater_than_ts(&pg_type_pattern_handle_array_dimension3)
+                PgJsonTypeFilter::DimThreeLengthGreaterThan => {
+                    gen_length_greater_than_ts(&pg_type_pattern_handle_array_dim3)
                 }
-                PgJsonTypeFilter::DimensionFourLengthGreaterThan => {
-                    gen_length_greater_than_ts(&pg_type_pattern_handle_array_dimension4)
+                PgJsonTypeFilter::DimFourLengthGreaterThan => {
+                    gen_length_greater_than_ts(&pg_type_pattern_handle_array_dim4)
                 }
                 PgJsonTypeFilter::GreaterThan { .. } => {
                     gen_greater_than_ts(&pg_type_pattern_handle_standart)
                 }
-                PgJsonTypeFilter::DimensionOneGreaterThan { .. } => {
-                    gen_greater_than_ts(&pg_type_pattern_handle_array_dimension1)
+                PgJsonTypeFilter::DimOneGreaterThan { .. } => {
+                    gen_greater_than_ts(&pg_type_pattern_handle_array_dim1)
                 }
-                PgJsonTypeFilter::DimensionTwoGreaterThan { .. } => {
-                    gen_greater_than_ts(&pg_type_pattern_handle_array_dimension2)
+                PgJsonTypeFilter::DimTwoGreaterThan { .. } => {
+                    gen_greater_than_ts(&pg_type_pattern_handle_array_dim2)
                 }
-                PgJsonTypeFilter::DimensionThreeGreaterThan { .. } => {
-                    gen_greater_than_ts(&pg_type_pattern_handle_array_dimension3)
+                PgJsonTypeFilter::DimThreeGreaterThan { .. } => {
+                    gen_greater_than_ts(&pg_type_pattern_handle_array_dim3)
                 }
-                PgJsonTypeFilter::DimensionFourGreaterThan { .. } => {
-                    gen_greater_than_ts(&pg_type_pattern_handle_array_dimension4)
+                PgJsonTypeFilter::DimFourGreaterThan { .. } => {
+                    gen_greater_than_ts(&pg_type_pattern_handle_array_dim4)
                 }
                 PgJsonTypeFilter::ContainsElGreaterThan { .. } => {
                     gen_contains_el_greater_than_ts(&pg_type_pattern_handle_standart)
                 }
-                PgJsonTypeFilter::DimensionOneContainsElGreaterThan { .. } => {
-                    gen_contains_el_greater_than_ts(&pg_type_pattern_handle_array_dimension1)
+                PgJsonTypeFilter::DimOneContainsElGreaterThan { .. } => {
+                    gen_contains_el_greater_than_ts(&pg_type_pattern_handle_array_dim1)
                 }
-                PgJsonTypeFilter::DimensionTwoContainsElGreaterThan { .. } => {
-                    gen_contains_el_greater_than_ts(&pg_type_pattern_handle_array_dimension2)
+                PgJsonTypeFilter::DimTwoContainsElGreaterThan { .. } => {
+                    gen_contains_el_greater_than_ts(&pg_type_pattern_handle_array_dim2)
                 }
-                PgJsonTypeFilter::DimensionThreeContainsElGreaterThan { .. } => {
-                    gen_contains_el_greater_than_ts(&pg_type_pattern_handle_array_dimension3)
+                PgJsonTypeFilter::DimThreeContainsElGreaterThan { .. } => {
+                    gen_contains_el_greater_than_ts(&pg_type_pattern_handle_array_dim3)
                 }
-                PgJsonTypeFilter::DimensionFourContainsElGreaterThan { .. } => {
-                    gen_contains_el_greater_than_ts(&pg_type_pattern_handle_array_dimension4)
+                PgJsonTypeFilter::DimFourContainsElGreaterThan { .. } => {
+                    gen_contains_el_greater_than_ts(&pg_type_pattern_handle_array_dim4)
                 }
                 PgJsonTypeFilter::AllElementsGreaterThan { .. } => {
                     gen_all_elements_greater_than_ts(&pg_type_pattern_handle_standart)
                 }
-                PgJsonTypeFilter::DimensionOneAllElementsGreaterThan { .. } => {
-                    gen_all_elements_greater_than_ts(&pg_type_pattern_handle_array_dimension1)
+                PgJsonTypeFilter::DimOneAllElementsGreaterThan { .. } => {
+                    gen_all_elements_greater_than_ts(&pg_type_pattern_handle_array_dim1)
                 }
-                PgJsonTypeFilter::DimensionTwoAllElementsGreaterThan { .. } => {
-                    gen_all_elements_greater_than_ts(&pg_type_pattern_handle_array_dimension2)
+                PgJsonTypeFilter::DimTwoAllElementsGreaterThan { .. } => {
+                    gen_all_elements_greater_than_ts(&pg_type_pattern_handle_array_dim2)
                 }
-                PgJsonTypeFilter::DimensionThreeAllElementsGreaterThan { .. } => {
-                    gen_all_elements_greater_than_ts(&pg_type_pattern_handle_array_dimension3)
+                PgJsonTypeFilter::DimThreeAllElementsGreaterThan { .. } => {
+                    gen_all_elements_greater_than_ts(&pg_type_pattern_handle_array_dim3)
                 }
-                PgJsonTypeFilter::DimensionFourAllElementsGreaterThan { .. } => {
-                    gen_all_elements_greater_than_ts(&pg_type_pattern_handle_array_dimension4)
+                PgJsonTypeFilter::DimFourAllElementsGreaterThan { .. } => {
+                    gen_all_elements_greater_than_ts(&pg_type_pattern_handle_array_dim4)
                 }
                 PgJsonTypeFilter::Between { .. } => {
                     gen_between_ts(&pg_type_pattern_handle_standart)
                 }
-                PgJsonTypeFilter::DimensionOneBetween { .. } => {
-                    gen_between_ts(&pg_type_pattern_handle_array_dimension1)
+                PgJsonTypeFilter::DimOneBetween { .. } => {
+                    gen_between_ts(&pg_type_pattern_handle_array_dim1)
                 }
-                PgJsonTypeFilter::DimensionTwoBetween { .. } => {
-                    gen_between_ts(&pg_type_pattern_handle_array_dimension2)
+                PgJsonTypeFilter::DimTwoBetween { .. } => {
+                    gen_between_ts(&pg_type_pattern_handle_array_dim2)
                 }
-                PgJsonTypeFilter::DimensionThreeBetween { .. } => {
-                    gen_between_ts(&pg_type_pattern_handle_array_dimension3)
+                PgJsonTypeFilter::DimThreeBetween { .. } => {
+                    gen_between_ts(&pg_type_pattern_handle_array_dim3)
                 }
-                PgJsonTypeFilter::DimensionFourBetween { .. } => {
-                    gen_between_ts(&pg_type_pattern_handle_array_dimension4)
+                PgJsonTypeFilter::DimFourBetween { .. } => {
+                    gen_between_ts(&pg_type_pattern_handle_array_dim4)
                 }
                 PgJsonTypeFilter::In { .. } => gen_in_ts(&pg_type_pattern_handle_standart),
-                PgJsonTypeFilter::DimensionOneIn { .. } => {
-                    gen_in_ts(&pg_type_pattern_handle_array_dimension1)
+                PgJsonTypeFilter::DimOneIn { .. } => gen_in_ts(&pg_type_pattern_handle_array_dim1),
+                PgJsonTypeFilter::DimTwoIn { .. } => gen_in_ts(&pg_type_pattern_handle_array_dim2),
+                PgJsonTypeFilter::DimThreeIn { .. } => {
+                    gen_in_ts(&pg_type_pattern_handle_array_dim3)
                 }
-                PgJsonTypeFilter::DimensionTwoIn { .. } => {
-                    gen_in_ts(&pg_type_pattern_handle_array_dimension2)
-                }
-                PgJsonTypeFilter::DimensionThreeIn { .. } => {
-                    gen_in_ts(&pg_type_pattern_handle_array_dimension3)
-                }
-                PgJsonTypeFilter::DimensionFourIn { .. } => {
-                    gen_in_ts(&pg_type_pattern_handle_array_dimension4)
-                }
+                PgJsonTypeFilter::DimFourIn { .. } => gen_in_ts(&pg_type_pattern_handle_array_dim4),
                 PgJsonTypeFilter::RegularExpression => {
                     gen_regular_expression_ts(&pg_type_pattern_handle_standart)
                 }
-                PgJsonTypeFilter::DimensionOneRegularExpression => {
-                    gen_regular_expression_ts(&pg_type_pattern_handle_array_dimension1)
+                PgJsonTypeFilter::DimOneRegularExpression => {
+                    gen_regular_expression_ts(&pg_type_pattern_handle_array_dim1)
                 }
-                PgJsonTypeFilter::DimensionTwoRegularExpression => {
-                    gen_regular_expression_ts(&pg_type_pattern_handle_array_dimension2)
+                PgJsonTypeFilter::DimTwoRegularExpression => {
+                    gen_regular_expression_ts(&pg_type_pattern_handle_array_dim2)
                 }
-                PgJsonTypeFilter::DimensionThreeRegularExpression => {
-                    gen_regular_expression_ts(&pg_type_pattern_handle_array_dimension3)
+                PgJsonTypeFilter::DimThreeRegularExpression => {
+                    gen_regular_expression_ts(&pg_type_pattern_handle_array_dim3)
                 }
-                PgJsonTypeFilter::DimensionFourRegularExpression => {
-                    gen_regular_expression_ts(&pg_type_pattern_handle_array_dimension4)
+                PgJsonTypeFilter::DimFourRegularExpression => {
+                    gen_regular_expression_ts(&pg_type_pattern_handle_array_dim4)
                 }
                 PgJsonTypeFilter::ContainsElRegularExpression => {
                     gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_standart)
                 }
-                PgJsonTypeFilter::DimensionOneContainsElRegularExpression => {
-                    gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_array_dimension1)
+                PgJsonTypeFilter::DimOneContainsElRegularExpression => {
+                    gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_array_dim1)
                 }
-                PgJsonTypeFilter::DimensionTwoContainsElRegularExpression => {
-                    gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_array_dimension2)
+                PgJsonTypeFilter::DimTwoContainsElRegularExpression => {
+                    gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_array_dim2)
                 }
-                PgJsonTypeFilter::DimensionThreeContainsElRegularExpression => {
-                    gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_array_dimension3)
+                PgJsonTypeFilter::DimThreeContainsElRegularExpression => {
+                    gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_array_dim3)
                 }
-                PgJsonTypeFilter::DimensionFourContainsElRegularExpression => {
-                    gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_array_dimension4)
+                PgJsonTypeFilter::DimFourContainsElRegularExpression => {
+                    gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_array_dim4)
                 }
                 PgJsonTypeFilter::AllElementsRegularExpression => {
                     gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_standart)
                 }
-                PgJsonTypeFilter::DimensionOneAllElementsRegularExpression => {
-                    gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_array_dimension1)
+                PgJsonTypeFilter::DimOneAllElementsRegularExpression => {
+                    gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_array_dim1)
                 }
-                PgJsonTypeFilter::DimensionTwoAllElementsRegularExpression => {
-                    gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_array_dimension2)
+                PgJsonTypeFilter::DimTwoAllElementsRegularExpression => {
+                    gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_array_dim2)
                 }
-                PgJsonTypeFilter::DimensionThreeAllElementsRegularExpression => {
-                    gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_array_dimension3)
+                PgJsonTypeFilter::DimThreeAllElementsRegularExpression => {
+                    gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_array_dim3)
                 }
-                PgJsonTypeFilter::DimensionFourAllElementsRegularExpression => {
-                    gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_array_dimension4)
+                PgJsonTypeFilter::DimFourAllElementsRegularExpression => {
+                    gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_array_dim4)
                 }
                 PgJsonTypeFilter::ContainsAllElementsOfArray { .. } => {
                     gen_contains_all_elements_of_array_ts(&pg_type_pattern_handle_standart)
                 }
-                PgJsonTypeFilter::DimensionOneContainsAllElementsOfArray { .. } => {
-                    gen_contains_all_elements_of_array_ts(&pg_type_pattern_handle_array_dimension1)
+                PgJsonTypeFilter::DimOneContainsAllElementsOfArray { .. } => {
+                    gen_contains_all_elements_of_array_ts(&pg_type_pattern_handle_array_dim1)
                 }
-                PgJsonTypeFilter::DimensionTwoContainsAllElementsOfArray { .. } => {
-                    gen_contains_all_elements_of_array_ts(&pg_type_pattern_handle_array_dimension2)
+                PgJsonTypeFilter::DimTwoContainsAllElementsOfArray { .. } => {
+                    gen_contains_all_elements_of_array_ts(&pg_type_pattern_handle_array_dim2)
                 }
-                PgJsonTypeFilter::DimensionThreeContainsAllElementsOfArray { .. } => {
-                    gen_contains_all_elements_of_array_ts(&pg_type_pattern_handle_array_dimension3)
+                PgJsonTypeFilter::DimThreeContainsAllElementsOfArray { .. } => {
+                    gen_contains_all_elements_of_array_ts(&pg_type_pattern_handle_array_dim3)
                 }
-                PgJsonTypeFilter::DimensionFourContainsAllElementsOfArray { .. } => {
-                    gen_contains_all_elements_of_array_ts(&pg_type_pattern_handle_array_dimension4)
+                PgJsonTypeFilter::DimFourContainsAllElementsOfArray { .. } => {
+                    gen_contains_all_elements_of_array_ts(&pg_type_pattern_handle_array_dim4)
                 }
                 // PgJsonTypeFilter::ContainedInArray => todo!(),
                 PgJsonTypeFilter::OverlapsWithArray { .. } => {
                     gen_overlaps_with_array_ts(&pg_type_pattern_handle_standart)
                 }
-                PgJsonTypeFilter::DimensionOneOverlapsWithArray { .. } => {
-                    gen_overlaps_with_array_ts(&pg_type_pattern_handle_array_dimension1)
+                PgJsonTypeFilter::DimOneOverlapsWithArray { .. } => {
+                    gen_overlaps_with_array_ts(&pg_type_pattern_handle_array_dim1)
                 }
-                PgJsonTypeFilter::DimensionTwoOverlapsWithArray { .. } => {
-                    gen_overlaps_with_array_ts(&pg_type_pattern_handle_array_dimension2)
+                PgJsonTypeFilter::DimTwoOverlapsWithArray { .. } => {
+                    gen_overlaps_with_array_ts(&pg_type_pattern_handle_array_dim2)
                 }
-                PgJsonTypeFilter::DimensionThreeOverlapsWithArray { .. } => {
-                    gen_overlaps_with_array_ts(&pg_type_pattern_handle_array_dimension3)
+                PgJsonTypeFilter::DimThreeOverlapsWithArray { .. } => {
+                    gen_overlaps_with_array_ts(&pg_type_pattern_handle_array_dim3)
                 }
-                PgJsonTypeFilter::DimensionFourOverlapsWithArray { .. } => {
-                    gen_overlaps_with_array_ts(&pg_type_pattern_handle_array_dimension4)
+                PgJsonTypeFilter::DimFourOverlapsWithArray { .. } => {
+                    gen_overlaps_with_array_ts(&pg_type_pattern_handle_array_dim4)
                 }
             };
             let struct_ts = gen_struct_ts(

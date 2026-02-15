@@ -1015,7 +1015,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     [
         "self", "where", "bit", "vec", "position", "equals", "try", "new", "error"
     ],
-    ["self", "where", "second", "dimension"],
+    ["self", "where", "second", "dim"],
     ["self", "visitor"],
     ["self", "not", "null", "try", "new", "error"],
     ["self", "to", "update", "query", "part", "error"],
@@ -1139,17 +1139,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ["derive", "self"],
     ["derive", "self", "if"],
     [
-        "self",
-        "read",
-        "only",
-        "ids",
-        "to",
-        "two",
-        "dimensional",
-        "vec",
-        "read",
-        "inner",
-        "acc"
+        "self", "read", "only", "ids", "to", "two", "dimal", "vec", "read", "inner", "acc"
     ],
     ["self", "gen", "pg", "json", "object", "type", "mod"],
     ["self", "gen", "pg", "table", "mod"]

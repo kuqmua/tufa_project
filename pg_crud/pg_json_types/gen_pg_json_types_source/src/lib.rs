@@ -12,8 +12,8 @@ use naming::{
     ReadOnlyIdsMergedWithCreateIntoReadSc,
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
     ReadOnlyIdsMergedWithCreateIntoWhereEqualSc, ReadOnlyIdsSc,
-    ReadOnlyIdsToTwoDimensionalVecReadInnerSc, ReadSc, SelfSc, SelfUcc, StringUcc,
-    UpdateForQueryUcc, UpdateUcc, ValueSc, VecOfUcc,
+    ReadOnlyIdsToTwoDimalVecReadInnerSc, ReadSc, SelfSc, SelfUcc, StringUcc, UpdateForQueryUcc,
+    UpdateUcc, ValueSc, VecOfUcc,
     parameter::{
         JsonbSelfUcc, SelfCreateForQueryUcc, SelfCreateUcc, SelfOriginUcc, SelfReadInnerUcc,
         SelfReadOnlyIdsUcc, SelfReadUcc, SelfSelectUcc, SelfTableTypeDeclarationUcc,
@@ -22,7 +22,7 @@ use naming::{
 };
 use panic_location::panic_location;
 use pg_crud_macros_common::{
-    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dimension, DimensionIndexNumber, ImportPath,
+    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, DimIndexNumber, ImportPath,
     IsQueryBindMutable, IsSelectOnlyCreatedIdsQueryBindMutable,
     IsSelectOnlyUpdatedIdsQueryBindMutable,
     IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed,
@@ -166,154 +166,152 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     )]
     enum PgJsonTypePattern {
         Standart,
-        ArrayDimension1 {
-            dimension1_not_null_or_nullable: NotNullOrNullable,
+        ArrayDim1 {
+            dim1_not_null_or_nullable: NotNullOrNullable,
         },
-        ArrayDimension2 {
-            dimension1_not_null_or_nullable: NotNullOrNullable,
-            dimension2_not_null_or_nullable: NotNullOrNullable,
+        ArrayDim2 {
+            dim1_not_null_or_nullable: NotNullOrNullable,
+            dim2_not_null_or_nullable: NotNullOrNullable,
         },
-        ArrayDimension3 {
-            dimension1_not_null_or_nullable: NotNullOrNullable,
-            dimension2_not_null_or_nullable: NotNullOrNullable,
-            dimension3_not_null_or_nullable: NotNullOrNullable,
+        ArrayDim3 {
+            dim1_not_null_or_nullable: NotNullOrNullable,
+            dim2_not_null_or_nullable: NotNullOrNullable,
+            dim3_not_null_or_nullable: NotNullOrNullable,
         },
-        ArrayDimension4 {
-            dimension1_not_null_or_nullable: NotNullOrNullable,
-            dimension2_not_null_or_nullable: NotNullOrNullable,
-            dimension3_not_null_or_nullable: NotNullOrNullable,
-            dimension4_not_null_or_nullable: NotNullOrNullable,
+        ArrayDim4 {
+            dim1_not_null_or_nullable: NotNullOrNullable,
+            dim2_not_null_or_nullable: NotNullOrNullable,
+            dim3_not_null_or_nullable: NotNullOrNullable,
+            dim4_not_null_or_nullable: NotNullOrNullable,
         },
     }
     impl PgJsonTypePattern {
         const fn down_by_1(&self) -> Option<Self> {
             match &self {
                 Self::Standart => None,
-                Self::ArrayDimension1 { .. } => Some(Self::Standart),
-                Self::ArrayDimension2 {
-                    dimension2_not_null_or_nullable,
+                Self::ArrayDim1 { .. } => Some(Self::Standart),
+                Self::ArrayDim2 {
+                    dim2_not_null_or_nullable,
                     ..
-                } => Some(Self::ArrayDimension1 {
-                    dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
+                } => Some(Self::ArrayDim1 {
+                    dim1_not_null_or_nullable: *dim2_not_null_or_nullable,
                 }),
-                Self::ArrayDimension3 {
-                    dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable,
+                Self::ArrayDim3 {
+                    dim2_not_null_or_nullable,
+                    dim3_not_null_or_nullable,
                     ..
-                } => Some(Self::ArrayDimension2 {
-                    dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                    dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
+                } => Some(Self::ArrayDim2 {
+                    dim1_not_null_or_nullable: *dim2_not_null_or_nullable,
+                    dim2_not_null_or_nullable: *dim3_not_null_or_nullable,
                 }),
-                Self::ArrayDimension4 {
-                    dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable,
-                    dimension4_not_null_or_nullable,
+                Self::ArrayDim4 {
+                    dim2_not_null_or_nullable,
+                    dim3_not_null_or_nullable,
+                    dim4_not_null_or_nullable,
                     ..
-                } => Some(Self::ArrayDimension3 {
-                    dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                    dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
-                    dimension3_not_null_or_nullable: *dimension4_not_null_or_nullable,
+                } => Some(Self::ArrayDim3 {
+                    dim1_not_null_or_nullable: *dim2_not_null_or_nullable,
+                    dim2_not_null_or_nullable: *dim3_not_null_or_nullable,
+                    dim3_not_null_or_nullable: *dim4_not_null_or_nullable,
                 }),
             }
         }
         const fn down_by_2(&self) -> Option<Self> {
             match &self {
-                Self::Standart | Self::ArrayDimension1 { .. } => None,
-                Self::ArrayDimension2 { .. } => Some(Self::Standart),
-                Self::ArrayDimension3 {
-                    dimension3_not_null_or_nullable,
+                Self::Standart | Self::ArrayDim1 { .. } => None,
+                Self::ArrayDim2 { .. } => Some(Self::Standart),
+                Self::ArrayDim3 {
+                    dim3_not_null_or_nullable,
                     ..
-                } => Some(Self::ArrayDimension1 {
-                    dimension1_not_null_or_nullable: *dimension3_not_null_or_nullable,
+                } => Some(Self::ArrayDim1 {
+                    dim1_not_null_or_nullable: *dim3_not_null_or_nullable,
                 }),
-                Self::ArrayDimension4 {
-                    dimension3_not_null_or_nullable,
-                    dimension4_not_null_or_nullable,
+                Self::ArrayDim4 {
+                    dim3_not_null_or_nullable,
+                    dim4_not_null_or_nullable,
                     ..
-                } => Some(Self::ArrayDimension2 {
-                    dimension1_not_null_or_nullable: *dimension3_not_null_or_nullable,
-                    dimension2_not_null_or_nullable: *dimension4_not_null_or_nullable,
+                } => Some(Self::ArrayDim2 {
+                    dim1_not_null_or_nullable: *dim3_not_null_or_nullable,
+                    dim2_not_null_or_nullable: *dim4_not_null_or_nullable,
                 }),
             }
         }
         const fn down_by_3(&self) -> Option<Self> {
             match &self {
-                Self::Standart | Self::ArrayDimension1 { .. } | Self::ArrayDimension2 { .. } => {
-                    None
-                }
-                Self::ArrayDimension3 { .. } => Some(Self::Standart),
-                Self::ArrayDimension4 {
-                    dimension4_not_null_or_nullable,
+                Self::Standart | Self::ArrayDim1 { .. } | Self::ArrayDim2 { .. } => None,
+                Self::ArrayDim3 { .. } => Some(Self::Standart),
+                Self::ArrayDim4 {
+                    dim4_not_null_or_nullable,
                     ..
-                } => Some(Self::ArrayDimension1 {
-                    dimension1_not_null_or_nullable: *dimension4_not_null_or_nullable,
+                } => Some(Self::ArrayDim1 {
+                    dim1_not_null_or_nullable: *dim4_not_null_or_nullable,
                 }),
             }
         }
         const fn down_by_4(&self) -> Option<Self> {
             match &self {
                 Self::Standart
-                | Self::ArrayDimension1 { .. }
-                | Self::ArrayDimension2 { .. }
-                | Self::ArrayDimension3 { .. } => None,
-                Self::ArrayDimension4 { .. } => Some(Self::Standart),
+                | Self::ArrayDim1 { .. }
+                | Self::ArrayDim2 { .. }
+                | Self::ArrayDim3 { .. } => None,
+                Self::ArrayDim4 { .. } => Some(Self::Standart),
             }
         }
     }
-    enum ArrayDimension {
-        ArrayDimension1,
-        ArrayDimension2 {
-            dimension1_not_null_or_nullable: NotNullOrNullable,
+    enum ArrayDim {
+        ArrayDim1,
+        ArrayDim2 {
+            dim1_not_null_or_nullable: NotNullOrNullable,
         },
-        ArrayDimension3 {
-            dimension1_not_null_or_nullable: NotNullOrNullable,
-            dimension2_not_null_or_nullable: NotNullOrNullable,
+        ArrayDim3 {
+            dim1_not_null_or_nullable: NotNullOrNullable,
+            dim2_not_null_or_nullable: NotNullOrNullable,
         },
-        ArrayDimension4 {
-            dimension1_not_null_or_nullable: NotNullOrNullable,
-            dimension2_not_null_or_nullable: NotNullOrNullable,
-            dimension3_not_null_or_nullable: NotNullOrNullable,
+        ArrayDim4 {
+            dim1_not_null_or_nullable: NotNullOrNullable,
+            dim2_not_null_or_nullable: NotNullOrNullable,
+            dim3_not_null_or_nullable: NotNullOrNullable,
         },
     }
-    impl ArrayDimension {
+    impl ArrayDim {
         const fn to_usize(&self) -> usize {
             match &self {
-                Self::ArrayDimension1 { .. } => 1,
-                Self::ArrayDimension2 { .. } => 2,
-                Self::ArrayDimension3 { .. } => 3,
-                Self::ArrayDimension4 { .. } => 4,
+                Self::ArrayDim1 { .. } => 1,
+                Self::ArrayDim2 { .. } => 2,
+                Self::ArrayDim3 { .. } => 3,
+                Self::ArrayDim4 { .. } => 4,
             }
         }
     }
-    impl TryFrom<&PgJsonTypePattern> for ArrayDimension {
+    impl TryFrom<&PgJsonTypePattern> for ArrayDim {
         type Error = ();
         fn try_from(value: &PgJsonTypePattern) -> Result<Self, Self::Error> {
             match &value {
                 PgJsonTypePattern::Standart => Err(()),
-                PgJsonTypePattern::ArrayDimension1 { .. } => Ok(Self::ArrayDimension1),
-                PgJsonTypePattern::ArrayDimension2 {
-                    dimension1_not_null_or_nullable,
+                PgJsonTypePattern::ArrayDim1 { .. } => Ok(Self::ArrayDim1),
+                PgJsonTypePattern::ArrayDim2 {
+                    dim1_not_null_or_nullable,
                     ..
-                } => Ok(Self::ArrayDimension2 {
-                    dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable,
+                } => Ok(Self::ArrayDim2 {
+                    dim1_not_null_or_nullable: *dim1_not_null_or_nullable,
                 }),
-                PgJsonTypePattern::ArrayDimension3 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
+                PgJsonTypePattern::ArrayDim3 {
+                    dim1_not_null_or_nullable,
+                    dim2_not_null_or_nullable,
                     ..
-                } => Ok(Self::ArrayDimension3 {
-                    dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable: *dimension2_not_null_or_nullable,
+                } => Ok(Self::ArrayDim3 {
+                    dim1_not_null_or_nullable: *dim1_not_null_or_nullable,
+                    dim2_not_null_or_nullable: *dim2_not_null_or_nullable,
                 }),
-                PgJsonTypePattern::ArrayDimension4 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable,
+                PgJsonTypePattern::ArrayDim4 {
+                    dim1_not_null_or_nullable,
+                    dim2_not_null_or_nullable,
+                    dim3_not_null_or_nullable,
                     ..
-                } => Ok(Self::ArrayDimension4 {
-                    dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable: *dimension3_not_null_or_nullable,
+                } => Ok(Self::ArrayDim4 {
+                    dim1_not_null_or_nullable: *dim1_not_null_or_nullable,
+                    dim2_not_null_or_nullable: *dim2_not_null_or_nullable,
+                    dim3_not_null_or_nullable: *dim3_not_null_or_nullable,
                 }),
             }
         }
@@ -329,11 +327,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     #[derive(Debug, Deserialize)]
     enum GenPgJsonTypesConfigVariant {
         All,
-        WithoutDimensions,
-        WithDimensionOne,
-        WithDimensionTwo,
-        WithDimensionThree,
-        WithDimensionFour,
+        WithoutDims,
+        WithDimOne,
+        WithDimTwo,
+        WithDimThree,
+        WithDimFour,
         Concrete(Vec<PgJsonTypeRecord>),
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
@@ -358,34 +356,34 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     });
                 }
             };
-            let gen_array_dimension1 = |acc_5b22a398: &mut Vec<PgJsonTypeRecord>, pg_json_type: PgJsonType|{
+            let gen_array_dim1 = |acc_5b22a398: &mut Vec<PgJsonTypeRecord>, pg_json_type: PgJsonType|{
                 for el_29854486 in NotNullOrNullable::into_array() {
                     for el_6440cc9c in NotNullOrNullable::into_array() {
                         acc_5b22a398.push(PgJsonTypeRecord {
                             pg_json_type: pg_json_type.clone(),
                             not_null_or_nullable: el_29854486,
-                            pg_json_type_pattern: PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: el_6440cc9c },
+                            pg_json_type_pattern: PgJsonTypePattern::ArrayDim1 { dim1_not_null_or_nullable: el_6440cc9c },
                         });
                     }
                 }
             };
-            let gen_array_dimension2 = |acc_e59f7158: &mut Vec<PgJsonTypeRecord>, pg_json_type: PgJsonType|{
+            let gen_array_dim2 = |acc_e59f7158: &mut Vec<PgJsonTypeRecord>, pg_json_type: PgJsonType|{
                 for el_a6ba4c3e in NotNullOrNullable::into_array() {
                     for el_4b5a815d in NotNullOrNullable::into_array() {
                         for el_2e4896dd in NotNullOrNullable::into_array() {
                             acc_e59f7158.push(PgJsonTypeRecord {
                                 pg_json_type: pg_json_type.clone(),
                                 not_null_or_nullable: el_a6ba4c3e,
-                                pg_json_type_pattern: PgJsonTypePattern::ArrayDimension2 {
-                                    dimension1_not_null_or_nullable: el_4b5a815d,
-                                    dimension2_not_null_or_nullable: el_2e4896dd
+                                pg_json_type_pattern: PgJsonTypePattern::ArrayDim2 {
+                                    dim1_not_null_or_nullable: el_4b5a815d,
+                                    dim2_not_null_or_nullable: el_2e4896dd
                                 },
                             });
                         }
                     }
                 }
             };
-            let gen_array_dimension3 = |acc_77498dc3: &mut Vec<PgJsonTypeRecord>, pg_json_type: PgJsonType|{
+            let gen_array_dim3 = |acc_77498dc3: &mut Vec<PgJsonTypeRecord>, pg_json_type: PgJsonType|{
                 for el_8f03b1c2 in NotNullOrNullable::into_array() {
                     for el_a27b642f in NotNullOrNullable::into_array() {
                         for el_dc57e9b7 in NotNullOrNullable::into_array() {
@@ -393,10 +391,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 acc_77498dc3.push(PgJsonTypeRecord {
                                     pg_json_type: pg_json_type.clone(),
                                     not_null_or_nullable: el_8f03b1c2,
-                                    pg_json_type_pattern: PgJsonTypePattern::ArrayDimension3 {
-                                        dimension1_not_null_or_nullable: el_a27b642f,
-                                        dimension2_not_null_or_nullable: el_dc57e9b7,
-                                        dimension3_not_null_or_nullable: el_4361fee5,
+                                    pg_json_type_pattern: PgJsonTypePattern::ArrayDim3 {
+                                        dim1_not_null_or_nullable: el_a27b642f,
+                                        dim2_not_null_or_nullable: el_dc57e9b7,
+                                        dim3_not_null_or_nullable: el_4361fee5,
                                     },
                                 });
                             }
@@ -404,7 +402,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let gen_array_dimension4 = |acc_7c8a3329: &mut Vec<PgJsonTypeRecord>, pg_json_type: PgJsonType|{
+            let gen_array_dim4 = |acc_7c8a3329: &mut Vec<PgJsonTypeRecord>, pg_json_type: PgJsonType|{
                 for el_daf10957 in NotNullOrNullable::into_array() {
                     for el_fc5a53dd in NotNullOrNullable::into_array() {
                         for el_69b59c5c in NotNullOrNullable::into_array() {
@@ -413,11 +411,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     acc_7c8a3329.push(PgJsonTypeRecord {
                                         pg_json_type: pg_json_type.clone(),
                                         not_null_or_nullable: el_daf10957,
-                                        pg_json_type_pattern: PgJsonTypePattern::ArrayDimension4 {
-                                            dimension1_not_null_or_nullable: el_fc5a53dd,
-                                            dimension2_not_null_or_nullable: el_69b59c5c,
-                                            dimension3_not_null_or_nullable: el_d7efbd09,
-                                            dimension4_not_null_or_nullable: el_c16cb65b,
+                                        pg_json_type_pattern: PgJsonTypePattern::ArrayDim4 {
+                                            dim1_not_null_or_nullable: el_fc5a53dd,
+                                            dim2_not_null_or_nullable: el_69b59c5c,
+                                            dim3_not_null_or_nullable: el_d7efbd09,
+                                            dim4_not_null_or_nullable: el_c16cb65b,
                                         },
                                     });
                                 }
@@ -431,70 +429,70 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     for el_644643cd in PgJsonTypePattern::into_array() {
                         match &el_644643cd {
                             PgJsonTypePattern::Standart => gen_standart(&mut acc_e2f65a79, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDimension1 { .. } => gen_array_dimension1(&mut acc_e2f65a79, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDimension2 { .. } => gen_array_dimension2(&mut acc_e2f65a79, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDimension3 { .. } => gen_array_dimension3(&mut acc_e2f65a79, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDimension4 { .. } => gen_array_dimension4(&mut acc_e2f65a79, pg_json_type.clone()),
+                            PgJsonTypePattern::ArrayDim1 { .. } => gen_array_dim1(&mut acc_e2f65a79, pg_json_type.clone()),
+                            PgJsonTypePattern::ArrayDim2 { .. } => gen_array_dim2(&mut acc_e2f65a79, pg_json_type.clone()),
+                            PgJsonTypePattern::ArrayDim3 { .. } => gen_array_dim3(&mut acc_e2f65a79, pg_json_type.clone()),
+                            PgJsonTypePattern::ArrayDim4 { .. } => gen_array_dim4(&mut acc_e2f65a79, pg_json_type.clone()),
                         }
                     }
                     acc_e2f65a79
                 }),
-                GenPgJsonTypesConfigVariant::WithoutDimensions => PgJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_3d95645c, pg_json_type| {
+                GenPgJsonTypesConfigVariant::WithoutDims => PgJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_3d95645c, pg_json_type| {
                     for el_fccf1979 in PgJsonTypePattern::into_array() {
                         match &el_fccf1979 {
                             PgJsonTypePattern::Standart => gen_standart(&mut acc_3d95645c, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDimension1 { .. } |
-                            PgJsonTypePattern::ArrayDimension2 { .. } |
-                            PgJsonTypePattern::ArrayDimension3 { .. } |
-                            PgJsonTypePattern::ArrayDimension4 { .. } => (),
+                            PgJsonTypePattern::ArrayDim1 { .. } |
+                            PgJsonTypePattern::ArrayDim2 { .. } |
+                            PgJsonTypePattern::ArrayDim3 { .. } |
+                            PgJsonTypePattern::ArrayDim4 { .. } => (),
                         }
                     }
                     acc_3d95645c
                 }),
-                GenPgJsonTypesConfigVariant::WithDimensionOne => PgJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_66a17cae, pg_json_type| {
+                GenPgJsonTypesConfigVariant::WithDimOne => PgJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_66a17cae, pg_json_type| {
                     for el_e69bd1fc in PgJsonTypePattern::into_array() {
                         match &el_e69bd1fc {
                             PgJsonTypePattern::Standart => gen_standart(&mut acc_66a17cae, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDimension1 { .. } => gen_array_dimension1(&mut acc_66a17cae, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDimension2 { .. } |
-                            PgJsonTypePattern::ArrayDimension3 { .. } |
-                            PgJsonTypePattern::ArrayDimension4 { .. } => (),
+                            PgJsonTypePattern::ArrayDim1 { .. } => gen_array_dim1(&mut acc_66a17cae, pg_json_type.clone()),
+                            PgJsonTypePattern::ArrayDim2 { .. } |
+                            PgJsonTypePattern::ArrayDim3 { .. } |
+                            PgJsonTypePattern::ArrayDim4 { .. } => (),
                         }
                     }
                     acc_66a17cae
                 }),
-                GenPgJsonTypesConfigVariant::WithDimensionTwo => PgJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_c5ffb796, pg_json_type| {
+                GenPgJsonTypesConfigVariant::WithDimTwo => PgJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_c5ffb796, pg_json_type| {
                     for el_345fd6bd in PgJsonTypePattern::into_array() {
                         match &el_345fd6bd {
                             PgJsonTypePattern::Standart => gen_standart(&mut acc_c5ffb796, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDimension1 { .. } => gen_array_dimension1(&mut acc_c5ffb796, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDimension2 { .. } => gen_array_dimension2(&mut acc_c5ffb796, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDimension3 { .. } |
-                            PgJsonTypePattern::ArrayDimension4 { .. } => (),
+                            PgJsonTypePattern::ArrayDim1 { .. } => gen_array_dim1(&mut acc_c5ffb796, pg_json_type.clone()),
+                            PgJsonTypePattern::ArrayDim2 { .. } => gen_array_dim2(&mut acc_c5ffb796, pg_json_type.clone()),
+                            PgJsonTypePattern::ArrayDim3 { .. } |
+                            PgJsonTypePattern::ArrayDim4 { .. } => (),
                         }
                     }
                     acc_c5ffb796
                 }),
-                GenPgJsonTypesConfigVariant::WithDimensionThree => PgJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_78b27c00, pg_json_type| {
+                GenPgJsonTypesConfigVariant::WithDimThree => PgJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_78b27c00, pg_json_type| {
                     for el_88e3b8fe in PgJsonTypePattern::into_array() {
                         match &el_88e3b8fe {
                             PgJsonTypePattern::Standart => gen_standart(&mut acc_78b27c00, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDimension1 { .. } => gen_array_dimension1(&mut acc_78b27c00, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDimension2 { .. } => gen_array_dimension2(&mut acc_78b27c00, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDimension3 { .. } => gen_array_dimension3(&mut acc_78b27c00, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDimension4 { .. } => (),
+                            PgJsonTypePattern::ArrayDim1 { .. } => gen_array_dim1(&mut acc_78b27c00, pg_json_type.clone()),
+                            PgJsonTypePattern::ArrayDim2 { .. } => gen_array_dim2(&mut acc_78b27c00, pg_json_type.clone()),
+                            PgJsonTypePattern::ArrayDim3 { .. } => gen_array_dim3(&mut acc_78b27c00, pg_json_type.clone()),
+                            PgJsonTypePattern::ArrayDim4 { .. } => (),
                         }
                     }
                     acc_78b27c00
                 }),
-                GenPgJsonTypesConfigVariant::WithDimensionFour => PgJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_172c62ad, pg_json_type| {
+                GenPgJsonTypesConfigVariant::WithDimFour => PgJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_172c62ad, pg_json_type| {
                     for el_80434642 in PgJsonTypePattern::into_array() {
                         match &el_80434642 {
                             PgJsonTypePattern::Standart => gen_standart(&mut acc_172c62ad, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDimension1 { .. } => gen_array_dimension1(&mut acc_172c62ad, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDimension2 { .. } => gen_array_dimension2(&mut acc_172c62ad, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDimension3 { .. } => gen_array_dimension3(&mut acc_172c62ad, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDimension4 { .. } => gen_array_dimension4(&mut acc_172c62ad, pg_json_type.clone()),
+                            PgJsonTypePattern::ArrayDim1 { .. } => gen_array_dim1(&mut acc_172c62ad, pg_json_type.clone()),
+                            PgJsonTypePattern::ArrayDim2 { .. } => gen_array_dim2(&mut acc_172c62ad, pg_json_type.clone()),
+                            PgJsonTypePattern::ArrayDim3 { .. } => gen_array_dim3(&mut acc_172c62ad, pg_json_type.clone()),
+                            PgJsonTypePattern::ArrayDim4 { .. } => gen_array_dim4(&mut acc_172c62ad, pg_json_type.clone()),
                         }
                     }
                     acc_172c62ad
@@ -526,45 +524,45 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             not_null_or_nullable: NotNullOrNullable::NotNull,
                             pg_json_type_pattern: PgJsonTypePattern::Standart,
                         }),
-                        (NotNullOrNullable::NotNull, PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable }) => gen_vec(PgJsonTypeRecordHandle {
-                            not_null_or_nullable: *dimension1_not_null_or_nullable,
+                        (NotNullOrNullable::NotNull, PgJsonTypePattern::ArrayDim1 { dim1_not_null_or_nullable }) => gen_vec(PgJsonTypeRecordHandle {
+                            not_null_or_nullable: *dim1_not_null_or_nullable,
                             pg_json_type_pattern: pg_json_type_record_handle.pg_json_type_pattern.down_by_1().expect("0e970a4f"),
                         }),
-                        (NotNullOrNullable::NotNull, PgJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, .. }) => gen_vec(PgJsonTypeRecordHandle {
-                            not_null_or_nullable: *dimension1_not_null_or_nullable,
+                        (NotNullOrNullable::NotNull, PgJsonTypePattern::ArrayDim2 { dim1_not_null_or_nullable, .. }) => gen_vec(PgJsonTypeRecordHandle {
+                            not_null_or_nullable: *dim1_not_null_or_nullable,
                             pg_json_type_pattern: pg_json_type_record_handle.pg_json_type_pattern.down_by_1().expect("85f8ed83"),
                         }),
                         (
                             NotNullOrNullable::NotNull,
-                            PgJsonTypePattern::ArrayDimension3 {
-                                dimension1_not_null_or_nullable,
-                                dimension2_not_null_or_nullable,
-                                dimension3_not_null_or_nullable,
+                            PgJsonTypePattern::ArrayDim3 {
+                                dim1_not_null_or_nullable,
+                                dim2_not_null_or_nullable,
+                                dim3_not_null_or_nullable,
                             },
                         ) => gen_vec(PgJsonTypeRecordHandle {
-                            not_null_or_nullable: *dimension1_not_null_or_nullable,
-                            pg_json_type_pattern: PgJsonTypePattern::ArrayDimension2 {
-                                dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                                dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
+                            not_null_or_nullable: *dim1_not_null_or_nullable,
+                            pg_json_type_pattern: PgJsonTypePattern::ArrayDim2 {
+                                dim1_not_null_or_nullable: *dim2_not_null_or_nullable,
+                                dim2_not_null_or_nullable: *dim3_not_null_or_nullable,
                             },
                         }),
                         (
                             NotNullOrNullable::NotNull,
-                            PgJsonTypePattern::ArrayDimension4 {
-                                dimension1_not_null_or_nullable,
-                                dimension2_not_null_or_nullable,
-                                dimension3_not_null_or_nullable,
-                                dimension4_not_null_or_nullable,
+                            PgJsonTypePattern::ArrayDim4 {
+                                dim1_not_null_or_nullable,
+                                dim2_not_null_or_nullable,
+                                dim3_not_null_or_nullable,
+                                dim4_not_null_or_nullable,
                             },
                         ) => gen_vec(PgJsonTypeRecordHandle {
-                            not_null_or_nullable: *dimension1_not_null_or_nullable,
-                            pg_json_type_pattern: PgJsonTypePattern::ArrayDimension3 {
-                                dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                                dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
-                                dimension3_not_null_or_nullable: *dimension4_not_null_or_nullable,
+                            not_null_or_nullable: *dim1_not_null_or_nullable,
+                            pg_json_type_pattern: PgJsonTypePattern::ArrayDim3 {
+                                dim1_not_null_or_nullable: *dim2_not_null_or_nullable,
+                                dim2_not_null_or_nullable: *dim3_not_null_or_nullable,
+                                dim3_not_null_or_nullable: *dim4_not_null_or_nullable,
                             },
                         }),
-                        (NotNullOrNullable::Nullable, PgJsonTypePattern::ArrayDimension1 { .. } | PgJsonTypePattern::ArrayDimension2 { .. } | PgJsonTypePattern::ArrayDimension3 { .. } | PgJsonTypePattern::ArrayDimension4 { .. }) => gen_vec(PgJsonTypeRecordHandle {
+                        (NotNullOrNullable::Nullable, PgJsonTypePattern::ArrayDim1 { .. } | PgJsonTypePattern::ArrayDim2 { .. } | PgJsonTypePattern::ArrayDim3 { .. } | PgJsonTypePattern::ArrayDim4 { .. }) => gen_vec(PgJsonTypeRecordHandle {
                             not_null_or_nullable: NotNullOrNullable::NotNull,
                             pg_json_type_pattern: pg_json_type_record_handle.pg_json_type_pattern.clone(),
                         }),
@@ -645,48 +643,48 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             let not_null_or_nullable_rust = current_not_null_or_nullable.rust();
             let (rust_part, pg_part) = match &current_pg_json_type_pattern {
                 PgJsonTypePattern::Standart => (rust_type_name.to_string(), pg_json_type_name.to_string()),
-                PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
-                    let d1 = dimension1_not_null_or_nullable;
-                    let d1_rust = dimension1_not_null_or_nullable.rust();
+                PgJsonTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => {
+                    let d1 = dim1_not_null_or_nullable;
+                    let d1_rust = dim1_not_null_or_nullable.rust();
                     (format!("{vec_of_ucc}{d1_rust}{rust_type_name}"), format!("{array_of_ucc}{d1}{pg_json_type_name}"))
                 }
-                PgJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
-                    let d1 = dimension1_not_null_or_nullable;
-                    let d1_rust = dimension1_not_null_or_nullable.rust();
-                    let d2 = dimension2_not_null_or_nullable;
-                    let d2_rust = dimension2_not_null_or_nullable.rust();
+                PgJsonTypePattern::ArrayDim2 { dim1_not_null_or_nullable, dim2_not_null_or_nullable } => {
+                    let d1 = dim1_not_null_or_nullable;
+                    let d1_rust = dim1_not_null_or_nullable.rust();
+                    let d2 = dim2_not_null_or_nullable;
+                    let d2_rust = dim2_not_null_or_nullable.rust();
                     (format!("{vec_of_ucc}{d1_rust}{vec_of_ucc}{d2_rust}{rust_type_name}"), format!("{array_of_ucc}{d1}{array_of_ucc}{d2}{pg_json_type_name}"))
                 }
-                PgJsonTypePattern::ArrayDimension3 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable,
+                PgJsonTypePattern::ArrayDim3 {
+                    dim1_not_null_or_nullable,
+                    dim2_not_null_or_nullable,
+                    dim3_not_null_or_nullable,
                 } => {
-                    let d1 = dimension1_not_null_or_nullable;
-                    let d1_rust = dimension1_not_null_or_nullable.rust();
-                    let d2 = dimension2_not_null_or_nullable;
-                    let d2_rust = dimension2_not_null_or_nullable.rust();
-                    let d3 = dimension3_not_null_or_nullable;
-                    let d3_rust = dimension3_not_null_or_nullable.rust();
+                    let d1 = dim1_not_null_or_nullable;
+                    let d1_rust = dim1_not_null_or_nullable.rust();
+                    let d2 = dim2_not_null_or_nullable;
+                    let d2_rust = dim2_not_null_or_nullable.rust();
+                    let d3 = dim3_not_null_or_nullable;
+                    let d3_rust = dim3_not_null_or_nullable.rust();
                     (
                         format!("{vec_of_ucc}{d1_rust}{vec_of_ucc}{d2_rust}{vec_of_ucc}{d3_rust}{rust_type_name}"),
                         format!("{array_of_ucc}{d1}{array_of_ucc}{d2}{array_of_ucc}{d3}{pg_json_type_name}"),
                     )
                 }
-                PgJsonTypePattern::ArrayDimension4 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable,
-                    dimension4_not_null_or_nullable,
+                PgJsonTypePattern::ArrayDim4 {
+                    dim1_not_null_or_nullable,
+                    dim2_not_null_or_nullable,
+                    dim3_not_null_or_nullable,
+                    dim4_not_null_or_nullable,
                 } => {
-                    let d1 = dimension1_not_null_or_nullable;
-                    let d1_rust = dimension1_not_null_or_nullable.rust();
-                    let d2 = dimension2_not_null_or_nullable;
-                    let d2_rust = dimension2_not_null_or_nullable.rust();
-                    let d3 = dimension3_not_null_or_nullable;
-                    let d3_rust = dimension3_not_null_or_nullable.rust();
-                    let d4 = dimension4_not_null_or_nullable;
-                    let d4_rust = dimension4_not_null_or_nullable.rust();
+                    let d1 = dim1_not_null_or_nullable;
+                    let d1_rust = dim1_not_null_or_nullable.rust();
+                    let d2 = dim2_not_null_or_nullable;
+                    let d2_rust = dim2_not_null_or_nullable.rust();
+                    let d3 = dim3_not_null_or_nullable;
+                    let d3_rust = dim3_not_null_or_nullable.rust();
+                    let d4 = dim4_not_null_or_nullable;
+                    let d4_rust = dim4_not_null_or_nullable.rust();
                     (
                         format!("{vec_of_ucc}{d1_rust}{vec_of_ucc}{d2_rust}{vec_of_ucc}{d3_rust}{vec_of_ucc}{d4_rust}{rust_type_name}"),
                         format!("{array_of_ucc}{d1}{array_of_ucc}{d2}{array_of_ucc}{d3}{array_of_ucc}{d4}{pg_json_type_name}"),
@@ -755,10 +753,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 NotNullOrNullable::NotNull => ConstFn::True,
                 NotNullOrNullable::Nullable => ConstFn::False,
             },
-            PgJsonTypePattern::ArrayDimension1 { .. } |
-            PgJsonTypePattern::ArrayDimension2 { .. } |
-            PgJsonTypePattern::ArrayDimension3 { .. } |
-            PgJsonTypePattern::ArrayDimension4 { .. } => ConstFn::False,
+            PgJsonTypePattern::ArrayDim1 { .. } |
+            PgJsonTypePattern::ArrayDim2 { .. } |
+            PgJsonTypePattern::ArrayDim3 { .. } |
+            PgJsonTypePattern::ArrayDim4 { .. } => ConstFn::False,
         };
         let gen_pub_new_or_fn_new_ts = |const_new_ts: &dyn ToTokens, new_ts: &dyn ToTokens|match maybe_const_fn {
             ConstFn::False => gen_pub_fn_new_value_ident_read_inner_content_ts(
@@ -791,10 +789,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 PgJsonType::UuidUuidAsJsonbString => DeriveCopy::True,
                 PgJsonType::StdStringStringAsJsonbString => DeriveCopy::False,
             },
-            PgJsonTypePattern::ArrayDimension1 {..} |
-            PgJsonTypePattern::ArrayDimension2 {..} |
-            PgJsonTypePattern::ArrayDimension3 {..} |
-            PgJsonTypePattern::ArrayDimension4 {..} => DeriveCopy::False,
+            PgJsonTypePattern::ArrayDim1 {..} |
+            PgJsonTypePattern::ArrayDim2 {..} |
+            PgJsonTypePattern::ArrayDim3 {..} |
+            PgJsonTypePattern::ArrayDim4 {..} => DeriveCopy::False,
         };
         let ident_origin_ts = {
             let gen_current_ident_origin_non_wrapping = |
@@ -938,30 +936,30 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     NotNullOrNullable::NotNull => &ident_read_inner_standart_not_null_alias_ts,
                                     NotNullOrNullable::Nullable => &gen_std_option_option_tokens_declaration_ts(&ident_standart_not_null_origin_ucc),
                                 },
-                                PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
+                                PgJsonTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => &{
                                     let (current_not_null_or_nullable, current_pg_json_type_pattern): (&NotNullOrNullable, &PgJsonTypePattern) = match &not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("e994797d")),
+                                        NotNullOrNullable::NotNull => (dim1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("e994797d")),
                                         NotNullOrNullable::Nullable => (&NotNullOrNullable::NotNull, pg_json_type_pattern),
                                     };
                                     gen_current_ident_origin(current_not_null_or_nullable, current_pg_json_type_pattern)
                                 },
-                                PgJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, .. } => &{
+                                PgJsonTypePattern::ArrayDim2 { dim1_not_null_or_nullable, .. } => &{
                                     let (current_not_null_or_nullable, current_pg_json_type_pattern): (&NotNullOrNullable, &PgJsonTypePattern) = match &not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("76eb44e3")),
+                                        NotNullOrNullable::NotNull => (dim1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("76eb44e3")),
                                         NotNullOrNullable::Nullable => (&NotNullOrNullable::NotNull, pg_json_type_pattern),
                                     };
                                     gen_current_ident_origin(current_not_null_or_nullable, current_pg_json_type_pattern)
                                 },
-                                PgJsonTypePattern::ArrayDimension3 { dimension1_not_null_or_nullable, .. } => &{
+                                PgJsonTypePattern::ArrayDim3 { dim1_not_null_or_nullable, .. } => &{
                                     let (current_not_null_or_nullable, current_pg_json_type_pattern): (&NotNullOrNullable, &PgJsonTypePattern) = match &not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("1b996c86")),
+                                        NotNullOrNullable::NotNull => (dim1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("1b996c86")),
                                         NotNullOrNullable::Nullable => (&NotNullOrNullable::NotNull, pg_json_type_pattern),
                                     };
                                     gen_current_ident_origin(current_not_null_or_nullable, current_pg_json_type_pattern)
                                 },
-                                PgJsonTypePattern::ArrayDimension4 { dimension1_not_null_or_nullable, .. } => &{
+                                PgJsonTypePattern::ArrayDim4 { dim1_not_null_or_nullable, .. } => &{
                                     let (current_not_null_or_nullable, current_pg_json_type_pattern): (&NotNullOrNullable, &PgJsonTypePattern) = match &not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("d24b7481")),
+                                        NotNullOrNullable::NotNull => (dim1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("d24b7481")),
                                         NotNullOrNullable::Nullable => (&NotNullOrNullable::NotNull, pg_json_type_pattern),
                                     };
                                     gen_current_ident_origin(current_not_null_or_nullable, current_pg_json_type_pattern)
@@ -973,7 +971,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 );
             let ident_origin_impl_new_self_content_ts = {
                 let gen_value_map_type_new_ts = |type_ts: &dyn ToTokens| quote! {#ValueSc.map(#type_ts::#NewSc)};
-                let gen_array_dimensions_initialization_ts = |type_ts: &dyn ToTokens| match &not_null_or_nullable {
+                let gen_array_dims_initialization_ts = |type_ts: &dyn ToTokens| match &not_null_or_nullable {
                     NotNullOrNullable::NotNull => quote! {#ValueSc.into_iter().map(#type_ts::#NewSc).collect()},
                     NotNullOrNullable::Nullable => gen_value_map_type_new_ts(&type_ts),
                 };
@@ -982,30 +980,30 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         NotNullOrNullable::NotNull => quote! {value},
                         NotNullOrNullable::Nullable => gen_value_map_type_new_ts(&ident_standart_not_null_origin_ucc),
                     },
-                    PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => gen_array_dimensions_initialization_ts(&{
+                    PgJsonTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => gen_array_dims_initialization_ts(&{
                         let (current_pg_json_type_pattern, current_not_null_or_nullable): (&PgJsonTypePattern, &NotNullOrNullable) = match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => (&pg_json_type_pattern.down_by_1().expect("1160d3df"), dimension1_not_null_or_nullable),
+                            NotNullOrNullable::NotNull => (&pg_json_type_pattern.down_by_1().expect("1160d3df"), dim1_not_null_or_nullable),
                             NotNullOrNullable::Nullable => (pg_json_type_pattern, &NotNullOrNullable::NotNull),
                         };
                         gen_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_pg_json_type_pattern)
                     }),
-                    PgJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, .. } => gen_array_dimensions_initialization_ts(&{
+                    PgJsonTypePattern::ArrayDim2 { dim1_not_null_or_nullable, .. } => gen_array_dims_initialization_ts(&{
                         let (current_pg_json_type_pattern, current_not_null_or_nullable): (&PgJsonTypePattern, &NotNullOrNullable) = match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => (&pg_json_type_pattern.down_by_1().expect("8ab62f4e"), dimension1_not_null_or_nullable),
+                            NotNullOrNullable::NotNull => (&pg_json_type_pattern.down_by_1().expect("8ab62f4e"), dim1_not_null_or_nullable),
                             NotNullOrNullable::Nullable => (pg_json_type_pattern, &NotNullOrNullable::NotNull),
                         };
                         gen_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_pg_json_type_pattern)
                     }),
-                    PgJsonTypePattern::ArrayDimension3 { dimension1_not_null_or_nullable, .. } => gen_array_dimensions_initialization_ts(&{
+                    PgJsonTypePattern::ArrayDim3 { dim1_not_null_or_nullable, .. } => gen_array_dims_initialization_ts(&{
                         let (current_pg_json_type_pattern, current_not_null_or_nullable): (&PgJsonTypePattern, &NotNullOrNullable) = match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => (&pg_json_type_pattern.down_by_1().expect("ed64919d"), dimension1_not_null_or_nullable),
+                            NotNullOrNullable::NotNull => (&pg_json_type_pattern.down_by_1().expect("ed64919d"), dim1_not_null_or_nullable),
                             NotNullOrNullable::Nullable => (pg_json_type_pattern, &NotNullOrNullable::NotNull),
                         };
                         gen_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_pg_json_type_pattern)
                     }),
-                    PgJsonTypePattern::ArrayDimension4 { dimension1_not_null_or_nullable, .. } => gen_array_dimensions_initialization_ts(&{
+                    PgJsonTypePattern::ArrayDim4 { dim1_not_null_or_nullable, .. } => gen_array_dims_initialization_ts(&{
                         let (current_pg_json_type_pattern, current_not_null_or_nullable): (&PgJsonTypePattern, &NotNullOrNullable) = match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => (&pg_json_type_pattern.down_by_1().expect("25646d29"), dimension1_not_null_or_nullable),
+                            NotNullOrNullable::NotNull => (&pg_json_type_pattern.down_by_1().expect("25646d29"), dim1_not_null_or_nullable),
                             NotNullOrNullable::Nullable => (pg_json_type_pattern, &NotNullOrNullable::NotNull),
                         };
                         gen_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_pg_json_type_pattern)
@@ -1172,7 +1170,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         },
                         NotNullOrNullable::Nullable => quote! {Some(#PgCrudCommonDefaultOptionSomeVecOneElCall)},
                     },
-                    PgJsonTypePattern::ArrayDimension1 { .. } | PgJsonTypePattern::ArrayDimension2 { .. } | PgJsonTypePattern::ArrayDimension3 { .. } | PgJsonTypePattern::ArrayDimension4 { .. } => match &not_null_or_nullable {
+                    PgJsonTypePattern::ArrayDim1 { .. } | PgJsonTypePattern::ArrayDim2 { .. } | PgJsonTypePattern::ArrayDim3 { .. } | PgJsonTypePattern::ArrayDim4 { .. } => match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => quote! {vec![#PgCrudCommonDefaultOptionSomeVecOneElCall]},
                         NotNullOrNullable::Nullable => quote! {Some(#PgCrudCommonDefaultOptionSomeVecOneElCall)},
                     },
@@ -1313,15 +1311,15 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 .derive_schemars_json_schema()
                 .build_struct(
                     &ident_select_ucc,
-                    &ArrayDimension::try_from(pg_json_type_pattern).map_or_else(
+                    &ArrayDim::try_from(pg_json_type_pattern).map_or_else(
                         |()| quote! {;},
-                        |array_dimension| {
+                        |array_dim| {
                             let mut arguments_ts = Vec::new();
-                            for el_419a74e5 in 1..=array_dimension.to_usize() {
-                                let dimension_number_pagination_ts = format!("dimension{el_419a74e5}_pagination").parse::<Ts2>()
+                            for el_419a74e5 in 1..=array_dim.to_usize() {
+                                let dim_number_pagination_ts = format!("dim{el_419a74e5}_pagination").parse::<Ts2>()
                                 .expect("2ad1faf7");
                                 arguments_ts.push(quote! {
-                                    #dimension_number_pagination_ts: #import_path::PaginationStartsWithZero
+                                    #dim_number_pagination_ts: #import_path::PaginationStartsWithZero
                                 });
                             }
                             quote! {{#(#arguments_ts),*}}
@@ -1329,18 +1327,18 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     )
                 );
             let gen_default_some_one_content_ts = |default_some_one_or_default_some_one_with_max_page_size: &DefaultSomeOneOrDefaultSomeOneWithMaxPageSize| {
-                let content_ts = ArrayDimension::try_from(pg_json_type_pattern).map_or_else(
+                let content_ts = ArrayDim::try_from(pg_json_type_pattern).map_or_else(
                     |()| Ts2::new(),
-                    |array_dimension| {
+                    |array_dim| {
                         let content_ts: &dyn ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
                             DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudCommonDefaultOptionSomeVecOneElCall,
                             DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall,
                         };
                         let mut arguments_ts = Vec::new();
-                        for el_d56aec99 in 1..=array_dimension.to_usize() {
-                            let dimension_number_pagination_ts = format!("dimension{el_d56aec99}_pagination").parse::<Ts2>().expect("26ca29fb");
+                        for el_d56aec99 in 1..=array_dim.to_usize() {
+                            let dim_number_pagination_ts = format!("dim{el_d56aec99}_pagination").parse::<Ts2>().expect("26ca29fb");
                             arguments_ts.push(quote! {
-                                #dimension_number_pagination_ts: #content_ts
+                                #dim_number_pagination_ts: #content_ts
                             });
                         }
                         quote! {#(#arguments_ts),*}
@@ -1416,321 +1414,321 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             }
                         }
-                        PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
-                            let array_dimension1_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("21eaebaf")));
+                        PgJsonTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => {
+                            let array_dim1_inner_el_ident_table_type_declaration_ucc = {
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dim1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("21eaebaf")));
                                 quote! {#value}
                             };
-                            let common_array_dimension1_pg_json_type_filters = {
+                            let common_array_dim1_pg_json_type_filters = {
                                 let mut vec = common_pg_json_type_filters;
-                                vec.push(PgJsonTypeFilter::DimensionOneEqual {
-                                    ident: array_dimension1_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimOneEqual {
+                                    ident: array_dim1_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
                                 vec.push(PgJsonTypeFilter::LengthEqual);
-                                vec.push(PgJsonTypeFilter::DimensionOneLengthEqual);
+                                vec.push(PgJsonTypeFilter::DimOneLengthEqual);
                                 vec.push(PgJsonTypeFilter::LengthGreaterThan);
-                                vec.push(PgJsonTypeFilter::DimensionOneLengthGreaterThan);
-                                vec.push(PgJsonTypeFilter::DimensionOneContainsAllElementsOfArray {
-                                    ident: array_dimension1_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimOneLengthGreaterThan);
+                                vec.push(PgJsonTypeFilter::DimOneContainsAllElementsOfArray {
+                                    ident: array_dim1_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionOneOverlapsWithArray {
-                                    ident: array_dimension1_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimOneOverlapsWithArray {
+                                    ident: array_dim1_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
                                 vec.push(PgJsonTypeFilter::AllElementsEqual {
-                                    ident: array_dimension1_inner_el_ident_table_type_declaration_ucc.clone(),
+                                    ident: array_dim1_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionOneIn {
-                                    ident: array_dimension1_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimOneIn {
+                                    ident: array_dim1_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
                                 vec
                             };
                             match &pg_json_type_specific {
                                 PgJsonTypeSpecific::Number => {
-                                    let mut filters = common_array_dimension1_pg_json_type_filters;
-                                    filters.push(PgJsonTypeFilter::DimensionOneGreaterThan {
-                                        ident: array_dimension1_inner_el_ident_table_type_declaration_ucc.clone(),
+                                    let mut filters = common_array_dim1_pg_json_type_filters;
+                                    filters.push(PgJsonTypeFilter::DimOneGreaterThan {
+                                        ident: array_dim1_inner_el_ident_table_type_declaration_ucc.clone(),
                                     });
-                                    filters.push(PgJsonTypeFilter::DimensionOneBetween {
-                                        ident: array_dimension1_inner_el_ident_table_type_declaration_ucc.clone(),
+                                    filters.push(PgJsonTypeFilter::DimOneBetween {
+                                        ident: array_dim1_inner_el_ident_table_type_declaration_ucc.clone(),
                                     });
                                     filters.push(PgJsonTypeFilter::ContainsElGreaterThan {
-                                        ident: array_dimension1_inner_el_ident_table_type_declaration_ucc.clone(),
+                                        ident: array_dim1_inner_el_ident_table_type_declaration_ucc.clone(),
                                     });
                                     filters.push(PgJsonTypeFilter::AllElementsGreaterThan {
-                                        ident: array_dimension1_inner_el_ident_table_type_declaration_ucc,
+                                        ident: array_dim1_inner_el_ident_table_type_declaration_ucc,
                                     });
                                     filters
                                 }
-                                PgJsonTypeSpecific::Bool => common_array_dimension1_pg_json_type_filters,
+                                PgJsonTypeSpecific::Bool => common_array_dim1_pg_json_type_filters,
                                 PgJsonTypeSpecific::String => {
-                                    let mut filters = common_array_dimension1_pg_json_type_filters;
-                                    filters.push(PgJsonTypeFilter::DimensionOneRegularExpression);
+                                    let mut filters = common_array_dim1_pg_json_type_filters;
+                                    filters.push(PgJsonTypeFilter::DimOneRegularExpression);
                                     filters.push(PgJsonTypeFilter::ContainsElRegularExpression);
                                     filters.push(PgJsonTypeFilter::AllElementsRegularExpression);
                                     filters
                                 }
                             }
                         }
-                        PgJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
-                            let array_dimension1_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("0c4491c4")));
+                        PgJsonTypePattern::ArrayDim2 { dim1_not_null_or_nullable, dim2_not_null_or_nullable } => {
+                            let array_dim1_inner_el_ident_table_type_declaration_ucc = {
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dim1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("0c4491c4")));
                                 quote! {#value}
                             };
-                            let array_dimension2_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension2_not_null_or_nullable, &pg_json_type_pattern.down_by_2().expect("2d4ee5d4")));
+                            let array_dim2_inner_el_ident_table_type_declaration_ucc = {
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dim2_not_null_or_nullable, &pg_json_type_pattern.down_by_2().expect("2d4ee5d4")));
                                 quote! {#value}
                             };
-                            let common_array_dimension2_pg_json_type_filters = {
+                            let common_array_dim2_pg_json_type_filters = {
                                 let mut vec = common_pg_json_type_filters;
-                                vec.push(PgJsonTypeFilter::DimensionOneEqual {
-                                    ident: array_dimension1_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimOneEqual {
+                                    ident: array_dim1_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionTwoEqual {
-                                    ident: array_dimension2_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimTwoEqual {
+                                    ident: array_dim2_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
                                 vec.push(PgJsonTypeFilter::LengthEqual);
-                                vec.push(PgJsonTypeFilter::DimensionOneLengthEqual);
-                                vec.push(PgJsonTypeFilter::DimensionTwoLengthEqual);
+                                vec.push(PgJsonTypeFilter::DimOneLengthEqual);
+                                vec.push(PgJsonTypeFilter::DimTwoLengthEqual);
                                 vec.push(PgJsonTypeFilter::LengthGreaterThan);
-                                vec.push(PgJsonTypeFilter::DimensionOneLengthGreaterThan);
-                                vec.push(PgJsonTypeFilter::DimensionTwoLengthGreaterThan);
-                                vec.push(PgJsonTypeFilter::DimensionTwoContainsAllElementsOfArray {
-                                    ident: array_dimension2_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimOneLengthGreaterThan);
+                                vec.push(PgJsonTypeFilter::DimTwoLengthGreaterThan);
+                                vec.push(PgJsonTypeFilter::DimTwoContainsAllElementsOfArray {
+                                    ident: array_dim2_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionTwoOverlapsWithArray {
-                                    ident: array_dimension2_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimTwoOverlapsWithArray {
+                                    ident: array_dim2_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
                                 vec.push(PgJsonTypeFilter::AllElementsEqual {
-                                    ident: array_dimension1_inner_el_ident_table_type_declaration_ucc.clone(),
+                                    ident: array_dim1_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionOneAllElementsEqual {
-                                    ident: array_dimension2_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimOneAllElementsEqual {
+                                    ident: array_dim2_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionOneIn {
-                                    ident: array_dimension1_inner_el_ident_table_type_declaration_ucc,
+                                vec.push(PgJsonTypeFilter::DimOneIn {
+                                    ident: array_dim1_inner_el_ident_table_type_declaration_ucc,
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionTwoIn {
-                                    ident: array_dimension2_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimTwoIn {
+                                    ident: array_dim2_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
                                 vec
                             };
                             match &pg_json_type_specific {
                                 PgJsonTypeSpecific::Number => {
-                                    let mut filters = common_array_dimension2_pg_json_type_filters;
-                                    filters.push(PgJsonTypeFilter::DimensionTwoGreaterThan {
-                                        ident: array_dimension2_inner_el_ident_table_type_declaration_ucc.clone(),
+                                    let mut filters = common_array_dim2_pg_json_type_filters;
+                                    filters.push(PgJsonTypeFilter::DimTwoGreaterThan {
+                                        ident: array_dim2_inner_el_ident_table_type_declaration_ucc.clone(),
                                     });
-                                    filters.push(PgJsonTypeFilter::DimensionTwoBetween {
-                                        ident: array_dimension2_inner_el_ident_table_type_declaration_ucc.clone(),
+                                    filters.push(PgJsonTypeFilter::DimTwoBetween {
+                                        ident: array_dim2_inner_el_ident_table_type_declaration_ucc.clone(),
                                     });
-                                    filters.push(PgJsonTypeFilter::DimensionOneContainsElGreaterThan {
-                                        ident: array_dimension2_inner_el_ident_table_type_declaration_ucc.clone(),
+                                    filters.push(PgJsonTypeFilter::DimOneContainsElGreaterThan {
+                                        ident: array_dim2_inner_el_ident_table_type_declaration_ucc.clone(),
                                     });
-                                    filters.push(PgJsonTypeFilter::DimensionOneAllElementsGreaterThan {
-                                        ident: array_dimension2_inner_el_ident_table_type_declaration_ucc,
+                                    filters.push(PgJsonTypeFilter::DimOneAllElementsGreaterThan {
+                                        ident: array_dim2_inner_el_ident_table_type_declaration_ucc,
                                     });
                                     filters
                                 }
-                                PgJsonTypeSpecific::Bool => common_array_dimension2_pg_json_type_filters,
+                                PgJsonTypeSpecific::Bool => common_array_dim2_pg_json_type_filters,
                                 PgJsonTypeSpecific::String => {
-                                    let mut filters = common_array_dimension2_pg_json_type_filters;
-                                    filters.push(PgJsonTypeFilter::DimensionTwoRegularExpression);
-                                    filters.push(PgJsonTypeFilter::DimensionOneContainsElRegularExpression);
-                                    filters.push(PgJsonTypeFilter::DimensionOneAllElementsRegularExpression);
+                                    let mut filters = common_array_dim2_pg_json_type_filters;
+                                    filters.push(PgJsonTypeFilter::DimTwoRegularExpression);
+                                    filters.push(PgJsonTypeFilter::DimOneContainsElRegularExpression);
+                                    filters.push(PgJsonTypeFilter::DimOneAllElementsRegularExpression);
                                     filters
                                 }
                             }
                         }
-                        PgJsonTypePattern::ArrayDimension3 {
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
-                            dimension3_not_null_or_nullable,
+                        PgJsonTypePattern::ArrayDim3 {
+                            dim1_not_null_or_nullable,
+                            dim2_not_null_or_nullable,
+                            dim3_not_null_or_nullable,
                         } => {
-                            let array_dimension1_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("3450bef4")));
+                            let array_dim1_inner_el_ident_table_type_declaration_ucc = {
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dim1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("3450bef4")));
                                 quote! {#value}
                             };
-                            let array_dimension2_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension2_not_null_or_nullable, &pg_json_type_pattern.down_by_2().expect("3c0d10f4")));
+                            let array_dim2_inner_el_ident_table_type_declaration_ucc = {
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dim2_not_null_or_nullable, &pg_json_type_pattern.down_by_2().expect("3c0d10f4")));
                                 quote! {#value}
                             };
-                            let array_dimension3_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension3_not_null_or_nullable, &pg_json_type_pattern.down_by_3().expect("9aaf9e82")));
+                            let array_dim3_inner_el_ident_table_type_declaration_ucc = {
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dim3_not_null_or_nullable, &pg_json_type_pattern.down_by_3().expect("9aaf9e82")));
                                 quote! {#value}
                             };
-                            let common_array_dimension3_pg_json_type_filters = {
+                            let common_array_dim3_pg_json_type_filters = {
                                 let mut vec = common_pg_json_type_filters;
-                                vec.push(PgJsonTypeFilter::DimensionOneEqual {
-                                    ident: array_dimension1_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimOneEqual {
+                                    ident: array_dim1_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionTwoEqual {
-                                    ident: array_dimension2_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimTwoEqual {
+                                    ident: array_dim2_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionThreeEqual {
-                                    ident: array_dimension3_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimThreeEqual {
+                                    ident: array_dim3_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
                                 vec.push(PgJsonTypeFilter::LengthEqual);
-                                vec.push(PgJsonTypeFilter::DimensionOneLengthEqual);
-                                vec.push(PgJsonTypeFilter::DimensionTwoLengthEqual);
-                                vec.push(PgJsonTypeFilter::DimensionThreeLengthEqual);
+                                vec.push(PgJsonTypeFilter::DimOneLengthEqual);
+                                vec.push(PgJsonTypeFilter::DimTwoLengthEqual);
+                                vec.push(PgJsonTypeFilter::DimThreeLengthEqual);
                                 vec.push(PgJsonTypeFilter::LengthGreaterThan);
-                                vec.push(PgJsonTypeFilter::DimensionOneLengthGreaterThan);
-                                vec.push(PgJsonTypeFilter::DimensionTwoLengthGreaterThan);
-                                vec.push(PgJsonTypeFilter::DimensionThreeLengthGreaterThan);
-                                vec.push(PgJsonTypeFilter::DimensionThreeContainsAllElementsOfArray {
-                                    ident: array_dimension3_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimOneLengthGreaterThan);
+                                vec.push(PgJsonTypeFilter::DimTwoLengthGreaterThan);
+                                vec.push(PgJsonTypeFilter::DimThreeLengthGreaterThan);
+                                vec.push(PgJsonTypeFilter::DimThreeContainsAllElementsOfArray {
+                                    ident: array_dim3_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionThreeOverlapsWithArray {
-                                    ident: array_dimension3_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimThreeOverlapsWithArray {
+                                    ident: array_dim3_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
                                 vec.push(PgJsonTypeFilter::AllElementsEqual {
-                                    ident: array_dimension1_inner_el_ident_table_type_declaration_ucc.clone(),
+                                    ident: array_dim1_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionOneAllElementsEqual {
-                                    ident: array_dimension2_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimOneAllElementsEqual {
+                                    ident: array_dim2_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionTwoAllElementsEqual {
-                                    ident: array_dimension3_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimTwoAllElementsEqual {
+                                    ident: array_dim3_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionOneIn {
-                                    ident: array_dimension1_inner_el_ident_table_type_declaration_ucc,
+                                vec.push(PgJsonTypeFilter::DimOneIn {
+                                    ident: array_dim1_inner_el_ident_table_type_declaration_ucc,
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionTwoIn {
-                                    ident: array_dimension2_inner_el_ident_table_type_declaration_ucc,
+                                vec.push(PgJsonTypeFilter::DimTwoIn {
+                                    ident: array_dim2_inner_el_ident_table_type_declaration_ucc,
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionThreeIn {
-                                    ident: array_dimension3_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimThreeIn {
+                                    ident: array_dim3_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
                                 vec
                             };
                             match &pg_json_type_specific {
                                 PgJsonTypeSpecific::Number => {
-                                    let mut filters = common_array_dimension3_pg_json_type_filters;
-                                    filters.push(PgJsonTypeFilter::DimensionThreeGreaterThan {
-                                        ident: array_dimension3_inner_el_ident_table_type_declaration_ucc.clone(),
+                                    let mut filters = common_array_dim3_pg_json_type_filters;
+                                    filters.push(PgJsonTypeFilter::DimThreeGreaterThan {
+                                        ident: array_dim3_inner_el_ident_table_type_declaration_ucc.clone(),
                                     });
-                                    filters.push(PgJsonTypeFilter::DimensionThreeBetween {
-                                        ident: array_dimension3_inner_el_ident_table_type_declaration_ucc.clone(),
+                                    filters.push(PgJsonTypeFilter::DimThreeBetween {
+                                        ident: array_dim3_inner_el_ident_table_type_declaration_ucc.clone(),
                                     });
-                                    filters.push(PgJsonTypeFilter::DimensionTwoContainsElGreaterThan {
-                                        ident: array_dimension3_inner_el_ident_table_type_declaration_ucc.clone(),
+                                    filters.push(PgJsonTypeFilter::DimTwoContainsElGreaterThan {
+                                        ident: array_dim3_inner_el_ident_table_type_declaration_ucc.clone(),
                                     });
-                                    filters.push(PgJsonTypeFilter::DimensionTwoAllElementsGreaterThan {
-                                        ident: array_dimension3_inner_el_ident_table_type_declaration_ucc,
+                                    filters.push(PgJsonTypeFilter::DimTwoAllElementsGreaterThan {
+                                        ident: array_dim3_inner_el_ident_table_type_declaration_ucc,
                                     });
                                     filters
                                 }
-                                PgJsonTypeSpecific::Bool => common_array_dimension3_pg_json_type_filters,
+                                PgJsonTypeSpecific::Bool => common_array_dim3_pg_json_type_filters,
                                 PgJsonTypeSpecific::String => {
-                                    let mut filters = common_array_dimension3_pg_json_type_filters;
-                                    filters.push(PgJsonTypeFilter::DimensionThreeRegularExpression);
-                                    filters.push(PgJsonTypeFilter::DimensionTwoContainsElRegularExpression);
-                                    filters.push(PgJsonTypeFilter::DimensionTwoAllElementsRegularExpression);
+                                    let mut filters = common_array_dim3_pg_json_type_filters;
+                                    filters.push(PgJsonTypeFilter::DimThreeRegularExpression);
+                                    filters.push(PgJsonTypeFilter::DimTwoContainsElRegularExpression);
+                                    filters.push(PgJsonTypeFilter::DimTwoAllElementsRegularExpression);
                                     filters
                                 }
                             }
                         }
-                        PgJsonTypePattern::ArrayDimension4 {
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
-                            dimension3_not_null_or_nullable,
-                            dimension4_not_null_or_nullable,
+                        PgJsonTypePattern::ArrayDim4 {
+                            dim1_not_null_or_nullable,
+                            dim2_not_null_or_nullable,
+                            dim3_not_null_or_nullable,
+                            dim4_not_null_or_nullable,
                         } => {
-                            let array_dimension1_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("550d313b")));
+                            let array_dim1_inner_el_ident_table_type_declaration_ucc = {
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dim1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("550d313b")));
                                 quote! {#value}
                             };
-                            let array_dimension2_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension2_not_null_or_nullable, &pg_json_type_pattern.down_by_2().expect("7bda1424")));
+                            let array_dim2_inner_el_ident_table_type_declaration_ucc = {
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dim2_not_null_or_nullable, &pg_json_type_pattern.down_by_2().expect("7bda1424")));
                                 quote! {#value}
                             };
-                            let array_dimension3_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension3_not_null_or_nullable, &pg_json_type_pattern.down_by_3().expect("b43aa5bd")));
+                            let array_dim3_inner_el_ident_table_type_declaration_ucc = {
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dim3_not_null_or_nullable, &pg_json_type_pattern.down_by_3().expect("b43aa5bd")));
                                 quote! {#value}
                             };
-                            let array_dimension4_inner_el_ident_table_type_declaration_ucc = {
-                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dimension4_not_null_or_nullable, &pg_json_type_pattern.down_by_4().expect("a246885a")));
+                            let array_dim4_inner_el_ident_table_type_declaration_ucc = {
+                                let value = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(dim4_not_null_or_nullable, &pg_json_type_pattern.down_by_4().expect("a246885a")));
                                 quote! {#value}
                             };
-                            let common_array_dimension4_pg_json_type_filters = {
+                            let common_array_dim4_pg_json_type_filters = {
                                 let mut vec = common_pg_json_type_filters;
-                                vec.push(PgJsonTypeFilter::DimensionOneEqual {
-                                    ident: array_dimension1_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimOneEqual {
+                                    ident: array_dim1_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionTwoEqual {
-                                    ident: array_dimension2_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimTwoEqual {
+                                    ident: array_dim2_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionThreeEqual {
-                                    ident: array_dimension3_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimThreeEqual {
+                                    ident: array_dim3_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionFourEqual {
-                                    ident: array_dimension4_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimFourEqual {
+                                    ident: array_dim4_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
                                 vec.push(PgJsonTypeFilter::LengthEqual);
-                                vec.push(PgJsonTypeFilter::DimensionOneLengthEqual);
-                                vec.push(PgJsonTypeFilter::DimensionTwoLengthEqual);
-                                vec.push(PgJsonTypeFilter::DimensionThreeLengthEqual);
-                                vec.push(PgJsonTypeFilter::DimensionFourLengthEqual);
+                                vec.push(PgJsonTypeFilter::DimOneLengthEqual);
+                                vec.push(PgJsonTypeFilter::DimTwoLengthEqual);
+                                vec.push(PgJsonTypeFilter::DimThreeLengthEqual);
+                                vec.push(PgJsonTypeFilter::DimFourLengthEqual);
                                 vec.push(PgJsonTypeFilter::LengthGreaterThan);
-                                vec.push(PgJsonTypeFilter::DimensionOneLengthGreaterThan);
-                                vec.push(PgJsonTypeFilter::DimensionTwoLengthGreaterThan);
-                                vec.push(PgJsonTypeFilter::DimensionThreeLengthGreaterThan);
-                                vec.push(PgJsonTypeFilter::DimensionFourLengthGreaterThan);
-                                vec.push(PgJsonTypeFilter::DimensionFourContainsAllElementsOfArray {
-                                    ident: array_dimension4_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimOneLengthGreaterThan);
+                                vec.push(PgJsonTypeFilter::DimTwoLengthGreaterThan);
+                                vec.push(PgJsonTypeFilter::DimThreeLengthGreaterThan);
+                                vec.push(PgJsonTypeFilter::DimFourLengthGreaterThan);
+                                vec.push(PgJsonTypeFilter::DimFourContainsAllElementsOfArray {
+                                    ident: array_dim4_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionFourOverlapsWithArray {
-                                    ident: array_dimension4_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimFourOverlapsWithArray {
+                                    ident: array_dim4_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
                                 vec.push(PgJsonTypeFilter::AllElementsEqual {
-                                    ident: array_dimension1_inner_el_ident_table_type_declaration_ucc.clone(),
+                                    ident: array_dim1_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionOneAllElementsEqual {
-                                    ident: array_dimension2_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimOneAllElementsEqual {
+                                    ident: array_dim2_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionTwoAllElementsEqual {
-                                    ident: array_dimension3_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimTwoAllElementsEqual {
+                                    ident: array_dim3_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionThreeAllElementsEqual {
-                                    ident: array_dimension4_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimThreeAllElementsEqual {
+                                    ident: array_dim4_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionOneIn {
-                                    ident: array_dimension1_inner_el_ident_table_type_declaration_ucc,
+                                vec.push(PgJsonTypeFilter::DimOneIn {
+                                    ident: array_dim1_inner_el_ident_table_type_declaration_ucc,
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionTwoIn {
-                                    ident: array_dimension2_inner_el_ident_table_type_declaration_ucc,
+                                vec.push(PgJsonTypeFilter::DimTwoIn {
+                                    ident: array_dim2_inner_el_ident_table_type_declaration_ucc,
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionThreeIn {
-                                    ident: array_dimension3_inner_el_ident_table_type_declaration_ucc,
+                                vec.push(PgJsonTypeFilter::DimThreeIn {
+                                    ident: array_dim3_inner_el_ident_table_type_declaration_ucc,
                                 });
-                                vec.push(PgJsonTypeFilter::DimensionFourIn {
-                                    ident: array_dimension4_inner_el_ident_table_type_declaration_ucc.clone(),
+                                vec.push(PgJsonTypeFilter::DimFourIn {
+                                    ident: array_dim4_inner_el_ident_table_type_declaration_ucc.clone(),
                                 });
                                 vec
                             };
                             match &pg_json_type_specific {
                                 PgJsonTypeSpecific::Number => {
-                                    let mut filters = common_array_dimension4_pg_json_type_filters;
-                                    filters.push(PgJsonTypeFilter::DimensionFourGreaterThan {
-                                        ident: array_dimension4_inner_el_ident_table_type_declaration_ucc.clone(),
+                                    let mut filters = common_array_dim4_pg_json_type_filters;
+                                    filters.push(PgJsonTypeFilter::DimFourGreaterThan {
+                                        ident: array_dim4_inner_el_ident_table_type_declaration_ucc.clone(),
                                     });
-                                    filters.push(PgJsonTypeFilter::DimensionFourBetween {
-                                        ident: array_dimension4_inner_el_ident_table_type_declaration_ucc.clone(),
+                                    filters.push(PgJsonTypeFilter::DimFourBetween {
+                                        ident: array_dim4_inner_el_ident_table_type_declaration_ucc.clone(),
                                     });
-                                    filters.push(PgJsonTypeFilter::DimensionThreeContainsElGreaterThan {
-                                        ident: array_dimension4_inner_el_ident_table_type_declaration_ucc.clone(),
+                                    filters.push(PgJsonTypeFilter::DimThreeContainsElGreaterThan {
+                                        ident: array_dim4_inner_el_ident_table_type_declaration_ucc.clone(),
                                     });
-                                    filters.push(PgJsonTypeFilter::DimensionThreeAllElementsGreaterThan {
-                                        ident: array_dimension4_inner_el_ident_table_type_declaration_ucc,
+                                    filters.push(PgJsonTypeFilter::DimThreeAllElementsGreaterThan {
+                                        ident: array_dim4_inner_el_ident_table_type_declaration_ucc,
                                     });
                                     filters
                                 }
-                                PgJsonTypeSpecific::Bool => common_array_dimension4_pg_json_type_filters,
+                                PgJsonTypeSpecific::Bool => common_array_dim4_pg_json_type_filters,
                                 PgJsonTypeSpecific::String => {
-                                    let mut filters = common_array_dimension4_pg_json_type_filters;
-                                    filters.push(PgJsonTypeFilter::DimensionFourRegularExpression);
-                                    filters.push(PgJsonTypeFilter::DimensionThreeContainsElRegularExpression);
-                                    filters.push(PgJsonTypeFilter::DimensionThreeAllElementsRegularExpression);
+                                    let mut filters = common_array_dim4_pg_json_type_filters;
+                                    filters.push(PgJsonTypeFilter::DimFourRegularExpression);
+                                    filters.push(PgJsonTypeFilter::DimThreeContainsElRegularExpression);
+                                    filters.push(PgJsonTypeFilter::DimThreeAllElementsRegularExpression);
                                     filters
                                 }
                             }
@@ -1813,8 +1811,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 };
                                 quote! {#ts1}
                             }
-                            PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
-                                let ts1 = vec_ts(&match &dimension1_not_null_or_nullable {
+                            PgJsonTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => {
+                                let ts1 = vec_ts(&match &dim1_not_null_or_nullable {
                                     NotNullOrNullable::NotNull => quote! {#ident_read_inner_standart_not_null_alias_ts},
                                     NotNullOrNullable::Nullable => gen_std_option_option_tokens_declaration_ts(&ident_read_inner_standart_not_null_alias_ts),
                                 });
@@ -1824,12 +1822,12 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 };
                                 quote! {#ts2}
                             }
-                            PgJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
-                                let ts1 = vec_ts(&match &dimension2_not_null_or_nullable {
+                            PgJsonTypePattern::ArrayDim2 { dim1_not_null_or_nullable, dim2_not_null_or_nullable } => {
+                                let ts1 = vec_ts(&match &dim2_not_null_or_nullable {
                                     NotNullOrNullable::NotNull => quote! {#ident_read_inner_standart_not_null_alias_ts},
                                     NotNullOrNullable::Nullable => gen_std_option_option_tokens_declaration_ts(&ident_read_inner_standart_not_null_alias_ts),
                                 });
-                                let ts2 = vec_ts(&match &dimension1_not_null_or_nullable {
+                                let ts2 = vec_ts(&match &dim1_not_null_or_nullable {
                                     NotNullOrNullable::NotNull => ts1,
                                     NotNullOrNullable::Nullable => gen_std_option_option_tokens_declaration_ts(&ts1),
                                 });
@@ -1839,20 +1837,20 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 };
                                 quote! {#ts3}
                             }
-                            PgJsonTypePattern::ArrayDimension3 {
-                                dimension1_not_null_or_nullable,
-                                dimension2_not_null_or_nullable,
-                                dimension3_not_null_or_nullable,
+                            PgJsonTypePattern::ArrayDim3 {
+                                dim1_not_null_or_nullable,
+                                dim2_not_null_or_nullable,
+                                dim3_not_null_or_nullable,
                             } => {
-                                let ts1 = vec_ts(&match &dimension3_not_null_or_nullable {
+                                let ts1 = vec_ts(&match &dim3_not_null_or_nullable {
                                     NotNullOrNullable::NotNull => quote! {#ident_read_inner_standart_not_null_alias_ts},
                                     NotNullOrNullable::Nullable => gen_std_option_option_tokens_declaration_ts(&ident_read_inner_standart_not_null_alias_ts),
                                 });
-                                let ts2 = vec_ts(&match &dimension2_not_null_or_nullable {
+                                let ts2 = vec_ts(&match &dim2_not_null_or_nullable {
                                     NotNullOrNullable::NotNull => ts1,
                                     NotNullOrNullable::Nullable => gen_std_option_option_tokens_declaration_ts(&ts1),
                                 });
-                                let ts3 = vec_ts(&match &dimension1_not_null_or_nullable {
+                                let ts3 = vec_ts(&match &dim1_not_null_or_nullable {
                                     NotNullOrNullable::NotNull => ts2,
                                     NotNullOrNullable::Nullable => gen_std_option_option_tokens_declaration_ts(&ts2),
                                 });
@@ -1862,25 +1860,25 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 };
                                 quote! {#ts4}
                             }
-                            PgJsonTypePattern::ArrayDimension4 {
-                                dimension1_not_null_or_nullable,
-                                dimension2_not_null_or_nullable,
-                                dimension3_not_null_or_nullable,
-                                dimension4_not_null_or_nullable,
+                            PgJsonTypePattern::ArrayDim4 {
+                                dim1_not_null_or_nullable,
+                                dim2_not_null_or_nullable,
+                                dim3_not_null_or_nullable,
+                                dim4_not_null_or_nullable,
                             } => {
-                                let ts1 = vec_ts(&match &dimension4_not_null_or_nullable {
+                                let ts1 = vec_ts(&match &dim4_not_null_or_nullable {
                                     NotNullOrNullable::NotNull => quote! {#ident_read_inner_standart_not_null_alias_ts},
                                     NotNullOrNullable::Nullable => gen_std_option_option_tokens_declaration_ts(&ident_read_inner_standart_not_null_alias_ts),
                                 });
-                                let ts2 = vec_ts(&match &dimension3_not_null_or_nullable {
+                                let ts2 = vec_ts(&match &dim3_not_null_or_nullable {
                                     NotNullOrNullable::NotNull => ts1,
                                     NotNullOrNullable::Nullable => gen_std_option_option_tokens_declaration_ts(&ts1),
                                 });
-                                let ts3 = vec_ts(&match &dimension2_not_null_or_nullable {
+                                let ts3 = vec_ts(&match &dim2_not_null_or_nullable {
                                     NotNullOrNullable::NotNull => ts2,
                                     NotNullOrNullable::Nullable => gen_std_option_option_tokens_declaration_ts(&ts2),
                                 });
-                                let ts4 = vec_ts(&match &dimension1_not_null_or_nullable {
+                                let ts4 = vec_ts(&match &dim1_not_null_or_nullable {
                                     NotNullOrNullable::NotNull => ts3,
                                     NotNullOrNullable::Nullable => gen_std_option_option_tokens_declaration_ts(&ts3),
                                 });
@@ -1903,36 +1901,36 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     NotNullOrNullable::NotNull => &ident_read_inner_standart_not_null_alias_ts,
                     NotNullOrNullable::Nullable => &gen_std_option_option_tokens_declaration_ts(&ident_read_inner_standart_not_null_alias_ts),
                 },
-                PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
-                    let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote! {#ident_read_inner_standart_not_null_alias_ts});
-                    not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dimension1_type))
+                PgJsonTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => &{
+                    let dim1_type = dim1_not_null_or_nullable.maybe_option_wrap(quote! {#ident_read_inner_standart_not_null_alias_ts});
+                    not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim1_type))
                 },
-                PgJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => &{
-                    let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote! {#ident_read_inner_standart_not_null_alias_ts});
-                    let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dimension2_type));
-                    not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dimension1_type))
+                PgJsonTypePattern::ArrayDim2 { dim1_not_null_or_nullable, dim2_not_null_or_nullable } => &{
+                    let dim2_type = dim2_not_null_or_nullable.maybe_option_wrap(quote! {#ident_read_inner_standart_not_null_alias_ts});
+                    let dim1_type = dim1_not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim2_type));
+                    not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim1_type))
                 },
-                PgJsonTypePattern::ArrayDimension3 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable,
+                PgJsonTypePattern::ArrayDim3 {
+                    dim1_not_null_or_nullable,
+                    dim2_not_null_or_nullable,
+                    dim3_not_null_or_nullable,
                 } => &{
-                    let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote! {#ident_read_inner_standart_not_null_alias_ts});
-                    let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dimension3_type));
-                    let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dimension2_type));
-                    not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dimension1_type))
+                    let dim3_type = dim3_not_null_or_nullable.maybe_option_wrap(quote! {#ident_read_inner_standart_not_null_alias_ts});
+                    let dim2_type = dim2_not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim3_type));
+                    let dim1_type = dim1_not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim2_type));
+                    not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim1_type))
                 },
-                PgJsonTypePattern::ArrayDimension4 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable,
-                    dimension4_not_null_or_nullable,
+                PgJsonTypePattern::ArrayDim4 {
+                    dim1_not_null_or_nullable,
+                    dim2_not_null_or_nullable,
+                    dim3_not_null_or_nullable,
+                    dim4_not_null_or_nullable,
                 } => &{
-                    let dimension4_type = dimension4_not_null_or_nullable.maybe_option_wrap(quote! {#ident_read_inner_standart_not_null_alias_ts});
-                    let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dimension4_type));
-                    let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dimension3_type));
-                    let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dimension2_type));
-                    not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dimension1_type))
+                    let dim4_type = dim4_not_null_or_nullable.maybe_option_wrap(quote! {#ident_read_inner_standart_not_null_alias_ts});
+                    let dim3_type = dim3_not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim4_type));
+                    let dim2_type = dim2_not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim3_type));
+                    let dim1_type = dim1_not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim2_type));
+                    not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim1_type))
                 },
             };
             let impl_from_ident_origin_for_ident_read_inner_ts = {
@@ -1943,10 +1941,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         NotNullOrNullable::NotNull => value_dot_zero_ts,
                         NotNullOrNullable::Nullable => nullable_ts,
                     },
-                    PgJsonTypePattern::ArrayDimension1 {..} |
-                    PgJsonTypePattern::ArrayDimension2 {..} |
-                    PgJsonTypePattern::ArrayDimension3 {..} |
-                    PgJsonTypePattern::ArrayDimension4 {..} => match &not_null_or_nullable {
+                    PgJsonTypePattern::ArrayDim1 {..} |
+                    PgJsonTypePattern::ArrayDim2 {..} |
+                    PgJsonTypePattern::ArrayDim3 {..} |
+                    PgJsonTypePattern::ArrayDim4 {..} => match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => quote!{#value_dot_zero_ts.into_iter().map(Into::into).collect()},
                         NotNullOrNullable::Nullable => nullable_ts
                     },
@@ -2033,9 +2031,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         };
         let pg_crud_macros_common_import_path_pg_crud_common = ImportPath::PgCrudCommon;
         let impl_pg_json_type_for_ident_ts = {
-            let gen_dimension_number_str = |dimensions_number: usize| format!("dimension{dimensions_number}");
-            let gen_dimension_number_start_str = |dimensions_number: usize| format!("{}_start", gen_dimension_number_str(dimensions_number));
-            let gen_dimension_number_end_str = |dimensions_number: usize| format!("{}_end", gen_dimension_number_str(dimensions_number));
+            let gen_dim_number_str = |dims_number: usize| format!("dim{dims_number}");
+            let gen_dim_number_start_str = |dims_number: usize| format!("{}_start", gen_dim_number_str(dims_number));
+            let gen_dim_number_end_str = |dims_number: usize| format!("{}_end", gen_dim_number_str(dims_number));
             let select_only_created_or_updated_ids_query_part_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                 quote! {
                     match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
@@ -2065,76 +2063,76 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &ident_select_ucc,
                 &match &pg_json_type_pattern {
                     PgJsonTypePattern::Standart => IsSelectQueryPartSelfSelectUsed::False,
-                    PgJsonTypePattern::ArrayDimension1 { .. } | PgJsonTypePattern::ArrayDimension2 { .. } | PgJsonTypePattern::ArrayDimension3 { .. } | PgJsonTypePattern::ArrayDimension4 { .. } => IsSelectQueryPartSelfSelectUsed::True,
+                    PgJsonTypePattern::ArrayDim1 { .. } | PgJsonTypePattern::ArrayDim2 { .. } | PgJsonTypePattern::ArrayDim3 { .. } | PgJsonTypePattern::ArrayDim4 { .. } => IsSelectQueryPartSelfSelectUsed::True,
                 },
                 &IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed::False,
                 &IsSelectQueryPartIsPgTypeUsed::False,
                 &{
                     let format_handle = {
-                        //last child dimension value does not matter - null or type - works both good
+                        //last child dim value does not matter - null or type - works both good
                         let column_name_and_maybe_field_getter_field_ident = format!("{{{ColumnNameAndMaybeFieldGetterSc}}}->'{{field_ident}}'");
-                        let format_handle = ArrayDimension::try_from(pg_json_type_pattern).map_or_else(
+                        let format_handle = ArrayDim::try_from(pg_json_type_pattern).map_or_else(
                             |()| column_name_and_maybe_field_getter_field_ident.clone(),
-                            |array_dimension| {
-                                enum ArrayDimensionSelectPattern {
-                                    ArrayDimension2 {
-                                        dimension1_not_null_or_nullable: NotNullOrNullable,
+                            |array_dim| {
+                                enum ArrayDimSelectPattern {
+                                    ArrayDim2 {
+                                        dim1_not_null_or_nullable: NotNullOrNullable,
                                     },
-                                    ArrayDimension3 {
-                                        dimension1_not_null_or_nullable: NotNullOrNullable,
-                                        dimension2_not_null_or_nullable: NotNullOrNullable,
+                                    ArrayDim3 {
+                                        dim1_not_null_or_nullable: NotNullOrNullable,
+                                        dim2_not_null_or_nullable: NotNullOrNullable,
                                     },
-                                    ArrayDimension4 {
-                                        dimension1_not_null_or_nullable: NotNullOrNullable,
-                                        dimension2_not_null_or_nullable: NotNullOrNullable,
-                                        dimension3_not_null_or_nullable: NotNullOrNullable,
+                                    ArrayDim4 {
+                                        dim1_not_null_or_nullable: NotNullOrNullable,
+                                        dim2_not_null_or_nullable: NotNullOrNullable,
+                                        dim3_not_null_or_nullable: NotNullOrNullable,
                                     },
                                 }
-                                impl TryFrom<&ArrayDimension> for ArrayDimensionSelectPattern {
+                                impl TryFrom<&ArrayDim> for ArrayDimSelectPattern {
                                     type Error = ();
-                                    fn try_from(value: &ArrayDimension) -> Result<Self, Self::Error> {
+                                    fn try_from(value: &ArrayDim) -> Result<Self, Self::Error> {
                                         match &value {
-                                            ArrayDimension::ArrayDimension1 => Err(()),
-                                            ArrayDimension::ArrayDimension2 {
-                                                dimension1_not_null_or_nullable,
-                                            } => Ok(Self::ArrayDimension2 {
-                                                dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable,
+                                            ArrayDim::ArrayDim1 => Err(()),
+                                            ArrayDim::ArrayDim2 {
+                                                dim1_not_null_or_nullable,
+                                            } => Ok(Self::ArrayDim2 {
+                                                dim1_not_null_or_nullable: *dim1_not_null_or_nullable,
                                             }),
-                                            ArrayDimension::ArrayDimension3 {
-                                                dimension1_not_null_or_nullable,
-                                                dimension2_not_null_or_nullable,
-                                            } => Ok(Self::ArrayDimension3 {
-                                                dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable,
-                                                dimension2_not_null_or_nullable: *dimension2_not_null_or_nullable,
+                                            ArrayDim::ArrayDim3 {
+                                                dim1_not_null_or_nullable,
+                                                dim2_not_null_or_nullable,
+                                            } => Ok(Self::ArrayDim3 {
+                                                dim1_not_null_or_nullable: *dim1_not_null_or_nullable,
+                                                dim2_not_null_or_nullable: *dim2_not_null_or_nullable,
                                             }),
-                                            ArrayDimension::ArrayDimension4 {
-                                                dimension1_not_null_or_nullable,
-                                                dimension2_not_null_or_nullable,
-                                                dimension3_not_null_or_nullable,
-                                            } => Ok(Self::ArrayDimension4 {
-                                                dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable,
-                                                dimension2_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                                                dimension3_not_null_or_nullable: *dimension3_not_null_or_nullable,
+                                            ArrayDim::ArrayDim4 {
+                                                dim1_not_null_or_nullable,
+                                                dim2_not_null_or_nullable,
+                                                dim3_not_null_or_nullable,
+                                            } => Ok(Self::ArrayDim4 {
+                                                dim1_not_null_or_nullable: *dim1_not_null_or_nullable,
+                                                dim2_not_null_or_nullable: *dim2_not_null_or_nullable,
+                                                dim3_not_null_or_nullable: *dim3_not_null_or_nullable,
                                             }),
                                         }
                                     }
                                 }
-                                let gen_jsonb_agg = |jsonb_agg_content: &str, jsonb_array_elements_content: &str, ordinality_content: &str, dimensions_number: usize| {
-                                    let dimension_number_start = gen_dimension_number_start_str(dimensions_number);
-                                    let dimension_number_end = gen_dimension_number_end_str(dimensions_number);
+                                let gen_jsonb_agg = |jsonb_agg_content: &str, jsonb_array_elements_content: &str, ordinality_content: &str, dims_number: usize| {
+                                    let dim_number_start = gen_dim_number_start_str(dims_number);
+                                    let dim_number_end = gen_dim_number_end_str(dims_number);
                                     format!(
-                                        "select jsonb_agg(({jsonb_agg_content})) from jsonb_array_elements(({jsonb_array_elements_content})) with ordinality {ordinality_content} between {{{dimension_number_start}}} and {{{dimension_number_end}}}"
+                                        "select jsonb_agg(({jsonb_agg_content})) from jsonb_array_elements(({jsonb_array_elements_content})) with ordinality {ordinality_content} between {{{dim_number_start}}} and {{{dim_number_end}}}"
                                     )
                                 };
-                                ArrayDimensionSelectPattern::try_from(&array_dimension).map_or_else(
+                                ArrayDimSelectPattern::try_from(&array_dim).map_or_else(
                                     |()| gen_jsonb_agg(
                                         "value",
                                         &format!("select {column_name_and_maybe_field_getter_field_ident}"),
                                         "where ordinality",
                                         1,
                                     ),
-                                    |array_dimension_select_pattern| {
-                                        // Dimension1 does not fit into pattern. its only for 2+ dimensions
+                                    |array_dim_select_pattern| {
+                                        // Dim1 does not fit into pattern. its only for 2+ dims
                                         let gen_d_number_elem = |content: usize| format!("d{content}_elem");
                                         let gen_d_number_ord = |content: usize| format!("d{content}_elem");
                                         let gen_dot_value = |content: &str| format!("{content}.value");
@@ -2145,30 +2143,30 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                         let one = 1;
                                         gen_jsonb_agg(
                                             &{
-                                                let mut current_usize_value = match &array_dimension_select_pattern {
-                                                    ArrayDimensionSelectPattern::ArrayDimension2 { .. } => 2,
-                                                    ArrayDimensionSelectPattern::ArrayDimension3 { .. } => 3,
-                                                    ArrayDimensionSelectPattern::ArrayDimension4 { .. } => 4,
+                                                let mut current_usize_value = match &array_dim_select_pattern {
+                                                    ArrayDimSelectPattern::ArrayDim2 { .. } => 2,
+                                                    ArrayDimSelectPattern::ArrayDim3 { .. } => 3,
+                                                    ArrayDimSelectPattern::ArrayDim4 { .. } => 4,
                                                 };
-                                                match &array_dimension_select_pattern {
-                                                    ArrayDimensionSelectPattern::ArrayDimension2 {
-                                                        dimension1_not_null_or_nullable,
-                                                    } => vec![dimension1_not_null_or_nullable],
-                                                    ArrayDimensionSelectPattern::ArrayDimension3 {
-                                                        dimension1_not_null_or_nullable,
-                                                        dimension2_not_null_or_nullable,
+                                                match &array_dim_select_pattern {
+                                                    ArrayDimSelectPattern::ArrayDim2 {
+                                                        dim1_not_null_or_nullable,
+                                                    } => vec![dim1_not_null_or_nullable],
+                                                    ArrayDimSelectPattern::ArrayDim3 {
+                                                        dim1_not_null_or_nullable,
+                                                        dim2_not_null_or_nullable,
                                                     } => vec![
-                                                        dimension2_not_null_or_nullable,
-                                                        dimension1_not_null_or_nullable,
+                                                        dim2_not_null_or_nullable,
+                                                        dim1_not_null_or_nullable,
                                                     ],
-                                                    ArrayDimensionSelectPattern::ArrayDimension4 {
-                                                        dimension1_not_null_or_nullable,
-                                                        dimension2_not_null_or_nullable,
-                                                        dimension3_not_null_or_nullable,
+                                                    ArrayDimSelectPattern::ArrayDim4 {
+                                                        dim1_not_null_or_nullable,
+                                                        dim2_not_null_or_nullable,
+                                                        dim3_not_null_or_nullable,
                                                     } => vec![
-                                                        dimension3_not_null_or_nullable,
-                                                        dimension2_not_null_or_nullable,
-                                                        dimension1_not_null_or_nullable,
+                                                        dim3_not_null_or_nullable,
+                                                        dim2_not_null_or_nullable,
+                                                        dim1_not_null_or_nullable,
                                                     ],
                                                 }
                                                 .into_iter()
@@ -2204,32 +2202,32 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             NotNullOrNullable::Nullable => format!("case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident})='null' then 'null'::jsonb else ({format_handle}) end"),
                         }
                     };
-                    let maybe_dimensions_start_end_initialization = ArrayDimension::try_from(pg_json_type_pattern).ok().into_iter().flat_map(|array_dimension| {
-                        (1..=array_dimension.to_usize()).map(|el_8d56d66d| {
-                            let dimension_number_start_ts =
-                                gen_dimension_number_start_str(el_8d56d66d)
+                    let maybe_dims_start_end_initialization = ArrayDim::try_from(pg_json_type_pattern).ok().into_iter().flat_map(|array_dim| {
+                        (1..=array_dim.to_usize()).map(|el_8d56d66d| {
+                            let dim_number_start_ts =
+                                gen_dim_number_start_str(el_8d56d66d)
                                     .parse::<Ts2>()
                                     .expect("77ec13b9");
-                            let dimension_number_end_ts =
-                                gen_dimension_number_end_str(el_8d56d66d)
+                            let dim_number_end_ts =
+                                gen_dim_number_end_str(el_8d56d66d)
                                     .parse::<Ts2>()
                                     .expect("24acbb5e");
-                            let dimension_number_pagination_ts =
+                            let dim_number_pagination_ts =
                                 format!(
                                     "{}_pagination",
-                                    gen_dimension_number_str(el_8d56d66d)
+                                    gen_dim_number_str(el_8d56d66d)
                                 )
                                 .parse::<Ts2>()
                                 .expect("745c99b3");
                             quote! {
-                                let #dimension_number_start_ts = #ValueSc.#dimension_number_pagination_ts.start();
-                                let #dimension_number_end_ts = #ValueSc.#dimension_number_pagination_ts.end();
+                                let #dim_number_start_ts = #ValueSc.#dim_number_pagination_ts.start();
+                                let #dim_number_end_ts = #ValueSc.#dim_number_pagination_ts.end();
                             }
                         })
                     });
                     let format_handle_ts = double_quotes_ts(&format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value',({format_handle})))"));
                     quote! {
-                        #(#maybe_dimensions_start_end_initialization)*
+                        #(#maybe_dims_start_end_initialization)*
                         Ok(format!(#format_handle_ts))
                     }
                 },
@@ -2299,71 +2297,71 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     };
                     let into_inner_content_ts = match &pg_json_type_pattern {
                         PgJsonTypePattern::Standart => Ts2::new(),
-                        PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => gen_into_iter_map_el_collect_not_null_or_nullable_ts(
+                        PgJsonTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => gen_into_iter_map_el_collect_not_null_or_nullable_ts(
                             &quote!{el_0fdb74a5},
-                            dimension1_not_null_or_nullable,
+                            dim1_not_null_or_nullable,
                         ),
-                        PgJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
-                            let dimension2_not_null_or_nullable_content_ts = gen_into_iter_map_el_collect_not_null_or_nullable_ts(
+                        PgJsonTypePattern::ArrayDim2 { dim1_not_null_or_nullable, dim2_not_null_or_nullable } => {
+                            let dim2_not_null_or_nullable_content_ts = gen_into_iter_map_el_collect_not_null_or_nullable_ts(
                                 &quote!{el_dac5ba56},
-                                dimension2_not_null_or_nullable
+                                dim2_not_null_or_nullable
                             );
                             gen_into_iter_map_el_collect_not_null_or_nullable_content_ts(
                                 &quote!{el_cf5646e9},
                                 &quote!{value_1c90c80c},
-                                dimension1_not_null_or_nullable,
-                                &dimension2_not_null_or_nullable_content_ts
+                                dim1_not_null_or_nullable,
+                                &dim2_not_null_or_nullable_content_ts
                             )
                         }
-                        PgJsonTypePattern::ArrayDimension3 {
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
-                            dimension3_not_null_or_nullable,
+                        PgJsonTypePattern::ArrayDim3 {
+                            dim1_not_null_or_nullable,
+                            dim2_not_null_or_nullable,
+                            dim3_not_null_or_nullable,
                         } => {
-                            let dimension3_not_null_or_nullable_content_ts = gen_into_iter_map_el_collect_not_null_or_nullable_ts(
+                            let dim3_not_null_or_nullable_content_ts = gen_into_iter_map_el_collect_not_null_or_nullable_ts(
                                 &quote!{el_c935a865},
-                                dimension3_not_null_or_nullable
+                                dim3_not_null_or_nullable
                             );
-                            let dimension2_not_null_or_nullable_content_ts = gen_into_iter_map_el_collect_not_null_or_nullable_content_ts(
+                            let dim2_not_null_or_nullable_content_ts = gen_into_iter_map_el_collect_not_null_or_nullable_content_ts(
                                 &quote!{el_dc9e788b},
                                 &quote!{value_3d1307e8},
-                                dimension2_not_null_or_nullable,
-                                &dimension3_not_null_or_nullable_content_ts
+                                dim2_not_null_or_nullable,
+                                &dim3_not_null_or_nullable_content_ts
                             );
                             gen_into_iter_map_el_collect_not_null_or_nullable_content_ts(
                                 &quote!{el_bf67606b},
                                 &quote!{value_721e4164},
-                                dimension1_not_null_or_nullable,
-                                &dimension2_not_null_or_nullable_content_ts
+                                dim1_not_null_or_nullable,
+                                &dim2_not_null_or_nullable_content_ts
                             )
                         }
-                        PgJsonTypePattern::ArrayDimension4 {
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
-                            dimension3_not_null_or_nullable,
-                            dimension4_not_null_or_nullable,
+                        PgJsonTypePattern::ArrayDim4 {
+                            dim1_not_null_or_nullable,
+                            dim2_not_null_or_nullable,
+                            dim3_not_null_or_nullable,
+                            dim4_not_null_or_nullable,
                         } => {
-                            let dimension4_not_null_or_nullable_content_ts = gen_into_iter_map_el_collect_not_null_or_nullable_ts(
+                            let dim4_not_null_or_nullable_content_ts = gen_into_iter_map_el_collect_not_null_or_nullable_ts(
                                 &quote!{el_144c60e6},
-                                dimension4_not_null_or_nullable
+                                dim4_not_null_or_nullable
                             );
-                            let dimension3_not_null_or_nullable_content_ts = gen_into_iter_map_el_collect_not_null_or_nullable_content_ts(
+                            let dim3_not_null_or_nullable_content_ts = gen_into_iter_map_el_collect_not_null_or_nullable_content_ts(
                                 &quote!{el_98961cb7},
                                 &quote!{value_995a5fbe},
-                                dimension3_not_null_or_nullable,
-                                &dimension4_not_null_or_nullable_content_ts
+                                dim3_not_null_or_nullable,
+                                &dim4_not_null_or_nullable_content_ts
                             );
-                            let dimension2_not_null_or_nullable_content_ts = gen_into_iter_map_el_collect_not_null_or_nullable_content_ts(
+                            let dim2_not_null_or_nullable_content_ts = gen_into_iter_map_el_collect_not_null_or_nullable_content_ts(
                                 &quote!{el_34e95172},
                                 &quote!{value_75b18ade},
-                                dimension2_not_null_or_nullable,
-                                &dimension3_not_null_or_nullable_content_ts
+                                dim2_not_null_or_nullable,
+                                &dim3_not_null_or_nullable_content_ts
                             );
                             gen_into_iter_map_el_collect_not_null_or_nullable_content_ts(
                                 &quote!{el_f64124e2},
                                 &quote!{value_7fc1b146},
-                                dimension1_not_null_or_nullable,
-                                &dimension2_not_null_or_nullable_content_ts
+                                dim1_not_null_or_nullable,
+                                &dim2_not_null_or_nullable_content_ts
                             )
                         }
                     };
@@ -2497,9 +2495,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 PgJsonType::StdStringStringAsJsonbString => quote! {std_string_string_test_cases_vec},
                 PgJsonType::UuidUuidAsJsonbString => quote! {uuid_uuid_test_cases_vec},
             };
-            let gen_array_dimension_equal_ts = |dimension: &Dimension| {
-                let dimension_index_number_max = DimensionIndexNumber::from(dimension);
-                let gen_dimension_index_number_ts = |not_null_or_nullable_vec: &[&NotNullOrNullable]|{
+            let gen_array_dim_equal_ts = |dim: &Dim| {
+                let dim_index_number_max = DimIndexNumber::from(dim);
+                let gen_dim_index_number_ts = |not_null_or_nullable_vec: &[&NotNullOrNullable]|{
                     assert!(!not_null_or_nullable_vec.is_empty(), "c1a5939d");
                     let content_ts_c85923bd = {
                         let gen_index_number_ts = |index_c1128a3e: usize|format!("index_{index_c1128a3e}").parse::<Ts2>().expect("afbe7252");
@@ -2565,31 +2563,31 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                         ).collect::<Vec<&NotNullOrNullable>>()
                                     )
                                 );
-                                let to_number_starting_with_one_word_str = |dimension_index_number: &DimensionIndexNumber| match dimension_index_number {
-                                    DimensionIndexNumber::Zero => "One",
-                                    DimensionIndexNumber::One => "Two",
-                                    DimensionIndexNumber::Two => "Three",
-                                    DimensionIndexNumber::Three => "Four",
+                                let to_number_starting_with_one_word_str = |dim_index_number: &DimIndexNumber| match dim_index_number {
+                                    DimIndexNumber::Zero => "One",
+                                    DimIndexNumber::One => "Two",
+                                    DimIndexNumber::Two => "Three",
+                                    DimIndexNumber::Three => "Four",
                                 };
-                                let dimension_number_starting_with_one_equal_ts = format!("Dimension{}Equal", to_number_starting_with_one_word_str(&dimension_index_number_max)).parse::<Ts2>().expect("52fa34ac");
-                                let pg_json_type_where_dimension_number_starting_with_one_equal_ts = format!("PgJsonTypeWhereDimension{}Equal", to_number_starting_with_one_word_str(&dimension_index_number_max)).parse::<Ts2>().expect("15d769b0");
+                                let dim_number_starting_with_one_equal_ts = format!("Dim{}Equal", to_number_starting_with_one_word_str(&dim_index_number_max)).parse::<Ts2>().expect("52fa34ac");
+                                let pg_json_type_where_dim_number_starting_with_one_equal_ts = format!("PgJsonTypeWhereDim{}Equal", to_number_starting_with_one_word_str(&dim_index_number_max)).parse::<Ts2>().expect("15d769b0");
                                 let current_where_ident_where_ucc = SelfWhereUcc::from_tokens(&gen_ident_ts(&NotNullOrNullable::NotNull, pg_json_type_pattern));
                                 let current_value_ident_table_type_declaration_ucc = SelfTableTypeDeclarationUcc::from_tokens(&gen_ident_ts(
                                     not_null_or_nullable_vec.last().expect("1221f6ec"),
-                                    &match dimension_index_number_max {
-                                        DimensionIndexNumber::Zero => pg_json_type_pattern.down_by_1().expect("1a47af86"),
-                                        DimensionIndexNumber::One => pg_json_type_pattern.down_by_2().expect("d8260225"),
-                                        DimensionIndexNumber::Two => pg_json_type_pattern.down_by_3().expect("473ac422"),
-                                        DimensionIndexNumber::Three => pg_json_type_pattern.down_by_4().expect("6a143218"),
+                                    &match dim_index_number_max {
+                                        DimIndexNumber::Zero => pg_json_type_pattern.down_by_1().expect("1a47af86"),
+                                        DimIndexNumber::One => pg_json_type_pattern.down_by_2().expect("d8260225"),
+                                        DimIndexNumber::Two => pg_json_type_pattern.down_by_3().expect("473ac422"),
+                                        DimIndexNumber::Three => pg_json_type_pattern.down_by_4().expect("6a143218"),
                                     }
                                 ));
                                 let vec_content_ts = {
                                     let content_ts_0dc5a500 = (
-                                        0i32..=match dimension_index_number_max {
-                                            DimensionIndexNumber::Zero => 0i32,
-                                            DimensionIndexNumber::One => 1i32,
-                                            DimensionIndexNumber::Two => 2i32,
-                                            DimensionIndexNumber::Three => 3i32,
+                                        0i32..=match dim_index_number_max {
+                                            DimIndexNumber::Zero => 0i32,
+                                            DimIndexNumber::One => 1i32,
+                                            DimIndexNumber::Two => 2i32,
+                                            DimIndexNumber::Three => 3i32,
                                         }
                                     )
                                     .map(|el_db559599| {
@@ -2606,10 +2604,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     quote! {#(#content_ts_0dc5a500),*}
                                 };
                                 quote! {
-                                    #current_where_ident_where_ucc::#dimension_number_starting_with_one_equal_ts(
-                                        where_filters::#pg_json_type_where_dimension_number_starting_with_one_equal_ts {
+                                    #current_where_ident_where_ucc::#dim_number_starting_with_one_equal_ts(
+                                        where_filters::#pg_json_type_where_dim_number_starting_with_one_equal_ts {
                                             logical_operator: #import_path::LogicalOperator::And,
-                                            dimensions: where_filters::BoundedStdVecVec::try_from(
+                                            dims: where_filters::BoundedStdVecVec::try_from(
                                                 vec![#vec_content_ts]
                                             ).expect("82cc0a3c"),
                                             #ValueSc: #current_value_ident_table_type_declaration_ucc::new(#value_index_ts.into()),
@@ -2706,65 +2704,65 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 };
                 match &pg_json_type_pattern {
                     PgJsonTypePattern::Standart => none_ts.clone(),
-                    PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match dimension_index_number_max {
-                        DimensionIndexNumber::Zero => gen_dimension_index_number_ts(&[
-                            dimension1_not_null_or_nullable,
+                    PgJsonTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => match dim_index_number_max {
+                        DimIndexNumber::Zero => gen_dim_index_number_ts(&[
+                            dim1_not_null_or_nullable,
                         ]),
-                        DimensionIndexNumber::One | DimensionIndexNumber::Two | DimensionIndexNumber::Three => none_ts.clone(),
+                        DimIndexNumber::One | DimIndexNumber::Two | DimIndexNumber::Three => none_ts.clone(),
                     },
-                    PgJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => match dimension_index_number_max {
-                        DimensionIndexNumber::Zero => gen_dimension_index_number_ts(&[
-                            dimension1_not_null_or_nullable,
+                    PgJsonTypePattern::ArrayDim2 { dim1_not_null_or_nullable, dim2_not_null_or_nullable } => match dim_index_number_max {
+                        DimIndexNumber::Zero => gen_dim_index_number_ts(&[
+                            dim1_not_null_or_nullable,
                         ]),
-                        DimensionIndexNumber::One => gen_dimension_index_number_ts(&[
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable
+                        DimIndexNumber::One => gen_dim_index_number_ts(&[
+                            dim1_not_null_or_nullable,
+                            dim2_not_null_or_nullable
                         ]),
-                        DimensionIndexNumber::Two | DimensionIndexNumber::Three => none_ts.clone(),
+                        DimIndexNumber::Two | DimIndexNumber::Three => none_ts.clone(),
                     },
-                    PgJsonTypePattern::ArrayDimension3 {
-                        dimension1_not_null_or_nullable,
-                        dimension2_not_null_or_nullable,
-                        dimension3_not_null_or_nullable,
-                    } => match dimension_index_number_max {
-                        DimensionIndexNumber::Zero => gen_dimension_index_number_ts(&[
-                            dimension1_not_null_or_nullable,
+                    PgJsonTypePattern::ArrayDim3 {
+                        dim1_not_null_or_nullable,
+                        dim2_not_null_or_nullable,
+                        dim3_not_null_or_nullable,
+                    } => match dim_index_number_max {
+                        DimIndexNumber::Zero => gen_dim_index_number_ts(&[
+                            dim1_not_null_or_nullable,
                         ]),
-                        DimensionIndexNumber::One => gen_dimension_index_number_ts(&[
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
+                        DimIndexNumber::One => gen_dim_index_number_ts(&[
+                            dim1_not_null_or_nullable,
+                            dim2_not_null_or_nullable,
                         ]),
-                        DimensionIndexNumber::Two => gen_dimension_index_number_ts(&[
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
-                            dimension3_not_null_or_nullable
+                        DimIndexNumber::Two => gen_dim_index_number_ts(&[
+                            dim1_not_null_or_nullable,
+                            dim2_not_null_or_nullable,
+                            dim3_not_null_or_nullable
                         ]),
-                        DimensionIndexNumber::Three => none_ts.clone(),
+                        DimIndexNumber::Three => none_ts.clone(),
                     },
-                    PgJsonTypePattern::ArrayDimension4 {
-                        dimension1_not_null_or_nullable,
-                        dimension2_not_null_or_nullable,
-                        dimension3_not_null_or_nullable,
-                        dimension4_not_null_or_nullable,
+                    PgJsonTypePattern::ArrayDim4 {
+                        dim1_not_null_or_nullable,
+                        dim2_not_null_or_nullable,
+                        dim3_not_null_or_nullable,
+                        dim4_not_null_or_nullable,
                     } => {
-                        match dimension_index_number_max {
-                            DimensionIndexNumber::Zero => gen_dimension_index_number_ts(&[
-                                dimension1_not_null_or_nullable
+                        match dim_index_number_max {
+                            DimIndexNumber::Zero => gen_dim_index_number_ts(&[
+                                dim1_not_null_or_nullable
                             ]),
-                            DimensionIndexNumber::One => gen_dimension_index_number_ts(&[
-                                dimension1_not_null_or_nullable,
-                                dimension2_not_null_or_nullable,
+                            DimIndexNumber::One => gen_dim_index_number_ts(&[
+                                dim1_not_null_or_nullable,
+                                dim2_not_null_or_nullable,
                             ]),
-                            DimensionIndexNumber::Two => gen_dimension_index_number_ts(&[
-                                dimension1_not_null_or_nullable,
-                                dimension2_not_null_or_nullable,
-                                dimension3_not_null_or_nullable,
+                            DimIndexNumber::Two => gen_dim_index_number_ts(&[
+                                dim1_not_null_or_nullable,
+                                dim2_not_null_or_nullable,
+                                dim3_not_null_or_nullable,
                             ]),
-                            DimensionIndexNumber::Three => gen_dimension_index_number_ts(&[
-                                dimension1_not_null_or_nullable,
-                                dimension2_not_null_or_nullable,
-                                dimension3_not_null_or_nullable,
-                                dimension4_not_null_or_nullable
+                            DimIndexNumber::Three => gen_dim_index_number_ts(&[
+                                dim1_not_null_or_nullable,
+                                dim2_not_null_or_nullable,
+                                dim3_not_null_or_nullable,
+                                dim4_not_null_or_nullable
                             ])
                         }
                     }
@@ -2812,10 +2810,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     //         }
                     //         NotNullOrNullable::Nullable => Ts2::new(),
                     //     },
-                    //     PgJsonTypePattern::ArrayDimension1 { .. } |
-                    //     PgJsonTypePattern::ArrayDimension2 { .. } |
-                    //     PgJsonTypePattern::ArrayDimension3 { .. } |
-                    //     PgJsonTypePattern::ArrayDimension4 { .. } => quote!{.clone()},
+                    //     PgJsonTypePattern::ArrayDim1 { .. } |
+                    //     PgJsonTypePattern::ArrayDim2 { .. } |
+                    //     PgJsonTypePattern::ArrayDim3 { .. } |
+                    //     PgJsonTypePattern::ArrayDim4 { .. } => quote!{.clone()},
                     // };
                     quote! {Some({
                         let mut acc_50e99088 = Vec::new();
@@ -2838,31 +2836,31 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         },
                         NotNullOrNullable::Nullable => gen_some_acc_content_ts(not_null_or_nullable, &gen_ident_ts(&NotNullOrNullable::NotNull, &PgJsonTypePattern::Standart)),
                     },
-                    PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => gen_some_acc_content_ts(
+                    PgJsonTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => gen_some_acc_content_ts(
                         not_null_or_nullable,
                         &match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("dec468c0")),
+                            NotNullOrNullable::NotNull => gen_ident_ts(dim1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("dec468c0")),
                             NotNullOrNullable::Nullable => gen_ident_ts(&NotNullOrNullable::NotNull, pg_json_type_pattern),
                         },
                     ),
-                    PgJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, .. } => gen_some_acc_content_ts(
+                    PgJsonTypePattern::ArrayDim2 { dim1_not_null_or_nullable, .. } => gen_some_acc_content_ts(
                         not_null_or_nullable,
                         &match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("4010ebf7")),
+                            NotNullOrNullable::NotNull => gen_ident_ts(dim1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("4010ebf7")),
                             NotNullOrNullable::Nullable => gen_ident_ts(&NotNullOrNullable::NotNull, pg_json_type_pattern),
                         },
                     ),
-                    PgJsonTypePattern::ArrayDimension3 { dimension1_not_null_or_nullable, .. } => gen_some_acc_content_ts(
+                    PgJsonTypePattern::ArrayDim3 { dim1_not_null_or_nullable, .. } => gen_some_acc_content_ts(
                         not_null_or_nullable,
                         &match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("acdbb564")),
+                            NotNullOrNullable::NotNull => gen_ident_ts(dim1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("acdbb564")),
                             NotNullOrNullable::Nullable => gen_ident_ts(&NotNullOrNullable::NotNull, pg_json_type_pattern),
                         },
                     ),
-                    PgJsonTypePattern::ArrayDimension4 { dimension1_not_null_or_nullable, .. } => gen_some_acc_content_ts(
+                    PgJsonTypePattern::ArrayDim4 { dim1_not_null_or_nullable, .. } => gen_some_acc_content_ts(
                         not_null_or_nullable,
                         &match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("5abf9504")),
+                            NotNullOrNullable::NotNull => gen_ident_ts(dim1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("5abf9504")),
                             NotNullOrNullable::Nullable => gen_ident_ts(&NotNullOrNullable::NotNull, pg_json_type_pattern),
                         },
                     ),
@@ -2883,16 +2881,16 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     PgJsonType::UuidUuidAsJsonbString => quote! {None},
                 }
             };
-            let read_only_ids_to_two_dimensional_vec_read_inner_ts = {
+            let read_only_ids_to_two_dimal_vec_read_inner_ts = {
                 let (has_len_greater_than_one_ts, has_len_greater_than_one_for_for_ts) = {
                     let gen_ts = |content_ts: &dyn ToTokens| {
                         quote! {let has_len_greater_than_one = #content_ts;}
                     };
                     (
-                        gen_ts(&quote! {read_only_ids_to_two_dimensional_vec_read_inner.len() > 1}),
+                        gen_ts(&quote! {read_only_ids_to_two_dimal_vec_read_inner.len() > 1}),
                         gen_ts(&quote! {{
                             let mut has_len_greater_than_one = false;
-                            for el_4a00ab02 in &read_only_ids_to_two_dimensional_vec_read_inner {
+                            for el_4a00ab02 in &read_only_ids_to_two_dimal_vec_read_inner {
                                 if el_4a00ab02.len() > 1 {
                                     has_len_greater_than_one = true;
                                     break;
@@ -2918,7 +2916,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         quote! {
                             let option_additional = {
                                 let mut option_additional = None;
-                                for el_c4f9bf8f in &read_only_ids_to_two_dimensional_vec_read_inner {
+                                for el_c4f9bf8f in &read_only_ids_to_two_dimal_vec_read_inner {
                                     if option_additional.is_some() {
                                         break;
                                     }
@@ -2939,7 +2937,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         let content_ts = {
                             let inner_content_ts = quote! {{
                                 let mut acc_6cd5b60a = Vec::new();
-                                for el_640f58e8 in read_only_ids_to_two_dimensional_vec_read_inner {
+                                for el_640f58e8 in read_only_ids_to_two_dimal_vec_read_inner {
                                     for el_d251d1f6 in el_640f58e8 {
                                         acc_6cd5b60a.push(el_d251d1f6);
                                     }
@@ -2959,11 +2957,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     };
                     quote! {
                         let mut acc_0a07db18 = Vec::new();
-                        let read_only_ids_to_two_dimensional_vec_read_inner = <
+                        let read_only_ids_to_two_dimal_vec_read_inner = <
                             #current_ident_ts
                             as
                             #import_path::PgJsonTypeTestCases
-                        >::#ReadOnlyIdsToTwoDimensionalVecReadInnerSc(
+                        >::#ReadOnlyIdsToTwoDimalVecReadInnerSc(
                             &#current_ident_read_only_ids_ucc(read_only_ids.0.clone())
                         );
                         #option_additional_content_ts
@@ -2986,7 +2984,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         NotNullOrNullable::NotNull => quote! {vec![#import_path::#standart_not_null_test_cases_vec_name_ts().into()]},
                         NotNullOrNullable::Nullable => quote! {
                             let mut acc_97242d4d = Vec::new();
-                            for el_8f3646f9 in <#ident_standart_not_null_ucc as #import_path::PgJsonTypeTestCases>::#ReadOnlyIdsToTwoDimensionalVecReadInnerSc(&#ident_read_only_ids_standart_not_null_ucc(read_only_ids.0.clone())) {
+                            for el_8f3646f9 in <#ident_standart_not_null_ucc as #import_path::PgJsonTypeTestCases>::#ReadOnlyIdsToTwoDimalVecReadInnerSc(&#ident_read_only_ids_standart_not_null_ucc(read_only_ids.0.clone())) {
                                 for el_35a4dba9 in el_8f3646f9 {
                                     acc_97242d4d.push(vec![Some(el_35a4dba9)]);
                                 }
@@ -2995,16 +2993,16 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             acc_97242d4d
                         },
                     },
-                    PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => gen_acc_content_handle_ts(
-                        &gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("d6f89137")),
-                        &match &dimension1_not_null_or_nullable {
+                    PgJsonTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => gen_acc_content_handle_ts(
+                        &gen_ident_ts(dim1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("d6f89137")),
+                        &match &dim1_not_null_or_nullable {
                             NotNullOrNullable::NotNull => &has_len_greater_than_one_for_for_ts,
                             NotNullOrNullable::Nullable => &has_len_greater_than_one_ts,
                         },
                     ),
-                    PgJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, .. } => gen_acc_content_handle_ts(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("38774398")), &has_len_greater_than_one_ts),
-                    PgJsonTypePattern::ArrayDimension3 { dimension1_not_null_or_nullable, .. } => gen_acc_content_handle_ts(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("053f4bab")), &has_len_greater_than_one_ts),
-                    PgJsonTypePattern::ArrayDimension4 { dimension1_not_null_or_nullable, .. } => gen_acc_content_handle_ts(&gen_ident_ts(dimension1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("860f8f15")), &has_len_greater_than_one_ts),
+                    PgJsonTypePattern::ArrayDim2 { dim1_not_null_or_nullable, .. } => gen_acc_content_handle_ts(&gen_ident_ts(dim1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("38774398")), &has_len_greater_than_one_ts),
+                    PgJsonTypePattern::ArrayDim3 { dim1_not_null_or_nullable, .. } => gen_acc_content_handle_ts(&gen_ident_ts(dim1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("053f4bab")), &has_len_greater_than_one_ts),
+                    PgJsonTypePattern::ArrayDim4 { dim1_not_null_or_nullable, .. } => gen_acc_content_handle_ts(&gen_ident_ts(dim1_not_null_or_nullable, &pg_json_type_pattern.down_by_1().expect("860f8f15")), &has_len_greater_than_one_ts),
                 };
                 match &pg_json_type {
                     PgJsonType::I8AsJsonbNumber
@@ -3083,11 +3081,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 not_null_or_nullable
                             ),
                         },
-                        PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => gen_iter_or_match_ts(
+                        PgJsonTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => gen_iter_or_match_ts(
                             not_null_or_nullable,
                             &gen_ident_ts(
                                 &match &not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => *dimension1_not_null_or_nullable,
+                                    NotNullOrNullable::NotNull => *dim1_not_null_or_nullable,
                                     NotNullOrNullable::Nullable => NotNullOrNullable::NotNull,
                                 },
                                 &match &not_null_or_nullable {
@@ -3097,11 +3095,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             ),
                             not_null_or_nullable,
                         ),
-                        PgJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, .. } => gen_iter_or_match_ts(
+                        PgJsonTypePattern::ArrayDim2 { dim1_not_null_or_nullable, .. } => gen_iter_or_match_ts(
                             not_null_or_nullable,
                             &gen_ident_ts(
                                 &match &not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => *dimension1_not_null_or_nullable,
+                                    NotNullOrNullable::NotNull => *dim1_not_null_or_nullable,
                                     NotNullOrNullable::Nullable => NotNullOrNullable::NotNull,
                                 },
                                 &match &not_null_or_nullable {
@@ -3111,11 +3109,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             ),
                             not_null_or_nullable,
                         ),
-                        PgJsonTypePattern::ArrayDimension3 { dimension1_not_null_or_nullable, .. } => gen_iter_or_match_ts(
+                        PgJsonTypePattern::ArrayDim3 { dim1_not_null_or_nullable, .. } => gen_iter_or_match_ts(
                             not_null_or_nullable,
                             &gen_ident_ts(
                                 &match &not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => *dimension1_not_null_or_nullable,
+                                    NotNullOrNullable::NotNull => *dim1_not_null_or_nullable,
                                     NotNullOrNullable::Nullable => NotNullOrNullable::NotNull,
                                 },
                                 &match &not_null_or_nullable {
@@ -3125,11 +3123,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             ),
                             not_null_or_nullable,
                         ),
-                        PgJsonTypePattern::ArrayDimension4 { dimension1_not_null_or_nullable, .. } => gen_iter_or_match_ts(
+                        PgJsonTypePattern::ArrayDim4 { dim1_not_null_or_nullable, .. } => gen_iter_or_match_ts(
                             not_null_or_nullable,
                             &gen_ident_ts(
                                 &match &not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => *dimension1_not_null_or_nullable,
+                                    NotNullOrNullable::NotNull => *dim1_not_null_or_nullable,
                                     NotNullOrNullable::Nullable => NotNullOrNullable::NotNull,
                                 },
                                 &match &not_null_or_nullable {
@@ -3221,10 +3219,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 #ReadOnlyIdsSc,
                 #CreateSc
             )};
-            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_one_equal_ts = gen_array_dimension_equal_ts(&Dimension::One);
-            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_two_equal_ts = gen_array_dimension_equal_ts(&Dimension::Two);
-            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_three_equal_ts = gen_array_dimension_equal_ts(&Dimension::Three);
-            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_four_equal_ts = gen_array_dimension_equal_ts(&Dimension::Four);
+            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_ts = gen_array_dim_equal_ts(&Dim::One);
+            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_ts = gen_array_dim_equal_ts(&Dim::Two);
+            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_three_equal_ts = gen_array_dim_equal_ts(&Dim::Three);
+            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_four_equal_ts = gen_array_dim_equal_ts(&Dim::Four);
             //todo maybe reuse LengthEqual and LengthGreaterThan
             let create_into_pg_json_type_option_vec_where_length_equal_ts = {
                 let gen_ts = || {
@@ -3285,7 +3283,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 };
                 match &pg_json_type_pattern {
                     PgJsonTypePattern::Standart => none_ts.clone(),
-                    PgJsonTypePattern::ArrayDimension1 { .. } | PgJsonTypePattern::ArrayDimension2 { .. } | PgJsonTypePattern::ArrayDimension3 { .. } | PgJsonTypePattern::ArrayDimension4 { .. } => gen_ts(),
+                    PgJsonTypePattern::ArrayDim1 { .. } | PgJsonTypePattern::ArrayDim2 { .. } | PgJsonTypePattern::ArrayDim3 { .. } | PgJsonTypePattern::ArrayDim4 { .. } => gen_ts(),
                 }
             };
             let create_into_pg_json_type_option_vec_where_length_greater_than_ts = {
@@ -3361,7 +3359,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 };
                 match &pg_json_type_pattern {
                     PgJsonTypePattern::Standart => none_ts.clone(),
-                    PgJsonTypePattern::ArrayDimension1 { .. } | PgJsonTypePattern::ArrayDimension2 { .. } | PgJsonTypePattern::ArrayDimension3 { .. } | PgJsonTypePattern::ArrayDimension4 { .. } => gen_ts(),
+                    PgJsonTypePattern::ArrayDim1 { .. } | PgJsonTypePattern::ArrayDim2 { .. } | PgJsonTypePattern::ArrayDim3 { .. } | PgJsonTypePattern::ArrayDim4 { .. } => gen_ts(),
                 }
             };
             let gen_dot_checked_sub_one_ts = |content_ts: &dyn ToTokens|quote!{#content_ts.checked_sub(1)};
@@ -3614,10 +3612,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             else {
                 none_ts.clone()
             };
-            //todo add contains_el_greater_than for dimension 2,3,4
+            //todo add contains_el_greater_than for dim 2,3,4
             let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_greater_than_ts = match &pg_json_type_pattern {
-                PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
-                    if matches!((&not_null_or_nullable, &dimension1_not_null_or_nullable), (
+                PgJsonTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => {
+                    if matches!((&not_null_or_nullable, &dim1_not_null_or_nullable), (
                         NotNullOrNullable::NotNull,
                         NotNullOrNullable::NotNull
                     )) {
@@ -3696,14 +3694,14 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 },
                 PgJsonTypePattern::Standart |
-                PgJsonTypePattern::ArrayDimension2 {..} |
-                PgJsonTypePattern::ArrayDimension3 {..} |
-                PgJsonTypePattern::ArrayDimension4 {..} => none_ts.clone()
+                PgJsonTypePattern::ArrayDim2 {..} |
+                PgJsonTypePattern::ArrayDim3 {..} |
+                PgJsonTypePattern::ArrayDim4 {..} => none_ts.clone()
             };
-            //todo add contains_el_regular_expression for dimension 2,3,4
+            //todo add contains_el_regular_expression for dim 2,3,4
             let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_regular_expression_ts = match &pg_json_type_pattern {
-                PgJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
-                    if matches!((&not_null_or_nullable, &dimension1_not_null_or_nullable), (
+                PgJsonTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => {
+                    if matches!((&not_null_or_nullable, &dim1_not_null_or_nullable), (
                         NotNullOrNullable::NotNull,
                         NotNullOrNullable::NotNull
                     )) {
@@ -3754,9 +3752,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 },
                 PgJsonTypePattern::Standart |
-                PgJsonTypePattern::ArrayDimension2 {..} |
-                PgJsonTypePattern::ArrayDimension3 {..} |
-                PgJsonTypePattern::ArrayDimension4 {..} => none_ts.clone()
+                PgJsonTypePattern::ArrayDim2 {..} |
+                PgJsonTypePattern::ArrayDim3 {..} |
+                PgJsonTypePattern::ArrayDim4 {..} => none_ts.clone()
             };
             gen_impl_pg_json_type_test_cases_for_ident_ts(
                 &quote! {#[cfg(feature = "test-utils")]},
@@ -3764,7 +3762,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &ident_read_inner_ucc,
                 &ident,
                 &option_vec_create_ts,
-                &read_only_ids_to_two_dimensional_vec_read_inner_ts,
+                &read_only_ids_to_two_dimal_vec_read_inner_ts,
                 &read_inner_into_read_with_new_or_try_new_unwraped_ts,
                 &read_inner_into_update_with_new_or_try_new_unwraped_ts,
                 &read_only_ids_into_option_value_read_inner_ts,
@@ -3777,10 +3775,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &read_only_ids_merged_with_create_into_where_equal_ts,
                 &read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts,
                 &read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_one_equal_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_two_equal_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_three_equal_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_four_equal_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_three_equal_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_four_equal_ts,
                 &create_into_pg_json_type_option_vec_where_length_equal_ts,
                 &create_into_pg_json_type_option_vec_where_length_greater_than_ts,
                 &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_greater_than_ts,

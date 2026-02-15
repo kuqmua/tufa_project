@@ -4,8 +4,8 @@ use macros_helpers::{
     DeriveCopy, DeriveDefault, DeriveEq, DeriveOrd, DerivePartialOrd, DeriveSerdeDeserialize,
     DeriveSerdeSerialize, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
     StructOrEnumDeriveTokenStreamBuilder, gen_const_new_ts, gen_if_write_is_err_ts,
-    gen_impl_display_ts, gen_impl_to_err_string_ts, gen_impl_from_ts,
-    gen_new_ts, gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts, maybe_write_ts_into_file,
+    gen_impl_display_ts, gen_impl_from_ts, gen_impl_to_err_string_ts, gen_new_ts,
+    gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts, maybe_write_ts_into_file,
 };
 use naming::{
     ArrayOfUcc, AsUcc, ColumnSc, ContainsNullByteUcc, CreateSc, DateNaiveSc, DateNaiveUcc, DateSc,
@@ -18,11 +18,10 @@ use naming::{
     MinuteSc, MonthsSc, NanosecondPrecisionIsNotSupportedUcc, NanosecondSc, NewSc, OptionUpdateSc,
     OptionVecCreateSc, PgTypePrimaryKeyUcc, PgTypeUcc, QuerySc, ReadIntoTableTypeDeclarationSc,
     ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeDeclarationSc, ReadOnlyIdsIntoUpdateSc,
-    ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsSc,
-    ReadOnlyIdsToTwoDimensionalVecReadInnerSc, ReadOnlyIdsUcc, ReadSc, ReadUcc, SecSc, SecondSc,
-    SelfSc, SelfUcc, StartSc, StartUcc, TableTypeDeclarationSc, TableTypeDeclarationUcc, TimeSc,
-    TimeUcc, ToErrStringSc, TryNewForDeserializeSc, TryNewSc, UnboundedUcc, UpdateUcc, ValueSc,
-    VecOfUcc,
+    ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsSc, ReadOnlyIdsToTwoDimalVecReadInnerSc,
+    ReadOnlyIdsUcc, ReadSc, ReadUcc, SecSc, SecondSc, SelfSc, SelfUcc, StartSc, StartUcc,
+    TableTypeDeclarationSc, TableTypeDeclarationUcc, TimeSc, TimeUcc, ToErrStringSc,
+    TryNewForDeserializeSc, TryNewSc, UnboundedUcc, UpdateUcc, ValueSc, VecOfUcc,
     parameter::{
         SelfCreateUcc, SelfNotNullUcc, SelfOriginTryNewErrorUcc,
         SelfOriginTryNewForDeserializeErrorUcc, SelfOriginUcc, SelfReadInnerUcc,
@@ -377,31 +376,31 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     )]
     enum PgTypePattern {
         Standart,
-        ArrayDimension1 {
-            dimension1_not_null_or_nullable: NotNullOrNullable,
+        ArrayDim1 {
+            dim1_not_null_or_nullable: NotNullOrNullable,
         },
         // sqlx does not support nested arrays yet. https://github.com/launchbadge/sqlx/issues/2280
-        // ArrayDimension2 {
-        //     dimension1_not_null_or_nullable: NotNullOrNullable,
-        //     dimension2_not_null_or_nullable: NotNullOrNullable,
+        // ArrayDim2 {
+        //     dim1_not_null_or_nullable: NotNullOrNullable,
+        //     dim2_not_null_or_nullable: NotNullOrNullable,
         // },
-        // ArrayDimension3 {
-        //     dimension1_not_null_or_nullable: NotNullOrNullable,
-        //     dimension2_not_null_or_nullable: NotNullOrNullable,
-        //     dimension3_not_null_or_nullable: NotNullOrNullable,
+        // ArrayDim3 {
+        //     dim1_not_null_or_nullable: NotNullOrNullable,
+        //     dim2_not_null_or_nullable: NotNullOrNullable,
+        //     dim3_not_null_or_nullable: NotNullOrNullable,
         // },
-        // ArrayDimension4 {
-        //     dimension1_not_null_or_nullable: NotNullOrNullable,
-        //     dimension2_not_null_or_nullable: NotNullOrNullable,
-        //     dimension3_not_null_or_nullable: NotNullOrNullable,
-        //     dimension4_not_null_or_nullable: NotNullOrNullable,
+        // ArrayDim4 {
+        //     dim1_not_null_or_nullable: NotNullOrNullable,
+        //     dim2_not_null_or_nullable: NotNullOrNullable,
+        //     dim3_not_null_or_nullable: NotNullOrNullable,
+        //     dim4_not_null_or_nullable: NotNullOrNullable,
         // },
     }
     impl PgTypePattern {
-        const fn array_dimensions_number(&self) -> usize {
+        const fn array_dims_number(&self) -> usize {
             match &self {
                 Self::Standart => 0,
-                Self::ArrayDimension1 { .. } => 1,
+                Self::ArrayDim1 { .. } => 1,
             }
         }
     }
@@ -656,13 +655,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             not_null_or_nullable: value.1,
                             pg_type_pattern: value.2,
                         }),
-                        PgTypePattern::ArrayDimension1 {
-                            dimension1_not_null_or_nullable,
+                        PgTypePattern::ArrayDim1 {
+                            dim1_not_null_or_nullable,
                         } => match &value.0.can_be_an_array_element() {
                             CanBeAnArrayElement::False => {
                                 Err(format!("{cant_support_array_version_message}{value:#?}"))
                             }
-                            CanBeAnArrayElement::True => match &dimension1_not_null_or_nullable {
+                            CanBeAnArrayElement::True => match &dim1_not_null_or_nullable {
                                 NotNullOrNullable::NotNull => Ok(Self {
                                     pg_type: value.0,
                                     not_null_or_nullable: value.1,
@@ -681,18 +680,16 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         not_null_or_nullable: value.1,
                         pg_type_pattern: value.2,
                     }),
-                    PgTypePattern::ArrayDimension1 { .. } => {
-                        match &value.0.can_be_an_array_element() {
-                            CanBeAnArrayElement::False => {
-                                Err(format!("{cant_support_array_version_message}{value:#?}"))
-                            }
-                            CanBeAnArrayElement::True => Ok(Self {
-                                pg_type: value.0,
-                                not_null_or_nullable: value.1,
-                                pg_type_pattern: value.2,
-                            }),
+                    PgTypePattern::ArrayDim1 { .. } => match &value.0.can_be_an_array_element() {
+                        CanBeAnArrayElement::False => {
+                            Err(format!("{cant_support_array_version_message}{value:#?}"))
                         }
-                    }
+                        CanBeAnArrayElement::True => Ok(Self {
+                            pg_type: value.0,
+                            not_null_or_nullable: value.1,
+                            pg_type_pattern: value.2,
+                        }),
+                    },
                 },
             }
         }
@@ -852,9 +849,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgTypePattern::Standart => {
                             acc_f806f6d2.push(el_8ae86bf2);
                         }
-                        PgTypePattern::ArrayDimension1 { .. } => {
+                        PgTypePattern::ArrayDim1 { .. } => {
                             for el_6577bebd in NotNullOrNullable::into_array() {
-                                acc_f806f6d2.push(PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: el_6577bebd });
+                                acc_f806f6d2.push(PgTypePattern::ArrayDim1 { dim1_not_null_or_nullable: el_6577bebd });
                             }
                         }
                     }
@@ -877,16 +874,16 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 });
                             }),
                         },
-                        PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &el_a897c529.can_be_an_array_element() {
+                        PgTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => match &el_a897c529.can_be_an_array_element() {
                             CanBeAnArrayElement::False => (),
                             CanBeAnArrayElement::True => match &el_a897c529.can_be_nullable() {
                                 CanBeNullable::False => {
-                                    if matches!(&dimension1_not_null_or_nullable, NotNullOrNullable::NotNull) {
+                                    if matches!(&dim1_not_null_or_nullable, NotNullOrNullable::NotNull) {
                                         for el_8b51bcb4 in NotNullOrNullable::into_array() {
                                             acc_4351207e.push(PgTypeRecord {
                                                 pg_type: el_a897c529.clone(),
                                                 not_null_or_nullable: el_8b51bcb4,
-                                                pg_type_pattern: PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable },
+                                                pg_type_pattern: PgTypePattern::ArrayDim1 { dim1_not_null_or_nullable: *dim1_not_null_or_nullable },
                                             });
                                         }
                                     }
@@ -951,16 +948,16 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                     (
                         NotNullOrNullable::NotNull,
-                        PgTypePattern::ArrayDimension1 {
-                            dimension1_not_null_or_nullable,
+                        PgTypePattern::ArrayDim1 {
+                            dim1_not_null_or_nullable,
                         },
                     ) => gen_vec(PgTypeRecordHandle {
-                        not_null_or_nullable: *dimension1_not_null_or_nullable,
+                        not_null_or_nullable: *dim1_not_null_or_nullable,
                         pg_type_pattern: PgTypePattern::Standart,
                     }),
                     (
                         NotNullOrNullable::Nullable,
-                        PgTypePattern::ArrayDimension1 { .. },
+                        PgTypePattern::ArrayDim1 { .. },
                     ) => gen_vec(PgTypeRecordHandle {
                         not_null_or_nullable: NotNullOrNullable::NotNull,
                         pg_type_pattern: pg_type_record_handle
@@ -1036,7 +1033,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let pg_type_initialization_try_new_try_from_pg_type = PgTypeInitializationTryNew::try_from(pg_type);
         let pg_type_deserialize = PgTypeDeserialize::from(pg_type);
 
-        let array_dimensions_number = pg_type_pattern.array_dimensions_number();
+        let array_dims_number = pg_type_pattern.array_dims_number();
 
         let pg_type_range_try_from_pg_type = PgTypeRange::try_from(pg_type);
         let pg_type_range_try_from_pg_type_is_ok = pg_type_range_try_from_pg_type.is_ok();
@@ -1106,9 +1103,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let not_null_or_nullable_rust = current_not_null_or_nullable.rust();
             let (rust_part, pg_part) = match &current_pg_type_pattern {
                 PgTypePattern::Standart => (format!("{rust_type_name}"), format!("{pg_type_name}")),
-                PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
-                    let d1 = dimension1_not_null_or_nullable;
-                    let d1_rust = dimension1_not_null_or_nullable.rust();
+                PgTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => {
+                    let d1 = dim1_not_null_or_nullable;
+                    let d1_rust = dim1_not_null_or_nullable.rust();
                     (format!("{VecOfUcc}{d1_rust}{rust_type_name}"), format!("{ArrayOfUcc}{d1}{pg_type_name}"))
                 }
             };
@@ -1130,15 +1127,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let ident_array_not_null_ucc = gen_ident_ts(
             pg_type,
             &NotNullOrNullable::NotNull,
-            &PgTypePattern::ArrayDimension1 {
-                dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            &PgTypePattern::ArrayDim1 {
+                dim1_not_null_or_nullable: NotNullOrNullable::NotNull,
             },
         );
         let ident_array_nullable_ucc = gen_ident_ts(
             pg_type,
             &NotNullOrNullable::NotNull,
-            &PgTypePattern::ArrayDimension1 {
-                dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            &PgTypePattern::ArrayDim1 {
+                dim1_not_null_or_nullable: NotNullOrNullable::Nullable,
             },
         );
         let gen_ts = |content_ts: &dyn ToTokens, pg_type_or_pg_type_test_cases: &PgTypeOrPgTypeTestCases| {
@@ -1241,9 +1238,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     NotNullOrNullable::NotNull => &inner_type_standart_not_null_ts,
                     NotNullOrNullable::Nullable => &gen_std_option_option_tokens_declaration_ts(&ident_standart_not_null_origin_ucc),
                 },
-                PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
+                PgTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => &{
                     let (current_pg_type_pattern, current_not_null_or_nullable): (&PgTypePattern, &NotNullOrNullable) = match &not_null_or_nullable {
-                        NotNullOrNullable::NotNull => (&PgTypePattern::Standart, dimension1_not_null_or_nullable),
+                        NotNullOrNullable::NotNull => (&PgTypePattern::Standart, dim1_not_null_or_nullable),
                         NotNullOrNullable::Nullable => (pg_type_pattern, &NotNullOrNullable::NotNull),
                     };
                     gen_current_ident_origin(current_pg_type_pattern, current_not_null_or_nullable)
@@ -1270,9 +1267,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 NotNullOrNullable::NotNull => &inner_type_standart_not_null_ts,
                 NotNullOrNullable::Nullable => &gen_std_option_option_tokens_declaration_ts(&inner_type_standart_not_null_ts),
             },
-            PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
-                let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote! {#inner_type_standart_not_null_ts});
-                not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dimension1_type))
+            PgTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => &{
+                let dim1_type = dim1_not_null_or_nullable.maybe_option_wrap(quote! {#inner_type_standart_not_null_ts});
+                not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim1_type))
             },
         };
         let can_be_primary_key = match &pg_type {
@@ -2563,7 +2560,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 PgType::StdStringStringAsText |
                 PgType::StdVecVecU8AsBytea => DeriveCopy::False,
             },
-            PgTypePattern::ArrayDimension1 { .. } => DeriveCopy::False,
+            PgTypePattern::ArrayDim1 { .. } => DeriveCopy::False,
         };
         let sqlx_types_chrono_naive_time_min_function_ts = quote!{sqlx_types_chrono_naive_time_min};
         let sqlx_types_chrono_naive_time_ten_function_ts = quote!{sqlx_types_chrono_naive_time_ten};
@@ -3335,7 +3332,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             let gen_match_option_ts = |type_ts: &dyn ToTokens| {
                                 quote! {value.map(#type_ts::#NewSc)}
                             };
-                            let gen_array_dimensions_initialization_ts = |type_ts: &dyn ToTokens| match &not_null_or_nullable {
+                            let gen_array_dims_initialization_ts = |type_ts: &dyn ToTokens| match &not_null_or_nullable {
                                 NotNullOrNullable::NotNull => quote! {value.into_iter().map(#type_ts::#NewSc).collect()},
                                 NotNullOrNullable::Nullable => gen_match_option_ts(&type_ts),
                             };
@@ -3355,9 +3352,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     }
                                     NotNullOrNullable::Nullable => gen_match_option_ts(&ident_standart_not_null_origin_ucc),
                                 },
-                                PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => gen_array_dimensions_initialization_ts(&{
+                                PgTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => gen_array_dims_initialization_ts(&{
                                     let (current_pg_type_pattern, current_not_null_or_nullable): (&PgTypePattern, &NotNullOrNullable) = match &not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => (&PgTypePattern::Standart, dimension1_not_null_or_nullable),
+                                        NotNullOrNullable::NotNull => (&PgTypePattern::Standart, dim1_not_null_or_nullable),
                                         NotNullOrNullable::Nullable => (pg_type_pattern, &NotNullOrNullable::NotNull),
                                     };
                                     gen_current_ident_origin_non_wrapping(current_pg_type_pattern, current_not_null_or_nullable)
@@ -3379,7 +3376,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 &content_ts
                             ),
                         },
-                        PgTypePattern::ArrayDimension1 { .. } => gen_new_ts(
+                        PgTypePattern::ArrayDim1 { .. } => gen_new_ts(
                             &must_use_ts,
                             &value_ident_inner_type_ts,
                             &content_ts
@@ -3399,7 +3396,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 None => None
                             }))}
                         };
-                        let gen_array_dimensions_initialization_ts = |type_ts: &dyn ToTokens| match &not_null_or_nullable {
+                        let gen_array_dims_initialization_ts = |type_ts: &dyn ToTokens| match &not_null_or_nullable {
                             NotNullOrNullable::NotNull => quote! {
                                 Ok(Self({
                                     let mut acc_4ce2782a = Vec::new();
@@ -3647,9 +3644,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                                 NotNullOrNullable::Nullable => gen_match_option_ts(&ident_standart_not_null_origin_ucc),
                             },
-                            PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => gen_array_dimensions_initialization_ts(&{
+                            PgTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => gen_array_dims_initialization_ts(&{
                                 let (current_pg_type_pattern, current_not_null_or_nullable): (&PgTypePattern, &NotNullOrNullable) = match &not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => (&PgTypePattern::Standart, dimension1_not_null_or_nullable),
+                                    NotNullOrNullable::NotNull => (&PgTypePattern::Standart, dim1_not_null_or_nullable),
                                     NotNullOrNullable::Nullable => (pg_type_pattern, &NotNullOrNullable::NotNull),
                                 };
                                 gen_current_ident_origin_non_wrapping(current_pg_type_pattern, current_not_null_or_nullable)
@@ -3930,7 +3927,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         },
                         NotNullOrNullable::Nullable => Ts2::new(),
                     },
-                    PgTypePattern::ArrayDimension1 { .. } => Ts2::new(),
+                    PgTypePattern::ArrayDim1 { .. } => Ts2::new(),
                 };
                 quote! {
                     #allow_clippy_arbitrary_source_item_ordering_ts
@@ -3959,9 +3956,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 &quote!{value_6bfd70fa}
                             ),
                         },
-                        PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
+                        PgTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => {
                             let el_dot_zero_ts = quote! {el_6910aab7.0};
-                            let dimension1_ts = match &dimension1_not_null_or_nullable {
+                            let dim1_ts = match &dim1_not_null_or_nullable {
                                 NotNullOrNullable::NotNull => el_dot_zero_ts,
                                 NotNullOrNullable::Nullable => gen_match_ts(
                                     &el_dot_zero_ts,
@@ -3969,14 +3966,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     &quote!{value_1b8cbd77}
                                 ),
                             };
-                            let into_iter_dimension1_ts = quote! {.into_iter().map(|el_6910aab7|#dimension1_ts).collect()};
+                            let into_iter_dim1_ts = quote! {.into_iter().map(|el_6910aab7|#dim1_ts).collect()};
                             match &not_null_or_nullable {
                                 NotNullOrNullable::NotNull => quote! {
-                                    #value_dot_zero #into_iter_dimension1_ts
+                                    #value_dot_zero #into_iter_dim1_ts
                                 },
                                 NotNullOrNullable::Nullable => gen_match_ts(
                                     &value_dot_zero,
-                                    &into_iter_dimension1_ts,
+                                    &into_iter_dim1_ts,
                                     &quote!{value_38cfcd24}
                                 ),
                             }
@@ -4121,7 +4118,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                         NotNullOrNullable::Nullable => quote! {Some(#pg_crud_common_default_option_some_vec_one_el_call_ts)},
                     },
-                    PgTypePattern::ArrayDimension1 { .. } => match &not_null_or_nullable {
+                    PgTypePattern::ArrayDim1 { .. } => match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => quote! {vec![#pg_crud_common_default_option_some_vec_one_el_call_ts]},
                         NotNullOrNullable::Nullable => quote! {Some(#pg_crud_common_default_option_some_vec_one_el_call_ts)},
                     },
@@ -4169,7 +4166,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         },
                         NotNullOrNullable::Nullable => ok_self_scopes_value_ts,
                     },
-                    PgTypePattern::ArrayDimension1 { .. } => ok_self_scopes_value_ts,
+                    PgTypePattern::ArrayDim1 { .. } => ok_self_scopes_value_ts,
                 }
             });
             let impl_sqlx_pg_pg_has_array_type_for_ident_origin_ts = {
@@ -4296,8 +4293,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             },
                         },
-                        PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => match &dimension1_not_null_or_nullable {
+                        PgTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => match &not_null_or_nullable {
+                            NotNullOrNullable::NotNull => match &dim1_not_null_or_nullable {
                                 NotNullOrNullable::NotNull => equal_ts,
                                 NotNullOrNullable::Nullable => {
                                     //todo thats not actually usefull coz nullable array comparison has different logic. need to refactor EqualOperatorHandle enum
@@ -4377,12 +4374,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &ident_select_ucc,
                 &match &pg_type_pattern {
                     PgTypePattern::Standart => quote! {;},
-                    PgTypePattern::ArrayDimension1 { .. } => {
+                    PgTypePattern::ArrayDim1 { .. } => {
                         let mut arguments_ts = Vec::new();
-                        for el_9f432ae3 in 1..=array_dimensions_number {
-                            let dimension_number_pagination_ts = format!("dimension{el_9f432ae3}_pagination").parse::<Ts2>().expect("af86f2d1");
+                        for el_9f432ae3 in 1..=array_dims_number {
+                            let dim_number_pagination_ts = format!("dim{el_9f432ae3}_pagination").parse::<Ts2>().expect("af86f2d1");
                             arguments_ts.push(quote! {
-                                #dimension_number_pagination_ts: pg_types_common::PaginationStartsWithOne
+                                #dim_number_pagination_ts: pg_types_common::PaginationStartsWithOne
                             });
                         }
                         quote! {{#(#arguments_ts),*}}
@@ -4393,16 +4390,16 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let (impl_default_option_some_vec_one_el_for_ident_select_ts, impl_default_option_some_vec_one_el_max_page_size_for_ident_select_ts) = {
                 let gen_default_content_ts = |default_some_one_or_default_some_one_with_max_page_size: &DefaultSomeOneOrDefaultSomeOneWithMaxPageSize| match &pg_type_pattern {
                     PgTypePattern::Standart => quote! {Self},
-                    PgTypePattern::ArrayDimension1 { .. } => {
+                    PgTypePattern::ArrayDim1 { .. } => {
                         let content_ts: &dyn ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
                             DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &pg_crud_common_default_option_some_vec_one_el_call_ts,
                             DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &pg_crud_common_default_option_some_vec_one_el_max_page_size_call_ts,
                         };
                         let mut arguments_ts = Vec::new();
-                        for el_a227c2ba in 1..=array_dimensions_number {
-                            let dimension_number_pagination_ts = format!("dimension{el_a227c2ba}_pagination").parse::<Ts2>().expect("e5250a98");
+                        for el_a227c2ba in 1..=array_dims_number {
+                            let dim_number_pagination_ts = format!("dim{el_a227c2ba}_pagination").parse::<Ts2>().expect("e5250a98");
                             arguments_ts.push(quote! {
-                                #dimension_number_pagination_ts: #content_ts
+                                #dim_number_pagination_ts: #content_ts
                             });
                         }
                         quote! {Self {#(#arguments_ts),*}}
@@ -4566,7 +4563,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => where_sqlx_pg_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
                         }
                     }
-                    PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
+                    PgTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => {
                         let ident_standart_not_null_or_nullable_if_can_be_nullable_table_type_declaration_ucc = {
                             let value = SelfTableTypeDeclarationUcc::from_tokens(&match &pg_type.can_be_nullable() {
                                 CanBeNullable::False => quote! {#ident_standart_not_null_ucc},
@@ -4577,45 +4574,45 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             });
                             quote! {#value}
                         };
-                        let dimension_one_greater_than = PgTypeFilter::DimensionOneGreaterThan {
+                        let dim_one_greater_than = PgTypeFilter::DimOneGreaterThan {
                             ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                         };
-                        let dimension_one_between = PgTypeFilter::DimensionOneBetween {
+                        let dim_one_between = PgTypeFilter::DimOneBetween {
                             ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                         };
-                        let dimension_one_in_handle = PgTypeFilter::DimensionOneIn {
+                        let dim_one_in_handle = PgTypeFilter::DimOneIn {
                             ident: ident_standart_not_null_or_nullable_if_can_be_nullable_table_type_declaration_ucc,
                         };
-                        let dimension_one_regular_expression = PgTypeFilter::DimensionOneRegularExpression;
-                        let dimension_one_current_date = PgTypeFilter::DimensionOneCurrentDate;
-                        let dimension_one_greater_than_current_date = PgTypeFilter::DimensionOneGreaterThanCurrentDate;
-                        let dimension_one_current_time = PgTypeFilter::DimensionOneCurrentTime;
-                        let dimension_one_greater_than_current_time = PgTypeFilter::DimensionOneGreaterThanCurrentTime;
-                        let dimension_one_current_timestamp = PgTypeFilter::DimensionOneCurrentTimestamp;
-                        let dimension_one_greater_than_current_timestamp = PgTypeFilter::DimensionOneGreaterThanCurrentTimestamp;
-                        let dimension_one_before = PgTypeFilter::DimensionOneBefore {
+                        let dim_one_regular_expression = PgTypeFilter::DimOneRegularExpression;
+                        let dim_one_current_date = PgTypeFilter::DimOneCurrentDate;
+                        let dim_one_greater_than_current_date = PgTypeFilter::DimOneGreaterThanCurrentDate;
+                        let dim_one_current_time = PgTypeFilter::DimOneCurrentTime;
+                        let dim_one_greater_than_current_time = PgTypeFilter::DimOneGreaterThanCurrentTime;
+                        let dim_one_current_timestamp = PgTypeFilter::DimOneCurrentTimestamp;
+                        let dim_one_greater_than_current_timestamp = PgTypeFilter::DimOneGreaterThanCurrentTimestamp;
+                        let dim_one_before = PgTypeFilter::DimOneBefore {
                             ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                         };
-                        let common_array_dimension1_pg_type_filters = {
+                        let common_array_dim1_pg_type_filters = {
                             let mut vec = common_pg_type_filters;
-                            vec.push(PgTypeFilter::DimensionOneEqual {
+                            vec.push(PgTypeFilter::DimOneEqual {
                                 ident: {
-                                    let value = SelfTableTypeDeclarationUcc::from_tokens(&match &dimension1_not_null_or_nullable {
+                                    let value = SelfTableTypeDeclarationUcc::from_tokens(&match &dim1_not_null_or_nullable {
                                         NotNullOrNullable::NotNull => &ident_standart_not_null_ucc,
                                         NotNullOrNullable::Nullable => &ident_standart_nullable_ucc,
                                     });
                                     quote! {#value}
                                 },
                             });
-                            vec.push(PgTypeFilter::DimensionOneLengthEqual);
-                            vec.push(PgTypeFilter::DimensionOneLengthGreaterThan);
+                            vec.push(PgTypeFilter::DimOneLengthEqual);
+                            vec.push(PgTypeFilter::DimOneLengthGreaterThan);
                             vec
                         };
-                        let common_array_dimension1_pg_type_number_filters = {
-                            let mut vec = common_array_dimension1_pg_type_filters.clone();
-                            vec.push(dimension_one_greater_than.clone());
-                            vec.push(dimension_one_between.clone());
-                            vec.push(dimension_one_in_handle.clone());
+                        let common_array_dim1_pg_type_number_filters = {
+                            let mut vec = common_array_dim1_pg_type_filters.clone();
+                            vec.push(dim_one_greater_than.clone());
+                            vec.push(dim_one_between.clone());
+                            vec.push(dim_one_in_handle.clone());
                             vec
                         };
                         let (
@@ -4628,42 +4625,42 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             let gen_where_sqlx_pg_types_pg_range_filter_ts = |pg_type_range: PgTypeRange| {
                                 let pg_type_from_pg_type_range = PgType::from(&pg_type_range);
                                 let range_el_ident_standart_not_null_ts = gen_ident_standart_not_null_ts(&pg_type_from_pg_type_range);
-                                let mut vec = common_array_dimension1_pg_type_filters.clone();
+                                let mut vec = common_array_dim1_pg_type_filters.clone();
                                 let range_el_ident_standart_not_null_as_crate_pg_type_read_ts = {
                                     let range_el_ident_standart_not_null_as_crate_pg_type_ts = gen_as_pg_type_ts(&range_el_ident_standart_not_null_ts);
                                     quote! {#range_el_ident_standart_not_null_as_crate_pg_type_ts::Read}
                                 };
-                                vec.push(PgTypeFilter::DimensionOneFindRangesWithinGivenRange {
+                                vec.push(PgTypeFilter::DimOneFindRangesWithinGivenRange {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(PgTypeFilter::DimensionOneFindRangesThatFullyContainTheGivenRange {
+                                vec.push(PgTypeFilter::DimOneFindRangesThatFullyContainTheGivenRange {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(PgTypeFilter::DimensionOneStrictlyToLeftOfRange {
+                                vec.push(PgTypeFilter::DimOneStrictlyToLeftOfRange {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(PgTypeFilter::DimensionOneStrictlyToRightOfRange {
+                                vec.push(PgTypeFilter::DimOneStrictlyToRightOfRange {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(PgTypeFilter::DimensionOneIncludedLowerBound {
+                                vec.push(PgTypeFilter::DimOneIncludedLowerBound {
                                     ident: range_el_ident_standart_not_null_as_crate_pg_type_read_ts.clone(),
                                 });
-                                vec.push(PgTypeFilter::DimensionOneExcludedUpperBound {
+                                vec.push(PgTypeFilter::DimOneExcludedUpperBound {
                                     ident: range_el_ident_standart_not_null_as_crate_pg_type_read_ts.clone(),
                                 });
-                                vec.push(PgTypeFilter::DimensionOneGreaterThanIncludedLowerBound {
+                                vec.push(PgTypeFilter::DimOneGreaterThanIncludedLowerBound {
                                     ident: range_el_ident_standart_not_null_as_crate_pg_type_read_ts.clone(),
                                 });
-                                vec.push(PgTypeFilter::DimensionOneGreaterThanExcludedUpperBound {
+                                vec.push(PgTypeFilter::DimOneGreaterThanExcludedUpperBound {
                                     ident: range_el_ident_standart_not_null_as_crate_pg_type_read_ts,
                                 });
-                                vec.push(PgTypeFilter::DimensionOneOverlapWithRange {
+                                vec.push(PgTypeFilter::DimOneOverlapWithRange {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(PgTypeFilter::DimensionOneAdjacentWithRange {
+                                vec.push(PgTypeFilter::DimOneAdjacentWithRange {
                                     ident: quote! {#ident_standart_not_null_table_type_declaration_ucc},
                                 });
-                                vec.push(PgTypeFilter::DimensionOneRangeLength);
+                                vec.push(PgTypeFilter::DimOneRangeLength);
                                 vec
                             };
                             (
@@ -4682,57 +4679,57 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             | PgType::F64AsFloat8
                             | PgType::I16AsSmallSerialInitializedByPg
                             | PgType::I32AsSerialInitializedByPg
-                            | PgType::I64AsBigSerialInitializedByPg => common_array_dimension1_pg_type_number_filters,
+                            | PgType::I64AsBigSerialInitializedByPg => common_array_dim1_pg_type_number_filters,
                             PgType::SqlxPgTypesPgMoneyAsMoney => {
-                                let mut vec = common_array_dimension1_pg_type_filters;
-                                vec.push(dimension_one_in_handle);
+                                let mut vec = common_array_dim1_pg_type_filters;
+                                vec.push(dim_one_in_handle);
                                 vec
                             }
                             PgType::StdVecVecU8AsBytea => {
-                                let mut vec = common_array_dimension1_pg_type_filters;
-                                vec.push(PgTypeFilter::DimensionOneEqualToEncodedStringRepresentation);
+                                let mut vec = common_array_dim1_pg_type_filters;
+                                vec.push(PgTypeFilter::DimOneEqualToEncodedStringRepresentation);
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveTimeAsTime | PgType::SqlxTypesTimeTimeAsTime => {
-                                let mut vec = common_array_dimension1_pg_type_filters;
-                                vec.push(dimension_one_greater_than);
-                                vec.push(dimension_one_between);
-                                vec.push(dimension_one_current_time);
-                                vec.push(dimension_one_greater_than_current_time);
+                                let mut vec = common_array_dim1_pg_type_filters;
+                                vec.push(dim_one_greater_than);
+                                vec.push(dim_one_between);
+                                vec.push(dim_one_current_time);
+                                vec.push(dim_one_greater_than_current_time);
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveDateAsDate => {
-                                let mut vec = common_array_dimension1_pg_type_filters;
-                                vec.push(dimension_one_greater_than);
-                                vec.push(dimension_one_between);
-                                vec.push(dimension_one_current_date);
-                                vec.push(dimension_one_greater_than_current_date);
+                                let mut vec = common_array_dim1_pg_type_filters;
+                                vec.push(dim_one_greater_than);
+                                vec.push(dim_one_between);
+                                vec.push(dim_one_current_date);
+                                vec.push(dim_one_greater_than_current_date);
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
-                                let mut vec = common_array_dimension1_pg_type_filters;
-                                vec.push(dimension_one_greater_than);
-                                vec.push(dimension_one_between);
-                                vec.push(dimension_one_current_timestamp);
-                                vec.push(dimension_one_greater_than_current_timestamp);
+                                let mut vec = common_array_dim1_pg_type_filters;
+                                vec.push(dim_one_greater_than);
+                                vec.push(dim_one_between);
+                                vec.push(dim_one_current_timestamp);
+                                vec.push(dim_one_greater_than_current_timestamp);
                                 vec
                             }
                             PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
-                                let mut vec = common_array_dimension1_pg_type_filters;
-                                vec.push(dimension_one_before);
-                                vec.push(dimension_one_between);
+                                let mut vec = common_array_dim1_pg_type_filters;
+                                vec.push(dim_one_before);
+                                vec.push(dim_one_between);
                                 vec
                             }
                             PgType::StdStringStringAsText | PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient => {
-                                let mut vec = common_array_dimension1_pg_type_filters;
-                                vec.push(dimension_one_regular_expression);
+                                let mut vec = common_array_dim1_pg_type_filters;
+                                vec.push(dim_one_regular_expression);
                                 vec
                             }
-                            PgType::BoolAsBool | PgType::SqlxPgTypesPgIntervalAsInterval | PgType::SqlxTypesIpnetworkIpNetworkAsInet => common_array_dimension1_pg_type_filters,
+                            PgType::BoolAsBool | PgType::SqlxPgTypesPgIntervalAsInterval | PgType::SqlxTypesIpnetworkIpNetworkAsInet => common_array_dim1_pg_type_filters,
                             PgType::SqlxTypesMacAddressMacAddressAsMacAddr => {
-                                let mut vec = common_array_dimension1_pg_type_filters;
-                                vec.push(dimension_one_greater_than);
-                                vec.push(dimension_one_regular_expression);
+                                let mut vec = common_array_dim1_pg_type_filters;
+                                vec.push(dim_one_greater_than);
+                                vec.push(dim_one_regular_expression);
                                 vec
                             }
                             PgType::SqlxPgTypesPgRangeI32AsInt4Range => where_sqlx_pg_types_pg_range_i32_ts,
@@ -5013,11 +5010,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     };
                     let maybe_array_part = match &pg_type_pattern {
                         PgTypePattern::Standart => String::new(),
-                        PgTypePattern::ArrayDimension1 { .. } => repeat_n("[]", array_dimensions_number).collect::<String>(),
+                        PgTypePattern::ArrayDim1 { .. } => repeat_n("[]", array_dims_number).collect::<String>(),
                     };
                     let maybe_constraint_part = match &pg_type_pattern {
                         PgTypePattern::Standart => String::new(),
-                        PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &dimension1_not_null_or_nullable {
+                        PgTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => match &dim1_not_null_or_nullable {
                             NotNullOrNullable::NotNull => ",check (array_position({column},null) is null)".to_owned(),
                             NotNullOrNullable::Nullable => String::new(),
                         },
@@ -5072,24 +5069,24 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &ident_select_ucc,
                 &match &element.pg_type_pattern {
                     PgTypePattern::Standart => SelectQueryPartValueUnderscore::True,
-                    PgTypePattern::ArrayDimension1 { .. } => SelectQueryPartValueUnderscore::False,
+                    PgTypePattern::ArrayDim1 { .. } => SelectQueryPartValueUnderscore::False,
                 },
                 &{
                     let content_ts = match &pg_type_pattern {
                         PgTypePattern::Standart => quote! {#ColumnSc.to_owned()},
-                        PgTypePattern::ArrayDimension1 { .. } => {
+                        PgTypePattern::ArrayDim1 { .. } => {
                             let format_handle_ts = double_quotes_ts(&{
-                                let acc = repeat_n("[{}:{}]", array_dimensions_number).collect::<String>();
+                                let acc = repeat_n("[{}:{}]", array_dims_number).collect::<String>();
                                 format!("{{column}}{acc}")
                             });
-                            let arguments_ts = (1..=array_dimensions_number)
+                            let arguments_ts = (1..=array_dims_number)
                             .map(|el_268f0f14| {
-                                let dimension_number_pagination_ts = format!("dimension{el_268f0f14}_pagination")
+                                let dim_number_pagination_ts = format!("dim{el_268f0f14}_pagination")
                                 .parse::<Ts2>()
                                 .expect("6f2305ee");
                                 quote! {
-                                    #ValueSc.#dimension_number_pagination_ts.start(),
-                                    #ValueSc.#dimension_number_pagination_ts.end(),
+                                    #ValueSc.#dim_number_pagination_ts.start(),
+                                    #ValueSc.#dim_number_pagination_ts.end(),
                                 }
                             });
                             quote! {format!(
@@ -5271,7 +5268,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 )
                             }),
                         },
-                        PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                        PgTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => match (&not_null_or_nullable, &dim1_not_null_or_nullable) {
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => gen_ident_read_ident_origin_ts(&quote! {
                                 #ValueSc.0.0.into_iter().map(|el_7302af7b|{
                                     #ident_standart_not_null_as_pg_type_ts::normalize(
@@ -5291,44 +5288,44 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             }),
                             (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => gen_ident_read_ident_origin_ts(&{
-                                let ident_array_dimension1_not_null_not_null_ucc = gen_ident_ts(
+                                let ident_array_dim1_not_null_not_null_ucc = gen_ident_ts(
                                     pg_type,
                                     &NotNullOrNullable::NotNull,
-                                    &PgTypePattern::ArrayDimension1 {
-                                        dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+                                    &PgTypePattern::ArrayDim1 {
+                                        dim1_not_null_or_nullable: NotNullOrNullable::NotNull,
                                     },
                                 );
-                                let ident_array_dimension1_not_null_not_null_read_ucc = SelfReadUcc::from_tokens(&ident_array_dimension1_not_null_not_null_ucc);
+                                let ident_array_dim1_not_null_not_null_read_ucc = SelfReadUcc::from_tokens(&ident_array_dim1_not_null_not_null_ucc);
                                 quote! {
                                     #ValueSc.0.0.map(|value_b4d912fb|
                                         <
-                                            #ident_array_dimension1_not_null_not_null_ucc
+                                            #ident_array_dim1_not_null_not_null_ucc
                                             as
                                             #import_path::PgType
                                         >::normalize(
-                                            #ident_array_dimension1_not_null_not_null_read_ucc(value_b4d912fb),
+                                            #ident_array_dim1_not_null_not_null_read_ucc(value_b4d912fb),
                                         ).0
                                     )
                                 }
                             }),
                             (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => gen_ident_read_ident_origin_ts(&{
-                                let ident_array_dimension1_not_null_nullable_ucc = gen_ident_ts(
+                                let ident_array_dim1_not_null_nullable_ucc = gen_ident_ts(
                                     pg_type,
                                     &NotNullOrNullable::NotNull,
-                                    &PgTypePattern::ArrayDimension1 {
-                                        dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+                                    &PgTypePattern::ArrayDim1 {
+                                        dim1_not_null_or_nullable: NotNullOrNullable::Nullable,
                                     },
                                 );
-                                let ident_array_dimension1_not_null_nullable_read_ucc = SelfReadUcc::from_tokens(&ident_array_dimension1_not_null_nullable_ucc);
+                                let ident_array_dim1_not_null_nullable_read_ucc = SelfReadUcc::from_tokens(&ident_array_dim1_not_null_nullable_ucc);
                                 quote! {
                                     #ValueSc.0.0.map(
                                         |value_dd042db2|
                                         <
-                                            #ident_array_dimension1_not_null_nullable_ucc
+                                            #ident_array_dim1_not_null_nullable_ucc
                                             as
                                             #import_path::PgType
                                         >::normalize(
-                                            #ident_array_dimension1_not_null_nullable_read_ucc(value_dd042db2),
+                                            #ident_array_dim1_not_null_nullable_read_ucc(value_dd042db2),
                                         ).0
                                     )
                                 }
@@ -5371,7 +5368,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 quote! {#value_dot_zero_dot_zero_ts.map(|value_bd169d3b| #content_ts)}
                             }
                         },
-                        PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                        PgTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => match (&not_null_or_nullable, &dim1_not_null_or_nullable) {
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
                                 let content_ts = if pg_type_range_try_from_pg_type_is_ok {
                                     gen_ident_standart_not_null_into_inner_ident_standart_not_null_read_ts(&quote!{el_f5e94f0c})
@@ -5452,7 +5449,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #import_path::#PgTypeUcc>::#read_or_update_ucc:: #content_ts}
             };
             let gen_standart_not_null_test_case_handle_ts = |is_need_to_use_into: &IsNeedToUseInto| {
-                let gen_range_read_only_ids_to_two_dimensional_vec_read_inner_ts =
+                let gen_range_read_only_ids_to_two_dimal_vec_read_inner_ts =
                     |min_ts: &dyn ToTokens, negative_less_typical_ts: &dyn ToTokens, negative_more_typical_ts: &dyn ToTokens, near_zero_ts: &dyn ToTokens, positive_less_typical_ts: &dyn ToTokens, positive_more_typical_ts: &dyn ToTokens, max_ts: &dyn ToTokens| {
                         quote! {{
                             let min = #min_ts;
@@ -5519,9 +5516,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             ]
                         }}
                     };
-                let gen_int_pgrange_read_only_ids_to_two_dimensional_vec_read_inner_ts = |int_range_type: &IntRangeType| {
+                let gen_int_pgrange_read_only_ids_to_two_dimal_vec_read_inner_ts = |int_range_type: &IntRangeType| {
                     let range_inner_type_ts = int_range_type_to_range_inner_type_ts(int_range_type);
-                    gen_range_read_only_ids_to_two_dimensional_vec_read_inner_ts(&quote! {#range_inner_type_ts::MIN}, &quote! {-20}, &quote! {-10}, &quote! {0}, &quote! {10}, &quote! {20}, &quote! {#range_inner_type_ts::MAX - 1})
+                    gen_range_read_only_ids_to_two_dimal_vec_read_inner_ts(&quote! {#range_inner_type_ts::MIN}, &quote! {-20}, &quote! {-10}, &quote! {0}, &quote! {10}, &quote! {20}, &quote! {#range_inner_type_ts::MAX - 1})
                 };
                 let empty_vec_ts = quote! {Vec::new()};
                 let gen_ident_standart_not_null_function_ts = |
@@ -5793,9 +5790,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         sqlx::types::mac_address::MacAddress::#NewSc([0x01, 0x00, 0x5E, 0x00, 0x00, 0xFB]), // Multicast address
                         sqlx::types::mac_address::MacAddress::#NewSc([0xDE, 0xAD, 0xBE, 0xEF, 0xCA, 0xFE]), // Random valid MAC
                     ]},
-                    PgType::SqlxPgTypesPgRangeI32AsInt4Range => gen_int_pgrange_read_only_ids_to_two_dimensional_vec_read_inner_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
-                    PgType::SqlxPgTypesPgRangeI64AsInt8Range => gen_int_pgrange_read_only_ids_to_two_dimensional_vec_read_inner_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
-                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => gen_range_read_only_ids_to_two_dimensional_vec_read_inner_ts(
+                    PgType::SqlxPgTypesPgRangeI32AsInt4Range => gen_int_pgrange_read_only_ids_to_two_dimal_vec_read_inner_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
+                    PgType::SqlxPgTypesPgRangeI64AsInt8Range => gen_int_pgrange_read_only_ids_to_two_dimal_vec_read_inner_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => gen_range_read_only_ids_to_two_dimal_vec_read_inner_ts(
                         &ident_sqlx_types_chrono_naive_date_min_ts,
                         &ident_sqlx_types_chrono_naive_date_negative_less_typical_ts,
                         &ident_sqlx_types_chrono_naive_date_negative_more_typical_ts,
@@ -5804,7 +5801,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         &ident_sqlx_types_chrono_naive_date_positive_more_typical_ts,
                         &ident_sqlx_types_chrono_naive_date_max_pred_opt_expect_ts
                     ),
-                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => gen_range_read_only_ids_to_two_dimensional_vec_read_inner_ts(
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => gen_range_read_only_ids_to_two_dimal_vec_read_inner_ts(
                         &sqlx_types_chrono_naive_date_time_min_ts,
                         &sqlx_types_chrono_naive_date_time_negative_less_typical_ts,
                         &sqlx_types_chrono_naive_date_time_negative_more_typical_ts,
@@ -5813,7 +5810,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         &sqlx_types_chrono_naive_date_time_positive_more_typical_ts,
                         &sqlx_types_chrono_naive_date_time_max_ts,
                     ),
-                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => gen_range_read_only_ids_to_two_dimensional_vec_read_inner_ts(
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => gen_range_read_only_ids_to_two_dimal_vec_read_inner_ts(
                         &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_min_ts,
                         &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_negative_less_typical_ts,
                         &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_negative_more_typical_ts,
@@ -5877,22 +5874,22 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         },
                         NotNullOrNullable::Nullable => gen_some_acc_content_ts(not_null_or_nullable, &gen_ident_ts(pg_type, &NotNullOrNullable::NotNull, &PgTypePattern::Standart), &Ts2::new()),
                     },
-                    PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => gen_some_acc_content_ts(
+                    PgTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => gen_some_acc_content_ts(
                         not_null_or_nullable,
                         &gen_ident_ts(
                             pg_type,
                             &match &not_null_or_nullable {
-                                NotNullOrNullable::NotNull => *dimension1_not_null_or_nullable,
+                                NotNullOrNullable::NotNull => *dim1_not_null_or_nullable,
                                 NotNullOrNullable::Nullable => NotNullOrNullable::NotNull,
                             },
                             &match &not_null_or_nullable {
                                 NotNullOrNullable::NotNull => PgTypePattern::Standart,
-                                NotNullOrNullable::Nullable => PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable },
+                                NotNullOrNullable::Nullable => PgTypePattern::ArrayDim1 { dim1_not_null_or_nullable: *dim1_not_null_or_nullable },
                             },
                         ),
                         &match &not_null_or_nullable {
                             NotNullOrNullable::NotNull => {
-                                let content_ts: &dyn ToTokens = match &dimension1_not_null_or_nullable {
+                                let content_ts: &dyn ToTokens = match &dim1_not_null_or_nullable {
                                     NotNullOrNullable::NotNull => &ident_standart_not_null_as_pg_type_test_cases_ts,
                                     NotNullOrNullable::Nullable => &ident_standart_nullable_as_pg_type_test_cases_ts,
                                 };
@@ -5960,7 +5957,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     ),
                 }
             };
-            let read_only_ids_to_two_dimensional_vec_read_inner_ts = {
+            let read_only_ids_to_two_dimal_vec_read_inner_ts = {
                 let gen_star_or_dot_clone_ts = |content_ts|match &pg_type {
                     PgType::I16AsInt2 |
                     PgType::I32AsInt4 |
@@ -5996,23 +5993,23 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             quote! {vec![{#content_ts}]}
                         }
                         NotNullOrNullable::Nullable => quote! {
-                            #ident_standart_not_null_as_pg_type_test_cases_ts::#ReadOnlyIdsToTwoDimensionalVecReadInnerSc(#ReadOnlyIdsSc)
+                            #ident_standart_not_null_as_pg_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(#ReadOnlyIdsSc)
                             .into_iter()
                             .flat_map(|el0| el0.into_iter().map(|el1| vec![Some(el1)]))
                             .chain(std::iter::once(vec![None]))
                             .collect()
                         },
                     },
-                    PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &not_null_or_nullable {
-                        NotNullOrNullable::NotNull => match &dimension1_not_null_or_nullable {
+                    PgTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => match &not_null_or_nullable {
+                        NotNullOrNullable::NotNull => match &dim1_not_null_or_nullable {
                             NotNullOrNullable::NotNull => {
                                 let el_d27d1981_ts = gen_star_or_dot_clone_ts(&quote!{el_d27d1981});
                                 quote! {
                                     let mut acc_abf96c9f = Vec::new();
-                                    let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_not_null_as_pg_type_test_cases_ts::#ReadOnlyIdsToTwoDimensionalVecReadInnerSc(#ReadOnlyIdsSc);
+                                    let read_only_ids_to_two_dimal_vec_read_inner = #ident_standart_not_null_as_pg_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(#ReadOnlyIdsSc);
                                     let option_additional = {
                                         let mut option_additional = None;
-                                        for el_cb3f4b45 in &read_only_ids_to_two_dimensional_vec_read_inner {
+                                        for el_cb3f4b45 in &read_only_ids_to_two_dimal_vec_read_inner {
                                             if option_additional.is_some() {
                                                 break;
                                             }
@@ -6032,7 +6029,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     };
                                     let has_len_greater_than_one = {
                                         let mut has_len_greater_than_one = false;
-                                        for el_89e74982 in &read_only_ids_to_two_dimensional_vec_read_inner {
+                                        for el_89e74982 in &read_only_ids_to_two_dimal_vec_read_inner {
                                             if el_89e74982.len() > 1 {
                                                 has_len_greater_than_one = true;
                                                 break;
@@ -6040,7 +6037,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         }
                                         has_len_greater_than_one
                                     };
-                                    for el_cb836246 in read_only_ids_to_two_dimensional_vec_read_inner {
+                                    for el_cb836246 in read_only_ids_to_two_dimal_vec_read_inner {
                                         acc_abf96c9f.push(vec![el_cb836246]);
                                     }
                                     if let Some(value_e22f9ad2) = option_additional {
@@ -6058,10 +6055,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 let el_6b831e7c_ts = gen_star_or_dot_clone_ts(&quote!{el_6b831e7c});
                                 quote! {
                                     let mut acc_68eba82f = Vec::new();
-                                    let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_nullable_as_pg_type_test_cases_ts::#ReadOnlyIdsToTwoDimensionalVecReadInnerSc(#ReadOnlyIdsSc);
+                                    let read_only_ids_to_two_dimal_vec_read_inner = #ident_standart_nullable_as_pg_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(#ReadOnlyIdsSc);
                                     let option_additional = {
                                         let mut option_additional = None;
-                                        for el_b04183c6 in &read_only_ids_to_two_dimensional_vec_read_inner {
+                                        for el_b04183c6 in &read_only_ids_to_two_dimal_vec_read_inner {
                                             if option_additional.is_some() {
                                                 break;
                                             }
@@ -6079,9 +6076,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         }
                                         option_additional
                                     };
-                                    let has_len_greater_than_one = read_only_ids_to_two_dimensional_vec_read_inner.len() > 1;
+                                    let has_len_greater_than_one = read_only_ids_to_two_dimal_vec_read_inner.len() > 1;
                                     acc_68eba82f.push(vec![
-                                        read_only_ids_to_two_dimensional_vec_read_inner
+                                        read_only_ids_to_two_dimal_vec_read_inner
                                         .into_iter()
                                         .flat_map(IntoIterator::into_iter)
                                         .collect()
@@ -6099,17 +6096,17 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         },
                         NotNullOrNullable::Nullable => {
-                            let content_ts = match &dimension1_not_null_or_nullable {
+                            let content_ts = match &dim1_not_null_or_nullable {
                                 NotNullOrNullable::NotNull => &ident_array_not_null_as_pg_type_test_cases_ts,
                                 NotNullOrNullable::Nullable => &ident_array_nullable_as_pg_type_test_cases_ts,
                             };
                             let el_31abc64a_ts = gen_star_or_dot_clone_ts(&quote!{el_31abc64a});
                             quote! {
                                 let mut acc_5f7f59ac = Vec::new();
-                                let read_only_ids_to_two_dimensional_vec_read_inner = #content_ts::#ReadOnlyIdsToTwoDimensionalVecReadInnerSc(#ReadOnlyIdsSc);
+                                let read_only_ids_to_two_dimal_vec_read_inner = #content_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(#ReadOnlyIdsSc);
                                 let option_additional = {
                                     let mut option_additional = None;
-                                    for el_12a259ab in &read_only_ids_to_two_dimensional_vec_read_inner {
+                                    for el_12a259ab in &read_only_ids_to_two_dimal_vec_read_inner {
                                         if option_additional.is_some() {
                                             break;
                                         }
@@ -6134,7 +6131,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 };
                                 let has_len_greater_than_one = {
                                     let mut has_len_greater_than_one = false;
-                                    for el_a177c6a3 in &read_only_ids_to_two_dimensional_vec_read_inner {
+                                    for el_a177c6a3 in &read_only_ids_to_two_dimal_vec_read_inner {
                                         for el_aa72f570 in el_a177c6a3 {
                                             if el_aa72f570.len() > 1 {
                                                 has_len_greater_than_one = true;
@@ -6145,7 +6142,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     has_len_greater_than_one
                                 };
                                 acc_5f7f59ac.push(vec![Some(
-                                    read_only_ids_to_two_dimensional_vec_read_inner
+                                    read_only_ids_to_two_dimal_vec_read_inner
                                     .into_iter()
                                     .flatten()
                                     .flatten()
@@ -6243,10 +6240,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 ]).expect("4c08b551")
             };
             let read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_ts = none_ts.clone();
-            let create_into_pg_type_option_vec_where_dimension_one_equal_ts = match &pg_type_pattern {
+            let create_into_pg_type_option_vec_where_dim_one_equal_ts = match &pg_type_pattern {
                 PgTypePattern::Standart => none_ts.clone(),
-                PgTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
-                    let ident_standart_not_null_or_nullable_table_type_declaration_ucc: &dyn ToTokens = match &dimension1_not_null_or_nullable {
+                PgTypePattern::ArrayDim1 { dim1_not_null_or_nullable } => {
+                    let ident_standart_not_null_or_nullable_table_type_declaration_ucc: &dyn ToTokens = match &dim1_not_null_or_nullable {
                         NotNullOrNullable::NotNull => &ident_standart_not_null_table_type_declaration_ucc,
                         NotNullOrNullable::Nullable => &ident_standart_nullable_table_type_declaration_ucc,
                     };
@@ -6260,10 +6257,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 let mut acc_74c71d5d = Vec::new();
                                 for (index_7702518c, el_081d735b) in #content_ts.into_iter().enumerate() {
                                     acc_74c71d5d.push(
-                                        #ident_where_ucc::DimensionOneEqual(
-                                            where_filters::PgTypeWhereDimensionOneEqual {
+                                        #ident_where_ucc::DimOneEqual(
+                                            where_filters::PgTypeWhereDimOneEqual {
                                                 logical_operator: #import_path::LogicalOperator::Or,
-                                                dimensions: where_filters::BoundedStdVecVec::try_from(
+                                                dims: where_filters::BoundedStdVecVec::try_from(
                                                     vec![
                                                         pg_crud_common::NotZeroUnsignedPartOfI32::try_from(
                                                             i32::try_from(index_7702518c.checked_add(1)?).expect("5954966c")
@@ -6518,7 +6515,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             )
                         },
                     },
-                    PgTypePattern::ArrayDimension1 { .. } => none_ts.clone(),
+                    PgTypePattern::ArrayDim1 { .. } => none_ts.clone(),
                 }
             };
             let read_only_ids_merged_with_table_type_declaration_into_pg_type_option_where_greater_than_ts = match &pg_type_pattern {
@@ -6593,12 +6590,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         IsNeedToImplPgTypeGreaterThanTest::False => none_ts.clone(),
                     }
                 }
-                PgTypePattern::ArrayDimension1 { .. } => none_ts.clone(),
+                PgTypePattern::ArrayDim1 { .. } => none_ts.clone(),
             };
-            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_one_equal_ts = none_ts.clone();
-            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_two_equal_ts = none_ts.clone();
-            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_three_equal_ts = none_ts.clone();
-            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_four_equal_ts = none_ts.clone();
+            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_ts = none_ts.clone();
+            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_ts = none_ts.clone();
+            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_three_equal_ts = none_ts.clone();
+            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_four_equal_ts = none_ts.clone();
             let create_into_pg_json_type_option_vec_where_length_equal_ts = none_ts.clone();
             let create_into_pg_json_type_option_vec_where_length_greater_than_ts = none_ts.clone();
             let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_greater_than_ts = none_ts.clone();
@@ -6613,7 +6610,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &ident_inner_type_ts,
                 &ident,
                 &option_vec_create_ts,
-                &read_only_ids_to_two_dimensional_vec_read_inner_ts,
+                &read_only_ids_to_two_dimal_vec_read_inner_ts,
                 &read_inner_into_read_with_new_or_try_new_unwraped_ts,
                 &read_inner_into_update_with_new_or_try_new_unwraped_ts,
                 &update_to_read_only_ids_ts,
@@ -6625,13 +6622,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &read_only_ids_merged_with_create_into_where_equal_ts,
                 &read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts,
                 &read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_ts,
-                &create_into_pg_type_option_vec_where_dimension_one_equal_ts,
+                &create_into_pg_type_option_vec_where_dim_one_equal_ts,
                 &pg_type_option_vec_where_greater_than_test_ts,
                 &read_only_ids_merged_with_table_type_declaration_into_pg_type_option_where_greater_than_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_one_equal_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_two_equal_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_three_equal_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_four_equal_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_three_equal_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_four_equal_ts,
                 &create_into_pg_json_type_option_vec_where_length_equal_ts,
                 &create_into_pg_json_type_option_vec_where_length_greater_than_ts,
                 &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_greater_than_ts,

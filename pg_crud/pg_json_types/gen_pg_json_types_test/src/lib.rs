@@ -28,7 +28,7 @@ test-utils = []"#,
                 {
                     "pg_table_columns_content_write_into_pg_table_columns_using_pg_json_types": "False",
                     "whole_content_write_into_gen_pg_json_types": "False",
-                    "variant": "WithDimensionOne"
+                    "variant": "WithDimOne"
                 }
             })
             .to_string(),

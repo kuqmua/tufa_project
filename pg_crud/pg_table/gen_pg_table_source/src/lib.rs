@@ -17,7 +17,7 @@ use naming::{
     CreateExtensionIfNotExistsPgJsonschemaUcc, CreateExtensionIfNotExistsUuidOsspUcc,
     CreateIntoPgJsonTypeOptionVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptionVecWhereLengthGreaterThanSc,
-    CreateIntoPgTypeOptionVecWhereDimensionOneEqualSc, CreateManyAdditionalErrorVariantsSc,
+    CreateIntoPgTypeOptionVecWhereDimOneEqualSc, CreateManyAdditionalErrorVariantsSc,
     CreateManyAdditionalLogicSc, CreateOneAdditionalErrorVariantsSc, CreateOneAdditionalLogicSc,
     CreateQueryBindSc, CreateQueryPartSc, CreateSc, CreateTableColumnQueryPartSc, CreateUcc,
     DefaultOptionSomeVecOneElMaxPageSizeSc, DefaultOptionSomeVecOneElMaxPageSizeUcc,
@@ -63,19 +63,18 @@ use naming::{
         SelfDeleteManyPayloadUcc, SelfDeleteOneErrorWithSerializeDeserializeUcc,
         SelfDeleteOneParametersUcc, SelfDeleteOnePayloadUcc, SelfErrorWithSerializeDeserializeSc,
         SelfGenPgTableModSc, SelfHandleSc, SelfPayloadExampleSc, SelfPreparePgErrorUcc,
-        SelfReadOneErrorWithSerializeDeserializeUcc,
-        SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSc, SelfReadOnlyIdsUcc, SelfReadUcc,
-        SelfSelectUcc, SelfTableTypeDeclarationUcc, SelfTestsSc, SelfTryDeleteOneErrorUcc,
-        SelfTryReadOneErrorUcc, SelfUpdateForQueryUcc, SelfUpdateManyParametersUcc,
-        SelfUpdateManyPayloadUcc, SelfUpdateTryNewErrorUcc, SelfUpdateUcc,
-        SelfWhereManyTryNewErrorUcc, SelfWhereManyUcc, SelfWhereUcc,
+        SelfReadOneErrorWithSerializeDeserializeUcc, SelfReadOnlyIdsToTwoDimalVecReadInnerAccSc,
+        SelfReadOnlyIdsUcc, SelfReadUcc, SelfSelectUcc, SelfTableTypeDeclarationUcc, SelfTestsSc,
+        SelfTryDeleteOneErrorUcc, SelfTryReadOneErrorUcc, SelfUpdateForQueryUcc,
+        SelfUpdateManyParametersUcc, SelfUpdateManyPayloadUcc, SelfUpdateTryNewErrorUcc,
+        SelfUpdateUcc, SelfWhereManyTryNewErrorUcc, SelfWhereManyUcc, SelfWhereUcc,
         StdOptionOptionSelfWhereManyUcc, TryFromSqlxPgPgRowWithNotEmptyUniqueVecSelfSelectSc,
         TrySelfHandleSc, TrySelfSc, UpdateQueryPartSelfSc,
     },
 };
 use panic_location::panic_location;
 use pg_crud_macros_common::{
-    ColumnParameterUnderscore, Dimension, EqualOrEqualUsingFields, ImportPath,
+    ColumnParameterUnderscore, Dim, EqualOrEqualUsingFields, ImportPath,
     IncrementParameterUnderscore, IsNeedToAddLogicalOperatorUnderscore, IsQueryBindMutable,
     gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_ts,
     gen_impl_pg_crud_default_option_some_vec_one_el_ts, gen_impl_serde_deserialize_for_struct_ts,
@@ -5124,17 +5123,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             "eb24448c_fa63_4259_bb05_3215802a78f6";
         let table_read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_name =
             "9ac6d79a_2673_4c07_be4a_01c5c20ff1ab";
-        let table_create_into_pg_type_option_vec_where_dimension_one_equal_name =
+        let table_create_into_pg_type_option_vec_where_dim_one_equal_name =
             "72940b0e_cd26_493f_9ec1_2d999d9a4401";
         let table_read_only_ids_merged_with_table_type_declaration_into_pg_type_option_where_greater_than_name =
             "5a52af33_a590_403b_808e_961df6d7e7aa";
-        let table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_one_equal_name =
+        let table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_name =
             "1f388ef8_dc28_489d_bed9_ca4e7f640dd5";
-        let table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_two_equal_name =
+        let table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_name =
             "581c947f_9b0f_452f_8e52_524088bbb2e7";
-        let table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_three_equal_name =
+        let table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_three_equal_name =
             "de556c26_9297_4adb_9483_22d474cf1e7d";
-        let table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_four_equal_name =
+        let table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_four_equal_name =
             "35b26a97_abdd_4cf9_b4e5_aa9b47aa1a0d";
         let table_create_into_pg_json_type_option_vec_where_length_equal_name =
             "1ce53b67_1e94_413e_83cf_c6d7094289a8";
@@ -5157,12 +5156,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &table_read_only_ids_merged_with_create_into_where_equal_name,
             &table_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_name,
             &table_read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_name,
-            &table_create_into_pg_type_option_vec_where_dimension_one_equal_name,
+            &table_create_into_pg_type_option_vec_where_dim_one_equal_name,
             &table_read_only_ids_merged_with_table_type_declaration_into_pg_type_option_where_greater_than_name,
-            &table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_one_equal_name,
-            &table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_two_equal_name,
-            &table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_three_equal_name,
-            &table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_four_equal_name,
+            &table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_name,
+            &table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_name,
+            &table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_three_equal_name,
+            &table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_four_equal_name,
             &table_create_into_pg_json_type_option_vec_where_length_equal_name,
             &table_create_into_pg_json_type_option_vec_where_length_greater_than_name,
             &table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_greater_than_name,
@@ -5174,12 +5173,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         ]);
         let select_default_all_with_max_page_size_cloned_clone_ts =
             quote! {select_default_all_with_max_page_size_cloned.clone()};
-        let read_only_ids_to_two_dimensional_vec_read_inner_acc_fields_ts =
+        let read_only_ids_to_two_dimal_vec_read_inner_acc_fields_ts =
             gen_fields_named_without_primary_key_without_comma_ts(&|element: &SynFieldWrapper| {
                 let field_ident = &element.field_ident;
-                let field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_sc =
-                    SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSc::from_tokens(&field_ident);
-                let ident_create_defaults_for_column_read_only_ids_to_two_dimensional_vec_read_inner_ts =
+                let field_ident_read_only_ids_to_two_dimal_vec_read_inner_acc_sc =
+                    SelfReadOnlyIdsToTwoDimalVecReadInnerAccSc::from_tokens(&field_ident);
+                let ident_create_defaults_for_column_read_only_ids_to_two_dimal_vec_read_inner_ts =
                     gen_fields_named_without_primary_key_without_comma_ts(
                         &|el_0dfa76d6: &SynFieldWrapper| {
                             let current_field_ident = &el_0dfa76d6.field_ident;
@@ -5187,7 +5186,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             if field_ident == current_field_ident {
                                 quote! {
                                     if let Some(value_a5f7e6cd) = &common_read_only_ids_returned_from_create_one.#current_field_ident {
-                                        for el_b3522b7d in <#current_field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(value_a5f7e6cd) {
+                                        for el_b3522b7d in <#current_field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimal_vec_read_inner(value_a5f7e6cd) {
                                             for _ in el_b3522b7d {
                                                 acc_458cda9e.push(ident_create_default.clone());
                                             }
@@ -5200,9 +5199,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         },
                     );
                 quote! {
-                    let #field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_sc = {
+                    let #field_ident_read_only_ids_to_two_dimal_vec_read_inner_acc_sc = {
                         let mut acc_458cda9e = Vec::new();
-                        #ident_create_defaults_for_column_read_only_ids_to_two_dimensional_vec_read_inner_ts
+                        #ident_create_defaults_for_column_read_only_ids_to_two_dimal_vec_read_inner_ts
                         acc_458cda9e
                     };
                 }
@@ -5229,12 +5228,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     url: &str,
                     current_table: &str,
                     select_default_all_with_max_page_size: pg_crud::NotEmptyUniqueVec<#ident_select_ucc>,
-                    read_only_ids_to_two_dimensional_vec_read_inner_acc: Vec<#ident_create_ucc>
+                    read_only_ids_to_two_dimal_vec_read_inner_acc: Vec<#ident_create_ucc>
                 ) -> Vec<#ident_read_only_ids_ucc> {
                     let read_only_ids_current_elements = futures::StreamExt::collect::<Vec<Vec<#ident_read_only_ids_ucc>>>(
                         futures::StreamExt::buffer_unordered(
                             futures::stream::iter(
-                                read_only_ids_to_two_dimensional_vec_read_inner_acc
+                                read_only_ids_to_two_dimal_vec_read_inner_acc
                                 .chunks(25)
                                 .map(Vec::from)
                                 .map(|el_8e425cb1| futures::FutureExt::boxed(async move { #ident::try_create_many_handle(
@@ -5933,8 +5932,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 }
             });
-            let create_into_pg_type_option_vec_where_dimension_one_equal_ts = gen_read_test_ts(
-                table_create_into_pg_type_option_vec_where_dimension_one_equal_name,
+            let create_into_pg_type_option_vec_where_dim_one_equal_ts = gen_read_test_ts(
+                table_create_into_pg_type_option_vec_where_dim_one_equal_name,
                 &gen_option_vec_create_call_unwrap_or_vec_ts,
                 &gen_ident_create_content_el_ts,
                 &|element: &SynFieldWrapper| {
@@ -5953,7 +5952,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }),
                     );
                     quote! {
-                        if let Some(value_b02d763d) = <#field_type as pg_crud::PgTypeTestCases>::#CreateIntoPgTypeOptionVecWhereDimensionOneEqualSc(
+                        if let Some(value_b02d763d) = <#field_type as pg_crud::PgTypeTestCases>::#CreateIntoPgTypeOptionVecWhereDimOneEqualSc(
                             ident_create.#field_ident.clone()
                         ) {
                             for el_39d1fb5d in value_b02d763d.into_vec() {
@@ -5997,15 +5996,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 },
             );
             let (
-                read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_one_equal_ts,
-                read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_two_equal_ts,
-                read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_three_equal_ts,
-                read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_four_equal_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_three_equal_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_four_equal_ts,
             ) = {
                 //todo if vec_create is empty then do different logic (for uuid). now uuid Tested using one default case
-                let gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_number_equal_ts =
-                    |test_name: &str, dimension: &Dimension| {
-                        let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_number_equal_sc = dimension.read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_number_equal_sc();
+                let gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_number_equal_ts =
+                    |test_name: &str, dim: &Dim| {
+                        let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_number_equal_sc = dim.read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_number_equal_sc();
                         gen_read_test_ts(test_name, &gen_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_ts, &gen_ident_create_content_el_ts, &|element: &SynFieldWrapper| {
                         let field_ident = &element.field_ident;
                         let field_type = &element.field_type;
@@ -6020,7 +6019,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             }
                         }));
                         quote! {
-                            if let Some(value_bb67b871) = <#field_type as pg_crud::PgTypeTestCases>::#read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_number_equal_sc(
+                            if let Some(value_bb67b871) = <#field_type as pg_crud::PgTypeTestCases>::#read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_number_equal_sc(
                                 read_only_ids_returned_from_create_one.#field_ident.clone().expect("2ed000a5"),
                                 ident_create.#field_ident.clone()
                             ) {
@@ -6032,10 +6031,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     })
                     };
                 (
-                    gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_number_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_one_equal_name, &Dimension::One),
-                    gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_number_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_two_equal_name, &Dimension::Two),
-                    gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_number_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_three_equal_name, &Dimension::Three),
-                    gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_number_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_four_equal_name, &Dimension::Four),
+                    gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_number_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_name, &Dim::One),
+                    gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_number_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_name, &Dim::Two),
+                    gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_number_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_three_equal_name, &Dim::Three),
+                    gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_number_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_four_equal_name, &Dim::Four),
                 )
             };
             let create_into_pg_json_type_option_vec_where_length_equal_ts = gen_read_test_ts(
@@ -6177,12 +6176,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #read_only_ids_merged_with_create_into_where_equal_ts
                 #read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts
                 #read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_ts
-                #create_into_pg_type_option_vec_where_dimension_one_equal_ts
+                #create_into_pg_type_option_vec_where_dim_one_equal_ts
                 #read_only_ids_merged_with_table_type_declaration_into_pg_type_option_where_greater_than_ts
-                #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_one_equal_ts
-                #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_two_equal_ts
-                #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_three_equal_ts
-                #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_four_equal_ts
+                #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_ts
+                #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_ts
+                #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_three_equal_ts
+                #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_four_equal_ts
                 #create_into_pg_json_type_option_vec_where_length_equal_ts
                 #create_into_pg_json_type_option_vec_where_length_greater_than_ts
                 #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_greater_than_ts
@@ -6259,10 +6258,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             } else {
                                 Ts2::new()
                             };
-                        let field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_sc =
-                            SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSc::from_tokens(
-                                &field_ident,
-                            );
+                        let field_ident_read_only_ids_to_two_dimal_vec_read_inner_acc_sc =
+                            SelfReadOnlyIdsToTwoDimalVecReadInnerAccSc::from_tokens(&field_ident);
                         let ident_read_only_ids_upper_fields_initialization_without_primary_key_ts =
                             gen_fields_named_without_primary_key_with_comma_ts(
                                 &|syn_field_wrapper: &SynFieldWrapper| {
@@ -6343,7 +6340,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 &url,
                                 &table_update_many,
                                 #select_default_all_with_max_page_size_clone_ts,
-                                #field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_sc.clone()
+                                #field_ident_read_only_ids_to_two_dimal_vec_read_inner_acc_sc.clone()
                             ).await.into_iter().enumerate() {
                                 let table_update_many_cloned = table_update_many.clone();
                                 let url_cloned = url.clone();
@@ -6357,7 +6354,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     >::read_inner_into_update_with_new_or_try_new_unwraped({
                                         let mut index_e0c50b3e: usize = 0;
                                         let mut option_test_case = None;
-                                        for el_76abae3a in <#field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(
+                                        for el_76abae3a in <#field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimal_vec_read_inner(
                                             &read_only_ids_current_element.#field_ident.clone().expect("af7d979d")
                                         ) {
                                             let mut should_break = false;
@@ -6461,10 +6458,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         } else {
                             Ts2::new()
                         };
-                        let field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_sc =
-                            SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSc::from_tokens(
-                                &field_ident,
-                            );
+                        let field_ident_read_only_ids_to_two_dimal_vec_read_inner_acc_sc =
+                            SelfReadOnlyIdsToTwoDimalVecReadInnerAccSc::from_tokens(&field_ident);
                         let ident_read_only_ids_upper_fields_initialization_without_primary_key_ts =
                             gen_fields_named_without_primary_key_with_comma_ts(
                                 &|element: &SynFieldWrapper| {
@@ -6531,7 +6526,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 &url,
                                 &table_update_one,
                                 #select_default_all_with_max_page_size_clone_ts,
-                                #field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_sc
+                                #field_ident_read_only_ids_to_two_dimal_vec_read_inner_acc_sc
                             ).await.into_iter().enumerate() {
                                 let table_update_one_cloned = table_update_one.clone();
                                 let url_cloned = url.clone();
@@ -6545,7 +6540,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     >::read_inner_into_update_with_new_or_try_new_unwraped({
                                         let mut index_e0d2f9db: usize = 0;
                                         let mut option_test_case = None;
-                                        for el_3a9a65ee in <#field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(
+                                        for el_3a9a65ee in <#field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimal_vec_read_inner(
                                             &read_only_ids_current_element.#field_ident.clone().expect("c4d98a71")
                                         ) {
                                             let mut should_break = false;
@@ -7110,7 +7105,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let #IdentCreateDefaultSc = ident_create_default();
                         #select_default_all_with_max_page_size_not_empty_unique_vec_ts
                         #common_read_only_ids_returned_from_create_one_ts
-                        #read_only_ids_to_two_dimensional_vec_read_inner_acc_fields_ts
+                        #read_only_ids_to_two_dimal_vec_read_inner_acc_fields_ts
                         futures::StreamExt::for_each_concurrent(
                             futures::stream::iter({
                                 let mut acc_9189f86e: Vec<futures::future::BoxFuture<'static, ()>> = Vec::new();

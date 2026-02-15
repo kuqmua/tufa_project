@@ -85,9 +85,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         }
         # ,
         # {
-        #   "DimensionOneEqual": {
+        #   "DimOneEqual": {
         #     "logical_operator": "Or",
-        #     "dimensions": [
+        #     "dims": [
         #       0
         #     ],
         #     "value": {
@@ -124,9 +124,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         #   }
         # },
         # {
-        #   "DimensionOneIn": {
+        #   "DimOneIn": {
         #     "logical_operator": "Or",
-        #     "dimensions": [
+        #     "dims": [
         #       0
         #     ],
         #     "value": [
@@ -284,7 +284,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             "field_1": null
           }
         ],
-        "dimension1_pagination": {
+        "dim1_pagination": {
           "limit": 5,
           "offset": 0
         }
@@ -746,9 +746,9 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #             }
     #           },
     #           {
-    #             "DimensionOneEqual": {
+    #             "DimOneEqual": {
     #               "logical_operator": "Or",
-    #               "dimensions": [
+    #               "dims": [
     #                 0
     #               ],
     #               "value": {
@@ -783,9 +783,9 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #             }
     #           },
     #           {
-    #             "DimensionOneIn": {
+    #             "DimOneIn": {
     #               "logical_operator": "Or",
-    #               "dimensions": [
+    #               "dims": [
     #                 0
     #               ],
     #               "value": [
@@ -947,9 +947,9 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #               }
     #             },
     #             {
-    #               "DimensionOneEqual": {
+    #               "DimOneEqual": {
     #                 "logical_operator": "Or",
-    #                 "dimensions": [
+    #                 "dims": [
     #                   0
     #                 ],
     #                 "value": {
@@ -984,9 +984,9 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #               }
     #             },
     #             {
-    #               "DimensionOneIn": {
+    #               "DimOneIn": {
     #                 "logical_operator": "Or",
-    #                 "dimensions": [
+    #                 "dims": [
     #                   0
     #                 ],
     #                 "value": [
