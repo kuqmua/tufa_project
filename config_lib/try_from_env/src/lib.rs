@@ -1,4 +1,4 @@
-use macros_helpers::gen_impl_std_fmt_display_ts;
+use macros_helpers::gen_impl_display_ts;
 use naming::parameter::{SelfTryFromEnvErrorUcc, TryFromStdEnvVarOkSelfErrorUcc};
 use naming::{
     DotenvSc, DotenvUcc, EnvVarNameSc, StdEnvVarErrorSc, StdEnvVarErrorUcc, ToTokensToUccTs,
@@ -58,7 +58,7 @@ pub fn try_from_env(input: Ts) -> Ts {
                 Self::#el_ident_ucc_ts { #el_ident } => write!(f, "{}", #el_ident)
             }
         });
-        gen_impl_std_fmt_display_ts(
+        gen_impl_display_ts(
             &Ts2::new(),
             &ident_try_from_env_error_ucc,
             &Ts2::new(),

@@ -3,10 +3,10 @@ use macros_helpers::{
     AttrIdentStr, DeriveClone, DeriveCopy, ErrorOccurenceFieldAttr, FormatWithCargofmt,
     ShouldWriteTokenStreamIntoFile, StatusCode, StructOrEnumDeriveTokenStreamBuilder,
     SynFieldWrapper, code_occurence_syn_field, gen_field_code_occurence_new_ts,
-    gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts,
+    gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts, gen_impl_display_ts,
     gen_impl_error_occurence_lib_to_err_string_ts, gen_impl_pub_try_new_for_ident_ts,
-    gen_impl_std_fmt_display_ts, gen_serde_version_of_named_syn_variant,
-    gen_simple_syn_punctuated_punctuated, get_macro_attr_meta_list_ts, maybe_write_ts_into_file,
+    gen_serde_version_of_named_syn_variant, gen_simple_syn_punctuated_punctuated,
+    get_macro_attr_meta_list_ts, maybe_write_ts_into_file,
 };
 use naming::{
     AdditionalParametersSc, AppStateSc, AsRefStrEnumWithUnitFieldsToScStr,
@@ -1502,7 +1502,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #content_ts_179037cd
             }
         };
-        let impl_std_fmt_display_for_ident_select_ts = gen_impl_std_fmt_display_ts(
+        let impl_display_for_ident_select_ts = gen_impl_display_ts(
             &Ts2::new(),
             &ident_select_ucc,
             &Ts2::new(),
@@ -1530,7 +1530,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             });
         quote! {
             #ident_select_ts
-            #impl_std_fmt_display_for_ident_select_ts
+            #impl_display_for_ident_select_ts
             #impl_error_occurence_lib_to_err_string_for_ident_select_ts
             #impl_pg_crud_all_variants_default_option_some_vec_one_el_for_ident_select_ts
         }

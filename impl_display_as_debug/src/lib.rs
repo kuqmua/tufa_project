@@ -1,4 +1,4 @@
-use macros_helpers::gen_impl_std_fmt_display_ts;
+use macros_helpers::gen_impl_display_ts;
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
@@ -8,7 +8,7 @@ pub fn impl_display_as_debug(input: Ts) -> Ts {
     panic_location::panic_location();
     let syn_derive_input: DeriveInput = parse(input).expect("d5385b71");
     let ident = &syn_derive_input.ident;
-    let generated = gen_impl_std_fmt_display_ts(
+    let generated = gen_impl_display_ts(
         &Ts2::new(),
         &ident,
         &Ts2::new(),

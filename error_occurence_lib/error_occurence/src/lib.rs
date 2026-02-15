@@ -1,7 +1,7 @@
 use gen_quotes::double_quotes_ts;
 use macros_helpers::{
-    ErrorOccurenceFieldAttr, gen_if_write_is_err_ts, gen_impl_error_occurence_lib_to_err_string_ts,
-    gen_impl_std_fmt_display_ts, gen_serde_version_of_named_syn_variant,
+    ErrorOccurenceFieldAttr, gen_if_write_is_err_ts, gen_impl_display_ts,
+    gen_impl_error_occurence_lib_to_err_string_ts, gen_serde_version_of_named_syn_variant,
 };
 use naming::{
     CodeOccurenceSc, IntoSerdeVersionSc, ValueSc, WithSerializeDeserializeUcc,
@@ -121,7 +121,7 @@ pub fn error_occurence(input: Ts) -> Ts {
         SuportedEnumVariant::Named => {
             let code_occurence_sc_str = CodeOccurenceSc.to_string();
             //todo maybe impl display was a bad idea. .to_string() casts is dangerous
-            let impl_std_fmt_display_handle_content_ts = {
+            let impl_display_handle_content_ts = {
                 let variants_ts = data_enum.variants.iter().map(|el_f497ea11| {
                     let el_ident = &el_f497ea11.ident;
                     let fields = if let Fields::Named(fields) = &el_f497ea11.fields {
@@ -307,11 +307,11 @@ pub fn error_occurence(input: Ts) -> Ts {
                     )
                 }
             };
-            let impl_std_fmt_display_for_ident_ts = gen_impl_std_fmt_display_ts(
+            let impl_display_for_ident_ts = gen_impl_display_ts(
                 &maybe_generic_parameters_error_occurence_lib_to_err_string_annotations_ts,
                 &ident,
                 &maybe_generic_parameters_ts,
-                &impl_std_fmt_display_handle_content_ts,
+                &impl_display_handle_content_ts,
             );
             let impl_ident_into_serde_version_ts = {
                 let variants_ts = data_enum.variants.iter().map(|el_7d5a4c39| {
@@ -399,13 +399,12 @@ pub fn error_occurence(input: Ts) -> Ts {
                     .map(gen_serde_version_of_named_syn_variant);
                 gen_enum_ident_with_serialize_deserialize_ts(&quote! {#(#variants_ts),*})
             };
-            let impl_std_fmt_display_for_ident_with_serialize_deserialize_ts =
-                gen_impl_std_fmt_display_ts(
-                    &maybe_generic_parameters_error_occurence_lib_to_err_string_annotations_ts,
-                    &ident_with_serialize_deserialize_ucc,
-                    &maybe_generic_parameters_ts,
-                    &impl_std_fmt_display_handle_content_ts,
-                );
+            let impl_display_for_ident_with_serialize_deserialize_ts = gen_impl_display_ts(
+                &maybe_generic_parameters_error_occurence_lib_to_err_string_annotations_ts,
+                &ident_with_serialize_deserialize_ucc,
+                &maybe_generic_parameters_ts,
+                &impl_display_handle_content_ts,
+            );
             let impl_error_occurence_lib_to_err_string_to_err_string_for_ident_with_serialize_deserialize_ts =
                 gen_impl_error_occurence_lib_to_err_string_ts(
                     &maybe_generic_parameters_error_occurence_lib_to_err_string_annotations_ts,
@@ -414,10 +413,10 @@ pub fn error_occurence(input: Ts) -> Ts {
                     &quote! {format!("{self}")},
                 );
             quote! {
-                #impl_std_fmt_display_for_ident_ts
+                #impl_display_for_ident_ts
                 #impl_ident_into_serde_version_ts
                 #enum_ident_with_serialize_deserialize_ts
-                #impl_std_fmt_display_for_ident_with_serialize_deserialize_ts
+                #impl_display_for_ident_with_serialize_deserialize_ts
                 #impl_error_occurence_lib_to_err_string_to_err_string_for_ident_with_serialize_deserialize_ts
             }
         }
@@ -429,7 +428,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                 });
                 quote! {match self { #(#variants_ts),* }}
             };
-            let impl_std_fmt_display_for_ident_ts = gen_impl_std_fmt_display_ts(
+            let impl_display_for_ident_ts = gen_impl_display_ts(
                 &maybe_generic_parameters_error_occurence_lib_to_err_string_annotations_ts,
                 &ident,
                 &maybe_generic_parameters_ts,
@@ -480,28 +479,27 @@ pub fn error_occurence(input: Ts) -> Ts {
                 });
                 gen_enum_ident_with_serialize_deserialize_ts(&quote! {#(#variants_ts),*})
             };
-            let impl_std_fmt_display_for_ident_with_serialize_deserialize_ts =
-                gen_impl_std_fmt_display_ts(
-                    &maybe_generic_parameters_error_occurence_lib_to_err_string_annotations_ts,
-                    &ident_with_serialize_deserialize_ucc,
-                    &maybe_generic_parameters_ts,
-                    &{
-                        let display_formatter_unnamed_ts = gen_display_formatter_unnamed_ts();
-                        quote! {
-                            write!(
-                                f,
-                                "{}",
-                                #display_formatter_unnamed_ts
-                            )
-                        }
-                    },
-                );
+            let impl_display_for_ident_with_serialize_deserialize_ts = gen_impl_display_ts(
+                &maybe_generic_parameters_error_occurence_lib_to_err_string_annotations_ts,
+                &ident_with_serialize_deserialize_ucc,
+                &maybe_generic_parameters_ts,
+                &{
+                    let display_formatter_unnamed_ts = gen_display_formatter_unnamed_ts();
+                    quote! {
+                        write!(
+                            f,
+                            "{}",
+                            #display_formatter_unnamed_ts
+                        )
+                    }
+                },
+            );
             //todo maybe make a trait?
             quote! {
-                #impl_std_fmt_display_for_ident_ts
+                #impl_display_for_ident_ts
                 #impl_ident_into_serde_version_ts
                 #enum_ident_with_serialize_deserialize_ts
-                #impl_std_fmt_display_for_ident_with_serialize_deserialize_ts
+                #impl_display_for_ident_with_serialize_deserialize_ts
             }
         }
     };

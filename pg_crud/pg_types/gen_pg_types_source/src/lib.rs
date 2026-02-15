@@ -4,7 +4,7 @@ use macros_helpers::{
     DeriveCopy, DeriveDefault, DeriveEq, DeriveOrd, DerivePartialOrd, DeriveSerdeDeserialize,
     DeriveSerdeSerialize, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
     StructOrEnumDeriveTokenStreamBuilder, gen_const_new_ts, gen_if_write_is_err_ts,
-    gen_impl_error_occurence_lib_to_err_string_ts, gen_impl_from_ts, gen_impl_std_fmt_display_ts,
+    gen_impl_display_ts, gen_impl_error_occurence_lib_to_err_string_ts, gen_impl_from_ts,
     gen_new_ts, gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts, maybe_write_ts_into_file,
 };
 use naming::{
@@ -1585,12 +1585,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         lifetime: serde::__private228::PhantomData<&'de ()>,
                     }
                 };
-                let start_end_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 2] = [&StartSc, &EndSc];
-                let hour_min_sec_micro_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 4] = [&HourSc, &MinSc, &SecSc, &MicroSc];
-                let hour_minute_second_microsecond_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 4] = [&HourSc, &MinuteSc, &SecondSc, &MicrosecondSc];
-                let date_time_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 2] = [&DateSc, &TimeSc];
-                let date_naive_time_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 2] = [&DateNaiveSc, &TimeSc];
-                let months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 3] = [&MonthsSc, &DaysSc, &MicrosecondsSc];
+                let start_end_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 2] = [&StartSc, &EndSc];
+                let hour_min_sec_micro_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 4] = [&HourSc, &MinSc, &SecSc, &MicroSc];
+                let hour_minute_second_microsecond_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 4] = [&HourSc, &MinuteSc, &SecondSc, &MicrosecondSc];
+                let date_time_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 2] = [&DateSc, &TimeSc];
+                let date_naive_time_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 2] = [&DateNaiveSc, &TimeSc];
+                let months_days_microseconds_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 3] = [&MonthsSc, &DaysSc, &MicrosecondsSc];
                 let serde_deserializer_deserialize_struct_visitor_ts = {
                     quote! {
                         _serde::Deserializer::deserialize_struct(
@@ -1693,7 +1693,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     };
                     (
-                        gen_match_origin_try_new_for_deserialize_ts(hour_min_sec_micro_std_fmt_display_plus_quote_to_tokens_array.len()),
+                        gen_match_origin_try_new_for_deserialize_ts(hour_min_sec_micro_display_plus_quote_to_tokens_array.len()),
                         gen_match_origin_try_new_for_deserialize_ts(1),
                         gen_match_origin_try_new_for_deserialize_ts(2),
                         gen_match_origin_try_new_for_deserialize_ts(4),
@@ -1927,12 +1927,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     };
                     (
-                        gen_fn_visit_str_ts(&start_end_std_fmt_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_str_ts(&hour_min_sec_micro_std_fmt_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_str_ts(&hour_minute_second_microsecond_std_fmt_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_str_ts(&date_time_std_fmt_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_str_ts(&date_naive_time_std_fmt_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_str_ts(&months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array),
+                        gen_fn_visit_str_ts(&start_end_display_plus_quote_to_tokens_array),
+                        gen_fn_visit_str_ts(&hour_min_sec_micro_display_plus_quote_to_tokens_array),
+                        gen_fn_visit_str_ts(&hour_minute_second_microsecond_display_plus_quote_to_tokens_array),
+                        gen_fn_visit_str_ts(&date_time_display_plus_quote_to_tokens_array),
+                        gen_fn_visit_str_ts(&date_naive_time_display_plus_quote_to_tokens_array),
+                        gen_fn_visit_str_ts(&months_days_microseconds_display_plus_quote_to_tokens_array),
                     )
                 };
                 let (fn_visit_bytes_start_end_ts, fn_visit_bytes_hour_min_sec_micro_ts, fn_visit_bytes_hour_minute_second_microsecond_ts, fn_visit_bytes_date_time_ts, fn_visit_bytes_date_naive_time_ts, fn_visit_bytes_months_days_microseconds_ts) = {
@@ -1955,12 +1955,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     };
                     (
-                        gen_fn_visit_bytes_ts(&start_end_std_fmt_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_bytes_ts(&hour_min_sec_micro_std_fmt_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_bytes_ts(&hour_minute_second_microsecond_std_fmt_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_bytes_ts(&date_time_std_fmt_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_bytes_ts(&date_naive_time_std_fmt_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_bytes_ts(&months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array),
+                        gen_fn_visit_bytes_ts(&start_end_display_plus_quote_to_tokens_array),
+                        gen_fn_visit_bytes_ts(&hour_min_sec_micro_display_plus_quote_to_tokens_array),
+                        gen_fn_visit_bytes_ts(&hour_minute_second_microsecond_display_plus_quote_to_tokens_array),
+                        gen_fn_visit_bytes_ts(&date_time_display_plus_quote_to_tokens_array),
+                        gen_fn_visit_bytes_ts(&date_naive_time_display_plus_quote_to_tokens_array),
+                        gen_fn_visit_bytes_ts(&months_days_microseconds_display_plus_quote_to_tokens_array),
                     )
                 };
                 let impl_serde_deserialize_for_field_ts = quote! {
@@ -2106,12 +2106,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             quote! {#(#fields_initialization_ts)*}
                         };
                         (
-                            gen_match_field_initialization_ts(&hour_min_sec_micro_std_fmt_display_plus_quote_to_tokens_array),
-                            gen_match_field_initialization_ts(&start_end_std_fmt_display_plus_quote_to_tokens_array),
-                            gen_match_field_initialization_ts(&hour_minute_second_microsecond_std_fmt_display_plus_quote_to_tokens_array),
-                            gen_match_field_initialization_ts(&date_time_std_fmt_display_plus_quote_to_tokens_array),
-                            gen_match_field_initialization_ts(&date_naive_time_std_fmt_display_plus_quote_to_tokens_array),
-                            gen_match_field_initialization_ts(&months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array),
+                            gen_match_field_initialization_ts(&hour_min_sec_micro_display_plus_quote_to_tokens_array),
+                            gen_match_field_initialization_ts(&start_end_display_plus_quote_to_tokens_array),
+                            gen_match_field_initialization_ts(&hour_minute_second_microsecond_display_plus_quote_to_tokens_array),
+                            gen_match_field_initialization_ts(&date_time_display_plus_quote_to_tokens_array),
+                            gen_match_field_initialization_ts(&date_naive_time_display_plus_quote_to_tokens_array),
+                            gen_match_field_initialization_ts(&months_days_microseconds_display_plus_quote_to_tokens_array),
                         )
                     };
                     (
@@ -2186,12 +2186,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     };
                     (
-                        gen_const_fields_ts(&start_end_std_fmt_display_plus_quote_to_tokens_array),
-                        gen_const_fields_ts(&hour_min_sec_micro_std_fmt_display_plus_quote_to_tokens_array),
-                        gen_const_fields_ts(&hour_minute_second_microsecond_std_fmt_display_plus_quote_to_tokens_array),
-                        gen_const_fields_ts(&date_time_std_fmt_display_plus_quote_to_tokens_array),
-                        gen_const_fields_ts(&date_naive_time_std_fmt_display_plus_quote_to_tokens_array),
-                        gen_const_fields_ts(&months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array),
+                        gen_const_fields_ts(&start_end_display_plus_quote_to_tokens_array),
+                        gen_const_fields_ts(&hour_min_sec_micro_display_plus_quote_to_tokens_array),
+                        gen_const_fields_ts(&hour_minute_second_microsecond_display_plus_quote_to_tokens_array),
+                        gen_const_fields_ts(&date_time_display_plus_quote_to_tokens_array),
+                        gen_const_fields_ts(&date_naive_time_display_plus_quote_to_tokens_array),
+                        gen_const_fields_ts(&months_days_microseconds_display_plus_quote_to_tokens_array),
                     )
                 };
                 let gen_impl_serde_de_visitor_for_tokens_ts = |
@@ -4040,7 +4040,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 DeriveOrImpl::Derive => &Ts2::new(),
                 DeriveOrImpl::Impl(value) => value,
             };
-            let impl_std_fmt_display_for_ident_origin_ts = gen_impl_std_fmt_display_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
+            let impl_display_for_ident_origin_ts = gen_impl_display_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
             let impl_error_occurence_lib_to_err_string_for_ident_origin_ts = gen_impl_error_occurence_lib_to_err_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {self.to_string()});
             let impl_default_option_some_vec_one_el_for_ident_origin_ts = gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_origin_ucc, &{
                 let content_ts = match &pg_type_pattern {
@@ -4197,7 +4197,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #maybe_impl_is_string_empty_for_ident_origin_ts
                 #maybe_impl_serde_serialize_for_ident_standart_not_null_origin_ts
                 #maybe_impl_serde_deserialize_for_ident_standart_not_null_origin_ts
-                #impl_std_fmt_display_for_ident_origin_ts
+                #impl_display_for_ident_origin_ts
                 #impl_error_occurence_lib_to_err_string_for_ident_origin_ts
                 #impl_default_option_some_vec_one_el_for_ident_origin_ts
                 #impl_sqlx_type_sqlx_pg_for_ident_origin_ts

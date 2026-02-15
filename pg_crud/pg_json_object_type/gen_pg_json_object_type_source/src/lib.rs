@@ -3,11 +3,10 @@ use gen_quotes::double_quotes_ts;
 use macros_helpers::{
     DeriveSerdeDeserialize, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
     StructOrEnumDeriveTokenStreamBuilder, SynFieldWrapper, gen_if_write_is_err_curly_braces_ts,
-    gen_if_write_is_err_ts, gen_impl_error_occurence_lib_to_err_string_ts, gen_impl_from_ts,
-    gen_impl_pub_const_new_for_ident_ts, gen_impl_pub_new_for_ident_ts,
-    gen_impl_std_fmt_display_ts, gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts,
-    gen_pub_type_alias_ts, gen_simple_syn_punctuated_punctuated, get_macro_attr_meta_list_ts,
-    maybe_write_ts_into_file,
+    gen_if_write_is_err_ts, gen_impl_display_ts, gen_impl_error_occurence_lib_to_err_string_ts,
+    gen_impl_from_ts, gen_impl_pub_const_new_for_ident_ts, gen_impl_pub_new_for_ident_ts,
+    gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts, gen_pub_type_alias_ts,
+    gen_simple_syn_punctuated_punctuated, get_macro_attr_meta_list_ts, maybe_write_ts_into_file,
 };
 use naming::{
     AllFieldsAreNoneUcc, ArrayOfUcc, AsRefStrToUccTs, AsUcc, ColumnNameAndMaybeFieldGetterSc,
@@ -899,18 +898,18 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let gen_type_as_pg_json_type_create_for_query_ts = |type_ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&type_ts, &pg_json_type_subtype_create_for_query);
             let ident_create_ts = {
                 let ident_create_common_ts = gen_ident_table_type_declaration_or_ident_create_common_ts(&PgJsonTypeSubtypeTableTypeDeclarationOrCreate::Create);
-                let gen_impl_std_fmt_display_for_ident_create_ts = |current_ident_ts: &dyn ToTokens| gen_impl_std_fmt_display_ts(
+                let gen_impl_display_for_ident_create_ts = |current_ident_ts: &dyn ToTokens| gen_impl_display_ts(
                     &Ts2::new(),
                     &current_ident_ts, &Ts2::new(),
                     &quote! {write!(f, "{self:?}")}
                 );
-                let impl_std_fmt_display_for_ident_create_ts = gen_impl_std_fmt_display_for_ident_create_ts(&ident_create_ucc);
+                let impl_display_for_ident_create_ts = gen_impl_display_for_ident_create_ts(&ident_create_ucc);
                 let impl_error_occurence_lib_to_err_string_for_ident_create_ts = gen_gen_impl_error_occurence_lib_to_err_string_wrapper_ts(&ident_create_ucc);
                 let maybe_ident_with_id_create_standart_not_null_ts = if is_standart_not_null {
-                    let impl_std_fmt_display_for_ident_with_id_create_standart_not_null_ts = gen_impl_std_fmt_display_for_ident_create_ts(&ident_with_id_standart_not_null_create_ucc);
+                    let impl_display_for_ident_with_id_create_standart_not_null_ts = gen_impl_display_for_ident_create_ts(&ident_with_id_standart_not_null_create_ucc);
                     let impl_error_occurence_lib_to_err_string_for_ident_with_id_create_standart_not_null_ts = gen_gen_impl_error_occurence_lib_to_err_string_wrapper_ts(&ident_with_id_standart_not_null_create_ucc);
                     quote! {
-                        #impl_std_fmt_display_for_ident_with_id_create_standart_not_null_ts
+                        #impl_display_for_ident_with_id_create_standart_not_null_ts
                         #impl_error_occurence_lib_to_err_string_for_ident_with_id_create_standart_not_null_ts
                     }
                 } else {
@@ -918,7 +917,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 };
                 quote! {
                     #ident_create_common_ts
-                    #impl_std_fmt_display_for_ident_create_ts
+                    #impl_display_for_ident_create_ts
                     #impl_error_occurence_lib_to_err_string_for_ident_create_ts
                     #maybe_ident_with_id_create_standart_not_null_ts
                 }

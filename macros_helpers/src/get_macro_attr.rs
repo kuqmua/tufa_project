@@ -24,15 +24,16 @@ pub fn get_macro_attr_meta_list_ts<'attrs_lifetime>(
     attr_path: &String,
 ) -> &'attrs_lifetime Ts2 {
     let attr = attrs
-    .iter()
-    .find(|el0| {
-        *attr_path == {
-            let mut value = ToTokens::to_token_stream(&el0.path()).to_string();
-            value.retain(|el1| !el1.is_whitespace());
-            value
-        }
-    })
-    .clone().expect("9d057161");
+        .iter()
+        .find(|el0| {
+            *attr_path == {
+                let mut value = ToTokens::to_token_stream(&el0.path()).to_string();
+                value.retain(|el1| !el1.is_whitespace());
+                value
+            }
+        })
+        .clone()
+        .expect("9d057161");
     if let Meta::List(value) = &attr.meta {
         &value.tokens
     } else {
