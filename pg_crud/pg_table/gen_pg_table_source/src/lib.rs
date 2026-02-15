@@ -861,7 +861,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let status_code_ts = syn_variant_wrapper
                 .get_option_status_code()
                 .expect("81efa954")
-                .to_axum_http_status_code_ts();
+                .to_http_status_code_ts();
             let wraped_into_axum_response_ts = wrap_into_axum_response_ts(
                 &quote! {#ident_operation_response_variants_ucc::#FromHandleSc(#ErrorSc)},
                 &status_code_ts,
@@ -2832,9 +2832,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     gen_ident_operation_response_variants_ucc(operation);
                 quote! {#ident_operation_response_variants_ucc::#DesirableUcc(#ValueSc)}
             },
-            &operation
-                .desirable_status_code()
-                .to_axum_http_status_code_ts(),
+            &operation.desirable_status_code().to_http_status_code_ts(),
             &ShouldAddReturn::False,
         );
         quote! {

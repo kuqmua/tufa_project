@@ -79,278 +79,70 @@ pub enum StatusCode {
 }
 impl StatusCode {
     #[must_use]
-    pub fn to_axum_http_status_code_ts(&self) -> Ts2 {
-        match *self {
-            Self::Continue100 => quote! {http::StatusCode::CONTINUE},
-            Self::SwitchingProtocols101 => {
-                quote! {http::StatusCode::SWITCHING_PROTOCOLS}
-            }
-            Self::Processing102 => quote! {http::StatusCode::PROCESSING},
-            Self::Ok200 => quote! {http::StatusCode::OK},
-            Self::Created201 => quote! {http::StatusCode::CREATED},
-            Self::Accepted202 => quote! {http::StatusCode::ACCEPTED},
-            Self::NonAuthoritativeInformation203 => {
-                quote! {http::StatusCode::NON_AUTHORITATIVE_INFORMATION}
-            }
-            Self::NoContent204 => quote! {http::StatusCode::NO_CONTENT},
-            Self::ResetContent205 => {
-                quote! {http::StatusCode::RESET_CONTENT}
-            }
-            Self::PartialContent206 => {
-                quote! {http::StatusCode::PARTIAL_CONTENT}
-            }
-            Self::MultiStatus207 => quote! {http::StatusCode::MULTI_STATUS},
-            Self::AlreadyReported208 => {
-                quote! {http::StatusCode::ALREADY_REPORTED}
-            }
-            Self::ImUsed226 => quote! {http::StatusCode::IM_USED},
-            Self::MultipleChoices300 => {
-                quote! {http::StatusCode::MULTIPLE_CHOICES}
-            }
-            Self::MovedPermanently301 => {
-                quote! {http::StatusCode::MOVED_PERMANENTLY}
-            }
-            Self::Found302 => quote! {http::StatusCode::FOUND},
-            Self::SeeOther303 => quote! {http::StatusCode::SEE_OTHER},
-            Self::NotModified304 => quote! {http::StatusCode::NOT_MODIFIED},
-            Self::UseProxy305 => quote! {http::StatusCode::USE_PROXY},
-            Self::TemporaryRedirect307 => {
-                quote! {http::StatusCode::TEMPORARY_REDIRECT}
-            }
-            Self::PermanentRedirect308 => {
-                quote! {http::StatusCode::PERMANENT_REDIRECT}
-            }
-            Self::BadRequest400 => quote! {http::StatusCode::BAD_REQUEST},
-            Self::Unauthorized401 => {
-                quote! {http::StatusCode::UNAUTHORIZED}
-            }
-            Self::PaymentRequired402 => {
-                quote! {http::StatusCode::PAYMENT_REQUIRED}
-            }
-            Self::Forbidden403 => quote! {http::StatusCode::FORBIDDEN},
-            Self::NotFound404 => quote! {http::StatusCode::NOT_FOUND},
-            Self::MethodNotAllowed405 => {
-                quote! {http::StatusCode::METHOD_NOT_ALLOWED}
-            }
-            Self::NotAcceptable406 => {
-                quote! {http::StatusCode::NOT_ACCEPTABLE}
-            }
-            Self::ProxyAuthenticationRequired407 => {
-                quote! {http::StatusCode::PROXY_AUTHENTICATION_REQUIRED}
-            }
-            Self::RequestTimeout408 => {
-                quote! {http::StatusCode::REQUEST_TIMEOUT}
-            }
-            Self::Conflict409 => quote! {http::StatusCode::CONFLICT},
-            Self::Gone410 => quote! {http::StatusCode::GONE},
-            Self::LengthRequired411 => {
-                quote! {http::StatusCode::LENGTH_REQUIRED}
-            }
-            Self::PreconditionFailed412 => {
-                quote! {http::StatusCode::PRECONDITION_FAILED}
-            }
-            Self::PayloadTooLarge413 => {
-                quote! {http::StatusCode::PAYLOAD_TOO_LARGE}
-            }
-            Self::UriTooLong414 => quote! {http::StatusCode::URI_TOO_LONG},
-            Self::UnsupportedMediaType415 => {
-                quote! {http::StatusCode::UNSUPPORTED_MEDIA_TYPE}
-            }
-            Self::RangeNotSatisfiable416 => {
-                quote! {http::StatusCode::RANGE_NOT_SATISFIABLE}
-            }
-            Self::ExpectationFailed417 => {
-                quote! {http::StatusCode::EXPECTATION_FAILED}
-            }
-            Self::ImATeapot418 => quote! {http::StatusCode::IM_A_TEAPOT},
-            Self::MisdirectedRequest421 => {
-                quote! {http::StatusCode::MISDIRECTED_REQUEST}
-            }
-            Self::UnprocessableEntity422 => {
-                quote! {http::StatusCode::UNPROCESSABLE_ENTITY}
-            }
-            Self::Locked423 => quote! {http::StatusCode::LOCKED},
-            Self::FailedDependency424 => {
-                quote! {http::StatusCode::FAILED_DEPENDENCY}
-            }
-            Self::UpgradeRequired426 => {
-                quote! {http::StatusCode::UPGRADE_REQUIRED}
-            }
-            Self::PreconditionRequired428 => {
-                quote! {http::StatusCode::PRECONDITION_REQUIRED}
-            }
-            Self::TooManyRequests429 => {
-                quote! {http::StatusCode::TOO_MANY_REQUESTS}
-            }
-            Self::RequestHeaderFieldsTooLarge431 => {
-                quote! {http::StatusCode::REQUEST_HEADER_FIELDS_TOO_LARGE}
-            }
-            Self::UnavailableForLegalReasons451 => {
-                quote! {http::StatusCode::UNAVAILABLE_FOR_LEGAL_REASONS}
-            }
-            Self::InternalServerError500 => {
-                quote! {http::StatusCode::INTERNAL_SERVER_ERROR}
-            }
-            Self::NotImplemented501 => {
-                quote! {http::StatusCode::NOT_IMPLEMENTED}
-            }
-            Self::BadGateway502 => quote! {http::StatusCode::BAD_GATEWAY},
-            Self::ServiceUnavailable503 => {
-                quote! {http::StatusCode::SERVICE_UNAVAILABLE}
-            }
-            Self::GatewayTimeout504 => {
-                quote! {http::StatusCode::GATEWAY_TIMEOUT}
-            }
-            Self::HttpVersionNotSupported505 => {
-                quote! {http::StatusCode::HTTP_VERSION_NOT_SUPPORTED}
-            }
-            Self::VariantAlsoNegotiates506 => {
-                quote! {http::StatusCode::VARIANT_ALSO_NEGOTIATES}
-            }
-            Self::InsufficientStorage507 => {
-                quote! {http::StatusCode::INSUFFICIENT_STORAGE}
-            }
-            Self::LoopDetected508 => {
-                quote! {http::StatusCode::LOOP_DETECTED}
-            }
-            Self::NotExtended510 => quote! {http::StatusCode::NOT_EXTENDED},
-            Self::NetworkAuthenticationRequired511 => {
-                quote! {http::StatusCode::NETWORK_AUTHENTICATION_REQUIRED}
-            }
-        }
-    }
-    #[must_use]
     pub fn to_http_status_code_ts(&self) -> Ts2 {
-        match *self {
-            Self::Continue100 => quote! {http::StatusCode::CONTINUE},
-            Self::SwitchingProtocols101 => {
-                quote! {http::StatusCode::SWITCHING_PROTOCOLS}
-            }
-            Self::Processing102 => quote! {http::StatusCode::PROCESSING},
-            Self::Ok200 => quote! {http::StatusCode::OK},
-            Self::Created201 => quote! {http::StatusCode::CREATED},
-            Self::Accepted202 => quote! {http::StatusCode::ACCEPTED},
-            Self::NonAuthoritativeInformation203 => {
-                quote! {http::StatusCode::NON_AUTHORITATIVE_INFORMATION}
-            }
-            Self::NoContent204 => quote! {http::StatusCode::NO_CONTENT},
-            Self::ResetContent205 => quote! {http::StatusCode::RESET_CONTENT},
-            Self::PartialContent206 => {
-                quote! {http::StatusCode::PARTIAL_CONTENT}
-            }
-            Self::MultiStatus207 => quote! {http::StatusCode::MULTI_STATUS},
-            Self::AlreadyReported208 => {
-                quote! {http::StatusCode::ALREADY_REPORTED}
-            }
-            Self::ImUsed226 => quote! {http::StatusCode::IM_USED},
-            Self::MultipleChoices300 => {
-                quote! {http::StatusCode::MULTIPLE_CHOICES}
-            }
-            Self::MovedPermanently301 => {
-                quote! {http::StatusCode::MOVED_PERMANENTLY}
-            }
-            Self::Found302 => quote! {http::StatusCode::FOUND},
-            Self::SeeOther303 => quote! {http::StatusCode::SEE_OTHER},
-            Self::NotModified304 => quote! {http::StatusCode::NOT_MODIFIED},
-            Self::UseProxy305 => quote! {http::StatusCode::USE_PROXY},
-            Self::TemporaryRedirect307 => {
-                quote! {http::StatusCode::TEMPORARY_REDIRECT}
-            }
-            Self::PermanentRedirect308 => {
-                quote! {http::StatusCode::PERMANENT_REDIRECT}
-            }
-            Self::BadRequest400 => quote! {http::StatusCode::BAD_REQUEST},
-            Self::Unauthorized401 => quote! {http::StatusCode::UNAUTHORIZED},
-            Self::PaymentRequired402 => {
-                quote! {http::StatusCode::PAYMENT_REQUIRED}
-            }
-            Self::Forbidden403 => quote! {http::StatusCode::FORBIDDEN},
-            Self::NotFound404 => quote! {http::StatusCode::NOT_FOUND},
-            Self::MethodNotAllowed405 => {
-                quote! {http::StatusCode::METHOD_NOT_ALLOWED}
-            }
-            Self::NotAcceptable406 => quote! {http::StatusCode::NOT_ACCEPTABLE},
-            Self::ProxyAuthenticationRequired407 => {
-                quote! {http::StatusCode::PROXY_AUTHENTICATION_REQUIRED}
-            }
-            Self::RequestTimeout408 => {
-                quote! {http::StatusCode::REQUEST_TIMEOUT}
-            }
-            Self::Conflict409 => quote! {http::StatusCode::CONFLICT},
-            Self::Gone410 => quote! {http::StatusCode::GONE},
-            Self::LengthRequired411 => {
-                quote! {http::StatusCode::LENGTH_REQUIRED}
-            }
-            Self::PreconditionFailed412 => {
-                quote! {http::StatusCode::PRECONDITION_FAILED}
-            }
-            Self::PayloadTooLarge413 => {
-                quote! {http::StatusCode::PAYLOAD_TOO_LARGE}
-            }
-            Self::UriTooLong414 => quote! {http::StatusCode::URI_TOO_LONG},
-            Self::UnsupportedMediaType415 => {
-                quote! {http::StatusCode::UNSUPPORTED_MEDIA_TYPE}
-            }
-            Self::RangeNotSatisfiable416 => {
-                quote! {http::StatusCode::RANGE_NOT_SATISFIABLE}
-            }
-            Self::ExpectationFailed417 => {
-                quote! {http::StatusCode::EXPECTATION_FAILED}
-            }
-            Self::ImATeapot418 => quote! {http::StatusCode::IM_A_TEAPOT},
-            Self::MisdirectedRequest421 => {
-                quote! {http::StatusCode::MISDIRECTED_REQUEST}
-            }
-            Self::UnprocessableEntity422 => {
-                quote! {http::StatusCode::UNPROCESSABLE_ENTITY}
-            }
-            Self::Locked423 => quote! {http::StatusCode::LOCKED},
-            Self::FailedDependency424 => {
-                quote! {http::StatusCode::FAILED_DEPENDENCY}
-            }
-            Self::UpgradeRequired426 => {
-                quote! {http::StatusCode::UPGRADE_REQUIRED}
-            }
-            Self::PreconditionRequired428 => {
-                quote! {http::StatusCode::PRECONDITION_REQUIRED}
-            }
-            Self::TooManyRequests429 => {
-                quote! {http::StatusCode::TOO_MANY_REQUESTS}
-            }
-            Self::RequestHeaderFieldsTooLarge431 => {
-                quote! {http::StatusCode::REQUEST_HEADER_FIELDS_TOO_LARGE}
-            }
-            Self::UnavailableForLegalReasons451 => {
-                quote! {http::StatusCode::UNAVAILABLE_FOR_LEGAL_REASONS}
-            }
-            Self::InternalServerError500 => {
-                quote! {http::StatusCode::INTERNAL_SERVER_ERROR}
-            }
-            Self::NotImplemented501 => {
-                quote! {http::StatusCode::NOT_IMPLEMENTED}
-            }
-            Self::BadGateway502 => quote! {http::StatusCode::BAD_GATEWAY},
-            Self::ServiceUnavailable503 => {
-                quote! {http::StatusCode::SERVICE_UNAVAILABLE}
-            }
-            Self::GatewayTimeout504 => {
-                quote! {http::StatusCode::GATEWAY_TIMEOUT}
-            }
-            Self::HttpVersionNotSupported505 => {
-                quote! {http::StatusCode::HTTP_VERSION_NOT_SUPPORTED}
-            }
-            Self::VariantAlsoNegotiates506 => {
-                quote! {http::StatusCode::VARIANT_ALSO_NEGOTIATES}
-            }
-            Self::InsufficientStorage507 => {
-                quote! {http::StatusCode::INSUFFICIENT_STORAGE}
-            }
-            Self::LoopDetected508 => quote! {http::StatusCode::LOOP_DETECTED},
-            Self::NotExtended510 => quote! {http::StatusCode::NOT_EXTENDED},
-            Self::NetworkAuthenticationRequired511 => {
-                quote! {http::StatusCode::NETWORK_AUTHENTICATION_REQUIRED}
-            }
-        }
+        let content_ts = match *self {
+            Self::Continue100 => quote! {CONTINUE},
+            Self::SwitchingProtocols101 => quote! {SWITCHING_PROTOCOLS},
+            Self::Processing102 => quote! {PROCESSING},
+            Self::Ok200 => quote! {OK},
+            Self::Created201 => quote! {CREATED},
+            Self::Accepted202 => quote! {ACCEPTED},
+            Self::NonAuthoritativeInformation203 => quote! {NON_AUTHORITATIVE_INFORMATION},
+            Self::NoContent204 => quote! {NO_CONTENT},
+            Self::ResetContent205 => quote! {RESET_CONTENT},
+            Self::PartialContent206 => quote! {PARTIAL_CONTENT},
+            Self::MultiStatus207 => quote! {MULTI_STATUS},
+            Self::AlreadyReported208 => quote! {ALREADY_REPORTED},
+            Self::ImUsed226 => quote! {IM_USED},
+            Self::MultipleChoices300 => quote! {MULTIPLE_CHOICES},
+            Self::MovedPermanently301 => quote! {MOVED_PERMANENTLY},
+            Self::Found302 => quote! {FOUND},
+            Self::SeeOther303 => quote! {SEE_OTHER},
+            Self::NotModified304 => quote! {NOT_MODIFIED},
+            Self::UseProxy305 => quote! {USE_PROXY},
+            Self::TemporaryRedirect307 => quote! {TEMPORARY_REDIRECT},
+            Self::PermanentRedirect308 => quote! {PERMANENT_REDIRECT},
+            Self::BadRequest400 => quote! {BAD_REQUEST},
+            Self::Unauthorized401 => quote! {UNAUTHORIZED},
+            Self::PaymentRequired402 => quote! {PAYMENT_REQUIRED},
+            Self::Forbidden403 => quote! {FORBIDDEN},
+            Self::NotFound404 => quote! {NOT_FOUND},
+            Self::MethodNotAllowed405 => quote! {METHOD_NOT_ALLOWED},
+            Self::NotAcceptable406 => quote! {NOT_ACCEPTABLE},
+            Self::ProxyAuthenticationRequired407 => quote! {PROXY_AUTHENTICATION_REQUIRED},
+            Self::RequestTimeout408 => quote! {REQUEST_TIMEOUT},
+            Self::Conflict409 => quote! {CONFLICT},
+            Self::Gone410 => quote! {GONE},
+            Self::LengthRequired411 => quote! {LENGTH_REQUIRED},
+            Self::PreconditionFailed412 => quote! {PRECONDITION_FAILED},
+            Self::PayloadTooLarge413 => quote! {PAYLOAD_TOO_LARGE},
+            Self::UriTooLong414 => quote! {URI_TOO_LONG},
+            Self::UnsupportedMediaType415 => quote! {UNSUPPORTED_MEDIA_TYPE},
+            Self::RangeNotSatisfiable416 => quote! {RANGE_NOT_SATISFIABLE},
+            Self::ExpectationFailed417 => quote! {EXPECTATION_FAILED},
+            Self::ImATeapot418 => quote! {IM_A_TEAPOT},
+            Self::MisdirectedRequest421 => quote! {MISDIRECTED_REQUEST},
+            Self::UnprocessableEntity422 => quote! {UNPROCESSABLE_ENTITY},
+            Self::Locked423 => quote! {LOCKED},
+            Self::FailedDependency424 => quote! {FAILED_DEPENDENCY},
+            Self::UpgradeRequired426 => quote! {UPGRADE_REQUIRED},
+            Self::PreconditionRequired428 => quote! {PRECONDITION_REQUIRED},
+            Self::TooManyRequests429 => quote! {TOO_MANY_REQUESTS},
+            Self::RequestHeaderFieldsTooLarge431 => quote! {REQUEST_HEADER_FIELDS_TOO_LARGE},
+            Self::UnavailableForLegalReasons451 => quote! {UNAVAILABLE_FOR_LEGAL_REASONS},
+            Self::InternalServerError500 => quote! {INTERNAL_SERVER_ERROR},
+            Self::NotImplemented501 => quote! {NOT_IMPLEMENTED},
+            Self::BadGateway502 => quote! {BAD_GATEWAY},
+            Self::ServiceUnavailable503 => quote! {SERVICE_UNAVAILABLE},
+            Self::GatewayTimeout504 => quote! {GATEWAY_TIMEOUT},
+            Self::HttpVersionNotSupported505 => quote! {HTTP_VERSION_NOT_SUPPORTED},
+            Self::VariantAlsoNegotiates506 => quote! {VARIANT_ALSO_NEGOTIATES},
+            Self::InsufficientStorage507 => quote! {INSUFFICIENT_STORAGE},
+            Self::LoopDetected508 => quote! {LOOP_DETECTED},
+            Self::NotExtended510 => quote! {NOT_EXTENDED},
+            Self::NetworkAuthenticationRequired511 => quote! {NETWORK_AUTHENTICATION_REQUIRED},
+        };
+        quote::quote! {http::StatusCode::#content_ts}
     }
     #[must_use]
     pub fn to_proc_macro_attribute_view_ts(&self) -> Ts2 {
