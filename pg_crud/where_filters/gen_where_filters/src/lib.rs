@@ -148,6 +148,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 &maybe_additional_traits_ts.as_ref().map_or_else(|| quote! {<#t_ts>}, |value_d05f3d4f| quote! {<#t_ts: #value_d05f3d4f>})
             }
         };
+        //todo use gen struct builder
         quote! {
             #[derive(Debug, Clone, PartialEq, serde::Serialize, #maybe_derive_serde_deserialize_ts schemars::JsonSchema)]
             pub struct #ident #maybe_declaration_of_struct_ident_generic_ts {
