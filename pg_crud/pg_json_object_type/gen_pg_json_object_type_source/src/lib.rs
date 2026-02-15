@@ -12,8 +12,8 @@ use naming::{
     AllFieldsAreNoneUcc, ArrayOfUcc, AsRefStrToUccTs, AsUcc, ColumnNameAndMaybeFieldGetterSc,
     ColumnSc, CreateIntoPgJsonTypeOptionVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptionVecWhereLengthGreaterThanSc, CreateSc, CreateUpdateDeleteAreEmptyUcc,
-    DefaultOptionSomeVecOneElSc, DefaultOptionSomeVecOneElUcc, DeleteSc, EqualUcc, ErrorSc,
-    FieldsSc, GenJsonbSetTargetSc, IdSc, IdsAreNotUniqueUcc, IncrementSc,
+    DefaultOptionSomeVecOneElSc, DefaultOptionSomeVecOneElUcc, DeleteSc, DisplayPlusToTokens,
+    EqualUcc, ErrorSc, FieldsSc, GenJsonbSetTargetSc, IdSc, IdsAreNotUniqueUcc, IncrementSc,
     IsNeedToAddLogicalOperatorSc, JsonbObjectUcc, JsonbSetAccumulatorSc, JsonbSetPathSc,
     JsonbSetTargetSc, NotUniqueIdInJsonDeleteArrayUcc, NotUniqueIdInJsonUpdateAndDeleteArraysUcc,
     OptionUpdateSc, OptionVecCreateSc, PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeTestCasesUcc,
@@ -35,9 +35,8 @@ use naming::{
     ReadOnlyIdsToTwoDimensionalVecReadInnerSc, ReadSc, SelectOnlyCreatedIdsQueryBindSc,
     SelectOnlyCreatedIdsQueryPartSc, SelectOnlyIdsQueryPartSc, SelectOnlyUpdatedIdsQueryBindSc,
     SelectOnlyUpdatedIdsQueryPartSc, SelectQueryPartPgTypeSc, SelectQueryPartSc, SelfSc, SelfUcc,
-    StdFmtDisplayPlusQuoteToTokens, StdOptionOptionObjectAccSc, ToTokensToUccTs, UpdateQueryBindSc,
-    UpdateQueryPartSc, UpdateSc, UpdateToReadOnlyIdsSc, UuidUuidAsNotNullJsonbStringUcc, ValueSc,
-    ValueUcc, VecOfUcc, WithIdUcc,
+    StdOptionOptionObjectAccSc, ToTokensToUccTs, UpdateQueryBindSc, UpdateQueryPartSc, UpdateSc,
+    UpdateToReadOnlyIdsSc, UuidUuidAsNotNullJsonbStringUcc, ValueSc, ValueUcc, VecOfUcc, WithIdUcc,
     parameter::{
         ElementSelfUcc, SelfCreateForQueryUcc, SelfCreateUcc, SelfCurrentSc,
         SelfGenPgJsonObjectTypeModSc, SelfLastSc, SelfReadInnerUcc, SelfReadOnlyIdsHandleUcc,
@@ -677,7 +676,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 quote! {(#content);}
             };
             let gen_ident_table_type_declaration_or_ident_create_common_ts = |pg_json_type_subtype_table_type_declaration_or_create: &PgJsonTypeSubtypeTableTypeDeclarationOrCreate| {
-                let ident_table_type_declaration_or_ident_create_ucc: &dyn StdFmtDisplayPlusQuoteToTokens = match &pg_json_type_subtype_table_type_declaration_or_create {
+                let ident_table_type_declaration_or_ident_create_ucc: &dyn DisplayPlusToTokens = match &pg_json_type_subtype_table_type_declaration_or_create {
                     PgJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration => &ident_table_type_declaration_ucc,
                     PgJsonTypeSubtypeTableTypeDeclarationOrCreate::Create => &ident_create_ucc,
                 };
@@ -844,7 +843,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &quote!{sqlx::types::Json<#SelfUcc>}
                 );
                 let maybe_ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_ts = if is_standart_not_null {
-                    let ident_with_id_table_type_declaration_or_ident_with_id_standart_not_null_create_ucc: &dyn StdFmtDisplayPlusQuoteToTokens = match &pg_json_type_subtype_table_type_declaration_or_create {
+                    let ident_with_id_table_type_declaration_or_ident_with_id_standart_not_null_create_ucc: &dyn DisplayPlusToTokens = match &pg_json_type_subtype_table_type_declaration_or_create {
                         PgJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration => &ident_with_id_standart_not_null_table_type_declaration_ucc,
                         PgJsonTypeSubtypeTableTypeDeclarationOrCreate::Create => &ident_with_id_standart_not_null_create_ucc,
                     };

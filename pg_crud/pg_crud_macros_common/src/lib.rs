@@ -12,13 +12,13 @@ use naming::{
     CreateIntoPgJsonTypeOptionVecWhereLengthGreaterThanSc,
     CreateIntoPgTypeOptionVecWhereDimensionOneEqualSc, CreateQueryBindSc, CreateQueryPartSc,
     CreateSc, CreateTableColumnQueryPartSc, CreateUcc, DefaultOptionSomeVecOneElMaxPageSizeSc,
-    DefaultOptionSomeVecOneElSc, EqualOperatorUcc, FieldIdentSc, FieldSc, IncrementSc,
-    IsNeedToAddLogicalOperatorSc, IsPrimaryKeySc, JsonbSetAccumulatorSc, JsonbSetPathSc,
-    JsonbSetTargetSc, MutSc, NormalizeSc, OptionUcc, OptionUpdateSc, OptionVecCreateSc,
-    PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeEqualOperatorUcc, PgTypeNotPrimaryKeyUcc,
-    PgTypeOptionVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc, PgTypeWhereFilterUcc,
-    PreviousReadMergedWithOptionUpdateIntoReadSc, QueryBindSc, QueryPartErrorUcc, QueryPartSc,
-    QuerySc, ReadInnerIntoReadWithNewOrTryNewUnwrapedSc,
+    DefaultOptionSomeVecOneElSc, DisplayPlusToTokens, EqualOperatorUcc, FieldIdentSc, FieldSc,
+    IncrementSc, IsNeedToAddLogicalOperatorSc, IsPrimaryKeySc, JsonbSetAccumulatorSc,
+    JsonbSetPathSc, JsonbSetTargetSc, MutSc, NormalizeSc, OptionUcc, OptionUpdateSc,
+    OptionVecCreateSc, PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeEqualOperatorUcc,
+    PgTypeNotPrimaryKeyUcc, PgTypeOptionVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc,
+    PgTypeWhereFilterUcc, PreviousReadMergedWithOptionUpdateIntoReadSc, QueryBindSc,
+    QueryPartErrorUcc, QueryPartSc, QuerySc, ReadInnerIntoReadWithNewOrTryNewUnwrapedSc,
     ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc, ReadInnerUcc,
     ReadOnlyIdsIntoOptionValueReadInnerSc, ReadOnlyIdsMergedWithCreateIntoOptionValueReadSc,
     ReadOnlyIdsMergedWithCreateIntoOptionVecWhereEqualToJsonFieldSc,
@@ -41,9 +41,8 @@ use naming::{
     ReadOnlyIdsToTwoDimensionalVecReadInnerSc, ReadOnlyIdsUcc, ReadSc, ReadUcc,
     SelectOnlyCreatedIdsQueryBindSc, SelectOnlyCreatedIdsQueryPartSc, SelectOnlyIdsQueryPartSc,
     SelectOnlyUpdatedIdsQueryBindSc, SelectOnlyUpdatedIdsQueryPartSc, SelectQueryPartSc, SelectUcc,
-    SelfUcc, StdFmtDisplayPlusQuoteToTokens, TableTypeDeclarationSc, TableTypeDeclarationUcc,
-    UpdateForQueryUcc, UpdateQueryBindSc, UpdateQueryPartSc, UpdateToReadOnlyIdsSc, UpdateUcc,
-    ValueSc, ValueUcc, WhereUcc,
+    SelfUcc, TableTypeDeclarationSc, TableTypeDeclarationUcc, UpdateForQueryUcc, UpdateQueryBindSc,
+    UpdateQueryPartSc, UpdateToReadOnlyIdsSc, UpdateUcc, ValueSc, ValueUcc, WhereUcc,
     parameter::{SelfCreateUcc, SelfSelectUcc, SelfWhereUcc},
 };
 use proc_macro2::TokenStream as Ts2;
@@ -390,7 +389,7 @@ pub enum ReadOrUpdate {
 }
 impl ReadOrUpdate {
     #[must_use]
-    pub fn ucc(&self) -> &dyn StdFmtDisplayPlusQuoteToTokens {
+    pub fn ucc(&self) -> &dyn DisplayPlusToTokens {
         match &self {
             Self::Read => &ReadUcc,
             Self::Update => &UpdateUcc,
@@ -456,7 +455,7 @@ impl Dimension {
     #[must_use]
     pub fn read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dimension_number_equal_sc(
         &self,
-    ) -> Box<dyn StdFmtDisplayPlusQuoteToTokens> {
+    ) -> Box<dyn DisplayPlusToTokens> {
         match self {
             Self::One => {
                 Box::new(ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereDimensionOneEqualSc)
@@ -700,7 +699,7 @@ pub fn gen_struct_ident_double_quotes_ts(value: &dyn Display) -> Ts2 {
     double_quotes_ts(&format!("struct {value}"))
 }
 pub fn gen_struct_ident_with_number_elements_double_quotes_ts(
-    ident: &dyn StdFmtDisplayPlusQuoteToTokens,
+    ident: &dyn DisplayPlusToTokens,
     length: usize,
 ) -> Ts2 {
     double_quotes_ts(&format!("struct {ident} with {length} elements"))
@@ -719,7 +718,7 @@ pub fn gen_std_vec_vec_tokens_declaration_ts(type_ts: &dyn ToTokens) -> Ts2 {
 }
 
 pub fn gen_serde_deserialize_double_quotes_ts(
-    ident: &dyn StdFmtDisplayPlusQuoteToTokens,
+    ident: &dyn DisplayPlusToTokens,
     length: usize,
 ) -> (Ts2, Ts2, Ts2) {
     let struct_pg_type_ident_where_tokens_double_quotes_ts =
@@ -2102,7 +2101,7 @@ pub fn gen_match_try_new_in_deserialize_ts(
     }
 }
 pub fn gen_impl_serde_deserialize_for_struct_ts(
-    ident: &dyn StdFmtDisplayPlusQuoteToTokens,
+    ident: &dyn DisplayPlusToTokens,
     vec_ident_type: &[(&Ident, &Type)],
     len: usize,
     gen_type_ts: &dyn Fn(&Ident, &Type) -> Ts2,

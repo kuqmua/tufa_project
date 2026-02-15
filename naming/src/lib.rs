@@ -1332,8 +1332,8 @@ impl ToTokens for HashMapSc {
     }
 }
 
-pub trait StdFmtDisplayPlusQuoteToTokens: Display + ToTokens {}
-impl<T> StdFmtDisplayPlusQuoteToTokens for T where T: Display + ToTokens {}
+pub trait DisplayPlusToTokens: Display + ToTokens {}
+impl<T> DisplayPlusToTokens for T where T: Display + ToTokens {}
 
 pub trait SwaggerUrlPathSelfQuotesStr {
     fn swagger_url_path_self_quotes_str(&self, table_name_str: &str) -> String;

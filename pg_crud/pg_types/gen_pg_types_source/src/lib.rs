@@ -9,19 +9,20 @@ use macros_helpers::{
 };
 use naming::{
     ArrayOfUcc, AsUcc, ColumnSc, ContainsNullByteUcc, CreateSc, DateNaiveSc, DateNaiveUcc, DateSc,
-    DateUcc, DaysSc, EarlierDateNotSupportedUcc, EarliestSupportedDateSc, EndSc, EndUcc, EqualUcc,
-    ErrorSc, ExcludedStartGreaterThanExcludedEndUcc, ExcludedStartGreaterThanIncludedEndUcc,
-    ExcludedUcc, GenPgTypesModSc, HourSc, IncludedEndCannotBeMaxUcc,
-    IncludedStartGreaterThanExcludedEndUcc, IncludedStartGreaterThanIncludedEndUcc, IncludedUcc,
-    IncrementSc, InvalidHourOrMinuteOrSecondOrMicrosecondUcc, MicroSc, MicrosecondSc,
-    MicrosecondsSc, MinSc, MinuteSc, MonthsSc, NanosecondPrecisionIsNotSupportedUcc, NanosecondSc,
-    NewSc, OptionUpdateSc, OptionVecCreateSc, PgTypePrimaryKeyUcc, PgTypeUcc, QuerySc,
-    ReadIntoTableTypeDeclarationSc, ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeDeclarationSc,
-    ReadOnlyIdsIntoUpdateSc, ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsSc,
+    DateUcc, DaysSc, DisplayPlusToTokens, EarlierDateNotSupportedUcc, EarliestSupportedDateSc,
+    EndSc, EndUcc, EqualUcc, ErrorSc, ExcludedStartGreaterThanExcludedEndUcc,
+    ExcludedStartGreaterThanIncludedEndUcc, ExcludedUcc, GenPgTypesModSc, HourSc,
+    IncludedEndCannotBeMaxUcc, IncludedStartGreaterThanExcludedEndUcc,
+    IncludedStartGreaterThanIncludedEndUcc, IncludedUcc, IncrementSc,
+    InvalidHourOrMinuteOrSecondOrMicrosecondUcc, MicroSc, MicrosecondSc, MicrosecondsSc, MinSc,
+    MinuteSc, MonthsSc, NanosecondPrecisionIsNotSupportedUcc, NanosecondSc, NewSc, OptionUpdateSc,
+    OptionVecCreateSc, PgTypePrimaryKeyUcc, PgTypeUcc, QuerySc, ReadIntoTableTypeDeclarationSc,
+    ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeDeclarationSc, ReadOnlyIdsIntoUpdateSc,
+    ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsSc,
     ReadOnlyIdsToTwoDimensionalVecReadInnerSc, ReadOnlyIdsUcc, ReadSc, ReadUcc, SecSc, SecondSc,
-    SelfSc, SelfUcc, StartSc, StartUcc, StdFmtDisplayPlusQuoteToTokens, TableTypeDeclarationSc,
-    TableTypeDeclarationUcc, TimeSc, TimeUcc, ToErrStringSc, TryNewForDeserializeSc, TryNewSc,
-    UnboundedUcc, UpdateUcc, ValueSc, VecOfUcc,
+    SelfSc, SelfUcc, StartSc, StartUcc, TableTypeDeclarationSc, TableTypeDeclarationUcc, TimeSc,
+    TimeUcc, ToErrStringSc, TryNewForDeserializeSc, TryNewSc, UnboundedUcc, UpdateUcc, ValueSc,
+    VecOfUcc,
     parameter::{
         SelfCreateUcc, SelfNotNullUcc, SelfOriginTryNewErrorUcc,
         SelfOriginTryNewForDeserializeErrorUcc, SelfOriginUcc, SelfReadInnerUcc,
@@ -1310,13 +1311,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         } else {
             IsNotNullStandartCanBePrimaryKey::False
         };
-        let gen_start_or_end_ucc = |start_or_end: &StartOrEnd| -> &dyn StdFmtDisplayPlusQuoteToTokens {
+        let gen_start_or_end_ucc = |start_or_end: &StartOrEnd| -> &dyn DisplayPlusToTokens {
             match &start_or_end {
                 StartOrEnd::End => &EndUcc,
                 StartOrEnd::Start => &StartUcc,
             }
         };
-        let gen_start_or_end_sc = |start_or_end: &StartOrEnd| -> &dyn StdFmtDisplayPlusQuoteToTokens {
+        let gen_start_or_end_sc = |start_or_end: &StartOrEnd| -> &dyn DisplayPlusToTokens {
             match &start_or_end {
                 StartOrEnd::End => &EndSc,
                 StartOrEnd::Start => &StartSc,
@@ -1475,7 +1476,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     })),
                     PgType::SqlxTypesTimeTimeAsTime => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
-                        let gen_serialize_field_self_zero_ts = |value: &dyn StdFmtDisplayPlusQuoteToTokens| gen_serialize_field_ts(&value, &quote! {&self.0.#value()});
+                        let gen_serialize_field_self_zero_ts = |value: &dyn DisplayPlusToTokens| gen_serialize_field_ts(&value, &quote! {&self.0.#value()});
                         let hour_serialize_field_ts = gen_serialize_field_self_zero_ts(&HourSc);
                         let minute_serialize_field_ts = gen_serialize_field_self_zero_ts(&MinuteSc);
                         let second_serialize_field_ts = gen_serialize_field_self_zero_ts(&SecondSc);
@@ -1490,7 +1491,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     })),
                     PgType::SqlxPgTypesPgIntervalAsInterval => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
-                        let gen_serialize_field_handle_ts = |value: &dyn StdFmtDisplayPlusQuoteToTokens| gen_serialize_field_ts(&value, &quote! {&#self_dot_zero_ts.#value});
+                        let gen_serialize_field_handle_ts = |value: &dyn DisplayPlusToTokens| gen_serialize_field_ts(&value, &quote! {&#self_dot_zero_ts.#value});
                         let months_serialize_field_ts = gen_serialize_field_handle_ts(&MonthsSc);
                         let days_serialize_field_ts = gen_serialize_field_handle_ts(&DaysSc);
                         let microseconds_serialize_field_ts = gen_serialize_field_handle_ts(&MicrosecondsSc);
@@ -1508,7 +1509,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             Time,
                         }
                         let gen_serialize_field_try_new_unwrap_ts = |date_or_time: &DateOrTime| {
-                            let date_or_time_ts: &dyn StdFmtDisplayPlusQuoteToTokens = match &date_or_time {
+                            let date_or_time_ts: &dyn DisplayPlusToTokens = match &date_or_time {
                                 DateOrTime::Date => &DateSc,
                                 DateOrTime::Time => &TimeSc,
                             };
@@ -1542,7 +1543,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             Time,
                         }
                         let gen_serialize_field_try_new_unwrap_ts = |date_naive_or_time: &DateNaiveOrTime| {
-                            let date_naive_or_time_ts: &dyn StdFmtDisplayPlusQuoteToTokens = match &date_naive_or_time {
+                            let date_naive_or_time_ts: &dyn DisplayPlusToTokens = match &date_naive_or_time {
                                 DateNaiveOrTime::Date => &DateNaiveSc,
                                 DateNaiveOrTime::Time => &TimeSc,
                             };
@@ -1585,12 +1586,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         lifetime: serde::__private228::PhantomData<&'de ()>,
                     }
                 };
-                let start_end_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 2] = [&StartSc, &EndSc];
-                let hour_min_sec_micro_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 4] = [&HourSc, &MinSc, &SecSc, &MicroSc];
-                let hour_minute_second_microsecond_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 4] = [&HourSc, &MinuteSc, &SecondSc, &MicrosecondSc];
-                let date_time_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 2] = [&DateSc, &TimeSc];
-                let date_naive_time_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 2] = [&DateNaiveSc, &TimeSc];
-                let months_days_microseconds_display_plus_quote_to_tokens_array: [&dyn StdFmtDisplayPlusQuoteToTokens; 3] = [&MonthsSc, &DaysSc, &MicrosecondsSc];
+                let start_end_display_plus_to_tokens_array: [&dyn DisplayPlusToTokens; 2] = [&StartSc, &EndSc];
+                let hour_min_sec_micro_display_plus_to_tokens_array: [&dyn DisplayPlusToTokens; 4] = [&HourSc, &MinSc, &SecSc, &MicroSc];
+                let hour_minute_second_microsecond_display_plus_to_tokens_array: [&dyn DisplayPlusToTokens; 4] = [&HourSc, &MinuteSc, &SecondSc, &MicrosecondSc];
+                let date_time_display_plus_to_tokens_array: [&dyn DisplayPlusToTokens; 2] = [&DateSc, &TimeSc];
+                let date_naive_time_display_plus_to_tokens_array: [&dyn DisplayPlusToTokens; 2] = [&DateNaiveSc, &TimeSc];
+                let months_days_microseconds_display_plus_to_tokens_array: [&dyn DisplayPlusToTokens; 3] = [&MonthsSc, &DaysSc, &MicrosecondsSc];
                 let serde_deserializer_deserialize_struct_visitor_ts = {
                     quote! {
                         _serde::Deserializer::deserialize_struct(
@@ -1693,7 +1694,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     };
                     (
-                        gen_match_origin_try_new_for_deserialize_ts(hour_min_sec_micro_display_plus_quote_to_tokens_array.len()),
+                        gen_match_origin_try_new_for_deserialize_ts(hour_min_sec_micro_display_plus_to_tokens_array.len()),
                         gen_match_origin_try_new_for_deserialize_ts(1),
                         gen_match_origin_try_new_for_deserialize_ts(2),
                         gen_match_origin_try_new_for_deserialize_ts(4),
@@ -1905,7 +1906,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     (gen_fn_visit_u64_ts(&parameter_number_two), gen_fn_visit_u64_ts(&parameter_number_three), gen_fn_visit_u64_ts(&parameter_number_four))
                 };
                 let (fn_visit_str_value_start_end_ts, fn_visit_str_value_hour_min_sec_micro_ts, fn_visit_str_value_hour_minute_second_microsecond_ts, fn_visit_str_value_date_time_ts, fn_visit_str_value_date_naive_time_ts, fn_visit_str_value_months_days_microseconds_ts) = {
-                    let gen_fn_visit_str_ts = |vec_ts: &[&dyn StdFmtDisplayPlusQuoteToTokens]| {
+                    let gen_fn_visit_str_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
                         let fields_ts = vec_ts.iter().enumerate().map(|(index_e1c5acfd, el_29343926)| {
                             let el_double_quotes_ts = double_quotes_ts(&el_29343926);
                             let field_index_name_ts = gen_field_index_ts(index_e1c5acfd);
@@ -1927,16 +1928,16 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     };
                     (
-                        gen_fn_visit_str_ts(&start_end_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_str_ts(&hour_min_sec_micro_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_str_ts(&hour_minute_second_microsecond_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_str_ts(&date_time_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_str_ts(&date_naive_time_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_str_ts(&months_days_microseconds_display_plus_quote_to_tokens_array),
+                        gen_fn_visit_str_ts(&start_end_display_plus_to_tokens_array),
+                        gen_fn_visit_str_ts(&hour_min_sec_micro_display_plus_to_tokens_array),
+                        gen_fn_visit_str_ts(&hour_minute_second_microsecond_display_plus_to_tokens_array),
+                        gen_fn_visit_str_ts(&date_time_display_plus_to_tokens_array),
+                        gen_fn_visit_str_ts(&date_naive_time_display_plus_to_tokens_array),
+                        gen_fn_visit_str_ts(&months_days_microseconds_display_plus_to_tokens_array),
                     )
                 };
                 let (fn_visit_bytes_start_end_ts, fn_visit_bytes_hour_min_sec_micro_ts, fn_visit_bytes_hour_minute_second_microsecond_ts, fn_visit_bytes_date_time_ts, fn_visit_bytes_date_naive_time_ts, fn_visit_bytes_months_days_microseconds_ts) = {
-                    let gen_fn_visit_bytes_ts = |vec_ts: &[&dyn StdFmtDisplayPlusQuoteToTokens]| {
+                    let gen_fn_visit_bytes_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
                         let fields_ts = vec_ts.iter().enumerate().map(|(index_545c3b1e, el_1dbc37ab)| {
                             let b_el_double_quotes_ts = format!("b{}", double_quotes_str(&el_1dbc37ab)).parse::<Ts2>().expect("c76c976b");
                             let field_index_name_ts = gen_field_index_ts(index_545c3b1e);
@@ -1955,12 +1956,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     };
                     (
-                        gen_fn_visit_bytes_ts(&start_end_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_bytes_ts(&hour_min_sec_micro_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_bytes_ts(&hour_minute_second_microsecond_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_bytes_ts(&date_time_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_bytes_ts(&date_naive_time_display_plus_quote_to_tokens_array),
-                        gen_fn_visit_bytes_ts(&months_days_microseconds_display_plus_quote_to_tokens_array),
+                        gen_fn_visit_bytes_ts(&start_end_display_plus_to_tokens_array),
+                        gen_fn_visit_bytes_ts(&hour_min_sec_micro_display_plus_to_tokens_array),
+                        gen_fn_visit_bytes_ts(&hour_minute_second_microsecond_display_plus_to_tokens_array),
+                        gen_fn_visit_bytes_ts(&date_time_display_plus_to_tokens_array),
+                        gen_fn_visit_bytes_ts(&date_naive_time_display_plus_to_tokens_array),
+                        gen_fn_visit_bytes_ts(&months_days_microseconds_display_plus_to_tokens_array),
                     )
                 };
                 let impl_serde_deserialize_for_field_ts = quote! {
@@ -2091,7 +2092,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         )
                     };
                     let (match_field_initialization_hour_min_sec_micro_ts, match_field_initialization_start_end_ts, match_field_initialization_hour_minute_second_microsecond_ts, match_field_initialization_date_time_ts, match_field_initialization_date_naive_time_ts, match_field_initialization_months_days_microseconds_ts) = {
-                        let gen_match_field_initialization_ts = |vec_ts: &[&dyn StdFmtDisplayPlusQuoteToTokens]| {
+                        let gen_match_field_initialization_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
                             let fields_initialization_ts = vec_ts.iter().enumerate().map(|(index_e1adef1a, el_f8a9e25b)| {
                                 let field_name_double_quotes_ts = double_quotes_str(&el_f8a9e25b);
                                 let field_index_ts = gen_field_index_ts(index_e1adef1a);
@@ -2106,12 +2107,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             quote! {#(#fields_initialization_ts)*}
                         };
                         (
-                            gen_match_field_initialization_ts(&hour_min_sec_micro_display_plus_quote_to_tokens_array),
-                            gen_match_field_initialization_ts(&start_end_display_plus_quote_to_tokens_array),
-                            gen_match_field_initialization_ts(&hour_minute_second_microsecond_display_plus_quote_to_tokens_array),
-                            gen_match_field_initialization_ts(&date_time_display_plus_quote_to_tokens_array),
-                            gen_match_field_initialization_ts(&date_naive_time_display_plus_quote_to_tokens_array),
-                            gen_match_field_initialization_ts(&months_days_microseconds_display_plus_quote_to_tokens_array),
+                            gen_match_field_initialization_ts(&hour_min_sec_micro_display_plus_to_tokens_array),
+                            gen_match_field_initialization_ts(&start_end_display_plus_to_tokens_array),
+                            gen_match_field_initialization_ts(&hour_minute_second_microsecond_display_plus_to_tokens_array),
+                            gen_match_field_initialization_ts(&date_time_display_plus_to_tokens_array),
+                            gen_match_field_initialization_ts(&date_naive_time_display_plus_to_tokens_array),
+                            gen_match_field_initialization_ts(&months_days_microseconds_display_plus_to_tokens_array),
                         )
                     };
                     (
@@ -2178,7 +2179,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     )
                 };
                 let (const_fields_start_end_ts, const_fields_sqlx_types_chrono_naive_time_ts, const_fields_sqlx_types_time_time_ts, const_fields_sqlx_types_chrono_naive_date_time_ts, const_fields_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts, const_fields_sqlx_pg_types_pg_interval_ts) = {
-                    let gen_const_fields_ts = |vec_ts: &[&dyn StdFmtDisplayPlusQuoteToTokens]| {
+                    let gen_const_fields_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
                         let field_names_ts = vec_ts.iter().map(|el_391d76e4| double_quotes_ts(&el_391d76e4));
                         quote! {
                             #[doc(hidden)]
@@ -2186,12 +2187,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     };
                     (
-                        gen_const_fields_ts(&start_end_display_plus_quote_to_tokens_array),
-                        gen_const_fields_ts(&hour_min_sec_micro_display_plus_quote_to_tokens_array),
-                        gen_const_fields_ts(&hour_minute_second_microsecond_display_plus_quote_to_tokens_array),
-                        gen_const_fields_ts(&date_time_display_plus_quote_to_tokens_array),
-                        gen_const_fields_ts(&date_naive_time_display_plus_quote_to_tokens_array),
-                        gen_const_fields_ts(&months_days_microseconds_display_plus_quote_to_tokens_array),
+                        gen_const_fields_ts(&start_end_display_plus_to_tokens_array),
+                        gen_const_fields_ts(&hour_min_sec_micro_display_plus_to_tokens_array),
+                        gen_const_fields_ts(&hour_minute_second_microsecond_display_plus_to_tokens_array),
+                        gen_const_fields_ts(&date_time_display_plus_to_tokens_array),
+                        gen_const_fields_ts(&date_naive_time_display_plus_to_tokens_array),
+                        gen_const_fields_ts(&months_days_microseconds_display_plus_to_tokens_array),
                     )
                 };
                 let gen_impl_serde_de_visitor_for_tokens_ts = |

@@ -36,14 +36,13 @@ use naming::{
     DimensionTwoContainsElGreaterThanUcc, DimensionTwoContainsElRegularExpressionUcc,
     DimensionTwoEqualUcc, DimensionTwoGreaterThanUcc, DimensionTwoInUcc,
     DimensionTwoLengthEqualUcc, DimensionTwoLengthGreaterThanUcc, DimensionTwoOverlapsWithArrayUcc,
-    DimensionTwoRegularExpressionUcc, EqualToEncodedStringRepresentationUcc, EqualUcc,
-    ExcludedUpperBoundUcc, FindRangesThatFullyContainTheGivenRangeUcc,
+    DimensionTwoRegularExpressionUcc, DisplayPlusToTokens, EqualToEncodedStringRepresentationUcc,
+    EqualUcc, ExcludedUpperBoundUcc, FindRangesThatFullyContainTheGivenRangeUcc,
     FindRangesWithinGivenRangeUcc, GreaterThanCurrentDateUcc, GreaterThanCurrentTimeUcc,
     GreaterThanCurrentTimestampUcc, GreaterThanExcludedUpperBoundUcc,
     GreaterThanIncludedLowerBoundUcc, GreaterThanUcc, InUcc, IncludedLowerBoundUcc, LengthEqualUcc,
     LengthGreaterThanUcc, OverlapWithRangeUcc, OverlapsWithArrayUcc, RangeLengthUcc,
-    RegularExpressionUcc, StdFmtDisplayPlusQuoteToTokens, StrictlyToLeftOfRangeUcc,
-    StrictlyToRightOfRangeUcc,
+    RegularExpressionUcc, StrictlyToLeftOfRangeUcc, StrictlyToRightOfRangeUcc,
     parameter::{PgJsonTypeWhereSelfUcc, PgTypeWhereSelfUcc},
 };
 use proc_macro2::TokenStream as Ts2;
@@ -164,7 +163,7 @@ impl PgFilter for PgTypeFilter {
         let value = PgTypeWhereSelfUcc::from_display(&self.ucc());
         quote! {#value}
     }
-    fn ucc(&self) -> &'static dyn StdFmtDisplayPlusQuoteToTokens {
+    fn ucc(&self) -> &'static dyn DisplayPlusToTokens {
         match &self {
             Self::Equal { .. } => &EqualUcc,
             Self::DimensionOneEqual { .. } => &DimensionOneEqualUcc,
@@ -390,7 +389,7 @@ impl PgFilter for PgJsonTypeFilter {
         let value = PgJsonTypeWhereSelfUcc::from_display(&self.ucc());
         quote! {#value}
     }
-    fn ucc(&self) -> &'static dyn StdFmtDisplayPlusQuoteToTokens {
+    fn ucc(&self) -> &'static dyn DisplayPlusToTokens {
         match &self {
             Self::Equal { .. } => &EqualUcc,
             Self::DimensionOneEqual { .. } => &DimensionOneEqualUcc,
@@ -505,5 +504,5 @@ impl PgFilter for PgJsonTypeFilter {
 pub trait PgFilter {
     fn maybe_generic(&self) -> Option<Ts2>;
     fn prefix_where_self_ucc(&self) -> Ts2;
-    fn ucc(&self) -> &'static dyn StdFmtDisplayPlusQuoteToTokens;
+    fn ucc(&self) -> &'static dyn DisplayPlusToTokens;
 }
