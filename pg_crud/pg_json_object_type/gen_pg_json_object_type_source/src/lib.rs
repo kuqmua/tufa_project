@@ -79,6 +79,7 @@ use pg_crud_macros_common::{
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
+use serde_json::from_str;
 use std::iter::repeat_with;
 use strum_macros::{Display, EnumIter};
 use syn::{
@@ -130,7 +131,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
     panic_location::panic_location();
     let syn_derive_input: DeriveInput = parse2(input_ts).expect("e5f0e27b");
     let import_path = ImportPath::PgCrud;
-    let gen_pg_json_object_type_config = serde_json::from_str::<GenPgJsonTypesConfig>(
+    let gen_pg_json_object_type_config = from_str::<GenPgJsonTypesConfig>(
         &get_macro_attribute_meta_list_ts(
             &syn_derive_input.attrs,
             &format!("{}::pg_json_object_type_config", import_path.sc_str()),

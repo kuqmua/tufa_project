@@ -42,6 +42,7 @@ use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use rayon::iter::{IntoParallelRefIterator as _, ParallelIterator as _};
 use serde::{Deserialize, Serialize};
+use serde_json::from_str;
 use std::{
     collections::HashSet,
     fmt::{Display, Formatter, Result as StdFmtResult},
@@ -345,7 +346,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     }
     panic_location::panic_location();
     let gen_pg_json_types_config =
-        serde_json::from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("1123f78f");
+        from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("1123f78f");
     let (fields_ts, pg_json_type_array) = {
         {
             let gen_standart = |acc_29796d99: &mut Vec<PgJsonTypeRecord>, pg_json_type: PgJsonType|{

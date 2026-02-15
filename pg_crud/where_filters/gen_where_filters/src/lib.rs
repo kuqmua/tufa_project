@@ -17,6 +17,7 @@ use pg_crud_macros_common::{
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
+use serde_json::from_str;
 use std::fmt::Display;
 use token_patterns::{
     CoreDefaultDefaultDefault, PgCrudCommonDefaultOptionSomeVecOneEl,
@@ -118,7 +119,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     }
     panic_location::panic_location();
     let gen_where_filters_config =
-        serde_json::from_str::<GenWhereFiltersConfig>(&input_ts.to_string()).expect("1217b73b");
+        from_str::<GenWhereFiltersConfig>(&input_ts.to_string()).expect("1217b73b");
     let import_path = ImportPath::PgCrudCommon;
     let t_ts = quote! {T};
     let t_annotation_generic_ts = quote! {<#t_ts>};

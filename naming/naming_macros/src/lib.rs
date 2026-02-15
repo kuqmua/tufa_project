@@ -3,6 +3,7 @@ use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use regex::Regex;
+use serde_json::from_str;
 #[allow(unused_imports)]
 use syn::{Data, DeriveInput, Fields, Ident, Type, parse};
 use token_patterns::StdStringString;
@@ -10,7 +11,7 @@ const REGEX_VALUE: &str = "^[a-zA-Z]+$";
 #[proc_macro]
 pub fn gen_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
     panic_location::panic_location();
-    let implementations_ts = serde_json::from_str::<Vec<Vec<String>>>(&input_ts.to_string())
+    let implementations_ts = from_str::<Vec<Vec<String>>>(&input_ts.to_string())
         .expect("90e5793b")
         .into_iter()
         .map(|el_020a8657| {
@@ -108,7 +109,7 @@ pub fn gen_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
 #[proc_macro]
 pub fn gen_self_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
     panic_location::panic_location();
-    let implementations_ts = serde_json::from_str::<Vec<Vec<String>>>(&input_ts.to_string()).expect("9d6a20af").into_iter().map(|el_a5ccbaa7| {
+    let implementations_ts = from_str::<Vec<Vec<String>>>(&input_ts.to_string()).expect("9d6a20af").into_iter().map(|el_a5ccbaa7| {
         {
             let regex = Regex::new(REGEX_VALUE).expect("cba1b5fb");
             for el_6d4f29dd in &el_a5ccbaa7 {

@@ -57,6 +57,7 @@ use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use rayon::iter::{IntoParallelRefIterator as _, ParallelIterator as _};
 use serde::{Deserialize, Serialize};
+use serde_json::from_str;
 use std::{
     fmt::{Display, Formatter, Result as StdFmtResult},
     iter::{once, repeat_n},
@@ -841,7 +842,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     }
     panic_location::panic_location();
     let gen_pg_json_types_config =
-        serde_json::from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("80485f71");
+        from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("80485f71");
     let (columns_ts, pg_type_array) = {
         let acc_5464fefe = match gen_pg_json_types_config.variant {
             GenPgTypesConfigVariant::All => PgType::into_array().into_iter().fold(Vec::new(), |mut acc_4351207e, el_a897c529| {

@@ -86,6 +86,7 @@ use pg_crud_macros_common::{
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
+use serde_json::from_str;
 use std::{
     fmt::{Display, Formatter, Result as StdFmtResult},
     iter::once,
@@ -446,7 +447,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
 
     // let pg_crud_all_variants_default_option_some_vec_one_el_call_ts = PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElCall;
     let syn_derive_input: DeriveInput = parse2(input).expect("991c614f");
-    let gen_pg_table_config = serde_json::from_str::<GenPgTableConfig>(
+    let gen_pg_table_config = from_str::<GenPgTableConfig>(
         &get_macro_attribute_meta_list_ts(
             &syn_derive_input.attrs,
             &format!("{}::gen_pg_table_config", import_path.sc_str()),

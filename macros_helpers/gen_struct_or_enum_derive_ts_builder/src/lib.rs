@@ -1,6 +1,7 @@
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
+use serde_json::from_str;
 #[proc_macro]
 pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
     use naming::parameter::{DeriveSelfIfSc, DeriveSelfSc, DeriveSelfUcc};
@@ -14,7 +15,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
     let make_pub_sc_ts = quote! {make_pub};
     let make_pub_if_sc_ts = quote! {make_pub_if};
     let make_pub_ucc_ts = quote! {MakePub};
-    let el_vec = serde_json::from_str::<Vec<String>>(&input_ts.to_string())
+    let el_vec = from_str::<Vec<String>>(&input_ts.to_string())
         .expect("c5d09740")
         .into_iter()
         .map(|el_4f4a2c74| {

@@ -5,6 +5,7 @@ use axum::{
 use http::header::ToStrError;
 use http_body::SizeHint;
 use reqwest::{Error, StatusCode, header::HeaderMap};
+use serde_json::Error as SerdeJsonError;
 use sqlx::{
     Error as SqlxError,
     migrate::MigrateError,
@@ -179,7 +180,7 @@ impl ToErrString for SqlxError {
         format!("{self}")
     }
 }
-impl ToErrString for serde_json::Error {
+impl ToErrString for SerdeJsonError {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }

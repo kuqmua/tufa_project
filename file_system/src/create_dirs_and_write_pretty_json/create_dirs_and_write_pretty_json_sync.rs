@@ -1,5 +1,5 @@
 use error_occurence_lib::{ErrorOccurence, code_occurence, code_occurence::CodeOccurence};
-use serde_json::{Error as SerdeJsonError, Value as SerdeJsonValue};
+use serde_json::{Error as SerdeJsonError, Value as SerdeJsonValue, to_string_pretty};
 use std::path::Path;
 use thiserror::Error;
 
@@ -21,7 +21,7 @@ pub fn create_dirs_and_write_pretty_json_sync(
     path: &Path,
     serde_json_value: &SerdeJsonValue,
 ) -> Result<(), CreateDirsAndWritePrettyJsonSyncErrorNamed> {
-    match serde_json::to_string_pretty(&serde_json_value) {
+    match to_string_pretty(&serde_json_value) {
         Ok(value) => {
             if let Err(error) = crate::create_dirs_and_write_file_sync(path, value.as_bytes()) {
                 return Err(
