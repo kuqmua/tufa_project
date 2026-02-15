@@ -25,7 +25,7 @@
     enum CommonAdditionalErrorVariants {
         // CheckCommit {
         //     #[eo_error_occurence]
-        //     check_commit: pg_crud::check_commit::Error,
+        //     check_commit: pg_crud::check_commit::CommitError,
         //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
         // },
     }
