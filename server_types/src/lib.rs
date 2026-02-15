@@ -7,25 +7,25 @@
         "whole_content_write_into_gen_pg_json_object_type": "False",
         "variant": 
         // {
-        //     "not_null_or_nullable": "NotNull",
+        //     "is_nullable": "False",
         //     "pattern": "Standart",
         //     "trait_gen": "PgTypeAndPgJsonType"
         // }
         // ,
         // {
-        //     "not_null_or_nullable": "Nullable",
+        //     "is_nullable": "True",
         //     "pattern": "Standart",
         //     "trait_gen": "PgTypeAndPgJsonType"
         // }
         // ,
         // {
-        //     "not_null_or_nullable": "NotNull",
+        //     "is_nullable": "False",
         //     "pattern": "Array",
         //     "trait_gen": "PgTypeAndPgJsonType"
         // }
         // ,
         {
-            "not_null_or_nullable": "Nullable",
+            "is_nullable": "True",
             "pattern": "Array",
             "trait_gen": "PgTypeAndPgJsonType"
         }
@@ -857,25 +857,25 @@ pub struct Animal {
         "whole_content_write_into_gen_pg_json_object_type": "False",
         "variant":
         // {
-        //     "not_null_or_nullable": "NotNull",
+        //     "is_nullable": "False",
         //     "pattern": "Standart",
         //     "trait_gen": "PgTypeAndPgJsonType"
         // }
         // ,
         // {
-        //     "not_null_or_nullable": "Nullable",
+        //     "is_nullable": "True",
         //     "pattern": "Standart",
         //     "trait_gen": "PgTypeAndPgJsonType"
         // }
         // ,
         // {
-        //     "not_null_or_nullable": "NotNull",
+        //     "is_nullable": "False",
         //     "pattern": "Array",
         //     "trait_gen": "PgTypeAndPgJsonType"
         // }
         // ,
         {
-            "not_null_or_nullable": "Nullable",
+            "is_nullable": "True",
             "pattern": "Array",
             "trait_gen": "PgTypeAndPgJsonType"
         }
@@ -1022,25 +1022,25 @@ pub struct Doggie {
         "whole_content_write_into_gen_pg_json_object_type": "False",
         "variant":
         // {
-        //     "not_null_or_nullable": "NotNull",
+        //     "is_nullable": "False",
         //     "pattern": "Standart",
         //     "trait_gen": "PgTypeAndPgJsonType"
         // }
         // ,
         // {
-        //     "not_null_or_nullable": "Nullable",
+        //     "is_nullable": "True",
         //     "pattern": "Standart",
         //     "trait_gen": "PgTypeAndPgJsonType"
         // }
         // ,
         // {
-        //     "not_null_or_nullable": "NotNull",
+        //     "is_nullable": "False",
         //     "pattern": "Array",
         //     "trait_gen": "PgTypeAndPgJsonType"
         // }
         // ,
         {
-            "not_null_or_nullable": "Nullable",
+            "is_nullable": "True",
             "pattern": "Array",
             "trait_gen": "PgTypeAndPgJsonType"
         }

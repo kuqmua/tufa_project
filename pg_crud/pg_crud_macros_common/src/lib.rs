@@ -88,38 +88,45 @@ pub enum IsStandartNotNull {
     EnumIter,
     EnumExtension,
 )]
-pub enum NotNullOrNullable {
+pub enum IsNullable {
     #[default]
-    NotNull,
-    Nullable,
+    False,
+    True,
 }
-impl NotNullOrNullable {
+impl IsNullable {
     #[must_use]
     pub fn maybe_option_wrap(&self, content_ts: Ts2) -> Ts2 {
         match &self {
-            Self::NotNull => content_ts,
-            Self::Nullable => quote! {Option<#content_ts>},
+            Self::False => content_ts,
+            Self::True => quote! {Option<#content_ts>},
         }
     }
     #[must_use]
     pub fn maybe_some_wrap(&self, content_ts: Ts2) -> Ts2 {
         match &self {
-            Self::NotNull => content_ts,
-            Self::Nullable => quote! {Some(#content_ts)},
+            Self::False => content_ts,
+            Self::True => quote! {Some(#content_ts)},
+        }
+    }
+    #[must_use]
+    pub const fn not_null_or_nullable_str(&self) -> &str {
+        match &self {
+            Self::False => "NotNull",
+            Self::True => "Nullable",
         }
     }
     #[must_use]
     pub fn prefix_str(&self) -> String {
         match &self {
-            Self::NotNull => String::default(),
-            Self::Nullable => String::from("StdOptionOption"),
+            Self::False => String::default(),
+            Self::True => String::from("StdOptionOption"),
         }
     }
     #[must_use]
     pub fn rust(&self) -> &'static dyn Display {
         match &self {
-            Self::NotNull => &"",
-            Self::Nullable => &OptionUcc,
+            Self::False => &"",
+            Self::True => &OptionUcc,
         }
     }
 }

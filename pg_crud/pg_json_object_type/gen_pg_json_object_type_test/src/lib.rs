@@ -28,7 +28,7 @@ test-utils = []"#,
                             "pg_table_columns_content_write_into_pg_table_columns_using_pg_json_object_types": "False",
                             "whole_content_write_into_gen_pg_json_object_type": "False",
                             "variant": {
-                                "not_null_or_nullable": "Nullable",
+                                "is_nullable": "True",
                                 "pattern": "Array",
                                 "trait_gen": "PgTypeAndPgJsonType"
                             }

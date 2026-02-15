@@ -13,693 +13,693 @@ gen_pg_json_types::gen_pg_json_types!({
     //   "Concrete": [
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": "Standart"
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": "Standart"
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim1": {
-    //                     "dim1_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim1": {
-    //                     "dim1_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim1": {
-    //                     "dim1_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim1": {
-    //                     "dim1_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim2": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim2": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim2": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim2": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim2": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim2": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim2": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim2": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim3": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim3": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim3": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim3": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim3": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim3": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim3": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim3": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim3": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim3": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim3": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim3": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim3": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim3": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim3": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim3": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "NotNull",
-    //                     "dim4_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "False",
+    //                     "dim4_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "NotNull",
-    //                     "dim4_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "False",
+    //                     "dim4_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "Nullable",
-    //                     "dim4_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "True",
+    //                     "dim4_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "Nullable",
-    //                     "dim4_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "True",
+    //                     "dim4_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "NotNull",
-    //                     "dim4_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "False",
+    //                     "dim4_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "NotNull",
-    //                     "dim4_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "False",
+    //                     "dim4_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "Nullable",
-    //                     "dim4_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "True",
+    //                     "dim4_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "Nullable",
-    //                     "dim4_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "True",
+    //                     "dim4_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "NotNull",
-    //                     "dim4_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "False",
+    //                     "dim4_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "NotNull",
-    //                     "dim4_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "False",
+    //                     "dim4_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "Nullable",
-    //                     "dim4_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "True",
+    //                     "dim4_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "Nullable",
-    //                     "dim4_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "True",
+    //                     "dim4_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "NotNull",
-    //                     "dim4_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "False",
+    //                     "dim4_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "NotNull",
-    //                     "dim4_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "False",
+    //                     "dim4_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "Nullable",
-    //                     "dim4_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "True",
+    //                     "dim4_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "Nullable",
-    //                     "dim4_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "True",
+    //                     "dim4_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "NotNull",
-    //                     "dim4_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "False",
+    //                     "dim4_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "NotNull",
-    //                     "dim4_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "False",
+    //                     "dim4_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "Nullable",
-    //                     "dim4_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "True",
+    //                     "dim4_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "Nullable",
-    //                     "dim4_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "True",
+    //                     "dim4_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "NotNull",
-    //                     "dim4_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "False",
+    //                     "dim4_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "NotNull",
-    //                     "dim4_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "False",
+    //                     "dim4_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "Nullable",
-    //                     "dim4_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "True",
+    //                     "dim4_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "NotNull",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "Nullable",
-    //                     "dim4_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "False",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "True",
+    //                     "dim4_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "NotNull",
-    //                     "dim4_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "False",
+    //                     "dim4_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "NotNull",
-    //                     "dim4_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "False",
+    //                     "dim4_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "Nullable",
-    //                     "dim4_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "True",
+    //                     "dim4_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "NotNull",
-    //                     "dim3_not_null_or_nullable": "Nullable",
-    //                     "dim4_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "False",
+    //                     "dim3_is_nullable": "True",
+    //                     "dim4_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "NotNull",
-    //                     "dim4_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "False",
+    //                     "dim4_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "NotNull",
-    //                     "dim4_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "False",
+    //                     "dim4_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "Nullable",
-    //                     "dim4_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "True",
+    //                     "dim4_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim4": {
-    //                     "dim1_not_null_or_nullable": "Nullable",
-    //                     "dim2_not_null_or_nullable": "Nullable",
-    //                     "dim3_not_null_or_nullable": "Nullable",
-    //                     "dim4_not_null_or_nullable": "Nullable"
+    //                     "dim1_is_nullable": "True",
+    //                     "dim2_is_nullable": "True",
+    //                     "dim3_is_nullable": "True",
+    //                     "dim4_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
     //             "pg_json_type": "UuidUuidAsJsonbString",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": "Standart"
     //         }
     //   ]
@@ -709,8920 +709,8920 @@ gen_pg_json_types::gen_pg_json_types!({
     //     "Concrete": [
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": "Standart"
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "Nullable",
+    //             "is_nullable": "True",
     //             "pg_json_type_pattern": "Standart"
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNumber",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": {
     //                 "ArrayDim1": {
-    //                     "dim1_not_null_or_nullable": "NotNull"
+    //                     "dim1_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNumber",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "StdStringStringAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         {
     //             "pg_json_type": "UuidUuidAsJsonbString",
-    //             "not_null_or_nullable": "NotNull",
+    //             "is_nullable": "False",
     //             "pg_json_type_pattern": "Standart"
     //         }
     //         // ,
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": "Standart"
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim1": {
-    //         //             "dim1_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim2": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim3": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "NotNull",
+    //         //     "is_nullable": "False",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "NotNull",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "NotNull",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "NotNull",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "NotNull"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "not_null_or_nullable": "Nullable",
+    //         //     "is_nullable": "True",
     //         //     "pg_json_type_pattern": {
     //         //         "ArrayDim4": {
-    //         //             "dim1_not_null_or_nullable": "Nullable",
-    //         //             "dim2_not_null_or_nullable": "Nullable",
-    //         //             "dim3_not_null_or_nullable": "Nullable",
-    //         //             "dim4_not_null_or_nullable": "Nullable"
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
     //         //         }
     //         //     }
     //         // }
