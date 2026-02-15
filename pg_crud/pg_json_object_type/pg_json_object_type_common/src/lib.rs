@@ -6,7 +6,7 @@ use thiserror::Error;
 use utoipa::ToSchema;
 
 #[derive(Debug, Serialize, Deserialize, Error, ErrorOccurence)]
-pub enum UniqueVecTryNewErrorNamed<T> {
+pub enum UniqueVecTryNewError<T> {
     NotUnique {
         #[eo_to_err_string_serialize_deserialize]
         value: T,
@@ -28,11 +28,11 @@ impl<T: PartialEq + Clone> UniqueVec<T> {
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
-    pub fn try_new(value: Vec<T>) -> Result<Self, UniqueVecTryNewErrorNamed<T>> {
+    pub fn try_new(value: Vec<T>) -> Result<Self, UniqueVecTryNewError<T>> {
         let mut acc_4855bea7 = Vec::new();
         for el_4dddc7c0 in &value {
             if acc_4855bea7.contains(&el_4dddc7c0) {
-                return Err(UniqueVecTryNewErrorNamed::NotUnique {
+                return Err(UniqueVecTryNewError::NotUnique {
                     value: el_4dddc7c0.clone(),
                     code_occurence: code_occurence!(),
                 });

@@ -2,19 +2,19 @@ use error_occurence_lib::{ErrorOccurence, code_occurence, code_occurence::CodeOc
 use std::{fs, io::Error as IoError, path::Path};
 use thiserror::Error;
 #[derive(Debug, Error, ErrorOccurence)]
-pub enum CreateDirIfItDoesntExistErrorNamed {
+pub enum CreateDirIfItDoesntExistError {
     CreateDirAll {
         #[eo_to_err_string]
         error: IoError,
         code_occurence: CodeOccurence,
     },
 }
-pub fn create_dir_if_it_doesnt_exist(path: &str) -> Result<(), CreateDirIfItDoesntExistErrorNamed> {
+pub fn create_dir_if_it_doesnt_exist(path: &str) -> Result<(), CreateDirIfItDoesntExistError> {
     if Path::new(path).exists() {
         return Ok(());
     }
     if let Err(error) = fs::create_dir_all(path) {
-        return Err(CreateDirIfItDoesntExistErrorNamed::CreateDirAll {
+        return Err(CreateDirIfItDoesntExistError::CreateDirAll {
             error,
             code_occurence: code_occurence!(),
         });

@@ -24,8 +24,8 @@ use naming::{
     TableTypeDeclarationUcc, TimeSc, TimeUcc, ToErrStringSc, TryNewForDeserializeSc, TryNewSc,
     UnboundedUcc, UpdateUcc, ValueSc, VecOfUcc,
     parameter::{
-        SelfCreateUcc, SelfNotNullUcc, SelfOriginTryNewErrorNamedUcc,
-        SelfOriginTryNewForDeserializeErrorNamedUcc, SelfOriginUcc, SelfReadInnerUcc,
+        SelfCreateUcc, SelfNotNullUcc, SelfOriginTryNewErrorUcc,
+        SelfOriginTryNewForDeserializeErrorUcc, SelfOriginUcc, SelfReadInnerUcc,
         SelfReadOnlyIdsUcc, SelfReadUcc, SelfSelectUcc, SelfTableTypeDeclarationUcc,
         SelfUpdateForQueryUcc, SelfUpdateUcc, SelfWhereUcc,
     },
@@ -48,7 +48,7 @@ use pg_crud_macros_common::{
     gen_impl_pg_type_not_primary_key_for_ident_ts, gen_impl_pg_type_test_cases_for_ident_ts,
     gen_impl_pg_type_ts, gen_impl_sqlx_decode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_sqlx_pg_for_ident_ts,
-    gen_pg_type_where_ts, gen_return_err_query_part_error_named_write_into_buffer_ts,
+    gen_pg_type_where_ts, gen_return_err_query_part_error_write_into_buffer_ts,
     gen_std_option_option_tokens_declaration_ts, gen_std_vec_vec_tokens_declaration_ts,
     gen_struct_ident_double_quotes_ts, gen_struct_ident_with_number_elements_double_quotes_ts,
     gen_tuple_struct_ident_double_quotes_ts, gen_value_initialization_ts,
@@ -1172,13 +1172,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc = gen_ident_standart_not_null_origin_ts(&PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp);
         let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc = gen_ident_standart_not_null_origin_ts(&PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz);
 
-        let gen_ident_standart_not_null_origin_try_new_error_named_ts = |current_pg_type: &PgType| SelfOriginTryNewErrorNamedUcc::from_tokens(
+        let gen_ident_standart_not_null_origin_try_new_error_ts = |current_pg_type: &PgType| SelfOriginTryNewErrorUcc::from_tokens(
             &gen_ident_standart_not_null_ts(current_pg_type)
         );
-        let sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_ucc = gen_ident_standart_not_null_origin_try_new_error_named_ts(&PgType::SqlxTypesChronoNaiveDateAsDate);
-        let sqlx_types_chrono_naive_time_as_not_null_time_origin_try_new_error_named_ucc = gen_ident_standart_not_null_origin_try_new_error_named_ts(&PgType::SqlxTypesChronoNaiveTimeAsTime);
-        let sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_try_new_error_named_ucc = gen_ident_standart_not_null_origin_try_new_error_named_ts(&PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp);
-        let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_try_new_error_named_ucc = gen_ident_standart_not_null_origin_try_new_error_named_ts(&PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz);
+        let sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_ucc = gen_ident_standart_not_null_origin_try_new_error_ts(&PgType::SqlxTypesChronoNaiveDateAsDate);
+        let sqlx_types_chrono_naive_time_as_not_null_time_origin_try_new_error_ucc = gen_ident_standart_not_null_origin_try_new_error_ts(&PgType::SqlxTypesChronoNaiveTimeAsTime);
+        let sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_try_new_error_ucc = gen_ident_standart_not_null_origin_try_new_error_ts(&PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp);
+        let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_try_new_error_ucc = gen_ident_standart_not_null_origin_try_new_error_ts(&PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz);
         let inner_type_standart_not_null_ts = {
             let value = {
                 let i16_str = "i16".to_owned();
@@ -2475,8 +2475,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         };
         let value_ident_inner_type_ts = quote! {#ValueSc: #ident_inner_type_ts};
         let ident_standart_not_null_read_ucc = SelfReadUcc::from_tokens(&ident_standart_not_null_ucc);
-        let ident_standart_not_null_origin_try_new_error_named_ucc = SelfOriginTryNewErrorNamedUcc::from_display(&ident_standart_not_null_ucc);
-        let ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc = SelfOriginTryNewForDeserializeErrorNamedUcc::from_display(&ident_standart_not_null_ucc);
+        let ident_standart_not_null_origin_try_new_error_ucc = SelfOriginTryNewErrorUcc::from_display(&ident_standart_not_null_ucc);
+        let ident_standart_not_null_origin_try_new_for_deserialize_error_ucc = SelfOriginTryNewForDeserializeErrorUcc::from_display(&ident_standart_not_null_ucc);
         let int_range_type_to_range_inner_type_ts = |int_range_type: &IntRangeType| -> Ts2 {
             match &int_range_type {
                 IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range => quote! {#i32_ts},
@@ -2499,7 +2499,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let pub_fn_new_or_try_new_ts = if pg_type_initialization_try_new_try_from_pg_type.is_ok() {
                 &gen_pub_try_new_ts(
                     &value_ident_inner_type_ts,
-                    &ident_standart_not_null_origin_try_new_error_named_ucc,
+                    &ident_standart_not_null_origin_try_new_error_ucc,
                     &quote! {
                         match #ident_origin_ucc::#TryNewSc(#ValueSc) {
                             Ok(value_0f9f1a61) => Ok(Self(value_0f9f1a61)),
@@ -3162,7 +3162,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
             };
-            let sqlx_types_chrono_naive_date_as_date_try_new_error_named_variants_ts = quote! {
+            let sqlx_types_chrono_naive_date_as_date_try_new_error_variants_ts = quote! {
                 #EarlierDateNotSupportedUcc {
                     #[eo_to_err_string_serialize_deserialize]
                     #ValueSc: #std_string_string_ts,
@@ -3171,14 +3171,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
             };
-            let std_string_string_as_text_try_new_error_named_variants_ts = quote! {
+            let std_string_string_as_text_try_new_error_variants_ts = quote! {
                 #ContainsNullByteUcc {
                     #[eo_to_err_string_serialize_deserialize]
                     #ValueSc: #ident_inner_type_ts,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
             };
-            let maybe_pub_enum_ident_standart_not_null_origin_try_new_error_named_ts = if matches!(&is_standart_not_null, IsStandartNotNull::True)
+            let maybe_pub_enum_ident_standart_not_null_origin_try_new_error_ts = if matches!(&is_standart_not_null, IsStandartNotNull::True)
                 && let Ok(pg_type_initialization_try_new) = &pg_type_initialization_try_new_try_from_pg_type
             {
                 let content_ts_d57d5de2 = StructOrEnumDeriveTokenStreamBuilder::new()
@@ -3189,7 +3189,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     .derive_thiserror_error()
                     .derive_error_occurence_lib_error_occurence()
                     .build_enum(
-                        &ident_standart_not_null_origin_try_new_error_named_ucc,
+                        &ident_standart_not_null_origin_try_new_error_ucc,
                         &{
                             let gen_start_end_ts = |content_ts: &dyn ToTokens| {
                                 let (start_variant_ts, end_variant_ts) = {
@@ -3211,43 +3211,43 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             };
                             let content_ts: &dyn ToTokens = match &pg_type_initialization_try_new {
-                                PgTypeInitializationTryNew::StdStringStringAsText => &std_string_string_as_text_try_new_error_named_variants_ts,
+                                PgTypeInitializationTryNew::StdStringStringAsText => &std_string_string_as_text_try_new_error_variants_ts,
                                 PgTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime | PgTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => &nanosecond_precision_is_not_supported_variant_try_new_ts,
-                                PgTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_error_named_variants_ts,
+                                PgTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_error_variants_ts,
                                 PgTypeInitializationTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => &quote! {
                                     #DateUcc {
                                         #[eo_error_occurence]
-                                        #ErrorSc: #sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_ucc,
+                                        #ErrorSc: #sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_ucc,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
                                     #TimeUcc {
                                         #[eo_error_occurence]
-                                        #ErrorSc: #sqlx_types_chrono_naive_time_as_not_null_time_origin_try_new_error_named_ucc,
+                                        #ErrorSc: #sqlx_types_chrono_naive_time_as_not_null_time_origin_try_new_error_ucc,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
                                 },
                                 PgTypeInitializationTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &quote! {
                                     #DateNaiveUcc {
                                         #[eo_error_occurence]
-                                        #ErrorSc: #sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_ucc,
+                                        #ErrorSc: #sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_ucc,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
                                     #TimeUcc {
                                         #[eo_error_occurence]
-                                        #ErrorSc: #sqlx_types_chrono_naive_time_as_not_null_time_origin_try_new_error_named_ucc,
+                                        #ErrorSc: #sqlx_types_chrono_naive_time_as_not_null_time_origin_try_new_error_ucc,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
                                 },
                                 PgTypeInitializationTryNew::SqlxPgTypesPgRangeI32AsInt4Range => &gen_int_range_type_error_variants_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
                                 PgTypeInitializationTryNew::SqlxPgTypesPgRangeI64AsInt8Range => &gen_int_range_type_error_variants_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
                                 PgTypeInitializationTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &gen_start_end_ts(
-                                    &sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_ucc
+                                    &sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_ucc
                                 ),
                                 PgTypeInitializationTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &gen_start_end_ts(
-                                    &sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_try_new_error_named_ucc
+                                    &sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_try_new_error_ucc
                                 ),
                                 PgTypeInitializationTryNew::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &gen_start_end_ts(
-                                    &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_try_new_error_named_ucc
+                                    &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_try_new_error_ucc
                                 ),
                             };
                             quote!{{#content_ts}}
@@ -3260,7 +3260,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             } else {
                 Ts2::new()
             };
-            let maybe_pub_enum_ident_standart_not_null_origin_try_new_for_deserialize_error_named_ts = if matches!(&is_standart_not_null, IsStandartNotNull::True)
+            let maybe_pub_enum_ident_standart_not_null_origin_try_new_for_deserialize_error_ts = if matches!(&is_standart_not_null, IsStandartNotNull::True)
                 && let DeriveOrImpl::Impl(_) = &serde_deserialize_derive_or_impl
             {
                 match &pg_type_deserialize {
@@ -3276,10 +3276,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             .derive_thiserror_error()
                             .derive_error_occurence_lib_error_occurence()
                             .build_enum(
-                                &ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc,
+                                &ident_standart_not_null_origin_try_new_for_deserialize_error_ucc,
                                 &{
                                     let content_ts: &dyn ToTokens = match &pg_type_impl_try_new_for_deserialize {
-                                        PgTypeImplTryNewForDeserialize::StdStringStringAsText => &std_string_string_as_text_try_new_error_named_variants_ts,
+                                        PgTypeImplTryNewForDeserialize::StdStringStringAsText => &std_string_string_as_text_try_new_error_variants_ts,
                                         PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => &quote! {
                                             #InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
                                                 #[eo_to_err_string_serialize_deserialize]
@@ -3310,7 +3310,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             },
                                             #nanosecond_precision_is_not_supported_variant_try_new_ts
                                         },
-                                        PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_error_named_variants_ts,
+                                        PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_error_variants_ts,
                                         PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI32AsInt4Range => &gen_int_range_type_error_variants_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
                                         PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI64AsInt8Range => &gen_int_range_type_error_variants_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
                                     };
@@ -3431,14 +3431,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             let (#StartSc, #EndSc) = match (#ValueSc.#StartSc, #ValueSc.#EndSc) {
                                                 (std::ops::Bound::Included(#StartSc), std::ops::Bound::Included(#EndSc)) => {
                                                     if #StartSc > #EndSc {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#IncludedStartGreaterThanIncludedEndUcc {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_ucc::#IncludedStartGreaterThanIncludedEndUcc {
                                                             #StartSc,
                                                             #EndSc,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
                                                     }
                                                     if #EndSc == max {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#IncludedEndCannotBeMaxUcc {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_ucc::#IncludedEndCannotBeMaxUcc {
                                                             #EndSc,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
@@ -3447,7 +3447,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 }
                                                 (std::ops::Bound::Included(#StartSc), std::ops::Bound::Excluded(#EndSc)) => {
                                                     if #StartSc > #EndSc {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#IncludedStartGreaterThanExcludedEndUcc {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_ucc::#IncludedStartGreaterThanExcludedEndUcc {
                                                             #StartSc,
                                                             #EndSc,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
@@ -3458,14 +3458,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 (std::ops::Bound::Included(#StartSc), std::ops::Bound::Unbounded) => (std::ops::Bound::Included(#StartSc), std::ops::Bound::Unbounded),
                                                 (std::ops::Bound::Excluded(#StartSc), std::ops::Bound::Included(#EndSc)) => {
                                                     if #StartSc > #EndSc {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#ExcludedStartGreaterThanIncludedEndUcc {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_ucc::#ExcludedStartGreaterThanIncludedEndUcc {
                                                             #StartSc,
                                                             #EndSc,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
                                                     }
                                                     if #EndSc == max {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#IncludedEndCannotBeMaxUcc {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_ucc::#IncludedEndCannotBeMaxUcc {
                                                             #EndSc,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
@@ -3474,7 +3474,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 }
                                                 (std::ops::Bound::Excluded(#StartSc), std::ops::Bound::Excluded(#EndSc)) => {
                                                     if #StartSc > #EndSc {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#ExcludedStartGreaterThanExcludedEndUcc {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_ucc::#ExcludedStartGreaterThanExcludedEndUcc {
                                                             #StartSc,
                                                             #EndSc,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
@@ -3485,7 +3485,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 (std::ops::Bound::Excluded(#StartSc), std::ops::Bound::Unbounded) => (std::ops::Bound::Excluded(#StartSc), std::ops::Bound::Unbounded),
                                                 (std::ops::Bound::Unbounded, std::ops::Bound::Included(#EndSc)) => {
                                                     if #EndSc == max {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#IncludedEndCannotBeMaxUcc {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_ucc::#IncludedEndCannotBeMaxUcc {
                                                             #EndSc,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
@@ -3504,7 +3504,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 std::ops::Bound::Included(included_value) => match #current_ident_ts::#TryNewSc(included_value) {
                                                     Ok(value_a9c1f658) => std::ops::Bound::Included(value_a9c1f658.0),
                                                     Err(er) => {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#StartUcc {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_ucc::#StartUcc {
                                                             #ErrorSc: er,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
@@ -3513,7 +3513,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 std::ops::Bound::Excluded(excluded_value) => match #current_ident_ts::#TryNewSc(excluded_value) {
                                                     Ok(value_f0ff8036) => std::ops::Bound::Excluded(value_f0ff8036.0),
                                                     Err(er) => {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#StartUcc {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_ucc::#StartUcc {
                                                             #ErrorSc: er,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
@@ -3525,7 +3525,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 std::ops::Bound::Included(included_value) => match #current_ident_ts::#TryNewSc(included_value) {
                                                     Ok(value_80168e2b) => std::ops::Bound::Included(value_80168e2b.0),
                                                     Err(er) => {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#EndUcc {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_ucc::#EndUcc {
                                                             #ErrorSc: er,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
@@ -3534,7 +3534,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 std::ops::Bound::Excluded(excluded_value) => match #current_ident_ts::#TryNewSc(excluded_value) {
                                                     Ok(value_05f87b70) => std::ops::Bound::Excluded(value_05f87b70.0),
                                                     Err(er) => {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#EndUcc {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_ucc::#EndUcc {
                                                             #ErrorSc: er,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
@@ -3547,7 +3547,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     match &pg_type_initialization_try_new {
                                         PgTypeInitializationTryNew::StdStringStringAsText => quote! {
                                             if #ValueSc.find('\0').is_some() {
-                                                Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#ContainsNullByteUcc {
+                                                Err(#ident_standart_not_null_origin_try_new_error_ucc::#ContainsNullByteUcc {
                                                     #ValueSc,
                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                 })
@@ -3557,7 +3557,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         },
                                         PgTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime => quote! {
                                             if <#inner_type_standart_not_null_ts as chrono::Timelike>::nanosecond(&#ValueSc).checked_rem(1000).expect("7c8b4e12") != 0 {
-                                                return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#NanosecondPrecisionIsNotSupportedUcc {
+                                                return Err(#ident_standart_not_null_origin_try_new_error_ucc::#NanosecondPrecisionIsNotSupportedUcc {
                                                     #ValueSc: #ValueSc.to_string(),
                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                 });
@@ -3566,7 +3566,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         },
                                         PgTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => quote! {
                                             if #ValueSc.nanosecond().checked_rem(1000).expect("ce47524f") != 0 {
-                                                return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#NanosecondPrecisionIsNotSupportedUcc {
+                                                return Err(#ident_standart_not_null_origin_try_new_error_ucc::#NanosecondPrecisionIsNotSupportedUcc {
                                                     #ValueSc: #ValueSc.to_string(),
                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                 });
@@ -3579,7 +3579,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 Ok(Self(#ValueSc))
                                             }
                                             else {
-                                                Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#EarlierDateNotSupportedUcc {
+                                                Err(#ident_standart_not_null_origin_try_new_error_ucc::#EarlierDateNotSupportedUcc {
                                                     #ValueSc: #ValueSc.to_string(),
                                                     #EarliestSupportedDateSc: #EarliestSupportedDateSc.to_string(),
                                                     code_occurence: error_occurence_lib::code_occurence!(),
@@ -3592,7 +3592,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             ) {
                                                 Ok(value_9be8eddb) => value_9be8eddb,
                                                 Err(er) => {
-                                                    return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#DateUcc {
+                                                    return Err(#ident_standart_not_null_origin_try_new_error_ucc::#DateUcc {
                                                         #ErrorSc: er,
                                                         code_occurence: error_occurence_lib::code_occurence!(),
                                                     });
@@ -3603,7 +3603,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             ) {
                                                 Ok(value_993484ce) => value_993484ce,
                                                 Err(er) => {
-                                                    return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#TimeUcc {
+                                                    return Err(#ident_standart_not_null_origin_try_new_error_ucc::#TimeUcc {
                                                         #ErrorSc: er,
                                                         code_occurence: error_occurence_lib::code_occurence!(),
                                                     });
@@ -3620,7 +3620,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 let #DateNaiveSc = match #sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc::#TryNewSc(#ValueSc.date_naive()) {
                                                     Ok(value_158945ad) => value_158945ad,
                                                     Err(er) => {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#DateNaiveUcc {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_ucc::#DateNaiveUcc {
                                                             #ErrorSc: er,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
@@ -3629,7 +3629,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 let #TimeSc = match #sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc::#TryNewSc(#ValueSc.time()) {
                                                     Ok(value_c5af739c) => value_c5af739c,
                                                     Err(er) => {
-                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_ucc::#TimeUcc {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_ucc::#TimeUcc {
                                                             #ErrorSc: er,
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         });
@@ -3657,7 +3657,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     };
                     quote! {
-                        pub fn #TryNewSc(#value_ident_inner_type_ts) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_ucc> {
+                        pub fn #TryNewSc(#value_ident_inner_type_ts) -> Result<Self, #ident_standart_not_null_origin_try_new_error_ucc> {
                             #content_ts
                         }
                     }
@@ -3788,46 +3788,46 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         let try_new_convert_pg_range_int_content_ts = gen_self_match_try_new_ts(
                                             &quote! {sqlx::postgres::types::PgRange { #StartSc: start_9a8ef454, #EndSc: end_a14eb2b9 }},
                                             &quote! {
-                                                #ident_standart_not_null_origin_try_new_error_named_ucc::#IncludedStartGreaterThanIncludedEndUcc {
+                                                #ident_standart_not_null_origin_try_new_error_ucc::#IncludedStartGreaterThanIncludedEndUcc {
                                                     #StartSc,
                                                     #EndSc,
                                                     code_occurence,
-                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#IncludedStartGreaterThanIncludedEndUcc {
-                                                    #StartSc,
-                                                    #EndSc,
-                                                    code_occurence,
-                                                }),
-                                                #ident_standart_not_null_origin_try_new_error_named_ucc::#IncludedStartGreaterThanExcludedEndUcc {
-                                                    #StartSc,
-                                                    #EndSc,
-                                                    code_occurence,
-                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#IncludedStartGreaterThanExcludedEndUcc {
+                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_ucc::#IncludedStartGreaterThanIncludedEndUcc {
                                                     #StartSc,
                                                     #EndSc,
                                                     code_occurence,
                                                 }),
-                                                #ident_standart_not_null_origin_try_new_error_named_ucc::#ExcludedStartGreaterThanIncludedEndUcc {
+                                                #ident_standart_not_null_origin_try_new_error_ucc::#IncludedStartGreaterThanExcludedEndUcc {
                                                     #StartSc,
                                                     #EndSc,
                                                     code_occurence,
-                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#ExcludedStartGreaterThanIncludedEndUcc {
-                                                    #StartSc,
-                                                    #EndSc,
-                                                    code_occurence,
-                                                }),
-                                                #ident_standart_not_null_origin_try_new_error_named_ucc::#ExcludedStartGreaterThanExcludedEndUcc {
-                                                    #StartSc,
-                                                    #EndSc,
-                                                    code_occurence,
-                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#ExcludedStartGreaterThanExcludedEndUcc {
+                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_ucc::#IncludedStartGreaterThanExcludedEndUcc {
                                                     #StartSc,
                                                     #EndSc,
                                                     code_occurence,
                                                 }),
-                                                #ident_standart_not_null_origin_try_new_error_named_ucc::#IncludedEndCannotBeMaxUcc {
+                                                #ident_standart_not_null_origin_try_new_error_ucc::#ExcludedStartGreaterThanIncludedEndUcc {
+                                                    #StartSc,
                                                     #EndSc,
                                                     code_occurence,
-                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#IncludedEndCannotBeMaxUcc {
+                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_ucc::#ExcludedStartGreaterThanIncludedEndUcc {
+                                                    #StartSc,
+                                                    #EndSc,
+                                                    code_occurence,
+                                                }),
+                                                #ident_standart_not_null_origin_try_new_error_ucc::#ExcludedStartGreaterThanExcludedEndUcc {
+                                                    #StartSc,
+                                                    #EndSc,
+                                                    code_occurence,
+                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_ucc::#ExcludedStartGreaterThanExcludedEndUcc {
+                                                    #StartSc,
+                                                    #EndSc,
+                                                    code_occurence,
+                                                }),
+                                                #ident_standart_not_null_origin_try_new_error_ucc::#IncludedEndCannotBeMaxUcc {
+                                                    #EndSc,
+                                                    code_occurence,
+                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_ucc::#IncludedEndCannotBeMaxUcc {
                                                     #EndSc,
                                                     code_occurence,
                                                 }),
@@ -3844,7 +3844,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 gen_self_match_try_new_ts(
                                                     &quote!{value_356f2a0b},
                                                     &quote! {
-                                                        #ident_standart_not_null_origin_try_new_error_named_ucc::#variant_ts => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#variant_ts),
+                                                        #ident_standart_not_null_origin_try_new_error_ucc::#variant_ts => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_ucc::#variant_ts),
                                                     },
                                                 )
                                             }
@@ -3858,14 +3858,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                     ) {
                                                         Some(value_b143b9e1) => {
                                                             if <#inner_type_standart_not_null_ts as chrono::Timelike>::nanosecond(&value_b143b9e1).checked_rem(1000).expect("c0514180") != 0 {
-                                                                return Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#NanosecondPrecisionIsNotSupportedUcc {
+                                                                return Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_ucc::#NanosecondPrecisionIsNotSupportedUcc {
                                                                     #ValueSc: value_b143b9e1.to_string(),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                                 });
                                                             }
                                                             Ok(Self(value_b143b9e1))
                                                         },
-                                                        None => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
+                                                        None => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_ucc::#InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
                                                             #HourSc,
                                                             #MinSc,
                                                             #SecSc,
@@ -3885,14 +3885,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                     ) {
                                                         Ok(value_9932d535) => {
                                                             if value_9932d535.nanosecond().checked_rem(1000).expect("0def33ce") != 0 {
-                                                                return Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#NanosecondPrecisionIsNotSupportedUcc {
+                                                                return Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_ucc::#NanosecondPrecisionIsNotSupportedUcc {
                                                                     #ValueSc: value_9932d535.to_string(),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                                 });
                                                             }
                                                             Ok(Self(value_9932d535))
                                                         },
-                                                        Err(er) => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
+                                                        Err(er) => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_ucc::#InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
                                                             #HourSc,
                                                             #MinuteSc,
                                                             #SecondSc,
@@ -3906,11 +3906,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => gen_self_match_try_new_ts(
                                                 &quote!{value_356f2a0b},
                                                 &quote! {
-                                                    #ident_standart_not_null_origin_try_new_error_named_ucc::#EarlierDateNotSupportedUcc {
+                                                    #ident_standart_not_null_origin_try_new_error_ucc::#EarlierDateNotSupportedUcc {
                                                         #ValueSc,
                                                         #EarliestSupportedDateSc,
                                                         code_occurence,
-                                                    } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc::#EarlierDateNotSupportedUcc {
+                                                    } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_ucc::#EarlierDateNotSupportedUcc {
                                                         #ValueSc,
                                                         #EarliestSupportedDateSc,
                                                         code_occurence,
@@ -3921,7 +3921,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         }
                                     };
                                     quote! {
-                                        fn #TryNewForDeserializeSc(#parameters_ts) -> Result<Self, #ident_standart_not_null_origin_try_new_for_deserialize_error_named_ucc> {
+                                        fn #TryNewForDeserializeSc(#parameters_ts) -> Result<Self, #ident_standart_not_null_origin_try_new_for_deserialize_error_ucc> {
                                             #content_ts
                                         }
                                     }
@@ -4190,8 +4190,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             };
             quote! {
                 #ident_origin_ts
-                #maybe_pub_enum_ident_standart_not_null_origin_try_new_error_named_ts
-                #maybe_pub_enum_ident_standart_not_null_origin_try_new_for_deserialize_error_named_ts
+                #maybe_pub_enum_ident_standart_not_null_origin_try_new_error_ts
+                #maybe_pub_enum_ident_standart_not_null_origin_try_new_for_deserialize_error_ts
                 #impl_ident_origin_ts
                 #impl_std_convert_from_ident_origin_for_ident_inner_type_ts
 
@@ -4921,7 +4921,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let typical_query_part_ts = {
                 let if_write_is_err_ts = gen_if_write_is_err_ts(
                     &quote! {acc_c7df00f5, "${value_ba581e0f}"},
-                    &gen_return_err_query_part_error_named_write_into_buffer_ts(import_path)
+                    &gen_return_err_query_part_error_write_into_buffer_ts(import_path)
                 );
                 quote! {
                     let mut acc_c7df00f5 = String::default();
@@ -6279,8 +6279,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }) {
                                 Ok(value_2218be19) => Some(value_2218be19),
                                 Err(error) => match error {
-                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
-                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("45c8de3c")
+                                    #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
+                                    #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("45c8de3c")
                                 }
                             }
                         }

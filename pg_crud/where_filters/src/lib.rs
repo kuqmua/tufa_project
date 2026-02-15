@@ -1,7 +1,7 @@
 use error_occurence_lib::{ErrorOccurence, code_occurence, code_occurence::CodeOccurence};
 use pg_crud_common::{
-    DefaultOptionSomeVecOneEl, NotEmptyUniqueVecTryNewErrorNamed, PgTypeWhereFilter,
-    QueryPartErrorNamed, increment_checked_add_one_returning_increment,
+    DefaultOptionSomeVecOneEl, NotEmptyUniqueVecTryNewError, PgTypeWhereFilter, QueryPartError,
+    increment_checked_add_one_returning_increment,
 };
 use regex::Regex;
 use schemars::{_private::alloc::borrow, JsonSchema, Schema, SchemaGenerator};
@@ -48,9 +48,9 @@ impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
-    pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewErrorNamed<T>> {
+    pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewError<T>> {
         if value.is_empty() {
-            return Err(NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {
+            return Err(NotEmptyUniqueVecTryNewError::IsEmpty {
                 code_occurence: code_occurence!(),
             });
         }
@@ -58,7 +58,7 @@ impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
             let mut acc_72940a4c = Vec::new();
             for el_7721a8da in &value {
                 if acc_72940a4c.contains(&el_7721a8da) {
-                    return Err(NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
+                    return Err(NotEmptyUniqueVecTryNewError::NotUnique {
                         value: el_7721a8da.clone(),
                         code_occurence: code_occurence!(),
                     });
@@ -89,13 +89,13 @@ impl<T: PartialEq + Clone + Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
         increment: &mut u64,
         _: &dyn Display,
         _is_need_to_add_logical_operator: bool,
-    ) -> Result<String, QueryPartErrorNamed> {
+    ) -> Result<String, QueryPartError> {
         let mut acc_ecd78d3a = String::default();
         for _ in self.to_vec() {
             match increment_checked_add_one_returning_increment(increment) {
                 Ok(value) => {
                     if write!(acc_ecd78d3a, "${value},").is_err() {
-                        return Err(QueryPartErrorNamed::WriteIntoBuffer {
+                        return Err(QueryPartError::WriteIntoBuffer {
                             code_occurence: code_occurence!(),
                         });
                     }
@@ -217,7 +217,7 @@ where
         increment: &mut u64,
         _: &dyn Display,
         _is_need_to_add_logical_operator: bool,
-    ) -> Result<String, QueryPartErrorNamed> {
+    ) -> Result<String, QueryPartError> {
         match increment_checked_add_one_returning_increment(increment) {
             Ok(value) => Ok(format!("${value}")),
             Err(error) => Err(error),
@@ -389,7 +389,7 @@ where
     end: T,
 }
 #[derive(Debug, Clone, Serialize, Deserialize, Error, ErrorOccurence)]
-pub enum BetweenTryNewErrorNamed<T> {
+pub enum BetweenTryNewError<T> {
     StartMoreOrEqualToEnd {
         #[eo_to_err_string_serialize_deserialize]
         start: T,
@@ -399,11 +399,11 @@ pub enum BetweenTryNewErrorNamed<T> {
     },
 }
 impl<T: Type<Postgres> + for<'__> Encode<'__, Postgres> + PartialOrd> Between<T> {
-    pub fn try_new(start: T, end: T) -> Result<Self, BetweenTryNewErrorNamed<T>> {
+    pub fn try_new(start: T, end: T) -> Result<Self, BetweenTryNewError<T>> {
         if start < end {
             Ok(Self { start, end })
         } else {
-            Err(BetweenTryNewErrorNamed::StartMoreOrEqualToEnd {
+            Err(BetweenTryNewError::StartMoreOrEqualToEnd {
                 start,
                 end,
                 code_occurence: code_occurence!(),
@@ -627,7 +627,7 @@ impl<'lifetime, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lif
         increment: &mut u64,
         _: &dyn Display,
         _: bool,
-    ) -> Result<String, QueryPartErrorNamed> {
+    ) -> Result<String, QueryPartError> {
         let start_increment = match increment_checked_add_one_returning_increment(increment) {
             Ok(value) => value,
             Err(error) => {
@@ -648,9 +648,9 @@ impl<'lifetime, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lif
 pub struct PgTypeNotEmptyUniqueVec<T>(Vec<T>);
 #[allow(clippy::arbitrary_source_item_ordering)]
 impl<T: PartialEq + Clone> PgTypeNotEmptyUniqueVec<T> {
-    pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewErrorNamed<T>> {
+    pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewError<T>> {
         if value.is_empty() {
-            return Err(NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {
+            return Err(NotEmptyUniqueVecTryNewError::IsEmpty {
                 code_occurence: code_occurence!(),
             });
         }
@@ -658,7 +658,7 @@ impl<T: PartialEq + Clone> PgTypeNotEmptyUniqueVec<T> {
             let mut acc_6be6ccee = Vec::new();
             for el_b3d83e60 in &value {
                 if acc_6be6ccee.contains(&el_b3d83e60) {
-                    return Err(NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
+                    return Err(NotEmptyUniqueVecTryNewError::NotUnique {
                         value: el_b3d83e60.clone(),
                         code_occurence: code_occurence!(),
                     });
@@ -772,7 +772,7 @@ pub struct BoundedStdVecVec<T, const LENGTH: usize>(Vec<T>);
 #[derive(
     Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, ErrorOccurence, JsonSchema,
 )]
-pub enum BoundedStdVecVecTryNewErrorNamed {
+pub enum BoundedStdVecVecTryNewError {
     LengthIsNotCorrect {
         #[eo_to_err_string_serialize_deserialize]
         wrong_length: usize,
@@ -801,7 +801,7 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
         increment: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
-    ) -> Result<String, QueryPartErrorNamed> {
+    ) -> Result<String, QueryPartError> {
         self.query_part(
             increment,
             column,
@@ -815,7 +815,7 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
         increment: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
-    ) -> Result<String, QueryPartErrorNamed> {
+    ) -> Result<String, QueryPartError> {
         self.query_part(
             increment,
             column,
@@ -829,7 +829,7 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
         increment: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
-    ) -> Result<String, QueryPartErrorNamed> {
+    ) -> Result<String, QueryPartError> {
         self.query_part(
             increment,
             column,
@@ -843,7 +843,7 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
         increment: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
-    ) -> Result<String, QueryPartErrorNamed> {
+    ) -> Result<String, QueryPartError> {
         self.query_part(
             increment,
             column,
@@ -870,7 +870,7 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
         _is_need_to_add_logical_operator: bool,
         pg_type_or_pg_json_type: &PgTypeOrPgJsonType,
         variant: &Variant,
-    ) -> Result<String, QueryPartErrorNamed> {
+    ) -> Result<String, QueryPartError> {
         let mut acc_24eb25aa = String::new();
         let current_len = match &variant {
             Variant::MinusOne => self.0.len().saturating_sub(1),
@@ -891,7 +891,7 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
                     )
                     .is_err()
                     {
-                        return Err(QueryPartErrorNamed::WriteIntoBuffer {
+                        return Err(QueryPartError::WriteIntoBuffer {
                             code_occurence: code_occurence!(),
                         });
                     }
@@ -909,13 +909,13 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
     }
 }
 impl<T, const LENGTH: usize> TryFrom<Vec<T>> for BoundedStdVecVec<T, LENGTH> {
-    type Error = BoundedStdVecVecTryNewErrorNamed;
+    type Error = BoundedStdVecVecTryNewError;
     fn try_from(value: Vec<T>) -> Result<Self, Self::Error> {
         let len = value.len();
         if len == LENGTH {
             Ok(Self(value))
         } else {
-            Err(BoundedStdVecVecTryNewErrorNamed::LengthIsNotCorrect {
+            Err(BoundedStdVecVecTryNewError::LengthIsNotCorrect {
                 wrong_length: len,
                 expected: LENGTH,
                 code_occurence: code_occurence!(),

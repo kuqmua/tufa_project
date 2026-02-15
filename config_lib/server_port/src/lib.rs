@@ -18,13 +18,13 @@ impl Display for ServerPort {
     }
 }
 #[derive(Debug, Serialize, Deserialize)]
-pub struct ServerPortErrorNamed {
+pub struct ServerPortError {
     message: String,
     server_port_max_value: u16,
     server_port_min_value: u16,
     value: u16,
 }
-impl Display for ServerPortErrorNamed {
+impl Display for ServerPortError {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         write!(
             f,
@@ -33,9 +33,9 @@ impl Display for ServerPortErrorNamed {
         )
     }
 }
-impl Error for ServerPortErrorNamed {}
+impl Error for ServerPortError {}
 impl TryFrom<u16> for ServerPort {
-    type Error = ServerPortErrorNamed;
+    type Error = ServerPortError;
     fn try_from(value: u16) -> Result<Self, Self::Error> {
         if value < SERVER_PORT_MIN_VALUE {
             Err(Self::Error {

@@ -33,7 +33,6 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["error", "occurence"],
     ["code", "occurence"],
     ["is", "none"],
-    ["error", "named"],
     ["try", "from"],
     ["from", "str"],
     ["column", "not", "found"],
@@ -93,7 +92,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["app", "state"],
     ["column", "select"],
     ["options", "try", "from", "sqlx", "row"],
-    ["query", "part", "error", "named"],
+    ["query", "part", "error"],
     ["primary", "key", "try", "from", "sqlx", "row"],
     ["extraction", "result"],
     ["serde", "json", "to", "string"],
@@ -215,13 +214,13 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
         "client"
     ],
     ["check", "commit"],
-    ["check", "commit", "error", "named"],
+    ["check", "commit", "error"],
     ["check", "body", "size"],
     ["source", "handle"],
     ["column", "decode", "index"],
     ["expected", "response"],
     ["pg", "crud"],
-    ["check", "body", "size", "error", "named"],
+    ["check", "body", "size", "error"],
     ["create", "many", "additional", "error", "variants"],
     ["create", "one", "additional", "error", "variants"],
     ["read", "many", "additional", "error", "variants"],
@@ -436,9 +435,9 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["not", "unique", "column", "json", "reader"],
     ["gen", "pg", "json", "type", "to", "read", "from", "vec"],
     [
-        "gen", "pg", "json", "type", "to", "read", "from", "vec", "error", "named"
+        "gen", "pg", "json", "type", "to", "read", "from", "vec", "error"
     ],
-    ["gen", "pg", "json", "type", "to", "read", "error", "named"],
+    ["gen", "pg", "json", "type", "to", "read", "error"],
     ["option", "to", "read"],
     ["option", "to", "update"],
     ["id"],
@@ -477,7 +476,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["all", "fields", "are", "none"],
     ["self"],
     [
-        "option", "to", "update", "try", "gen", "pg", "json", "type", "error", "named"
+        "option", "to", "update", "try", "gen", "pg", "json", "type", "error"
     ],
     ["create", "query", "part"],
     ["create", "query", "bind"],
@@ -491,7 +490,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ],
     ["field", "ident"],
     ["pg", "json", "type"],
-    ["create", "query", "part", "error", "named"],
+    ["create", "query", "part", "error"],
     ["create"],
     ["dotenv"],
     ["std", "env", "var", "error"],
@@ -556,7 +555,7 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
         "find", "ranges", "that", "fully", "contain", "the", "given", "range"
     ],
     ["is", "null"],
-    ["try", "new", "error", "named"],
+    ["try", "new", "error"],
     ["start", "more", "or", "equal", "to", "end"],
     ["is", "empty"],
     ["length", "is", "negative"],
@@ -1303,7 +1302,8 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["executor", "acquire"],
     ["gen", "pg", "json", "types", "mod"],
     ["gen", "pg", "types", "mod"],
-    ["to", "err", "string"]
+    ["to", "err", "string"],
+    ["body", "size", "error"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

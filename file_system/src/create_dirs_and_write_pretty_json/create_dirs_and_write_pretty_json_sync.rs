@@ -4,7 +4,7 @@ use std::path::Path;
 use thiserror::Error;
 
 #[derive(Debug, Error, ErrorOccurence)]
-pub enum CreateDirsAndWritePrettyJsonSyncErrorNamed {
+pub enum CreateDirsAndWritePrettyJsonSyncError {
     SerdeJson {
         #[eo_to_err_string]
         error: SerdeJsonError,
@@ -12,7 +12,7 @@ pub enum CreateDirsAndWritePrettyJsonSyncErrorNamed {
     },
     WriteBytesIntoFile {
         #[eo_error_occurence]
-        error: crate::CreateDirsAndWriteFileSyncErrorNamed,
+        error: crate::CreateDirsAndWriteFileSyncError,
         code_occurence: CodeOccurence,
     },
 }
@@ -20,20 +20,18 @@ pub enum CreateDirsAndWritePrettyJsonSyncErrorNamed {
 pub fn create_dirs_and_write_pretty_json_sync(
     path: &Path,
     serde_json_value: &SerdeJsonValue,
-) -> Result<(), CreateDirsAndWritePrettyJsonSyncErrorNamed> {
+) -> Result<(), CreateDirsAndWritePrettyJsonSyncError> {
     match to_string_pretty(&serde_json_value) {
         Ok(value) => {
             if let Err(error) = crate::create_dirs_and_write_file_sync(path, value.as_bytes()) {
-                return Err(
-                    CreateDirsAndWritePrettyJsonSyncErrorNamed::WriteBytesIntoFile {
-                        error,
-                        code_occurence: code_occurence!(),
-                    },
-                );
+                return Err(CreateDirsAndWritePrettyJsonSyncError::WriteBytesIntoFile {
+                    error,
+                    code_occurence: code_occurence!(),
+                });
             }
             Ok(())
         }
-        Err(error) => Err(CreateDirsAndWritePrettyJsonSyncErrorNamed::SerdeJson {
+        Err(error) => Err(CreateDirsAndWritePrettyJsonSyncError::SerdeJson {
             error,
             code_occurence: code_occurence!(),
         }),

@@ -2463,7 +2463,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     fn get_inner(#ValueSc: &<Self::PgJsonType as #import_path::PgJsonType>::#CreateForQueryUcc) -> &Self::#ReadInnerUcc {
                         &#ValueSc.0.0
                     }
-                    fn increment_checked_add_one(#IncrementSc: &mut #u64_ts) -> Result<#u64_ts, #import_path::QueryPartErrorNamed> {
+                    fn increment_checked_add_one(#IncrementSc: &mut #u64_ts) -> Result<#u64_ts, #import_path::QueryPartError> {
                         #import_path::increment_checked_add_one_returning_increment(#IncrementSc)
                     }
                 }
@@ -2626,8 +2626,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                             acc_049ff0b3.push(#import_path::NullableJsonObjectPgTypeWhereFilter(Some(value_9328b66f)));
                                         },
                                         Err(error) => match error {
-                                            #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => (),
-                                            #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("2f5f648a")
+                                            #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => (),
+                                            #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("2f5f648a")
                                         }
                                     }
                                 },
@@ -3259,10 +3259,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                             ) {
                                                 Ok(value_d82bbdbe) => Some(value_d82bbdbe),
                                                 Err(error) => match error {
-                                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => {
+                                                    #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => {
                                                         return None;
                                                     },
-                                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("3d7ce854")
+                                                    #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("3d7ce854")
                                                 }
                                             },
                                             None => None,
@@ -3278,8 +3278,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         ]) {
                             Ok(value_e196e86d) => Some(value_e196e86d),
                             Err(error) => match error {
-                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
-                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("e9f9b021")
+                                #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
+                                #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("e9f9b021")
                             }
                         }
                     }
@@ -3338,10 +3338,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                         ) {
                                             Ok(value_cdc120a8) => Some(value_cdc120a8),
                                             Err(error) => match error {
-                                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => {
+                                                #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => {
                                                     return None;
                                                 },
-                                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("584f801e")
+                                                #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("584f801e")
                                             }
                                         },
                                         None => None,
@@ -3354,8 +3354,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         match #import_path::NotEmptyUniqueVec::try_new(vec![#content_ts]) {
                             Ok(value_cee8d0ab) => Some(value_cee8d0ab),
                             Err(error) => match error {
-                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
-                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("497359a5")
+                                #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
+                                #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("497359a5")
                             },
                         }
                     }
@@ -3414,8 +3414,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         ) {
                             Ok(value_6f3e23b5) => Some(value_6f3e23b5),
                             Err(error) => match error {
-                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty { .. } => None,
-                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique { .. } => panic!("11287f54"),
+                                #import_path::NotEmptyUniqueVecTryNewError::IsEmpty { .. } => None,
+                                #import_path::NotEmptyUniqueVecTryNewError::NotUnique { .. } => panic!("11287f54"),
                             },
                         }
                     };
@@ -3481,8 +3481,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 ]) {
                                     Ok(value_41af48fb) => Some(value_41af48fb),
                                     Err(error) => match error {
-                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
-                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("5edabfcc")
+                                        #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
+                                        #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("5edabfcc")
                                     }
                                 },
                                 Err(error) => None
@@ -3561,8 +3561,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             ]) {
                                 Ok(value_1c4f89a4) => Some(value_1c4f89a4),
                                 Err(error) => match error {
-                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
-                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("16ae359d")
+                                    #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
+                                    #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("16ae359d")
                                 }
                             }
                         }
@@ -3605,8 +3605,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         ]) {
                             Ok(value_75ae8964) => Some(value_75ae8964),
                             Err(error) => match error {
-                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
-                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("b9713787")
+                                #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
+                                #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("b9713787")
                             }
                         }
                     },
@@ -3656,8 +3656,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 }) {
                                     Ok(value_69c93ec5) => Some(value_69c93ec5),
                                     Err(error) => match error {
-                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
-                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("47e44ecd")
+                                        #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
+                                        #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("47e44ecd")
                                     }
                                 }
                             };
@@ -3743,8 +3743,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 .collect()) {
                                     Ok(value_0363f494) => Some(value_0363f494),
                                     Err(error) => match error {
-                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
-                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("415a73d9")
+                                        #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
+                                        #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("415a73d9")
                                     }
                                 }
                             }

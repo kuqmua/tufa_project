@@ -37,8 +37,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "from",
         "self",
         "payload",
-        "error",
-        "named"
+        "error"
     ],
     ["try", "self"],
     ["try", "self", "response", "variants"],
@@ -75,10 +74,9 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "with",
         "serialize",
         "deserialize",
-        "error",
-        "named"
+        "error"
     ],
-    ["try", "self", "error", "named"],
+    ["try", "self", "error"],
     ["try", "self", "request", "error"],
     [
         "self",
@@ -90,24 +88,22 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "with",
         "serialize",
         "deserialize",
-        "error",
-        "named"
+        "error"
     ],
     ["try", "self", "with", "serialize", "deserialize"],
     ["tvfrr", "extraction", "logic", "try", "self"],
-    ["try", "self", "generated", "logic", "error", "named"],
+    ["try", "self", "generated", "logic", "error"],
     ["try", "self", "generated", "logic", "desirable"],
     ["try", "self", "logic"],
     ["try", "self", "logic", "response", "variants"],
-    ["try", "self", "logic", "error", "named"],
-    ["self", "error", "named", "with", "serialize", "deserialize"],
+    ["try", "self", "logic", "error"],
+    ["self", "error", "with", "serialize", "deserialize"],
     [
         "try",
         "self",
         "generated",
         "logic",
         "error",
-        "named",
         "with",
         "serialize",
         "deserialize"
@@ -138,7 +134,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     [
         "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "select"
     ],
-    ["self", "try", "new", "error", "named"],
+    ["self", "try", "new", "error"],
     ["object", "self", "read"],
     ["std", "option", "option", "object", "self", "read"],
     ["std", "vec", "vec", "object", "with", "id", "self", "read"],
@@ -220,7 +216,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "array", "change"
     ],
     [
-        "self", "option", "to", "update", "try", "gen", "pg", "json", "type", "error", "named"
+        "self", "option", "to", "update", "try", "gen", "pg", "json", "type", "error"
     ],
     [
         "self",
@@ -233,7 +229,6 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "json",
         "type",
         "error",
-        "named",
         "with",
         "serialize",
         "deserialize"
@@ -242,13 +237,9 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ["self", "to", "create", "origin"],
     ["self", "to", "create", "with", "generated", "id"],
     ["self", "to", "create", "without", "generated", "id"],
-    [
-        "self", "json", "array", "change", "try", "gen", "error", "named"
-    ],
+    ["self", "json", "array", "change", "try", "gen", "error"],
     ["self", "field", "to", "update"],
-    [
-        "self", "gen", "pg", "json", "type", "to", "read", "error", "named"
-    ],
+    ["self", "gen", "pg", "json", "type", "to", "read", "error"],
     [
         "self",
         "try",
@@ -259,55 +250,51 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "update",
         "bind",
         "increments",
-        "error",
-        "named"
+        "error"
     ],
     [
         "std", "vec", "vec", "object", "with", "id", "self", "json", "array", "change", "try",
-        "new", "error", "named"
+        "new", "error"
     ],
     [
         "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "json",
-        "array", "change", "try", "new", "error", "named"
+        "array", "change", "try", "new", "error"
     ],
     ["not", "unique", "field", "self"],
     ["self", "read", "without", "id"],
     ["self", "read", "with", "id"],
+    ["self", "option", "to", "update", "try", "new", "error"],
     [
-        "self", "option", "to", "update", "try", "new", "error", "named"
+        "std", "vec", "vec", "object", "with", "id", "self", "read", "try", "new", "error"
     ],
     [
-        "std", "vec", "vec", "object", "with", "id", "self", "read", "try", "new", "error", "named"
-    ],
-    [
-        "self", "gen", "pg", "json", "type", "to", "read", "from", "vec", "error", "named"
+        "self", "gen", "pg", "json", "type", "to", "read", "from", "vec", "error"
     ],
     [
         "std", "option", "option", "object", "self", "option", "to", "update", "try", "new",
-        "error", "named"
+        "error"
     ],
     [
         "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "read",
-        "try", "new", "error", "named"
+        "try", "new", "error"
     ],
     [
-        "self", "read", "with", "or", "without", "id", "try", "from", "error", "named"
+        "self", "read", "with", "or", "without", "id", "try", "from", "error"
     ],
-    ["self", "select", "try", "new", "error", "named"],
-    ["object", "self", "select", "try", "new", "error", "named"],
+    ["self", "select", "try", "new", "error"],
+    ["object", "self", "select", "try", "new", "error"],
     [
-        "std", "option", "option", "object", "self", "select", "try", "new", "error", "named"
+        "std", "option", "option", "object", "self", "select", "try", "new", "error"
     ],
     [
-        "std", "vec", "vec", "object", "with", "id", "self", "select", "try", "new", "error",
-        "named"
+        "std", "vec", "vec", "object", "with", "id", "self", "select", "try", "new", "error"
     ],
     [
         "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "select",
-        "try", "new", "error", "named"
+        "try", "new", "error"
     ],
     [
-        "object", "self", "option", "to", "update", "try", "gen", "error", "named"
+        "object", "self", "option", "to", "update", "try", "gen", "error"
     ],
     [
         "object",
@@ -321,29 +308,26 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "json",
         "type",
         "error",
-        "named",
         "with",
         "serialize",
         "deserialize"
     ],
     [
         "std", "option", "option", "object", "self", "option", "to", "update", "try", "gen",
-        "error", "named"
+        "error"
     ],
     [
         "std", "vec", "vec", "object", "with", "id", "self", "option", "to", "update", "try",
-        "gen", "pg", "json", "type", "error", "named"
+        "gen", "pg", "json", "type", "error"
     ],
     [
         "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "option",
-        "to", "update", "try", "gen", "pg", "json", "type", "error", "named"
+        "to", "update", "try", "gen", "pg", "json", "type", "error"
     ],
     ["self", "with", "serialize", "deserialize"],
-    ["self", "try", "from", "env", "error", "named"],
+    ["self", "try", "from", "env", "error"],
     ["get", "self"],
-    [
-        "try", "from", "std", "env", "var", "ok", "self", "error", "named"
-    ],
+    ["try", "from", "std", "env", "var", "ok", "self", "error"],
     ["self", "options"],
     ["error", "self"],
     ["not", "unique", "self"],
@@ -408,30 +392,30 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "id", "self", "select"
     ],
     [
-        "pg", "json", "type", "self", "select", "try", "new", "error", "named"
+        "pg", "json", "type", "self", "select", "try", "new", "error"
     ],
     [
-        "pg", "json", "type", "object", "self", "select", "try", "new", "error", "named"
+        "pg", "json", "type", "object", "self", "select", "try", "new", "error"
     ],
     [
         "pg", "json", "type", "std", "option", "option", "object", "self", "select", "try", "new",
-        "error", "named"
+        "error"
     ],
     [
         "pg", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "select", "try",
-        "new", "error", "named"
+        "new", "error"
     ],
     [
         "pg", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with",
-        "id", "self", "select", "try", "new", "error", "named"
+        "id", "self", "select", "try", "new", "error"
     ],
     ["pg", "json", "type", "self", "read"],
     ["pg", "json", "type", "self", "read", "without", "id"],
     ["pg", "json", "type", "self", "read", "with", "id"],
     ["self", "update", "element"],
     ["pg", "json", "type", "self", "option", "to", "update"],
-    ["self", "update", "error", "named"],
-    ["self", "update", "try", "new", "error", "named"],
+    ["self", "update", "error"],
+    ["self", "update", "try", "new", "error"],
     ["object", "self", "update"],
     ["std", "option", "option", "object", "self", "update"],
     [
@@ -442,12 +426,11 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ],
     [
         "std", "vec", "vec", "object", "with", "id", "self", "option", "to", "update", "try",
-        "gen", "error", "named"
+        "gen", "error"
     ],
     [
         "pg", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with",
-        "id", "self", "option", "to", "update", "try", "gen", "pg", "json", "type", "error",
-        "named"
+        "id", "self", "option", "to", "update", "try", "gen", "pg", "json", "type", "error"
     ],
     [
         "pg",
@@ -464,7 +447,6 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "json",
         "type",
         "error",
-        "named",
         "with",
         "serialize",
         "deserialize"
@@ -483,14 +465,12 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "json",
         "type",
         "error",
-        "named",
         "with",
         "serialize",
         "deserialize"
     ],
     [
-        "pg", "json", "type", "self", "read", "with", "or", "without", "id", "try", "from",
-        "error", "named"
+        "pg", "json", "type", "self", "read", "with", "or", "without", "id", "try", "from", "error"
     ],
     ["pg", "type", "object", "self"],
     ["pg", "type", "std", "option", "option", "object", "self"],
@@ -567,19 +547,19 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "id", "self"
     ],
     [
-        "pg", "json", "type", "object", "self", "read", "try", "new", "error", "named"
+        "pg", "json", "type", "object", "self", "read", "try", "new", "error"
     ],
     [
         "pg", "json", "type", "std", "option", "option", "object", "self", "read", "try", "new",
-        "error", "named"
+        "error"
     ],
     [
         "pg", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "read", "try",
-        "new", "error", "named"
+        "new", "error"
     ],
     [
         "pg", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with",
-        "id", "self", "read", "try", "new", "error", "named"
+        "id", "self", "read", "try", "new", "error"
     ],
     ["pg", "json", "type", "object", "self", "reader"],
     [
@@ -593,26 +573,23 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "id", "self", "reader"
     ],
     [
-        "pg", "type", "self", "to", "update", "query", "part", "error", "named"
+        "pg", "type", "self", "to", "update", "query", "part", "error"
     ],
     [
-        "pg", "type", "self", "as", "json", "to", "update", "query", "part", "error", "named"
+        "pg", "type", "self", "as", "json", "to", "update", "query", "part", "error"
     ],
     [
-        "pg", "type", "self", "as", "json", "not", "null", "to", "update", "query", "part",
-        "error", "named"
+        "pg", "type", "self", "as", "json", "not", "null", "to", "update", "query", "part", "error"
     ],
-    ["self", "where", "try", "new", "error", "named"],
+    ["self", "where", "try", "new", "error"],
     ["pg", "type", "self", "where", "equal"],
     ["pg", "type", "self", "where", "greater", "than"],
     ["pg", "type", "self", "where", "between"],
     [
-        "pg", "type", "self", "where", "between", "try", "new", "error", "named"
+        "pg", "type", "self", "where", "between", "try", "new", "error"
     ],
     ["pg", "type", "self", "where", "in"],
-    [
-        "pg", "type", "self", "where", "in", "try", "new", "error", "named"
-    ],
+    ["pg", "type", "self", "where", "in", "try", "new", "error"],
     [
         "pg", "type", "std", "option", "option", "self", "where", "equal"
     ],
@@ -698,7 +675,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "pg", "type", "std", "option", "option", "self", "where", "length", "greater", "than"
     ],
     [
-        "pg", "type", "self", "where", "length", "greater", "than", "try", "new", "error", "named"
+        "pg", "type", "self", "where", "length", "greater", "than", "try", "new", "error"
     ],
     [
         "pg",
@@ -760,9 +737,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "pg", "type", "std", "option", "option", "self", "where", "is", "null"
     ],
     ["pg", "type", "self", "where", "named"],
-    [
-        "self", "where", "range", "length", "try", "new", "error", "named"
-    ],
+    ["self", "where", "range", "length", "try", "new", "error"],
     ["self", "where", "range", "length"],
     ["self", "nullable"],
     ["self", "not", "null"],
@@ -772,7 +747,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ["pg", "type", "self", "not", "null", "to", "delete"],
     ["self", "not", "null", "to", "delete"],
     [
-        "pg", "type", "self", "where", "position", "equals", "try", "new", "error", "named"
+        "pg", "type", "self", "where", "position", "equals", "try", "new", "error"
     ],
     ["pg", "type", "self", "where", "position", "equals"],
     ["self", "as", "json", "nullable"],
@@ -787,11 +762,11 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ["pg", "json", "type", "self", "where", "equal"],
     ["pg", "json", "type", "self", "where", "between"],
     [
-        "pg", "json", "type", "self", "where", "between", "try", "new", "error", "named"
+        "pg", "json", "type", "self", "where", "between", "try", "new", "error"
     ],
     ["pg", "json", "type", "self", "where", "in"],
     [
-        "pg", "json", "type", "self", "where", "in", "try", "new", "error", "named"
+        "pg", "json", "type", "self", "where", "in", "try", "new", "error"
     ],
     [
         "pg",
@@ -804,8 +779,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "expression",
         "try",
         "new",
-        "error",
-        "named"
+        "error"
     ],
     [
         "pg",
@@ -830,8 +804,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "expression",
         "try",
         "new",
-        "error",
-        "named"
+        "error"
     ],
     [
         "pg",
@@ -844,8 +817,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "expression",
         "try",
         "new",
-        "error",
-        "named"
+        "error"
     ],
     [
         "pg",
@@ -859,8 +831,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "expression",
         "try",
         "new",
-        "error",
-        "named"
+        "error"
     ],
     [
         "pg",
@@ -890,45 +861,39 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "pg", "json", "type", "std", "option", "option", "self", "where"
     ],
     [
-        "pg", "json", "type", "self", "where", "length", "greater", "than", "try", "new", "error",
-        "named"
+        "pg", "json", "type", "self", "where", "length", "greater", "than", "try", "new", "error"
     ],
     [
         "pg", "json", "type", "self", "where", "length", "greater", "than"
     ],
     [
-        "pg", "json", "type", "self", "where", "position", "equals", "try", "new", "error", "named"
+        "pg", "json", "type", "self", "where", "position", "equals", "try", "new", "error"
     ],
     ["pg", "json", "type", "self", "where", "position", "equals"],
     [
-        "pg", "type", "self", "where", "bit", "vec", "position", "equals", "try", "new", "error",
-        "named"
+        "pg", "type", "self", "where", "bit", "vec", "position", "equals", "try", "new", "error"
     ],
     [
         "pg", "json", "type", "self", "where", "bit", "vec", "position", "equals"
     ],
     [
         "pg", "json", "type", "self", "where", "bit", "vec", "position", "equals", "try", "new",
-        "error", "named"
+        "error"
     ],
     [
         "pg", "type", "self", "where", "bit", "vec", "position", "equals"
     ],
     [
-        "pg", "type", "self", "where", "position", "greater", "than", "try", "new", "error",
-        "named"
+        "pg", "type", "self", "where", "position", "greater", "than", "try", "new", "error"
     ],
     [
-        "pg", "json", "type", "self", "where", "position", "greater", "than", "try", "new",
-        "error", "named"
+        "pg", "json", "type", "self", "where", "position", "greater", "than", "try", "new", "error"
     ],
     ["pg", "type", "self", "where", "position", "greater", "than"],
     [
         "pg", "json", "type", "self", "where", "position", "greater", "than"
     ],
-    [
-        "pg", "json", "type", "self", "where", "try", "new", "error", "named"
-    ],
+    ["pg", "json", "type", "self", "where", "try", "new", "error"],
     [
         "pg",
         "type",
@@ -964,8 +929,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "expression",
         "try",
         "new",
-        "error",
-        "named"
+        "error"
     ],
     [
         "pg",
@@ -980,8 +944,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "expression",
         "try",
         "new",
-        "error",
-        "named"
+        "error"
     ],
     [
         "pg",
@@ -1018,8 +981,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "expression",
         "try",
         "new",
-        "error",
-        "named"
+        "error"
     ],
     [
         "pg",
@@ -1034,16 +996,15 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "expression",
         "try",
         "new",
-        "error",
-        "named"
+        "error"
     ],
     [
         "pg", "type", "self", "where", "contains", "all", "elements", "of", "array", "try", "new",
-        "error", "named"
+        "error"
     ],
     [
         "pg", "json", "type", "self", "where", "contains", "all", "elements", "of", "array", "try",
-        "new", "error", "named"
+        "new", "error"
     ],
     [
         "pg", "type", "self", "where", "contains", "all", "elements", "of", "array"
@@ -1052,30 +1013,26 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "pg", "json", "type", "self", "where", "contains", "all", "elements", "of", "array"
     ],
     [
-        "self", "where", "bit", "vec", "position", "equals", "try", "new", "error", "named"
+        "self", "where", "bit", "vec", "position", "equals", "try", "new", "error"
     ],
     ["self", "where", "second", "dimension"],
     ["self", "visitor"],
-    ["self", "not", "null", "try", "new", "error", "named"],
-    ["self", "to", "update", "query", "part", "error", "named"],
+    ["self", "not", "null", "try", "new", "error"],
+    ["self", "to", "update", "query", "part", "error"],
     ["self", "length"],
     ["vec", "self", "array", "not", "null"],
     ["vec", "self", "array", "nullable"],
-    [
-        "self", "option", "to", "update", "try", "gen", "error", "named"
-    ],
+    ["self", "option", "to", "update", "try", "gen", "error"],
     [
         "pg", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with",
         "id", "self", "option", "to", "update"
     ],
     [
         "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "option",
-        "to", "update", "try", "gen", "error", "named"
+        "to", "update", "try", "gen", "error"
     ],
     ["pg", "type", "where", "self"],
-    [
-        "pg", "type", "where", "self", "try", "new", "error", "named"
-    ],
+    ["pg", "type", "where", "self", "try", "new", "error"],
     [
         "pg",
         "type",
@@ -1084,15 +1041,12 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "try",
         "new",
         "error",
-        "named",
         "with",
         "serialize",
         "deserialize"
     ],
     ["pg", "json", "type", "where", "self"],
-    [
-        "pg", "json", "type", "where", "self", "try", "new", "error", "named"
-    ],
+    ["pg", "json", "type", "where", "self", "try", "new", "error"],
     [
         "pg",
         "json",
@@ -1102,19 +1056,14 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "try",
         "new",
         "error",
-        "named",
         "with",
         "serialize",
         "deserialize"
     ],
     ["self", "without", "id", "read"],
     ["self", "with", "id", "read"],
-    [
-        "self", "without", "id", "read", "try", "from", "error", "named"
-    ],
-    [
-        "self", "with", "id", "read", "try", "from", "error", "named"
-    ],
+    ["self", "without", "id", "read", "try", "from", "error"],
+    ["self", "with", "id", "read", "try", "from", "error"],
     ["self", "table", "type", "declaration"],
     ["self", "not", "null", "origin"],
     ["self", "nullable", "origin"],
@@ -1126,11 +1075,11 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ["self", "with", "id", "select", "element"],
     ["self", "with", "id", "update", "element"],
     ["self", "with", "id", "where"],
-    ["self", "read", "try", "from", "error", "named"],
+    ["self", "read", "try", "from", "error"],
     ["element", "self"],
-    ["self", "prepare", "pg", "error", "named"],
+    ["self", "prepare", "pg", "error"],
     ["self", "where", "many"],
-    ["self", "where", "many", "try", "new", "error", "named"],
+    ["self", "where", "many", "try", "new", "error"],
     ["std", "option", "option", "self", "where", "many"],
     [
         "try", "from", "sqlx", "pg", "pg", "row", "with", "not", "empty", "unique", "vec", "self",
@@ -1138,7 +1087,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ],
     ["update", "query", "part", "self"],
     ["self", "tests"],
-    ["self", "origin", "try", "new", "error", "named"],
+    ["self", "origin", "try", "new", "error"],
     [
         "self",
         "origin",
@@ -1146,8 +1095,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "new",
         "for",
         "deserialize",
-        "error",
-        "named"
+        "error"
     ],
     ["self", "test", "cases"],
     ["self", "some", "value", "update"],
@@ -1164,26 +1112,24 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ["self", "delete", "many", "payload"],
     ["self", "delete", "one", "parameters"],
     ["self", "delete", "one", "payload"],
-    ["self", "try", "read", "one", "error", "named"],
+    ["self", "try", "read", "one", "error"],
     [
         "self",
         "read",
         "one",
         "error",
-        "named",
         "with",
         "serialize",
         "deserialize"
     ],
     ["self", "update", "many", "parameters"],
     ["self", "update", "many", "payload"],
-    ["self", "try", "delete", "one", "error", "named"],
+    ["self", "try", "delete", "one", "error"],
     [
         "self",
         "delete",
         "one",
         "error",
-        "named",
         "with",
         "serialize",
         "deserialize"

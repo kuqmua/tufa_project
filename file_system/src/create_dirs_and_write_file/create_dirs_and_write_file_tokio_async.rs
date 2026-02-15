@@ -3,7 +3,7 @@ use std::{fs, io::Error as IoError, path::Path};
 use thiserror::Error;
 use tokio::{fs::File, io::AsyncWriteExt};
 #[derive(Debug, Error, ErrorOccurence)]
-pub enum CreateDirsAndWriteFileTokioAsyncErrorNamed {
+pub enum CreateDirsAndWriteFileTokioAsyncError {
     StdIoError {
         #[eo_to_err_string]
         error: IoError,
@@ -13,11 +13,11 @@ pub enum CreateDirsAndWriteFileTokioAsyncErrorNamed {
 pub async fn create_dirs_and_write_file_tokio_async(
     path: &Path,
     bytes: &[u8],
-) -> Result<(), CreateDirsAndWriteFileTokioAsyncErrorNamed> {
+) -> Result<(), CreateDirsAndWriteFileTokioAsyncError> {
     if let Some(prefix) = path.parent()
         && let Err(error) = fs::create_dir_all(prefix)
     {
-        return Err(CreateDirsAndWriteFileTokioAsyncErrorNamed::StdIoError {
+        return Err(CreateDirsAndWriteFileTokioAsyncError::StdIoError {
             error,
             code_occurence: code_occurence!(),
         });
@@ -25,14 +25,14 @@ pub async fn create_dirs_and_write_file_tokio_async(
     match File::open(path).await {
         Ok(mut file) => {
             if let Err(error) = AsyncWriteExt::write_all(&mut file, bytes).await {
-                return Err(CreateDirsAndWriteFileTokioAsyncErrorNamed::StdIoError {
+                return Err(CreateDirsAndWriteFileTokioAsyncError::StdIoError {
                     error,
                     code_occurence: code_occurence!(),
                 });
             }
             Ok(())
         }
-        Err(error) => Err(CreateDirsAndWriteFileTokioAsyncErrorNamed::StdIoError {
+        Err(error) => Err(CreateDirsAndWriteFileTokioAsyncError::StdIoError {
             error,
             code_occurence: code_occurence!(),
         }),

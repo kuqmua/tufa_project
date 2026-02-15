@@ -2,7 +2,7 @@ use error_occurence_lib::code_occurence::CodeOccurence;
 use error_occurence_lib::{ErrorOccurence, code_occurence};
 use pg_crud_common::{
     DEFAULT_PAGINATION_LIMIT, DefaultOptionSomeVecOneEl, DefaultOptionSomeVecOneElMaxPageSize,
-    PaginationBase, PgTypeWhereFilter, QueryPartErrorNamed,
+    PaginationBase, PgTypeWhereFilter, QueryPartError,
 };
 use schemars::JsonSchema;
 use serde::de::{Error as SerdeError, IgnoredAny, MapAccess, SeqAccess, Visitor};
@@ -14,7 +14,7 @@ use utoipa::ToSchema;
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, ToSchema, JsonSchema)]
 pub struct PaginationStartsWithOne(PaginationBase);
 #[derive(Debug, Serialize, Deserialize, Error, ErrorOccurence)]
-pub enum PaginationStartsWithOneTryNewErrorNamed {
+pub enum PaginationStartsWithOneTryNewError {
     LimitIsLessThanOrEqualToZero {
         #[eo_to_err_string_serialize_deserialize]
         limit: i64,
@@ -42,31 +42,26 @@ impl PaginationStartsWithOne {
     pub const fn start(&self) -> i64 {
         self.0.start()
     }
-    pub fn try_new(
-        limit: i64,
-        offset: i64,
-    ) -> Result<Self, PaginationStartsWithOneTryNewErrorNamed> {
+    pub fn try_new(limit: i64, offset: i64) -> Result<Self, PaginationStartsWithOneTryNewError> {
         if limit <= 0 || offset < 1 {
             if limit <= 0 {
                 Err(
-                    PaginationStartsWithOneTryNewErrorNamed::LimitIsLessThanOrEqualToZero {
+                    PaginationStartsWithOneTryNewError::LimitIsLessThanOrEqualToZero {
                         limit,
                         code_occurence: code_occurence!(),
                     },
                 )
             } else {
-                Err(
-                    PaginationStartsWithOneTryNewErrorNamed::OffsetIsLessThanOne {
-                        offset,
-                        code_occurence: code_occurence!(),
-                    },
-                )
+                Err(PaginationStartsWithOneTryNewError::OffsetIsLessThanOne {
+                    offset,
+                    code_occurence: code_occurence!(),
+                })
             }
         } else if offset.checked_add(limit).is_some() {
             Ok(Self(PaginationBase::new_unchecked(limit, offset)))
         } else {
             Err(
-                PaginationStartsWithOneTryNewErrorNamed::OffsetPlusLimitIsIntOverflow {
+                PaginationStartsWithOneTryNewError::OffsetPlusLimitIsIntOverflow {
                     limit,
                     offset,
                     code_occurence: code_occurence!(),
@@ -239,7 +234,7 @@ impl<'lifetime> PgTypeWhereFilter<'lifetime> for PaginationStartsWithOne {
         increment: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
-    ) -> Result<String, QueryPartErrorNamed> {
+    ) -> Result<String, QueryPartError> {
         self.0
             .query_part(increment, column, is_need_to_add_logical_operator)
     }

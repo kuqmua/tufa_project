@@ -508,7 +508,7 @@ pub fn error_occurence(input: Ts) -> Ts {
     };
     let generated = quote! {#tokens};
     // println!("{generated} ");
-    // if ident == "ErrorNamed" {
+    // if ident == "Error" {
     //     maybe_write_ts_into_file(
     //         ShouldWriteTokenStreamIntoFile::True,
     //         "error_occurence",

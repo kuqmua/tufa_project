@@ -1,7 +1,7 @@
 pub use futures::TryStreamExt;
 pub use pg_crud_common::*;
 pub use pg_json_object_type::{
-    GenPgJsonObjectType, UniqueVec, UniqueVecTryNewErrorNamed, pg_json_object_type_config,
+    GenPgJsonObjectType, UniqueVec, UniqueVecTryNewError, pg_json_object_type_config,
 };
 pub use pg_json_types::*;
 pub use pg_table::{

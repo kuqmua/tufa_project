@@ -9,7 +9,7 @@ use http_body::SizeHint;
 use http_logic::GetAxumHttpStatusCode;
 use thiserror::Error;
 #[derive(Debug, Error, ErrorOccurence)]
-pub enum ErrorNamed {
+pub enum BodySizeError {
     ReachedMaximumSizeOfBody {
         #[eo_to_err_string]
         axum_error: Error,
@@ -20,18 +20,18 @@ pub enum ErrorNamed {
         code_occurence: CodeOccurence,
     },
 }
-impl GetAxumHttpStatusCode for ErrorNamed {
+impl GetAxumHttpStatusCode for BodySizeError {
     fn get_axum_http_status_code(&self) -> StatusCode {
         match self {
             Self::ReachedMaximumSizeOfBody { .. } => StatusCode::PAYLOAD_TOO_LARGE,
         }
     }
 }
-pub async fn check_body_size(body: Body, limit: usize) -> Result<Bytes, ErrorNamed> {
+pub async fn check_body_size(body: Body, limit: usize) -> Result<Bytes, BodySizeError> {
     let size_hint = HttpBody::size_hint(&body);
     match to_bytes(body, limit).await {
         Ok(value) => Ok(value),
-        Err(error) => Err(ErrorNamed::ReachedMaximumSizeOfBody {
+        Err(error) => Err(BodySizeError::ReachedMaximumSizeOfBody {
             axum_error: error,
             maximum_size_of_body_limit_in_bytes: limit,
             size_hint,

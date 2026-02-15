@@ -1,5 +1,5 @@
 //todo
-pub use pg_types_common::{PaginationStartsWithOne, PaginationStartsWithOneTryNewErrorNamed};
+pub use pg_types_common::{PaginationStartsWithOne, PaginationStartsWithOneTryNewError};
 
 gen_pg_types::gen_pg_types!({
     "pg_table_columns_content_write_into_pg_table_columns_using_pg_types": "False",

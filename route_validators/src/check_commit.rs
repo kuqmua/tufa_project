@@ -8,7 +8,7 @@ use http_logic::GetAxumHttpStatusCode;
 use naming::CommitSc;
 use thiserror::Error;
 #[derive(Debug, Error, ErrorOccurence)]
-pub enum ErrorNamed {
+pub enum CommitError {
     CommitNotEqual {
         #[eo_to_err_string_serialize_deserialize]
         commit_not_equal: String,
@@ -27,7 +27,7 @@ pub enum ErrorNamed {
         code_occurence: CodeOccurence,
     },
 }
-impl GetAxumHttpStatusCode for ErrorNamed {
+impl GetAxumHttpStatusCode for CommitError {
     fn get_axum_http_status_code(&self) -> StatusCode {
         match self {
             Self::CommitNotEqual { .. }
@@ -40,13 +40,13 @@ pub fn check_commit(
     // app_state: &dyn app_state::GetEnableApiGitCommitCheck,
     enable_api_git_commit_check: bool,
     headers: &HeaderMap<HeaderValue>,
-) -> Result<(), ErrorNamed> {
+) -> Result<(), CommitError> {
     if
     // app_state.get_enable_api_git_commit_check()
     enable_api_git_commit_check {
         headers.get(CommitSc.to_string()).map_or_else(
             || {
-                Err(ErrorNamed::NoCommitHeader {
+                Err(CommitError::NoCommitHeader {
                     no_commit_header: String::from("no_commit_header"),
                     code_occurence: code_occurence!(),
                 })
@@ -56,14 +56,14 @@ pub fn check_commit(
                     if value_16408fd2 == PROJECT_GIT_INFO.commit {
                         Ok(())
                     } else {
-                        Err(ErrorNamed::CommitNotEqual {
+                        Err(CommitError::CommitNotEqual {
                             commit_not_equal: String::from("different project commit provided, services must work only with equal project commits"),
                             commit_to_use: GetGitCommitLink::get_git_commit_link(&PROJECT_GIT_INFO),
                             code_occurence: code_occurence!(),
                         })
                     }
                 }
-                Err(error) => Err(ErrorNamed::CommitToStrConversion {
+                Err(error) => Err(CommitError::CommitToStrConversion {
                     commit_to_str_conversion: error,
                     code_occurence: code_occurence!(),
                 }),
