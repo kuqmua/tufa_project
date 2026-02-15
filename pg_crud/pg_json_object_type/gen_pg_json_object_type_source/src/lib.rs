@@ -80,10 +80,10 @@ use pg_crud_macros_common::{
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use std::iter::repeat_with;
-use syn::token::{Colon, Pub};
 use syn::{
     Data, DeriveInput, Field, FieldMutability, Fields, Ident, Path, Type, TypePath, Visibility,
     parse2,
+    token::{Colon, Pub},
 };
 use token_patterns::{
     AllowClippyArbitrarySourceItemOrdering, MustUse, PgCrudDefaultOptionSomeVecOneElCall,
