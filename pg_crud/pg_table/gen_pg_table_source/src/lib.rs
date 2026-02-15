@@ -1,13 +1,12 @@
 use gen_quotes::double_quotes_ts;
 use macros_helpers::{
-    AttributeIdentStr, DeriveClone, DeriveCopy, ErrorOccurenceFieldAttribute, FormatWithCargofmt,
+    AttrIdentStr, DeriveClone, DeriveCopy, ErrorOccurenceFieldAttr, FormatWithCargofmt,
     ShouldWriteTokenStreamIntoFile, StatusCode, StructOrEnumDeriveTokenStreamBuilder,
     SynFieldWrapper, code_occurence_syn_field, gen_field_code_occurence_new_ts,
     gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts,
     gen_impl_error_occurence_lib_to_err_string_ts, gen_impl_pub_try_new_for_ident_ts,
     gen_impl_std_fmt_display_ts, gen_serde_version_of_named_syn_variant,
-    gen_simple_syn_punctuated_punctuated, get_macro_attribute_meta_list_ts,
-    maybe_write_ts_into_file,
+    gen_simple_syn_punctuated_punctuated, get_macro_attr_meta_list_ts, maybe_write_ts_into_file,
 };
 use naming::{
     AdditionalParametersSc, AppStateSc, AsRefStrEnumWithUnitFieldsToScStr,
@@ -106,7 +105,7 @@ use token_patterns::{
     AllowClippyArbitrarySourceItemOrdering, Bool, Char, CoreDefaultDefaultDefault,
     DeriveDebugSerdeSerializeSerdeDeserialize, DeriveDebugThisErrorErrorOccurence,
     DeriveDebugThiserrorErrorOccurence, Error0, Error1, Error2, Error3, F32, F64,
-    FieldAttributeSerdeSkipSerializingIfOptionIsNone, I8, I16, I32, I64, MustUse,
+    FieldAttrSerdeSkipSerializingIfOptionIsNone, I8, I16, I32, I64, MustUse,
     PgCrudCommonDefaultOptionSomeVecOneEl, PgCrudCommonDefaultOptionSomeVecOneElCall,
     PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall, PgCrudDefaultOptionSomeVecOneElCall,
     RefStr, SqlxAcquire, SqlxRow, StdStringString, U8, U16, U32, U64,
@@ -114,7 +113,7 @@ use token_patterns::{
 //todo decide where to do error log (maybe add in some places)
 //todo gen route what will return columns of the table and their rust and postgersql types
 //todo created at and updated at fields + created by + updated by
-//todo attributes for activation generation crud methods(like gen create, update_one, delete_one)
+//todo attrs for activation generation crud methods(like gen create, update_one, delete_one)
 //todo authorization for returning concrete error or just minimal info(user role)
 //todo gen rules and roles
 //todo maybe add unnest sql types?
@@ -207,28 +206,28 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 | Self::DeleteOne => StatusCode::Ok200,
             }
         }
-        const fn gen_pg_table_attribute_additional_error_variants(self) -> GenPgTableAttribute {
+        const fn gen_pg_table_attr_additional_error_variants(self) -> GenPgTableAttr {
             match self {
-                Self::CreateMany => GenPgTableAttribute::CreateManyAdditionalErrorVariants,
-                Self::CreateOne => GenPgTableAttribute::CreateOneAdditionalErrorVariants,
-                Self::ReadMany => GenPgTableAttribute::ReadManyAdditionalErrorVariants,
-                Self::ReadOne => GenPgTableAttribute::ReadOneAdditionalErrorVariants,
-                Self::UpdateMany => GenPgTableAttribute::UpdateManyAdditionalErrorVariants,
-                Self::UpdateOne => GenPgTableAttribute::UpdateOneAdditionalErrorVariants,
-                Self::DeleteMany => GenPgTableAttribute::DeleteManyAdditionalErrorVariants,
-                Self::DeleteOne => GenPgTableAttribute::DeleteOneAdditionalErrorVariants,
+                Self::CreateMany => GenPgTableAttr::CreateManyAdditionalErrorVariants,
+                Self::CreateOne => GenPgTableAttr::CreateOneAdditionalErrorVariants,
+                Self::ReadMany => GenPgTableAttr::ReadManyAdditionalErrorVariants,
+                Self::ReadOne => GenPgTableAttr::ReadOneAdditionalErrorVariants,
+                Self::UpdateMany => GenPgTableAttr::UpdateManyAdditionalErrorVariants,
+                Self::UpdateOne => GenPgTableAttr::UpdateOneAdditionalErrorVariants,
+                Self::DeleteMany => GenPgTableAttr::DeleteManyAdditionalErrorVariants,
+                Self::DeleteOne => GenPgTableAttr::DeleteOneAdditionalErrorVariants,
             }
         }
-        const fn gen_pg_table_attribute_additional_logic(self) -> GenPgTableAttribute {
+        const fn gen_pg_table_attr_additional_logic(self) -> GenPgTableAttr {
             match self {
-                Self::CreateMany => GenPgTableAttribute::CreateManyAdditionalLogic,
-                Self::CreateOne => GenPgTableAttribute::CreateOneAdditionalLogic,
-                Self::ReadMany => GenPgTableAttribute::ReadManyAdditionalLogic,
-                Self::ReadOne => GenPgTableAttribute::ReadOneAdditionalLogic,
-                Self::UpdateMany => GenPgTableAttribute::UpdateManyAdditionalLogic,
-                Self::UpdateOne => GenPgTableAttribute::UpdateOneAdditionalLogic,
-                Self::DeleteMany => GenPgTableAttribute::DeleteManyAdditionalLogic,
-                Self::DeleteOne => GenPgTableAttribute::DeleteOneAdditionalLogic,
+                Self::CreateMany => GenPgTableAttr::CreateManyAdditionalLogic,
+                Self::CreateOne => GenPgTableAttr::CreateOneAdditionalLogic,
+                Self::ReadMany => GenPgTableAttr::ReadManyAdditionalLogic,
+                Self::ReadOne => GenPgTableAttr::ReadOneAdditionalLogic,
+                Self::UpdateMany => GenPgTableAttr::UpdateManyAdditionalLogic,
+                Self::UpdateOne => GenPgTableAttr::UpdateOneAdditionalLogic,
+                Self::DeleteMany => GenPgTableAttr::DeleteManyAdditionalLogic,
+                Self::DeleteOne => GenPgTableAttr::DeleteOneAdditionalLogic,
             }
         }
         const fn http_method(self) -> OperationHttpMethod {
@@ -333,7 +332,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, Display)]
-    enum GenPgTableAttribute {
+    enum GenPgTableAttr {
         CreateManyAdditionalErrorVariants,
         CreateOneAdditionalErrorVariants,
         ReadManyAdditionalErrorVariants,
@@ -353,8 +352,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         DeleteOneAdditionalLogic,
         CommonAdditionalLogic,
     }
-    impl GenPgTableAttribute {
-        fn gen_path_to_attribute(self) -> String {
+    impl GenPgTableAttr {
+        fn gen_path_to_attr(self) -> String {
             let value = match self {
                 Self::CreateManyAdditionalErrorVariants => {
                     CreateManyAdditionalErrorVariantsSc.to_string()
@@ -436,8 +435,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let sqlx_acquire = SqlxAcquire;
     let derive_debug_serde_serialize_serde_deserialize = DeriveDebugSerdeSerializeSerdeDeserialize;
     let ref_str = RefStr;
-    let field_attribute_serde_skip_serializing_if_option_is_none_ts =
-        FieldAttributeSerdeSkipSerializingIfOptionIsNone;
+    let field_attr_serde_skip_serializing_if_option_is_none_ts =
+        FieldAttrSerdeSkipSerializingIfOptionIsNone;
     let sqlx_row = SqlxRow;
     let pg_crud_default_option_some_vec_one_el_call_ts = PgCrudDefaultOptionSomeVecOneElCall;
     let string_ts = StdStringString;
@@ -450,7 +449,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     // let pg_crud_all_variants_default_option_some_vec_one_el_call_ts = PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElCall;
     let syn_derive_input: DeriveInput = parse2(input).expect("991c614f");
     let gen_pg_table_config = from_str::<GenPgTableConfig>(
-        &get_macro_attribute_meta_list_ts(
+        &get_macro_attr_meta_list_ts(
             &syn_derive_input.attrs,
             &format!("{}::gen_pg_table_config", import_path.sc_str()),
         )
@@ -879,7 +878,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let new_syn_variant_wrapper = |variant_name: &dyn Display,
                                    status_code: Option<StatusCode>,
                                    current_fields: Vec<(
-        ErrorOccurenceFieldAttribute,
+        ErrorOccurenceFieldAttr,
         &dyn Display,
         Punctuated<PathSegment, PathSep>,
     )>|
@@ -887,7 +886,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         SynVariantWrapper {
             variant: Variant {
                 attrs: {
-                    let mut attributes = Vec::new();
+                    let mut attrs = Vec::new();
                     if let Some(value) = status_code.as_ref() {
                         let mut segments = Punctuated::new();
                         segments.push(PathSegment {
@@ -897,7 +896,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             ),
                             arguments: PathArguments::None,
                         });
-                        attributes.push(Attribute {
+                        attrs.push(Attribute {
                             pound_token: Pound {
                                 spans: [proc_macro2::Span::call_site()],
                             },
@@ -909,7 +908,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             }),
                         });
                     }
-                    attributes
+                    attrs
                 },
                 ident: Ident::new(&variant_name.to_string(), proc_macro2::Span::call_site()),
                 fields: Fields::Named(FieldsNamed {
@@ -931,9 +930,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 let mut handle = Punctuated::new();
                                                 handle.push(PathSegment {
                                                     ident: Ident::new(
-                                                        AttributeIdentStr::attribute_ident_str(
-                                                            &element.0,
-                                                        ),
+                                                        AttrIdentStr::attr_ident_str(&element.0),
                                                         proc_macro2::Span::call_site(),
                                                     ),
                                                     arguments: PathArguments::None,
@@ -978,7 +975,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &QueryPartUcc,
         Some(StatusCode::BadRequest400),
         vec![(
-            ErrorOccurenceFieldAttribute::EoErrorOccurence,
+            ErrorOccurenceFieldAttr::EoErrorOccurence,
             &ErrorSc,
             gen_simple_syn_punctuated_punctuated(&[
                 &PgCrudSc.to_string(),
@@ -1410,13 +1407,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             }
         };
-    let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string_serialize_deserialize =
-        ErrorOccurenceFieldAttribute::EoToErrStringSerializeDeserialize;
+    let macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string_serialize_deserialize =
+        ErrorOccurenceFieldAttr::EoToErrStringSerializeDeserialize;
     let string_syn_punctuated_punctuated = gen_simple_syn_punctuated_punctuated(&["String"]);
     let try_bind_syn_variant_wrapper = new_syn_variant_wrapper(
         &TryBindUcc,
         Some(StatusCode::InternalServerError500),
-        vec![(macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string_serialize_deserialize, &TryBindSc, string_syn_punctuated_punctuated.clone())],
+        vec![(macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string_serialize_deserialize, &TryBindSc, string_syn_punctuated_punctuated.clone())],
     );
     let gen_query_pg_type_where_filter_query_bind_parameters_payload_where_many_query_ts =
         |operation: &Operation| {
@@ -1443,13 +1440,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         TryFromSqlxPgPgRowWithNotEmptyUniqueVecSelfSelectSc::from_display(&ident);
     let sqlx_error_syn_punctuated_punctuated =
         gen_simple_syn_punctuated_punctuated(&["sqlx", "Error"]);
-    let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string =
-        ErrorOccurenceFieldAttribute::EoToErrString;
+    let macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string =
+        ErrorOccurenceFieldAttr::EoToErrString;
     let pg_syn_variant_wrapper = new_syn_variant_wrapper(
         &PgUcc,
         Some(StatusCode::InternalServerError500),
         vec![(
-            macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
+            macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string,
             &PgSc,
             sqlx_error_syn_punctuated_punctuated.clone(),
         )],
@@ -1555,7 +1552,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let field_option_primary_key_ts = {
                         let std_option_option_value_primary_key_field_type_as_pg_type_read_ts = gen_std_option_option_tokens_declaration_ts(&gen_value_declaration_ts(&gen_as_pg_type_read_ts(&primary_key_field_type)));
                         quote! {
-                            #field_attribute_serde_skip_serializing_if_option_is_none_ts
+                            #field_attr_serde_skip_serializing_if_option_is_none_ts
                             pub #primary_key_field_ident: #std_option_option_value_primary_key_field_type_as_pg_type_read_ts
                         }
                     };
@@ -1564,7 +1561,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let field_ident = &element.field_ident;
                         let std_option_option_value_field_type_as_pg_type_read_ts = gen_std_option_option_tokens_declaration_ts(&gen_value_declaration_ts(&gen_as_pg_type_read_ts(&element.field_type)));
                         quote! {
-                            #field_attribute_serde_skip_serializing_if_option_is_none_ts
+                            #field_attr_serde_skip_serializing_if_option_is_none_ts
                             #field_visibility #field_ident: #std_option_option_value_field_type_as_pg_type_read_ts
                         }
                     });
@@ -2155,12 +2152,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         Some(StatusCode::InternalServerError500),
         vec![
             (
-                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
+                macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string,
                 &RowSc,
                 sqlx_error_syn_punctuated_punctuated.clone(),
             ),
             (
-                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
+                macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string,
                 &RollbackSc,
                 sqlx_error_syn_punctuated_punctuated,
             ),
@@ -2181,7 +2178,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &NotUniqueFieldUcc,
         Some(StatusCode::BadRequest400),
         vec![(
-            macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string_serialize_deserialize,
+            macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string_serialize_deserialize,
             &NotUniqueFieldSc,
             gen_simple_syn_punctuated_punctuated(&[&ident_select_ucc.to_string()]),
         )],
@@ -2190,7 +2187,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &SerdeJsonToStringUcc,
         None,
         vec![(
-            macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
+            macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string,
             &SerdeJsonToStringSc,
             gen_simple_syn_punctuated_punctuated(&["serde_json", "Error"]),
         )],
@@ -2200,17 +2197,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         Some(StatusCode::BadRequest400),
         vec![
             (
-                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
+                macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string,
                 &StatusCodeSc,
                 gen_simple_syn_punctuated_punctuated(&["reqwest", "StatusCode"]),
             ),
             (
-                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
+                macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string,
                 &HeadersSc,
                 gen_simple_syn_punctuated_punctuated(&["reqwest", "header", "HeaderMap"]),
             ),
             (
-                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
+                macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string,
                 &ReqwestSc,
                 gen_simple_syn_punctuated_punctuated(&["reqwest", "Error"]),
             ),
@@ -2220,21 +2217,21 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &DeserializeResponseUcc,
         None,
         vec![
-            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string, &StatusCodeSc, gen_simple_syn_punctuated_punctuated(&["reqwest", "StatusCode"])),
+            (macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string, &StatusCodeSc, gen_simple_syn_punctuated_punctuated(&["reqwest", "StatusCode"])),
             (
-                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
+                macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string,
                 &HeadersSc,
                 gen_simple_syn_punctuated_punctuated(&["reqwest", "header", "HeaderMap"]),
             ),
-            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string_serialize_deserialize, &ResponseTextSc, string_syn_punctuated_punctuated),
-            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string, &SerdeSc, gen_simple_syn_punctuated_punctuated(&["serde_json", "Error"])),
+            (macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string_serialize_deserialize, &ResponseTextSc, string_syn_punctuated_punctuated),
+            (macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string, &SerdeSc, gen_simple_syn_punctuated_punctuated(&["serde_json", "Error"])),
         ],
     );
     let reqwest_syn_variant_wrapper = new_syn_variant_wrapper(
         &ReqwestUcc,
         None,
         vec![(
-            macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
+            macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string,
             &ReqwestSc,
             gen_simple_syn_punctuated_punctuated(&["reqwest", "Error"]),
         )],
@@ -2243,7 +2240,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &CheckBodySizeUcc,
         Some(StatusCode::BadRequest400),
         vec![(
-            ErrorOccurenceFieldAttribute::EoErrorOccurence,
+            ErrorOccurenceFieldAttr::EoErrorOccurence,
             &CheckBodySizeSc,
             gen_simple_syn_punctuated_punctuated(&[
                 &PgCrudSc.to_string(),
@@ -2256,7 +2253,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &SerdeJsonUcc,
         Some(StatusCode::BadRequest400),
         vec![(
-            macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
+            macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string,
             &SerdeJsonSc,
             gen_simple_syn_punctuated_punctuated(&["serde_json", "Error"]),
         )],
@@ -2266,7 +2263,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &HeaderContentTypeApplicationJsonNotFoundUcc,
             Some(StatusCode::BadRequest400),
             Vec::<(
-                ErrorOccurenceFieldAttribute,
+                ErrorOccurenceFieldAttr,
                 &'static dyn Display,
                 Punctuated<PathSegment, PathSep>,
             )>::default(),
@@ -2286,17 +2283,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         ]
     };
     let gen_additional_error_variants = |current_syn_derive_input: &DeriveInput,
-                                         gen_pg_table_attribute: GenPgTableAttribute|
+                                         gen_pg_table_attr: GenPgTableAttr|
      -> Vec<Variant> {
-        let gen_pg_table_attribute_str = gen_pg_table_attribute.to_string();
-        let common_additional_error_variants_attribute_ts = get_macro_attribute_meta_list_ts(
+        let gen_pg_table_attr_str = gen_pg_table_attr.to_string();
+        let common_additional_error_variants_attr_ts = get_macro_attr_meta_list_ts(
             &current_syn_derive_input.attrs,
-            &gen_pg_table_attribute.gen_path_to_attribute(),
+            &gen_pg_table_attr.gen_path_to_attr(),
         );
         let value: DeriveInput =
-            parse2((*common_additional_error_variants_attribute_ts).clone()).expect("1b80783d");
+            parse2((*common_additional_error_variants_attr_ts).clone()).expect("1b80783d");
         let value_ident_str = value.ident.to_string();
-        assert!(value_ident_str == gen_pg_table_attribute_str, "8a66c852");
+        assert!(value_ident_str == gen_pg_table_attr_str, "8a66c852");
         let variants = if let Data::Enum(data_enum) = value.data {
             data_enum.variants
         } else {
@@ -2306,7 +2303,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let common_additional_error_variants = gen_additional_error_variants(
         &syn_derive_input,
-        GenPgTableAttribute::CommonAdditionalErrorVariants,
+        GenPgTableAttr::CommonAdditionalErrorVariants,
     );
     let common_route_syn_variants = {
         let mut acc_94f701ab = vec![
@@ -2320,9 +2317,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
         acc_94f701ab
     };
-    let common_additional_logic_ts = get_macro_attribute_meta_list_ts(
+    let common_additional_logic_ts = get_macro_attr_meta_list_ts(
         &syn_derive_input.attrs,
-        &GenPgTableAttribute::CommonAdditionalLogic.gen_path_to_attribute(),
+        &GenPgTableAttr::CommonAdditionalLogic.gen_path_to_attr(),
     );
     let gen_pub_handle_ts = |is_pub: bool| {
         if is_pub {
@@ -2501,33 +2498,31 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let fields_mapped_into_ts = fields_named.named.iter().map(|field| {
             let field_ident = field.ident.as_ref().expect("a21dc807");
-            let error_occurence_attribute = if *field_ident == *CodeOccurenceSc.to_string() {
+            let error_occurence_attr = if *field_ident == *CodeOccurenceSc.to_string() {
                 Ts2::new()
             } else {
-                let mut error_occurence_attribute: Option<ErrorOccurenceFieldAttribute> = None;
+                let mut error_occurence_attr: Option<ErrorOccurenceFieldAttr> = None;
                 for el_1c83e302 in &field.attrs {
                     if el_1c83e302.path().segments.len() == 1 {
                         let segment = el_1c83e302.path().segments.first().expect("5bd7ed8d");
                         if let Ok(value) = {
-                            <ErrorOccurenceFieldAttribute as FromStr>::from_str(
+                            <ErrorOccurenceFieldAttr as FromStr>::from_str(
                                 &segment.ident.to_string(),
                             )
                         } {
-                            if error_occurence_attribute.is_some() {
+                            if error_occurence_attr.is_some() {
                                 panic!("9a469d36")
                             } else {
-                                error_occurence_attribute = Some(value);
+                                error_occurence_attr = Some(value);
                             }
                         }
                     }
                 }
-                error_occurence_attribute
-                    .expect("d1003b2e")
-                    .to_attribute_view_ts()
+                error_occurence_attr.expect("d1003b2e").to_attr_view_ts()
             };
             let field_type = &field.ty;
             quote! {
-                #error_occurence_attribute
+                #error_occurence_attr
                 #field_ident: #field_type
             }
         });
@@ -2688,7 +2683,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
             for el_60533068 in gen_additional_error_variants(
                 &syn_derive_input,
-                operation.gen_pg_table_attribute_additional_error_variants(),
+                operation.gen_pg_table_attr_additional_error_variants(),
             ) {
                 type_variants_from_request_response_syn_variants.push(el_60533068.clone());
             }
@@ -2707,7 +2702,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &ident_operation_error_with_serialize_deserialize_ucc,
                         None,
                         vec![(
-                    macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_err_string,
+                    macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string,
                     &operation.operation_error_with_serialize_deserialize_sc(),
                     gen_simple_syn_punctuated_punctuated(&[
                         &ident_operation_error_with_serialize_deserialize_ucc.to_string(),
@@ -2791,11 +2786,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let additional_validators_ts = {
-            let operation_additional_logic_ts = get_macro_attribute_meta_list_ts(
+            let operation_additional_logic_ts = get_macro_attr_meta_list_ts(
                 &syn_derive_input.attrs,
                 &operation
-                    .gen_pg_table_attribute_additional_logic()
-                    .gen_path_to_attribute(),
+                    .gen_pg_table_attr_additional_logic()
+                    .gen_path_to_attr(),
             );
             quote! {
                 #current_additional_logic_ts

@@ -253,8 +253,8 @@ impl ToTokens for Error3 {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct FieldAttributeSerdeSkipSerializingIfOptionIsNone;
-impl ToTokens for FieldAttributeSerdeSkipSerializingIfOptionIsNone {
+pub struct FieldAttrSerdeSkipSerializingIfOptionIsNone;
+impl ToTokens for FieldAttrSerdeSkipSerializingIfOptionIsNone {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {#[serde(skip_serializing_if = "Option::is_none")]}.to_tokens(tokens);
     }

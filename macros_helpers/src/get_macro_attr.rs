@@ -2,37 +2,37 @@ use proc_macro2::TokenStream as Ts2;
 use quote::ToTokens;
 use syn::{Attribute, Meta};
 #[must_use]
-pub fn get_macro_attribute<'attributes_litime>(
-    attributes: &'attributes_litime [Attribute],
-    attribute_path: &String,
-) -> &'attributes_litime Attribute {
-    let option_attribute = attributes.iter().find(|attr| {
-        *attribute_path == {
+pub fn get_macro_attr<'attrs_litime>(
+    attrs: &'attrs_litime [Attribute],
+    attr_path: &String,
+) -> &'attrs_litime Attribute {
+    let option_attr = attrs.iter().find(|attr| {
+        *attr_path == {
             let mut stringified_path = ToTokens::to_token_stream(&attr.path()).to_string();
             stringified_path.retain(|value_3b43b8ea| !value_3b43b8ea.is_whitespace());
             stringified_path
         }
     });
-    option_attribute.expect("68acaa15")
+    option_attr.expect("68acaa15")
 }
 
 #[must_use]
-pub fn get_macro_attribute_meta_list_ts<'attributes_lifetime>(
-    attributes: &'attributes_lifetime [Attribute],
-    attribute_path: &String,
-) -> &'attributes_lifetime Ts2 {
-    let option_attribute = attributes
+pub fn get_macro_attr_meta_list_ts<'attrs_lifetime>(
+    attrs: &'attrs_lifetime [Attribute],
+    attr_path: &String,
+) -> &'attrs_lifetime Ts2 {
+    let option_attr = attrs
         .iter()
         .find(|attr| {
-            *attribute_path == {
+            *attr_path == {
                 let mut stringified_path = ToTokens::to_token_stream(&attr.path()).to_string();
                 stringified_path.retain(|value_e5eda357| !value_e5eda357.is_whitespace());
                 stringified_path
             }
         })
         .clone();
-    let attribute = option_attribute.expect("9d057161");
-    if let Meta::List(value) = &attribute.meta {
+    let attr = option_attr.expect("9d057161");
+    if let Meta::List(value) = &attr.meta {
         &value.tokens
     } else {
         panic!("985dc2d5")

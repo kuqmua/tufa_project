@@ -15,95 +15,89 @@ fn impl_ident_content_ts(ident_ts: &dyn ToTokens, content_ts: &dyn ToTokens) -> 
 }
 
 pub fn gen_new_ts(
-    attribute_ts: &dyn ToTokens,
+    attr_ts: &dyn ToTokens,
     parameters_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        #attribute_ts
+        #attr_ts
         fn new(#parameters_ts) -> Self {
             #content_ts
         }
     }
 }
 pub fn gen_const_new_ts(
-    attribute_ts: &dyn ToTokens,
+    attr_ts: &dyn ToTokens,
     parameters_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
     let content_ts_5986cf7b =
         const_space_content_ts(&gen_new_ts(&Ts2::new(), parameters_ts, content_ts));
     quote! {
-        #attribute_ts
+        #attr_ts
         #content_ts_5986cf7b
     }
 }
 pub fn gen_pub_new_ts(
-    attribute_ts: &dyn ToTokens,
+    attr_ts: &dyn ToTokens,
     parameters_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
     let content_ts_73940779 =
         pub_space_content_ts(&gen_new_ts(&Ts2::new(), parameters_ts, content_ts));
     quote! {
-        #attribute_ts
+        #attr_ts
         #content_ts_73940779
     }
 }
 pub fn gen_pub_const_new_ts(
-    attribute_ts: &dyn ToTokens,
+    attr_ts: &dyn ToTokens,
     parameters_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
     let content_ts_5dc3668f =
         pub_space_content_ts(&gen_const_new_ts(&Ts2::new(), parameters_ts, content_ts));
     quote! {
-        #attribute_ts
+        #attr_ts
         #content_ts_5dc3668f
     }
 }
 pub fn gen_impl_new_for_ident_ts(
     ident_ts: &dyn ToTokens,
-    attribute_ts: &dyn ToTokens,
+    attr_ts: &dyn ToTokens,
     parameters_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
-    impl_ident_content_ts(
-        ident_ts,
-        &gen_new_ts(attribute_ts, parameters_ts, content_ts),
-    )
+    impl_ident_content_ts(ident_ts, &gen_new_ts(attr_ts, parameters_ts, content_ts))
 }
 pub fn gen_impl_const_new_for_ident_ts(
     ident_ts: &dyn ToTokens,
-    attribute_ts: &dyn ToTokens,
+    attr_ts: &dyn ToTokens,
     parameters_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
-    impl_ident_content_ts(
-        ident_ts,
-        &gen_new_ts(attribute_ts, parameters_ts, content_ts),
-    )
+    impl_ident_content_ts(ident_ts, &gen_new_ts(attr_ts, parameters_ts, content_ts))
 }
 pub fn gen_impl_pub_new_for_ident_ts(
     ident_ts: &dyn ToTokens,
-    attribute_ts: &dyn ToTokens,
+    attr_ts: &dyn ToTokens,
     parameters_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
     impl_ident_content_ts(
         ident_ts,
-        &gen_pub_new_ts(attribute_ts, parameters_ts, content_ts),
+        &gen_pub_new_ts(attr_ts, parameters_ts, content_ts),
     )
 }
 pub fn gen_impl_pub_const_new_for_ident_ts(
     ident_ts: &dyn ToTokens,
-    attribute_ts: &dyn ToTokens,
+    attr_ts: &dyn ToTokens,
     parameters_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
     impl_ident_content_ts(
         ident_ts,
-        &gen_pub_const_new_ts(attribute_ts, parameters_ts, content_ts),
+        &gen_pub_const_new_ts(attr_ts, parameters_ts, content_ts),
     )
 }
 

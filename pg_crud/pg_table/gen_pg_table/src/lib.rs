@@ -1,7 +1,7 @@
 //todo decide where to do error log (maybe add in some places)
 //todo gen route what will return columns of the table and their rust and postgersql types
 //todo created at and updated at fields + created by + updated by
-//todo attributes for activation generation crud methods(like gen create, update_one, delete_one)
+//todo attrs for activation generation crud methods(like gen create, update_one, delete_one)
 //todo authorization for returning concrete error or just minimal info(user role)
 //todo gen rules and roles
 //todo maybe add unnest sql types?

@@ -596,7 +596,7 @@ impl ToTokens for UpdateQueryPartJsonbSetPathUnderscore {
     }
 }
 pub fn gen_pg_type_where_ts(
-    attributes_ts: &dyn ToTokens,
+    attrs_ts: &dyn ToTokens,
     variants: &Vec<&dyn PgFilter>,
     prefix: &dyn ToTokens,
     should_derive_utoipa_to_schema: &ShouldDeriveUtoipaToSchema,
@@ -614,7 +614,7 @@ pub fn gen_pg_type_where_ts(
             quote! {#el_ucc(where_filters::#prefix_where_self_ucc #type_ts)}
         });
         quote! {
-            #attributes_ts
+            #attrs_ts
             #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize #should_derive_utoipa_to_schema #should_derive_schemars_json_schema)]
             pub enum #ident {
                 #(#variants_ts),*

@@ -1,4 +1,4 @@
-use crate::attribute_ident_str::AttributeIdentStr;
+use crate::attr_ident_str::AttrIdentStr;
 use naming::{CodeOccurenceSc, HashMapUcc, WithSerializeDeserializeUcc};
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
@@ -10,7 +10,7 @@ use token_patterns::StdStringString;
 
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
-pub enum ErrorOccurenceFieldAttribute {
+pub enum ErrorOccurenceFieldAttr {
     EoToErrString,
     EoToErrStringSerializeDeserialize,
     EoErrorOccurence,
@@ -21,7 +21,7 @@ pub enum ErrorOccurenceFieldAttribute {
     EoHashMapKeyStdStringStringValueToErrStringSerializeDeserialize,
     EoHashMapKeyStdStringStringValueErrorOccurence,
 }
-impl FromStr for ErrorOccurenceFieldAttribute {
+impl FromStr for ErrorOccurenceFieldAttr {
     type Err = ();
     fn from_str(value: &str) -> Result<Self, Self::Err> {
         if value == "eo_to_err_string" {
@@ -49,10 +49,10 @@ impl FromStr for ErrorOccurenceFieldAttribute {
         }
     }
 }
-impl TryFrom<&Field> for ErrorOccurenceFieldAttribute {
+impl TryFrom<&Field> for ErrorOccurenceFieldAttr {
     type Error = String;
     fn try_from(syn_field: &Field) -> Result<Self, Self::Error> {
-        let mut option_attribute = None;
+        let mut option_attr = None;
         for el_adfb232c in &syn_field.attrs {
             if el_adfb232c.path().segments.len() == 1 {
                 let first_segment_ident = match el_adfb232c.path().segments.first() {
@@ -62,18 +62,18 @@ impl TryFrom<&Field> for ErrorOccurenceFieldAttribute {
                     }
                 };
                 if let Ok(value) = FromStr::from_str(&first_segment_ident.to_string()) {
-                    if option_attribute.is_some() {
-                        return Err("two or more supported attributes!".to_owned());
+                    if option_attr.is_some() {
+                        return Err("two or more supported attrs!".to_owned());
                     }
-                    option_attribute = Some(value);
+                    option_attr = Some(value);
                 }
-            } //other attributes are not for this proc_macro
+            } //other attrs are not for this proc_macro
         }
-        option_attribute.map_or_else(|| Err("option attribute is None".to_owned()), Ok)
+        option_attr.map_or_else(|| Err("option attr is None".to_owned()), Ok)
     }
 }
-impl AttributeIdentStr for ErrorOccurenceFieldAttribute {
-    fn attribute_ident_str(&self) -> &str {
+impl AttrIdentStr for ErrorOccurenceFieldAttr {
+    fn attr_ident_str(&self) -> &str {
         match *self {
             Self::EoToErrString => "eo_to_err_string",
             Self::EoToErrStringSerializeDeserialize => "eo_to_err_string_serialize_deserialize",
@@ -95,10 +95,10 @@ impl AttributeIdentStr for ErrorOccurenceFieldAttribute {
         }
     }
 }
-impl ErrorOccurenceFieldAttribute {
+impl ErrorOccurenceFieldAttr {
     #[must_use]
-    pub fn to_attribute_view_ts(&self) -> Ts2 {
-        let value = format!("#[{}]", AttributeIdentStr::attribute_ident_str(self));
+    pub fn to_attr_view_ts(&self) -> Ts2 {
+        let value = format!("#[{}]", AttrIdentStr::attr_ident_str(self));
         value.parse::<Ts2>().expect("147c39e9")
     }
 }
@@ -143,22 +143,22 @@ pub fn gen_serde_version_of_named_syn_variant(value: &Variant) -> Ts2 {
             let el_type = &el_c25b655e.ty;
             quote! {#el_type}
         };
-        let el_type_with_serialize_deserialize_ts = match ErrorOccurenceFieldAttribute::try_from(el_c25b655e).expect("2db209a8") {
-            ErrorOccurenceFieldAttribute::EoToErrString => {
+        let el_type_with_serialize_deserialize_ts = match ErrorOccurenceFieldAttr::try_from(el_c25b655e).expect("2db209a8") {
+            ErrorOccurenceFieldAttr::EoToErrString => {
                 quote! {
                     #StdStringString
                 }
             }
-            ErrorOccurenceFieldAttribute::EoToErrStringSerializeDeserialize | ErrorOccurenceFieldAttribute::EoVecToErrStringSerializeDeserialize => el_type_ts,
-            ErrorOccurenceFieldAttribute::EoErrorOccurence => format!(
+            ErrorOccurenceFieldAttr::EoToErrStringSerializeDeserialize | ErrorOccurenceFieldAttr::EoVecToErrStringSerializeDeserialize => el_type_ts,
+            ErrorOccurenceFieldAttr::EoErrorOccurence => format!(
                 "{el_type_ts}{WithSerializeDeserializeUcc}"
             ).parse::<Ts2>().expect("201dc0a4"),
-            ErrorOccurenceFieldAttribute::EoVecToErrString => {
+            ErrorOccurenceFieldAttr::EoVecToErrString => {
                 quote! {
                     Vec<#StdStringString>
                 }
             }
-            ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
+            ErrorOccurenceFieldAttr::EoVecErrorOccurence => {
                 let segments = if let Type::Path(path_value) = &el_c25b655e.ty {
                     &path_value.path.segments
                 } else {
@@ -183,17 +183,17 @@ pub fn gen_serde_version_of_named_syn_variant(value: &Variant) -> Ts2 {
                     Vec<#el_vec_type_with_serialize_deserialize_ts>
                 }
             }
-            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToErrString => {
+            ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrString => {
                 let _: &GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap();
                 quote! {
                     std::collections::HashMap<#StdStringString, #StdStringString>
                 }
             }
-            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToErrStringSerializeDeserialize => {
+            ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrStringSerializeDeserialize => {
                 let _: &GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap();
                 el_type_ts
             }
-            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
+            ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueErrorOccurence => {
                 let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap();
                 let el_hashmap_value_type_with_serialize_deserialize_ts = format!(
                     "{}{}",

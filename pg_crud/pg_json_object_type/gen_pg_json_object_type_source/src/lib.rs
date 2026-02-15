@@ -6,7 +6,7 @@ use macros_helpers::{
     gen_if_write_is_err_ts, gen_impl_error_occurence_lib_to_err_string_ts, gen_impl_from_ts,
     gen_impl_pub_const_new_for_ident_ts, gen_impl_pub_new_for_ident_ts,
     gen_impl_std_fmt_display_ts, gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts,
-    gen_pub_type_alias_ts, gen_simple_syn_punctuated_punctuated, get_macro_attribute_meta_list_ts,
+    gen_pub_type_alias_ts, gen_simple_syn_punctuated_punctuated, get_macro_attr_meta_list_ts,
     maybe_write_ts_into_file,
 };
 use naming::{
@@ -125,7 +125,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
     let syn_derive_input: DeriveInput = parse2(input_ts).expect("e5f0e27b");
     let import_path = ImportPath::PgCrud;
     let gen_pg_json_object_type_config = from_str::<GenPgJsonTypesConfig>(
-        &get_macro_attribute_meta_list_ts(
+        &get_macro_attr_meta_list_ts(
             &syn_derive_input.attrs,
             &format!("{}::pg_json_object_type_config", import_path.sc_str()),
         )
@@ -683,7 +683,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     PgJsonTypeSubtypeTableTypeDeclarationOrCreate::Create => &ident_create_ucc,
                 };
                 let gen_ident_table_type_declaration_or_create_ts = |
-                    attributes_ts: &dyn ToTokens,
+                    attrs_ts: &dyn ToTokens,
                     current_ident_ts: &dyn ToTokens,
                     content_ts: &dyn ToTokens
                 | {
@@ -701,7 +701,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &content_ts
                     );
                     quote!{
-                        #attributes_ts
+                        #attrs_ts
                         #content_ts_44f35e48
                     }
                 };
@@ -930,7 +930,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let ident_array_not_null_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ident_array_not_null_ucc);
             let pg_crud_path_pg_json_type_uuid_uuid_create_for_query_ts = gen_type_as_pg_json_type_create_for_query_ts(&uuid_uuid_as_not_null_jsonb_string_ts);
             let gen_debug_clone_partialeq_serialize_pub_struct_ts = |
-                attributes_ts: &dyn ToTokens,
+                attrs_ts: &dyn ToTokens,
                 current_ident_ts: &dyn ToTokens,
                 content_ts_153ac202: &dyn ToTokens
             | {
@@ -945,7 +945,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &content_ts_153ac202
                     );
                 quote!{
-                    #attributes_ts
+                    #attrs_ts
                     #content_ts_6ea2da58
                 }
             };
@@ -1167,7 +1167,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             };
             let ident_select_ts = {
                 let gen_pub_struct_ident_select_ts = |
-                    attributes_ts: &dyn ToTokens,
+                    attrs_ts: &dyn ToTokens,
                     current_ident_ts: &dyn ToTokens,
                     content_ts_fc7ad384: &dyn ToTokens
                 | {
@@ -1185,7 +1185,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &content_ts_fc7ad384
                     );
                     quote!{
-                        #attributes_ts
+                        #attrs_ts
                         #content_ts_83d3ad18
                     }
                 };
@@ -1604,7 +1604,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         quote! {#(#variants_ts),*}
                     };
                     let gen_ident_where_ts = |
-                        attributes_ts: &dyn ToTokens,
+                        attrs_ts: &dyn ToTokens,
                         current_ident_ts: &dyn ToTokens,
                         content_ts_e1af2d89: &dyn ToTokens
                     | {
@@ -1622,7 +1622,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             &quote!{{#content_ts_e1af2d89}}
                         );
                         quote!{
-                            #attributes_ts
+                            #attrs_ts
                             #content_ts_60d5d187
                         }
                     };
