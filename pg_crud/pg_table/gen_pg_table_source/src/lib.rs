@@ -91,6 +91,7 @@ use std::{
     iter::once,
     str::FromStr,
 };
+use strum_macros::Display;
 use syn::{
     AttrStyle, Attribute, Data, DeriveInput, Field, FieldMutability, Fields, FieldsNamed, Ident,
     Meta, Path, PathArguments, PathSegment, Type, TypePath, Variant, Visibility, parse2,
@@ -328,7 +329,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         ReadOne,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, strum_macros::Display)]
+    #[derive(Debug, Display)]
     enum GenPgTableAttribute {
         CreateManyAdditionalErrorVariants,
         CreateOneAdditionalErrorVariants,

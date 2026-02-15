@@ -80,6 +80,7 @@ use pg_crud_macros_common::{
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use std::iter::repeat_with;
+use strum_macros::{Display, EnumIter};
 use syn::{
     Data, DeriveInput, Field, FieldMutability, Fields, Ident, Path, Type, TypePath, Visibility,
     parse2,
@@ -105,8 +106,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         PartialEq,
         serde::Serialize,
         serde::Deserialize,
-        strum_macros::Display,
-        strum_macros::EnumIter,
+        Display,
+        EnumIter,
         enum_extension_lib::EnumExtension,
     )]
     enum Pattern {
@@ -213,7 +214,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         .into_iter()
         .enumerate()
         .map(|(index, element)| {
-            #[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+            #[derive(Debug, Display, EnumIter, enum_extension_lib::EnumExtension)]
             enum IsStandartWithId {
                 False,
                 True,
@@ -227,7 +228,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 ArrayNullableWithIdentifier,//Identifier instead of Id - just to fix clippy lint
             }
             #[allow(clippy::arbitrary_source_item_ordering)]
-            #[derive(Debug, Clone, strum_macros::Display)]
+            #[derive(Debug, Clone, Display)]
             enum PgJsonTypeSubtype {
                 TableTypeDeclaration,
                 Create,
@@ -245,7 +246,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     self.to_string().parse::<Ts2>().expect("43ac0b62").to_tokens(tokens);
                 }
             }
-            #[derive(Debug, Clone, strum_macros::Display)]
+            #[derive(Debug, Clone, Display)]
             enum PgTypeSubtype {
                 // TableTypeDeclaration,
                 // Create,
