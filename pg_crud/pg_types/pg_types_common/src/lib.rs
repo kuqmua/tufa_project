@@ -11,7 +11,6 @@ use sqlx::{Postgres, postgres::PgArguments, query::Query};
 use std::fmt::Display;
 use thiserror::Error;
 use utoipa::ToSchema;
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, ToSchema, JsonSchema)]
 pub struct PaginationStartsWithOne(PaginationBase);
 #[derive(Debug, Serialize, Deserialize, Error, ErrorOccurence)]

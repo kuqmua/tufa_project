@@ -1,11 +1,12 @@
 use axum::{
-    Error,
+    Error as AxumError,
     extract::rejection::{JsonDataError, JsonRejection, JsonSyntaxError},
 };
 use http::header::ToStrError;
 use http_body::SizeHint;
 use reqwest::header::HeaderMap;
 use sqlx::{
+    Error as SqlxError,
     migrate::MigrateError,
     types::chrono::{NaiveDate, NaiveDateTime, NaiveTime},
     types::time::{PrimitiveDateTime, Time},
@@ -148,7 +149,7 @@ impl ToStdStringString for ToStrError {
         format!("{self}")
     }
 }
-impl ToStdStringString for Error {
+impl ToStdStringString for AxumError {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
@@ -173,7 +174,7 @@ impl ToStdStringString for IoError {
         format!("{self}")
     }
 }
-impl ToStdStringString for sqlx::Error {
+impl ToStdStringString for SqlxError {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }

@@ -5,7 +5,7 @@ use pg_crud_common::{
 };
 use schemars::{_private::alloc::borrow, JsonSchema, Schema, SchemaGenerator};
 use serde::{Deserialize, Serialize};
-use sqlx::{postgres::PgArguments, query::Query, types::Json};
+use sqlx::{Encode, Postgres, Type, postgres::PgArguments, query::Query, types::Json};
 use std::fmt::{Display, Formatter, Result as StdFmtResult, Write as _};
 use thiserror::Error;
 use utoipa::ToSchema;
@@ -71,8 +71,8 @@ impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
 impl<T: PartialEq + Clone + Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
     pub fn query_bind_one_by_one<'query_lifetime>(
         self,
-        mut query: Query<'query_lifetime, sqlx::Postgres, PgArguments>,
-    ) -> Result<Query<'query_lifetime, sqlx::Postgres, PgArguments>, String>
+        mut query: Query<'query_lifetime, Postgres, PgArguments>,
+    ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String>
     where
         T: 'query_lifetime,
     {
@@ -204,8 +204,8 @@ where
 {
     fn query_bind(
         self,
-        mut query: Query<'lifetime, sqlx::Postgres, PgArguments>,
-    ) -> Result<Query<'lifetime, sqlx::Postgres, PgArguments>, String> {
+        mut query: Query<'lifetime, Postgres, PgArguments>,
+    ) -> Result<Query<'lifetime, Postgres, PgArguments>, String> {
         if let Err(error) = query.try_bind(Json(self.0)) {
             return Err(error.to_string());
         }
@@ -382,7 +382,7 @@ impl RegularExpressionCase {
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, JsonSchema)]
 pub struct Between<T>
 where
-    T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
+    T: Type<Postgres> + for<'__> Encode<'__, Postgres>,
 {
     start: T,
     end: T,
@@ -397,9 +397,7 @@ pub enum BetweenTryNewErrorNamed<T> {
         code_occurence: CodeOccurence,
     },
 }
-impl<T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + PartialOrd>
-    Between<T>
-{
+impl<T: Type<Postgres> + for<'__> Encode<'__, Postgres> + PartialOrd> Between<T> {
     pub fn try_new(start: T, end: T) -> Result<Self, BetweenTryNewErrorNamed<T>> {
         if start < end {
             Ok(Self { start, end })
@@ -423,8 +421,8 @@ const _: () = {
         T: std::fmt::Debug
             + _serde::Deserialize<'de>
             + PartialOrd
-            + sqlx::Type<sqlx::Postgres>
-            + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
+            + Type<Postgres>
+            + for<'__> Encode<'__, Postgres>,
     {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
@@ -490,9 +488,7 @@ const _: () = {
             #[doc(hidden)]
             struct __Visitor<'de, T>
             where
-                T: _serde::Deserialize<'de>
-                    + sqlx::Type<sqlx::Postgres>
-                    + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
+                T: _serde::Deserialize<'de> + Type<Postgres> + for<'__> Encode<'__, Postgres>,
             {
                 marker: _serde::__private228::PhantomData<Between<T>>,
                 lifetime: _serde::__private228::PhantomData<&'de ()>,
@@ -502,8 +498,8 @@ const _: () = {
                 T: std::fmt::Debug
                     + _serde::Deserialize<'de>
                     + PartialOrd
-                    + sqlx::Type<sqlx::Postgres>
-                    + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
+                    + Type<Postgres>
+                    + for<'__> Encode<'__, Postgres>,
             {
                 type Value = Between<T>;
                 fn expecting(
@@ -600,11 +596,8 @@ const _: () = {
         }
     }
 };
-impl<
-    T: DefaultOptionSomeVecOneEl
-        + sqlx::Type<sqlx::Postgres>
-        + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
-> DefaultOptionSomeVecOneEl for Between<T>
+impl<T: DefaultOptionSomeVecOneEl + Type<Postgres> + for<'__> Encode<'__, Postgres>>
+    DefaultOptionSomeVecOneEl for Between<T>
 {
     fn default_option_some_vec_one_el() -> Self {
         Self {
@@ -613,15 +606,13 @@ impl<
         }
     }
 }
-impl<
-    'lifetime,
-    T: Send + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'lifetime,
-> PgTypeWhereFilter<'lifetime> for Between<T>
+impl<'lifetime, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime>
+    PgTypeWhereFilter<'lifetime> for Between<T>
 {
     fn query_bind(
         self,
-        mut query: Query<'lifetime, sqlx::Postgres, PgArguments>,
-    ) -> Result<Query<'lifetime, sqlx::Postgres, PgArguments>, String> {
+        mut query: Query<'lifetime, Postgres, PgArguments>,
+    ) -> Result<Query<'lifetime, Postgres, PgArguments>, String> {
         if let Err(error) = query.try_bind(self.start) {
             return Err(error.to_string());
         }
@@ -797,11 +788,8 @@ enum Variant {
     MinusOne,
     Normal,
 }
-impl<
-    'lifetime,
-    T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'lifetime,
-    const LENGTH: usize,
-> BoundedStdVecVec<T, LENGTH>
+impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, const LENGTH: usize>
+    BoundedStdVecVec<T, LENGTH>
 {
     #[must_use]
     pub fn into_inner(self) -> Vec<T> {
@@ -865,8 +853,8 @@ impl<
     }
     pub fn query_bind(
         self,
-        mut query: Query<'lifetime, sqlx::Postgres, PgArguments>,
-    ) -> Result<Query<'lifetime, sqlx::Postgres, PgArguments>, String> {
+        mut query: Query<'lifetime, Postgres, PgArguments>,
+    ) -> Result<Query<'lifetime, Postgres, PgArguments>, String> {
         for el_a05046df in self.0 {
             if let Err(error) = query.try_bind(el_a05046df) {
                 return Err(error.to_string());
