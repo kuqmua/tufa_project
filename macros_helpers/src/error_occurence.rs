@@ -76,9 +76,7 @@ impl AttributeIdentStr for ErrorOccurenceFieldAttribute {
     fn attribute_ident_str(&self) -> &str {
         match *self {
             Self::EoToErrString => "eo_to_err_string",
-            Self::EoToErrStringSerializeDeserialize => {
-                "eo_to_err_string_serialize_deserialize"
-            }
+            Self::EoToErrStringSerializeDeserialize => "eo_to_err_string_serialize_deserialize",
             Self::EoErrorOccurence => "eo_error_occurence",
             Self::EoVecToErrString => "eo_vec_to_err_string",
             Self::EoVecToErrStringSerializeDeserialize => {

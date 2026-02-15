@@ -4,7 +4,7 @@ use axum::{
 };
 use http::header::ToStrError;
 use http_body::SizeHint;
-use reqwest::header::HeaderMap;
+use reqwest::{Error, StatusCode, header::HeaderMap};
 use sqlx::{
     Error as SqlxError,
     migrate::MigrateError,
@@ -184,12 +184,12 @@ impl ToErrString for serde_json::Error {
         format!("{self}")
     }
 }
-impl ToErrString for reqwest::Error {
+impl ToErrString for Error {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToErrString for reqwest::StatusCode {
+impl ToErrString for StatusCode {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
