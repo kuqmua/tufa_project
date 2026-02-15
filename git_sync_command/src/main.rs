@@ -1,6 +1,7 @@
+use dotenv::dotenv;
+use std::{env, fs, path::PathBuf, process::Command};
 fn main() {
-    use std::{env, fs, path::PathBuf, process::Command};
-    let _unused = dotenv::dotenv().expect("0964b79a");
+    let _unused = dotenv().expect("0964b79a");
     let gitmodules_path_env_name = "GITMODULES_PATH";
     let string_path = env::var(gitmodules_path_env_name).expect("25f5388e");
     let parent_dir_pathbuf = PathBuf::from(string_path);

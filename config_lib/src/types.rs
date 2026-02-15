@@ -1,3 +1,4 @@
+use dotenv::dotenv;
 use enum_extension_lib::EnumExtension;
 use serde::{Deserialize, Serialize};
 use std::{
@@ -58,10 +59,10 @@ impl SourcePlaceType {
     #[must_use]
     pub fn from_env_or_default() -> Self {
         let fix_message = "You can set environment variable SOURCE_PLACE_TYPE to be equal \"source\" or \"github\"";
-        if let Err(error) = dotenv::dotenv() {
+        if let Err(error) = dotenv() {
             let default = Self::default();
             eprintln!(
-                "using default SourcePlaceType::{default:#?} (failed to dotenv::dotenv(): {error}) {fix_message}"
+                "using default SourcePlaceType::{default:#?} (failed to dotenv(): {error}) {fix_message}"
             );
             return default;
         }
