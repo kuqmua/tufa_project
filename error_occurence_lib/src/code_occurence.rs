@@ -8,8 +8,10 @@ use std::{
     time::{Duration, SystemTime, UNIX_EPOCH},
 };
 use utoipa::ToSchema;
+use app_state::SourcePlaceType;
+use git_info::PROJECT_GIT_INFO;
 
-static SOURCE_PLACE_TYPE: OnceLock<app_state::SourcePlaceType> = OnceLock::new();
+static SOURCE_PLACE_TYPE: OnceLock<SourcePlaceType> = OnceLock::new();
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, ToSchema, JsonSchema)]
 pub struct MacroOccurence {
@@ -41,7 +43,7 @@ impl CodeOccurence {
             file,
             line,
             column,
-            commit: git_info::PROJECT_GIT_INFO.commit.to_owned(),
+            commit: PROJECT_GIT_INFO.commit.to_owned(),
             duration: SystemTime::now()
                 .duration_since(UNIX_EPOCH)
                 .unwrap_or_default(),
@@ -60,8 +62,8 @@ impl Display for CodeOccurence {
         write!(
             f,
             "{} {}",
-            &match SOURCE_PLACE_TYPE.get_or_init(app_state::SourcePlaceType::from_env_or_default) {
-                app_state::SourcePlaceType::Source => self.macro_occurence.as_ref().map_or_else(
+            &match SOURCE_PLACE_TYPE.get_or_init(SourcePlaceType::from_env_or_default) {
+                SourcePlaceType::Source => self.macro_occurence.as_ref().map_or_else(
                     || format!("{}:{}:{}", self.file, self.line, self.column),
                     |value_efd00048| format!(
                         "{}:{}:{} ({}:{}:{})",
@@ -73,7 +75,7 @@ impl Display for CodeOccurence {
                         value_efd00048.column
                     )
                 ),
-                app_state::SourcePlaceType::Github => self.macro_occurence.as_ref().map_or_else(
+                SourcePlaceType::Github => self.macro_occurence.as_ref().map_or_else(
                     || format!(
                         "{}/blob/{}/{}#L{}",
                         GITHUB_URL, self.commit, self.file, self.line

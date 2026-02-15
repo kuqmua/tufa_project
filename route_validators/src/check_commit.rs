@@ -6,6 +6,7 @@ use error_occurence_lib::{ErrorOccurence, code_occurence, code_occurence::CodeOc
 use http_logic::GetAxumHttpStatusCode;
 use naming::CommitSc;
 use thiserror::Error;
+use git_info::{GetGitCommitLink, PROJECT_GIT_INFO};
 #[derive(Debug, Error, ErrorOccurence)]
 pub enum ErrorNamed {
     CommitNotEqual {
@@ -52,12 +53,12 @@ pub fn check_commit(
             },
             |value_9c98ee60| match value_9c98ee60.to_str() {
                 Ok(value_16408fd2) => {
-                    if value_16408fd2 == git_info::PROJECT_GIT_INFO.commit {
+                    if value_16408fd2 == PROJECT_GIT_INFO.commit {
                         Ok(())
                     } else {
                         Err(ErrorNamed::CommitNotEqual {
                             commit_not_equal: String::from("different project commit provided, services must work only with equal project commits"),
-                            commit_to_use: git_info::GetGitCommitLink::get_git_commit_link(&git_info::PROJECT_GIT_INFO),
+                            commit_to_use: GetGitCommitLink::get_git_commit_link(&PROJECT_GIT_INFO),
                             code_occurence: code_occurence!(),
                         })
                     }
