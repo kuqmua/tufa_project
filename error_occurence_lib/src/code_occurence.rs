@@ -1,3 +1,4 @@
+use chrono::{DateTime, FixedOffset, Utc};
 use naming::GITHUB_URL;
 use schemars::JsonSchema;
 use std::{
@@ -95,9 +96,9 @@ impl Display for CodeOccurence {
             },
             match (
                 UNIX_EPOCH.checked_add(self.duration),
-                chrono::FixedOffset::east_opt(10800)
+                FixedOffset::east_opt(10800)
             ) {
-                (Some(epoch), Some(offset)) => chrono::DateTime::<chrono::Utc>::from(epoch)
+                (Some(epoch), Some(offset)) => DateTime::<Utc>::from(epoch)
                     .with_timezone(&offset)
                     .format("%Y-%m-%d %H:%M:%S")
                     .to_string(),

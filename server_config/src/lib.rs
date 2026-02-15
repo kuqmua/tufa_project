@@ -1,3 +1,4 @@
+use chrono::FixedOffset;
 use config_lib::types::{SourcePlaceType, TracingLevel};
 use std::net::SocketAddr;
 use thiserror::Error;
@@ -10,6 +11,6 @@ pub struct Config {
     pub maximum_size_of_http_body_in_bytes: usize,
     pub service_socket_address: SocketAddr,
     pub source_place_type: SourcePlaceType,
-    pub timezone: chrono::FixedOffset,
+    pub timezone: FixedOffset,
     pub tracing_level: TracingLevel,
 }
