@@ -1,4 +1,6 @@
+use app_state::SourcePlaceType;
 use chrono::{DateTime, FixedOffset, Utc};
+use git_info::PROJECT_GIT_INFO;
 use naming::GITHUB_URL;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -8,8 +10,6 @@ use std::{
     time::{Duration, SystemTime, UNIX_EPOCH},
 };
 use utoipa::ToSchema;
-use app_state::SourcePlaceType;
-use git_info::PROJECT_GIT_INFO;
 
 static SOURCE_PLACE_TYPE: OnceLock<SourcePlaceType> = OnceLock::new();
 #[allow(clippy::arbitrary_source_item_ordering)]

@@ -3,6 +3,7 @@ pub use pg_crud_common_and_macros_common::*;
 use error_occurence_lib::{
     ErrorOccurence, ToErrString, code_occurence, code_occurence::CodeOccurence,
 };
+use from_str::FromStr;
 use naming::{AscUcc, DescUcc, DisplayToScStr, DisplayToUccStr};
 use schemars::JsonSchema;
 use serde::{Deserialize, Deserializer, Serialize};
@@ -793,7 +794,7 @@ impl<T: Debug + PartialEq + Clone + AllEnumVariantsArrayDefaultOptionSomeVecOneE
     }
 }
 
-#[derive(Debug, Default, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, from_str::FromStr)]
+#[derive(Debug, Default, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, FromStr)]
 pub enum Order {
     #[serde(rename(serialize = "asc", deserialize = "asc"))]
     #[default]

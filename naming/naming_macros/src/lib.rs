@@ -1,4 +1,5 @@
 use gen_quotes::double_quotes_ts;
+use panic_location::panic_location;
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -10,7 +11,7 @@ use token_patterns::StdStringString;
 const REGEX_VALUE: &str = "^[a-zA-Z]+$";
 #[proc_macro]
 pub fn gen_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
-    panic_location::panic_location();
+    panic_location();
     let implementations_ts = from_str::<Vec<Vec<String>>>(&input_ts.to_string())
         .expect("90e5793b")
         .into_iter()
@@ -108,7 +109,7 @@ pub fn gen_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
 }
 #[proc_macro]
 pub fn gen_self_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
-    panic_location::panic_location();
+    panic_location();
     let implementations_ts = from_str::<Vec<Vec<String>>>(&input_ts.to_string()).expect("9d6a20af").into_iter().map(|el_a5ccbaa7| {
         {
             let regex = Regex::new(REGEX_VALUE).expect("cba1b5fb");
@@ -273,7 +274,7 @@ enum Operation {
 */
 #[proc_macro_derive(AsRefStrEnumWithUnitFieldsToUccStr)]
 pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(input_ts: Ts) -> Ts {
-    panic_location::panic_location();
+    panic_location();
     let syn_derive_input: DeriveInput = parse(input_ts).expect("a8f22481");
     let ident = &syn_derive_input.ident;
     let Data::Enum(data_enum) = syn_derive_input.data else {
@@ -318,7 +319,7 @@ only works if all enum variants without fields like this
 */
 #[proc_macro_derive(AsRefStrEnumWithUnitFieldsToScStr)]
 pub fn as_ref_str_enum_with_unit_fields_to_sc_str(input_ts: Ts) -> Ts {
-    panic_location::panic_location();
+    panic_location();
     let syn_derive_input: DeriveInput = parse(input_ts).expect("dea5cbcf");
     let ident = &syn_derive_input.ident;
     let Data::Enum(data_enum) = syn_derive_input.data else {
@@ -363,7 +364,7 @@ only works if all enum variants without fields like this
 */
 #[proc_macro_derive(AsRefStrEnumWithUnitFieldsToUpperScStr)]
 pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(input_ts: Ts) -> Ts {
-    panic_location::panic_location();
+    panic_location();
     let syn_derive_input: DeriveInput = parse(input_ts).expect("edabbc24");
     let ident = &syn_derive_input.ident;
     let Data::Enum(data_enum) = syn_derive_input.data else {

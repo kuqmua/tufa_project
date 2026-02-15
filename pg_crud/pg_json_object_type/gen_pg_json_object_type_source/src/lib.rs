@@ -1,3 +1,4 @@
+use enum_extension_lib::EnumExtension;
 use gen_quotes::double_quotes_ts;
 use macros_helpers::{
     DeriveSerdeDeserialize, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
@@ -48,6 +49,7 @@ use naming::{
         SelfUpdateUcc, SelfWhereUcc,
     },
 };
+use panic_location::panic_location;
 use pg_crud_macros_common::{
     ColumnParameterUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrementUnderscore,
     CreateQueryPartValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dimension,
@@ -102,16 +104,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         PgTypeAndPgJsonType,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(
-        Debug,
-        Clone,
-        PartialEq,
-        Serialize,
-        Deserialize,
-        Display,
-        EnumIter,
-        enum_extension_lib::EnumExtension,
-    )]
+    #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Display, EnumIter, EnumExtension)]
     enum Pattern {
         Standart,
         Array,
@@ -129,7 +122,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         variant: PgJsonObjectTypeRecord,
         whole_content_write_into_gen_pg_json_object_type: ShouldWriteTokenStreamIntoFile,
     }
-    panic_location::panic_location();
+    panic_location();
     let syn_derive_input: DeriveInput = parse2(input_ts).expect("e5f0e27b");
     let import_path = ImportPath::PgCrud;
     let gen_pg_json_object_type_config = from_str::<GenPgJsonTypesConfig>(
@@ -216,7 +209,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         .into_iter()
         .enumerate()
         .map(|(index, element)| {
-            #[derive(Debug, Display, EnumIter, enum_extension_lib::EnumExtension)]
+            #[derive(Debug, Display, EnumIter, EnumExtension)]
             enum IsStandartWithId {
                 False,
                 True,

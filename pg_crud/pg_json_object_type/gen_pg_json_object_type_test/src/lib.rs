@@ -1,9 +1,10 @@
 #[cfg(test)]
 mod tests {
+    use macro_clippy_check_common::clippy_check;
     #[test]
     fn clippy() {
         use quote::quote;
-        macro_clippy_check_common::clippy_check(
+        clippy_check(
             "gen_pg_json_object_type_test_content",
             "../pg_crud/pg_json_object_type/",
             r#"[dependencies]

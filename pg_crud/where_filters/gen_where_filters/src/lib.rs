@@ -8,6 +8,7 @@ use naming::{
     ValueSc,
     parameter::{PgJsonTypeWhereSelfUcc, PgTypeWhereSelfUcc},
 };
+use panic_location::panic_location;
 use pg_crud_macros_common::{
     ColumnParameterUnderscore, ImportPath, IncrementParameterUnderscore,
     IsNeedToAddLogicalOperatorUnderscore, IsQueryBindMutable, PgJsonTypeFilter, PgTypeFilter,
@@ -117,7 +118,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             ShouldWriteTokenStreamIntoFile,
         whole_content_write_into_gen_where_filters: ShouldWriteTokenStreamIntoFile,
     }
-    panic_location::panic_location();
+    panic_location();
     let gen_where_filters_config =
         from_str::<GenWhereFiltersConfig>(&input_ts.to_string()).expect("1217b73b");
     let import_path = ImportPath::PgCrudCommon;

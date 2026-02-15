@@ -74,6 +74,7 @@ use naming::{
         TrySelfHandleSc, TrySelfSc, UpdateQueryPartSelfSc,
     },
 };
+use panic_location::panic_location;
 use pg_crud_macros_common::{
     ColumnParameterUnderscore, Dimension, EqualOrEqualUsingFields, ImportPath,
     IncrementParameterUnderscore, IsNeedToAddLogicalOperatorUnderscore, IsQueryBindMutable,
@@ -424,7 +425,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         common_content_write_into_gen_pg_table_common: ShouldWriteTokenStreamIntoFile,
         whole_content_write_into_gen_pg_table: ShouldWriteTokenStreamIntoFile,
     }
-    panic_location::panic_location();
+    panic_location();
     let error_0_ts = Error0;
     let error_1_ts = Error1;
     let error_2_ts = Error2;

@@ -1,9 +1,12 @@
 use chrono::FixedOffset;
-use config_lib::types::{SourcePlaceType, TracingLevel};
+use config_lib::{
+    GenGetterTraitsForStructFields, TryFromEnv,
+    types::{SourcePlaceType, TracingLevel},
+};
 use secrecy::SecretBox;
 use std::net::SocketAddr;
 use thiserror::Error;
-#[derive(Debug, config_lib::TryFromEnv, config_lib::GenGetterTraitsForStructFields)]
+#[derive(Debug, TryFromEnv, GenGetterTraitsForStructFields)]
 pub struct Config {
     //todo maybe auto gen .env and docker-compose environment variables. and maybe write in directly into files
     pub database_url: SecretBox<String>,

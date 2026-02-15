@@ -3,10 +3,10 @@ use axum::http::{
     header::{HeaderValue, ToStrError},
 };
 use error_occurence_lib::{ErrorOccurence, code_occurence, code_occurence::CodeOccurence};
+use git_info::{GetGitCommitLink, PROJECT_GIT_INFO};
 use http_logic::GetAxumHttpStatusCode;
 use naming::CommitSc;
 use thiserror::Error;
-use git_info::{GetGitCommitLink, PROJECT_GIT_INFO};
 #[derive(Debug, Error, ErrorOccurence)]
 pub enum ErrorNamed {
     CommitNotEqual {

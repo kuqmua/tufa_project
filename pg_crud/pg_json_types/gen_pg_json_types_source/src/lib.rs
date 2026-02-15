@@ -21,6 +21,7 @@ use naming::{
         SelfUpdateForQueryUcc, SelfUpdateUcc, SelfWhereUcc,
     },
 };
+use panic_location::panic_location;
 use pg_crud_macros_common::{
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dimension, DimensionIndexNumber, ImportPath,
     IsQueryBindMutable, IsSelectOnlyCreatedIdsQueryBindMutable,
@@ -344,7 +345,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         whole_content_write_into_gen_pg_json_types: ShouldWriteTokenStreamIntoFile,
         variant: GenPgJsonTypesConfigVariant,
     }
-    panic_location::panic_location();
+    panic_location();
     let gen_pg_json_types_config =
         from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("1123f78f");
     let (fields_ts, pg_json_type_array) = {

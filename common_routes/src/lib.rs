@@ -5,10 +5,12 @@ use axum::{
     http::{StatusCode, Uri},
     routing::get,
 };
+use constants::SLASH_SWAGGER_UI;
+use git_info::GetGitCommitLink;
 use serde::Serialize;
 use std::sync::Arc;
 type DynArcCommonRoutesParametersSendSync = Arc<dyn CommonRoutesParameters>;
-pub trait CommonRoutesParameters: git_info::GetGitCommitLink + Send + Sync {}
+pub trait CommonRoutesParameters: GetGitCommitLink + Send + Sync {}
 pub fn common_routes(app_state_b9fc2d94: DynArcCommonRoutesParametersSendSync) -> Router {
     Router::new()
         .route(
@@ -53,7 +55,7 @@ pub fn common_routes(app_state_b9fc2d94: DynArcCommonRoutesParametersSendSync) -
                     Json(NotFoundHandle {
                         message: format!("No route for {uri}"),
                         commit: app_state_19103bd5.get_git_commit_link(),
-                        open_api_specification: constants::SLASH_SWAGGER_UI,
+                        open_api_specification: SLASH_SWAGGER_UI,
                     }),
                 )
             },

@@ -16,9 +16,9 @@ use naming::{
     IncludedStartGreaterThanExcludedEndUcc, IncludedStartGreaterThanIncludedEndUcc, IncludedUcc,
     IncrementSc, InvalidHourOrMinuteOrSecondOrMicrosecondUcc, MicroSc, MicrosecondSc,
     MicrosecondsSc, MinSc, MinuteSc, MonthsSc, NanosecondPrecisionIsNotSupportedUcc, NanosecondSc,
-    NewSc, OptionUpdateSc, OptionVecCreateSc, PgTypeUcc, QuerySc, ReadIntoTableTypeDeclarationSc,
-    ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeDeclarationSc, ReadOnlyIdsIntoUpdateSc,
-    ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsSc,
+    NewSc, OptionUpdateSc, OptionVecCreateSc, PgTypePrimaryKeyUcc, PgTypeUcc, QuerySc,
+    ReadIntoTableTypeDeclarationSc, ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeDeclarationSc,
+    ReadOnlyIdsIntoUpdateSc, ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsSc,
     ReadOnlyIdsToTwoDimensionalVecReadInnerSc, ReadOnlyIdsUcc, ReadSc, ReadUcc, SecSc, SecondSc,
     SelfSc, SelfUcc, StartSc, StartUcc, StdFmtDisplayPlusQuoteToTokens, TableTypeDeclarationSc,
     TableTypeDeclarationUcc, TimeSc, TimeUcc, ToErrStringSc, TryNewForDeserializeSc, TryNewSc,
@@ -30,6 +30,7 @@ use naming::{
         SelfUpdateForQueryUcc, SelfUpdateUcc, SelfWhereUcc,
     },
 };
+use panic_location::panic_location;
 use pg_crud_common_and_macros_common::PgTypeGreaterThanVariant;
 use pg_crud_macros_common::{
     ColumnParameterUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrementUnderscore,
@@ -840,7 +841,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             }
         }
     }
-    panic_location::panic_location();
+    panic_location();
     let gen_pg_json_types_config =
         from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("80485f71");
     let (columns_ts, pg_type_array) = {
@@ -6642,7 +6643,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             )
         };
         let maybe_impl_pg_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_ts = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
-            let pg_type_primary_key_ucc = naming::PgTypePrimaryKeyUcc;
+            let pg_type_primary_key_ucc = PgTypePrimaryKeyUcc;
             let value_as_read_only_ids_ts = quote! {#ValueSc: #self_as_pg_type_ts::#ReadOnlyIdsUcc};
             quote! {
                 #allow_clippy_arbitrary_source_item_ordering_ts
