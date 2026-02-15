@@ -1,6 +1,6 @@
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
-pub fn gen_impl_std_convert_try_from_ts(
+pub fn gen_impl_try_from_ts(
     from_type_ts: &dyn ToTokens,
     for_type_ts: &dyn ToTokens,
     error_type_ts: &dyn ToTokens,

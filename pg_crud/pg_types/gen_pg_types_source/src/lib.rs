@@ -4,9 +4,8 @@ use macros_helpers::{
     DeriveCopy, DeriveDefault, DeriveEq, DeriveOrd, DerivePartialOrd, DeriveSerdeDeserialize,
     DeriveSerdeSerialize, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
     StructOrEnumDeriveTokenStreamBuilder, gen_const_new_ts, gen_if_write_is_err_ts,
-    gen_impl_error_occurence_lib_to_err_string_ts, gen_impl_std_convert_from_ts,
-    gen_impl_std_fmt_display_ts, gen_new_ts, gen_pub_const_new_ts, gen_pub_new_ts,
-    gen_pub_try_new_ts, maybe_write_ts_into_file,
+    gen_impl_error_occurence_lib_to_err_string_ts, gen_impl_from_ts, gen_impl_std_fmt_display_ts,
+    gen_new_ts, gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts, maybe_write_ts_into_file,
 };
 use naming::{
     ArrayOfUcc, AsUcc, ColumnSc, ContainsNullByteUcc, CreateSc, DateNaiveSc, DateNaiveUcc, DateSc,
@@ -3940,7 +3939,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let impl_std_convert_from_ident_origin_for_ident_inner_type_ts = {
+            let impl_from_ident_origin_for_ident_inner_type_ts = {
                 let content_ts = {
                     let value_dot_zero = quote! {#ValueSc.0};
                     let gen_match_ts = |
@@ -4181,9 +4180,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let maybe_impl_std_convert_from_ident_read_for_ident_origin_ts = match &is_not_null_standart_can_be_primary_key {
+            let maybe_impl_from_ident_read_for_ident_origin_ts = match &is_not_null_standart_can_be_primary_key {
                 IsNotNullStandartCanBePrimaryKey::False => Ts2::new(),
-                IsNotNullStandartCanBePrimaryKey::True => gen_impl_std_convert_from_ts(&ident_standart_not_null_read_ucc, &ident_origin_ucc, &{
+                IsNotNullStandartCanBePrimaryKey::True => gen_impl_from_ts(&ident_standart_not_null_read_ucc, &ident_origin_ucc, &{
                     let ident_standart_not_null_as_crate_pg_type_ts = gen_as_pg_type_ts(&ident_standart_not_null_ucc);
                     quote! {Self::#NewSc(#ident_standart_not_null_as_crate_pg_type_ts::into_inner(#ValueSc))}
                 }),
@@ -4193,7 +4192,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #maybe_pub_enum_ident_standart_not_null_origin_try_new_error_ts
                 #maybe_pub_enum_ident_standart_not_null_origin_try_new_for_deserialize_error_ts
                 #impl_ident_origin_ts
-                #impl_std_convert_from_ident_origin_for_ident_inner_type_ts
+                #impl_from_ident_origin_for_ident_inner_type_ts
 
                 #maybe_impl_is_string_empty_for_ident_origin_ts
                 #maybe_impl_serde_serialize_for_ident_standart_not_null_origin_ts
@@ -4205,7 +4204,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #impl_sqlx_encode_sqlx_pg_for_ident_origin_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_origin_ts
                 #impl_sqlx_pg_pg_has_array_type_for_ident_origin_ts
-                #maybe_impl_std_convert_from_ident_read_for_ident_origin_ts
+                #maybe_impl_from_ident_read_for_ident_origin_ts
             }
         };
         let gen_pub_struct_tokens_ts = |current_ident_ts: &dyn ToTokens, content_ts: &dyn ToTokens, derive_default: DeriveDefault| {
@@ -4904,12 +4903,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 );
             let impl_sqlx_type_sqlx_pg_for_ident_update_for_query_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_update_for_query_ucc, &ident_origin_ucc);
             let impl_sqlx_encode_sqlx_pg_for_ident_update_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_update_for_query_ucc, &quote! {#SelfSc.0});
-            let impl_std_convert_from_ident_update_for_ident_update_for_query_ts = gen_impl_std_convert_from_ts(&ident_update_ucc, &ident_update_for_query_ucc, &quote! {Self(#ValueSc.0)});
+            let impl_from_ident_update_for_ident_update_for_query_ts = gen_impl_from_ts(&ident_update_ucc, &ident_update_for_query_ucc, &quote! {Self(#ValueSc.0)});
             quote! {
                 #ident_update_for_query_ts
                 #impl_sqlx_type_sqlx_pg_for_ident_update_for_query_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_update_for_query_ts
-                #impl_std_convert_from_ident_update_for_ident_update_for_query_ts
+                #impl_from_ident_update_for_ident_update_for_query_ts
             }
         };
         let impl_pg_type_for_ident_ts = {

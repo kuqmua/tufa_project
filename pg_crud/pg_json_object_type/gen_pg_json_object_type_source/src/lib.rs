@@ -3,11 +3,10 @@ use gen_quotes::double_quotes_ts;
 use macros_helpers::{
     DeriveSerdeDeserialize, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
     StructOrEnumDeriveTokenStreamBuilder, SynFieldWrapper, gen_if_write_is_err_curly_braces_ts,
-    gen_if_write_is_err_ts, gen_impl_error_occurence_lib_to_err_string_ts,
+    gen_if_write_is_err_ts, gen_impl_error_occurence_lib_to_err_string_ts, gen_impl_from_ts,
     gen_impl_pub_const_new_for_ident_ts, gen_impl_pub_new_for_ident_ts,
-    gen_impl_std_convert_from_ts, gen_impl_std_fmt_display_ts, gen_pub_const_new_ts,
-    gen_pub_new_ts, gen_pub_try_new_ts, gen_pub_type_alias_ts,
-    gen_simple_syn_punctuated_punctuated, get_macro_attribute_meta_list_ts,
+    gen_impl_std_fmt_display_ts, gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts,
+    gen_pub_type_alias_ts, gen_simple_syn_punctuated_punctuated, get_macro_attribute_meta_list_ts,
     maybe_write_ts_into_file,
 };
 use naming::{
@@ -962,7 +961,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     });
                     quote! {{#(#content_ts),*}}
                 };
-                let impl_std_convert_from_standart_not_null_without_id_content_ts = {
+                let impl_from_standart_not_null_without_id_content_ts = {
                     let content_ts = vec_syn_field.iter().map(|el_0fc1e145| {
                         let field_ident = &el_0fc1e145.field_ident;
                         let type_as_pg_json_type_subtype_crate_for_query_ts = gen_type_as_pg_json_type_subtype_ts(
@@ -1008,13 +1007,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             },
                         }
                     );
-                    let impl_std_convert_from_ident_create_for_ident_create_for_query_ts = gen_impl_std_convert_from_ts(
+                    let impl_from_ident_create_for_ident_create_for_query_ts = gen_impl_from_ts(
                         &ident_create_ucc,
                         &ident_create_for_query_ucc,
                         &{
                             let content_ts = match &not_null_or_nullable {
                                 NotNullOrNullable::NotNull => match &pattern {
-                                    Pattern::Standart => quote! {{#impl_std_convert_from_standart_not_null_without_id_content_ts}},
+                                    Pattern::Standart => quote! {{#impl_from_standart_not_null_without_id_content_ts}},
                                     Pattern::Array => quote!{(
                                         #ValueSc.0.into_iter().map(#ident_with_id_standart_not_null_create_for_query_ucc::from).collect()
                                     )},
@@ -1040,7 +1039,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     );
                     quote! {
                         #ident_create_for_query_ts
-                        #impl_std_convert_from_ident_create_for_ident_create_for_query_ts
+                        #impl_from_ident_create_for_ident_create_for_query_ts
                         #impl_sqlx_encode_sqlx_pg_for_ident_create_for_query_ts
                         #impl_sqlx_type_sqlx_pg_for_ident_create_for_query_ts
                     }
@@ -1051,19 +1050,19 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &ident_with_id_standart_not_null_create_for_query_ucc,
                         &gen_struct_standart_not_null_content_ts(&is_standart_with_id_true)
                     );
-                    let impl_std_convert_from_ident_with_id_standart_not_null_create_for_ident_with_id_standart_not_null_create_for_query_ts = gen_impl_std_convert_from_ts(
+                    let impl_from_ident_with_id_standart_not_null_create_for_ident_with_id_standart_not_null_create_for_query_ts = gen_impl_from_ts(
                         &ident_with_id_standart_not_null_create_ucc,
                         &ident_with_id_standart_not_null_create_for_query_ucc,
                         &quote! {Self {
                             #IdSc: #pg_crud_path_pg_json_type_uuid_uuid_create_for_query_ts::new(
                                 uuid::Uuid::new_v4()
                             ),
-                            #impl_std_convert_from_standart_not_null_without_id_content_ts
+                            #impl_from_standart_not_null_without_id_content_ts
                         }}
                     );
                     quote! {
                         #ident_with_id_standart_not_null_create_for_query_ts
-                        #impl_std_convert_from_ident_with_id_standart_not_null_create_for_ident_with_id_standart_not_null_create_for_query_ts
+                        #impl_from_ident_with_id_standart_not_null_create_for_ident_with_id_standart_not_null_create_for_query_ts
                     }
                 } else {
                     Ts2::new()
@@ -3521,7 +3520,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         }
                     }
                 };
-                let impl_std_convert_from_ident_standart_not_null_update_for_ident_standart_not_null_update_for_query_ts = gen_impl_std_convert_from_ts(
+                let impl_from_ident_standart_not_null_update_for_ident_standart_not_null_update_for_query_ts = gen_impl_from_ts(
                     &quote!{#ident_as_import_path_pg_json_type_ts::Update},
                     &quote!{#ident_as_import_path_pg_json_type_ts::UpdateForQuery},
                     &match &not_null_or_nullable {
@@ -3569,7 +3568,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 quote!{{#(#variants_ts),*}}
                             }
                         );
-                    let impl_std_convert_from_ident_standart_not_null_update_el_for_ident_standart_not_null_update_for_query_el_ts = gen_impl_std_convert_from_ts(
+                    let impl_from_ident_standart_not_null_update_el_for_ident_standart_not_null_update_for_query_el_ts = gen_impl_from_ts(
                         &ident_standart_not_null_update_el_ucc,
                         &ident_standart_not_null_update_for_query_el_ucc,
                         &{
@@ -3597,7 +3596,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     );
                     quote! {
                         #ident_standart_not_null_update_for_query_el_ts
-                        #impl_std_convert_from_ident_standart_not_null_update_el_for_ident_standart_not_null_update_for_query_el_ts
+                        #impl_from_ident_standart_not_null_update_el_for_ident_standart_not_null_update_for_query_el_ts
                     }
                 } else {
                     Ts2::new()
@@ -3621,7 +3620,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             #FieldsSc
                         }},
                     );
-                    let impl_std_convert_from_ident_with_id_standart_not_null_update_el_for_ident_with_id_standart_not_null_update_for_query_el_ts = gen_impl_std_convert_from_ts(
+                    let impl_from_ident_with_id_standart_not_null_update_el_for_ident_with_id_standart_not_null_update_for_query_el_ts = gen_impl_from_ts(
                         &ident_with_id_standart_not_null_update_el_ucc,
                         &ident_with_id_standart_not_null_update_for_query_el_ucc,
                         &quote! {Self {
@@ -3636,7 +3635,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     quote! {
                         #ident_with_id_standart_not_null_update_for_query_el_ts
                         #impl_pub_const_new_for_ident_with_id_standart_not_null_update_for_query_el_ts
-                        #impl_std_convert_from_ident_with_id_standart_not_null_update_el_for_ident_with_id_standart_not_null_update_for_query_el_ts
+                        #impl_from_ident_with_id_standart_not_null_update_el_for_ident_with_id_standart_not_null_update_for_query_el_ts
                     }
                 } else {
                     Ts2::new()
@@ -3644,7 +3643,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 quote!{
                     #ident_update_for_query_ts
                     #impl_ident_update_for_query_ts
-                    #impl_std_convert_from_ident_standart_not_null_update_for_ident_standart_not_null_update_for_query_ts
+                    #impl_from_ident_standart_not_null_update_for_ident_standart_not_null_update_for_query_ts
                     #maybe_ident_update_for_query_el_ts
                     #maybe_ident_with_id_standart_not_null_update_for_query_el_ts
                 }

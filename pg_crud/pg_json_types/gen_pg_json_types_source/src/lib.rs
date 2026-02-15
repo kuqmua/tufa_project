@@ -3,8 +3,8 @@ use gen_quotes::double_quotes_ts;
 use macros_helpers::{
     DeriveCopy, DeriveSchemarsJsonSchema, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
     StructOrEnumDeriveTokenStreamBuilder, gen_impl_error_occurence_lib_to_err_string_ts,
-    gen_impl_std_convert_from_ts, gen_impl_std_fmt_display_ts, gen_pub_const_new_ts,
-    gen_pub_new_ts, maybe_write_ts_into_file,
+    gen_impl_from_ts, gen_impl_std_fmt_display_ts, gen_pub_const_new_ts, gen_pub_new_ts,
+    maybe_write_ts_into_file,
 };
 use naming::{
     ArrayOfUcc, AsUcc, BooleanUcc, ColumnNameAndMaybeFieldGetterSc, CreateForQueryUcc, CreateSc,
@@ -1029,8 +1029,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let impl_std_convert_from_ident_create_for_ident_origin_ts = gen_impl_std_convert_from_ts(&ident_create_ucc, &ident_origin_ucc, &quote! {#ValueSc.0});
-            let impl_std_convert_from_ident_update_for_ident_origin_ts = gen_impl_std_convert_from_ts(&ident_update_ucc, &ident_origin_ucc, &quote! {#ValueSc.0});
+            let impl_from_ident_create_for_ident_origin_ts = gen_impl_from_ts(&ident_create_ucc, &ident_origin_ucc, &quote! {#ValueSc.0});
+            let impl_from_ident_update_for_ident_origin_ts = gen_impl_from_ts(&ident_update_ucc, &ident_origin_ucc, &quote! {#ValueSc.0});
             //todo
             let maybe_impl_schemars_json_schema_for_ident_origin_ts = if matches!(&is_standart_not_null, IsStandartNotNull::True) {
                 match &pg_json_type {
@@ -1185,8 +1185,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             quote! {
                 #ident_origin_ts
                 #impl_ident_origin_ts
-                #impl_std_convert_from_ident_create_for_ident_origin_ts
-                #impl_std_convert_from_ident_update_for_ident_origin_ts
+                #impl_from_ident_create_for_ident_origin_ts
+                #impl_from_ident_update_for_ident_origin_ts
                 #maybe_impl_schemars_json_schema_for_ident_origin_ts
                 #maybe_impl_is_string_empty_for_ident_origin_ts
                 #impl_std_fmt_display_for_ident_origin_ts
@@ -1285,9 +1285,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             };
             let impl_sqlx_encode_sqlx_pg_for_ident_create_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_create_for_query_ucc, &quote! {sqlx::types::Json(&#SelfSc.0)});
             let impl_sqlx_type_sqlx_pg_for_ident_create_for_query_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_create_for_query_ucc, &ident_origin_ucc);
-            let impl_std_convert_from_ident_create_for_ident_create_for_query_ts = gen_impl_std_convert_from_ts(&ident_create_ucc, &ident_create_for_query_ucc, &quote! {Self(#ValueSc.0)});
-            let maybe_impl_std_convert_from_ident_update_for_ident_create_for_query_ts = if matches!(&is_standart_not_null_uuid, IsStandartNotNullUuid::True) {
-                gen_impl_std_convert_from_ts(&ident_update_ucc, &ident_create_for_query_ucc, &quote! {Self(#ValueSc.0)})
+            let impl_from_ident_create_for_ident_create_for_query_ts = gen_impl_from_ts(&ident_create_ucc, &ident_create_for_query_ucc, &quote! {Self(#ValueSc.0)});
+            let maybe_impl_from_ident_update_for_ident_create_for_query_ts = if matches!(&is_standart_not_null_uuid, IsStandartNotNullUuid::True) {
+                gen_impl_from_ts(&ident_update_ucc, &ident_create_for_query_ucc, &quote! {Self(#ValueSc.0)})
             } else {
                 Ts2::new()
             };
@@ -1296,8 +1296,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 #impl_ident_create_for_query_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_create_for_query_ts
                 #impl_sqlx_type_sqlx_pg_for_ident_create_for_query_ts
-                #impl_std_convert_from_ident_create_for_ident_create_for_query_ts
-                #maybe_impl_std_convert_from_ident_update_for_ident_create_for_query_ts
+                #impl_from_ident_create_for_ident_create_for_query_ts
+                #maybe_impl_from_ident_update_for_ident_create_for_query_ts
             }
         };
         let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
@@ -1936,7 +1936,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     not_null_or_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dimension1_type))
                 },
             };
-            let impl_std_convert_from_ident_origin_for_ident_read_inner_ts = {
+            let impl_from_ident_origin_for_ident_read_inner_ts = {
                 let value_dot_zero_ts = quote!{#ValueSc.0};
                 let nullable_ts = quote!{#value_dot_zero_ts.map(Into::into)};
                 let into_inner_content_ts = match &pg_json_type_pattern {
@@ -1962,7 +1962,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             };
             quote! {
                 pub type #ident_read_inner_ucc = #type_ts;
-                #impl_std_convert_from_ident_origin_for_ident_read_inner_ts
+                #impl_from_ident_origin_for_ident_read_inner_ts
             }
         };
         let ident_update_ts = {
@@ -2020,14 +2020,14 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let impl_std_convert_from_ident_update_for_ident_update_for_query_ts = gen_impl_std_convert_from_ts(&ident_update_ucc, &ident_update_for_query_ucc, &quote! {Self(#ValueSc.0)});
+            let impl_from_ident_update_for_ident_update_for_query_ts = gen_impl_from_ts(&ident_update_ucc, &ident_update_for_query_ucc, &quote! {Self(#ValueSc.0)});
             //its only for primitive json types
             let impl_sqlx_encode_sqlx_pg_for_ident_update_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_update_for_query_ucc, &quote! {sqlx::types::Json(&#SelfSc.0)});
             let impl_sqlx_type_sqlx_pg_for_ident_update_for_query_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_update_for_query_ucc, &ident_origin_ucc);
             quote! {
                 #ident_update_for_query_ts
                 #impl_ident_update_for_query_ts
-                #impl_std_convert_from_ident_update_for_ident_update_for_query_ts
+                #impl_from_ident_update_for_ident_update_for_query_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_update_for_query_ts
                 #impl_sqlx_type_sqlx_pg_for_ident_update_for_query_ts
             }
