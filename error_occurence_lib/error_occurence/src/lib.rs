@@ -148,8 +148,14 @@ pub fn error_occurence(input: Ts) -> Ts {
                             String::new(),
                             |mut acc_924ab1b3, el_e405984a| {
                                 use std::fmt::Write as _;
-                                let current_ident = &el_e405984a.ident.as_ref().expect("2e7cd5fe");
-                                assert!(writeln!(acc_924ab1b3, "{current_ident}: {{}}").is_ok(), "ab44c70f");
+                                let el_e405984a_ident = &el_e405984a.ident.as_ref().expect("2e7cd5fe");
+                                assert!(
+                                    writeln!(
+                                        acc_924ab1b3,
+                                        "{el_e405984a_ident}: {{}}"
+                                    ).is_ok(),
+                                    "ab44c70f"
+                                );
                                 acc_924ab1b3
                             }
                         )
@@ -157,17 +163,17 @@ pub fn error_occurence(input: Ts) -> Ts {
                     let fields_format_values_excluding_code_occurence_ts = fields.iter()
                     .filter(|el_48337db8| *el_48337db8.ident.as_ref().expect("f6f6fb24") != *code_occurence_sc_str)
                     .map(|el_f00312fe| {
-                        let current_ident = &el_f00312fe.ident.as_ref().expect("e97b25b9");
+                        let el_f00312fe_ident = &el_f00312fe.ident.as_ref().expect("e97b25b9");
                         match ErrorOccurenceFieldAttr::try_from(el_f00312fe).expect("8ff56aeb") {
                             ErrorOccurenceFieldAttr::EoToErrString | ErrorOccurenceFieldAttr::EoToErrStringSerializeDeserialize => {
                                 quote! {
-                                    error_occurence_lib::ToErrString::to_err_string(#current_ident)
+                                    error_occurence_lib::ToErrString::to_err_string(#el_f00312fe_ident)
                                 }
                             }
                             ErrorOccurenceFieldAttr::EoErrorOccurence => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_52e70d22, "\n {element}"}, &quote! {panic!("c751d54a");});
                                 quote! {
-                                    #current_ident.to_string().lines().fold(
+                                    #el_f00312fe_ident.to_string().lines().fold(
                                         #StdStringString::new(),
                                         |mut acc_52e70d22, element| {
                                             #if_write_is_err_ts
@@ -179,7 +185,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                             ErrorOccurenceFieldAttr::EoVecToErrString | ErrorOccurenceFieldAttr::EoVecToErrStringSerializeDeserialize => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_a9ba7521, "\n {el_6e4f53ad}"}, &quote! {panic!("b35ed9f5");});
                                 quote! {
-                                    #current_ident.iter().fold(
+                                    #el_f00312fe_ident.iter().fold(
                                         #StdStringString::new(),
                                         |mut acc_ac447c4b, el_36630fcf| {
                                             acc_ac447c4b.push_str(
@@ -201,7 +207,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                             ErrorOccurenceFieldAttr::EoVecErrorOccurence => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_1bbd5ef3, "\n {el_3f2fe01d}"}, &quote! {panic!("4dfdd18d");});
                                 quote! {
-                                    #current_ident.iter().fold(
+                                    #el_f00312fe_ident.iter().fold(
                                         #StdStringString::new(),
                                         |mut acc_c5adba93, el_37c46c8a| {
                                             acc_c5adba93.push_str(&el_37c46c8a.to_string().lines().fold(
@@ -219,7 +225,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                             ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrString | ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrStringSerializeDeserialize => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {key}: {}", &error_occurence_lib::ToErrString::to_err_string(#ValueSc)}, &quote! {panic!("d030580a");});
                                 quote! {
-                                    #current_ident.iter().fold(
+                                    #el_f00312fe_ident.iter().fold(
                                         #StdStringString::new(),
                                         |mut acc_06473093, (key, #ValueSc)| {
                                             #if_write_is_err_ts
@@ -247,7 +253,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                                     &quote! {panic!("75f6432a");},
                                 );
                                 quote! {
-                                    #current_ident.iter().fold(
+                                    #el_f00312fe_ident.iter().fold(
                                         #StdStringString::new(),
                                         |mut acc_a47e1ba7, (key, #ValueSc)| {
                                             #if_write_is_err_ts
@@ -325,45 +331,45 @@ pub fn error_occurence(input: Ts) -> Ts {
                     let fields_into_serde_version_excluding_code_occurence_ts = fields.iter()
                     .filter(|el_6a54951c| *el_6a54951c.ident.as_ref().expect("0488fc4c") != *code_occurence_sc_str)
                     .map(|el_d7e120a3| {
-                        let current_ident = &el_d7e120a3.ident.as_ref().expect("9a672ac2");
+                        let el_d7e120a3_ident = &el_d7e120a3.ident.as_ref().expect("9a672ac2");
                         let conversion_ts = match ErrorOccurenceFieldAttr::try_from(el_d7e120a3).expect("449c3781") {
                             ErrorOccurenceFieldAttr::EoToErrString => {
                                 quote! {
-                                    #current_ident: {
-                                        error_occurence_lib::ToErrString::to_err_string(&#current_ident)
+                                    #el_d7e120a3_ident: {
+                                        error_occurence_lib::ToErrString::to_err_string(&#el_d7e120a3_ident)
                                     }
                                 }
                             }
                             ErrorOccurenceFieldAttr::EoToErrStringSerializeDeserialize | ErrorOccurenceFieldAttr::EoVecToErrStringSerializeDeserialize | ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrStringSerializeDeserialize => {
                                 quote! {
-                                    #current_ident
+                                    #el_d7e120a3_ident
                                 }
                             }
                             ErrorOccurenceFieldAttr::EoErrorOccurence => {
                                 quote! {
-                                    #current_ident: {
-                                        #current_ident.into_serde_version()
+                                    #el_d7e120a3_ident: {
+                                        #el_d7e120a3_ident.into_serde_version()
                                     }
                                 }
                             }
                             ErrorOccurenceFieldAttr::EoVecToErrString => {
                                 quote! {
-                                    #current_ident: {
-                                        #current_ident.into_iter().map(|el_3c145d8e|error_occurence_lib::ToErrString::to_err_string(&el_3c145d8e)).collect()
+                                    #el_d7e120a3_ident: {
+                                        #el_d7e120a3_ident.into_iter().map(|el_3c145d8e|error_occurence_lib::ToErrString::to_err_string(&el_3c145d8e)).collect()
                                     }
                                 }
                             }
                             ErrorOccurenceFieldAttr::EoVecErrorOccurence => {
                                 quote! {
-                                    #current_ident: {
-                                        #current_ident.into_iter().map(|el_607695c6|el_607695c6.into_serde_version()).collect()
+                                    #el_d7e120a3_ident: {
+                                        #el_d7e120a3_ident.into_iter().map(|el_607695c6|el_607695c6.into_serde_version()).collect()
                                     }
                                 }
                             }
                             ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrString => {
                                 quote! {
-                                    #current_ident: {
-                                        #current_ident.into_iter().map(|(key, value)|
+                                    #el_d7e120a3_ident: {
+                                        #el_d7e120a3_ident.into_iter().map(|(key, value)|
                                             (key, error_occurence_lib::ToErrString::to_err_string(&value))
                                         ).collect()
                                     }
@@ -371,8 +377,8 @@ pub fn error_occurence(input: Ts) -> Ts {
                             }
                             ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueErrorOccurence => {
                                 quote! {
-                                    #current_ident: {
-                                        #current_ident.into_iter().map(
+                                    #el_d7e120a3_ident: {
+                                        #el_d7e120a3_ident.into_iter().map(
                                             |(key, value)|(key, value.into_serde_version())
                                         ).collect()
                                     }
