@@ -161,6 +161,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
                 self,
                 struct_or_enum: #struct_or_enum_ucc,
                 current_ident: &dyn #quote_to_tokens_ts,
+                current_generics: &dyn #quote_to_tokens_ts,
                 content_ts: &dyn #quote_to_tokens_ts,
             ) -> Ts2 {
                 let maybe_pub_ts = self.#make_pub_sc_ts.then(|| quote::quote!{pub});
@@ -224,6 +225,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
                     ::#quote_to_tokens_ts::to_tokens(&maybe_pub_ts, &mut _s);
                     ::#quote_to_tokens_ts::to_tokens(&struct_or_enum_ts, &mut _s);
                     ::#quote_to_tokens_ts::to_tokens(&current_ident, &mut _s);
+                    ::#quote_to_tokens_ts::to_tokens(&current_generics, &mut _s);
                     ::#quote_to_tokens_ts::to_tokens(&content_ts, &mut _s);
                     _s
                 }
@@ -231,16 +233,28 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
             pub fn build_struct(
                 self,
                 current_ident: &dyn #quote_to_tokens_ts,
+                current_generics: &dyn #quote_to_tokens_ts,
                 content_ts: &dyn #quote_to_tokens_ts,
             ) -> Ts2 {
-                self.build_handle(#struct_or_enum_ucc::Struct, current_ident, content_ts)
+                self.build_handle(
+                    #struct_or_enum_ucc::Struct,
+                    current_ident,
+                    current_generics,
+                    content_ts
+                )
             }
             pub fn build_enum(
                 self,
                 current_ident: &dyn #quote_to_tokens_ts,
+                current_generics: &dyn #quote_to_tokens_ts,
                 content_ts: &dyn #quote_to_tokens_ts,
             ) -> Ts2 {
-                self.build_handle(#struct_or_enum_ucc::Enum, current_ident, content_ts)
+                self.build_handle(
+                    #struct_or_enum_ucc::Enum,
+                    current_ident,
+                    current_generics,
+                    content_ts
+                )
             }
         }
     };

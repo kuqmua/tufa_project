@@ -1,4 +1,5 @@
 use gen_quotes::double_quotes_ts;
+use macros_helpers::{DeriveSerdeDeserialize, StructOrEnumDeriveTokenStreamBuilder};
 use macros_helpers::{
     FormatWithCargofmt, ShouldWriteTokenStreamIntoFile, gen_if_write_is_err_ts,
     maybe_write_ts_into_file,
@@ -137,21 +138,34 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     };
     let gen_struct_ts = |filter_initialized_with_try_new_result_is_ok: bool, should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn ToTokens, struct_additional_fields_ts: &dyn ToTokens| {
         let maybe_pub_ts: &dyn ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_ts_new } else { &PubSc };
-        let maybe_derive_serde_deserialize_ts: &dyn ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_ts_new } else { &quote! {serde::Deserialize,} };
         let maybe_declaration_of_struct_ident_generic_ts: &dyn ToTokens = match &should_add_declaration_of_struct_ident_generic {
             ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_ts_new,
             ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_ts } => {
                 &maybe_additional_traits_ts.as_ref().map_or_else(|| quote! {<#t_ts>}, |value_d05f3d4f| quote! {<#t_ts: #value_d05f3d4f>})
             }
         };
-        //todo use gen struct builder
-        quote! {
-            #[derive(Debug, Clone, PartialEq, serde::Serialize, #maybe_derive_serde_deserialize_ts schemars::JsonSchema)]
-            pub struct #ident #maybe_declaration_of_struct_ident_generic_ts {
+        StructOrEnumDeriveTokenStreamBuilder::new()
+        .make_pub()
+        .derive_debug()
+        .derive_clone()
+        .derive_partial_eq()
+        .derive_serde_serialize()
+        .derive_serde_deserialize_if(
+            if filter_initialized_with_try_new_result_is_ok {
+                DeriveSerdeDeserialize::False
+            } else {
+                DeriveSerdeDeserialize::True
+            }
+        )
+        .derive_schemars_json_schema()
+        .build_struct(
+            &ident,
+            &maybe_declaration_of_struct_ident_generic_ts,
+            &quote::quote!{{
                 #maybe_pub_ts logical_operator: #import_path::LogicalOperator,
                 #struct_additional_fields_ts
-            }
-        }
+            }}
+        )
     };
     let gen_impl_default_option_some_vec_one_el_ts = |should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn ToTokens, impl_default_option_some_vec_one_el_additional_fields_ts: &dyn ToTokens| {
         gen_impl_default_option_some_vec_one_el_ts(

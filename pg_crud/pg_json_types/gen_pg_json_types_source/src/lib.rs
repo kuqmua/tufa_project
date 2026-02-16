@@ -706,6 +706,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 .derive_copy()
                 .build_struct(
                     &ident,
+                    &Ts2::new(),
                     &quote!{;}
                 );
             quote! {
@@ -919,6 +920,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 )
                 .build_struct(
                     &ident_origin_ucc,
+                    &Ts2::new(),
                     &{
                         let content_ts: &dyn ToTokens = {
                             let gen_current_ident_origin = |current_is_nullable: &IsNullable, current_pg_json_type_pattern: &PgJsonTypePattern| {
@@ -1205,6 +1207,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 .derive_schemars_json_schema()
                 .build_struct(
                     &ident_table_type_declaration_ucc,
+                    &Ts2::new(),
                     &ident_origin_struct_content_ts
                 );
             let impl_ident_table_type_declaration_ts = {
@@ -1241,6 +1244,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 .derive_schemars_json_schema()
                 .build_struct(
                     &ident_create_ucc,
+                    &Ts2::new(),
                     &ident_origin_struct_content_ts
                 );
             let impl_ident_create_ts = {
@@ -1268,6 +1272,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 .derive_serde_serialize()
                 .build_struct(
                     &ident_create_for_query_ucc,
+                    &Ts2::new(),
                     &ident_origin_struct_content_ts
                 );
             let impl_ident_create_for_query_ts = {
@@ -1308,6 +1313,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 .derive_schemars_json_schema()
                 .build_struct(
                     &ident_select_ucc,
+                    &Ts2::new(),
                     &ArrayDim::try_from(pg_json_type_pattern).map_or_else(
                         |()| quote! {;},
                         |array_dim| {
@@ -1765,6 +1771,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 .derive_schemars_json_schema()
                 .build_struct(
                     &ident_read_ucc,
+                    &Ts2::new(),
                     &ident_origin_struct_content_ts
                 );
             let impl_ident_read_ts = {
@@ -1796,6 +1803,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             .derive_serde_deserialize()
             .build_struct(
                 &ident_read_only_ids_ucc,
+                &Ts2::new(),
                 &{
                     let std_option_option_unit_ts = gen_std_option_option_tokens_declaration_ts(&quote! {()});
                     let vec_ts = |value: &dyn ToTokens| gen_std_vec_vec_tokens_declaration_ts(&value);
@@ -1972,6 +1980,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 .derive_schemars_json_schema()
                 .build_struct(
                     &ident_update_ucc,
+                    &Ts2::new(),
                     &ident_origin_struct_content_ts
                 );
             let impl_ident_update_ts = {
@@ -2005,6 +2014,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 .derive_serde_serialize()
                 .build_struct(
                     &ident_update_for_query_ucc,
+                    &Ts2::new(),
                     &ident_origin_struct_content_ts
                 );
             let impl_ident_update_for_query_ts = {

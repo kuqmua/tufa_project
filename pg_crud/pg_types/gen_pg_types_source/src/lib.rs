@@ -2578,6 +2578,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .derive_partial_eq()
                 .build_struct(
                     &ident,
+                    &Ts2::new(),
                     &quote!{;},
                 );
             // println!("@@@{}", ident_inner_type_ts);
@@ -3105,6 +3106,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 })
                 .build_struct(
                     &ident_origin_ucc,
+                    &Ts2::new(),
                     &quote!{(#field_type_handle);},
                 );
             let gen_int_range_type_error_variants_ts = |int_range_type: &IntRangeType| {
@@ -3180,6 +3182,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     .derive_error_occurence_lib_error_occurence()
                     .build_enum(
                         &ident_standart_not_null_origin_try_new_error_ucc,
+                        &Ts2::new(),
                         &{
                             let gen_start_end_ts = |content_ts: &dyn ToTokens| {
                                 let (start_variant_ts, end_variant_ts) = {
@@ -3267,6 +3270,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             .derive_error_occurence_lib_error_occurence()
                             .build_enum(
                                 &ident_standart_not_null_origin_try_new_for_deserialize_error_ucc,
+                                &Ts2::new(),
                                 &{
                                     let content_ts: &dyn ToTokens = match &pg_type_impl_try_new_for_deserialize {
                                         PgTypeImplTryNewForDeserialize::StdStringStringAsText => &std_string_string_as_text_try_new_error_variants_ts,
@@ -4210,6 +4214,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .derive_serde_deserialize()
                 .build_struct(
                     &current_ident_ts,
+                    &Ts2::new(),
                     &content_ts
                 )
         };
@@ -4258,6 +4263,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .derive_serde_deserialize()
                 .build_struct(
                     &ident_table_type_declaration_ucc,
+                    &Ts2::new(),
                     &ident_origin_struct_content_ts
                 );
             let impl_ident_table_type_declaration_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_table_type_declaration_ucc);
@@ -4330,6 +4336,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     .derive_serde_deserialize()
                     .build_struct(
                         &ident_create_ucc,
+                        &Ts2::new(),
                         &ident_origin_struct_content_ts
                     ),
                 CanBePrimaryKey::True => gen_pub_struct_tokens_ts(&ident_create_ucc, &quote! {(());}, DeriveDefault::False),
@@ -4776,6 +4783,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     .derive_serde_deserialize()
                     .build_struct(
                         &ident_read_ucc,
+                        &Ts2::new(),
                         &ident_origin_struct_content_ts
                     )
             };
@@ -4834,6 +4842,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .derive_serde_deserialize()
                 .build_struct(
                     &ident_read_only_ids_ucc,
+                    &Ts2::new(),
                     &quote!{(#ident_read_ucc);},
                 );
             let impl_sqlx_decode_sqlx_pg_for_ident_read_only_ids_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
@@ -4865,6 +4874,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .derive_serde_deserialize()
                 .build_struct(
                     &ident_update_ucc,
+                    &Ts2::new(),
                     &ident_origin_struct_content_ts
                 );
             let impl_ident_update_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_update_ucc);
@@ -4890,6 +4900,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .derive_serde_deserialize()
                 .build_struct(
                     &ident_update_for_query_ucc,
+                    &Ts2::new(),
                     &ident_origin_struct_content_ts
                 );
             let impl_sqlx_type_sqlx_pg_for_ident_update_for_query_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_update_for_query_ucc, &ident_origin_ucc);

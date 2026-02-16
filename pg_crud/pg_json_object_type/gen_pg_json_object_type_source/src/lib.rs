@@ -469,6 +469,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     .derive_copy()
                     .build_struct(
                         &current_ident,
+                        &Ts2::new(),
                         &quote!{;}
                     );
                 let ident_ts = gen_struct_ident_ts(&ident);
@@ -695,6 +696,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     .derive_schemars_json_schema()
                     .build_struct(
                         &current_ident_ts,
+                        &Ts2::new(),
                         &content_ts
                     );
                     quote!{
@@ -939,6 +941,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     .derive_serde_serialize()
                     .build_struct(
                         &current_ident_ts,
+                        &Ts2::new(),
                         &content_ts_153ac202
                     );
                 quote!{
@@ -1179,6 +1182,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     .derive_schemars_json_schema()
                     .build_struct(
                         &current_ident_ts,
+                        &Ts2::new(),
                         &content_ts_fc7ad384
                     );
                     quote!{
@@ -1472,6 +1476,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         .derive_schemars_json_schema()
                         .build_enum(
                             &ident_select_el_or_ident_with_id_select_el_ucc,
+                            &Ts2::new(),
                             &{
                                 let content_ts_ecc4a666 = get_vec_syn_field(is_standart_with_id).iter().map(|el_840c2253| {
                                     let field_ident = &el_840c2253.field_ident;
@@ -1616,6 +1621,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         .derive_schemars_json_schema()
                         .build_enum(
                             &current_ident_ts,
+                            &Ts2::new(),
                             &quote!{{#content_ts_e1af2d89}}
                         );
                         quote!{
@@ -2064,6 +2070,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     .derive_schemars_json_schema()
                     .build_struct(
                         &current_ident_ts,
+                        &Ts2::new(),
                         &content_ts_1c85ea2c
                     );
                     quote!{
@@ -2103,6 +2110,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     .derive_error_occurence_lib_error_occurence()
                     .build_enum(
                         &current_ident_ts,
+                        &Ts2::new(),
                         &quote!{{
                             #all_fields_are_none_ucc {
                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -2406,6 +2414,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     .derive_serde_deserialize()
                     .build_struct(
                         &ident_read_only_ids_handle_ucc,
+                        &Ts2::new(),
                         &gen_ident_read_only_ids_or_ident_with_id_read_only_ids_content_ts(&IsStandartWithId::False)
                     );
                     quote!{
@@ -2425,6 +2434,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     .derive_serde_deserialize()
                     .build_struct(
                         &ident_read_only_ids_ucc,
+                        &Ts2::new(),
                         &match &pattern {
                             Pattern::Standart => match &is_nullable {
                                 IsNullable::False => {
@@ -2472,6 +2482,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             .derive_serde_deserialize()
                             .build_struct(
                                 &ident_with_id_standart_not_null_read_only_ids_handle_ucc,
+                                &Ts2::new(),
                                 &gen_ident_read_only_ids_or_ident_with_id_read_only_ids_content_ts(&IsStandartWithId::True)
                             );
                             quote!{
@@ -2488,6 +2499,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             .derive_serde_deserialize()
                             .build_struct(
                                 &ident_with_id_standart_not_null_read_only_ids_ucc,
+                                &Ts2::new(),
                                 &{
                                     let value_ident_with_id_standart_not_null_read_only_ids_handle_ts = wrap_into_value_declaration_ts(
                                         &ident_with_id_standart_not_null_read_only_ids_handle_ucc
@@ -2530,6 +2542,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             IsStandartWithId::False => &ident_read_inner_ucc,
                             IsStandartWithId::True => &ident_with_id_standart_not_null_read_inner_ucc,
                         },
+                        &Ts2::new(),
                         &{
                             let content_ts = gen_ident_or_ident_with_id_read_or_read_inner_fields_declaration_ts(
                                 is_standart_with_id,
@@ -2684,6 +2697,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     .derive_schemars_json_schema()
                     .build_struct(
                         &ident_update_ucc,
+                        &Ts2::new(),
                         &content_ts_975df5c5
                     );
                     quote!{
@@ -2708,6 +2722,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             .derive_error_occurence_lib_error_occurence()
                             .build_enum(
                                 &ident_update_try_new_error_ucc,
+                                &Ts2::new(),
                                 &quote!{{
                                     #create_update_delete_are_empty_ucc {
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -3080,6 +3095,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         .derive_schemars_json_schema()
                         .build_enum(
                             &ident_standart_not_null_update_el_ucc,
+                            &Ts2::new(),
                             &{
                                 let variants_ts = vec_syn_field.iter().map(|el_092057f6| {
                                     let field_ident = &el_092057f6.field_ident;
@@ -3152,6 +3168,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         .derive_schemars_json_schema()
                         .build_struct(
                             &ident_with_id_standart_not_null_update_el_ucc,
+                            &Ts2::new(),
                             &quote!{{#ident_with_id_standart_not_null_update_el_fields_declaration_ts}}
                         );
                         quote!{
@@ -3551,6 +3568,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         .derive_serde_serialize()
                         .build_enum(
                             &ident_standart_not_null_update_for_query_el_ucc,
+                            &Ts2::new(),
                             &{
                                 let variants_ts = vec_syn_field.iter().map(|el_9d8af887| {
                                     let field_ident = &el_9d8af887.field_ident;

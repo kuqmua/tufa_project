@@ -639,6 +639,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .derive_error_occurence_lib_error_occurence()
             .build_enum(
                 &ident_prepare_pg_error_ucc,
+                &Ts2::new(),
                 &quote! {{
                     #CreateExtensionIfNotExistsPgJsonschemaUcc {
                         #content_ts
@@ -1022,7 +1023,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .derive_serde_serialize()
             .derive_serde_deserialize()
             .derive_utoipa_to_schema()
-            .build_struct(&ident_create_ucc, &{
+            .build_struct(&ident_create_ucc, &Ts2::new(), &{
                 let content_ts = gen_fields_named_without_primary_key_with_comma_ts(
                     &|element: &SynFieldWrapper| {
                         let field_ident = &element.field_ident;
@@ -1192,7 +1193,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .derive_clone()
                 .derive_serde_serialize()
                 .derive_utoipa_to_schema()
-                .build_struct(&ident_where_many_ucc, &quote! {{#fields_declaration_ts}});
+                .build_struct(
+                    &ident_where_many_ucc,
+                    &Ts2::new(),
+                    &quote! {{#fields_declaration_ts}},
+                );
             quote! {
                 #allow_clippy_arbitrary_source_item_ordering_ts
                 #content_ts_2ecd6da8
@@ -1205,6 +1210,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .derive_error_occurence_lib_error_occurence()
             .build_enum(
                 &ident_where_many_try_new_error_ucc,
+                &Ts2::new(),
                 &quote! {{
                     #NoFieldsProvidedUcc {
                         #[eo_to_err_string]
@@ -1285,7 +1291,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .derive_serde_serialize()
             .derive_serde_deserialize()
             .derive_utoipa_to_schema()
-            .build_struct(&std_option_option_ident_where_many_ucc, &{
+            .build_struct(&std_option_option_ident_where_many_ucc, &Ts2::new(), &{
                 let std_option_option_ident_read_only_ids_standart_not_null_ts =
                     gen_std_option_option_tokens_declaration_ts(&ident_where_many_ucc);
                 quote! {(pub #std_option_option_ident_read_only_ids_standart_not_null_ts);}
@@ -1483,6 +1489,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .derive_serde_deserialize()
             .build_enum(
                 &ident_select_ucc,
+                &Ts2::new(),
                 &{
                     let variants = gen_fields_named_with_comma_ts(&|element: &SynFieldWrapper| {
                         let serialize_deserialize_ident_ts = double_quotes_ts(&element.field_ident);
@@ -1546,6 +1553,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .derive_serde_deserialize()
             .build_struct(
                 &ident_read_ucc,
+                &Ts2::new(),
                 &{
                     let field_option_primary_key_ts = {
                         let std_option_option_value_primary_key_field_type_as_pg_type_read_ts = gen_std_option_option_tokens_declaration_ts(&gen_value_declaration_ts(&gen_as_pg_type_read_ts(&primary_key_field_type)));
@@ -1687,7 +1695,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .derive_partial_eq()
                 .derive_serde_serialize()
                 .derive_serde_deserialize()
-                .build_struct(&ident_read_only_ids_ucc, &{
+                .build_struct(&ident_read_only_ids_ucc, &Ts2::new(), &{
                     enum WrapIntoOption {
                         False,
                         True,
@@ -1853,7 +1861,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .derive_debug()
                 .derive_serde_serialize()
                 .derive_utoipa_to_schema()
-                .build_struct(&ident_update_ucc, &quote! {{#fields_declaration_ts}});
+                .build_struct(
+                    &ident_update_ucc,
+                    &Ts2::new(),
+                    &quote! {{#fields_declaration_ts}},
+                );
             quote! {
                 #allow_clippy_arbitrary_source_item_ordering_ts
                 #content_ts_a09c0471
@@ -1866,6 +1878,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .derive_error_occurence_lib_error_occurence()
             .build_enum(
                 &ident_update_try_new_error_ucc,
+                &Ts2::new(),
                 &quote! {{
                     #NoFieldsProvidedUcc {
                         #[eo_to_err_string]
@@ -1969,6 +1982,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .derive_utoipa_to_schema()
             .build_struct(
                 &ident_update_for_query_ucc,
+                &Ts2::new(),
                 &{
                     let fields_named_without_primary_key_ts = gen_fields_named_without_primary_key_with_comma_ts(&|element: &SynFieldWrapper| -> Ts2 {
                         let field_ident = &element.field_ident;
@@ -2626,12 +2640,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .derive_debug()
                 .derive_clone_if(derive_clone)
                 .derive_copy_if(derive_copy)
-                .build_struct(&gen_ident_operation_parameters_ucc(operation), &{
-                    let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
-                    quote! {{
-                        pub #PayloadSc: #ident_operation_payload_ucc,
-                    }}
-                });
+                .build_struct(
+                    &gen_ident_operation_parameters_ucc(operation),
+                    &Ts2::new(),
+                    &{
+                        let ident_operation_payload_ucc =
+                            gen_ident_operation_payload_ucc(operation);
+                        quote! {{
+                            pub #PayloadSc: #ident_operation_payload_ucc,
+                        }}
+                    },
+                );
             quote! {
                 #allow_clippy_arbitrary_source_item_ordering_ts
                 #content_ts_0d032fce
@@ -2657,7 +2676,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     .derive_serde_serialize()
                     .derive_serde_deserialize()
                     .derive_utoipa_to_schema()
-                    .build_struct(&ident_operation_payload_ucc, &declaration_ts);
+                    .build_struct(&ident_operation_payload_ucc, &Ts2::new(), &declaration_ts);
                 quote! {
                     #allow_clippy_arbitrary_source_item_ordering_ts
                     #content_ts_ec5b096c
@@ -3874,6 +3893,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .derive_utoipa_to_schema()
                 .build_struct(
                     &ident_operation_payload_ucc,
+                    &Ts2::new(),
                     &quote! {(#std_vec_vec_ident_update_ts);},
                 );
             let ident_operation_payload_try_new_error_ucc =
@@ -3890,6 +3910,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     .derive_error_occurence_lib_error_occurence()
                     .build_enum(
                         &ident_operation_payload_try_new_error_ucc,
+                        &Ts2::new(),
                         &quote! {{
                             #not_unique_primary_key_ucc {
                                 #[eo_to_err_string]
