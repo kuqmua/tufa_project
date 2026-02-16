@@ -5201,15 +5201,15 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             quote!{#field_ident_last_sc.clone_from(&#field_ident_current_sc);}
                                         };
                                         let fields_ts = vec_syn_field.iter().map(|el_value| {
-                                            let current_field_ident = &el_value.field_ident;
-                                            let current_field_ident_current_sc = SelfCurrentSc::from_display(&current_field_ident);
-                                            let current_field_ident_last_sc = SelfLastSc::from_display(&current_field_ident);
-                                            let content_ts: &dyn ToTokens = if field_ident == current_field_ident {
-                                                &current_field_ident_current_sc
+                                            let field_ident_84b52e71 = &el_value.field_ident;
+                                            let field_ident_84b52e71_current_sc = SelfCurrentSc::from_display(&field_ident_84b52e71);
+                                            let field_ident_84b52e71_last_sc = SelfLastSc::from_display(&field_ident_84b52e71);
+                                            let content_ts: &dyn ToTokens = if field_ident == field_ident_84b52e71 {
+                                                &field_ident_84b52e71_current_sc
                                             } else {
-                                                &current_field_ident_last_sc
+                                                &field_ident_84b52e71_last_sc
                                             };
-                                            quote! {#current_field_ident: #content_ts.clone()}
+                                            quote! {#field_ident_84b52e71: #content_ts.clone()}
                                         });
                                         let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el_9b199f7f.field_type);
                                         let value_content_ts = wrap_into_value_initialization_ts(&quote!{el_2720df8a});
@@ -5256,17 +5256,17 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     let content_ts = vec_syn_field.iter().map(|el_bb247316| {
                                         let field_ident = &el_bb247316.field_ident;
                                         let fields_ts = vec_syn_field.iter().map(|el_value| {
-                                            let current_field_ident = &el_value.field_ident;
-                                            if field_ident == current_field_ident {
+                                            let field_ident_dd46e0cb = &el_value.field_ident;
+                                            if field_ident == field_ident_dd46e0cb {
                                                 let value_content_ts = wrap_into_value_initialization_ts(&quote!{el_18d1f553});
                                                 quote! {
-                                                    #current_field_ident: Some(#value_content_ts)
+                                                    #field_ident_dd46e0cb: Some(#value_content_ts)
                                                 }
                                             } else {
-                                                let current_field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el_value.field_type);
+                                                let field_type_as_pg_json_type_test_cases_ts_64dc25bd = gen_type_as_pg_json_type_test_cases_ts(&el_value.field_type);
                                                 quote! {
-                                                    #current_field_ident: #current_field_type_as_pg_json_type_test_cases_ts::#ReadOnlyIdsIntoOptionValueReadInnerSc(
-                                                        el_49a5bb62.0.#ValueSc.#current_field_ident.clone()
+                                                    #field_ident_dd46e0cb: #field_type_as_pg_json_type_test_cases_ts_64dc25bd::#ReadOnlyIdsIntoOptionValueReadInnerSc(
+                                                        el_49a5bb62.0.#ValueSc.#field_ident_dd46e0cb.clone()
                                                     )
                                                 }
                                             }
@@ -5573,14 +5573,15 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         let for_loop_ts = vec_syn_field.iter().map(|el_cf4923ce| {
                                             let field_ident = &el_cf4923ce.field_ident;
                                             let field_ident_ts = {
-                                                let current_field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&field_ident);
+                                                let field_ident_ucc_ts_fe80e842 = ToTokensToUccTs::case_or_panic(&field_ident);
                                                 quote!{
-                                                    #ident_standart_not_null_update_el_ucc::#current_field_ident_ucc_ts(value_d2a6daf8) => {
+                                                    #ident_standart_not_null_update_el_ucc::#field_ident_ucc_ts_fe80e842(value_d2a6daf8) => {
                                                         #field_ident = Some(value_d2a6daf8.#ValueSc.clone());
                                                     },
                                                 }
                                             };
-                                            let fields_without_current_ident_ts = if vec_syn_field.is_empty() {
+                                            //todo wtf
+                                            let fields_without_ident_ts_11eab22a = if vec_syn_field.is_empty() {
                                                 Ts2::new()
                                             }
                                             else {
@@ -5588,13 +5589,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 .iter()
                                                 .filter(|el_a1502880| el_a1502880.field_ident != *field_ident)
                                                 .map(|el_2908bd7a| {
-                                                    let current_field_ident = &el_2908bd7a.field_ident;
-                                                    let current_field_ident_ucc_ts =
+                                                    let el_2908bd7a_field_ident = &el_2908bd7a.field_ident;
+                                                    let el_2908bd7a_field_ident_ucc_ts =
                                                         ToTokensToUccTs::case_or_panic(
-                                                            &current_field_ident,
+                                                            &el_2908bd7a_field_ident,
                                                         );
                                                     quote! {
-                                                        #ident_standart_not_null_update_el_ucc::#current_field_ident_ucc_ts(_)
+                                                        #ident_standart_not_null_update_el_ucc::#el_2908bd7a_field_ident_ucc_ts(_)
                                                     }
                                                 })
                                                 .fold(None, |acc_bbf653f7, el_2be3f4ee| Some(match acc_bbf653f7 {
@@ -5610,7 +5611,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 for el_da177c5a in el_4634bb8a.fields.0.to_vec() {
                                                     match &el_da177c5a {
                                                         #field_ident_ts
-                                                        #fields_without_current_ident_ts
+                                                        #fields_without_ident_ts_11eab22a
                                                     }
                                                 }
                                             }
@@ -5760,8 +5761,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 });
                                 quote!{#(#ts),*}
                             };
-                            let gen_option_ts = |current_pattern: &Pattern|{
-                                let current_ident_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(match &current_pattern {
+                            let gen_option_ts = |pattern_53bdff8d: &Pattern|{
+                                let ident_as_pg_json_type_test_cases_ts_53bdff8d = gen_type_as_pg_json_type_test_cases_ts(match &pattern_53bdff8d {
                                     Pattern::Standart => &ident_standart_not_null_ucc,
                                     Pattern::Array => &ident_array_not_null_ucc
                                 });
@@ -5770,7 +5771,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         Some(value_fca601b5) => #ident_read_ucc(
                                             match value_fca601b5.0 {
                                                 Some(value_8d7747f1) => Some(
-                                                    #current_ident_as_pg_json_type_test_cases_ts::previous_read_merged_with_option_update_into_read(
+                                                    #ident_as_pg_json_type_test_cases_ts_53bdff8d::previous_read_merged_with_option_update_into_read(
                                                         #ReadSc.0.unwrap_or_else(#default_but_option_is_some_ts),
                                                         Some(value_8d7747f1),
                                                     )
@@ -5853,14 +5854,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             }
                         };
                         let read_only_ids_merged_with_create_into_read_ts = {
-                            let gen_nullable_ts = |current_ident_ts: &dyn ToTokens, content_ts: &dyn ToTokens|{
-                                let current_ident_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&current_ident_ts);
+                            let gen_nullable_ts = |ident_ts_3eb17505: &dyn ToTokens, content_ts: &dyn ToTokens|{
+                                let ident_as_pg_json_type_test_cases_ts_3eb17505 = gen_type_as_pg_json_type_test_cases_ts(&ident_ts_3eb17505);
                                 quote! {
                                     #ident_read_ucc::new(
                                         match (#ReadOnlyIdsSc.0.#ValueSc, #CreateSc.0) {
                                             (Some(read_only_ids_2b2ab8a1), Some(create_4a1adaa3)) => {
                                                 Some(
-                                                    #current_ident_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoOptionValueReadSc(
+                                                    #ident_as_pg_json_type_test_cases_ts_3eb17505::#ReadOnlyIdsMergedWithCreateIntoOptionValueReadSc(
                                                         read_only_ids_2b2ab8a1,
                                                         create_4a1adaa3
                                                     ).expect("56ac4450").#ValueSc #content_ts
@@ -5952,14 +5953,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             quote!{Some(#value_initialization_ts)}
                         };
                         let read_only_ids_merged_with_create_into_table_type_declaration_ts = {
-                            let gen_nullable_ts = |current_ident_ts: &dyn ToTokens, content_ts: &dyn ToTokens|{
-                                let current_ident_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&current_ident_ts);
+                            let gen_nullable_ts = |ident_ts_971139d7: &dyn ToTokens, content_ts: &dyn ToTokens|{
+                                let ident_as_pg_json_type_test_cases_ts_971139d7 = gen_type_as_pg_json_type_test_cases_ts(&ident_ts_971139d7);
                                 quote! {
                                     #ident_table_type_declaration_ucc::new(
                                         match (#ReadOnlyIdsSc.0.#ValueSc, #CreateSc.0) {
                                             (Some(read_only_ids_fb2ec2e4), Some(create_2f615d4f)) => {
                                                 Some(
-                                                    #current_ident_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSc(
+                                                    #ident_as_pg_json_type_test_cases_ts_971139d7::#ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSc(
                                                         read_only_ids_fb2ec2e4,
                                                         create_2f615d4f
                                                     ) #content_ts
@@ -6079,7 +6080,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             )
                                         }
                                     };
-                                    let current_ident_ts = gen_read_only_ids_merged_with_create_into_table_type_declaration_ts(
+                                    let ident_ts_978daa48 = gen_read_only_ids_merged_with_create_into_table_type_declaration_ts(
                                         &IdSc,
                                         &uuid_uuid_as_not_null_jsonb_string_ts,
                                         &default_but_option_is_some_call_ts
@@ -6101,7 +6102,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                     for (read_only_ids_ea32954c, create_3cbe8967) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
                                                         acc_321b3fcd.push(
                                                             #ident_with_id_standart_not_null_table_type_declaration_ucc::new(
-                                                                #current_ident_ts,
+                                                                #ident_ts_978daa48,
                                                                 #(#parameters_ts),*
                                                             )
                                                         );
@@ -6115,13 +6116,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             },
                             IsNullable::True => {
                                 let content_ts = {
-                                    let current_ident_ts = gen_type_as_pg_json_type_test_cases_ts(&gen_ident_ucc(&match &pattern {
+                                    let ident_ts_bdc5fdf7 = gen_type_as_pg_json_type_test_cases_ts(&gen_ident_ucc(&match &pattern {
                                         Pattern::Standart => IdentPattern::StandartNotNullWithoutId,
                                         Pattern::Array => IdentPattern::ArrayNotNullWithId,
                                     }));
                                     quote!{
                                         vec![
-                                            #current_ident_ts::#ReadOnlyIdsMergedWithCreateIntoWhereEqualSc(
+                                            #ident_ts_bdc5fdf7::#ReadOnlyIdsMergedWithCreateIntoWhereEqualSc(
                                                 read_only_ids_ce30c0fe,
                                                 create_8fd81ed8
                                             )
@@ -6182,7 +6183,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 )
                                             }
                                         };
-                                        let current_ident_ts = gen_read_only_ids_merged_with_create_into_table_type_declaration_ts(
+                                        let ident_ts_76fd9d28 = gen_read_only_ids_merged_with_create_into_table_type_declaration_ts(
                                             &IdSc,
                                             &uuid_uuid_as_not_null_jsonb_string_ts,
                                             &default_but_option_is_some_call_ts
@@ -6204,7 +6205,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                         for (read_only_ids_319c9e78, create_00ae06d2) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
                                                             acc_97ebf7d6.push(
                                                                 #ident_with_id_standart_not_null_table_type_declaration_ucc::new(
-                                                                    #current_ident_ts,
+                                                                    #ident_ts_76fd9d28,
                                                                     #(#parameters_ts),*
                                                                 )
                                                             );
@@ -6218,12 +6219,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 },
                                 IsNullable::True => {
                                     let content_ts = {
-                                        let current_ident_ts = gen_type_as_pg_json_type_test_cases_ts(&gen_ident_ucc(&match &pattern {
+                                        let ident_ts_b9e61412 = gen_type_as_pg_json_type_test_cases_ts(&gen_ident_ucc(&match &pattern {
                                             Pattern::Standart => IdentPattern::StandartNotNullWithoutId,
                                             Pattern::Array => IdentPattern::ArrayNotNullWithId,
                                         }));
                                         quote! {
-                                            #current_ident_ts::#ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc(
+                                            #ident_ts_b9e61412::#ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc(
                                                 read_only_ids_2898c440,
                                                 create_f1c4667c
                                             )
@@ -6738,7 +6739,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             quote! {
                                                 if let Some(value_f190793e) = #field_ident {
                                                     for el_22ac4087 in value_f190793e.clone().into_vec() {
-                                                        let current_where = #ident_where_ucc::#el_field_ident_ucc(
+                                                        let where_f8a4319c = #ident_where_ucc::#el_field_ident_ucc(
                                                             match el_22ac4087 {
                                                                 #import_path::SingleOrMultiple::Multiple(multiple) => #import_path::PgTypeWhere::new(
                                                                     and,
@@ -6750,15 +6751,15 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                                 ).expect("2ed4dc5e"),
                                                             }
                                                         );
-                                                        all_fields_acc.push(current_where.clone());
+                                                        all_fields_acc.push(where_f8a4319c.clone());
                                                         match #import_path::NotEmptyUniqueVec::try_new(vec![
                                                             #IdSc.clone(),
-                                                            current_where
+                                                            where_f8a4319c
                                                         ]) {
                                                             Ok(value_fdd1b3eb) => {
-                                                                let multiple_current_where_with_id = #import_path::SingleOrMultiple::Multiple(value_fdd1b3eb);
-                                                                if !acc_359c0b3f.contains(&multiple_current_where_with_id) {
-                                                                    acc_359c0b3f.push(multiple_current_where_with_id);
+                                                                let multiple_where_with_id_f8a4319c = #import_path::SingleOrMultiple::Multiple(value_fdd1b3eb);
+                                                                if !acc_359c0b3f.contains(&multiple_where_with_id_f8a4319c) {
+                                                                    acc_359c0b3f.push(multiple_where_with_id_f8a4319c);
                                                                 }
                                                             },
                                                             Err(error) => match error {
@@ -6849,13 +6850,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 },
                                 IsNullable::True => {
-                                    let current_ident_ts = gen_type_as_pg_json_type_test_cases_ts(&gen_ident_ucc(&match &pattern {
+                                    let ident_ts_a8bc30fc = gen_type_as_pg_json_type_test_cases_ts(&gen_ident_ucc(&match &pattern {
                                         Pattern::Standart => IdentPattern::StandartNotNullWithoutId,
                                         Pattern::Array => IdentPattern::ArrayNotNullWithId,
                                     }));
                                     quote! {
                                         match (#ReadOnlyIdsSc.0.value, #CreateSc.0) {
-                                            (Some(read_only_ids_3e2e30c8), Some(create_79039a2f)) => #current_ident_ts::#method_name_ts(
+                                            (Some(read_only_ids_3e2e30c8), Some(create_79039a2f)) => #ident_ts_a8bc30fc::#method_name_ts(
                                                 read_only_ids_3e2e30c8,
                                                 create_79039a2f
                                             ).map_or_else(|| None, |value_35662b3a| match #import_path::NotEmptyUniqueVec::try_new({
