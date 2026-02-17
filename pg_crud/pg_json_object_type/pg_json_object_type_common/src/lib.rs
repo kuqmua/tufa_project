@@ -8,7 +8,7 @@ use utoipa::ToSchema;
 #[derive(Debug, Serialize, Deserialize, Error, ErrorOccurence)]
 pub enum UniqueVecTryNewError<T> {
     NotUnique {
-        #[eo_to_err_string_serialize_deserialize]
+        #[eo_to_err_string_serde]
         value: T,
         code_occurence: CodeOccurence,
     },

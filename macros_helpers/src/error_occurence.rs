@@ -1,5 +1,5 @@
 use crate::attr_ident_str::AttrIdentStr;
-use naming::{CodeOccurenceSc, HashMapUcc, WithSerializeDeserializeUcc};
+use naming::{CodeOccurenceSc, HashMapUcc, WithSerdeUcc};
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use std::str::FromStr;
@@ -12,13 +12,13 @@ use token_patterns::StdStringString;
 #[derive(Debug, Clone, Copy)]
 pub enum ErrorOccurenceFieldAttr {
     EoToErrString,
-    EoToErrStringSerializeDeserialize,
+    EoToErrStringSerde,
     EoErrorOccurence,
     EoVecToErrString,
-    EoVecToErrStringSerializeDeserialize,
+    EoVecToErrStringSerde,
     EoVecErrorOccurence,
     EoHashMapKeyStdStringStringValueToErrString,
-    EoHashMapKeyStdStringStringValueToErrStringSerializeDeserialize,
+    EoHashMapKeyStdStringStringValueToErrStringSerde,
     EoHashMapKeyStdStringStringValueErrorOccurence,
 }
 impl FromStr for ErrorOccurenceFieldAttr {
@@ -26,22 +26,20 @@ impl FromStr for ErrorOccurenceFieldAttr {
     fn from_str(value: &str) -> Result<Self, Self::Err> {
         if value == "eo_to_err_string" {
             Ok(Self::EoToErrString)
-        } else if value == "eo_to_err_string_serialize_deserialize" {
-            Ok(Self::EoToErrStringSerializeDeserialize)
+        } else if value == "eo_to_err_string_serde" {
+            Ok(Self::EoToErrStringSerde)
         } else if value == "eo_error_occurence" {
             Ok(Self::EoErrorOccurence)
         } else if value == "eo_vec_to_err_string" {
             Ok(Self::EoVecToErrString)
-        } else if value == "eo_vec_to_err_string_serialize_deserialize" {
-            Ok(Self::EoVecToErrStringSerializeDeserialize)
+        } else if value == "eo_vec_to_err_string_serde" {
+            Ok(Self::EoVecToErrStringSerde)
         } else if value == "eo_vec_error_occurence" {
             Ok(Self::EoVecErrorOccurence)
         } else if value == "eo_hashmap_key_std_string_string_value_to_err_string" {
             Ok(Self::EoHashMapKeyStdStringStringValueToErrString)
-        } else if value
-            == "eo_hashmap_key_std_string_string_value_to_err_string_serialize_deserialize"
-        {
-            Ok(Self::EoHashMapKeyStdStringStringValueToErrStringSerializeDeserialize)
+        } else if value == "eo_hashmap_key_std_string_string_value_to_err_string_serde" {
+            Ok(Self::EoHashMapKeyStdStringStringValueToErrStringSerde)
         } else if value == "eo_hashmap_key_std_string_string_value_error_occurence" {
             Ok(Self::EoHashMapKeyStdStringStringValueErrorOccurence)
         } else {
@@ -76,18 +74,16 @@ impl AttrIdentStr for ErrorOccurenceFieldAttr {
     fn attr_ident_str(&self) -> &str {
         match *self {
             Self::EoToErrString => "eo_to_err_string",
-            Self::EoToErrStringSerializeDeserialize => "eo_to_err_string_serialize_deserialize",
+            Self::EoToErrStringSerde => "eo_to_err_string_serde",
             Self::EoErrorOccurence => "eo_error_occurence",
             Self::EoVecToErrString => "eo_vec_to_err_string",
-            Self::EoVecToErrStringSerializeDeserialize => {
-                "eo_vec_to_err_string_serialize_deserialize"
-            }
+            Self::EoVecToErrStringSerde => "eo_vec_to_err_string_serde",
             Self::EoVecErrorOccurence => "eo_vec_error_occurence",
             Self::EoHashMapKeyStdStringStringValueToErrString => {
                 "eo_hashmap_key_std_string_string_value_to_err_string"
             }
-            Self::EoHashMapKeyStdStringStringValueToErrStringSerializeDeserialize => {
-                "eo_hashmap_key_std_string_string_value_to_err_string_serialize_deserialize"
+            Self::EoHashMapKeyStdStringStringValueToErrStringSerde => {
+                "eo_hashmap_key_std_string_string_value_to_err_string_serde"
             }
             Self::EoHashMapKeyStdStringStringValueErrorOccurence => {
                 "eo_hashmap_key_std_string_string_value_error_occurence"
@@ -112,7 +108,7 @@ pub fn gen_serde_version_of_named_syn_variant(value: &Variant) -> Ts2 {
         panic!("79b0f231");
     };
     let code_occurence_sc = CodeOccurenceSc;
-    let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_ts = fields.iter()
+    let fields_idents_idents_with_serde_excluding_code_occurence_ts = fields.iter()
     .filter(|el_5782b638| *el_5782b638.ident.as_ref().expect("3078fd99") != *code_occurence_sc.to_string())
     .map(|el_c25b655e| {
         let get_type_path_third_segment_second_argument_check_if_hashmap = ||{
@@ -143,15 +139,15 @@ pub fn gen_serde_version_of_named_syn_variant(value: &Variant) -> Ts2 {
             let el_type = &el_c25b655e.ty;
             quote! {#el_type}
         };
-        let el_type_with_serialize_deserialize_ts = match ErrorOccurenceFieldAttr::try_from(el_c25b655e).expect("2db209a8") {
+        let el_type_with_serde_ts = match ErrorOccurenceFieldAttr::try_from(el_c25b655e).expect("2db209a8") {
             ErrorOccurenceFieldAttr::EoToErrString => {
                 quote! {
                     #StdStringString
                 }
             }
-            ErrorOccurenceFieldAttr::EoToErrStringSerializeDeserialize | ErrorOccurenceFieldAttr::EoVecToErrStringSerializeDeserialize => el_type_ts,
+            ErrorOccurenceFieldAttr::EoToErrStringSerde | ErrorOccurenceFieldAttr::EoVecToErrStringSerde => el_type_ts,
             ErrorOccurenceFieldAttr::EoErrorOccurence => format!(
-                "{el_type_ts}{WithSerializeDeserializeUcc}"
+                "{el_type_ts}{WithSerdeUcc}"
             ).parse::<Ts2>().expect("201dc0a4"),
             ErrorOccurenceFieldAttr::EoVecToErrString => {
                 quote! {
@@ -166,7 +162,7 @@ pub fn gen_serde_version_of_named_syn_variant(value: &Variant) -> Ts2 {
                 };
                 assert!(segments.len() == 1, "0c65bbaa");
                 let first_segment = segments.iter().next().expect("595050cf");
-                let el_vec_type_with_serialize_deserialize_ts = if let PathArguments::AngleBracketed(AngleBracketedGenericArguments { args, .. }) = &first_segment.arguments {
+                let el_vec_type_with_serde_ts = if let PathArguments::AngleBracketed(AngleBracketedGenericArguments { args, .. }) = &first_segment.arguments {
                     assert!(args.len() == 1, "572a9da8");
                     format!(
                         "{}{}",
@@ -174,13 +170,13 @@ pub fn gen_serde_version_of_named_syn_variant(value: &Variant) -> Ts2 {
                             let first_arg = args.iter().next().expect("e9b33787");
                             quote! {#first_arg}
                         },
-                        WithSerializeDeserializeUcc,
+                        WithSerdeUcc,
                     ).parse::<Ts2>().expect("22c364b9")
                 } else {
                     panic!("07c6ab44");
                 };
                 quote! {
-                    Vec<#el_vec_type_with_serialize_deserialize_ts>
+                    Vec<#el_vec_type_with_serde_ts>
                 }
             }
             ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrString => {
@@ -189,27 +185,27 @@ pub fn gen_serde_version_of_named_syn_variant(value: &Variant) -> Ts2 {
                     std::collections::HashMap<#StdStringString, #StdStringString>
                 }
             }
-            ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrStringSerializeDeserialize => {
+            ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrStringSerde => {
                 let _: &GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap();
                 el_type_ts
             }
             ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueErrorOccurence => {
                 let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap();
-                let el_hashmap_value_type_with_serialize_deserialize_ts = format!(
+                let el_hashmap_value_type_with_serde_ts = format!(
                     "{}{}",
                     quote! {#second_argument},
-                    WithSerializeDeserializeUcc
+                    WithSerdeUcc
                 ).parse::<Ts2>().expect("86307dbc");
                 quote! {
-                    std::collections::HashMap<#StdStringString, #el_hashmap_value_type_with_serialize_deserialize_ts>
+                    std::collections::HashMap<#StdStringString, #el_hashmap_value_type_with_serde_ts>
                 }
             }
         };
-        quote! {#el_c25b655e_ident: #el_type_with_serialize_deserialize_ts,}
+        quote! {#el_c25b655e_ident: #el_type_with_serde_ts,}
     });
     quote! {
         #el_ident {
-            #(#fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_ts)*
+            #(#fields_idents_idents_with_serde_excluding_code_occurence_ts)*
             #code_occurence_sc: error_occurence_lib::code_occurence::CodeOccurence,
         }
     }

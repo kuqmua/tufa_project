@@ -1481,11 +1481,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             &{
                                 let content_ts_ecc4a666 = get_vec_syn_field(is_standart_with_id).iter().map(|el_840c2253| {
                                     let field_ident = &el_840c2253.field_ident;
-                                    let serialize_deserialize_field_ident_double_quotes_ts = double_quotes_ts(&field_ident);
+                                    let serde_field_ident_double_quotes_ts = double_quotes_ts(&field_ident);
                                     let variant_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&field_ident);
                                     let field_type_as_json_type_select_ts = gen_type_as_pg_json_type_select_ts(&el_840c2253.field_type);
                                     quote! {
-                                        #[serde(rename(serialize = #serialize_deserialize_field_ident_double_quotes_ts, deserialize = #serialize_deserialize_field_ident_double_quotes_ts))]
+                                        #[serde(rename(serialize = #serde_field_ident_double_quotes_ts, deserialize = #serde_field_ident_double_quotes_ts))]
                                         #variant_ident_ucc_ts(#field_type_as_json_type_select_ts)
                                     }
                                 });
@@ -2729,17 +2729,17 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
                                     #ids_are_not_unique_uppper_camel_case {
-                                        #[eo_to_err_string_serialize_deserialize]
+                                        #[eo_to_err_string_serde]
                                         duplicate: #StdStringString,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
                                     #not_unique_id_in_json_delete_array_ucc {
-                                        #[eo_to_err_string_serialize_deserialize]
+                                        #[eo_to_err_string_serde]
                                         error: #StdStringString,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
                                     #not_unique_id_in_json_update_and_delete_arrays_ucc {
-                                        #[eo_to_err_string_serialize_deserialize]
+                                        #[eo_to_err_string_serde]
                                         error: #StdStringString,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },

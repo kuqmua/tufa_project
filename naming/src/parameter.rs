@@ -4,7 +4,7 @@ use quote::ToTokens;
 naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ["self", "parameters"],
     ["self", "payload"],
-    ["self", "payload", "with", "serialize", "deserialize"],
+    ["self", "payload", "with", "serde"],
     [
         "self",
         "payload",
@@ -13,15 +13,13 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "self",
         "payload",
         "with",
-        "serialize",
-        "deserialize"
+        "serde"
     ],
     [
         "self",
         "payload",
         "with",
-        "serialize",
-        "deserialize",
+        "serde",
         "try",
         "from",
         "self",
@@ -31,8 +29,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "self",
         "payload",
         "with",
-        "serialize",
-        "deserialize",
+        "serde",
         "try",
         "from",
         "self",
@@ -46,8 +43,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "payload",
         "element",
         "with",
-        "serialize",
-        "deserialize"
+        "serde"
     ],
     ["self", "payload", "element"],
     [
@@ -59,8 +55,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "self",
         "payload",
         "with",
-        "serialize",
-        "deserialize"
+        "serde"
     ],
     [
         "self",
@@ -72,8 +67,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "payload",
         "element",
         "with",
-        "serialize",
-        "deserialize",
+        "serde",
         "error"
     ],
     ["try", "self", "error"],
@@ -86,18 +80,17 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "self",
         "payload",
         "with",
-        "serialize",
-        "deserialize",
+        "serde",
         "error"
     ],
-    ["try", "self", "with", "serialize", "deserialize"],
+    ["try", "self", "with", "serde"],
     ["tvfrr", "extraction", "logic", "try", "self"],
     ["try", "self", "generated", "logic", "error"],
     ["try", "self", "generated", "logic", "desirable"],
     ["try", "self", "logic"],
     ["try", "self", "logic", "response", "variants"],
     ["try", "self", "logic", "error"],
-    ["self", "error", "with", "serialize", "deserialize"],
+    ["self", "error", "with", "serde"],
     [
         "try",
         "self",
@@ -105,8 +98,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "logic",
         "error",
         "with",
-        "serialize",
-        "deserialize"
+        "serde"
     ],
     ["self", "payload", "example"],
     ["self", "create"],
@@ -230,8 +222,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "type",
         "error",
         "with",
-        "serialize",
-        "deserialize"
+        "serde"
     ],
     ["self", "json", "array", "change"],
     ["self", "to", "create", "origin"],
@@ -309,8 +300,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "type",
         "error",
         "with",
-        "serialize",
-        "deserialize"
+        "serde"
     ],
     [
         "std", "option", "option", "object", "self", "option", "to", "update", "try", "gen",
@@ -324,7 +314,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "option",
         "to", "update", "try", "gen", "pg", "json", "type", "error"
     ],
-    ["self", "with", "serialize", "deserialize"],
+    ["self", "with", "serde"],
     ["self", "try", "from", "env", "error"],
     ["get", "self"],
     ["try", "from", "std", "env", "var", "ok", "self", "error"],
@@ -448,8 +438,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "type",
         "error",
         "with",
-        "serialize",
-        "deserialize"
+        "serde"
     ],
     [
         "pg",
@@ -466,8 +455,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "type",
         "error",
         "with",
-        "serialize",
-        "deserialize"
+        "serde"
     ],
     [
         "pg", "json", "type", "self", "read", "with", "or", "without", "id", "try", "from", "error"
@@ -1042,8 +1030,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "new",
         "error",
         "with",
-        "serialize",
-        "deserialize"
+        "serde"
     ],
     ["pg", "json", "type", "where", "self"],
     ["pg", "json", "type", "where", "self", "try", "new", "error"],
@@ -1057,8 +1044,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "new",
         "error",
         "with",
-        "serialize",
-        "deserialize"
+        "serde"
     ],
     ["self", "without", "id", "read"],
     ["self", "with", "id", "read"],
@@ -1119,8 +1105,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "one",
         "error",
         "with",
-        "serialize",
-        "deserialize"
+        "serde"
     ],
     ["self", "update", "many", "parameters"],
     ["self", "update", "many", "payload"],
@@ -1131,8 +1116,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "one",
         "error",
         "with",
-        "serialize",
-        "deserialize"
+        "serde"
     ],
     ["self", "handle"],
     ["try", "self", "handle"],

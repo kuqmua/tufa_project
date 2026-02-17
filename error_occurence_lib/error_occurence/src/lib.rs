@@ -4,8 +4,7 @@ use macros_helpers::{
     gen_impl_to_err_string_ts, gen_serde_version_of_named_syn_variant,
 };
 use naming::{
-    CodeOccurenceSc, IntoSerdeVersionSc, ValueSc, WithSerializeDeserializeUcc,
-    parameter::SelfWithSerializeDeserializeUcc,
+    CodeOccurenceSc, IntoSerdeVersionSc, ValueSc, WithSerdeUcc, parameter::SelfWithSerdeUcc,
 };
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
@@ -16,13 +15,13 @@ use token_patterns::StdStringString;
     ErrorOccurence,
     attributes(
         eo_to_err_string,
-        eo_to_err_string_serialize_deserialize,
+        eo_to_err_string_serde,
         eo_error_occurence,
         eo_vec_to_err_string,
-        eo_vec_to_err_string_serialize_deserialize,
+        eo_vec_to_err_string_serde,
         eo_vec_error_occurence,
         eo_hashmap_key_std_string_string_value_to_err_string,
-        eo_hashmap_key_std_string_string_value_to_err_string_serialize_deserialize,
+        eo_hashmap_key_std_string_string_value_to_err_string_serde,
         eo_hashmap_key_std_string_string_value_error_occurence,
     )
 )]
@@ -46,7 +45,7 @@ pub fn error_occurence(input: Ts) -> Ts {
             }
         })
         .collect::<Vec<&Ident>>();
-    let ident_with_serialize_deserialize_ucc = SelfWithSerializeDeserializeUcc::from_tokens(&ident);
+    let ident_with_serde_ucc = SelfWithSerdeUcc::from_tokens(&ident);
     let Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("d98214f7");
     };
@@ -97,10 +96,10 @@ pub fn error_occurence(input: Ts) -> Ts {
                 .map(|el_4ee89bd7| quote! {#el_4ee89bd7: error_occurence_lib::ToErrString});
             quote! {<#(#value),*>}
         };
-    let gen_enum_ident_with_serialize_deserialize_ts = |variants_ts: &dyn ToTokens| {
+    let gen_enum_ident_with_serde_ts = |variants_ts: &dyn ToTokens| {
         quote! {
             #[derive(Debug, thiserror::Error, serde::Serialize, serde::Deserialize)]
-            pub enum #ident_with_serialize_deserialize_ucc #maybe_generic_parameters_ts {
+            pub enum #ident_with_serde_ucc #maybe_generic_parameters_ts {
                 #variants_ts
             }
         }
@@ -108,7 +107,7 @@ pub fn error_occurence(input: Ts) -> Ts {
     let gen_impl_ident_into_serde_version_ts = |variants: &dyn ToTokens| {
         quote! {
             impl #maybe_generic_parameters_ts #ident #maybe_generic_parameters_ts {
-                pub fn #IntoSerdeVersionSc(self) -> #ident_with_serialize_deserialize_ucc #maybe_generic_parameters_ts {
+                pub fn #IntoSerdeVersionSc(self) -> #ident_with_serde_ucc #maybe_generic_parameters_ts {
                     #[allow(clippy::redundant_closure_for_method_calls)]
                     match self {
                         #variants
@@ -165,7 +164,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                     .map(|el_f00312fe| {
                         let el_f00312fe_ident = &el_f00312fe.ident.as_ref().expect("e97b25b9");
                         match ErrorOccurenceFieldAttr::try_from(el_f00312fe).expect("8ff56aeb") {
-                            ErrorOccurenceFieldAttr::EoToErrString | ErrorOccurenceFieldAttr::EoToErrStringSerializeDeserialize => {
+                            ErrorOccurenceFieldAttr::EoToErrString | ErrorOccurenceFieldAttr::EoToErrStringSerde => {
                                 quote! {
                                     error_occurence_lib::ToErrString::to_err_string(#el_f00312fe_ident)
                                 }
@@ -182,7 +181,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                                     )
                                 }
                             }
-                            ErrorOccurenceFieldAttr::EoVecToErrString | ErrorOccurenceFieldAttr::EoVecToErrStringSerializeDeserialize => {
+                            ErrorOccurenceFieldAttr::EoVecToErrString | ErrorOccurenceFieldAttr::EoVecToErrStringSerde => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_a9ba7521, "\n {el_6e4f53ad}"}, &quote! {panic!("b35ed9f5");});
                                 quote! {
                                     #el_f00312fe_ident.iter().fold(
@@ -222,7 +221,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                                     )
                                 }
                             }
-                            ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrString | ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrStringSerializeDeserialize => {
+                            ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrString | ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrStringSerde => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {key}: {}", &error_occurence_lib::ToErrString::to_err_string(#ValueSc)}, &quote! {panic!("d030580a");});
                                 quote! {
                                     #el_f00312fe_ident.iter().fold(
@@ -340,7 +339,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                                     }
                                 }
                             }
-                            ErrorOccurenceFieldAttr::EoToErrStringSerializeDeserialize | ErrorOccurenceFieldAttr::EoVecToErrStringSerializeDeserialize | ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrStringSerializeDeserialize => {
+                            ErrorOccurenceFieldAttr::EoToErrStringSerde | ErrorOccurenceFieldAttr::EoVecToErrStringSerde | ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrStringSerde => {
                                 quote! {
                                     #el_d7e120a3_ident
                                 }
@@ -390,7 +389,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                     quote! {
                         Self::#el_ident {
                             #(#fields_idents_ts),*
-                        } => #ident_with_serialize_deserialize_ucc::#el_ident {
+                        } => #ident_with_serde_ucc::#el_ident {
                             #(#fields_into_serde_version_excluding_code_occurence_ts)*
                             #CodeOccurenceSc,
                         }
@@ -398,32 +397,32 @@ pub fn error_occurence(input: Ts) -> Ts {
                 });
                 gen_impl_ident_into_serde_version_ts(&quote! {#(#variants_ts),*})
             };
-            let enum_ident_with_serialize_deserialize_ts = {
+            let enum_ident_with_serde_ts = {
                 let variants_ts = data_enum
                     .variants
                     .iter()
                     .map(gen_serde_version_of_named_syn_variant);
-                gen_enum_ident_with_serialize_deserialize_ts(&quote! {#(#variants_ts),*})
+                gen_enum_ident_with_serde_ts(&quote! {#(#variants_ts),*})
             };
-            let impl_display_for_ident_with_serialize_deserialize_ts = gen_impl_display_ts(
+            let impl_display_for_ident_with_serde_ts = gen_impl_display_ts(
                 &maybe_generic_parameters_error_occurence_lib_to_err_string_annotations_ts,
-                &ident_with_serialize_deserialize_ucc,
+                &ident_with_serde_ucc,
                 &maybe_generic_parameters_ts,
                 &impl_display_handle_content_ts,
             );
-            let impl_error_occurence_lib_to_err_string_to_err_string_for_ident_with_serialize_deserialize_ts =
+            let impl_error_occurence_lib_to_err_string_to_err_string_for_ident_with_serde_ts =
                 gen_impl_to_err_string_ts(
                     &maybe_generic_parameters_error_occurence_lib_to_err_string_annotations_ts,
-                    &ident_with_serialize_deserialize_ucc,
+                    &ident_with_serde_ucc,
                     &maybe_generic_parameters_ts,
                     &quote! {format!("{self}")},
                 );
             quote! {
                 #impl_display_for_ident_ts
                 #impl_ident_into_serde_version_ts
-                #enum_ident_with_serialize_deserialize_ts
-                #impl_display_for_ident_with_serialize_deserialize_ts
-                #impl_error_occurence_lib_to_err_string_to_err_string_for_ident_with_serialize_deserialize_ts
+                #enum_ident_with_serde_ts
+                #impl_display_for_ident_with_serde_ts
+                #impl_error_occurence_lib_to_err_string_to_err_string_for_ident_with_serde_ts
             }
         }
         SuportedEnumVariant::Unnamed => {
@@ -453,14 +452,14 @@ pub fn error_occurence(input: Ts) -> Ts {
                 let variants_ts = data_enum.variants.iter().map(|el_0e2b2f9c| {
                     let el_ident = &el_0e2b2f9c.ident;
                     quote! {
-                        Self::#el_ident(value) => #ident_with_serialize_deserialize_ucc::#el_ident(
+                        Self::#el_ident(value) => #ident_with_serde_ucc::#el_ident(
                             value.#IntoSerdeVersionSc(),
                         )
                     }
                 });
                 gen_impl_ident_into_serde_version_ts(&quote! {#(#variants_ts),*})
             };
-            let enum_ident_with_serialize_deserialize_ts = {
+            let enum_ident_with_serde_ts = {
                 let variants_ts = data_enum.variants.iter().map(|el_0f06fa87| {
                     let el_ident = &el_0f06fa87.ident;
                     let fields = if let Fields::Unnamed(fields) = &el_0f06fa87.fields {
@@ -468,7 +467,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                     } else {
                         panic!("5749e920");
                     };
-                    let inner_type_with_serialize_deserialize_ts = {
+                    let inner_type_with_serde_ts = {
                         format!(
                             "{}{}",
                             {
@@ -476,18 +475,18 @@ pub fn error_occurence(input: Ts) -> Ts {
                                 let field_type = &fields.iter().next().expect("8a80c36d").ty;
                                 quote! {#field_type}.to_string()
                             },
-                            WithSerializeDeserializeUcc
+                            WithSerdeUcc
                         )
                         .parse::<Ts2>()
                         .expect("9ff40f7e")
                     };
-                    quote! {#el_ident(#inner_type_with_serialize_deserialize_ts)}
+                    quote! {#el_ident(#inner_type_with_serde_ts)}
                 });
-                gen_enum_ident_with_serialize_deserialize_ts(&quote! {#(#variants_ts),*})
+                gen_enum_ident_with_serde_ts(&quote! {#(#variants_ts),*})
             };
-            let impl_display_for_ident_with_serialize_deserialize_ts = gen_impl_display_ts(
+            let impl_display_for_ident_with_serde_ts = gen_impl_display_ts(
                 &maybe_generic_parameters_error_occurence_lib_to_err_string_annotations_ts,
-                &ident_with_serialize_deserialize_ucc,
+                &ident_with_serde_ucc,
                 &maybe_generic_parameters_ts,
                 &{
                     let display_formatter_unnamed_ts = gen_display_formatter_unnamed_ts();
@@ -504,8 +503,8 @@ pub fn error_occurence(input: Ts) -> Ts {
             quote! {
                 #impl_display_for_ident_ts
                 #impl_ident_into_serde_version_ts
-                #enum_ident_with_serialize_deserialize_ts
-                #impl_display_for_ident_with_serialize_deserialize_ts
+                #enum_ident_with_serde_ts
+                #impl_display_for_ident_with_serde_ts
             }
         }
     };

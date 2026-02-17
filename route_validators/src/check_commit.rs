@@ -10,9 +10,9 @@ use thiserror::Error;
 #[derive(Debug, Error, ErrorOccurence)]
 pub enum CommitError {
     CommitNotEqual {
-        #[eo_to_err_string_serialize_deserialize]
+        #[eo_to_err_string_serde]
         commit_not_equal: String,
-        #[eo_to_err_string_serialize_deserialize]
+        #[eo_to_err_string_serde]
         commit_to_use: String,
         code_occurence: CodeOccurence,
     },
@@ -22,7 +22,7 @@ pub enum CommitError {
         code_occurence: CodeOccurence,
     },
     NoCommitHeader {
-        #[eo_to_err_string_serialize_deserialize]
+        #[eo_to_err_string_serde]
         no_commit_header: String,
         code_occurence: CodeOccurence,
     },

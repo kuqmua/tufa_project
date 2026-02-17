@@ -16,19 +16,19 @@ pub struct PaginationStartsWithOne(PaginationBase);
 #[derive(Debug, Serialize, Deserialize, Error, ErrorOccurence)]
 pub enum PaginationStartsWithOneTryNewError {
     LimitIsLessThanOrEqualToZero {
-        #[eo_to_err_string_serialize_deserialize]
+        #[eo_to_err_string_serde]
         limit: i64,
         code_occurence: CodeOccurence,
     },
     OffsetIsLessThanOne {
-        #[eo_to_err_string_serialize_deserialize]
+        #[eo_to_err_string_serde]
         offset: i64,
         code_occurence: CodeOccurence,
     },
     OffsetPlusLimitIsIntOverflow {
-        #[eo_to_err_string_serialize_deserialize]
+        #[eo_to_err_string_serde]
         limit: i64,
-        #[eo_to_err_string_serialize_deserialize]
+        #[eo_to_err_string_serde]
         offset: i64,
         code_occurence: CodeOccurence,
     },

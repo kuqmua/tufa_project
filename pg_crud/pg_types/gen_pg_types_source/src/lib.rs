@@ -3110,35 +3110,35 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 let range_inner_type_ts = int_range_type_to_range_inner_type_ts(int_range_type);
                 quote! {
                     #IncludedStartGreaterThanIncludedEndUcc {
-                        #[eo_to_err_string_serialize_deserialize]
+                        #[eo_to_err_string_serde]
                         #StartSc: #range_inner_type_ts,
-                        #[eo_to_err_string_serialize_deserialize]
+                        #[eo_to_err_string_serde]
                         #EndSc: #range_inner_type_ts,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
                     #IncludedStartGreaterThanExcludedEndUcc {
-                        #[eo_to_err_string_serialize_deserialize]
+                        #[eo_to_err_string_serde]
                         #StartSc: #range_inner_type_ts,
-                        #[eo_to_err_string_serialize_deserialize]
+                        #[eo_to_err_string_serde]
                         #EndSc: #range_inner_type_ts,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
                     #ExcludedStartGreaterThanIncludedEndUcc {
-                        #[eo_to_err_string_serialize_deserialize]
+                        #[eo_to_err_string_serde]
                         #StartSc: #range_inner_type_ts,
-                        #[eo_to_err_string_serialize_deserialize]
+                        #[eo_to_err_string_serde]
                         #EndSc: #range_inner_type_ts,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
                     #ExcludedStartGreaterThanExcludedEndUcc {
-                        #[eo_to_err_string_serialize_deserialize]
+                        #[eo_to_err_string_serde]
                         #StartSc: #range_inner_type_ts,
-                        #[eo_to_err_string_serialize_deserialize]
+                        #[eo_to_err_string_serde]
                         #EndSc: #range_inner_type_ts,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
                     #IncludedEndCannotBeMaxUcc {
-                        #[eo_to_err_string_serialize_deserialize]
+                        #[eo_to_err_string_serde]
                         #EndSc: #range_inner_type_ts,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
@@ -3146,23 +3146,23 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             };
             let nanosecond_precision_is_not_supported_variant_try_new_ts = quote! {
                 #NanosecondPrecisionIsNotSupportedUcc {
-                    #[eo_to_err_string_serialize_deserialize]
+                    #[eo_to_err_string_serde]
                     #ValueSc: #std_string_string_ts,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
             };
             let sqlx_types_chrono_naive_date_as_date_try_new_error_variants_ts = quote! {
                 #EarlierDateNotSupportedUcc {
-                    #[eo_to_err_string_serialize_deserialize]
+                    #[eo_to_err_string_serde]
                     #ValueSc: #std_string_string_ts,
-                    #[eo_to_err_string_serialize_deserialize]
+                    #[eo_to_err_string_serde]
                     #EarliestSupportedDateSc: #std_string_string_ts,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
             };
             let std_string_string_as_text_try_new_error_variants_ts = quote! {
                 #ContainsNullByteUcc {
-                    #[eo_to_err_string_serialize_deserialize]
+                    #[eo_to_err_string_serde]
                     #ValueSc: #ident_inner_type_ts,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
@@ -3273,13 +3273,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         PgTypeImplTryNewForDeserialize::StdStringStringAsText => &std_string_string_as_text_try_new_error_variants_ts,
                                         PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => &quote! {
                                             #InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
-                                                #[eo_to_err_string_serialize_deserialize]
+                                                #[eo_to_err_string_serde]
                                                 #HourSc: #u32_ts,
-                                                #[eo_to_err_string_serialize_deserialize]
+                                                #[eo_to_err_string_serde]
                                                 #MinSc: #u32_ts,
-                                                #[eo_to_err_string_serialize_deserialize]
+                                                #[eo_to_err_string_serde]
                                                 #SecSc: #u32_ts,
-                                                #[eo_to_err_string_serialize_deserialize]
+                                                #[eo_to_err_string_serde]
                                                 #MicroSc: #u32_ts,
                                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                             },
@@ -3287,15 +3287,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         },
                                         PgTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => &quote! {
                                             #InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
-                                                #[eo_to_err_string_serialize_deserialize]
+                                                #[eo_to_err_string_serde]
                                                 #HourSc: #u8_ts,
-                                                #[eo_to_err_string_serialize_deserialize]
+                                                #[eo_to_err_string_serde]
                                                 #MinuteSc: #u8_ts,
-                                                #[eo_to_err_string_serialize_deserialize]
+                                                #[eo_to_err_string_serde]
                                                 #SecondSc: #u8_ts,
-                                                #[eo_to_err_string_serialize_deserialize]
+                                                #[eo_to_err_string_serde]
                                                 #MicrosecondSc: #u32_ts,
-                                                #[eo_to_err_string_serialize_deserialize]
+                                                #[eo_to_err_string_serde]
                                                 #ErrorSc: #std_string_string_ts,
                                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                             },

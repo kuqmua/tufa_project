@@ -36,25 +36,23 @@ pub const DEFAULT_PAGINATION_LIMIT: i64 = 5;
 
 trait_alias!(DebugClonePartialEqAlias = Debug + Clone + PartialEq);
 trait_alias!(DebugClonePartialEqSerializeAlias = DebugClonePartialEqAlias + Serialize);
-trait_alias!(DebugClonePartialEqSerializeDeserializeAlias = DebugClonePartialEqSerializeAlias + for<'__> Deserialize<'__>);
+trait_alias!(DebugClonePartialEqSerdeAlias = DebugClonePartialEqSerializeAlias + for<'__> Deserialize<'__>);
 trait_alias!(
-    DebugClonePartialEqSerializeDeserializeDefaultSomeOneAlias =
-        DebugClonePartialEqSerializeDeserializeAlias + DefaultOptionSomeVecOneEl
+    DebugClonePartialEqSerdeDefaultSomeOneAlias =
+        DebugClonePartialEqSerdeAlias + DefaultOptionSomeVecOneEl
 );
 trait_alias!(SqlxEncodePgSqlxTypePgAlias = for<'__> Encode<'__, Postgres> + Type<Postgres>);
 trait_alias!(UtoipaToSchemaAndSchemarsJsonSchemaAlias = for<'__> ToSchema<'__> + JsonSchema);
 
-trait_alias!(
-    TableTypeDeclarationAlias = DebugClonePartialEqSerializeDeserializeDefaultSomeOneAlias
-);
-trait_alias!(CreateAlias = DebugClonePartialEqSerializeDeserializeDefaultSomeOneAlias);
+trait_alias!(TableTypeDeclarationAlias = DebugClonePartialEqSerdeDefaultSomeOneAlias);
+trait_alias!(CreateAlias = DebugClonePartialEqSerdeDefaultSomeOneAlias);
 trait_alias!(CreateForQueryAlias = DebugClonePartialEqSerializeAlias + SqlxEncodePgSqlxTypePgAlias);
-trait_alias!(SelectAlias = DebugClonePartialEqSerializeDeserializeDefaultSomeOneAlias);
-trait_alias!(WhereAlias = DebugClonePartialEqSerializeDeserializeAlias + for<'__> PgTypeWhereFilter<'__>);
-trait_alias!(ReadAlias = DebugClonePartialEqSerializeDeserializeAlias);
-trait_alias!(ReadOnlyIdsAlias = DebugClonePartialEqSerializeDeserializeAlias);
+trait_alias!(SelectAlias = DebugClonePartialEqSerdeDefaultSomeOneAlias);
+trait_alias!(WhereAlias = DebugClonePartialEqSerdeAlias + for<'__> PgTypeWhereFilter<'__>);
+trait_alias!(ReadAlias = DebugClonePartialEqSerdeAlias);
+trait_alias!(ReadOnlyIdsAlias = DebugClonePartialEqSerdeAlias);
 trait_alias!(ReadInnerAlias = DebugClonePartialEqAlias);
-trait_alias!(UpdateAlias = DebugClonePartialEqSerializeDeserializeDefaultSomeOneAlias);
+trait_alias!(UpdateAlias = DebugClonePartialEqSerdeDefaultSomeOneAlias);
 trait_alias!(UpdateForQueryAlias = DebugClonePartialEqSerializeAlias);
 #[allow(clippy::arbitrary_source_item_ordering)]
 pub trait PgType {
@@ -896,19 +894,19 @@ pub struct PaginationStartsWithZero(PaginationBase);
 #[derive(Debug, Serialize, Deserialize, Error, ErrorOccurence)]
 pub enum PaginationStartsWithZeroTryNewError {
     LimitIsLessThanOrEqualToZero {
-        #[eo_to_err_string_serialize_deserialize]
+        #[eo_to_err_string_serde]
         limit: i64,
         code_occurence: CodeOccurence,
     },
     OffsetIsLessThanZero {
-        #[eo_to_err_string_serialize_deserialize]
+        #[eo_to_err_string_serde]
         offset: i64,
         code_occurence: CodeOccurence,
     },
     OffsetPlusLimitIsIntOverflow {
-        #[eo_to_err_string_serialize_deserialize]
+        #[eo_to_err_string_serde]
         limit: i64,
-        #[eo_to_err_string_serialize_deserialize]
+        #[eo_to_err_string_serde]
         offset: i64,
         code_occurence: CodeOccurence,
     },
@@ -1151,7 +1149,7 @@ pub enum NotEmptyUniqueVecTryNewError<T> {
         code_occurence: CodeOccurence,
     },
     NotUnique {
-        #[eo_to_err_string_serialize_deserialize]
+        #[eo_to_err_string_serde]
         value: T,
         code_occurence: CodeOccurence,
     },
@@ -1392,7 +1390,7 @@ pub struct UnsignedPartOfI32(i32); //todo why exactly i32? maybe different types
 )]
 pub enum UnsignedPartOfI32TryFromI32Error {
     LessThanZero {
-        #[eo_to_err_string_serialize_deserialize]
+        #[eo_to_err_string_serde]
         value: i32,
         code_occurence: CodeOccurence,
     },

@@ -13,7 +13,7 @@ pub enum BodySizeError {
     ReachedMaximumSizeOfBody {
         #[eo_to_err_string]
         axum_error: Error,
-        #[eo_to_err_string_serialize_deserialize]
+        #[eo_to_err_string_serde]
         maximum_size_of_body_limit_in_bytes: usize,
         #[eo_to_err_string]
         size_hint: SizeHint,
