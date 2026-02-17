@@ -872,11 +872,11 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
         variant: &Variant,
     ) -> Result<String, QueryPartError> {
         let mut acc_24eb25aa = String::new();
-        let current_len = match &variant {
+        let len_27270409 = match &variant {
             Variant::MinusOne => self.0.len().saturating_sub(1),
             Variant::Normal => self.0.len(),
         };
-        for _ in 0..current_len {
+        for _ in 0..len_27270409 {
             match increment_checked_add_one_returning_increment(increment) {
                 Ok(value) => {
                     if write!(
