@@ -333,7 +333,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     .collect::<Vec<&Field>>()
                     .iter()
                     .map(|el_f01f3f33|SynFieldWrapper {
-                        field_visibility: el_f01f3f33.vis.clone(),
+                        field_vis: el_f01f3f33.vis.clone(),
                         field_ident: el_f01f3f33.ident.clone().expect("3ac7f263"),
                         field_type: el_f01f3f33.ty.clone(),
                     })
@@ -425,7 +425,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     }),
                 };
                 SynFieldWrapper {
-                    field_visibility: value.vis.clone(),
+                    field_vis: value.vis.clone(),
                     field_ident: value.ident.clone().expect("3550d755"),
                     field_type: value.ty,
                 }

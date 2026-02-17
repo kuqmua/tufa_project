@@ -3,5 +3,5 @@ use syn::{Ident, Type, Visibility};
 pub struct SynFieldWrapper {
     pub field_ident: Ident,
     pub field_type: Type,
-    pub field_visibility: Visibility,
+    pub field_vis: Visibility,
 }

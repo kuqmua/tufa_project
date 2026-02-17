@@ -469,7 +469,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     //todo write runtime check
                     assert!(field_ident_len <= max_pg_column_length, "1266ae5a");
                     fields.push(SynFieldWrapper {
-                        field_visibility: el_2e7b44a3.vis.clone(),
+                        field_vis: el_2e7b44a3.vis.clone(),
                         field_ident: field_ident.clone(),
                         field_type: el_2e7b44a3.ty.clone(),
                     });
@@ -486,7 +486,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         panic!("1a75cea1");
                                     } else {
                                         option_primary_key_field = Some(SynFieldWrapper {
-                                            field_visibility: el_2e7b44a3.vis.clone(),
+                                            field_vis: el_2e7b44a3.vis.clone(),
                                             field_ident: field_ident.clone(),
                                             field_type: el_2e7b44a3.ty.clone(),
                                         });
@@ -498,7 +498,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                     if !is_primary_key {
                         fields_without_primary_key.push(SynFieldWrapper {
-                            field_visibility: el_2e7b44a3.vis.clone(),
+                            field_vis: el_2e7b44a3.vis.clone(),
                             field_ident: field_ident.clone(),
                             field_type: el_2e7b44a3.ty.clone(),
                         });
@@ -1560,12 +1560,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     };
                     let fields_options_without_primary_key_ts = gen_fields_named_without_primary_key_with_comma_ts(&|element: &SynFieldWrapper| -> Ts2 {
-                        let field_visibility = &element.field_visibility;
+                        let field_vis = &element.field_vis;
                         let field_ident = &element.field_ident;
                         let std_option_option_value_field_type_as_pg_type_read_ts = gen_std_option_option_tokens_declaration_ts(&gen_value_declaration_ts(&gen_as_pg_type_read_ts(&element.field_type)));
                         quote! {
                             #field_attr_serde_skip_serializing_if_option_is_none_ts
-                            #field_visibility #field_ident: #std_option_option_value_field_type_as_pg_type_read_ts
+                            #field_vis #field_ident: #std_option_option_value_field_type_as_pg_type_read_ts
                         }
                     });
                     quote!{{
