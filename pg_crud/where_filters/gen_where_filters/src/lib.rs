@@ -1,4 +1,4 @@
-use gen_quotes::double_quotes_ts;
+use gen_quotes::dq_ts;
 use macros_helpers::{DeriveSerdeDeserialize, StructOrEnumDeriveTokenStreamBuilder};
 use macros_helpers::{
     FormatWithCargofmt, ShouldWriteTokenStreamIntoFile, gen_if_write_is_err_ts,
@@ -436,8 +436,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             ),
                             IncrementParameterUnderscore::False,
                             {
-                                let format_handle_ts =
-                                    double_quotes_ts(&gen_format_handle_str(&pg_type_kind));
+                                let format_handle_ts = dq_ts(&gen_format_handle_str(&pg_type_kind));
                                 quote! {
                                     #maybe_dims_indexes_initialization_ts
                                     #value_match_increment_checked_add_one_initialization_ts
@@ -490,7 +489,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         gen_maybe_dims_default_initialization_value_default_ts(&maybe_dims_default_initialization_ts),
                         IncrementParameterUnderscore::False,
                         {
-                            let format_handle_ts = double_quotes_ts(&format!("{{}}({{}}{} {{}})", pg_type_kind.format_argument()));
+                            let format_handle_ts = dq_ts(&format!("{{}}({{}}{} {{}})", pg_type_kind.format_argument()));
                             quote! {
                                 #maybe_dims_indexes_initialization_ts
                                 #value_match_self_value_query_part_initialization_ts
@@ -534,7 +533,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         ),
                         IncrementParameterUnderscore::False,
                         {
-                            let format_handle_ts = double_quotes_ts(&format!(
+                            let format_handle_ts = dq_ts(&format!(
                                 "{{}}({{}}{} in ({{}}))",
                                 pg_type_kind.format_argument()
                             ));
@@ -601,7 +600,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                         IncrementParameterUnderscore::False,
                         {
-                            let format_handle_ts = double_quotes_ts(&format!(
+                            let format_handle_ts = dq_ts(&format!(
                                 "{{}}({{}}{} {{}} ${{}})",
                                 pg_type_kind.format_argument()
                             ));
@@ -642,7 +641,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         ),
                         IncrementParameterUnderscore::False,
                         {
-                            let format_handle_ts = double_quotes_ts(&format!(
+                            let format_handle_ts = dq_ts(&format!(
                                 "{{}}({{}}{} < ${{}})",
                                 pg_type_kind.format_argument()
                             ));
@@ -689,7 +688,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 }
                             },
                             {
-                                let format_handle_ts = double_quotes_ts(&format!(
+                                let format_handle_ts = dq_ts(&format!(
                                     "{{}}({{}}{} {pg_syntax})",
                                     pg_type_kind.format_argument()
                                 ));
@@ -779,7 +778,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             },
                             IncrementParameterUnderscore::False,
                             {
-                                let format_handle_ts = double_quotes_ts(&format!(
+                                let format_handle_ts = dq_ts(&format!(
                                     "{{}}(encode({{}}{}, '{{}}') = ${{}})",
                                     pg_type_kind.format_argument()
                                 ));
@@ -835,9 +834,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         value_default_option_some_vec_one_el_ts.clone(),
                         IncrementParameterUnderscore::False,
                         {
-                            let format_handle_ts = double_quotes_ts(&format!(
-                                "{{}}(array_length({{}}, 1) {operator} ${{}})"
-                            ));
+                            let format_handle_ts =
+                                dq_ts(&format!("{{}}(array_length({{}}, 1) {operator} ${{}})"));
                             quote! {
                                 match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
                                     Ok(value_f7988de8) => Ok(format!(#format_handle_ts, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #ColumnSc, value_f7988de8)),
@@ -945,7 +943,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         ),
                         IncrementParameterUnderscore::False,
                         {
-                            let format_handle_ts = double_quotes_ts(&format!(
+                            let format_handle_ts = dq_ts(&format!(
                                 "{{}}(upper({{}}{}) - lower({{}}{}) = ${{}})",
                                 pg_type_kind.format_argument(),
                                 pg_type_kind.format_argument(),
@@ -1278,8 +1276,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #value_default_option_some_vec_one_el_ts
                         },
                         {
-                            let format_handle_ts =
-                                double_quotes_ts(&gen_format_handle_str(&pg_type_kind));
+                            let format_handle_ts = dq_ts(&gen_format_handle_str(&pg_type_kind));
                             quote! {
                                 #maybe_dims_indexes_initialization_ts
                                 #value_match_increment_checked_add_one_initialization_ts
@@ -1346,7 +1343,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #ValueSc: #core_default_default_default_ts
                         },
                         {
-                            let format_handle_ts = double_quotes_ts(&format!(
+                            let format_handle_ts = dq_ts(&format!(
                                 "{{}}(jsonb_array_length({{}}{}) {operation} ${{}})",
                                 pg_type_kind.format_argument()
                             ));
@@ -1436,7 +1433,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             PgTypePatternHandle::ArrayDim3 |
                             PgTypePatternHandle::ArrayDim4 => &value_match_increment_checked_add_one_initialization_ts
                         };
-                        let format_handle_ts = double_quotes_ts(&format!("{{}}({{}}{} {{}})", pg_type_kind.format_argument()));
+                        let format_handle_ts = dq_ts(&format!("{{}}({{}}{} {{}})", pg_type_kind.format_argument()));
                         quote! {
                             #maybe_dims_indexes_initialization_ts
                             #content_ts
@@ -1495,7 +1492,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         &maybe_dims_default_initialization_ts,
                     ),
                     {
-                        let format_handle_ts = double_quotes_ts(&format!(
+                        let format_handle_ts = dq_ts(&format!(
                             "{{}}({{}}{} in ({{}}))",
                             pg_type_kind.format_argument()
                         ));
@@ -1566,7 +1563,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         #regular_expression_case_and_value_default_initialization_ts
                     },
                     {
-                        let format_handle_ts = double_quotes_ts(&format!(
+                        let format_handle_ts = dq_ts(&format!(
                             "{{}}(trim(both '\\\"' from ({{}}{})::text) {{}} ${{}})",
                             match &pg_type_kind {
                                 PgTypeKind::Standart => "",
@@ -1614,7 +1611,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #regular_expression_case_and_value_default_initialization_ts
                         },
                         {
-                            let format_handle_ts = double_quotes_ts(&format!(
+                            let format_handle_ts = dq_ts(&format!(
                                 //todo test it properly using all strange string variants
                                 "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where (el #>> '{{{{}}}}') {{}} ${{}}))",
                                 // "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) {{}} ${{}}))",
@@ -1661,7 +1658,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #regular_expression_case_and_value_default_initialization_ts
                         },
                         {
-                            let format_handle_ts = double_quotes_ts(&format!(
+                            let format_handle_ts = dq_ts(&format!(
                                 //todo test it properly using all strange string variants
                                 "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el #>> '{{{{}}}}') !{{}} ${{}}))",
                                 // "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) !{{}} ${{}}))",
@@ -1709,7 +1706,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #value_default_option_some_vec_one_el_ts
                         },
                         {
-                            let format_handle_ts = double_quotes_ts(&format!(
+                            let format_handle_ts = dq_ts(&format!(
                                 "{{}}({{}}{} @> {{}})",
                                 pg_type_kind.format_argument()
                             ));
@@ -1753,7 +1750,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         #value_default_option_some_vec_one_el_ts
                     },
                     {
-                        let format_handle_ts = double_quotes_ts(&format!(
+                        let format_handle_ts = dq_ts(&format!(
                             "{{}}(exists (select 1 from jsonb_array_elements_text({{}}{}) as e1 join jsonb_array_elements_text({{}}) as e2 on e1.value = e2.value))",
                             pg_type_kind.format_argument()
                         ));

@@ -1,5 +1,5 @@
 use enum_extension_lib::EnumExtension;
-use gen_quotes::double_quotes_ts;
+use gen_quotes::dq_ts;
 use macros_helpers::{
     DeriveCopy, DeriveSchemarsJsonSchema, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
     StructOrEnumDeriveTokenStreamBuilder, gen_impl_display_ts, gen_impl_from_ts,
@@ -796,7 +796,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 is_nullable_e7d1d83c: &IsNullable,
                 pg_json_type_pattern_1ca83c6c: &PgJsonTypePattern
             | SelfOriginUcc::from_tokens(&gen_ident_ts(is_nullable_e7d1d83c, pg_json_type_pattern_1ca83c6c));
-            // let schema_name_format_handle_ts = double_quotes_ts(&ident_origin_ucc);
+            // let schema_name_format_handle_ts = dq_ts(&ident_origin_ucc);
             //todo json schema logic
             // let metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_ts = quote! {
             //     Some(Box::new(schemars::schema::Metadata {
@@ -1030,10 +1030,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             let maybe_impl_schemars_json_schema_for_ident_origin_ts = if matches!(&is_standart_not_null, IsStandartNotNull::True) {
                 match &pg_json_type {
                     PgJsonType::UuidUuidAsJsonbString => {
-                        let ident_standart_not_null_origin_double_quotes_ts = double_quotes_ts(
+                        let ident_standart_not_null_origin_dq_ts = dq_ts(
                             &ident_standart_not_null_origin_ucc
                         );
-                        let text_ident_standart_not_null_origin_double_quotes_ts = double_quotes_ts(
+                        let text_ident_standart_not_null_origin_dq_ts = dq_ts(
                             &format!("tests::{ident_standart_not_null_origin_ucc}")
                         );
                         quote!{
@@ -1045,10 +1045,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 #[allow(unused_braces)]
                                 impl schemars::JsonSchema for #ident_standart_not_null_origin_ucc {
                                     fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-                                        schemars::_private::alloc::borrow::Cow::Borrowed(#ident_standart_not_null_origin_double_quotes_ts)
+                                        schemars::_private::alloc::borrow::Cow::Borrowed(#ident_standart_not_null_origin_dq_ts)
                                     }
                                     fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-                                        schemars::_private::alloc::borrow::Cow::Borrowed(#text_ident_standart_not_null_origin_double_quotes_ts)
+                                        schemars::_private::alloc::borrow::Cow::Borrowed(#text_ident_standart_not_null_origin_dq_ts)
                                     }
                                     fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
                                         { generator.subschema_for::<String>() }
@@ -1079,7 +1079,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             // match &schemars_json_schema {
             //     SchemarsJsonSchema::Derive => &Ts2::new(),
             //     SchemarsJsonSchema::Impl(schema_object_ts) => &{
-            //         let schema_id_format_handle_ts = double_quotes_ts(&format!("pg_crud::postgersql_json_type::{ident_origin_ucc}"));
+            //         let schema_id_format_handle_ts = dq_ts(&format!("pg_crud::postgersql_json_type::{ident_origin_ucc}"));
             //         let metadata_ts = &schema_object_ts.metadata;
             //         let instance_type_ts = &schema_object_ts.instance_type;
             //         let format_ts = &schema_object_ts.format;
@@ -2231,7 +2231,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             }
                         })
                     });
-                    let format_handle_ts = double_quotes_ts(&format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value',({format_handle})))"));
+                    let format_handle_ts = dq_ts(&format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value',({format_handle})))"));
                     quote! {
                         #(#maybe_dims_start_end_initialization)*
                         Ok(format!(#format_handle_ts))
@@ -2384,7 +2384,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &ident_update_for_query_ucc,
                 &{
                     let jsonb_set_accumulator_sc = JsonbSetAccumulatorSc;
-                    let format_handle_ts = double_quotes_ts(&format!("jsonb_set({{{jsonb_set_accumulator_sc}}},'{{{{{{jsonb_set_path}}}}}}',${{value_26526e0f}})"));
+                    let format_handle_ts = dq_ts(&format!("jsonb_set({{{jsonb_set_accumulator_sc}}},'{{{{{{jsonb_set_path}}}}}}',${{value_26526e0f}})"));
                     quote! {
                         match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
                             Ok(value_26526e0f) => Ok(format!(#format_handle_ts)),

@@ -1,7 +1,7 @@
 mod filters;
 use enum_extension_lib::EnumExtension;
 pub use filters::*;
-use gen_quotes::{double_quotes_str, double_quotes_ts};
+use gen_quotes::{dq_str, dq_ts};
 use macros_helpers::gen_impl_to_err_string_ts;
 use naming::{
     AllVariantsDefaultOptionSomeVecOneElMaxPageSizeSc, AllVariantsDefaultOptionSomeVecOneElSc,
@@ -696,17 +696,17 @@ pub fn gen_pg_type_where_ts(
 pub fn pg_crud_common_query_part_error_ts() -> Ts2 {
     quote! {pg_crud_common::#QueryPartErrorUcc}
 }
-pub fn gen_struct_ident_double_quotes_ts(value: &dyn Display) -> Ts2 {
-    double_quotes_ts(&format!("struct {value}"))
+pub fn gen_struct_ident_dq_ts(value: &dyn Display) -> Ts2 {
+    dq_ts(&format!("struct {value}"))
 }
-pub fn gen_struct_ident_with_number_elements_double_quotes_ts(
+pub fn gen_struct_ident_with_number_elements_dq_ts(
     ident: &dyn DisplayPlusToTokens,
     length: usize,
 ) -> Ts2 {
-    double_quotes_ts(&format!("struct {ident} with {length} elements"))
+    dq_ts(&format!("struct {ident} with {length} elements"))
 }
-pub fn gen_tuple_struct_ident_double_quotes_ts(value: &dyn Display) -> Ts2 {
-    double_quotes_ts(&format!("tuple struct {value}"))
+pub fn gen_tuple_struct_ident_dq_ts(value: &dyn Display) -> Ts2 {
+    dq_ts(&format!("tuple struct {value}"))
 }
 pub fn gen_sqlx_types_json_type_declaration_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {sqlx::types::Json<#type_ts>}
@@ -717,19 +717,18 @@ pub fn gen_std_option_option_tokens_declaration_ts(type_ts: &dyn ToTokens) -> Ts
 pub fn gen_std_vec_vec_tokens_declaration_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {Vec<#type_ts>}
 }
-pub fn gen_serde_deserialize_double_quotes_ts(
+pub fn gen_serde_deserialize_dq_ts(
     ident: &dyn DisplayPlusToTokens,
     length: usize,
 ) -> (Ts2, Ts2, Ts2) {
-    let struct_pg_type_ident_where_tokens_double_quotes_ts =
-        gen_struct_ident_double_quotes_ts(ident);
-    let struct_pg_type_ident_where_tokens_with_number_elements_double_quotes_ts =
-        gen_struct_ident_with_number_elements_double_quotes_ts(ident, length);
-    let pg_type_ident_where_tokens_double_quotes_ts = double_quotes_ts(&ident);
+    let struct_pg_type_ident_where_tokens_dq_ts = gen_struct_ident_dq_ts(ident);
+    let struct_pg_type_ident_where_tokens_with_number_elements_dq_ts =
+        gen_struct_ident_with_number_elements_dq_ts(ident, length);
+    let pg_type_ident_where_tokens_dq_ts = dq_ts(&ident);
     (
-        struct_pg_type_ident_where_tokens_double_quotes_ts,
-        struct_pg_type_ident_where_tokens_with_number_elements_double_quotes_ts,
-        pg_type_ident_where_tokens_double_quotes_ts,
+        struct_pg_type_ident_where_tokens_dq_ts,
+        struct_pg_type_ident_where_tokens_with_number_elements_dq_ts,
+        pg_type_ident_where_tokens_dq_ts,
     )
 }
 pub fn gen_impl_pg_json_type_ts(
@@ -2123,12 +2122,12 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         .parse::<Ts2>()
         .expect("09a0c518")
     }
-    fn gen_field_ident_double_quotes_serde_private_ok_field_ts(
-        field_name_double_quotes_ts: &dyn ToTokens,
+    fn gen_field_ident_dq_serde_private_ok_field_ts(
+        field_name_dq_ts: &dyn ToTokens,
         index: usize,
     ) -> Ts2 {
         let field_index_ts = gen_underscore_underscore_field_index_ts(index);
-        quote! {#field_name_double_quotes_ts => Ok(__Field::#field_index_ts)}
+        quote! {#field_name_dq_ts => Ok(__Field::#field_index_ts)}
     }
     let vec_ident = vec_ident_type
         .iter()
@@ -2154,38 +2153,32 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
     let visit_str_value_enum_variants_ts = {
         let visit_str_value_enum_variants_ts =
             vec_ident.iter().enumerate().map(|(index, element)| {
-                let field_name_double_quotes_ts = double_quotes_ts(&element);
-                gen_field_ident_double_quotes_serde_private_ok_field_ts(
-                    &field_name_double_quotes_ts,
-                    index,
-                )
+                let field_name_dq_ts = dq_ts(&element);
+                gen_field_ident_dq_serde_private_ok_field_ts(&field_name_dq_ts, index)
             });
         quote! {#(#visit_str_value_enum_variants_ts),*,}
     };
     let visit_bytes_value_enum_variants_ts = {
         let visit_bytes_value_enum_variants_ts =
             vec_ident.iter().enumerate().map(|(index, element)| {
-                let b_field_name_double_quotes_ts = {
-                    let el_ident_double_quotes_str = double_quotes_str(&element.to_string());
-                    let value = format!("b{el_ident_double_quotes_str}");
+                let b_field_name_dq_ts = {
+                    let el_ident_dq_str = dq_str(&element.to_string());
+                    let value = format!("b{el_ident_dq_str}");
                     value.parse::<Ts2>().expect("9e33625e")
                 };
-                gen_field_ident_double_quotes_serde_private_ok_field_ts(
-                    &b_field_name_double_quotes_ts,
-                    index,
-                )
+                gen_field_ident_dq_serde_private_ok_field_ts(&b_field_name_dq_ts, index)
             });
         quote! {#(#visit_bytes_value_enum_variants_ts),*,}
     };
-    let struct_ident_double_quotes_ts = gen_struct_ident_double_quotes_ts(&ident);
+    let struct_ident_dq_ts = gen_struct_ident_dq_ts(&ident);
     let visit_seq_fields_initialization_ts = {
         let content_ts = vec_ident_type.iter().enumerate().map(|(index, (el_ident, el_type))| {
             let field_index_handle_ts = gen_underscore_underscore_field_index_handle_ts(index);
             let type_ts = gen_type_ts(el_ident, el_type);
-            let struct_ident_options_with_double_quotes_ts = double_quotes_ts(&format!("struct {ident} with {len} elements"));
+            let struct_ident_options_with_dq_ts = dq_ts(&format!("struct {ident} with {len} elements"));
             quote! {
                 let Some(#field_index_handle_ts) = serde::de::SeqAccess::next_element::<#type_ts>(&mut __seq)? else {
-                    return Err(serde::de::Error::invalid_length(0usize, &#struct_ident_options_with_double_quotes_ts));
+                    return Err(serde::de::Error::invalid_length(0usize, &#struct_ident_options_with_dq_ts));
                 };
             }
         });
@@ -2211,13 +2204,13 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
     let visit_map_match_variants_ts = {
         let visit_map_match_variants_ts = vec_ident_type.iter().enumerate().map(|(index, (el_ident, el_type))| {
             let field_index_ts = gen_underscore_underscore_field_index_ts(index);
-            let field_ident_double_quotes_ts = double_quotes_ts(&el_ident);
+            let field_ident_dq_ts = dq_ts(&el_ident);
             let type_ts = gen_type_ts(el_ident, el_type);
             quote! {
                 __Field::#field_index_ts => {
                     if Option::is_some(&#field_index_ts) {
                         return Err(
-                            <__A::Error as serde::de::Error>::duplicate_field(#field_ident_double_quotes_ts),
+                            <__A::Error as serde::de::Error>::duplicate_field(#field_ident_dq_ts),
                         );
                     }
                     #field_index_ts = Some(
@@ -2232,12 +2225,12 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         let content_ts = vec_ident.iter().enumerate().map(|(index, el_a1d37c97)| {
             let field_index_ts = gen_underscore_underscore_field_index_ts(index);
             let field_index_handle_ts = gen_underscore_underscore_field_index_handle_ts(index);
-            let field_ident_double_quotes_ts = double_quotes_ts(&el_a1d37c97);
+            let field_ident_dq_ts = dq_ts(&el_a1d37c97);
             quote! {
                 let #field_index_handle_ts = match #field_index_ts {
                     Some(value_4f8faf03) => value_4f8faf03,
                     None => {
-                        serde::__private228::de::missing_field(#field_ident_double_quotes_ts)?
+                        serde::__private228::de::missing_field(#field_ident_dq_ts)?
                     }
                 };
             }
@@ -2245,12 +2238,10 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         quote! {#(#content_ts)*}
     };
     let fields_array_elements_ts = {
-        let fields_array_elements_ts = vec_ident
-            .iter()
-            .map(|el_43a33e0b| double_quotes_ts(&el_43a33e0b));
+        let fields_array_elements_ts = vec_ident.iter().map(|el_43a33e0b| dq_ts(&el_43a33e0b));
         quote! {#(#fields_array_elements_ts),*}
     };
-    let ident_double_quotes_ts = double_quotes_ts(&ident);
+    let ident_dq_ts = dq_ts(&ident);
     quote! {
         #[allow(unused_qualifications)]
         #[allow(clippy::absolute_paths)]
@@ -2352,7 +2343,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                         ) -> _serde::__private228::fmt::Result {
                             _serde::__private228::Formatter::write_str(
                                 __formatter,
-                                #struct_ident_double_quotes_ts,
+                                #struct_ident_dq_ts,
                             )
                         }
                         #[inline]
@@ -2395,7 +2386,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                     const FIELDS: &[&str] = &[#fields_array_elements_ts];
                     _serde::Deserializer::deserialize_struct(
                         __deserializer,
-                        #ident_double_quotes_ts,
+                        #ident_dq_ts,
                         FIELDS,
                         __Visitor {
                             marker: _serde::__private228::PhantomData::<Self>,

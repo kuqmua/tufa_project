@@ -1,5 +1,5 @@
 use enum_extension_lib::EnumExtension;
-use gen_quotes::{double_quotes_str, double_quotes_ts};
+use gen_quotes::{dq_str, dq_ts};
 use macros_helpers::{
     DeriveCopy, DeriveDefault, DeriveEq, DeriveOrd, DerivePartialOrd, DeriveSerdeDeserialize,
     DeriveSerdeSerialize, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
@@ -48,8 +48,8 @@ use pg_crud_macros_common::{
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_sqlx_pg_for_ident_ts,
     gen_pg_type_where_ts, gen_return_err_query_part_error_write_into_buffer_ts,
     gen_std_option_option_tokens_declaration_ts, gen_std_vec_vec_tokens_declaration_ts,
-    gen_struct_ident_double_quotes_ts, gen_struct_ident_with_number_elements_double_quotes_ts,
-    gen_tuple_struct_ident_double_quotes_ts, gen_value_initialization_ts,
+    gen_struct_ident_dq_ts, gen_struct_ident_with_number_elements_dq_ts,
+    gen_tuple_struct_ident_dq_ts, gen_value_initialization_ts,
     impl_pg_type_equal_operator_for_ident_ts, impl_pg_type_where_filter_for_ident_ts,
 };
 use proc_macro2::TokenStream as Ts2;
@@ -1336,8 +1336,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let parameter_number_two = ParameterNumber::Two;
             let parameter_number_three = ParameterNumber::Three;
             let parameter_number_four = ParameterNumber::Four;
-            let ident_standart_not_null_double_quotes_ts = double_quotes_ts(&ident_standart_not_null_ucc);
-            let ident_standart_not_null_origin_double_quotes_ts = double_quotes_ts(&ident_standart_not_null_origin_ucc);
+            let ident_standart_not_null_dq_ts = dq_ts(&ident_standart_not_null_ucc);
+            let ident_standart_not_null_origin_dq_ts = dq_ts(&ident_standart_not_null_origin_ucc);
             let gen_std_ops_bound_ts = |type_ts: &dyn ToTokens| {
                 quote! {std::ops::Bound<#type_ts>}
             };
@@ -1368,7 +1368,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 };
                 let gen_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4 = |value_ts: &dyn ToTokens| {
-                    quote! {_serde::Serializer::serialize_newtype_struct(__serializer, #ident_standart_not_null_origin_double_quotes_ts, &#self_dot_zero_ts #value_ts)}
+                    quote! {_serde::Serializer::serialize_newtype_struct(__serializer, #ident_standart_not_null_origin_dq_ts, &#self_dot_zero_ts #value_ts)}
                 };
                 let gen_serde_state_initialization_ts = |parameter_number: &ParameterNumber| {
                     let parameter_number_ts = {
@@ -1376,15 +1376,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         quote! {#(#value)*}
                     };
                     quote! {
-                        let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_standart_not_null_origin_double_quotes_ts, usize::from(false) #parameter_number_ts)?;
+                        let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_standart_not_null_origin_dq_ts, usize::from(false) #parameter_number_ts)?;
                     }
                 };
                 let serde_state_initialization_two_fields_ts = gen_serde_state_initialization_ts(&parameter_number_two);
                 let serde_state_initialization_three_fields_ts = gen_serde_state_initialization_ts(&parameter_number_three);
                 let serde_state_initialization_four_fields_ts = gen_serde_state_initialization_ts(&parameter_number_four);
                 let gen_serialize_field_ts = |field_name: &dyn Display, third_parameter_ts: &dyn ToTokens| {
-                    let field_name_double_quotes_ts = double_quotes_ts(&field_name);
-                    quote! {_serde::ser::SerializeStruct::serialize_field(&mut __serde_state, #field_name_double_quotes_ts, #third_parameter_ts)?;}
+                    let field_name_dq_ts = dq_ts(&field_name);
+                    quote! {_serde::ser::SerializeStruct::serialize_field(&mut __serde_state, #field_name_dq_ts, #third_parameter_ts)?;}
                 };
                 let serde_ser_serialize_struct_end_ts = quote! {_serde::ser::SerializeStruct::end(__serde_state)};
                 let serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_ts = {
@@ -1564,8 +1564,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     False,
                     True,
                 }
-                let struct_ident_double_quotes_ts = gen_struct_ident_double_quotes_ts(&ident_origin_ucc);
-                let tuple_struct_ident_double_quotes_ts = gen_tuple_struct_ident_double_quotes_ts(&ident_origin_ucc);
+                let struct_ident_dq_ts = gen_struct_ident_dq_ts(&ident_origin_ucc);
+                let tuple_struct_ident_dq_ts = gen_tuple_struct_ident_dq_ts(&ident_origin_ucc);
                 let struct_visitor_ts = quote! {
                     #[doc(hidden)]
                     struct __Visitor<'de> {
@@ -1583,7 +1583,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     quote! {
                         _serde::Deserializer::deserialize_struct(
                             __deserializer,
-                            #ident_standart_not_null_double_quotes_ts,
+                            #ident_standart_not_null_dq_ts,
                             FIELDS,
                             __Visitor {
                                 marker: _serde::__private228::PhantomData::<Self>,
@@ -1595,7 +1595,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 let serde_deserializer_deserialize_newtype_struct_ts = quote! {
                     _serde::Deserializer::deserialize_newtype_struct(
                         __deserializer,
-                        #ident_standart_not_null_origin_double_quotes_ts,
+                        #ident_standart_not_null_origin_dq_ts,
                         __Visitor {
                             marker: serde::__private228::PhantomData::<Self>,
                             lifetime: serde::__private228::PhantomData,
@@ -1643,7 +1643,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     };
                     (gen_enum_field_ts(&parameter_number_two), gen_enum_field_ts(&parameter_number_three), gen_enum_field_ts(&parameter_number_four))
                 };
-                let (fn_expecting_struct_ident_double_quotes_ts, fn_expecting_tuple_struct_ident_double_quotes_ts, fn_expecting_field_identifier_ts) = {
+                let (fn_expecting_struct_ident_dq_ts, fn_expecting_tuple_struct_ident_dq_ts, fn_expecting_field_identifier_ts) = {
                     let gen_fn_expecting_ts = |content_ts: &dyn ToTokens| {
                         quote! {
                             fn expecting(&self, __f: &mut serde::__private228::Formatter<'_>) -> serde::__private228::fmt::Result {
@@ -1651,7 +1651,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                     };
-                    (gen_fn_expecting_ts(&struct_ident_double_quotes_ts), gen_fn_expecting_ts(&tuple_struct_ident_double_quotes_ts), gen_fn_expecting_ts(&quote! {"field identifier"}))
+                    (gen_fn_expecting_ts(&struct_ident_dq_ts), gen_fn_expecting_ts(&tuple_struct_ident_dq_ts), gen_fn_expecting_ts(&quote! {"field identifier"}))
                 };
                 let field_0_value_ts = gen_field_index_value_ts(parameter_number_one.get_index());
                 let gen_serde_private_ok_ts = |content_ts: &dyn ToTokens| {
@@ -1718,7 +1718,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     )
                 };
                 let gen_fields_serde_de_seq_access_next_el_initialization_ts = |vec_ts: &[&dyn ToTokens]| {
-                    let error_message_ts = gen_struct_ident_with_number_elements_double_quotes_ts(&ident_standart_not_null_origin_ucc, vec_ts.len());
+                    let error_message_ts = gen_struct_ident_with_number_elements_dq_ts(&ident_standart_not_null_origin_ucc, vec_ts.len());
                     let fields_initialization_ts = vec_ts.iter().enumerate().map(|(index_70b4dabd, el_9dc7f312)| {
                         let field_index_value_ts = gen_field_index_value_ts(index_70b4dabd);
                         let index_usize_ts = format!("{index_70b4dabd}usize").parse::<Ts2>().expect("ce15e6bf");
@@ -1895,9 +1895,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 let (fn_visit_str_value_start_end_ts, fn_visit_str_value_hour_min_sec_micro_ts, fn_visit_str_value_hour_minute_second_microsecond_ts, fn_visit_str_value_date_time_ts, fn_visit_str_value_date_naive_time_ts, fn_visit_str_value_months_days_microseconds_ts) = {
                     let gen_fn_visit_str_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
                         let fields_ts = vec_ts.iter().enumerate().map(|(index_e1c5acfd, el_29343926)| {
-                            let el_double_quotes_ts = double_quotes_ts(&el_29343926);
+                            let el_dq_ts = dq_ts(&el_29343926);
                             let field_index_name_ts = gen_field_index_ts(index_e1c5acfd);
-                            quote! {#el_double_quotes_ts => Ok(__Field::#field_index_name_ts)}
+                            quote! {#el_dq_ts => Ok(__Field::#field_index_name_ts)}
                         });
                         quote! {
                             fn visit_str<__E>(
@@ -1926,9 +1926,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 let (fn_visit_bytes_start_end_ts, fn_visit_bytes_hour_min_sec_micro_ts, fn_visit_bytes_hour_minute_second_microsecond_ts, fn_visit_bytes_date_time_ts, fn_visit_bytes_date_naive_time_ts, fn_visit_bytes_months_days_microseconds_ts) = {
                     let gen_fn_visit_bytes_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
                         let fields_ts = vec_ts.iter().enumerate().map(|(index_545c3b1e, el_1dbc37ab)| {
-                            let b_el_double_quotes_ts = format!("b{}", double_quotes_str(&el_1dbc37ab)).parse::<Ts2>().expect("c76c976b");
+                            let b_el_dq_ts = format!("b{}", dq_str(&el_1dbc37ab)).parse::<Ts2>().expect("c76c976b");
                             let field_index_name_ts = gen_field_index_ts(index_545c3b1e);
-                            quote! {#b_el_double_quotes_ts => Ok(__Field::#field_index_name_ts)}
+                            quote! {#b_el_dq_ts => Ok(__Field::#field_index_name_ts)}
                         });
                         quote! {
                             fn visit_bytes<__E>(self, __value: &[u8]) -> Result<Self::Value, __E>
@@ -2039,13 +2039,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     ) = {
                         let gen_while_some_next_key_field_ts = |vec_ts: &[(&dyn Display, &dyn ToTokens)]| {
                             let fields_initialization_ts = vec_ts.iter().enumerate().map(|(index_2b1736c7, el_692238ce)| {
-                                let field_name_double_quotes_ts = double_quotes_str(&el_692238ce.0);
+                                let field_name_dq_ts = dq_str(&el_692238ce.0);
                                 let field_type_ts = &el_692238ce.1;
                                 let field_index_name_ts = gen_field_index_ts(index_2b1736c7);
                                 quote! {
                                     __Field::#field_index_name_ts => {
                                         if Option::is_some(&#field_index_name_ts) {
-                                            return Err(<__A::Error as serde::de::Error>::duplicate_field(#field_name_double_quotes_ts));
+                                            return Err(<__A::Error as serde::de::Error>::duplicate_field(#field_name_dq_ts));
                                         }
                                         #field_index_name_ts = Some(serde::de::MapAccess::next_value::<#field_type_ts>(&mut __map)?);
                                     }
@@ -2081,13 +2081,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let (match_field_initialization_hour_min_sec_micro_ts, match_field_initialization_start_end_ts, match_field_initialization_hour_minute_second_microsecond_ts, match_field_initialization_date_time_ts, match_field_initialization_date_naive_time_ts, match_field_initialization_months_days_microseconds_ts) = {
                         let gen_match_field_initialization_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
                             let fields_initialization_ts = vec_ts.iter().enumerate().map(|(index_e1adef1a, el_f8a9e25b)| {
-                                let field_name_double_quotes_ts = double_quotes_str(&el_f8a9e25b);
+                                let field_name_dq_ts = dq_str(&el_f8a9e25b);
                                 let field_index_ts = gen_field_index_ts(index_e1adef1a);
                                 let field_index_value_ts = gen_field_index_value_ts(index_e1adef1a);
                                 quote! {
                                     let #field_index_value_ts = match #field_index_ts {
                                         Some(value_eeeb431b) => value_eeeb431b,
-                                        None => serde::__private228::de::missing_field(#field_name_double_quotes_ts)?,
+                                        None => serde::__private228::de::missing_field(#field_name_dq_ts)?,
                                     };
                                 }
                             });
@@ -2167,7 +2167,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 };
                 let (const_fields_start_end_ts, const_fields_sqlx_types_chrono_naive_time_ts, const_fields_sqlx_types_time_time_ts, const_fields_sqlx_types_chrono_naive_date_time_ts, const_fields_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts, const_fields_sqlx_pg_types_pg_interval_ts) = {
                     let gen_const_fields_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
-                        let field_names_ts = vec_ts.iter().map(|el_391d76e4| double_quotes_ts(&el_391d76e4));
+                        let field_names_ts = vec_ts.iter().map(|el_391d76e4| dq_ts(&el_391d76e4));
                         quote! {
                             #[doc(hidden)]
                             const FIELDS: &[&str] = &[#(#field_names_ts),*];
@@ -2236,25 +2236,25 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         )
                     };
                     (
-                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_struct_ident_double_quotes_ts, &fn_visit_seq_sqlx_types_chrono_naive_time_ts, &fn_visit_map_sqlx_types_chrono_naive_time_ts),
-                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_tuple_struct_ident_double_quotes_ts, &fn_visit_newtype_struct_pg_money_ts, &fn_visit_seq_pg_money_ts),
-                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_tuple_struct_ident_double_quotes_ts, &fn_visit_newtype_struct_uuid_ts, &fn_visit_seq_uuid_uuid_ts),
-                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_tuple_struct_ident_double_quotes_ts, &fn_visit_newtype_struct_mac_address_ts, &fn_visit_seq_sqlx_types_mac_address_mac_address_ts),
-                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_tuple_struct_ident_double_quotes_ts, &fn_visit_newtype_struct_text_ts, &fn_visit_seq_std_string_string_ts),
-                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_struct_ident_double_quotes_ts, &fn_visit_seq_sqlx_types_time_time_ts, &fn_visit_map_sqlx_types_time_time_ts),
-                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_tuple_struct_ident_double_quotes_ts, &fn_visit_newtype_struct_sqlx_types_chrono_naive_date_ts, &fn_visit_seq_sqlx_types_chrono_naive_date_ts),
-                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_struct_ident_double_quotes_ts, &fn_visit_seq_sqlx_types_chrono_naive_date_time_ts, &fn_visit_map_sqlx_types_chrono_naive_date_time_ts),
-                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_struct_ident_double_quotes_ts, &fn_visit_seq_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts, &fn_visit_map_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts),
-                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_struct_ident_double_quotes_ts, &fn_visit_seq_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts, &fn_visit_map_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts),
-                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_struct_ident_double_quotes_ts, &fn_visit_seq_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts, &fn_visit_map_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts),
+                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_struct_ident_dq_ts, &fn_visit_seq_sqlx_types_chrono_naive_time_ts, &fn_visit_map_sqlx_types_chrono_naive_time_ts),
+                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_tuple_struct_ident_dq_ts, &fn_visit_newtype_struct_pg_money_ts, &fn_visit_seq_pg_money_ts),
+                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_tuple_struct_ident_dq_ts, &fn_visit_newtype_struct_uuid_ts, &fn_visit_seq_uuid_uuid_ts),
+                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_tuple_struct_ident_dq_ts, &fn_visit_newtype_struct_mac_address_ts, &fn_visit_seq_sqlx_types_mac_address_mac_address_ts),
+                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_tuple_struct_ident_dq_ts, &fn_visit_newtype_struct_text_ts, &fn_visit_seq_std_string_string_ts),
+                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_struct_ident_dq_ts, &fn_visit_seq_sqlx_types_time_time_ts, &fn_visit_map_sqlx_types_time_time_ts),
+                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_tuple_struct_ident_dq_ts, &fn_visit_newtype_struct_sqlx_types_chrono_naive_date_ts, &fn_visit_seq_sqlx_types_chrono_naive_date_ts),
+                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_struct_ident_dq_ts, &fn_visit_seq_sqlx_types_chrono_naive_date_time_ts, &fn_visit_map_sqlx_types_chrono_naive_date_time_ts),
+                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_struct_ident_dq_ts, &fn_visit_seq_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts, &fn_visit_map_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts),
+                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_struct_ident_dq_ts, &fn_visit_seq_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts, &fn_visit_map_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts),
+                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_struct_ident_dq_ts, &fn_visit_seq_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts, &fn_visit_map_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts),
                         gen_impl_serde_de_visitor_for_visitor_ts(
-                            &fn_expecting_struct_ident_double_quotes_ts,
+                            &fn_expecting_struct_ident_dq_ts,
                             &fn_visit_seq_sqlx_pg_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
                             &fn_visit_map_sqlx_pg_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
                         ),
-                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_struct_ident_double_quotes_ts, &fn_visit_seq_sqlx_pg_types_pg_range_i32_ts, &fn_visit_map_sqlx_pg_types_pg_range_sqlx_pg_types_pg_range_i32_ts),
-                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_struct_ident_double_quotes_ts, &fn_visit_seq_sqlx_pg_types_pg_range_i64_ts, &fn_visit_map_sqlx_pg_types_pg_range_sqlx_pg_types_pg_range_i64_ts),
-                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_struct_ident_double_quotes_ts, &fn_visit_seq_sqlx_pg_types_pg_interval_ts, &fn_visit_map_sqlx_pg_types_pg_interval_ts),
+                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_struct_ident_dq_ts, &fn_visit_seq_sqlx_pg_types_pg_range_i32_ts, &fn_visit_map_sqlx_pg_types_pg_range_sqlx_pg_types_pg_range_i32_ts),
+                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_struct_ident_dq_ts, &fn_visit_seq_sqlx_pg_types_pg_range_i64_ts, &fn_visit_map_sqlx_pg_types_pg_range_sqlx_pg_types_pg_range_i64_ts),
+                        gen_impl_serde_de_visitor_for_visitor_ts(&fn_expecting_struct_ident_dq_ts, &fn_visit_seq_sqlx_pg_types_pg_interval_ts, &fn_visit_map_sqlx_pg_types_pg_interval_ts),
                     )
                 };
                 let field_visitor_ts = quote! {__FieldVisitor};
@@ -4967,7 +4967,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 }
             };
             let select_only_ids_and_select_only_updated_ids_query_common_ts = {
-                let format_handle_ts = double_quotes_ts(&{
+                let format_handle_ts = dq_ts(&{
                     let column_comma = "{column},";
                     if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) { column_comma.to_owned() } else { format!("'{{{{\\\"value\\\": null}}}}'::jsonb as {column_comma}") }
                 });
@@ -5026,25 +5026,25 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let space_additional_parameter = " {}";
                     match (&is_nullable, &can_be_primary_key) {
                         (IsNullable::False, CanBePrimaryKey::False) => {
-                            let format_handle_ts = double_quotes_ts(&column_pg_query_type_not_null);
+                            let format_handle_ts = dq_ts(&column_pg_query_type_not_null);
                             quote! {
                                 format!(#format_handle_ts)
                             }
                         }
                         (IsNullable::False, CanBePrimaryKey::True) => {
-                            let format_handle_ts = double_quotes_ts(&format!("{column_pg_query_type_not_null}{space_additional_parameter}"));
+                            let format_handle_ts = dq_ts(&format!("{column_pg_query_type_not_null}{space_additional_parameter}"));
                             quote! {
                                 format!(#format_handle_ts, #maybe_primary_key_is_primary_key_ts)
                             }
                         }
                         (IsNullable::True, CanBePrimaryKey::False) => {
-                            let format_handle_ts = double_quotes_ts(&column_pg_query_type);
+                            let format_handle_ts = dq_ts(&column_pg_query_type);
                             quote! {
                                 format!(#format_handle_ts)
                             }
                         }
                         (IsNullable::True, CanBePrimaryKey::True) => {
-                            let format_handle_ts = double_quotes_ts(&format!("{column_pg_query_type}{space_additional_parameter}"));
+                            let format_handle_ts = dq_ts(&format!("{column_pg_query_type}{space_additional_parameter}"));
                             quote! {
                                 format!(#format_handle_ts, #maybe_primary_key_is_primary_key_ts)
                             }
@@ -5076,7 +5076,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let content_ts = match &pg_type_pattern {
                         PgTypePattern::Standart => quote! {#ColumnSc.to_owned()},
                         PgTypePattern::ArrayDim1 { .. } => {
-                            let format_handle_ts = double_quotes_ts(&{
+                            let format_handle_ts = dq_ts(&{
                                 let acc = repeat_n("[{}:{}]", array_dims_number).collect::<String>();
                                 format!("{{column}}{acc}")
                             });
@@ -5226,8 +5226,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             PgTypeRange::I32AsInt4 | PgTypeRange::I64AsInt8 => int_range_normalize_ts,
                                             PgTypeRange::SqlxTypesChronoNaiveDateAsDate => {
                                                 let gen_dot_succ_opt_expect_ts = |id: &dyn Display| {
-                                                    let id_double_quotes_ts = double_quotes_ts(&id);
-                                                    quote! {.succ_opt().expect(#id_double_quotes_ts)}
+                                                    let id_dq_ts = dq_ts(&id);
+                                                    quote! {.succ_opt().expect(#id_dq_ts)}
                                                 };
                                                 let gen_included_start_succ_opt_ts = |id: &dyn Display| {
                                                     let dot_succ_opt_expect_ts = gen_dot_succ_opt_expect_ts(&id);

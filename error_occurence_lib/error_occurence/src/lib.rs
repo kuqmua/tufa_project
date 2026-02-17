@@ -1,4 +1,4 @@
-use gen_quotes::double_quotes_ts;
+use gen_quotes::dq_ts;
 use macros_helpers::{
     ErrorOccurenceFieldAttr, gen_if_write_is_err_ts, gen_impl_display_ts,
     gen_impl_to_err_string_ts, gen_serde_version_of_named_syn_variant,
@@ -140,7 +140,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                             quote!{#(#acc_ts),*,}
                         }
                     };
-                    let fields_format_excluding_code_occurence_ts = double_quotes_ts(
+                    let fields_format_excluding_code_occurence_ts = dq_ts(
                         &fields.iter()
                         .filter(|el_6ba47e94| *el_6ba47e94.ident.as_ref().expect("3d70a4f4") != *code_occurence_sc_str)
                         .fold(

@@ -1,5 +1,5 @@
 pub mod parameter;
-use gen_quotes::double_quotes_str;
+use gen_quotes::dq_str;
 pub use naming_common::{
     AsRefStrToScStr, AsRefStrToScTs, AsRefStrToUccStr, AsRefStrToUccTs, AsRefStrToUpperScStr,
     AsRefStrToUpperScTs, DisplayToScStr, DisplayToScTs, DisplayToUccStr, DisplayToUccTs,
@@ -1097,7 +1097,7 @@ where
     T: AsRefStrToScStr,
 {
     fn swagger_url_path_self_quotes_str(&self, table_name_str: &str) -> String {
-        double_quotes_str(&format!("/{}/{}", table_name_str, self.case(),))
+        dq_str(&format!("/{}/{}", table_name_str, self.case(),))
     }
 }
 pub trait SwaggerUrlPathSelfQuotesTokenStream {
