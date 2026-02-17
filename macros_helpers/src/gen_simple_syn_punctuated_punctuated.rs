@@ -1,5 +1,4 @@
 use syn::{PathArguments, PathSegment, punctuated::Punctuated, token::PathSep};
-
 #[must_use]
 pub fn gen_simple_syn_punctuated_punctuated(
     parts_vec: &[&str],

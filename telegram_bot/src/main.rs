@@ -1,5 +1,4 @@
 use teloxide::{Bot, prelude::Requester, repl, types::Message, utils::command::BotCommands};
-
 #[derive(BotCommands, Clone)]
 #[command(
     rename_rule = "lowercase",
@@ -15,7 +14,6 @@ enum Command {
     #[command(description = "handle a username and an age.", parse_with = "split")]
     UsernameAndAge { username: String, age: u8 },
 }
-
 #[tokio::main]
 async fn main() {
     Box::pin(repl(

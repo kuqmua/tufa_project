@@ -55,7 +55,6 @@ use token_patterns::{
     PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall, StdStringString, U8, U16, U32, U64,
     UuidUuid,
 };
-
 #[must_use]
 pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]

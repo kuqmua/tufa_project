@@ -1,10 +1,11 @@
+use naming::ToTokensToUccStr;
+use naming::parameter::{GetSelfSc, GetSelfUcc};
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use syn::{Data, DeriveInput, Fields, parse};
 #[proc_macro_derive(GenGetterTraitsForStructFields)]
 pub fn gen_getter_traits_for_struct_fields(input: Ts) -> Ts {
-    use naming::ToTokensToUccStr;
     panic_location::panic_location();
     let syn_derive_input: DeriveInput = parse(input).expect("49780295");
     let ident = &syn_derive_input.ident;
@@ -42,10 +43,8 @@ pub fn gen_getter_traits_for_struct_fields(input: Ts) -> Ts {
     };
     generated.into()
 }
-
 #[proc_macro_derive(GenGetterTrait)]
 pub fn gen_getter_trait(input: Ts) -> Ts {
-    use naming::parameter::{GetSelfSc, GetSelfUcc};
     panic_location::panic_location();
     let syn_derive_input: DeriveInput = parse(input).expect("195b48f5");
     let ident = &syn_derive_input.ident;

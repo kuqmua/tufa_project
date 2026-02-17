@@ -7,7 +7,6 @@ use syn::{
     AngleBracketedGenericArguments, Field, Fields, GenericArgument, PathArguments, Type, Variant,
 };
 use token_patterns::StdStringString;
-
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
 pub enum ErrorOccurenceFieldAttr {

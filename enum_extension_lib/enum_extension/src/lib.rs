@@ -1,7 +1,6 @@
 use proc_macro::TokenStream as Ts;
 use quote::quote;
 use syn::{Data, DeriveInput, Fields, parse};
-
 #[proc_macro_derive(EnumExtension)]
 pub fn enum_extension(input: Ts) -> Ts {
     panic_location::panic_location();

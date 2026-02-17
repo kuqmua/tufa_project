@@ -1,8 +1,6 @@
 mod filters;
-
-pub use filters::*;
-
 use enum_extension_lib::EnumExtension;
+pub use filters::*;
 use gen_quotes::{double_quotes_str, double_quotes_ts};
 use macros_helpers::gen_impl_to_err_string_ts;
 use naming::{
@@ -63,7 +61,6 @@ use token_patterns::{
     PgCrudCommonDefaultOptionSomeVecOneElMaxPageSize, PgCrudDefaultOptionSomeVecOneEl,
     PgCrudDefaultOptionSomeVecOneElMaxPageSize, RefStr, StdFmtDisplay, StdStringString, U64,
 };
-
 #[derive(Debug, Clone)]
 pub enum DeriveOrImpl {
     Derive,
@@ -421,19 +418,16 @@ pub enum PgTypeOrPgJsonType {
     PgJsonType,
     PgType,
 }
-
 #[derive(Debug, Clone, Copy)]
 pub enum DefaultSomeOneOrDefaultSomeOneWithMaxPageSize {
     DefaultSomeOne,
     DefaultSomeOneWithMaxPageSize,
 }
-
 #[derive(Debug, Clone, Copy)]
 pub enum EqualOrEqualUsingFields {
     Equal,
     EqualUsingFields,
 }
-
 #[derive(Debug, Clone, Copy)]
 pub enum EqualOperatorHandle {
     Equal,
@@ -723,7 +717,6 @@ pub fn gen_std_option_option_tokens_declaration_ts(type_ts: &dyn ToTokens) -> Ts
 pub fn gen_std_vec_vec_tokens_declaration_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {Vec<#type_ts>}
 }
-
 pub fn gen_serde_deserialize_double_quotes_ts(
     ident: &dyn DisplayPlusToTokens,
     length: usize,
@@ -1027,7 +1020,6 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
         }
     }
 }
-
 pub fn gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(
     ident_ts: &dyn ToTokens,
     content_ts: &dyn ToTokens,
@@ -1190,7 +1182,6 @@ pub fn gen_impl_pg_type_ts(
         }
     }
 }
-
 pub fn gen_impl_pg_type_not_primary_key_for_ident_ts(
     import_path: &ImportPath,
     ident: &dyn ToTokens,
@@ -1204,7 +1195,6 @@ pub fn gen_impl_pg_type_not_primary_key_for_ident_ts(
         }
     }
 }
-
 // fn gen_read_only_ids_merged_with_create_into_where_method_ts(
 //     import_path: &ImportPath,
 //     method_name_ts: &dyn ToTokens,
@@ -1235,7 +1225,6 @@ pub fn gen_impl_pg_type_not_primary_key_for_ident_ts(
 //         }
 //     }
 // }
-
 fn gen_option_vec_create_ts(path_ts: &dyn ToTokens, content_ts: &dyn ToTokens) -> Ts2 {
     quote! {
         fn #OptionVecCreateSc() -> Option<Vec<#path_ts::#CreateUcc>> {
@@ -1354,7 +1343,6 @@ fn gen_read_only_ids_merged_with_create_into_table_type_declaration_ts(
         }
     }
 }
-
 pub fn gen_read_only_ids_merged_with_create_into_where_equal_ts(
     read_only_ids_ts: &dyn ToTokens,
     create_ts: &dyn ToTokens,
@@ -1386,7 +1374,6 @@ pub fn gen_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts
         }
     }
 }
-
 fn gen_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_to_json_field_pg_type_or_pg_json_type_ts(
     import_path: ImportPath,
     read_only_ids_ts: &dyn ToTokens,

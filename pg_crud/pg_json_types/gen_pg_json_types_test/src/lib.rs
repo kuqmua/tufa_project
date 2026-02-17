@@ -1,9 +1,9 @@
 #[cfg(test)]
 mod tests {
     use macro_clippy_check_common::clippy_check;
+    use quote::quote;
     #[test]
     fn clippy() {
-        use quote::quote;
         clippy_check(
             "gen_pg_json_types_test_content",
             "../pg_crud/pg_json_types/",

@@ -1,11 +1,11 @@
 #[cfg(test)]
 mod tests {
     use macro_clippy_check_common::clippy_check;
+    use proc_macro2::TokenStream as Ts2;
+    use quote::quote;
+    use token_patterns::AllowClippyArbitrarySourceItemOrdering;
     #[test]
     fn clippy() {
-        use proc_macro2::TokenStream as Ts2;
-        use quote::quote;
-        use token_patterns::AllowClippyArbitrarySourceItemOrdering;
         clippy_check(
             "gen_pg_table_test_content",
             "../pg_crud/pg_table/",

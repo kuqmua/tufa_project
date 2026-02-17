@@ -2,7 +2,6 @@ use error_occurence_lib::{ErrorOccurence, code_occurence, code_occurence::CodeOc
 use serde_json::{Error as SerdeJsonError, Value as SerdeJsonValue, to_string_pretty};
 use std::path::Path;
 use thiserror::Error;
-
 #[derive(Debug, Error, ErrorOccurence)]
 pub enum CreateDirsAndWritePrettyJsonSyncError {
     SerdeJson {

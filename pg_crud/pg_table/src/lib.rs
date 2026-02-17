@@ -3,7 +3,6 @@ use app_state::{
     GetTimezone,
 };
 pub use gen_pg_table::*;
-
 pub trait CombinationOfAppStateLogicTraits:
     GetEnableApiGitCommitCheck
     + GetMaximumSizeOfHttpBodyInBytes
@@ -14,7 +13,6 @@ pub trait CombinationOfAppStateLogicTraits:
     + Sync
 {
 }
-
 #[must_use]
 pub fn gen_create_many_query_string(
     table: &str,

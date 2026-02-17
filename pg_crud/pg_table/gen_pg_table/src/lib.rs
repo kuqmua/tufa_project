@@ -1,5 +1,4 @@
 use proc_macro::TokenStream as Ts;
-
 #[proc_macro_attribute]
 pub fn gen_pg_table_config(_attr: Ts, item: Ts) -> Ts {
     item

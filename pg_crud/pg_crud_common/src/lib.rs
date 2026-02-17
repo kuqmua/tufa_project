@@ -1,10 +1,9 @@
-pub use pg_crud_common_and_macros_common::*;
-
 use error_occurence_lib::{
     ErrorOccurence, ToErrString, code_occurence, code_occurence::CodeOccurence,
 };
 use from_str::FromStr;
 use naming::{AscUcc, DescUcc, DisplayToScStr, DisplayToUccStr};
+pub use pg_crud_common_and_macros_common::*;
 use schemars::JsonSchema;
 use serde::{Deserialize, Deserializer, Serialize};
 use sqlx::{
@@ -24,16 +23,13 @@ use std::{
 use thiserror::Error;
 use utoipa::ToSchema;
 use uuid::Uuid;
-
 macro_rules! trait_alias {
     ($name:ident = $($bounds:tt)+) => {
         pub trait $name: $($bounds)+ {}
         impl<T: $($bounds)+> $name for T {}
     };
 }
-
 pub const DEFAULT_PAGINATION_LIMIT: i64 = 5;
-
 trait_alias!(DebugClonePartialEqAlias = Debug + Clone + PartialEq);
 trait_alias!(DebugClonePartialEqSerializeAlias = DebugClonePartialEqAlias + Serialize);
 trait_alias!(DebugClonePartialEqSerdeAlias = DebugClonePartialEqSerializeAlias + for<'__> Deserialize<'__>);
@@ -43,7 +39,6 @@ trait_alias!(
 );
 trait_alias!(SqlxEncodePgSqlxTypePgAlias = for<'__> Encode<'__, Postgres> + Type<Postgres>);
 trait_alias!(UtoipaToSchemaAndSchemarsJsonSchemaAlias = for<'__> ToSchema<'__> + JsonSchema);
-
 trait_alias!(TableTypeDeclarationAlias = DebugClonePartialEqSerdeDefaultSomeOneAlias);
 trait_alias!(CreateAlias = DebugClonePartialEqSerdeDefaultSomeOneAlias);
 trait_alias!(CreateForQueryAlias = DebugClonePartialEqSerializeAlias + SqlxEncodePgSqlxTypePgAlias);
@@ -513,13 +508,11 @@ where
         ))]
     }
 }
-
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, ErrorOccurence)]
 pub enum QueryPartError {
     CheckedAdd { code_occurence: CodeOccurence },
     WriteIntoBuffer { code_occurence: CodeOccurence },
 }
-
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
 pub struct PgTypeWhere<T> {
     logical_operator: LogicalOperator,
@@ -550,7 +543,6 @@ impl<T: PartialEq + Clone> PgTypeWhere<T> {
         }
     }
 }
-
 #[allow(unused_qualifications)]
 #[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
@@ -790,7 +782,6 @@ impl<T: Debug + PartialEq + Clone + AllEnumVariantsArrayDefaultOptionSomeVecOneE
         }
     }
 }
-
 #[derive(Debug, Default, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, FromStr)]
 pub enum Order {
     #[serde(rename(serialize = "asc", deserialize = "asc"))]
@@ -822,13 +813,11 @@ impl Order {
         DisplayToUccStr::case(&self)
     }
 }
-
 #[derive(Debug, Serialize, Deserialize)]
 pub struct OrderBy<ColumnGeneric> {
     pub column: ColumnGeneric,
     pub order: Option<Order>,
 }
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema)]
 pub struct PaginationBase {
     limit: i64,
@@ -1131,18 +1120,15 @@ impl DefaultOptionSomeVecOneElMaxPageSize for PaginationStartsWithZero {
         Self(PaginationBase::new_unchecked(i32::MAX.into(), 0))
     }
 }
-
 //this needed coz serde Option<Option<T>> #[serde(skip_serializing_if = "Option::is_none")] - if both options: inner and parent is null then it skip - its not correct
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema)]
 pub struct Value<T> {
     pub value: T,
 }
-
 //todo ExactSizeIterator now is not a solution. error[E0658]: use of unstable library feature `exact_size_is_empty`. maybe rewrite it later
 pub trait IsStringEmpty {
     fn is_string_empty(&self) -> bool;
 }
-
 #[derive(Debug, Serialize, Deserialize, Error, ErrorOccurence)]
 pub enum NotEmptyUniqueVecTryNewError<T> {
     IsEmpty {
@@ -1154,7 +1140,6 @@ pub enum NotEmptyUniqueVecTryNewError<T> {
         code_occurence: CodeOccurence,
     },
 }
-
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
 pub struct NotEmptyUniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
@@ -1335,7 +1320,6 @@ where
         Ok(acc_57b31116)
     }
 }
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub struct JsonFieldRights {
     can_create: bool,
@@ -1382,7 +1366,6 @@ impl EqualOperator {
 pub trait PgTypeEqualOperator {
     fn operator(&self) -> EqualOperator;
 }
-
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Serialize, JsonSchema)]
 pub struct UnsignedPartOfI32(i32); //todo why exactly i32? maybe different types for pg type and pg json type
 #[derive(
@@ -1505,7 +1488,6 @@ impl DefaultOptionSomeVecOneEl for UnsignedPartOfI32 {
         Self(0)
     }
 }
-
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Serialize, JsonSchema)]
 pub struct NotZeroUnsignedPartOfI32(UnsignedPartOfI32);
 #[derive(

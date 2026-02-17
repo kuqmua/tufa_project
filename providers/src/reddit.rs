@@ -3,17 +3,14 @@ use serde_derive::{Deserialize, Serialize};
 pub struct Data {
     pub data: DataChildren,
 }
-
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct DataChildren {
     pub children: Vec<DataChildrenElement>,
 }
-
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct DataChildrenElement {
     pub data: DataChildrenElementData,
 }
-
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct DataChildrenElementData {
     // media_embed ???

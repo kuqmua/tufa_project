@@ -6,82 +6,29 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ["self", "payload"],
     ["self", "payload", "with", "serde"],
     [
-        "self",
-        "payload",
-        "try",
-        "from",
-        "self",
-        "payload",
-        "with",
-        "serde"
+        "self", "payload", "try", "from", "self", "payload", "with", "serde"
     ],
     [
-        "self",
-        "payload",
-        "with",
-        "serde",
-        "try",
-        "from",
-        "self",
-        "payload"
+        "self", "payload", "with", "serde", "try", "from", "self", "payload"
     ],
     [
-        "self",
-        "payload",
-        "with",
-        "serde",
-        "try",
-        "from",
-        "self",
-        "payload",
-        "error"
+        "self", "payload", "with", "serde", "try", "from", "self", "payload", "error"
     ],
     ["try", "self"],
     ["try", "self", "response", "variants"],
-    [
-        "self",
-        "payload",
-        "element",
-        "with",
-        "serde"
-    ],
+    ["self", "payload", "element", "with", "serde"],
     ["self", "payload", "element"],
     [
-        "self",
-        "payload",
-        "element",
-        "try",
-        "from",
-        "self",
-        "payload",
-        "with",
-        "serde"
+        "self", "payload", "element", "try", "from", "self", "payload", "with", "serde"
     ],
     [
-        "self",
-        "payload",
-        "element",
-        "try",
-        "from",
-        "self",
-        "payload",
-        "element",
-        "with",
-        "serde",
+        "self", "payload", "element", "try", "from", "self", "payload", "element", "with", "serde",
         "error"
     ],
     ["try", "self", "error"],
     ["try", "self", "request", "error"],
     [
-        "self",
-        "payload",
-        "try",
-        "from",
-        "self",
-        "payload",
-        "with",
-        "serde",
-        "error"
+        "self", "payload", "try", "from", "self", "payload", "with", "serde", "error"
     ],
     ["try", "self", "with", "serde"],
     ["tvfrr", "extraction", "logic", "try", "self"],
@@ -211,17 +158,7 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "self", "option", "to", "update", "try", "gen", "pg", "json", "type", "error"
     ],
     [
-        "self",
-        "option",
-        "to",
-        "update",
-        "try",
-        "gen",
-        "pg",
-        "json",
-        "type",
-        "error",
-        "with",
+        "self", "option", "to", "update", "try", "gen", "pg", "json", "type", "error", "with",
         "serde"
     ],
     ["self", "json", "array", "change"],
@@ -288,19 +225,8 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "object", "self", "option", "to", "update", "try", "gen", "error"
     ],
     [
-        "object",
-        "self",
-        "option",
-        "to",
-        "update",
-        "try",
-        "gen",
-        "pg",
-        "json",
-        "type",
-        "error",
-        "with",
-        "serde"
+        "object", "self", "option", "to", "update", "try", "gen", "pg", "json", "type", "error",
+        "with", "serde"
     ],
     [
         "std", "option", "option", "object", "self", "option", "to", "update", "try", "gen",
@@ -423,39 +349,12 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
         "id", "self", "option", "to", "update", "try", "gen", "pg", "json", "type", "error"
     ],
     [
-        "pg",
-        "json",
-        "type",
-        "object",
-        "self",
-        "option",
-        "to",
-        "update",
-        "try",
-        "gen",
-        "pg",
-        "json",
-        "type",
-        "error",
-        "with",
-        "serde"
+        "pg", "json", "type", "object", "self", "option", "to", "update", "try", "gen", "pg",
+        "json", "type", "error", "with", "serde"
     ],
     [
-        "pg",
-        "json",
-        "type",
-        "self",
-        "option",
-        "to",
-        "update",
-        "try",
-        "gen",
-        "pg",
-        "json",
-        "type",
-        "error",
-        "with",
-        "serde"
+        "pg", "json", "type", "self", "option", "to", "update", "try", "gen", "pg", "json", "type",
+        "error", "with", "serde"
     ],
     [
         "pg", "json", "type", "self", "read", "with", "or", "without", "id", "try", "from", "error"
@@ -1022,29 +921,12 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ["pg", "type", "where", "self"],
     ["pg", "type", "where", "self", "try", "new", "error"],
     [
-        "pg",
-        "type",
-        "where",
-        "self",
-        "try",
-        "new",
-        "error",
-        "with",
-        "serde"
+        "pg", "type", "where", "self", "try", "new", "error", "with", "serde"
     ],
     ["pg", "json", "type", "where", "self"],
     ["pg", "json", "type", "where", "self", "try", "new", "error"],
     [
-        "pg",
-        "json",
-        "type",
-        "where",
-        "self",
-        "try",
-        "new",
-        "error",
-        "with",
-        "serde"
+        "pg", "json", "type", "where", "self", "try", "new", "error", "with", "serde"
     ],
     ["self", "without", "id", "read"],
     ["self", "with", "id", "read"],
@@ -1099,25 +981,11 @@ naming_macros::gen_self_upper_camel_and_sc_str_and_ts!([
     ["self", "delete", "one", "parameters"],
     ["self", "delete", "one", "payload"],
     ["self", "try", "read", "one", "error"],
-    [
-        "self",
-        "read",
-        "one",
-        "error",
-        "with",
-        "serde"
-    ],
+    ["self", "read", "one", "error", "with", "serde"],
     ["self", "update", "many", "parameters"],
     ["self", "update", "many", "payload"],
     ["self", "try", "delete", "one", "error"],
-    [
-        "self",
-        "delete",
-        "one",
-        "error",
-        "with",
-        "serde"
-    ],
+    ["self", "delete", "one", "error", "with", "serde"],
     ["self", "handle"],
     ["try", "self", "handle"],
     ["derive", "self"],

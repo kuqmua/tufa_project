@@ -13,7 +13,6 @@ fn impl_ident_content_ts(ident_ts: &dyn ToTokens, content_ts: &dyn ToTokens) -> 
         }
     }
 }
-
 pub fn gen_new_ts(
     attr_ts: &dyn ToTokens,
     parameters_ts: &dyn ToTokens,
@@ -100,7 +99,6 @@ pub fn gen_impl_pub_const_new_for_ident_ts(
         &gen_pub_const_new_ts(attr_ts, parameters_ts, content_ts),
     )
 }
-
 pub fn gen_try_new_ts(
     parameters_ts: &dyn ToTokens,
     err_type_ts: &dyn ToTokens,

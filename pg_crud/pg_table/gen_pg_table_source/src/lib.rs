@@ -88,7 +88,7 @@ use quote::{ToTokens, quote};
 use serde::Deserialize;
 use serde_json::from_str;
 use std::{
-    fmt::{Display, Formatter, Result as StdFmtResult},
+    fmt::{Display, Formatter, Result as StdFmtResult, Write as _},
     iter::once,
     str::FromStr,
 };
@@ -132,7 +132,6 @@ use token_patterns::{
 //todo support read table length
 //todo what is pub what is private
 //todo header Retry-After logic
-
 //todo pg json:
 //* write json schema in pg
 //* validate insert json field with json schema
@@ -3205,7 +3204,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let mut value = fields
             .iter()
             .fold(String::default(), |mut acc_b2600a1f, element| {
-                use std::fmt::Write as _;
                 assert!(
                     write!(acc_b2600a1f, "{}", &element.field_ident).is_ok(),
                     "b9fe50dc"

@@ -5,6 +5,7 @@ use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use regex::Regex;
 use serde_json::from_str;
+use std::fmt::Write as _;
 #[allow(unused_imports)]
 use syn::{Data, DeriveInput, Fields, Ident, Type, parse};
 use token_patterns::StdStringString;
@@ -36,7 +37,6 @@ pub fn gen_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                     if index == 0 {
                         acc_7a8bd950.push_str(&el_sc_str);
                     } else {
-                        use std::fmt::Write as _;
                         assert!(write!(acc_7a8bd950, "_{el_sc_str}").is_ok(), "ef718915");
                     }
                     acc_7a8bd950
@@ -145,7 +145,6 @@ pub fn gen_self_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
             }));
             let elements_concat_value_sc_double_quotes_ts = double_quotes_ts(&{
                 let mut value = el_a5ccbaa7.iter().fold(String::new(), |mut acc_cbcae5e1, el_73b0c851| {
-                    use std::fmt::Write as _;
                     let symbol = '_';
                     if el_73b0c851 == "self" {
                         assert!(write!(acc_cbcae5e1, "{{value}}{symbol}").is_ok(), "6a02a2ff");

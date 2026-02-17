@@ -4,7 +4,6 @@ use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 use utoipa::ToSchema;
-
 #[derive(Debug, Serialize, Deserialize, Error, ErrorOccurence)]
 pub enum UniqueVecTryNewError<T> {
     NotUnique {

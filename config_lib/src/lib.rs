@@ -1,16 +1,14 @@
 pub mod types;
 use chrono::FixedOffset;
+pub use gen_getter_traits_for_struct_fields::GenGetterTraitsForStructFields;
 use secrecy::SecretBox;
 use std::{
     net::{AddrParseError, SocketAddr},
     num::ParseIntError,
     str::{FromStr, ParseBoolError},
 };
-
-pub use gen_getter_traits_for_struct_fields::GenGetterTraitsForStructFields;
 use thiserror::Error;
 pub use try_from_env::TryFromEnv;
-
 pub trait TryFromStdEnvVarOk: Sized {
     type Error;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error>;
@@ -126,7 +124,6 @@ impl TryFromStdEnvVarOk for StartingCheckLink {
         }))
     }
 }
-
 #[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct TracingLevel(pub types::TracingLevel);
 #[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug)]
@@ -148,7 +145,6 @@ impl TryFromStdEnvVarOk for TracingLevel {
         }))
     }
 }
-
 #[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct SourcePlaceType(pub types::SourcePlaceType);
 #[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug)]
@@ -170,7 +166,6 @@ impl TryFromStdEnvVarOk for SourcePlaceType {
         }))
     }
 }
-
 #[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct EnableApiGitCommitCheck(pub bool);
 #[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug)]
@@ -190,7 +185,6 @@ impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
         }))
     }
 }
-
 #[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct MaximumSizeOfHttpBodyInBytes(pub usize);
 #[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug)]

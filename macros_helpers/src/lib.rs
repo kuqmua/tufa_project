@@ -19,7 +19,6 @@ mod syn_field_wrapper;
 mod wrap_derive;
 mod write_string_into_file;
 mod write_ts_into_file;
-
 pub use attr_ident_str::AttrIdentStr;
 pub use code_occurence_syn_field::code_occurence_syn_field;
 pub use error_occurence::{ErrorOccurenceFieldAttr, gen_serde_version_of_named_syn_variant};

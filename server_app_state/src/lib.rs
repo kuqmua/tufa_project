@@ -9,7 +9,6 @@ use git_info::{GetGitCommitLink, ProjectGitInfo};
 use pg_crud::CombinationOfAppStateLogicTraits;
 use server_config::Config;
 use sqlx::PgPool;
-
 #[derive(Debug)]
 pub struct ServerAppState<'lifetime> {
     pub config: Config,

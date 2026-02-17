@@ -1,10 +1,5 @@
 pub mod parameter;
-
 use gen_quotes::double_quotes_str;
-use proc_macro2::TokenStream as Ts2;
-use quote::{ToTokens, quote};
-use std::fmt::{Display, Formatter, Result as FmtResult};
-
 pub use naming_common::{
     AsRefStrToScStr, AsRefStrToScTs, AsRefStrToUccStr, AsRefStrToUccTs, AsRefStrToUpperScStr,
     AsRefStrToUpperScTs, DisplayToScStr, DisplayToScTs, DisplayToUccStr, DisplayToUccTs,
@@ -15,7 +10,9 @@ pub use naming_macros::{
     AsRefStrEnumWithUnitFieldsToScStr, AsRefStrEnumWithUnitFieldsToUccStr,
     AsRefStrEnumWithUnitFieldsToUpperScStr,
 };
-
+use proc_macro2::TokenStream as Ts2;
+use quote::{ToTokens, quote};
+use std::fmt::{Display, Formatter, Result as FmtResult};
 pub const GITHUB_URL: &str = "https://github.com/kuqmua/tufa_project";
 pub const SUPPORTS_ONLY_STRINGIFIED: &str = "supports only";
 pub const SYN_FIELDS: &str = "syn::Fields";
@@ -25,7 +22,6 @@ pub const STD_STRINGIFIED: &str = "std";
 pub const SQLX_TYPES_UUID_STRINGIFIED: &str = "sqlx::types::Uuid";
 pub const FIELD_IDENT_IS_NONE: &str = "field.ident is None";
 pub const SYN_TYPE_PATH: &str = "syn::Type::Path";
-
 naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["primary", "key"],
     ["serde"],
@@ -1064,7 +1060,6 @@ naming_macros::gen_upper_camel_and_sc_str_and_ts!([
     ["to", "err", "string"],
     ["body", "size", "error"]
 ]);
-
 #[derive(Debug, Clone, Copy)]
 pub struct HashMap;
 #[derive(Debug, Clone, Copy)]
@@ -1091,14 +1086,12 @@ impl ToTokens for HashMapSc {
         quote! {hashmap}.to_tokens(tokens);
     }
 }
-
 pub trait DisplayPlusToTokens: Display + ToTokens {}
 impl<T> DisplayPlusToTokens for T where T: Display + ToTokens {}
 
 pub trait SwaggerUrlPathSelfQuotesStr {
     fn swagger_url_path_self_quotes_str(&self, table_name_str: &str) -> String;
 }
-
 impl<T> SwaggerUrlPathSelfQuotesStr for T
 where
     T: AsRefStrToScStr,
@@ -1107,11 +1100,9 @@ where
         double_quotes_str(&format!("/{}/{}", table_name_str, self.case(),))
     }
 }
-
 pub trait SwaggerUrlPathSelfQuotesTokenStream {
     fn swagger_url_path_self_quotes_ts(&self, table_name_str: &str) -> Ts2;
 }
-
 impl<T> SwaggerUrlPathSelfQuotesTokenStream for T
 where
     T: SwaggerUrlPathSelfQuotesStr,

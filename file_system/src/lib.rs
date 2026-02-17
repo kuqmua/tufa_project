@@ -1,7 +1,6 @@
 mod create_dir_if_it_doesnt_exist;
 mod create_dirs_and_write_file;
 mod create_dirs_and_write_pretty_json;
-
 pub use create_dir_if_it_doesnt_exist::{
     CreateDirIfItDoesntExistError, CreateDirIfItDoesntExistErrorWithSerde,
     create_dir_if_it_doesnt_exist,

@@ -42,7 +42,6 @@ use naming::{
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use strum_macros::{Display, EnumIter};
-
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Display, EnumIter, EnumExtension)]
 pub enum PgTypeFilter {

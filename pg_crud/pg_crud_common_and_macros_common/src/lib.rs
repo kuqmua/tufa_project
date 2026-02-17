@@ -4,7 +4,6 @@ use quote::{ToTokens, quote};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter, Result as StdFmtResult};
-
 pub trait DefaultOptionSomeVecOneEl: Sized {
     fn default_option_some_vec_one_el() -> Self;
 }
@@ -17,7 +16,6 @@ pub trait DefaultOptionSomeVecOneElMaxPageSize: Sized {
 pub trait AllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize: Sized {
     fn all_variants_default_option_some_vec_one_el_max_page_size() -> Vec<Self>;
 }
-
 #[derive(Debug, Default, Clone, Copy, Serialize, Deserialize, Eq, PartialEq, JsonSchema)]
 pub enum LogicalOperator {
     And,
@@ -68,7 +66,6 @@ impl ToTokens for LogicalOperator {
         .to_tokens(tokens);
     }
 }
-
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum PgTypeGreaterThanVariant {
     EqualNotGreaterThan,
@@ -94,7 +91,6 @@ impl ToTokens for PgTypeGreaterThanVariant {
         .to_tokens(tokens);
     }
 }
-
 #[derive(Debug, Clone, Copy)]
 pub enum PgJsonTypeLengthGreaterThanVariant {
     EqualNotLengthGreaterThan,

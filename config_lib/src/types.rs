@@ -7,7 +7,6 @@ use std::{
     str::FromStr,
 };
 use strum_macros::{Display as StrumDisplay, EnumIter};
-
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(
     Debug, Default, Clone, Copy, EnumIter, EnumExtension, Serialize, Deserialize, PartialEq, Eq,
@@ -38,7 +37,6 @@ impl Display for TracingLevel {
         write!(f, "{}", self.to_sc())
     }
 }
-
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, StrumDisplay, Serialize, Deserialize)]
 pub enum SourcePlaceType {
     #[default]

@@ -15,7 +15,6 @@ pub struct DataElement {
     pub title: Option<String>,
     pub updated: Option<String>,
 }
-
 #[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct DataElementAuthor {
     pub name: Option<String>,

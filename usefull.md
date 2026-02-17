@@ -41,7 +41,6 @@ Minimized binary sized: [min-sized-rust](https://github.com/johnthagen/min-sized
 ```rust
 use std::io::Read;
 struct Buf<const N: usize>([u8; N]);
-
 const fn len(strs: &[&str]) -> usize {
     let mut result = 0;
     let mut remaining = strs;
@@ -51,7 +50,6 @@ const fn len(strs: &[&str]) -> usize {
     }
     result
 }
-
 const fn concat<const N: usize>(strs: &[&str]) -> Buf<N> {
     let mut buffer = [0; N];
     let mut position_in_buffer: usize = 0;
@@ -68,7 +66,6 @@ const fn concat<const N: usize>(strs: &[&str]) -> Buf<N> {
     }
     Buf(buffer)
 }
-
 macro_rules! my_concat {
     ($($x: expr),+ $(,)?) => {{
         const STRS: &[&str] = &[$($x), +];

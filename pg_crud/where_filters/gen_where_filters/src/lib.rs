@@ -24,7 +24,6 @@ use token_patterns::{
     CoreDefaultDefaultDefault, PgCrudCommonDefaultOptionSomeVecOneEl,
     PgCrudCommonDefaultOptionSomeVecOneElCall,
 };
-
 #[proc_macro]
 pub fn gen_where_filters(input_ts: Ts) -> Ts {
     #[derive(Clone)]

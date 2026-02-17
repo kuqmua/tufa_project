@@ -3,13 +3,11 @@ use server_port_common::{
     SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE,
     SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE, SERVER_PORT_MAX_VALUE, SERVER_PORT_MIN_VALUE,
 };
+pub use server_port_try_from_u16::server_port_try_from_u16;
 use std::{
     error::Error,
     fmt::{Display, Formatter, Result as FmtResult},
 };
-
-pub use server_port_try_from_u16::server_port_try_from_u16;
-
 #[derive(Debug, Clone, Copy, Serialize)]
 pub struct ServerPort(u16);
 impl Display for ServerPort {
