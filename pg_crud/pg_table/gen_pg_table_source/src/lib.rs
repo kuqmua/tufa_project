@@ -4938,7 +4938,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             primary_key_field_type_read_only_ids_into_read_el_80a93892_primary_key_field_ident_ts,
             primary_key_field_type_read_only_ids_into_read_el_adf2b4c4_primary_key_field_ident_ts,
             primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_ts,
-            primary_key_field_type_read_only_is_into_read_read_only_ids_current_el_primary_key_field_ident_ts,
+            primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3,
             primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_ts,
         ) = {
             let gen_read_only_ids_into_read_ts = |content_ts: &dyn ToTokens| {
@@ -4957,7 +4957,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &quote! {read_only_ids_from_try_create_one.#primary_key_field_ident},
                 ),
                 gen_read_only_ids_into_read_ts(
-                    &quote! {read_only_ids_current_element.#primary_key_field_ident},
+                    &quote! {read_only_ids_element_937c5af3.#primary_key_field_ident},
                 ),
                 gen_read_only_ids_into_read_ts(
                     &quote! {read_only_ids_returned_from_create_one.#primary_key_field_ident},
@@ -4967,7 +4967,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let primary_key_field_type_as_pg_type_update_as_pg_type_primary_key_read_only_ids_into_update_ts = {
             let method_call_ts = gen_primary_key_field_type_as_pg_type_primary_key_method_call_ts(
                 &ReadOnlyIdsIntoUpdateSc,
-                &quote! {read_only_ids_current_element.#primary_key_field_ident},
+                &quote! {read_only_ids_element_937c5af3.#primary_key_field_ident},
             );
             quote! {
                 <
@@ -5229,7 +5229,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     };
                 }
             });
-        let gen_read_only_ids_current_elements_ts = {
+        let gen_read_only_ids_elements_ts_fe29ff70 = {
             let ident_read_fields_initialization_without_primary_key_ts =
                 gen_fields_named_without_primary_key_with_comma_ts(
                     &|syn_field_wrapper: &SynFieldWrapper| {
@@ -5247,7 +5247,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     },
                 );
             quote! {
-                async fn gen_read_only_ids_current_elements(
+                async fn gen_read_only_ids_elements_8a1ef027(
                     url: &str,
                     table_9c259e1c: &str,
                     select_default_all_with_max_page_size: pg_crud::NotEmptyUniqueVec<#ident_select_ucc>,
@@ -5526,19 +5526,19 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 quote! {
                     let read_only_ids_from_try_create_one = gen_read_only_ids_from_try_create_one_default(
                         &url_cloned,
-                        &current_table
+                        &table_7e35b1ce
                     ).await;
                     #content_ts
                     let _: #primary_key_field_type_as_pg_type_read_ts = gen_try_delete_one_handle(
                         &url_cloned,
                         #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_ts,
-                        &current_table
+                        &table_7e35b1ce
                     ).await.expect("93b4bf61");
                     gen_check_no_rows_returned_from_ident_try_read_one_handle_primary_key(
                         &url_cloned,
                         #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_ts,
                         select_default_all_with_max_page_size_cloned,
-                        &current_table,
+                        &table_7e35b1ce,
                     ).await;
                 }
             };
@@ -5568,7 +5568,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     )
                                 ),
                                 select_default_all_with_max_page_size_cloned.clone(),
-                                &current_table
+                                &table_7e35b1ce
                             ).await
                             .expect("e661c49b")
                             .is_empty(),
@@ -5580,7 +5580,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     for el_30614c66 in [1,2] {
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
-                        let current_table = table_test_read_many_by_non_existent_primary_keys.clone();
+                        let table_7e35b1ce = table_test_read_many_by_non_existent_primary_keys.clone();
                         acc_9189f86e.push(futures::FutureExt::boxed(async move {
                             #content_ts
                         }));
@@ -5599,7 +5599,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #ident_create_many_parameters_ucc {
                                 payload: #ident_create_many_payload_ucc(ident_vec_create.clone())
                             },
-                            &current_table
+                            &table_7e35b1ce
                         ).await.expect("d775179f");
                         assert_eq!(
                             gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create(
@@ -5628,7 +5628,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     )
                                 ),
                                 select_default_all_with_max_page_size_cloned.clone(),
-                                &current_table
+                                &table_7e35b1ce
                             ).await.expect("b8efe770"),
                             "error 3b2cf1f5-2c4e-4908-ba66-f4af84fe0893"
                         );
@@ -5645,7 +5645,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         )),
                                     },
                                 },
-                                &current_table
+                                &table_7e35b1ce
                             )
                             .await
                             .expect("d5c23a9d")
@@ -5687,7 +5687,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     )
                                 ),
                                 select_default_all_with_max_page_size_cloned.clone(),
-                                &current_table
+                                &table_7e35b1ce
                             ).await
                             .expect("1f079962")
                             .is_empty(),
@@ -5699,7 +5699,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     for el_a636d084 in [1,2] {
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
-                        let current_table = table_test_read_many_by_equal_to_created_primary_keys.clone();
+                        let table_7e35b1ce = table_test_read_many_by_equal_to_created_primary_keys.clone();
                         let ident_create_default_cloned = ident_create_default.clone();
                         acc_9189f86e.push(futures::FutureExt::boxed(async move {
                             #content_ts
@@ -5727,7 +5727,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 &url_cloned,
                                 #ident_where_many_ucc::try_new(#ident_where_many_try_new_parameters_content_ts).expect("83c2d430"),
                                 #select_default_all_with_max_page_size_cloned_clone_ts,
-                                &current_table
+                                &table_7e35b1ce
                             ).await.expect("c3e316c0"),
                             "ee8d232d"
                         );
@@ -5769,7 +5769,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let content_ts = gen_content_ts(element);
                             quote! {
                                 for #ElementSc in #method_call_ts {
-                                    let current_table = #table_test_name_field_ident_ts.clone();
+                                    let table_7e35b1ce = #table_test_name_field_ident_ts.clone();
                                     let url_cloned = url.clone();
                                     let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
                                     acc_9189f86e.push(futures::FutureExt::boxed(async move {
@@ -5779,7 +5779,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         let read_only_ids_returned_from_create_one = gen_read_only_ids_from_try_create_one(
                                             &url_cloned,
                                             ident_create.clone(),
-                                            &current_table
+                                            &table_7e35b1ce
                                         ).await;
                                         #content_ts
                                         let read_only_ids_from_try_delete_many = itertools::Itertools::sorted(
@@ -5811,7 +5811,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                         )),
                                                     },
                                                 },
-                                                &current_table
+                                                &table_7e35b1ce
                                             )
                                             .await
                                             .expect("338bcf89")
@@ -5843,7 +5843,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                     )
                                                 ),
                                                 #select_default_all_with_max_page_size_cloned_clone_ts,
-                                                &current_table
+                                                &table_7e35b1ce
                                             ).await
                                             .expect("1817b67a")
                                             .is_empty(),
@@ -6255,7 +6255,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                                     logical_operator: pg_crud::LogicalOperator::Or,
                                                                     value: #primary_key_field_type_table_type_declaration_ts::new(
                                                                         #primary_key_field_type_as_pg_type_ts into_inner(
-                                                                            #primary_key_field_type_read_only_is_into_read_read_only_ids_current_el_primary_key_field_ident_ts
+                                                                            #primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3
                                                                         )
                                                                     ),
                                                                 }
@@ -6322,7 +6322,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 quote! {
                                                     <#field_type_0490079a as pg_crud::PgTypeTestCases>::previous_read_merged_with_option_update_into_read(
                                                         <#field_type_0490079a as pg_crud::PgTypeTestCases>::read_only_ids_to_option_value_read_default_option_some_vec_one_el(
-                                                            &read_only_ids_current_element.#field_ident_b9ec9008.clone().expect("96213542")
+                                                            &read_only_ids_element_937c5af3.#field_ident_b9ec9008.clone().expect("96213542")
                                                         ).expect("bf0d6f55").#ValueSc,
                                                         Some(#UpdateSc.clone())
                                                     )
@@ -6340,7 +6340,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             );
                         let expected_read_many_ts =
                             if is_fields_without_primary_key_len_greater_than_one {
-                                let value_initialization_ts = gen_import_path_value_initialization_ts(&primary_key_field_type_read_only_is_into_read_read_only_ids_current_el_primary_key_field_ident_ts);
+                                let value_initialization_ts = gen_import_path_value_initialization_ts(&primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3);
                                 quote! {
                                     previous_read.into_iter().map(|el_a6bc6b2f| #ident_read_ucc {
                                         #primary_key_field_ident: Some(#value_initialization_ts),
@@ -6348,7 +6348,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     }).collect::<Vec<#ident_read_ucc>>()
                                 }
                             } else {
-                                let value_initialization_ts = gen_import_path_value_initialization_ts(&primary_key_field_type_read_only_is_into_read_read_only_ids_current_el_primary_key_field_ident_ts);
+                                let value_initialization_ts = gen_import_path_value_initialization_ts(&primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3);
                                 quote! {
                                     vec![
                                         #ident_read_ucc {
@@ -6359,7 +6359,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 }
                             };
                         quote! {
-                            for (index_7f181188, read_only_ids_current_element) in gen_read_only_ids_current_elements(
+                            for (index_7f181188, read_only_ids_element_937c5af3) in gen_read_only_ids_elements_8a1ef027(
                                 &url,
                                 &table_update_many,
                                 #select_default_all_with_max_page_size_clone_ts,
@@ -6378,7 +6378,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         let mut index_e0c50b3e: usize = 0;
                                         let mut option_test_case = None;
                                         for el_76abae3a in <#field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimal_vec_read_inner(
-                                            &read_only_ids_current_element.#field_ident.clone().expect("af7d979d")
+                                            &read_only_ids_element_937c5af3.#field_ident.clone().expect("af7d979d")
                                         ) {
                                             let mut should_break = false;
                                             for el_72f5ad12 in el_76abae3a {
@@ -6398,7 +6398,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     assert_eq!(
                                         vec![
                                             #ident_read_only_ids_ucc {
-                                                #primary_key_field_ident: read_only_ids_current_element.#primary_key_field_ident,
+                                                #primary_key_field_ident: read_only_ids_element_937c5af3.#primary_key_field_ident,
                                                 #ident_read_only_ids_upper_fields_initialization_without_primary_key_ts
                                             }
                                         ],
@@ -6433,7 +6433,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                                         logical_operator: pg_crud::LogicalOperator::Or,
                                                                         #ValueSc: #primary_key_field_type_table_type_declaration_ts::new(
                                                                             <#primary_key_field_type as pg_crud::PgType>::into_inner(
-                                                                                #primary_key_field_type_read_only_is_into_read_read_only_ids_current_el_primary_key_field_ident_ts
+                                                                                #primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3
                                                                             )
                                                                         ),
                                                                     }
@@ -6472,7 +6472,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             quote! {
                                 let previous_read = gen_ident_try_read_one_handle_primary_key(
                                     &url_cloned,
-                                    #primary_key_field_type_read_only_is_into_read_read_only_ids_current_el_primary_key_field_ident_ts,
+                                    #primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3,
                                     #select_default_all_with_max_page_size_cloned_clone_ts,
                                     &table_update_one_cloned
                                 )
@@ -6528,7 +6528,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                         as
                                                         pg_crud::PgTypeTestCases
                                                     >::read_only_ids_to_option_value_read_default_option_some_vec_one_el(
-                                                        &read_only_ids_current_element.#field_ident_8c7d4975.clone().expect("4f19d0d2")
+                                                        &read_only_ids_element_937c5af3.#field_ident_8c7d4975.clone().expect("4f19d0d2")
                                                     ).expect("c7685b19").#ValueSc,
                                                     Some(#UpdateSc.clone())
                                                 )
@@ -6543,9 +6543,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     }
                                 },
                             );
-                        let value_initialization_ts = gen_import_path_value_initialization_ts(&primary_key_field_type_read_only_is_into_read_read_only_ids_current_el_primary_key_field_ident_ts);
+                        let value_initialization_ts = gen_import_path_value_initialization_ts(&primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3);
                         quote! {
-                            for (index_26824592, read_only_ids_current_element) in gen_read_only_ids_current_elements(
+                            for (index_26824592, read_only_ids_element_937c5af3) in gen_read_only_ids_elements_8a1ef027(
                                 &url,
                                 &table_update_one,
                                 #select_default_all_with_max_page_size_clone_ts,
@@ -6564,7 +6564,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         let mut index_e0d2f9db: usize = 0;
                                         let mut option_test_case = None;
                                         for el_3a9a65ee in <#field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimal_vec_read_inner(
-                                            &read_only_ids_current_element.#field_ident.clone().expect("c4d98a71")
+                                            &read_only_ids_element_937c5af3.#field_ident.clone().expect("c4d98a71")
                                         ) {
                                             let mut should_break = false;
                                             for el_bb734c11 in el_3a9a65ee {
@@ -6583,7 +6583,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     });
                                     assert_eq!(
                                         #ident_read_only_ids_ucc {
-                                            #primary_key_field_ident: read_only_ids_current_element.#primary_key_field_ident,
+                                            #primary_key_field_ident: read_only_ids_element_937c5af3.#primary_key_field_ident,
                                             #ident_read_only_ids_upper_fields_initialization_without_primary_key_ts
                                         },
                                         #ident::try_update_one_handle(
@@ -6605,7 +6605,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         },
                                         gen_ident_try_read_one_handle_primary_key(
                                             &url_cloned,
-                                            #primary_key_field_type_read_only_is_into_read_read_only_ids_current_el_primary_key_field_ident_ts,
+                                            #primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3,
                                             select_default_all_with_max_page_size_cloned,
                                             &table_update_one_cloned
                                         )
@@ -6647,7 +6647,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     })),
                                 },
                             },
-                            &current_table
+                            &table_7e35b1ce
                         )
                         .await
                         .expect("0d5dec47")
@@ -6659,7 +6659,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     for el_39819198 in [1,2] {
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
-                        let current_table = table_test_read_many_by_equal_to_created_primary_keys.clone();
+                        let table_7e35b1ce = table_test_read_many_by_equal_to_created_primary_keys.clone();
                         acc_9189f86e.push(futures::FutureExt::boxed(async move {
                             #content_ts
                         }));
@@ -6681,7 +6681,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     std::iter::repeat_n(ident_create_default_cloned, el_56409d32).collect()
                                 )
                             },
-                            &current_table
+                            &table_7e35b1ce
                         ).await.expect("b8695890");
                         let read_only_ids_from_try_delete_many = #ident::try_delete_many_handle(
                             &url_cloned,
@@ -6703,7 +6703,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     })),
                                 },
                             },
-                            &current_table
+                            &table_7e35b1ce
                         ).await.expect("b80b91b8");
                         assert_eq!(
                             read_only_ids_from_try_delete_many,
@@ -6733,7 +6733,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     )
                                 ),
                                 select_default_all_with_max_page_size_cloned.clone(),
-                                &current_table
+                                &table_7e35b1ce
                             ).await
                             .expect("bcb79917")
                             .is_empty(),
@@ -6746,7 +6746,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
                         //todo is table name correct?
-                        let current_table = table_test_read_many_by_equal_to_created_primary_keys.clone();
+                        let table_7e35b1ce = table_test_read_many_by_equal_to_created_primary_keys.clone();
                         let ident_create_default_cloned = ident_create_default.clone();
                         acc_9189f86e.push(futures::FutureExt::boxed(async move {
                             #content_ts
@@ -7007,7 +7007,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         });
                         acc_1debe8fb
                     }
-                    #gen_read_only_ids_current_elements_ts
+                    #gen_read_only_ids_elements_ts_fe29ff70
                     tracing_subscriber::fmt::init();
                     tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("38823c21").block_on(async {
                         //todo maybe refactor

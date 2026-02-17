@@ -1217,10 +1217,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             };
             value.parse::<Ts2>().expect("2555843f")
         };
-        let gen_current_ident_origin_non_wrapping = |pg_type_pattern_94bed782: &PgTypePattern, is_nullable_28c189b3: &IsNullable| SelfOriginUcc::from_tokens(&gen_ident_ts(pg_type, is_nullable_28c189b3, pg_type_pattern_94bed782));
+        let gen_ident_origin_non_wrapping_8ad5380a = |pg_type_pattern_94bed782: &PgTypePattern, is_nullable_28c189b3: &IsNullable| SelfOriginUcc::from_tokens(&gen_ident_ts(pg_type, is_nullable_28c189b3, pg_type_pattern_94bed782));
         let field_type_handle: &dyn ToTokens = {
             let gen_current_ident_origin = |pg_type_pattern_7790d04a: &PgTypePattern, is_nullable_86d888a6: &IsNullable| {
-                let value = gen_current_ident_origin_non_wrapping(pg_type_pattern_7790d04a, is_nullable_86d888a6);
+                let value = gen_ident_origin_non_wrapping_8ad5380a(pg_type_pattern_7790d04a, is_nullable_86d888a6);
                 match &is_nullable {
                     IsNullable::False => gen_std_vec_vec_tokens_declaration_ts(&value),
                     IsNullable::True => gen_std_option_option_tokens_declaration_ts(&value),
@@ -3354,7 +3354,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         IsNullable::False => (&PgTypePattern::Standart, dim1_is_nullable),
                                         IsNullable::True => (pg_type_pattern, &IsNullable::False),
                                     };
-                                    gen_current_ident_origin_non_wrapping(pg_type_pattern_ce191343, is_nullable_b772ed8a)
+                                    gen_ident_origin_non_wrapping_8ad5380a(pg_type_pattern_ce191343, is_nullable_b772ed8a)
                                 }),
                             }
                         };
@@ -3646,7 +3646,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     IsNullable::False => (&PgTypePattern::Standart, dim1_is_nullable),
                                     IsNullable::True => (pg_type_pattern, &IsNullable::False),
                                 };
-                                gen_current_ident_origin_non_wrapping(pg_type_pattern_fb8e939d, is_nullable_104968f1)
+                                gen_ident_origin_non_wrapping_8ad5380a(pg_type_pattern_fb8e939d, is_nullable_104968f1)
                             }),
                         }
                     };
