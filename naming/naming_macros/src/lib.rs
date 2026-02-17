@@ -11,7 +11,7 @@ use syn::{Data, DeriveInput, Fields, Ident, Type, parse};
 use token_patterns::StdStringString;
 const REGEX_VALUE: &str = "^[a-zA-Z]+$";
 #[proc_macro]
-pub fn gen_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
+pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
     panic_location();
     let implementations_ts = from_str::<Vec<Vec<String>>>(&input_ts.to_string())
         .expect("90e5793b")
@@ -108,7 +108,7 @@ pub fn gen_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
     generated.into()
 }
 #[proc_macro]
-pub fn gen_self_upper_camel_and_sc_str_and_ts(input_ts: Ts) -> Ts {
+pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
     panic_location();
     let implementations_ts = from_str::<Vec<Vec<String>>>(&input_ts.to_string()).expect("9d6a20af").into_iter().map(|el_a5ccbaa7| {
         {

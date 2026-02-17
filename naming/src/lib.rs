@@ -22,7 +22,7 @@ pub const STD_STRINGIFIED: &str = "std";
 pub const SQLX_TYPES_UUID_STRINGIFIED: &str = "sqlx::types::Uuid";
 pub const FIELD_IDENT_IS_NONE: &str = "field.ident is None";
 pub const SYN_TYPE_PATH: &str = "syn::Type::Path";
-naming_macros::gen_upper_camel_and_sc_str_and_ts!([
+naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["primary", "key"],
     ["serde"],
     ["with", "serde"],
