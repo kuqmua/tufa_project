@@ -5249,11 +5249,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             quote! {
                 async fn gen_read_only_ids_current_elements(
                     url: &str,
-                    current_table: &str,
+                    table_9c259e1c: &str,
                     select_default_all_with_max_page_size: pg_crud::NotEmptyUniqueVec<#ident_select_ucc>,
                     read_only_ids_to_two_dimal_vec_read_inner_acc: Vec<#ident_create_ucc>
                 ) -> Vec<#ident_read_only_ids_ucc> {
-                    let read_only_ids_current_elements = futures::StreamExt::collect::<Vec<Vec<#ident_read_only_ids_ucc>>>(
+                    let read_only_ids_elements_efeed554 = futures::StreamExt::collect::<Vec<Vec<#ident_read_only_ids_ucc>>>(
                         futures::StreamExt::buffer_unordered(
                             futures::stream::iter(
                                 read_only_ids_to_two_dimal_vec_read_inner_acc
@@ -5264,7 +5264,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     #ident_create_many_parameters_ucc {
                                         payload: #ident_create_many_payload_ucc(el_8e425cb1)
                                     },
-                                    current_table
+                                    table_9c259e1c
                                 ).await.expect("38a24e7a") }))
                             ),
                             5
@@ -5276,7 +5276,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     .collect::<Vec<#ident_read_only_ids_ucc>>();
                     assert_eq!(
                         itertools::Itertools::sorted_by(
-                            read_only_ids_current_elements.iter().map(|el_f108da5a| {
+                            read_only_ids_elements_efeed554.iter().map(|el_f108da5a| {
                                 #ident_read_ucc {
                                     #primary_key_field_ident: <
                                         #primary_key_field_type as pg_crud::PgTypeTestCases
@@ -5298,7 +5298,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     Some(
                                         gen_pg_type_where_try_new_primary_key(
                                             pg_crud::LogicalOperator::Or,
-                                            read_only_ids_current_elements.iter().map(|el_43ab7fb5| #primary_key_field_type_where_ts::Equal(
+                                            read_only_ids_elements_efeed554.iter().map(|el_43ab7fb5| #primary_key_field_type_where_ts::Equal(
                                                 pg_crud::PgTypeWhereEqual {
                                                     logical_operator: pg_crud::LogicalOperator::Or,
                                                     #ValueSc: #primary_key_field_type_table_type_declaration_ts::new(
@@ -5312,7 +5312,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     )
                                 ),
                                 #select_default_all_with_max_page_size_clone_ts,
-                                current_table
+                                table_9c259e1c
                             )
                             .await
                             .expect("097d5e7d")
@@ -5325,7 +5325,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         .collect::<Vec<#ident_read_ucc>>(),
                         "50198a7f"
                     );
-                    read_only_ids_current_elements
+                    read_only_ids_elements_efeed554
                 }
             }
         };
