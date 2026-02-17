@@ -13,7 +13,7 @@ pub fn gen_getter_traits_for_struct_fields(input: Ts) -> Ts {
         Data::Struct(value) => value,
         Data::Enum(_) | Data::Union(_) => panic!("15cd72a2"),
     };
-    let generated_traits_implementations = datastruct.fields.into_iter().map(|field| {
+    let generated_traits_impls_ts = datastruct.fields.into_iter().map(|field| {
         let (field_ident, ucc_field_ident) = {
             let field_ident = field.ident.as_ref().expect("e5c23c45");
             (field_ident, ToTokensToUccStr::case(&field_ident))
@@ -38,9 +38,7 @@ pub fn gen_getter_traits_for_struct_fields(input: Ts) -> Ts {
             }
         }
     });
-    let generated = quote! {
-        #(#generated_traits_implementations)*
-    };
+    let generated = quote! {#(#generated_traits_impls_ts)*};
     generated.into()
 }
 #[proc_macro_derive(GenGetterTrait)]

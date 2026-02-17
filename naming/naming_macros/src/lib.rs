@@ -13,7 +13,7 @@ const REGEX_VALUE: &str = "^[a-zA-Z]+$";
 #[proc_macro]
 pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
     panic_location();
-    let implementations_ts = from_str::<Vec<Vec<String>>>(&input_ts.to_string())
+    let content_ts = from_str::<Vec<Vec<String>>>(&input_ts.to_string())
         .expect("90e5793b")
         .into_iter()
         .map(|el_020a8657| {
@@ -42,10 +42,6 @@ pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                     acc_7a8bd950
                 },
             );
-            let phrase_part_ucc_dq_ts = dq_ts(&phrase_part_ucc_str);
-            let phrase_part_sc_dq_ts = dq_ts(&phrase_part_sc_str);
-            let phrase_part_ucc_ts = phrase_part_ucc_str.parse::<Ts2>().expect("7cf3ffc0");
-            let phrase_part_sc_ts = phrase_part_sc_str.parse::<Ts2>().expect("114a573a");
             let phrase_part_ucc_ucc_ts = {
                 let value = format!("{phrase_part_ucc_str}Ucc");
                 value.parse::<Ts2>().expect("4ab6a54c")
@@ -54,59 +50,73 @@ pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 let value = format!("{phrase_part_ucc_str}Sc");
                 value.parse::<Ts2>().expect("0cc47b2e")
             };
-            let gen_struct_declaration = |struct_name_ts: &dyn ToTokens| {
-                quote! {
-                    #[derive(Debug)]
-                    pub struct #struct_name_ts;
-                }
+            let (ucc_struct_declaration_ts, sc_struct_declaration_ts) = {
+                let gen_struct_declaration = |struct_name_ts: &dyn ToTokens| {
+                    quote! {
+                        #[derive(Debug)]
+                        pub struct #struct_name_ts;
+                    }
+                };
+                (
+                    gen_struct_declaration(&phrase_part_ucc_ucc_ts),
+                    gen_struct_declaration(&phrase_part_sc_ucc_ts),
+                )
             };
-            let ucc_struct_declaration_ts = gen_struct_declaration(&phrase_part_ucc_ucc_ts);
-            let sc_struct_declaration_ts = gen_struct_declaration(&phrase_part_sc_ucc_ts);
-            let gen_display_implementation_ts =
-                |struct_name_ts: &dyn ToTokens, write_content_ts: &dyn ToTokens| {
-                    quote! {
-                        impl std::fmt::Display for #struct_name_ts {
-                            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                write!(f, #write_content_ts)
+            let (impl_display_ucc_ts, impl_display_sc_ts) = {
+                let gen_impl_display_ts =
+                    |struct_name_ts: &dyn ToTokens, write_content_ts: &dyn ToTokens| {
+                        quote! {
+                            impl std::fmt::Display for #struct_name_ts {
+                                fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                                    write!(f, #write_content_ts)
+                                }
                             }
                         }
-                    }
-                };
-            let ucc_display_implementation_ts =
-                gen_display_implementation_ts(&phrase_part_ucc_ucc_ts, &phrase_part_ucc_dq_ts);
-            let sc_display_implementation_ts =
-                gen_display_implementation_ts(&phrase_part_sc_ucc_ts, &phrase_part_sc_dq_ts);
-            let gen_to_tokens_implementation_ts =
-                |struct_name_ts: &dyn ToTokens, quote_content_ts: &dyn ToTokens| {
-                    quote! {
-                        impl ToTokens for #struct_name_ts {
-                            fn to_tokens(&self, tokens: &mut Ts2) {
-                                quote!{#quote_content_ts}.to_tokens(tokens);
+                    };
+                (
+                    gen_impl_display_ts(&phrase_part_ucc_ucc_ts, &dq_ts(&phrase_part_ucc_str)),
+                    gen_impl_display_ts(&phrase_part_sc_ucc_ts, &dq_ts(&phrase_part_sc_str)),
+                )
+            };
+            let (impl_to_tokens_ucc_ts, impl_to_tokens_snake_ts) = {
+                let gen_impl_to_tokens_ts =
+                    |struct_name_ts: &dyn ToTokens, quote_content_ts: &dyn ToTokens| {
+                        quote! {
+                            impl ToTokens for #struct_name_ts {
+                                fn to_tokens(&self, tokens: &mut Ts2) {
+                                    quote!{#quote_content_ts}.to_tokens(tokens);
+                                }
                             }
                         }
-                    }
-                };
-            let ucc_to_tokens_implementation_ts =
-                gen_to_tokens_implementation_ts(&phrase_part_ucc_ucc_ts, &phrase_part_ucc_ts);
-            let snake_to_tokens_implementation_ts =
-                gen_to_tokens_implementation_ts(&phrase_part_sc_ucc_ts, &phrase_part_sc_ts);
+                    };
+                (
+                    gen_impl_to_tokens_ts(
+                        &phrase_part_ucc_ucc_ts,
+                        &phrase_part_ucc_str.parse::<Ts2>().expect("7cf3ffc0"),
+                    ),
+                    gen_impl_to_tokens_ts(
+                        &phrase_part_sc_ucc_ts,
+                        &phrase_part_sc_str.parse::<Ts2>().expect("114a573a"),
+                    ),
+                )
+            };
             quote! {
                 #ucc_struct_declaration_ts
-                #ucc_display_implementation_ts
-                #ucc_to_tokens_implementation_ts
+                #impl_display_ucc_ts
+                #impl_to_tokens_ucc_ts
                 #sc_struct_declaration_ts
-                #sc_display_implementation_ts
-                #snake_to_tokens_implementation_ts
+                #impl_display_sc_ts
+                #impl_to_tokens_snake_ts
             }
         });
-    let generated = quote! {#(#implementations_ts)*};
+    let generated = quote! {#(#content_ts)*};
     // println!("{generated}");
     generated.into()
 }
 #[proc_macro]
 pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
     panic_location();
-    let implementations_ts = from_str::<Vec<Vec<String>>>(&input_ts.to_string()).expect("9d6a20af").into_iter().map(|el_a5ccbaa7| {
+    let content_ts = from_str::<Vec<Vec<String>>>(&input_ts.to_string()).expect("9d6a20af").into_iter().map(|el_a5ccbaa7| {
         {
             let regex = Regex::new(REGEX_VALUE).expect("cba1b5fb");
             for el_6d4f29dd in &el_a5ccbaa7 {
@@ -254,7 +264,7 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
             #pub_struct_sc_ts
         }
     });
-    let generated = quote! {#(#implementations_ts)*};
+    let generated = quote! {#(#content_ts)*};
     // println!("{generated}");
     generated.into()
 }

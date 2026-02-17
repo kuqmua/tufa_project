@@ -55,7 +55,7 @@ fn main() {
                             // ])
                             .allow_origin(["http://127.0.0.1".parse().expect("2a0b7c30")]),
                     )
-                    //todo partialy move to gen postresql crud implementation (except git_info route)
+                    //todo partialy move to gen postresql crud impl (except git_info route)
                     // .merge(utoipa_swagger_ui::SwaggerUi::new(constants::SLASH_SWAGGER_UI).url("/api-docs/openapi.json", {
                     //         // error: needless use of `for_each`
                     //         // #[derive(utoipa::OpenApi)]
