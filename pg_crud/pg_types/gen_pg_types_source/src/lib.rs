@@ -15,15 +15,14 @@ use naming::{
     IncludedEndCannotBeMaxUcc, IncludedStartGreaterThanExcludedEndUcc,
     IncludedStartGreaterThanIncludedEndUcc, IncludedUcc, IncrementSc,
     InvalidHourOrMinuteOrSecondOrMicrosecondUcc, MaxSc, MicroSc, MicrosecondSc, MicrosecondsSc,
-    MinSc, MinSc, MinuteSc, MonthsSc, NanosecondPrecisionIsNotSupportedUcc, NanosecondSc,
-    NearZeroSc, NegativeLessTypicalSc, NegativeMoreTypicalSc, NewSc, OptionUpdateSc,
-    OptionVecCreateSc, PgTypePrimaryKeyUcc, PgTypeUcc, PositiveLessTypicalSc,
-    PositiveMoreTypicalSc, QuerySc, ReadIntoTableTypeDeclarationSc, ReadOnlyIdsIntoReadSc,
-    ReadOnlyIdsIntoTableTypeDeclarationSc, ReadOnlyIdsIntoUpdateSc,
-    ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsSc, ReadOnlyIdsToTwoDimalVecReadInnerSc,
-    ReadOnlyIdsUcc, ReadSc, ReadUcc, SecSc, SecondSc, SelfSc, SelfUcc, StartSc, StartUcc,
-    TableTypeDeclarationSc, TableTypeDeclarationUcc, TimeSc, TimeUcc, ToErrStringSc,
-    TryNewForDeserializeSc, TryNewSc, UnboundedUcc, UpdateUcc, ValueSc, VecOfUcc,
+    MinSc, MinuteSc, MonthsSc, NanosecondPrecisionIsNotSupportedUcc, NanosecondSc, NearZeroSc,
+    NegativeLessTypicalSc, NegativeMoreTypicalSc, NewSc, OptionUpdateSc, OptionVecCreateSc,
+    PgTypePrimaryKeyUcc, PgTypeUcc, PositiveLessTypicalSc, PositiveMoreTypicalSc, QuerySc,
+    ReadIntoTableTypeDeclarationSc, ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeDeclarationSc,
+    ReadOnlyIdsIntoUpdateSc, ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsSc,
+    ReadOnlyIdsToTwoDimalVecReadInnerSc, ReadOnlyIdsUcc, ReadSc, ReadUcc, SecSc, SecondSc, SelfSc,
+    SelfUcc, StartSc, StartUcc, TableTypeDeclarationSc, TableTypeDeclarationUcc, TimeSc, TimeUcc,
+    ToErrStringSc, TryNewForDeserializeSc, TryNewSc, UnboundedUcc, UpdateUcc, ValueSc, VecOfUcc,
     parameter::{
         SelfCreateUcc, SelfNotNullUcc, SelfOriginTryNewErrorUcc,
         SelfOriginTryNewForDeserializeErrorUcc, SelfOriginUcc, SelfReadInnerUcc,
@@ -5429,8 +5428,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 let gen_range_read_only_ids_to_two_dimal_vec_read_inner_ts =
                     |min_ts: &dyn ToTokens, negative_less_typical_ts: &dyn ToTokens, negative_more_typical_ts: &dyn ToTokens, near_zero_ts: &dyn ToTokens, positive_less_typical_ts: &dyn ToTokens, positive_more_typical_ts: &dyn ToTokens, max_ts: &dyn ToTokens| {
                         enum Bnd<'lifetime> {
-                            Excl(&'dyn ToTokens),
-                            Incl(&'dyn ToTokens),
+                            Excl(&'lifetime dyn ToTokens),
+                            Incl(&'lifetime dyn ToTokens),
                             Unb,
                         }
                         let content_ts_08778f0f = [
