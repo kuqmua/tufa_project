@@ -2589,15 +2589,20 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             };
             let ident_operation_error_ts = {
-                let variants_ts = type_variants_from_request_response_syn_variants
-                    .iter()
-                    .map(gen_error_occurence_variant_ts);
+                let content_ts_685e0be8 = StructOrEnumDeriveTokenStreamBuilder::new()
+                    .make_pub()
+                    .derive_debug()
+                    .derive_thiserror_error()
+                    .derive_error_occurence_lib_error_occurence()
+                    .build_enum(&ident_operation_error_ucc, &Ts2::new(), &{
+                        let variants_ts = type_variants_from_request_response_syn_variants
+                            .iter()
+                            .map(gen_error_occurence_variant_ts);
+                        quote! {{#(#variants_ts),*}}
+                    });
                 quote! {
                     #AllowClippyArbitrarySourceItemOrdering
-                    #DeriveDebugThisErrorErrorOccurence
-                    pub enum #ident_operation_error_ucc {
-                        #(#variants_ts),*
-                    }
+                    #content_ts_685e0be8
                 }
             };
             quote! {
