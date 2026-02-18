@@ -14,10 +14,12 @@ use naming::{
     ExcludedStartGreaterThanIncludedEndUcc, ExcludedUcc, GenPgTypesModSc, HourSc,
     IncludedEndCannotBeMaxUcc, IncludedStartGreaterThanExcludedEndUcc,
     IncludedStartGreaterThanIncludedEndUcc, IncludedUcc, IncrementSc,
-    InvalidHourOrMinuteOrSecondOrMicrosecondUcc, MicroSc, MicrosecondSc, MicrosecondsSc, MinSc,
-    MinuteSc, MonthsSc, NanosecondPrecisionIsNotSupportedUcc, NanosecondSc, NewSc, OptionUpdateSc,
-    OptionVecCreateSc, PgTypePrimaryKeyUcc, PgTypeUcc, QuerySc, ReadIntoTableTypeDeclarationSc,
-    ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeDeclarationSc, ReadOnlyIdsIntoUpdateSc,
+    InvalidHourOrMinuteOrSecondOrMicrosecondUcc, MaxSc, MicroSc, MicrosecondSc, MicrosecondsSc,
+    MinSc, MinSc, MinuteSc, MonthsSc, NanosecondPrecisionIsNotSupportedUcc, NanosecondSc,
+    NearZeroSc, NegativeLessTypicalSc, NegativeMoreTypicalSc, NewSc, OptionUpdateSc,
+    OptionVecCreateSc, PgTypePrimaryKeyUcc, PgTypeUcc, PositiveLessTypicalSc,
+    PositiveMoreTypicalSc, QuerySc, ReadIntoTableTypeDeclarationSc, ReadOnlyIdsIntoReadSc,
+    ReadOnlyIdsIntoTableTypeDeclarationSc, ReadOnlyIdsIntoUpdateSc,
     ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsSc, ReadOnlyIdsToTwoDimalVecReadInnerSc,
     ReadOnlyIdsUcc, ReadSc, ReadUcc, SecSc, SecondSc, SelfSc, SelfUcc, StartSc, StartUcc,
     TableTypeDeclarationSc, TableTypeDeclarationUcc, TimeSc, TimeUcc, ToErrStringSc,
@@ -5427,63 +5429,55 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 let gen_range_read_only_ids_to_two_dimal_vec_read_inner_ts =
                     |min_ts: &dyn ToTokens, negative_less_typical_ts: &dyn ToTokens, negative_more_typical_ts: &dyn ToTokens, near_zero_ts: &dyn ToTokens, positive_less_typical_ts: &dyn ToTokens, positive_more_typical_ts: &dyn ToTokens, max_ts: &dyn ToTokens| {
                         enum Bnd<'lifetime> {
-                            Excl(&'lifetime Ts2),
-                            Incl(&'lifetime Ts2),
+                            Excl(&'dyn ToTokens),
+                            Incl(&'dyn ToTokens),
                             Unb,
                         }
-                        //todo move it to naming?
-                        let min = quote!{min};
-                        let max = quote!{max};
-                        let near_zero = quote!{near_zero};
-                        let negative_less_typical = quote!{negative_less_typical};
-                        let negative_more_typical = quote!{negative_more_typical};
-                        let positive_less_typical = quote!{positive_less_typical};
-                        let positive_more_typical = quote!{positive_more_typical};
                         let content_ts_08778f0f = [
-                            (Bnd::Incl(&min),Bnd::Incl(&min)),
-                            (Bnd::Incl(&negative_less_typical),Bnd::Incl(&negative_more_typical)),
-                            (Bnd::Incl(&near_zero), Bnd::Incl(&near_zero)),
-                            (Bnd::Incl(&positive_less_typical), Bnd::Incl(&positive_more_typical)),
-                            (Bnd::Incl(&max), Bnd::Incl(&max)),
-                            (Bnd::Incl(&min), Bnd::Incl(&max)),
-                            (Bnd::Incl(&min), Bnd::Excl(&min)),
-                            (Bnd::Incl(&negative_less_typical), Bnd::Excl(&negative_more_typical)),
-                            (Bnd::Incl(&near_zero), Bnd::Excl(&near_zero)),
-                            (Bnd::Incl(&positive_less_typical), Bnd::Excl(&positive_more_typical)),
-                            (Bnd::Incl(&max), Bnd::Excl(&max)),
-                            (Bnd::Incl(&min), Bnd::Excl(&max)),
-                            (Bnd::Incl(&min), Bnd::Unb),
-                            (Bnd::Incl(&negative_less_typical), Bnd::Unb),
-                            (Bnd::Incl(&near_zero), Bnd::Unb),
-                            (Bnd::Incl(&positive_less_typical), Bnd::Unb),
-                            (Bnd::Incl(&max), Bnd::Unb),
-                            (Bnd::Excl(&min), Bnd::Incl(&min)),
-                            (Bnd::Excl(&negative_less_typical), Bnd::Incl(&negative_more_typical)),
-                            (Bnd::Excl(&near_zero), Bnd::Incl(&near_zero)),
-                            (Bnd::Excl(&positive_less_typical), Bnd::Incl(&positive_more_typical)),
-                            (Bnd::Excl(&max), Bnd::Incl(&max)),
-                            (Bnd::Excl(&min), Bnd::Incl(&max)),
-                            (Bnd::Excl(&min), Bnd::Excl(&min)),
-                            (Bnd::Excl(&negative_less_typical), Bnd::Excl(&negative_more_typical)),
-                            (Bnd::Excl(&near_zero), Bnd::Excl(&near_zero)),
-                            (Bnd::Excl(&positive_less_typical), Bnd::Excl(&positive_more_typical)),
-                            (Bnd::Excl(&max), Bnd::Excl(&max)),
-                            (Bnd::Excl(&min), Bnd::Excl(&max)),
-                            (Bnd::Excl(&min), Bnd::Unb),
-                            (Bnd::Excl(&negative_less_typical), Bnd::Unb),
-                            (Bnd::Excl(&near_zero), Bnd::Unb),
-                            (Bnd::Excl(&positive_less_typical), Bnd::Unb),
-                            (Bnd::Excl(&max), Bnd::Unb),
-                            (Bnd::Unb, Bnd::Incl(&min)),
-                            (Bnd::Unb, Bnd::Incl(&negative_more_typical)),
-                            (Bnd::Unb, Bnd::Incl(&near_zero)),
-                            (Bnd::Unb, Bnd::Incl(&positive_more_typical)),
-                            (Bnd::Unb, Bnd::Incl(&max)),
-                            (Bnd::Unb, Bnd::Excl(&min)),
-                            (Bnd::Unb, Bnd::Excl(&negative_more_typical)),
-                            (Bnd::Unb, Bnd::Excl(&near_zero)),
-                            (Bnd::Unb, Bnd::Excl(&positive_more_typical)),
-                            (Bnd::Unb, Bnd::Excl(&max)),
+                            (Bnd::Incl(&MinSc),Bnd::Incl(&MinSc)),
+                            (Bnd::Incl(&NegativeLessTypicalSc),Bnd::Incl(&NegativeMoreTypicalSc)),
+                            (Bnd::Incl(&NearZeroSc), Bnd::Incl(&NearZeroSc)),
+                            (Bnd::Incl(&PositiveLessTypicalSc), Bnd::Incl(&PositiveMoreTypicalSc)),
+                            (Bnd::Incl(&MaxSc), Bnd::Incl(&MaxSc)),
+                            (Bnd::Incl(&MinSc), Bnd::Incl(&MaxSc)),
+                            (Bnd::Incl(&MinSc), Bnd::Excl(&MinSc)),
+                            (Bnd::Incl(&NegativeLessTypicalSc), Bnd::Excl(&NegativeMoreTypicalSc)),
+                            (Bnd::Incl(&NearZeroSc), Bnd::Excl(&NearZeroSc)),
+                            (Bnd::Incl(&PositiveLessTypicalSc), Bnd::Excl(&PositiveMoreTypicalSc)),
+                            (Bnd::Incl(&MaxSc), Bnd::Excl(&MaxSc)),
+                            (Bnd::Incl(&MinSc), Bnd::Excl(&MaxSc)),
+                            (Bnd::Incl(&MinSc), Bnd::Unb),
+                            (Bnd::Incl(&NegativeLessTypicalSc), Bnd::Unb),
+                            (Bnd::Incl(&NearZeroSc), Bnd::Unb),
+                            (Bnd::Incl(&PositiveLessTypicalSc), Bnd::Unb),
+                            (Bnd::Incl(&MaxSc), Bnd::Unb),
+                            (Bnd::Excl(&MinSc), Bnd::Incl(&MinSc)),
+                            (Bnd::Excl(&NegativeLessTypicalSc), Bnd::Incl(&NegativeMoreTypicalSc)),
+                            (Bnd::Excl(&NearZeroSc), Bnd::Incl(&NearZeroSc)),
+                            (Bnd::Excl(&PositiveLessTypicalSc), Bnd::Incl(&PositiveMoreTypicalSc)),
+                            (Bnd::Excl(&MaxSc), Bnd::Incl(&MaxSc)),
+                            (Bnd::Excl(&MinSc), Bnd::Incl(&MaxSc)),
+                            (Bnd::Excl(&MinSc), Bnd::Excl(&MinSc)),
+                            (Bnd::Excl(&NegativeLessTypicalSc), Bnd::Excl(&NegativeMoreTypicalSc)),
+                            (Bnd::Excl(&NearZeroSc), Bnd::Excl(&NearZeroSc)),
+                            (Bnd::Excl(&PositiveLessTypicalSc), Bnd::Excl(&PositiveMoreTypicalSc)),
+                            (Bnd::Excl(&MaxSc), Bnd::Excl(&MaxSc)),
+                            (Bnd::Excl(&MinSc), Bnd::Excl(&MaxSc)),
+                            (Bnd::Excl(&MinSc), Bnd::Unb),
+                            (Bnd::Excl(&NegativeLessTypicalSc), Bnd::Unb),
+                            (Bnd::Excl(&NearZeroSc), Bnd::Unb),
+                            (Bnd::Excl(&PositiveLessTypicalSc), Bnd::Unb),
+                            (Bnd::Excl(&MaxSc), Bnd::Unb),
+                            (Bnd::Unb, Bnd::Incl(&MinSc)),
+                            (Bnd::Unb, Bnd::Incl(&NegativeMoreTypicalSc)),
+                            (Bnd::Unb, Bnd::Incl(&NearZeroSc)),
+                            (Bnd::Unb, Bnd::Incl(&PositiveMoreTypicalSc)),
+                            (Bnd::Unb, Bnd::Incl(&MaxSc)),
+                            (Bnd::Unb, Bnd::Excl(&MinSc)),
+                            (Bnd::Unb, Bnd::Excl(&NegativeMoreTypicalSc)),
+                            (Bnd::Unb, Bnd::Excl(&NearZeroSc)),
+                            (Bnd::Unb, Bnd::Excl(&PositiveMoreTypicalSc)),
+                            (Bnd::Unb, Bnd::Excl(&MaxSc)),
                             (Bnd::Unb, Bnd::Unb),
                         ]
                         .into_iter()
@@ -5502,13 +5496,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             quote!{sqlx::postgres::types::PgRange { start: #start_ts, end: #end_ts}}
                         });
                         quote!{{
-                            let min = #min_ts;
-                            let negative_less_typical = #negative_less_typical_ts;
-                            let negative_more_typical = #negative_more_typical_ts;
-                            let near_zero = #near_zero_ts;
-                            let positive_less_typical = #positive_less_typical_ts;
-                            let positive_more_typical = #positive_more_typical_ts;
-                            let max = #max_ts;
+                            let #MinSc = #min_ts;
+                            let #MaxSc = #max_ts;
+                            let #NegativeLessTypicalSc = #negative_less_typical_ts;
+                            let #NegativeMoreTypicalSc = #negative_more_typical_ts;
+                            let #NearZeroSc = #near_zero_ts;
+                            let #PositiveLessTypicalSc = #positive_less_typical_ts;
+                            let #PositiveMoreTypicalSc = #positive_more_typical_ts;
                             vec![#(#content_ts_08778f0f),*]
                         }}
                     };

@@ -1058,7 +1058,13 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["gen", "pg", "json", "types", "mod"],
     ["gen", "pg", "types", "mod"],
     ["to", "err", "string"],
-    ["body", "size", "error"]
+    ["body", "size", "error"],
+    ["max"],
+    ["near", "zero"],
+    ["negative", "less", "typical"],
+    ["negative", "more", "typical"],
+    ["positive", "less", "typical"],
+    ["positive", "more", "typical"]
 ]);
 #[derive(Debug, Clone, Copy)]
 pub struct HashMap;
