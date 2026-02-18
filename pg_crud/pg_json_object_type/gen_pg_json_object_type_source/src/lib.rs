@@ -2250,7 +2250,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         IsNullable::True => gen_impl_pg_crud_default_option_some_vec_one_el_ts(&ident_read_ucc, &Ts2::new(), &self_some_pg_crud_default_option_some_vec_one_el_call_ts),
                     },
                 };
-                let impl_sqlx_type_sqlx_pg_for_ident_read_ts = gen_sqlx_types_json_type_declaration_wrapper_ts(&ident_read_ucc);
+                let impl_sqlx_type_for_ident_read_ts = gen_sqlx_types_json_type_declaration_wrapper_ts(&ident_read_ucc);
                 let impl_sqlx_encode_sqlx_pg_for_ident_read_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(
                     &ident_read_ucc,
                     &quote!{sqlx::types::Json(#SelfSc)}
@@ -2299,7 +2299,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     #impl_ident_read_ts
                     #maybe_impl_serde_deserialize_for_ident_read_or_ident_with_id_standart_not_null_read_ts
                     #impl_pg_crud_default_option_some_vec_one_el_for_ident_read_or_ident_with_id_standart_not_null_read_ts
-                    #impl_sqlx_type_sqlx_pg_for_ident_read_ts
+                    #impl_sqlx_type_for_ident_read_ts
                     #impl_sqlx_encode_sqlx_pg_for_ident_read_ts
                     #impl_sqlx_decode_sqlx_pg_for_ident_read_ts
                     #maybe_ident_with_id_read_ts
