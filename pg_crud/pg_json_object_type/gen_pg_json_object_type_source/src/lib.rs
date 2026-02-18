@@ -10,15 +10,16 @@ use macros_helpers::{
 };
 use naming::{
     AllFieldsAreNoneUcc, ArrayOfUcc, AsRefStrToUccTs, AsUcc, ColumnNameAndMaybeFieldGetterSc,
-    ColumnSc, CreateIntoPgJsonTypeOptionVecWhereLengthEqualSc,
+    ColumnSc, ContainsAllElementsOfArrayUcc, CreateIntoPgJsonTypeOptionVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptionVecWhereLengthGreaterThanSc, CreateSc, CreateUpdateDeleteAreEmptyUcc,
-    DefaultOptionSomeVecOneElSc, DefaultOptionSomeVecOneElUcc, DeleteSc, DisplayPlusToTokens,
-    EqualUcc, ErrorSc, FieldsSc, GenJsonbSetTargetSc, IdSc, IdsAreNotUniqueUcc, IncrementSc,
-    IsNeedToAddLogicalOperatorSc, JsonbObjectUcc, JsonbSetAccumulatorSc, JsonbSetPathSc,
-    JsonbSetTargetSc, NotUniqueIdInJsonDeleteArrayUcc, NotUniqueIdInJsonUpdateAndDeleteArraysUcc,
-    OptionUpdateSc, OptionVecCreateSc, PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeTestCasesUcc,
-    PgTypeUcc, PreviousReadMergedWithOptionUpdateIntoReadSc, QueryPartErrorUcc, QueryPartSc,
-    QuerySc, ReadInnerIntoReadWithNewOrTryNewUnwrapedSc,
+    DefaultOptionSomeVecOneElSc, DefaultOptionSomeVecOneElUcc, DeleteSc, DimOneEqualUcc,
+    DimOneInUcc, DisplayPlusToTokens, EqualUcc, ErrorSc, FieldsSc, GenJsonbSetTargetSc,
+    IdSc, IdsAreNotUniqueUcc, InUcc, IncrementSc, IsNeedToAddLogicalOperatorSc, JsonbObjectUcc,
+    JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc, LengthEqualUcc, LengthGreaterThanUcc,
+    NotUniqueIdInJsonDeleteArrayUcc, NotUniqueIdInJsonUpdateAndDeleteArraysUcc, OptionUpdateSc,
+    OptionVecCreateSc, OverlapsWithArrayUcc, PgJsonTypeTestCasesUcc, PgJsonTypeUcc,
+    PgTypeTestCasesUcc, PgTypeUcc, PreviousReadMergedWithOptionUpdateIntoReadSc, QueryPartErrorUcc,
+    QueryPartSc, QuerySc, ReadInnerIntoReadWithNewOrTryNewUnwrapedSc,
     ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc, ReadOnlyIdsIntoOptionValueReadInnerSc,
     ReadOnlyIdsMergedWithCreateIntoOptionValueReadSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereBetweenSc,
@@ -1784,6 +1785,23 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             )
                                         }
                                     });
+                                    let concrete_filters_ts = [
+                                        quote!{#EqualUcc},
+                                        quote!{#DimOneEqualUcc},
+                                        quote!{#LengthEqualUcc},
+                                        quote!{#LengthGreaterThanUcc},
+                                        quote!{#InUcc},
+                                        quote!{#DimOneInUcc},
+                                        quote!{#ContainsAllElementsOfArrayUcc},
+                                        quote!{#OverlapsWithArrayUcc}
+                                    ].into_iter().map(|el_ts|quote!{
+                                        Self::#el_ts(#ValueSc) => #import_path::PgTypeWhereFilter::#QueryPartSc(
+                                            #ValueSc,
+                                            #IncrementSc,
+                                            #ColumnSc,
+                                            #IsNeedToAddLogicalOperatorSc
+                                        ),
+                                    });
                                     quote! {
                                         let mut gen_el_query = |
                                             logical_operator: &#import_path::LogicalOperator,
@@ -1806,54 +1824,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             Ok(format!("{logical_operator_query_part}(exists (select 1 from jsonb_array_elements({column}) as {elem} where {value_9696ee60}))"))
                                         };
                                         match &self {
-                                            Self::Equal(#ValueSc) => #import_path::PgTypeWhereFilter::#QueryPartSc(
-                                                #ValueSc,
-                                                #IncrementSc,
-                                                #ColumnSc,
-                                                #IsNeedToAddLogicalOperatorSc
-                                            ),
-                                            Self::DimOneEqual(#ValueSc) => #import_path::PgTypeWhereFilter::#QueryPartSc(
-                                                #ValueSc,
-                                                #IncrementSc,
-                                                #ColumnSc,
-                                                #IsNeedToAddLogicalOperatorSc
-                                            ),
-                                            Self::LengthEqual(#ValueSc) => #import_path::PgTypeWhereFilter::#QueryPartSc(
-                                                #ValueSc,
-                                                #IncrementSc,
-                                                #ColumnSc,
-                                                #IsNeedToAddLogicalOperatorSc
-                                            ),
-                                            Self::LengthGreaterThan(#ValueSc) => #import_path::PgTypeWhereFilter::#QueryPartSc(
-                                                #ValueSc,
-                                                #IncrementSc,
-                                                #ColumnSc,
-                                                #IsNeedToAddLogicalOperatorSc
-                                            ),
-                                            Self::In(#ValueSc) => #import_path::PgTypeWhereFilter::#QueryPartSc(
-                                                #ValueSc,
-                                                #IncrementSc,
-                                                #ColumnSc,
-                                                #IsNeedToAddLogicalOperatorSc
-                                            ),
-                                            Self::DimOneIn(#ValueSc) => #import_path::PgTypeWhereFilter::#QueryPartSc(
-                                                #ValueSc,
-                                                #IncrementSc,
-                                                #ColumnSc,
-                                                #IsNeedToAddLogicalOperatorSc
-                                            ),
-                                            Self::ContainsAllElementsOfArray(#ValueSc) => #import_path::PgTypeWhereFilter::#QueryPartSc(
-                                                #ValueSc,
-                                                #IncrementSc,
-                                                #ColumnSc,
-                                                #IsNeedToAddLogicalOperatorSc
-                                            ),
-                                            Self::OverlapsWithArray(#ValueSc) => #import_path::PgTypeWhereFilter::#QueryPartSc(
-                                                #ValueSc,
-                                                #IncrementSc,
-                                                #ColumnSc,
-                                                #IsNeedToAddLogicalOperatorSc
-                                            ),
+                                            #(#concrete_filters_ts)*
                                             #(#el_filters_ts),*
                                         }
                                     }
