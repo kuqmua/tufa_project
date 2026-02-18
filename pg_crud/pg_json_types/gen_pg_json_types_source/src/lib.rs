@@ -845,11 +845,6 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 .derive_serde_deserialize()
                 .derive_utoipa_to_schema()
                 .derive_schemars_json_schema_if(
-                    //todo
-                    // match &schemars_json_schema {
-                    //     SchemarsJsonSchema::Derive => DeriveSchemarsJsonSchema::True,
-                    //     SchemarsJsonSchema::Impl(_) => DeriveSchemarsJsonSchema::False,
-                    // }
                     if matches!(&is_standart_not_null, IsStandartNotNull::True) {
                         match &pg_json_type {
                             PgJsonType::UuidUuidAsJsonbString => DeriveSchemarsJsonSchema::False,
@@ -882,39 +877,22 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     IsNullable::True => gen_option_tokens_declaration_ts(&value),
                                 }
                             };
+                            let gen_dims_ts = |dim1_is_nullable_a5c667cd: &IsNullable|{
+                                let (is_nullable_79be16e9, pattern_3437adad): (&IsNullable, &Pattern) = match &is_nullable {
+                                    IsNullable::False => (dim1_is_nullable_a5c667cd, &pattern.down_by_1().expect("e994797d")),
+                                    IsNullable::True => (&IsNullable::False, pattern),
+                                };
+                                gen_ident_origin_6f054930(is_nullable_79be16e9, pattern_3437adad)
+                            };
                             match &pattern {
                                 Pattern::Standart => match &is_nullable {
                                     IsNullable::False => &ident_read_inner_standart_not_null_alias_ts,
                                     IsNullable::True => &gen_option_tokens_declaration_ts(&ident_standart_not_null_origin_ucc),
                                 },
-                                Pattern::ArrayDim1 { dim1_is_nullable } => &{
-                                    let (is_nullable_572191e3, pattern_0d46e7d9): (&IsNullable, &Pattern) = match &is_nullable {
-                                        IsNullable::False => (dim1_is_nullable, &pattern.down_by_1().expect("e994797d")),
-                                        IsNullable::True => (&IsNullable::False, pattern),
-                                    };
-                                    gen_ident_origin_6f054930(is_nullable_572191e3, pattern_0d46e7d9)
-                                },
-                                Pattern::ArrayDim2 { dim1_is_nullable, .. } => &{
-                                    let (is_nullable_800854cc, pattern_9f256bad): (&IsNullable, &Pattern) = match &is_nullable {
-                                        IsNullable::False => (dim1_is_nullable, &pattern.down_by_1().expect("76eb44e3")),
-                                        IsNullable::True => (&IsNullable::False, pattern),
-                                    };
-                                    gen_ident_origin_6f054930(is_nullable_800854cc, pattern_9f256bad)
-                                },
-                                Pattern::ArrayDim3 { dim1_is_nullable, .. } => &{
-                                    let (is_nullable_1941ef3f, pattern_afc056a8): (&IsNullable, &Pattern) = match &is_nullable {
-                                        IsNullable::False => (dim1_is_nullable, &pattern.down_by_1().expect("1b996c86")),
-                                        IsNullable::True => (&IsNullable::False, pattern),
-                                    };
-                                    gen_ident_origin_6f054930(is_nullable_1941ef3f, pattern_afc056a8)
-                                },
-                                Pattern::ArrayDim4 { dim1_is_nullable, .. } => &{
-                                    let (is_nullable_90884b9d, pattern_ae87dbd1): (&IsNullable, &Pattern) = match &is_nullable {
-                                        IsNullable::False => (dim1_is_nullable, &pattern.down_by_1().expect("d24b7481")),
-                                        IsNullable::True => (&IsNullable::False, pattern),
-                                    };
-                                    gen_ident_origin_6f054930(is_nullable_90884b9d, pattern_ae87dbd1)
-                                },
+                                Pattern::ArrayDim1 { dim1_is_nullable } |
+                                Pattern::ArrayDim2 { dim1_is_nullable, .. } |
+                                Pattern::ArrayDim3 { dim1_is_nullable, .. } |
+                                Pattern::ArrayDim4 { dim1_is_nullable, .. } => &gen_dims_ts(dim1_is_nullable),
                             }
                         };
                         quote!{(#content_ts);}
