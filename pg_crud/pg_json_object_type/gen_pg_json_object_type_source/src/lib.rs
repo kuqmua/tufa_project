@@ -1383,7 +1383,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         }
                     }
                 };
-                let impl_sqlx_type_sqlx_pg_for_ident_select_ts = gen_sqlx_types_json_type_declaration_wrapper_ts(&ident_select_ucc);
+                let impl_sqlx_type_for_ident_select_ts = gen_sqlx_types_json_type_declaration_wrapper_ts(&ident_select_ucc);
                 let impl_sqlx_decode_sqlx_pg_for_ident_select_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_wrapper_ts(&ident_select_ucc);
                 let impl_pg_crud_default_option_some_vec_one_el_standart_not_null_content_ts = quote! {
                     Self(#PgCrudDefaultOptionSomeVecOneElCall)
@@ -1572,7 +1572,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 quote! {
                     #ident_select_ts
                     #impl_ident_select_ts
-                    #impl_sqlx_type_sqlx_pg_for_ident_select_ts
+                    #impl_sqlx_type_for_ident_select_ts
                     #impl_sqlx_decode_sqlx_pg_for_ident_select_ts
                     #impl_pg_crud_default_option_some_vec_one_el_for_ident_select_ts
                     #impl_pg_crud_default_option_some_vec_one_el_max_page_size_for_ident_select_ts
