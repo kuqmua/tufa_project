@@ -38,7 +38,7 @@ pub use gen_new_or_try_new::{
 };
 pub use gen_pub_type_alias_ts::gen_pub_type_alias_ts;
 pub use gen_simple_syn_punctuated_punctuated::{
-    gen_simple_syn_punctuated_punctuated, std_string_string_syn_punctuated_punctuated,
+    gen_simple_syn_punctuated_punctuated, string_syn_punctuated_punctuated,
 };
 pub use gen_std_default_default_ts::gen_std_default_default_ts;
 pub use get_macro_attr::{get_macro_attr, get_macro_attr_meta_list_ts};

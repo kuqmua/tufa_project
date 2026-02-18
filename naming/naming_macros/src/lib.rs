@@ -375,7 +375,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(input_ts: Ts) -> Ts {
     let Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("b2263e7e");
     };
-    let std_string_string = StdStringString;
+    let string = StdStringString;
     let variants_matching_values_ts = data_enum
         .variants
         .iter()
@@ -385,7 +385,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(input_ts: Ts) -> Ts {
                 let variant_ident_sc_str =
                     naming_common::ToTokensToUpperScStr::case(&variant_ident);
                 let variant_ident_sc_dq_ts = dq_ts(&variant_ident_sc_str);
-                quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_sc_dq_ts)}
+                quote! {Self::#variant_ident => #string::from(#variant_ident_sc_dq_ts)}
             }
             Fields::Named(_) | Fields::Unnamed(_) => panic!("b6fedcff"),
         })
@@ -393,7 +393,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(input_ts: Ts) -> Ts {
     let trait_path_ts = trait_path_ts();
     let generated = quote! {
         impl #trait_path_ts::ToUpperScStr for #ident {
-            fn case(&self) -> #std_string_string {
+            fn case(&self) -> #string {
                 match self {
                     #(#variants_matching_values_ts),*
                 }

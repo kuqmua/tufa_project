@@ -31,6 +31,6 @@ pub fn gen_simple_syn_punctuated_punctuated(
 }
 
 #[must_use]
-pub fn std_string_string_syn_punctuated_punctuated() -> Punctuated<PathSegment, PathSep> {
+pub fn string_syn_punctuated_punctuated() -> Punctuated<PathSegment, PathSep> {
     gen_simple_syn_punctuated_punctuated(&["std", "string", "String"])
 }

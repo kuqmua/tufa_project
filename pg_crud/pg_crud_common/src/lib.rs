@@ -1723,7 +1723,7 @@ pub const fn bool_test_cases_vec() -> [bool; 2] {
     [true, false]
 }
 #[must_use]
-pub fn std_string_string_test_cases_vec() -> [String; 12] {
+pub fn string_test_cases_vec() -> [String; 12] {
     #[allow(clippy::non_ascii_literal)]
     [
         String::new(),

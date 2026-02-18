@@ -20,9 +20,9 @@ use token_patterns::StdStringString;
         eo_vec_to_err_string,
         eo_vec_to_err_string_serde,
         eo_vec_error_occurence,
-        eo_hashmap_key_std_string_string_value_to_err_string,
-        eo_hashmap_key_std_string_string_value_to_err_string_serde,
-        eo_hashmap_key_std_string_string_value_error_occurence,
+        eo_hashmap_key_string_value_to_err_string,
+        eo_hashmap_key_string_value_to_err_string_serde,
+        eo_hashmap_key_string_value_error_occurence,
     )
 )]
 pub fn error_occurence(input: Ts) -> Ts {

@@ -630,7 +630,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         let import_path = ImportPath::PgCrudCommon;
         let none_ts = quote! {None};
         let u64_ts = U64;
-        let std_string_string_ts = StdStringString;
+        let string_ts = StdStringString;
         let gen_import_path_value_initialization_ts = |content_ts: &dyn ToTokens| gen_value_initialization_ts(&import_path, &content_ts);
         let gen_ident_ts = |is_nullable_ddf79d44: &IsNullable, pg_json_type_pattern_2c09ee59: &PgJsonTypePattern| {
             let vec_of_ucc = VecOfUcc;
@@ -727,7 +727,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 PgJsonType::F32AsJsonbNumber => &F32,
                 PgJsonType::F64AsJsonbNumber => &F64,
                 PgJsonType::BoolAsJsonbBoolean => &Bool,
-                PgJsonType::StdStringStringAsJsonbString => &std_string_string_ts,
+                PgJsonType::StdStringStringAsJsonbString => &string_ts,
                 PgJsonType::UuidUuidAsJsonbString => &UuidUuid,
             };
             quote! {#content_ts}
@@ -2443,7 +2443,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             mut #QuerySc: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
                         ) -> Result<
                             sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-                            #std_string_string_ts
+                            #string_ts
                         > {
                             if let Err(#ErrorSc) = #QuerySc.try_bind(#ValueSc.0.0.to_string()) {
                                 return Err(#ErrorSc.to_string())
@@ -2498,7 +2498,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 PgJsonType::F32AsJsonbNumber => quote! {f32_test_cases_vec},
                 PgJsonType::F64AsJsonbNumber => quote! {f64_test_cases_vec},
                 PgJsonType::BoolAsJsonbBoolean => quote! {bool_test_cases_vec},
-                PgJsonType::StdStringStringAsJsonbString => quote! {std_string_string_test_cases_vec},
+                PgJsonType::StdStringStringAsJsonbString => quote! {string_test_cases_vec},
                 PgJsonType::UuidUuidAsJsonbString => quote! {uuid_uuid_test_cases_vec},
             };
             let gen_array_dim_equal_ts = |dim: &Dim| {

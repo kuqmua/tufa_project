@@ -30,11 +30,11 @@ pub enum ErrorOne {
         eo_vec_serde: Vec<SerdeStruct>,
         #[eo_vec_error_occurence]
         eo_vec_error_occurence_field: Vec<ErrorUnnamedOne>, //IN SERIALIZE DESERIALIZE Vec<nested>
-        #[eo_hashmap_key_std_string_string_value_to_err_string]
+        #[eo_hashmap_key_string_value_to_err_string]
         hashmap_string_string: HashMap<String, DisplayStruct>,
-        #[eo_hashmap_key_std_string_string_value_to_err_string_serde]
+        #[eo_hashmap_key_string_value_to_err_string_serde]
         hashmap_string_serde: HashMap<String, SerdeStruct>,
-        #[eo_hashmap_key_std_string_string_value_error_occurence]
+        #[eo_hashmap_key_string_value_error_occurence]
         hashmap_string_error_occurence: HashMap<String, ErrorUnnamedOne>,
 
         code_occurence: CodeOccurence,
