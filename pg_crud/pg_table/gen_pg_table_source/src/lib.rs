@@ -2533,16 +2533,23 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let ident_operation_response_variants_ucc =
                 gen_ident_operation_response_variants_ucc(operation);
             let ident_try_operation_logic_response_variants_ts = {
-                let variants_ts = type_variants_from_request_response_syn_variants
-                    .iter()
-                    .map(gen_serde_version_of_named_syn_variant);
+                let content_ts_c997a274 = StructOrEnumDeriveTokenStreamBuilder::new()
+                    .make_pub()
+                    .derive_debug()
+                    .derive_serde_serialize()
+                    .derive_serde_deserialize()
+                    .build_enum(&ident_operation_response_variants_ucc, &Ts2::new(), &{
+                        let variants_ts = type_variants_from_request_response_syn_variants
+                            .iter()
+                            .map(gen_serde_version_of_named_syn_variant);
+                        quote! {{
+                            #DesirableUcc(#desirable_type_ts),
+                            #(#variants_ts),*
+                        }}
+                    });
                 quote! {
                     #AllowClippyArbitrarySourceItemOrdering
-                    #DeriveDebugSerdeSerializeSerdeDeserialize
-                    pub enum #ident_operation_response_variants_ucc {
-                        #DesirableUcc(#desirable_type_ts),
-                        #(#variants_ts),*
-                    }
+                    #content_ts_c997a274
                 }
             };
             let ident_operation_error_ucc = gen_ident_operation_error_ucc(operation);
