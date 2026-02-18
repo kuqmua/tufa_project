@@ -78,9 +78,9 @@ use pg_crud_macros_common::{
     IncrementParameterUnderscore, IsNeedToAddLogicalOperatorUnderscore, IsQueryBindMutable,
     gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_ts,
     gen_impl_pg_crud_default_option_some_vec_one_el_ts, gen_impl_serde_deserialize_for_struct_ts,
-    gen_match_try_new_in_deserialize_ts, gen_query_part_error_write_into_buffer_ts,
-    gen_return_err_query_part_error_write_into_buffer_ts,
-    gen_std_option_option_tokens_declaration_ts, gen_std_vec_vec_tokens_declaration_ts,
+    gen_match_try_new_in_deserialize_ts, gen_option_tokens_declaration_ts,
+    gen_query_part_error_write_into_buffer_ts,
+    gen_return_err_query_part_error_write_into_buffer_ts, gen_std_vec_vec_tokens_declaration_ts,
     gen_value_initialization_ts, impl_pg_type_where_filter_for_ident_ts, maybe_wrap_into_braces_ts,
 };
 use proc_macro2::TokenStream as Ts2;
@@ -763,7 +763,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 quote! {#ident_select_ucc::#field_ident_ucc_ts(#ColumnSc) #initialization_ts}
             });
-            let std_option_option_char_ts = gen_std_option_option_tokens_declaration_ts(&Char);
+            let option_char_ts = gen_option_tokens_declaration_ts(&Char);
             quote! {
                 fn #GenSelectQueryPartSc(#select_borrow_pg_crud_not_empty_unique_vec_ident_select_ts) -> Result<#string_ts, #import_path ::#QueryPartErrorUcc> {
                     let mut acc_37c883c3 = #string_ts::default();
@@ -773,7 +773,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         });
                         acc_37c883c3.push(',');
                     }
-                    let _: #std_option_option_char_ts = acc_37c883c3.pop();
+                    let _: #option_char_ts = acc_37c883c3.pop();
                     Ok(acc_37c883c3)
                 }
             }
@@ -1171,12 +1171,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let field_ident = &element.field_ident;
                 let el_syn_field_ty_as_pg_type_where_ts =
                     gen_as_pg_type_where_ts(&element.field_type);
-                let std_option_option_pg_type_where_syn_field_ty_as_pg_type_where_ts =
-                    gen_std_option_option_tokens_declaration_ts(
+                let option_pg_type_where_syn_field_ty_as_pg_type_where_ts =
+                    gen_option_tokens_declaration_ts(
                         &quote! {pg_crud::PgTypeWhere<#el_syn_field_ty_as_pg_type_where_ts>},
                     );
                 quote! {
-                    #field_ident: #std_option_option_pg_type_where_syn_field_ty_as_pg_type_where_ts
+                    #field_ident: #option_pg_type_where_syn_field_ty_as_pg_type_where_ts
                 }
             });
         let ident_where_many_ts = {
@@ -1244,7 +1244,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 fields_len,
                 &|_: &Ident, syn_type: &Type| {
                     let syn_type_as_pg_type_where_ts = gen_as_pg_type_where_ts(&syn_type);
-                    gen_std_option_option_tokens_declaration_ts(
+                    gen_option_tokens_declaration_ts(
                         &quote! {pg_crud::PgTypeWhere<#syn_type_as_pg_type_where_ts>},
                     )
                 },
@@ -1274,25 +1274,24 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     };
 
-    let std_option_option_ident_where_many_ucc =
-        StdOptionOptionSelfWhereManyUcc::from_tokens(&ident);
-    let std_option_option_ident_where_many_ts = {
-        let std_option_option_ident_where_many_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+    let option_ident_where_many_ucc = StdOptionOptionSelfWhereManyUcc::from_tokens(&ident);
+    let option_ident_where_many_ts = {
+        let option_ident_where_many_ts = StructOrEnumDeriveTokenStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_clone()
             .derive_serde_serialize()
             .derive_serde_deserialize()
             .derive_utoipa_to_schema()
-            .build_struct(&std_option_option_ident_where_many_ucc, &Ts2::new(), &{
-                let std_option_option_ident_read_only_ids_standart_not_null_ts =
-                    gen_std_option_option_tokens_declaration_ts(&ident_where_many_ucc);
-                quote! {(pub #std_option_option_ident_read_only_ids_standart_not_null_ts);}
+            .build_struct(&option_ident_where_many_ucc, &Ts2::new(), &{
+                let option_ident_read_only_ids_standart_not_null_ts =
+                    gen_option_tokens_declaration_ts(&ident_where_many_ucc);
+                quote! {(pub #option_ident_read_only_ids_standart_not_null_ts);}
             });
-        let impl_pg_type_where_filter_for_std_option_option_ident_where_many_ts =
+        let impl_pg_type_where_filter_for_option_ident_where_many_ts =
             impl_pg_type_where_filter_for_ident_ts(
                 &quote! {<'lifetime>},
-                &std_option_option_ident_where_many_ucc,
+                &option_ident_where_many_ucc,
                 &Ts2::new(),
                 &IncrementParameterUnderscore::False,
                 &ColumnParameterUnderscore::True,
@@ -1365,19 +1364,19 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 },
                 &ImportPath::PgCrud,
             );
-        let impl_pg_crud_default_option_some_vec_one_el_for_std_option_option_ident_where_many_ts =
+        let impl_pg_crud_default_option_some_vec_one_el_for_option_ident_where_many_ts =
             gen_impl_pg_crud_default_option_some_vec_one_el_for_tokens_no_lifetime_ts(
-                &std_option_option_ident_where_many_ucc,
+                &option_ident_where_many_ucc,
                 &quote! {Self(Some(#pg_crud_default_option_some_vec_one_el_call_ts))},
             );
         quote! {
-            #std_option_option_ident_where_many_ts
-            #impl_pg_type_where_filter_for_std_option_option_ident_where_many_ts
-            #impl_pg_crud_default_option_some_vec_one_el_for_std_option_option_ident_where_many_ts
+            #option_ident_where_many_ts
+            #impl_pg_type_where_filter_for_option_ident_where_many_ts
+            #impl_pg_crud_default_option_some_vec_one_el_for_option_ident_where_many_ts
         }
     };
-    let pub_where_many_std_option_option_ident_where_many_ts =
-        quote! {pub #WhereManySc: #std_option_option_ident_where_many_ucc};
+    let pub_where_many_option_ident_where_many_ts =
+        quote! {pub #WhereManySc: #option_ident_where_many_ucc};
     let where_many_pg_crud_default_option_some_vec_one_el_call_ts = quote! {
         #WhereManySc: #pg_crud_default_option_some_vec_one_el_call_ts
     };
@@ -1553,19 +1552,19 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &Ts2::new(),
                 &{
                     let field_option_primary_key_ts = {
-                        let std_option_option_value_primary_key_field_type_as_pg_type_read_ts = gen_std_option_option_tokens_declaration_ts(&gen_value_declaration_ts(&gen_as_pg_type_read_ts(&primary_key_field_type)));
+                        let option_value_primary_key_field_type_as_pg_type_read_ts = gen_option_tokens_declaration_ts(&gen_value_declaration_ts(&gen_as_pg_type_read_ts(&primary_key_field_type)));
                         quote! {
                             #field_attr_serde_skip_serializing_if_option_is_none_ts
-                            pub #primary_key_field_ident: #std_option_option_value_primary_key_field_type_as_pg_type_read_ts
+                            pub #primary_key_field_ident: #option_value_primary_key_field_type_as_pg_type_read_ts
                         }
                     };
                     let fields_options_without_primary_key_ts = gen_fields_named_without_primary_key_with_comma_ts(&|element: &SynFieldWrapper| -> Ts2 {
                         let field_vis = &element.field_vis;
                         let field_ident = &element.field_ident;
-                        let std_option_option_value_field_type_as_pg_type_read_ts = gen_std_option_option_tokens_declaration_ts(&gen_value_declaration_ts(&gen_as_pg_type_read_ts(&element.field_type)));
+                        let option_value_field_type_as_pg_type_read_ts = gen_option_tokens_declaration_ts(&gen_value_declaration_ts(&gen_as_pg_type_read_ts(&element.field_type)));
                         quote! {
                             #field_attr_serde_skip_serializing_if_option_is_none_ts
-                            #field_vis #field_ident: #std_option_option_value_field_type_as_pg_type_read_ts
+                            #field_vis #field_ident: #option_value_field_type_as_pg_type_read_ts
                         }
                     });
                     quote!{{
@@ -1582,26 +1581,24 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let impl_ident_read_ts = {
             let fn_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts = {
                 let declaration_primary_key_ts = {
-                    let std_option_option_value_primary_key_field_type_as_primary_key_ts =
-                        gen_std_option_option_tokens_declaration_ts(&gen_value_declaration_ts(
+                    let option_value_primary_key_field_type_as_primary_key_ts =
+                        gen_option_tokens_declaration_ts(&gen_value_declaration_ts(
                             &primary_key_field_type_as_pg_type_read_ucc,
                         ));
                     quote! {
-                        let mut #primary_key_field_ident: #std_option_option_value_primary_key_field_type_as_primary_key_ts = None;
+                        let mut #primary_key_field_ident: #option_value_primary_key_field_type_as_primary_key_ts = None;
                     }
                 };
                 let declaration_without_primary_key_ts =
                     gen_fields_named_without_primary_key_without_comma_ts(
                         &|element: &SynFieldWrapper| {
                             let field_ident = &element.field_ident;
-                            let std_option_option_value_field_type_as_pg_type_read_ts =
-                                gen_std_option_option_tokens_declaration_ts(
-                                    &gen_value_declaration_ts(&gen_as_pg_type_read_ts(
-                                        &element.field_type,
-                                    )),
-                                );
+                            let option_value_field_type_as_pg_type_read_ts =
+                                gen_option_tokens_declaration_ts(&gen_value_declaration_ts(
+                                    &gen_as_pg_type_read_ts(&element.field_type),
+                                ));
                             quote! {
-                                let mut #field_ident: #std_option_option_value_field_type_as_pg_type_read_ts = None;
+                                let mut #field_ident: #option_value_field_type_as_pg_type_read_ts = None;
                             }
                         },
                     );
@@ -1704,11 +1701,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 WrapIntoOption::False => {
                                     gen_as_pg_type_read_only_ids_ts(&field_type)
                                 }
-                                WrapIntoOption::True => {
-                                    gen_std_option_option_tokens_declaration_ts(
-                                        &gen_as_pg_type_read_only_ids_ts(&field_type),
-                                    )
-                                }
+                                WrapIntoOption::True => gen_option_tokens_declaration_ts(
+                                    &gen_as_pg_type_read_only_ids_ts(&field_type),
+                                ),
                             };
                             quote! {
                                 pub #field_ident: #field_type_ts
@@ -1830,7 +1825,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 value.parse::<Ts2>().expect("dbdbb7f2")
             };
             let syn_type_as_pg_type_update_ts = gen_as_pg_type_update_ts(&syn_type);
-            gen_std_option_option_tokens_declaration_ts(
+            gen_option_tokens_declaration_ts(
                 &quote! {#path_value_ts<#syn_type_as_pg_type_update_ts>},
             )
         };
@@ -1988,7 +1983,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 value.parse::<Ts2>().expect("2b09d4ae")
                             };
                             let syn_type_as_pg_type_update_for_query_ts = gen_as_pg_type_update_for_query_ts(&element.field_type);
-                            gen_std_option_option_tokens_declaration_ts(&quote! {#path_value_ts<#syn_type_as_pg_type_update_for_query_ts>})
+                            gen_option_tokens_declaration_ts(&quote! {#path_value_ts<#syn_type_as_pg_type_update_for_query_ts>})
                         };
                         quote! {#field_ident: #option_value_field_type_as_pg_type_update_for_query_ts}
                     });
@@ -3558,7 +3553,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             gen_parameters_payload_and_default_ts(
                 &operation,
                 &quote! {{
-                    #pub_where_many_std_option_option_ident_where_many_ts,
+                    #pub_where_many_option_ident_where_many_ts,
                     #pub_select_pg_crud_not_empty_unique_vec_ident_select_ts,
                     pub #OrderBySc: #pg_crud_order_by_ts<#ident_select_ucc>,
                     pub #PaginationSc: pg_crud::PaginationStartsWithZero,
@@ -4605,7 +4600,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &operation,
             gen_parameters_payload_and_default_ts(
                 &operation,
-                &quote! {{#pub_where_many_std_option_option_ident_where_many_ts}},
+                &quote! {{#pub_where_many_option_ident_where_many_ts}},
                 &quote! {{#where_many_pg_crud_default_option_some_vec_one_el_call_ts}},
             ),
         );
@@ -5068,7 +5063,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 ),
             )
         };
-        let std_option_option_ident_where_many_content_ts =
+        let option_ident_where_many_content_ts =
             gen_fields_named_without_primary_key_with_comma_ts(&|element: &SynFieldWrapper| {
                 let field_ident_edb35ef4 = &element.field_ident;
                 quote! {
@@ -5436,12 +5431,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         #ident_delete_many_parameters_ucc {
                                             //todo rewrite it using new\try_new?
                                             payload: #ident_delete_many_payload_ucc {
-                                                where_many: #std_option_option_ident_where_many_ucc(Some(
+                                                where_many: #option_ident_where_many_ucc(Some(
                                                     #ident_where_many_ucc {
                                                         #primary_key_field_ident: Some(gen_pg_type_where_try_new_or_primary_keys(
                                                             &read_only_ids_from_try_create_many
                                                         )),
-                                                        #std_option_option_ident_where_many_content_ts
+                                                        #option_ident_where_many_content_ts
                                                     }
                                                 ))
                                             }
@@ -5674,10 +5669,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 &url_cloned,
                                 #ident_delete_many_parameters_ucc {
                                     payload: #ident_delete_many_payload_ucc {
-                                        where_many: #std_option_option_ident_where_many_ucc(Some(
+                                        where_many: #option_ident_where_many_ucc(Some(
                                             #ident_where_many_ucc {
                                                 #primary_key_field_ident: Some(gen_pg_type_where_try_new_or_primary_keys(&read_only_ids_from_try_create_many)),
-                                                #std_option_option_ident_where_many_content_ts
+                                                #option_ident_where_many_content_ts
                                             }
                                         )),
                                     },
@@ -5824,7 +5819,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 &url_cloned,
                                                 #ident_delete_many_parameters_ucc {
                                                     payload: #ident_delete_many_payload_ucc {
-                                                        where_many: #std_option_option_ident_where_many_ucc(Some(
+                                                        where_many: #option_ident_where_many_ucc(Some(
                                                             #ident_where_many_ucc {
                                                                 #primary_key_field_ident: Some(
                                                                     gen_pg_type_where_try_new_primary_key(
@@ -5843,7 +5838,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                                         ]
                                                                     )
                                                                 ),
-                                                                #std_option_option_ident_where_many_content_ts
+                                                                #option_ident_where_many_content_ts
                                                             }
                                                         )),
                                                     },
@@ -6664,7 +6659,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &url_cloned,
                             #ident_delete_many_parameters_ucc {
                                 payload: #ident_delete_many_payload_ucc {
-                                    where_many: #std_option_option_ident_where_many_ucc(Some(#ident_where_many_ucc {
+                                    where_many: #option_ident_where_many_ucc(Some(#ident_where_many_ucc {
                                         #primary_key_field_ident: Some(
                                             gen_pg_type_where_try_new_primary_key(
                                                 pg_crud::LogicalOperator::Or,
@@ -6724,7 +6719,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &url_cloned,
                             #ident_delete_many_parameters_ucc {
                                 payload: #ident_delete_many_payload_ucc {
-                                    where_many: #std_option_option_ident_where_many_ucc(Some(#ident_where_many_ucc {
+                                    where_many: #option_ident_where_many_ucc(Some(#ident_where_many_ucc {
                                         #primary_key_field_ident: Some(
                                             gen_pg_type_where_try_new_primary_key(
                                                 pg_crud::LogicalOperator::Or,//here
@@ -6912,7 +6907,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             endpoint_location,
                             #ident_read_many_parameters_ucc {
                                 payload: #ident_read_many_payload_ucc {
-                                    where_many: #std_option_option_ident_where_many_ucc(Some(
+                                    where_many: #option_ident_where_many_ucc(Some(
                                         ident_where_many_6b1fab92
                                     )),
                                     select,
@@ -7199,7 +7194,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         #impl_ident_ts
         #ident_create_ts
         #ident_where_many_ts
-        #std_option_option_ident_where_many_ts
+        #option_ident_where_many_ts
         #select_ts
         #ident_read_ts
         #ident_read_only_ids_ts
