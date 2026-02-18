@@ -47,9 +47,9 @@ use pg_crud_macros_common::{
     gen_impl_pg_type_ts, gen_impl_sqlx_decode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_sqlx_pg_for_ident_ts,
     gen_option_tokens_declaration_ts, gen_pg_type_where_ts,
-    gen_return_err_query_part_error_write_into_buffer_ts, gen_std_vec_vec_tokens_declaration_ts,
-    gen_struct_ident_dq_ts, gen_struct_ident_with_number_elements_dq_ts,
-    gen_tuple_struct_ident_dq_ts, gen_value_initialization_ts,
+    gen_return_err_query_part_error_write_into_buffer_ts, gen_struct_ident_dq_ts,
+    gen_struct_ident_with_number_elements_dq_ts, gen_tuple_struct_ident_dq_ts,
+    gen_value_initialization_ts, gen_vec_tokens_declaration_ts,
     impl_pg_type_equal_operator_for_ident_ts, impl_pg_type_where_filter_for_ident_ts,
 };
 use proc_macro2::TokenStream as Ts2;
@@ -1179,7 +1179,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 let sqlx_pg_types_pg_money_str = "sqlx::postgres::types::PgMoney".to_owned();
                 let bool_str = "bool".to_owned();
                 let std_string_string_str = "String".to_owned();
-                let std_vec_vec_u8_str = "Vec<u8>".to_owned();
+                let vec_u8_str = "Vec<u8>".to_owned();
                 let sqlx_types_chrono_naive_date_str = "sqlx::types::chrono::NaiveDate".to_owned();
                 let sqlx_types_chrono_naive_time_str = "sqlx::types::chrono::NaiveTime".to_owned();
                 let sqlx_types_time_time_str = "sqlx::types::time::Time".to_owned();
@@ -1198,7 +1198,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgType::SqlxPgTypesPgMoneyAsMoney => sqlx_pg_types_pg_money_str,
                     PgType::BoolAsBool => bool_str,
                     PgType::StdStringStringAsText => std_string_string_str,
-                    PgType::StdVecVecU8AsBytea => std_vec_vec_u8_str,
+                    PgType::StdVecVecU8AsBytea => vec_u8_str,
                     PgType::SqlxTypesChronoNaiveTimeAsTime => sqlx_types_chrono_naive_time_str,
                     PgType::SqlxTypesTimeTimeAsTime => sqlx_types_time_time_str,
                     PgType::SqlxPgTypesPgIntervalAsInterval => sqlx_pg_types_pg_interval_str,
@@ -1231,7 +1231,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     };
                     let value = gen_ident_origin_non_wrapping_8ad5380a(pg_type_pattern_7790d04a, is_nullable_86d888a6);
                     match &is_nullable {
-                        IsNullable::False => gen_std_vec_vec_tokens_declaration_ts(&value),
+                        IsNullable::False => gen_vec_tokens_declaration_ts(&value),
                         IsNullable::True => gen_option_tokens_declaration_ts(&value),
                     }
                 },
@@ -1259,7 +1259,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             },
             PgTypePattern::ArrayDim1 { dim1_is_nullable } => &{
                 let dim1_type = dim1_is_nullable.maybe_option_wrap(quote! {#inner_type_standart_not_null_ts});
-                is_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim1_type))
+                is_nullable.maybe_option_wrap(gen_vec_tokens_declaration_ts(&dim1_type))
             },
         };
         let can_be_primary_key = match &pg_type {

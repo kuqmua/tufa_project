@@ -35,8 +35,8 @@ use pg_crud_macros_common::{
     gen_impl_pg_json_type_test_cases_for_ident_ts, gen_impl_pg_json_type_ts,
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_sqlx_pg_for_ident_ts,
     gen_option_tokens_declaration_ts, gen_pg_type_where_ts,
-    gen_sqlx_types_json_type_declaration_ts, gen_std_vec_vec_tokens_declaration_ts,
-    gen_value_initialization_ts,
+    gen_sqlx_types_json_type_declaration_ts, gen_value_initialization_ts,
+    gen_vec_tokens_declaration_ts,
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -925,7 +925,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             let gen_ident_origin_6f054930 = |is_nullable_70fb22e6: &IsNullable, pg_json_type_pattern_042c1c1d: &PgJsonTypePattern| {
                                 let value = gen_ident_origin_non_wrapping_6c0934a6(is_nullable_70fb22e6, pg_json_type_pattern_042c1c1d);
                                 match &is_nullable {
-                                    IsNullable::False => gen_std_vec_vec_tokens_declaration_ts(&value),
+                                    IsNullable::False => gen_vec_tokens_declaration_ts(&value),
                                     IsNullable::True => gen_option_tokens_declaration_ts(&value),
                                 }
                             };
@@ -1805,7 +1805,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &Ts2::new(),
                 &{
                     let option_unit_ts = gen_option_tokens_declaration_ts(&quote! {()});
-                    let vec_ts = |value: &dyn ToTokens| gen_std_vec_vec_tokens_declaration_ts(&value);
+                    let vec_ts = |value: &dyn ToTokens| gen_vec_tokens_declaration_ts(&value);
                     let content_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                         match &pg_json_type_pattern {
                             PgJsonTypePattern::Standart => {
@@ -1907,12 +1907,12 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 },
                 PgJsonTypePattern::ArrayDim1 { dim1_is_nullable } => &{
                     let dim1_type = dim1_is_nullable.maybe_option_wrap(quote! {#ident_read_inner_standart_not_null_alias_ts});
-                    is_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim1_type))
+                    is_nullable.maybe_option_wrap(gen_vec_tokens_declaration_ts(&dim1_type))
                 },
                 PgJsonTypePattern::ArrayDim2 { dim1_is_nullable, dim2_is_nullable } => &{
                     let dim2_type = dim2_is_nullable.maybe_option_wrap(quote! {#ident_read_inner_standart_not_null_alias_ts});
-                    let dim1_type = dim1_is_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim2_type));
-                    is_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim1_type))
+                    let dim1_type = dim1_is_nullable.maybe_option_wrap(gen_vec_tokens_declaration_ts(&dim2_type));
+                    is_nullable.maybe_option_wrap(gen_vec_tokens_declaration_ts(&dim1_type))
                 },
                 PgJsonTypePattern::ArrayDim3 {
                     dim1_is_nullable,
@@ -1920,9 +1920,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     dim3_is_nullable,
                 } => &{
                     let dim3_type = dim3_is_nullable.maybe_option_wrap(quote! {#ident_read_inner_standart_not_null_alias_ts});
-                    let dim2_type = dim2_is_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim3_type));
-                    let dim1_type = dim1_is_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim2_type));
-                    is_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim1_type))
+                    let dim2_type = dim2_is_nullable.maybe_option_wrap(gen_vec_tokens_declaration_ts(&dim3_type));
+                    let dim1_type = dim1_is_nullable.maybe_option_wrap(gen_vec_tokens_declaration_ts(&dim2_type));
+                    is_nullable.maybe_option_wrap(gen_vec_tokens_declaration_ts(&dim1_type))
                 },
                 PgJsonTypePattern::ArrayDim4 {
                     dim1_is_nullable,
@@ -1931,10 +1931,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     dim4_is_nullable,
                 } => &{
                     let dim4_type = dim4_is_nullable.maybe_option_wrap(quote! {#ident_read_inner_standart_not_null_alias_ts});
-                    let dim3_type = dim3_is_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim4_type));
-                    let dim2_type = dim2_is_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim3_type));
-                    let dim1_type = dim1_is_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim2_type));
-                    is_nullable.maybe_option_wrap(gen_std_vec_vec_tokens_declaration_ts(&dim1_type))
+                    let dim3_type = dim3_is_nullable.maybe_option_wrap(gen_vec_tokens_declaration_ts(&dim4_type));
+                    let dim2_type = dim2_is_nullable.maybe_option_wrap(gen_vec_tokens_declaration_ts(&dim3_type));
+                    let dim1_type = dim1_is_nullable.maybe_option_wrap(gen_vec_tokens_declaration_ts(&dim2_type));
+                    is_nullable.maybe_option_wrap(gen_vec_tokens_declaration_ts(&dim1_type))
                 },
             };
             let impl_from_ident_origin_for_ident_read_inner_ts = {

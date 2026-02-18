@@ -73,7 +73,7 @@ use pg_crud_macros_common::{
     gen_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts,
     gen_read_only_ids_merged_with_create_into_where_equal_ts,
     gen_return_err_query_part_error_write_into_buffer_ts, gen_sqlx_types_json_type_declaration_ts,
-    gen_std_vec_vec_tokens_declaration_ts, gen_value_initialization_ts,
+    gen_value_initialization_ts, gen_vec_tokens_declaration_ts,
     impl_pg_type_where_filter_for_ident_ts, maybe_wrap_into_braces_ts, wrap_content_into_scopes_ts,
 };
 use proc_macro2::TokenStream as Ts2;
@@ -744,7 +744,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             IsNullable::True => wrap_into_scopes_ts(&gen_option_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(ident_standart_not_null_ucc))),
                         },
                         Pattern::Array => match &is_nullable {
-                            IsNullable::False => wrap_into_scopes_ts(&gen_std_vec_vec_tokens_declaration_ts(
+                            IsNullable::False => wrap_into_scopes_ts(&gen_vec_tokens_declaration_ts(
                                 &gen_tokens_table_type_declaration_or_create_ts(&ident_with_id_standart_not_null_ucc)
                             )),
                             IsNullable::True => wrap_into_scopes_ts(&gen_option_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(&ident_with_id_array_not_null_ucc))),
@@ -766,8 +766,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 IsNullable::True => gen_wrap_into_value_parameter_ts(&gen_option_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(ident_standart_not_null_ucc))),
                             },
                             Pattern::Array => match &is_nullable {
-                                IsNullable::False => gen_wrap_into_value_parameter_ts(&gen_std_vec_vec_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(&ident_with_id_standart_not_null_ucc))),
-                                IsNullable::True => gen_wrap_into_value_parameter_ts(&gen_option_tokens_declaration_ts(&gen_std_vec_vec_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(
+                                IsNullable::False => gen_wrap_into_value_parameter_ts(&gen_vec_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(&ident_with_id_standart_not_null_ucc))),
+                                IsNullable::True => gen_wrap_into_value_parameter_ts(&gen_option_tokens_declaration_ts(&gen_vec_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(
                                     &ident_with_id_standart_not_null_ucc,
                                 )))),
                             },
@@ -993,7 +993,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             },
                             Pattern::Array => match &is_nullable {
                                 IsNullable::False => wrap_into_scopes_ts(
-                                    &gen_std_vec_vec_tokens_declaration_ts(
+                                    &gen_vec_tokens_declaration_ts(
                                         &ident_with_id_standart_not_null_create_for_query_ucc
                                     )
                                 ),
@@ -2095,7 +2095,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             IsNullable::True => (wrap_content_into_scopes_dot_comma_ts(&gen_option_tokens_declaration_ts(&ident_standart_not_null_as_pg_json_type_read_ts)), DeriveSerdeDeserialize::True),
                         },
                         Pattern::Array => match &is_nullable {
-                            IsNullable::False => (wrap_content_into_scopes_dot_comma_ts(&gen_std_vec_vec_tokens_declaration_ts(&ident_with_id_standart_not_null_read_ucc)), DeriveSerdeDeserialize::True),
+                            IsNullable::False => (wrap_content_into_scopes_dot_comma_ts(&gen_vec_tokens_declaration_ts(&ident_with_id_standart_not_null_read_ucc)), DeriveSerdeDeserialize::True),
                             IsNullable::True => (wrap_content_into_scopes_dot_comma_ts(&gen_option_tokens_declaration_ts(&ident_with_id_array_not_null_as_pg_json_type_read_ts)), DeriveSerdeDeserialize::True),
                         },
                     };
@@ -2197,7 +2197,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 };
                 let impl_ident_read_ts = {
                     let pub_new_or_try_new_ts = {
-                        let std_vec_vec_ident_with_id_standart_not_null_read_ts = gen_std_vec_vec_tokens_declaration_ts(&ident_with_id_standart_not_null_read_ucc);
+                        let vec_ident_with_id_standart_not_null_read_ts = gen_vec_tokens_declaration_ts(&ident_with_id_standart_not_null_read_ucc);
                         match &pattern {
                             Pattern::Standart => match &is_nullable {
                                 IsNullable::False => gen_pub_try_new_for_ident_read_or_ident_with_id_standart_not_null_read_ts(&is_standart_with_id_false),
@@ -2215,7 +2215,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 IsNullable::False => gen_pub_const_new_ts(
                                     &must_use_ts,
                                     &gen_value_type_ts(
-                                        &std_vec_vec_ident_with_id_standart_not_null_read_ts
+                                        &vec_ident_with_id_standart_not_null_read_ts
                                     ),
                                     &self_value_ts
                                 ),
@@ -2223,7 +2223,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     &must_use_ts,
                                     &gen_value_type_ts(
                                         &gen_option_tokens_declaration_ts(
-                                            &std_vec_vec_ident_with_id_standart_not_null_read_ts
+                                            &vec_ident_with_id_standart_not_null_read_ts
                                         )
                                     ),
                                     &quote! {Self(#ValueSc.map(#ident_with_id_array_not_null_as_pg_json_type_read_ts::new))},
@@ -2453,11 +2453,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             },
                             Pattern::Array => match &is_nullable {
                                 IsNullable::False => {
-                                    let value_std_vec_vec_ident_with_id_standart_not_null_read_only_ids_ts = wrap_into_value_declaration_ts(&gen_std_vec_vec_tokens_declaration_ts(
+                                    let value_vec_ident_with_id_standart_not_null_read_only_ids_ts = wrap_into_value_declaration_ts(&gen_vec_tokens_declaration_ts(
                                         &ident_with_id_standart_not_null_read_only_ids_ucc
                                     ));
                                     quote! {
-                                        (#value_std_vec_vec_ident_with_id_standart_not_null_read_only_ids_ts);
+                                        (#value_vec_ident_with_id_standart_not_null_read_only_ids_ts);
                                     }
                                 },
                                 IsNullable::True => {
@@ -2565,7 +2565,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             IsNullable::True => gen_pub_type_ident_read_inner_alias_ts(&gen_option_tokens_declaration_ts(&gen_type_as_pg_json_type_read_inner_ts(&ident_standart_not_null_ucc))),
                         },
                         Pattern::Array => gen_pub_type_ident_read_inner_alias_ts(&match &is_nullable {
-                            IsNullable::False => gen_std_vec_vec_tokens_declaration_ts(
+                            IsNullable::False => gen_vec_tokens_declaration_ts(
                                 &ident_with_id_standart_not_null_read_inner_ucc
                             ),
                             IsNullable::True => gen_option_tokens_declaration_ts(&gen_type_as_pg_json_type_read_inner_ts(&ident_with_id_array_not_null_ucc)),
@@ -2639,18 +2639,18 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         IsStandartWithId::True => &ident_with_id_standart_not_null_update_el_ucc,
                     })
                 };
-                let std_vec_vec_ident_with_id_standart_not_null_create_ts = gen_std_vec_vec_tokens_declaration_ts(
+                let vec_ident_with_id_standart_not_null_create_ts = gen_vec_tokens_declaration_ts(
                     &ident_with_id_standart_not_null_create_ucc
                 );
-                let std_vec_vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts = gen_std_vec_vec_tokens_declaration_ts(
+                let vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts = gen_vec_tokens_declaration_ts(
                     &pg_crud_path_pg_json_type_uuid_uuid_update_ts
                 );
                 let gen_create_update_delete_fields_ts_ffcbdaf0 = |should_add_serde_skip_serializing_if_vec_is_empty_annotation: &ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation| {
                     gen_create_update_delete_fields_ts_043c4057(
                         should_add_serde_skip_serializing_if_vec_is_empty_annotation,
-                        &std_vec_vec_ident_with_id_standart_not_null_create_ts,
+                        &vec_ident_with_id_standart_not_null_create_ts,
                         &import_path_unique_vec_ident_with_id_standart_not_null_update_el_ts,
-                        &std_vec_vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts
+                        &vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts
                     )
                 };
                 let ident_update_ts = {
@@ -3002,9 +3002,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             where
                                                 __A: serde::de::SeqAccess<'de>,
                                             {
-                                                let __field0_value = serde::de::SeqAccess::next_element::<#std_vec_vec_ident_with_id_standart_not_null_create_ts>(&mut __seq)?.unwrap_or_default();
+                                                let __field0_value = serde::de::SeqAccess::next_element::<#vec_ident_with_id_standart_not_null_create_ts>(&mut __seq)?.unwrap_or_default();
                                                 let __field1_value = serde::de::SeqAccess::next_element::<#import_path_unique_vec_ident_with_id_standart_not_null_update_el_ts>(&mut __seq)?.unwrap_or_default();
-                                                let __field2_value = serde::de::SeqAccess::next_element::<#std_vec_vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts>(&mut __seq)?.unwrap_or_default();
+                                                let __field2_value = serde::de::SeqAccess::next_element::<#vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts>(&mut __seq)?.unwrap_or_default();
                                                 #match_try_new_in_deserialize_ts
                                             }
                                             #[inline]
@@ -3012,16 +3012,16 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             where
                                                 __A: serde::de::MapAccess<'de>,
                                             {
-                                                let mut __field0: Option<#std_vec_vec_ident_with_id_standart_not_null_create_ts> = None;
+                                                let mut __field0: Option<#vec_ident_with_id_standart_not_null_create_ts> = None;
                                                 let mut __field1: Option<#import_path_unique_vec_ident_with_id_standart_not_null_update_el_ts> = None;
-                                                let mut __field2: Option<#std_vec_vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts> = None;
+                                                let mut __field2: Option<#vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts> = None;
                                                 while let Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                                                     match __key {
                                                         __Field::__field0 => {
                                                             if Option::is_some(&__field0) {
                                                                 return Err(<__A::Error as serde::de::Error>::duplicate_field("create"));
                                                             }
-                                                            __field0 = Some(serde::de::MapAccess::next_value::<#std_vec_vec_ident_with_id_standart_not_null_create_ts>(&mut __map)?);
+                                                            __field0 = Some(serde::de::MapAccess::next_value::<#vec_ident_with_id_standart_not_null_create_ts>(&mut __map)?);
                                                         }
                                                         __Field::__field1 => {
                                                             if Option::is_some(&__field1) {
@@ -3033,7 +3033,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                             if Option::is_some(&__field2) {
                                                                 return Err(<__A::Error as serde::de::Error>::duplicate_field("delete"));
                                                             }
-                                                            __field2 = Some(serde::de::MapAccess::next_value::<#std_vec_vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts>(&mut __map)?);
+                                                            __field2 = Some(serde::de::MapAccess::next_value::<#vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts>(&mut __map)?);
                                                         }
                                                         __Field::__ignore => {
                                                             let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
@@ -3231,10 +3231,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             IsStandartWithId::True => &ident_with_id_standart_not_null_update_for_query_el_ucc,
                         })
                     };
-                    let std_vec_vec_ident_with_id_standart_not_null_create_for_query_ts = gen_std_vec_vec_tokens_declaration_ts(
+                    let vec_ident_with_id_standart_not_null_create_for_query_ts = gen_vec_tokens_declaration_ts(
                         &ident_with_id_standart_not_null_create_for_query_ucc
                     );
-                    let std_vec_vec_pg_crud_path_pg_json_type_uuid_uuid_update_for_query_ts = gen_std_vec_vec_tokens_declaration_ts(
+                    let vec_pg_crud_path_pg_json_type_uuid_uuid_update_for_query_ts = gen_vec_tokens_declaration_ts(
                         &pg_crud_path_pg_json_type_uuid_uuid_update_for_query_ts
                     );
                     match &pattern {
@@ -3257,9 +3257,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 &{
                                     let fields_ts = gen_create_update_delete_fields_ts_043c4057(
                                         &ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::True,
-                                        &std_vec_vec_ident_with_id_standart_not_null_create_for_query_ts,
+                                        &vec_ident_with_id_standart_not_null_create_for_query_ts,
                                         &import_path_unique_vec_ident_with_id_standart_not_null_update_for_query_el_ts,
-                                        &std_vec_vec_pg_crud_path_pg_json_type_uuid_uuid_update_for_query_ts,//todo maybe expand logic with where cases
+                                        &vec_pg_crud_path_pg_json_type_uuid_uuid_update_for_query_ts,//todo maybe expand logic with where cases
                                     );
                                     quote! {{#fields_ts}}
                                 }

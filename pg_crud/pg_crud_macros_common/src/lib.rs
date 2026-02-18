@@ -714,7 +714,7 @@ pub fn gen_sqlx_types_json_type_declaration_ts(type_ts: &dyn ToTokens) -> Ts2 {
 pub fn gen_option_tokens_declaration_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {Option<#type_ts>}
 }
-pub fn gen_std_vec_vec_tokens_declaration_ts(type_ts: &dyn ToTokens) -> Ts2 {
+pub fn gen_vec_tokens_declaration_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {Vec<#type_ts>}
 }
 pub fn gen_serde_deserialize_dq_ts(

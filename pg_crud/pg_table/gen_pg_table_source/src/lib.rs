@@ -80,8 +80,9 @@ use pg_crud_macros_common::{
     gen_impl_pg_crud_default_option_some_vec_one_el_ts, gen_impl_serde_deserialize_for_struct_ts,
     gen_match_try_new_in_deserialize_ts, gen_option_tokens_declaration_ts,
     gen_query_part_error_write_into_buffer_ts,
-    gen_return_err_query_part_error_write_into_buffer_ts, gen_std_vec_vec_tokens_declaration_ts,
-    gen_value_initialization_ts, impl_pg_type_where_filter_for_ident_ts, maybe_wrap_into_braces_ts,
+    gen_return_err_query_part_error_write_into_buffer_ts, gen_value_initialization_ts,
+    gen_vec_tokens_declaration_ts, impl_pg_type_where_filter_for_ident_ts,
+    maybe_wrap_into_braces_ts,
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -565,10 +566,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let ident_read_one_error_with_serde_ucc = SelfReadOneErrorWithSerdeUcc::from_tokens(&ident);
     let ident_try_delete_one_error_ucc = SelfTryDeleteOneErrorUcc::from_tokens(&ident);
     let ident_delete_one_error_with_serde_ucc = SelfDeleteOneErrorWithSerdeUcc::from_tokens(&ident);
-    let std_vec_vec_primary_key_field_type_read_ts =
-        gen_std_vec_vec_tokens_declaration_ts(&primary_key_field_type_as_pg_type_read_ucc);
-    let std_vec_vec_ident_read_only_ids_ts =
-        gen_std_vec_vec_tokens_declaration_ts(&ident_read_only_ids_ucc);
+    let vec_primary_key_field_type_read_ts =
+        gen_vec_tokens_declaration_ts(&primary_key_field_type_as_pg_type_read_ucc);
+    let vec_ident_read_only_ids_ts = gen_vec_tokens_declaration_ts(&ident_read_only_ids_ucc);
     let primary_key_field_ident = &primary_key_field.field_ident;
     let primary_key_field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&primary_key_field_ident);
     let primary_key_field_type_update_ts =
@@ -2174,8 +2174,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         )
     };
 
-    let std_vec_vec_struct_options_ident_ts =
-        gen_std_vec_vec_tokens_declaration_ts(&ident_read_ucc);
+    let vec_struct_options_ident_ts = gen_vec_tokens_declaration_ts(&ident_read_ucc);
     let not_unique_field_syn_variant_wrapper = new_syn_variant_wrapper(
         &NotUniqueFieldUcc,
         Some(StatusCode::BadRequest400),
@@ -3267,9 +3266,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             gen_parameters_payload_and_default_ts(
                 &operation,
                 &{
-                    let std_vec_vec_ident_create_ts =
-                        gen_std_vec_vec_tokens_declaration_ts(&ident_create_ucc);
-                    quote! {(pub #std_vec_vec_ident_create_ts);}
+                    let vec_ident_create_ts = gen_vec_tokens_declaration_ts(&ident_create_ucc);
+                    quote! {(pub #vec_ident_create_ts);}
                 },
                 &quote! {(vec![#pg_crud_default_option_some_vec_one_el_call_ts])},
             ),
@@ -3278,7 +3276,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let try_operation_logic_response_variants_impl_from_try_operation_logic_error_for_try_operation_logic_response_variants_try_operation_logic_error_ts =
                 gen_ident_try_operation_logic_response_variants_ident_operation_error_convert_ts(
                     &operation,
-                    &std_vec_vec_ident_read_only_ids_ts,
+                    &vec_ident_read_only_ids_ts,
                     &type_variants_from_request_response_syn_variants,
                 );
             {
@@ -3373,7 +3371,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             impl_ident_vec_ts.push(gen_try_operation_ts(
                 &operation,
                 &type_variants_from_request_response_syn_variants,
-                &std_vec_vec_ident_read_only_ids_ts,
+                &vec_ident_read_only_ids_ts,
                 &ValueSc,
             ));
             quote! {
@@ -3577,7 +3575,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let try_operation_logic_response_variants_impl_from_try_operation_logic_error_for_try_operation_logic_response_variants_try_operation_logic_error_ts =
                 gen_ident_try_operation_logic_response_variants_ident_operation_error_convert_ts(
                     &operation,
-                    &std_vec_vec_struct_options_ident_ts,
+                    &vec_struct_options_ident_ts,
                     &type_variants_from_request_response_syn_variants,
                 );
             {
@@ -3728,7 +3726,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             impl_ident_vec_ts.push(gen_try_operation_ts(
                 &operation,
                 &type_variants_from_request_response_syn_variants,
-                &std_vec_vec_struct_options_ident_ts,
+                &vec_struct_options_ident_ts,
                 &quote! {
                     #ValueSc
                     .into_iter()
@@ -3919,8 +3917,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             );
         let parameters_ts = gen_parameters_pattern_ts(&operation, {
             let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(&operation);
-            let std_vec_vec_ident_update_ts =
-                gen_std_vec_vec_tokens_declaration_ts(&ident_update_ucc);
+            let vec_ident_update_ts = gen_vec_tokens_declaration_ts(&ident_update_ucc);
             let ident_operation_payload_vec_ts = StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
@@ -3929,7 +3926,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .build_struct(
                     &ident_operation_payload_ucc,
                     &Ts2::new(),
-                    &quote! {(#std_vec_vec_ident_update_ts);},
+                    &quote! {(#vec_ident_update_ts);},
                 );
             let ident_operation_payload_try_new_error_ucc =
                 format!("{ident}{operation}PayloadTryNewError")
@@ -3957,7 +3954,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     );
             let impl_pub_try_new_for_ident_operation_payload_ts = gen_impl_pub_try_new_for_ident_ts(
                 &gen_ident_operation_payload_ucc(&operation),
-                &quote! {#ValueSc: #std_vec_vec_ident_update_ts},
+                &quote! {#ValueSc: #vec_ident_update_ts},
                 &ident_operation_payload_try_new_error_ucc,
                 &quote! {
                     let mut acc_6bf275fc = Vec::new();
@@ -4025,7 +4022,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     where
                                         __E: _serde::Deserializer<'de>,
                                     {
-                                        let __field0: #std_vec_vec_ident_update_ts = <#std_vec_vec_ident_update_ts as _serde::Deserialize>::deserialize(__e)?;
+                                        let __field0: #vec_ident_update_ts = <#vec_ident_update_ts as _serde::Deserialize>::deserialize(__e)?;
                                         #match_ident_update_many_payload_try_new_field0_ts
                                     }
                                     #[inline]
@@ -4036,7 +4033,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     where
                                         __A: _serde::de::SeqAccess<'de>,
                                     {
-                                        let Some(__field0) = _serde::de::SeqAccess::next_element::<#std_vec_vec_ident_update_ts>(&mut __seq)? else {
+                                        let Some(__field0) = _serde::de::SeqAccess::next_element::<#vec_ident_update_ts>(&mut __seq)? else {
                                             return Err(_serde::de::Error::invalid_length(0usize, &#tuple_struct_ident_operation_payload_with_1_el_dq_ts));
                                         };
                                         #match_ident_update_many_payload_try_new_field0_ts
@@ -4074,7 +4071,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let try_operation_logic_response_variants_impl_from_try_operation_logic_error_for_try_operation_logic_response_variants_try_operation_logic_error_ts =
                 gen_ident_try_operation_logic_response_variants_ident_operation_error_convert_ts(
                     &operation,
-                    &std_vec_vec_ident_read_only_ids_ts,
+                    &vec_ident_read_only_ids_ts,
                     &type_variants_from_request_response_syn_variants,
                 );
             {
@@ -4320,7 +4317,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             impl_ident_vec_ts.push(gen_try_operation_ts(
                 &operation,
                 &type_variants_from_request_response_syn_variants,
-                &std_vec_vec_ident_read_only_ids_ts,
+                &vec_ident_read_only_ids_ts,
                 &ValueSc,
             ));
             quote! {
@@ -4608,7 +4605,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let try_operation_logic_response_variants_impl_from_try_operation_logic_error_for_try_operation_logic_response_variants_try_operation_logic_error_ts =
                 gen_ident_try_operation_logic_response_variants_ident_operation_error_convert_ts(
                     &operation,
-                    &std_vec_vec_primary_key_field_type_read_ts,
+                    &vec_primary_key_field_type_read_ts,
                     &type_variants_from_request_response_syn_variants,
                 );
             {
@@ -4659,7 +4656,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             impl_ident_vec_ts.push(gen_try_operation_ts(
                 &operation,
                 &type_variants_from_request_response_syn_variants,
-                &std_vec_vec_primary_key_field_type_read_ts,
+                &vec_primary_key_field_type_read_ts,
                 &ValueSc,
             ));
             quote! {
