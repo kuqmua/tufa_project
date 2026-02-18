@@ -338,7 +338,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     let config = from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("1123f78f");
     let (fields_ts, pg_json_type_array) = {
         let acc_d97120ed = {
-            let generate_variants = |max_dim: Option<i32>|{
+            let gen_variants = |max_dim: Option<i32>|{
                 PgJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, pg_json_type| {
                     for pattern in Pattern::into_array() {
                         let include = match max_dim {
@@ -443,12 +443,12 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 })
             };
             match config.variant {
-                ConfigVariant::All => generate_variants(None),
-                ConfigVariant::WithoutDims => generate_variants(Some(0i32)),
-                ConfigVariant::WithDimOne => generate_variants(Some(1i32)),
-                ConfigVariant::WithDimTwo => generate_variants(Some(2i32)),
-                ConfigVariant::WithDimThree => generate_variants(Some(3i32)),
-                ConfigVariant::WithDimFour => generate_variants(Some(4i32)),
+                ConfigVariant::All => gen_variants(None),
+                ConfigVariant::WithoutDims => gen_variants(Some(0i32)),
+                ConfigVariant::WithDimOne => gen_variants(Some(1i32)),
+                ConfigVariant::WithDimTwo => gen_variants(Some(2i32)),
+                ConfigVariant::WithDimThree => gen_variants(Some(3i32)),
+                ConfigVariant::WithDimFour => gen_variants(Some(4i32)),
                 ConfigVariant::Concrete(value) => value,
             }
         };
