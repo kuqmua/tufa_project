@@ -2702,39 +2702,48 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
             type_variants_from_request_response_syn_variants
         };
-    let gen_ident_try_operation_error_ts =
-        |operation: &Operation, syn_variants: &Vec<Variant>| -> Ts2 {
-            let ident_try_operation_error_ucc = gen_ident_try_operation_error_ucc(operation);
-            let variants = syn_variants
-                .iter()
-                .cloned()
-                .chain(once({
-                    let ident_operation_error_with_serde_ucc =
-                        gen_ident_operation_error_with_serde_ucc(operation);
-                    new_syn_variant_wrapper(
-                        &ident_operation_error_with_serde_ucc,
-                        None,
-                        vec![(
-                    macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string,
-                    &operation.operation_error_with_serde_sc(),
-                    gen_simple_syn_punctuated_punctuated(&[
-                        &ident_operation_error_with_serde_ucc.to_string(),
-                    ]),
-                )],
-                    )
-                    .get_syn_variant()
-                    .clone()
-                }))
-                .collect::<Vec<Variant>>();
-            let variants_ts = variants.iter().map(gen_error_occurence_variant_ts);
-            quote! {
-                #AllowClippyArbitrarySourceItemOrdering
-                #DeriveDebugThiserrorErrorOccurence
-                pub enum #ident_try_operation_error_ucc {
-                    #(#variants_ts),*
-                }
-            }
-        };
+    let gen_ident_try_operation_error_ts = |operation: &Operation,
+                                            syn_variants: &Vec<Variant>|
+     -> Ts2 {
+        let content_ts_930e1a93 = StructOrEnumDeriveTokenStreamBuilder::new()
+                .make_pub()
+                .derive_debug()
+                .derive_thiserror_error()
+                .derive_error_occurence_lib_error_occurence()
+                .build_enum(
+                    &gen_ident_try_operation_error_ucc(operation),
+                    &Ts2::new(),
+                    &{
+                        let variants = syn_variants
+                            .iter()
+                            .cloned()
+                            .chain(once({
+                                let ident_operation_error_with_serde_ucc =
+                                    gen_ident_operation_error_with_serde_ucc(operation);
+                                new_syn_variant_wrapper(
+                                    &ident_operation_error_with_serde_ucc,
+                                    None,
+                                    vec![(
+                                macros_helpers_error_occurence_error_occurence_field_attr_eo_to_err_string,
+                                &operation.operation_error_with_serde_sc(),
+                                gen_simple_syn_punctuated_punctuated(&[
+                                    &ident_operation_error_with_serde_ucc.to_string(),
+                                ]),
+                            )],
+                                )
+                                .get_syn_variant()
+                                .clone()
+                            }))
+                            .collect::<Vec<Variant>>();
+                        let variants_ts = variants.iter().map(gen_error_occurence_variant_ts);
+                        quote!{{#(#variants_ts),*}}
+                    }
+                );
+        quote! {
+            #AllowClippyArbitrarySourceItemOrdering
+            #content_ts_930e1a93
+        }
+    };
     let std_sync_arc_combination_of_app_state_logic_traits_ts =
         quote! {std::sync::Arc<dyn #PgCrudSc::CombinationOfAppStateLogicTraits>};
     let gen_operation_ts = |operation: &Operation,
