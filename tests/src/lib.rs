@@ -502,4 +502,29 @@ mod tests {
             }
         }
     }
+    #[test]
+    fn check_no_empty_lines_in_rust_files() {
+        let mut errors = Vec::new();
+        for entry in project_directory()
+            .into_iter()
+            .filter_entry(|el| el.file_name() != "target")
+            .filter_map(Result::ok)
+            .filter(|el0| el0.path().extension().and_then(|el1| el1.to_str()) == Some("rs"))
+        {
+            let path = entry.path();
+            let Ok(content) = read_to_string(path) else {
+                continue;
+            };
+            for (line_number, line) in content.lines().enumerate() {
+                if line.trim().is_empty() {
+                    errors.push(format!("{}:{} empty line", path.display(), line_number + 1));
+                }
+            }
+        }
+        assert!(
+            errors.is_empty(),
+            "Empty lines found in Rust files:\n{}",
+            errors.join("\n")
+        );
+    }
 }
