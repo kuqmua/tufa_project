@@ -52,8 +52,7 @@ use strum_macros::{Display, EnumIter};
 use token_patterns::{
     AllowClippyArbitrarySourceItemOrdering, Bool, F32, F64, I8, I16, I32, I64, MustUse,
     PgCrudCommonDefaultOptionSomeVecOneEl, PgCrudCommonDefaultOptionSomeVecOneElCall,
-    PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall, StdStringString, U8, U16, U32, U64,
-    UuidUuid,
+    PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall, StringTs, U8, U16, U32, U64, UuidUuid,
 };
 #[must_use]
 pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
@@ -721,7 +720,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 PgJsonType::F32AsJsonbNumber => &F32,
                 PgJsonType::F64AsJsonbNumber => &F64,
                 PgJsonType::BoolAsJsonbBoolean => &Bool,
-                PgJsonType::StringAsJsonbString => &StdStringString,
+                PgJsonType::StringAsJsonbString => &StringTs,
                 PgJsonType::UuidUuidAsJsonbString => &UuidUuid,
             };
             quote! {#content_ts}
@@ -2437,7 +2436,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             mut #QuerySc: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
                         ) -> Result<
                             sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-                            #StdStringString
+                            #StringTs
                         > {
                             if let Err(#ErrorSc) = #QuerySc.try_bind(#ValueSc.0.0.to_string()) {
                                 return Err(#ErrorSc.to_string())

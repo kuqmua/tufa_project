@@ -10,7 +10,7 @@ use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use syn::{Data, DeriveInput, Fields, GenericParam, Ident, parse};
-use token_patterns::StdStringString;
+use token_patterns::StringTs;
 #[proc_macro_derive(
     ErrorOccurence,
     attributes(
@@ -173,7 +173,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_52e70d22, "\n {element}"}, &quote! {panic!("c751d54a");});
                                 quote! {
                                     #el_f00312fe_ident.to_string().lines().fold(
-                                        #StdStringString::new(),
+                                        #StringTs::new(),
                                         |mut acc_52e70d22, element| {
                                             #if_write_is_err_ts
                                             acc_52e70d22
@@ -185,13 +185,13 @@ pub fn error_occurence(input: Ts) -> Ts {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_a9ba7521, "\n {el_6e4f53ad}"}, &quote! {panic!("b35ed9f5");});
                                 quote! {
                                     #el_f00312fe_ident.iter().fold(
-                                        #StdStringString::new(),
+                                        #StringTs::new(),
                                         |mut acc_ac447c4b, el_36630fcf| {
                                             acc_ac447c4b.push_str(
                                                 &error_occurence_lib::ToErrString::to_err_string(el_36630fcf)
                                                 .lines()
                                                 .fold(
-                                                    #StdStringString::new(),
+                                                    #StringTs::new(),
                                                     |mut acc_a9ba7521, el_6e4f53ad| {
                                                         #if_write_is_err_ts
                                                         acc_a9ba7521
@@ -207,10 +207,10 @@ pub fn error_occurence(input: Ts) -> Ts {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_1bbd5ef3, "\n {el_3f2fe01d}"}, &quote! {panic!("4dfdd18d");});
                                 quote! {
                                     #el_f00312fe_ident.iter().fold(
-                                        #StdStringString::new(),
+                                        #StringTs::new(),
                                         |mut acc_c5adba93, el_37c46c8a| {
                                             acc_c5adba93.push_str(&el_37c46c8a.to_string().lines().fold(
-                                                #StdStringString::new(),
+                                                #StringTs::new(),
                                                 |mut acc_1bbd5ef3, el_3f2fe01d| {
                                                     #if_write_is_err_ts
                                                     acc_1bbd5ef3
@@ -225,7 +225,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {key}: {}", &error_occurence_lib::ToErrString::to_err_string(#ValueSc)}, &quote! {panic!("d030580a");});
                                 quote! {
                                     #el_f00312fe_ident.iter().fold(
-                                        #StdStringString::new(),
+                                        #StringTs::new(),
                                         |mut acc_06473093, (key, #ValueSc)| {
                                             #if_write_is_err_ts
                                             acc_06473093
@@ -241,7 +241,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                                             acc_a47e1ba7,
                                             "\n {key}: {}",
                                             #ValueSc.to_string().lines().fold(
-                                                #StdStringString::new(),
+                                                #StringTs::new(),
                                                 |mut acc_addfc699, el_8b8f577e| {
                                                     #if_write_is_err_ts
                                                     acc_addfc699
@@ -253,7 +253,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                                 );
                                 quote! {
                                     #el_f00312fe_ident.iter().fold(
-                                        #StdStringString::new(),
+                                        #StringTs::new(),
                                         |mut acc_a47e1ba7, (key, #ValueSc)| {
                                             #if_write_is_err_ts
                                             acc_a47e1ba7

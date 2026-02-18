@@ -59,7 +59,7 @@ use token_patterns::{
     PgCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize,
     PgCrudCommonDefaultOptionSomeVecOneEl, PgCrudCommonDefaultOptionSomeVecOneElCall,
     PgCrudCommonDefaultOptionSomeVecOneElMaxPageSize, PgCrudDefaultOptionSomeVecOneEl,
-    PgCrudDefaultOptionSomeVecOneElMaxPageSize, RefStr, StdFmtDisplay, StdStringString, U64,
+    PgCrudDefaultOptionSomeVecOneElMaxPageSize, RefStr, StdFmtDisplay, StringTs, U64,
 };
 #[derive(Debug, Clone)]
 pub enum DeriveOrImpl {
@@ -782,7 +782,7 @@ pub fn gen_impl_pg_json_type_ts(
                 #ColumnNameAndMaybeFieldGetterSc: #RefStr,
                 #is_select_query_part_column_name_and_maybe_field_getter_for_error_message_used: #RefStr,
                 #is_select_query_part_is_pg_type_used: #Bool,
-            ) -> Result<#StdStringString, #path_ts #QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #path_ts #QueryPartErrorUcc> {
                 #select_query_part_ts
             }
             type #WhereUcc = #where_type_ts;
@@ -790,7 +790,7 @@ pub fn gen_impl_pg_json_type_ts(
             type #ReadOnlyIdsUcc = #read_only_ids_type_ts;
             fn #SelectOnlyIdsQueryPartSc(
                 #ColumnNameAndMaybeFieldGetterSc: #RefStr,
-            ) -> Result<#StdStringString, #import_path ::#QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #import_path ::#QueryPartErrorUcc> {
                 #select_only_ids_query_part_ts
             }
             type #ReadInnerUcc = #read_inner_type_ts;
@@ -805,13 +805,13 @@ pub fn gen_impl_pg_json_type_ts(
                 #is_update_query_part_jsonb_set_target_used: #RefStr,
                 #JsonbSetPathSc: #RefStr,
                 #IncrementSc: #reference_mut_u64_ts,
-            ) -> Result<#StdStringString, #path_ts #QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #path_ts #QueryPartErrorUcc> {
                 #update_query_part_ts
             }
             fn #UpdateQueryBindSc(
                 #ValueSc: Self::#UpdateForQueryUcc,
                 #is_update_query_bind_mutable #QuerySc: #query_pg_arguments_ts
-            ) -> Result<#query_pg_arguments_ts, #StdStringString> {
+            ) -> Result<#query_pg_arguments_ts, #StringTs> {
                 #update_query_bind_ts
             }
             fn #SelectOnlyUpdatedIdsQueryPartSc(
@@ -819,13 +819,13 @@ pub fn gen_impl_pg_json_type_ts(
                 #FieldIdentSc: #RefStr,
                 #ColumnNameAndMaybeFieldGetterSc: #RefStr,
                 #IncrementSc: &mut #U64
-            ) -> Result<#StdStringString, #import_path ::#QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #import_path ::#QueryPartErrorUcc> {
                 #select_only_updated_ids_query_part_ts
             }
             fn #SelectOnlyUpdatedIdsQueryBindSc<'lifetime>(
                 #ValueSc: &'lifetime Self::#UpdateForQueryUcc,
                 #is_select_only_updated_ids_query_bind_mutable #QuerySc: #query_lifetime_pg_arguments_ts
-            ) -> Result<#query_lifetime_pg_arguments_ts, #StdStringString> {
+            ) -> Result<#query_lifetime_pg_arguments_ts, #StringTs> {
                 #select_only_updated_ids_query_bind_ts
             }
 
@@ -834,13 +834,13 @@ pub fn gen_impl_pg_json_type_ts(
                 #FieldIdentSc: #RefStr,
                 #ColumnNameAndMaybeFieldGetterSc: #RefStr,
                 #IncrementSc: &mut #U64
-            ) -> Result<#StdStringString, #import_path ::#QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #import_path ::#QueryPartErrorUcc> {
                 #select_only_created_ids_query_part_ts
             }
             fn #SelectOnlyCreatedIdsQueryBindSc<'lifetime>(
                 #ValueSc: &'lifetime Self::#CreateForQueryUcc,
                 #is_select_only_created_ids_query_bind_mutable #QuerySc: #query_lifetime_pg_arguments_ts
-            ) -> Result<#query_lifetime_pg_arguments_ts, #StdStringString> {
+            ) -> Result<#query_lifetime_pg_arguments_ts, #StringTs> {
                 #select_only_created_ids_query_bind_ts
             }
         }
@@ -1007,7 +1007,7 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
                 #increment_parameter_underscore: &mut #U64,
                 #column_parameter_underscore: &dyn #StdFmtDisplay,
                 #is_need_to_add_logical_operator_underscore: #Bool
-            ) -> Result<#StdStringString, #import_path::#QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #import_path::#QueryPartErrorUcc> {
                 #query_part_content_ts
             }
             fn #QueryBindSc(self, #is_query_bind_mutable query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
@@ -1111,7 +1111,7 @@ pub fn gen_impl_pg_type_ts(
             fn #CreateQueryPartSc(
                 #create_query_part_value_underscore: &Self::#CreateUcc,
                 #create_query_part_increment_underscore: &mut #U64
-            ) -> Result<#StdStringString, #import_path ::#QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #import_path ::#QueryPartErrorUcc> {
                 #create_query_part_content_ts
             }
             fn #CreateQueryBindSc(
@@ -1127,7 +1127,7 @@ pub fn gen_impl_pg_type_ts(
             fn #SelectQueryPartSc(
                 #select_query_part_value_underscore: &Self::#SelectUcc,
                 #ColumnSc: #RefStr,
-            ) -> Result<#StdStringString, #import_path ::#QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #import_path ::#QueryPartErrorUcc> {
                 #select_query_part_content_ts
             }
             type #WhereUcc = #ident_where_ucc;
@@ -1138,7 +1138,7 @@ pub fn gen_impl_pg_type_ts(
             type #ReadOnlyIdsUcc = #read_only_ids_ts;
             fn #SelectOnlyIdsQueryPartSc(
                 #ColumnSc: #RefStr
-            ) -> Result<#StdStringString, #import_path ::#QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #import_path ::#QueryPartErrorUcc> {
                 #select_only_ids_query_part_ts
             }
             type #ReadInnerUcc = #ident_read_inner_ucc;
@@ -1153,7 +1153,7 @@ pub fn gen_impl_pg_type_ts(
                 #update_query_part_jsonb_set_target_underscore: #RefStr,
                 #update_query_part_jsonb_set_path_underscore: #RefStr,
                 #IncrementSc: &mut #U64
-            ) -> Result<#StdStringString, #import_path ::#QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #import_path ::#QueryPartErrorUcc> {
                 #update_query_part_content_ts
             }
             fn #UpdateQueryBindSc(
@@ -1169,7 +1169,7 @@ pub fn gen_impl_pg_type_ts(
                 #ValueSc: &Self::#UpdateForQueryUcc,
                 #ColumnSc: #RefStr,
                 #IncrementSc: &mut #U64,
-            ) -> Result<#StdStringString, #import_path ::#QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #import_path ::#QueryPartErrorUcc> {
                 #select_only_updated_ids_query_part_ts
             }
             fn #SelectOnlyUpdatedIdsQueryBindSc<'lifetime>(

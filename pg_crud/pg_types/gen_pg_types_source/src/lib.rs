@@ -65,7 +65,7 @@ use strum_macros::{Display as StrumDisplay, EnumIter};
 use token_patterns::{
     AllowClippyArbitrarySourceItemOrdering, CoreDefaultDefaultDefault, F32, I16, I32, I64, MustUse,
     PgCrudCommonDefaultOptionSomeVecOneElCall,
-    PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall, StdStringString, U8, U32,
+    PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall, StringTs, U8, U32,
 };
 #[must_use]
 pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
@@ -1688,9 +1688,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     };
                     (
                         gen_fn_visit_newtype_struct_ts(&I64, &gen_serde_private_ok_pg_type_ts(&quote! {#inner_type_standart_not_null_ts(#field_0_value_ts)})),
-                        gen_fn_visit_newtype_struct_ts(&StdStringString, &gen_serde_private_ok_pg_type_ts(&match_uuid_uuid_field_type_try_parse_ts)),
+                        gen_fn_visit_newtype_struct_ts(&StringTs, &gen_serde_private_ok_pg_type_ts(&match_uuid_uuid_field_type_try_parse_ts)),
                         gen_fn_visit_newtype_struct_ts(&array_u8_6_ts, &gen_serde_private_ok_pg_type_ts(&sqlx_types_mac_address_mac_address_field_type_new_field_0_value_ts)),
-                        gen_fn_visit_newtype_struct_ts(&StdStringString, &match_origin_try_new_for_deserialize_one_ts),
+                        gen_fn_visit_newtype_struct_ts(&StringTs, &match_origin_try_new_for_deserialize_one_ts),
                         gen_fn_visit_newtype_struct_ts(&inner_type_standart_not_null_ts, &match_origin_try_new_for_deserialize_one_ts),
                     )
                 };
@@ -1752,7 +1752,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }),
                         gen_fn_visit_seq_ts(&{
-                            let fields_initialization_ts = gen_fields_serde_de_seq_access_next_el_initialization_ts(&[&StdStringString]);
+                            let fields_initialization_ts = gen_fields_serde_de_seq_access_next_el_initialization_ts(&[&StringTs]);
                             let serde_private_ok_pg_type_ts = gen_serde_private_ok_pg_type_ts(&match_uuid_uuid_field_type_try_parse_ts);
                             quote! {
                                 #fields_initialization_ts
@@ -1768,7 +1768,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }),
                         gen_fn_visit_seq_ts(&{
-                            let fields_initialization_ts = gen_fields_serde_de_seq_access_next_el_initialization_ts(&[&StdStringString]);
+                            let fields_initialization_ts = gen_fields_serde_de_seq_access_next_el_initialization_ts(&[&StringTs]);
                             quote! {
                                 #fields_initialization_ts
                                 #match_origin_try_new_for_deserialize_one_ts
@@ -3122,16 +3122,16 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let nanosecond_precision_is_not_supported_variant_try_new_ts = quote! {
                 #NanosecondPrecisionIsNotSupportedUcc {
                     #[eo_to_err_string_serde]
-                    #ValueSc: #StdStringString,
+                    #ValueSc: #StringTs,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
             };
             let sqlx_types_chrono_naive_date_as_date_try_new_error_variants_ts = quote! {
                 #EarlierDateNotSupportedUcc {
                     #[eo_to_err_string_serde]
-                    #ValueSc: #StdStringString,
+                    #ValueSc: #StringTs,
                     #[eo_to_err_string_serde]
-                    #EarliestSupportedDateSc: #StdStringString,
+                    #EarliestSupportedDateSc: #StringTs,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
             };
@@ -3271,7 +3271,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 #[eo_to_err_string_serde]
                                                 #MicrosecondSc: #U32,
                                                 #[eo_to_err_string_serde]
-                                                #ErrorSc: #StdStringString,
+                                                #ErrorSc: #StringTs,
                                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                             },
                                             #nanosecond_precision_is_not_supported_variant_try_new_ts
@@ -4887,7 +4887,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         };
         let impl_pg_type_for_ident_ts = {
             let gen_ok_string_from_tokens_ts = |content_ts: &dyn ToTokens| {
-                quote! {Ok(#StdStringString::from(#content_ts))}
+                quote! {Ok(#StringTs::from(#content_ts))}
             };
             let ok_string_from_default_ts = gen_ok_string_from_tokens_ts(&quote! {"default"});
             let ok_string_from_uuid_generate_v4_ts = gen_ok_string_from_tokens_ts(&quote! {"uuid_generate_v4()"});

@@ -8,7 +8,7 @@ use serde_json::from_str;
 use std::fmt::Write as _;
 #[allow(unused_imports)]
 use syn::{Data, DeriveInput, Fields, Ident, Type, parse};
-use token_patterns::StdStringString;
+use token_patterns::StringTs;
 const REGEX_VALUE: &str = "^[a-zA-Z]+$";
 #[proc_macro]
 pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
@@ -293,7 +293,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(input_ts: Ts) -> Ts {
                 let el_ident = &el.ident;
                 let el_ident_ucc_str = naming_common::ToTokensToUccStr::case(&el_ident);
                 let el_ident_ucc_dq_ts = dq_ts(&el_ident_ucc_str);
-                quote! {Self::#el_ident => #StdStringString::from(#el_ident_ucc_dq_ts)}
+                quote! {Self::#el_ident => #StringTs::from(#el_ident_ucc_dq_ts)}
             }
             Fields::Named(_) | Fields::Unnamed(_) => {
                 panic!("4955c50d")
@@ -303,7 +303,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(input_ts: Ts) -> Ts {
     let trait_path_ts = trait_path_ts();
     let generated = quote! {
         impl #trait_path_ts::AsRefStrToUccStr for #ident {
-            fn case(&self) -> #StdStringString {//todo maybe write duplicate Trait with &str instead of String
+            fn case(&self) -> #StringTs {//todo maybe write duplicate Trait with &str instead of String
                 match self {
                     #(#variants_matching_values_ts),*
                 }
@@ -338,7 +338,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(input_ts: Ts) -> Ts {
                 let el_ident = &el.ident;
                 let el_ident_sc_str = naming_common::ToTokensToScStr::case(&el_ident);
                 let el_ident_sc_dq_ts = dq_ts(&el_ident_sc_str);
-                quote! {Self::#el_ident => #StdStringString::from(#el_ident_sc_dq_ts)}
+                quote! {Self::#el_ident => #StringTs::from(#el_ident_sc_dq_ts)}
             }
             Fields::Named(_) | Fields::Unnamed(_) => {
                 panic!("b3ef2657")
@@ -348,7 +348,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(input_ts: Ts) -> Ts {
     let trait_path_ts = trait_path_ts();
     let generated = quote! {
         impl #trait_path_ts::AsRefStrToScStr for #ident {
-            fn case(&self) -> #StdStringString {
+            fn case(&self) -> #StringTs {
                 match self {
                     #(#variants_matching_values_ts),*
                 }
@@ -375,7 +375,6 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(input_ts: Ts) -> Ts {
     let Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("b2263e7e");
     };
-    let string = StdStringString;
     let variants_matching_values_ts = data_enum
         .variants
         .iter()
@@ -385,7 +384,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(input_ts: Ts) -> Ts {
                 let variant_ident_sc_str =
                     naming_common::ToTokensToUpperScStr::case(&variant_ident);
                 let variant_ident_sc_dq_ts = dq_ts(&variant_ident_sc_str);
-                quote! {Self::#variant_ident => #string::from(#variant_ident_sc_dq_ts)}
+                quote! {Self::#variant_ident => #StringTs::from(#variant_ident_sc_dq_ts)}
             }
             Fields::Named(_) | Fields::Unnamed(_) => panic!("b6fedcff"),
         })
@@ -393,7 +392,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(input_ts: Ts) -> Ts {
     let trait_path_ts = trait_path_ts();
     let generated = quote! {
         impl #trait_path_ts::ToUpperScStr for #ident {
-            fn case(&self) -> #string {
+            fn case(&self) -> #StringTs {
                 match self {
                     #(#variants_matching_values_ts),*
                 }

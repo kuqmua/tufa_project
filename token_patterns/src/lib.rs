@@ -106,8 +106,8 @@ impl ToTokens for RefStr {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct StdStringString;
-impl ToTokens for StdStringString {
+pub struct StringTs;
+impl ToTokens for StringTs {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {String}.to_tokens(tokens);
     }

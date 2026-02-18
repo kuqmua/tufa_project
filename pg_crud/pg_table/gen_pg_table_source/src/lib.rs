@@ -108,7 +108,7 @@ use token_patterns::{
     FieldAttrSerdeSkipSerializingIfOptionIsNone, I8, I16, I32, I64, MustUse,
     PgCrudCommonDefaultOptionSomeVecOneEl, PgCrudCommonDefaultOptionSomeVecOneElCall,
     PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall, PgCrudDefaultOptionSomeVecOneElCall,
-    RefStr, SqlxAcquire, SqlxRow, StdStringString, U8, U16, U32, U64,
+    RefStr, SqlxAcquire, SqlxRow, StringTs, U8, U16, U32, U64,
 };
 //todo decide where to do error log (maybe add in some places)
 //todo gen route what will return columns of the table and their rust and postgersql types
@@ -746,8 +746,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             });
             let option_char_ts = gen_option_tokens_declaration_ts(&Char);
             quote! {
-                fn #GenSelectQueryPartSc(#select_borrow_pg_crud_not_empty_unique_vec_ident_select_ts) -> Result<#StdStringString, #import_path ::#QueryPartErrorUcc> {
-                    let mut acc_37c883c3 = #StdStringString::default();
+                fn #GenSelectQueryPartSc(#select_borrow_pg_crud_not_empty_unique_vec_ident_select_ts) -> Result<#StringTs, #import_path ::#QueryPartErrorUcc> {
+                    let mut acc_37c883c3 = #StringTs::default();
                     for el_78d2ec39 in #SelectSc.to_vec() {
                         acc_37c883c3.push_str(&match el_78d2ec39 {
                             #variants_ts
@@ -1059,7 +1059,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     },
                 );
                 quote! {
-                    fn #CreateQueryPartSc(&self, #IncrementSc: &mut u64) -> Result<#StdStringString, pg_crud::#QueryPartErrorUcc> {
+                    fn #CreateQueryPartSc(&self, #IncrementSc: &mut u64) -> Result<#StringTs, pg_crud::#QueryPartErrorUcc> {
                         let mut acc_a097110b = String::default();
                         #primary_key_content_ts
                         #column_increments_ts
@@ -1308,12 +1308,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     quote! {
                         Ok(match &self.0 {
                             Some(value) => {
-                                let mut #AdditionalParametersSc = #StdStringString::from("where");
+                                let mut #AdditionalParametersSc = #StringTs::from("where");
                                 let mut is_first_push_to_additional_parameters_already_happend = false;
                                 #(#additional_parameters_modification_ts)*
                                 #AdditionalParametersSc
                             },
-                            None => #StdStringString::default()
+                            None => #StringTs::default()
                         })
                     }
                 },
@@ -1981,7 +1981,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let impl_ident_update_for_query_ts = {
             let update_query_part_primary_key_ts = {
                 quote! {
-                    fn #update_query_part_primary_key_sc(&self, #IncrementSc: &mut u64) -> Result<#StdStringString, #PgCrudSc::#QueryPartErrorUcc> {
+                    fn #update_query_part_primary_key_sc(&self, #IncrementSc: &mut u64) -> Result<#StringTs, #PgCrudSc::#QueryPartErrorUcc> {
                         match #primary_key_field_type_as_pg_type_ts #UpdateQueryPartSc(
                             &self.#primary_key_field_ident,
                             "",
@@ -2007,7 +2007,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         fn #update_query_part_field_ident_sc(
                             #ValueSc: &pg_crud::Value<#field_type_as_pg_crud_pg_type_pg_type_ts #UpdateForQueryUcc>,
                             #IncrementSc: &mut u64
-                        ) -> Result<#StdStringString, #PgCrudSc::#QueryPartErrorUcc> {
+                        ) -> Result<#StringTs, #PgCrudSc::#QueryPartErrorUcc> {
                             match #field_type_as_pg_crud_pg_type_pg_type_ts #UpdateQueryPartSc(
                                 &#ValueSc.#ValueSc,
                                 #field_ident_dq_ts,
@@ -2058,7 +2058,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 });
                 quote! {
-                    fn #SelectOnlyUpdatedIdsQueryPartSc(&self, #IncrementSc: &mut u64) -> Result<#StdStringString, pg_crud::QueryPartError> {
+                    fn #SelectOnlyUpdatedIdsQueryPartSc(&self, #IncrementSc: &mut u64) -> Result<#StringTs, pg_crud::QueryPartError> {
                         let mut acc_88c91f52 = String::new();
                         #primary_key_content_ts
                         #(#content_ts)*
@@ -3204,7 +3204,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         });
         quote! {
             {
-                let mut acc_a35168d8 = #StdStringString::new();
+                let mut acc_a35168d8 = #StringTs::new();
                 #(#select_only_ids_query_part_initialization_ts)*
                 let _: Option<char> = acc_a35168d8.pop();
                 acc_a35168d8
@@ -3286,7 +3286,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #column_names_dq_ts,
                         &{
                             #increment_initialization_ts
-                            let mut acc_8a58994e = #StdStringString::default();
+                            let mut acc_8a58994e = #StringTs::default();
                             for el_1651705d in &#ParametersSc.#PayloadSc.0 {
                                 match el_1651705d.#CreateQueryPartSc(&mut #IncrementSc) {
                                     Ok(value_f4fdd10d) => {
@@ -4102,7 +4102,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 pg_crud::gen_column_equals_case_acc_else_column_end_comma_update_many_query_part(
                                                     #field_ident_dq_ts,
                                                     &{
-                                                        let mut acc_8ad06c8c = #StdStringString::default();
+                                                        let mut acc_8ad06c8c = #StringTs::default();
                                                         for el_defbc401 in &#UpdateForQueryVecSc {
                                                             if let Some(value_3ea04126) = &el_defbc401.#field_ident {
                                                                 acc_8ad06c8c.push_str(&#PgCrudSc::#gen_when_column_id_then_value_update_many_query_part_sc(
@@ -4150,13 +4150,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         {
                             #increment_initialization_ts
                             let elements = {
-                                let mut acc_b86a253a = #StdStringString::default();
+                                let mut acc_b86a253a = #StringTs::default();
                                 #fields_named_without_primary_key_update_assignment_ts
                                 let _: Option<char> = acc_b86a253a.pop();
                                 acc_b86a253a
                             };
                             let primary_keys = {
-                                let mut acc_a95eb175 = #StdStringString::default();
+                                let mut acc_a95eb175 = #StringTs::default();
                                 for el_9b2b56f8 in &#UpdateForQueryVecSc {
                                     #if_write_is_err_ts
                                 }
@@ -4390,7 +4390,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         {
                             #increment_initialization_ts
                             let #ColumnsSc = {
-                                let mut acc_683e37b8 = #StdStringString::default();
+                                let mut acc_683e37b8 = #StringTs::default();
                                 #additional_parameters_modification_ts
                                 let _: Option<char> = acc_683e37b8.pop();
                                 acc_683e37b8
