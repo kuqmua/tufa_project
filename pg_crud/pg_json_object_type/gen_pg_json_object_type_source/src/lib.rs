@@ -2476,11 +2476,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         }
                     };
                     let impl_sqlx_decode_sqlx_pg_for_ident_with_id_standart_not_null_read_only_ids_ts = gen_impl_sqlx_decode_ts(&ident_with_id_standart_not_null_read_only_ids_ucc);
-                    let impl_sqlx_type_sqlx_pg_for_ident_with_id_standart_not_null_read_only_ids_ts = gen_impl_sqlx_type_ts(&ident_with_id_standart_not_null_read_only_ids_ucc);
+                    let impl_sqlx_type_for_ident_with_id_standart_not_null_read_only_ids_ts = gen_impl_sqlx_type_ts(&ident_with_id_standart_not_null_read_only_ids_ucc);
                     quote! {
                         #ident_with_id_standart_not_null_read_only_ids_ts
                         #impl_sqlx_decode_sqlx_pg_for_ident_with_id_standart_not_null_read_only_ids_ts
-                        #impl_sqlx_type_sqlx_pg_for_ident_with_id_standart_not_null_read_only_ids_ts
+                        #impl_sqlx_type_for_ident_with_id_standart_not_null_read_only_ids_ts
                     }
                 } else {
                     Ts2::new()
