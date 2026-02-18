@@ -339,157 +339,120 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("1123f78f");
     let (fields_ts, pg_json_type_array) = {
         {
-            let gen_standart = |acc_29796d99: &mut Vec<PgJsonTypeRecord>, pg_json_type: PgJsonType|{
-                for el_2f39e657 in IsNullable::into_array() {
-                    acc_29796d99.push(PgJsonTypeRecord {
-                        pg_json_type: pg_json_type.clone(),
-                        is_nullable: el_2f39e657,
-                        pg_json_type_pattern: PgJsonTypePattern::Standart,
-                    });
-                }
-            };
-            let gen_array_dim1 = |acc_5b22a398: &mut Vec<PgJsonTypeRecord>, pg_json_type: PgJsonType|{
-                for el_29854486 in IsNullable::into_array() {
-                    for el_6440cc9c in IsNullable::into_array() {
-                        acc_5b22a398.push(PgJsonTypeRecord {
-                            pg_json_type: pg_json_type.clone(),
-                            is_nullable: el_29854486,
-                            pg_json_type_pattern: PgJsonTypePattern::ArrayDim1 { dim1_is_nullable: el_6440cc9c },
-                        });
-                    }
-                }
-            };
-            let gen_array_dim2 = |acc_e59f7158: &mut Vec<PgJsonTypeRecord>, pg_json_type: PgJsonType|{
-                for el_a6ba4c3e in IsNullable::into_array() {
-                    for el_4b5a815d in IsNullable::into_array() {
-                        for el_2e4896dd in IsNullable::into_array() {
-                            acc_e59f7158.push(PgJsonTypeRecord {
-                                pg_json_type: pg_json_type.clone(),
-                                is_nullable: el_a6ba4c3e,
-                                pg_json_type_pattern: PgJsonTypePattern::ArrayDim2 {
-                                    dim1_is_nullable: el_4b5a815d,
-                                    dim2_is_nullable: el_2e4896dd
-                                },
-                            });
-                        }
-                    }
-                }
-            };
-            let gen_array_dim3 = |acc_77498dc3: &mut Vec<PgJsonTypeRecord>, pg_json_type: PgJsonType|{
-                for el_8f03b1c2 in IsNullable::into_array() {
-                    for el_a27b642f in IsNullable::into_array() {
-                        for el_dc57e9b7 in IsNullable::into_array() {
-                            for el_4361fee5 in IsNullable::into_array() {
-                                acc_77498dc3.push(PgJsonTypeRecord {
-                                    pg_json_type: pg_json_type.clone(),
-                                    is_nullable: el_8f03b1c2,
-                                    pg_json_type_pattern: PgJsonTypePattern::ArrayDim3 {
-                                        dim1_is_nullable: el_a27b642f,
-                                        dim2_is_nullable: el_dc57e9b7,
-                                        dim3_is_nullable: el_4361fee5,
-                                    },
-                                });
-                            }
-                        }
-                    }
-                }
-            };
-            let gen_array_dim4 = |acc_7c8a3329: &mut Vec<PgJsonTypeRecord>, pg_json_type: PgJsonType|{
-                for el_daf10957 in IsNullable::into_array() {
-                    for el_fc5a53dd in IsNullable::into_array() {
-                        for el_69b59c5c in IsNullable::into_array() {
-                            for el_d7efbd09 in IsNullable::into_array() {
-                                for el_c16cb65b in IsNullable::into_array() {
-                                    acc_7c8a3329.push(PgJsonTypeRecord {
-                                        pg_json_type: pg_json_type.clone(),
-                                        is_nullable: el_daf10957,
-                                        pg_json_type_pattern: PgJsonTypePattern::ArrayDim4 {
-                                            dim1_is_nullable: el_fc5a53dd,
-                                            dim2_is_nullable: el_69b59c5c,
-                                            dim3_is_nullable: el_d7efbd09,
-                                            dim4_is_nullable: el_c16cb65b,
-                                        },
-                                    });
+            let acc_d97120ed = {
+                let generate_variants = |max_dim: Option<i32>|{
+                    PgJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, pg_json_type| {
+                        for pattern in PgJsonTypePattern::into_array() {
+                            let include = match max_dim {
+                                None => true,
+                                Some(0i32) => matches!(pattern, PgJsonTypePattern::Standart),
+                                Some(value_b6fece15) => {
+                                    let dim = match pattern {
+                                        PgJsonTypePattern::Standart => 0i32,
+                                        PgJsonTypePattern::ArrayDim1 { .. } => 1i32,
+                                        PgJsonTypePattern::ArrayDim2 { .. } => 2i32,
+                                        PgJsonTypePattern::ArrayDim3 { .. } => 3i32,
+                                        PgJsonTypePattern::ArrayDim4 { .. } => 4i32,
+                                    };
+                                    dim <= value_b6fece15
+                                }
+                            };
+                            if include {
+                                match pattern {
+                                    PgJsonTypePattern::Standart => {
+                                        for is_nullable in IsNullable::into_array() {
+                                            acc.push(PgJsonTypeRecord {
+                                                pg_json_type: pg_json_type.clone(),
+                                                is_nullable,
+                                                pg_json_type_pattern: PgJsonTypePattern::Standart,
+                                            });
+                                        }
+                                    }
+                                    PgJsonTypePattern::ArrayDim1 { .. } => {
+                                        for is_nullable in IsNullable::into_array() {
+                                            for dim1_is_nullable in IsNullable::into_array() {
+                                                acc.push(PgJsonTypeRecord {
+                                                    pg_json_type: pg_json_type.clone(),
+                                                    is_nullable,
+                                                    pg_json_type_pattern: PgJsonTypePattern::ArrayDim1 {
+                                                        dim1_is_nullable,
+                                                    },
+                                                });
+                                            }
+                                        }
+                                    }
+                                    PgJsonTypePattern::ArrayDim2 { .. } => {
+                                        for is_nullable in IsNullable::into_array() {
+                                            for dim1_is_nullable in IsNullable::into_array() {
+                                                for dim2_is_nullable in IsNullable::into_array() {
+                                                    acc.push(PgJsonTypeRecord {
+                                                        pg_json_type: pg_json_type.clone(),
+                                                        is_nullable,
+                                                        pg_json_type_pattern: PgJsonTypePattern::ArrayDim2 {
+                                                            dim1_is_nullable,
+                                                            dim2_is_nullable,
+                                                        },
+                                                    });
+                                                }
+                                            }
+                                        }
+                                    }
+                                    PgJsonTypePattern::ArrayDim3 { .. } => {
+                                        for is_nullable in IsNullable::into_array() {
+                                            for dim1_is_nullable in IsNullable::into_array() {
+                                                for dim2_is_nullable in IsNullable::into_array() {
+                                                    for dim3_is_nullable in IsNullable::into_array() {
+                                                        acc.push(PgJsonTypeRecord {
+                                                            pg_json_type: pg_json_type.clone(),
+                                                            is_nullable,
+                                                            pg_json_type_pattern: PgJsonTypePattern::ArrayDim3 {
+                                                                dim1_is_nullable,
+                                                                dim2_is_nullable,
+                                                                dim3_is_nullable,
+                                                            },
+                                                        });
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    PgJsonTypePattern::ArrayDim4 { .. } => {
+                                        for is_nullable in IsNullable::into_array() {
+                                            for dim1_is_nullable in IsNullable::into_array() {
+                                                for dim2_is_nullable in IsNullable::into_array() {
+                                                    for dim3_is_nullable in IsNullable::into_array() {
+                                                        for dim4_is_nullable in IsNullable::into_array() {
+                                                            acc.push(PgJsonTypeRecord {
+                                                                pg_json_type: pg_json_type.clone(),
+                                                                is_nullable,
+                                                                pg_json_type_pattern: PgJsonTypePattern::ArrayDim4 {
+                                                                    dim1_is_nullable,
+                                                                    dim2_is_nullable,
+                                                                    dim3_is_nullable,
+                                                                    dim4_is_nullable,
+                                                                },
+                                                            });
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
-                    }
+                        acc
+                    })
+                };
+                match gen_pg_json_types_config.variant {
+                    GenPgJsonTypesConfigVariant::All => generate_variants(None),
+                    GenPgJsonTypesConfigVariant::WithoutDims => generate_variants(Some(0i32)),
+                    GenPgJsonTypesConfigVariant::WithDimOne => generate_variants(Some(1i32)),
+                    GenPgJsonTypesConfigVariant::WithDimTwo => generate_variants(Some(2i32)),
+                    GenPgJsonTypesConfigVariant::WithDimThree => generate_variants(Some(3i32)),
+                    GenPgJsonTypesConfigVariant::WithDimFour => generate_variants(Some(4i32)),
+                    GenPgJsonTypesConfigVariant::Concrete(value) => value,
                 }
-            };
-            let acc_d97120ed = match gen_pg_json_types_config.variant {
-                GenPgJsonTypesConfigVariant::All => PgJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_e2f65a79, pg_json_type| {
-                    for el_644643cd in PgJsonTypePattern::into_array() {
-                        match &el_644643cd {
-                            PgJsonTypePattern::Standart => gen_standart(&mut acc_e2f65a79, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDim1 { .. } => gen_array_dim1(&mut acc_e2f65a79, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDim2 { .. } => gen_array_dim2(&mut acc_e2f65a79, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDim3 { .. } => gen_array_dim3(&mut acc_e2f65a79, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDim4 { .. } => gen_array_dim4(&mut acc_e2f65a79, pg_json_type.clone()),
-                        }
-                    }
-                    acc_e2f65a79
-                }),
-                GenPgJsonTypesConfigVariant::WithoutDims => PgJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_3d95645c, pg_json_type| {
-                    for el_fccf1979 in PgJsonTypePattern::into_array() {
-                        match &el_fccf1979 {
-                            PgJsonTypePattern::Standart => gen_standart(&mut acc_3d95645c, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDim1 { .. } |
-                            PgJsonTypePattern::ArrayDim2 { .. } |
-                            PgJsonTypePattern::ArrayDim3 { .. } |
-                            PgJsonTypePattern::ArrayDim4 { .. } => (),
-                        }
-                    }
-                    acc_3d95645c
-                }),
-                GenPgJsonTypesConfigVariant::WithDimOne => PgJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_66a17cae, pg_json_type| {
-                    for el_e69bd1fc in PgJsonTypePattern::into_array() {
-                        match &el_e69bd1fc {
-                            PgJsonTypePattern::Standart => gen_standart(&mut acc_66a17cae, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDim1 { .. } => gen_array_dim1(&mut acc_66a17cae, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDim2 { .. } |
-                            PgJsonTypePattern::ArrayDim3 { .. } |
-                            PgJsonTypePattern::ArrayDim4 { .. } => (),
-                        }
-                    }
-                    acc_66a17cae
-                }),
-                GenPgJsonTypesConfigVariant::WithDimTwo => PgJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_c5ffb796, pg_json_type| {
-                    for el_345fd6bd in PgJsonTypePattern::into_array() {
-                        match &el_345fd6bd {
-                            PgJsonTypePattern::Standart => gen_standart(&mut acc_c5ffb796, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDim1 { .. } => gen_array_dim1(&mut acc_c5ffb796, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDim2 { .. } => gen_array_dim2(&mut acc_c5ffb796, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDim3 { .. } |
-                            PgJsonTypePattern::ArrayDim4 { .. } => (),
-                        }
-                    }
-                    acc_c5ffb796
-                }),
-                GenPgJsonTypesConfigVariant::WithDimThree => PgJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_78b27c00, pg_json_type| {
-                    for el_88e3b8fe in PgJsonTypePattern::into_array() {
-                        match &el_88e3b8fe {
-                            PgJsonTypePattern::Standart => gen_standart(&mut acc_78b27c00, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDim1 { .. } => gen_array_dim1(&mut acc_78b27c00, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDim2 { .. } => gen_array_dim2(&mut acc_78b27c00, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDim3 { .. } => gen_array_dim3(&mut acc_78b27c00, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDim4 { .. } => (),
-                        }
-                    }
-                    acc_78b27c00
-                }),
-                GenPgJsonTypesConfigVariant::WithDimFour => PgJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_172c62ad, pg_json_type| {
-                    for el_80434642 in PgJsonTypePattern::into_array() {
-                        match &el_80434642 {
-                            PgJsonTypePattern::Standart => gen_standart(&mut acc_172c62ad, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDim1 { .. } => gen_array_dim1(&mut acc_172c62ad, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDim2 { .. } => gen_array_dim2(&mut acc_172c62ad, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDim3 { .. } => gen_array_dim3(&mut acc_172c62ad, pg_json_type.clone()),
-                            PgJsonTypePattern::ArrayDim4 { .. } => gen_array_dim4(&mut acc_172c62ad, pg_json_type.clone()),
-                        }
-                    }
-                    acc_172c62ad
-                }),
-                GenPgJsonTypesConfigVariant::Concrete(value) => value,
             };
             let mut seen = HashSet::new();
             assert!(
