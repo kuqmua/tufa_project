@@ -221,7 +221,6 @@ impl PgFilter for PgTypeFilter {
         }
     }
 }
-
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Display, EnumIter, EnumExtension)]
 pub enum PgJsonTypeFilter {
@@ -453,7 +452,6 @@ impl PgFilter for PgJsonTypeFilter {
         }
     }
 }
-
 pub trait PgFilter {
     fn maybe_generic(&self) -> Option<Ts2>;
     fn prefix_where_self_ucc(&self) -> Ts2;

@@ -29,7 +29,6 @@ pub fn gen_simple_syn_punctuated_punctuated(
         panic!("f68497cc");
     }
 }
-
 #[must_use]
 pub fn string_syn_punctuated_punctuated() -> Punctuated<PathSegment, PathSep> {
     gen_simple_syn_punctuated_punctuated(&["std", "string", "String"])

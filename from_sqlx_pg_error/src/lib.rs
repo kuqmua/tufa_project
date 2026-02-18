@@ -6,14 +6,12 @@
 //     let ident = &syn_derive_input.ident;
 //     let proc_macro_name_ucc_ident_str =
 //         format!("{proc_macro_name_ucc} {ident}");
-
 //     // let sqlx_pg_error_syn_variants = enum_variants::sqlx_pg_error_syn_variants(&proc_macro_name_ucc_ident_str);
 //     // sqlx_pg_error_syn_variants.iter().map(|el_ea7f6dd1|{
 //     //     let field_ident = field.ident;
 //     //     let field_ty =
 //     //     quote! {}
 //     // }).collect::<Vec<Ts2>>();
-
 //     let field_code_occurence_new_d7be05e4_ebc4_47bc_a99c_d1143d5e4dae_ts = gen_field_code_occurence_new_ts(
 //         file!(),
 //         line!(),

@@ -420,7 +420,6 @@ impl TryFrom<&String> for StatusCode {
         }
     }
 }
-
 #[must_use]
 pub fn get_only_one(variant: &Variant) -> StatusCode {
     let mut option_self = None;

@@ -191,7 +191,6 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
     //     "GenPgJsonObjectTypeJsonVariants",
     //     &serde_json::to_string(&pg_json_object_type_record_vec).expect("efc7a263"),
     // );
-
     // element.iter().enumerate().fold(String::new(), |mut acc_1e1c6a6e, (index, element)| {
     //     let el_sc_str = naming_common::AsRefStrToScStr::case(element);
     //     if index == 0 {
@@ -283,20 +282,17 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let is_nullable = &element.is_nullable;
             let pattern = &element.pattern;
             let trait_gen = &element.trait_gen;
-
             let self_field_vec_ts = quote! {.0.to_vec()};
             let cfg_feature_test_utils = quote! {#[cfg(feature = "test-utils")]};
             let return_err_query_part_error_write_into_buffer_ts = gen_return_err_query_part_error_write_into_buffer_ts(import_path);
             let none_ts = quote!{None};
             let must_use_ts = MustUse;
-
             let gen_import_path_value_initialization_ts = |content_ts: &dyn ToTokens|{
                 gen_value_initialization_ts(
                     &import_path,
                     &content_ts
                 )
             };
-
             let import_path_query_part_error_ts = {
                 let query_part_error_ucc = QueryPartErrorUcc;
                 quote! {#import_path::#query_part_error_ucc}
@@ -325,7 +321,6 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let wrap_into_value_initialization_ts = |content_ts: &dyn ToTokens|{
                 quote!{#import_path_value_ts { #ValueSc: #content_ts }}
             };
-
             let syn_derive_input_ident = &syn_derive_input.ident;
             let vec_syn_field = if let Data::Struct(data_struct) = &syn_derive_input.data {
                 if let Fields::Named(fields_named) = &data_struct.fields {
@@ -364,7 +359,6 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 let not_null_or_nullable_str = is_nullable_325dc715.not_null_or_nullable_str();
                 format!("{is_nullable_325dc715_rust}{rust_part}{AsUcc}{not_null_or_nullable_str}{pg_part}").parse::<Ts2>().expect("43784dd3")
             };
-
             let ident = &gen_ident_ucc(&match (&is_nullable, &pattern) {
                 (IsNullable::False, Pattern::Standart) => IdentPattern::StandartNotNullWithoutId,
                 (IsNullable::False, Pattern::Array) => IdentPattern::ArrayNotNullWithId,
@@ -385,7 +379,6 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let ident_as_import_path_pg_json_type_ts = gen_type_as_pg_json_type_ts(&ident);
             let ident_standart_not_null_as_import_path_pg_json_type_ts = gen_type_as_pg_json_type_ts(&ident_standart_not_null_ucc);
             let ident_array_not_null_as_import_path_pg_json_type_ts = gen_type_as_pg_json_type_ts(&ident_array_not_null_ucc);
-
             let uuid_uuid_as_not_null_jsonb_string_ucc = UuidUuidAsNotNullJsonbStringUcc;
             let uuid_uuid_as_not_null_jsonb_string_ts = quote!{#import_path::#uuid_uuid_as_not_null_jsonb_string_ucc};
             let uuid_uuid_as_not_null_jsonb_string_table_type_declaration_ucc = {
@@ -666,7 +659,6 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let ident_as_pg_json_type_table_type_declaration_ts = gen_type_as_pg_json_type_subtype_ts(&ident, &pg_json_type_subtype_table_type_declaration);
             let self_value_ts = quote! {Self(#ValueSc)};
             let pg_type_where_filter_query_bind_value_query_ts = quote!{#import_path::PgTypeWhereFilter::query_bind(#ValueSc, #QuerySc)};
-
             let ident_table_type_declaration_ucc = SelfTableTypeDeclarationUcc::from_tokens(&ident);
             let ident_create_ucc = SelfCreateUcc::from_tokens(&ident);
             let ident_array_not_null_update_for_query_ucc = SelfUpdateForQueryUcc::from_tokens(&ident_array_not_null_ucc);
@@ -887,7 +879,6 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     #maybe_ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_ts
                 }
             };
-
             let ident_table_type_declaration_ts = {
                 let ident_table_type_declaration_common_ts = gen_ident_table_type_declaration_or_ident_create_common_ts(&PgJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration);
                 quote! {
@@ -6981,7 +6972,6 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         let create_into_pg_type_option_vec_where_dim_one_equal_ts = &none_ts;
                         let pg_type_option_vec_where_greater_than_test_ts = &none_ts;
                         let read_only_ids_merged_with_table_type_declaration_into_pg_type_option_where_greater_than_ts = &none_ts;
-
                         let (
                             read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_ts,
                             read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_ts,

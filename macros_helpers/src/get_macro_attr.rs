@@ -17,7 +17,6 @@ pub fn get_macro_attr<'attrs_litime>(
         })
         .expect("68acaa15")
 }
-
 #[must_use]
 pub fn get_macro_attr_meta_list_ts<'attrs_lifetime>(
     attrs: &'attrs_lifetime [Attribute],

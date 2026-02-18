@@ -4160,7 +4160,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #maybe_pub_enum_ident_standart_not_null_origin_try_new_for_deserialize_error_ts
                 #impl_ident_origin_ts
                 #impl_from_ident_origin_for_ident_inner_type_ts
-
                 #maybe_impl_is_string_empty_for_ident_origin_ts
                 #maybe_impl_serde_serialize_for_ident_standart_not_null_origin_ts
                 #maybe_impl_serde_deserialize_for_ident_standart_not_null_origin_ts
@@ -5442,52 +5441,44 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(positive_less_typical), end: std::ops::Bound::Included(positive_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(max), end: std::ops::Bound::Included(max)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(min), end: std::ops::Bound::Included(max)},
-
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(min), end: std::ops::Bound::Excluded(min)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(negative_less_typical), end: std::ops::Bound::Excluded(negative_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(near_zero), end: std::ops::Bound::Excluded(near_zero)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(positive_less_typical), end: std::ops::Bound::Excluded(positive_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(max), end: std::ops::Bound::Excluded(max)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(min), end: std::ops::Bound::Excluded(max)},
-
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(min), end: std::ops::Bound::Unbounded},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(negative_less_typical), end: std::ops::Bound::Unbounded},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(near_zero), end: std::ops::Bound::Unbounded},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(positive_less_typical), end: std::ops::Bound::Unbounded},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(max), end: std::ops::Bound::Unbounded},
-
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(min), end: std::ops::Bound::Included(min)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(negative_less_typical), end: std::ops::Bound::Included(negative_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(near_zero), end: std::ops::Bound::Included(near_zero)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(positive_less_typical), end: std::ops::Bound::Included(positive_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(max), end: std::ops::Bound::Included(max)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(min), end: std::ops::Bound::Included(max)},
-
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(min), end: std::ops::Bound::Excluded(min)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(negative_less_typical), end: std::ops::Bound::Excluded(negative_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(near_zero), end: std::ops::Bound::Excluded(near_zero)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(positive_less_typical), end: std::ops::Bound::Excluded(positive_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(max), end: std::ops::Bound::Excluded(max)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(min), end: std::ops::Bound::Excluded(max)},
-
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(min), end: std::ops::Bound::Unbounded},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(negative_less_typical), end: std::ops::Bound::Unbounded},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(near_zero), end: std::ops::Bound::Unbounded},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(positive_less_typical), end: std::ops::Bound::Unbounded},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(max), end: std::ops::Bound::Unbounded},
-
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(min)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(negative_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(near_zero)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(positive_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(max)},
-
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(min)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(negative_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(near_zero)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(positive_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(max)},
-
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Unbounded},
                             ]
                         }}

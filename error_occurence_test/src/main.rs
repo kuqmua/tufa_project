@@ -36,7 +36,6 @@ pub enum ErrorOne {
         hashmap_string_serde: HashMap<String, SerdeStruct>,
         #[eo_hashmap_key_string_value_error_occurence]
         hashmap_string_error_occurence: HashMap<String, ErrorUnnamedOne>,
-
         code_occurence: CodeOccurence,
     },
 }

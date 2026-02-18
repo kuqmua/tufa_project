@@ -234,7 +234,6 @@ pub trait PgTypeTestCases {
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> <Self::PgType as PgType>::TableTypeDeclaration;
-
     //todo add prefix pg_type or pg_json_type ?
     fn read_only_ids_merged_with_create_into_where_equal(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
@@ -274,7 +273,6 @@ pub trait PgTypeTestCases {
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
-
     fn create_into_pg_json_type_option_vec_where_length_equal(
         create: <Self::PgType as PgType>::Create,
     ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
@@ -369,7 +367,6 @@ pub trait PgJsonTypeTestCases {
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> <Self::PgJsonType as PgJsonType>::TableTypeDeclaration;
-
     fn read_only_ids_merged_with_create_into_where_equal(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,

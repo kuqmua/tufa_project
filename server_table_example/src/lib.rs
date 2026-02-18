@@ -44,7 +44,6 @@ pub struct TableExample {
     // pub primary_key: pg_crud::I64AsNotNullBigSerialInitializedByPg,
     #[gen_pg_table_primary_key]
     pub primary_key_column: pg_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPg,
-
     pub column_0: pg_crud::I16AsNotNullInt2,
     // pub column_1: pg_crud::OptionI16AsNullableInt2,
     // pub column_2: pg_crud::VecOfI16AsNotNullArrayOfNotNullInt2,
@@ -157,7 +156,6 @@ pub struct TableExample {
     // pub column_109: pg_crud::OptionVecOfSqlxTypesMacAddressMacAddressAsNullableArrayOfNotNullMacAddr,
     // pub column_110: pg_crud::VecOfOptionSqlxTypesMacAddressMacAddressAsNotNullArrayOfNullableMacAddr,
     // pub column_111: pg_crud::OptionVecOfOptionSqlxTypesMacAddressMacAddressAsNullableArrayOfNullableMacAddr,
-
     // pub column_112: pg_crud::SqlxPgTypesPgRangeI32AsNotNullInt4Range,
     // pub column_113: pg_crud::OptionSqlxPgTypesPgRangeI32AsNullableInt4Range,
     // pub column_114: pg_crud::VecOfSqlxPgTypesPgRangeI32AsNotNullArrayOfNotNullInt4Range,

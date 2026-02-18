@@ -15,7 +15,6 @@ pub enum CreateDirsAndWritePrettyJsonTokioAsyncError {
         code_occurence: CodeOccurence,
     },
 }
-
 pub async fn create_dirs_and_write_pretty_json_tokio_async(
     path: &Path,
     serde_json_value: SerdeJsonValue,

@@ -95,7 +95,6 @@ impl ErrorOccurenceFieldAttr {
         value.parse::<Ts2>().expect("147c39e9")
     }
 }
-
 #[must_use]
 pub fn gen_serde_version_of_named_syn_variant(value: &Variant) -> Ts2 {
     let el_ident = &value.ident;

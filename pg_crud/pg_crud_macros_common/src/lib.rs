@@ -828,7 +828,6 @@ pub fn gen_impl_pg_json_type_ts(
             ) -> Result<#query_lifetime_pg_arguments_ts, #StringTs> {
                 #select_only_updated_ids_query_bind_ts
             }
-
             fn #SelectOnlyCreatedIdsQueryPartSc(
                 #ValueSc: &Self::#CreateForQueryUcc,
                 #FieldIdentSc: #RefStr,

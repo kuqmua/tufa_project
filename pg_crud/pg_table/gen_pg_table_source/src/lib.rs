@@ -1254,7 +1254,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #impl_pg_crud_default_option_some_vec_one_el_for_ident_where_many_ts
         }
     };
-
     let option_ident_where_many_ucc = StdOptionOptionSelfWhereManyUcc::from_tokens(&ident);
     let option_ident_where_many_ts = {
         let option_ident_where_many_ts = StructOrEnumDeriveTokenStreamBuilder::new()
@@ -2153,7 +2152,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             quote! {#pg_crud_pg_type_where_filter_ts #QueryBindSc},
         )
     };
-
     let vec_struct_options_ident_ts = gen_vec_tokens_declaration_ts(&ident_read_ucc);
     let not_unique_field_syn_variant_wrapper = new_syn_variant_wrapper(
         &NotUniqueFieldUcc,
@@ -5070,7 +5068,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             });
         let select_default_all_with_max_page_size_clone_ts =
             quote! {select_default_all_with_max_page_size.clone()};
-
         let common_read_only_ids_returned_from_create_one_ts = {
             let primary_key_read_ts = quote! {primary_key_read};
             let primary_key_read_clone_ts = quote! {primary_key_read.clone()};
@@ -5204,7 +5201,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             "fe3267a0_f49a_42ce_8e51_2a10e5360eb8";
         let table_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_regular_expression_name =
             "b4504737_4463_4e47_bb30_9512275c66b1";
-
         fill_table_field_idents_vec_ts(vec![
             &table_read_only_ids_merged_with_create_into_where_equal_name,
             &table_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_name,
@@ -7070,7 +7066,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         .await.expect("e3044bb9");
                         let #UrlSc = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&#ConfigSc));
                         let table = #ident_dq_ts;
-
                         let add_table_postfix = |postfix: &str|{
                             let value = format!("{table}_{postfix}");
                             assert!(value.len() <= 63, "77f9bfb7");

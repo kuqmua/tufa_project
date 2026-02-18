@@ -15,7 +15,6 @@ pub enum CreateDirsAndWritePrettyJsonSyncError {
         code_occurence: CodeOccurence,
     },
 }
-
 pub fn create_dirs_and_write_pretty_json_sync(
     path: &Path,
     serde_json_value: &SerdeJsonValue,

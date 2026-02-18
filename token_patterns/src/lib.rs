@@ -164,7 +164,6 @@ impl ToTokens for DeriveDebugThisErrorErrorOccurence {
             .to_tokens(tokens);
     }
 }
-
 #[derive(Debug, Clone, Copy)]
 pub struct StrSqlxColumnIndex;
 impl ToTokens for StrSqlxColumnIndex {
@@ -201,7 +200,6 @@ impl ToTokens for CodeOccurenceScDoubleDotSpaceErrorOccurenceLibCodeOccurenceCod
             .to_tokens(tokens);
     }
 }
-
 #[derive(Debug, Clone, Copy)]
 pub struct CoreDefaultDefaultDefault;
 impl ToTokens for CoreDefaultDefaultDefault {
@@ -223,7 +221,6 @@ impl ToTokens for SqlxTypesTimeOffsetDateTimeUnixEpoch {
         quote! {sqlx::types::time::OffsetDateTime::UNIX_EPOCH}.to_tokens(tokens);
     }
 }
-
 #[derive(Debug, Clone, Copy)]
 pub struct Error0;
 impl ToTokens for Error0 {
@@ -350,7 +347,6 @@ impl ToTokens for StdFmtDisplay {
         quote! {std::fmt::Display}.to_tokens(tokens);
     }
 }
-
 #[derive(Debug, Clone, Copy)]
 pub struct CrateDefaultOptionSomeVecOneEl;
 impl ToTokens for CrateDefaultOptionSomeVecOneEl {

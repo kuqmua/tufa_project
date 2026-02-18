@@ -16,7 +16,6 @@ pub fn dq_ts(inner_content: &dyn Display) -> Ts2 {
     let value = dq_str(inner_content);
     value.parse::<Ts2>().expect("0391ac99")
 }
-
 #[must_use]
 pub fn binary_single_quotes_str(inner_content: &str) -> String {
     format!("b\'{inner_content}\'")

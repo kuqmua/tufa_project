@@ -38,7 +38,6 @@ pub struct Animal {
     // pub field_3: pg_crud::VecOfOptionI8AsNotNullArrayOfNullableJsonbNumber,
     // pub field_4: pg_crud::OptionVecOfI8AsNullableArrayOfNotNullJsonbNumber,
     // pub field_5: pg_crud::OptionVecOfOptionI8AsNullableArrayOfNullableJsonbNumber,
-
     // pub field_6: pg_crud::VecOfVecOfI8AsNotNullArrayOfNotNullArrayOfNotNullJsonbNumber,
     // pub field_7: pg_crud::VecOfVecOfOptionI8AsNotNullArrayOfNotNullArrayOfNullableJsonbNumber,
     // pub field_8: pg_crud::VecOfOptionVecOfI8AsNotNullArrayOfNullableArrayOfNotNullJsonbNumber,
@@ -47,7 +46,6 @@ pub struct Animal {
     // pub field_11: pg_crud::OptionVecOfVecOfOptionI8AsNullableArrayOfNotNullArrayOfNullableJsonbNumber,
     // pub field_12: pg_crud::OptionVecOfOptionVecOfI8AsNullableArrayOfNullableArrayOfNotNullJsonbNumber,
     // pub field_13: pg_crud::OptionVecOfOptionVecOfOptionI8AsNullableArrayOfNullableArrayOfNullableJsonbNumber,
-
     // pub field_14: pg_crud::VecOfVecOfVecOfI8AsNotNullArrayOfNotNullArrayOfNotNullArrayOfNotNullJsonbNumber,
     // pub field_15: pg_crud::VecOfVecOfVecOfOptionI8AsNotNullArrayOfNotNullArrayOfNotNullArrayOfNullableJsonbNumber,
     // pub field_16: pg_crud::VecOfVecOfOptionVecOfI8AsNotNullArrayOfNotNullArrayOfNullableArrayOfNotNullJsonbNumber,
@@ -64,7 +62,6 @@ pub struct Animal {
     // pub field_27: pg_crud::OptionVecOfOptionVecOfVecOfOptionI8AsNullableArrayOfNullableArrayOfNotNullArrayOfNullableJsonbNumber,
     // pub field_28: pg_crud::OptionVecOfOptionVecOfOptionVecOfI8AsNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbNumber,
     // pub field_29: pg_crud::OptionVecOfOptionVecOfOptionVecOfOptionI8AsNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbNumber,
-
     // pub field_30: pg_crud::VecOfVecOfVecOfVecOfI8AsNotNullArrayOfNotNullArrayOfNotNullArrayOfNotNullArrayOfNotNullJsonbNumber,
     // pub field_31: pg_crud::VecOfVecOfVecOfVecOfOptionI8AsNotNullArrayOfNotNullArrayOfNotNullArrayOfNotNullArrayOfNullableJsonbNumber,
     // pub field_32: pg_crud::VecOfVecOfVecOfOptionVecOfI8AsNotNullArrayOfNotNullArrayOfNotNullArrayOfNullableArrayOfNotNullJsonbNumber,
@@ -97,7 +94,6 @@ pub struct Animal {
     // pub field_59: pg_crud::OptionVecOfOptionVecOfOptionVecOfVecOfOptionI8AsNullableArrayOfNullableArrayOfNullableArrayOfNotNullArrayOfNullableJsonbNumber,
     // pub field_60: pg_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfI8AsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbNumber,
     // pub field_61: pg_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionI8AsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbNumber,
-
     // pub field_62: pg_crud::I16AsNotNullJsonbNumber,
     // pub field_63: pg_crud::OptionI16AsNullableJsonbNumber,
     // pub field_64: pg_crud::VecOfI16AsNotNullArrayOfNotNullJsonbNumber,
@@ -847,7 +843,6 @@ pub struct Animal {
     pub field_807: crate::VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
     pub field_809: crate::OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
-
 #[allow(unused_qualifications)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjectType)]
@@ -896,7 +891,6 @@ pub struct Doggie {
     // pub field_11: pg_crud::OptionVecOfVecOfOptionI8AsNullableArrayOfNotNullArrayOfNullableJsonbNumber,
     // pub field_12: pg_crud::OptionVecOfOptionVecOfI8AsNullableArrayOfNullableArrayOfNotNullJsonbNumber,
     // pub field_13: pg_crud::OptionVecOfOptionVecOfOptionI8AsNullableArrayOfNullableArrayOfNullableJsonbNumber,
-
     // pub field_14: pg_crud::VecOfVecOfVecOfI8AsNotNullArrayOfNotNullArrayOfNotNullArrayOfNotNullJsonbNumber,
     // pub field_15: pg_crud::VecOfVecOfVecOfOptionI8AsNotNullArrayOfNotNullArrayOfNotNullArrayOfNullableJsonbNumber,
     // pub field_16: pg_crud::VecOfVecOfOptionVecOfI8AsNotNullArrayOfNotNullArrayOfNullableArrayOfNotNullJsonbNumber,
@@ -1012,7 +1006,6 @@ pub struct Doggie {
     pub field_808: crate::VecOfCatWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
     pub field_809: crate::OptionVecOfCatWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
-
 #[allow(unused_qualifications)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjectType)]
