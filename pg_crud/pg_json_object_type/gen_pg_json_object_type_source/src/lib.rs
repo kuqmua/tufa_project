@@ -13,8 +13,8 @@ use naming::{
     ColumnSc, ContainsAllElementsOfArrayUcc, CreateIntoPgJsonTypeOptionVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptionVecWhereLengthGreaterThanSc, CreateSc, CreateUpdateDeleteAreEmptyUcc,
     DefaultOptionSomeVecOneElSc, DefaultOptionSomeVecOneElUcc, DeleteSc, DimOneEqualUcc,
-    DimOneInUcc, DisplayPlusToTokens, EqualUcc, ErrorSc, FieldsSc, GenJsonbSetTargetSc,
-    IdSc, IdsAreNotUniqueUcc, InUcc, IncrementSc, IsNeedToAddLogicalOperatorSc, JsonbObjectUcc,
+    DimOneInUcc, DisplayPlusToTokens, EqualUcc, ErrorSc, FieldsSc, GenJsonbSetTargetSc, IdSc,
+    IdsAreNotUniqueUcc, InUcc, IncrementSc, IsNeedToAddLogicalOperatorSc, JsonbObjectUcc,
     JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc, LengthEqualUcc, LengthGreaterThanUcc,
     NotUniqueIdInJsonDeleteArrayUcc, NotUniqueIdInJsonUpdateAndDeleteArraysUcc, OptionUpdateSc,
     OptionVecCreateSc, OverlapsWithArrayUcc, PgJsonTypeTestCasesUcc, PgJsonTypeUcc,
@@ -68,7 +68,7 @@ use pg_crud_macros_common::{
     gen_impl_pg_type_not_primary_key_for_ident_ts, gen_impl_pg_type_test_cases_for_ident_ts,
     gen_impl_pg_type_ts, gen_impl_serde_deserialize_for_struct_ts,
     gen_impl_sqlx_decode_sqlx_pg_for_ident_ts, gen_impl_sqlx_encode_sqlx_pg_for_ident_ts,
-    gen_impl_sqlx_type_sqlx_pg_for_ident_ts, gen_match_try_new_in_deserialize_ts,
+    gen_impl_sqlx_type_for_ident_ts, gen_match_try_new_in_deserialize_ts,
     gen_option_tokens_declaration_ts,
     gen_read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts,
     gen_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts,
@@ -832,7 +832,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &ident_table_type_declaration_or_ident_create_ucc,
                     &quote!{sqlx::types::Json(#SelfSc)}
                 );
-                let impl_sqlx_type_sqlx_pg_for_ident_table_type_declaration_or_ident_create_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(
+                let impl_sqlx_type_sqlx_pg_for_ident_table_type_declaration_or_ident_create_ts = gen_impl_sqlx_type_for_ident_ts(
                     &ident_table_type_declaration_or_ident_create_ucc,
                     &quote!{sqlx::types::Json<#SelfUcc>}
                 );
@@ -1026,7 +1026,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &ident_create_for_query_ucc,
                         &quote!{sqlx::types::Json(#SelfSc)}
                     );
-                    let impl_sqlx_type_sqlx_pg_for_ident_create_for_query_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(
+                    let impl_sqlx_type_sqlx_pg_for_ident_create_for_query_ts = gen_impl_sqlx_type_for_ident_ts(
                         &ident_create_for_query_ucc,
                         &quote!{sqlx::types::Json<#SelfUcc>}
                     );
@@ -1065,7 +1065,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     #maybe_ident_with_id_standart_not_null_create_for_query_ts
                 }
             };
-            let gen_sqlx_types_json_type_declaration_wrapper_ts = |ident_ts_dff2e4a1: &dyn ToTokens| gen_impl_sqlx_type_sqlx_pg_for_ident_ts(
+            let gen_sqlx_types_json_type_declaration_wrapper_ts = |ident_ts_dff2e4a1: &dyn ToTokens| gen_impl_sqlx_type_for_ident_ts(
                 &ident_ts_dff2e4a1,
                 &gen_sqlx_types_json_type_declaration_ts(&SelfUcc)
             );
@@ -2328,7 +2328,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 )
             };
             let gen_impl_sqlx_type_ts = |ident_ts_58d92fbf: &dyn ToTokens|{
-                gen_impl_sqlx_type_sqlx_pg_for_ident_ts(
+                gen_impl_sqlx_type_for_ident_ts(
                     &ident_ts_58d92fbf,
                     &quote!{sqlx::types::Json<Self>}
                 )

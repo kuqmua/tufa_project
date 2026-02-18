@@ -46,7 +46,7 @@ use pg_crud_macros_common::{
     gen_impl_pg_crud_common_default_option_some_vec_one_el_ts,
     gen_impl_pg_type_not_primary_key_for_ident_ts, gen_impl_pg_type_test_cases_for_ident_ts,
     gen_impl_pg_type_ts, gen_impl_sqlx_decode_sqlx_pg_for_ident_ts,
-    gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_sqlx_pg_for_ident_ts,
+    gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_for_ident_ts,
     gen_option_tokens_declaration_ts, gen_pg_type_where_ts,
     gen_return_err_query_part_error_write_into_buffer_ts, gen_struct_ident_dq_ts,
     gen_struct_ident_with_number_elements_dq_ts, gen_tuple_struct_ident_dq_ts,
@@ -4095,7 +4095,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 };
                 quote! {Self(#content_ts)}
             });
-            let impl_sqlx_type_sqlx_pg_for_ident_origin_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_origin_ucc, &field_type_handle);
+            let impl_sqlx_type_for_ident_origin_ts = gen_impl_sqlx_type_for_ident_ts(&ident_origin_ucc, &field_type_handle);
             let impl_sqlx_encode_sqlx_pg_for_ident_origin_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_origin_ucc, &quote! {#SelfSc.0});
             let impl_sqlx_decode_sqlx_pg_for_ident_origin_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(&ident_origin_ucc, &field_type_handle, &{
                 let scopes_value_ts = quote! {(value_147c3532)};
@@ -4167,7 +4167,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #impl_display_for_ident_origin_ts
                 #impl_error_occurence_lib_to_err_string_for_ident_origin_ts
                 #impl_default_option_some_vec_one_el_for_ident_origin_ts
-                #impl_sqlx_type_sqlx_pg_for_ident_origin_ts
+                #impl_sqlx_type_for_ident_origin_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_origin_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_origin_ts
                 #impl_sqlx_pg_pg_has_array_type_for_ident_origin_ts
@@ -4241,7 +4241,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let impl_ident_table_type_declaration_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_table_type_declaration_ucc);
             let impl_default_option_some_vec_one_el_for_ident_table_type_declaration_ts =
                 gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_table_type_declaration_ucc, &quote! {Self(#PgCrudCommonDefaultOptionSomeVecOneElCall)});
-            let impl_sqlx_type_sqlx_pg_for_ident_table_type_declaration_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_table_type_declaration_ucc, &ident_origin_ucc);
+            let impl_sqlx_type_for_ident_table_type_declaration_ts = gen_impl_sqlx_type_for_ident_ts(&ident_table_type_declaration_ucc, &ident_origin_ucc);
             let impl_sqlx_encode_sqlx_pg_for_ident_table_type_declaration_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_table_type_declaration_ucc, &quote! {#SelfSc.0});
             let impl_sqlx_decode_sqlx_pg_for_ident_table_type_declaration_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(&ident_table_type_declaration_ucc, &ident_origin_ucc, &quote! {Ok(Self(value_147c3532))});
             //todo rewrite as dependency of PgType trait?
@@ -4288,7 +4288,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #ident_table_type_declaration_ts
                 #impl_ident_table_type_declaration_ts
                 #impl_default_option_some_vec_one_el_for_ident_table_type_declaration_ts
-                #impl_sqlx_type_sqlx_pg_for_ident_table_type_declaration_ts
+                #impl_sqlx_type_for_ident_table_type_declaration_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_table_type_declaration_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_table_type_declaration_ts
                 #impl_pg_type_equal_operator_for_ident_table_type_declaration_ts
@@ -4328,8 +4328,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 CanBePrimaryKey::False => gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_create_ucc, &quote! {#SelfSc.0}),
                 CanBePrimaryKey::True => Ts2::new(),
             };
-            let maybe_impl_sqlx_type_sqlx_pg_for_ident_create_ts = match &can_be_primary_key {
-                CanBePrimaryKey::False => gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_create_ucc, &ident_origin_ucc),
+            let maybe_impl_sqlx_type_for_ident_create_ts = match &can_be_primary_key {
+                CanBePrimaryKey::False => gen_impl_sqlx_type_for_ident_ts(&ident_create_ucc, &ident_origin_ucc),
                 CanBePrimaryKey::True => Ts2::new(),
             };
             quote! {
@@ -4337,7 +4337,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #maybe_impl_ident_create_ts
                 #impl_default_option_some_vec_one_el_for_ident_create_ts
                 #maybe_impl_sqlx_encode_sqlx_pg_for_ident_create_ts
-                #maybe_impl_sqlx_type_sqlx_pg_for_ident_create_ts
+                #maybe_impl_sqlx_type_for_ident_create_ts
             }
         };
         let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
@@ -4769,7 +4769,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &ident_origin_ucc,
                 &quote! {Ok(Self(value_147c3532))}
             );
-            let impl_sqlx_type_sqlx_pg_for_ident_read_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_read_ucc, &ident_origin_ucc);
+            let impl_sqlx_type_for_ident_read_ts = gen_impl_sqlx_type_for_ident_ts(&ident_read_ucc, &ident_origin_ucc);
             let maybe_impl_pg_type_where_filter_for_ident_read_if_can_be_primary_key_ts = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
                 impl_pg_type_where_filter_for_ident_ts(
                     &quote! {<'lifetime>},
@@ -4798,7 +4798,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #impl_crate_default_option_some_vec_one_el_for_ident_read_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_origin_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_read_ts
-                #impl_sqlx_type_sqlx_pg_for_ident_read_ts
+                #impl_sqlx_type_for_ident_read_ts
                 #maybe_impl_pg_type_where_filter_for_ident_read_if_can_be_primary_key_ts
             }
         };
@@ -4822,11 +4822,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &ident_read_ucc,
                 &quote! {Ok(Self(value_147c3532))}
             );
-            let impl_sqlx_type_sqlx_pg_for_ident_read_only_ids_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_read_only_ids_ucc, &ident_read_ucc);
+            let impl_sqlx_type_for_ident_read_only_ids_ts = gen_impl_sqlx_type_for_ident_ts(&ident_read_only_ids_ucc, &ident_read_ucc);
             quote! {
                 #ident_read_only_ids_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_read_only_ids_ts
-                #impl_sqlx_type_sqlx_pg_for_ident_read_only_ids_ts
+                #impl_sqlx_type_for_ident_read_only_ids_ts
             }
         } else {
             Ts2::new()
@@ -4875,12 +4875,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     &Ts2::new(),
                     &ident_origin_struct_content_ts
                 );
-            let impl_sqlx_type_sqlx_pg_for_ident_update_for_query_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_update_for_query_ucc, &ident_origin_ucc);
+            let impl_sqlx_type_for_ident_update_for_query_ts = gen_impl_sqlx_type_for_ident_ts(&ident_update_for_query_ucc, &ident_origin_ucc);
             let impl_sqlx_encode_sqlx_pg_for_ident_update_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_update_for_query_ucc, &quote! {#SelfSc.0});
             let impl_from_ident_update_for_ident_update_for_query_ts = gen_impl_from_ts(&ident_update_ucc, &ident_update_for_query_ucc, &quote! {Self(#ValueSc.0)});
             quote! {
                 #ident_update_for_query_ts
-                #impl_sqlx_type_sqlx_pg_for_ident_update_for_query_ts
+                #impl_sqlx_type_for_ident_update_for_query_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_update_for_query_ts
                 #impl_from_ident_update_for_ident_update_for_query_ts
             }

@@ -33,7 +33,7 @@ use pg_crud_macros_common::{
     gen_impl_pg_crud_common_default_option_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_common_default_option_some_vec_one_el_ts,
     gen_impl_pg_json_type_test_cases_for_ident_ts, gen_impl_pg_json_type_ts,
-    gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_sqlx_pg_for_ident_ts,
+    gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_for_ident_ts,
     gen_option_tokens_declaration_ts, gen_pg_type_where_ts,
     gen_sqlx_types_json_type_declaration_ts, gen_value_initialization_ts,
     gen_vec_tokens_declaration_ts,
@@ -958,7 +958,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 };
                 quote! {Self(#content_ts)}
             });
-            let impl_sqlx_type_sqlx_pg_for_ident_origin_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_origin_ucc, &gen_sqlx_types_json_type_declaration_ts(&ident_read_inner_ucc));
+            let impl_sqlx_type_for_ident_origin_ts = gen_impl_sqlx_type_for_ident_ts(&ident_origin_ucc, &gen_sqlx_types_json_type_declaration_ts(&ident_read_inner_ucc));
             let impl_sqlx_encode_sqlx_pg_for_ident_origin_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_origin_ucc, &quote! {sqlx::types::Json(&#SelfSc.0)});
             quote! {
                 #ident_origin_ts
@@ -970,7 +970,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 #impl_display_for_ident_origin_ts
                 #impl_error_occurence_lib_to_err_string_for_ident_origin_ts
                 #impl_default_option_some_vec_one_el_for_ident_origin_ts
-                #impl_sqlx_type_sqlx_pg_for_ident_origin_ts
+                #impl_sqlx_type_for_ident_origin_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_origin_ts
             }
         };
@@ -1004,13 +1004,13 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             //todo maybe add to trait?
             let impl_sqlx_encode_sqlx_pg_for_ident_table_type_declaration_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_table_type_declaration_ucc, &quote! {&#SelfSc.0});
             //todo maybe add to trait?
-            let impl_sqlx_type_sqlx_pg_for_ident_table_type_declaration_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_table_type_declaration_ucc, &gen_sqlx_types_json_type_declaration_ts(&ident_read_inner_ucc));
+            let impl_sqlx_type_for_ident_table_type_declaration_ts = gen_impl_sqlx_type_for_ident_ts(&ident_table_type_declaration_ucc, &gen_sqlx_types_json_type_declaration_ts(&ident_read_inner_ucc));
             quote! {
                 #ident_table_type_declaration_ts
                 #impl_ident_table_type_declaration_ts
                 #impl_default_option_some_vec_one_el_for_ident_table_type_declaration_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_table_type_declaration_ts
-                #impl_sqlx_type_sqlx_pg_for_ident_table_type_declaration_ts
+                #impl_sqlx_type_for_ident_table_type_declaration_ts
             }
         };
         let ident_create_ts = {
@@ -1065,7 +1065,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 }
             };
             let impl_sqlx_encode_sqlx_pg_for_ident_create_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_create_for_query_ucc, &quote! {sqlx::types::Json(&#SelfSc.0)});
-            let impl_sqlx_type_sqlx_pg_for_ident_create_for_query_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_create_for_query_ucc, &ident_origin_ucc);
+            let impl_sqlx_type_for_ident_create_for_query_ts = gen_impl_sqlx_type_for_ident_ts(&ident_create_for_query_ucc, &ident_origin_ucc);
             let impl_from_ident_create_for_ident_create_for_query_ts = gen_impl_from_ts(&ident_create_ucc, &ident_create_for_query_ucc, &quote! {Self(#ValueSc.0)});
             let maybe_impl_from_ident_update_for_ident_create_for_query_ts = if matches!(&is_standart_not_null_uuid, IsStandartNotNullUuid::True) {
                 gen_impl_from_ts(&ident_update_ucc, &ident_create_for_query_ucc, &quote! {Self(#ValueSc.0)})
@@ -1076,7 +1076,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 #ident_create_for_query_ts
                 #impl_ident_create_for_query_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_create_for_query_ts
-                #impl_sqlx_type_sqlx_pg_for_ident_create_for_query_ts
+                #impl_sqlx_type_for_ident_create_for_query_ts
                 #impl_from_ident_create_for_ident_create_for_query_ts
                 #maybe_impl_from_ident_update_for_ident_create_for_query_ts
             }
@@ -1566,13 +1566,13 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             let impl_default_option_some_vec_one_el_for_ident_read_ts =
                 gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_read_ucc, &quote! {Self(#PgCrudCommonDefaultOptionSomeVecOneElCall)});
             let impl_sqlx_encode_sqlx_pg_for_ident_read_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_read_ucc, &quote! {&#SelfSc.0});
-            let impl_sqlx_type_sqlx_pg_for_ident_read_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_read_ucc, &gen_sqlx_types_json_type_declaration_ts(&ident_read_inner_ucc));
+            let impl_sqlx_type_for_ident_read_ts = gen_impl_sqlx_type_for_ident_ts(&ident_read_ucc, &gen_sqlx_types_json_type_declaration_ts(&ident_read_inner_ucc));
             quote! {
                 #ident_read_ts
                 #impl_ident_read_ts
                 #impl_default_option_some_vec_one_el_for_ident_read_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_read_ts
-                #impl_sqlx_type_sqlx_pg_for_ident_read_ts
+                #impl_sqlx_type_for_ident_read_ts
             }
         };
         let ident_read_only_ids_standart_not_null_ucc = SelfReadOnlyIdsUcc::from_tokens(&ident_standart_not_null_ucc);
@@ -1809,13 +1809,13 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             let impl_from_ident_update_for_ident_update_for_query_ts = gen_impl_from_ts(&ident_update_ucc, &ident_update_for_query_ucc, &quote! {Self(#ValueSc.0)});
             //its only for primitive json types
             let impl_sqlx_encode_sqlx_pg_for_ident_update_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_update_for_query_ucc, &quote! {sqlx::types::Json(&#SelfSc.0)});
-            let impl_sqlx_type_sqlx_pg_for_ident_update_for_query_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_update_for_query_ucc, &ident_origin_ucc);
+            let impl_sqlx_type_for_ident_update_for_query_ts = gen_impl_sqlx_type_for_ident_ts(&ident_update_for_query_ucc, &ident_origin_ucc);
             quote! {
                 #ident_update_for_query_ts
                 #impl_ident_update_for_query_ts
                 #impl_from_ident_update_for_ident_update_for_query_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_update_for_query_ts
-                #impl_sqlx_type_sqlx_pg_for_ident_update_for_query_ts
+                #impl_sqlx_type_for_ident_update_for_query_ts
             }
         };
         let pg_crud_macros_common_import_path_pg_crud_common = ImportPath::PgCrudCommon;

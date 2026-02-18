@@ -1046,10 +1046,7 @@ pub fn gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
         }
     }
 }
-pub fn gen_impl_sqlx_type_sqlx_pg_for_ident_ts(
-    ident_ts: &dyn ToTokens,
-    type_ts: &dyn ToTokens,
-) -> Ts2 {
+pub fn gen_impl_sqlx_type_for_ident_ts(ident_ts: &dyn ToTokens, type_ts: &dyn ToTokens) -> Ts2 {
     quote! {
         impl sqlx::Type<sqlx::Postgres> for #ident_ts {
             fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
