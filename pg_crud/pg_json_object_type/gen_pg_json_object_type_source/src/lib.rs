@@ -832,7 +832,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &ident_table_type_declaration_or_ident_create_ucc,
                     &quote!{sqlx::types::Json(#SelfSc)}
                 );
-                let impl_sqlx_type_sqlx_pg_for_ident_table_type_declaration_or_ident_create_ts = gen_impl_sqlx_type_for_ident_ts(
+                let impl_sqlx_type_for_ident_table_type_declaration_or_ident_create_ts = gen_impl_sqlx_type_for_ident_ts(
                     &ident_table_type_declaration_or_ident_create_ucc,
                     &quote!{sqlx::types::Json<#SelfUcc>}
                 );
@@ -876,7 +876,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     #impl_pub_new_for_ident_table_type_declaration_or_ident_create_ts
                     #impl_pg_crud_default_option_some_vec_one_el_for_ident_table_type_declaration_or_ident_create_ts
                     #impl_sqlx_encode_sqlx_pg_for_ident_table_type_declaration_or_ident_create_ts
-                    #impl_sqlx_type_sqlx_pg_for_ident_table_type_declaration_or_ident_create_ts
+                    #impl_sqlx_type_for_ident_table_type_declaration_or_ident_create_ts
                     #maybe_ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_ts
                 }
             };
@@ -1026,7 +1026,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &ident_create_for_query_ucc,
                         &quote!{sqlx::types::Json(#SelfSc)}
                     );
-                    let impl_sqlx_type_sqlx_pg_for_ident_create_for_query_ts = gen_impl_sqlx_type_for_ident_ts(
+                    let impl_sqlx_type_for_ident_create_for_query_ts = gen_impl_sqlx_type_for_ident_ts(
                         &ident_create_for_query_ucc,
                         &quote!{sqlx::types::Json<#SelfUcc>}
                     );
@@ -1034,7 +1034,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         #ident_create_for_query_ts
                         #impl_from_ident_create_for_ident_create_for_query_ts
                         #impl_sqlx_encode_sqlx_pg_for_ident_create_for_query_ts
-                        #impl_sqlx_type_sqlx_pg_for_ident_create_for_query_ts
+                        #impl_sqlx_type_for_ident_create_for_query_ts
                     }
                 };
                 let maybe_ident_with_id_standart_not_null_create_for_query_ts = if is_standart_not_null {
