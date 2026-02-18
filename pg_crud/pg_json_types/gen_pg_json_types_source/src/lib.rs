@@ -551,24 +551,6 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             False,
             True,
         }
-        // struct SchemaObjectTokenStream<'lifetime> {
-        //     metadata: &'lifetime dyn ToTokens,
-        //     instance_type: &'lifetime dyn ToTokens,
-        //     format: &'lifetime dyn ToTokens,
-        //     enum_values: &'lifetime dyn ToTokens,
-        //     const_value: &'lifetime dyn ToTokens,
-        //     subschemas: &'lifetime dyn ToTokens,
-        //     number: &'lifetime dyn ToTokens,
-        //     string: &'lifetime dyn ToTokens,
-        //     array: &'lifetime dyn ToTokens,
-        //     object: &'lifetime dyn ToTokens,
-        //     reference: &'lifetime dyn ToTokens,
-        //     extensions: &'lifetime dyn ToTokens,
-        // }
-        // enum SchemarsJsonSchema<'schema_object_ts_tifetime> {
-        //     Derive,
-        //     Impl(SchemaObjectTokenStream<'schema_object_ts_tifetime>),
-        // }
         let pg_json_type = &el_1d376874.pg_json_type;
         let is_nullable = &el_1d376874.is_nullable;
         let pattern = &el_1d376874.pattern;
@@ -749,91 +731,6 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 is_nullable_e7d1d83c: &IsNullable,
                 pattern_1ca83c6c: &Pattern
             | SelfOriginUcc::from_tokens(&gen_ident_ts(is_nullable_e7d1d83c, pattern_1ca83c6c));
-            // let schema_name_format_handle_ts = dq_ts(&ident_origin_ucc);
-            //todo json schema logic
-            // let metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_ts = quote! {
-            //     Some(Box::new(schemars::schema::Metadata {
-            //         id: None,
-            //         title: Some(#schema_name_format_handle_ts.to_owned()),
-            //         description: None,
-            //         default: None,
-            //         deprecated: false,
-            //         read_only: false,
-            //         write_only: false,
-            //         examples: Vec::default(),
-            //     }))
-            // };
-            // let extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_ts = quote! {schemars::Map::default()};
-            // let (instance_type_number_ts, instance_type_string_ts) = {
-            //     let gen_instance_type_some_schemars_schema_single_or_vec_single_box_new_schemars_schema_instance_type = |instance_type: &schemars::schema::InstanceType| {
-            //         let instance_type_ts: &dyn ToTokens = match &instance_type {
-            //             schemars::schema::InstanceType::Null => &NullUcc,
-            //             schemars::schema::InstanceType::Boolean => &BooleanUcc,
-            //             schemars::schema::InstanceType::Object => &ObjectUcc,
-            //             schemars::schema::InstanceType::Array => &ArrayUcc,
-            //             schemars::schema::InstanceType::Number => &NumberUcc,
-            //             schemars::schema::InstanceType::String => &StringUcc,
-            //             schemars::schema::InstanceType::Integer => &IntegerUcc,
-            //         };
-            //         quote! {Some(schemars::schema::SingleOrVec::Single(Box::new(schemars::schema::InstanceType::#instance_type_ts)))}
-            //     };
-            //     (
-            //         gen_instance_type_some_schemars_schema_single_or_vec_single_box_new_schemars_schema_instance_type(&schemars::schema::InstanceType::Number),
-            //         gen_instance_type_some_schemars_schema_single_or_vec_single_box_new_schemars_schema_instance_type(&schemars::schema::InstanceType::String),
-            //     )
-            // };
-            // let schemars_json_schema = if let IsStandartNotNull::True = &is_standart_not_null {
-            //     match &pg_json_type {
-            //         PgJsonType::I8AsJsonbNumber
-            //         | PgJsonType::I16AsJsonbNumber
-            //         | PgJsonType::I32AsJsonbNumber
-            //         | PgJsonType::I64AsJsonbNumber
-            //         | PgJsonType::U8AsJsonbNumber
-            //         | PgJsonType::U16AsJsonbNumber
-            //         | PgJsonType::U32AsJsonbNumber
-            //         | PgJsonType::U64AsJsonbNumber => SchemarsJsonSchema::Impl(SchemaObjectTokenStream {
-            //             metadata: &metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_ts,
-            //             instance_type: &instance_type_number_ts,
-            //             format: &none_ucc,
-            //             enum_values: &none_ucc,
-            //             const_value: &none_ucc,
-            //             subschemas: &none_ucc,
-            //             number: &quote! {Some(Box::new(schemars::schema::NumberValidation {
-            //                 multiple_of: None,
-            //                 maximum: Some(#ident_read_inner_standart_not_null_alias_ts ::MAX as #f64_ts),
-            //                 exclusive_maximum: None,
-            //                 minimum: Some(#ident_read_inner_standart_not_null_alias_ts ::MIN as #f64_ts),
-            //                 exclusive_minimum: None,
-            //             }))},
-            //             string: &none_ucc,
-            //             array: &none_ucc,
-            //             object: &none_ucc,
-            //             reference: &none_ucc,
-            //             extensions: &extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_ts,
-            //         }),
-            //         PgJsonType::F32AsJsonbNumber | PgJsonType::F64AsJsonbNumber | PgJsonType::BoolAsJsonbBoolean | PgJsonType::StringAsJsonbString => SchemarsJsonSchema::Derive,
-            //         PgJsonType::UuidUuidAsJsonbString => SchemarsJsonSchema::Impl(SchemaObjectTokenStream {
-            //             metadata: &metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_ts,
-            //             instance_type: &instance_type_string_ts,
-            //             format: &none_ucc,
-            //             enum_values: &none_ucc,
-            //             const_value: &none_ucc,
-            //             subschemas: &none_ucc,
-            //             number: &none_ucc,
-            //             string: &quote! {Some(Box::new(schemars::schema::StringValidation {
-            //                 max_length: Some(36),
-            //                 min_length: Some(36),
-            //                 pattern: None,
-            //             }))},
-            //             array: &none_ucc,
-            //             object: &none_ucc,
-            //             reference: &none_ucc,
-            //             extensions: &extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_ts,
-            //         }),
-            //     }
-            // } else {
-            //     SchemarsJsonSchema::Derive
-            // };
             let ident_origin_ts = StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
@@ -1007,51 +904,6 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             } else {
                 Ts2::new()
             };
-            // match &schemars_json_schema {
-            //     SchemarsJsonSchema::Derive => &Ts2::new(),
-            //     SchemarsJsonSchema::Impl(schema_object_ts) => &{
-            //         let schema_id_format_handle_ts = dq_ts(&format!("pg_crud::postgersql_json_type::{ident_origin_ucc}"));
-            //         let metadata_ts = &schema_object_ts.metadata;
-            //         let instance_type_ts = &schema_object_ts.instance_type;
-            //         let format_ts = &schema_object_ts.format;
-            //         let enum_values_ts = &schema_object_ts.enum_values;
-            //         let const_value_ts = &schema_object_ts.const_value;
-            //         let subschemas_ts = &schema_object_ts.subschemas;
-            //         let number_ts = &schema_object_ts.number;
-            //         let string_ts = &schema_object_ts.string;
-            //         let array_ts = &schema_object_ts.array;
-            //         let object_ts = &schema_object_ts.object;
-            //         let reference_ts = &schema_object_ts.reference;
-            //         let extensions_ts = &schema_object_ts.extensions;
-            //         //todo maybe reuse
-            //         quote! {
-            //             impl #schemars_json_schema_ts for #ident_origin_ucc {
-            //                 fn schema_name() -> String {
-            //                     #schema_name_format_handle_ts.to_owned()
-            //                 }
-            //                 fn schema_id() -> std::borrow::Cow<'static, str> {
-            //                     std::borrow::Cow::Borrowed(#schema_id_format_handle_ts)
-            //                 }
-            //                 fn json_schema(_: &mut schemars::SchemaGenerator) -> schemars::schema::Schema {
-            //                     schemars::schema::Schema::Object(schemars::schema::SchemaObject {
-            //                         metadata: #metadata_ts,
-            //                         instance_type: #instance_type_ts,
-            //                         format: #format_ts,
-            //                         enum_values: #enum_values_ts,
-            //                         const_value: #const_value_ts,
-            //                         subschemas: #subschemas_ts,
-            //                         number: #number_ts,
-            //                         string: #string_ts,
-            //                         array: #array_ts,
-            //                         object: #object_ts,
-            //                         reference: #reference_ts,
-            //                         extensions: #extensions_ts,
-            //                     })
-            //                 }
-            //             }
-            //         }
-            //     },
-            // };
             let maybe_impl_is_string_empty_for_ident_origin_ts = if matches!(&is_standart_not_null, IsStandartNotNull::True) {
                 match &pg_json_type {
                     PgJsonType::I8AsJsonbNumber
