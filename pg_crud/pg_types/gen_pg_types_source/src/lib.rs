@@ -79,7 +79,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         F64,
         SqlxPgTypesPgMoney,
         Bool,
-        StdStringString,
+        String,
         StdVecVecU8,
         SqlxTypesChronoNaiveTime,
         SqlxTypesTimeTime,
@@ -106,7 +106,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 PgType::I64AsInt8 | PgType::I64AsBigSerialInitializedByPg => Self::I64,
                 PgType::SqlxPgTypesPgMoneyAsMoney => Self::SqlxPgTypesPgMoney,
                 PgType::BoolAsBool => Self::Bool,
-                PgType::StdStringStringAsText => Self::StdStringString,
+                PgType::StringAsText => Self::String,
                 PgType::StdVecVecU8AsBytea => Self::StdVecVecU8,
                 PgType::SqlxTypesChronoNaiveTimeAsTime => Self::SqlxTypesChronoNaiveTime,
                 PgType::SqlxTypesTimeTimeAsTime => Self::SqlxTypesTimeTime,
@@ -168,7 +168,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 PgType::I64AsBigSerialInitializedByPg => Self::BigSerialInitializedByPg,
                 PgType::SqlxPgTypesPgMoneyAsMoney => Self::Money,
                 PgType::BoolAsBool => Self::Bool,
-                PgType::StdStringStringAsText => Self::Text,
+                PgType::StringAsText => Self::Text,
                 PgType::StdVecVecU8AsBytea => Self::Bytea,
                 PgType::SqlxTypesChronoNaiveTimeAsTime | PgType::SqlxTypesTimeTimeAsTime => Self::Time,
                 PgType::SqlxPgTypesPgIntervalAsInterval => Self::Interval,
@@ -203,7 +203,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         SqlxPgTypesPgMoneyAsMoney,
         // SqlxTypesBigDecimalAsNumeric, remove coz dont know how to deserialize with scale i64
         BoolAsBool,
-        StdStringStringAsText,
+        StringAsText,
         StdVecVecU8AsBytea,
         SqlxTypesChronoNaiveTimeAsTime,
         SqlxTypesTimeTimeAsTime,
@@ -242,7 +242,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 | Self::F64AsFloat8
                 | Self::SqlxPgTypesPgMoneyAsMoney
                 | Self::BoolAsBool
-                | Self::StdStringStringAsText
+                | Self::StringAsText
                 | Self::StdVecVecU8AsBytea
                 | Self::SqlxTypesChronoNaiveTimeAsTime
                 | Self::SqlxTypesTimeTimeAsTime
@@ -270,7 +270,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 | Self::F64AsFloat8
                 | Self::SqlxPgTypesPgMoneyAsMoney
                 | Self::BoolAsBool
-                | Self::StdStringStringAsText
+                | Self::StringAsText
                 | Self::StdVecVecU8AsBytea
                 | Self::SqlxTypesChronoNaiveTimeAsTime
                 | Self::SqlxTypesTimeTimeAsTime
@@ -335,7 +335,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 | PgType::I64AsBigSerialInitializedByPg
                 | PgType::SqlxPgTypesPgMoneyAsMoney
                 | PgType::BoolAsBool
-                | PgType::StdStringStringAsText
+                | PgType::StringAsText
                 | PgType::StdVecVecU8AsBytea
                 | PgType::SqlxTypesChronoNaiveTimeAsTime
                 | PgType::SqlxTypesTimeTimeAsTime
@@ -702,7 +702,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug)]
     enum PgTypeInitializationTryNew {
-        StdStringStringAsText,
+        StringAsText,
         SqlxTypesChronoNaiveTimeAsTime,
         SqlxTypesTimeTimeAsTime,
         SqlxTypesChronoNaiveDateAsDate,
@@ -734,7 +734,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient
                 | PgType::SqlxTypesIpnetworkIpNetworkAsInet
                 | PgType::SqlxTypesMacAddressMacAddressAsMacAddr => Err(()),
-                PgType::StdStringStringAsText => Ok(Self::StdStringStringAsText),
+                PgType::StringAsText => Ok(Self::StringAsText),
                 PgType::SqlxTypesChronoNaiveTimeAsTime => Ok(Self::SqlxTypesChronoNaiveTimeAsTime),
                 PgType::SqlxTypesTimeTimeAsTime => Ok(Self::SqlxTypesTimeTimeAsTime),
                 PgType::SqlxTypesChronoNaiveDateAsDate => Ok(Self::SqlxTypesChronoNaiveDateAsDate),
@@ -751,7 +751,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     impl From<&PgTypeInitializationTryNew> for PgType {
         fn from(value: &PgTypeInitializationTryNew) -> Self {
             match value {
-                PgTypeInitializationTryNew::StdStringStringAsText => Self::StdStringStringAsText,
+                PgTypeInitializationTryNew::StringAsText => Self::StringAsText,
                 PgTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime => Self::SqlxTypesChronoNaiveTimeAsTime,
                 PgTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => Self::SqlxTypesTimeTimeAsTime,
                 PgTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => Self::SqlxTypesChronoNaiveDateAsDate,
@@ -778,7 +778,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug)]
     enum PgTypeImplTryNewForDeserialize {
-        StdStringStringAsText,
+        StringAsText,
         SqlxTypesChronoNaiveTimeAsTime,
         SqlxTypesTimeTimeAsTime,
         SqlxTypesChronoNaiveDateAsDate,
@@ -815,7 +815,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient
                 | PgType::SqlxTypesIpnetworkIpNetworkAsInet
                 | PgType::SqlxTypesMacAddressMacAddressAsMacAddr => Self::Derive,
-                PgType::StdStringStringAsText => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PgTypeImplTryNewForDeserialize::StdStringStringAsText)),
+                PgType::StringAsText => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PgTypeImplTryNewForDeserialize::StringAsText)),
                 PgType::SqlxTypesChronoNaiveTimeAsTime => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime)),
                 PgType::SqlxTypesTimeTimeAsTime => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PgTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime)),
                 PgType::SqlxPgTypesPgIntervalAsInterval => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PgTypeImplNewForDeserialize::SsqlxPgTypesPgIntervalAsInterval)),
@@ -1024,26 +1024,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let pg_type_pattern = &element.pg_type_pattern;
         let pg_type_initialization_try_new_try_from_pg_type = PgTypeInitializationTryNew::try_from(pg_type);
         let pg_type_deserialize = PgTypeDeserialize::from(pg_type);
-
         let array_dims_number = pg_type_pattern.array_dims_number();
-
         let pg_type_range_try_from_pg_type = PgTypeRange::try_from(pg_type);
         let pg_type_range_try_from_pg_type_is_ok = pg_type_range_try_from_pg_type.is_ok();
-
-        let u8_ts = U8;
-        let i16_ts = I16;
-        let u32_ts = U32;
-        let i32_ts = I32;
-        let i64_ts = I64;
-        let f32_ts = F32;
-        let string_ts = StdStringString;
-
-        let core_default_default_default_ts = CoreDefaultDefaultDefault;
-        let pg_crud_common_default_option_some_vec_one_el_call_ts = PgCrudCommonDefaultOptionSomeVecOneElCall;
-        let pg_crud_common_default_option_some_vec_one_el_max_page_size_call_ts = PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall;
-        let must_use_ts = MustUse;
-        let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
-
         let import_path = ImportPath::PgCrudCommon;
         let import_path_non_primary_key_pg_type_read_only_ids_ts = quote! {#import_path::NonPrimaryKeyPgTypeReadOnlyIds};
         let none_ts = quote!{None};
@@ -1076,15 +1059,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &Ts2::new(),
                 PgType::StdVecVecU8AsBytea |
-                PgType::StdStringStringAsText => &dot_clone_ts,
+                PgType::StringAsText => &dot_clone_ts,
             }
         }
         else {
             &dot_clone_ts
         };
-
         let gen_import_path_value_initialization_ts = |content_ts: &dyn ToTokens| gen_value_initialization_ts(&import_path, &content_ts);
-
         let gen_ident_str = |
             pg_type_73b7c8af: &PgType,
             is_nullable_a5a792df: &IsNullable,
@@ -1144,24 +1125,20 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let ident_standart_not_null_as_pg_type_ts = gen_as_pg_type_ts(&ident_standart_not_null_ucc);
         let ident_standart_nullable_as_pg_type_ts = gen_as_pg_type_ts(&ident_standart_nullable_ucc);
         let self_pg_type_as_pg_type_ts = gen_as_pg_type_ts(&quote! {Self::#PgTypeUcc});
-
         let ident_standart_not_null_as_pg_type_test_cases_ts = gen_as_pg_type_test_cases_ts(&ident_standart_not_null_ucc);
         let ident_standart_nullable_as_pg_type_test_cases_ts = gen_as_pg_type_test_cases_ts(&ident_standart_nullable_ucc);
         let ident_array_not_null_as_pg_type_test_cases_ts = gen_as_pg_type_test_cases_ts(&ident_array_not_null_ucc);
         let ident_array_nullable_as_pg_type_test_cases_ts = gen_as_pg_type_test_cases_ts(&ident_array_nullable_ucc);
-
         let gen_ident_standart_not_null_origin_ts = |pg_type_1faa6188: &PgType| SelfOriginUcc::from_tokens(
             &gen_ident_standart_not_null_ts(pg_type_1faa6188)
         );
         let ident_standart_not_null_origin_ucc = gen_ident_standart_not_null_origin_ts(pg_type);
         let ident_origin_ucc = SelfOriginUcc::from_tokens(&ident);
         let ident_standart_nullable_table_type_declaration_ucc = SelfTableTypeDeclarationUcc::from_tokens(&ident_standart_nullable_ucc);
-
         let sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc = gen_ident_standart_not_null_origin_ts(&PgType::SqlxTypesChronoNaiveDateAsDate);
         let sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc = gen_ident_standart_not_null_origin_ts(&PgType::SqlxTypesChronoNaiveTimeAsTime);
         let sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc = gen_ident_standart_not_null_origin_ts(&PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp);
         let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc = gen_ident_standart_not_null_origin_ts(&PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz);
-
         let gen_ident_standart_not_null_origin_try_new_error_ts = |pg_type_454846c8: &PgType| SelfOriginTryNewErrorUcc::from_tokens(
             &gen_ident_standart_not_null_ts(pg_type_454846c8)
         );
@@ -1197,7 +1174,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgType::I64AsInt8 | PgType::I64AsBigSerialInitializedByPg => i64_str,
                     PgType::SqlxPgTypesPgMoneyAsMoney => sqlx_pg_types_pg_money_str,
                     PgType::BoolAsBool => bool_str,
-                    PgType::StdStringStringAsText => string_str,
+                    PgType::StringAsText => string_str,
                     PgType::StdVecVecU8AsBytea => vec_u8_str,
                     PgType::SqlxTypesChronoNaiveTimeAsTime => sqlx_types_chrono_naive_time_str,
                     PgType::SqlxTypesTimeTimeAsTime => sqlx_types_time_time_str,
@@ -1270,7 +1247,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             | PgType::F64AsFloat8
             | PgType::SqlxPgTypesPgMoneyAsMoney
             | PgType::BoolAsBool
-            | PgType::StdStringStringAsText
+            | PgType::StringAsText
             | PgType::StdVecVecU8AsBytea
             | PgType::SqlxTypesChronoNaiveTimeAsTime
             | PgType::SqlxTypesTimeTimeAsTime
@@ -1341,8 +1318,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let gen_std_ops_bound_ts = |type_ts: &dyn ToTokens| {
                 quote! {std::ops::Bound<#type_ts>}
             };
-            let std_ops_bound_i32_ts = gen_std_ops_bound_ts(&i32_ts);
-            let std_ops_bound_i64_ts = gen_std_ops_bound_ts(&i64_ts);
+            let std_ops_bound_i32_ts = gen_std_ops_bound_ts(&I32);
+            let std_ops_bound_i64_ts = gen_std_ops_bound_ts(&I64);
             let std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ts = gen_std_ops_bound_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc);
             let std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ts = gen_std_ops_bound_ts(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc);
             let std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts = gen_std_ops_bound_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc);
@@ -1351,7 +1328,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     quote! {
                         #[allow(unused_qualifications)]
                         #[allow(clippy::absolute_paths)]
-                        #allow_clippy_arbitrary_source_item_ordering_ts
+                        #AllowClippyArbitrarySourceItemOrdering
                         const _: () = {
                             #[allow(unused_extern_crates, clippy::useless_attribute)]
                             extern crate serde as _serde;
@@ -1435,7 +1412,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     | PgType::I32AsSerialInitializedByPg
                     | PgType::I64AsBigSerialInitializedByPg
                     | PgType::BoolAsBool
-                    | PgType::StdStringStringAsText
+                    | PgType::StringAsText
                     | PgType::StdVecVecU8AsBytea
                     | PgType::SqlxTypesChronoNaiveDateAsDate
                     | PgType::SqlxTypesIpnetworkIpNetworkAsInet => DeriveOrImpl::Derive,
@@ -1606,7 +1583,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     quote! {
                         #[allow(unused_qualifications)]
                         #[allow(clippy::absolute_paths)]
-                        #allow_clippy_arbitrary_source_item_ordering_ts
+                        #AllowClippyArbitrarySourceItemOrdering
                         const _: () = {
                             #[allow(unused_extern_crates, clippy::useless_attribute)]
                             extern crate serde as _serde;
@@ -1710,10 +1687,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     };
                     (
-                        gen_fn_visit_newtype_struct_ts(&i64_ts, &gen_serde_private_ok_pg_type_ts(&quote! {#inner_type_standart_not_null_ts(#field_0_value_ts)})),
-                        gen_fn_visit_newtype_struct_ts(&string_ts, &gen_serde_private_ok_pg_type_ts(&match_uuid_uuid_field_type_try_parse_ts)),
+                        gen_fn_visit_newtype_struct_ts(&I64, &gen_serde_private_ok_pg_type_ts(&quote! {#inner_type_standart_not_null_ts(#field_0_value_ts)})),
+                        gen_fn_visit_newtype_struct_ts(&StdStringString, &gen_serde_private_ok_pg_type_ts(&match_uuid_uuid_field_type_try_parse_ts)),
                         gen_fn_visit_newtype_struct_ts(&array_u8_6_ts, &gen_serde_private_ok_pg_type_ts(&sqlx_types_mac_address_mac_address_field_type_new_field_0_value_ts)),
-                        gen_fn_visit_newtype_struct_ts(&string_ts, &match_origin_try_new_for_deserialize_one_ts),
+                        gen_fn_visit_newtype_struct_ts(&StdStringString, &match_origin_try_new_for_deserialize_one_ts),
                         gen_fn_visit_newtype_struct_ts(&inner_type_standart_not_null_ts, &match_origin_try_new_for_deserialize_one_ts),
                     )
                 };
@@ -1760,7 +1737,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     };
                     (
                         gen_fn_visit_seq_ts(&{
-                            let fields_initialization_ts = gen_fields_serde_de_seq_access_next_el_initialization_ts(&[&i64_ts]);
+                            let fields_initialization_ts = gen_fields_serde_de_seq_access_next_el_initialization_ts(&[&I64]);
                             let serde_private_ok_pg_type_ts = gen_serde_private_ok_pg_type_ts(&quote! {#inner_type_standart_not_null_ts(#field_0_value_ts)});
                             quote! {
                                 #fields_initialization_ts
@@ -1768,14 +1745,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }),
                         gen_fn_visit_seq_ts(&{
-                            let fields_initialization_ts = gen_fields_serde_de_seq_access_next_el_initialization_ts(&[&u32_ts, &u32_ts, &u32_ts, &u32_ts]);
+                            let fields_initialization_ts = gen_fields_serde_de_seq_access_next_el_initialization_ts(&[&U32, &U32, &U32, &U32]);
                             quote! {
                                 #fields_initialization_ts
                                 #sqlx_types_chrono_naive_time_origin_try_new_for_deserialize
                             }
                         }),
                         gen_fn_visit_seq_ts(&{
-                            let fields_initialization_ts = gen_fields_serde_de_seq_access_next_el_initialization_ts(&[&string_ts]);
+                            let fields_initialization_ts = gen_fields_serde_de_seq_access_next_el_initialization_ts(&[&StdStringString]);
                             let serde_private_ok_pg_type_ts = gen_serde_private_ok_pg_type_ts(&match_uuid_uuid_field_type_try_parse_ts);
                             quote! {
                                 #fields_initialization_ts
@@ -1791,14 +1768,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }),
                         gen_fn_visit_seq_ts(&{
-                            let fields_initialization_ts = gen_fields_serde_de_seq_access_next_el_initialization_ts(&[&string_ts]);
+                            let fields_initialization_ts = gen_fields_serde_de_seq_access_next_el_initialization_ts(&[&StdStringString]);
                             quote! {
                                 #fields_initialization_ts
                                 #match_origin_try_new_for_deserialize_one_ts
                             }
                         }),
                         gen_fn_visit_seq_ts(&{
-                            let fields_initialization_ts = gen_fields_serde_de_seq_access_next_el_initialization_ts(&[&u8_ts, &u8_ts, &u8_ts, &u32_ts]);
+                            let fields_initialization_ts = gen_fields_serde_de_seq_access_next_el_initialization_ts(&[&U8, &U8, &U8, &U32]);
                             quote! {
                                 #fields_initialization_ts
                                 #match_origin_try_new_for_deserialize_four_ts
@@ -1861,7 +1838,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }),
                         gen_fn_visit_seq_ts(&{
-                            let fields_initialization_ts = gen_fields_serde_de_seq_access_next_el_initialization_ts(&[&i32_ts, &i32_ts, &i64_ts]);
+                            let fields_initialization_ts = gen_fields_serde_de_seq_access_next_el_initialization_ts(&[&I32, &I32, &I64]);
                             quote! {
                                 #fields_initialization_ts
                                 #origin_new_for_deserialize_three_ts
@@ -2013,8 +1990,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             quote! {#(#fields_initialization_ts)*}
                         };
                         (
-                            gen_field_option_none_initialization_ts(&[&u32_ts, &u32_ts, &u32_ts, &u32_ts]),
-                            gen_field_option_none_initialization_ts(&[&u8_ts, &u8_ts, &u8_ts, &u32_ts]),
+                            gen_field_option_none_initialization_ts(&[&U32, &U32, &U32, &U32]),
+                            gen_field_option_none_initialization_ts(&[&U8, &U8, &U8, &U32]),
                             gen_field_option_none_initialization_ts(&[&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc, &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc]),
                             gen_field_option_none_initialization_ts(&[&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc, &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc]),
                             gen_field_option_none_initialization_ts(&[&std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts, &std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts]),
@@ -2022,7 +1999,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             gen_field_option_none_initialization_ts(&[&std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ts, &std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ts]),
                             gen_field_option_none_initialization_ts(&[&std_ops_bound_i32_ts, &std_ops_bound_i32_ts]),
                             gen_field_option_none_initialization_ts(&[&std_ops_bound_i64_ts, &std_ops_bound_i64_ts]),
-                            gen_field_option_none_initialization_ts(&[&i32_ts, &i32_ts, &i64_ts]),
+                            gen_field_option_none_initialization_ts(&[&I32, &I32, &I64]),
                         )
                     };
                     let (
@@ -2063,8 +2040,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         };
                         (
-                            gen_while_some_next_key_field_ts(&[(&HourSc, &u32_ts), (&MinSc, &u32_ts), (&SecSc, &u32_ts), (&MicroSc, &u32_ts)]),
-                            gen_while_some_next_key_field_ts(&[(&HourSc, &u8_ts), (&MinuteSc, &u8_ts), (&SecondSc, &u8_ts), (&MicrosecondSc, &u32_ts)]),
+                            gen_while_some_next_key_field_ts(&[(&HourSc, &U32), (&MinSc, &U32), (&SecSc, &U32), (&MicroSc, &U32)]),
+                            gen_while_some_next_key_field_ts(&[(&HourSc, &U8), (&MinuteSc, &U8), (&SecondSc, &U8), (&MicrosecondSc, &U32)]),
                             gen_while_some_next_key_field_ts(&[(&DateSc, &sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc), (&TimeSc, &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc)]),
                             gen_while_some_next_key_field_ts(&[(&DateNaiveSc, &sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc), (&TimeSc, &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc)]),
                             gen_while_some_next_key_field_ts(&[(&StartSc, &std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts), (&EndSc, &std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts)]),
@@ -2075,7 +2052,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             ]),
                             gen_while_some_next_key_field_ts(&[(&StartSc, &std_ops_bound_i32_ts), (&EndSc, &std_ops_bound_i32_ts)]),
                             gen_while_some_next_key_field_ts(&[(&StartSc, &std_ops_bound_i64_ts), (&EndSc, &std_ops_bound_i64_ts)]),
-                            gen_while_some_next_key_field_ts(&[(&MonthsSc, &i32_ts), (&DaysSc, &i32_ts), (&MicrosecondsSc, &i64_ts)]),
+                            gen_while_some_next_key_field_ts(&[(&MonthsSc, &I32), (&DaysSc, &I32), (&MicrosecondsSc, &I64)]),
                         )
                     };
                     let (match_field_initialization_hour_min_sec_micro_ts, match_field_initialization_start_end_ts, match_field_initialization_hour_minute_second_microsecond_ts, match_field_initialization_date_time_ts, match_field_initialization_date_naive_time_ts, match_field_initialization_months_days_microseconds_ts) = {
@@ -2348,7 +2325,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         #impl_serde_de_visitor_for_visitor_pg_money_ts
                         #serde_deserializer_deserialize_newtype_struct_ts
                     })),
-                    PgType::StdStringStringAsText => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                    PgType::StringAsText => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
                         #struct_visitor_ts
                         #impl_serde_de_visitor_for_visitor_string_ts
                         #serde_deserializer_deserialize_newtype_struct_ts
@@ -2466,8 +2443,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let ident_standart_not_null_origin_try_new_for_deserialize_error_ucc = SelfOriginTryNewForDeserializeErrorUcc::from_display(&ident_standart_not_null_ucc);
         let int_range_type_to_range_inner_type_ts = |int_range_type: &IntRangeType| -> Ts2 {
             match &int_range_type {
-                IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range => quote! {#i32_ts},
-                IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range => quote! {#i64_ts},
+                IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range => quote! {#I32},
+                IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range => quote! {#I64},
             }
         };
         let gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts = |content_ts: &dyn ToTokens| {
@@ -2501,13 +2478,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         && matches!(&is_nullable, IsNullable::False)
                     {
                         gen_pub_const_new_ts(
-                            &must_use_ts,
+                            &MustUse,
                             &value_ident_inner_type_ts,
                             &self_ident_origin_new_value_ts
                         )
                     } else {
                         gen_pub_new_ts(
-                            &must_use_ts,
+                            &MustUse,
                             &value_ident_inner_type_ts,
                             &self_ident_origin_new_value_ts
                         )
@@ -2547,7 +2524,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DeriveCopy::True,
-                PgType::StdStringStringAsText |
+                PgType::StringAsText |
                 PgType::StdVecVecU8AsBytea => DeriveCopy::False,
             },
             PgTypePattern::ArrayDim1 { .. } => DeriveCopy::False,
@@ -2557,7 +2534,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let sqlx_types_chrono_naive_time_twenty_function_ts = quote!{sqlx_types_chrono_naive_time_twenty};
         let sqlx_types_chrono_naive_time_max_function_ts = quote!{sqlx_types_chrono_naive_time_max};
         let sqlx_types_chrono_naive_date_min_function_ts = quote!{sqlx_types_chrono_naive_date_min};
-
         let sqlx_types_chrono_naive_date_negative_less_typical_function_ts = quote!{sqlx_types_chrono_naive_date_negative_less_typical};
         let sqlx_types_chrono_naive_date_negative_more_typical_function_ts = quote!{sqlx_types_chrono_naive_date_negative_more_typical};
         let sqlx_types_chrono_naive_date_near_zero_function_ts = quote!{sqlx_types_chrono_naive_date_near_zero};
@@ -2565,7 +2541,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let sqlx_types_chrono_naive_date_positive_more_typical_function_ts = quote!{sqlx_types_chrono_naive_date_positive_more_typical};
         let sqlx_types_chrono_naive_date_max_function_ts = quote!{sqlx_types_chrono_naive_date_max};
         let sqlx_types_chrono_naive_date_max_pred_opt_expect_function_ts = quote!{sqlx_types_chrono_naive_date_max_pred_opt_expect};
-
         let ident_ts = {
             let ident_ts = StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
@@ -2637,7 +2612,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::I64AsBigSerialInitializedByPg |
                         PgType::SqlxPgTypesPgMoneyAsMoney |
                         PgType::BoolAsBool |
-                        PgType::StdStringStringAsText |
+                        PgType::StringAsText |
                         PgType::StdVecVecU8AsBytea |
                         PgType::SqlxPgTypesPgIntervalAsInterval |
                         PgType::SqlxTypesChronoNaiveDateAsDate |
@@ -2690,7 +2665,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::I64AsBigSerialInitializedByPg |
                         PgType::SqlxPgTypesPgMoneyAsMoney |
                         PgType::BoolAsBool |
-                        PgType::StdStringStringAsText |
+                        PgType::StringAsText |
                         PgType::StdVecVecU8AsBytea |
                         PgType::SqlxPgTypesPgIntervalAsInterval |
                         PgType::SqlxTypesChronoNaiveDateAsDate |
@@ -2751,7 +2726,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::I64AsBigSerialInitializedByPg |
                         PgType::SqlxPgTypesPgMoneyAsMoney |
                         PgType::BoolAsBool |
-                        PgType::StdStringStringAsText |
+                        PgType::StringAsText |
                         PgType::StdVecVecU8AsBytea |
                         PgType::SqlxPgTypesPgIntervalAsInterval |
                         PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
@@ -2803,7 +2778,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::I64AsBigSerialInitializedByPg |
                         PgType::SqlxPgTypesPgMoneyAsMoney |
                         PgType::BoolAsBool |
-                        PgType::StdStringStringAsText |
+                        PgType::StringAsText |
                         PgType::StdVecVecU8AsBytea |
                         PgType::SqlxPgTypesPgIntervalAsInterval |
                         PgType::SqlxTypesChronoNaiveDateAsDate |
@@ -2856,7 +2831,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::I64AsBigSerialInitializedByPg |
                         PgType::SqlxPgTypesPgMoneyAsMoney |
                         PgType::BoolAsBool |
-                        PgType::StdStringStringAsText |
+                        PgType::StringAsText |
                         PgType::StdVecVecU8AsBytea |
                         PgType::SqlxTypesTimeTimeAsTime |
                         PgType::SqlxPgTypesPgIntervalAsInterval |
@@ -2901,7 +2876,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::I64AsBigSerialInitializedByPg |
                         PgType::SqlxPgTypesPgMoneyAsMoney |
                         PgType::BoolAsBool |
-                        PgType::StdStringStringAsText |
+                        PgType::StringAsText |
                         PgType::StdVecVecU8AsBytea |
                         PgType::SqlxTypesTimeTimeAsTime |
                         PgType::SqlxPgTypesPgIntervalAsInterval |
@@ -2939,7 +2914,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::I64AsBigSerialInitializedByPg |
                         PgType::SqlxPgTypesPgMoneyAsMoney |
                         PgType::BoolAsBool |
-                        PgType::StdStringStringAsText |
+                        PgType::StringAsText |
                         PgType::StdVecVecU8AsBytea |
                         PgType::SqlxTypesTimeTimeAsTime |
                         PgType::SqlxPgTypesPgIntervalAsInterval |
@@ -3021,7 +2996,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     maybe_read_inner_initializations_ts.is_some()
                 {
                     quote!{
-                        #allow_clippy_arbitrary_source_item_ordering_ts
+                        #AllowClippyArbitrarySourceItemOrdering
                         impl #ident {
                             #maybe_min_inner_type_ts
                             #maybe_slightly_more_than_min_inner_type_ts
@@ -3069,7 +3044,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         | PgType::I32AsSerialInitializedByPg
                         | PgType::I64AsBigSerialInitializedByPg
                         | PgType::BoolAsBool
-                        | PgType::StdStringStringAsText
+                        | PgType::StringAsText
                         | PgType::StdVecVecU8AsBytea
                         | PgType::SqlxTypesChronoNaiveTimeAsTime
                         | PgType::SqlxTypesTimeTimeAsTime
@@ -3147,16 +3122,16 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let nanosecond_precision_is_not_supported_variant_try_new_ts = quote! {
                 #NanosecondPrecisionIsNotSupportedUcc {
                     #[eo_to_err_string_serde]
-                    #ValueSc: #string_ts,
+                    #ValueSc: #StdStringString,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
             };
             let sqlx_types_chrono_naive_date_as_date_try_new_error_variants_ts = quote! {
                 #EarlierDateNotSupportedUcc {
                     #[eo_to_err_string_serde]
-                    #ValueSc: #string_ts,
+                    #ValueSc: #StdStringString,
                     #[eo_to_err_string_serde]
-                    #EarliestSupportedDateSc: #string_ts,
+                    #EarliestSupportedDateSc: #StdStringString,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
             };
@@ -3201,7 +3176,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             };
                             let content_ts: &dyn ToTokens = match &pg_type_initialization_try_new {
-                                PgTypeInitializationTryNew::StdStringStringAsText => &string_as_text_try_new_error_variants_ts,
+                                PgTypeInitializationTryNew::StringAsText => &string_as_text_try_new_error_variants_ts,
                                 PgTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime | PgTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => &nanosecond_precision_is_not_supported_variant_try_new_ts,
                                 PgTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_error_variants_ts,
                                 PgTypeInitializationTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => &quote! {
@@ -3244,7 +3219,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     );
                 quote!{
-                    #allow_clippy_arbitrary_source_item_ordering_ts
+                    #AllowClippyArbitrarySourceItemOrdering
                     #content_ts_d57d5de2
                 }
             } else {
@@ -3270,17 +3245,17 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 &Ts2::new(),
                                 &{
                                     let content_ts: &dyn ToTokens = match &pg_type_impl_try_new_for_deserialize {
-                                        PgTypeImplTryNewForDeserialize::StdStringStringAsText => &string_as_text_try_new_error_variants_ts,
+                                        PgTypeImplTryNewForDeserialize::StringAsText => &string_as_text_try_new_error_variants_ts,
                                         PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => &quote! {
                                             #InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
                                                 #[eo_to_err_string_serde]
-                                                #HourSc: #u32_ts,
+                                                #HourSc: #U32,
                                                 #[eo_to_err_string_serde]
-                                                #MinSc: #u32_ts,
+                                                #MinSc: #U32,
                                                 #[eo_to_err_string_serde]
-                                                #SecSc: #u32_ts,
+                                                #SecSc: #U32,
                                                 #[eo_to_err_string_serde]
-                                                #MicroSc: #u32_ts,
+                                                #MicroSc: #U32,
                                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                             },
                                             #nanosecond_precision_is_not_supported_variant_try_new_ts
@@ -3288,15 +3263,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         PgTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => &quote! {
                                             #InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
                                                 #[eo_to_err_string_serde]
-                                                #HourSc: #u8_ts,
+                                                #HourSc: #U8,
                                                 #[eo_to_err_string_serde]
-                                                #MinuteSc: #u8_ts,
+                                                #MinuteSc: #U8,
                                                 #[eo_to_err_string_serde]
-                                                #SecondSc: #u8_ts,
+                                                #SecondSc: #U8,
                                                 #[eo_to_err_string_serde]
-                                                #MicrosecondSc: #u32_ts,
+                                                #MicrosecondSc: #U32,
                                                 #[eo_to_err_string_serde]
-                                                #ErrorSc: #string_ts,
+                                                #ErrorSc: #StdStringString,
                                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                             },
                                             #nanosecond_precision_is_not_supported_variant_try_new_ts
@@ -3309,7 +3284,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             );
                             quote!{
-                                #allow_clippy_arbitrary_source_item_ordering_ts
+                                #AllowClippyArbitrarySourceItemOrdering
                                 #content_ts_026f2a24
                             }
                         }
@@ -3360,18 +3335,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     match &pg_type_pattern {
                         PgTypePattern::Standart => match &is_nullable {
                             IsNullable::False => gen_const_new_ts(
-                                &must_use_ts,
+                                &MustUse,
                                 &value_ident_inner_type_ts,
                                 &content_ts
                             ),
                             IsNullable::True => gen_new_ts(
-                                &must_use_ts,
+                                &MustUse,
                                 &value_ident_inner_type_ts,
                                 &content_ts
                             ),
                         },
                         PgTypePattern::ArrayDim1 { .. } => gen_new_ts(
-                            &must_use_ts,
+                            &MustUse,
                             &value_ident_inner_type_ts,
                             &content_ts
                         ),
@@ -3536,7 +3511,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         }))
                                     };
                                     match &pg_type_initialization_try_new {
-                                        PgTypeInitializationTryNew::StdStringStringAsText => quote! {
+                                        PgTypeInitializationTryNew::StringAsText => quote! {
                                             if #ValueSc.find('\0').is_some() {
                                                 Err(#ident_standart_not_null_origin_try_new_error_ucc::#ContainsNullByteUcc {
                                                     #ValueSc,
@@ -3668,9 +3643,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         };
                                         match &pg_type_impl_new_for_deserialize {
                                             PgTypeImplNewForDeserialize::SsqlxPgTypesPgIntervalAsInterval => quote! {
-                                                #MonthsSc: #i32_ts,
-                                                #DaysSc: #i32_ts,
-                                                #MicrosecondsSc: #i64_ts,
+                                                #MonthsSc: #I32,
+                                                #DaysSc: #I32,
+                                                #MicrosecondsSc: #I64,
                                             },
                                             PgTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote! {
                                                 #DateSc: #sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc,
@@ -3742,23 +3717,23 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             }
                                         };
                                         match &pg_type_impl_try_new_for_deserialize {
-                                            PgTypeImplTryNewForDeserialize::StdStringStringAsText | PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => {
+                                            PgTypeImplTryNewForDeserialize::StringAsText | PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => {
                                                 quote! {value_356f2a0b: #ident_inner_type_ts}
                                             }
                                             PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => {
                                                 quote! {
-                                                    #HourSc: #u32_ts,
-                                                    #MinSc: #u32_ts,
-                                                    #SecSc: #u32_ts,
-                                                    #MicroSc: #u32_ts
+                                                    #HourSc: #U32,
+                                                    #MinSc: #U32,
+                                                    #SecSc: #U32,
+                                                    #MicroSc: #U32
                                                 }
                                             }
                                             PgTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => {
                                                 quote! {
-                                                    #HourSc: #u8_ts,
-                                                    #MinuteSc: #u8_ts,
-                                                    #SecondSc: #u8_ts,
-                                                    #MicrosecondSc: #u32_ts
+                                                    #HourSc: #U8,
+                                                    #MinuteSc: #U8,
+                                                    #SecondSc: #U8,
+                                                    #MicrosecondSc: #U32
                                                 }
                                             }
                                             PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI32AsInt4Range => gen_value_pg_range_int_type_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
@@ -3825,7 +3800,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             },
                                         );
                                         match &pg_type_impl_try_new_for_deserialize {
-                                            PgTypeImplTryNewForDeserialize::StdStringStringAsText => {
+                                            PgTypeImplTryNewForDeserialize::StringAsText => {
                                                 let variant_ts = quote! {
                                                     #ContainsNullByteUcc {
                                                         #ValueSc,
@@ -3924,7 +3899,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgTypePattern::ArrayDim1 { .. } => Ts2::new(),
                 };
                 quote! {
-                    #allow_clippy_arbitrary_source_item_ordering_ts
+                    #AllowClippyArbitrarySourceItemOrdering
                     impl #ident_origin_ucc {
                         #fn_new_or_try_new_ts
                         #maybe_fn_new_or_try_new_for_deserialize_token
@@ -4008,7 +3983,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Ts2::new(),
-                        PgType::StdStringStringAsText => gen_impl_crate_is_string_empty_for_ident_content_ts(
+                        PgType::StringAsText => gen_impl_crate_is_string_empty_for_ident_content_ts(
                             &ident_origin_ucc,
                             &quote! {self.0.clone().is_empty()},
                         ),
@@ -4040,8 +4015,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         IsNullable::False => {
                             let pg_range_int_default_initialization_ts = quote! {
                                 sqlx::postgres::types::PgRange {
-                                    start: std::ops::Bound::Included(#core_default_default_default_ts),
-                                    end: std::ops::Bound::Excluded(#core_default_default_default_ts),
+                                    start: std::ops::Bound::Included(#CoreDefaultDefaultDefault),
+                                    end: std::ops::Bound::Excluded(#CoreDefaultDefaultDefault),
                                 }
                             };
                             let gen_as_default_option_some_vec_one_el_call_ts = |ident_ts_87626b85: &dyn ToTokens| {
@@ -4078,19 +4053,19 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 | PgType::I32AsSerialInitializedByPg
                                 | PgType::I64AsBigSerialInitializedByPg
                                 | PgType::BoolAsBool
-                                | PgType::StdStringStringAsText
+                                | PgType::StringAsText
                                 | PgType::SqlxTypesChronoNaiveDateAsDate
                                 | PgType::SqlxTypesChronoNaiveTimeAsTime
                                 | PgType::SqlxTypesMacAddressMacAddressAsMacAddr
                                 | PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg => &quote! {#field_type_handle::default()},
                                 PgType::SqlxTypesUuidUuidAsUuidInitializedByClient => &quote! {#ident_inner_type_ts::default()},
-                                PgType::SqlxPgTypesPgMoneyAsMoney => &quote! {#inner_type_standart_not_null_ts(#core_default_default_default_ts)},
-                                PgType::StdVecVecU8AsBytea => &quote! {vec![#core_default_default_default_ts]},
+                                PgType::SqlxPgTypesPgMoneyAsMoney => &quote! {#inner_type_standart_not_null_ts(#CoreDefaultDefaultDefault)},
+                                PgType::StdVecVecU8AsBytea => &quote! {vec![#CoreDefaultDefaultDefault]},
                                 PgType::SqlxTypesTimeTimeAsTime => &gen_sqlx_types_time_time_from_hms_micro_unwrap_ts(&quote! {0,0,0,0}),
                                 PgType::SqlxPgTypesPgIntervalAsInterval => &quote! {#inner_type_standart_not_null_ts {
-                                    #MonthsSc: #core_default_default_default_ts,
-                                    #DaysSc: #core_default_default_default_ts,
-                                    #MicrosecondsSc: #core_default_default_default_ts
+                                    #MonthsSc: #CoreDefaultDefaultDefault,
+                                    #DaysSc: #CoreDefaultDefaultDefault,
+                                    #MicrosecondsSc: #CoreDefaultDefaultDefault
                                 }},
                                 PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
                                     #sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_option_some_vec_one_el_call_ts.0,
@@ -4101,7 +4076,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     #sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_option_some_vec_one_el_call_ts.0,
                                 })),
                                 PgType::SqlxTypesIpnetworkIpNetworkAsInet => &quote! {
-                                    sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSc(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default_ts).expect("9e9c9b57"))
+                                    sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSc(core::net::Ipv4Addr::UNSPECIFIED, #CoreDefaultDefaultDefault).expect("9e9c9b57"))
                                 },
                                 PgType::SqlxPgTypesPgRangeI32AsInt4Range | PgType::SqlxPgTypesPgRangeI64AsInt8Range => &pg_range_int_default_initialization_ts,
                                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &gen_sqlx_pg_types_pg_range_default_option_some_vec_one_el_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc),
@@ -4110,11 +4085,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             };
                             quote! {#initialization_ts}
                         }
-                        IsNullable::True => quote! {Some(#pg_crud_common_default_option_some_vec_one_el_call_ts)},
+                        IsNullable::True => quote! {Some(#PgCrudCommonDefaultOptionSomeVecOneElCall)},
                     },
                     PgTypePattern::ArrayDim1 { .. } => match &is_nullable {
-                        IsNullable::False => quote! {vec![#pg_crud_common_default_option_some_vec_one_el_call_ts]},
-                        IsNullable::True => quote! {Some(#pg_crud_common_default_option_some_vec_one_el_call_ts)},
+                        IsNullable::False => quote! {vec![#PgCrudCommonDefaultOptionSomeVecOneElCall]},
+                        IsNullable::True => quote! {Some(#PgCrudCommonDefaultOptionSomeVecOneElCall)},
                     },
                 };
                 quote! {Self(#content_ts)}
@@ -4137,7 +4112,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             | PgType::I64AsBigSerialInitializedByPg
                             | PgType::SqlxPgTypesPgMoneyAsMoney
                             | PgType::BoolAsBool
-                            | PgType::StdStringStringAsText
+                            | PgType::StringAsText
                             | PgType::StdVecVecU8AsBytea
                             | PgType::SqlxTypesChronoNaiveTimeAsTime
                             | PgType::SqlxTypesTimeTimeAsTime
@@ -4236,7 +4211,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         | PgType::I32AsSerialInitializedByPg
                         | PgType::I64AsBigSerialInitializedByPg
                         | PgType::BoolAsBool
-                        | PgType::StdStringStringAsText
+                        | PgType::StringAsText
                         | PgType::StdVecVecU8AsBytea
                         | PgType::SqlxTypesChronoNaiveTimeAsTime
                         | PgType::SqlxTypesTimeTimeAsTime
@@ -4265,7 +4240,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 );
             let impl_ident_table_type_declaration_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_table_type_declaration_ucc);
             let impl_default_option_some_vec_one_el_for_ident_table_type_declaration_ts =
-                gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_table_type_declaration_ucc, &quote! {Self(#pg_crud_common_default_option_some_vec_one_el_call_ts)});
+                gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_table_type_declaration_ucc, &quote! {Self(#PgCrudCommonDefaultOptionSomeVecOneElCall)});
             let impl_sqlx_type_sqlx_pg_for_ident_table_type_declaration_ts = gen_impl_sqlx_type_sqlx_pg_for_ident_ts(&ident_table_type_declaration_ucc, &ident_origin_ucc);
             let impl_sqlx_encode_sqlx_pg_for_ident_table_type_declaration_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_table_type_declaration_ucc, &quote! {#SelfSc.0});
             let impl_sqlx_decode_sqlx_pg_for_ident_table_type_declaration_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(&ident_table_type_declaration_ucc, &ident_origin_ucc, &quote! {Ok(Self(value_147c3532))});
@@ -4344,7 +4319,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             };
             let impl_default_option_some_vec_one_el_for_ident_create_ts = gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_create_ucc, &{
                 let content_ts: &dyn ToTokens = match &can_be_primary_key {
-                    CanBePrimaryKey::False => &pg_crud_common_default_option_some_vec_one_el_call_ts,
+                    CanBePrimaryKey::False => &PgCrudCommonDefaultOptionSomeVecOneElCall,
                     CanBePrimaryKey::True => &quote! {()},
                 };
                 quote! {Self(#content_ts)}
@@ -4389,8 +4364,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgTypePattern::Standart => quote! {Self},
                     PgTypePattern::ArrayDim1 { .. } => {
                         let content_ts: &dyn ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
-                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &pg_crud_common_default_option_some_vec_one_el_call_ts,
-                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &pg_crud_common_default_option_some_vec_one_el_max_page_size_call_ts,
+                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudCommonDefaultOptionSomeVecOneElCall,
+                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall,
                         };
                         let mut arguments_ts = Vec::new();
                         for el_a227c2ba in 1..=array_dims_number {
@@ -4416,7 +4391,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let ident_read_ucc = SelfReadUcc::from_tokens(&ident);
         let ident_where_ucc = SelfWhereUcc::from_tokens(&ident);
         let ident_where_ts = gen_pg_type_where_ts(
-            &allow_clippy_arbitrary_source_item_ordering_ts,
+            &AllowClippyArbitrarySourceItemOrdering,
             &{
                 let common_pg_type_filters = vec![PgTypeFilter::Equal { ident: quote! {#ident_table_type_declaration_ucc} }];
                 match &pg_type_pattern {
@@ -4541,7 +4516,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec.push(between);
                                 vec
                             }
-                            PgType::StdStringStringAsText | PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient => {
+                            PgType::StringAsText | PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient => {
                                 let mut vec = common_standart_pg_type_filters;
                                 vec.push(regular_expression);
                                 vec
@@ -4717,7 +4692,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec.push(dim_one_between);
                                 vec
                             }
-                            PgType::StdStringStringAsText | PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient => {
+                            PgType::StringAsText | PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient => {
                                 let mut vec = common_array_dim1_pg_type_filters;
                                 vec.push(dim_one_regular_expression);
                                 vec
@@ -4787,7 +4762,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let impl_ident_read_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_read_ucc);
             let impl_error_occurence_lib_to_err_string_for_ident_read_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_read_ucc, &Ts2::new(), &quote! {self.0.to_string()});
             let impl_crate_default_option_some_vec_one_el_for_ident_read_ts =
-                gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_read_ucc, &quote! {Self(#pg_crud_common_default_option_some_vec_one_el_call_ts)});
+                gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_read_ucc, &quote! {Self(#PgCrudCommonDefaultOptionSomeVecOneElCall)});
             let impl_sqlx_encode_sqlx_pg_for_ident_origin_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_read_ucc, &quote! {#SelfSc.0});
             let impl_sqlx_decode_sqlx_pg_for_ident_read_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
                 &ident_read_ucc,
@@ -4876,7 +4851,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 );
             let impl_ident_update_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_update_ucc);
             let impl_default_option_some_vec_one_el_for_ident_update_ts =
-                gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_update_ucc, &quote! {Self(#pg_crud_common_default_option_some_vec_one_el_call_ts)});
+                gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_update_ucc, &quote! {Self(#PgCrudCommonDefaultOptionSomeVecOneElCall)});
             let impl_error_occurence_lib_to_err_string_for_ident_update_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_update_ucc, &Ts2::new(), &quote! {self.0.#ToErrStringSc()});
             quote! {
                 #ident_update_ts
@@ -4912,7 +4887,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         };
         let impl_pg_type_for_ident_ts = {
             let gen_ok_string_from_tokens_ts = |content_ts: &dyn ToTokens| {
-                quote! {Ok(#string_ts::from(#content_ts))}
+                quote! {Ok(#StdStringString::from(#content_ts))}
             };
             let ok_string_from_default_ts = gen_ok_string_from_tokens_ts(&quote! {"default"});
             let ok_string_from_uuid_generate_v4_ts = gen_ok_string_from_tokens_ts(&quote! {"uuid_generate_v4()"});
@@ -4946,7 +4921,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     | PgType::F64AsFloat8
                     | PgType::SqlxPgTypesPgMoneyAsMoney
                     | PgType::BoolAsBool
-                    | PgType::StdStringStringAsText
+                    | PgType::StringAsText
                     | PgType::StdVecVecU8AsBytea
                     | PgType::SqlxTypesChronoNaiveTimeAsTime
                     | PgType::SqlxTypesTimeTimeAsTime
@@ -4993,7 +4968,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::I64AsBigSerialInitializedByPg => "bigserial",
                         PgType::SqlxPgTypesPgMoneyAsMoney => "money",
                         PgType::BoolAsBool => "bool",
-                        PgType::StdStringStringAsText => "text",
+                        PgType::StringAsText => "text",
                         PgType::StdVecVecU8AsBytea => "bytea",
                         PgType::SqlxTypesChronoNaiveTimeAsTime | PgType::SqlxTypesTimeTimeAsTime => "time",
                         PgType::SqlxPgTypesPgIntervalAsInterval => "interval",
@@ -5624,6 +5599,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     #ident_sqlx_types_chrono_naive_date_max_ts,
                     #ident_sqlx_types_chrono_naive_time_max_ts
                 });
+                //todo reuse?
                 let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_min_ts = gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&sqlx_types_chrono_naive_date_time_min_ts);
                 let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_negative_less_typical_ts = gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&sqlx_types_chrono_naive_date_time_negative_less_typical_ts);
                 let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_negative_more_typical_ts = gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&sqlx_types_chrono_naive_date_time_negative_more_typical_ts);
@@ -5651,7 +5627,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         ).collect::<Vec<#inner_type_standart_not_null_ts>>()
                     },
                     PgType::BoolAsBool => gen_typical_test_cases_vec_ts(&quote! {bool_test_cases_vec}),
-                    PgType::StdStringStringAsText => gen_typical_test_cases_vec_ts(&quote! {string_test_cases_vec}),
+                    PgType::StringAsText => gen_typical_test_cases_vec_ts(&quote! {string_test_cases_vec}),
                     PgType::StdVecVecU8AsBytea => quote! {vec![
                         Vec::new(),
                         (0u8..=255).collect(),
@@ -5698,8 +5674,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgType::SqlxPgTypesPgIntervalAsInterval => {
                         let min_ts = quote! {MIN};
                         let max_ts = quote! {MAX};
-                        let i32_min_ts = quote! {#i32_ts::#min_ts};
-                        let i32_max_ts = quote! {#i32_ts::#max_ts};
+                        let i32_min_ts = quote! {#I32::#min_ts};
+                        let i32_max_ts = quote! {#I32::#max_ts};
                         let gen_sqlx_pg_types_pg_interval_ts = |months_ts: &dyn ToTokens, days_ts: &dyn ToTokens, microseconds_ts: &dyn ToTokens| {
                             quote! {sqlx::postgres::types::PgInterval {
                                 months: #months_ts,
@@ -5707,8 +5683,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 microseconds: #microseconds_ts
                             }}
                         };
-                        let min_content_ts = gen_sqlx_pg_types_pg_interval_ts(&i32_min_ts, &i32_min_ts, &quote! {#i64_ts::#min_ts});
-                        let max_content_ts = gen_sqlx_pg_types_pg_interval_ts(&i32_max_ts, &i32_max_ts, &quote! {#i64_ts::#max_ts});
+                        let min_content_ts = gen_sqlx_pg_types_pg_interval_ts(&i32_min_ts, &i32_min_ts, &quote! {#I64::#min_ts});
+                        let max_content_ts = gen_sqlx_pg_types_pg_interval_ts(&i32_max_ts, &i32_max_ts, &quote! {#I64::#max_ts});
                         quote! {vec![
                             #min_content_ts,
                             #max_content_ts
@@ -5930,7 +5906,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &Ts2::new(),
                                             PgType::StdVecVecU8AsBytea |
-                                            PgType::StdStringStringAsText => &dot_clone_ts,
+                                            PgType::StringAsText => &dot_clone_ts,
                                         };
                                         quote! {vec![value_6465e8ae #maybe_dot_clone_ts_060db18f.0.into(); #number_ts]}
                                     };
@@ -5985,7 +5961,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => quote!{*#content_ts},
                     PgType::StdVecVecU8AsBytea |
-                    PgType::StdStringStringAsText => quote!{#content_ts.clone()}
+                    PgType::StringAsText => quote!{#content_ts.clone()}
                 };
                 match &pg_type_pattern {
                     PgTypePattern::Standart => match &is_nullable {
@@ -6182,7 +6158,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let content_ts: &dyn ToTokens = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
                         &quote! {#ValueSc.0 #maybe_dot_clone_ts}
                     } else {
-                        &pg_crud_common_default_option_some_vec_one_el_call_ts
+                        &PgCrudCommonDefaultOptionSomeVecOneElCall
                     };
                     quote! {#self_pg_type_as_pg_type_ts::normalize(#content_ts)}
                 });
@@ -6389,36 +6365,36 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             );
                             match &pg_type {
                                 PgType::I16AsInt2 => wrap_into_not_empty_unique_vec_ts(&gen_greater_than_test_new_new_vec_ts(
-                                    &quote!{#i16_ts::MIN},
-                                    &quote!{#i16_ts::MIN + 1},
+                                    &quote!{#I16::MIN},
+                                    &quote!{#I16::MIN + 1},
                                     &quote!{0},
                                     &quote!{1},
-                                    &quote!{#i16_ts::MAX},
-                                    &quote!{#i16_ts::MAX - 1}
+                                    &quote!{#I16::MAX},
+                                    &quote!{#I16::MAX - 1}
                                 )),
                                 PgType::I32AsInt4 => wrap_into_not_empty_unique_vec_ts(&gen_greater_than_test_new_new_vec_ts(
-                                    &quote!{#i32_ts::MIN},
-                                    &quote!{#i32_ts::MIN + 1},
+                                    &quote!{#I32::MIN},
+                                    &quote!{#I32::MIN + 1},
                                     &quote!{0},
                                     &quote!{1},
-                                    &quote!{#i32_ts::MAX},
-                                    &quote!{#i32_ts::MAX - 1}
+                                    &quote!{#I32::MAX},
+                                    &quote!{#I32::MAX - 1}
                                 )),
                                 PgType::I64AsInt8 => wrap_into_not_empty_unique_vec_ts(&gen_greater_than_test_new_new_vec_ts(
-                                    &quote!{#i64_ts::MIN},
-                                    &quote!{#i64_ts::MIN + 1},
+                                    &quote!{#I64::MIN},
+                                    &quote!{#I64::MIN + 1},
                                     &quote!{0},
                                     &quote!{1},
-                                    &quote!{#i64_ts::MAX},
-                                    &quote!{#i64_ts::MAX - 1}
+                                    &quote!{#I64::MAX},
+                                    &quote!{#I64::MAX - 1}
                                 )),
                                 PgType::F32AsFloat4 => wrap_into_not_empty_unique_vec_ts(&gen_greater_than_test_new_new_vec_ts(
-                                    &quote!{#f32_ts::MIN},
-                                    &quote!{#f32_ts::MIN.next_up()},
+                                    &quote!{#F32::MIN},
+                                    &quote!{#F32::MIN.next_up()},
                                     &quote!{0.0},
                                     &quote!{1.0},
-                                    &quote!{#f32_ts::MAX},
-                                    &quote!{#f32_ts::MAX.next_down()}
+                                    &quote!{#F32::MAX},
+                                    &quote!{#F32::MAX.next_down()}
                                 )),
                                 PgType::F64AsFloat8 => wrap_into_not_empty_unique_vec_ts(&gen_greater_than_test_new_new_vec_ts(
                                 //todo rust f64 != pg float8
@@ -6484,7 +6460,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 PgType::I64AsBigSerialInitializedByPg |//todo diffrent test logic for autogenerated?
                                 PgType::SqlxPgTypesPgMoneyAsMoney |
                                 PgType::BoolAsBool |
-                                PgType::StdStringStringAsText |
+                                PgType::StringAsText |
                                 PgType::StdVecVecU8AsBytea |
                                 PgType::SqlxPgTypesPgIntervalAsInterval |
                                 PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
@@ -6545,7 +6521,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::I64AsBigSerialInitializedByPg => IsNeedToImplPgTypeGreaterThanTest::TrueFromReadOnlyIds,
                         PgType::SqlxPgTypesPgMoneyAsMoney |//todo why no support?
                         PgType::BoolAsBool |
-                        PgType::StdStringStringAsText |
+                        PgType::StringAsText |
                         PgType::StdVecVecU8AsBytea |
                         PgType::SqlxPgTypesPgIntervalAsInterval |
                         PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |//todo why no support?
@@ -6644,7 +6620,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let pg_type_primary_key_ucc = PgTypePrimaryKeyUcc;
             let value_as_read_only_ids_ts = quote! {#ValueSc: #self_as_pg_type_ts::#ReadOnlyIdsUcc};
             quote! {
-                #allow_clippy_arbitrary_source_item_ordering_ts
+                #AllowClippyArbitrarySourceItemOrdering
                 impl #import_path::#pg_type_primary_key_ucc for #ident_standart_not_null_ucc {
                     type #PgTypeUcc = Self;
                     type #TableTypeDeclarationUcc = #ident_standart_not_null_table_type_declaration_ucc;

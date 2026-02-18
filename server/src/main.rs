@@ -87,7 +87,7 @@ fn main() {
                     //     //                 // pg_crud::I64,
                     //     //                 // pg_crud::F32,
                     //     //                 // pg_crud::F64,
-                    //     //                 // pg_crud::StdStringString,
+                    //     //                 // pg_crud::String,
                     //     //                 // pg_crud::StdVecVecU8,
                     //     //                 // pg_crud::SqlxPgTypesPgInterval,
                     //     //                 // pg_crud::SqlxPgTypesPgRangeI64,

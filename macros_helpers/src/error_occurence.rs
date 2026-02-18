@@ -16,9 +16,9 @@ pub enum ErrorOccurenceFieldAttr {
     EoVecToErrString,
     EoVecToErrStringSerde,
     EoVecErrorOccurence,
-    EoHashMapKeyStdStringStringValueToErrString,
-    EoHashMapKeyStdStringStringValueToErrStringSerde,
-    EoHashMapKeyStdStringStringValueErrorOccurence,
+    EoHashMapKeyStringValueToErrString,
+    EoHashMapKeyStringValueToErrStringSerde,
+    EoHashMapKeyStringValueErrorOccurence,
 }
 impl FromStr for ErrorOccurenceFieldAttr {
     type Err = ();
@@ -36,11 +36,11 @@ impl FromStr for ErrorOccurenceFieldAttr {
         } else if value == "eo_vec_error_occurence" {
             Ok(Self::EoVecErrorOccurence)
         } else if value == "eo_hashmap_key_string_value_to_err_string" {
-            Ok(Self::EoHashMapKeyStdStringStringValueToErrString)
+            Ok(Self::EoHashMapKeyStringValueToErrString)
         } else if value == "eo_hashmap_key_string_value_to_err_string_serde" {
-            Ok(Self::EoHashMapKeyStdStringStringValueToErrStringSerde)
+            Ok(Self::EoHashMapKeyStringValueToErrStringSerde)
         } else if value == "eo_hashmap_key_string_value_error_occurence" {
-            Ok(Self::EoHashMapKeyStdStringStringValueErrorOccurence)
+            Ok(Self::EoHashMapKeyStringValueErrorOccurence)
         } else {
             Err(())
         }
@@ -78,13 +78,11 @@ impl AttrIdentStr for ErrorOccurenceFieldAttr {
             Self::EoVecToErrString => "eo_vec_to_err_string",
             Self::EoVecToErrStringSerde => "eo_vec_to_err_string_serde",
             Self::EoVecErrorOccurence => "eo_vec_error_occurence",
-            Self::EoHashMapKeyStdStringStringValueToErrString => {
-                "eo_hashmap_key_string_value_to_err_string"
-            }
-            Self::EoHashMapKeyStdStringStringValueToErrStringSerde => {
+            Self::EoHashMapKeyStringValueToErrString => "eo_hashmap_key_string_value_to_err_string",
+            Self::EoHashMapKeyStringValueToErrStringSerde => {
                 "eo_hashmap_key_string_value_to_err_string_serde"
             }
-            Self::EoHashMapKeyStdStringStringValueErrorOccurence => {
+            Self::EoHashMapKeyStringValueErrorOccurence => {
                 "eo_hashmap_key_string_value_error_occurence"
             }
         }
@@ -178,17 +176,17 @@ pub fn gen_serde_version_of_named_syn_variant(value: &Variant) -> Ts2 {
                     Vec<#el_vec_type_with_serde_ts>
                 }
             }
-            ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrString => {
+            ErrorOccurenceFieldAttr::EoHashMapKeyStringValueToErrString => {
                 let _: &GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap();
                 quote! {
                     std::collections::HashMap<#StdStringString, #StdStringString>
                 }
             }
-            ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrStringSerde => {
+            ErrorOccurenceFieldAttr::EoHashMapKeyStringValueToErrStringSerde => {
                 let _: &GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap();
                 el_type_ts
             }
-            ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueErrorOccurence => {
+            ErrorOccurenceFieldAttr::EoHashMapKeyStringValueErrorOccurence => {
                 let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap();
                 let el_hashmap_value_type_with_serde_ts = format!(
                     "{}{}",

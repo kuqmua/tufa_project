@@ -221,7 +221,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                                     )
                                 }
                             }
-                            ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrString | ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrStringSerde => {
+                            ErrorOccurenceFieldAttr::EoHashMapKeyStringValueToErrString | ErrorOccurenceFieldAttr::EoHashMapKeyStringValueToErrStringSerde => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {key}: {}", &error_occurence_lib::ToErrString::to_err_string(#ValueSc)}, &quote! {panic!("d030580a");});
                                 quote! {
                                     #el_f00312fe_ident.iter().fold(
@@ -233,7 +233,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                                     )
                                 }
                             }
-                            ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueErrorOccurence => {
+                            ErrorOccurenceFieldAttr::EoHashMapKeyStringValueErrorOccurence => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(
                                     &{
                                         let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_addfc699, "\n  {el_8b8f577e}"}, &quote! {panic!("d0492fbf");});
@@ -339,7 +339,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                                     }
                                 }
                             }
-                            ErrorOccurenceFieldAttr::EoToErrStringSerde | ErrorOccurenceFieldAttr::EoVecToErrStringSerde | ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrStringSerde => {
+                            ErrorOccurenceFieldAttr::EoToErrStringSerde | ErrorOccurenceFieldAttr::EoVecToErrStringSerde | ErrorOccurenceFieldAttr::EoHashMapKeyStringValueToErrStringSerde => {
                                 quote! {
                                     #el_d7e120a3_ident
                                 }
@@ -365,7 +365,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                                     }
                                 }
                             }
-                            ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueToErrString => {
+                            ErrorOccurenceFieldAttr::EoHashMapKeyStringValueToErrString => {
                                 quote! {
                                     #el_d7e120a3_ident: {
                                         #el_d7e120a3_ident.into_iter().map(|(key, value)|
@@ -374,7 +374,7 @@ pub fn error_occurence(input: Ts) -> Ts {
                                     }
                                 }
                             }
-                            ErrorOccurenceFieldAttr::EoHashMapKeyStdStringStringValueErrorOccurence => {
+                            ErrorOccurenceFieldAttr::EoHashMapKeyStringValueErrorOccurence => {
                                 quote! {
                                     #el_d7e120a3_ident: {
                                         #el_d7e120a3_ident.into_iter().map(

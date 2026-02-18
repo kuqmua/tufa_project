@@ -345,17 +345,17 @@ gen_pg_types::gen_pg_types!({
     //             }
     //         },
     //         {
-    //             "pg_type": "StdStringStringAsText",
+    //             "pg_type": "StringAsText",
     //             "is_nullable": "False",
     //             "pg_type_pattern": "Standart"
     //         },
     //         {
-    //             "pg_type": "StdStringStringAsText",
+    //             "pg_type": "StringAsText",
     //             "is_nullable": "True",
     //             "pg_type_pattern": "Standart"
     //         },
     //         {
-    //             "pg_type": "StdStringStringAsText",
+    //             "pg_type": "StringAsText",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
     //                 "ArrayDim1": {
@@ -364,7 +364,7 @@ gen_pg_types::gen_pg_types!({
     //             }
     //         },
     //         {
-    //             "pg_type": "StdStringStringAsText",
+    //             "pg_type": "StringAsText",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
     //                 "ArrayDim1": {
@@ -373,7 +373,7 @@ gen_pg_types::gen_pg_types!({
     //             }
     //         },
     //         {
-    //             "pg_type": "StdStringStringAsText",
+    //             "pg_type": "StringAsText",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
     //                 "ArrayDim1": {
@@ -382,7 +382,7 @@ gen_pg_types::gen_pg_types!({
     //             }
     //         },
     //         {
-    //             "pg_type": "StdStringStringAsText",
+    //             "pg_type": "StringAsText",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
     //                 "ArrayDim1": {

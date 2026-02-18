@@ -71,7 +71,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         F32,
         F64,
         Bool,
-        StdStringString,
+        String,
         UuidUuid,
     }
     impl From<&PgJsonType> for RustTypeName {
@@ -88,7 +88,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 PgJsonType::F32AsJsonbNumber => Self::F32,
                 PgJsonType::F64AsJsonbNumber => Self::F64,
                 PgJsonType::BoolAsJsonbBoolean => Self::Bool,
-                PgJsonType::StdStringStringAsJsonbString => Self::StdStringString,
+                PgJsonType::StringAsJsonbString => Self::String,
                 PgJsonType::UuidUuidAsJsonbString => Self::UuidUuid,
             }
         }
@@ -126,9 +126,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 | PgJsonType::F32AsJsonbNumber
                 | PgJsonType::F64AsJsonbNumber => Self::Number,
                 PgJsonType::BoolAsJsonbBoolean => Self::Boolean,
-                PgJsonType::StdStringStringAsJsonbString | PgJsonType::UuidUuidAsJsonbString => {
-                    Self::String
-                }
+                PgJsonType::StringAsJsonbString | PgJsonType::UuidUuidAsJsonbString => Self::String,
             }
         }
     }
@@ -148,7 +146,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         F32AsJsonbNumber,
         F64AsJsonbNumber,
         BoolAsJsonbBoolean,
-        StdStringStringAsJsonbString,
+        StringAsJsonbString,
         UuidUuidAsJsonbString,
     }
     impl ToTokens for PgJsonType {
@@ -629,26 +627,22 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         };
         let import_path = ImportPath::PgCrudCommon;
         let none_ts = quote! {None};
-        let u64_ts = U64;
-        let string_ts = StdStringString;
         let gen_import_path_value_initialization_ts = |content_ts: &dyn ToTokens| gen_value_initialization_ts(&import_path, &content_ts);
         let gen_ident_ts = |is_nullable_ddf79d44: &IsNullable, pg_json_type_pattern_2c09ee59: &PgJsonTypePattern| {
-            let vec_of_ucc = VecOfUcc;
-            let array_of_ucc = ArrayOfUcc;
             let is_nullable_rust = is_nullable_ddf79d44.rust();
             let (rust_part, pg_part) = match &pg_json_type_pattern_2c09ee59 {
                 PgJsonTypePattern::Standart => (rust_type_name.to_string(), pg_json_type_name.to_string()),
                 PgJsonTypePattern::ArrayDim1 { dim1_is_nullable } => {
                     let d1 = dim1_is_nullable.not_null_or_nullable_str();
                     let d1_rust = dim1_is_nullable.rust();
-                    (format!("{vec_of_ucc}{d1_rust}{rust_type_name}"), format!("{array_of_ucc}{d1}{pg_json_type_name}"))
+                    (format!("{VecOfUcc}{d1_rust}{rust_type_name}"), format!("{ArrayOfUcc}{d1}{pg_json_type_name}"))
                 }
                 PgJsonTypePattern::ArrayDim2 { dim1_is_nullable, dim2_is_nullable } => {
                     let d1 = dim1_is_nullable.not_null_or_nullable_str();
                     let d1_rust = dim1_is_nullable.rust();
                     let d2 = dim2_is_nullable.not_null_or_nullable_str();
                     let d2_rust = dim2_is_nullable.rust();
-                    (format!("{vec_of_ucc}{d1_rust}{vec_of_ucc}{d2_rust}{rust_type_name}"), format!("{array_of_ucc}{d1}{array_of_ucc}{d2}{pg_json_type_name}"))
+                    (format!("{VecOfUcc}{d1_rust}{VecOfUcc}{d2_rust}{rust_type_name}"), format!("{ArrayOfUcc}{d1}{ArrayOfUcc}{d2}{pg_json_type_name}"))
                 }
                 PgJsonTypePattern::ArrayDim3 {
                     dim1_is_nullable,
@@ -662,8 +656,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     let d3 = dim3_is_nullable.not_null_or_nullable_str();
                     let d3_rust = dim3_is_nullable.rust();
                     (
-                        format!("{vec_of_ucc}{d1_rust}{vec_of_ucc}{d2_rust}{vec_of_ucc}{d3_rust}{rust_type_name}"),
-                        format!("{array_of_ucc}{d1}{array_of_ucc}{d2}{array_of_ucc}{d3}{pg_json_type_name}"),
+                        format!("{VecOfUcc}{d1_rust}{VecOfUcc}{d2_rust}{VecOfUcc}{d3_rust}{rust_type_name}"),
+                        format!("{ArrayOfUcc}{d1}{ArrayOfUcc}{d2}{ArrayOfUcc}{d3}{pg_json_type_name}"),
                     )
                 }
                 PgJsonTypePattern::ArrayDim4 {
@@ -681,8 +675,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     let d4 = dim4_is_nullable.not_null_or_nullable_str();
                     let d4_rust = dim4_is_nullable.rust();
                     (
-                        format!("{vec_of_ucc}{d1_rust}{vec_of_ucc}{d2_rust}{vec_of_ucc}{d3_rust}{vec_of_ucc}{d4_rust}{rust_type_name}"),
-                        format!("{array_of_ucc}{d1}{array_of_ucc}{d2}{array_of_ucc}{d3}{array_of_ucc}{d4}{pg_json_type_name}"),
+                        format!("{VecOfUcc}{d1_rust}{VecOfUcc}{d2_rust}{VecOfUcc}{d3_rust}{VecOfUcc}{d4_rust}{rust_type_name}"),
+                        format!("{ArrayOfUcc}{d1}{ArrayOfUcc}{d2}{ArrayOfUcc}{d3}{ArrayOfUcc}{d4}{pg_json_type_name}"),
                     )
                 }
             };
@@ -723,11 +717,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 PgJsonType::U8AsJsonbNumber => &U8,
                 PgJsonType::U16AsJsonbNumber => &U16,
                 PgJsonType::U32AsJsonbNumber => &U32,
-                PgJsonType::U64AsJsonbNumber => &u64_ts,
+                PgJsonType::U64AsJsonbNumber => &U64,
                 PgJsonType::F32AsJsonbNumber => &F32,
                 PgJsonType::F64AsJsonbNumber => &F64,
                 PgJsonType::BoolAsJsonbBoolean => &Bool,
-                PgJsonType::StdStringStringAsJsonbString => &string_ts,
+                PgJsonType::StringAsJsonbString => &StdStringString,
                 PgJsonType::UuidUuidAsJsonbString => &UuidUuid,
             };
             quote! {#content_ts}
@@ -784,7 +778,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 PgJsonType::F64AsJsonbNumber |
                 PgJsonType::BoolAsJsonbBoolean |
                 PgJsonType::UuidUuidAsJsonbString => DeriveCopy::True,
-                PgJsonType::StdStringStringAsJsonbString => DeriveCopy::False,
+                PgJsonType::StringAsJsonbString => DeriveCopy::False,
             },
             PgJsonTypePattern::ArrayDim1 {..} |
             PgJsonTypePattern::ArrayDim2 {..} |
@@ -858,7 +852,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             //             reference: &none_ucc,
             //             extensions: &extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_ts,
             //         }),
-            //         PgJsonType::F32AsJsonbNumber | PgJsonType::F64AsJsonbNumber | PgJsonType::BoolAsJsonbBoolean | PgJsonType::StdStringStringAsJsonbString => SchemarsJsonSchema::Derive,
+            //         PgJsonType::F32AsJsonbNumber | PgJsonType::F64AsJsonbNumber | PgJsonType::BoolAsJsonbBoolean | PgJsonType::StringAsJsonbString => SchemarsJsonSchema::Derive,
             //         PgJsonType::UuidUuidAsJsonbString => SchemarsJsonSchema::Impl(SchemaObjectTokenStream {
             //             metadata: &metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_ts,
             //             instance_type: &instance_type_string_ts,
@@ -911,7 +905,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             | PgJsonType::F32AsJsonbNumber
                             | PgJsonType::F64AsJsonbNumber
                             | PgJsonType::BoolAsJsonbBoolean
-                            | PgJsonType::StdStringStringAsJsonbString => DeriveSchemarsJsonSchema::True,
+                            | PgJsonType::StringAsJsonbString => DeriveSchemarsJsonSchema::True,
                         }
                     } else {
                         DeriveSchemarsJsonSchema::True
@@ -1071,7 +1065,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     | PgJsonType::F32AsJsonbNumber
                     | PgJsonType::F64AsJsonbNumber
                     | PgJsonType::BoolAsJsonbBoolean
-                    | PgJsonType::StdStringStringAsJsonbString => Ts2::new(),
+                    | PgJsonType::StringAsJsonbString => Ts2::new(),
                 }
             } else {
                 Ts2::new()
@@ -1134,7 +1128,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     | PgJsonType::F32AsJsonbNumber
                     | PgJsonType::F64AsJsonbNumber
                     | PgJsonType::BoolAsJsonbBoolean => Ts2::new(),
-                    PgJsonType::StdStringStringAsJsonbString => gen_impl_crate_is_string_empty_for_ident_content_ts(
+                    PgJsonType::StringAsJsonbString => gen_impl_crate_is_string_empty_for_ident_content_ts(
                         &ident_origin_ucc,
                         &quote!{self.0.clone().is_empty()}
                     ),
@@ -1163,7 +1157,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             | PgJsonType::F32AsJsonbNumber
                             | PgJsonType::F64AsJsonbNumber
                             | PgJsonType::BoolAsJsonbBoolean => quote! {Default::default()},
-                            PgJsonType::StdStringStringAsJsonbString => quote! {String::default()},
+                            PgJsonType::StringAsJsonbString => quote! {String::default()},
                             PgJsonType::UuidUuidAsJsonbString => quote! {uuid::Uuid::new_v4()},
                         },
                         IsNullable::True => quote! {Some(#PgCrudCommonDefaultOptionSomeVecOneElCall)},
@@ -1383,7 +1377,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 | PgJsonType::F32AsJsonbNumber
                                 | PgJsonType::F64AsJsonbNumber => Self::Number,
                                 PgJsonType::BoolAsJsonbBoolean => Self::Bool,
-                                PgJsonType::StdStringStringAsJsonbString | PgJsonType::UuidUuidAsJsonbString => Self::String,
+                                PgJsonType::StringAsJsonbString | PgJsonType::UuidUuidAsJsonbString => Self::String,
                             }
                         }
                     }
@@ -2443,7 +2437,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             mut #QuerySc: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
                         ) -> Result<
                             sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-                            #string_ts
+                            #StdStringString
                         > {
                             if let Err(#ErrorSc) = #QuerySc.try_bind(#ValueSc.0.0.to_string()) {
                                 return Err(#ErrorSc.to_string())
@@ -2466,7 +2460,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     fn get_inner(#ValueSc: &<Self::PgJsonType as #import_path::PgJsonType>::#CreateForQueryUcc) -> &Self::#ReadInnerUcc {
                         &#ValueSc.0.0
                     }
-                    fn increment_checked_add_one(#IncrementSc: &mut #u64_ts) -> Result<#u64_ts, #import_path::QueryPartError> {
+                    fn increment_checked_add_one(#IncrementSc: &mut #U64) -> Result<#U64, #import_path::QueryPartError> {
                         #import_path::increment_checked_add_one_returning_increment(#IncrementSc)
                     }
                 }
@@ -2498,7 +2492,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 PgJsonType::F32AsJsonbNumber => quote! {f32_test_cases_vec},
                 PgJsonType::F64AsJsonbNumber => quote! {f64_test_cases_vec},
                 PgJsonType::BoolAsJsonbBoolean => quote! {bool_test_cases_vec},
-                PgJsonType::StdStringStringAsJsonbString => quote! {string_test_cases_vec},
+                PgJsonType::StringAsJsonbString => quote! {string_test_cases_vec},
                 PgJsonType::UuidUuidAsJsonbString => quote! {uuid_uuid_test_cases_vec},
             };
             let gen_array_dim_equal_ts = |dim: &Dim| {
@@ -2859,7 +2853,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     | PgJsonType::F32AsJsonbNumber
                     | PgJsonType::F64AsJsonbNumber
                     | PgJsonType::BoolAsJsonbBoolean
-                    | PgJsonType::StdStringStringAsJsonbString => content_ts,
+                    | PgJsonType::StringAsJsonbString => content_ts,
                     PgJsonType::UuidUuidAsJsonbString => quote! {None},
                 }
             };
@@ -2998,7 +2992,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     | PgJsonType::F32AsJsonbNumber
                     | PgJsonType::F64AsJsonbNumber
                     | PgJsonType::BoolAsJsonbBoolean
-                    | PgJsonType::StdStringStringAsJsonbString => content_ts,
+                    | PgJsonType::StringAsJsonbString => content_ts,
                     PgJsonType::UuidUuidAsJsonbString => quote! {Vec::new()},
                 }
             };
@@ -3425,7 +3419,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     PgJsonType::F32AsJsonbNumber => float_32_greater_than_one_less_ts,
                     PgJsonType::F64AsJsonbNumber => float_64_greater_than_one_less_ts,
                     PgJsonType::BoolAsJsonbBoolean |
-                    PgJsonType::StdStringStringAsJsonbString |
+                    PgJsonType::StringAsJsonbString |
                     PgJsonType::UuidUuidAsJsonbString => none_ts.clone(),
                 }
             }
@@ -3503,7 +3497,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     PgJsonType::F32AsJsonbNumber |
                     PgJsonType::F64AsJsonbNumber => between_one_less_and_one_more_float_ts,
                     PgJsonType::BoolAsJsonbBoolean |
-                    PgJsonType::StdStringStringAsJsonbString |
+                    PgJsonType::StringAsJsonbString |
                     PgJsonType::UuidUuidAsJsonbString => none_ts.clone()
                 }
             }
@@ -3547,7 +3541,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         }
                     },
                     PgJsonType::BoolAsJsonbBoolean |
-                    PgJsonType::StdStringStringAsJsonbString |
+                    PgJsonType::StringAsJsonbString |
                     PgJsonType::UuidUuidAsJsonbString => none_ts.clone()
                 }
             }
@@ -3570,7 +3564,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     PgJsonType::F64AsJsonbNumber |
                     PgJsonType::BoolAsJsonbBoolean |
                     PgJsonType::UuidUuidAsJsonbString => none_ts.clone(),
-                    PgJsonType::StdStringStringAsJsonbString => quote!{
+                    PgJsonType::StringAsJsonbString => quote!{
                         match #import_path::NotEmptyUniqueVec::try_new(vec![
                             #import_path::SingleOrMultiple::Single(
                                 #ident_where_ucc::RegularExpression(
@@ -3667,7 +3661,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             PgJsonType::F32AsJsonbNumber => float_32_greater_than_one_less_ts,
                             PgJsonType::F64AsJsonbNumber => float_64_greater_than_one_less_ts,
                             PgJsonType::BoolAsJsonbBoolean |
-                            PgJsonType::StdStringStringAsJsonbString |
+                            PgJsonType::StringAsJsonbString |
                             PgJsonType::UuidUuidAsJsonbString => none_ts.clone(),
                         }
                     }
@@ -3700,7 +3694,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             PgJsonType::F64AsJsonbNumber |
                             PgJsonType::BoolAsJsonbBoolean |
                             PgJsonType::UuidUuidAsJsonbString => none_ts.clone(),
-                            PgJsonType::StdStringStringAsJsonbString => quote!{
+                            PgJsonType::StringAsJsonbString => quote!{
                                 match #import_path::NotEmptyUniqueVec::try_new(create.0.0.into_iter().map(|el_590fca71| {
                                     #import_path::SingleOrMultiple::Single(
                                         #ident_where_ucc::ContainsElRegularExpression(
