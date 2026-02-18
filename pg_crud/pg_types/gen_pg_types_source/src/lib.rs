@@ -298,30 +298,30 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .to_tokens(tokens);
         }
     }
-    impl From<&PgTypeRange> for PgType {
-        fn from(value: &PgTypeRange) -> Self {
+    impl From<&Range> for PgType {
+        fn from(value: &Range) -> Self {
             match value {
-                PgTypeRange::I32AsInt4 => Self::I32AsInt4,
-                PgTypeRange::I64AsInt8 => Self::I64AsInt8,
-                PgTypeRange::SqlxTypesChronoNaiveDateAsDate => Self::SqlxTypesChronoNaiveDateAsDate,
-                PgTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
+                Range::I32AsInt4 => Self::I32AsInt4,
+                Range::I64AsInt8 => Self::I64AsInt8,
+                Range::SqlxTypesChronoNaiveDateAsDate => Self::SqlxTypesChronoNaiveDateAsDate,
+                Range::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
                     Self::SqlxTypesChronoNaiveDateTimeAsTimestamp
                 }
-                PgTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
+                Range::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
                     Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz
                 }
             }
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    enum PgTypeRange {
+    enum Range {
         I32AsInt4,
         I64AsInt8,
         SqlxTypesChronoNaiveDateAsDate,
         SqlxTypesChronoNaiveDateTimeAsTimestamp,
         SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz,
     }
-    impl TryFrom<&PgType> for PgTypeRange {
+    impl TryFrom<&PgType> for Range {
         type Error = ();
         fn try_from(value: &PgType) -> Result<Self, Self::Error> {
             match &value {
@@ -355,12 +355,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             }
         }
     }
-    impl Display for PgTypeRange {
+    impl Display for Range {
         fn fmt(&self, f: &mut Formatter<'_>) -> StdFmtResult {
             write!(f, "{}", SelfNotNullUcc::from_display(&PgType::from(self)))
         }
     }
-    impl ToTokens for PgTypeRange {
+    impl ToTokens for Range {
         fn to_tokens(&self, tokens: &mut Ts2) {
             self.to_string()
                 .parse::<Ts2>()
@@ -1025,8 +1025,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let pg_type_initialization_try_new_try_from_pg_type = PgTypeInitializationTryNew::try_from(pg_type);
         let pg_type_deserialize = PgTypeDeserialize::from(pg_type);
         let array_dims_number = pg_type_pattern.array_dims_number();
-        let pg_type_range_try_from_pg_type = PgTypeRange::try_from(pg_type);
-        let pg_type_range_try_from_pg_type_is_ok = pg_type_range_try_from_pg_type.is_ok();
+        let range_try_from_pg_type = Range::try_from(pg_type);
+        let range_try_from_pg_type_is_ok = range_try_from_pg_type.is_ok();
         let import_path = ImportPath::PgCrudCommon;
         let import_path_non_primary_key_pg_type_read_only_ids_ts = quote! {#import_path::NonPrimaryKeyPgTypeReadOnlyIds};
         let none_ts = quote!{None};
@@ -3308,7 +3308,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             match &pg_type_pattern {
                                 PgTypePattern::Standart => match &is_nullable {
                                     IsNullable::False => {
-                                        pg_type_range_try_from_pg_type.as_ref().map_or_else(
+                                        range_try_from_pg_type.as_ref().map_or_else(
                                             |()| quote! {#ValueSc},
                                             |value_6ed98462| gen_pg_range_conversion_ts(
                                                 &ValueSc,
@@ -4593,9 +4593,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             where_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
                             where_sqlx_pg_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
                         ) = {
-                            let gen_where_sqlx_pg_types_pg_range_filter_ts = |pg_type_range: PgTypeRange| {
-                                let pg_type_from_pg_type_range = PgType::from(&pg_type_range);
-                                let range_el_ident_standart_not_null_ts = gen_ident_standart_not_null_ts(&pg_type_from_pg_type_range);
+                            let gen_where_sqlx_pg_types_pg_range_filter_ts = |range: Range| {
+                                let pg_type_from_range = PgType::from(&range);
+                                let range_el_ident_standart_not_null_ts = gen_ident_standart_not_null_ts(&pg_type_from_range);
                                 let mut vec = common_array_dim1_pg_type_filters.clone();
                                 let range_el_ident_standart_not_null_as_crate_pg_type_read_ts = {
                                     let range_el_ident_standart_not_null_as_crate_pg_type_ts = gen_as_pg_type_ts(&range_el_ident_standart_not_null_ts);
@@ -4635,11 +4635,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec
                             };
                             (
-                                gen_where_sqlx_pg_types_pg_range_filter_ts(PgTypeRange::I32AsInt4),
-                                gen_where_sqlx_pg_types_pg_range_filter_ts(PgTypeRange::I64AsInt8),
-                                gen_where_sqlx_pg_types_pg_range_filter_ts(PgTypeRange::SqlxTypesChronoNaiveDateAsDate),
-                                gen_where_sqlx_pg_types_pg_range_filter_ts(PgTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp),
-                                gen_where_sqlx_pg_types_pg_range_filter_ts(PgTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz),
+                                gen_where_sqlx_pg_types_pg_range_filter_ts(Range::I32AsInt4),
+                                gen_where_sqlx_pg_types_pg_range_filter_ts(Range::I64AsInt8),
+                                gen_where_sqlx_pg_types_pg_range_filter_ts(Range::SqlxTypesChronoNaiveDateAsDate),
+                                gen_where_sqlx_pg_types_pg_range_filter_ts(Range::SqlxTypesChronoNaiveDateTimeAsTimestamp),
+                                gen_where_sqlx_pg_types_pg_range_filter_ts(Range::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz),
                             )
                         };
                         match &pg_type {
@@ -5081,9 +5081,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     match &pg_type_pattern {
                         PgTypePattern::Standart => match &is_nullable {
                             IsNullable::False => {
-                                PgTypeRange::try_from(pg_type).as_ref().map_or_else(
+                                Range::try_from(pg_type).as_ref().map_or_else(
                                     |()| quote! {#ValueSc},
-                                    |pg_type_range| {
+                                    |range| {
                                         let gen_sqlx_pg_types_pg_range_ts = |start_ts: &dyn ToTokens, end_ts: &dyn ToTokens| {
                                             quote! {
                                                 sqlx::postgres::types::PgRange{
@@ -5196,9 +5196,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             &gen_sqlx_pg_types_pg_range_ts(&UnboundedUcc, &included_end_ts),
                                             &sqlx_pg_types_pg_range_unbounded_excluded_ts,
                                         );
-                                        match &pg_type_range {
-                                            PgTypeRange::I32AsInt4 | PgTypeRange::I64AsInt8 => int_range_normalize_ts,
-                                            PgTypeRange::SqlxTypesChronoNaiveDateAsDate => {
+                                        match &range {
+                                            Range::I32AsInt4 | Range::I64AsInt8 => int_range_normalize_ts,
+                                            Range::SqlxTypesChronoNaiveDateAsDate => {
                                                 let gen_dot_succ_opt_expect_ts = |id: &dyn Display| {
                                                     let id_dq_ts = dq_ts(&id);
                                                     quote! {.succ_opt().expect(#id_dq_ts)}
@@ -5225,7 +5225,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                     &sqlx_pg_types_pg_range_unbounded_excluded_ts,
                                                 )
                                             }
-                                            PgTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp | PgTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => range_match_timestamp_and_timestamp_tz_ts,
+                                            Range::SqlxTypesChronoNaiveDateTimeAsTimestamp | Range::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => range_match_timestamp_and_timestamp_tz_ts,
                                         }
                                     }
                                 )
@@ -5328,14 +5328,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     match &pg_type_pattern {
                         PgTypePattern::Standart => match &is_nullable {
                             IsNullable::False => {
-                                if pg_type_range_try_from_pg_type_is_ok {
+                                if range_try_from_pg_type_is_ok {
                                     gen_pg_range_conversion_ts(&value_dot_zero_dot_zero_ts, &quote!{value_af65ccce})
                                 } else {
                                     value_dot_zero_dot_zero_ts
                                 }
                             }
                             IsNullable::True => {
-                                let content_ts = if pg_type_range_try_from_pg_type_is_ok {
+                                let content_ts = if range_try_from_pg_type_is_ok {
                                     gen_ident_standart_not_null_into_inner_ident_standart_not_null_read_ts(&quote!{value_bd169d3b})
                                 } else {
                                     quote!{value_bd169d3b.0}
@@ -5345,7 +5345,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         },
                         PgTypePattern::ArrayDim1 { dim1_is_nullable } => match (&is_nullable, &dim1_is_nullable) {
                             (IsNullable::False, IsNullable::False) => {
-                                let content_ts = if pg_type_range_try_from_pg_type_is_ok {
+                                let content_ts = if range_try_from_pg_type_is_ok {
                                     gen_ident_standart_not_null_into_inner_ident_standart_not_null_read_ts(&quote!{el_f5e94f0c})
                                 } else {
                                     quote! {el_f5e94f0c.0}
@@ -5355,7 +5355,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             }
                             (IsNullable::False, IsNullable::True) => {
-                                let content_ts = if pg_type_range_try_from_pg_type_is_ok {
+                                let content_ts = if range_try_from_pg_type_is_ok {
                                     gen_ident_standart_not_null_into_inner_ident_standart_not_null_read_ts(&quote!{value_e9a6bd41})
                                 } else {
                                     quote!{value_e9a6bd41.0}
@@ -5367,7 +5367,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             }
                             (IsNullable::True, IsNullable::False) => {
-                                let content_ts = if pg_type_range_try_from_pg_type_is_ok {
+                                let content_ts = if range_try_from_pg_type_is_ok {
                                     gen_ident_standart_not_null_into_inner_ident_standart_not_null_read_ts(&quote!{el_b37be63e})
                                 } else {
                                     quote! {el_b37be63e.0}
@@ -5379,7 +5379,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             }
                             (IsNullable::True, IsNullable::True) => {
-                                let content_ts = if pg_type_range_try_from_pg_type_is_ok {
+                                let content_ts = if range_try_from_pg_type_is_ok {
                                     gen_ident_standart_not_null_into_inner_ident_standart_not_null_read_ts(&quote!{value_e5c5f65c})
                                 } else {
                                     quote!{value_e5c5f65c.0}
