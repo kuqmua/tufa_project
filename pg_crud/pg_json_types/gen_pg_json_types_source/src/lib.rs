@@ -310,7 +310,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
-    struct PgJsonTypeRecord {
+    struct Record {
         pg_json_type: PgJsonType,
         is_nullable: IsNullable,
         pattern: Pattern,
@@ -324,7 +324,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         WithDimTwo,
         WithDimThree,
         WithDimFour,
-        Concrete(Vec<PgJsonTypeRecord>),
+        Concrete(Vec<Record>),
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, Deserialize)]
@@ -359,7 +359,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             match pattern {
                                 Pattern::Standart => {
                                     for is_nullable in IsNullable::into_array() {
-                                        acc.push(PgJsonTypeRecord {
+                                        acc.push(Record {
                                             pg_json_type: pg_json_type.clone(),
                                             is_nullable,
                                             pattern: Pattern::Standart,
@@ -369,7 +369,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 Pattern::ArrayDim1 { .. } => {
                                     for is_nullable in IsNullable::into_array() {
                                         for dim1_is_nullable in IsNullable::into_array() {
-                                            acc.push(PgJsonTypeRecord {
+                                            acc.push(Record {
                                                 pg_json_type: pg_json_type.clone(),
                                                 is_nullable,
                                                 pattern: Pattern::ArrayDim1 {
@@ -383,7 +383,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     for is_nullable in IsNullable::into_array() {
                                         for dim1_is_nullable in IsNullable::into_array() {
                                             for dim2_is_nullable in IsNullable::into_array() {
-                                                acc.push(PgJsonTypeRecord {
+                                                acc.push(Record {
                                                     pg_json_type: pg_json_type.clone(),
                                                     is_nullable,
                                                     pattern: Pattern::ArrayDim2 {
@@ -400,7 +400,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                         for dim1_is_nullable in IsNullable::into_array() {
                                             for dim2_is_nullable in IsNullable::into_array() {
                                                 for dim3_is_nullable in IsNullable::into_array() {
-                                                    acc.push(PgJsonTypeRecord {
+                                                    acc.push(Record {
                                                         pg_json_type: pg_json_type.clone(),
                                                         is_nullable,
                                                         pattern: Pattern::ArrayDim3 {
@@ -420,7 +420,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                             for dim2_is_nullable in IsNullable::into_array() {
                                                 for dim3_is_nullable in IsNullable::into_array() {
                                                     for dim4_is_nullable in IsNullable::into_array() {
-                                                        acc.push(PgJsonTypeRecord {
+                                                        acc.push(Record {
                                                             pg_json_type: pg_json_type.clone(),
                                                             is_nullable,
                                                             pattern: Pattern::ArrayDim4 {
@@ -463,27 +463,27 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     }.into_iter().fold(Vec::new(), |mut acc_5e43269c, el_c4f9bf8f| {
         for el_7ae8d2ae in {
             #[derive(Clone)]
-            struct PgJsonTypeRecordHandle {
+            struct RecordHandle {
                 is_nullable: IsNullable,
                 pattern: Pattern,
             }
-            fn gen_pg_json_type_record_handle_vec(pg_json_type_record_handle: PgJsonTypeRecordHandle) -> Vec<PgJsonTypeRecordHandle> {
-                let gen_vec = |pg_json_type_record_handle_1e4b61e4: PgJsonTypeRecordHandle| gen_pg_json_type_record_handle_vec(
-                    pg_json_type_record_handle_1e4b61e4
-                ).into_iter().chain(once(pg_json_type_record_handle.clone())).collect();
-                match (&pg_json_type_record_handle.is_nullable, &pg_json_type_record_handle.pattern) {
-                    (IsNullable::False, Pattern::Standart) => vec![pg_json_type_record_handle],
-                    (IsNullable::True, Pattern::Standart) => gen_vec(PgJsonTypeRecordHandle {
+            fn gen_record_handle_vec(record_handle: RecordHandle) -> Vec<RecordHandle> {
+                let gen_vec = |record_handle_1e4b61e4: RecordHandle| gen_record_handle_vec(
+                    record_handle_1e4b61e4
+                ).into_iter().chain(once(record_handle.clone())).collect();
+                match (&record_handle.is_nullable, &record_handle.pattern) {
+                    (IsNullable::False, Pattern::Standart) => vec![record_handle],
+                    (IsNullable::True, Pattern::Standart) => gen_vec(RecordHandle {
                         is_nullable: IsNullable::False,
                         pattern: Pattern::Standart,
                     }),
-                    (IsNullable::False, Pattern::ArrayDim1 { dim1_is_nullable }) => gen_vec(PgJsonTypeRecordHandle {
+                    (IsNullable::False, Pattern::ArrayDim1 { dim1_is_nullable }) => gen_vec(RecordHandle {
                         is_nullable: *dim1_is_nullable,
-                        pattern: pg_json_type_record_handle.pattern.down_by_1().expect("0e970a4f"),
+                        pattern: record_handle.pattern.down_by_1().expect("0e970a4f"),
                     }),
-                    (IsNullable::False, Pattern::ArrayDim2 { dim1_is_nullable, .. }) => gen_vec(PgJsonTypeRecordHandle {
+                    (IsNullable::False, Pattern::ArrayDim2 { dim1_is_nullable, .. }) => gen_vec(RecordHandle {
                         is_nullable: *dim1_is_nullable,
-                        pattern: pg_json_type_record_handle.pattern.down_by_1().expect("85f8ed83"),
+                        pattern: record_handle.pattern.down_by_1().expect("85f8ed83"),
                     }),
                     (
                         IsNullable::False,
@@ -492,7 +492,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             dim2_is_nullable,
                             dim3_is_nullable,
                         },
-                    ) => gen_vec(PgJsonTypeRecordHandle {
+                    ) => gen_vec(RecordHandle {
                         is_nullable: *dim1_is_nullable,
                         pattern: Pattern::ArrayDim2 {
                             dim1_is_nullable: *dim2_is_nullable,
@@ -507,7 +507,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             dim3_is_nullable,
                             dim4_is_nullable,
                         },
-                    ) => gen_vec(PgJsonTypeRecordHandle {
+                    ) => gen_vec(RecordHandle {
                         is_nullable: *dim1_is_nullable,
                         pattern: Pattern::ArrayDim3 {
                             dim1_is_nullable: *dim2_is_nullable,
@@ -515,31 +515,31 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             dim3_is_nullable: *dim4_is_nullable,
                         },
                     }),
-                    (IsNullable::True, Pattern::ArrayDim1 { .. } | Pattern::ArrayDim2 { .. } | Pattern::ArrayDim3 { .. } | Pattern::ArrayDim4 { .. }) => gen_vec(PgJsonTypeRecordHandle {
+                    (IsNullable::True, Pattern::ArrayDim1 { .. } | Pattern::ArrayDim2 { .. } | Pattern::ArrayDim3 { .. } | Pattern::ArrayDim4 { .. }) => gen_vec(RecordHandle {
                         is_nullable: IsNullable::False,
-                        pattern: pg_json_type_record_handle.pattern.clone(),
+                        pattern: record_handle.pattern.clone(),
                     }),
                 }
             }
-            gen_pg_json_type_record_handle_vec(PgJsonTypeRecordHandle {
+            gen_record_handle_vec(RecordHandle {
                 is_nullable: el_c4f9bf8f.is_nullable,
                 pattern: el_c4f9bf8f.pattern,
             })
         } {
-            let pg_json_type_record = PgJsonTypeRecord {
+            let record = Record {
                 pg_json_type: el_c4f9bf8f.pg_json_type.clone(),
                 is_nullable: el_7ae8d2ae.is_nullable,
                 pattern: el_7ae8d2ae.pattern,
             };
-            if !acc_5e43269c.contains(&pg_json_type_record) {
-                acc_5e43269c.push(pg_json_type_record);
+            if !acc_5e43269c.contains(&record) {
+                acc_5e43269c.push(record);
             }
         }
         acc_5e43269c
     })
     .into_iter()
     .enumerate()
-    .collect::<Vec<(usize, PgJsonTypeRecord)>>()
+    .collect::<Vec<(usize, Record)>>()
     .par_iter()
     // .into_iter() //just for console prints ordering
     .map(|(index, el_1d376874)| {
