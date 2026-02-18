@@ -10,8 +10,9 @@ keywords = ["keyword"]
 categories = ["category"]
 
 [dependencies]
-macros = {path = "./macros"}
-common = {path = "./common"}
+gen_pg_json_object_type = {path = "./gen_pg_json_object_type"}
+pg_json_object_type_common = {path = "./pg_json_object_type_common"}
+#pg_crud_common = {path = "../pg_crud_common", features = ["test-utils"]}
 
 [lints]
 workspace = true
