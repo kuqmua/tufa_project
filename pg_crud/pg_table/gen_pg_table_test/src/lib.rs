@@ -21,7 +21,6 @@ utoipa.workspace = true
 git_info = {path = "../../../git_info"}
 error_occurence_lib = {path = "../../../error_occurence_lib"}
 pg_crud = {path = "../../../pg_crud", features = ["test-utils"]}
-
 [dev-dependencies]
 num_cpus.workspace = true
 futures.workspace = true

@@ -17,7 +17,6 @@ error_occurence_lib = {path = "../../../error_occurence_lib"}
 pg_crud_common = {path = "../../pg_crud_common"}
 pg_types_common = {path = "../pg_types_common"}
 where_filters = {path = "../../where_filters"}
-
 [features]
 test-utils = []"#,
             &gen_pg_types_source::gen_pg_types(&quote! {

@@ -19,7 +19,6 @@ readme = "readme"
 license = "license"
 keywords = ["keyword"]
 categories = ["category"]
-
 [lints]
 workspace = true"#
     );

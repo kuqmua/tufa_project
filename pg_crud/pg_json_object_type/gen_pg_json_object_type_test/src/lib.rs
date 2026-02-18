@@ -17,7 +17,6 @@ uuid.workspace = true
 thiserror.workspace = true
 error_occurence_lib = {path = "../../../error_occurence_lib"}
 pg_crud = {path = "../../../pg_crud", features = ["test-utils"]}
-
 [features]
 test-utils = []"#,
             &{

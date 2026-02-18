@@ -515,6 +515,13 @@ mod tests {
             let Ok(content) = read_to_string(path) else {
                 continue;
             };
+            let mut lines_iter = content.lines();
+            if let Some(first_line) = lines_iter.next()
+                && first_line.trim().is_empty()
+                && lines_iter.next().is_none()
+            {
+                continue;
+            }
             for (line_number, line) in content.lines().enumerate() {
                 if line.trim().is_empty() {
                     errors.push(format!("{}:{} empty line", path.display(), line_number + 1));

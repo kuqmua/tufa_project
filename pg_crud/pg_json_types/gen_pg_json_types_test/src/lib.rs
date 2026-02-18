@@ -18,10 +18,8 @@ error_occurence_lib = {path = "../../../error_occurence_lib"}
 pg_crud_common = {path = "../../pg_crud_common"}
 gen_pg_json_types_common = {path = "../gen_pg_json_types_common"}
 where_filters = {path = "../../where_filters"}
-
 [dev-dependencies]
 uuid.workspace = true
-
 [features]
 test-utils = []"#,
             &gen_pg_json_types_source::gen_pg_json_types(&quote! {
