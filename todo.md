@@ -32,11 +32,6 @@
 * Const generic functions
 * Trait bounds on generic parameters for constant function
 
-## Memory Management
-* Dynamic dispatching
-* Mutex now const (on nightly)
-* Wrapper around component or do not use function component
-* How to create struct fields from different struct fields (mixin)
 
 # Development Tools
 
@@ -113,9 +108,6 @@
 * Futures in some cases instead of threads (like file open or write in file)
 * Thread pool instead of for loop
 * Thread pool with this let cpus = num_cpus::get()
-
-## Async Programming
-* In cases across await points use tokio::sync::Mutex instead of std Mutex
 
 # Configuration
 
