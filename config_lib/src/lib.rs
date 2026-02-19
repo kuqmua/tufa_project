@@ -60,13 +60,13 @@ pub enum TryFromStdEnvVarOkRedisUrlEr {
 }
 impl TryFromStdEnvVarOk for RedisUrl {
     type Error = TryFromStdEnvVarOkRedisUrlEr;
-    fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        Ok(Self(if value.is_empty() {
+    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
+        Ok(Self(if v.is_empty() {
             return Err(Self::Error::IsEmpty {
                 is_empty: String::from("is empty"),
             });
         } else {
-            SecretBox::new(Box::new(value))
+            SecretBox::new(Box::new(v))
         }))
     }
 }
@@ -78,13 +78,13 @@ pub enum TryFromStdEnvVarOkMongoUrlEr {
 }
 impl TryFromStdEnvVarOk for MongoUrl {
     type Error = TryFromStdEnvVarOkMongoUrlEr;
-    fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        Ok(Self(if value.is_empty() {
+    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
+        Ok(Self(if v.is_empty() {
             return Err(Self::Error::IsEmpty {
                 is_empty: String::from("is empty"),
             });
         } else {
-            SecretBox::new(Box::new(value))
+            SecretBox::new(Box::new(v))
         }))
     }
 }
@@ -96,13 +96,13 @@ pub enum TryFromStdEnvVarOkDatabaseUrlEr {
 }
 impl TryFromStdEnvVarOk for DatabaseUrl {
     type Error = TryFromStdEnvVarOkDatabaseUrlEr;
-    fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        Ok(Self(if value.is_empty() {
+    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
+        Ok(Self(if v.is_empty() {
             return Err(Self::Error::IsEmpty {
                 is_empty: String::from("is empty"),
             });
         } else {
-            SecretBox::new(Box::new(value))
+            SecretBox::new(Box::new(v))
         }))
     }
 }
@@ -114,13 +114,13 @@ pub enum TryFromStdEnvVarOkStartingCheckLinkEr {
 }
 impl TryFromStdEnvVarOk for StartingCheckLink {
     type Error = TryFromStdEnvVarOkStartingCheckLinkEr;
-    fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        Ok(Self(if value.is_empty() {
+    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
+        Ok(Self(if v.is_empty() {
             return Err(Self::Error::IsEmpty {
                 is_empty: String::from("is empty"),
             });
         } else {
-            value
+            v
         }))
     }
 }
@@ -134,9 +134,9 @@ pub enum TryFromStdEnvVarOkTracingLevelEr {
 }
 impl TryFromStdEnvVarOk for TracingLevel {
     type Error = TryFromStdEnvVarOkTracingLevelEr;
-    fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        Ok(Self(match value.parse::<types::TracingLevel>() {
-            Ok(handle) => handle,
+    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
+        Ok(Self(match v.parse::<types::TracingLevel>() {
+            Ok(v0) => v0,
             Err(er) => {
                 return Err(Self::Error::AppStateTracingLevelParsing {
                     app_state_tracing_type_parsing: er,
@@ -174,9 +174,9 @@ pub enum TryFromStdEnvVarOkEnableApiGitCommitCheckEr {
 }
 impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
     type Error = TryFromStdEnvVarOkEnableApiGitCommitCheckEr;
-    fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        Ok(Self(match value.parse::<bool>() {
-            Ok(handle) => handle,
+    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
+        Ok(Self(match v.parse::<bool>() {
+            Ok(v0) => v0,
             Err(er) => {
                 return Err(Self::Error::BoolParsing { bool_parsing: er });
             }
@@ -191,9 +191,9 @@ pub enum TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesEr {
 }
 impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
     type Error = TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesEr;
-    fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        Ok(Self(match value.parse::<usize>() {
-            Ok(handle) => handle,
+    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
+        Ok(Self(match v.parse::<usize>() {
+            Ok(v0) => v0,
             Err(er) => {
                 return Err(Self::Error::UsizeParsing { usize_parsing: er });
             }
