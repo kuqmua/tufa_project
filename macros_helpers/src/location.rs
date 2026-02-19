@@ -22,24 +22,24 @@ pub enum LocationFieldAttr {
 }
 impl FromStr for LocationFieldAttr {
     type Err = ();
-    fn from_str(value: &str) -> Result<Self, Self::Err> {
-        if value == "eo_to_err_string" {
+    fn from_str(v: &str) -> Result<Self, Self::Err> {
+        if v == "eo_to_err_string" {
             Ok(Self::EoToErrString)
-        } else if value == "eo_to_err_string_serde" {
+        } else if v == "eo_to_err_string_serde" {
             Ok(Self::EoToErrStringSerde)
-        } else if value == "eo_location" {
+        } else if v == "eo_location" {
             Ok(Self::EoLocation)
-        } else if value == "eo_vec_to_err_string" {
+        } else if v == "eo_vec_to_err_string" {
             Ok(Self::EoVecToErrString)
-        } else if value == "eo_vec_to_err_string_serde" {
+        } else if v == "eo_vec_to_err_string_serde" {
             Ok(Self::EoVecToErrStringSerde)
-        } else if value == "eo_vec_location" {
+        } else if v == "eo_vec_location" {
             Ok(Self::EoVecLocation)
-        } else if value == "eo_hashmap_key_string_value_to_err_string" {
+        } else if v == "eo_hashmap_key_string_value_to_err_string" {
             Ok(Self::EoHashMapKeyStringValueToErrString)
-        } else if value == "eo_hashmap_key_string_value_to_err_string_serde" {
+        } else if v == "eo_hashmap_key_string_value_to_err_string_serde" {
             Ok(Self::EoHashMapKeyStringValueToErrStringSerde)
-        } else if value == "eo_hashmap_key_string_value_location" {
+        } else if v == "eo_hashmap_key_string_value_location" {
             Ok(Self::EoHashMapKeyStringValueLocation)
         } else {
             Err(())
@@ -94,9 +94,9 @@ impl LocationFieldAttr {
     }
 }
 #[must_use]
-pub fn gen_serde_version_of_named_syn_variant(value: &Variant) -> Ts2 {
-    let el_ident = &value.ident;
-    let fields = if let Fields::Named(fields) = &value.fields {
+pub fn gen_serde_version_of_named_syn_variant(v: &Variant) -> Ts2 {
+    let el_ident = &v.ident;
+    let fields = if let Fields::Named(fields) = &v.fields {
         &fields.named
     } else {
         panic!("79b0f231");

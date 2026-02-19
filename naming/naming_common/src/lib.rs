@@ -204,24 +204,24 @@ where
         to_ts_or_panic(&ToTokensToUpperScStr::case(self))
     }
 }
-fn to_ts_or_panic(value: &dyn Display) -> Ts2 {
-    value.to_string().parse::<Ts2>().expect("753ce6dd")
+fn to_ts_or_panic(v: &dyn Display) -> Ts2 {
+    v.to_string().parse::<Ts2>().expect("753ce6dd")
 }
-fn to_ucc_str<T: AsRef<str>>(value: &T) -> String
+fn to_ucc_str<T: AsRef<str>>(v: &T) -> String
 where
     String: PartialEq<T>,
 {
-    Casing::to_case(value, Case::UpperCamel)
+    Casing::to_case(v, Case::UpperCamel)
 }
-fn to_sc_str<T: AsRef<str>>(value: &T) -> String
+fn to_sc_str<T: AsRef<str>>(v: &T) -> String
 where
     String: PartialEq<T>,
 {
-    Casing::to_case(value, Case::Snake)
+    Casing::to_case(v, Case::Snake)
 }
-fn to_upper_sc_str<T: AsRef<str>>(value: &T) -> String
+fn to_upper_sc_str<T: AsRef<str>>(v: &T) -> String
 where
     String: PartialEq<T>,
 {
-    Casing::to_case(value, Case::UpperSnake)
+    Casing::to_case(v, Case::UpperSnake)
 }

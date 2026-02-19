@@ -134,26 +134,26 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
             }
             assert!(is_self_exists_and_only_one, "5680dd63");
         };
-        let (elements_concat_value_ucc_dq_ts, elements_concat_value_sc_dq_ts, struct_ucc_ucc_ts, struct_sc_token_ucc_ts, trait_ucc_ucc_ts, trait_sc_token_ucc_ts) = {
+        let (elements_concat_v_ucc_dq_ts, elements_concat_v_sc_dq_ts, struct_ucc_ucc_ts, struct_sc_token_ucc_ts, trait_ucc_ucc_ts, trait_sc_token_ucc_ts) = {
             let ucc_ucc_str = "Ucc";
             let sc_ucc_str = "Sc";
             let elements_concat_ucc_str = el_a5ccbaa7.iter().fold(String::new(), |mut acc_34997d76, el_98881b7d| {
                 acc_34997d76.push_str(&naming_common::AsRefStrToUccStr::case(el_98881b7d));
                 acc_34997d76
             });
-            let elements_concat_value_ucc_dq_ts = dq_ts(&el_a5ccbaa7.iter().fold(String::new(), |mut acc_ae77cbd3, el_626f2b61| {
+            let elements_concat_v_ucc_dq_ts = dq_ts(&el_a5ccbaa7.iter().fold(String::new(), |mut acc_ae77cbd3, el_626f2b61| {
                 if el_626f2b61 == "self" {
-                    acc_ae77cbd3.push_str("{value}");
+                    acc_ae77cbd3.push_str("{v}");
                 } else {
                     acc_ae77cbd3.push_str(&naming_common::AsRefStrToUccStr::case(el_626f2b61));
                 }
                 acc_ae77cbd3
             }));
-            let elements_concat_value_sc_dq_ts = dq_ts(&{
+            let elements_concat_v_sc_dq_ts = dq_ts(&{
                 let mut value = el_a5ccbaa7.iter().fold(String::new(), |mut acc_cbcae5e1, el_73b0c851| {
                     let symbol = '_';
                     if el_73b0c851 == "self" {
-                        assert!(write!(acc_cbcae5e1, "{{value}}{symbol}").is_ok(), "6a02a2ff");
+                        assert!(write!(acc_cbcae5e1, "{{v}}{symbol}").is_ok(), "6a02a2ff");
                     } else {
                         assert!(write!(acc_cbcae5e1, "{}{symbol}", naming_common::AsRefStrToScStr::case(el_73b0c851)).is_ok(), "d915980a");
                     }
@@ -183,15 +183,15 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 (trait_ucc_ucc_ts, trait_sc_token_ucc_ts)
             };
             (
-                elements_concat_value_ucc_dq_ts,
-                elements_concat_value_sc_dq_ts,
+                elements_concat_v_ucc_dq_ts,
+                elements_concat_v_sc_dq_ts,
                 struct_ucc_ucc_ts,
                 struct_sc_token_ucc_ts,
                 trait_ucc_ucc_ts,
                 trait_sc_token_ucc_ts,
             )
         };
-        let gen_struct_ts = |elements_concat_value_case_dq_ts: &dyn ToTokens, is_ucc: bool, trait_ident_ts: &dyn ToTokens| {
+        let gen_struct_ts = |elements_concat_v_case_dq_ts: &dyn ToTokens, is_ucc: bool, trait_ident_ts: &dyn ToTokens| {
             let struct_ident_ts = if is_ucc {
                 quote! {#struct_ucc_ucc_ts}
             } else {
@@ -206,24 +206,24 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 #[derive(Debug)]
                 pub struct #struct_ident_ts(String);
                 impl #struct_ident_ts {
-                    fn wrap(value: &dyn std::fmt::Display) -> Self {
-                        Self(Self::format(value))
+                    fn wrap(v: &dyn std::fmt::Display) -> Self {
+                        Self(Self::format(v))
                     }
-                    fn format(value: &dyn std::fmt::Display) -> String {
-                        format!(#elements_concat_value_case_dq_ts)
+                    fn format(v: &dyn std::fmt::Display) -> String {
+                        format!(#elements_concat_v_case_dq_ts)
                     }
-                    pub fn from_display(value: &dyn std::fmt::Display) -> Self {
-                        Self::wrap(&#casing_ts(&value.to_string()))
+                    pub fn from_display(v: &dyn std::fmt::Display) -> Self {
+                        Self::wrap(&#casing_ts(&v.to_string()))
                     }
-                    pub fn from_tokens(value: &dyn ToTokens) -> Self {
+                    pub fn from_tokens(v: &dyn ToTokens) -> Self {
                         Self::wrap(&#casing_ts(&{
                             let mut tokens = Ts2::new();
-                            ToTokens::to_tokens(&value, &mut tokens);
+                            ToTokens::to_tokens(&v, &mut tokens);
                             tokens
                         }.to_string()))
                     }
-                    pub fn from_type_last_segment(value: &syn::Type) -> Self {
-                        if let syn::Type::Path(type_path) = value {
+                    pub fn from_type_last_segment(v: &syn::Type) -> Self {
+                        if let syn::Type::Path(type_path) = v {
                             let path_before_str = type_path.path.segments.iter().take(
                                 type_path.path.segments.len().checked_sub(1).expect("e1f5a332")
                             )
@@ -257,8 +257,8 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 impl #trait_ident_ts for #struct_ident_ts {}
             }
         };
-        let pub_struct_ucc_ts = gen_struct_ts(&elements_concat_value_ucc_dq_ts, true, &trait_ucc_ucc_ts);
-        let pub_struct_sc_ts = gen_struct_ts(&elements_concat_value_sc_dq_ts, false, &trait_sc_token_ucc_ts);
+        let pub_struct_ucc_ts = gen_struct_ts(&elements_concat_v_ucc_dq_ts, true, &trait_ucc_ucc_ts);
+        let pub_struct_sc_ts = gen_struct_ts(&elements_concat_v_sc_dq_ts, false, &trait_sc_token_ucc_ts);
         quote! {
             #pub_struct_ucc_ts
             #pub_struct_sc_ts

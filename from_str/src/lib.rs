@@ -46,14 +46,14 @@ pub fn from_str(input: Ts) -> Ts {
             });
     let er_ts = {
         let er_str =
-            format!("\"Invalid {ident}, expected one of {er_variants_str} found {{value}}\"");
+            format!("\"Invalid {ident}, expected one of {er_variants_str} found {{v}}\"");
         er_str.parse::<Ts2>().expect("1b778757")
     };
     let generated = quote! {
         impl std::str::FromStr for #ident {
             type Err = String;
-            fn from_str(value: &str) -> Result<Self, Self::Err> {
-                match value {
+            fn from_str(v: &str) -> Result<Self, Self::Err> {
+                match v {
                     #(#variants_ts)*
                     _ => Err(format!(#er_ts)),
                 }
