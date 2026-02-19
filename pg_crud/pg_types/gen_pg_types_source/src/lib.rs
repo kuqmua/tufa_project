@@ -1379,6 +1379,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         #serde_ser_serialize_struct_end_ts
                     })
                 };
+                let gen_b5af560e_ts = |ts: &dyn ToTokens|{
+                    DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(
+                        &gen_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&ts)
+                    ))
+                };
                 match &pg_type {
                     PgType::I16AsInt2
                     | PgType::I32AsInt4
@@ -1393,7 +1398,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     | PgType::StdVecVecU8AsBytea
                     | PgType::SqlxTypesChronoNaiveDateAsDate
                     | PgType::SqlxTypesIpnetworkIpNetworkAsInet => DeriveOrImpl::Derive,
-                    PgType::SqlxPgTypesPgMoneyAsMoney => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&gen_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote! {.0}))),
+                    PgType::SqlxPgTypesPgMoneyAsMoney => gen_b5af560e_ts(&quote! {.0}),
+                    PgType::SqlxTypesMacAddressMacAddressAsMacAddr => gen_b5af560e_ts(&quote! {.bytes()}),
                     PgType::SqlxTypesChronoNaiveTimeAsTime => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
                         let gen_field_inner_type_standart_not_null_ts_as_chrono_timelike_ts = |content_ts: &dyn ToTokens| {
                             quote! {&(<#inner_type_standart_not_null_ts as chrono::Timelike>::#content_ts)}
@@ -1506,7 +1512,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     })),
                     PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient => DeriveOrImpl::Impl(impl_serde_serialize_for_uuid_uuid_ts),
-                    PgType::SqlxTypesMacAddressMacAddressAsMacAddr => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&gen_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote! {.bytes()}))),
                     PgType::SqlxPgTypesPgRangeI32AsInt4Range | PgType::SqlxPgTypesPgRangeI64AsInt8Range => DeriveOrImpl::Impl(impl_serde_serialize_for_pg_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_ts),
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc)),
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc)),
