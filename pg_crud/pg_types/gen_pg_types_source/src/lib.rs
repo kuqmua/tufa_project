@@ -5560,42 +5560,48 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         ),
                     )
                 };
-                let sqlx_types_chrono_naive_date_time_min_ts = gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
-                    #ident_sqlx_types_chrono_naive_date_min_ts,
-                    #ident_sqlx_types_chrono_naive_time_min_ts
-                });
-                let sqlx_types_chrono_naive_date_time_negative_less_typical_ts = gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
-                    #ident_sqlx_types_chrono_naive_date_negative_less_typical_ts,
-                    #ident_sqlx_types_chrono_naive_time_twenty_ts,
-                });
-                let sqlx_types_chrono_naive_date_time_negative_more_typical_ts = gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
-                    #ident_sqlx_types_chrono_naive_date_negative_more_typical_ts,
-                    #ident_sqlx_types_chrono_naive_time_ten_ts,
-                });
-                let sqlx_types_chrono_naive_date_time_near_zero_ts = gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
-                    #ident_sqlx_types_chrono_naive_date_near_zero_ts,
-                    #ident_sqlx_types_chrono_naive_time_min_ts
-                });
-                let sqlx_types_chrono_naive_date_time_positive_less_typical_ts = gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
-                    #ident_sqlx_types_chrono_naive_date_positive_less_typical_ts,
-                    #ident_sqlx_types_chrono_naive_time_ten_ts,
-                });
-                let sqlx_types_chrono_naive_date_time_positive_more_typical_ts = gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
-                    #ident_sqlx_types_chrono_naive_date_positive_more_typical_ts,
-                    #ident_sqlx_types_chrono_naive_time_twenty_ts,
-                });
-                let sqlx_types_chrono_naive_date_time_max_ts = gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
-                    #ident_sqlx_types_chrono_naive_date_max_ts,
-                    #ident_sqlx_types_chrono_naive_time_max_ts
-                });
-                //todo reuse?
-                let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_min_ts = gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&sqlx_types_chrono_naive_date_time_min_ts);
-                let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_negative_less_typical_ts = gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&sqlx_types_chrono_naive_date_time_negative_less_typical_ts);
-                let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_negative_more_typical_ts = gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&sqlx_types_chrono_naive_date_time_negative_more_typical_ts);
-                let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_near_zero_ts = gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&sqlx_types_chrono_naive_date_time_near_zero_ts);
-                let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_positive_less_typical_ts = gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&sqlx_types_chrono_naive_date_time_positive_less_typical_ts);
-                let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_positive_more_typical_ts = gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&sqlx_types_chrono_naive_date_time_positive_more_typical_ts);
-                let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_max_ts = gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&sqlx_types_chrono_naive_date_time_max_ts);
+                let (
+                    sqlx_types_chrono_naive_date_time_min_ts,
+                    sqlx_types_chrono_naive_date_time_negative_less_typical_ts,
+                    sqlx_types_chrono_naive_date_time_negative_more_typical_ts,
+                    sqlx_types_chrono_naive_date_time_near_zero_ts,
+                    sqlx_types_chrono_naive_date_time_positive_less_typical_ts,
+                    sqlx_types_chrono_naive_date_time_positive_more_typical_ts,
+                    sqlx_types_chrono_naive_date_time_max_ts,
+                ) = {
+                    let gen_naive = |date: &dyn ToTokens, time: &dyn ToTokens| {
+                        gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! { #date, #time })
+                    };
+                    (
+                        gen_naive(&ident_sqlx_types_chrono_naive_date_min_ts, &ident_sqlx_types_chrono_naive_time_min_ts),
+                        gen_naive(&ident_sqlx_types_chrono_naive_date_negative_less_typical_ts, &ident_sqlx_types_chrono_naive_time_twenty_ts),
+                        gen_naive(&ident_sqlx_types_chrono_naive_date_negative_more_typical_ts, &ident_sqlx_types_chrono_naive_time_ten_ts),
+                        gen_naive(&ident_sqlx_types_chrono_naive_date_near_zero_ts, &ident_sqlx_types_chrono_naive_time_min_ts),
+                        gen_naive(&ident_sqlx_types_chrono_naive_date_positive_less_typical_ts, &ident_sqlx_types_chrono_naive_time_ten_ts),
+                        gen_naive(&ident_sqlx_types_chrono_naive_date_positive_more_typical_ts, &ident_sqlx_types_chrono_naive_time_twenty_ts),
+                        gen_naive(&ident_sqlx_types_chrono_naive_date_max_ts, &ident_sqlx_types_chrono_naive_time_max_ts),
+                    )
+                };
+                let (
+                    sqlx_types_chrono_date_time_sqlx_types_chrono_utc_min_ts,
+                    sqlx_types_chrono_date_time_sqlx_types_chrono_utc_negative_less_typical_ts,
+                    sqlx_types_chrono_date_time_sqlx_types_chrono_utc_negative_more_typical_ts,
+                    sqlx_types_chrono_date_time_sqlx_types_chrono_utc_near_zero_ts,
+                    sqlx_types_chrono_date_time_sqlx_types_chrono_utc_positive_less_typical_ts,
+                    sqlx_types_chrono_date_time_sqlx_types_chrono_utc_positive_more_typical_ts,
+                    sqlx_types_chrono_date_time_sqlx_types_chrono_utc_max_ts,
+                ) = {
+                    let gen_utc = |naive: &dyn ToTokens| gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(naive);
+                    (
+                        gen_utc(&sqlx_types_chrono_naive_date_time_min_ts),
+                        gen_utc(&sqlx_types_chrono_naive_date_time_negative_less_typical_ts),
+                        gen_utc(&sqlx_types_chrono_naive_date_time_negative_more_typical_ts),
+                        gen_utc(&sqlx_types_chrono_naive_date_time_near_zero_ts),
+                        gen_utc(&sqlx_types_chrono_naive_date_time_positive_less_typical_ts),
+                        gen_utc(&sqlx_types_chrono_naive_date_time_positive_more_typical_ts),
+                        gen_utc(&sqlx_types_chrono_naive_date_time_max_ts),
+                    )
+                };
                 let gen_typical_test_cases_vec_ts = |value: &dyn ToTokens| {
                     let content_ts = match &is_need_to_use_into {
                         IsNeedToUseInto::True => quote! {.into()},
