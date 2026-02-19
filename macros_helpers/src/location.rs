@@ -53,9 +53,9 @@ impl TryFrom<&Field> for LocationFieldAttr {
         for el_adfb232c in &syn_field.attrs {
             if el_adfb232c.path().segments.len() == 1 {
                 let first_segment_ident = match el_adfb232c.path().segments.first() {
-                    Some(value) => &value.ident,
+                    Some(v) => &v.ident,
                     None => {
-                        return Err("no first value in punct".to_owned());
+                        return Err("no first in punct".to_owned());
                     }
                 };
                 if let Ok(v) = FromStr::from_str(&first_segment_ident.to_string()) {
@@ -89,8 +89,9 @@ impl AttrIdentStr for LocationFieldAttr {
 impl LocationFieldAttr {
     #[must_use]
     pub fn to_attr_view_ts(&self) -> Ts2 {
-        let value = format!("#[{}]", AttrIdentStr::attr_ident_str(self));
-        value.parse::<Ts2>().expect("147c39e9")
+        format!("#[{}]", AttrIdentStr::attr_ident_str(self))
+            .parse::<Ts2>()
+            .expect("147c39e9")
     }
 }
 #[must_use]
@@ -152,8 +153,8 @@ pub fn gen_serde_version_of_named_syn_variant(v: &Variant) -> Ts2 {
                     }
                 }
                 LocationFieldAttr::EoVecLocation => {
-                    let segments = if let Type::Path(path_value) = &el_c25b655e.ty {
-                        &path_value.path.segments
+                    let segments = if let Type::Path(v0) = &el_c25b655e.ty {
+                        &v0.path.segments
                     } else {
                         panic!("8d93bf20");
                     };

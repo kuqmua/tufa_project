@@ -527,9 +527,9 @@ impl<T: PartialEq + Clone> PgTypeWhere<T> {
         value: Vec<T>,
     ) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
         match NotEmptyUniqueVec::try_new(value) {
-            Ok(value_56f976af) => Ok(Self {
+            Ok(v_56f976af) => Ok(Self {
                 logical_operator,
-                value: value_56f976af,
+                value: v_56f976af,
             }),
             Err(er) => Err(er),
         }
@@ -1612,9 +1612,9 @@ pub fn increment_checked_add_one_returning_increment(
 ) -> Result<u64, QueryPartEr> {
     increment.checked_add(1).map_or_else(
         || Err(QueryPartEr::CheckedAdd { loc: loc!() }),
-        |value_d25735be| {
-            *increment = value_d25735be;
-            Ok(value_d25735be)
+        |v| {
+            *increment = v;
+            Ok(v)
         },
     )
 }

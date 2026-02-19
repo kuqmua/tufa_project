@@ -42,14 +42,12 @@ pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                     acc_7a8bd950
                 },
             );
-            let phrase_part_ucc_ucc_ts = {
-                let value = format!("{phrase_part_ucc_str}Ucc");
-                value.parse::<Ts2>().expect("4ab6a54c")
-            };
-            let phrase_part_sc_ucc_ts = {
-                let value = format!("{phrase_part_ucc_str}Sc");
-                value.parse::<Ts2>().expect("0cc47b2e")
-            };
+            let phrase_part_ucc_ucc_ts = format!("{phrase_part_ucc_str}Ucc")
+                .parse::<Ts2>()
+                .expect("4ab6a54c");
+            let phrase_part_sc_ucc_ts = format!("{phrase_part_ucc_str}Sc")
+                .parse::<Ts2>()
+                .expect("0cc47b2e");
             let (ucc_struct_declaration_ts, sc_struct_declaration_ts) = {
                 let gen_struct_declaration = |struct_name_ts: &dyn ToTokens| {
                     quote! {
@@ -150,7 +148,7 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 acc_ae77cbd3
             }));
             let elements_concat_v_sc_dq_ts = dq_ts(&{
-                let mut value = el_a5ccbaa7.iter().fold(String::new(), |mut acc_cbcae5e1, el_73b0c851| {
+                let mut acc = el_a5ccbaa7.iter().fold(String::new(), |mut acc_cbcae5e1, el_73b0c851| {
                     let symbol = '_';
                     if el_73b0c851 == "self" {
                         assert!(write!(acc_cbcae5e1, "{{v}}{symbol}").is_ok(), "6a02a2ff");
@@ -159,27 +157,15 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                     }
                     acc_cbcae5e1
                 });
-                let _: Option<char> = value.pop();
-                value
+                let _: Option<char> = acc.pop();
+                acc
             });
-            let struct_ucc_ucc_ts = {
-                let value = format!("{elements_concat_ucc_str}{ucc_ucc_str}");
-                value.parse::<Ts2>().expect("82f4ac08")
-            };
-            let struct_sc_token_ucc_ts = {
-                let value = format!("{elements_concat_ucc_str}{sc_ucc_str}");
-                value.parse::<Ts2>().expect("21044eba")
-            };
+            let struct_ucc_ucc_ts = format!("{elements_concat_ucc_str}{ucc_ucc_str}").parse::<Ts2>().expect("82f4ac08");
+            let struct_sc_token_ucc_ts = format!("{elements_concat_ucc_str}{sc_ucc_str}").parse::<Ts2>().expect("21044eba");
             let (trait_ucc_ucc_ts, trait_sc_token_ucc_ts) = {
                 let trait_ucc_str = "Trait";
-                let trait_ucc_ucc_ts = {
-                    let value = format!("{elements_concat_ucc_str}{ucc_ucc_str}{trait_ucc_str}");
-                    value.parse::<Ts2>().expect("1066857a")
-                };
-                let trait_sc_token_ucc_ts = {
-                    let value = format!("{elements_concat_ucc_str}{sc_ucc_str}{trait_ucc_str}");
-                    value.parse::<Ts2>().expect("8db74cfd")
-                };
+                let trait_ucc_ucc_ts = format!("{elements_concat_ucc_str}{ucc_ucc_str}{trait_ucc_str}").parse::<Ts2>().expect("1066857a");
+                let trait_sc_token_ucc_ts = format!("{elements_concat_ucc_str}{sc_ucc_str}{trait_ucc_str}").parse::<Ts2>().expect("8db74cfd");
                 (trait_ucc_ucc_ts, trait_sc_token_ucc_ts)
             };
             (
@@ -247,10 +233,8 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 }
                 impl ToTokens for #struct_ident_ts {
                     fn to_tokens(&self, tokens: &mut Ts2) {
-                        let value_str = self.to_string();
-                        let value_ts = value_str.parse::<Ts2>()
-                            .expect("71c8d26b");
-                        value_ts.to_tokens(tokens);
+                        self.to_string().parse::<Ts2>()
+                            .expect("71c8d26b").to_tokens(tokens);
                     }
                 }
                 pub trait #trait_ident_ts: std::fmt::Display + ToTokens {}

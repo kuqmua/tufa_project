@@ -609,8 +609,7 @@ pub fn gen_pg_type_where_ts(
             let el_ucc = el_a9dc0e35.ucc();
             let prefix_where_self_ucc = el_a9dc0e35.prefix_where_self_ucc();
             let option_type_ts: Option<Ts2> = el_a9dc0e35.maybe_generic();
-            let type_ts =
-                option_type_ts.map_or_else(Ts2::new, |value_0016edb0| quote! {<#value_0016edb0>});
+            let type_ts = option_type_ts.map_or_else(Ts2::new, |v| quote! {<#v>});
             quote! {#el_ucc(where_filters::#prefix_where_self_ucc #type_ts)}
         });
         quote! {

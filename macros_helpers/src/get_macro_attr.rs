@@ -10,9 +10,9 @@ pub fn get_macro_attr<'attrs_litime>(
         .iter()
         .find(|el0| {
             *attr_path == {
-                let mut value = ToTokens::to_token_stream(&el0.path()).to_string();
-                value.retain(|el1| !el1.is_whitespace());
-                value
+                let mut acc = ToTokens::to_token_stream(&el0.path()).to_string();
+                acc.retain(|el1| !el1.is_whitespace());
+                acc
             }
         })
         .expect("68acaa15")
@@ -26,15 +26,15 @@ pub fn get_macro_attr_meta_list_ts<'attrs_lifetime>(
         .iter()
         .find(|el0| {
             *attr_path == {
-                let mut value = ToTokens::to_token_stream(&el0.path()).to_string();
-                value.retain(|el1| !el1.is_whitespace());
-                value
+                let mut acc = ToTokens::to_token_stream(&el0.path()).to_string();
+                acc.retain(|el1| !el1.is_whitespace());
+                acc
             }
         })
         .clone()
         .expect("9d057161");
-    if let Meta::List(value) = &attr.meta {
-        &value.tokens
+    if let Meta::List(v) = &attr.meta {
+        &v.tokens
     } else {
         panic!("985dc2d5")
     }

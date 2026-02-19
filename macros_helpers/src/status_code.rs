@@ -146,8 +146,7 @@ impl StatusCode {
     }
     #[must_use]
     pub fn to_proc_macro_attr_view_ts(&self) -> Ts2 {
-        let value = format!("#[{self}]");
-        value.parse::<Ts2>().expect("48ab5b45")
+        format!("#[{self}]").parse::<Ts2>().expect("48ab5b45")
     }
     #[must_use]
     pub fn to_status_code_description_ts(&self) -> Ts2 {
@@ -424,14 +423,21 @@ impl TryFrom<&String> for StatusCode {
 pub fn get_only_one(variant: &Variant) -> StatusCode {
     let mut option_self = None;
     variant.attrs.iter().for_each(|attr| {
-        if attr.path().segments.len() == 1 {
-            let value = attr.path().segments.first().expect("9deb71d1");
-            if let Ok(named_attr) = StatusCode::try_from(&value.ident.to_string()) {
-                if option_self.is_some() {
-                    panic!("07286cf0");
-                } else {
-                    option_self = Some(named_attr);
-                }
+        if attr.path().segments.len() == 1
+            && let Ok(named_attr) = StatusCode::try_from(
+                &attr
+                    .path()
+                    .segments
+                    .first()
+                    .expect("9deb71d1")
+                    .ident
+                    .to_string(),
+            )
+        {
+            if option_self.is_some() {
+                panic!("07286cf0");
+            } else {
+                option_self = Some(named_attr);
             }
         }
     });

@@ -153,8 +153,8 @@ impl PgFilter for PgTypeFilter {
         }
     }
     fn prefix_where_self_ucc(&self) -> Ts2 {
-        let value = PgTypeWhereSelfUcc::from_display(&self.ucc());
-        quote! {#value}
+        let v = PgTypeWhereSelfUcc::from_display(&self.ucc());
+        quote! {#v}
     }
     fn ucc(&self) -> &'static dyn DisplayPlusToTokens {
         match &self {
@@ -372,8 +372,8 @@ impl PgFilter for PgJsonTypeFilter {
         }
     }
     fn prefix_where_self_ucc(&self) -> Ts2 {
-        let value = PgJsonTypeWhereSelfUcc::from_display(&self.ucc());
-        quote! {#value}
+        let v = PgJsonTypeWhereSelfUcc::from_display(&self.ucc());
+        quote! {#v}
     }
     fn ucc(&self) -> &'static dyn DisplayPlusToTokens {
         match &self {
