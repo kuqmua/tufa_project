@@ -112,9 +112,9 @@
 //         impl From<sqlx::Error> for #ident {
 //             fn from(val: sqlx::Error) -> Self {
 //                 match val {
-//                     sqlx::Error::Configuration(value) => {
+//                     sqlx::Error::Configuration(v) => {
 //                         Self::Configuration {
-//                             configuration: value.to_string(),
+//                             configuration: v.to_string(),
 //                             #field_loc_new_d7be05e4_ebc4_47bc_a99c_d1143d5e4dae_ts
 //                         }
 //                     }
@@ -128,8 +128,8 @@
 //                         io,
 //                         #field_loc_new_7e40e82a_3043_41f3_974c_973a53d221de_ts,
 //                     },
-//                     sqlx::Error::Tls(value) => Self::Tls {
-//                         tls: value.to_string(),
+//                     sqlx::Error::Tls(v) => Self::Tls {
+//                         tls: v.to_string(),
 //                         #field_loc_new_279a8e42_c552_42db_b137_c8acb9973f92_ts,
 //                     },
 //                     sqlx::Error::Protocol(string) => Self::Protocol {
@@ -164,8 +164,8 @@
 //                             #field_loc_new_81a0d2c3_5246_477c_8c67_10a5940c95c1_ts,
 //                         }
 //                     }
-//                     sqlx::Error::Decode(value) => Self::Decode {
-//                         decode: value.to_string(),
+//                     sqlx::Error::Decode(v) => Self::Decode {
+//                         decode: v.to_string(),
 //                         #field_loc_new_89ccb64c_050b_45bb_ae7b_1ade4f90ada5_ts,
 //                     },
 //                     sqlx::Error::PoolTimedOut => Self::PoolTimedOut {

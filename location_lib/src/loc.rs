@@ -64,14 +64,9 @@ impl Display for Loc {
             &match SOURCE_PLACE_TYPE.get_or_init(SourcePlaceType::from_env_or_default) {
                 SourcePlaceType::Source => self.macro_occurence.as_ref().map_or_else(
                     || format!("{}:{}:{}", self.file, self.line, self.column),
-                    |value_efd00048| format!(
+                    |v| format!(
                         "{}:{}:{} ({}:{}:{})",
-                        self.file,
-                        self.line,
-                        self.column,
-                        value_efd00048.file,
-                        value_efd00048.line,
-                        value_efd00048.column
+                        self.file, self.line, self.column, v.file, v.line, v.column
                     )
                 ),
                 SourcePlaceType::Github => self.macro_occurence.as_ref().map_or_else(
@@ -79,7 +74,7 @@ impl Display for Loc {
                         "{}/blob/{}/{}#L{}",
                         GITHUB_URL, self.commit, self.file, self.line
                     ),
-                    |value_2ad91ca0| format!(
+                    |v| format!(
                         "{}/blob/{}/{}#L{} ({}/blob/{}/{}#L{})",
                         GITHUB_URL,
                         self.commit,
@@ -87,8 +82,8 @@ impl Display for Loc {
                         self.line,
                         GITHUB_URL,
                         self.commit,
-                        value_2ad91ca0.file,
-                        value_2ad91ca0.line
+                        v.file,
+                        v.line
                     )
                 ),
             },

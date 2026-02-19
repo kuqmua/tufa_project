@@ -50,16 +50,16 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
             };
             Element {
                 derive_trait_name_ucc: {
-                    let value = DeriveSelfUcc::from_display(&sc);
-                    quote! {#value}
+                    let v = DeriveSelfUcc::from_display(&sc);
+                    quote! {#v}
                 },
                 derive_trait_name_sc: {
-                    let value = DeriveSelfSc::from_display(&sc);
-                    quote! {#value}
+                    let v = DeriveSelfSc::from_display(&sc);
+                    quote! {#v}
                 },
                 derive_trait_name_if_sc: {
-                    let value = DeriveSelfIfSc::from_display(&sc);
-                    quote! {#value}
+                    let v = DeriveSelfIfSc::from_display(&sc);
+                    quote! {#v}
                 },
                 trait_type: el_4f4a2c74.parse::<Ts2>().expect("8672240f"),
             }

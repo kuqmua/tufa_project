@@ -37,7 +37,7 @@ pub fn location(input: Ts) -> Ts {
         .params
         .iter()
         .map(|el_a6a747c1| match &el_a6a747c1 {
-            GenericParam::Type(value) => &value.ident,
+            GenericParam::Type(v) => &v.ident,
             GenericParam::Lifetime(_) | GenericParam::Const(_) => {
                 panic!("3ce82d11")
             }
@@ -89,10 +89,10 @@ pub fn location(input: Ts) -> Ts {
         if generic_parameters.is_empty() {
             Ts2::new()
         } else {
-            let value = generic_parameters
+            let v = generic_parameters
                 .iter()
                 .map(|el_4ee89bd7| quote! {#el_4ee89bd7: location_lib::ToErrString});
-            quote! {<#(#value),*>}
+            quote! {<#(#v),*>}
         };
     let gen_enum_ident_with_serde_ts = |variants_ts: &dyn ToTokens| {
         quote! {
@@ -366,8 +366,8 @@ pub fn location(input: Ts) -> Ts {
                             LocationFieldAttr::EoHashMapKeyStringValueToErrString => {
                                 quote! {
                                     #el_d7e120a3_ident: {
-                                        #el_d7e120a3_ident.into_iter().map(|(key, value)|
-                                            (key, location_lib::ToErrString::to_err_string(&value))
+                                        #el_d7e120a3_ident.into_iter().map(|(k, v)|
+                                            (k, location_lib::ToErrString::to_err_string(&v))
                                         ).collect()
                                     }
                                 }
@@ -376,7 +376,7 @@ pub fn location(input: Ts) -> Ts {
                                 quote! {
                                     #el_d7e120a3_ident: {
                                         #el_d7e120a3_ident.into_iter().map(
-                                            |(key, value)|(key, value.into_serde_version())
+                                            |(k, v)|(k, v.into_serde_version())
                                         ).collect()
                                     }
                                 }
@@ -450,8 +450,8 @@ pub fn location(input: Ts) -> Ts {
                 let variants_ts = data_enum.variants.iter().map(|el_0e2b2f9c| {
                     let el_ident = &el_0e2b2f9c.ident;
                     quote! {
-                        Self::#el_ident(value) => #ident_with_serde_ucc::#el_ident(
-                            value.#IntoSerdeVersionSc(),
+                        Self::#el_ident(v) => #ident_with_serde_ucc::#el_ident(
+                            v.#IntoSerdeVersionSc(),
                         )
                     }
                 });

@@ -66,8 +66,8 @@ impl SourcePlaceType {
         }
         let name = "SOURCE_PLACE_TYPE";
         match env::var(name) {
-            Ok(env_value) => match <Self as FromStr>::from_str(&env_value) {
-                Ok(v) => v,
+            Ok(v) => match <Self as FromStr>::from_str(&v) {
+                Ok(v0) => v0,
                 Err(er) => {
                     let default = Self::default();
                     eprintln!(
