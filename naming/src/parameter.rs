@@ -245,7 +245,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["get", "self"],
     ["try", "from", "std", "env", "var", "ok", "self", "error"],
     ["self", "options"],
-    ["error", "self"],
+    ["er", "self"],
     ["not", "unique", "self"],
     ["is", "self", "update", "exist"],
     ["self", "column", "read", "permission"],

@@ -222,31 +222,31 @@ impl ToTokens for SqlxTypesTimeOffsetDateTimeUnixEpoch {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct Error0;
-impl ToTokens for Error0 {
+pub struct Er0;
+impl ToTokens for Er0 {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {error_0}.to_tokens(tokens);
+        quote! {er_0}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct Error1;
-impl ToTokens for Error1 {
+pub struct Er1;
+impl ToTokens for Er1 {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {error_1}.to_tokens(tokens);
+        quote! {er_1}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct Error2;
-impl ToTokens for Error2 {
+pub struct Er2;
+impl ToTokens for Er2 {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {error_2}.to_tokens(tokens);
+        quote! {er_2}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct Error3;
-impl ToTokens for Error3 {
+pub struct Er3;
+impl ToTokens for Er3 {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {error_3}.to_tokens(tokens);
+        quote! {er_3}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
