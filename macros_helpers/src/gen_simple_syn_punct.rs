@@ -1,8 +1,6 @@
 use syn::{PathArguments, PathSegment, punctuated::Punctuated, token::PathSep};
 #[must_use]
-pub fn gen_simple_syn_punctuated_punctuated(
-    parts_vec: &[&str],
-) -> Punctuated<PathSegment, PathSep> {
+pub fn gen_simple_syn_punct(parts_vec: &[&str]) -> Punctuated<PathSegment, PathSep> {
     let parts_vec_len = parts_vec.len();
     if parts_vec_len >= 1 {
         let mut handle = Punctuated::<PathSegment, PathSep>::new();
@@ -30,6 +28,6 @@ pub fn gen_simple_syn_punctuated_punctuated(
     }
 }
 #[must_use]
-pub fn string_syn_punctuated_punctuated() -> Punctuated<PathSegment, PathSep> {
-    gen_simple_syn_punctuated_punctuated(&["std", "string", "String"])
+pub fn string_syn_punct() -> Punctuated<PathSegment, PathSep> {
+    gen_simple_syn_punct(&["std", "string", "String"])
 }

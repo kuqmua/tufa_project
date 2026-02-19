@@ -1,7 +1,7 @@
+use crate::gen_simple_syn_punct::gen_simple_syn_punct;
 use syn::{Field, FieldMutability, Ident, Path, Type, TypePath, Visibility, token::Colon};
 #[must_use]
 pub fn code_occurence_syn_field() -> Field {
-    use crate::gen_simple_syn_punctuated_punctuated::gen_simple_syn_punctuated_punctuated;
     Field {
         attrs: Vec::new(),
         vis: Visibility::Inherited,
@@ -14,7 +14,7 @@ pub fn code_occurence_syn_field() -> Field {
             qself: None,
             path: Path {
                 leading_colon: None,
-                segments: gen_simple_syn_punctuated_punctuated(&[
+                segments: gen_simple_syn_punct(&[
                     "er_occurence_lib",
                     "code_occurence",
                     "CodeOccurence",

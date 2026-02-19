@@ -9,7 +9,7 @@ mod gen_impl_to_err_string_ts;
 mod gen_impl_try_from_ts;
 mod gen_new_or_try_new;
 mod gen_pub_type_alias_ts;
-mod gen_simple_syn_punctuated_punctuated;
+mod gen_simple_syn_punct;
 mod gen_std_default_default_ts;
 mod get_macro_attr;
 mod pagination_start_end_initialization_ts;
@@ -37,9 +37,7 @@ pub use gen_new_or_try_new::{
     gen_pub_new_ts, gen_pub_try_new_ts, gen_try_new_ts,
 };
 pub use gen_pub_type_alias_ts::gen_pub_type_alias_ts;
-pub use gen_simple_syn_punctuated_punctuated::{
-    gen_simple_syn_punctuated_punctuated, string_syn_punctuated_punctuated,
-};
+pub use gen_simple_syn_punct::{gen_simple_syn_punct, string_syn_punct};
 pub use gen_std_default_default_ts::gen_std_default_default_ts;
 pub use get_macro_attr::{get_macro_attr, get_macro_attr_meta_list_ts};
 pub use pagination_start_end_initialization_ts::pagination_start_end_initialization_ts;

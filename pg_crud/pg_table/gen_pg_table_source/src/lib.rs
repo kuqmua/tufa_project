@@ -5,8 +5,8 @@ use macros_helpers::{
     SynFieldWrapper, code_occurence_syn_field, gen_field_code_occurence_new_ts,
     gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts, gen_impl_display_ts,
     gen_impl_pub_try_new_for_ident_ts, gen_impl_to_err_string_ts,
-    gen_serde_version_of_named_syn_variant, gen_simple_syn_punctuated_punctuated,
-    get_macro_attr_meta_list_ts, maybe_write_ts_into_file,
+    gen_serde_version_of_named_syn_variant, gen_simple_syn_punct, get_macro_attr_meta_list_ts,
+    maybe_write_ts_into_file,
 };
 use naming::{
     AdditionalParametersSc, AppStateSc, AsRefStrEnumWithUnitFieldsToScStr,
@@ -937,10 +937,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         vec![(
             ErOccurenceFieldAttr::EoErOccurence,
             &ErSc,
-            gen_simple_syn_punctuated_punctuated(&[
-                &PgCrudSc.to_string(),
-                &QueryPartErUcc.to_string(),
-            ]),
+            gen_simple_syn_punct(&[&PgCrudSc.to_string(), &QueryPartErUcc.to_string()]),
         )],
     );
     let gen_select_query_part_parameters_payload_select_ts = |operation: &Operation| {
@@ -1371,14 +1368,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
     let macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string_serde =
         ErOccurenceFieldAttr::EoToErrStringSerde;
-    let string_syn_punctuated_punctuated = gen_simple_syn_punctuated_punctuated(&["String"]);
+    let string_syn_punct = gen_simple_syn_punct(&["String"]);
     let try_bind_syn_variant_wrapper = new_syn_variant_wrapper(
         &TryBindUcc,
         Some(StatusCode::InternalServerEr500),
         vec![(
             macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string_serde,
             &TryBindSc,
-            string_syn_punctuated_punctuated.clone(),
+            string_syn_punct.clone(),
         )],
     );
     let gen_query_pg_type_where_filter_query_bind_parameters_payload_where_many_query_ts =
@@ -1403,7 +1400,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
     let try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_sc =
         TryFromSqlxPgPgRowWithNotEmptyUniqueVecSelfSelectSc::from_display(&ident);
-    let simple_syn_punctuated_sqlx_error = gen_simple_syn_punctuated_punctuated(&["sqlx", "Error"]);
+    let simple_syn_punct_sqlx_error = gen_simple_syn_punct(&["sqlx", "Error"]);
     let macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string =
         ErOccurenceFieldAttr::EoToErrString;
     let pg_syn_variant_wrapper = new_syn_variant_wrapper(
@@ -1412,7 +1409,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         vec![(
             macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
             &PgSc,
-            simple_syn_punctuated_sqlx_error.clone(),
+            simple_syn_punct_sqlx_error.clone(),
         )],
     );
     let gen_match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts =
@@ -2115,12 +2112,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             (
                 macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
                 &RowSc,
-                simple_syn_punctuated_sqlx_error.clone(),
+                simple_syn_punct_sqlx_error.clone(),
             ),
             (
                 macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
                 &RollbackSc,
-                simple_syn_punctuated_sqlx_error,
+                simple_syn_punct_sqlx_error,
             ),
         ],
     );
@@ -2139,22 +2136,20 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         vec![(
             macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string_serde,
             &NotUniqueFieldSc,
-            gen_simple_syn_punctuated_punctuated(&[&ident_select_ucc.to_string()]),
+            gen_simple_syn_punct(&[&ident_select_ucc.to_string()]),
         )],
     );
-    let simple_syn_punctuated_serde_error =
-        gen_simple_syn_punctuated_punctuated(&["serde_json", "Error"]);
+    let simple_syn_punct_serde_error = gen_simple_syn_punct(&["serde_json", "Error"]);
     let serde_json_to_string_syn_variant_wrapper = new_syn_variant_wrapper(
         &SerdeJsonToStringUcc,
         None,
         vec![(
             macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
             &SerdeJsonToStringSc,
-            simple_syn_punctuated_serde_error.clone(),
+            simple_syn_punct_serde_error.clone(),
         )],
     );
-    let simple_syn_punctuated_reqwest_error =
-        gen_simple_syn_punctuated_punctuated(&["reqwest", "Error"]);
+    let simple_syn_punct_reqwest_error = gen_simple_syn_punct(&["reqwest", "Error"]);
     let failed_to_get_response_text_syn_variant_wrapper = new_syn_variant_wrapper(
         &FailedToGetResponseTextUcc,
         Some(StatusCode::BadRequest400),
@@ -2162,17 +2157,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             (
                 macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
                 &StatusCodeSc,
-                gen_simple_syn_punctuated_punctuated(&["reqwest", "StatusCode"]),
+                gen_simple_syn_punct(&["reqwest", "StatusCode"]),
             ),
             (
                 macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
                 &HeadersSc,
-                gen_simple_syn_punctuated_punctuated(&["reqwest", "header", "HeaderMap"]),
+                gen_simple_syn_punct(&["reqwest", "header", "HeaderMap"]),
             ),
             (
                 macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
                 &ReqwestSc,
-                simple_syn_punctuated_reqwest_error.clone(),
+                simple_syn_punct_reqwest_error.clone(),
             ),
         ],
     );
@@ -2183,22 +2178,22 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             (
                 macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
                 &StatusCodeSc,
-                gen_simple_syn_punctuated_punctuated(&["reqwest", "StatusCode"]),
+                gen_simple_syn_punct(&["reqwest", "StatusCode"]),
             ),
             (
                 macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
                 &HeadersSc,
-                gen_simple_syn_punctuated_punctuated(&["reqwest", "header", "HeaderMap"]),
+                gen_simple_syn_punct(&["reqwest", "header", "HeaderMap"]),
             ),
             (
                 macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string_serde,
                 &ResponseTextSc,
-                string_syn_punctuated_punctuated,
+                string_syn_punct,
             ),
             (
                 macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
                 &SerdeSc,
-                simple_syn_punctuated_serde_error.clone(),
+                simple_syn_punct_serde_error.clone(),
             ),
         ],
     );
@@ -2208,7 +2203,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         vec![(
             macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
             &ReqwestSc,
-            simple_syn_punctuated_reqwest_error,
+            simple_syn_punct_reqwest_error,
         )],
     );
     let check_body_size_syn_variant_wrapper = new_syn_variant_wrapper(
@@ -2217,7 +2212,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         vec![(
             ErOccurenceFieldAttr::EoErOccurence,
             &CheckBodySizeSc,
-            gen_simple_syn_punctuated_punctuated(&[
+            gen_simple_syn_punct(&[
                 &PgCrudSc.to_string(),
                 "check_body_size",
                 &BodySizeErUcc.to_string(),
@@ -2230,7 +2225,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         vec![(
             macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
             &SerdeJsonSc,
-            simple_syn_punctuated_serde_error,
+            simple_syn_punct_serde_error,
         )],
     );
     let header_content_type_application_json_not_found_syn_variant_wrapper =
@@ -2705,7 +2700,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     vec![(
                                 macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
                                 &operation.operation_er_with_serde_sc(),
-                                gen_simple_syn_punctuated_punctuated(&[
+                                gen_simple_syn_punct(&[
                                     &ident_operation_er_with_serde_ucc.to_string(),
                                 ]),
                             )],

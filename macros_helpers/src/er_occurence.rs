@@ -55,7 +55,7 @@ impl TryFrom<&Field> for ErOccurenceFieldAttr {
                 let first_segment_ident = match el_adfb232c.path().segments.first() {
                     Some(value) => &value.ident,
                     None => {
-                        return Err("no first value in punctuated".to_owned());
+                        return Err("no first value in punct".to_owned());
                     }
                 };
                 if let Ok(value) = FromStr::from_str(&first_segment_ident.to_string()) {

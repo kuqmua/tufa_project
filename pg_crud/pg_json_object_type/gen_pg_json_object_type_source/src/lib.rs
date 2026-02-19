@@ -6,7 +6,7 @@ use macros_helpers::{
     gen_if_write_is_err_ts, gen_impl_display_ts, gen_impl_from_ts,
     gen_impl_pub_const_new_for_ident_ts, gen_impl_pub_new_for_ident_ts, gen_impl_to_err_string_ts,
     gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts, gen_pub_type_alias_ts,
-    gen_simple_syn_punctuated_punctuated, get_macro_attr_meta_list_ts, maybe_write_ts_into_file,
+    gen_simple_syn_punct, get_macro_attr_meta_list_ts, maybe_write_ts_into_file,
 };
 use naming::{
     AllFieldsAreNoneUcc, ArrayOfUcc, AsRefStrToUccTs, AsUcc, ColumnNameAndMaybeFieldGetterSc,
@@ -407,7 +407,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         qself: None,
                         path: Path {
                             leading_colon: None,
-                            segments: gen_simple_syn_punctuated_punctuated(
+                            segments: gen_simple_syn_punct(
                                 &[import_path.to_path(), &UuidUuidAsNotNullJsonbStringUcc.to_string()]
                             ),
                         },
