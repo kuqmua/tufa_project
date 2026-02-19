@@ -6,12 +6,12 @@ use thiserror::Error;
 pub enum CreateDirsAndWritePrettyJsonSyncError {
     SerdeJson {
         #[eo_to_err_string]
-        error: SerdeJsonError,
+        er: SerdeJsonError,
         code_occurence: CodeOccurence,
     },
     WriteBytesIntoFile {
         #[eo_error_occurence]
-        error: crate::CreateDirsAndWriteFileSyncError,
+        er: crate::CreateDirsAndWriteFileSyncError,
         code_occurence: CodeOccurence,
     },
 }
@@ -23,14 +23,14 @@ pub fn create_dirs_and_write_pretty_json_sync(
         Ok(value) => {
             if let Err(er) = crate::create_dirs_and_write_file_sync(path, value.as_bytes()) {
                 return Err(CreateDirsAndWritePrettyJsonSyncError::WriteBytesIntoFile {
-                    error: er,
+                    er,
                     code_occurence: code_occurence!(),
                 });
             }
             Ok(())
         }
         Err(er) => Err(CreateDirsAndWritePrettyJsonSyncError::SerdeJson {
-            error: er,
+            er,
             code_occurence: code_occurence!(),
         }),
     }

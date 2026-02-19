@@ -6,12 +6,12 @@ use thiserror::Error;
 pub enum CreateDirsAndWritePrettyJsonTokioAsyncError {
     SerdeJson {
         #[eo_to_err_string]
-        error: SerdeJsonError,
+        er: SerdeJsonError,
         code_occurence: CodeOccurence,
     },
     WriteBytesIntoFile {
         #[eo_error_occurence]
-        error: crate::CreateDirsAndWriteFileTokioAsyncError,
+        er: crate::CreateDirsAndWriteFileTokioAsyncError,
         code_occurence: CodeOccurence,
     },
 }
@@ -24,7 +24,7 @@ pub async fn create_dirs_and_write_pretty_json_tokio_async(
             match crate::create_dirs_and_write_file_tokio_async(path, value.as_bytes()).await {
                 Err(er) => Err(
                     CreateDirsAndWritePrettyJsonTokioAsyncError::WriteBytesIntoFile {
-                        error: er,
+                        er,
                         code_occurence: code_occurence!(),
                     },
                 ),
@@ -32,7 +32,7 @@ pub async fn create_dirs_and_write_pretty_json_tokio_async(
             }
         }
         Err(er) => Err(CreateDirsAndWritePrettyJsonTokioAsyncError::SerdeJson {
-            error: er,
+            er,
             code_occurence: code_occurence!(),
         }),
     }

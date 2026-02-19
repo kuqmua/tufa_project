@@ -12,7 +12,7 @@ use thiserror::Error;
 pub enum BodySizeError {
     ReachedMaximumSizeOfBody {
         #[eo_to_err_string]
-        axum_error: Error,
+        er: Error,
         #[eo_to_err_string_serde]
         maximum_size_of_body_limit_in_bytes: usize,
         #[eo_to_err_string]
@@ -32,7 +32,7 @@ pub async fn check_body_size(body: Body, limit: usize) -> Result<Bytes, BodySize
     match to_bytes(body, limit).await {
         Ok(value) => Ok(value),
         Err(er) => Err(BodySizeError::ReachedMaximumSizeOfBody {
-            axum_error: er,
+            er,
             maximum_size_of_body_limit_in_bytes: limit,
             size_hint,
             code_occurence: code_occurence!(),

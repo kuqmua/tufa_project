@@ -269,7 +269,7 @@ cargo run -q | bunyan
 # Fix permission denied errors
 cd .. sudo chmod -R 777 server && cd server
 
-# Fix I/O error: Permission denied (os error 13)
+# Fix I/O er: Permission denied (os error 13)
 sudo chown -R $(whoami) session_based_authentication/
 ```
 

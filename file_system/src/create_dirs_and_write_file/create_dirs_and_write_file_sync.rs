@@ -9,7 +9,7 @@ use thiserror::Error;
 pub enum CreateDirsAndWriteFileSyncError {
     StdIo {
         #[eo_to_err_string]
-        error: IoError,
+        er: IoError,
         code_occurence: CodeOccurence,
     },
 }
@@ -21,7 +21,7 @@ pub fn create_dirs_and_write_file_sync(
         && let Err(er) = fs::create_dir_all(prefix)
     {
         return Err(CreateDirsAndWriteFileSyncError::StdIo {
-            error: er,
+            er,
             code_occurence: code_occurence!(),
         });
     }
@@ -29,20 +29,20 @@ pub fn create_dirs_and_write_file_sync(
         Ok(mut file) => {
             if let Err(er) = Write::write_all(&mut file, bytes) {
                 return Err(CreateDirsAndWriteFileSyncError::StdIo {
-                    error: er,
+                    er,
                     code_occurence: code_occurence!(),
                 });
             }
             if let Err(er) = file.sync_all() {
                 return Err(CreateDirsAndWriteFileSyncError::StdIo {
-                    error: er,
+                    er,
                     code_occurence: code_occurence!(),
                 });
             }
             Ok(())
         }
         Err(er) => Err(CreateDirsAndWriteFileSyncError::StdIo {
-            error: er,
+            er,
             code_occurence: code_occurence!(),
         }),
     }

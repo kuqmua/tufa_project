@@ -1468,8 +1468,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 quote! {
                                     &match #ident_ts_203ac73c::#TryNewSc(self.0.#date_or_time_ts()) {
                                         Ok(value_b2ac0c33) => value_b2ac0c33,
-                                        Err(error_2c555724) => {
-                                            return Err(_serde::ser::Error::custom(error_2c555724));
+                                        Err(er) => {
+                                            return Err(_serde::ser::Error::custom(er));
                                         },
                                     }
                                 }

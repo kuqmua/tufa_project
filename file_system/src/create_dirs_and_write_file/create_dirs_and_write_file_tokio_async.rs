@@ -6,7 +6,7 @@ use tokio::{fs::File, io::AsyncWriteExt};
 pub enum CreateDirsAndWriteFileTokioAsyncError {
     StdIoError {
         #[eo_to_err_string]
-        error: IoError,
+        er: IoError,
         code_occurence: CodeOccurence,
     },
 }
@@ -18,7 +18,7 @@ pub async fn create_dirs_and_write_file_tokio_async(
         && let Err(er) = fs::create_dir_all(prefix)
     {
         return Err(CreateDirsAndWriteFileTokioAsyncError::StdIoError {
-            error: er,
+            er,
             code_occurence: code_occurence!(),
         });
     }
@@ -26,14 +26,14 @@ pub async fn create_dirs_and_write_file_tokio_async(
         Ok(mut file) => {
             if let Err(er) = AsyncWriteExt::write_all(&mut file, bytes).await {
                 return Err(CreateDirsAndWriteFileTokioAsyncError::StdIoError {
-                    error: er,
+                    er,
                     code_occurence: code_occurence!(),
                 });
             }
             Ok(())
         }
         Err(er) => Err(CreateDirsAndWriteFileTokioAsyncError::StdIoError {
-            error: er,
+            er,
             code_occurence: code_occurence!(),
         }),
     }

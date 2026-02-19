@@ -2668,10 +2668,6 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         #content_ts_c9a843aa
                     }
                 };
-                let not_unique_id_in_json_delete_array_ucc = NotUniqueIdInJsonDeleteArrayUcc;
-                let not_unique_id_in_json_update_and_delete_arrays_ucc = NotUniqueIdInJsonUpdateAndDeleteArraysUcc;
-                let create_update_delete_are_empty_ucc = CreateUpdateDeleteAreEmptyUcc;
-                let ids_are_not_unique_uppper_camel_case = IdsAreNotUniqueUcc;
                 let ident_update_try_new_error_ucc = &SelfUpdateTryNewErrorUcc::from_tokens(&ident);
                 let maybe_ident_update_try_new_error_ts = match &pattern {
                     Pattern::Standart => Ts2::new(),
@@ -2687,22 +2683,22 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 &ident_update_try_new_error_ucc,
                                 &Ts2::new(),
                                 &quote!{{
-                                    #create_update_delete_are_empty_ucc {
+                                    #CreateUpdateDeleteAreEmptyUcc {
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
-                                    #ids_are_not_unique_uppper_camel_case {
+                                    #IdsAreNotUniqueUcc {
                                         #[eo_to_err_string_serde]
                                         duplicate: #StringTs,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
-                                    #not_unique_id_in_json_delete_array_ucc {
+                                    #NotUniqueIdInJsonDeleteArrayUcc {
                                         #[eo_to_err_string_serde]
-                                        error: #StringTs,
+                                        er: #StringTs,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
-                                    #not_unique_id_in_json_update_and_delete_arrays_ucc {
+                                    #NotUniqueIdInJsonUpdateAndDeleteArraysUcc {
                                         #[eo_to_err_string_serde]
-                                        error: #StringTs,
+                                        er: #StringTs,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
                                 }}
@@ -2729,7 +2725,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     let check_if_all_empty_ts = {
                                         quote! {
                                             if create.is_empty() && update.is_empty() && delete.is_empty() {
-                                                return Err(#ident_update_try_new_error_ucc::#create_update_delete_are_empty_ucc {
+                                                return Err(#ident_update_try_new_error_ucc::#CreateUpdateDeleteAreEmptyUcc {
                                                     code_occurence: error_occurence_lib::code_occurence!()
                                                 });
                                             }
@@ -2774,7 +2770,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             let mut acc_2bf4e098 = Vec::new();
                                             for el_dff7634c in update.to_vec() {
                                                 if acc_2bf4e098.contains(&&el_dff7634c.#IdSc) {
-                                                    return Err(#ident_update_try_new_error_ucc::#ids_are_not_unique_uppper_camel_case {
+                                                    return Err(#ident_update_try_new_error_ucc::#IdsAreNotUniqueUcc {
                                                         duplicate: #uuid_as_pg_json_type_update_to_err_string_el_id_ts,
                                                         code_occurence: error_occurence_lib::code_occurence!()
                                                     });
@@ -2783,7 +2779,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             }
                                             for el_2b0181e6 in &delete {
                                                 if acc_2bf4e098.contains(&el_2b0181e6) {
-                                                    return Err(#ident_update_try_new_error_ucc::#ids_are_not_unique_uppper_camel_case {
+                                                    return Err(#ident_update_try_new_error_ucc::#IdsAreNotUniqueUcc {
                                                         duplicate: #uuid_as_pg_json_type_update_to_err_string_el_ts,
                                                         code_occurence: error_occurence_lib::code_occurence!()
                                                     });
@@ -2805,8 +2801,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                     let mut delete_acc = Vec::new();
                                                     for el_2ecc509c in &delete {
                                                         if delete_acc.contains(&el_2ecc509c) {
-                                                            return Err(#ident_update_try_new_error_ucc::#not_unique_id_in_json_delete_array_ucc {
-                                                                #ErrorSc: format!(
+                                                            return Err(#ident_update_try_new_error_ucc::#NotUniqueIdInJsonDeleteArrayUcc {
+                                                                er: format!(
                                                                     #not_unique_id_in_json_delete_array_dq_ts,
                                                                     #uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_object_vec_el_id_ts::get_inner(
                                                                         &el_2ecc509c.clone().into()
@@ -2826,8 +2822,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             quote! {
                                                 for el_fefe9816 in update_acc {
                                                     if delete_acc.contains(&el_fefe9816) {
-                                                        return Err(#ident_update_try_new_error_ucc::#not_unique_id_in_json_update_and_delete_arrays_ucc {
-                                                            #ErrorSc: format!(
+                                                        return Err(#ident_update_try_new_error_ucc::#NotUniqueIdInJsonUpdateAndDeleteArraysUcc {
+                                                            er: format!(
                                                                 #not_unique_id_in_json_update_and_delete_arrays_dq_ts,
                                                                 #uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_object_vec_el_id_ts::get_inner(
                                                                     &el_fefe9816.clone().into()

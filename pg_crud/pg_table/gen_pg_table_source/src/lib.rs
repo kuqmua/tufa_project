@@ -605,7 +605,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let ident_prepare_pg_error_ucc = SelfPreparePgErrorUcc::from_tokens(&ident);
         let content_ts = quote! {
             #[eo_to_err_string]
-            error: sqlx::Error,
+            er: sqlx::Error,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
         };
         let ident_prepare_pg_error_ts = StructOrEnumDeriveTokenStreamBuilder::new()
@@ -644,15 +644,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let pub_async_fn_prepare_extensions_ts = quote! {
             pub async fn #PrepareExtensionsSc(#PoolSc: &sqlx::Pool<sqlx::Postgres>) -> Result<(), #ident_prepare_pg_error_ucc> {
-                if let Err(#ErrorSc) = sqlx::query("create extension if not exists pg_jsonschema").execute(#PoolSc).await {
+                if let Err(er) = sqlx::query("create extension if not exists pg_jsonschema").execute(#PoolSc).await {
                     return Err(#ident_prepare_pg_error_ucc::#CreateExtensionIfNotExistsPgJsonschemaUcc {
-                        #ErrorSc,
+                        er,
                         code_occurence: error_occurence_lib::code_occurence!()
                     });
                 }
-                if let Err(#ErrorSc) = sqlx::query("create extension if not exists \"uuid-ossp\"").execute(#PoolSc).await {
+                if let Err(er) = sqlx::query("create extension if not exists \"uuid-ossp\"").execute(#PoolSc).await {
                     return Err(#ident_prepare_pg_error_ucc::#CreateExtensionIfNotExistsUuidOsspUcc {
-                        #ErrorSc,
+                        er,
                         code_occurence: error_occurence_lib::code_occurence!()
                     });
                 }
@@ -697,7 +697,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #(#serde_json_to_string_schemars_schema_for_generic_unwrap_ts),*
                     )).execute(#PoolSc).await {
                         return Err(#ident_prepare_pg_error_ucc::#PreparePgUcc {
-                            error: er,
+                            er,
                             code_occurence: error_occurence_lib::code_occurence!()
                         });
                     }
@@ -4224,8 +4224,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 quote! {
                                     for el_4b24f8f0 in &#UpdateForQueryVecSc {
                                         if let Some(value_2edaa480) = &el_4b24f8f0.#field_ident {
-                                            if let Err(error_696908ba) = #QuerySc.try_bind(el_4b24f8f0.#primary_key_field_ident) {
-                                                let #Error0 = error_696908ba.to_string();
+                                            if let Err(er) = #QuerySc.try_bind(el_4b24f8f0.#primary_key_field_ident) {
+                                                let #Error0 = er.to_string();
                                                 #pg_syn_variant_error_initialization_eprintln_response_creation_ts
                                             }
                                             match #as_pg_crud_pg_type_pg_type_ts #UpdateQueryBindSc(
@@ -7111,7 +7111,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         };
                         drop_all_test_tables().await;
                         #ident::prepare_extensions(&#PgPoolSc).await.expect("0633ff48");
-                        //do not make it concurrent. would be pg error: "duplicate key value violates unique constraint \"pg_class_relname_nsp_index\""
+                        //do not make it concurrent. would be pg er: "duplicate key value violates unique constraint \"pg_class_relname_nsp_index\""
                         for el_dac43b91 in table_names {
                             #ident::prepare_pg_table(
                                 &#PgPoolSc,

@@ -5,7 +5,7 @@ use thiserror::Error;
 pub enum CreateDirIfItDoesntExistError {
     CreateDirAll {
         #[eo_to_err_string]
-        error: IoError,
+        er: IoError,
         code_occurence: CodeOccurence,
     },
 }
@@ -15,7 +15,7 @@ pub fn create_dir_if_it_doesnt_exist(path: &str) -> Result<(), CreateDirIfItDoes
     }
     if let Err(er) = fs::create_dir_all(path) {
         return Err(CreateDirIfItDoesntExistError::CreateDirAll {
-            error: er,
+            er,
             code_occurence: code_occurence!(),
         });
     }
