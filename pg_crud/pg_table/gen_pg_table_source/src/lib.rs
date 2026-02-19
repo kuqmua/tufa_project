@@ -1796,7 +1796,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let ident_update_many_payload_ucc = SelfUpdateManyPayloadUcc::from_tokens(&ident);
     let ident_update_try_new_error_ucc = SelfUpdateTryNewErrorUcc::from_tokens(&ident);
     let ident_update_for_query_ucc = SelfUpdateForQueryUcc::from_tokens(&ident);
-    let update_query_part_primary_key_sc = UpdateQueryPartPrimaryKeySc;
     let ident_update_ts = {
         let gen_option_value_field_type_as_pg_type_update_ts = |syn_type: &Type| {
             let path_value_ts = {
@@ -1980,7 +1979,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let impl_ident_update_for_query_ts = {
             let update_query_part_primary_key_ts = {
                 quote! {
-                    fn #update_query_part_primary_key_sc(&self, #IncrementSc: &mut u64) -> Result<#StringTs, #PgCrudSc::#QueryPartErrorUcc> {
+                    fn #UpdateQueryPartPrimaryKeySc(&self, #IncrementSc: &mut u64) -> Result<#StringTs, #PgCrudSc::#QueryPartErrorUcc> {
                         match #primary_key_field_type_as_pg_type_ts #UpdateQueryPartSc(
                             &self.#primary_key_field_ident,
                             "",
@@ -2120,7 +2119,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     column!(),
                 );
             quote! {
-                match #content_ts.#update_query_part_primary_key_sc(&mut #IncrementSc) {
+                match #content_ts.#UpdateQueryPartPrimaryKeySc(&mut #IncrementSc) {
                     Ok(value_f269a3b2) => value_f269a3b2,
                     Err(#Error0) => {
                         #content_ts_75b4019b
@@ -3931,8 +3930,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 format!("{ident}{operation}PayloadTryNewError")
                     .parse::<Ts2>()
                     .expect("3da248bb");
-            let not_unique_primary_key_ucc = NotUniquePrimaryKeyUcc;
-            let not_unique_primary_key_sc = NotUniquePrimaryKeySc;
             let ident_operation_payload_try_new_error_ts =
                 StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
@@ -3943,9 +3940,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &ident_operation_payload_try_new_error_ucc,
                         &Ts2::new(),
                         &quote! {{
-                            #not_unique_primary_key_ucc {
+                            #NotUniquePrimaryKeyUcc {
                                 #[eo_to_err_string]
-                                #not_unique_primary_key_sc: #primary_key_field_type_update_ts,
+                                #NotUniquePrimaryKeySc: #primary_key_field_type_update_ts,
                                 #[eo_to_err_string]
                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                             }
@@ -3959,8 +3956,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let mut acc_6bf275fc = Vec::new();
                     for el_35facc3a in &#ValueSc {
                         if acc_6bf275fc.contains(&&el_35facc3a.#primary_key_field_ident) {
-                            return Err(#ident_operation_payload_try_new_error_ucc::#not_unique_primary_key_ucc {
-                                #not_unique_primary_key_sc: el_35facc3a.#primary_key_field_ident,
+                            return Err(#ident_operation_payload_try_new_error_ucc::#NotUniquePrimaryKeyUcc {
+                                #NotUniquePrimaryKeySc: el_35facc3a.#primary_key_field_ident,
                                 code_occurence: error_occurence_lib::code_occurence!(),
                             });
                         }
@@ -4126,7 +4123,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                             if let Some(value_3ea04126) = &el_defbc401.#field_ident {
                                                                 acc_8ad06c8c.push_str(&#PgCrudSc::#gen_when_column_id_then_value_update_many_query_part_sc(
                                                                     Self::#PrimaryKeySc(),
-                                                                    &match el_defbc401.#update_query_part_primary_key_sc(&mut #IncrementSc) {
+                                                                    &match el_defbc401.#UpdateQueryPartPrimaryKeySc(&mut #IncrementSc) {
                                                                         Ok(value_00890100) => value_00890100,
                                                                         Err(#Error0) => {
                                                                             #content_ts_1b64e228
@@ -4391,7 +4388,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 }
                             },
                         );
-                    let primary_key_query_part_sc = PrimaryKeyQueryPartSc;
                     let additional_parameters_primary_key_modification_ts =
                         gen_match_update_query_part_primary_key_ts(
                             &operation,
@@ -4414,7 +4410,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 let _: Option<char> = acc_683e37b8.pop();
                                 acc_683e37b8
                             };
-                            let #primary_key_query_part_sc = #additional_parameters_primary_key_modification_ts;
+                            let #PrimaryKeyQueryPartSc = #additional_parameters_primary_key_modification_ts;
                             let return_columns = match #UpdateForQuerySc.select_only_updated_ids_query_part(&mut #IncrementSc) {
                                 Ok(value_7f0d86a1) => value_7f0d86a1,
                                 Err(#Error0) => {
@@ -4425,7 +4421,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 #TableSc,
                                 &#ColumnsSc,
                                 Self::#PrimaryKeySc(),
-                                &#primary_key_query_part_sc,
+                                &#PrimaryKeyQueryPartSc,
                                 &return_columns
                             )
                         }
@@ -4920,8 +4916,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let field_ident = &element.field_ident;
                 let field_type = &element.field_type;
                 let field_ident_ucc = ToTokensToUccTs::case_or_panic(&field_ident);
-                let ucc = DefaultOptionSomeVecOneElMaxPageSizeUcc;
-                let sc = DefaultOptionSomeVecOneElMaxPageSizeSc;
                 quote! {
                     #ident_select_ucc::#field_ident_ucc(
                         <
@@ -4931,8 +4925,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 pg_crud::PgType
                             >::Select
                             as
-                            pg_crud::#ucc
-                        >::#sc()
+                            pg_crud::#DefaultOptionSomeVecOneElMaxPageSizeUcc
+                        >::#DefaultOptionSomeVecOneElMaxPageSizeSc()
                     )
                 }
             });

@@ -103,11 +103,10 @@ pub fn gen_serde_version_of_named_syn_variant(value: &Variant) -> Ts2 {
     } else {
         panic!("79b0f231");
     };
-    let code_occurence_sc = CodeOccurenceSc;
     let fields_idents_idents_with_serde_excluding_code_occurence_ts = fields
         .iter()
         .filter(|el_5782b638| {
-            *el_5782b638.ident.as_ref().expect("3078fd99") != *code_occurence_sc.to_string()
+            *el_5782b638.ident.as_ref().expect("3078fd99") != *CodeOccurenceSc.to_string()
         })
         .map(|el_c25b655e| {
             let get_type_path_third_segment_second_argument_check_if_hashmap = || {
@@ -119,8 +118,7 @@ pub fn gen_serde_version_of_named_syn_variant(value: &Variant) -> Ts2 {
                 assert!(segments.len() == 1, "114c28f3");
                 let first_segment = segments.iter().next().expect("a037b0ba");
                 {
-                    let hashmap_ucc = HashMapUcc;
-                    assert!(first_segment.ident == hashmap_ucc.to_string(), "5e1bc6b1");
+                    assert!(first_segment.ident == HashMapUcc.to_string(), "5e1bc6b1");
                 };
                 let PathArguments::AngleBracketed(AngleBracketedGenericArguments { args, .. }) =
                     &first_segment.arguments
@@ -218,7 +216,7 @@ pub fn gen_serde_version_of_named_syn_variant(value: &Variant) -> Ts2 {
     quote! {
         #el_ident {
             #(#fields_idents_idents_with_serde_excluding_code_occurence_ts)*
-            #code_occurence_sc: error_occurence_lib::code_occurence::CodeOccurence,
+            #CodeOccurenceSc: error_occurence_lib::code_occurence::CodeOccurence,
         }
     }
 }

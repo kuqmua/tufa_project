@@ -6617,11 +6617,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             )
         };
         let maybe_impl_pg_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_ts = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
-            let pg_type_primary_key_ucc = PgTypePrimaryKeyUcc;
             let value_as_read_only_ids_ts = quote! {#ValueSc: #self_as_pg_type_ts::#ReadOnlyIdsUcc};
             quote! {
                 #AllowClippyArbitrarySourceItemOrdering
-                impl #import_path::#pg_type_primary_key_ucc for #ident_standart_not_null_ucc {
+                impl #import_path::#PgTypePrimaryKeyUcc for #ident_standart_not_null_ucc {
                     type #PgTypeUcc = Self;
                     type #TableTypeDeclarationUcc = #ident_standart_not_null_table_type_declaration_ucc;
                     fn #ReadOnlyIdsIntoTableTypeDeclarationSc(#value_as_read_only_ids_ts) -> #self_as_pg_type_ts::#TableTypeDeclarationUcc {
@@ -6695,7 +6694,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         &FormatWithCargofmt::True,
     );
     let generated = {
-        let gen_pg_types_mod_sc = GenPgTypesModSc;
         let content_ts = pg_type_array
             .into_iter()
             .map(|el_f9569807| el_f9569807.parse::<Ts2>().expect("e0c9257d"))
@@ -6703,10 +6701,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         quote! {
             #[allow(unused_qualifications)]
             #[allow(clippy::absolute_paths)]
-            mod #gen_pg_types_mod_sc {
+            mod #GenPgTypesModSc {
                 #(#content_ts)*
             }
-            pub use #gen_pg_types_mod_sc::*;
+            pub use #GenPgTypesModSc::*;
         }
     };
     maybe_write_ts_into_file(

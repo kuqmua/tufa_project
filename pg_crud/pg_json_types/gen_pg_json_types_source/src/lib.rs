@@ -2166,8 +2166,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &ident_update_ucc,
                 &ident_update_for_query_ucc,
                 &{
-                    let jsonb_set_accumulator_sc = JsonbSetAccumulatorSc;
-                    let format_handle_ts = dq_ts(&format!("jsonb_set({{{jsonb_set_accumulator_sc}}},'{{{{{{jsonb_set_path}}}}}}',${{value_26526e0f}})"));
+                    let format_handle_ts = dq_ts(&format!("jsonb_set({{{JsonbSetAccumulatorSc}}},'{{{{{{jsonb_set_path}}}}}}',${{value_26526e0f}})"));
                     quote! {
                         match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
                             Ok(value_26526e0f) => Ok(format!(#format_handle_ts)),
@@ -3597,7 +3596,6 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         &FormatWithCargofmt::True,
     );
     let generated = {
-        let gen_pg_json_types_mod_sc = GenPgJsonTypesModSc;
         let content_ts = pg_json_type_array
             .into_iter()
             .map(|el_af9caefa| el_af9caefa.parse::<Ts2>().expect("84e21b40"))
@@ -3605,10 +3603,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         quote! {
             #[allow(unused_qualifications)]
             #[allow(clippy::absolute_paths)]
-            mod #gen_pg_json_types_mod_sc {
+            mod #GenPgJsonTypesModSc {
                 #(#content_ts)*
             }
-            pub use #gen_pg_json_types_mod_sc::*;
+            pub use #GenPgJsonTypesModSc::*;
         }
     };
     maybe_write_ts_into_file(

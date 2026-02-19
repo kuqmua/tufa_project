@@ -1,9 +1,9 @@
 use gen_quotes::dq_ts;
+use naming::CodeOccurenceSc;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 #[must_use]
 pub fn gen_field_code_occurence_new_ts(file: &'static str, line: u32, column: u32) -> Ts2 {
-    use naming::CodeOccurenceSc;
     let code_occurence_new_ts = {
         let file_ts = dq_ts(&file);
         let line_ts = {
@@ -27,6 +27,5 @@ pub fn gen_field_code_occurence_new_ts(file: &'static str, line: u32, column: u3
             )
         }
     };
-    let code_occurence_sc = CodeOccurenceSc;
-    quote! {#code_occurence_sc: #code_occurence_new_ts}
+    quote! {#CodeOccurenceSc: #code_occurence_new_ts}
 }

@@ -294,10 +294,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &content_ts
                 )
             };
-            let import_path_query_part_error_ts = {
-                let query_part_error_ucc = QueryPartErrorUcc;
-                quote! {#import_path::#query_part_error_ucc}
-            };
+            let import_path_query_part_error_ts = quote! {#import_path::#QueryPartErrorUcc};
             let vec_pg_crud_default_option_some_vec_one_el_call_ts = quote!{vec![#PgCrudDefaultOptionSomeVecOneElCall]};
             let default_but_option_is_some_ts = quote!{
                 #import_path::#DefaultOptionSomeVecOneElUcc::#DefaultOptionSomeVecOneElSc
@@ -380,18 +377,17 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let ident_as_import_path_pg_json_type_ts = gen_type_as_pg_json_type_ts(&ident);
             let ident_standart_not_null_as_import_path_pg_json_type_ts = gen_type_as_pg_json_type_ts(&ident_standart_not_null_ucc);
             let ident_array_not_null_as_import_path_pg_json_type_ts = gen_type_as_pg_json_type_ts(&ident_array_not_null_ucc);
-            let uuid_uuid_as_not_null_jsonb_string_ucc = UuidUuidAsNotNullJsonbStringUcc;
-            let uuid_uuid_as_not_null_jsonb_string_ts = quote!{#import_path::#uuid_uuid_as_not_null_jsonb_string_ucc};
+            let uuid_uuid_as_not_null_jsonb_string_ts = quote!{#import_path::#UuidUuidAsNotNullJsonbStringUcc};
             let uuid_uuid_as_not_null_jsonb_string_table_type_declaration_ucc = {
-                let uuid_uuid_as_not_null_jsonb_string_table_type_declaration_ucc = SelfTableTypeDeclarationUcc::from_display(&uuid_uuid_as_not_null_jsonb_string_ucc);
+                let uuid_uuid_as_not_null_jsonb_string_table_type_declaration_ucc = SelfTableTypeDeclarationUcc::from_display(&UuidUuidAsNotNullJsonbStringUcc);
                 quote!{#import_path::#uuid_uuid_as_not_null_jsonb_string_table_type_declaration_ucc}
             };
             let uuid_uuid_as_not_null_jsonb_string_update_ucc = {
-                let uuid_uuid_as_not_null_jsonb_string_update_ucc = SelfUpdateUcc::from_display(&uuid_uuid_as_not_null_jsonb_string_ucc);
+                let uuid_uuid_as_not_null_jsonb_string_update_ucc = SelfUpdateUcc::from_display(&UuidUuidAsNotNullJsonbStringUcc);
                 quote!{#import_path::#uuid_uuid_as_not_null_jsonb_string_update_ucc}
             };
             let uuid_uuid_as_not_null_jsonb_string_where_ucc = {
-                let uuid_uuid_as_not_null_jsonb_string_where_ucc = SelfWhereUcc::from_display(&uuid_uuid_as_not_null_jsonb_string_ucc);
+                let uuid_uuid_as_not_null_jsonb_string_where_ucc = SelfWhereUcc::from_display(&UuidUuidAsNotNullJsonbStringUcc);
                 quote!{#import_path::#uuid_uuid_as_not_null_jsonb_string_where_ucc}
             };
             let uuid_uuid_as_not_null_jsonb_string_as_import_path_pg_json_type_ts = gen_type_as_pg_json_type_ts(&uuid_uuid_as_not_null_jsonb_string_ts);
@@ -413,7 +409,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         path: Path {
                             leading_colon: None,
                             segments: gen_simple_syn_punctuated_punctuated(
-                                &[import_path.to_path(), &uuid_uuid_as_not_null_jsonb_string_ucc.to_string()]
+                                &[import_path.to_path(), &UuidUuidAsNotNullJsonbStringUcc.to_string()]
                             ),
                         },
                     }),
@@ -2063,7 +2059,6 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     };
                     gen_ident_read_ts(&ident_read_ucc, &content_ts, derive_serde_deserialize)
                 };
-                let all_fields_are_none_ucc = AllFieldsAreNoneUcc;
                 let gen_ident_read_try_from_error_ts = |ident_ts_df27c0c4: &dyn ToTokens|StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
@@ -2075,7 +2070,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &ident_ts_df27c0c4,
                         &Ts2::new(),
                         &quote!{{
-                            #all_fields_are_none_ucc {
+                            #AllFieldsAreNoneUcc {
                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                             },
                         }}
@@ -2144,7 +2139,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 };
                                 quote! {
                                     if #content_ts {
-                                        return Err(#ident_read_try_from_error_or_ident_with_id_standart_not_null_read_try_from_error_ucc::#all_fields_are_none_ucc {
+                                        return Err(#ident_read_try_from_error_or_ident_with_id_standart_not_null_read_try_from_error_ucc::#AllFieldsAreNoneUcc {
                                             code_occurence: error_occurence_lib::code_occurence!()
                                         });
                                     }
@@ -2559,16 +2554,15 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let ident_with_id_standart_not_null_update_el_ucc = &SelfUpdateElementUcc::from_tokens(&ident_with_id_standart_not_null_ucc);
             let ident_with_id_standart_not_null_update_for_query_el_ucc = &SelfUpdateForQueryElementUcc::from_tokens(&ident_with_id_standart_not_null_ucc);
             let (gen_jsonb_set_target_sc, gen_jsonb_set_target_ts) = {
-                let gen_jsonb_set_target_sc = GenJsonbSetTargetSc;
                 let gen_jsonb_set_target_ts = {
                     let format_handle_ts = dq_ts(&format!("{{{JsonbSetTargetSc}}}->'{{value_12d082b5}}'"));
                     quote! {
-                        let #gen_jsonb_set_target_sc = |value_12d082b5: &str|{
+                        let #GenJsonbSetTargetSc = |value_12d082b5: &str|{
                             format!(#format_handle_ts)
                         };
                     }
                 };
-                (gen_jsonb_set_target_sc, gen_jsonb_set_target_ts)
+                (GenJsonbSetTargetSc, gen_jsonb_set_target_ts)
             };
             let import_path_unique_vec_ident_with_id_standart_not_null_update_el_ts = quote!{
                 #import_path::UniqueVec::<#ident_with_id_standart_not_null_update_el_ucc>
@@ -3980,8 +3974,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &match &pattern {
                         Pattern::Standart => match &is_nullable {
                             IsNullable::False => {
-                                let object_acc_sc = StdOptionOptionObjectAccSc;
-                                let format_handle_ts = dq_ts(&format!("jsonb_set({{{JsonbSetAccumulatorSc}}},'{{{{{{{JsonbSetPathSc}}}}}}}',{{{object_acc_sc}}})"));
+                                let format_handle_ts = dq_ts(&format!("jsonb_set({{{JsonbSetAccumulatorSc}}},'{{{{{{{JsonbSetPathSc}}}}}}}',{{{StdOptionOptionObjectAccSc}}})"));
                                 let query_part_variants_ts = vec_syn_field.iter().map(|el_ebd92dbf| {
                                     let variant_ident_ucc_ts = AsRefStrToUccTs::case_or_panic(&el_ebd92dbf.field_ident.to_string());
                                     let field_ident_dq_ts = gen_field_ident_dq_ts(el_ebd92dbf);
@@ -3990,13 +3983,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         #ident_update_for_query_el_ucc::#variant_ident_ucc_ts(value_3b3fae4c) => {
                                             match #field_type_as_crud_pg_json_type_from_field_ts::#UpdateQueryPartSc(
                                                 &value_3b3fae4c.#ValueSc,
-                                                &#object_acc_sc,
+                                                &#StdOptionOptionObjectAccSc,
                                                 &#gen_jsonb_set_target_sc(#field_ident_dq_ts),
                                                 #field_ident_dq_ts,
                                                 #IncrementSc,
                                             ) {
                                                 Ok(value_5edc1648) => {
-                                                    #object_acc_sc = value_5edc1648;
+                                                    #StdOptionOptionObjectAccSc = value_5edc1648;
                                                 }
                                                 Err(#ErrorSc) => {
                                                     return Err(#ErrorSc);
@@ -4007,7 +4000,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 });
                                 let some_format_handle_ts = dq_ts(&format!("case when jsonb_typeof({{{JsonbSetTargetSc}}}) = 'object' then ({{{JsonbSetTargetSc}}})::jsonb else '{{{{}}}}'::jsonb end"));
                                 quote! {
-                                    let mut #object_acc_sc = format!(#some_format_handle_ts);
+                                    let mut #StdOptionOptionObjectAccSc = format!(#some_format_handle_ts);
                                     #gen_jsonb_set_target_ts
                                     for el_157f4b80 in #ValueSc.0.to_vec() {
                                         match el_157f4b80 {
@@ -4015,7 +4008,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         }
                                     }
                                     if #JsonbSetPathSc.is_empty() {
-                                        Ok(#object_acc_sc)
+                                        Ok(#StdOptionOptionObjectAccSc)
                                     }
                                     else {
                                         Ok(format!(#format_handle_ts))

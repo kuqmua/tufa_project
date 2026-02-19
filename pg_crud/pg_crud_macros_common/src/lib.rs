@@ -853,10 +853,9 @@ pub fn gen_impl_default_option_some_vec_one_el_ts(
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
     let path_trait_ts = import_path.default_option_some_vec_one_el();
-    let default_option_some_vec_one_el_sc = DefaultOptionSomeVecOneElSc;
     quote! {
         impl #impl_generic_ts #path_trait_ts for #ident #ident_generic_ts {
-            fn #default_option_some_vec_one_el_sc() -> Self {
+            fn #DefaultOptionSomeVecOneElSc() -> Self {
                 #content_ts
             }
         }
@@ -868,10 +867,9 @@ pub fn gen_impl_all_variants_default_option_some_vec_one_el_ts(
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
     let path_trait_ts = import_path.all_variants_default_option_some_vec_one_el();
-    let all_variants_default_option_some_vec_one_el_sc = AllVariantsDefaultOptionSomeVecOneElSc;
     quote! {
         impl #path_trait_ts for #ident {
-            fn #all_variants_default_option_some_vec_one_el_sc() -> Vec<Self> {
+            fn #AllVariantsDefaultOptionSomeVecOneElSc() -> Vec<Self> {
                 #content_ts
             }
         }
@@ -885,10 +883,9 @@ pub fn gen_impl_default_option_some_vec_one_el_max_page_size_ts(
     content_ts: &dyn ToTokens,
 ) -> Ts2 {
     let path_trait_ts = import_path.default_option_some_vec_one_el_max_page_size();
-    let default_option_some_vec_one_el_max_page_size_sc = DefaultOptionSomeVecOneElMaxPageSizeSc;
     quote! {
         impl #impl_generic_ts #path_trait_ts for #ident #ident_generic_ts {
-            fn #default_option_some_vec_one_el_max_page_size_sc() -> Self {
+            fn #DefaultOptionSomeVecOneElMaxPageSizeSc() -> Self {
                 #content_ts
             }
         }
@@ -1706,7 +1703,6 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     );
     let create_into_pg_type_option_vec_where_dim_one_equal_sc =
         CreateIntoPgTypeOptionVecWhereDimOneEqualSc;
-    let pg_type_option_vec_where_greater_than_test_sc = PgTypeOptionVecWhereGreaterThanTestSc;
     let read_only_ids_merged_with_table_type_declaration_into_pg_type_option_where_greater_than_sc =
         ReadOnlyIdsMergedWithTableTypeDeclarationIntoPgTypeOptionWhereGreaterThanSc;
     let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_content_ts =
@@ -1808,7 +1804,7 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             ) -> Option<#import_path::NotEmptyUniqueVec<#self_pg_type_as_pg_type_ts::#WhereUcc>> {
                 #create_into_pg_type_option_vec_where_dim_one_equal_ts
             }
-            fn #pg_type_option_vec_where_greater_than_test_sc() -> Option<
+            fn #PgTypeOptionVecWhereGreaterThanTestSc() -> Option<
                 #import_path::NotEmptyUniqueVec<
                     #import_path::PgTypeGreaterThanTest<
                         #SelfUcc::#PgTypeUcc
