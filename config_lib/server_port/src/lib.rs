@@ -34,21 +34,21 @@ impl Display for ServerPortEr {
 impl Error for ServerPortEr {}
 impl TryFrom<u16> for ServerPort {
     type Error = ServerPortEr;
-    fn try_from(value: u16) -> Result<Self, Self::Error> {
-        if value < SERVER_PORT_MIN_VALUE {
+    fn try_from(v: u16) -> Result<Self, Self::Error> {
+        if v < SERVER_PORT_MIN_VALUE {
             Err(Self::Error {
                 server_port_min_value: SERVER_PORT_MIN_VALUE,
                 server_port_max_value: SERVER_PORT_MAX_VALUE,
-                value,
+                value: v,
                 message: String::from(SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE),
             })
-        } else if value <= SERVER_PORT_MAX_VALUE {
-            Ok(Self(value))
+        } else if v <= SERVER_PORT_MAX_VALUE {
+            Ok(Self(v))
         } else {
             Err(Self::Error {
                 server_port_min_value: SERVER_PORT_MIN_VALUE,
                 server_port_max_value: SERVER_PORT_MAX_VALUE,
-                value,
+                value: v,
                 message: String::from(SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE),
             })
         }

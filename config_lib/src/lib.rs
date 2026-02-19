@@ -11,7 +11,7 @@ use thiserror::Error;
 pub use try_from_env::TryFromEnv;
 pub trait TryFromStdEnvVarOk: Sized {
     type Error;
-    fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error>;
+    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error>;
 }
 #[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct ServiceSocketAddress(pub SocketAddr);
@@ -21,8 +21,8 @@ pub enum TryFromStdEnvVarOkServiceSocketAddressEr {
 }
 impl TryFromStdEnvVarOk for ServiceSocketAddress {
     type Error = TryFromStdEnvVarOkServiceSocketAddressEr;
-    fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        <SocketAddr as FromStr>::from_str(&value)
+    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
+        <SocketAddr as FromStr>::from_str(&v)
             .map(Self)
             .map_err(|er| Self::Error::StdNetSocketAddr {
                 std_net_socket_addr: er,
@@ -38,9 +38,9 @@ pub enum TryFromStdEnvVarOkTimezoneEr {
 }
 impl TryFromStdEnvVarOk for Timezone {
     type Error = TryFromStdEnvVarOkTimezoneEr;
-    fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        let Some(fixed_offset) = FixedOffset::east_opt(match value.parse::<i32>() {
-            Ok(value_i32) => value_i32,
+    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
+        let Some(fixed_offset) = FixedOffset::east_opt(match v.parse::<i32>() {
+            Ok(v0) => v0,
             Err(er) => {
                 return Err(Self::Error::I32Parsing { i32_parsing: er });
             }
@@ -155,9 +155,9 @@ pub enum TryFromStdEnvVarOkSourcePlaceTypeEr {
 }
 impl TryFromStdEnvVarOk for SourcePlaceType {
     type Error = TryFromStdEnvVarOkSourcePlaceTypeEr;
-    fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        Ok(Self(match value.parse::<types::SourcePlaceType>() {
-            Ok(handle) => handle,
+    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
+        Ok(Self(match v.parse::<types::SourcePlaceType>() {
+            Ok(v0) => v0,
             Err(er) => {
                 return Err(Self::Error::AppStateSourcePlaceTypeParsing {
                     app_state_source_place_type_parsing: er,
