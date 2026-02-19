@@ -196,11 +196,11 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
                     }
                 }
                 let __field0_value = match __field0 {
-                    Some(value) => value,
+                    Some(v) => v,
                     None => serde::__private228::de::missing_field("limit")?,
                 };
                 let __field1_value = match __field1 {
-                    Some(value) => value,
+                    Some(v) => v,
                     None => serde::__private228::de::missing_field("offset")?,
                 };
                 match PaginationStartsWithOne::try_new(__field0_value, __field1_value) {

@@ -15,11 +15,11 @@ pub fn try_from_env(input: Ts) -> Ts {
     let ident = &syn_derive_input.ident;
     let ident_try_from_env_er_ucc = SelfTryFromEnvErUcc::from_tokens(&ident);
     let data_struct = match syn_derive_input.data {
-        Data::Struct(value) => value,
+        Data::Struct(v) => v,
         Data::Enum(_) | Data::Union(_) => panic!("54289ad5"),
     };
     let fields_named = match data_struct.fields {
-        Fields::Named(value) => value.named,
+        Fields::Named(v) => v.named,
         Fields::Unnamed(_) | Fields::Unit => {
             panic!("330b2512")
         }

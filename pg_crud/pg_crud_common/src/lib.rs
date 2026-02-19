@@ -456,7 +456,7 @@ where
         query: Query<'query_lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
         match self.0 {
-            Some(value) => value.query_bind(query),
+            Some(v) => v.query_bind(query),
             None => Ok(query), //todo maybe wrong
         }
     }
@@ -678,11 +678,11 @@ const _: () = {
                         }
                     }
                     let __field0_value = match __field0 {
-                        Some(value) => value,
+                        Some(v) => v,
                         None => _serde::__private228::de::missing_field("logical_operator")?,
                     };
                     let __field1_value = match __field1 {
-                        Some(value) => value,
+                        Some(v) => v,
                         None => _serde::__private228::de::missing_field("value")?,
                     };
                     match PgTypeWhere::try_new(__field0_value, __field1_value) {
@@ -1055,11 +1055,11 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
                     }
                 }
                 let __field0_value = match __field0 {
-                    Some(value) => value,
+                    Some(v) => v,
                     None => serde::__private228::de::missing_field("limit")?,
                 };
                 let __field1_value = match __field1 {
-                    Some(value) => value,
+                    Some(v) => v,
                     None => serde::__private228::de::missing_field("offset")?,
                 };
                 match PaginationStartsWithZero::try_new(__field0_value, __field1_value) {

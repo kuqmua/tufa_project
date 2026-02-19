@@ -10,7 +10,7 @@ pub fn gen_getter_traits_for_struct_fields(input: Ts) -> Ts {
     let syn_derive_input: DeriveInput = parse(input).expect("49780295");
     let ident = &syn_derive_input.ident;
     let datastruct = match syn_derive_input.data {
-        Data::Struct(value) => value,
+        Data::Struct(v) => v,
         Data::Enum(_) | Data::Union(_) => panic!("15cd72a2"),
     };
     let generated_traits_impls_ts = datastruct.fields.into_iter().map(|field| {
@@ -47,11 +47,11 @@ pub fn gen_getter_trait(input: Ts) -> Ts {
     let syn_derive_input: DeriveInput = parse(input).expect("195b48f5");
     let ident = &syn_derive_input.ident;
     let data_struct = match syn_derive_input.data {
-        Data::Struct(value) => value,
+        Data::Struct(v) => v,
         Data::Enum(_) | Data::Union(_) => panic!("cd6bbc4e"),
     };
     let fields_unnamed = match data_struct.fields {
-        Fields::Unnamed(value) => value.unnamed,
+        Fields::Unnamed(v) => v.unnamed,
         Fields::Named(_) | Fields::Unit => panic!("577cb86a"),
     };
     assert!(fields_unnamed.len() == 1, "1e82dc7e");

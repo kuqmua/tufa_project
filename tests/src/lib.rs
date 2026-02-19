@@ -45,7 +45,7 @@ mod tests {
         let workspace = toml_value_from_from_cargo_toml_workspace();
         let lints = workspace.get("lints").expect("82eaea37");
         let toml_value_table = match lints.get(rust_or_clippy.name()).expect("dbd02f72").clone() {
-            Value::Table(value) => value,
+            Value::Table(v) => v,
             Value::String(_)
             | Value::Integer(_)
             | Value::Float(_)

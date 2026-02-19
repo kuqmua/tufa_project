@@ -594,15 +594,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                         let __field0_value = match __field0 {
-                            Some(value) => value,
+                            Some(v) => v,
                             None => _serde::__private228::de::missing_field("pg_type")?,
                         };
                         let __field1_value = match __field1 {
-                            Some(value) => value,
+                            Some(v) => v,
                             None => _serde::__private228::de::missing_field("is_nullable")?,
                         };
                         let __field2_value = match __field2 {
-                            Some(value) => value,
+                            Some(v) => v,
                             None => _serde::__private228::de::missing_field("pg_type_pattern")?,
                         };
                         match PgTypeRecord::try_from((
@@ -893,7 +893,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 }
                 acc_4351207e
             }),
-            GenPgTypesConfigVariant::Concrete(value) => value,
+            GenPgTypesConfigVariant::Concrete(v) => v,
         };
         {
             let mut check_acc = Vec::new();
@@ -3982,11 +3982,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             };
             let maybe_impl_serde_serialize_for_ident_standart_not_null_origin_ts = match &serde_serialize_derive_or_impl {
                 DeriveOrImpl::Derive => &Ts2::new(),
-                DeriveOrImpl::Impl(value) => value,
+                DeriveOrImpl::Impl(v) => v,
             };
             let maybe_impl_serde_deserialize_for_ident_standart_not_null_origin_ts = match &serde_deserialize_derive_or_impl {
                 DeriveOrImpl::Derive => &Ts2::new(),
-                DeriveOrImpl::Impl(value) => value,
+                DeriveOrImpl::Impl(v) => v,
             };
             let impl_display_for_ident_origin_ts = gen_impl_display_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
             let impl_location_lib_to_err_string_for_ident_origin_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {self.to_string()});

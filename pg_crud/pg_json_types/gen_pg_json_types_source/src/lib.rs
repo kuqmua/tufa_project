@@ -449,7 +449,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 ConfigVariant::WithDimTwo => gen_variants(Some(2i32)),
                 ConfigVariant::WithDimThree => gen_variants(Some(3i32)),
                 ConfigVariant::WithDimFour => gen_variants(Some(4i32)),
-                ConfigVariant::Concrete(value) => value,
+                ConfigVariant::Concrete(v) => v,
             }
         };
         let mut seen = HashSet::new();

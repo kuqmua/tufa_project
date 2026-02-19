@@ -427,7 +427,7 @@ pub fn location(input: Ts) -> Ts {
             let gen_display_formatter_unnamed_ts = || {
                 let variants_ts = data_enum.variants.iter().map(|el_f99bd80d| {
                     let el_ident = &el_f99bd80d.ident;
-                    quote! {Self::#el_ident(value) => value}
+                    quote! {Self::#el_ident(v) => v}
                 });
                 quote! {match self { #(#variants_ts),* }}
             };
