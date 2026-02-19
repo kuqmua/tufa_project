@@ -1033,37 +1033,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let none_ts = quote!{None};
         let dot_clone_ts = quote!{.clone()};
         let maybe_dot_clone_ts: &dyn ToTokens = if matches!(&pg_type_pattern, PgTypePattern::Standart) &&
-            matches!(&is_nullable, IsNullable::False)
+            matches!(&is_nullable, IsNullable::False) && !matches!(
+                pg_type,
+                PgType::StdVecVecU8AsBytea | PgType::StringAsText
+            )
         {
-            match &pg_type {
-                PgType::I16AsInt2 |
-                PgType::I32AsInt4 |
-                PgType::I64AsInt8 |
-                PgType::F32AsFloat4 |
-                PgType::F64AsFloat8 |
-                PgType::I16AsSmallSerialInitializedByPg |
-                PgType::I32AsSerialInitializedByPg |
-                PgType::I64AsBigSerialInitializedByPg |
-                PgType::SqlxPgTypesPgMoneyAsMoney |
-                PgType::BoolAsBool |
-                PgType::SqlxTypesChronoNaiveTimeAsTime | PgType::SqlxTypesTimeTimeAsTime |
-                PgType::SqlxPgTypesPgIntervalAsInterval |
-                PgType::SqlxTypesChronoNaiveDateAsDate |
-                PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
-                PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
-                PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg | PgType::SqlxTypesUuidUuidAsUuidInitializedByClient |
-                PgType::SqlxTypesIpnetworkIpNetworkAsInet |
-                PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
-                PgType::SqlxPgTypesPgRangeI32AsInt4Range |
-                PgType::SqlxPgTypesPgRangeI64AsInt8Range |
-                PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
-                PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
-                PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &Ts2::new(),
-                PgType::StdVecVecU8AsBytea |
-                PgType::StringAsText => &dot_clone_ts,
-            }
-        }
-        else {
+            &Ts2::new()
+        } else {
             &dot_clone_ts
         };
         let gen_import_path_value_initialization_ts = |content_ts: &dyn ToTokens| gen_value_initialization_ts(&import_path, &content_ts);
