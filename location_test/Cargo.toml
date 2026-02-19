@@ -1,5 +1,5 @@
 [package]
-name = "er_occurence_test"
+name = "location_test"
 version = "0.1.0"
 edition = "2024"
 description = "description"
@@ -12,7 +12,7 @@ categories = ["category"]
 [dependencies]
 thiserror.workspace = true
 serde.workspace = true
-er_occurence_lib = {path = "../er_occurence_lib"}
+location_lib = {path = "../location_lib"}
 
 [lints]
 workspace = true

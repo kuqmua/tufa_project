@@ -2,12 +2,12 @@ use axum::http::{
     HeaderMap, StatusCode,
     header::{HeaderValue, ToStrError},
 };
-use er_occurence_lib::{ErOccurence, code_occurence, code_occurence::CodeOccurence};
+use location_lib::{Location, code_occurence, code_occurence::CodeOccurence};
 use git_info::{GetGitCommitLink, PROJECT_GIT_INFO};
 use http_logic::GetAxumHttpStatusCode;
 use naming::CommitSc;
 use thiserror::Error;
-#[derive(Debug, Error, ErOccurence)]
+#[derive(Debug, Error, Location)]
 pub enum CommitEr {
     CommitNotEqual {
         #[eo_to_err_string_serde]

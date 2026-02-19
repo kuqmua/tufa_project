@@ -1,7 +1,7 @@
 use gen_quotes::dq_ts;
 use macros_helpers::{
-    ErOccurenceFieldAttr, gen_if_write_is_err_ts, gen_impl_display_ts, gen_impl_to_err_string_ts,
-    gen_serde_version_of_named_syn_variant,
+    LocationFieldAttr, gen_if_write_is_err_ts, gen_impl_display_ts,
+    gen_impl_to_err_string_ts, gen_serde_version_of_named_syn_variant,
 };
 use naming::{
     CodeOccurenceSc, IntoSerdeVersionSc, ValueSc, WithSerdeUcc, parameter::SelfWithSerdeUcc,
@@ -12,20 +12,20 @@ use quote::{ToTokens, quote};
 use syn::{Data, DeriveInput, Fields, GenericParam, Ident, parse};
 use token_patterns::StringTs;
 #[proc_macro_derive(
-    ErOccurence,
+    Location,
     attributes(
         eo_to_err_string,
         eo_to_err_string_serde,
-        eo_er_occurence,
+        eo_location,
         eo_vec_to_err_string,
         eo_vec_to_err_string_serde,
-        eo_vec_er_occurence,
+        eo_vec_location,
         eo_hashmap_key_string_value_to_err_string,
         eo_hashmap_key_string_value_to_err_string_serde,
-        eo_hashmap_key_string_value_er_occurence,
+        eo_hashmap_key_string_value_location,
     )
 )]
-pub fn er_occurence(input: Ts) -> Ts {
+pub fn location(input: Ts) -> Ts {
     #[derive(Debug, Clone, Copy, PartialEq, Eq)]
     enum SuportedEnumVariant {
         Named,
@@ -87,13 +87,13 @@ pub fn er_occurence(input: Ts) -> Ts {
     } else {
         quote! {<#(#generic_parameters),*>}
     };
-    let maybe_generic_parameters_er_occurence_lib_to_err_string_annotations_ts =
+    let maybe_generic_parameters_location_lib_to_err_string_annotations_ts =
         if generic_parameters.is_empty() {
             Ts2::new()
         } else {
             let value = generic_parameters
                 .iter()
-                .map(|el_4ee89bd7| quote! {#el_4ee89bd7: er_occurence_lib::ToErrString});
+                .map(|el_4ee89bd7| quote! {#el_4ee89bd7: location_lib::ToErrString});
             quote! {<#(#value),*>}
         };
     let gen_enum_ident_with_serde_ts = |variants_ts: &dyn ToTokens| {
@@ -163,13 +163,13 @@ pub fn er_occurence(input: Ts) -> Ts {
                     .filter(|el_48337db8| *el_48337db8.ident.as_ref().expect("f6f6fb24") != *code_occurence_sc_str)
                     .map(|el_f00312fe| {
                         let el_f00312fe_ident = &el_f00312fe.ident.as_ref().expect("e97b25b9");
-                        match ErOccurenceFieldAttr::try_from(el_f00312fe).expect("8ff56aeb") {
-                            ErOccurenceFieldAttr::EoToErrString | ErOccurenceFieldAttr::EoToErrStringSerde => {
+                        match LocationFieldAttr::try_from(el_f00312fe).expect("8ff56aeb") {
+                            LocationFieldAttr::EoToErrString | LocationFieldAttr::EoToErrStringSerde => {
                                 quote! {
-                                    er_occurence_lib::ToErrString::to_err_string(#el_f00312fe_ident)
+                                    location_lib::ToErrString::to_err_string(#el_f00312fe_ident)
                                 }
                             }
-                            ErOccurenceFieldAttr::EoErOccurence => {
+                            LocationFieldAttr::EoLocation => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_52e70d22, "\n {element}"}, &quote! {panic!("c751d54a");});
                                 quote! {
                                     #el_f00312fe_ident.to_string().lines().fold(
@@ -181,14 +181,14 @@ pub fn er_occurence(input: Ts) -> Ts {
                                     )
                                 }
                             }
-                            ErOccurenceFieldAttr::EoVecToErrString | ErOccurenceFieldAttr::EoVecToErrStringSerde => {
+                            LocationFieldAttr::EoVecToErrString | LocationFieldAttr::EoVecToErrStringSerde => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_a9ba7521, "\n {el_6e4f53ad}"}, &quote! {panic!("b35ed9f5");});
                                 quote! {
                                     #el_f00312fe_ident.iter().fold(
                                         #StringTs::new(),
                                         |mut acc_ac447c4b, el_36630fcf| {
                                             acc_ac447c4b.push_str(
-                                                &er_occurence_lib::ToErrString::to_err_string(el_36630fcf)
+                                                &location_lib::ToErrString::to_err_string(el_36630fcf)
                                                 .lines()
                                                 .fold(
                                                     #StringTs::new(),
@@ -203,7 +203,7 @@ pub fn er_occurence(input: Ts) -> Ts {
                                     )
                                 }
                             }
-                            ErOccurenceFieldAttr::EoVecErOccurence => {
+                            LocationFieldAttr::EoVecLocation => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_1bbd5ef3, "\n {el_3f2fe01d}"}, &quote! {panic!("4dfdd18d");});
                                 quote! {
                                     #el_f00312fe_ident.iter().fold(
@@ -221,8 +221,8 @@ pub fn er_occurence(input: Ts) -> Ts {
                                     )
                                 }
                             }
-                            ErOccurenceFieldAttr::EoHashMapKeyStringValueToErrString | ErOccurenceFieldAttr::EoHashMapKeyStringValueToErrStringSerde => {
-                                let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {key}: {}", &er_occurence_lib::ToErrString::to_err_string(#ValueSc)}, &quote! {panic!("d030580a");});
+                            LocationFieldAttr::EoHashMapKeyStringValueToErrString | LocationFieldAttr::EoHashMapKeyStringValueToErrStringSerde => {
+                                let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {key}: {}", &location_lib::ToErrString::to_err_string(#ValueSc)}, &quote! {panic!("d030580a");});
                                 quote! {
                                     #el_f00312fe_ident.iter().fold(
                                         #StringTs::new(),
@@ -233,7 +233,7 @@ pub fn er_occurence(input: Ts) -> Ts {
                                     )
                                 }
                             }
-                            ErOccurenceFieldAttr::EoHashMapKeyStringValueErOccurence => {
+                            LocationFieldAttr::EoHashMapKeyStringValueLocation => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(
                                     &{
                                         let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_addfc699, "\n  {el_8b8f577e}"}, &quote! {panic!("d0492fbf");});
@@ -313,7 +313,7 @@ pub fn er_occurence(input: Ts) -> Ts {
                 }
             };
             let impl_display_for_ident_ts = gen_impl_display_ts(
-                &maybe_generic_parameters_er_occurence_lib_to_err_string_annotations_ts,
+                &maybe_generic_parameters_location_lib_to_err_string_annotations_ts,
                 &ident,
                 &maybe_generic_parameters_ts,
                 &impl_display_handle_content_ts,
@@ -331,50 +331,50 @@ pub fn er_occurence(input: Ts) -> Ts {
                     .filter(|el_6a54951c| *el_6a54951c.ident.as_ref().expect("0488fc4c") != *code_occurence_sc_str)
                     .map(|el_d7e120a3| {
                         let el_d7e120a3_ident = &el_d7e120a3.ident.as_ref().expect("9a672ac2");
-                        let conversion_ts = match ErOccurenceFieldAttr::try_from(el_d7e120a3).expect("449c3781") {
-                            ErOccurenceFieldAttr::EoToErrString => {
+                        let conversion_ts = match LocationFieldAttr::try_from(el_d7e120a3).expect("449c3781") {
+                            LocationFieldAttr::EoToErrString => {
                                 quote! {
                                     #el_d7e120a3_ident: {
-                                        er_occurence_lib::ToErrString::to_err_string(&#el_d7e120a3_ident)
+                                        location_lib::ToErrString::to_err_string(&#el_d7e120a3_ident)
                                     }
                                 }
                             }
-                            ErOccurenceFieldAttr::EoToErrStringSerde | ErOccurenceFieldAttr::EoVecToErrStringSerde | ErOccurenceFieldAttr::EoHashMapKeyStringValueToErrStringSerde => {
+                            LocationFieldAttr::EoToErrStringSerde | LocationFieldAttr::EoVecToErrStringSerde | LocationFieldAttr::EoHashMapKeyStringValueToErrStringSerde => {
                                 quote! {
                                     #el_d7e120a3_ident
                                 }
                             }
-                            ErOccurenceFieldAttr::EoErOccurence => {
+                            LocationFieldAttr::EoLocation => {
                                 quote! {
                                     #el_d7e120a3_ident: {
                                         #el_d7e120a3_ident.into_serde_version()
                                     }
                                 }
                             }
-                            ErOccurenceFieldAttr::EoVecToErrString => {
+                            LocationFieldAttr::EoVecToErrString => {
                                 quote! {
                                     #el_d7e120a3_ident: {
-                                        #el_d7e120a3_ident.into_iter().map(|el_3c145d8e|er_occurence_lib::ToErrString::to_err_string(&el_3c145d8e)).collect()
+                                        #el_d7e120a3_ident.into_iter().map(|el_3c145d8e|location_lib::ToErrString::to_err_string(&el_3c145d8e)).collect()
                                     }
                                 }
                             }
-                            ErOccurenceFieldAttr::EoVecErOccurence => {
+                            LocationFieldAttr::EoVecLocation => {
                                 quote! {
                                     #el_d7e120a3_ident: {
                                         #el_d7e120a3_ident.into_iter().map(|el_607695c6|el_607695c6.into_serde_version()).collect()
                                     }
                                 }
                             }
-                            ErOccurenceFieldAttr::EoHashMapKeyStringValueToErrString => {
+                            LocationFieldAttr::EoHashMapKeyStringValueToErrString => {
                                 quote! {
                                     #el_d7e120a3_ident: {
                                         #el_d7e120a3_ident.into_iter().map(|(key, value)|
-                                            (key, er_occurence_lib::ToErrString::to_err_string(&value))
+                                            (key, location_lib::ToErrString::to_err_string(&value))
                                         ).collect()
                                     }
                                 }
                             }
-                            ErOccurenceFieldAttr::EoHashMapKeyStringValueErOccurence => {
+                            LocationFieldAttr::EoHashMapKeyStringValueLocation => {
                                 quote! {
                                     #el_d7e120a3_ident: {
                                         #el_d7e120a3_ident.into_iter().map(
@@ -405,14 +405,14 @@ pub fn er_occurence(input: Ts) -> Ts {
                 gen_enum_ident_with_serde_ts(&quote! {#(#variants_ts),*})
             };
             let impl_display_for_ident_with_serde_ts = gen_impl_display_ts(
-                &maybe_generic_parameters_er_occurence_lib_to_err_string_annotations_ts,
+                &maybe_generic_parameters_location_lib_to_err_string_annotations_ts,
                 &ident_with_serde_ucc,
                 &maybe_generic_parameters_ts,
                 &impl_display_handle_content_ts,
             );
-            let impl_er_occurence_lib_to_err_string_to_err_string_for_ident_with_serde_ts =
+            let impl_location_lib_to_err_string_to_err_string_for_ident_with_serde_ts =
                 gen_impl_to_err_string_ts(
-                    &maybe_generic_parameters_er_occurence_lib_to_err_string_annotations_ts,
+                    &maybe_generic_parameters_location_lib_to_err_string_annotations_ts,
                     &ident_with_serde_ucc,
                     &maybe_generic_parameters_ts,
                     &quote! {format!("{self}")},
@@ -422,7 +422,7 @@ pub fn er_occurence(input: Ts) -> Ts {
                 #impl_ident_into_serde_version_ts
                 #enum_ident_with_serde_ts
                 #impl_display_for_ident_with_serde_ts
-                #impl_er_occurence_lib_to_err_string_to_err_string_for_ident_with_serde_ts
+                #impl_location_lib_to_err_string_to_err_string_for_ident_with_serde_ts
             }
         }
         SuportedEnumVariant::Unnamed => {
@@ -434,7 +434,7 @@ pub fn er_occurence(input: Ts) -> Ts {
                 quote! {match self { #(#variants_ts),* }}
             };
             let impl_display_for_ident_ts = gen_impl_display_ts(
-                &maybe_generic_parameters_er_occurence_lib_to_err_string_annotations_ts,
+                &maybe_generic_parameters_location_lib_to_err_string_annotations_ts,
                 &ident,
                 &maybe_generic_parameters_ts,
                 &{
@@ -485,7 +485,7 @@ pub fn er_occurence(input: Ts) -> Ts {
                 gen_enum_ident_with_serde_ts(&quote! {#(#variants_ts),*})
             };
             let impl_display_for_ident_with_serde_ts = gen_impl_display_ts(
-                &maybe_generic_parameters_er_occurence_lib_to_err_string_annotations_ts,
+                &maybe_generic_parameters_location_lib_to_err_string_annotations_ts,
                 &ident_with_serde_ucc,
                 &maybe_generic_parameters_ts,
                 &{
@@ -513,7 +513,7 @@ pub fn er_occurence(input: Ts) -> Ts {
     // if ident == "Er" {
     //     maybe_write_ts_into_file(
     //         ShouldWriteTokenStreamIntoFile::True,
-    //         "er_occurence",
+    //         "location",
     //         &generated,
     //         &FormatWithCargofmt::True,
     //     );

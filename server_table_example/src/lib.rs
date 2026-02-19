@@ -24,9 +24,9 @@
 #[pg_crud::common_additional_er_variants{
     enum CommonAdditionalErVariants {
         // CheckCommit {
-        //     #[eo_er_occurence]
+        //     #[eo_location]
         //     check_commit: pg_crud::check_commit::CommitEr,
-        //     code_occurence: er_occurence_lib::code_occurence::CodeOccurence,
+        //     code_occurence: location_lib::code_occurence::CodeOccurence,
         // },
     }
 }]

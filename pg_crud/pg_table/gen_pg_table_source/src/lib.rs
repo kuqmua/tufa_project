@@ -1,6 +1,6 @@
 use gen_quotes::dq_ts;
 use macros_helpers::{
-    AttrIdentStr, DeriveClone, DeriveCopy, ErOccurenceFieldAttr, FormatWithCargofmt,
+    AttrIdentStr, DeriveClone, DeriveCopy, LocationFieldAttr, FormatWithCargofmt,
     ShouldWriteTokenStreamIntoFile, StatusCode, StructOrEnumDeriveTokenStreamBuilder,
     SynFieldWrapper, code_occurence_syn_field, gen_field_code_occurence_new_ts,
     gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts, gen_impl_display_ts,
@@ -592,13 +592,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let content_ts = quote! {
             #[eo_to_err_string]
             er: sqlx::Error,
-            code_occurence: er_occurence_lib::code_occurence::CodeOccurence,
+            code_occurence: location_lib::code_occurence::CodeOccurence,
         };
         let ident_prepare_pg_er_ts = StructOrEnumDeriveTokenStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_thiserror_error()
-            .derive_er_occurence_lib_er_occurence()
+            .derive_location_lib_location()
             .build_enum(
                 &ident_prepare_pg_er_ucc,
                 &Ts2::new(),
@@ -633,13 +633,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 if let Err(er) = sqlx::query("create extension if not exists pg_jsonschema").execute(#PoolSc).await {
                     return Err(#ident_prepare_pg_er_ucc::#CreateExtensionIfNotExistsPgJsonschemaUcc {
                         er,
-                        code_occurence: er_occurence_lib::code_occurence!()
+                        code_occurence: location_lib::code_occurence!()
                     });
                 }
                 if let Err(er) = sqlx::query("create extension if not exists \"uuid-ossp\"").execute(#PoolSc).await {
                     return Err(#ident_prepare_pg_er_ucc::#CreateExtensionIfNotExistsUuidOsspUcc {
                         er,
-                        code_occurence: er_occurence_lib::code_occurence!()
+                        code_occurence: location_lib::code_occurence!()
                     });
                 }
                 Ok(())
@@ -684,7 +684,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     )).execute(#PoolSc).await {
                         return Err(#ident_prepare_pg_er_ucc::#PreparePgUcc {
                             er,
-                            code_occurence: er_occurence_lib::code_occurence!()
+                            code_occurence: location_lib::code_occurence!()
                         });
                     }
                     Ok(())
@@ -838,7 +838,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let new_syn_variant_wrapper = |variant_name: &dyn Display,
                                    status_code: Option<StatusCode>,
                                    fields_cd1fd715: Vec<(
-        ErOccurenceFieldAttr,
+        LocationFieldAttr,
         &dyn Display,
         Punctuated<PathSegment, PathSep>,
     )>|
@@ -935,7 +935,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &QueryPartUcc,
         Some(StatusCode::BadRequest400),
         vec![(
-            ErOccurenceFieldAttr::EoErOccurence,
+            LocationFieldAttr::EoLocation,
             &ErSc,
             gen_simple_syn_punct(&[&PgCrudSc.to_string(), &QueryPartErUcc.to_string()]),
         )],
@@ -1164,14 +1164,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .make_pub()
             .derive_debug()
             .derive_thiserror_error()
-            .derive_er_occurence_lib_er_occurence()
+            .derive_location_lib_location()
             .build_enum(
                 &ident_where_many_try_new_er_ucc,
                 &Ts2::new(),
                 &quote! {{
                     #NoFieldsProvidedUcc {
                         #[eo_to_err_string]
-                        code_occurence: er_occurence_lib::code_occurence::CodeOccurence,
+                        code_occurence: location_lib::code_occurence::CodeOccurence,
                     }
                 }},
             );
@@ -1191,7 +1191,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 quote! {
                     if matches!((#fields_ts), (#fields_named_with_comma_none_ts)) {
                         return Err(#ident_where_many_try_new_er_ucc::#NoFieldsProvidedUcc {
-                            code_occurence: er_occurence_lib::code_occurence!(),
+                            code_occurence: location_lib::code_occurence!(),
                         });
                     }
                     Ok(Self {#fields_inialization_ts})
@@ -1366,14 +1366,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             }
         };
-    let macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string_serde =
-        ErOccurenceFieldAttr::EoToErrStringSerde;
+    let macros_helpers_location_location_field_attr_eo_to_err_string_serde =
+        LocationFieldAttr::EoToErrStringSerde;
     let string_syn_punct = gen_simple_syn_punct(&["String"]);
     let try_bind_syn_variant_wrapper = new_syn_variant_wrapper(
         &TryBindUcc,
         Some(StatusCode::InternalServerEr500),
         vec![(
-            macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string_serde,
+            macros_helpers_location_location_field_attr_eo_to_err_string_serde,
             &TryBindSc,
             string_syn_punct.clone(),
         )],
@@ -1401,13 +1401,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_sc =
         TryFromSqlxPgPgRowWithNotEmptyUniqueVecSelfSelectSc::from_display(&ident);
     let simple_syn_punct_sqlx_error = gen_simple_syn_punct(&["sqlx", "Error"]);
-    let macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string =
-        ErOccurenceFieldAttr::EoToErrString;
+    let macros_helpers_location_location_field_attr_eo_to_err_string =
+        LocationFieldAttr::EoToErrString;
     let pg_syn_variant_wrapper = new_syn_variant_wrapper(
         &PgUcc,
         Some(StatusCode::InternalServerEr500),
         vec![(
-            macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
+            macros_helpers_location_location_field_attr_eo_to_err_string,
             &PgSc,
             simple_syn_punct_sqlx_error.clone(),
         )],
@@ -1469,7 +1469,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &Ts2::new(),
             &quote! {write!(f, "{}", serde_json::to_string(&self).unwrap_or_else(|el_2636212f|format!("cannot serialize into json: {el_2636212f:?}")))},
         );
-        let impl_er_occurence_lib_to_err_string_for_ident_select_ts = gen_impl_to_err_string_ts(
+        let impl_location_lib_to_err_string_for_ident_select_ts = gen_impl_to_err_string_ts(
             &Ts2::new(),
             &ident_select_ucc,
             &Ts2::new(),
@@ -1490,7 +1490,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         quote! {
             #ident_select_ts
             #impl_display_for_ident_select_ts
-            #impl_er_occurence_lib_to_err_string_for_ident_select_ts
+            #impl_location_lib_to_err_string_for_ident_select_ts
             #impl_pg_crud_all_variants_default_option_some_vec_one_el_for_ident_select_ts
         }
     };
@@ -1823,14 +1823,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .make_pub()
             .derive_debug()
             .derive_thiserror_error()
-            .derive_er_occurence_lib_er_occurence()
+            .derive_location_lib_location()
             .build_enum(
                 &ident_update_try_new_er_ucc,
                 &Ts2::new(),
                 &quote! {{
                     #NoFieldsProvidedUcc {
                         #[eo_to_err_string]
-                        code_occurence: er_occurence_lib::code_occurence::CodeOccurence,
+                        code_occurence: location_lib::code_occurence::CodeOccurence,
                     }
                 }},
             );
@@ -1865,7 +1865,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 quote! {
                     if matches!(#left_ts, #right_ts) {
                         return Err(#ident_update_try_new_er_ucc::#NoFieldsProvidedUcc {
-                            code_occurence: er_occurence_lib::code_occurence!(),
+                            code_occurence: location_lib::code_occurence!(),
                         });
                     }
                     Ok(Self {#fields_inialization_ts})
@@ -2110,12 +2110,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         Some(StatusCode::InternalServerEr500),
         vec![
             (
-                macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
+                macros_helpers_location_location_field_attr_eo_to_err_string,
                 &RowSc,
                 simple_syn_punct_sqlx_error.clone(),
             ),
             (
-                macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
+                macros_helpers_location_location_field_attr_eo_to_err_string,
                 &RollbackSc,
                 simple_syn_punct_sqlx_error,
             ),
@@ -2134,7 +2134,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &NotUniqueFieldUcc,
         Some(StatusCode::BadRequest400),
         vec![(
-            macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string_serde,
+            macros_helpers_location_location_field_attr_eo_to_err_string_serde,
             &NotUniqueFieldSc,
             gen_simple_syn_punct(&[&ident_select_ucc.to_string()]),
         )],
@@ -2144,7 +2144,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &SerdeJsonToStringUcc,
         None,
         vec![(
-            macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
+            macros_helpers_location_location_field_attr_eo_to_err_string,
             &SerdeJsonToStringSc,
             simple_syn_punct_serde_error.clone(),
         )],
@@ -2155,17 +2155,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         Some(StatusCode::BadRequest400),
         vec![
             (
-                macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
+                macros_helpers_location_location_field_attr_eo_to_err_string,
                 &StatusCodeSc,
                 gen_simple_syn_punct(&["reqwest", "StatusCode"]),
             ),
             (
-                macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
+                macros_helpers_location_location_field_attr_eo_to_err_string,
                 &HeadersSc,
                 gen_simple_syn_punct(&["reqwest", "header", "HeaderMap"]),
             ),
             (
-                macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
+                macros_helpers_location_location_field_attr_eo_to_err_string,
                 &ReqwestSc,
                 simple_syn_punct_reqwest_error.clone(),
             ),
@@ -2176,22 +2176,22 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         None,
         vec![
             (
-                macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
+                macros_helpers_location_location_field_attr_eo_to_err_string,
                 &StatusCodeSc,
                 gen_simple_syn_punct(&["reqwest", "StatusCode"]),
             ),
             (
-                macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
+                macros_helpers_location_location_field_attr_eo_to_err_string,
                 &HeadersSc,
                 gen_simple_syn_punct(&["reqwest", "header", "HeaderMap"]),
             ),
             (
-                macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string_serde,
+                macros_helpers_location_location_field_attr_eo_to_err_string_serde,
                 &ResponseTextSc,
                 string_syn_punct,
             ),
             (
-                macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
+                macros_helpers_location_location_field_attr_eo_to_err_string,
                 &SerdeSc,
                 simple_syn_punct_serde_error.clone(),
             ),
@@ -2201,7 +2201,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &ReqwestUcc,
         None,
         vec![(
-            macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
+            macros_helpers_location_location_field_attr_eo_to_err_string,
             &ReqwestSc,
             simple_syn_punct_reqwest_error,
         )],
@@ -2210,7 +2210,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &CheckBodySizeUcc,
         Some(StatusCode::BadRequest400),
         vec![(
-            ErOccurenceFieldAttr::EoErOccurence,
+            LocationFieldAttr::EoLocation,
             &CheckBodySizeSc,
             gen_simple_syn_punct(&[
                 &PgCrudSc.to_string(),
@@ -2223,7 +2223,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &SerdeJsonUcc,
         Some(StatusCode::BadRequest400),
         vec![(
-            macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
+            macros_helpers_location_location_field_attr_eo_to_err_string,
             &SerdeJsonSc,
             simple_syn_punct_serde_error,
         )],
@@ -2233,7 +2233,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &HeaderContentTypeApplicationJsonNotFoundUcc,
             Some(StatusCode::BadRequest400),
             Vec::<(
-                ErOccurenceFieldAttr,
+                LocationFieldAttr,
                 &'static dyn Display,
                 Punctuated<PathSegment, PathSep>,
             )>::default(),
@@ -2460,36 +2460,36 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #ValueSc
             }
         };
-    let gen_er_occurence_variant_ts = |er_variant: &Variant| -> Ts2 {
+    let gen_location_variant_ts = |er_variant: &Variant| -> Ts2 {
         let variant_ident = &er_variant.ident;
         let Fields::Named(fields_named) = &er_variant.fields else {
             panic!("2acd4725");
         };
         let fields_mapped_into_ts = fields_named.named.iter().map(|field| {
             let field_ident = field.ident.as_ref().expect("a21dc807");
-            let er_occurence_attr = if *field_ident == *CodeOccurenceSc.to_string() {
+            let location_attr = if *field_ident == *CodeOccurenceSc.to_string() {
                 Ts2::new()
             } else {
-                let mut er_occurence_attr: Option<ErOccurenceFieldAttr> = None;
+                let mut location_attr: Option<LocationFieldAttr> = None;
                 for el_1c83e302 in &field.attrs {
                     if el_1c83e302.path().segments.len() == 1 {
                         let segment = el_1c83e302.path().segments.first().expect("5bd7ed8d");
                         if let Ok(value) = {
-                            <ErOccurenceFieldAttr as FromStr>::from_str(&segment.ident.to_string())
+                            <LocationFieldAttr as FromStr>::from_str(&segment.ident.to_string())
                         } {
-                            if er_occurence_attr.is_some() {
+                            if location_attr.is_some() {
                                 panic!("9a469d36")
                             } else {
-                                er_occurence_attr = Some(value);
+                                location_attr = Some(value);
                             }
                         }
                     }
                 }
-                er_occurence_attr.expect("d1003b2e").to_attr_view_ts()
+                location_attr.expect("d1003b2e").to_attr_view_ts()
             };
             let field_type = &field.ty;
             quote! {
-                #er_occurence_attr
+                #location_attr
                 #field_ident: #field_type
             }
         });
@@ -2567,11 +2567,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     .make_pub()
                     .derive_debug()
                     .derive_thiserror_error()
-                    .derive_er_occurence_lib_er_occurence()
+                    .derive_location_lib_location()
                     .build_enum(&ident_operation_er_ucc, &Ts2::new(), &{
                         let variants_ts = type_variants_from_request_response_syn_variants
                             .iter()
-                            .map(gen_er_occurence_variant_ts);
+                            .map(gen_location_variant_ts);
                         quote! {{#(#variants_ts),*}}
                     });
                 quote! {
@@ -2683,7 +2683,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .make_pub()
                 .derive_debug()
                 .derive_thiserror_error()
-                .derive_er_occurence_lib_er_occurence()
+                .derive_location_lib_location()
                 .build_enum(
                     &gen_ident_try_operation_er_ucc(operation),
                     &Ts2::new(),
@@ -2698,7 +2698,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     &ident_operation_er_with_serde_ucc,
                                     None,
                                     vec![(
-                                macros_helpers_er_occurence_er_occurence_field_attr_eo_to_err_string,
+                                macros_helpers_location_location_field_attr_eo_to_err_string,
                                 &operation.operation_er_with_serde_sc(),
                                 gen_simple_syn_punct(&[
                                     &ident_operation_er_with_serde_ucc.to_string(),
@@ -2709,7 +2709,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 .clone()
                             }))
                             .collect::<Vec<Variant>>();
-                        let variants_ts = variants.iter().map(gen_er_occurence_variant_ts);
+                        let variants_ts = variants.iter().map(gen_location_variant_ts);
                         quote!{{#(#variants_ts),*}}
                     }
                 );
@@ -3910,7 +3910,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .make_pub()
                 .derive_debug()
                 .derive_thiserror_error()
-                .derive_er_occurence_lib_er_occurence()
+                .derive_location_lib_location()
                 .build_enum(
                     &ident_operation_payload_try_new_er_ucc,
                     &Ts2::new(),
@@ -3919,7 +3919,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #[eo_to_err_string]
                             #NotUniquePrimaryKeySc: #primary_key_field_type_update_ts,
                             #[eo_to_err_string]
-                            code_occurence: er_occurence_lib::code_occurence::CodeOccurence,
+                            code_occurence: location_lib::code_occurence::CodeOccurence,
                         }
                     }},
                 );
@@ -3933,7 +3933,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         if acc_6bf275fc.contains(&&el_35facc3a.#primary_key_field_ident) {
                             return Err(#ident_operation_payload_try_new_er_ucc::#NotUniquePrimaryKeyUcc {
                                 #NotUniquePrimaryKeySc: el_35facc3a.#primary_key_field_ident,
-                                code_occurence: er_occurence_lib::code_occurence!(),
+                                code_occurence: location_lib::code_occurence!(),
                             });
                         }
                         acc_6bf275fc.push(&el_35facc3a.#primary_key_field_ident);

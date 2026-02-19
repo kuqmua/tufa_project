@@ -666,7 +666,7 @@ pub fn gen_pg_type_where_ts(
             },
             &ImportPath::PgCrudCommon,
         );
-    let impl_er_occurence_lib_to_err_string_for_pg_type_tokens_where_ts = gen_impl_to_err_string_ts(
+    let impl_location_lib_to_err_string_for_pg_type_tokens_where_ts = gen_impl_to_err_string_ts(
         &Ts2::new(),
         &ident,
         &Ts2::new(),
@@ -687,7 +687,7 @@ pub fn gen_pg_type_where_ts(
     quote! {
         #pg_type_tokens_where_ts
         #impl_pg_type_pg_type_where_filter_for_pg_type_tokens_where_ts
-        #impl_er_occurence_lib_to_err_string_for_pg_type_tokens_where_ts
+        #impl_location_lib_to_err_string_for_pg_type_tokens_where_ts
         #impl_all_variants_default_option_some_vec_one_el_for_pg_type_tokens_where_ts
     }
 }
@@ -2064,7 +2064,7 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
 }
 #[must_use]
 pub fn pg_crud_common_query_part_er_checked_add_initialization_ts() -> Ts2 {
-    quote! {pg_crud_common::QueryPartEr::CheckedAdd { code_occurence: er_occurence_lib::code_occurence!() }}
+    quote! {pg_crud_common::QueryPartEr::CheckedAdd { code_occurence: location_lib::code_occurence!() }}
 }
 pub fn gen_impl_crate_is_string_empty_for_ident_content_ts(
     ident: &dyn ToTokens,
@@ -2417,7 +2417,7 @@ pub fn impl_pg_type_equal_operator_for_ident_ts(
 pub fn gen_query_part_er_write_into_buffer_ts(import_path: ImportPath) -> Ts2 {
     quote! {
         #import_path::QueryPartEr::WriteIntoBuffer {
-            code_occurence: er_occurence_lib::code_occurence!()
+            code_occurence: location_lib::code_occurence!()
         }
     }
 }

@@ -1,11 +1,11 @@
-use er_occurence_lib::{ErOccurence, code_occurence, code_occurence::CodeOccurence};
+use location_lib::{Location, code_occurence, code_occurence::CodeOccurence};
 use std::{
     fs::{self, File},
     io::{Error as IoEr, Write},
     path::Path,
 };
 use thiserror::Error;
-#[derive(Debug, Error, ErOccurence)]
+#[derive(Debug, Error, Location)]
 pub enum CreateDirsAndWriteFileSyncEr {
     StdIo {
         #[eo_to_err_string]

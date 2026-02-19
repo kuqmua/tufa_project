@@ -1,5 +1,5 @@
 [package]
-name = "er_occurence_lib"
+name = "location_lib"
 version = "0.1.0"
 edition = "2024"
 description = "description"
@@ -18,7 +18,7 @@ serde.workspace = true
 schemars.workspace = true
 git_info = {path = "../git_info"}
 app_state = {path = "../app_state"}
-er_occurence = {path = "./er_occurence"}
+location = {path = "./location"}
 naming = {path = "../naming"}
 to_err_string = {path = "../to_err_string"}
 

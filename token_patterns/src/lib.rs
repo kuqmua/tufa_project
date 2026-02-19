@@ -78,10 +78,10 @@ impl ToTokens for SchemarsJsonSchema {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct ErOccurenceLibErOccurence;
-impl ToTokens for ErOccurenceLibErOccurence {
+pub struct LocationLibLocation;
+impl ToTokens for LocationLibLocation {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {er_occurence_lib::ErOccurence}.to_tokens(tokens);
+        quote! {location_lib::Location}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
@@ -123,7 +123,7 @@ impl ToTokens for DeriveDebug {
 pub struct DeriveDebugThiserrorErrorOccurence;
 impl ToTokens for DeriveDebugThiserrorErrorOccurence {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {#[derive(Debug, thiserror::Error, er_occurence_lib::ErOccurence)]}
+        quote! {#[derive(Debug, thiserror::Error, location_lib::Location)]}
             .to_tokens(tokens);
     }
 }
@@ -178,17 +178,17 @@ impl ToTokens for SqlxTypesTypeDatabase {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct ErOccurenceLibCodeOccurenceCodeOccurence;
-impl ToTokens for ErOccurenceLibCodeOccurenceCodeOccurence {
+pub struct LocationLibCodeOccurenceCodeOccurence;
+impl ToTokens for LocationLibCodeOccurenceCodeOccurence {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {er_occurence_lib::code_occurence::CodeOccurence}.to_tokens(tokens);
+        quote! {location_lib::code_occurence::CodeOccurence}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct CodeOccurenceScDoubleDotSpaceErOccurenceLibCodeOccurenceCodeOccurence;
-impl ToTokens for CodeOccurenceScDoubleDotSpaceErOccurenceLibCodeOccurenceCodeOccurence {
+pub struct CodeOccurenceScDoubleDotSpaceLocationLibCodeOccurenceCodeOccurence;
+impl ToTokens for CodeOccurenceScDoubleDotSpaceLocationLibCodeOccurenceCodeOccurence {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {code_occurence: er_occurence_lib::code_occurence::CodeOccurence}.to_tokens(tokens);
+        quote! {code_occurence: location_lib::code_occurence::CodeOccurence}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]

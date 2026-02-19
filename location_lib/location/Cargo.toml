@@ -1,6 +1,6 @@
 [package]
 edition = "2024"
-name = "er_occurence"
+name = "location"
 version = "0.1.0"
 description = "description"
 repository = "repository"

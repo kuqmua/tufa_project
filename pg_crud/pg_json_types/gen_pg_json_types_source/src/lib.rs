@@ -930,7 +930,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 Ts2::new()
             };
             let impl_display_for_ident_origin_ts = gen_impl_display_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
-            let impl_er_occurence_lib_to_err_string_for_ident_origin_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {format!("{self:#?}")});
+            let impl_location_lib_to_err_string_for_ident_origin_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {format!("{self:#?}")});
             let impl_default_option_some_vec_one_el_for_ident_origin_ts = gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_origin_ucc, &{
                 let content_ts = match &pattern {
                     Pattern::Standart => match &is_nullable {
@@ -968,7 +968,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 #maybe_impl_schemars_json_schema_for_ident_origin_ts
                 #maybe_impl_is_string_empty_for_ident_origin_ts
                 #impl_display_for_ident_origin_ts
-                #impl_er_occurence_lib_to_err_string_for_ident_origin_ts
+                #impl_location_lib_to_err_string_for_ident_origin_ts
                 #impl_default_option_some_vec_one_el_for_ident_origin_ts
                 #impl_sqlx_type_for_ident_origin_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_origin_ts
@@ -1772,7 +1772,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let impl_er_occurence_lib_to_err_string_for_ident_update_ts = if matches!(&is_standart_not_null_uuid, IsStandartNotNullUuid::True) {
+            let impl_location_lib_to_err_string_for_ident_update_ts = if matches!(&is_standart_not_null_uuid, IsStandartNotNullUuid::True) {
                 gen_impl_to_err_string_ts(&Ts2::new(), &ident_update_ucc, &Ts2::new(), &quote! {format!("{self:?}")})
             } else {
                 Ts2::new()
@@ -1782,7 +1782,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             quote! {
                 #ident_update_ts
                 #impl_ident_update_ts
-                #impl_er_occurence_lib_to_err_string_for_ident_update_ts
+                #impl_location_lib_to_err_string_for_ident_update_ts
                 #impl_default_option_some_vec_one_el_for_ident_update_ts
             }
         };

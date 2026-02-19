@@ -1,4 +1,4 @@
-use er_occurence_lib::{ErOccurence, ToErrString, code_occurence, code_occurence::CodeOccurence};
+use location_lib::{Location, ToErrString, code_occurence, code_occurence::CodeOccurence};
 use from_str::FromStr;
 use naming::{AscUcc, DescUcc, DisplayToScStr, DisplayToUccStr};
 pub use pg_crud_common_and_macros_common::*;
@@ -500,7 +500,7 @@ where
         ))]
     }
 }
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, ErOccurence)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location)]
 pub enum QueryPartEr {
     CheckedAdd { code_occurence: CodeOccurence },
     WriteIntoBuffer { code_occurence: CodeOccurence },
@@ -872,7 +872,7 @@ impl Default for PaginationBase {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, ToSchema, JsonSchema)]
 pub struct PaginationStartsWithZero(PaginationBase);
-#[derive(Debug, Serialize, Deserialize, Error, ErOccurence)]
+#[derive(Debug, Serialize, Deserialize, Error, Location)]
 pub enum PaginationStartsWithZeroTryNewEr {
     LimitIsLessThanOrEqualToZero {
         #[eo_to_err_string_serde]
@@ -1121,7 +1121,7 @@ pub struct Value<T> {
 pub trait IsStringEmpty {
     fn is_string_empty(&self) -> bool;
 }
-#[derive(Debug, Serialize, Deserialize, Error, ErOccurence)]
+#[derive(Debug, Serialize, Deserialize, Error, Location)]
 pub enum NotEmptyUniqueVecTryNewEr<T> {
     IsEmpty {
         code_occurence: CodeOccurence,
@@ -1360,7 +1360,7 @@ pub trait PgTypeEqualOperator {
 }
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Serialize, JsonSchema)]
 pub struct UnsignedPartOfI32(i32); //todo why exactly i32? maybe different types for pg type and pg json type
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, ErOccurence, JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location, JsonSchema)]
 pub enum UnsignedPartOfI32TryFromI32Er {
     LessThanZero {
         #[eo_to_err_string_serde]
@@ -1480,13 +1480,13 @@ impl DefaultOptionSomeVecOneEl for UnsignedPartOfI32 {
 }
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Serialize, JsonSchema)]
 pub struct NotZeroUnsignedPartOfI32(UnsignedPartOfI32);
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, ErOccurence, JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location, JsonSchema)]
 pub enum NotZeroUnsignedPartOfI32TryFromI32Er {
     IsZero {
         code_occurence: CodeOccurence,
     },
     UnsignedPartOfI32TryFromI32Er {
-        #[eo_er_occurence]
+        #[eo_location]
         value: UnsignedPartOfI32TryFromI32Er,
         code_occurence: CodeOccurence,
     },

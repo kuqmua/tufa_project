@@ -33,7 +33,7 @@ This is a Rust workspace project with the following main components:
 - `postgresql_crud`: Core crate for PostgreSQL CRUD operations
 - `config_lib`: Configuration management utilities
 - `git_info`: Git repository information tools
-- `er_occurence_lib`: Advanced er handling with context
+- `location_lib`: Advanced er handling with context
 - `from_sqlx_postgres_er`: SQLx PostgreSQL er conversion
 - `from_str`: String parsing utilities
 - `gen_quotes`: Quote generation utilities
@@ -124,7 +124,7 @@ Configuration management with environment variable parsing and type-safe accesso
 ### git_info
 Compile-time and runtime Git repository information retrieval.
 
-### er_occurence_lib
+### location_lib
 Advanced er handling system with detailed context and source tracking.
 
 ### from_sqlx_postgres_er

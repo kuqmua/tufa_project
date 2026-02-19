@@ -19,7 +19,7 @@ thiserror.workspace = true
 sqlx.workspace = true
 utoipa.workspace = true
 git_info = {path = "../git_info"}
-er_occurence_lib = {path = "../er_occurence_lib"}
+location_lib = {path = "../location_lib"}
 pg_crud = {path = "../pg_crud", features = ["test-utils"]}
 server_types = {path = "../server_types"}
 

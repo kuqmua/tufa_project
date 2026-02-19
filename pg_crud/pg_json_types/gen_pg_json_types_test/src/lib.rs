@@ -14,7 +14,7 @@ uuid.workspace = true
 sqlx.workspace = true
 serde.workspace = true
 utoipa.workspace = true
-er_occurence_lib = {path = "../../../er_occurence_lib"}
+location_lib = {path = "../../../location_lib"}
 pg_crud_common = {path = "../../pg_crud_common"}
 gen_pg_json_types_common = {path = "../gen_pg_json_types_common"}
 where_filters = {path = "../../where_filters"}

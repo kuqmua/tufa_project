@@ -14,5 +14,5 @@ gen_struct_or_enum_derive_ts_builder::gen_struct_or_enum_derive_ts_builder!([
     "utoipa::ToSchema",
     "schemars::JsonSchema",
     "thiserror::Error",
-    "er_occurence_lib::ErOccurence"
+    "location_lib::Location"
 ]);

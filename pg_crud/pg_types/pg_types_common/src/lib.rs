@@ -1,5 +1,5 @@
-use er_occurence_lib::code_occurence::CodeOccurence;
-use er_occurence_lib::{ErOccurence, code_occurence};
+use location_lib::code_occurence::CodeOccurence;
+use location_lib::{Location, code_occurence};
 use pg_crud_common::{
     DEFAULT_PAGINATION_LIMIT, DefaultOptionSomeVecOneEl, DefaultOptionSomeVecOneElMaxPageSize,
     PaginationBase, PgTypeWhereFilter, QueryPartEr,
@@ -13,7 +13,7 @@ use thiserror::Error;
 use utoipa::ToSchema;
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, ToSchema, JsonSchema)]
 pub struct PaginationStartsWithOne(PaginationBase);
-#[derive(Debug, Serialize, Deserialize, Error, ErOccurence)]
+#[derive(Debug, Serialize, Deserialize, Error, Location)]
 pub enum PaginationStartsWithOneTryNewEr {
     LimitIsLessThanOrEqualToZero {
         #[eo_to_err_string_serde]

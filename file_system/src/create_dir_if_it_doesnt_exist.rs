@@ -1,7 +1,7 @@
-use er_occurence_lib::{ErOccurence, code_occurence, code_occurence::CodeOccurence};
+use location_lib::{Location, code_occurence, code_occurence::CodeOccurence};
 use std::{fs, io::Error as IoEr, path::Path};
 use thiserror::Error;
-#[derive(Debug, Error, ErOccurence)]
+#[derive(Debug, Error, Location)]
 pub enum CreateDirIfItDoesntExistEr {
     CreateDirAll {
         #[eo_to_err_string]

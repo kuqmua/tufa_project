@@ -1,8 +1,8 @@
-use er_occurence_lib::{ErOccurence, code_occurence, code_occurence::CodeOccurence};
+use location_lib::{Location, code_occurence, code_occurence::CodeOccurence};
 use serde_json::{Error as SerdeJsonEr, Value as SerdeJsonValue, to_string_pretty};
 use std::path::Path;
 use thiserror::Error;
-#[derive(Debug, Error, ErOccurence)]
+#[derive(Debug, Error, Location)]
 pub enum CreateDirsAndWritePrettyJsonSyncEr {
     SerdeJson {
         #[eo_to_err_string]
@@ -10,7 +10,7 @@ pub enum CreateDirsAndWritePrettyJsonSyncEr {
         code_occurence: CodeOccurence,
     },
     WriteBytesIntoFile {
-        #[eo_er_occurence]
+        #[eo_location]
         er: crate::CreateDirsAndWriteFileSyncEr,
         code_occurence: CodeOccurence,
     },

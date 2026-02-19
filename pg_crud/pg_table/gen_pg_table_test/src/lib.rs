@@ -19,7 +19,7 @@ serde_json.workspace = true
 thiserror.workspace = true
 utoipa.workspace = true
 git_info = {path = "../../../git_info"}
-er_occurence_lib = {path = "../../../er_occurence_lib"}
+location_lib = {path = "../../../location_lib"}
 pg_crud = {path = "../../../pg_crud", features = ["test-utils"]}
 [dev-dependencies]
 num_cpus.workspace = true
@@ -73,9 +73,9 @@ server_config = {path = "../../../server_config"}"#,
                         #[pg_crud::common_additional_er_variants{
                             enum CommonAdditionalErVariants {
                                 CheckCommit {
-                                    #[eo_er_occurence]
+                                    #[eo_location]
                                     check_commit: pg_crud::check_commit::CommitEr,
-                                    code_occurence: er_occurence_lib::code_occurence::CodeOccurence,
+                                    code_occurence: location_lib::code_occurence::CodeOccurence,
                                 },
                             }
                         }]

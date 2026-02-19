@@ -1,10 +1,10 @@
-use er_occurence_lib::{ErOccurence, code_occurence, code_occurence::CodeOccurence};
+use location_lib::{Location, code_occurence, code_occurence::CodeOccurence};
 use pg_crud_common::DefaultOptionSomeVecOneEl;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 use utoipa::ToSchema;
-#[derive(Debug, Serialize, Deserialize, Error, ErOccurence)]
+#[derive(Debug, Serialize, Deserialize, Error, Location)]
 pub enum UniqueVecTryNewEr<T> {
     NotUnique {
         #[eo_to_err_string_serde]

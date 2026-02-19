@@ -19,7 +19,7 @@ http-body.workspace = true
 bytes.workspace = true
 git_info = {path = "../git_info"}
 naming = {path = "../naming"}
-er_occurence_lib = {path = "../er_occurence_lib"}
+location_lib = {path = "../location_lib"}
 http_logic = {path = "../http_logic"}
 
 [lints]

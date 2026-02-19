@@ -1,16 +1,18 @@
 // todo is there is no point to add additional info to enum like this
-// eo_er_occurence_field: {
+// eo_location_field: {
 //     eo_display_with_serde_field: value
 // }
-// https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/er_occurence_test/src/main.rs#L85 2024-05-06 09:17:23
+// https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/location_test/src/main.rs#L85 2024-05-06 09:17:23
 // impl display like this this
-// eo_er_occurence_field
-// https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/er_occurence_test/src/main.rs#L85 2024-05-06 09:17:23
-use er_occurence_lib::{ErOccurence, ToErrString, code_occurence, code_occurence::CodeOccurence};
+// eo_location_field
+// https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/location_test/src/main.rs#L85 2024-05-06 09:17:23
+use location_lib::{
+    Location, ToErrString, code_occurence, code_occurence::CodeOccurence,
+};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use thiserror::Error;
-#[derive(Debug, Error, ErOccurence)]
+#[derive(Debug, Error, Location)]
 pub enum ErOne {
     //use ToErrString for hashmap keys instead of Display
     //todo even for String in serialize deserialize version of er must be using ToErrString impl instead of std::fmt::Display
@@ -20,24 +22,24 @@ pub enum ErOne {
         eo_display_field: DisplayStruct, //IN SERIALIZE DESERIALIZE String
         #[eo_to_err_string_serde]
         eo_serde: SerdeStruct,
-        #[eo_er_occurence]
-        eo_er_occurence_field: ErTwo, //IN SERIALIZE DESERIALIZE nested
+        #[eo_location]
+        eo_location_field: ErTwo, //IN SERIALIZE DESERIALIZE nested
         #[eo_vec_to_err_string] //todo remove wrapper under Vec
         eo_vec_display_field: Vec<DisplayStruct>, //IN SERIALIZE DESERIALIZE Vec<String>
         #[eo_vec_to_err_string_serde]
         eo_vec_serde: Vec<SerdeStruct>,
-        #[eo_vec_er_occurence]
-        eo_vec_er_occurence_field: Vec<ErUnnamedOne>, //IN SERIALIZE DESERIALIZE Vec<nested>
+        #[eo_vec_location]
+        eo_vec_location_field: Vec<ErUnnamedOne>, //IN SERIALIZE DESERIALIZE Vec<nested>
         #[eo_hashmap_key_string_value_to_err_string]
         hashmap_string_string: HashMap<String, DisplayStruct>,
         #[eo_hashmap_key_string_value_to_err_string_serde]
         hashmap_string_serde: HashMap<String, SerdeStruct>,
-        #[eo_hashmap_key_string_value_er_occurence]
-        hashmap_string_er_occurence: HashMap<String, ErUnnamedOne>,
+        #[eo_hashmap_key_string_value_location]
+        hashmap_string_location: HashMap<String, ErUnnamedOne>,
         code_occurence: CodeOccurence,
     },
 }
-#[derive(Debug, Error, ErOccurence)]
+#[derive(Debug, Error, Location)]
 pub enum ErTwo {
     Another {
         #[eo_to_err_string_serde]
@@ -50,7 +52,7 @@ pub enum ErTwo {
         code_occurence: CodeOccurence,
     },
 }
-#[derive(Debug, Error, ErOccurence)]
+#[derive(Debug, Error, Location)]
 pub enum ErUnnamedOne {
     Something(ErTwo),
 }
@@ -88,7 +90,7 @@ fn main() {
             two: true,
             three: 42,
         },
-        eo_er_occurence_field: ErTwo::Variant {
+        eo_location_field: ErTwo::Variant {
             eo_display_with_serde_field: String::from("value"),
             code_occurence: code_occurence!(),
         },
@@ -114,7 +116,7 @@ fn main() {
                 three: 422,
             },
         ],
-        eo_vec_er_occurence_field: vec![
+        eo_vec_location_field: vec![
             ErUnnamedOne::Something(ErTwo::Variant {
                 eo_display_with_serde_field: String::from("value"),
                 code_occurence: code_occurence!(),
@@ -158,7 +160,7 @@ fn main() {
                 },
             ),
         ]),
-        hashmap_string_er_occurence: HashMap::from([
+        hashmap_string_location: HashMap::from([
             (
                 String::from("ksdfgadsfgsdfgdfgey"),
                 ErUnnamedOne::Something(ErTwo::Variant {

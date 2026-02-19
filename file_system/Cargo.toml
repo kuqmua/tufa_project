@@ -14,7 +14,7 @@ serde.workspace = true
 serde_json.workspace = true
 tokio.workspace = true
 thiserror.workspace = true
-er_occurence_lib = {path = "../er_occurence_lib"}
+location_lib = {path = "../location_lib"}
 
 [lints]
 workspace = true

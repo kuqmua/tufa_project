@@ -16,7 +16,7 @@ sqlx.workspace = true
 serde.workspace = true
 thiserror.workspace = true
 schemars.workspace = true
-er_occurence_lib = {path = "../../er_occurence_lib"}
+location_lib = {path = "../../location_lib"}
 from_str = {path = "../../from_str"}
 naming = {path = "../../naming"}
 pg_crud_common_and_macros_common = {path = "../pg_crud_common_and_macros_common"}

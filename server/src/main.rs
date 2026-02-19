@@ -74,8 +74,8 @@ fn main() {
                     //     //     components(
                     //     //             schemas(
                     //     //                 server_table_example::server::routes::git_info::GitInfo,
-                    //     //                 er_occurence_lib::code_occurence::StdTimeDuration,
-                    //     //                 er_occurence_lib::code_occurence::CodeOccurence,
+                    //     //                 location_lib::code_occurence::StdTimeDuration,
+                    //     //                 location_lib::code_occurence::CodeOccurence,
                     //     //                 //
                     //     //                 // pg_crud::TimeMonth,
                     //     //                 // pg_crud::SqlxTypesTimeUtcOffset,

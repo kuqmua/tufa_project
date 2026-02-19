@@ -17,7 +17,7 @@ utoipa.workspace = true
 regex.workspace = true
 thiserror.workspace = true
 gen_where_filters = {path = "./gen_where_filters"}
-er_occurence_lib = {path = "../../er_occurence_lib"}
+location_lib = {path = "../../location_lib"}
 pg_crud_common = {path = "../pg_crud_common", features = ["test-utils"]}
 
 
