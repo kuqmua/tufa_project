@@ -1,20 +1,20 @@
-use error_occurence_lib::{ErrorOccurence, code_occurence, code_occurence::CodeOccurence};
-use std::{fs, io::Error as IoError, path::Path};
+use er_occurence_lib::{ErOccurence, code_occurence, code_occurence::CodeOccurence};
+use std::{fs, io::Error as IoEr, path::Path};
 use thiserror::Error;
-#[derive(Debug, Error, ErrorOccurence)]
-pub enum CreateDirIfItDoesntExistError {
+#[derive(Debug, Error, ErOccurence)]
+pub enum CreateDirIfItDoesntExistEr {
     CreateDirAll {
         #[eo_to_err_string]
-        er: IoError,
+        er: IoEr,
         code_occurence: CodeOccurence,
     },
 }
-pub fn create_dir_if_it_doesnt_exist(path: &str) -> Result<(), CreateDirIfItDoesntExistError> {
+pub fn create_dir_if_it_doesnt_exist(path: &str) -> Result<(), CreateDirIfItDoesntExistEr> {
     if Path::new(path).exists() {
         return Ok(());
     }
     if let Err(er) = fs::create_dir_all(path) {
-        return Err(CreateDirIfItDoesntExistError::CreateDirAll {
+        return Err(CreateDirIfItDoesntExistEr::CreateDirAll {
             er,
             code_occurence: code_occurence!(),
         });

@@ -65,7 +65,7 @@ pub enum StatusCode {
     TooManyRequests429,
     RequestHeaderFieldsTooLarge431,
     UnavailableForLegalReasons451,
-    InternalServerError500,
+    InternalServerEr500,
     NotImplemented501,
     BadGateway502,
     ServiceUnavailable503,
@@ -130,7 +130,7 @@ impl StatusCode {
             Self::TooManyRequests429 => quote! {TOO_MANY_REQUESTS},
             Self::RequestHeaderFieldsTooLarge431 => quote! {REQUEST_HEADER_FIELDS_TOO_LARGE},
             Self::UnavailableForLegalReasons451 => quote! {UNAVAILABLE_FOR_LEGAL_REASONS},
-            Self::InternalServerError500 => quote! {INTERNAL_SERVER_ERROR},
+            Self::InternalServerEr500 => quote! {INTERNAL_SERVER_ERROR},
             Self::NotImplemented501 => quote! {NOT_IMPLEMENTED},
             Self::BadGateway502 => quote! {BAD_GATEWAY},
             Self::ServiceUnavailable503 => quote! {SERVICE_UNAVAILABLE},
@@ -209,7 +209,7 @@ impl StatusCode {
             Self::UnavailableForLegalReasons451 => {
                 quote! {"unavailable for legal reasons"}
             }
-            Self::InternalServerError500 => quote! {"internal server error"},
+            Self::InternalServerEr500 => quote! {"internal server er"},
             Self::NotImplemented501 => quote! {"not implemented"},
             Self::BadGateway502 => quote! {"bad gateway"},
             Self::ServiceUnavailable503 => quote! {"service unavailable"},
@@ -278,7 +278,7 @@ impl StatusCode {
             Self::TooManyRequests429 => quote! {429},
             Self::RequestHeaderFieldsTooLarge431 => quote! {431},
             Self::UnavailableForLegalReasons451 => quote! {451},
-            Self::InternalServerError500 => quote! {500},
+            Self::InternalServerEr500 => quote! {500},
             Self::NotImplemented501 => quote! {501},
             Self::BadGateway502 => quote! {502},
             Self::ServiceUnavailable503 => quote! {503},
@@ -393,8 +393,8 @@ impl TryFrom<&String> for StatusCode {
             Ok(Self::RequestHeaderFieldsTooLarge431)
         } else if value == "unavailable_for_legal_reasons_451" {
             Ok(Self::UnavailableForLegalReasons451)
-        } else if value == "internal_server_error_500" {
-            Ok(Self::InternalServerError500)
+        } else if value == "internal_server_er_500" {
+            Ok(Self::InternalServerEr500)
         } else if value == "not_implemented_501" {
             Ok(Self::NotImplemented501)
         } else if value == "bad_gateway_502" {

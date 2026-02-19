@@ -1,6 +1,6 @@
 [package]
 edition = "2024"
-name = "error_occurence"
+name = "er_occurence"
 version = "0.1.0"
 description = "description"
 repository = "repository"

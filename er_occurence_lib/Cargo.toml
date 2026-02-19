@@ -1,5 +1,5 @@
 [package]
-name = "error_occurence_lib"
+name = "er_occurence_lib"
 version = "0.1.0"
 edition = "2024"
 description = "description"
@@ -18,7 +18,7 @@ serde.workspace = true
 schemars.workspace = true
 git_info = {path = "../git_info"}
 app_state = {path = "../app_state"}
-error_occurence = {path = "./error_occurence"}
+er_occurence = {path = "./er_occurence"}
 naming = {path = "../naming"}
 to_err_string = {path = "../to_err_string"}
 

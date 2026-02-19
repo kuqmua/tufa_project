@@ -1,6 +1,4 @@
-use error_occurence_lib::{
-    ErrorOccurence, ToErrString, code_occurence, code_occurence::CodeOccurence,
-};
+use er_occurence_lib::{ErOccurence, ToErrString, code_occurence, code_occurence::CodeOccurence};
 use from_str::FromStr;
 use naming::{AscUcc, DescUcc, DisplayToScStr, DisplayToUccStr};
 pub use pg_crud_common_and_macros_common::*;
@@ -15,7 +13,7 @@ use sqlx::{
     {Database, Decode, Encode, Postgres, Type},
 };
 use std::{
-    error::Error as StdErrorError,
+    error::Error as StdErEr,
     fmt::{
         Formatter, Result as StdFmtResult, {Debug, Display},
     },
@@ -55,21 +53,18 @@ pub trait PgType {
     type TableTypeDeclaration: TableTypeDeclarationAlias;
     fn create_table_column_query_part(column: &dyn Display, _: bool) -> impl Display;
     type Create: CreateAlias;
-    fn create_query_part(
-        value: &Self::Create,
-        increment: &mut u64,
-    ) -> Result<String, QueryPartError>;
+    fn create_query_part(value: &Self::Create, increment: &mut u64) -> Result<String, QueryPartEr>;
     fn create_query_bind(
         value: Self::Create,
         query: Query<'_, Postgres, PgArguments>,
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
     type Select: SelectAlias;
-    fn select_query_part(value: &Self::Select, column: &str) -> Result<String, QueryPartError>;
+    fn select_query_part(value: &Self::Select, column: &str) -> Result<String, QueryPartEr>;
     type Where: WhereAlias;
     type Read: ReadAlias + for<'__> Decode<'__, Postgres> + Type<Postgres>;
     fn normalize(value: Self::Read) -> Self::Read;
     type ReadOnlyIds: ReadOnlyIdsAlias;
-    fn select_only_ids_query_part(column: &str) -> Result<String, QueryPartError>;
+    fn select_only_ids_query_part(column: &str) -> Result<String, QueryPartEr>;
     type ReadInner: ReadInnerAlias;
     fn into_inner(value: Self::Read) -> Self::ReadInner;
     type Update: UpdateAlias;
@@ -80,7 +75,7 @@ pub trait PgType {
         jsonb_set_target: &str,
         jsonb_set_path: &str,
         increment: &mut u64,
-    ) -> Result<String, QueryPartError>;
+    ) -> Result<String, QueryPartEr>;
     fn update_query_bind(
         value: Self::UpdateForQuery,
         query: Query<'_, Postgres, PgArguments>,
@@ -89,7 +84,7 @@ pub trait PgType {
         value: &Self::UpdateForQuery,
         column: &str,
         increment: &mut u64,
-    ) -> Result<String, QueryPartError>;
+    ) -> Result<String, QueryPartEr>;
     fn select_only_updated_ids_query_bind<'lifetime>(
         value: &'lifetime Self::UpdateForQuery,
         query: Query<'lifetime, Postgres, PgArguments>,
@@ -106,9 +101,9 @@ pub trait PgJsonType {
         field_ident: &str,
         column_name_and_maybe_field_getter: &str,
         //todo remove this coz its used properly now
-        column_name_and_maybe_field_getter_for_error_message: &str,
+        column_name_and_maybe_field_getter_for_er_message: &str,
         is_pg_type: bool,
-    ) -> Result<String, QueryPartError>;
+    ) -> Result<String, QueryPartEr>;
     type Where: WhereAlias
         + UtoipaToSchemaAndSchemarsJsonSchemaAlias
         + AllEnumVariantsArrayDefaultOptionSomeVecOneEl
@@ -119,7 +114,7 @@ pub trait PgJsonType {
     type ReadOnlyIds: ReadOnlyIdsAlias;
     fn select_only_ids_query_part(
         column_name_and_maybe_field_getter: &str,
-    ) -> Result<String, QueryPartError>;
+    ) -> Result<String, QueryPartEr>;
     type ReadInner: ReadInnerAlias;
     fn into_inner(value: Self::Read) -> Self::ReadInner;
     type Update: UpdateAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias;
@@ -130,7 +125,7 @@ pub trait PgJsonType {
         jsonb_set_target: &str,
         jsonb_set_path: &str,
         increment: &mut u64,
-    ) -> Result<String, QueryPartError>;
+    ) -> Result<String, QueryPartEr>;
     fn update_query_bind(
         value: Self::UpdateForQuery,
         query: Query<'_, Postgres, PgArguments>,
@@ -140,7 +135,7 @@ pub trait PgJsonType {
         field_ident: &str,
         column_name_and_maybe_field_getter: &str,
         increment: &mut u64,
-    ) -> Result<String, QueryPartError>;
+    ) -> Result<String, QueryPartEr>;
     fn select_only_updated_ids_query_bind<'lifetime>(
         value: &'lifetime Self::UpdateForQuery,
         query: Query<'lifetime, Postgres, PgArguments>,
@@ -150,7 +145,7 @@ pub trait PgJsonType {
         field_ident: &str,
         column_name_and_maybe_field_getter: &str,
         increment: &mut u64,
-    ) -> Result<String, QueryPartError>;
+    ) -> Result<String, QueryPartEr>;
     fn select_only_created_ids_query_bind<'lifetime>(
         value: &'lifetime Self::CreateForQuery,
         query: Query<'lifetime, Postgres, PgArguments>,
@@ -195,7 +190,7 @@ pub trait PgJsonTypeObjectVecElementId {
         query: Query<'_, Postgres, PgArguments>,
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
     fn get_inner(value: &<Self::PgJsonType as PgJsonType>::CreateForQuery) -> &Self::ReadInner;
-    fn increment_checked_add_one(increment: &mut u64) -> Result<u64, QueryPartError>;
+    fn increment_checked_add_one(increment: &mut u64) -> Result<u64, QueryPartEr>;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[cfg(feature = "test-utils")]
@@ -436,7 +431,7 @@ pub trait PgTypeWhereFilter<'query_lifetime> {
         increment: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
-    ) -> Result<String, QueryPartError>;
+    ) -> Result<String, QueryPartEr>;
 }
 //todo custom deserialization - must not contain more than one element
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema)]
@@ -470,7 +465,7 @@ where
         increment: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
-    ) -> Result<String, QueryPartError> {
+    ) -> Result<String, QueryPartEr> {
         self.0.as_ref().map_or_else(
             || Ok(format!("{column} = 'null'")),
             |value_b4a9fcfb| {
@@ -505,8 +500,8 @@ where
         ))]
     }
 }
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, ErrorOccurence)]
-pub enum QueryPartError {
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, ErOccurence)]
+pub enum QueryPartEr {
     CheckedAdd { code_occurence: CodeOccurence },
     WriteIntoBuffer { code_occurence: CodeOccurence },
 }
@@ -530,7 +525,7 @@ impl<T: PartialEq + Clone> PgTypeWhere<T> {
     pub fn try_new(
         logical_operator: LogicalOperator,
         value: Vec<T>,
-    ) -> Result<Self, NotEmptyUniqueVecTryNewError<T>> {
+    ) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
         match NotEmptyUniqueVec::try_new(value) {
             Ok(value_56f976af) => Ok(Self {
                 logical_operator,
@@ -734,7 +729,7 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
         increment: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
-    ) -> Result<String, QueryPartError> {
+    ) -> Result<String, QueryPartEr> {
         let mut acc_cc6d18f7 = String::default();
         let mut is_need_to_add_logical_operator_inner_handle = false;
         for el_a38b9c67 in &self.value.0 {
@@ -747,7 +742,7 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
                 Ok(value) => {
                     use std::fmt::Write as _;
                     if write!(acc_cc6d18f7, "{value} ").is_err() {
-                        return Err(QueryPartError::WriteIntoBuffer {
+                        return Err(QueryPartEr::WriteIntoBuffer {
                             code_occurence: code_occurence!(),
                         });
                     }
@@ -852,7 +847,7 @@ impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PaginationBase {
         increment: &mut u64,
         _: &dyn Display,
         _: bool,
-    ) -> Result<String, QueryPartError> {
+    ) -> Result<String, QueryPartEr> {
         let limit_increment = match increment_checked_add_one_returning_increment(increment) {
             Ok(value) => value,
             Err(er) => {
@@ -877,8 +872,8 @@ impl Default for PaginationBase {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, ToSchema, JsonSchema)]
 pub struct PaginationStartsWithZero(PaginationBase);
-#[derive(Debug, Serialize, Deserialize, Error, ErrorOccurence)]
-pub enum PaginationStartsWithZeroTryNewError {
+#[derive(Debug, Serialize, Deserialize, Error, ErOccurence)]
+pub enum PaginationStartsWithZeroTryNewEr {
     LimitIsLessThanOrEqualToZero {
         #[eo_to_err_string_serde]
         limit: i64,
@@ -906,17 +901,17 @@ impl PaginationStartsWithZero {
     pub const fn start(&self) -> i64 {
         self.0.start()
     }
-    pub fn try_new(limit: i64, offset: i64) -> Result<Self, PaginationStartsWithZeroTryNewError> {
+    pub fn try_new(limit: i64, offset: i64) -> Result<Self, PaginationStartsWithZeroTryNewEr> {
         if limit <= 0 || offset < 0 {
             if limit <= 0 {
                 Err(
-                    PaginationStartsWithZeroTryNewError::LimitIsLessThanOrEqualToZero {
+                    PaginationStartsWithZeroTryNewEr::LimitIsLessThanOrEqualToZero {
                         limit,
                         code_occurence: code_occurence!(),
                     },
                 )
             } else {
-                Err(PaginationStartsWithZeroTryNewError::OffsetIsLessThanZero {
+                Err(PaginationStartsWithZeroTryNewEr::OffsetIsLessThanZero {
                     offset,
                     code_occurence: code_occurence!(),
                 })
@@ -925,7 +920,7 @@ impl PaginationStartsWithZero {
             Ok(Self(PaginationBase::new_unchecked(limit, offset)))
         } else {
             Err(
-                PaginationStartsWithZeroTryNewError::OffsetPlusLimitIsIntOverflow {
+                PaginationStartsWithZeroTryNewEr::OffsetPlusLimitIsIntOverflow {
                     limit,
                     offset,
                     code_occurence: code_occurence!(),
@@ -1025,7 +1020,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
                 };
                 match PaginationStartsWithZero::try_new(__field0, __field1) {
                     Ok(value) => Ok(value),
-                    Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))), //todo use serde_json::to_string(&error).unwrap_or_else(|_|"failed to serialize error".into())
+                    Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))), //todo use serde_json::to_string(&er).unwrap_or_else(|_|"failed to serialize er".into())
                 }
             }
             #[inline]
@@ -1100,7 +1095,7 @@ impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PaginationStartsWit
         increment: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
-    ) -> Result<String, QueryPartError> {
+    ) -> Result<String, QueryPartEr> {
         self.0
             .query_part(increment, column, is_need_to_add_logical_operator)
     }
@@ -1122,12 +1117,12 @@ impl DefaultOptionSomeVecOneElMaxPageSize for PaginationStartsWithZero {
 pub struct Value<T> {
     pub value: T,
 }
-//todo ExactSizeIterator now is not a solution. error[E0658]: use of unstable library feature `exact_size_is_empty`. maybe rewrite it later
+//todo ExactSizeIterator now is not a solution. er[E0658]: use of unstable library feature `exact_size_is_empty`. maybe rewrite it later
 pub trait IsStringEmpty {
     fn is_string_empty(&self) -> bool;
 }
-#[derive(Debug, Serialize, Deserialize, Error, ErrorOccurence)]
-pub enum NotEmptyUniqueVecTryNewError<T> {
+#[derive(Debug, Serialize, Deserialize, Error, ErOccurence)]
+pub enum NotEmptyUniqueVecTryNewEr<T> {
     IsEmpty {
         code_occurence: CodeOccurence,
     },
@@ -1148,9 +1143,9 @@ impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
-    pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewError<T>> {
+    pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
         if value.is_empty() {
-            return Err(NotEmptyUniqueVecTryNewError::IsEmpty {
+            return Err(NotEmptyUniqueVecTryNewEr::IsEmpty {
                 code_occurence: code_occurence!(),
             });
         }
@@ -1158,7 +1153,7 @@ impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
             let mut acc_11fac69e = Vec::new();
             for el_db9bd5a0 in &value {
                 if acc_11fac69e.contains(&el_db9bd5a0) {
-                    return Err(NotEmptyUniqueVecTryNewError::NotUnique {
+                    return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
                         value: el_db9bd5a0.clone(),
                         code_occurence: code_occurence!(),
                     });
@@ -1294,7 +1289,7 @@ where
         increment: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
-    ) -> Result<String, QueryPartError> {
+    ) -> Result<String, QueryPartEr> {
         let mut acc_57b31116 = String::default();
         for (index, value_953208ce) in self.0.iter().enumerate() {
             match value_953208ce.query_part(
@@ -1365,10 +1360,8 @@ pub trait PgTypeEqualOperator {
 }
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Serialize, JsonSchema)]
 pub struct UnsignedPartOfI32(i32); //todo why exactly i32? maybe different types for pg type and pg json type
-#[derive(
-    Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, ErrorOccurence, JsonSchema,
-)]
-pub enum UnsignedPartOfI32TryFromI32Error {
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, ErOccurence, JsonSchema)]
+pub enum UnsignedPartOfI32TryFromI32Er {
     LessThanZero {
         #[eo_to_err_string_serde]
         value: i32,
@@ -1376,7 +1369,7 @@ pub enum UnsignedPartOfI32TryFromI32Error {
     },
 }
 impl TryFrom<i32> for UnsignedPartOfI32 {
-    type Error = UnsignedPartOfI32TryFromI32Error;
+    type Error = UnsignedPartOfI32TryFromI32Er;
     fn try_from(value: i32) -> Result<Self, Self::Error> {
         if value >= 0 {
             Ok(Self(value))
@@ -1470,7 +1463,7 @@ impl Encode<'_, Postgres> for UnsignedPartOfI32 {
     fn encode_by_ref(
         &self,
         buf: &mut PgArgumentBuffer,
-    ) -> Result<IsNull, Box<dyn StdErrorError + Send + Sync>> {
+    ) -> Result<IsNull, Box<dyn StdErEr + Send + Sync>> {
         <i32 as Encode<Postgres>>::encode_by_ref(&self.0, buf)
     }
 }
@@ -1487,21 +1480,19 @@ impl DefaultOptionSomeVecOneEl for UnsignedPartOfI32 {
 }
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Serialize, JsonSchema)]
 pub struct NotZeroUnsignedPartOfI32(UnsignedPartOfI32);
-#[derive(
-    Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, ErrorOccurence, JsonSchema,
-)]
-pub enum NotZeroUnsignedPartOfI32TryFromI32Error {
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, ErOccurence, JsonSchema)]
+pub enum NotZeroUnsignedPartOfI32TryFromI32Er {
     IsZero {
         code_occurence: CodeOccurence,
     },
-    UnsignedPartOfI32TryFromI32Error {
-        #[eo_error_occurence]
-        value: UnsignedPartOfI32TryFromI32Error,
+    UnsignedPartOfI32TryFromI32Er {
+        #[eo_er_occurence]
+        value: UnsignedPartOfI32TryFromI32Er,
         code_occurence: CodeOccurence,
     },
 }
 impl TryFrom<i32> for NotZeroUnsignedPartOfI32 {
-    type Error = NotZeroUnsignedPartOfI32TryFromI32Error;
+    type Error = NotZeroUnsignedPartOfI32TryFromI32Er;
     fn try_from(value: i32) -> Result<Self, Self::Error> {
         match UnsignedPartOfI32::try_from(value) {
             Ok(handle) => {
@@ -1513,7 +1504,7 @@ impl TryFrom<i32> for NotZeroUnsignedPartOfI32 {
                     Ok(Self(handle))
                 }
             }
-            Err(er) => Err(Self::Error::UnsignedPartOfI32TryFromI32Error {
+            Err(er) => Err(Self::Error::UnsignedPartOfI32TryFromI32Er {
                 value: er,
                 code_occurence: code_occurence!(),
             }),
@@ -1602,7 +1593,7 @@ impl Encode<'_, Postgres> for NotZeroUnsignedPartOfI32 {
     fn encode_by_ref(
         &self,
         buf: &mut PgArgumentBuffer,
-    ) -> Result<IsNull, Box<dyn StdErrorError + Send + Sync>> {
+    ) -> Result<IsNull, Box<dyn StdErEr + Send + Sync>> {
         <UnsignedPartOfI32 as Encode<Postgres>>::encode_by_ref(&self.0, buf)
     }
 }
@@ -1624,10 +1615,10 @@ pub enum SingleOrMultiple<T: Debug + PartialEq + Clone> {
 }
 pub fn increment_checked_add_one_returning_increment(
     increment: &mut u64,
-) -> Result<u64, QueryPartError> {
+) -> Result<u64, QueryPartEr> {
     increment.checked_add(1).map_or_else(
         || {
-            Err(QueryPartError::CheckedAdd {
+            Err(QueryPartEr::CheckedAdd {
                 code_occurence: code_occurence!(),
             })
         },

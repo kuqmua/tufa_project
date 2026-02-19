@@ -19,7 +19,7 @@ Tufa Project is a Rust workspace containing multiple crates designed to facilita
 ## Key Features
 
 - PostgreSQL CRUD operations with code generation
-- Advanced error handling with detailed context
+- Advanced er handling with detailed context
 - Configuration management
 - Git information integration
 - Type-safe database interactions
@@ -33,8 +33,8 @@ This is a Rust workspace project with the following main components:
 - `postgresql_crud`: Core crate for PostgreSQL CRUD operations
 - `config_lib`: Configuration management utilities
 - `git_info`: Git repository information tools
-- `error_occurence_lib`: Advanced error handling with context
-- `from_sqlx_postgres_error`: SQLx PostgreSQL error conversion
+- `er_occurence_lib`: Advanced er handling with context
+- `from_sqlx_postgres_er`: SQLx PostgreSQL er conversion
 - `from_str`: String parsing utilities
 - `gen_quotes`: Quote generation utilities
 - `macros_helpers`: Helper macros for code generation
@@ -96,7 +96,7 @@ RUST_LOG=sqlx=debug cargo test --features test-utils -- --nocapture
 ### Code Quality
 
 ```bash
-# Check for errors
+# Check for ers
 cargo check
 
 # Run clippy lints
@@ -124,14 +124,14 @@ Configuration management with environment variable parsing and type-safe accesso
 ### git_info
 Compile-time and runtime Git repository information retrieval.
 
-### error_occurence_lib
-Advanced error handling system with detailed context and source tracking.
+### er_occurence_lib
+Advanced er handling system with detailed context and source tracking.
 
-### from_sqlx_postgres_error
-Utilities for converting SQLx PostgreSQL errors to application-specific errors.
+### from_sqlx_postgres_er
+Utilities for converting SQLx PostgreSQL ers to application-specific ers.
 
 ### from_str
-Safe string parsing with detailed error context.
+Safe string parsing with detailed er context.
 
 ### gen_quotes
 Utilities for generating quotes and text content.

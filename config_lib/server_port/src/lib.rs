@@ -1,4 +1,4 @@
-use serde::{Deserialize, Deserializer, Serialize, de::Error as SerdeError};
+use serde::{Deserialize, Deserializer, Serialize, de::Error as SerdeEr};
 use server_port_common::{
     SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE,
     SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE, SERVER_PORT_MAX_VALUE, SERVER_PORT_MIN_VALUE,
@@ -16,13 +16,13 @@ impl Display for ServerPort {
     }
 }
 #[derive(Debug, Serialize, Deserialize)]
-pub struct ServerPortError {
+pub struct ServerPortEr {
     message: String,
     server_port_max_value: u16,
     server_port_min_value: u16,
     value: u16,
 }
-impl Display for ServerPortError {
+impl Display for ServerPortEr {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         write!(
             f,
@@ -31,9 +31,9 @@ impl Display for ServerPortError {
         )
     }
 }
-impl Error for ServerPortError {}
+impl Error for ServerPortEr {}
 impl TryFrom<u16> for ServerPort {
-    type Error = ServerPortError;
+    type Error = ServerPortEr;
     fn try_from(value: u16) -> Result<Self, Self::Error> {
         if value < SERVER_PORT_MIN_VALUE {
             Err(Self::Error {
@@ -67,7 +67,7 @@ impl<'de> Deserialize<'de> for ServerPort {
             }
         }) {
             Ok(value) => Ok(value),
-            Err(er) => Err(SerdeError::custom(er)),
+            Err(er) => Err(SerdeEr::custom(er)),
         }
     }
 }

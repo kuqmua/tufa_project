@@ -85,7 +85,7 @@ mod tests {
     }
     fn check_expect_or_panic_contains_only_unique_uuid_v4(expect_or_panic: ExpectOrPanic) {
         struct ExpectVisitor {
-            errors: Vec<String>,
+            ers: Vec<String>,
             expect_or_panic: ExpectOrPanic,
             uuids: Vec<String>,
         }
@@ -106,20 +106,20 @@ mod tests {
                             if value.len() == 8 {
                                 self.uuids.push(value);
                             } else {
-                                self.errors.push(format!("arg len is not 8: {value}"));
+                                self.ers.push(format!("arg len is not 8: {value}"));
                             }
                         } else {
-                            self.errors.push("arg is not string literal".to_owned());
+                            self.ers.push("arg is not string literal".to_owned());
                         }
                     } else {
-                        self.errors.push("with != 1 arg".to_owned());
+                        self.ers.push("with != 1 arg".to_owned());
                     }
                 }
                 visit_expr_method_call(self, i);
             }
         }
         let mut all_uuids = Vec::new();
-        let mut all_errors = Vec::new();
+        let mut all_ers = Vec::new();
         for el_fcc35079 in project_directory()
             .into_iter()
             .filter_entry(|el_7e9cb4cf| el_7e9cb4cf.file_name() != "target")
@@ -139,13 +139,13 @@ mod tests {
             let mut visitor = ExpectVisitor {
                 expect_or_panic,
                 uuids: Vec::new(),
-                errors: Vec::new(),
+                ers: Vec::new(),
             };
             Visit::visit_file(&mut visitor, &ast);
             all_uuids.extend(visitor.uuids);
-            all_errors.extend(
+            all_ers.extend(
                 visitor
-                    .errors
+                    .ers
                     .into_iter()
                     .map(|el_2b9891bd| format!("{:?}: {}", el_fcc35079.path(), el_2b9891bd)),
             );
@@ -158,9 +158,9 @@ mod tests {
             }
         }
         if !duplicates.is_empty() {
-            all_errors.push(format!("duplicate UUIDs found: {duplicates:?}"));
+            all_ers.push(format!("duplicate UUIDs found: {duplicates:?}"));
         }
-        assert!(all_errors.is_empty(), "6062a9e9 {all_errors:#?}",);
+        assert!(all_ers.is_empty(), "6062a9e9 {all_ers:#?}",);
     }
     fn project_directory() -> WalkDir {
         WalkDir::new("../")
@@ -395,7 +395,7 @@ mod tests {
     }
     #[test]
     fn all_files_are_english_only() {
-        let mut errors = Vec::new();
+        let mut ers = Vec::new();
         let exceptions = [
             "../pg_crud/pg_crud_common/src/lib.rs", //contain utf-8 String test
         ];
@@ -430,7 +430,7 @@ mod tests {
             for (key_0fa16fc1, value_3d676d2e) in content.lines().enumerate() {
                 for el_c0fa9fc2 in value_3d676d2e.chars() {
                     if !(matches!(el_c0fa9fc2, '\n' | '\r' | '\t') || el_c0fa9fc2.is_ascii()) {
-                        errors.push(format!(
+                        ers.push(format!(
                             "{}:{} non-english symbol `{}` (U+{:04X})",
                             path.display(),
                             key_0fa16fc1 + 1,
@@ -441,11 +441,7 @@ mod tests {
                 }
             }
         }
-        assert!(
-            errors.is_empty(),
-            "non-english symbols:\n{}",
-            errors.join("\n")
-        );
+        assert!(ers.is_empty(), "non-english symbols:\n{}", ers.join("\n"));
     }
     #[test]
     fn workspace_crates_must_use_workspace_dependencies() {
@@ -504,7 +500,7 @@ mod tests {
     }
     #[test]
     fn check_no_empty_lines_in_rust_files() {
-        let mut errors = Vec::new();
+        let mut ers = Vec::new();
         for entry in project_directory()
             .into_iter()
             .filter_entry(|el| el.file_name() != "target")
@@ -524,14 +520,14 @@ mod tests {
             }
             for (line_number, line) in content.lines().enumerate() {
                 if line.trim().is_empty() {
-                    errors.push(format!("{}:{} empty line", path.display(), line_number + 1));
+                    ers.push(format!("{}:{} empty line", path.display(), line_number + 1));
                 }
             }
         }
         assert!(
-            errors.is_empty(),
+            ers.is_empty(),
             "Empty lines found in Rust files:\n{}",
-            errors.join("\n")
+            ers.join("\n")
         );
     }
 }

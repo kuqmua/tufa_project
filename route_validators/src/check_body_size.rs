@@ -4,12 +4,12 @@ use axum::{
     http::StatusCode,
 };
 use bytes::Bytes;
-use error_occurence_lib::{ErrorOccurence, code_occurence, code_occurence::CodeOccurence};
+use er_occurence_lib::{ErOccurence, code_occurence, code_occurence::CodeOccurence};
 use http_body::SizeHint;
 use http_logic::GetAxumHttpStatusCode;
 use thiserror::Error;
-#[derive(Debug, Error, ErrorOccurence)]
-pub enum BodySizeError {
+#[derive(Debug, Error, ErOccurence)]
+pub enum BodySizeEr {
     ReachedMaximumSizeOfBody {
         #[eo_to_err_string]
         er: Error,
@@ -20,18 +20,18 @@ pub enum BodySizeError {
         code_occurence: CodeOccurence,
     },
 }
-impl GetAxumHttpStatusCode for BodySizeError {
+impl GetAxumHttpStatusCode for BodySizeEr {
     fn get_axum_http_status_code(&self) -> StatusCode {
         match self {
             Self::ReachedMaximumSizeOfBody { .. } => StatusCode::PAYLOAD_TOO_LARGE,
         }
     }
 }
-pub async fn check_body_size(body: Body, limit: usize) -> Result<Bytes, BodySizeError> {
+pub async fn check_body_size(body: Body, limit: usize) -> Result<Bytes, BodySizeEr> {
     let size_hint = HttpBody::size_hint(&body);
     match to_bytes(body, limit).await {
         Ok(value) => Ok(value),
-        Err(er) => Err(BodySizeError::ReachedMaximumSizeOfBody {
+        Err(er) => Err(BodySizeEr::ReachedMaximumSizeOfBody {
             er,
             maximum_size_of_body_limit_in_bytes: limit,
             size_hint,

@@ -5,4 +5,4 @@ MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES="1048576000" # 100 megabyte in bytes
 SERVICE_SOCKET_ADDRESS="127.0.0.1:8080"
 SOURCE_PLACE_TYPE="source" # source|github
 TIMEZONE="10800" # i32, in seconds. main is 10800. value = hours * 3600. -24 < hours < 24. so value is -86_400 < secs && secs < 86_400. Otherwise panics on start.  Makes a new FixedOffset for the Eastern Hemisphere with given timezone difference. The negative secs means the Western Hemisphere
-TRACING_LEVEL="debug" # trace|debug|info|warn|error
+TRACING_LEVEL="debug" # trace|debug|info|warn|er

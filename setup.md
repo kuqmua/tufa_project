@@ -238,7 +238,7 @@ There are two mainstream options for property-based testing in the Rust ecosyste
 ### Large Test Suites
 If you have large test suite with a flat file structure, you'll soon be building tens of executable every time you run `cargo test`. While each executable is compiled in parallel, the linking phase is instead entirely sequential! Bundling all your test cases in a single executable reduces the time spent compiling your test suite in CI.
 
-If you are running Linux, you might see errors like:
+If you are running Linux, you might see ers like:
 ```
 thread 'actix-rt:worker' panicked at 
 'Can not create Runtime: Os { code: 24, kind: Other, message: "Too many open files" }',
@@ -264,12 +264,12 @@ cargo run -q | bunyan
 
 ## Troubleshooting
 
-### Permission Errors
+### Permission Ers
 ```bash
-# Fix permission denied errors
+# Fix permission denied ers
 cd .. sudo chmod -R 777 server && cd server
 
-# Fix I/O er: Permission denied (os error 13)
+# Fix I/O er: Permission denied (os er 13)
 sudo chown -R $(whoami) session_based_authentication/
 ```
 

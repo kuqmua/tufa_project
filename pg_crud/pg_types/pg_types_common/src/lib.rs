@@ -1,11 +1,11 @@
-use error_occurence_lib::code_occurence::CodeOccurence;
-use error_occurence_lib::{ErrorOccurence, code_occurence};
+use er_occurence_lib::code_occurence::CodeOccurence;
+use er_occurence_lib::{ErOccurence, code_occurence};
 use pg_crud_common::{
     DEFAULT_PAGINATION_LIMIT, DefaultOptionSomeVecOneEl, DefaultOptionSomeVecOneElMaxPageSize,
-    PaginationBase, PgTypeWhereFilter, QueryPartError,
+    PaginationBase, PgTypeWhereFilter, QueryPartEr,
 };
 use schemars::JsonSchema;
-use serde::de::{Error as SerdeError, IgnoredAny, MapAccess, SeqAccess, Visitor};
+use serde::de::{Error as SerdeEr, IgnoredAny, MapAccess, SeqAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use sqlx::{Postgres, postgres::PgArguments, query::Query};
 use std::fmt::Display;
@@ -13,8 +13,8 @@ use thiserror::Error;
 use utoipa::ToSchema;
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, ToSchema, JsonSchema)]
 pub struct PaginationStartsWithOne(PaginationBase);
-#[derive(Debug, Serialize, Deserialize, Error, ErrorOccurence)]
-pub enum PaginationStartsWithOneTryNewError {
+#[derive(Debug, Serialize, Deserialize, Error, ErOccurence)]
+pub enum PaginationStartsWithOneTryNewEr {
     LimitIsLessThanOrEqualToZero {
         #[eo_to_err_string_serde]
         limit: i64,
@@ -42,17 +42,17 @@ impl PaginationStartsWithOne {
     pub const fn start(&self) -> i64 {
         self.0.start()
     }
-    pub fn try_new(limit: i64, offset: i64) -> Result<Self, PaginationStartsWithOneTryNewError> {
+    pub fn try_new(limit: i64, offset: i64) -> Result<Self, PaginationStartsWithOneTryNewEr> {
         if limit <= 0 || offset < 1 {
             if limit <= 0 {
                 Err(
-                    PaginationStartsWithOneTryNewError::LimitIsLessThanOrEqualToZero {
+                    PaginationStartsWithOneTryNewEr::LimitIsLessThanOrEqualToZero {
                         limit,
                         code_occurence: code_occurence!(),
                     },
                 )
             } else {
-                Err(PaginationStartsWithOneTryNewError::OffsetIsLessThanOne {
+                Err(PaginationStartsWithOneTryNewEr::OffsetIsLessThanOne {
                     offset,
                     code_occurence: code_occurence!(),
                 })
@@ -61,7 +61,7 @@ impl PaginationStartsWithOne {
             Ok(Self(PaginationBase::new_unchecked(limit, offset)))
         } else {
             Err(
-                PaginationStartsWithOneTryNewError::OffsetPlusLimitIsIntOverflow {
+                PaginationStartsWithOneTryNewEr::OffsetPlusLimitIsIntOverflow {
                     limit,
                     offset,
                     code_occurence: code_occurence!(),
@@ -116,7 +116,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
             }
             fn visit_bytes<__E>(self, __value: &[u8]) -> Result<Self::Value, __E>
             where
-                __E: SerdeError,
+                __E: SerdeEr,
             {
                 match __value {
                     b"limit" => Ok(__Field::__field0),
@@ -153,20 +153,20 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
                 __A: SeqAccess<'de>,
             {
                 let Some(__field0) = SeqAccess::next_element::<i64>(&mut __seq)? else {
-                    return Err(SerdeError::invalid_length(
+                    return Err(SerdeEr::invalid_length(
                         0usize,
                         &"struct PaginationStartsWithOne with 2 elements",
                     ));
                 };
                 let Some(__field1) = SeqAccess::next_element::<i64>(&mut __seq)? else {
-                    return Err(SerdeError::invalid_length(
+                    return Err(SerdeEr::invalid_length(
                         1usize,
                         &"struct PaginationStartsWithOne with 2 elements",
                     ));
                 };
                 match PaginationStartsWithOne::try_new(__field0, __field1) {
                     Ok(value) => Ok(value),
-                    Err(er) => Err(SerdeError::custom(format!("{er:?}"))),
+                    Err(er) => Err(SerdeEr::custom(format!("{er:?}"))),
                 }
             }
             #[inline]
@@ -180,13 +180,13 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
                     match __key {
                         __Field::__field0 => {
                             if Option::is_some(&__field0) {
-                                return Err(<__A::Error as SerdeError>::duplicate_field("limit"));
+                                return Err(<__A::Error as SerdeEr>::duplicate_field("limit"));
                             }
                             __field0 = Some(MapAccess::next_value::<i64>(&mut __map)?);
                         }
                         __Field::__field1 => {
                             if Option::is_some(&__field1) {
-                                return Err(<__A::Error as SerdeError>::duplicate_field("offset"));
+                                return Err(<__A::Error as SerdeEr>::duplicate_field("offset"));
                             }
                             __field1 = Some(MapAccess::next_value::<i64>(&mut __map)?);
                         }
@@ -205,7 +205,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
                 };
                 match PaginationStartsWithOne::try_new(__field0_value, __field1_value) {
                     Ok(value) => Ok(value),
-                    Err(er) => Err(SerdeError::custom(format!("{er:?}"))),
+                    Err(er) => Err(SerdeEr::custom(format!("{er:?}"))),
                 }
             }
         }
@@ -234,7 +234,7 @@ impl<'lifetime> PgTypeWhereFilter<'lifetime> for PaginationStartsWithOne {
         increment: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
-    ) -> Result<String, QueryPartError> {
+    ) -> Result<String, QueryPartEr> {
         self.0
             .query_part(increment, column, is_need_to_add_logical_operator)
     }

@@ -14,7 +14,7 @@ utoipa.workspace = true
 serde.workspace = true
 thiserror.workspace = true
 schemars.workspace = true
-error_occurence_lib = {path = "../../../error_occurence_lib"}
+er_occurence_lib = {path = "../../../er_occurence_lib"}
 pg_crud_common = {path = "../../pg_crud_common", features = ["test-utils"]}
 
 [lints]

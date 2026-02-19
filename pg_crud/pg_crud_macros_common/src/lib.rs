@@ -5,7 +5,7 @@ use gen_quotes::{dq_str, dq_ts};
 use macros_helpers::gen_impl_to_err_string_ts;
 use naming::{
     AllVariantsDefaultOptionSomeVecOneElMaxPageSizeSc, AllVariantsDefaultOptionSomeVecOneElSc,
-    ColumnNameAndMaybeFieldGetterForErrorMessageSc, ColumnNameAndMaybeFieldGetterSc, ColumnSc,
+    ColumnNameAndMaybeFieldGetterForErMessageSc, ColumnNameAndMaybeFieldGetterSc, ColumnSc,
     CreateForQueryUcc, CreateIntoPgJsonTypeOptionVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptionVecWhereLengthGreaterThanSc,
     CreateIntoPgTypeOptionVecWhereDimOneEqualSc, CreateQueryBindSc, CreateQueryPartSc, CreateSc,
@@ -16,7 +16,7 @@ use naming::{
     OptionVecCreateSc, PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeEqualOperatorUcc,
     PgTypeNotPrimaryKeyUcc, PgTypeOptionVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc,
     PgTypeWhereFilterUcc, PreviousReadMergedWithOptionUpdateIntoReadSc, QueryBindSc,
-    QueryPartErrorUcc, QueryPartSc, QuerySc, ReadInnerIntoReadWithNewOrTryNewUnwrapedSc,
+    QueryPartErUcc, QueryPartSc, QuerySc, ReadInnerIntoReadWithNewOrTryNewUnwrapedSc,
     ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc, ReadInnerUcc,
     ReadOnlyIdsIntoOptionValueReadInnerSc, ReadOnlyIdsMergedWithCreateIntoOptionValueReadSc,
     ReadOnlyIdsMergedWithCreateIntoOptionVecWhereEqualToJsonFieldSc,
@@ -242,16 +242,16 @@ impl ToTokens for IsSelectQueryPartSelfSelectUsed {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub enum IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed {
+pub enum IsSelectQueryPartColumnNameAndMaybeFieldGetterForErMessageUsed {
     False,
     True,
 }
-impl ToTokens for IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed {
+impl ToTokens for IsSelectQueryPartColumnNameAndMaybeFieldGetterForErMessageUsed {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
             Self::True => {
-                ColumnNameAndMaybeFieldGetterForErrorMessageSc.to_tokens(tokens);
+                ColumnNameAndMaybeFieldGetterForErMessageSc.to_tokens(tokens);
             }
         }
     }
@@ -666,13 +666,12 @@ pub fn gen_pg_type_where_ts(
             },
             &ImportPath::PgCrudCommon,
         );
-    let impl_error_occurence_lib_to_err_string_for_pg_type_tokens_where_ts =
-        gen_impl_to_err_string_ts(
-            &Ts2::new(),
-            &ident,
-            &Ts2::new(),
-            &quote! {format!("{self:#?}")},
-        );
+    let impl_er_occurence_lib_to_err_string_for_pg_type_tokens_where_ts = gen_impl_to_err_string_ts(
+        &Ts2::new(),
+        &ident,
+        &Ts2::new(),
+        &quote! {format!("{self:#?}")},
+    );
     let impl_all_variants_default_option_some_vec_one_el_for_pg_type_tokens_where_ts =
         gen_impl_pg_crud_common_all_variants_default_option_some_vec_one_el_ts(&ident, &{
             let variants_ts = variants.iter().map(|el_b9724130| {
@@ -688,13 +687,13 @@ pub fn gen_pg_type_where_ts(
     quote! {
         #pg_type_tokens_where_ts
         #impl_pg_type_pg_type_where_filter_for_pg_type_tokens_where_ts
-        #impl_error_occurence_lib_to_err_string_for_pg_type_tokens_where_ts
+        #impl_er_occurence_lib_to_err_string_for_pg_type_tokens_where_ts
         #impl_all_variants_default_option_some_vec_one_el_for_pg_type_tokens_where_ts
     }
 }
 #[must_use]
-pub fn pg_crud_common_query_part_error_ts() -> Ts2 {
-    quote! {pg_crud_common::#QueryPartErrorUcc}
+pub fn pg_crud_common_query_part_er_ts() -> Ts2 {
+    quote! {pg_crud_common::#QueryPartErUcc}
 }
 pub fn gen_struct_ident_dq_ts(value: &dyn Display) -> Ts2 {
     dq_ts(&format!("struct {value}"))
@@ -739,7 +738,7 @@ pub fn gen_impl_pg_json_type_ts(
     create_for_query_type_ts: &dyn ToTokens,
     select_type_ts: &dyn ToTokens,
     is_select_query_part_self_select_used: &IsSelectQueryPartSelfSelectUsed,
-    is_select_query_part_column_name_and_maybe_field_getter_for_error_message_used: &IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed,
+    is_select_query_part_column_name_and_maybe_field_getter_for_er_message_used: &IsSelectQueryPartColumnNameAndMaybeFieldGetterForErMessageUsed,
     is_select_query_part_is_pg_type_used: &IsSelectQueryPartIsPgTypeUsed,
     select_query_part_ts: &dyn ToTokens,
     where_type_ts: &dyn ToTokens,
@@ -780,9 +779,9 @@ pub fn gen_impl_pg_json_type_ts(
                 #is_select_query_part_self_select_used: &Self::#SelectUcc,
                 #FieldIdentSc: #RefStr,
                 #ColumnNameAndMaybeFieldGetterSc: #RefStr,
-                #is_select_query_part_column_name_and_maybe_field_getter_for_error_message_used: #RefStr,
+                #is_select_query_part_column_name_and_maybe_field_getter_for_er_message_used: #RefStr,
                 #is_select_query_part_is_pg_type_used: #Bool,
-            ) -> Result<#StringTs, #path_ts #QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #path_ts #QueryPartErUcc> {
                 #select_query_part_ts
             }
             type #WhereUcc = #where_type_ts;
@@ -790,7 +789,7 @@ pub fn gen_impl_pg_json_type_ts(
             type #ReadOnlyIdsUcc = #read_only_ids_type_ts;
             fn #SelectOnlyIdsQueryPartSc(
                 #ColumnNameAndMaybeFieldGetterSc: #RefStr,
-            ) -> Result<#StringTs, #import_path ::#QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                 #select_only_ids_query_part_ts
             }
             type #ReadInnerUcc = #read_inner_type_ts;
@@ -805,7 +804,7 @@ pub fn gen_impl_pg_json_type_ts(
                 #is_update_query_part_jsonb_set_target_used: #RefStr,
                 #JsonbSetPathSc: #RefStr,
                 #IncrementSc: #reference_mut_u64_ts,
-            ) -> Result<#StringTs, #path_ts #QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #path_ts #QueryPartErUcc> {
                 #update_query_part_ts
             }
             fn #UpdateQueryBindSc(
@@ -819,7 +818,7 @@ pub fn gen_impl_pg_json_type_ts(
                 #FieldIdentSc: #RefStr,
                 #ColumnNameAndMaybeFieldGetterSc: #RefStr,
                 #IncrementSc: &mut #U64
-            ) -> Result<#StringTs, #import_path ::#QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                 #select_only_updated_ids_query_part_ts
             }
             fn #SelectOnlyUpdatedIdsQueryBindSc<'lifetime>(
@@ -833,7 +832,7 @@ pub fn gen_impl_pg_json_type_ts(
                 #FieldIdentSc: #RefStr,
                 #ColumnNameAndMaybeFieldGetterSc: #RefStr,
                 #IncrementSc: &mut #U64
-            ) -> Result<#StringTs, #import_path ::#QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                 #select_only_created_ids_query_part_ts
             }
             fn #SelectOnlyCreatedIdsQueryBindSc<'lifetime>(
@@ -1003,7 +1002,7 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
                 #increment_parameter_underscore: &mut #U64,
                 #column_parameter_underscore: &dyn #StdFmtDisplay,
                 #is_need_to_add_logical_operator_underscore: #Bool
-            ) -> Result<#StringTs, #import_path::#QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #import_path::#QueryPartErUcc> {
                 #query_part_content_ts
             }
             fn #QueryBindSc(self, #is_query_bind_mutable query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
@@ -1104,7 +1103,7 @@ pub fn gen_impl_pg_type_ts(
             fn #CreateQueryPartSc(
                 #create_query_part_value_underscore: &Self::#CreateUcc,
                 #create_query_part_increment_underscore: &mut #U64
-            ) -> Result<#StringTs, #import_path ::#QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                 #create_query_part_content_ts
             }
             fn #CreateQueryBindSc(
@@ -1120,7 +1119,7 @@ pub fn gen_impl_pg_type_ts(
             fn #SelectQueryPartSc(
                 #select_query_part_value_underscore: &Self::#SelectUcc,
                 #ColumnSc: #RefStr,
-            ) -> Result<#StringTs, #import_path ::#QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                 #select_query_part_content_ts
             }
             type #WhereUcc = #ident_where_ucc;
@@ -1131,7 +1130,7 @@ pub fn gen_impl_pg_type_ts(
             type #ReadOnlyIdsUcc = #read_only_ids_ts;
             fn #SelectOnlyIdsQueryPartSc(
                 #ColumnSc: #RefStr
-            ) -> Result<#StringTs, #import_path ::#QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                 #select_only_ids_query_part_ts
             }
             type #ReadInnerUcc = #ident_read_inner_ucc;
@@ -1146,7 +1145,7 @@ pub fn gen_impl_pg_type_ts(
                 #update_query_part_jsonb_set_target_underscore: #RefStr,
                 #update_query_part_jsonb_set_path_underscore: #RefStr,
                 #IncrementSc: &mut #U64
-            ) -> Result<#StringTs, #import_path ::#QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                 #update_query_part_content_ts
             }
             fn #UpdateQueryBindSc(
@@ -1162,7 +1161,7 @@ pub fn gen_impl_pg_type_ts(
                 #ValueSc: &Self::#UpdateForQueryUcc,
                 #ColumnSc: #RefStr,
                 #IncrementSc: &mut #U64,
-            ) -> Result<#StringTs, #import_path ::#QueryPartErrorUcc> {
+            ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                 #select_only_updated_ids_query_part_ts
             }
             fn #SelectOnlyUpdatedIdsQueryBindSc<'lifetime>(
@@ -2064,8 +2063,8 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
     }
 }
 #[must_use]
-pub fn pg_crud_common_query_part_error_checked_add_initialization_ts() -> Ts2 {
-    quote! {pg_crud_common::QueryPartError::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }}
+pub fn pg_crud_common_query_part_er_checked_add_initialization_ts() -> Ts2 {
+    quote! {pg_crud_common::QueryPartEr::CheckedAdd { code_occurence: er_occurence_lib::code_occurence!() }}
 }
 pub fn gen_impl_crate_is_string_empty_for_ident_content_ts(
     ident: &dyn ToTokens,
@@ -2415,15 +2414,15 @@ pub fn impl_pg_type_equal_operator_for_ident_ts(
     }
 }
 #[must_use]
-pub fn gen_query_part_error_write_into_buffer_ts(import_path: ImportPath) -> Ts2 {
+pub fn gen_query_part_er_write_into_buffer_ts(import_path: ImportPath) -> Ts2 {
     quote! {
-        #import_path::QueryPartError::WriteIntoBuffer {
-            code_occurence: error_occurence_lib::code_occurence!()
+        #import_path::QueryPartEr::WriteIntoBuffer {
+            code_occurence: er_occurence_lib::code_occurence!()
         }
     }
 }
 #[must_use]
-pub fn gen_return_err_query_part_error_write_into_buffer_ts(import_path: ImportPath) -> Ts2 {
-    let content_ts = gen_query_part_error_write_into_buffer_ts(import_path);
+pub fn gen_return_err_query_part_er_write_into_buffer_ts(import_path: ImportPath) -> Ts2 {
+    let content_ts = gen_query_part_er_write_into_buffer_ts(import_path);
     quote! {return Err(#content_ts);}
 }

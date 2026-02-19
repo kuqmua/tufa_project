@@ -15,7 +15,7 @@ pub fn code_occurence_syn_field() -> Field {
             path: Path {
                 leading_colon: None,
                 segments: gen_simple_syn_punctuated_punctuated(&[
-                    "error_occurence_lib",
+                    "er_occurence_lib",
                     "code_occurence",
                     "CodeOccurence",
                 ]),

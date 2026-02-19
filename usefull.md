@@ -113,7 +113,7 @@ struct S{
 impl S {
     #[must_use]
     pub fn new(one: &str, two: i32) -> Self {
-        //case2 - error[E0435]: attempt to use a non-constant value in a constant
+        //case2 - er[E0435]: attempt to use a non-constant value in a constant
         // let one = const { S::one_not_batman(one) };
         // let two = const { S::two_not_negative(two) };
         S{
@@ -168,17 +168,17 @@ mod something {
         pub two: i32,
     }
     #[derive(Debug)]
-    pub enum SomethingError {
+    pub enum SomethingEr {
         IsBatman,
         IsNegative,
     }
     impl Something {
-        const fn check(value: UncheckedSomething) -> Result<UncheckedSomething, SomethingError> {
+        const fn check(value: UncheckedSomething) -> Result<UncheckedSomething, SomethingEr> {
             if matches!(value.one.as_bytes(), b"batman") {
-                return Err(SomethingError::IsBatman);
+                return Err(SomethingEr::IsBatman);
             }
             if value.two <= 0 {
-                return Err(SomethingError::IsNegative);
+                return Err(SomethingEr::IsNegative);
             }
             Ok(value)
         }
@@ -190,7 +190,7 @@ mod something {
         }
         pub fn try_run_time_new_with_runtime_check(
             unchecked_value: UncheckedSomething,
-        ) -> Result<Self, SomethingError> {
+        ) -> Result<Self, SomethingEr> {
             match Self::check(unchecked_value) {
                 Ok(value) => Ok(Self {
                     one: value.one.to_string(),
@@ -208,8 +208,8 @@ mod something {
                     two: value.two,
                 },
                 Err(er) => match er {
-                    SomethingError::IsBatman => panic!("e4778c18-87e3-40f7-977b-a27473ce786b"),
-                    SomethingError::IsNegative => panic!("d434f5b3-0b0e-477b-aff0-d17113d0cf18"),
+                    SomethingEr::IsBatman => panic!("e4778c18-87e3-40f7-977b-a27473ce786b"),
+                    SomethingEr::IsNegative => panic!("d434f5b3-0b0e-477b-aff0-d17113d0cf18"),
                 },
             }
         }

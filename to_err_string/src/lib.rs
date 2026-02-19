@@ -1,20 +1,20 @@
 use axum::{
-    Error as AxumError,
+    Error as AxumEr,
     extract::rejection::{JsonDataError, JsonRejection, JsonSyntaxError},
 };
 use http::header::ToStrError;
 use http_body::SizeHint;
 use reqwest::{Error, StatusCode, header::HeaderMap};
-use serde_json::Error as SerdeJsonError;
+use serde_json::Error as SerdeJsonEr;
 use sqlx::{
-    Error as SqlxError,
+    Error as SqlxEr,
     migrate::MigrateError,
     types::chrono::{NaiveDate, NaiveDateTime, NaiveTime},
     types::time::{PrimitiveDateTime, Time},
-    types::uuid::Error as UuidError,
+    types::uuid::Error as UuidEr,
     types::{BigDecimal, Decimal},
 };
-use std::io::Error as IoError;
+use std::io::Error as IoEr;
 use time::error::ComponentRange;
 use tracing::{dispatcher::SetGlobalDefaultError, log::SetLoggerError};
 pub trait ToErrString {
@@ -127,7 +127,7 @@ impl ToErrString for Option<f64> {
 }
 impl ToErrString for SetGlobalDefaultError {
     fn to_err_string(&self) -> String {
-        String::from("tracing::dispatcher::SetGlobalDefaultError")
+        String::from("tracing::dispatcher::SetGlobalDefaultEr")
     }
 }
 impl ToErrString for SetLoggerError {
@@ -150,7 +150,7 @@ impl ToErrString for ToStrError {
         format!("{self}")
     }
 }
-impl ToErrString for AxumError {
+impl ToErrString for AxumEr {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
@@ -165,22 +165,22 @@ impl ToErrString for ComponentRange {
         format!("{self}")
     }
 }
-impl ToErrString for UuidError {
+impl ToErrString for UuidEr {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToErrString for IoError {
+impl ToErrString for IoEr {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToErrString for SqlxError {
+impl ToErrString for SqlxEr {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }
 }
-impl ToErrString for SerdeJsonError {
+impl ToErrString for SerdeJsonEr {
     fn to_err_string(&self) -> String {
         format!("{self}")
     }

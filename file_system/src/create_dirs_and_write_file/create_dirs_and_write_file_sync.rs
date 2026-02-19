@@ -1,26 +1,26 @@
-use error_occurence_lib::{ErrorOccurence, code_occurence, code_occurence::CodeOccurence};
+use er_occurence_lib::{ErOccurence, code_occurence, code_occurence::CodeOccurence};
 use std::{
     fs::{self, File},
-    io::{Error as IoError, Write},
+    io::{Error as IoEr, Write},
     path::Path,
 };
 use thiserror::Error;
-#[derive(Debug, Error, ErrorOccurence)]
-pub enum CreateDirsAndWriteFileSyncError {
+#[derive(Debug, Error, ErOccurence)]
+pub enum CreateDirsAndWriteFileSyncEr {
     StdIo {
         #[eo_to_err_string]
-        er: IoError,
+        er: IoEr,
         code_occurence: CodeOccurence,
     },
 }
 pub fn create_dirs_and_write_file_sync(
     path: &Path,
     bytes: &[u8],
-) -> Result<(), CreateDirsAndWriteFileSyncError> {
+) -> Result<(), CreateDirsAndWriteFileSyncEr> {
     if let Some(prefix) = path.parent()
         && let Err(er) = fs::create_dir_all(prefix)
     {
-        return Err(CreateDirsAndWriteFileSyncError::StdIo {
+        return Err(CreateDirsAndWriteFileSyncEr::StdIo {
             er,
             code_occurence: code_occurence!(),
         });
@@ -28,20 +28,20 @@ pub fn create_dirs_and_write_file_sync(
     match File::create(path) {
         Ok(mut file) => {
             if let Err(er) = Write::write_all(&mut file, bytes) {
-                return Err(CreateDirsAndWriteFileSyncError::StdIo {
+                return Err(CreateDirsAndWriteFileSyncEr::StdIo {
                     er,
                     code_occurence: code_occurence!(),
                 });
             }
             if let Err(er) = file.sync_all() {
-                return Err(CreateDirsAndWriteFileSyncError::StdIo {
+                return Err(CreateDirsAndWriteFileSyncEr::StdIo {
                     er,
                     code_occurence: code_occurence!(),
                 });
             }
             Ok(())
         }
-        Err(er) => Err(CreateDirsAndWriteFileSyncError::StdIo {
+        Err(er) => Err(CreateDirsAndWriteFileSyncEr::StdIo {
             er,
             code_occurence: code_occurence!(),
         }),

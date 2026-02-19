@@ -37,7 +37,7 @@ EXPOSE 8080
 CMD [ "./server" ]
 
 # maybe add install diesel cli for postgres(diesel dependency)
-# coz maybe would be linking error
+# coz maybe would be linking er
 # sudo apt install libpq-dev <br/>
 # cargo install diesel_cli --no-default-features --features postgres
 

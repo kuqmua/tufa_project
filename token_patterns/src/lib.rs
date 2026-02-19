@@ -22,8 +22,8 @@ impl ToTokens for AxumResponseIntoResponse {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct ReqwestError;
-impl ToTokens for ReqwestError {
+pub struct ReqwestEr;
+impl ToTokens for ReqwestEr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {reqwest::Error}.to_tokens(tokens);
     }
@@ -78,10 +78,10 @@ impl ToTokens for SchemarsJsonSchema {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct ErrorOccurenceLibErrorOccurence;
-impl ToTokens for ErrorOccurenceLibErrorOccurence {
+pub struct ErOccurenceLibErOccurence;
+impl ToTokens for ErOccurenceLibErOccurence {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {error_occurence_lib::ErrorOccurence}.to_tokens(tokens);
+        quote! {er_occurence_lib::ErOccurence}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
@@ -123,7 +123,7 @@ impl ToTokens for DeriveDebug {
 pub struct DeriveDebugThiserrorErrorOccurence;
 impl ToTokens for DeriveDebugThiserrorErrorOccurence {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]}
+        quote! {#[derive(Debug, thiserror::Error, er_occurence_lib::ErOccurence)]}
             .to_tokens(tokens);
     }
 }
@@ -157,14 +157,6 @@ impl ToTokens for DeriveDebugCloneCopy {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct DeriveDebugThisErrorErrorOccurence;
-impl ToTokens for DeriveDebugThisErrorErrorOccurence {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]}
-            .to_tokens(tokens);
-    }
-}
-#[derive(Debug, Clone, Copy)]
 pub struct StrSqlxColumnIndex;
 impl ToTokens for StrSqlxColumnIndex {
     fn to_tokens(&self, tokens: &mut Ts2) {
@@ -186,18 +178,17 @@ impl ToTokens for SqlxTypesTypeDatabase {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct ErrorOccurenceLibCodeOccurenceCodeOccurence;
-impl ToTokens for ErrorOccurenceLibCodeOccurenceCodeOccurence {
+pub struct ErOccurenceLibCodeOccurenceCodeOccurence;
+impl ToTokens for ErOccurenceLibCodeOccurenceCodeOccurence {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {error_occurence_lib::code_occurence::CodeOccurence}.to_tokens(tokens);
+        quote! {er_occurence_lib::code_occurence::CodeOccurence}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct CodeOccurenceScDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence;
-impl ToTokens for CodeOccurenceScDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence {
+pub struct CodeOccurenceScDoubleDotSpaceErOccurenceLibCodeOccurenceCodeOccurence;
+impl ToTokens for CodeOccurenceScDoubleDotSpaceErOccurenceLibCodeOccurenceCodeOccurence {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {code_occurence: error_occurence_lib::code_occurence::CodeOccurence}
-            .to_tokens(tokens);
+        quote! {code_occurence: er_occurence_lib::code_occurence::CodeOccurence}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]

@@ -7,7 +7,7 @@ use macros_helpers::{
 };
 use naming::{
     ArrayOfUcc, AsUcc, BooleanUcc, ColumnNameAndMaybeFieldGetterSc, CreateForQueryUcc, CreateSc,
-    EqualUcc, ErrorSc, GenPgJsonTypesModSc, IncrementSc, JsonbSetAccumulatorSc, NewSc, NumberUcc,
+    EqualUcc, ErSc, GenPgJsonTypesModSc, IncrementSc, JsonbSetAccumulatorSc, NewSc, NumberUcc,
     OptionUpdateSc, OptionVecCreateSc, PgJsonTypeUcc, QuerySc, ReadInnerUcc,
     ReadOnlyIdsMergedWithCreateIntoReadSc,
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
@@ -25,11 +25,11 @@ use pg_crud_macros_common::{
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, DimIndexNumber, ImportPath, IsNullable,
     IsQueryBindMutable, IsSelectOnlyCreatedIdsQueryBindMutable,
     IsSelectOnlyUpdatedIdsQueryBindMutable,
-    IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed,
-    IsSelectQueryPartIsPgTypeUsed, IsSelectQueryPartSelfSelectUsed, IsStandartNotNull,
-    IsUpdateQueryBindMutable, IsUpdateQueryPartJsonbSetTargetUsed, IsUpdateQueryPartSelfUpdateUsed,
-    PgFilter, PgJsonTypeFilter, ReadOrUpdate, ShouldDeriveSchemarsJsonSchema,
-    ShouldDeriveUtoipaToSchema, gen_impl_crate_is_string_empty_for_ident_content_ts,
+    IsSelectQueryPartColumnNameAndMaybeFieldGetterForErMessageUsed, IsSelectQueryPartIsPgTypeUsed,
+    IsSelectQueryPartSelfSelectUsed, IsStandartNotNull, IsUpdateQueryBindMutable,
+    IsUpdateQueryPartJsonbSetTargetUsed, IsUpdateQueryPartSelfUpdateUsed, PgFilter,
+    PgJsonTypeFilter, ReadOrUpdate, ShouldDeriveSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
+    gen_impl_crate_is_string_empty_for_ident_content_ts,
     gen_impl_pg_crud_common_default_option_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_common_default_option_some_vec_one_el_ts,
     gen_impl_pg_json_type_test_cases_for_ident_ts, gen_impl_pg_json_type_ts,
@@ -930,7 +930,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 Ts2::new()
             };
             let impl_display_for_ident_origin_ts = gen_impl_display_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
-            let impl_error_occurence_lib_to_err_string_for_ident_origin_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {format!("{self:#?}")});
+            let impl_er_occurence_lib_to_err_string_for_ident_origin_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {format!("{self:#?}")});
             let impl_default_option_some_vec_one_el_for_ident_origin_ts = gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_origin_ucc, &{
                 let content_ts = match &pattern {
                     Pattern::Standart => match &is_nullable {
@@ -968,7 +968,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 #maybe_impl_schemars_json_schema_for_ident_origin_ts
                 #maybe_impl_is_string_empty_for_ident_origin_ts
                 #impl_display_for_ident_origin_ts
-                #impl_error_occurence_lib_to_err_string_for_ident_origin_ts
+                #impl_er_occurence_lib_to_err_string_for_ident_origin_ts
                 #impl_default_option_some_vec_one_el_for_ident_origin_ts
                 #impl_sqlx_type_for_ident_origin_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_origin_ts
@@ -1772,7 +1772,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let impl_error_occurence_lib_to_err_string_for_ident_update_ts = if matches!(&is_standart_not_null_uuid, IsStandartNotNullUuid::True) {
+            let impl_er_occurence_lib_to_err_string_for_ident_update_ts = if matches!(&is_standart_not_null_uuid, IsStandartNotNullUuid::True) {
                 gen_impl_to_err_string_ts(&Ts2::new(), &ident_update_ucc, &Ts2::new(), &quote! {format!("{self:?}")})
             } else {
                 Ts2::new()
@@ -1782,7 +1782,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             quote! {
                 #ident_update_ts
                 #impl_ident_update_ts
-                #impl_error_occurence_lib_to_err_string_for_ident_update_ts
+                #impl_er_occurence_lib_to_err_string_for_ident_update_ts
                 #impl_default_option_some_vec_one_el_for_ident_update_ts
             }
         };
@@ -1827,7 +1827,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 quote! {
                     match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
                         Ok(value_f06128be) => Ok(format!("'{field_ident}',jsonb_build_object('value',${value_f06128be}),")),
-                        Err(#ErrorSc) => Err(#ErrorSc),
+                        Err(#ErSc) => Err(#ErSc),
                     }
                 }
             } else {
@@ -1835,8 +1835,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             };
             let select_only_created_or_updated_ids_query_bind_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                 quote! {
-                    if let Err(#ErrorSc) = #QuerySc.try_bind(#ValueSc) {
-                        return Err(#ErrorSc.to_string());
+                    if let Err(#ErSc) = #QuerySc.try_bind(#ValueSc) {
+                        return Err(#ErSc.to_string());
                     }
                     Ok(#QuerySc)
                 }
@@ -1854,7 +1854,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     Pattern::Standart => IsSelectQueryPartSelfSelectUsed::False,
                     Pattern::ArrayDim1 { .. } | Pattern::ArrayDim2 { .. } | Pattern::ArrayDim3 { .. } | Pattern::ArrayDim4 { .. } => IsSelectQueryPartSelfSelectUsed::True,
                 },
-                &IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed::False,
+                &IsSelectQueryPartColumnNameAndMaybeFieldGetterForErMessageUsed::False,
                 &IsSelectQueryPartIsPgTypeUsed::False,
                 &{
                     let format_handle = {
@@ -2170,7 +2170,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     quote! {
                         match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
                             Ok(value_26526e0f) => Ok(format!(#format_handle_ts)),
-                            Err(#ErrorSc) => Err(#ErrorSc),
+                            Err(#ErSc) => Err(#ErSc),
                         }
                     }
                 },
@@ -2227,8 +2227,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
                             #StringTs
                         > {
-                            if let Err(#ErrorSc) = #QuerySc.try_bind(#ValueSc.0.0.to_string()) {
-                                return Err(#ErrorSc.to_string())
+                            if let Err(#ErSc) = #QuerySc.try_bind(#ValueSc.0.0.to_string()) {
+                                return Err(#ErSc.to_string())
                             }
                             Ok(#QuerySc)
                         }
@@ -2248,7 +2248,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     fn get_inner(#ValueSc: &<Self::PgJsonType as #import_path::PgJsonType>::#CreateForQueryUcc) -> &Self::#ReadInnerUcc {
                         &#ValueSc.0.0
                     }
-                    fn increment_checked_add_one(#IncrementSc: &mut #U64) -> Result<#U64, #import_path::QueryPartError> {
+                    fn increment_checked_add_one(#IncrementSc: &mut #U64) -> Result<#U64, #import_path::QueryPartEr> {
                         #import_path::increment_checked_add_one_returning_increment(#IncrementSc)
                     }
                 }
@@ -2411,8 +2411,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                             acc_049ff0b3.push(#import_path::NullableJsonObjectPgTypeWhereFilter(Some(value_9328b66f)));
                                         },
                                         Err(er) => match er {
-                                            #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => (),
-                                            #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("2f5f648a")
+                                            #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => (),
+                                            #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("2f5f648a")
                                         }
                                     }
                                 },
@@ -3020,10 +3020,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                             ) {
                                                 Ok(value_d82bbdbe) => Some(value_d82bbdbe),
                                                 Err(er) => match er {
-                                                    #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => {
+                                                    #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => {
                                                         return None;
                                                     },
-                                                    #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("3d7ce854")
+                                                    #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("3d7ce854")
                                                 }
                                             },
                                             None => None,
@@ -3039,8 +3039,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         ]) {
                             Ok(value_e196e86d) => Some(value_e196e86d),
                             Err(er) => match er {
-                                #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
-                                #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("e9f9b021")
+                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
+                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("e9f9b021")
                             }
                         }
                     }
@@ -3099,10 +3099,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                         ) {
                                             Ok(value_cdc120a8) => Some(value_cdc120a8),
                                             Err(er) => match er {
-                                                #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => {
+                                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => {
                                                     return None;
                                                 },
-                                                #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("584f801e")
+                                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("584f801e")
                                             }
                                         },
                                         None => None,
@@ -3115,8 +3115,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         match #import_path::NotEmptyUniqueVec::try_new(vec![#content_ts]) {
                             Ok(value_cee8d0ab) => Some(value_cee8d0ab),
                             Err(er) => match er {
-                                #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
-                                #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("497359a5")
+                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
+                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("497359a5")
                             },
                         }
                     }
@@ -3141,7 +3141,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 };
                 quote!{{
                     let value = #content_ts - #minus_ts;
-                    //The correct way to compare floating point numbers is to define an allowed error margin
+                    //The correct way to compare floating point numbers is to define an allowed er margin
                     if (#content_ts - value).abs() < #more_ts {
                         None
                     }
@@ -3175,8 +3175,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         ) {
                             Ok(value_6f3e23b5) => Some(value_6f3e23b5),
                             Err(er) => match er {
-                                #import_path::NotEmptyUniqueVecTryNewError::IsEmpty { .. } => None,
-                                #import_path::NotEmptyUniqueVecTryNewError::NotUnique { .. } => panic!("11287f54"),
+                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty { .. } => None,
+                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique { .. } => panic!("11287f54"),
                             },
                         }
                     };
@@ -3242,8 +3242,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 ]) {
                                     Ok(value_41af48fb) => Some(value_41af48fb),
                                     Err(er) => match er {
-                                        #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
-                                        #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("5edabfcc")
+                                        #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
+                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("5edabfcc")
                                     }
                                 },
                                 Err(er) => None
@@ -3322,8 +3322,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             ]) {
                                 Ok(value_1c4f89a4) => Some(value_1c4f89a4),
                                 Err(er) => match er {
-                                    #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
-                                    #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("16ae359d")
+                                    #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
+                                    #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("16ae359d")
                                 }
                             }
                         }
@@ -3366,8 +3366,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         ]) {
                             Ok(value_75ae8964) => Some(value_75ae8964),
                             Err(er) => match er {
-                                #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
-                                #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("b9713787")
+                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
+                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("b9713787")
                             }
                         }
                     },
@@ -3417,8 +3417,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 }) {
                                     Ok(value_69c93ec5) => Some(value_69c93ec5),
                                     Err(er) => match er {
-                                        #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
-                                        #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("47e44ecd")
+                                        #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
+                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("47e44ecd")
                                     }
                                 }
                             };
@@ -3504,8 +3504,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 .collect()) {
                                     Ok(value_0363f494) => Some(value_0363f494),
                                     Err(er) => match er {
-                                        #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
-                                        #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("415a73d9")
+                                        #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
+                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("415a73d9")
                                     }
                                 }
                             }

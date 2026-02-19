@@ -16,28 +16,28 @@ pub trait TryFromStdEnvVarOk: Sized {
 #[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct ServiceSocketAddress(pub SocketAddr);
 #[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug)]
-pub enum TryFromStdEnvVarOkServiceSocketAddressError {
+pub enum TryFromStdEnvVarOkServiceSocketAddressEr {
     StdNetSocketAddr { std_net_socket_addr: AddrParseError },
 }
 impl TryFromStdEnvVarOk for ServiceSocketAddress {
-    type Error = TryFromStdEnvVarOkServiceSocketAddressError;
+    type Error = TryFromStdEnvVarOkServiceSocketAddressEr;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
         <SocketAddr as FromStr>::from_str(&value)
             .map(Self)
-            .map_err(|error| Self::Error::StdNetSocketAddr {
-                std_net_socket_addr: error,
+            .map_err(|er| Self::Error::StdNetSocketAddr {
+                std_net_socket_addr: er,
             })
     }
 }
 #[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct Timezone(pub FixedOffset);
 #[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug)]
-pub enum TryFromStdEnvVarOkTimezoneError {
+pub enum TryFromStdEnvVarOkTimezoneEr {
     ChronoFixedOffset { chrono_fixed_offset: String },
     I32Parsing { i32_parsing: ParseIntError },
 }
 impl TryFromStdEnvVarOk for Timezone {
-    type Error = TryFromStdEnvVarOkTimezoneError;
+    type Error = TryFromStdEnvVarOkTimezoneEr;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
         let Some(fixed_offset) = FixedOffset::east_opt(match value.parse::<i32>() {
             Ok(value_i32) => value_i32,
@@ -55,11 +55,11 @@ impl TryFromStdEnvVarOk for Timezone {
 #[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct RedisUrl(pub SecretBox<String>);
 #[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug)]
-pub enum TryFromStdEnvVarOkRedisUrlError {
+pub enum TryFromStdEnvVarOkRedisUrlEr {
     IsEmpty { is_empty: String },
 }
 impl TryFromStdEnvVarOk for RedisUrl {
-    type Error = TryFromStdEnvVarOkRedisUrlError;
+    type Error = TryFromStdEnvVarOkRedisUrlEr;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
         Ok(Self(if value.is_empty() {
             return Err(Self::Error::IsEmpty {
@@ -73,11 +73,11 @@ impl TryFromStdEnvVarOk for RedisUrl {
 #[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct MongoUrl(pub SecretBox<String>);
 #[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug)]
-pub enum TryFromStdEnvVarOkMongoUrlError {
+pub enum TryFromStdEnvVarOkMongoUrlEr {
     IsEmpty { is_empty: String },
 }
 impl TryFromStdEnvVarOk for MongoUrl {
-    type Error = TryFromStdEnvVarOkMongoUrlError;
+    type Error = TryFromStdEnvVarOkMongoUrlEr;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
         Ok(Self(if value.is_empty() {
             return Err(Self::Error::IsEmpty {
@@ -91,11 +91,11 @@ impl TryFromStdEnvVarOk for MongoUrl {
 #[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct DatabaseUrl(pub SecretBox<String>);
 #[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug)]
-pub enum TryFromStdEnvVarOkDatabaseUrlError {
+pub enum TryFromStdEnvVarOkDatabaseUrlEr {
     IsEmpty { is_empty: String },
 }
 impl TryFromStdEnvVarOk for DatabaseUrl {
-    type Error = TryFromStdEnvVarOkDatabaseUrlError;
+    type Error = TryFromStdEnvVarOkDatabaseUrlEr;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
         Ok(Self(if value.is_empty() {
             return Err(Self::Error::IsEmpty {
@@ -109,11 +109,11 @@ impl TryFromStdEnvVarOk for DatabaseUrl {
 #[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct StartingCheckLink(pub String);
 #[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug)]
-pub enum TryFromStdEnvVarOkStartingCheckLinkError {
+pub enum TryFromStdEnvVarOkStartingCheckLinkEr {
     IsEmpty { is_empty: String },
 }
 impl TryFromStdEnvVarOk for StartingCheckLink {
-    type Error = TryFromStdEnvVarOkStartingCheckLinkError;
+    type Error = TryFromStdEnvVarOkStartingCheckLinkEr;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
         Ok(Self(if value.is_empty() {
             return Err(Self::Error::IsEmpty {
@@ -127,13 +127,13 @@ impl TryFromStdEnvVarOk for StartingCheckLink {
 #[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct TracingLevel(pub types::TracingLevel);
 #[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug)]
-pub enum TryFromStdEnvVarOkTracingLevelError {
+pub enum TryFromStdEnvVarOkTracingLevelEr {
     AppStateTracingLevelParsing {
         app_state_tracing_type_parsing: String,
     },
 }
 impl TryFromStdEnvVarOk for TracingLevel {
-    type Error = TryFromStdEnvVarOkTracingLevelError;
+    type Error = TryFromStdEnvVarOkTracingLevelEr;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
         Ok(Self(match value.parse::<types::TracingLevel>() {
             Ok(handle) => handle,
@@ -148,13 +148,13 @@ impl TryFromStdEnvVarOk for TracingLevel {
 #[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct SourcePlaceType(pub types::SourcePlaceType);
 #[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug)]
-pub enum TryFromStdEnvVarOkSourcePlaceTypeError {
+pub enum TryFromStdEnvVarOkSourcePlaceTypeEr {
     AppStateSourcePlaceTypeParsing {
         app_state_source_place_type_parsing: String,
     },
 }
 impl TryFromStdEnvVarOk for SourcePlaceType {
-    type Error = TryFromStdEnvVarOkSourcePlaceTypeError;
+    type Error = TryFromStdEnvVarOkSourcePlaceTypeEr;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
         Ok(Self(match value.parse::<types::SourcePlaceType>() {
             Ok(handle) => handle,
@@ -169,11 +169,11 @@ impl TryFromStdEnvVarOk for SourcePlaceType {
 #[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct EnableApiGitCommitCheck(pub bool);
 #[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug)]
-pub enum TryFromStdEnvVarOkEnableApiGitCommitCheckError {
+pub enum TryFromStdEnvVarOkEnableApiGitCommitCheckEr {
     BoolParsing { bool_parsing: ParseBoolError },
 }
 impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
-    type Error = TryFromStdEnvVarOkEnableApiGitCommitCheckError;
+    type Error = TryFromStdEnvVarOkEnableApiGitCommitCheckEr;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
         Ok(Self(match value.parse::<bool>() {
             Ok(handle) => handle,
@@ -186,11 +186,11 @@ impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
 #[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait)]
 pub struct MaximumSizeOfHttpBodyInBytes(pub usize);
 #[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug)]
-pub enum TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesError {
+pub enum TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesEr {
     UsizeParsing { usize_parsing: ParseIntError },
 }
 impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
-    type Error = TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesError;
+    type Error = TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesEr;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
         Ok(Self(match value.parse::<usize>() {
             Ok(handle) => handle,

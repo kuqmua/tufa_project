@@ -4,7 +4,7 @@
 * CodeLLDB
 * Better TOML
 * crates
-* Error Lens
+* Er Lens
 * Tabnine
 * Rust Test Explorer
 * activitus bar - icons on bottom panel instead of left

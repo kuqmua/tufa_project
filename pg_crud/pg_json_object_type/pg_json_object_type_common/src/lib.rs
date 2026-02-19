@@ -1,11 +1,11 @@
-use error_occurence_lib::{ErrorOccurence, code_occurence, code_occurence::CodeOccurence};
+use er_occurence_lib::{ErOccurence, code_occurence, code_occurence::CodeOccurence};
 use pg_crud_common::DefaultOptionSomeVecOneEl;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 use utoipa::ToSchema;
-#[derive(Debug, Serialize, Deserialize, Error, ErrorOccurence)]
-pub enum UniqueVecTryNewError<T> {
+#[derive(Debug, Serialize, Deserialize, Error, ErOccurence)]
+pub enum UniqueVecTryNewEr<T> {
     NotUnique {
         #[eo_to_err_string_serde]
         value: T,
@@ -27,11 +27,11 @@ impl<T: PartialEq + Clone> UniqueVec<T> {
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
-    pub fn try_new(value: Vec<T>) -> Result<Self, UniqueVecTryNewError<T>> {
+    pub fn try_new(value: Vec<T>) -> Result<Self, UniqueVecTryNewEr<T>> {
         let mut acc_4855bea7 = Vec::new();
         for el_4dddc7c0 in &value {
             if acc_4855bea7.contains(&el_4dddc7c0) {
-                return Err(UniqueVecTryNewError::NotUnique {
+                return Err(UniqueVecTryNewEr::NotUnique {
                     value: el_4dddc7c0.clone(),
                     code_occurence: code_occurence!(),
                 });

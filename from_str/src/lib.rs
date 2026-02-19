@@ -31,7 +31,7 @@ pub fn from_str(input: Ts) -> Ts {
             #variant_ident_sc_ts => Ok(Self::#variant_ident),
         }
     });
-    let error_variants_str =
+    let er_variants_str =
         variant_idents
             .iter()
             .fold(String::default(), |mut acc_d6966473, variant_ident| {
@@ -44,10 +44,10 @@ pub fn from_str(input: Ts) -> Ts {
                 );
                 acc_d6966473
             });
-    let error_ts = {
-        let error_str =
-            format!("\"Invalid {ident}, expected one of {error_variants_str} found {{value}}\"");
-        error_str.parse::<Ts2>().expect("1b778757")
+    let er_ts = {
+        let er_str =
+            format!("\"Invalid {ident}, expected one of {er_variants_str} found {{value}}\"");
+        er_str.parse::<Ts2>().expect("1b778757")
     };
     let generated = quote! {
         impl std::str::FromStr for #ident {
@@ -55,7 +55,7 @@ pub fn from_str(input: Ts) -> Ts {
             fn from_str(value: &str) -> Result<Self, Self::Err> {
                 match value {
                     #(#variants_ts)*
-                    _ => Err(format!(#error_ts)),
+                    _ => Err(format!(#er_ts)),
                 }
             }
         }

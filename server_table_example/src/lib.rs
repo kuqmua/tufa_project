@@ -13,20 +13,20 @@
     "common_content_write_into_gen_pg_table_common": "False",
     "whole_content_write_into_gen_pg_table": "False"
 }}]
-#[pg_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
-#[pg_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]
-#[pg_crud::read_many_additional_error_variants{enum ReadManyAdditionalErrorVariants{}}]
-#[pg_crud::read_one_additional_error_variants{enum ReadOneAdditionalErrorVariants{}}]
-#[pg_crud::update_many_additional_error_variants{enum UpdateManyAdditionalErrorVariants{}}]
-#[pg_crud::update_one_additional_error_variants{enum UpdateOneAdditionalErrorVariants{}}]
-#[pg_crud::delete_many_additional_error_variants{enum DeleteManyAdditionalErrorVariants{}}]
-#[pg_crud::delete_one_additional_error_variants{enum DeleteOneAdditionalErrorVariants{}}]
-#[pg_crud::common_additional_error_variants{
-    enum CommonAdditionalErrorVariants {
+#[pg_crud::create_many_additional_er_variants{enum CreateManyAdditionalErVariants{}}]
+#[pg_crud::create_one_additional_er_variants{enum CreateOneAdditionalErVariants{}}]
+#[pg_crud::read_many_additional_er_variants{enum ReadManyAdditionalErVariants{}}]
+#[pg_crud::read_one_additional_er_variants{enum ReadOneAdditionalErVariants{}}]
+#[pg_crud::update_many_additional_er_variants{enum UpdateManyAdditionalErVariants{}}]
+#[pg_crud::update_one_additional_er_variants{enum UpdateOneAdditionalErVariants{}}]
+#[pg_crud::delete_many_additional_er_variants{enum DeleteManyAdditionalErVariants{}}]
+#[pg_crud::delete_one_additional_er_variants{enum DeleteOneAdditionalErVariants{}}]
+#[pg_crud::common_additional_er_variants{
+    enum CommonAdditionalErVariants {
         // CheckCommit {
-        //     #[eo_error_occurence]
-        //     check_commit: pg_crud::check_commit::CommitError,
-        //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        //     #[eo_er_occurence]
+        //     check_commit: pg_crud::check_commit::CommitEr,
+        //     code_occurence: er_occurence_lib::code_occurence::CodeOccurence,
         // },
     }
 }]

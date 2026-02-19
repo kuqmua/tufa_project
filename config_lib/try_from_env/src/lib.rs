@@ -1,7 +1,7 @@
 use macros_helpers::gen_impl_display_ts;
-use naming::parameter::{SelfTryFromEnvErrorUcc, TryFromStdEnvVarOkSelfErrorUcc};
+use naming::parameter::{SelfTryFromEnvErUcc, TryFromStdEnvVarOkSelfErUcc};
 use naming::{
-    DotenvSc, DotenvUcc, EnvVarNameSc, StdEnvVarErrorSc, StdEnvVarErrorUcc, ToTokensToUccTs,
+    DotenvSc, DotenvUcc, EnvVarNameSc, StdEnvVarErSc, StdEnvVarErUcc, ToTokensToUccTs,
     ToTokensToUpperScStr, TryFromStdEnvVarOkUcc,
 };
 use proc_macro::TokenStream as Ts;
@@ -13,7 +13,7 @@ pub fn try_from_env(input: Ts) -> Ts {
     panic_location::panic_location();
     let syn_derive_input: DeriveInput = parse(input).expect("e45f75c2");
     let ident = &syn_derive_input.ident;
-    let ident_try_from_env_error_ucc = SelfTryFromEnvErrorUcc::from_tokens(&ident);
+    let ident_try_from_env_er_ucc = SelfTryFromEnvErUcc::from_tokens(&ident);
     let data_struct = match syn_derive_input.data {
         Data::Struct(value) => value,
         Data::Enum(_) | Data::Union(_) => panic!("54289ad5"),
@@ -24,33 +24,33 @@ pub fn try_from_env(input: Ts) -> Ts {
             panic!("330b2512")
         }
     };
-    let error_ts = {
+    let er_ts = {
         let variants_ts = fields_named.iter().map(|el_f931deb2| {
             let el_ident = &el_f931deb2.ident.as_ref().expect("2ecb63c1");
             let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
-            let try_from_std_env_var_ok_self_error_ucc =
-                TryFromStdEnvVarOkSelfErrorUcc::from_tokens(&el_ident);
+            let try_from_std_env_var_ok_self_er_ucc =
+                TryFromStdEnvVarOkSelfErUcc::from_tokens(&el_ident);
             quote! {
                 #el_ident_ucc_ts {
-                    #el_ident: config_lib::#try_from_std_env_var_ok_self_error_ucc,
+                    #el_ident: config_lib::#try_from_std_env_var_ok_self_er_ucc,
                 }
             }
         });
         quote! {
             #[derive(Debug, Error)]
-            pub enum #ident_try_from_env_error_ucc {
+            pub enum #ident_try_from_env_er_ucc {
                 #DotenvUcc {
                     #DotenvSc: dotenv::Error,
                 },
-                #StdEnvVarErrorUcc {
-                    #StdEnvVarErrorSc: std::env::VarError,
+                #StdEnvVarErUcc {
+                    #StdEnvVarErSc: std::env::VarError,
                     env_var_name: String,
                 },
                 #(#variants_ts),*
             }
         }
     };
-    let display_error_ts = {
+    let display_er_ts = {
         let variants_ts = fields_named.iter().map(|el_f931deb2| {
             let el_ident = &el_f931deb2.ident.as_ref().expect("8b79a379");
             let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
@@ -60,17 +60,17 @@ pub fn try_from_env(input: Ts) -> Ts {
         });
         gen_impl_display_ts(
             &Ts2::new(),
-            &ident_try_from_env_error_ucc,
+            &ident_try_from_env_er_ucc,
             &Ts2::new(),
             &quote! {
                 match self {
                     Self::#DotenvUcc {
                         #DotenvSc
                     } => write!(f, "{}", #DotenvSc),
-                    Self::#StdEnvVarErrorUcc {
-                        #StdEnvVarErrorSc,
+                    Self::#StdEnvVarErUcc {
+                        #StdEnvVarErSc,
                         env_var_name
-                    } => write!(f, "{} {}", #StdEnvVarErrorSc, env_var_name),
+                    } => write!(f, "{} {}", #StdEnvVarErSc, env_var_name),
                     #(#variants_ts),*
                 }
             },
@@ -88,8 +88,8 @@ pub fn try_from_env(input: Ts) -> Ts {
                     let env_var_name = String::from(#el_ident_quotes_upper_sc_string);
                     match std::env::var(&env_var_name) {
                         Err(er) => {
-                            return Err(#ident_try_from_env_error_ucc::#StdEnvVarErrorUcc {
-                                #StdEnvVarErrorSc: er,
+                            return Err(#ident_try_from_env_er_ucc::#StdEnvVarErUcc {
+                                #StdEnvVarErSc: er,
                                 #EnvVarNameSc,
                             });
                         }
@@ -98,7 +98,7 @@ pub fn try_from_env(input: Ts) -> Ts {
                             config_lib::#TryFromStdEnvVarOkUcc
                         >::try_from_std_env_var_ok(value) {
                             Err(er) => {
-                                return Err(#ident_try_from_env_error_ucc::#el_ident_ucc_ts {
+                                return Err(#ident_try_from_env_er_ucc::#el_ident_ucc_ts {
                                     #el_ident: er,
                                 });
                             }
@@ -111,9 +111,9 @@ pub fn try_from_env(input: Ts) -> Ts {
         let fields_ts = fields_named.iter().map(|el_dd7dea0c| &el_dd7dea0c.ident);
         quote! {
             impl #ident {
-                pub fn try_from_env() -> Result<Self, #ident_try_from_env_error_ucc> {
+                pub fn try_from_env() -> Result<Self, #ident_try_from_env_er_ucc> {
                     if let Err(er) = dotenv::dotenv() {
-                        return Err(#ident_try_from_env_error_ucc::#DotenvUcc {
+                        return Err(#ident_try_from_env_er_ucc::#DotenvUcc {
                             #DotenvSc: er,
                         });
                     }
@@ -126,8 +126,8 @@ pub fn try_from_env(input: Ts) -> Ts {
         }
     };
     let generated = quote! {
-        #error_ts
-        #display_error_ts
+        #er_ts
+        #display_er_ts
         #try_from_env_ts
     };
     // println!("{generated}");

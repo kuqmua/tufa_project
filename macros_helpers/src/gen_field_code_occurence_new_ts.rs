@@ -15,11 +15,11 @@ pub fn gen_field_code_occurence_new_ts(file: &'static str, line: u32, column: u3
             column_str.parse::<Ts2>().expect("105a4e62")
         };
         quote! {
-            error_occurence_lib::code_occurence::CodeOccurence::new(
+            er_occurence_lib::code_occurence::CodeOccurence::new(
                 file!().to_owned(),
                 line!(),
                 column!(),
-                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                Some(er_occurence_lib::code_occurence::MacroOccurence {
                     file: String::from(#file_ts),
                     line: #line_ts,
                     column: #column_ts,

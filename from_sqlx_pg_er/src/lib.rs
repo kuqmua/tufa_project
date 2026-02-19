@@ -1,13 +1,13 @@
-// #[proc_macro_derive(FromSqlxPgError)]
-// pub fn from_sqlx_pg_error(input: Ts) -> Ts {
+// #[proc_macro_derive(FromSqlxPgEr)]
+// pub fn from_sqlx_pg_er(input: Ts) -> Ts {
 //     panic_location::panic_location();
-//     let proc_macro_name_ucc = "FromSqlxPgError";
+//     let proc_macro_name_ucc = "FromSqlxPgEr";
 //     let syn_derive_input: DeriveInput = parse(input).expect("cd5c05b1");
 //     let ident = &syn_derive_input.ident;
 //     let proc_macro_name_ucc_ident_str =
 //         format!("{proc_macro_name_ucc} {ident}");
-//     // let sqlx_pg_error_syn_variants = enum_variants::sqlx_pg_error_syn_variants(&proc_macro_name_ucc_ident_str);
-//     // sqlx_pg_error_syn_variants.iter().map(|el_ea7f6dd1|{
+//     // let sqlx_pg_er_syn_variants = enum_variants::sqlx_pg_er_syn_variants(&proc_macro_name_ucc_ident_str);
+//     // sqlx_pg_er_syn_variants.iter().map(|el_ea7f6dd1|{
 //     //     let field_ident = field.ident;
 //     //     let field_ty =
 //     //     quote! {}
@@ -180,8 +180,8 @@
 //                         worker_crashed: String::from("worker crashed"),
 //                         #field_code_occurence_new_75e32177_f3b7_46f3_81f3_f6f56e8f2308_ts,
 //                     },
-//                     sqlx::Error::Migrate(migrate_error) => Self::Migrate {
-//                         migrate: *migrate_error,
+//                     sqlx::Error::Migrate(migrate_er) => Self::Migrate {
+//                         migrate: *migrate_er,
 //                         #field_code_occurence_new_b281dabf_8137_4f23_ad97_daa8b2347670_ts,
 //                     },
 //                     _ => Self::UnexpectedCase {

@@ -15,7 +15,7 @@ schemars.workspace = true
 utoipa.workspace = true
 uuid.workspace = true
 thiserror.workspace = true
-error_occurence_lib = {path = "../../../error_occurence_lib"}
+er_occurence_lib = {path = "../../../er_occurence_lib"}
 pg_crud = {path = "../../../pg_crud", features = ["test-utils"]}
 [features]
 test-utils = []"#,

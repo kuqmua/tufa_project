@@ -17,7 +17,7 @@ pub enum TracingLevel {
     Info,
     Warn,
     #[default]
-    Error,
+    Er,
 }
 impl FromStr for TracingLevel {
     type Err = String;
@@ -27,7 +27,7 @@ impl FromStr for TracingLevel {
             "debug" => Ok(Self::Debug),
             "info" => Ok(Self::Info),
             "warn" => Ok(Self::Warn),
-            "error" => Ok(Self::Error),
+            "er" => Ok(Self::Er),
             _ => Err(format!("Unknown tracing level: {s}")),
         }
     }

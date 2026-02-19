@@ -1,46 +1,44 @@
 // todo is there is no point to add additional info to enum like this
-// eo_error_occurence_field: {
+// eo_er_occurence_field: {
 //     eo_display_with_serde_field: value
 // }
-// https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/error_occurence_test/src/main.rs#L85 2024-05-06 09:17:23
+// https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/er_occurence_test/src/main.rs#L85 2024-05-06 09:17:23
 // impl display like this this
-// eo_error_occurence_field
-// https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/error_occurence_test/src/main.rs#L85 2024-05-06 09:17:23
-use error_occurence_lib::{
-    ErrorOccurence, ToErrString, code_occurence, code_occurence::CodeOccurence,
-};
+// eo_er_occurence_field
+// https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/er_occurence_test/src/main.rs#L85 2024-05-06 09:17:23
+use er_occurence_lib::{ErOccurence, ToErrString, code_occurence, code_occurence::CodeOccurence};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use thiserror::Error;
-#[derive(Debug, Error, ErrorOccurence)]
-pub enum ErrorOne {
+#[derive(Debug, Error, ErOccurence)]
+pub enum ErOne {
     //use ToErrString for hashmap keys instead of Display
-    //todo even for String in serialize deserialize version of error must be using ToErrString impl instead of std::fmt::Display
+    //todo even for String in serialize deserialize version of er must be using ToErrString impl instead of std::fmt::Display
     //todo test on using only code_occurence as pnly field in named variant
     Variant {
         #[eo_to_err_string]
         eo_display_field: DisplayStruct, //IN SERIALIZE DESERIALIZE String
         #[eo_to_err_string_serde]
         eo_serde: SerdeStruct,
-        #[eo_error_occurence]
-        eo_error_occurence_field: ErrorTwo, //IN SERIALIZE DESERIALIZE nested
+        #[eo_er_occurence]
+        eo_er_occurence_field: ErTwo, //IN SERIALIZE DESERIALIZE nested
         #[eo_vec_to_err_string] //todo remove wrapper under Vec
         eo_vec_display_field: Vec<DisplayStruct>, //IN SERIALIZE DESERIALIZE Vec<String>
         #[eo_vec_to_err_string_serde]
         eo_vec_serde: Vec<SerdeStruct>,
-        #[eo_vec_error_occurence]
-        eo_vec_error_occurence_field: Vec<ErrorUnnamedOne>, //IN SERIALIZE DESERIALIZE Vec<nested>
+        #[eo_vec_er_occurence]
+        eo_vec_er_occurence_field: Vec<ErUnnamedOne>, //IN SERIALIZE DESERIALIZE Vec<nested>
         #[eo_hashmap_key_string_value_to_err_string]
         hashmap_string_string: HashMap<String, DisplayStruct>,
         #[eo_hashmap_key_string_value_to_err_string_serde]
         hashmap_string_serde: HashMap<String, SerdeStruct>,
-        #[eo_hashmap_key_string_value_error_occurence]
-        hashmap_string_error_occurence: HashMap<String, ErrorUnnamedOne>,
+        #[eo_hashmap_key_string_value_er_occurence]
+        hashmap_string_er_occurence: HashMap<String, ErUnnamedOne>,
         code_occurence: CodeOccurence,
     },
 }
-#[derive(Debug, Error, ErrorOccurence)]
-pub enum ErrorTwo {
+#[derive(Debug, Error, ErOccurence)]
+pub enum ErTwo {
     Another {
         #[eo_to_err_string_serde]
         sdasdasd: String,
@@ -52,9 +50,9 @@ pub enum ErrorTwo {
         code_occurence: CodeOccurence,
     },
 }
-#[derive(Debug, Error, ErrorOccurence)]
-pub enum ErrorUnnamedOne {
-    Something(ErrorTwo),
+#[derive(Debug, Error, ErOccurence)]
+pub enum ErUnnamedOne {
+    Something(ErTwo),
 }
 #[derive(Debug)]
 pub struct DisplayStruct {
@@ -80,7 +78,7 @@ impl ToErrString for SerdeStruct {
     }
 }
 fn main() {
-    let error = ErrorOne::Variant {
+    let er = ErOne::Variant {
         eo_display_field: DisplayStruct {
             display: String::from("value"),
             something: true,
@@ -90,7 +88,7 @@ fn main() {
             two: true,
             three: 42,
         },
-        eo_error_occurence_field: ErrorTwo::Variant {
+        eo_er_occurence_field: ErTwo::Variant {
             eo_display_with_serde_field: String::from("value"),
             code_occurence: code_occurence!(),
         },
@@ -116,12 +114,12 @@ fn main() {
                 three: 422,
             },
         ],
-        eo_vec_error_occurence_field: vec![
-            ErrorUnnamedOne::Something(ErrorTwo::Variant {
+        eo_vec_er_occurence_field: vec![
+            ErUnnamedOne::Something(ErTwo::Variant {
                 eo_display_with_serde_field: String::from("value"),
                 code_occurence: code_occurence!(),
             }),
-            ErrorUnnamedOne::Something(ErrorTwo::Variant {
+            ErUnnamedOne::Something(ErTwo::Variant {
                 eo_display_with_serde_field: String::from("123"),
                 code_occurence: code_occurence!(),
             }),
@@ -160,17 +158,17 @@ fn main() {
                 },
             ),
         ]),
-        hashmap_string_error_occurence: HashMap::from([
+        hashmap_string_er_occurence: HashMap::from([
             (
                 String::from("ksdfgadsfgsdfgdfgey"),
-                ErrorUnnamedOne::Something(ErrorTwo::Variant {
+                ErUnnamedOne::Something(ErTwo::Variant {
                     eo_display_with_serde_field: String::from("vasdfgdgdfglue"),
                     code_occurence: code_occurence!(),
                 }),
             ),
             (
                 String::from("kesdfgsdgfdfgy"),
-                ErrorUnnamedOne::Something(ErrorTwo::Variant {
+                ErUnnamedOne::Something(ErTwo::Variant {
                     eo_display_with_serde_field: String::from("valsdfgdsafgdsgue"),
                     code_occurence: code_occurence!(),
                 }),
@@ -178,5 +176,5 @@ fn main() {
         ]),
         code_occurence: code_occurence!(),
     };
-    println!("{error:?}");
+    println!("{er:?}");
 }

@@ -1,6 +1,6 @@
 mod attr_ident_str;
 mod code_occurence_syn_field;
-mod error_occurence;
+mod er_occurence;
 mod gen_field_code_occurence_new_ts;
 mod gen_if_write_is_err_ts;
 mod gen_impl_display_ts;
@@ -21,7 +21,7 @@ mod write_string_into_file;
 mod write_ts_into_file;
 pub use attr_ident_str::AttrIdentStr;
 pub use code_occurence_syn_field::code_occurence_syn_field;
-pub use error_occurence::{ErrorOccurenceFieldAttr, gen_serde_version_of_named_syn_variant};
+pub use er_occurence::{ErOccurenceFieldAttr, gen_serde_version_of_named_syn_variant};
 pub use gen_field_code_occurence_new_ts::gen_field_code_occurence_new_ts;
 pub use gen_if_write_is_err_ts::{gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts};
 pub use gen_impl_display_ts::gen_impl_display_ts;
@@ -45,10 +45,10 @@ pub use get_macro_attr::{get_macro_attr, get_macro_attr_meta_list_ts};
 pub use pagination_start_end_initialization_ts::pagination_start_end_initialization_ts;
 pub use status_code::{StatusCode, get_only_one};
 pub use struct_or_enum_derive_ts_builder::{
-    DeriveClone, DeriveCopy, DeriveDebug, DeriveDefault, DeriveEq,
-    DeriveErrorOccurenceLibErrorOccurence, DeriveOrd, DerivePartialEq, DerivePartialOrd,
-    DeriveSchemarsJsonSchema, DeriveSerdeDeserialize, DeriveSerdeSerialize, DeriveThiserrorError,
-    DeriveUtoipaToSchema, MakePub, StructOrEnumDeriveTokenStreamBuilder,
+    DeriveClone, DeriveCopy, DeriveDebug, DeriveDefault, DeriveEq, DeriveErOccurenceLibErOccurence,
+    DeriveOrd, DerivePartialEq, DerivePartialOrd, DeriveSchemarsJsonSchema, DeriveSerdeDeserialize,
+    DeriveSerdeSerialize, DeriveThiserrorError, DeriveUtoipaToSchema, MakePub,
+    StructOrEnumDeriveTokenStreamBuilder,
 };
 pub use syn_field_wrapper::SynFieldWrapper;
 pub use wrap_derive::wrap_derive;

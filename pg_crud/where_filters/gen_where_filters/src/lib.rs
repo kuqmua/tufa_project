@@ -5,7 +5,7 @@ use macros_helpers::{
     maybe_write_ts_into_file,
 };
 use naming::{
-    ColumnSc, DimsIndexesSc, DimsSc, ErrorSc, IncrementSc, PubSc, QuerySc, SelfSc, ValueSc,
+    ColumnSc, DimsIndexesSc, DimsSc, ErSc, IncrementSc, PubSc, QuerySc, SelfSc, ValueSc,
     parameter::{PgJsonTypeWhereSelfUcc, PgTypeWhereSelfUcc},
 };
 use panic_location::panic_location;
@@ -242,14 +242,14 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         #value_default_option_some_vec_one_el_ts
     };
     let if_let_err_query_try_bind_self_value_to_string_ts = quote! {
-        if let Err(#ErrorSc) = #QuerySc.try_bind(#SelfSc.#ValueSc.to_string()) {
-            return Err(#ErrorSc.to_string());
+        if let Err(#ErSc) = #QuerySc.try_bind(#SelfSc.#ValueSc.to_string()) {
+            return Err(#ErSc.to_string());
         }
         Ok(#QuerySc)
     };
     let if_let_err_query_try_bind_self_value_ts = quote! {
-        if let Err(#ErrorSc) = #QuerySc.try_bind(#SelfSc.#ValueSc) {
-            return Err(#ErrorSc.to_string());
+        if let Err(#ErSc) = #QuerySc.try_bind(#SelfSc.#ValueSc) {
+            return Err(#ErSc.to_string());
         }
     };
     let query_bind_one_value_ts = quote! {
@@ -266,8 +266,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         quote! {
             let #ident_ts = match pg_crud_common::increment_checked_add_one_returning_increment(#IncrementSc) {
                 Ok(value_25d59e01) => value_25d59e01,
-                Err(#ErrorSc) => {
-                    return Err(#ErrorSc);
+                Err(#ErSc) => {
+                    return Err(#ErSc);
                 },
             };
         }
@@ -294,8 +294,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             Ok(value_f6d31bdd) => {
                 #QuerySc = value_f6d31bdd;
             },
-            Err(#ErrorSc) => {
-                return Err(#ErrorSc);
+            Err(#ErSc) => {
+                return Err(#ErSc);
             }
         }
         Ok(#QuerySc)
@@ -316,8 +316,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             quote! {
                 let #ident_ts = match self.#field_ts.#function_ts(#IncrementSc, #ColumnSc, is_need_to_add_logical_operator) {
                     Ok(value_0a22ee9a) => value_0a22ee9a,
-                    Err(#ErrorSc) => {
-                        return Err(#ErrorSc);
+                    Err(#ErSc) => {
+                        return Err(#ErSc);
                     }
                 };
             }
@@ -332,8 +332,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             Ok(value_ed6f1157) => {
                 #QuerySc = value_ed6f1157;
             }
-            Err(#ErrorSc) => {
-                return Err(#ErrorSc);
+            Err(#ErSc) => {
+                return Err(#ErSc);
             }
         }
     };
@@ -550,8 +550,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                             Ok(value_daedba9c) => {
                                                 #if_write_is_err_ts
                                             },
-                                            Err(#ErrorSc) => {
-                                                return Err(#ErrorSc);
+                                            Err(#ErSc) => {
+                                                return Err(#ErSc);
                                             },
                                         }
                                     }
@@ -571,8 +571,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         quote! {
                             #maybe_dims_query_bind_content_ts
                             for el_ea865d8c in #SelfSc.#ValueSc.into_vec() {
-                                if let Err(#ErrorSc) = #QuerySc.try_bind(el_ea865d8c) {
-                                    return Err(#ErrorSc.to_string());
+                                if let Err(#ErSc) = #QuerySc.try_bind(el_ea865d8c) {
+                                    return Err(#ErSc.to_string());
                                 }
                             }
                             Ok(#QuerySc)
@@ -798,8 +798,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             is_query_bind_mutable_true,
                             quote! {
                                 #maybe_dims_query_bind_content_ts
-                                if let Err(#ErrorSc) = #QuerySc.try_bind(self.encoded_string_representation) {
-                                    return Err(#ErrorSc.to_string());
+                                if let Err(#ErSc) = #QuerySc.try_bind(self.encoded_string_representation) {
+                                    return Err(#ErSc.to_string());
                                 }
                                 Ok(#QuerySc)
                             },
@@ -839,7 +839,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             quote! {
                                 match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
                                     Ok(value_f7988de8) => Ok(format!(#format_handle_ts, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #ColumnSc, value_f7988de8)),
-                                    Err(#ErrorSc) => Err(#ErrorSc),
+                                    Err(#ErSc) => Err(#ErSc),
                                 }
                             }
                         },
@@ -924,8 +924,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     Ok(value_6cb14cdc) => {
                                         #QuerySc = value_6cb14cdc;
                                     },
-                                    Err(#ErrorSc) => {
-                                        return Err(#ErrorSc);
+                                    Err(#ErSc) => {
+                                        return Err(#ErSc);
                                     }
                                 }
                                 #query_self_dims_query_bind_query_ts
@@ -1246,8 +1246,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 pub #ValueSc: PgJsonTypeNotEmptyUniqueVec<T>
             };
             let query_bind_sqlx_types_json_self_value_ts = quote! {
-                if let Err(#ErrorSc) = #QuerySc.try_bind(sqlx::types::Json(#SelfSc.#ValueSc)) {
-                    return Err(#ErrorSc.to_string());
+                if let Err(#ErSc) = #QuerySc.try_bind(sqlx::types::Json(#SelfSc.#ValueSc)) {
+                    return Err(#ErSc.to_string());
                 }
                 Ok(#QuerySc)
             };
@@ -1516,8 +1516,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             Ok(value_c79b2256) => {
                                 #QuerySc = value_c79b2256;
                             }
-                            Err(#ErrorSc) => {
-                                return Err(#ErrorSc);
+                            Err(#ErSc) => {
+                                return Err(#ErSc);
                             }
                         }
                         Ok(#QuerySc)

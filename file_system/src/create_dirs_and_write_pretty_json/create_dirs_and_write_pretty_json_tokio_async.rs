@@ -1,29 +1,29 @@
-use error_occurence_lib::{ErrorOccurence, code_occurence, code_occurence::CodeOccurence};
-use serde_json::{Error as SerdeJsonError, Value as SerdeJsonValue, to_string_pretty};
+use er_occurence_lib::{ErOccurence, code_occurence, code_occurence::CodeOccurence};
+use serde_json::{Error as SerdeJsonEr, Value as SerdeJsonValue, to_string_pretty};
 use std::path::Path;
 use thiserror::Error;
-#[derive(Debug, Error, ErrorOccurence)]
-pub enum CreateDirsAndWritePrettyJsonTokioAsyncError {
+#[derive(Debug, Error, ErOccurence)]
+pub enum CreateDirsAndWritePrettyJsonTokioAsyncEr {
     SerdeJson {
         #[eo_to_err_string]
-        er: SerdeJsonError,
+        er: SerdeJsonEr,
         code_occurence: CodeOccurence,
     },
     WriteBytesIntoFile {
-        #[eo_error_occurence]
-        er: crate::CreateDirsAndWriteFileTokioAsyncError,
+        #[eo_er_occurence]
+        er: crate::CreateDirsAndWriteFileTokioAsyncEr,
         code_occurence: CodeOccurence,
     },
 }
 pub async fn create_dirs_and_write_pretty_json_tokio_async(
     path: &Path,
     serde_json_value: SerdeJsonValue,
-) -> Result<(), CreateDirsAndWritePrettyJsonTokioAsyncError> {
+) -> Result<(), CreateDirsAndWritePrettyJsonTokioAsyncEr> {
     match to_string_pretty(&serde_json_value) {
         Ok(value) => {
             match crate::create_dirs_and_write_file_tokio_async(path, value.as_bytes()).await {
                 Err(er) => Err(
-                    CreateDirsAndWritePrettyJsonTokioAsyncError::WriteBytesIntoFile {
+                    CreateDirsAndWritePrettyJsonTokioAsyncEr::WriteBytesIntoFile {
                         er,
                         code_occurence: code_occurence!(),
                     },
@@ -31,7 +31,7 @@ pub async fn create_dirs_and_write_pretty_json_tokio_async(
                 Ok(()) => Ok(()),
             }
         }
-        Err(er) => Err(CreateDirsAndWritePrettyJsonTokioAsyncError::SerdeJson {
+        Err(er) => Err(CreateDirsAndWritePrettyJsonTokioAsyncEr::SerdeJson {
             er,
             code_occurence: code_occurence!(),
         }),

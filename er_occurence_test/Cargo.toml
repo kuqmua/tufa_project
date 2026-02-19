@@ -1,5 +1,5 @@
 [package]
-name = "error_occurence_test"
+name = "er_occurence_test"
 version = "0.1.0"
 edition = "2024"
 description = "description"
@@ -12,7 +12,7 @@ categories = ["category"]
 [dependencies]
 thiserror.workspace = true
 serde.workspace = true
-error_occurence_lib = {path = "../error_occurence_lib"}
+er_occurence_lib = {path = "../er_occurence_lib"}
 
 [lints]
 workspace = true

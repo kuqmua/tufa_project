@@ -18,7 +18,7 @@ thiserror.workspace = true
 gen_pg_types = {path = "./gen_pg_types"}
 pg_types_common = {path = "./pg_types_common"}
 pg_crud_common = {path = "../pg_crud_common", features = ["test-utils"]}
-error_occurence_lib = {path = "../../error_occurence_lib"}
+er_occurence_lib = {path = "../../er_occurence_lib"}
 where_filters = {path = "../where_filters"}
 
 [lints]

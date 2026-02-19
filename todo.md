@@ -48,7 +48,7 @@
 # Testing
 
 ## Test Strategies
-* Tracing through few microservices with error handlers
+* Tracing through few microservices with er handlers
 * Runtime tests with bot logging in some messenger
 * Parsing providers posts tests
 * Server what running web tests every hour like http requests and get valid data or not
@@ -63,20 +63,20 @@
 * Create big json file to test parsing speed as test
 * Test for all env var to working and usage
 
-# Error Handling
+# Er Handling
 
-## Error Management
+## Er Management
 * try_ prefix if function can return Err or None
-* Big enum of enums (recursive) of all errors in project
-* If error size > then ok return type then allocate error on heap, otherwise actual return type would be more then needed
+* Big enum of enums (recursive) of all ers in project
+* If er size > then ok return type then allocate er on heap, otherwise actual return type would be more then needed
 * Rename all functions return type to mean something
-* Try SNAFU as error handling crate
+* Try SNAFU as er handling crate
 
-## Error Implementation
-* How to do error handling with Box<ErrorImpl>
-* If your function is propagating the error upstream (e.g. using the ? operator), it should not log the error
-* Add field how_to_fix error into error
-* Async runtime error handling state for write/dont write/partially write into console error info
+## Er Implementation
+* How to do er handling with Box<ErImpl>
+* If your function is propagating the er upstream (e.g. using the ? operator), it should not log the er
+* Add field how_to_fix er into er
+* Async runtime er handling state for write/dont write/partially write into console er info
 
 # Database Integration
 
@@ -142,7 +142,7 @@
 ## Code Refactoring
 * Early return refactoring with ok_or and ?
 * Remove unwrap() into expect() to give more meaning
-* Result instead of option in all code possible coz return Option loosing information about error
+* Result instead of option in all code possible coz return Option loosing information about er
 * Move providers link parts (specific urls) to project constants
 * Reuse files with functions and constants using #[path=""] instead of module system
 
@@ -151,7 +151,7 @@
 * Learn more about iterator methods
 * Learn more about rust macro system
 * AsRef trait find out more
-* Find out more about downcast errors
+* Find out more about downcast ers
 
 # Performance Optimization
 
@@ -250,8 +250,8 @@
 
 ## Procedural Macros
 * Cut enum extension into few different proc macroses
-* Write match should trace inside init or new function of error initialization
-* https://blog.turbo.fish/proc-macro-error-handling/
+* Write match should trace inside init or new function of er initialization
+* https://blog.turbo.fish/proc-macro-er-handling/
 * Some logic around location() file!() line!() column!() - maybe gen all other functions - github link and others on compile time instead of runtime?
 
 ## Code Generation Tools
