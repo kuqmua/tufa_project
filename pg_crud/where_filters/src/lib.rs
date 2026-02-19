@@ -78,8 +78,8 @@ impl<T: PartialEq + Clone + Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
         T: 'query_lifetime,
     {
         for el_cc499cbc in self.0 {
-            if let Err(error) = query.try_bind(Json(el_cc499cbc)) {
-                return Err(error.to_string());
+            if let Err(er) = query.try_bind(Json(el_cc499cbc)) {
+                return Err(er.to_string());
             }
         }
         Ok(query)
@@ -100,8 +100,8 @@ impl<T: PartialEq + Clone + Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
                         });
                     }
                 }
-                Err(error) => {
-                    return Err(error);
+                Err(er) => {
+                    return Err(er);
                 }
             }
         }
@@ -207,8 +207,8 @@ where
         self,
         mut query: Query<'lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'lifetime, Postgres, PgArguments>, String> {
-        if let Err(error) = query.try_bind(Json(self.0)) {
-            return Err(error.to_string());
+        if let Err(er) = query.try_bind(Json(self.0)) {
+            return Err(er.to_string());
         }
         Ok(query)
     }
@@ -292,8 +292,8 @@ const _: () = {
                     let __field0: String = <String as _serde::Deserialize>::deserialize(__e)?;
                     Ok(RegexRegex(match Regex::new(&__field0) {
                         Ok(value) => value,
-                        Err(error) => {
-                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                        Err(er) => {
+                            return Err(serde::de::Error::custom(format!("{er:?}")));
                         }
                     }))
                 }
@@ -311,8 +311,8 @@ const _: () = {
                     };
                     Ok(RegexRegex(match Regex::new(&__field0) {
                         Ok(value) => value,
-                        Err(error) => {
-                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                        Err(er) => {
+                            return Err(serde::de::Error::custom(format!("{er:?}")));
                         }
                     }))
                 }
@@ -614,11 +614,11 @@ impl<'lifetime, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lif
         self,
         mut query: Query<'lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'lifetime, Postgres, PgArguments>, String> {
-        if let Err(error) = query.try_bind(self.start) {
-            return Err(error.to_string());
+        if let Err(er) = query.try_bind(self.start) {
+            return Err(er.to_string());
         }
-        if let Err(error) = query.try_bind(self.end) {
-            return Err(error.to_string());
+        if let Err(er) = query.try_bind(self.end) {
+            return Err(er.to_string());
         }
         Ok(query)
     }
@@ -856,8 +856,8 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
         mut query: Query<'lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'lifetime, Postgres, PgArguments>, String> {
         for el_a05046df in self.0 {
-            if let Err(error) = query.try_bind(el_a05046df) {
-                return Err(error.to_string());
+            if let Err(er) = query.try_bind(el_a05046df) {
+                return Err(er.to_string());
             }
         }
         Ok(query)
@@ -895,8 +895,8 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
                         });
                     }
                 }
-                Err(error) => {
-                    return Err(error);
+                Err(er) => {
+                    return Err(er);
                 }
             }
         }

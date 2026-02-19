@@ -722,8 +722,8 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
                 Ok(value) => {
                     query = value;
                 }
-                Err(error) => {
-                    return Err(error);
+                Err(er) => {
+                    return Err(er);
                 }
             }
         }
@@ -753,8 +753,8 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
                     }
                     is_need_to_add_logical_operator_inner_handle = true;
                 }
-                Err(error) => {
-                    return Err(error);
+                Err(er) => {
+                    return Err(er);
                 }
             }
         }
@@ -839,11 +839,11 @@ impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PaginationBase {
         self,
         mut query: Query<'query_lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
-        if let Err(error) = query.try_bind(self.limit) {
-            return Err(error.to_string());
+        if let Err(er) = query.try_bind(self.limit) {
+            return Err(er.to_string());
         }
-        if let Err(error) = query.try_bind(self.offset) {
-            return Err(error.to_string());
+        if let Err(er) = query.try_bind(self.offset) {
+            return Err(er.to_string());
         }
         Ok(query)
     }
@@ -1282,8 +1282,8 @@ where
                 Ok(value) => {
                     query = value;
                 }
-                Err(error) => {
-                    return Err(error);
+                Err(er) => {
+                    return Err(er);
                 }
             }
         }
@@ -1309,8 +1309,8 @@ where
                 Ok(value) => {
                     acc_57b31116.push_str(&value);
                 }
-                Err(error) => {
-                    return Err(error);
+                Err(er) => {
+                    return Err(er);
                 }
             }
         }
@@ -1513,8 +1513,8 @@ impl TryFrom<i32> for NotZeroUnsignedPartOfI32 {
                     Ok(Self(handle))
                 }
             }
-            Err(error) => Err(Self::Error::UnsignedPartOfI32TryFromI32Error {
-                value: error,
+            Err(er) => Err(Self::Error::UnsignedPartOfI32TryFromI32Error {
+                value: er,
                 code_occurence: code_occurence!(),
             }),
         }

@@ -692,12 +692,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             };
             quote! {
                 pub async fn #PreparePgTableSc(#PoolSc: &sqlx::Pool<sqlx::Postgres>, table: &str) -> Result<(), #ident_prepare_pg_error_ucc> {
-                    if let Err(error) = sqlx::query(&format!(
+                    if let Err(er) = sqlx::query(&format!(
                         #prepare_pg_dq_ts,
                         #(#serde_json_to_string_schemars_schema_for_generic_unwrap_ts),*
                     )).execute(#PoolSc).await {
                         return Err(#ident_prepare_pg_error_ucc::#PreparePgUcc {
-                            error,
+                            error: er,
                             code_occurence: error_occurence_lib::code_occurence!()
                         });
                     }
@@ -2031,8 +2031,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             increment,
                         ){
                             Ok(value) => value,
-                            Err(error) => {
-                                return Err(error);
+                            Err(er) => {
+                                return Err(er);
                             }
                         });
                     }

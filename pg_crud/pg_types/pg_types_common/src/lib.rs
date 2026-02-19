@@ -166,7 +166,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
                 };
                 match PaginationStartsWithOne::try_new(__field0, __field1) {
                     Ok(value) => Ok(value),
-                    Err(error) => Err(SerdeError::custom(format!("{error:?}"))),
+                    Err(er) => Err(SerdeError::custom(format!("{er:?}"))),
                 }
             }
             #[inline]
@@ -205,7 +205,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
                 };
                 match PaginationStartsWithOne::try_new(__field0_value, __field1_value) {
                     Ok(value) => Ok(value),
-                    Err(error) => Err(SerdeError::custom(format!("{error:?}"))),
+                    Err(er) => Err(SerdeError::custom(format!("{er:?}"))),
                 }
             }
         }

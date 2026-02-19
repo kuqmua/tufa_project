@@ -1619,8 +1619,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 let gen_serde_private_ok_pg_type_ts = |content_ts: &dyn ToTokens| gen_serde_private_ok_ts(&quote! {#ident_standart_not_null_origin_ucc(#content_ts)});
                 let match_uuid_uuid_field_type_try_parse_ts = quote! {match #inner_type_standart_not_null_ts::try_parse(&#field_0_value_ts) {
                     Ok(value_3c0b34fb) => value_3c0b34fb,
-                    Err(error) => {
-                        return Err(serde::de::Error::custom(error));
+                    Err(er) => {
+                        return Err(serde::de::Error::custom(er));
                     }
                 }};
                 let sqlx_types_mac_address_mac_address_field_type_new_field_0_value_ts = quote! {#inner_type_standart_not_null_ts::#NewSc(#field_0_value_ts)};

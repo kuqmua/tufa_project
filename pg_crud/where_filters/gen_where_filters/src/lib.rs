@@ -1423,8 +1423,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     is_need_to_add_logical_operator
                                 ) {
                                     Ok(value_cc8dda2f) => value_cc8dda2f,
-                                    Err(error) => {
-                                        return Err(error);
+                                    Err(er) => {
+                                        return Err(er);
                                     }
                                 };
                             },
@@ -1454,8 +1454,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     Ok(value) => {
                                         query = value;
                                     },
-                                    Err(error) => {
-                                        return Err(error.to_string());
+                                    Err(er) => {
+                                        return Err(er.to_string());
                                     }
                                 }
                                 Ok(query)

@@ -21,16 +21,16 @@ pub fn create_dirs_and_write_pretty_json_sync(
 ) -> Result<(), CreateDirsAndWritePrettyJsonSyncError> {
     match to_string_pretty(&serde_json_value) {
         Ok(value) => {
-            if let Err(error) = crate::create_dirs_and_write_file_sync(path, value.as_bytes()) {
+            if let Err(er) = crate::create_dirs_and_write_file_sync(path, value.as_bytes()) {
                 return Err(CreateDirsAndWritePrettyJsonSyncError::WriteBytesIntoFile {
-                    error,
+                    error: er,
                     code_occurence: code_occurence!(),
                 });
             }
             Ok(())
         }
-        Err(error) => Err(CreateDirsAndWritePrettyJsonSyncError::SerdeJson {
-            error,
+        Err(er) => Err(CreateDirsAndWritePrettyJsonSyncError::SerdeJson {
+            error: er,
             code_occurence: code_occurence!(),
         }),
     }

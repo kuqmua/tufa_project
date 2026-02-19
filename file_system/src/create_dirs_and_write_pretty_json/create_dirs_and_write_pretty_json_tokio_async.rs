@@ -22,17 +22,17 @@ pub async fn create_dirs_and_write_pretty_json_tokio_async(
     match to_string_pretty(&serde_json_value) {
         Ok(value) => {
             match crate::create_dirs_and_write_file_tokio_async(path, value.as_bytes()).await {
-                Err(error) => Err(
+                Err(er) => Err(
                     CreateDirsAndWritePrettyJsonTokioAsyncError::WriteBytesIntoFile {
-                        error,
+                        error: er,
                         code_occurence: code_occurence!(),
                     },
                 ),
                 Ok(()) => Ok(()),
             }
         }
-        Err(error) => Err(CreateDirsAndWritePrettyJsonTokioAsyncError::SerdeJson {
-            error,
+        Err(er) => Err(CreateDirsAndWritePrettyJsonTokioAsyncError::SerdeJson {
+            error: er,
             code_occurence: code_occurence!(),
         }),
     }
