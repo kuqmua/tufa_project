@@ -1,4 +1,4 @@
-use location_lib::{Location, code_occurence, code_occurence::CodeOccurence};
+use location_lib::{Location, loc, loc::Loc};
 use pg_crud_common::DefaultOptionSomeVecOneEl;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -9,7 +9,7 @@ pub enum UniqueVecTryNewEr<T> {
     NotUnique {
         #[eo_to_err_string_serde]
         value: T,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
@@ -33,7 +33,7 @@ impl<T: PartialEq + Clone> UniqueVec<T> {
             if acc_4855bea7.contains(&el_4dddc7c0) {
                 return Err(UniqueVecTryNewEr::NotUnique {
                     value: el_4dddc7c0.clone(),
-                    code_occurence: code_occurence!(),
+                    loc: loc!(),
                 });
             }
             acc_4855bea7.push(el_4dddc7c0);

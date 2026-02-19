@@ -4,9 +4,9 @@ use axum::{
     http::StatusCode,
 };
 use bytes::Bytes;
-use location_lib::{Location, code_occurence, code_occurence::CodeOccurence};
 use http_body::SizeHint;
 use http_logic::GetAxumHttpStatusCode;
+use location_lib::{Location, loc, loc::Loc};
 use thiserror::Error;
 #[derive(Debug, Error, Location)]
 pub enum BodySizeEr {
@@ -17,7 +17,7 @@ pub enum BodySizeEr {
         maximum_size_of_body_limit_in_bytes: usize,
         #[eo_to_err_string]
         size_hint: SizeHint,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
 }
 impl GetAxumHttpStatusCode for BodySizeEr {
@@ -35,7 +35,7 @@ pub async fn check_body_size(body: Body, limit: usize) -> Result<Bytes, BodySize
             er,
             maximum_size_of_body_limit_in_bytes: limit,
             size_hint,
-            code_occurence: code_occurence!(),
+            loc: loc!(),
         }),
     }
 }

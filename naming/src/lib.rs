@@ -26,7 +26,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["primary", "key"],
     ["serde"],
     ["with", "serde"],
-    ["code", "occurence"],
+    ["loc"],
     ["is", "none"],
     ["try", "from"],
     ["from", "str"],

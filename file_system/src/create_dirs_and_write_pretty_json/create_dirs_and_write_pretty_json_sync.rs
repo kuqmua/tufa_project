@@ -1,4 +1,4 @@
-use location_lib::{Location, code_occurence, code_occurence::CodeOccurence};
+use location_lib::{Location, loc, loc::Loc};
 use serde_json::{Error as SerdeJsonEr, Value as SerdeJsonValue, to_string_pretty};
 use std::path::Path;
 use thiserror::Error;
@@ -7,12 +7,12 @@ pub enum CreateDirsAndWritePrettyJsonSyncEr {
     SerdeJson {
         #[eo_to_err_string]
         er: SerdeJsonEr,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
     WriteBytesIntoFile {
         #[eo_location]
         er: crate::CreateDirsAndWriteFileSyncEr,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
 }
 pub fn create_dirs_and_write_pretty_json_sync(
@@ -24,14 +24,11 @@ pub fn create_dirs_and_write_pretty_json_sync(
             if let Err(er) = crate::create_dirs_and_write_file_sync(path, value.as_bytes()) {
                 return Err(CreateDirsAndWritePrettyJsonSyncEr::WriteBytesIntoFile {
                     er,
-                    code_occurence: code_occurence!(),
+                    loc: loc!(),
                 });
             }
             Ok(())
         }
-        Err(er) => Err(CreateDirsAndWritePrettyJsonSyncEr::SerdeJson {
-            er,
-            code_occurence: code_occurence!(),
-        }),
+        Err(er) => Err(CreateDirsAndWritePrettyJsonSyncEr::SerdeJson { er, loc: loc!() }),
     }
 }

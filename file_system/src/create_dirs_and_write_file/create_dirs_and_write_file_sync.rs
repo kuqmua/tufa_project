@@ -1,4 +1,4 @@
-use location_lib::{Location, code_occurence, code_occurence::CodeOccurence};
+use location_lib::{Location, loc, loc::Loc};
 use std::{
     fs::{self, File},
     io::{Error as IoEr, Write},
@@ -10,7 +10,7 @@ pub enum CreateDirsAndWriteFileSyncEr {
     StdIo {
         #[eo_to_err_string]
         er: IoEr,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
 }
 pub fn create_dirs_and_write_file_sync(
@@ -20,30 +20,18 @@ pub fn create_dirs_and_write_file_sync(
     if let Some(prefix) = path.parent()
         && let Err(er) = fs::create_dir_all(prefix)
     {
-        return Err(CreateDirsAndWriteFileSyncEr::StdIo {
-            er,
-            code_occurence: code_occurence!(),
-        });
+        return Err(CreateDirsAndWriteFileSyncEr::StdIo { er, loc: loc!() });
     }
     match File::create(path) {
         Ok(mut file) => {
             if let Err(er) = Write::write_all(&mut file, bytes) {
-                return Err(CreateDirsAndWriteFileSyncEr::StdIo {
-                    er,
-                    code_occurence: code_occurence!(),
-                });
+                return Err(CreateDirsAndWriteFileSyncEr::StdIo { er, loc: loc!() });
             }
             if let Err(er) = file.sync_all() {
-                return Err(CreateDirsAndWriteFileSyncEr::StdIo {
-                    er,
-                    code_occurence: code_occurence!(),
-                });
+                return Err(CreateDirsAndWriteFileSyncEr::StdIo { er, loc: loc!() });
             }
             Ok(())
         }
-        Err(er) => Err(CreateDirsAndWriteFileSyncEr::StdIo {
-            er,
-            code_occurence: code_occurence!(),
-        }),
+        Err(er) => Err(CreateDirsAndWriteFileSyncEr::StdIo { er, loc: loc!() }),
     }
 }

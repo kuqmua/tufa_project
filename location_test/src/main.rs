@@ -6,9 +6,7 @@
 // impl display like this this
 // eo_location_field
 // https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/location_test/src/main.rs#L85 2024-05-06 09:17:23
-use location_lib::{
-    Location, ToErrString, code_occurence, code_occurence::CodeOccurence,
-};
+use location_lib::{Location, ToErrString, loc, loc::Loc};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use thiserror::Error;
@@ -16,7 +14,7 @@ use thiserror::Error;
 pub enum ErOne {
     //use ToErrString for hashmap keys instead of Display
     //todo even for String in serialize deserialize version of er must be using ToErrString impl instead of std::fmt::Display
-    //todo test on using only code_occurence as pnly field in named variant
+    //todo test on using only loc as pnly field in named variant
     Variant {
         #[eo_to_err_string]
         eo_display_field: DisplayStruct, //IN SERIALIZE DESERIALIZE String
@@ -36,7 +34,7 @@ pub enum ErOne {
         hashmap_string_serde: HashMap<String, SerdeStruct>,
         #[eo_hashmap_key_string_value_location]
         hashmap_string_location: HashMap<String, ErUnnamedOne>,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
 }
 #[derive(Debug, Error, Location)]
@@ -44,12 +42,12 @@ pub enum ErTwo {
     Another {
         #[eo_to_err_string_serde]
         sdasdasd: String,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
     Variant {
         #[eo_to_err_string_serde]
         eo_display_with_serde_field: String,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
 }
 #[derive(Debug, Error, Location)]
@@ -92,7 +90,7 @@ fn main() {
         },
         eo_location_field: ErTwo::Variant {
             eo_display_with_serde_field: String::from("value"),
-            code_occurence: code_occurence!(),
+            loc: loc!(),
         },
         eo_vec_display_field: vec![
             DisplayStruct {
@@ -119,11 +117,11 @@ fn main() {
         eo_vec_location_field: vec![
             ErUnnamedOne::Something(ErTwo::Variant {
                 eo_display_with_serde_field: String::from("value"),
-                code_occurence: code_occurence!(),
+                loc: loc!(),
             }),
             ErUnnamedOne::Something(ErTwo::Variant {
                 eo_display_with_serde_field: String::from("123"),
-                code_occurence: code_occurence!(),
+                loc: loc!(),
             }),
         ],
         hashmap_string_string: HashMap::from([
@@ -165,18 +163,18 @@ fn main() {
                 String::from("ksdfgadsfgsdfgdfgey"),
                 ErUnnamedOne::Something(ErTwo::Variant {
                     eo_display_with_serde_field: String::from("vasdfgdgdfglue"),
-                    code_occurence: code_occurence!(),
+                    loc: loc!(),
                 }),
             ),
             (
                 String::from("kesdfgsdgfdfgy"),
                 ErUnnamedOne::Something(ErTwo::Variant {
                     eo_display_with_serde_field: String::from("valsdfgdsafgdsgue"),
-                    code_occurence: code_occurence!(),
+                    loc: loc!(),
                 }),
             ),
         ]),
-        code_occurence: code_occurence!(),
+        loc: loc!(),
     };
     println!("{er:?}");
 }

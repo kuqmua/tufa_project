@@ -75,7 +75,7 @@ server_config = {path = "../../../server_config"}"#,
                                 CheckCommit {
                                     #[eo_location]
                                     check_commit: pg_crud::check_commit::CommitEr,
-                                    code_occurence: location_lib::code_occurence::CodeOccurence,
+                                    loc: location_lib::loc::Loc,
                                 },
                             }
                         }]

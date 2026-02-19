@@ -2070,7 +2070,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &Ts2::new(),
                         &quote!{{
                             #AllFieldsAreNoneUcc {
-                                code_occurence: location_lib::code_occurence::CodeOccurence,
+                                loc: location_lib::loc::Loc,
                             },
                         }}
                     );
@@ -2139,7 +2139,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 quote! {
                                     if #content_ts {
                                         return Err(#ident_read_try_from_er_or_ident_with_id_standart_not_null_read_try_from_er_ucc::#AllFieldsAreNoneUcc {
-                                            code_occurence: location_lib::code_occurence!()
+                                            loc: location_lib::loc!()
                                         });
                                     }
                                 }
@@ -2677,22 +2677,22 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 &Ts2::new(),
                                 &quote!{{
                                     #CreateUpdateDeleteAreEmptyUcc {
-                                        code_occurence: location_lib::code_occurence::CodeOccurence,
+                                        loc: location_lib::loc::Loc,
                                     },
                                     #IdsAreNotUniqueUcc {
                                         #[eo_to_err_string_serde]
                                         duplicate: #StringTs,
-                                        code_occurence: location_lib::code_occurence::CodeOccurence,
+                                        loc: location_lib::loc::Loc,
                                     },
                                     #NotUniqueIdInJsonDeleteArrayUcc {
                                         #[eo_to_err_string_serde]
                                         er: #StringTs,
-                                        code_occurence: location_lib::code_occurence::CodeOccurence,
+                                        loc: location_lib::loc::Loc,
                                     },
                                     #NotUniqueIdInJsonUpdateAndDeleteArraysUcc {
                                         #[eo_to_err_string_serde]
                                         er: #StringTs,
-                                        code_occurence: location_lib::code_occurence::CodeOccurence,
+                                        loc: location_lib::loc::Loc,
                                     },
                                 }}
                             ),
@@ -2719,7 +2719,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         quote! {
                                             if create.is_empty() && update.is_empty() && delete.is_empty() {
                                                 return Err(#ident_update_try_new_er_ucc::#CreateUpdateDeleteAreEmptyUcc {
-                                                    code_occurence: location_lib::code_occurence!()
+                                                    loc: location_lib::loc!()
                                                 });
                                             }
                                         }
@@ -2765,7 +2765,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 if acc_2bf4e098.contains(&&el_dff7634c.#IdSc) {
                                                     return Err(#ident_update_try_new_er_ucc::#IdsAreNotUniqueUcc {
                                                         duplicate: #uuid_as_pg_json_type_update_to_err_string_el_id_ts,
-                                                        code_occurence: location_lib::code_occurence!()
+                                                        loc: location_lib::loc!()
                                                     });
                                                 }
                                                 acc_2bf4e098.push(&el_dff7634c.#IdSc);
@@ -2774,7 +2774,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 if acc_2bf4e098.contains(&el_2b0181e6) {
                                                     return Err(#ident_update_try_new_er_ucc::#IdsAreNotUniqueUcc {
                                                         duplicate: #uuid_as_pg_json_type_update_to_err_string_el_ts,
-                                                        code_occurence: location_lib::code_occurence!()
+                                                        loc: location_lib::loc!()
                                                     });
                                                 }
                                                 acc_2bf4e098.push(el_2b0181e6);
@@ -2801,7 +2801,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                                         &el_2ecc509c.clone().into()
                                                                     )
                                                                 ),
-                                                                code_occurence: location_lib::code_occurence!()
+                                                                loc: location_lib::loc!()
                                                             });
                                                         }
                                                         delete_acc.push(el_2ecc509c);
@@ -2822,7 +2822,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                                     &el_fefe9816.clone().into()
                                                                 )
                                                             ),
-                                                            code_occurence: location_lib::code_occurence!()
+                                                            loc: location_lib::loc!()
                                                         });
                                                     }
                                                 }

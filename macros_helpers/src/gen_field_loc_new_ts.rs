@@ -1,10 +1,10 @@
 use gen_quotes::dq_ts;
-use naming::CodeOccurenceSc;
+use naming::LocSc;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 #[must_use]
-pub fn gen_field_code_occurence_new_ts(file: &'static str, line: u32, column: u32) -> Ts2 {
-    let code_occurence_new_ts = {
+pub fn gen_field_loc_new_ts(file: &'static str, line: u32, column: u32) -> Ts2 {
+    let loc_new_ts = {
         let file_ts = dq_ts(&file);
         let line_ts = {
             let line_str = line.to_string();
@@ -15,11 +15,11 @@ pub fn gen_field_code_occurence_new_ts(file: &'static str, line: u32, column: u3
             column_str.parse::<Ts2>().expect("105a4e62")
         };
         quote! {
-            location_lib::code_occurence::CodeOccurence::new(
+            location_lib::loc::Loc::new(
                 file!().to_owned(),
                 line!(),
                 column!(),
-                Some(location_lib::code_occurence::MacroOccurence {
+                Some(location_lib::loc::MacroOccurence {
                     file: String::from(#file_ts),
                     line: #line_ts,
                     column: #column_ts,
@@ -27,5 +27,5 @@ pub fn gen_field_code_occurence_new_ts(file: &'static str, line: u32, column: u3
             )
         }
     };
-    quote! {#CodeOccurenceSc: #code_occurence_new_ts}
+    quote! {#LocSc: #loc_new_ts}
 }

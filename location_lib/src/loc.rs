@@ -20,7 +20,7 @@ pub struct MacroOccurence {
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, ToSchema, JsonSchema)]
-pub struct CodeOccurence {
+pub struct Loc {
     #[allow(clippy::arbitrary_source_item_ordering)]
     file: String,
     line: u32,
@@ -30,7 +30,7 @@ pub struct CodeOccurence {
     duration: Duration,
     macro_occurence: Option<MacroOccurence>,
 }
-impl CodeOccurence {
+impl Loc {
     #[must_use]
     pub fn new(
         file: String,
@@ -56,7 +56,7 @@ pub struct StdTimeDuration {
     pub secs: u64,
     pub nanos: u32,
 }
-impl Display for CodeOccurence {
+impl Display for Loc {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         write!(
             f,

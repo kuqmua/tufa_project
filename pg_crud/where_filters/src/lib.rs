@@ -1,4 +1,4 @@
-use location_lib::{Location, code_occurence, code_occurence::CodeOccurence};
+use location_lib::{Location, loc, loc::Loc};
 use pg_crud_common::{
     DefaultOptionSomeVecOneEl, NotEmptyUniqueVecTryNewEr, PgTypeWhereFilter, QueryPartEr,
     increment_checked_add_one_returning_increment,
@@ -50,9 +50,7 @@ impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
     }
     pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
         if value.is_empty() {
-            return Err(NotEmptyUniqueVecTryNewEr::IsEmpty {
-                code_occurence: code_occurence!(),
-            });
+            return Err(NotEmptyUniqueVecTryNewEr::IsEmpty { loc: loc!() });
         }
         {
             let mut acc_72940a4c = Vec::new();
@@ -60,7 +58,7 @@ impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
                 if acc_72940a4c.contains(&el_7721a8da) {
                     return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
                         value: el_7721a8da.clone(),
-                        code_occurence: code_occurence!(),
+                        loc: loc!(),
                     });
                 }
                 acc_72940a4c.push(el_7721a8da);
@@ -95,9 +93,7 @@ impl<T: PartialEq + Clone + Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
             match increment_checked_add_one_returning_increment(increment) {
                 Ok(value) => {
                     if write!(acc_ecd78d3a, "${value},").is_err() {
-                        return Err(QueryPartEr::WriteIntoBuffer {
-                            code_occurence: code_occurence!(),
-                        });
+                        return Err(QueryPartEr::WriteIntoBuffer { loc: loc!() });
                     }
                 }
                 Err(er) => {
@@ -395,7 +391,7 @@ pub enum BetweenTryNewEr<T> {
         start: T,
         #[eo_to_err_string_serde]
         end: T,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
 }
 impl<T: Type<Postgres> + for<'__> Encode<'__, Postgres> + PartialOrd> Between<T> {
@@ -406,7 +402,7 @@ impl<T: Type<Postgres> + for<'__> Encode<'__, Postgres> + PartialOrd> Between<T>
             Err(BetweenTryNewEr::StartMoreOrEqualToEnd {
                 start,
                 end,
-                code_occurence: code_occurence!(),
+                loc: loc!(),
             })
         }
     }
@@ -649,9 +645,7 @@ pub struct PgTypeNotEmptyUniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> PgTypeNotEmptyUniqueVec<T> {
     pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
         if value.is_empty() {
-            return Err(NotEmptyUniqueVecTryNewEr::IsEmpty {
-                code_occurence: code_occurence!(),
-            });
+            return Err(NotEmptyUniqueVecTryNewEr::IsEmpty { loc: loc!() });
         }
         {
             let mut acc_6be6ccee = Vec::new();
@@ -659,7 +653,7 @@ impl<T: PartialEq + Clone> PgTypeNotEmptyUniqueVec<T> {
                 if acc_6be6ccee.contains(&el_b3d83e60) {
                     return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
                         value: el_b3d83e60.clone(),
-                        code_occurence: code_occurence!(),
+                        loc: loc!(),
                     });
                 }
                 acc_6be6ccee.push(el_b3d83e60);
@@ -775,7 +769,7 @@ pub enum BoundedStdVecVecTryNewEr {
         wrong_length: usize,
         #[eo_to_err_string_serde]
         expected: usize,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
 }
 enum PgTypeOrPgJsonType {
@@ -888,9 +882,7 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
                     )
                     .is_err()
                     {
-                        return Err(QueryPartEr::WriteIntoBuffer {
-                            code_occurence: code_occurence!(),
-                        });
+                        return Err(QueryPartEr::WriteIntoBuffer { loc: loc!() });
                     }
                 }
                 Err(er) => {
@@ -915,7 +907,7 @@ impl<T, const LENGTH: usize> TryFrom<Vec<T>> for BoundedStdVecVec<T, LENGTH> {
             Err(BoundedStdVecVecTryNewEr::LengthIsNotCorrect {
                 wrong_length: len,
                 expected: LENGTH,
-                code_occurence: code_occurence!(),
+                loc: loc!(),
             })
         }
     }

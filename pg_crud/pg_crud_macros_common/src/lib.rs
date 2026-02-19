@@ -2064,7 +2064,7 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
 }
 #[must_use]
 pub fn pg_crud_common_query_part_er_checked_add_initialization_ts() -> Ts2 {
-    quote! {pg_crud_common::QueryPartEr::CheckedAdd { code_occurence: location_lib::code_occurence!() }}
+    quote! {pg_crud_common::QueryPartEr::CheckedAdd { loc: location_lib::loc!() }}
 }
 pub fn gen_impl_crate_is_string_empty_for_ident_content_ts(
     ident: &dyn ToTokens,
@@ -2417,7 +2417,7 @@ pub fn impl_pg_type_equal_operator_for_ident_ts(
 pub fn gen_query_part_er_write_into_buffer_ts(import_path: ImportPath) -> Ts2 {
     quote! {
         #import_path::QueryPartEr::WriteIntoBuffer {
-            code_occurence: location_lib::code_occurence!()
+            loc: location_lib::loc!()
         }
     }
 }

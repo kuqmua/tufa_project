@@ -1,4 +1,4 @@
-use location_lib::{Location, code_occurence, code_occurence::CodeOccurence};
+use location_lib::{Location, loc, loc::Loc};
 use std::{fs, io::Error as IoEr, path::Path};
 use thiserror::Error;
 use tokio::{fs::File, io::AsyncWriteExt};
@@ -7,7 +7,7 @@ pub enum CreateDirsAndWriteFileTokioAsyncEr {
     StdIoEr {
         #[eo_to_err_string]
         er: IoEr,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
 }
 pub async fn create_dirs_and_write_file_tokio_async(
@@ -17,24 +17,15 @@ pub async fn create_dirs_and_write_file_tokio_async(
     if let Some(prefix) = path.parent()
         && let Err(er) = fs::create_dir_all(prefix)
     {
-        return Err(CreateDirsAndWriteFileTokioAsyncEr::StdIoEr {
-            er,
-            code_occurence: code_occurence!(),
-        });
+        return Err(CreateDirsAndWriteFileTokioAsyncEr::StdIoEr { er, loc: loc!() });
     }
     match File::open(path).await {
         Ok(mut file) => {
             if let Err(er) = AsyncWriteExt::write_all(&mut file, bytes).await {
-                return Err(CreateDirsAndWriteFileTokioAsyncEr::StdIoEr {
-                    er,
-                    code_occurence: code_occurence!(),
-                });
+                return Err(CreateDirsAndWriteFileTokioAsyncEr::StdIoEr { er, loc: loc!() });
             }
             Ok(())
         }
-        Err(er) => Err(CreateDirsAndWriteFileTokioAsyncEr::StdIoEr {
-            er,
-            code_occurence: code_occurence!(),
-        }),
+        Err(er) => Err(CreateDirsAndWriteFileTokioAsyncEr::StdIoEr { er, loc: loc!() }),
     }
 }

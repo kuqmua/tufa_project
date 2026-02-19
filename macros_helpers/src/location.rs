@@ -1,5 +1,5 @@
 use crate::attr_ident_str::AttrIdentStr;
-use naming::{CodeOccurenceSc, HashMapUcc, WithSerdeUcc};
+use naming::{HashMapUcc, LocSc, WithSerdeUcc};
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use std::str::FromStr;
@@ -101,11 +101,9 @@ pub fn gen_serde_version_of_named_syn_variant(value: &Variant) -> Ts2 {
     } else {
         panic!("79b0f231");
     };
-    let fields_idents_idents_with_serde_excluding_code_occurence_ts = fields
+    let fields_idents_idents_with_serde_excluding_loc_ts = fields
         .iter()
-        .filter(|el_5782b638| {
-            *el_5782b638.ident.as_ref().expect("3078fd99") != *CodeOccurenceSc.to_string()
-        })
+        .filter(|el_5782b638| *el_5782b638.ident.as_ref().expect("3078fd99") != *LocSc.to_string())
         .map(|el_c25b655e| {
             let get_type_path_third_segment_second_argument_check_if_hashmap = || {
                 let segments = if let Type::Path(syn_type_path) = &el_c25b655e.ty {
@@ -213,8 +211,8 @@ pub fn gen_serde_version_of_named_syn_variant(value: &Variant) -> Ts2 {
         });
     quote! {
         #el_ident {
-            #(#fields_idents_idents_with_serde_excluding_code_occurence_ts)*
-            #CodeOccurenceSc: location_lib::code_occurence::CodeOccurence,
+            #(#fields_idents_idents_with_serde_excluding_loc_ts)*
+            #LocSc: location_lib::loc::Loc,
         }
     }
 }

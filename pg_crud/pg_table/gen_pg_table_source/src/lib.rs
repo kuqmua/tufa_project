@@ -1,18 +1,17 @@
 use gen_quotes::dq_ts;
 use macros_helpers::{
-    AttrIdentStr, DeriveClone, DeriveCopy, LocationFieldAttr, FormatWithCargofmt,
+    AttrIdentStr, DeriveClone, DeriveCopy, FormatWithCargofmt, LocationFieldAttr,
     ShouldWriteTokenStreamIntoFile, StatusCode, StructOrEnumDeriveTokenStreamBuilder,
-    SynFieldWrapper, code_occurence_syn_field, gen_field_code_occurence_new_ts,
-    gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts, gen_impl_display_ts,
-    gen_impl_pub_try_new_for_ident_ts, gen_impl_to_err_string_ts,
-    gen_serde_version_of_named_syn_variant, gen_simple_syn_punct, get_macro_attr_meta_list_ts,
-    maybe_write_ts_into_file,
+    SynFieldWrapper, gen_field_loc_new_ts, gen_if_write_is_err_curly_braces_ts,
+    gen_if_write_is_err_ts, gen_impl_display_ts, gen_impl_pub_try_new_for_ident_ts,
+    gen_impl_to_err_string_ts, gen_serde_version_of_named_syn_variant, gen_simple_syn_punct,
+    get_macro_attr_meta_list_ts, loc_syn_field, maybe_write_ts_into_file,
 };
 use naming::{
     AdditionalParametersSc, AppStateSc, AsRefStrEnumWithUnitFieldsToScStr,
     AsRefStrEnumWithUnitFieldsToUccStr, AsRefStrToScStr, AsRefStrToScTs, BeginSc, BindedQuerySc,
-    BodyBytesSc, BodySc, BodySizeErUcc, BySc, CheckBodySizeSc, CheckBodySizeUcc, CodeOccurenceSc,
-    ColumnSc, ColumnsSc, CommitSc, CommonAdditionalErVariantsSc, CommonAdditionalLogicSc,
+    BodyBytesSc, BodySc, BodySizeErUcc, BySc, CheckBodySizeSc, CheckBodySizeUcc, ColumnSc,
+    ColumnsSc, CommitSc, CommonAdditionalErVariantsSc, CommonAdditionalLogicSc,
     CommonReadOnlyIdsReturnedFromCreateOneSc, ConfigSc, CreateExtensionIfNotExistsPgJsonschemaUcc,
     CreateExtensionIfNotExistsUuidOsspUcc, CreateIntoPgJsonTypeOptionVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptionVecWhereLengthGreaterThanSc,
@@ -27,7 +26,7 @@ use naming::{
     FailedToGetResponseTextUcc, FalseSc, FromHandleSc, FutureSc,
     GenColumnQuealsValueCommaUpdateOneQueryPartSc, GenPgTablePrimaryKeySc, GenSelectQueryPartSc,
     GenWhenColumnIdThenValueUpdateManyQueryPartSc, HeaderContentTypeApplicationJsonNotFoundUcc,
-    HeadersSc, IdentCreateDefaultSc, IncrementSc, IntoSerdeVersionSc, NoFieldsProvidedUcc,
+    HeadersSc, IdentCreateDefaultSc, IncrementSc, IntoSerdeVersionSc, LocSc, NoFieldsProvidedUcc,
     NotUniqueFieldSc, NotUniqueFieldUcc, NotUniquePrimaryKeySc, NotUniquePrimaryKeyUcc,
     OptionVecCreateSc, OrderBySc, OrderByUcc, OrderSc, PaginationSc, ParametersSc, PayloadSc,
     PayloadUcc, PgCrudSc, PgPoolForTokioSpawnSyncMoveSc, PgPoolSc, PgSc,
@@ -592,7 +591,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let content_ts = quote! {
             #[eo_to_err_string]
             er: sqlx::Error,
-            code_occurence: location_lib::code_occurence::CodeOccurence,
+            loc: location_lib::loc::Loc,
         };
         let ident_prepare_pg_er_ts = StructOrEnumDeriveTokenStreamBuilder::new()
             .make_pub()
@@ -633,13 +632,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 if let Err(er) = sqlx::query("create extension if not exists pg_jsonschema").execute(#PoolSc).await {
                     return Err(#ident_prepare_pg_er_ucc::#CreateExtensionIfNotExistsPgJsonschemaUcc {
                         er,
-                        code_occurence: location_lib::code_occurence!()
+                        loc: location_lib::loc!()
                     });
                 }
                 if let Err(er) = sqlx::query("create extension if not exists \"uuid-ossp\"").execute(#PoolSc).await {
                     return Err(#ident_prepare_pg_er_ucc::#CreateExtensionIfNotExistsUuidOsspUcc {
                         er,
-                        code_occurence: location_lib::code_occurence!()
+                        loc: location_lib::loc!()
                     });
                 }
                 Ok(())
@@ -684,7 +683,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     )).execute(#PoolSc).await {
                         return Err(#ident_prepare_pg_er_ucc::#PreparePgUcc {
                             er,
-                            code_occurence: location_lib::code_occurence!()
+                            loc: location_lib::loc!()
                         });
                     }
                     Ok(())
@@ -793,8 +792,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let fields_ts = if let Fields::Named(value) = &syn_variant_wrapper.variant.fields {
             value.named.iter().enumerate().map(|(index, element)| {
                 let field_ident = &element.ident;
-                if *field_ident.as_ref().expect("edbbd08a") == CodeOccurenceSc.to_string() {
-                    gen_field_code_occurence_new_ts(file, line, column)
+                if *field_ident.as_ref().expect("edbbd08a") == LocSc.to_string() {
+                    gen_field_loc_new_ts(file, line, column)
                 } else {
                     let er_increment_sc = ErSelfSc::from_display(&index);
                     quote! {#field_ident: #er_increment_sc}
@@ -922,7 +921,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 acc_37be2059
                             },
                         );
-                        handle.push_value(code_occurence_syn_field());
+                        handle.push_value(loc_syn_field());
                         handle
                     },
                 }),
@@ -1171,7 +1170,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &quote! {{
                     #NoFieldsProvidedUcc {
                         #[eo_to_err_string]
-                        code_occurence: location_lib::code_occurence::CodeOccurence,
+                        loc: location_lib::loc::Loc,
                     }
                 }},
             );
@@ -1191,7 +1190,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 quote! {
                     if matches!((#fields_ts), (#fields_named_with_comma_none_ts)) {
                         return Err(#ident_where_many_try_new_er_ucc::#NoFieldsProvidedUcc {
-                            code_occurence: location_lib::code_occurence!(),
+                            loc: location_lib::loc!(),
                         });
                     }
                     Ok(Self {#fields_inialization_ts})
@@ -1830,7 +1829,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &quote! {{
                     #NoFieldsProvidedUcc {
                         #[eo_to_err_string]
-                        code_occurence: location_lib::code_occurence::CodeOccurence,
+                        loc: location_lib::loc::Loc,
                     }
                 }},
             );
@@ -1865,7 +1864,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 quote! {
                     if matches!(#left_ts, #right_ts) {
                         return Err(#ident_update_try_new_er_ucc::#NoFieldsProvidedUcc {
-                            code_occurence: location_lib::code_occurence!(),
+                            loc: location_lib::loc!(),
                         });
                     }
                     Ok(Self {#fields_inialization_ts})
@@ -2467,16 +2466,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let fields_mapped_into_ts = fields_named.named.iter().map(|field| {
             let field_ident = field.ident.as_ref().expect("a21dc807");
-            let location_attr = if *field_ident == *CodeOccurenceSc.to_string() {
+            let location_attr = if *field_ident == *LocSc.to_string() {
                 Ts2::new()
             } else {
                 let mut location_attr: Option<LocationFieldAttr> = None;
                 for el_1c83e302 in &field.attrs {
                     if el_1c83e302.path().segments.len() == 1 {
                         let segment = el_1c83e302.path().segments.first().expect("5bd7ed8d");
-                        if let Ok(value) = {
-                            <LocationFieldAttr as FromStr>::from_str(&segment.ident.to_string())
-                        } {
+                        if let Ok(value) =
+                            { <LocationFieldAttr as FromStr>::from_str(&segment.ident.to_string()) }
+                        {
                             if location_attr.is_some() {
                                 panic!("9a469d36")
                             } else {
@@ -2676,48 +2675,43 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
             type_variants_from_request_response_syn_variants
         };
-    let gen_ident_try_operation_er_ts = |operation: &Operation,
-                                         syn_variants: &Vec<Variant>|
-     -> Ts2 {
-        let content_ts_930e1a93 = StructOrEnumDeriveTokenStreamBuilder::new()
+    let gen_ident_try_operation_er_ts =
+        |operation: &Operation, syn_variants: &Vec<Variant>| -> Ts2 {
+            let content_ts_930e1a93 = StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_thiserror_error()
                 .derive_location_lib_location()
-                .build_enum(
-                    &gen_ident_try_operation_er_ucc(operation),
-                    &Ts2::new(),
-                    &{
-                        let variants = syn_variants
-                            .iter()
-                            .cloned()
-                            .chain(once({
-                                let ident_operation_er_with_serde_ucc =
-                                    gen_ident_operation_er_with_serde_ucc(operation);
-                                new_syn_variant_wrapper(
-                                    &ident_operation_er_with_serde_ucc,
-                                    None,
-                                    vec![(
-                                macros_helpers_location_location_field_attr_eo_to_err_string,
-                                &operation.operation_er_with_serde_sc(),
-                                gen_simple_syn_punct(&[
-                                    &ident_operation_er_with_serde_ucc.to_string(),
-                                ]),
-                            )],
-                                )
-                                .get_syn_variant()
-                                .clone()
-                            }))
-                            .collect::<Vec<Variant>>();
-                        let variants_ts = variants.iter().map(gen_location_variant_ts);
-                        quote!{{#(#variants_ts),*}}
-                    }
-                );
-        quote! {
-            #AllowClippyArbitrarySourceItemOrdering
-            #content_ts_930e1a93
-        }
-    };
+                .build_enum(&gen_ident_try_operation_er_ucc(operation), &Ts2::new(), &{
+                    let variants = syn_variants
+                        .iter()
+                        .cloned()
+                        .chain(once({
+                            let ident_operation_er_with_serde_ucc =
+                                gen_ident_operation_er_with_serde_ucc(operation);
+                            new_syn_variant_wrapper(
+                                &ident_operation_er_with_serde_ucc,
+                                None,
+                                vec![(
+                                    macros_helpers_location_location_field_attr_eo_to_err_string,
+                                    &operation.operation_er_with_serde_sc(),
+                                    gen_simple_syn_punct(&[
+                                        &ident_operation_er_with_serde_ucc.to_string()
+                                    ]),
+                                )],
+                            )
+                            .get_syn_variant()
+                            .clone()
+                        }))
+                        .collect::<Vec<Variant>>();
+                    let variants_ts = variants.iter().map(gen_location_variant_ts);
+                    quote! {{#(#variants_ts),*}}
+                });
+            quote! {
+                #AllowClippyArbitrarySourceItemOrdering
+                #content_ts_930e1a93
+            }
+        };
     let std_sync_arc_combination_of_app_state_logic_traits_ts =
         quote! {std::sync::Arc<dyn #PgCrudSc::CombinationOfAppStateLogicTraits>};
     let gen_operation_ts = |operation: &Operation,
@@ -3023,12 +3017,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             };
             let return_er_ts = {
-                let field_code_occurence_new_6ac7b78e_da5d_4274_b58c_67bb9625d008_ts =
-                    gen_field_code_occurence_new_ts(file!(), line!(), column!());
+                let field_loc_new_6ac7b78e_da5d_4274_b58c_67bb9625d008_ts =
+                    gen_field_loc_new_ts(file!(), line!(), column!());
                 quote! {
                     Err(#ident_try_operation_er_ucc::#try_operation_logic_er_with_serde_ucc {
                         #operation_er_with_serde_sc,
-                        #field_code_occurence_new_6ac7b78e_da5d_4274_b58c_67bb9625d008_ts,
+                        #field_loc_new_6ac7b78e_da5d_4274_b58c_67bb9625d008_ts,
                     })
                 }
             };
@@ -3919,7 +3913,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #[eo_to_err_string]
                             #NotUniquePrimaryKeySc: #primary_key_field_type_update_ts,
                             #[eo_to_err_string]
-                            code_occurence: location_lib::code_occurence::CodeOccurence,
+                            loc: location_lib::loc::Loc,
                         }
                     }},
                 );
@@ -3933,7 +3927,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         if acc_6bf275fc.contains(&&el_35facc3a.#primary_key_field_ident) {
                             return Err(#ident_operation_payload_try_new_er_ucc::#NotUniquePrimaryKeyUcc {
                                 #NotUniquePrimaryKeySc: el_35facc3a.#primary_key_field_ident,
-                                code_occurence: location_lib::code_occurence!(),
+                                loc: location_lib::loc!(),
                             });
                         }
                         acc_6bf275fc.push(&el_35facc3a.#primary_key_field_ident);

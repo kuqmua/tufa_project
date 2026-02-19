@@ -123,8 +123,7 @@ impl ToTokens for DeriveDebug {
 pub struct DeriveDebugThiserrorErrorOccurence;
 impl ToTokens for DeriveDebugThiserrorErrorOccurence {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {#[derive(Debug, thiserror::Error, location_lib::Location)]}
-            .to_tokens(tokens);
+        quote! {#[derive(Debug, thiserror::Error, location_lib::Location)]}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
@@ -178,17 +177,17 @@ impl ToTokens for SqlxTypesTypeDatabase {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct LocationLibCodeOccurenceCodeOccurence;
-impl ToTokens for LocationLibCodeOccurenceCodeOccurence {
+pub struct LocationLibLocLoc;
+impl ToTokens for LocationLibLocLoc {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {location_lib::code_occurence::CodeOccurence}.to_tokens(tokens);
+        quote! {location_lib::loc::Loc}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct CodeOccurenceScDoubleDotSpaceLocationLibCodeOccurenceCodeOccurence;
-impl ToTokens for CodeOccurenceScDoubleDotSpaceLocationLibCodeOccurenceCodeOccurence {
+pub struct LocScDoubleDotSpaceLocationLibLocLoc;
+impl ToTokens for LocScDoubleDotSpaceLocationLibLocLoc {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {code_occurence: location_lib::code_occurence::CodeOccurence}.to_tokens(tokens);
+        quote! {loc: location_lib::loc::Loc}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]

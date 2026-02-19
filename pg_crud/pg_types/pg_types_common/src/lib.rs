@@ -1,5 +1,5 @@
-use location_lib::code_occurence::CodeOccurence;
-use location_lib::{Location, code_occurence};
+use location_lib::loc::Loc;
+use location_lib::{Location, loc};
 use pg_crud_common::{
     DEFAULT_PAGINATION_LIMIT, DefaultOptionSomeVecOneEl, DefaultOptionSomeVecOneElMaxPageSize,
     PaginationBase, PgTypeWhereFilter, QueryPartEr,
@@ -18,19 +18,19 @@ pub enum PaginationStartsWithOneTryNewEr {
     LimitIsLessThanOrEqualToZero {
         #[eo_to_err_string_serde]
         limit: i64,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
     OffsetIsLessThanOne {
         #[eo_to_err_string_serde]
         offset: i64,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
     OffsetPlusLimitIsIntOverflow {
         #[eo_to_err_string_serde]
         limit: i64,
         #[eo_to_err_string_serde]
         offset: i64,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
 }
 impl PaginationStartsWithOne {
@@ -48,13 +48,13 @@ impl PaginationStartsWithOne {
                 Err(
                     PaginationStartsWithOneTryNewEr::LimitIsLessThanOrEqualToZero {
                         limit,
-                        code_occurence: code_occurence!(),
+                        loc: loc!(),
                     },
                 )
             } else {
                 Err(PaginationStartsWithOneTryNewEr::OffsetIsLessThanOne {
                     offset,
-                    code_occurence: code_occurence!(),
+                    loc: loc!(),
                 })
             }
         } else if offset.checked_add(limit).is_some() {
@@ -64,7 +64,7 @@ impl PaginationStartsWithOne {
                 PaginationStartsWithOneTryNewEr::OffsetPlusLimitIsIntOverflow {
                     limit,
                     offset,
-                    code_occurence: code_occurence!(),
+                    loc: loc!(),
                 },
             )
         }

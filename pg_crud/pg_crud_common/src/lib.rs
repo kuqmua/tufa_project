@@ -1,5 +1,5 @@
-use location_lib::{Location, ToErrString, code_occurence, code_occurence::CodeOccurence};
 use from_str::FromStr;
+use location_lib::{Location, ToErrString, loc, loc::Loc};
 use naming::{AscUcc, DescUcc, DisplayToScStr, DisplayToUccStr};
 pub use pg_crud_common_and_macros_common::*;
 use schemars::JsonSchema;
@@ -502,8 +502,8 @@ where
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location)]
 pub enum QueryPartEr {
-    CheckedAdd { code_occurence: CodeOccurence },
-    WriteIntoBuffer { code_occurence: CodeOccurence },
+    CheckedAdd { loc: Loc },
+    WriteIntoBuffer { loc: Loc },
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
 pub struct PgTypeWhere<T> {
@@ -742,9 +742,7 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
                 Ok(value) => {
                     use std::fmt::Write as _;
                     if write!(acc_cc6d18f7, "{value} ").is_err() {
-                        return Err(QueryPartEr::WriteIntoBuffer {
-                            code_occurence: code_occurence!(),
-                        });
+                        return Err(QueryPartEr::WriteIntoBuffer { loc: loc!() });
                     }
                     is_need_to_add_logical_operator_inner_handle = true;
                 }
@@ -877,19 +875,19 @@ pub enum PaginationStartsWithZeroTryNewEr {
     LimitIsLessThanOrEqualToZero {
         #[eo_to_err_string_serde]
         limit: i64,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
     OffsetIsLessThanZero {
         #[eo_to_err_string_serde]
         offset: i64,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
     OffsetPlusLimitIsIntOverflow {
         #[eo_to_err_string_serde]
         limit: i64,
         #[eo_to_err_string_serde]
         offset: i64,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
 }
 impl PaginationStartsWithZero {
@@ -907,13 +905,13 @@ impl PaginationStartsWithZero {
                 Err(
                     PaginationStartsWithZeroTryNewEr::LimitIsLessThanOrEqualToZero {
                         limit,
-                        code_occurence: code_occurence!(),
+                        loc: loc!(),
                     },
                 )
             } else {
                 Err(PaginationStartsWithZeroTryNewEr::OffsetIsLessThanZero {
                     offset,
-                    code_occurence: code_occurence!(),
+                    loc: loc!(),
                 })
             }
         } else if offset.checked_add(limit).is_some() {
@@ -923,7 +921,7 @@ impl PaginationStartsWithZero {
                 PaginationStartsWithZeroTryNewEr::OffsetPlusLimitIsIntOverflow {
                     limit,
                     offset,
-                    code_occurence: code_occurence!(),
+                    loc: loc!(),
                 },
             )
         }
@@ -1124,12 +1122,12 @@ pub trait IsStringEmpty {
 #[derive(Debug, Serialize, Deserialize, Error, Location)]
 pub enum NotEmptyUniqueVecTryNewEr<T> {
     IsEmpty {
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
     NotUnique {
         #[eo_to_err_string_serde]
         value: T,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
@@ -1145,9 +1143,7 @@ impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
     }
     pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
         if value.is_empty() {
-            return Err(NotEmptyUniqueVecTryNewEr::IsEmpty {
-                code_occurence: code_occurence!(),
-            });
+            return Err(NotEmptyUniqueVecTryNewEr::IsEmpty { loc: loc!() });
         }
         {
             let mut acc_11fac69e = Vec::new();
@@ -1155,7 +1151,7 @@ impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
                 if acc_11fac69e.contains(&el_db9bd5a0) {
                     return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
                         value: el_db9bd5a0.clone(),
-                        code_occurence: code_occurence!(),
+                        loc: loc!(),
                     });
                 }
                 acc_11fac69e.push(el_db9bd5a0);
@@ -1365,7 +1361,7 @@ pub enum UnsignedPartOfI32TryFromI32Er {
     LessThanZero {
         #[eo_to_err_string_serde]
         value: i32,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
 }
 impl TryFrom<i32> for UnsignedPartOfI32 {
@@ -1374,10 +1370,7 @@ impl TryFrom<i32> for UnsignedPartOfI32 {
         if value >= 0 {
             Ok(Self(value))
         } else {
-            Err(Self::Error::LessThanZero {
-                value,
-                code_occurence: code_occurence!(),
-            })
+            Err(Self::Error::LessThanZero { value, loc: loc!() })
         }
     }
 }
@@ -1483,12 +1476,12 @@ pub struct NotZeroUnsignedPartOfI32(UnsignedPartOfI32);
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location, JsonSchema)]
 pub enum NotZeroUnsignedPartOfI32TryFromI32Er {
     IsZero {
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
     UnsignedPartOfI32TryFromI32Er {
         #[eo_location]
         value: UnsignedPartOfI32TryFromI32Er,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
 }
 impl TryFrom<i32> for NotZeroUnsignedPartOfI32 {
@@ -1497,16 +1490,14 @@ impl TryFrom<i32> for NotZeroUnsignedPartOfI32 {
         match UnsignedPartOfI32::try_from(value) {
             Ok(handle) => {
                 if handle.0 == 0 {
-                    Err(Self::Error::IsZero {
-                        code_occurence: code_occurence!(),
-                    })
+                    Err(Self::Error::IsZero { loc: loc!() })
                 } else {
                     Ok(Self(handle))
                 }
             }
             Err(er) => Err(Self::Error::UnsignedPartOfI32TryFromI32Er {
                 value: er,
-                code_occurence: code_occurence!(),
+                loc: loc!(),
             }),
         }
     }
@@ -1617,11 +1608,7 @@ pub fn increment_checked_add_one_returning_increment(
     increment: &mut u64,
 ) -> Result<u64, QueryPartEr> {
     increment.checked_add(1).map_or_else(
-        || {
-            Err(QueryPartEr::CheckedAdd {
-                code_occurence: code_occurence!(),
-            })
-        },
+        || Err(QueryPartEr::CheckedAdd { loc: loc!() }),
         |value_d25735be| {
             *increment = value_d25735be;
             Ok(value_d25735be)

@@ -1,4 +1,4 @@
-use location_lib::{Location, code_occurence, code_occurence::CodeOccurence};
+use location_lib::{Location, loc, loc::Loc};
 use serde_json::{Error as SerdeJsonEr, Value as SerdeJsonValue, to_string_pretty};
 use std::path::Path;
 use thiserror::Error;
@@ -7,12 +7,12 @@ pub enum CreateDirsAndWritePrettyJsonTokioAsyncEr {
     SerdeJson {
         #[eo_to_err_string]
         er: SerdeJsonEr,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
     WriteBytesIntoFile {
         #[eo_location]
         er: crate::CreateDirsAndWriteFileTokioAsyncEr,
-        code_occurence: CodeOccurence,
+        loc: Loc,
     },
 }
 pub async fn create_dirs_and_write_pretty_json_tokio_async(
@@ -25,15 +25,12 @@ pub async fn create_dirs_and_write_pretty_json_tokio_async(
                 Err(er) => Err(
                     CreateDirsAndWritePrettyJsonTokioAsyncEr::WriteBytesIntoFile {
                         er,
-                        code_occurence: code_occurence!(),
+                        loc: loc!(),
                     },
                 ),
                 Ok(()) => Ok(()),
             }
         }
-        Err(er) => Err(CreateDirsAndWritePrettyJsonTokioAsyncEr::SerdeJson {
-            er,
-            code_occurence: code_occurence!(),
-        }),
+        Err(er) => Err(CreateDirsAndWritePrettyJsonTokioAsyncEr::SerdeJson { er, loc: loc!() }),
     }
 }

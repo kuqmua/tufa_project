@@ -1,11 +1,9 @@
 use gen_quotes::dq_ts;
 use macros_helpers::{
-    LocationFieldAttr, gen_if_write_is_err_ts, gen_impl_display_ts,
-    gen_impl_to_err_string_ts, gen_serde_version_of_named_syn_variant,
+    LocationFieldAttr, gen_if_write_is_err_ts, gen_impl_display_ts, gen_impl_to_err_string_ts,
+    gen_serde_version_of_named_syn_variant,
 };
-use naming::{
-    CodeOccurenceSc, IntoSerdeVersionSc, ValueSc, WithSerdeUcc, parameter::SelfWithSerdeUcc,
-};
+use naming::{IntoSerdeVersionSc, LocSc, ValueSc, WithSerdeUcc, parameter::SelfWithSerdeUcc};
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -118,7 +116,7 @@ pub fn location(input: Ts) -> Ts {
     };
     let tokens = match supported_enum_variant {
         SuportedEnumVariant::Named => {
-            let code_occurence_sc_str = CodeOccurenceSc.to_string();
+            let loc_sc_str = LocSc.to_string();
             //todo maybe impl display was a bad idea. .to_string() casts is dangerous
             let impl_display_handle_content_ts = {
                 let variants_ts = data_enum.variants.iter().map(|el_f497ea11| {
@@ -128,9 +126,9 @@ pub fn location(input: Ts) -> Ts {
                     } else {
                         panic!("f64e0d21");
                     };
-                    let fields_idents_excluding_code_occurence_ts = {
+                    let fields_idents_excluding_loc_ts = {
                         let acc_ts = fields.iter()
-                        .filter(|el_e26e2572| *el_e26e2572.ident.as_ref().expect("07504636") != *code_occurence_sc_str)
+                        .filter(|el_e26e2572| *el_e26e2572.ident.as_ref().expect("07504636") != *loc_sc_str)
                         .map(|el_e4070354| el_e4070354.ident.as_ref().expect("971ace15"))
                         .collect::<Vec<&Ident>>();
                         if acc_ts.is_empty() {
@@ -140,9 +138,9 @@ pub fn location(input: Ts) -> Ts {
                             quote!{#(#acc_ts),*,}
                         }
                     };
-                    let fields_format_excluding_code_occurence_ts = dq_ts(
+                    let fields_format_excluding_loc_ts = dq_ts(
                         &fields.iter()
-                        .filter(|el_6ba47e94| *el_6ba47e94.ident.as_ref().expect("3d70a4f4") != *code_occurence_sc_str)
+                        .filter(|el_6ba47e94| *el_6ba47e94.ident.as_ref().expect("3d70a4f4") != *loc_sc_str)
                         .fold(
                             String::new(),
                             |mut acc_924ab1b3, el_e405984a| {
@@ -159,8 +157,8 @@ pub fn location(input: Ts) -> Ts {
                             }
                         )
                     );
-                    let fields_format_values_excluding_code_occurence_ts = fields.iter()
-                    .filter(|el_48337db8| *el_48337db8.ident.as_ref().expect("f6f6fb24") != *code_occurence_sc_str)
+                    let fields_format_values_excluding_loc_ts = fields.iter()
+                    .filter(|el_48337db8| *el_48337db8.ident.as_ref().expect("f6f6fb24") != *loc_sc_str)
                     .map(|el_f00312fe| {
                         let el_f00312fe_ident = &el_f00312fe.ident.as_ref().expect("e97b25b9");
                         match LocationFieldAttr::try_from(el_f00312fe).expect("8ff56aeb") {
@@ -265,17 +263,17 @@ pub fn location(input: Ts) -> Ts {
                     });
                     quote! {
                         Self::#el_ident {
-                            #fields_idents_excluding_code_occurence_ts
+                            #fields_idents_excluding_loc_ts
                             ..
                         } => {
                             format!(
-                                #fields_format_excluding_code_occurence_ts,
-                                #(#fields_format_values_excluding_code_occurence_ts),*
+                                #fields_format_excluding_loc_ts,
+                                #(#fields_format_values_excluding_loc_ts),*
                             )
                         }
                     }
                 });
-                let code_occurence_variants_ts =
+                let loc_variants_ts =
                     data_enum
                         .variants
                         .iter()
@@ -285,14 +283,14 @@ pub fn location(input: Ts) -> Ts {
                             if index == 0 {
                                 quote! {
                                     Self::#el_ident {
-                                        #CodeOccurenceSc,
+                                        #LocSc,
                                         ..
                                     }
                                 }
                             } else {
                                 quote! {
                                     | Self::#el_ident {
-                                        #CodeOccurenceSc,
+                                        #LocSc,
                                         ..
                                     }
                                 }
@@ -306,8 +304,8 @@ pub fn location(input: Ts) -> Ts {
                             #(#variants_ts),*
                         },
                         match self {
-                            #(#code_occurence_variants_ts)*
-                            => #CodeOccurenceSc
+                            #(#loc_variants_ts)*
+                            => #LocSc
                         }
                     )
                 }
@@ -327,8 +325,8 @@ pub fn location(input: Ts) -> Ts {
                         panic!("238b402b");
                     };
                     let fields_idents_ts = fields.iter().map(|el_cddf556e| &el_cddf556e.ident);
-                    let fields_into_serde_version_excluding_code_occurence_ts = fields.iter()
-                    .filter(|el_6a54951c| *el_6a54951c.ident.as_ref().expect("0488fc4c") != *code_occurence_sc_str)
+                    let fields_into_serde_version_excluding_loc_ts = fields.iter()
+                    .filter(|el_6a54951c| *el_6a54951c.ident.as_ref().expect("0488fc4c") != *loc_sc_str)
                     .map(|el_d7e120a3| {
                         let el_d7e120a3_ident = &el_d7e120a3.ident.as_ref().expect("9a672ac2");
                         let conversion_ts = match LocationFieldAttr::try_from(el_d7e120a3).expect("449c3781") {
@@ -390,8 +388,8 @@ pub fn location(input: Ts) -> Ts {
                         Self::#el_ident {
                             #(#fields_idents_ts),*
                         } => #ident_with_serde_ucc::#el_ident {
-                            #(#fields_into_serde_version_excluding_code_occurence_ts)*
-                            #CodeOccurenceSc,
+                            #(#fields_into_serde_version_excluding_loc_ts)*
+                            #LocSc,
                         }
                     }
                 });
