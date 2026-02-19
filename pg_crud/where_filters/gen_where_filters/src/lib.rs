@@ -1451,8 +1451,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         let content_ts: &dyn ToTokens = match pg_type_pattern_handle {
                             PgTypePatternHandle::Standart => &quote!{
                                 match self.value.query_bind(query) {
-                                    Ok(value) => {
-                                        query = value;
+                                    Ok(v) => {
+                                        query = v;
                                     },
                                     Err(er) => {
                                         return Err(er.to_string());

@@ -20,8 +20,8 @@ pub fn create_dirs_and_write_pretty_json_sync(
     serde_json_value: &SerdeJsonValue,
 ) -> Result<(), CreateDirsAndWritePrettyJsonSyncEr> {
     match to_string_pretty(&serde_json_value) {
-        Ok(value) => {
-            if let Err(er) = crate::create_dirs_and_write_file_sync(path, value.as_bytes()) {
+        Ok(v) => {
+            if let Err(er) = crate::create_dirs_and_write_file_sync(path, v.as_bytes()) {
                 return Err(CreateDirsAndWritePrettyJsonSyncEr::WriteBytesIntoFile {
                     er,
                     loc: loc!(),

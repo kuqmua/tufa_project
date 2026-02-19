@@ -2084,7 +2084,7 @@ pub fn gen_match_try_new_in_deserialize_ts(
 ) -> Ts2 {
     quote! {
         match #ident::try_new(#initialization_ts) {
-            Ok(value) => Ok(value),
+            Ok(v) => Ok(v),
             Err(er) => Err(serde::de::Error::custom(format!("{er:?}")))
         }
     }

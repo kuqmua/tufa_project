@@ -88,11 +88,11 @@ impl<T: PartialEq + Clone + Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
         _: &dyn Display,
         _is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartEr> {
-        let mut acc_ecd78d3a = String::default();
+        let mut acc = String::default();
         for _ in self.to_vec() {
             match increment_checked_add_one_returning_increment(increment) {
-                Ok(value) => {
-                    if write!(acc_ecd78d3a, "${value},").is_err() {
+                Ok(v) => {
+                    if write!(acc, "${v},").is_err() {
                         return Err(QueryPartEr::WriteIntoBuffer { loc: loc!() });
                     }
                 }
@@ -101,8 +101,8 @@ impl<T: PartialEq + Clone + Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
                 }
             }
         }
-        let _: Option<char> = acc_ecd78d3a.pop();
-        Ok(acc_ecd78d3a)
+        let _: Option<char> = acc.pop();
+        Ok(acc)
     }
 }
 #[allow(unused_qualifications)]
@@ -162,7 +162,7 @@ const _: () = {
                         ));
                     };
                     match PgJsonTypeNotEmptyUniqueVec::try_new(__field0) {
-                        Ok(value) => Ok(value),
+                        Ok(v) => Ok(v),
                         Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
@@ -215,7 +215,7 @@ where
         _is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartEr> {
         match increment_checked_add_one_returning_increment(increment) {
-            Ok(value) => Ok(format!("${value}")),
+            Ok(v) => Ok(format!("${v}")),
             Err(er) => Err(er),
         }
     }
@@ -287,7 +287,7 @@ const _: () = {
                 {
                     let __field0: String = <String as _serde::Deserialize>::deserialize(__e)?;
                     Ok(RegexRegex(match Regex::new(&__field0) {
-                        Ok(value) => value,
+                        Ok(v) => v,
                         Err(er) => {
                             return Err(serde::de::Error::custom(format!("{er:?}")));
                         }
@@ -306,7 +306,7 @@ const _: () = {
                         ));
                     };
                     Ok(RegexRegex(match Regex::new(&__field0) {
-                        Ok(value) => value,
+                        Ok(v) => v,
                         Err(er) => {
                             return Err(serde::de::Error::custom(format!("{er:?}")));
                         }
@@ -525,7 +525,7 @@ const _: () = {
                         ));
                     };
                     match Between::try_new(__field0, __field1) {
-                        Ok(value) => Ok(value),
+                        Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
@@ -574,7 +574,7 @@ const _: () = {
                         None => _serde::__private228::de::missing_field("end")?,
                     };
                     match Between::try_new(__field0_value, __field1_value) {
-                        Ok(value) => Ok(value),
+                        Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
@@ -625,13 +625,13 @@ impl<'lifetime, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lif
         _: bool,
     ) -> Result<String, QueryPartEr> {
         let start_increment = match increment_checked_add_one_returning_increment(increment) {
-            Ok(value) => value,
+            Ok(v) => v,
             Err(er) => {
                 return Err(er);
             }
         };
         let end_increment = match increment_checked_add_one_returning_increment(increment) {
-            Ok(value) => value,
+            Ok(v) => v,
             Err(er) => {
                 return Err(er);
             }
@@ -727,7 +727,7 @@ const _: () = {
                         ));
                     };
                     match PgTypeNotEmptyUniqueVec::try_new(__field0) {
-                        Ok(value) => Ok(value),
+                        Ok(v) => Ok(v),
                         Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
@@ -862,21 +862,21 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
         pg_type_or_pg_json_type: &PgTypeOrPgJsonType,
         variant: &Variant,
     ) -> Result<String, QueryPartEr> {
-        let mut acc_24eb25aa = String::new();
+        let mut acc = String::new();
         let len_27270409 = match &variant {
             Variant::MinusOne => self.0.len().saturating_sub(1),
             Variant::Normal => self.0.len(),
         };
         for _ in 0..len_27270409 {
             match increment_checked_add_one_returning_increment(increment) {
-                Ok(value) => {
+                Ok(v) => {
                     if write!(
-                        acc_24eb25aa,
+                        acc,
                         "{}",
                         &match &pg_type_or_pg_json_type {
-                            PgTypeOrPgJsonType::PgType => format!("[${value}]"),
+                            PgTypeOrPgJsonType::PgType => format!("[${v}]"),
                             PgTypeOrPgJsonType::PgJsonType => {
-                                format!("->${value}")
+                                format!("->${v}")
                             }
                         }
                     )
@@ -890,7 +890,7 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
                 }
             }
         }
-        Ok(acc_24eb25aa)
+        Ok(acc)
     }
     #[must_use]
     pub const fn to_inner(&self) -> &Vec<T> {
@@ -956,7 +956,7 @@ const _: () = {
                 {
                     let __field0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
                     match BoundedStdVecVec::try_from(__field0) {
-                        Ok(value) => Ok(value),
+                        Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
@@ -973,7 +973,7 @@ const _: () = {
                         ));
                     };
                     match BoundedStdVecVec::try_from(__field0) {
-                        Ok(value) => Ok(value),
+                        Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }

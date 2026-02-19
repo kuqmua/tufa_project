@@ -61,12 +61,12 @@ impl<'de> Deserialize<'de> for ServerPort {
         D: Deserializer<'de>,
     {
         match Self::try_from(match u16::deserialize(deserializer) {
-            Ok(value) => value,
+            Ok(v) => v,
             Err(er) => {
                 return Err(er);
             }
         }) {
-            Ok(value) => Ok(value),
+            Ok(v) => Ok(v),
             Err(er) => Err(SerdeEr::custom(er)),
         }
     }

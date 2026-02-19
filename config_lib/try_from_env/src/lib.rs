@@ -93,16 +93,16 @@ pub fn try_from_env(input: Ts) -> Ts {
                                 #EnvVarNameSc,
                             });
                         }
-                        Ok(value) => match <
+                        Ok(v) => match <
                             config_lib::#el_ident_wrapper_ucc_ts as
                             config_lib::#TryFromStdEnvVarOkUcc
-                        >::try_from_std_env_var_ok(value) {
+                        >::try_from_std_env_var_ok(v) {
                             Err(er) => {
                                 return Err(#ident_try_from_env_er_ucc::#el_ident_ucc_ts {
                                     #el_ident: er,
                                 });
                             }
-                            Ok(value) => value.0,
+                            Ok(v) => v.0,
                         },
                     }
                 };

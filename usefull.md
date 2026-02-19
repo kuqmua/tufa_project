@@ -173,39 +173,39 @@ mod something {
         IsNegative,
     }
     impl Something {
-        const fn check(value: UncheckedSomething) -> Result<UncheckedSomething, SomethingEr> {
-            if matches!(value.one.as_bytes(), b"batman") {
+        const fn check(v: UncheckedSomething) -> Result<UncheckedSomething, SomethingEr> {
+            if matches!(v.one.as_bytes(), b"batman") {
                 return Err(SomethingEr::IsBatman);
             }
-            if value.two <= 0 {
+            if v.two <= 0 {
                 return Err(SomethingEr::IsNegative);
             }
-            Ok(value)
+            Ok(v)
         }
-        pub fn runtime_new_with_compile_time_check(value: InputCheckedSomething) -> Self {
+        pub fn runtime_new_with_compile_time_check(v: InputCheckedSomething) -> Self {
             Self {
-                one: value.one.to_string(),
-                two: value.two,
+                one: v.one.to_string(),
+                two: v.two,
             }
         }
         pub fn try_run_time_new_with_runtime_check(
-            unchecked_value: UncheckedSomething,
+            v0: UncheckedSomething,
         ) -> Result<Self, SomethingEr> {
-            match Self::check(unchecked_value) {
-                Ok(value) => Ok(Self {
-                    one: value.one.to_string(),
-                    two: value.two,
+            match Self::check(v0) {
+                Ok(v1) => Ok(Self {
+                    one: v1.one.to_string(),
+                    two: v1.two,
                 }),
                 Err(er) => Err(er),
             }
         }
         pub const fn compile_time_check(
-            unchecked_value: UncheckedSomething,
+            v0: UncheckedSomething,
         ) -> InputCheckedSomething {
-            match Self::check(unchecked_value) {
-                Ok(value) => InputCheckedSomething {
-                    one: value.one,
-                    two: value.two,
+            match Self::check(v0) {
+                Ok(v1) => InputCheckedSomething {
+                    one: v1.one,
+                    two: v1.two,
                 },
                 Err(er) => match er {
                     SomethingEr::IsBatman => panic!("e4778c18-87e3-40f7-977b-a27473ce786b"),

@@ -634,7 +634,7 @@ const _: () = {
                         ));
                     };
                     match PgTypeWhere::try_new(__field0, __field1) {
-                        Ok(value) => Ok(value),
+                        Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
@@ -686,7 +686,7 @@ const _: () = {
                         None => _serde::__private228::de::missing_field("value")?,
                     };
                     match PgTypeWhere::try_new(__field0_value, __field1_value) {
-                        Ok(value) => Ok(value),
+                        Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
@@ -714,8 +714,8 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
     ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
         for el_4e314a75 in self.value.0 {
             match PgTypeWhereFilter::query_bind(el_4e314a75, query) {
-                Ok(value) => {
-                    query = value;
+                Ok(v) => {
+                    query = v;
                 }
                 Err(er) => {
                     return Err(er);
@@ -739,9 +739,9 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
                 column,
                 is_need_to_add_logical_operator_inner_handle,
             ) {
-                Ok(value) => {
+                Ok(v) => {
                     use std::fmt::Write as _;
-                    if write!(acc_cc6d18f7, "{value} ").is_err() {
+                    if write!(acc_cc6d18f7, "{v} ").is_err() {
                         return Err(QueryPartEr::WriteIntoBuffer { loc: loc!() });
                     }
                     is_need_to_add_logical_operator_inner_handle = true;
@@ -847,13 +847,13 @@ impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PaginationBase {
         _: bool,
     ) -> Result<String, QueryPartEr> {
         let limit_increment = match increment_checked_add_one_returning_increment(increment) {
-            Ok(value) => value,
+            Ok(v) => v,
             Err(er) => {
                 return Err(er);
             }
         };
         let offset_increment = match increment_checked_add_one_returning_increment(increment) {
-            Ok(value) => value,
+            Ok(v) => v,
             Err(er) => {
                 return Err(er);
             }
@@ -1017,7 +1017,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
                     ));
                 };
                 match PaginationStartsWithZero::try_new(__field0, __field1) {
-                    Ok(value) => Ok(value),
+                    Ok(v) => Ok(v),
                     Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))), //todo use serde_json::to_string(&er).unwrap_or_else(|_|"failed to serialize er".into())
                 }
             }
@@ -1063,7 +1063,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
                     None => serde::__private228::de::missing_field("offset")?,
                 };
                 match PaginationStartsWithZero::try_new(__field0_value, __field1_value) {
-                    Ok(value) => Ok(value),
+                    Ok(v) => Ok(v),
                     Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                 }
             }
@@ -1211,7 +1211,7 @@ const _: () = {
                         ));
                     };
                     match NotEmptyUniqueVec::try_new(__field0) {
-                        Ok(value) => Ok(value),
+                        Ok(v) => Ok(v),
                         Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
@@ -1270,8 +1270,8 @@ where
     ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
         for el_7f5ffb83 in self.0 {
             match el_7f5ffb83.query_bind(query) {
-                Ok(value) => {
-                    query = value;
+                Ok(v) => {
+                    query = v;
                 }
                 Err(er) => {
                     return Err(er);
@@ -1297,8 +1297,8 @@ where
                     true
                 },
             ) {
-                Ok(value) => {
-                    acc_57b31116.push_str(&value);
+                Ok(v) => {
+                    acc_57b31116.push_str(&v);
                 }
                 Err(er) => {
                     return Err(er);
@@ -1406,7 +1406,7 @@ const _: () = {
                 {
                     let __field0: i32 = <i32 as Deserialize>::deserialize(__e)?;
                     match UnsignedPartOfI32::try_from(__field0) {
-                        Ok(value) => Ok(value),
+                        Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
@@ -1423,7 +1423,7 @@ const _: () = {
                         ));
                     };
                     match UnsignedPartOfI32::try_from(__field0) {
-                        Ok(value) => Ok(value),
+                        Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
@@ -1534,7 +1534,7 @@ const _: () = {
                 {
                     let __field0: i32 = <i32 as Deserialize>::deserialize(__e)?;
                     match NotZeroUnsignedPartOfI32::try_from(__field0) {
-                        Ok(value) => Ok(value),
+                        Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
@@ -1551,7 +1551,7 @@ const _: () = {
                         ));
                     };
                     match NotZeroUnsignedPartOfI32::try_from(__field0) {
-                        Ok(value) => Ok(value),
+                        Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }

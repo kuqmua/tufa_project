@@ -667,7 +667,7 @@ mem_forget = { level = "deny" }
 mem_replace_option_with_none = { level = "deny" }
 mem_replace_with_default = { level = "deny" }
 mem_replace_with_uninit = { level = "deny" }
-min_ident_chars = { level = "deny" }
+min_ident_chars = { level = "allow" } #enable for llm context window optimization
 min_max = { level = "deny" }
 mismatching_type_param_order = { level = "deny" }
 misnamed_getters = { level = "deny" }

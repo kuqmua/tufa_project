@@ -531,7 +531,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             ));
                         };
                         match PgTypeRecord::try_from((__field0, __field1, __field2)) {
-                            Ok(value) => Ok(value),
+                            Ok(v) => Ok(v),
                             Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                         }
                     }
@@ -610,7 +610,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             __field1_value,
                             __field2_value,
                         )) {
-                            Ok(value) => Ok(value),
+                            Ok(v) => Ok(v),
                             Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                         }
                     }

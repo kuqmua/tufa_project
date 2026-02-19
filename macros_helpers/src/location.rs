@@ -58,11 +58,11 @@ impl TryFrom<&Field> for LocationFieldAttr {
                         return Err("no first value in punct".to_owned());
                     }
                 };
-                if let Ok(value) = FromStr::from_str(&first_segment_ident.to_string()) {
+                if let Ok(v) = FromStr::from_str(&first_segment_ident.to_string()) {
                     if option_attr.is_some() {
                         return Err("two or more supported attrs!".to_owned());
                     }
-                    option_attr = Some(value);
+                    option_attr = Some(v);
                 }
             } //other attrs are not for this proc_macro
         }

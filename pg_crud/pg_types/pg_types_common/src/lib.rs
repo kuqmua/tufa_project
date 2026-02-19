@@ -165,7 +165,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
                     ));
                 };
                 match PaginationStartsWithOne::try_new(__field0, __field1) {
-                    Ok(value) => Ok(value),
+                    Ok(v) => Ok(v),
                     Err(er) => Err(SerdeEr::custom(format!("{er:?}"))),
                 }
             }
@@ -204,7 +204,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
                     None => serde::__private228::de::missing_field("offset")?,
                 };
                 match PaginationStartsWithOne::try_new(__field0_value, __field1_value) {
-                    Ok(value) => Ok(value),
+                    Ok(v) => Ok(v),
                     Err(er) => Err(SerdeEr::custom(format!("{er:?}"))),
                 }
             }

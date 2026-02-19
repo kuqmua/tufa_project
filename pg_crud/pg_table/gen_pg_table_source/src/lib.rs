@@ -2007,7 +2007,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #primary_key_field_ident_dq_ts,
                             increment,
                         ){
-                            Ok(value) => value,
+                            Ok(v) => v,
                             Err(er) => {
                                 return Err(er);
                             }
@@ -2473,13 +2473,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 for el_1c83e302 in &field.attrs {
                     if el_1c83e302.path().segments.len() == 1 {
                         let segment = el_1c83e302.path().segments.first().expect("5bd7ed8d");
-                        if let Ok(value) =
+                        if let Ok(v) =
                             { <LocationFieldAttr as FromStr>::from_str(&segment.ident.to_string()) }
                         {
                             if location_attr.is_some() {
                                 panic!("9a469d36")
                             } else {
-                                location_attr = Some(value);
+                                location_attr = Some(v);
                             }
                         }
                     }

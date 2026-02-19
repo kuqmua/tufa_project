@@ -30,7 +30,7 @@ impl GetAxumHttpStatusCode for BodySizeEr {
 pub async fn check_body_size(body: Body, limit: usize) -> Result<Bytes, BodySizeEr> {
     let size_hint = HttpBody::size_hint(&body);
     match to_bytes(body, limit).await {
-        Ok(value) => Ok(value),
+        Ok(v) => Ok(v),
         Err(er) => Err(BodySizeEr::ReachedMaximumSizeOfBody {
             er,
             maximum_size_of_body_limit_in_bytes: limit,

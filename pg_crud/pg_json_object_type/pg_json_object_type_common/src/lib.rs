@@ -83,7 +83,7 @@ const _: () = {
                 {
                     let __field0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
                     match UniqueVec::try_new(__field0) {
-                        Ok(value) => Ok(value),
+                        Ok(v) => Ok(v),
                         Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
@@ -100,7 +100,7 @@ const _: () = {
                         ));
                     };
                     match UniqueVec::try_new(__field0) {
-                        Ok(value) => Ok(value),
+                        Ok(v) => Ok(v),
                         Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
