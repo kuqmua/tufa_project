@@ -38,17 +38,17 @@ workspace = true"#
     };
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let target_crate_dir = manifest_dir.join(format!("{command_path}{crate_name}"));
-    if let Ok(value_90318089) = Command::new("cargo")
+    if let Ok(v) = Command::new("cargo")
         .current_dir(&target_crate_dir)
         .args(["fmt"])
         .status()
     {
-        assert!(value_90318089.success(), "2a1deb01");
+        assert!(v.success(), "2a1deb01");
     } else {
         return_to_previous();
         panic!("8dc4f045");
     }
-    if let Ok(value_f263835c) = Command::new("cargo")
+    if let Ok(v) = Command::new("cargo")
         .current_dir(&target_crate_dir)
         .args([
             "clippy",
@@ -60,7 +60,7 @@ workspace = true"#
         ])
         .status()
     {
-        assert!(value_f263835c.success(), "2c037283");
+        assert!(v.success(), "2c037283");
         return_to_previous();
     } else {
         return_to_previous();

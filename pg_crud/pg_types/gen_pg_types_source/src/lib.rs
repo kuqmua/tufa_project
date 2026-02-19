@@ -3450,7 +3450,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                     Ok(value_a9c1f658) => std::ops::Bound::Included(value_a9c1f658.0),
                                                     Err(er) => {
                                                         return Err(#ident_standart_not_null_origin_try_new_er_ucc::#StartUcc {
-                                                            #ErSc: er,
+                                                            #ErSc,
                                                             loc: location_lib::loc!(),
                                                         });
                                                     }
@@ -3459,7 +3459,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                     Ok(value_f0ff8036) => std::ops::Bound::Excluded(value_f0ff8036.0),
                                                     Err(er) => {
                                                         return Err(#ident_standart_not_null_origin_try_new_er_ucc::#StartUcc {
-                                                            #ErSc: er,
+                                                            #ErSc,
                                                             loc: location_lib::loc!(),
                                                         });
                                                     }
@@ -3471,7 +3471,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                     Ok(value_80168e2b) => std::ops::Bound::Included(value_80168e2b.0),
                                                     Err(er) => {
                                                         return Err(#ident_standart_not_null_origin_try_new_er_ucc::#EndUcc {
-                                                            #ErSc: er,
+                                                            #ErSc,
                                                             loc: location_lib::loc!(),
                                                         });
                                                     }
@@ -3480,7 +3480,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                     Ok(value_05f87b70) => std::ops::Bound::Excluded(value_05f87b70.0),
                                                     Err(er) => {
                                                         return Err(#ident_standart_not_null_origin_try_new_er_ucc::#EndUcc {
-                                                            #ErSc: er,
+                                                            #ErSc,
                                                             loc: location_lib::loc!(),
                                                         });
                                                     }
@@ -3538,7 +3538,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 Ok(value_9be8eddb) => value_9be8eddb,
                                                 Err(er) => {
                                                     return Err(#ident_standart_not_null_origin_try_new_er_ucc::#DateUcc {
-                                                        #ErSc: er,
+                                                        #ErSc,
                                                         loc: location_lib::loc!(),
                                                     });
                                                 }
@@ -3549,7 +3549,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 Ok(value_993484ce) => value_993484ce,
                                                 Err(er) => {
                                                     return Err(#ident_standart_not_null_origin_try_new_er_ucc::#TimeUcc {
-                                                        #ErSc: er,
+                                                        #ErSc,
                                                         loc: location_lib::loc!(),
                                                     });
                                                 }
@@ -3566,7 +3566,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                     Ok(value_158945ad) => value_158945ad,
                                                     Err(er) => {
                                                         return Err(#ident_standart_not_null_origin_try_new_er_ucc::#DateNaiveUcc {
-                                                            #ErSc: er,
+                                                            #ErSc,
                                                             loc: location_lib::loc!(),
                                                         });
                                                     }
@@ -3575,7 +3575,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                     Ok(value_c5af739c) => value_c5af739c,
                                                     Err(er) => {
                                                         return Err(#ident_standart_not_null_origin_try_new_er_ucc::#TimeUcc {
-                                                            #ErSc: er,
+                                                            #ErSc,
                                                             loc: location_lib::loc!(),
                                                         });
                                                     }
