@@ -303,8 +303,8 @@ mod tests {
                 .clone()
             {
                 Value::String(version_string) => {
-                    fn check_version_string(value: &str) -> Option<()> {
-                        let rest = value.strip_prefix('=')?;
+                    fn check_version_string(v: &str) -> Option<()> {
+                        let rest = v.strip_prefix('=')?;
                         let mut iter = rest.split('.');
                         let _: u64 = iter.next()?.parse::<u64>().ok()?;
                         let _: u64 = iter.next()?.parse::<u64>().ok()?;

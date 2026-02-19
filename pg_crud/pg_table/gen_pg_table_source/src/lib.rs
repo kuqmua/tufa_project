@@ -273,8 +273,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     }
     impl From<&CreateOrUpdateOrDeleteMany> for Operation {
-        fn from(value: &CreateOrUpdateOrDeleteMany) -> Self {
-            match &value {
+        fn from(v: &CreateOrUpdateOrDeleteMany) -> Self {
+            match &v {
                 CreateOrUpdateOrDeleteMany::Create => Self::CreateMany,
                 CreateOrUpdateOrDeleteMany::Update => Self::UpdateMany,
                 CreateOrUpdateOrDeleteMany::Delete => Self::DeleteMany,
@@ -282,24 +282,24 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     }
     impl From<&ReadManyOrDeleteMany> for Operation {
-        fn from(value: &ReadManyOrDeleteMany) -> Self {
-            match &value {
+        fn from(v: &ReadManyOrDeleteMany) -> Self {
+            match &v {
                 ReadManyOrDeleteMany::ReadMany => Self::ReadMany,
                 ReadManyOrDeleteMany::DeleteMany => Self::DeleteMany,
             }
         }
     }
     impl From<&ReadManyOrReadOne> for Operation {
-        fn from(value: &ReadManyOrReadOne) -> Self {
-            match &value {
+        fn from(v: &ReadManyOrReadOne) -> Self {
+            match &v {
                 ReadManyOrReadOne::ReadMany => Self::ReadMany,
                 ReadManyOrReadOne::ReadOne => Self::ReadOne,
             }
         }
     }
     impl From<&CreateOrUpdateOrDeleteOne> for Operation {
-        fn from(value: &CreateOrUpdateOrDeleteOne) -> Self {
-            match &value {
+        fn from(v: &CreateOrUpdateOrDeleteOne) -> Self {
+            match &v {
                 CreateOrUpdateOrDeleteOne::Create => Self::CreateOne,
                 CreateOrUpdateOrDeleteOne::Update => Self::UpdateOne,
                 CreateOrUpdateOrDeleteOne::Delete => Self::DeleteOne,

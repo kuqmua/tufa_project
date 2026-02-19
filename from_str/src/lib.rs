@@ -45,8 +45,7 @@ pub fn from_str(input: Ts) -> Ts {
                 acc_d6966473
             });
     let er_ts = {
-        let er_str =
-            format!("\"Invalid {ident}, expected one of {er_variants_str} found {{v}}\"");
+        let er_str = format!("\"Invalid {ident}, expected one of {er_variants_str} found {{v}}\"");
         er_str.parse::<Ts2>().expect("1b778757")
     };
     let generated = quote! {

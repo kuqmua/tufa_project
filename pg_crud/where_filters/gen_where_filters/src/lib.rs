@@ -48,8 +48,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     }
     impl TryFrom<&PgTypePatternHandle> for DimNumber {
         type Error = ();
-        fn try_from(value: &PgTypePatternHandle) -> Result<Self, Self::Error> {
-            match &value {
+        fn try_from(v: &PgTypePatternHandle) -> Result<Self, Self::Error> {
+            match &v {
                 PgTypePatternHandle::Standart => Err(()),
                 PgTypePatternHandle::ArrayDim1 => Ok(Self::One),
                 PgTypePatternHandle::ArrayDim2 => Ok(Self::Two),

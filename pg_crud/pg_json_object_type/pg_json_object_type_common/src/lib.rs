@@ -27,9 +27,9 @@ impl<T: PartialEq + Clone> UniqueVec<T> {
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
-    pub fn try_new(value: Vec<T>) -> Result<Self, UniqueVecTryNewEr<T>> {
+    pub fn try_new(v: Vec<T>) -> Result<Self, UniqueVecTryNewEr<T>> {
         let mut acc_4855bea7 = Vec::new();
-        for el_4dddc7c0 in &value {
+        for el_4dddc7c0 in &v {
             if acc_4855bea7.contains(&el_4dddc7c0) {
                 return Err(UniqueVecTryNewEr::NotUnique {
                     value: el_4dddc7c0.clone(),
@@ -38,7 +38,7 @@ impl<T: PartialEq + Clone> UniqueVec<T> {
             }
             acc_4855bea7.push(el_4dddc7c0);
         }
-        Ok(Self(value))
+        Ok(Self(v))
     }
 }
 #[allow(unused_qualifications)]
@@ -129,12 +129,12 @@ impl<T> Default for UniqueVec<T> {
     }
 }
 impl<T> From<UniqueVec<T>> for Vec<T> {
-    fn from(value: UniqueVec<T>) -> Self {
-        value.0
+    fn from(v: UniqueVec<T>) -> Self {
+        v.0
     }
 }
 impl<T1> UniqueVec<T1> {
-    pub fn from_t1_impl_from_t2<T2: From<T1>>(value: Self) -> UniqueVec<T2> {
-        UniqueVec(value.0.into_iter().map(T2::from).collect::<Vec<T2>>())
+    pub fn from_t1_impl_from_t2<T2: From<T1>>(v: Self) -> UniqueVec<T2> {
+        UniqueVec(v.0.into_iter().map(T2::from).collect::<Vec<T2>>())
     }
 }

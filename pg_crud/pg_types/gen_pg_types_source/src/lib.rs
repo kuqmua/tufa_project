@@ -97,8 +97,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
     }
     impl From<&PgType> for RustTypeName {
-        fn from(value: &PgType) -> Self {
-            match &value {
+        fn from(v: &PgType) -> Self {
+            match &v {
                 PgType::F32AsFloat4 => Self::F32,
                 PgType::F64AsFloat8 => Self::F64,
                 PgType::I16AsInt2 | PgType::I16AsSmallSerialInitializedByPg => Self::I16,
@@ -156,8 +156,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         TimestampTzRange,
     }
     impl From<&PgType> for PgTypeName {
-        fn from(value: &PgType) -> Self {
-            match &value {
+        fn from(v: &PgType) -> Self {
+            match &v {
                 PgType::I16AsInt2 => Self::Int2,
                 PgType::I32AsInt4 => Self::Int4,
                 PgType::I64AsInt8 => Self::Int8,
@@ -221,8 +221,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange,
         SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange,
     }
-    fn wrap_into_sqlx_pg_types_pg_range_str(value: &dyn Display) -> String {
-        format!("sqlx::postgres::types::PgRange<{value}>")
+    fn wrap_into_sqlx_pg_types_pg_range_str(v: &dyn Display) -> String {
+        format!("sqlx::postgres::types::PgRange<{v}>")
     }
     enum CanBeNullable {
         False,
@@ -299,8 +299,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     impl From<&Range> for PgType {
-        fn from(value: &Range) -> Self {
-            match value {
+        fn from(v: &Range) -> Self {
+            match v {
                 Range::I32AsInt4 => Self::I32AsInt4,
                 Range::I64AsInt8 => Self::I64AsInt8,
                 Range::SqlxTypesChronoNaiveDateAsDate => Self::SqlxTypesChronoNaiveDateAsDate,
@@ -323,8 +323,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     }
     impl TryFrom<&PgType> for Range {
         type Error = ();
-        fn try_from(value: &PgType) -> Result<Self, Self::Error> {
-            match &value {
+        fn try_from(v: &PgType) -> Result<Self, Self::Error> {
+            match &v {
                 PgType::I16AsInt2
                 | PgType::I32AsInt4
                 | PgType::I64AsInt8
@@ -631,55 +631,53 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     };
     impl TryFrom<(PgType, IsNullable, PgTypePattern)> for PgTypeRecord {
         type Error = String;
-        fn try_from(value: (PgType, IsNullable, PgTypePattern)) -> Result<Self, Self::Error> {
+        fn try_from(v: (PgType, IsNullable, PgTypePattern)) -> Result<Self, Self::Error> {
             let cant_support_nullable_variants_message = "cant support nullable variants: ";
             let cant_support_array_version_message = "cant support array_version: ";
-            match &value.0.can_be_nullable() {
+            match &v.0.can_be_nullable() {
                 CanBeNullable::False => {
-                    if matches!(&value.1, IsNullable::True) {
-                        return Err(format!(
-                            "{cant_support_nullable_variants_message}{value:#?}"
-                        ));
+                    if matches!(&v.1, IsNullable::True) {
+                        return Err(format!("{cant_support_nullable_variants_message}{v:#?}"));
                     }
-                    match &value.2 {
+                    match &v.2 {
                         PgTypePattern::Standart => Ok(Self {
-                            pg_type: value.0,
-                            is_nullable: value.1,
-                            pg_type_pattern: value.2,
+                            pg_type: v.0,
+                            is_nullable: v.1,
+                            pg_type_pattern: v.2,
                         }),
                         PgTypePattern::ArrayDim1 { dim1_is_nullable } => {
-                            match &value.0.can_be_an_array_element() {
+                            match &v.0.can_be_an_array_element() {
                                 CanBeAnArrayElement::False => {
-                                    Err(format!("{cant_support_array_version_message}{value:#?}"))
+                                    Err(format!("{cant_support_array_version_message}{v:#?}"))
                                 }
                                 CanBeAnArrayElement::True => match &dim1_is_nullable {
                                     IsNullable::False => Ok(Self {
-                                        pg_type: value.0,
-                                        is_nullable: value.1,
-                                        pg_type_pattern: value.2,
+                                        pg_type: v.0,
+                                        is_nullable: v.1,
+                                        pg_type_pattern: v.2,
                                     }),
                                     IsNullable::True => Err(format!(
-                                        "{cant_support_nullable_variants_message}{value:#?}"
+                                        "{cant_support_nullable_variants_message}{v:#?}"
                                     )),
                                 },
                             }
                         }
                     }
                 }
-                CanBeNullable::True => match &value.2 {
+                CanBeNullable::True => match &v.2 {
                     PgTypePattern::Standart => Ok(Self {
-                        pg_type: value.0,
-                        is_nullable: value.1,
-                        pg_type_pattern: value.2,
+                        pg_type: v.0,
+                        is_nullable: v.1,
+                        pg_type_pattern: v.2,
                     }),
-                    PgTypePattern::ArrayDim1 { .. } => match &value.0.can_be_an_array_element() {
+                    PgTypePattern::ArrayDim1 { .. } => match &v.0.can_be_an_array_element() {
                         CanBeAnArrayElement::False => {
-                            Err(format!("{cant_support_array_version_message}{value:#?}"))
+                            Err(format!("{cant_support_array_version_message}{v:#?}"))
                         }
                         CanBeAnArrayElement::True => Ok(Self {
-                            pg_type: value.0,
-                            is_nullable: value.1,
-                            pg_type_pattern: value.2,
+                            pg_type: v.0,
+                            is_nullable: v.1,
+                            pg_type_pattern: v.2,
                         }),
                     },
                 },
@@ -716,8 +714,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     }
     impl TryFrom<&PgType> for PgTypeInitializationTryNew {
         type Error = ();
-        fn try_from(value: &PgType) -> Result<Self, Self::Error> {
-            match value {
+        fn try_from(v: &PgType) -> Result<Self, Self::Error> {
+            match v {
                 PgType::I16AsInt2
                 | PgType::I32AsInt4
                 | PgType::I64AsInt8
@@ -749,8 +747,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     impl From<&PgTypeInitializationTryNew> for PgType {
-        fn from(value: &PgTypeInitializationTryNew) -> Self {
-            match value {
+        fn from(v: &PgTypeInitializationTryNew) -> Self {
+            match v {
                 PgTypeInitializationTryNew::StringAsText => Self::StringAsText,
                 PgTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime => Self::SqlxTypesChronoNaiveTimeAsTime,
                 PgTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => Self::SqlxTypesTimeTimeAsTime,
@@ -798,8 +796,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         ),
     }
     impl From<&PgType> for PgTypeDeserialize {
-        fn from(value: &PgType) -> Self {
-            match value {
+        fn from(v: &PgType) -> Self {
+            match v {
                 PgType::I16AsInt2
                 | PgType::I32AsInt4
                 | PgType::I64AsInt8
@@ -1422,7 +1420,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     })),
                     PgType::SqlxTypesTimeTimeAsTime => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
-                        let gen_serialize_field_self_zero_ts = |value: &dyn DisplayPlusToTokens| gen_serialize_field_ts(&value, &quote! {&self.0.#value()});
+                        let gen_serialize_field_self_zero_ts = |v: &dyn DisplayPlusToTokens| gen_serialize_field_ts(&v, &quote! {&self.0.#v()});
                         let hour_serialize_field_ts = gen_serialize_field_self_zero_ts(&HourSc);
                         let minute_serialize_field_ts = gen_serialize_field_self_zero_ts(&MinuteSc);
                         let second_serialize_field_ts = gen_serialize_field_self_zero_ts(&SecondSc);
@@ -1437,7 +1435,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     })),
                     PgType::SqlxPgTypesPgIntervalAsInterval => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
-                        let gen_serialize_field_handle_ts = |value: &dyn DisplayPlusToTokens| gen_serialize_field_ts(&value, &quote! {&#self_dot_zero_ts.#value});
+                        let gen_serialize_field_handle_ts = |v: &dyn DisplayPlusToTokens| gen_serialize_field_ts(&v, &quote! {&#self_dot_zero_ts.#v});
                         let months_serialize_field_ts = gen_serialize_field_handle_ts(&MonthsSc);
                         let days_serialize_field_ts = gen_serialize_field_handle_ts(&DaysSc);
                         let microseconds_serialize_field_ts = gen_serialize_field_handle_ts(&MicrosecondsSc);
@@ -5606,12 +5604,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         gen_utc(&sqlx_types_chrono_naive_date_time_max_ts),
                     )
                 };
-                let gen_typical_test_cases_vec_ts = |value: &dyn ToTokens| {
+                let gen_typical_test_cases_vec_ts = |v: &dyn ToTokens| {
                     let content_ts = match &is_need_to_use_into {
                         IsNeedToUseInto::True => quote! {.into()},
                         IsNeedToUseInto::False => Ts2::new(),
                     };
-                    quote! {#import_path::#value()#content_ts}
+                    quote! {#import_path::#v()#content_ts}
                 };
                 match &pg_type {
                     PgType::I16AsInt2 => gen_typical_test_cases_vec_ts(&quote! {i16_test_cases_vec}),
@@ -5877,8 +5875,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             quote! {new(#content_ts_68722004)}
                                         }
                                     };
-                                    let gen_vec_value_clone_zero_into_number_ts = |value: usize| {
-                                        let number_ts = value.to_string().parse::<Ts2>().expect("50c87202");
+                                    let gen_vec_value_clone_zero_into_number_ts = |v: usize| {
+                                        let number_ts = v.to_string().parse::<Ts2>().expect("50c87202");
                                         //todo maybe correlate with .derive_copy_if()
                                         let maybe_dot_clone_ts_060db18f: &dyn ToTokens = match &pg_type {
                                             PgType::I16AsInt2 |

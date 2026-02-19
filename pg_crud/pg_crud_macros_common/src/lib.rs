@@ -482,8 +482,8 @@ pub enum DimIndexNumber {
     Three,
 }
 impl From<&Dim> for DimIndexNumber {
-    fn from(value: &Dim) -> Self {
-        match &value {
+    fn from(v: &Dim) -> Self {
+        match &v {
             Dim::One => Self::Zero,
             Dim::Two => Self::One,
             Dim::Three => Self::Two,
@@ -695,8 +695,8 @@ pub fn gen_pg_type_where_ts(
 pub fn pg_crud_common_query_part_er_ts() -> Ts2 {
     quote! {pg_crud_common::#QueryPartErUcc}
 }
-pub fn gen_struct_ident_dq_ts(value: &dyn Display) -> Ts2 {
-    dq_ts(&format!("struct {value}"))
+pub fn gen_struct_ident_dq_ts(v: &dyn Display) -> Ts2 {
+    dq_ts(&format!("struct {v}"))
 }
 pub fn gen_struct_ident_with_number_elements_dq_ts(
     ident: &dyn DisplayPlusToTokens,
@@ -704,8 +704,8 @@ pub fn gen_struct_ident_with_number_elements_dq_ts(
 ) -> Ts2 {
     dq_ts(&format!("struct {ident} with {length} elements"))
 }
-pub fn gen_tuple_struct_ident_dq_ts(value: &dyn Display) -> Ts2 {
-    dq_ts(&format!("tuple struct {value}"))
+pub fn gen_tuple_struct_ident_dq_ts(v: &dyn Display) -> Ts2 {
+    dq_ts(&format!("tuple struct {v}"))
 }
 pub fn gen_sqlx_types_json_type_declaration_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {sqlx::types::Json<#type_ts>}

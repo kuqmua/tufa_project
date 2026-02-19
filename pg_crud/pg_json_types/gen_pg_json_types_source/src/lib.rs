@@ -74,8 +74,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         UuidUuid,
     }
     impl From<&PgJsonType> for RustTypeName {
-        fn from(value: &PgJsonType) -> Self {
-            match &value {
+        fn from(v: &PgJsonType) -> Self {
+            match &v {
                 PgJsonType::I8AsJsonbNumber => Self::I8,
                 PgJsonType::I16AsJsonbNumber => Self::I16,
                 PgJsonType::I32AsJsonbNumber => Self::I32,
@@ -112,8 +112,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     impl From<&PgJsonType> for PgJsonTypeName {
-        fn from(value: &PgJsonType) -> Self {
-            match &value {
+        fn from(v: &PgJsonType) -> Self {
+            match &v {
                 PgJsonType::I8AsJsonbNumber
                 | PgJsonType::I16AsJsonbNumber
                 | PgJsonType::I32AsJsonbNumber
@@ -278,8 +278,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     }
     impl TryFrom<&Pattern> for ArrayDim {
         type Error = ();
-        fn try_from(value: &Pattern) -> Result<Self, Self::Error> {
-            match &value {
+        fn try_from(v: &Pattern) -> Result<Self, Self::Error> {
+            match &v {
                 Pattern::Standart => Err(()),
                 Pattern::ArrayDim1 { .. } => Ok(Self::ArrayDim1),
                 Pattern::ArrayDim2 {
@@ -1153,8 +1153,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         String,
                     }
                     impl From<&PgJsonType> for PgJsonTypeSpecific {
-                        fn from(value: &PgJsonType) -> Self {
-                            match value {
+                        fn from(v: &PgJsonType) -> Self {
+                            match v {
                                 PgJsonType::I8AsJsonbNumber
                                 | PgJsonType::I16AsJsonbNumber
                                 | PgJsonType::I32AsJsonbNumber
@@ -1588,7 +1588,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &Ts2::new(),
                 &{
                     let option_unit_ts = gen_option_tokens_declaration_ts(&quote! {()});
-                    let vec_ts = |value: &dyn ToTokens| gen_vec_tokens_declaration_ts(&value);
+                    let vec_ts = |v: &dyn ToTokens| gen_vec_tokens_declaration_ts(&v);
                     let content_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                         match &pattern {
                             Pattern::Standart => {
@@ -1879,8 +1879,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 }
                                 impl TryFrom<&ArrayDim> for ArrayDimSelectPattern {
                                     type Error = ();
-                                    fn try_from(value: &ArrayDim) -> Result<Self, Self::Error> {
-                                        match &value {
+                                    fn try_from(v: &ArrayDim) -> Result<Self, Self::Error> {
+                                        match &v {
                                             ArrayDim::ArrayDim1 => Err(()),
                                             ArrayDim::ArrayDim2 {
                                                 dim1_is_nullable,

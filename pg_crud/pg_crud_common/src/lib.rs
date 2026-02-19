@@ -1141,13 +1141,13 @@ impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
-    pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
-        if value.is_empty() {
+    pub fn try_new(v: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
+        if v.is_empty() {
             return Err(NotEmptyUniqueVecTryNewEr::IsEmpty { loc: loc!() });
         }
         {
             let mut acc_11fac69e = Vec::new();
-            for el_db9bd5a0 in &value {
+            for el_db9bd5a0 in &v {
                 if acc_11fac69e.contains(&el_db9bd5a0) {
                     return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
                         value: el_db9bd5a0.clone(),
@@ -1157,7 +1157,7 @@ impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
                 acc_11fac69e.push(el_db9bd5a0);
             }
         }
-        Ok(Self(value))
+        Ok(Self(v))
     }
 }
 #[allow(unused_qualifications)]
@@ -1247,13 +1247,13 @@ impl<T> Default for NotEmptyUniqueVec<T> {
     }
 }
 impl<T> From<NotEmptyUniqueVec<T>> for Vec<T> {
-    fn from(value: NotEmptyUniqueVec<T>) -> Self {
-        value.0
+    fn from(v: NotEmptyUniqueVec<T>) -> Self {
+        v.0
     }
 }
 impl<T1> NotEmptyUniqueVec<T1> {
-    pub fn from_t1_impl_from_t2<T2: From<T1>>(value: Self) -> NotEmptyUniqueVec<T2> {
-        NotEmptyUniqueVec(value.0.into_iter().map(T2::from).collect::<Vec<T2>>())
+    pub fn from_t1_impl_from_t2<T2: From<T1>>(v: Self) -> NotEmptyUniqueVec<T2> {
+        NotEmptyUniqueVec(v.0.into_iter().map(T2::from).collect::<Vec<T2>>())
     }
 }
 impl<'query_lifetime, T> PgTypeWhereFilter<'query_lifetime> for NotEmptyUniqueVec<T>
@@ -1319,7 +1319,7 @@ pub struct NonPrimaryKeyPgTypeReadOnlyIds(pub Value<Option<()>>);
 impl Decode<'_, Postgres> for NonPrimaryKeyPgTypeReadOnlyIds {
     fn decode(value: PgValueRef<'_>) -> Result<Self, BoxDynError> {
         match <Json<Self> as Decode<Postgres>>::decode(value) {
-            Ok(decode_value) => Ok(decode_value.0),
+            Ok(v0) => Ok(v0.0),
             Err(er) => Err(er),
         }
     }
@@ -1366,11 +1366,14 @@ pub enum UnsignedPartOfI32TryFromI32Er {
 }
 impl TryFrom<i32> for UnsignedPartOfI32 {
     type Error = UnsignedPartOfI32TryFromI32Er;
-    fn try_from(value: i32) -> Result<Self, Self::Error> {
-        if value >= 0 {
-            Ok(Self(value))
+    fn try_from(v: i32) -> Result<Self, Self::Error> {
+        if v >= 0 {
+            Ok(Self(v))
         } else {
-            Err(Self::Error::LessThanZero { value, loc: loc!() })
+            Err(Self::Error::LessThanZero {
+                value: v,
+                loc: loc!(),
+            })
         }
     }
 }
@@ -1486,13 +1489,13 @@ pub enum NotZeroUnsignedPartOfI32TryFromI32Er {
 }
 impl TryFrom<i32> for NotZeroUnsignedPartOfI32 {
     type Error = NotZeroUnsignedPartOfI32TryFromI32Er;
-    fn try_from(value: i32) -> Result<Self, Self::Error> {
-        match UnsignedPartOfI32::try_from(value) {
-            Ok(handle) => {
-                if handle.0 == 0 {
+    fn try_from(v: i32) -> Result<Self, Self::Error> {
+        match UnsignedPartOfI32::try_from(v) {
+            Ok(v0) => {
+                if v0.0 == 0 {
                     Err(Self::Error::IsZero { loc: loc!() })
                 } else {
-                    Ok(Self(handle))
+                    Ok(Self(v0))
                 }
             }
             Err(er) => Err(Self::Error::UnsignedPartOfI32TryFromI32Er {

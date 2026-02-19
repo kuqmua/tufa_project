@@ -259,8 +259,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 Create,
             }
             impl From<&PgJsonTypeSubtypeTableTypeDeclarationOrCreate> for PgJsonTypeSubtype {
-                fn from(value: &PgJsonTypeSubtypeTableTypeDeclarationOrCreate) -> Self {
-                    match &value {
+                fn from(v: &PgJsonTypeSubtypeTableTypeDeclarationOrCreate) -> Self {
+                    match &v {
                         PgJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration => Self::TableTypeDeclaration,
                         PgJsonTypeSubtypeTableTypeDeclarationOrCreate::Create => Self::Create,
                     }
@@ -1968,8 +1968,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     }
                 }
             };
-            let gen_field_ident_dq_ts = |value: &SynFieldWrapper| {
-                dq_ts(&value.field_ident)
+            let gen_field_ident_dq_ts = |v: &SynFieldWrapper| {
+                dq_ts(&v.field_ident)
             };
             let gen_type_as_pg_json_type_read_ts = |type_ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&type_ts, &pg_json_type_subtype_read);
             let gen_type_as_pg_json_type_read_inner_ts = |type_ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&type_ts, &pg_json_type_subtype_read_inner);

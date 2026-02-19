@@ -48,13 +48,13 @@ impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
-    pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
-        if value.is_empty() {
+    pub fn try_new(v: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
+        if v.is_empty() {
             return Err(NotEmptyUniqueVecTryNewEr::IsEmpty { loc: loc!() });
         }
         {
             let mut acc_72940a4c = Vec::new();
-            for el_7721a8da in &value {
+            for el_7721a8da in &v {
                 if acc_72940a4c.contains(&el_7721a8da) {
                     return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
                         value: el_7721a8da.clone(),
@@ -64,7 +64,7 @@ impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
                 acc_72940a4c.push(el_7721a8da);
             }
         }
-        Ok(Self(value))
+        Ok(Self(v))
     }
 }
 impl<T: PartialEq + Clone + Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
@@ -191,8 +191,8 @@ impl<T> Default for PgJsonTypeNotEmptyUniqueVec<T> {
     }
 }
 impl<T> From<PgJsonTypeNotEmptyUniqueVec<T>> for Vec<T> {
-    fn from(value: PgJsonTypeNotEmptyUniqueVec<T>) -> Self {
-        value.0
+    fn from(v: PgJsonTypeNotEmptyUniqueVec<T>) -> Self {
+        v.0
     }
 }
 impl<'lifetime, T> PgTypeWhereFilter<'lifetime> for PgJsonTypeNotEmptyUniqueVec<T>
@@ -643,13 +643,13 @@ impl<'lifetime, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lif
 pub struct PgTypeNotEmptyUniqueVec<T>(Vec<T>);
 #[allow(clippy::arbitrary_source_item_ordering)]
 impl<T: PartialEq + Clone> PgTypeNotEmptyUniqueVec<T> {
-    pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
-        if value.is_empty() {
+    pub fn try_new(v: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
+        if v.is_empty() {
             return Err(NotEmptyUniqueVecTryNewEr::IsEmpty { loc: loc!() });
         }
         {
             let mut acc_6be6ccee = Vec::new();
-            for el_b3d83e60 in &value {
+            for el_b3d83e60 in &v {
                 if acc_6be6ccee.contains(&el_b3d83e60) {
                     return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
                         value: el_b3d83e60.clone(),
@@ -659,7 +659,7 @@ impl<T: PartialEq + Clone> PgTypeNotEmptyUniqueVec<T> {
                 acc_6be6ccee.push(el_b3d83e60);
             }
         }
-        Ok(Self(value))
+        Ok(Self(v))
     }
     #[must_use]
     pub const fn to_vec(&self) -> &Vec<T> {
@@ -756,8 +756,8 @@ impl<T> Default for PgTypeNotEmptyUniqueVec<T> {
     }
 }
 impl<T> From<PgTypeNotEmptyUniqueVec<T>> for Vec<T> {
-    fn from(value: PgTypeNotEmptyUniqueVec<T>) -> Self {
-        value.0
+    fn from(v: PgTypeNotEmptyUniqueVec<T>) -> Self {
+        v.0
     }
 }
 #[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, Serialize, JsonSchema)]
@@ -899,10 +899,10 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
 }
 impl<T, const LENGTH: usize> TryFrom<Vec<T>> for BoundedStdVecVec<T, LENGTH> {
     type Error = BoundedStdVecVecTryNewEr;
-    fn try_from(value: Vec<T>) -> Result<Self, Self::Error> {
-        let len = value.len();
+    fn try_from(v: Vec<T>) -> Result<Self, Self::Error> {
+        let len = v.len();
         if len == LENGTH {
-            Ok(Self(value))
+            Ok(Self(v))
         } else {
             Err(BoundedStdVecVecTryNewEr::LengthIsNotCorrect {
                 wrong_length: len,
