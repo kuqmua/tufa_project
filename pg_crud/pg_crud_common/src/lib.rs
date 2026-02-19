@@ -536,7 +536,7 @@ impl<T: PartialEq + Clone> PgTypeWhere<T> {
                 logical_operator,
                 value: value_56f976af,
             }),
-            Err(error) => Err(error),
+            Err(er) => Err(er),
         }
     }
 }
@@ -640,7 +640,7 @@ const _: () = {
                     };
                     match PgTypeWhere::try_new(__field0, __field1) {
                         Ok(value) => Ok(value),
-                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                        Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
                 #[inline]
@@ -692,7 +692,7 @@ const _: () = {
                     };
                     match PgTypeWhere::try_new(__field0_value, __field1_value) {
                         Ok(value) => Ok(value),
-                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                        Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
             }
@@ -855,14 +855,14 @@ impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PaginationBase {
     ) -> Result<String, QueryPartError> {
         let limit_increment = match increment_checked_add_one_returning_increment(increment) {
             Ok(value) => value,
-            Err(error) => {
-                return Err(error);
+            Err(er) => {
+                return Err(er);
             }
         };
         let offset_increment = match increment_checked_add_one_returning_increment(increment) {
             Ok(value) => value,
-            Err(error) => {
-                return Err(error);
+            Err(er) => {
+                return Err(er);
             }
         };
         Ok(format!(
@@ -1025,7 +1025,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
                 };
                 match PaginationStartsWithZero::try_new(__field0, __field1) {
                     Ok(value) => Ok(value),
-                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))), //todo use serde_json::to_string(&error).unwrap_or_else(|_|"failed to serialize error".into())
+                    Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))), //todo use serde_json::to_string(&error).unwrap_or_else(|_|"failed to serialize error".into())
                 }
             }
             #[inline]
@@ -1071,7 +1071,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
                 };
                 match PaginationStartsWithZero::try_new(__field0_value, __field1_value) {
                     Ok(value) => Ok(value),
-                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                    Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                 }
             }
         }
@@ -1221,7 +1221,7 @@ const _: () = {
                     };
                     match NotEmptyUniqueVec::try_new(__field0) {
                         Ok(value) => Ok(value),
-                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                        Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
             }
@@ -1329,7 +1329,7 @@ impl Decode<'_, Postgres> for NonPrimaryKeyPgTypeReadOnlyIds {
     fn decode(value: PgValueRef<'_>) -> Result<Self, BoxDynError> {
         match <Json<Self> as Decode<Postgres>>::decode(value) {
             Ok(decode_value) => Ok(decode_value.0),
-            Err(error) => Err(error),
+            Err(er) => Err(er),
         }
     }
 }
@@ -1421,7 +1421,7 @@ const _: () = {
                     let __field0: i32 = <i32 as Deserialize>::deserialize(__e)?;
                     match UnsignedPartOfI32::try_from(__field0) {
                         Ok(value) => Ok(value),
-                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                        Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
                 #[inline]
@@ -1438,7 +1438,7 @@ const _: () = {
                     };
                     match UnsignedPartOfI32::try_from(__field0) {
                         Ok(value) => Ok(value),
-                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                        Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
             }
@@ -1553,7 +1553,7 @@ const _: () = {
                     let __field0: i32 = <i32 as Deserialize>::deserialize(__e)?;
                     match NotZeroUnsignedPartOfI32::try_from(__field0) {
                         Ok(value) => Ok(value),
-                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                        Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
                 #[inline]
@@ -1570,7 +1570,7 @@ const _: () = {
                     };
                     match NotZeroUnsignedPartOfI32::try_from(__field0) {
                         Ok(value) => Ok(value),
-                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                        Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
             }

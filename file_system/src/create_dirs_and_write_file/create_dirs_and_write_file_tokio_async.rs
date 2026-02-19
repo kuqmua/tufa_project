@@ -15,25 +15,25 @@ pub async fn create_dirs_and_write_file_tokio_async(
     bytes: &[u8],
 ) -> Result<(), CreateDirsAndWriteFileTokioAsyncError> {
     if let Some(prefix) = path.parent()
-        && let Err(error) = fs::create_dir_all(prefix)
+        && let Err(er) = fs::create_dir_all(prefix)
     {
         return Err(CreateDirsAndWriteFileTokioAsyncError::StdIoError {
-            error,
+            error: er,
             code_occurence: code_occurence!(),
         });
     }
     match File::open(path).await {
         Ok(mut file) => {
-            if let Err(error) = AsyncWriteExt::write_all(&mut file, bytes).await {
+            if let Err(er) = AsyncWriteExt::write_all(&mut file, bytes).await {
                 return Err(CreateDirsAndWriteFileTokioAsyncError::StdIoError {
-                    error,
+                    error: er,
                     code_occurence: code_occurence!(),
                 });
             }
             Ok(())
         }
-        Err(error) => Err(CreateDirsAndWriteFileTokioAsyncError::StdIoError {
-            error,
+        Err(er) => Err(CreateDirsAndWriteFileTokioAsyncError::StdIoError {
+            error: er,
             code_occurence: code_occurence!(),
         }),
     }

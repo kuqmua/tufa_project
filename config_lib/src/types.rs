@@ -57,10 +57,10 @@ impl SourcePlaceType {
     #[must_use]
     pub fn from_env_or_default() -> Self {
         let fix_message = "You can set environment variable SOURCE_PLACE_TYPE to be equal \"source\" or \"github\"";
-        if let Err(error) = dotenv() {
+        if let Err(er) = dotenv() {
             let default = Self::default();
             eprintln!(
-                "using default SourcePlaceType::{default:#?} (failed to dotenv(): {error}) {fix_message}"
+                "using default SourcePlaceType::{default:#?} (failed to dotenv(): {er}) {fix_message}"
             );
             return default;
         }
@@ -68,18 +68,18 @@ impl SourcePlaceType {
         match env::var(name) {
             Ok(env_value) => match <Self as FromStr>::from_str(&env_value) {
                 Ok(value) => value,
-                Err(error) => {
+                Err(er) => {
                     let default = Self::default();
                     eprintln!(
-                        "using default SourcePlaceType::{default:#?} (<SourcePlaceType as FromStr>::from_str(&value): {error}) {fix_message}"
+                        "using default SourcePlaceType::{default:#?} (<SourcePlaceType as FromStr>::from_str(&value): {er}) {fix_message}"
                     );
                     default
                 }
             },
-            Err(error) => {
+            Err(er) => {
                 let default = Self::default();
                 eprintln!(
-                    "using default SourcePlaceType::{default:#?} (env::var(\"{name}\"): {error}) {fix_message}"
+                    "using default SourcePlaceType::{default:#?} (env::var(\"{name}\"): {er}) {fix_message}"
                 );
                 default
             }

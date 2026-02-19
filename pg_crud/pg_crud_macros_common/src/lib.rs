@@ -1040,7 +1040,7 @@ pub fn gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
             fn decode(#ValueSc: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
                 match <#type_ts as sqlx::Decode<sqlx::Postgres>>::decode(#ValueSc) {
                     Ok(value_147c3532) => #ok_value_match_ts,
-                    Err(error) => Err(error),
+                    Err(er) => Err(er),
                 }
             }
         }
@@ -2090,7 +2090,7 @@ pub fn gen_match_try_new_in_deserialize_ts(
     quote! {
         match #ident::try_new(#initialization_ts) {
             Ok(value) => Ok(value),
-            Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
+            Err(er) => Err(serde::de::Error::custom(format!("{er:?}")))
         }
     }
 }

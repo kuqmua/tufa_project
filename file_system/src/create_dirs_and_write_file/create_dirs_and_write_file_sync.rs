@@ -18,31 +18,31 @@ pub fn create_dirs_and_write_file_sync(
     bytes: &[u8],
 ) -> Result<(), CreateDirsAndWriteFileSyncError> {
     if let Some(prefix) = path.parent()
-        && let Err(error) = fs::create_dir_all(prefix)
+        && let Err(er) = fs::create_dir_all(prefix)
     {
         return Err(CreateDirsAndWriteFileSyncError::StdIo {
-            error,
+            error: er,
             code_occurence: code_occurence!(),
         });
     }
     match File::create(path) {
         Ok(mut file) => {
-            if let Err(error) = Write::write_all(&mut file, bytes) {
+            if let Err(er) = Write::write_all(&mut file, bytes) {
                 return Err(CreateDirsAndWriteFileSyncError::StdIo {
-                    error,
+                    error: er,
                     code_occurence: code_occurence!(),
                 });
             }
-            if let Err(error) = file.sync_all() {
+            if let Err(er) = file.sync_all() {
                 return Err(CreateDirsAndWriteFileSyncError::StdIo {
-                    error,
+                    error: er,
                     code_occurence: code_occurence!(),
                 });
             }
             Ok(())
         }
-        Err(error) => Err(CreateDirsAndWriteFileSyncError::StdIo {
-            error,
+        Err(er) => Err(CreateDirsAndWriteFileSyncError::StdIo {
+            error: er,
             code_occurence: code_occurence!(),
         }),
     }

@@ -533,7 +533,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         };
                         match PgTypeRecord::try_from((__field0, __field1, __field2)) {
                             Ok(value) => Ok(value),
-                            Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                            Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                         }
                     }
                     #[inline]
@@ -612,7 +612,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             __field2_value,
                         )) {
                             Ok(value) => Ok(value),
-                            Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                            Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                         }
                     }
                 }
@@ -6252,7 +6252,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 acc_74c71d5d
                             }) {
                                 Ok(value_2218be19) => Some(value_2218be19),
-                                Err(error) => match error {
+                                Err(er) => match er {
                                     #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
                                     #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("45c8de3c")
                                 }

@@ -87,9 +87,9 @@ pub fn try_from_env(input: Ts) -> Ts {
                 let #el_ident = {
                     let env_var_name = String::from(#el_ident_quotes_upper_sc_string);
                     match std::env::var(&env_var_name) {
-                        Err(error) => {
+                        Err(er) => {
                             return Err(#ident_try_from_env_error_ucc::#StdEnvVarErrorUcc {
-                                #StdEnvVarErrorSc: error,
+                                #StdEnvVarErrorSc: er,
                                 #EnvVarNameSc,
                             });
                         }
@@ -97,9 +97,9 @@ pub fn try_from_env(input: Ts) -> Ts {
                             config_lib::#el_ident_wrapper_ucc_ts as
                             config_lib::#TryFromStdEnvVarOkUcc
                         >::try_from_std_env_var_ok(value) {
-                            Err(error) => {
+                            Err(er) => {
                                 return Err(#ident_try_from_env_error_ucc::#el_ident_ucc_ts {
-                                    #el_ident: error,
+                                    #el_ident: er,
                                 });
                             }
                             Ok(value) => value.0,
@@ -112,9 +112,9 @@ pub fn try_from_env(input: Ts) -> Ts {
         quote! {
             impl #ident {
                 pub fn try_from_env() -> Result<Self, #ident_try_from_env_error_ucc> {
-                    if let Err(error) = dotenv::dotenv() {
+                    if let Err(er) = dotenv::dotenv() {
                         return Err(#ident_try_from_env_error_ucc::#DotenvUcc {
-                            #DotenvSc: error,
+                            #DotenvSc: er,
                         });
                     }
                     #(#fields_initialization_ts)*

@@ -13,9 +13,9 @@ pub fn create_dir_if_it_doesnt_exist(path: &str) -> Result<(), CreateDirIfItDoes
     if Path::new(path).exists() {
         return Ok(());
     }
-    if let Err(error) = fs::create_dir_all(path) {
+    if let Err(er) = fs::create_dir_all(path) {
         return Err(CreateDirIfItDoesntExistError::CreateDirAll {
-            error,
+            error: er,
             code_occurence: code_occurence!(),
         });
     }

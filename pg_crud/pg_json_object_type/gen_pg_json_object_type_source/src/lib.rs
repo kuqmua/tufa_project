@@ -4776,7 +4776,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                         #import_path::NullableJsonObjectPgTypeWhereFilter(Some(value_7ed84f3b))
                                                     );
                                                 },
-                                                Err(error) => match error {
+                                                Err(er) => match er {
                                                     #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => (),
                                                     #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("23dca12f")
                                                 }
@@ -4798,7 +4798,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             }
                         ) {
                             Ok(value_55f2dc3d) => Some(value_55f2dc3d),
-                            Err(error) => match error {
+                            Err(er) => match er {
                                 #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
                                 #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("88912e24")
                             }
@@ -4845,7 +4845,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         acc_2fe1cca8
                                     }) {
                                         Ok(value_a5fa471d) => Some(value_a5fa471d),
-                                        Err(error) => match error {
+                                        Err(er) => match er {
                                             #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
                                             #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("89e719cf")
                                         }
@@ -4951,7 +4951,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         acc_dd377eb1
                                     }) {
                                         Ok(value_dfac36e4) => Some(value_dfac36e4),
-                                        Err(error) => match error {
+                                        Err(er) => match er {
                                             #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
                                             #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("93390f1a")
                                         },
@@ -6096,7 +6096,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         match (#ReadOnlyIdsSc.0.#ValueSc, #CreateSc.0) {
                                             (Some(read_only_ids_ce30c0fe), Some(create_8fd81ed8)) => match #import_path::NotEmptyUniqueVec::try_new(#content_ts) {
                                                 Ok(value_7a9cd49b) => Some(value_7a9cd49b),
-                                                Err(error) => match error {
+                                                Err(er) => match er {
                                                     #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
                                                     #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("463769fc")
                                                 }
@@ -6255,7 +6255,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                         Ok(value_8e72cfd7) => {
                                                             acc_12b6f16d.push(#import_path::NullableJsonObjectPgTypeWhereFilter(Some(value_8e72cfd7)));
                                                         },
-                                                        Err(error) => match error {
+                                                        Err(er) => match er {
                                                             #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => (),
                                                             #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("2a88b17f")
                                                         }
@@ -6303,7 +6303,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                                 )
                                                             );
                                                         },
-                                                        Err(error) => match error {
+                                                        Err(er) => match er {
                                                             #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => (),
                                                             #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("6c4da72e")
                                                         }
@@ -6323,7 +6323,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 ) {
                                     Ok(value_72dbefbc) => Some(value_72dbefbc),
-                                    Err(error) => match error {
+                                    Err(er) => match er {
                                         #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
                                         #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("d41bcbca")
                                     }
@@ -6369,7 +6369,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 acc_587bf907
                                             }) {
                                                 Ok(value_ea661a62) => Some(value_ea661a62),
-                                                Err(error) => match error {
+                                                Err(er) => match er {
                                                     #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
                                                     #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("7786dfd4")
                                                 },
@@ -6429,7 +6429,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 acc_480d72e5
                                             }) {
                                                 Ok(value_cc01db9a) => Some(value_cc01db9a),
-                                                Err(error) => match error {
+                                                Err(er) => match er {
                                                     #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
                                                     #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("bad01dd0")
                                                 },
@@ -6455,7 +6455,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 Ok(value_1d0202fc) => {
                                                     acc_87f84b5c.push(#import_path::NullableJsonObjectPgTypeWhereFilter(Some(value_1d0202fc)));
                                                 }
-                                                Err(error) => match error {
+                                                Err(er) => match er {
                                                     #import_path::NotEmptyUniqueVecTryNewError::IsEmpty { .. } => (),
                                                     #import_path::NotEmptyUniqueVecTryNewError::NotUnique { .. } => panic!("bdb0a112"),
                                                 },
@@ -6468,7 +6468,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         acc_87f84b5c
                                     }) {
                                         Ok(value_ea4ca151) => Some(value_ea4ca151),
-                                        Err(error) => match error {
+                                        Err(er) => match er {
                                             #import_path::NotEmptyUniqueVecTryNewError::IsEmpty { .. } => None,
                                             #import_path::NotEmptyUniqueVecTryNewError::NotUnique { .. } => panic!("c7ecc36f"),
                                         },
@@ -6515,7 +6515,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 acc_f5866fb6
                                             }) {
                                                 Ok(value_c4c01cd9) => Some(value_c4c01cd9),
-                                                Err(error) => match error {
+                                                Err(er) => match er {
                                                     #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
                                                     #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("91d713b5")
                                                 },
@@ -6579,7 +6579,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 acc_acceb7eb
                                             }) {
                                                 Ok(value_a889de37) => Some(value_a889de37),
-                                                Err(error) => match error {
+                                                Err(er) => match er {
                                                     #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
                                                     #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("a9e99f81")
                                                 },
@@ -6666,7 +6666,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 acc_a94bd7fb
                                             }) {
                                                 Ok(value_ebe930f0) => Some(value_ebe930f0),
-                                                Err(error) => match error {
+                                                Err(er) => match er {
                                                     #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
                                                     #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("b877e9c0")
                                                 }
@@ -6724,7 +6724,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                                     acc_359c0b3f.push(multiple_where_with_id_f8a4319c);
                                                                 }
                                                             },
-                                                            Err(error) => match error {
+                                                            Err(er) => match er {
                                                                 #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => (),
                                                                 #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("f0e3d01b")
                                                             }
@@ -6755,7 +6755,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                                 all_fields_acc.push(value_d6218307);
                                                             }
                                                         },
-                                                        Err(error) => match error {
+                                                        Err(er) => match er {
                                                             #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => (),
                                                             #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("f8fcc434")
                                                         }
@@ -6793,7 +6793,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                             Ok(value_80199720) => {
                                                                 acc_359c0b3f.push(#import_path::SingleOrMultiple::Multiple(value_80199720));
                                                             },
-                                                            Err(error) => match error {
+                                                            Err(er) => match er {
                                                                 #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => (),
                                                                 #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("32a3da97")
                                                             }
@@ -6803,7 +6803,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 acc_359c0b3f
                                             }) {
                                                 Ok(value_752f0e8d) => Some(value_752f0e8d),
-                                                Err(error) => match error {
+                                                Err(er) => match er {
                                                     #import_path::NotEmptyUniqueVecTryNewError::IsEmpty {..} => None,
                                                     #import_path::NotEmptyUniqueVecTryNewError::NotUnique {..} => panic!("76542a11")
                                                 }
@@ -6832,7 +6832,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                             Ok(value_4ce6ecd3) => {
                                                                 acc_e0d72451.push(#import_path::SingleOrMultiple::Single(#import_path::NullableJsonObjectPgTypeWhereFilter(Some(value_4ce6ecd3))));
                                                             }
-                                                            Err(error) => match error {
+                                                            Err(er) => match er {
                                                                 #import_path::NotEmptyUniqueVecTryNewError::IsEmpty { .. } => (),
                                                                 #import_path::NotEmptyUniqueVecTryNewError::NotUnique { .. } => panic!("626ffa77"),
                                                             },
@@ -6842,7 +6842,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 acc_e0d72451
                                             }) {
                                                 Ok(value_5d381053) => Some(value_5d381053),
-                                                Err(error) => match error {
+                                                Err(er) => match er {
                                                     #import_path::NotEmptyUniqueVecTryNewError::IsEmpty { .. } => None,
                                                     #import_path::NotEmptyUniqueVecTryNewError::NotUnique { .. } => panic!("23a17416"),
                                                 },

@@ -41,8 +41,8 @@ impl TryFromStdEnvVarOk for Timezone {
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
         let Some(fixed_offset) = FixedOffset::east_opt(match value.parse::<i32>() {
             Ok(value_i32) => value_i32,
-            Err(error) => {
-                return Err(Self::Error::I32Parsing { i32_parsing: error });
+            Err(er) => {
+                return Err(Self::Error::I32Parsing { i32_parsing: er });
             }
         }) else {
             return Err(Self::Error::ChronoFixedOffset {
@@ -137,9 +137,9 @@ impl TryFromStdEnvVarOk for TracingLevel {
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
         Ok(Self(match value.parse::<types::TracingLevel>() {
             Ok(handle) => handle,
-            Err(error) => {
+            Err(er) => {
                 return Err(Self::Error::AppStateTracingLevelParsing {
-                    app_state_tracing_type_parsing: error,
+                    app_state_tracing_type_parsing: er,
                 });
             }
         }))
@@ -158,9 +158,9 @@ impl TryFromStdEnvVarOk for SourcePlaceType {
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
         Ok(Self(match value.parse::<types::SourcePlaceType>() {
             Ok(handle) => handle,
-            Err(error) => {
+            Err(er) => {
                 return Err(Self::Error::AppStateSourcePlaceTypeParsing {
-                    app_state_source_place_type_parsing: error,
+                    app_state_source_place_type_parsing: er,
                 });
             }
         }))
@@ -177,10 +177,8 @@ impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
         Ok(Self(match value.parse::<bool>() {
             Ok(handle) => handle,
-            Err(error) => {
-                return Err(Self::Error::BoolParsing {
-                    bool_parsing: error,
-                });
+            Err(er) => {
+                return Err(Self::Error::BoolParsing { bool_parsing: er });
             }
         }))
     }
@@ -196,10 +194,8 @@ impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
         Ok(Self(match value.parse::<usize>() {
             Ok(handle) => handle,
-            Err(error) => {
-                return Err(Self::Error::UsizeParsing {
-                    usize_parsing: error,
-                });
+            Err(er) => {
+                return Err(Self::Error::UsizeParsing { usize_parsing: er });
             }
         }))
     }
