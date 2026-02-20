@@ -146,22 +146,22 @@ const _: () = {
                 where
                     __E: _serde::Deserializer<'de>,
                 {
-                    let __field0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
-                    Ok(PgJsonTypeNotEmptyUniqueVec(__field0))
+                    let f0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
+                    Ok(PgJsonTypeNotEmptyUniqueVec(f0))
                 }
                 #[inline]
                 fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let Some(__field0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
+                    let Some(f0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
                             &"tuple struct PgJsonTypeNotEmptyUniqueVec with 1 element",
                         ));
                     };
-                    match PgJsonTypeNotEmptyUniqueVec::try_new(__field0) {
+                    match PgJsonTypeNotEmptyUniqueVec::try_new(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -285,8 +285,8 @@ const _: () = {
                 where
                     __E: _serde::Deserializer<'de>,
                 {
-                    let __field0: String = <String as _serde::Deserialize>::deserialize(__e)?;
-                    Ok(RegexRegex(match Regex::new(&__field0) {
+                    let f0: String = <String as _serde::Deserialize>::deserialize(__e)?;
+                    Ok(RegexRegex(match Regex::new(&f0) {
                         Ok(v) => v,
                         Err(er) => {
                             return Err(serde::de::Error::custom(format!("{er:?}")));
@@ -298,14 +298,14 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let Some(__field0) = _serde::de::SeqAccess::next_element::<String>(&mut __seq)?
+                    let Some(f0) = _serde::de::SeqAccess::next_element::<String>(&mut __seq)?
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
                             &"tuple struct RegexRegex with 1 element",
                         ));
                     };
-                    Ok(RegexRegex(match Regex::new(&__field0) {
+                    Ok(RegexRegex(match Regex::new(&f0) {
                         Ok(v) => v,
                         Err(er) => {
                             return Err(serde::de::Error::custom(format!("{er:?}")));
@@ -428,8 +428,8 @@ const _: () = {
             #[expect(non_camel_case_types)]
             #[doc(hidden)]
             enum __Field {
-                __field0,
-                __field1,
+                f0,
+                f1,
                 __ignore,
             }
             #[doc(hidden)]
@@ -447,8 +447,8 @@ const _: () = {
                     __E: _serde::de::Error,
                 {
                     match v {
-                        1u64 => Ok(__Field::__field0),
-                        2u64 => Ok(__Field::__field1),
+                        1u64 => Ok(__Field::f0),
+                        2u64 => Ok(__Field::f1),
                         _ => Ok(__Field::__ignore),
                     }
                 }
@@ -457,8 +457,8 @@ const _: () = {
                     __E: _serde::de::Error,
                 {
                     match v {
-                        "start" => Ok(__Field::__field0),
-                        "end" => Ok(__Field::__field1),
+                        "start" => Ok(__Field::f0),
+                        "end" => Ok(__Field::f1),
                         _ => Ok(__Field::__ignore),
                     }
                 }
@@ -467,8 +467,8 @@ const _: () = {
                     __E: _serde::de::Error,
                 {
                     match v {
-                        b"start" => Ok(__Field::__field0),
-                        b"end" => Ok(__Field::__field1),
+                        b"start" => Ok(__Field::f0),
+                        b"end" => Ok(__Field::f1),
                         _ => Ok(__Field::__ignore),
                     }
                 }
@@ -510,21 +510,19 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let Some(__field0) = _serde::de::SeqAccess::next_element::<T>(&mut __seq)?
-                    else {
+                    let Some(f0) = _serde::de::SeqAccess::next_element::<T>(&mut __seq)? else {
                         return Err(_serde::de::Error::invalid_length(
                             1usize,
                             &"struct Between with 2 elements",
                         ));
                     };
-                    let Some(__field1) = _serde::de::SeqAccess::next_element::<T>(&mut __seq)?
-                    else {
+                    let Some(f1) = _serde::de::SeqAccess::next_element::<T>(&mut __seq)? else {
                         return Err(_serde::de::Error::invalid_length(
                             2usize,
                             &"struct Between with 2 elements",
                         ));
                     };
-                    match Between::try_new(__field0, __field1) {
+                    match Between::try_new(f0, f1) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -534,28 +532,26 @@ const _: () = {
                 where
                     __A: _serde::de::MapAccess<'de>,
                 {
-                    let mut __field0: Option<T> = None;
-                    let mut __field1: Option<T> = None;
+                    let mut f0: Option<T> = None;
+                    let mut f1: Option<T> = None;
                     while let Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)?
                     {
                         match __key {
-                            __Field::__field0 => {
-                                if Option::is_some(&__field0) {
+                            __Field::f0 => {
+                                if Option::is_some(&f0) {
                                     return Err(
                                         <__A::Error as _serde::de::Error>::duplicate_field("start"),
                                     );
                                 }
-                                __field0 =
-                                    Some(_serde::de::MapAccess::next_value::<T>(&mut __map)?);
+                                f0 = Some(_serde::de::MapAccess::next_value::<T>(&mut __map)?);
                             }
-                            __Field::__field1 => {
-                                if Option::is_some(&__field1) {
+                            __Field::f1 => {
+                                if Option::is_some(&f1) {
                                     return Err(
                                         <__A::Error as _serde::de::Error>::duplicate_field("end"),
                                     );
                                 }
-                                __field1 =
-                                    Some(_serde::de::MapAccess::next_value::<T>(&mut __map)?);
+                                f1 = Some(_serde::de::MapAccess::next_value::<T>(&mut __map)?);
                             }
                             __Field::__ignore => {
                                 let _: serde::de::IgnoredAny =
@@ -565,15 +561,15 @@ const _: () = {
                             }
                         }
                     }
-                    let __field0_value = match __field0 {
+                    let f0_value = match f0 {
                         Some(v) => v,
                         None => _serde::__private228::de::missing_field("start")?,
                     };
-                    let __field1_value = match __field1 {
+                    let f1_value = match f1 {
                         Some(v) => v,
                         None => _serde::__private228::de::missing_field("end")?,
                     };
-                    match Between::try_new(__field0_value, __field1_value) {
+                    match Between::try_new(f0_value, f1_value) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -706,22 +702,22 @@ const _: () = {
                 where
                     __E: _serde::Deserializer<'de>,
                 {
-                    let __field0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
-                    Ok(PgTypeNotEmptyUniqueVec(__field0))
+                    let f0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
+                    Ok(PgTypeNotEmptyUniqueVec(f0))
                 }
                 #[inline]
                 fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let Some(__field0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
+                    let Some(f0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
                             &"tuple struct PgTypeNotEmptyUniqueVec with 1 element",
                         ));
                     };
-                    match PgTypeNotEmptyUniqueVec::try_new(__field0) {
+                    match PgTypeNotEmptyUniqueVec::try_new(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -949,8 +945,8 @@ const _: () = {
                 where
                     __E: _serde::Deserializer<'de>,
                 {
-                    let __field0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
-                    match BoundedStdVecVec::try_from(__field0) {
+                    let f0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
+                    match BoundedStdVecVec::try_from(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -960,14 +956,14 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let Some(__field0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
+                    let Some(f0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
                             &"tuple struct BoundedStdVecVec with 1 element",
                         ));
                     };
-                    match BoundedStdVecVec::try_from(__field0) {
+                    match BoundedStdVecVec::try_from(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }

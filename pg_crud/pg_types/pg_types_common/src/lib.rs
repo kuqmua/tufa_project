@@ -80,8 +80,8 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
         #[expect(non_camel_case_types)]
         #[doc(hidden)]
         enum __Field {
-            __field0,
-            __field1,
+            f0,
+            f1,
             __ignore,
         }
         #[doc(hidden)]
@@ -99,8 +99,8 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
                 __E: serde::de::Error,
             {
                 match v {
-                    0u64 => Ok(__Field::__field0),
-                    1u64 => Ok(__Field::__field1),
+                    0u64 => Ok(__Field::f0),
+                    1u64 => Ok(__Field::f1),
                     _ => Ok(__Field::__ignore),
                 }
             }
@@ -109,8 +109,8 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
                 __E: serde::de::Error,
             {
                 match v {
-                    "limit" => Ok(__Field::__field0),
-                    "offset" => Ok(__Field::__field1),
+                    "limit" => Ok(__Field::f0),
+                    "offset" => Ok(__Field::f1),
                     _ => Ok(__Field::__ignore),
                 }
             }
@@ -119,8 +119,8 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
                 __E: SerdeEr,
             {
                 match v {
-                    b"limit" => Ok(__Field::__field0),
-                    b"offset" => Ok(__Field::__field1),
+                    b"limit" => Ok(__Field::f0),
+                    b"offset" => Ok(__Field::f1),
                     _ => Ok(__Field::__ignore),
                 }
             }
@@ -152,19 +152,19 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
             where
                 __A: SeqAccess<'de>,
             {
-                let Some(__field0) = SeqAccess::next_element::<i64>(&mut __seq)? else {
+                let Some(f0) = SeqAccess::next_element::<i64>(&mut __seq)? else {
                     return Err(SerdeEr::invalid_length(
                         0usize,
                         &"struct PaginationStartsWithOne with 2 elements",
                     ));
                 };
-                let Some(__field1) = SeqAccess::next_element::<i64>(&mut __seq)? else {
+                let Some(f1) = SeqAccess::next_element::<i64>(&mut __seq)? else {
                     return Err(SerdeEr::invalid_length(
                         1usize,
                         &"struct PaginationStartsWithOne with 2 elements",
                     ));
                 };
-                match PaginationStartsWithOne::try_new(__field0, __field1) {
+                match PaginationStartsWithOne::try_new(f0, f1) {
                     Ok(v) => Ok(v),
                     Err(er) => Err(SerdeEr::custom(format!("{er:?}"))),
                 }
@@ -174,36 +174,36 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
             where
                 __A: MapAccess<'de>,
             {
-                let mut __field0: Option<i64> = None;
-                let mut __field1: Option<i64> = None;
+                let mut f0: Option<i64> = None;
+                let mut f1: Option<i64> = None;
                 while let Some(__key) = MapAccess::next_key::<__Field>(&mut __map)? {
                     match __key {
-                        __Field::__field0 => {
-                            if Option::is_some(&__field0) {
+                        __Field::f0 => {
+                            if Option::is_some(&f0) {
                                 return Err(<__A::Error as SerdeEr>::duplicate_field("limit"));
                             }
-                            __field0 = Some(MapAccess::next_value::<i64>(&mut __map)?);
+                            f0 = Some(MapAccess::next_value::<i64>(&mut __map)?);
                         }
-                        __Field::__field1 => {
-                            if Option::is_some(&__field1) {
+                        __Field::f1 => {
+                            if Option::is_some(&f1) {
                                 return Err(<__A::Error as SerdeEr>::duplicate_field("offset"));
                             }
-                            __field1 = Some(MapAccess::next_value::<i64>(&mut __map)?);
+                            f1 = Some(MapAccess::next_value::<i64>(&mut __map)?);
                         }
                         __Field::__ignore => {
                             let _: IgnoredAny = MapAccess::next_value::<IgnoredAny>(&mut __map)?;
                         }
                     }
                 }
-                let __field0_value = match __field0 {
+                let f0_value = match f0 {
                     Some(v) => v,
                     None => serde::__private228::de::missing_field("limit")?,
                 };
-                let __field1_value = match __field1 {
+                let f1_value = match f1 {
                     Some(v) => v,
                     None => serde::__private228::de::missing_field("offset")?,
                 };
-                match PaginationStartsWithOne::try_new(__field0_value, __field1_value) {
+                match PaginationStartsWithOne::try_new(f0_value, f1_value) {
                     Ok(v) => Ok(v),
                     Err(er) => Err(SerdeEr::custom(format!("{er:?}"))),
                 }

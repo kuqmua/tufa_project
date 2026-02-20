@@ -548,8 +548,8 @@ const _: () = {
             #[expect(non_camel_case_types)]
             #[doc(hidden)]
             enum __Field {
-                __field0,
-                __field1,
+                f0,
+                f1,
                 __ignore,
             }
             #[doc(hidden)]
@@ -564,8 +564,8 @@ const _: () = {
                     __E: _serde::de::Error,
                 {
                     match v {
-                        0u64 => Ok(__Field::__field0),
-                        1u64 => Ok(__Field::__field1),
+                        0u64 => Ok(__Field::f0),
+                        1u64 => Ok(__Field::f1),
                         _ => Ok(__Field::__ignore),
                     }
                 }
@@ -574,8 +574,8 @@ const _: () = {
                     __E: _serde::de::Error,
                 {
                     match v {
-                        "logical_operator" => Ok(__Field::__field0),
-                        "value" => Ok(__Field::__field1),
+                        "logical_operator" => Ok(__Field::f0),
+                        "value" => Ok(__Field::f1),
                         _ => Ok(__Field::__ignore),
                     }
                 }
@@ -584,8 +584,8 @@ const _: () = {
                     __E: _serde::de::Error,
                 {
                     match v {
-                        b"logical_operator" => Ok(__Field::__field0),
-                        b"value" => Ok(__Field::__field1),
+                        b"logical_operator" => Ok(__Field::f0),
+                        b"value" => Ok(__Field::f1),
                         _ => Ok(__Field::__ignore),
                     }
                 }
@@ -616,7 +616,7 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let Some(__field0) =
+                    let Some(f0) =
                         _serde::de::SeqAccess::next_element::<LogicalOperator>(&mut __seq)?
                     else {
                         return Err(_serde::de::Error::invalid_length(
@@ -624,14 +624,14 @@ const _: () = {
                             &"struct PgTypeWhere with 2 elements",
                         ));
                     };
-                    let Some(__field1) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
+                    let Some(f1) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             1usize,
                             &"struct PgTypeWhere with 2 elements",
                         ));
                     };
-                    match PgTypeWhere::try_new(__field0, __field1) {
+                    match PgTypeWhere::try_new(f0, f1) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -641,31 +641,30 @@ const _: () = {
                 where
                     __A: _serde::de::MapAccess<'de>,
                 {
-                    let mut __field0: Option<LogicalOperator> = None;
-                    let mut __field1: Option<Vec<T>> = None;
+                    let mut f0: Option<LogicalOperator> = None;
+                    let mut f1: Option<Vec<T>> = None;
                     while let Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)?
                     {
                         match __key {
-                            __Field::__field0 => {
-                                if Option::is_some(&__field0) {
+                            __Field::f0 => {
+                                if Option::is_some(&f0) {
                                     return Err(
                                         <__A::Error as _serde::de::Error>::duplicate_field(
                                             "logical_operator",
                                         ),
                                     );
                                 }
-                                __field0 = Some(_serde::de::MapAccess::next_value::<
-                                    LogicalOperator,
-                                >(&mut __map)?);
+                                f0 = Some(_serde::de::MapAccess::next_value::<LogicalOperator>(
+                                    &mut __map,
+                                )?);
                             }
-                            __Field::__field1 => {
-                                if Option::is_some(&__field1) {
+                            __Field::f1 => {
+                                if Option::is_some(&f1) {
                                     return Err(
                                         <__A::Error as _serde::de::Error>::duplicate_field("value"),
                                     );
                                 }
-                                __field1 =
-                                    Some(_serde::de::MapAccess::next_value::<Vec<T>>(&mut __map)?);
+                                f1 = Some(_serde::de::MapAccess::next_value::<Vec<T>>(&mut __map)?);
                             }
                             __Field::__ignore => {
                                 let _: serde::de::IgnoredAny =
@@ -675,15 +674,15 @@ const _: () = {
                             }
                         }
                     }
-                    let __field0_value = match __field0 {
+                    let f0_value = match f0 {
                         Some(v) => v,
                         None => _serde::__private228::de::missing_field("logical_operator")?,
                     };
-                    let __field1_value = match __field1 {
+                    let f1_value = match f1 {
                         Some(v) => v,
                         None => _serde::__private228::de::missing_field("value")?,
                     };
-                    match PgTypeWhere::try_new(__field0_value, __field1_value) {
+                    match PgTypeWhere::try_new(f0_value, f1_value) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -931,8 +930,8 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
         #[expect(non_camel_case_types)]
         #[doc(hidden)]
         enum __Field {
-            __field0,
-            __field1,
+            f0,
+            f1,
             __ignore,
         }
         #[doc(hidden)]
@@ -947,8 +946,8 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
                 __E: serde::de::Error,
             {
                 match v {
-                    0u64 => Ok(__Field::__field0),
-                    1u64 => Ok(__Field::__field1),
+                    0u64 => Ok(__Field::f0),
+                    1u64 => Ok(__Field::f1),
                     _ => Ok(__Field::__ignore),
                 }
             }
@@ -957,8 +956,8 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
                 __E: serde::de::Error,
             {
                 match v {
-                    "limit" => Ok(__Field::__field0),
-                    "offset" => Ok(__Field::__field1),
+                    "limit" => Ok(__Field::f0),
+                    "offset" => Ok(__Field::f1),
                     _ => Ok(__Field::__ignore),
                 }
             }
@@ -967,8 +966,8 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
                 __E: serde::de::Error,
             {
                 match v {
-                    b"limit" => Ok(__Field::__field0),
-                    b"offset" => Ok(__Field::__field1),
+                    b"limit" => Ok(__Field::f0),
+                    b"offset" => Ok(__Field::f1),
                     _ => Ok(__Field::__ignore),
                 }
             }
@@ -997,19 +996,19 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
             where
                 __A: serde::de::SeqAccess<'de>,
             {
-                let Some(__field0) = serde::de::SeqAccess::next_element::<i64>(&mut __seq)? else {
+                let Some(f0) = serde::de::SeqAccess::next_element::<i64>(&mut __seq)? else {
                     return Err(serde::de::Error::invalid_length(
                         0usize,
                         &"struct PaginationStartsWithZero with 2 elements",
                     ));
                 };
-                let Some(__field1) = serde::de::SeqAccess::next_element::<i64>(&mut __seq)? else {
+                let Some(f1) = serde::de::SeqAccess::next_element::<i64>(&mut __seq)? else {
                     return Err(serde::de::Error::invalid_length(
                         1usize,
                         &"struct PaginationStartsWithZero with 2 elements",
                     ));
                 };
-                match PaginationStartsWithZero::try_new(__field0, __field1) {
+                match PaginationStartsWithZero::try_new(f0, f1) {
                     Ok(v) => Ok(v),
                     Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))), //todo use serde_json::to_string(&er).unwrap_or_else(|_|"failed to serialize er".into())
                 }
@@ -1019,25 +1018,25 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
             where
                 __A: serde::de::MapAccess<'de>,
             {
-                let mut __field0: Option<i64> = None;
-                let mut __field1: Option<i64> = None;
+                let mut f0: Option<i64> = None;
+                let mut f1: Option<i64> = None;
                 while let Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                     match __key {
-                        __Field::__field0 => {
-                            if Option::is_some(&__field0) {
+                        __Field::f0 => {
+                            if Option::is_some(&f0) {
                                 return Err(<__A::Error as serde::de::Error>::duplicate_field(
                                     "limit",
                                 ));
                             }
-                            __field0 = Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
+                            f0 = Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
                         }
-                        __Field::__field1 => {
-                            if Option::is_some(&__field1) {
+                        __Field::f1 => {
+                            if Option::is_some(&f1) {
                                 return Err(<__A::Error as serde::de::Error>::duplicate_field(
                                     "offset",
                                 ));
                             }
-                            __field1 = Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
+                            f1 = Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
                         }
                         __Field::__ignore => {
                             let _: serde::de::IgnoredAny =
@@ -1047,15 +1046,15 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
                         }
                     }
                 }
-                let __field0_value = match __field0 {
+                let f0_value = match f0 {
                     Some(v) => v,
                     None => serde::__private228::de::missing_field("limit")?,
                 };
-                let __field1_value = match __field1 {
+                let f1_value = match f1 {
                     Some(v) => v,
                     None => serde::__private228::de::missing_field("offset")?,
                 };
-                match PaginationStartsWithZero::try_new(__field0_value, __field1_value) {
+                match PaginationStartsWithZero::try_new(f0_value, f1_value) {
                     Ok(v) => Ok(v),
                     Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                 }
@@ -1188,22 +1187,22 @@ const _: () = {
                 where
                     __E: Deserializer<'de>,
                 {
-                    let __field0: Vec<T> = <Vec<T> as Deserialize>::deserialize(__e)?;
-                    Ok(NotEmptyUniqueVec(__field0))
+                    let f0: Vec<T> = <Vec<T> as Deserialize>::deserialize(__e)?;
+                    Ok(NotEmptyUniqueVec(f0))
                 }
                 #[inline]
                 fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let Some(__field0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
+                    let Some(f0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
                             &"tuple struct NotEmptyUniqueVec with 1 element",
                         ));
                     };
-                    match NotEmptyUniqueVec::try_new(__field0) {
+                    match NotEmptyUniqueVec::try_new(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -1400,8 +1399,8 @@ const _: () = {
                 where
                     __E: Deserializer<'de>,
                 {
-                    let __field0: i32 = <i32 as Deserialize>::deserialize(__e)?;
-                    match UnsignedPartOfI32::try_from(__field0) {
+                    let f0: i32 = <i32 as Deserialize>::deserialize(__e)?;
+                    match UnsignedPartOfI32::try_from(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -1411,14 +1410,13 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let Some(__field0) = _serde::de::SeqAccess::next_element::<i32>(&mut __seq)?
-                    else {
+                    let Some(f0) = _serde::de::SeqAccess::next_element::<i32>(&mut __seq)? else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
                             &"tuple struct UnsignedPartOfI32 with 1 element",
                         ));
                     };
-                    match UnsignedPartOfI32::try_from(__field0) {
+                    match UnsignedPartOfI32::try_from(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -1528,8 +1526,8 @@ const _: () = {
                 where
                     __E: Deserializer<'de>,
                 {
-                    let __field0: i32 = <i32 as Deserialize>::deserialize(__e)?;
-                    match NotZeroUnsignedPartOfI32::try_from(__field0) {
+                    let f0: i32 = <i32 as Deserialize>::deserialize(__e)?;
+                    match NotZeroUnsignedPartOfI32::try_from(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -1539,14 +1537,13 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let Some(__field0) = _serde::de::SeqAccess::next_element::<i32>(&mut __seq)?
-                    else {
+                    let Some(f0) = _serde::de::SeqAccess::next_element::<i32>(&mut __seq)? else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
                             &"tuple struct NotZeroUnsignedPartOfI32 with 1 element",
                         ));
                     };
-                    match NotZeroUnsignedPartOfI32::try_from(__field0) {
+                    match NotZeroUnsignedPartOfI32::try_from(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }

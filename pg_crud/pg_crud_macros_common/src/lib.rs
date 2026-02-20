@@ -10,8 +10,8 @@ use naming::{
     CreateIntoPgJsonTypeOptionVecWhereLengthGreaterThanSc,
     CreateIntoPgTypeOptionVecWhereDimOneEqualSc, CreateQueryBindSc, CreateQueryPartSc, CreateSc,
     CreateTableColumnQueryPartSc, CreateUcc, DefaultOptionSomeVecOneElMaxPageSizeSc,
-    DefaultOptionSomeVecOneElSc, DisplayPlusToTokens, EqualOperatorUcc, FieldIdentSc, FieldSc,
-    IncrSc, IsNeedToAddLogicalOperatorSc, IsPrimaryKeySc, JsonbSetAccumulatorSc, JsonbSetPathSc,
+    DefaultOptionSomeVecOneElSc, DisplayPlusToTokens, EqualOperatorUcc, FieldIdentSc, IncrSc,
+    IsNeedToAddLogicalOperatorSc, IsPrimaryKeySc, JsonbSetAccumulatorSc, JsonbSetPathSc,
     JsonbSetTargetSc, MutSc, NormalizeSc, OptionUcc, OptionUpdateSc, OptionVecCreateSc,
     PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeEqualOperatorUcc, PgTypeNotPrimaryKeyUcc,
     PgTypeOptionVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc, PgTypeWhereFilterUcc,
@@ -2082,7 +2082,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
     gen_type_ts: &dyn Fn(&Ident, &Type) -> Ts2,
 ) -> Ts2 {
     fn gen_underscore_underscore_field_index_str(index: usize) -> String {
-        format!("__field{index}")
+        format!("f{index}")
     }
     fn gen_underscore_underscore_field_index_ts(index: usize) -> Ts2 {
         gen_underscore_underscore_field_index_str(index)
@@ -2110,7 +2110,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         .collect::<Vec<&Ident>>();
     let field_enum_vrts_ts = {
         let field_enum_vrts_ts = (0..len)
-            .map(|i| format!("__{FieldSc}{i}").parse::<Ts2>().expect("c46314b0"))
+            .map(|i| format!("f{i}").parse::<Ts2>().expect("c46314b0"))
             .collect::<Vec<Ts2>>();
         quote! {#(#field_enum_vrts_ts),*}
     };

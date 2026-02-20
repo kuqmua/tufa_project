@@ -3879,10 +3879,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     "tuple struct {ident_operation_payload_ucc} with 1 element"
                 ));
                 let match_ident_update_many_payload_try_new_field0_ts =
-                    gen_match_try_new_in_deserialize_ts(
-                        &ident_operation_payload_ucc,
-                        &quote! {__field0},
-                    );
+                    gen_match_try_new_in_deserialize_ts(&ident_operation_payload_ucc, &quote! {f0});
                 let ident_operation_payload_dq_ts = dq_ts(&ident_operation_payload_ucc);
                 quote! {
                     #[allow(unused_qualifications)]
@@ -3924,7 +3921,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     where
                                         __E: _serde::Deserializer<'de>,
                                     {
-                                        let __field0: #vec_ident_update_ts = <#vec_ident_update_ts as _serde::Deserialize>::deserialize(__e)?;
+                                        let f0: #vec_ident_update_ts = <#vec_ident_update_ts as _serde::Deserialize>::deserialize(__e)?;
                                         #match_ident_update_many_payload_try_new_field0_ts
                                     }
                                     #[inline]
@@ -3935,7 +3932,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     where
                                         __A: _serde::de::SeqAccess<'de>,
                                     {
-                                        let Some(__field0) = _serde::de::SeqAccess::next_element::<#vec_ident_update_ts>(&mut __seq)? else {
+                                        let Some(f0) = _serde::de::SeqAccess::next_element::<#vec_ident_update_ts>(&mut __seq)? else {
                                             return Err(_serde::de::Error::invalid_length(0usize, &#tuple_struct_ident_operation_payload_with_1_el_dq_ts));
                                         };
                                         #match_ident_update_many_payload_try_new_field0_ts

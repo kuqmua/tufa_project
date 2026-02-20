@@ -427,9 +427,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #[allow(non_camel_case_types)]
                 #[doc(hidden)]
                 enum __Field {
-                    __field0,
-                    __field1,
-                    __field2,
+                    f0,
+                    f1,
+                    f2,
                     __ignore,
                 }
                 #[doc(hidden)]
@@ -448,9 +448,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         __E: _serde::de::Error,
                     {
                         match v {
-                            0u64 => Ok(__Field::__field0),
-                            1u64 => Ok(__Field::__field1),
-                            2u64 => Ok(__Field::__field2),
+                            0u64 => Ok(__Field::f0),
+                            1u64 => Ok(__Field::f1),
+                            2u64 => Ok(__Field::f2),
                             _ => Ok(__Field::__ignore),
                         }
                     }
@@ -459,9 +459,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         __E: _serde::de::Error,
                     {
                         match v {
-                            "pg_type" => Ok(__Field::__field0),
-                            "is_nullable" => Ok(__Field::__field1),
-                            "pg_type_pattern" => Ok(__Field::__field2),
+                            "pg_type" => Ok(__Field::f0),
+                            "is_nullable" => Ok(__Field::f1),
+                            "pg_type_pattern" => Ok(__Field::f2),
                             _ => Ok(__Field::__ignore),
                         }
                     }
@@ -470,9 +470,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         __E: _serde::de::Error,
                     {
                         match v {
-                            b"pg_type" => Ok(__Field::__field0),
-                            b"is_nullable" => Ok(__Field::__field1),
-                            b"pg_type_pattern" => Ok(__Field::__field2),
+                            b"pg_type" => Ok(__Field::f0),
+                            b"is_nullable" => Ok(__Field::f1),
+                            b"pg_type_pattern" => Ok(__Field::f2),
                             _ => Ok(__Field::__ignore),
                         }
                     }
@@ -506,15 +506,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     where
                         __A: _serde::de::SeqAccess<'de>,
                     {
-                        let Some(__field0) =
-                            _serde::de::SeqAccess::next_element::<PgType>(&mut __seq)?
+                        let Some(f0) = _serde::de::SeqAccess::next_element::<PgType>(&mut __seq)?
                         else {
                             return Err(_serde::de::Error::invalid_length(
                                 0usize,
                                 &"struct PgTypeRecord with 3 elements",
                             ));
                         };
-                        let Some(__field1) =
+                        let Some(f1) =
                             _serde::de::SeqAccess::next_element::<IsNullable>(&mut __seq)?
                         else {
                             return Err(_serde::de::Error::invalid_length(
@@ -522,7 +521,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 &"struct PgTypeRecord with 3 elements",
                             ));
                         };
-                        let Some(__field2) =
+                        let Some(f2) =
                             _serde::de::SeqAccess::next_element::<PgTypePattern>(&mut __seq)?
                         else {
                             return Err(_serde::de::Error::invalid_length(
@@ -530,7 +529,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 &"struct PgTypeRecord with 3 elements",
                             ));
                         };
-                        match PgTypeRecord::try_from((__field0, __field1, __field2)) {
+                        match PgTypeRecord::try_from((f0, f1, f2)) {
                             Ok(v) => Ok(v),
                             Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                         }
@@ -540,50 +539,48 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     where
                         __A: _serde::de::MapAccess<'de>,
                     {
-                        let mut __field0: Option<PgType> = None;
-                        let mut __field1: Option<IsNullable> = None;
-                        let mut __field2: Option<PgTypePattern> = None;
+                        let mut f0: Option<PgType> = None;
+                        let mut f1: Option<IsNullable> = None;
+                        let mut f2: Option<PgTypePattern> = None;
                         while let Some(__key) =
                             _serde::de::MapAccess::next_key::<__Field>(&mut __map)?
                         {
                             match __key {
-                                __Field::__field0 => {
-                                    if Option::is_some(&__field0) {
+                                __Field::f0 => {
+                                    if Option::is_some(&f0) {
                                         return Err(
                                             <__A::Error as _serde::de::Error>::duplicate_field(
                                                 "pg_type",
                                             ),
                                         );
                                     }
-                                    __field0 = Some(_serde::de::MapAccess::next_value::<PgType>(
+                                    f0 = Some(_serde::de::MapAccess::next_value::<PgType>(
                                         &mut __map,
                                     )?);
                                 }
-                                __Field::__field1 => {
-                                    if Option::is_some(&__field1) {
+                                __Field::f1 => {
+                                    if Option::is_some(&f1) {
                                         return Err(
                                             <__A::Error as _serde::de::Error>::duplicate_field(
                                                 "is_nullable",
                                             ),
                                         );
                                     }
-                                    __field1 =
-                                        Some(_serde::de::MapAccess::next_value::<IsNullable>(
-                                            &mut __map,
-                                        )?);
+                                    f1 = Some(_serde::de::MapAccess::next_value::<IsNullable>(
+                                        &mut __map,
+                                    )?);
                                 }
-                                __Field::__field2 => {
-                                    if Option::is_some(&__field2) {
+                                __Field::f2 => {
+                                    if Option::is_some(&f2) {
                                         return Err(
                                             <__A::Error as _serde::de::Error>::duplicate_field(
                                                 "pg_type_pattern",
                                             ),
                                         );
                                     }
-                                    __field2 =
-                                        Some(_serde::de::MapAccess::next_value::<PgTypePattern>(
-                                            &mut __map,
-                                        )?);
+                                    f2 = Some(_serde::de::MapAccess::next_value::<PgTypePattern>(
+                                        &mut __map,
+                                    )?);
                                 }
                                 __Field::__ignore => {
                                     let _: serde::de::IgnoredAny =
@@ -593,23 +590,19 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             }
                         }
-                        let __field0_value = match __field0 {
+                        let f0_value = match f0 {
                             Some(v) => v,
                             None => _serde::__private228::de::missing_field("pg_type")?,
                         };
-                        let __field1_value = match __field1 {
+                        let f1_value = match f1 {
                             Some(v) => v,
                             None => _serde::__private228::de::missing_field("is_nullable")?,
                         };
-                        let __field2_value = match __field2 {
+                        let f2_value = match f2 {
                             Some(v) => v,
                             None => _serde::__private228::de::missing_field("pg_type_pattern")?,
                         };
-                        match PgTypeRecord::try_from((
-                            __field0_value,
-                            __field1_value,
-                            __field2_value,
-                        )) {
+                        match PgTypeRecord::try_from((f0_value, f1_value, f2_value)) {
                             Ok(v) => Ok(v),
                             Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                         }
@@ -1580,8 +1573,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         };
                     }
                 };
-                let gen_field_index_ts = |index_52391f7d: usize| format!("__field{index_52391f7d}").parse::<Ts2>().expect("a4e1a63f");
-                let gen_field_index_value_ts = |index_7ef2fc7d: usize| format!("__field{index_7ef2fc7d}_value").parse::<Ts2>().expect("fa97be6c");
+                let gen_field_index_ts = |index_52391f7d: usize| format!("f{index_52391f7d}").parse::<Ts2>().expect("a4e1a63f");
+                let gen_field_index_value_ts = |index_7ef2fc7d: usize| format!("f{index_7ef2fc7d}_value").parse::<Ts2>().expect("fa97be6c");
                 let (enum_field_two_ts, enum_field_three_ts, enum_field_four_ts) = {
                     let gen_enum_field_ts = |parameter_number: &ParameterNumber| {
                         let fields_ts = {

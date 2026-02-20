@@ -81,8 +81,8 @@ const _: () = {
                 where
                     __E: _serde::Deserializer<'de>,
                 {
-                    let __field0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
-                    match UniqueVec::try_new(__field0) {
+                    let f0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
+                    match UniqueVec::try_new(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -92,14 +92,14 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let Some(__field0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
+                    let Some(f0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
                             &"tuple struct UniqueVec with 1 element",
                         ));
                     };
-                    match UniqueVec::try_new(__field0) {
+                    match UniqueVec::try_new(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }

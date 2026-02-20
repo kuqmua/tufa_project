@@ -2870,7 +2870,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             let ident_update_dq_ts = dq_ts(&ident_update_ucc);
                             let match_try_new_in_deserialize_ts = gen_match_try_new_in_deserialize_ts(
                                 &ident_update_ucc,
-                                &quote! {__field0_value, __field1_value, __field2_value}
+                                &quote! {f0_value, f1_value, f2_value}
                             );
                             quote! {
                                 #[allow(clippy::absolute_paths)]
@@ -2883,9 +2883,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         #[allow(non_camel_case_types)]
                                         #[doc(hidden)]
                                         enum __Field {
-                                            __field0,
-                                            __field1,
-                                            __field2,
+                                            f0,
+                                            f1,
+                                            f2,
                                             __ignore,
                                         }
                                         #[doc(hidden)]
@@ -2900,9 +2900,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 __E: serde::de::Error,
                                             {
                                                 match v {
-                                                    0u64 => Ok(__Field::__field0),
-                                                    1u64 => Ok(__Field::__field1),
-                                                    2u64 => Ok(__Field::__field2),
+                                                    0u64 => Ok(__Field::f0),
+                                                    1u64 => Ok(__Field::f1),
+                                                    2u64 => Ok(__Field::f2),
                                                     _ => Ok(__Field::__ignore),
                                                 }
                                             }
@@ -2911,9 +2911,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 __E: serde::de::Error,
                                             {
                                                 match v {
-                                                    "create" => Ok(__Field::__field0),
-                                                    "update" => Ok(__Field::__field1),
-                                                    "delete" => Ok(__Field::__field2),
+                                                    "create" => Ok(__Field::f0),
+                                                    "update" => Ok(__Field::f1),
+                                                    "delete" => Ok(__Field::f2),
                                                     _ => Ok(__Field::__ignore),
                                                 }
                                             }
@@ -2922,9 +2922,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 __E: serde::de::Error,
                                             {
                                                 match v {
-                                                    b"create" => Ok(__Field::__field0),
-                                                    b"update" => Ok(__Field::__field1),
-                                                    b"delete" => Ok(__Field::__field2),
+                                                    b"create" => Ok(__Field::f0),
+                                                    b"update" => Ok(__Field::f1),
+                                                    b"delete" => Ok(__Field::f2),
                                                     _ => Ok(__Field::__ignore),
                                                 }
                                             }
@@ -2953,9 +2953,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             where
                                                 __A: serde::de::SeqAccess<'de>,
                                             {
-                                                let __field0_value = serde::de::SeqAccess::next_element::<#vec_ident_with_id_standart_not_null_create_ts>(&mut __seq)?.unwrap_or_default();
-                                                let __field1_value = serde::de::SeqAccess::next_element::<#import_path_unique_vec_ident_with_id_standart_not_null_update_el_ts>(&mut __seq)?.unwrap_or_default();
-                                                let __field2_value = serde::de::SeqAccess::next_element::<#vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts>(&mut __seq)?.unwrap_or_default();
+                                                let f0_value = serde::de::SeqAccess::next_element::<#vec_ident_with_id_standart_not_null_create_ts>(&mut __seq)?.unwrap_or_default();
+                                                let f1_value = serde::de::SeqAccess::next_element::<#import_path_unique_vec_ident_with_id_standart_not_null_update_el_ts>(&mut __seq)?.unwrap_or_default();
+                                                let f2_value = serde::de::SeqAccess::next_element::<#vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts>(&mut __seq)?.unwrap_or_default();
                                                 #match_try_new_in_deserialize_ts
                                             }
                                             #[inline]
@@ -2963,37 +2963,37 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             where
                                                 __A: serde::de::MapAccess<'de>,
                                             {
-                                                let mut __field0: Option<#vec_ident_with_id_standart_not_null_create_ts> = None;
-                                                let mut __field1: Option<#import_path_unique_vec_ident_with_id_standart_not_null_update_el_ts> = None;
-                                                let mut __field2: Option<#vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts> = None;
+                                                let mut f0: Option<#vec_ident_with_id_standart_not_null_create_ts> = None;
+                                                let mut f1: Option<#import_path_unique_vec_ident_with_id_standart_not_null_update_el_ts> = None;
+                                                let mut f2: Option<#vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts> = None;
                                                 while let Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                                                     match __key {
-                                                        __Field::__field0 => {
-                                                            if Option::is_some(&__field0) {
+                                                        __Field::f0 => {
+                                                            if Option::is_some(&f0) {
                                                                 return Err(<__A::Error as serde::de::Error>::duplicate_field("create"));
                                                             }
-                                                            __field0 = Some(serde::de::MapAccess::next_value::<#vec_ident_with_id_standart_not_null_create_ts>(&mut __map)?);
+                                                            f0 = Some(serde::de::MapAccess::next_value::<#vec_ident_with_id_standart_not_null_create_ts>(&mut __map)?);
                                                         }
-                                                        __Field::__field1 => {
-                                                            if Option::is_some(&__field1) {
+                                                        __Field::f1 => {
+                                                            if Option::is_some(&f1) {
                                                                 return Err(<__A::Error as serde::de::Error>::duplicate_field("update"));
                                                             }
-                                                            __field1 = Some(serde::de::MapAccess::next_value::<#import_path_unique_vec_ident_with_id_standart_not_null_update_el_ts>(&mut __map)?);
+                                                            f1 = Some(serde::de::MapAccess::next_value::<#import_path_unique_vec_ident_with_id_standart_not_null_update_el_ts>(&mut __map)?);
                                                         }
-                                                        __Field::__field2 => {
-                                                            if Option::is_some(&__field2) {
+                                                        __Field::f2 => {
+                                                            if Option::is_some(&f2) {
                                                                 return Err(<__A::Error as serde::de::Error>::duplicate_field("delete"));
                                                             }
-                                                            __field2 = Some(serde::de::MapAccess::next_value::<#vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts>(&mut __map)?);
+                                                            f2 = Some(serde::de::MapAccess::next_value::<#vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts>(&mut __map)?);
                                                         }
                                                         __Field::__ignore => {
                                                             let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
                                                         }
                                                     }
                                                 }
-                                                let __field0_value = __field0.unwrap_or_default();
-                                                let __field1_value = __field1.unwrap_or_default();
-                                                let __field2_value = __field2.unwrap_or_default();
+                                                let f0_value = f0.unwrap_or_default();
+                                                let f1_value = f1.unwrap_or_default();
+                                                let f2_value = f2.unwrap_or_default();
                                                 #match_try_new_in_deserialize_ts
                                             }
                                         }
