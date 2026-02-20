@@ -17,10 +17,6 @@ fn main() {
         .expect("9ce61c06");
     let contents =
         fs::read_to_string(format!("{parent_dir_pathbuf_as_string}.gitmodules")).expect("c6dd3528");
-    let _unused_git_version = Command::new("git")
-        .args(["version"])
-        .output()
-        .expect("6fb6579e");
     let path_space_equal_space = "path = ";
     let paths_vec: Vec<String> = contents
         .lines()
