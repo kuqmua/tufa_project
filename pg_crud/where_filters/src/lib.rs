@@ -442,31 +442,31 @@ const _: () = {
                 ) -> _serde::__private228::fmt::Result {
                     _serde::__private228::Formatter::write_str(__f, "field identifier")
                 }
-                fn visit_u64<__E>(self, __value: u64) -> Result<Self::Value, __E>
+                fn visit_u64<__E>(self, v: u64) -> Result<Self::Value, __E>
                 where
                     __E: _serde::de::Error,
                 {
-                    match __value {
+                    match v {
                         1u64 => Ok(__Field::__field0),
                         2u64 => Ok(__Field::__field1),
                         _ => Ok(__Field::__ignore),
                     }
                 }
-                fn visit_str<__E>(self, __value: &str) -> Result<Self::Value, __E>
+                fn visit_str<__E>(self, v: &str) -> Result<Self::Value, __E>
                 where
                     __E: _serde::de::Error,
                 {
-                    match __value {
+                    match v {
                         "start" => Ok(__Field::__field0),
                         "end" => Ok(__Field::__field1),
                         _ => Ok(__Field::__ignore),
                     }
                 }
-                fn visit_bytes<__E>(self, __value: &[u8]) -> Result<Self::Value, __E>
+                fn visit_bytes<__E>(self, v: &[u8]) -> Result<Self::Value, __E>
                 where
                     __E: _serde::de::Error,
                 {
-                    match __value {
+                    match v {
                         b"start" => Ok(__Field::__field0),
                         b"end" => Ok(__Field::__field1),
                         _ => Ok(__Field::__ignore),

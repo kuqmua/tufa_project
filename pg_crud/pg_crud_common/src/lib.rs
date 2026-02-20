@@ -559,31 +559,31 @@ const _: () = {
                 fn expecting(&self, __f: &mut Formatter<'_>) -> _serde::__private228::fmt::Result {
                     _serde::__private228::Formatter::write_str(__f, "field identifier")
                 }
-                fn visit_u64<__E>(self, __value: u64) -> Result<Self::Value, __E>
+                fn visit_u64<__E>(self, v: u64) -> Result<Self::Value, __E>
                 where
                     __E: _serde::de::Error,
                 {
-                    match __value {
+                    match v {
                         0u64 => Ok(__Field::__field0),
                         1u64 => Ok(__Field::__field1),
                         _ => Ok(__Field::__ignore),
                     }
                 }
-                fn visit_str<__E>(self, __value: &str) -> Result<Self::Value, __E>
+                fn visit_str<__E>(self, v: &str) -> Result<Self::Value, __E>
                 where
                     __E: _serde::de::Error,
                 {
-                    match __value {
+                    match v {
                         "logical_operator" => Ok(__Field::__field0),
                         "value" => Ok(__Field::__field1),
                         _ => Ok(__Field::__ignore),
                     }
                 }
-                fn visit_bytes<__E>(self, __value: &[u8]) -> Result<Self::Value, __E>
+                fn visit_bytes<__E>(self, v: &[u8]) -> Result<Self::Value, __E>
                 where
                     __E: _serde::de::Error,
                 {
-                    match __value {
+                    match v {
                         b"logical_operator" => Ok(__Field::__field0),
                         b"value" => Ok(__Field::__field1),
                         _ => Ok(__Field::__ignore),
@@ -942,31 +942,31 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
             fn expecting(&self, __f: &mut Formatter<'_>) -> serde::__private228::fmt::Result {
                 serde::__private228::Formatter::write_str(__f, "field identifier")
             }
-            fn visit_u64<__E>(self, __value: u64) -> Result<Self::Value, __E>
+            fn visit_u64<__E>(self, v: u64) -> Result<Self::Value, __E>
             where
                 __E: serde::de::Error,
             {
-                match __value {
+                match v {
                     0u64 => Ok(__Field::__field0),
                     1u64 => Ok(__Field::__field1),
                     _ => Ok(__Field::__ignore),
                 }
             }
-            fn visit_str<__E>(self, __value: &str) -> Result<Self::Value, __E>
+            fn visit_str<__E>(self, v: &str) -> Result<Self::Value, __E>
             where
                 __E: serde::de::Error,
             {
-                match __value {
+                match v {
                     "limit" => Ok(__Field::__field0),
                     "offset" => Ok(__Field::__field1),
                     _ => Ok(__Field::__ignore),
                 }
             }
-            fn visit_bytes<__E>(self, __value: &[u8]) -> Result<Self::Value, __E>
+            fn visit_bytes<__E>(self, v: &[u8]) -> Result<Self::Value, __E>
             where
                 __E: serde::de::Error,
             {
-                match __value {
+                match v {
                     b"limit" => Ok(__Field::__field0),
                     b"offset" => Ok(__Field::__field1),
                     _ => Ok(__Field::__ignore),

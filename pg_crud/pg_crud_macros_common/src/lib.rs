@@ -2253,36 +2253,36 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                         }
                         fn visit_u64<__E>(
                             self,
-                            __value: u64,
+                            v: u64,
                         ) -> Result<Self::Value, __E>
                         where
                             __E: _serde::de::Error,
                         {
-                            match __value {
+                            match v {
                                 #visit_u64_value_enum_vrts_ts,
                                 _ => Ok(__Field::__ignore),
                             }
                         }
                         fn visit_str<__E>(
                             self,
-                            __value: &str,
+                            v: &str,
                         ) -> Result<Self::Value, __E>
                         where
                             __E: _serde::de::Error,
                         {
-                            match __value {
+                            match v {
                                 #visit_str_value_enum_vrts_ts
                                 _ => Ok(__Field::__ignore),
                             }
                         }
                         fn visit_bytes<__E>(
                             self,
-                            __value: &[u8],
+                            v: &[u8],
                         ) -> Result<Self::Value, __E>
                         where
                             __E: _serde::de::Error,
                         {
-                            match __value {
+                            match v {
                                 #visit_bytes_value_enum_vrts_ts
                                 _ => Ok(__Field::__ignore),
                             }
