@@ -631,7 +631,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["pg", "type", "where", "filter"],
     ["is", "primary", "key"],
     ["create", "table", "column", "query", "part"],
-    ["table", "type", "declaration"],
+    ["table", "type"],
     ["mut"],
     ["boolean"],
     ["object"],
@@ -885,16 +885,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
         "read", "only", "ids", "merged", "with", "create", "into", "read"
     ],
     [
-        "read",
-        "only",
-        "ids",
-        "merged",
-        "with",
-        "create",
-        "into",
-        "table",
-        "type",
-        "declaration"
+        "read", "only", "ids", "merged", "with", "create", "into", "table", "type"
     ],
     [
         "read", "inner", "into", "read", "with", "new", "or", "try", "new", "unwraped"
@@ -917,18 +908,10 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ],
     ["equal", "operator"],
     ["pg", "type", "equal", "operator"],
-    [
-        "read",
-        "only",
-        "ids",
-        "into",
-        "table",
-        "type",
-        "declaration"
-    ],
+    ["read", "only", "ids", "into", "table", "type"],
     ["read", "only", "ids", "into", "read"],
     ["read", "only", "ids", "into", "update"],
-    ["read", "into", "table", "type", "declaration"],
+    ["read", "into", "table", "type"],
     [
         "read", "only", "ids", "merged", "with", "create", "into", "where", "equal", "to", "json",
         "field"
@@ -949,21 +932,8 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
         "create", "into", "pg", "type", "opt", "vec", "where", "dim", "one", "equal"
     ],
     [
-        "read",
-        "only",
-        "ids",
-        "merged",
-        "with",
-        "table",
-        "type",
-        "declaration",
-        "into",
-        "pg",
-        "type",
-        "opt",
-        "where",
-        "greater",
-        "than"
+        "read", "only", "ids", "merged", "with", "table", "type", "into", "pg", "type", "opt",
+        "where", "greater", "than"
     ],
     [
         "pg", "type", "opt", "vec", "where", "greater", "than", "test"

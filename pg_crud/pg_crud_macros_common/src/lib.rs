@@ -29,17 +29,17 @@ use naming::{
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereGreaterThanSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereInSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereRegularExpressionSc,
-    ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSc,
+    ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsMergedWithCreateIntoTableTypeSc,
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSc,
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
     ReadOnlyIdsMergedWithCreateIntoWhereEqualSc,
-    ReadOnlyIdsMergedWithTableTypeDeclarationIntoPgTypeOptWhereGreaterThanSc, ReadOnlyIdsSc,
+    ReadOnlyIdsMergedWithTableTypeIntoPgTypeOptWhereGreaterThanSc, ReadOnlyIdsSc,
     ReadOnlyIdsToOptValueReadDefaultOptSomeVecOneElSc, ReadOnlyIdsToTwoDimalVecReadInnerSc,
     ReadOnlyIdsUcc, ReadSc, ReadUcc, SelectOnlyCreatedIdsQueryBindSc,
     SelectOnlyCreatedIdsQueryPartSc, SelectOnlyIdsQueryPartSc, SelectOnlyUpdatedIdsQueryBindSc,
-    SelectOnlyUpdatedIdsQueryPartSc, SelectQueryPartSc, SelectUcc, SelfUcc, TableTypeDeclarationSc,
-    TableTypeDeclarationUcc, UpdateForQueryUcc, UpdateQueryBindSc, UpdateQueryPartSc,
-    UpdateToReadOnlyIdsSc, UpdateUcc, ValueSc, ValueUcc, WhereUcc,
+    SelectOnlyUpdatedIdsQueryPartSc, SelectQueryPartSc, SelectUcc, SelfUcc, TableTypeSc,
+    TableTypeUcc, UpdateForQueryUcc, UpdateQueryBindSc, UpdateQueryPartSc, UpdateToReadOnlyIdsSc,
+    UpdateUcc, ValueSc, ValueUcc, WhereUcc,
     parameter::{SelfCreateUcc, SelfSelectUcc, SelfWhereUcc},
 };
 use proc_macro2::TokenStream as Ts2;
@@ -724,7 +724,7 @@ pub fn gen_serde_deserialize_dq_ts(
 pub fn gen_impl_pg_json_type_ts(
     import_path: &ImportPath,
     ident: &dyn ToTokens,
-    table_type_declaration_type_ts: &dyn ToTokens,
+    table_type_type_ts: &dyn ToTokens,
     create_type_ts: &dyn ToTokens,
     create_for_query_type_ts: &dyn ToTokens,
     select_type_ts: &dyn ToTokens,
@@ -762,7 +762,7 @@ pub fn gen_impl_pg_json_type_ts(
     quote! {
         #AllowClippyArbitrarySourceItemOrdering
         impl #path_ts #PgJsonTypeUcc for #ident {
-            type #TableTypeDeclarationUcc = #table_type_declaration_type_ts;
+            type #TableTypeUcc = #table_type_type_ts;
             type #CreateUcc = #create_type_ts;
             type #CreateForQueryUcc = #create_for_query_type_ts;
             type #SelectUcc = #select_type_ts;
@@ -1040,7 +1040,7 @@ pub fn gen_impl_sqlx_type_for_ident_ts(ident_ts: &dyn ToTokens, type_ts: &dyn To
 pub fn gen_impl_pg_type_ts(
     import_path: &ImportPath,
     ident: &dyn ToTokens,
-    ident_table_type_declaration_ucc: &dyn ToTokens,
+    ident_table_type_ucc: &dyn ToTokens,
     is_primary_key_underscore: &IsPrimaryKeyUnderscore,
     create_table_column_query_part_ts: &dyn ToTokens,
     ident_create_ucc: &dyn ToTokens,
@@ -1078,7 +1078,7 @@ pub fn gen_impl_pg_type_ts(
     quote! {
         #AllowClippyArbitrarySourceItemOrdering
         impl #import_path :: #PgTypeUcc for #ident {
-            type #TableTypeDeclarationUcc = #ident_table_type_declaration_ucc;
+            type #TableTypeUcc = #ident_table_type_ucc;
             fn #CreateTableColumnQueryPartSc(#ColumnSc: &dyn #StdFmtDisplay, #is_primary_key_underscore: #Bool) -> impl #StdFmtDisplay {
                 #create_table_column_query_part_ts
             }
@@ -1304,15 +1304,15 @@ fn gen_read_only_ids_merged_with_create_into_opt_value_read_ts(
         }
     }
 }
-fn gen_read_only_ids_merged_with_create_into_table_type_declaration_ts(
+fn gen_read_only_ids_merged_with_create_into_table_type_ts(
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSc(
+        fn #ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
             #ReadOnlyIdsSc: #path_ts::#ReadOnlyIdsUcc,
             #CreateSc: #path_ts::#CreateUcc
-        ) -> #path_ts::#TableTypeDeclarationUcc {
+        ) -> #path_ts::#TableTypeUcc {
             #ts
         }
     }
@@ -1584,13 +1584,13 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     previous_read_merged_with_opt_update_into_read_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_read_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_opt_value_read_ts: &dyn ToTokens,
-    read_only_ids_merged_with_create_into_table_type_declaration_ts: &dyn ToTokens,
+    read_only_ids_merged_with_create_into_table_type_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_where_equal_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts: &dyn ToTokens,
     create_into_pg_type_opt_vec_where_dim_one_equal_ts: &dyn ToTokens,
     pg_type_opt_vec_where_greater_than_test_ts: &dyn ToTokens,
-    read_only_ids_merged_with_table_type_declaration_into_pg_type_opt_where_greater_than_ts: &dyn ToTokens,
+    read_only_ids_merged_with_table_type_into_pg_type_opt_where_greater_than_ts: &dyn ToTokens,
     create_into_pg_json_type_opt_vec_where_dim_one_equal_ts: &dyn ToTokens,
     create_into_pg_json_type_opt_vec_where_dim_two_equal_ts: &dyn ToTokens,
     create_into_pg_json_type_opt_vec_where_dim_three_equal_ts: &dyn ToTokens,
@@ -1653,10 +1653,10 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             &self_pg_type_as_pg_type_ts,
             &read_only_ids_merged_with_create_into_opt_value_read_ts,
         );
-    let read_only_ids_merged_with_create_into_table_type_declaration_ts_f227db63 =
-        gen_read_only_ids_merged_with_create_into_table_type_declaration_ts(
+    let read_only_ids_merged_with_create_into_table_type_ts_f227db63 =
+        gen_read_only_ids_merged_with_create_into_table_type_ts(
             &self_pg_type_as_pg_type_ts,
-            &read_only_ids_merged_with_create_into_table_type_declaration_ts,
+            &read_only_ids_merged_with_create_into_table_type_ts,
         );
     let read_only_ids_merged_with_create_into_where_equal_ts_dcde170f =
         gen_read_only_ids_merged_with_create_into_where_equal_ts(
@@ -1683,8 +1683,8 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     );
     let create_into_pg_type_opt_vec_where_dim_one_equal_sc =
         CreateIntoPgTypeOptVecWhereDimOneEqualSc;
-    let read_only_ids_merged_with_table_type_declaration_into_pg_type_opt_where_greater_than_sc =
-        ReadOnlyIdsMergedWithTableTypeDeclarationIntoPgTypeOptWhereGreaterThanSc;
+    let read_only_ids_merged_with_table_type_into_pg_type_opt_where_greater_than_sc =
+        ReadOnlyIdsMergedWithTableTypeIntoPgTypeOptWhereGreaterThanSc;
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts_33093313 =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts(
             *import_path,
@@ -1775,7 +1775,7 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             #previous_read_merged_with_opt_update_into_read_ts_c48b8ede
             #read_only_ids_merged_with_create_into_read_ts_df48e4b7
             #read_only_ids_merged_with_create_into_opt_value_read_ts_8b7e9688
-            #read_only_ids_merged_with_create_into_table_type_declaration_ts_f227db63
+            #read_only_ids_merged_with_create_into_table_type_ts_f227db63
             #read_only_ids_merged_with_create_into_where_equal_ts_dcde170f
             #read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts_076c6ebd
             #read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts_948ce180
@@ -1793,12 +1793,12 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             > {
                 #pg_type_opt_vec_where_greater_than_test_ts
             }
-            fn #read_only_ids_merged_with_table_type_declaration_into_pg_type_opt_where_greater_than_sc(
+            fn #read_only_ids_merged_with_table_type_into_pg_type_opt_where_greater_than_sc(
                 greater_than_vrt: #import_path::PgTypeGreaterThanVrt,
                 #ReadOnlyIdsSc: #self_pg_type_as_pg_type_ts::#ReadOnlyIdsUcc,
-                #TableTypeDeclarationSc: #self_pg_type_as_pg_type_ts::#TableTypeDeclarationUcc,
+                #TableTypeSc: #self_pg_type_as_pg_type_ts::#TableTypeUcc,
             ) -> Option<#self_pg_type_as_pg_type_ts::#WhereUcc> {
-                #read_only_ids_merged_with_table_type_declaration_into_pg_type_opt_where_greater_than_ts
+                #read_only_ids_merged_with_table_type_into_pg_type_opt_where_greater_than_ts
             }
             #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts_33093313
             #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts_9522c7a5
@@ -1830,7 +1830,7 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
     previous_read_merged_with_opt_update_into_read_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_read_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_opt_value_read_ts: &dyn ToTokens,
-    read_only_ids_merged_with_create_into_table_type_declaration_ts: &dyn ToTokens,
+    read_only_ids_merged_with_create_into_table_type_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_where_equal_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts: &dyn ToTokens,
@@ -1901,10 +1901,10 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
             &self_pg_json_type_as_pg_json_type_ts,
             &read_only_ids_merged_with_create_into_opt_value_read_ts,
         );
-    let read_only_ids_merged_with_create_into_table_type_declaration_ts_b605767e =
-        gen_read_only_ids_merged_with_create_into_table_type_declaration_ts(
+    let read_only_ids_merged_with_create_into_table_type_ts_b605767e =
+        gen_read_only_ids_merged_with_create_into_table_type_ts(
             &self_pg_json_type_as_pg_json_type_ts,
-            &read_only_ids_merged_with_create_into_table_type_declaration_ts,
+            &read_only_ids_merged_with_create_into_table_type_ts,
         );
     let read_only_ids_merged_with_create_into_where_equal_ts_1009eb88 =
         gen_read_only_ids_merged_with_create_into_where_equal_ts(
@@ -2024,7 +2024,7 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
             #previous_read_merged_with_opt_update_into_read_ts_ab0384b9
             #read_only_ids_merged_with_create_into_read_ts_7df2fa10
             #read_only_ids_merged_with_create_into_opt_value_read_ts_1f54e2bf
-            #read_only_ids_merged_with_create_into_table_type_declaration_ts_b605767e
+            #read_only_ids_merged_with_create_into_table_type_ts_b605767e
             #read_only_ids_merged_with_create_into_where_equal_ts_1009eb88
             #read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts_876245c5
             #read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts_11560e7f

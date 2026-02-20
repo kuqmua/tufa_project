@@ -880,7 +880,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "with", "id", "read"],
     ["self", "without", "id", "read", "try", "from", "er"],
     ["self", "with", "id", "read", "try", "from", "er"],
-    ["self", "table", "type", "declaration"],
+    ["self", "table", "type"],
     ["self", "not", "null", "origin"],
     ["self", "nullable", "origin"],
     ["self", "origin"],
