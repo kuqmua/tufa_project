@@ -36,9 +36,9 @@ mod tests {
     }
     fn toml_value_from_from_cargo_toml_workspace() -> Value {
         let mut file = File::open("../Cargo.toml").expect("39a0d238");
-        let mut contents = String::new();
-        let _: usize = Read::read_to_string(&mut file, &mut contents).expect("2f5914f2");
-        let table = contents.parse::<TomlTable>().expect("beb11586");
+        let mut acc = String::new();
+        let _: usize = Read::read_to_string(&mut file, &mut acc).expect("2f5914f2");
+        let table = acc.parse::<TomlTable>().expect("beb11586");
         table.get("workspace").expect("f728192d").clone()
     }
     fn lints_vec_from_cargo_toml_workspace(rust_or_clippy: RustOrClippy) -> Vec<String> {
@@ -132,10 +132,10 @@ mod tests {
                     == Some("rs")
             })
         {
-            let Ok(content) = read_to_string(el_fcc35079.path()) else {
+            let Ok(ts) = read_to_string(el_fcc35079.path()) else {
                 continue;
             };
-            let ast = parse_file(&content).expect("5e7a83eb");
+            let ast = parse_file(&ts).expect("5e7a83eb");
             let mut visitor = ExpectVisitor {
                 expect_or_panic,
                 uuids: Vec::new(),
@@ -380,10 +380,10 @@ mod tests {
                     == Some("rs")
             })
         {
-            let Ok(content) = read_to_string(el_44a8aa56.path()) else {
+            let Ok(v) = read_to_string(el_44a8aa56.path()) else {
                 continue;
             };
-            for el_714b3d9c in regex.find_iter(&content) {
+            for el_714b3d9c in regex.find_iter(&v) {
                 let uuid = Uuid::parse_str(el_714b3d9c.as_str()).expect("c9711efd");
                 assert!(uuid.get_version_num() == 4, "49b49b21");
                 assert!(seen.insert(uuid), "4cf9d239");
@@ -421,10 +421,10 @@ mod tests {
             if exceptions.contains(&path.display().to_string().as_str()) {
                 continue;
             }
-            let Ok(content) = read_to_string(path) else {
+            let Ok(v) = read_to_string(path) else {
                 continue; //skip binary non-utf8 files
             };
-            for (key_0fa16fc1, v_3d676d2e) in content.lines().enumerate() {
+            for (key_0fa16fc1, v_3d676d2e) in v.lines().enumerate() {
                 for el_c0fa9fc2 in v_3d676d2e.chars() {
                     if !(matches!(el_c0fa9fc2, '\n' | '\r' | '\t') || el_c0fa9fc2.is_ascii()) {
                         ers.push(format!(
@@ -455,9 +455,9 @@ mod tests {
                 continue;
             }
             let mut file = File::open(path).expect("bbb0d1fe");
-            let mut content = String::new();
-            let _: usize = Read::read_to_string(&mut file, &mut content).expect("8952ff62");
-            let parsed: Table = content.parse().expect("49012f1f");
+            let mut acc = String::new();
+            let _: usize = Read::read_to_string(&mut file, &mut acc).expect("8952ff62");
+            let parsed: Table = acc.parse().expect("49012f1f");
             for el_3c618c8f in ["dependencies", "dev-dependencies", "build-dependencies"] {
                 if let Some(deps) = parsed
                     .get(el_3c618c8f)
@@ -504,17 +504,17 @@ mod tests {
             .filter(|el0| el0.path().extension().and_then(|el1| el1.to_str()) == Some("rs"))
         {
             let path = entry.path();
-            let Ok(content) = read_to_string(path) else {
+            let Ok(v) = read_to_string(path) else {
                 continue;
             };
-            let mut lines_iter = content.lines();
+            let mut lines_iter = v.lines();
             if let Some(first_line) = lines_iter.next()
                 && first_line.trim().is_empty()
                 && lines_iter.next().is_none()
             {
                 continue;
             }
-            for (line_number, line) in content.lines().enumerate() {
+            for (line_number, line) in v.lines().enumerate() {
                 if line.trim().is_empty() {
                     ers.push(format!("{}:{} empty line", path.display(), line_number + 1));
                 }

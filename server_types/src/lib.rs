@@ -3,8 +3,8 @@
 #[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjectType)]
 #[pg_crud::pg_json_object_type_config{
     {
-        "pg_table_columns_content_write_into_pg_table_columns_using_pg_json_object_types": "False",
-        "whole_content_write_into_gen_pg_json_object_type": "False",
+        "pg_table_columns_write_into_pg_table_columns_using_pg_json_object_types": "False",
+        "whole_write_into_gen_pg_json_object_type": "False",
         "vrt": 
         // {
         //     "is_nullable": "False",
@@ -848,8 +848,8 @@ pub struct Animal {
 #[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjectType)]
 #[pg_crud::pg_json_object_type_config{
     {
-        "pg_table_columns_content_write_into_pg_table_columns_using_pg_json_object_types": "False",
-        "whole_content_write_into_gen_pg_json_object_type": "False",
+        "pg_table_columns_write_into_pg_table_columns_using_pg_json_object_types": "False",
+        "whole_write_into_gen_pg_json_object_type": "False",
         "vrt":
         // {
         //     "is_nullable": "False",
@@ -1011,8 +1011,8 @@ pub struct Doggie {
 #[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjectType)]
 #[pg_crud::pg_json_object_type_config{
     {
-        "pg_table_columns_content_write_into_pg_table_columns_using_pg_json_object_types": "False",
-        "whole_content_write_into_gen_pg_json_object_type": "False",
+        "pg_table_columns_write_into_pg_table_columns_using_pg_json_object_types": "False",
+        "whole_write_into_gen_pg_json_object_type": "False",
         "vrt":
         // {
         //     "is_nullable": "False",

@@ -1,17 +1,17 @@
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy, pg_crud::GenPgTable)]
 #[pg_crud::gen_pg_table_config{{
-    "create_many_content_write_into_gen_pg_table_create_many": "False",
-    "create_one_content_write_into_gen_pg_table_create_one": "False",
-    "read_many_content_write_into_gen_pg_table_read_many": "False",
-    "read_one_content_write_into_gen_pg_table_read_one": "False",
-    "update_many_content_write_into_gen_pg_table_update_many": "False",
-    "update_one_content_write_into_gen_pg_table_update_one": "False",
-    "delete_many_content_write_into_gen_pg_table_delete_many": "False",
-    "delete_one_content_write_into_gen_pg_table_delete_one": "False",
-    "tests_content_write_into_gen_pg_table_tests": "False",
-    "common_content_write_into_gen_pg_table_common": "False",
-    "whole_content_write_into_gen_pg_table": "False"
+    "create_many_write_into_gen_pg_table_create_many": "False",
+    "create_one_write_into_gen_pg_table_create_one": "False",
+    "read_many_write_into_gen_pg_table_read_many": "False",
+    "read_one_write_into_gen_pg_table_read_one": "False",
+    "update_many_write_into_gen_pg_table_update_many": "False",
+    "update_one_write_into_gen_pg_table_update_one": "False",
+    "delete_many_write_into_gen_pg_table_delete_many": "False",
+    "delete_one_write_into_gen_pg_table_delete_one": "False",
+    "tests_write_into_gen_pg_table_tests": "False",
+    "common_write_into_gen_pg_table_common": "False",
+    "whole_write_into_gen_pg_table": "False"
 }}]
 #[pg_crud::create_many_additional_er_vrts{enum CreateManyAdditionalErVrts{}}]
 #[pg_crud::create_one_additional_er_vrts{enum CreateOneAdditionalErVrts{}}]

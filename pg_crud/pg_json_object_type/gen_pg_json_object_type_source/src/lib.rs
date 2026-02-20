@@ -113,10 +113,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
     }
     #[derive(Debug, Deserialize)]
     struct GenPgJsonTypesConfig {
-        pg_table_columns_content_write_into_pg_table_columns_using_pg_json_object_types:
+        pg_table_columns_write_into_pg_table_columns_using_pg_json_object_types:
             ShouldWriteTokenStreamIntoFile,
         vrt: PgJsonObjectTypeRecord,
-        whole_content_write_into_gen_pg_json_object_type: ShouldWriteTokenStreamIntoFile,
+        whole_write_into_gen_pg_json_object_type: ShouldWriteTokenStreamIntoFile,
     }
     panic_location();
     let di: DeriveInput = parse2(input_ts).expect("e5f0e27b");
@@ -7049,7 +7049,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         .collect::<(Vec<Ts2>, Vec<Ts2>)>();
     maybe_write_ts_into_file(
         gen_pg_json_object_type_config
-            .pg_table_columns_content_write_into_pg_table_columns_using_pg_json_object_types,
+            .pg_table_columns_write_into_pg_table_columns_using_pg_json_object_types,
         "pg_table_columns_using_pg_json_object_types",
         &quote! {
             pub struct PgTableColumnsContentWriteIntoPgTableColumnsUsingPgJsonObjectTypes {
@@ -7071,7 +7071,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         }
     };
     maybe_write_ts_into_file(
-        gen_pg_json_object_type_config.whole_content_write_into_gen_pg_json_object_type,
+        gen_pg_json_object_type_config.whole_write_into_gen_pg_json_object_type,
         "gen_pg_json_object_type",
         &generated,
         &FormatWithCargofmt::True,
