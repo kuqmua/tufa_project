@@ -659,9 +659,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let ident_array_not_null_update_for_query_ucc = SelfUpdateForQueryUcc::from_tokens(&ident_array_not_null_ucc);
             let ident_standart_not_null_read_inner_ucc = SelfReadInnerUcc::from_tokens(&ident_standart_not_null_ucc);
             let ident_with_id_standart_not_null_create_for_query_ucc = SelfCreateForQueryUcc::from_tokens(&ident_with_id_standart_not_null_ucc);
-            let wrap_into_scopes_dot_comma_ts = |content: &dyn ToTokens| {
-                let ts = wrap_into_scopes_ts(&quote!{#content});
-                quote! {#ts;}
+            let wrap_into_scopes_dot_comma_ts = |ts: &dyn ToTokens| {
+                let scopes_ts = wrap_into_scopes_ts(&ts);
+                quote! {#scopes_ts;}
             };
             let gen_ident_table_type_declaration_or_ident_create_common_ts = |pg_json_type_subtype_table_type_declaration_or_create: &PgJsonTypeSubtypeTableTypeDeclarationOrCreate| {
                 let ident_table_type_declaration_or_ident_create_ucc: &dyn DisplayPlusToTokens = match &pg_json_type_subtype_table_type_declaration_or_create {
@@ -1086,10 +1086,6 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let self_some_pg_crud_default_opt_some_vec_one_el_max_page_size_call_ts = quote! {
                 Self(Some(#PgCrudDefaultOptSomeVecOneElMaxPageSizeCall))
             };
-            let wrap_content_into_scopes_dot_comma_ts = |ts: &dyn ToTokens| {
-                let scopes_ts = wrap_into_scopes_ts(&ts);
-                quote! {#scopes_ts;}
-            };
             let gen_type_as_pg_json_type_update_ts = |type_ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&type_ts, &pg_json_type_subtype_update);
             let gen_type_as_pg_json_type_update_for_query_ts = |type_ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&type_ts, &pg_json_type_subtype_update_for_query);
             let self_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&SelfUcc);
@@ -1186,7 +1182,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             IsStandartWithId::False => &ident_standart_not_null_select_ucc,
                             IsStandartWithId::True => &ident_with_id_standart_not_null_select_ucc,
                         },
-                        &wrap_content_into_scopes_dot_comma_ts(&gen_unique_vec_wrapper_ts(match &is_standart_with_id {
+                        &wrap_into_scopes_dot_comma_ts(&gen_unique_vec_wrapper_ts(match &is_standart_with_id {
                             IsStandartWithId::False => &ident_standart_not_null_select_el_ucc,
                             IsStandartWithId::True => &ident_with_id_standart_not_null_select_el_ucc,
                         })),
@@ -1208,7 +1204,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     IsNullable::True => gen_pub_struct_ident_select_ts(
                         &AllowClippyArbitrarySourceItemOrdering,
                         &ident_select_ucc,
-                        &wrap_content_into_scopes_dot_comma_ts(&gen_opt_tokens_declaration_ts(&match &pattern {
+                        &wrap_into_scopes_dot_comma_ts(&gen_opt_tokens_declaration_ts(&match &pattern {
                             Pattern::Standart => &ident_standart_not_null_as_pg_json_type_select_ts,
                             Pattern::Array => &ident_with_id_array_not_null_as_pg_json_type_select_ts,
                         })),
@@ -2049,11 +2045,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 },
                                 DeriveSerdeDeserialize::False,
                             ),
-                            IsNullable::True => (wrap_content_into_scopes_dot_comma_ts(&gen_opt_tokens_declaration_ts(&ident_standart_not_null_as_pg_json_type_read_ts)), DeriveSerdeDeserialize::True),
+                            IsNullable::True => (wrap_into_scopes_dot_comma_ts(&gen_opt_tokens_declaration_ts(&ident_standart_not_null_as_pg_json_type_read_ts)), DeriveSerdeDeserialize::True),
                         },
                         Pattern::Array => match &is_nullable {
-                            IsNullable::False => (wrap_content_into_scopes_dot_comma_ts(&gen_vec_tokens_declaration_ts(&ident_with_id_standart_not_null_read_ucc)), DeriveSerdeDeserialize::True),
-                            IsNullable::True => (wrap_content_into_scopes_dot_comma_ts(&gen_opt_tokens_declaration_ts(&ident_with_id_array_not_null_as_pg_json_type_read_ts)), DeriveSerdeDeserialize::True),
+                            IsNullable::False => (wrap_into_scopes_dot_comma_ts(&gen_vec_tokens_declaration_ts(&ident_with_id_standart_not_null_read_ucc)), DeriveSerdeDeserialize::True),
+                            IsNullable::True => (wrap_into_scopes_dot_comma_ts(&gen_opt_tokens_declaration_ts(&ident_with_id_array_not_null_as_pg_json_type_read_ts)), DeriveSerdeDeserialize::True),
                         },
                     };
                     gen_ident_read_ts(&ident_read_ucc, &ts, derive_serde_deserialize)
@@ -2609,7 +2605,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     )
                 };
                 let ident_update_ts = {
-                    let gen_opt_ident_type_ts = |ident_ts_dee7d090: &dyn ToTokens| wrap_content_into_scopes_dot_comma_ts(
+                    let gen_opt_ident_type_ts = |ident_ts_dee7d090: &dyn ToTokens| wrap_into_scopes_dot_comma_ts(
                         &gen_opt_tokens_declaration_ts(&ident_ts_dee7d090)
                     );
                     let (
@@ -2619,7 +2615,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         Pattern::Standart => match &is_nullable {
                             IsNullable::False => (
                                 DeriveSerdeDeserialize::True,
-                                &wrap_content_into_scopes_dot_comma_ts(
+                                &wrap_into_scopes_dot_comma_ts(
                                     &gen_ident_update_standart_not_null_ts(&is_standart_with_id_false)
                                 )
                             ),
@@ -3173,7 +3169,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             &ts
                         )
                     };
-                    let gen_opt_ident_type_ts = |ident_ts_5a4646ae: &dyn ToTokens| wrap_content_into_scopes_dot_comma_ts(
+                    let gen_opt_ident_type_ts = |ident_ts_5a4646ae: &dyn ToTokens| wrap_into_scopes_dot_comma_ts(
                         &gen_opt_tokens_declaration_ts(&ident_ts_5a4646ae)
                     );
                     let gen_ident_update_for_query_standart_not_null_ts = |is_standart_with_id: &IsStandartWithId| {
@@ -3191,7 +3187,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     match &pattern {
                         Pattern::Standart => match &is_nullable {
                             IsNullable::False => gen_ident_update_for_query_ts(
-                                &wrap_content_into_scopes_dot_comma_ts(
+                                &wrap_into_scopes_dot_comma_ts(
                                     &gen_ident_update_for_query_standart_not_null_ts(
                                         &is_standart_with_id_false
                                     )
