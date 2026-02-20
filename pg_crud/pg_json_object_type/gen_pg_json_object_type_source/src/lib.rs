@@ -5736,7 +5736,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             match &is_nullable {
                                 IsNullable::False => match &pattern {
                                     Pattern::Standart => {
-                                        let struct_initializattion_ts = gen_struct_init_ts(&|content_ts: &dyn ToTokens|{
+                                        let struct_init_ts = gen_struct_init_ts(&|content_ts: &dyn ToTokens|{
                                             quote!{
                                                 #ReadSc.#content_ts.expect("a2d26e36").#ValueSc
                                             }
@@ -5751,7 +5751,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                         }
                                                     }
                                                     #ident_read_ucc {
-                                                        #struct_initializattion_ts
+                                                        #struct_init_ts
                                                     }
                                                 },
                                                 None => #ReadSc
@@ -5759,7 +5759,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         }
                                     },
                                     Pattern::Array => {
-                                        let struct_initializattion_ts = gen_struct_init_ts(&|content_ts: &dyn ToTokens|{
+                                        let struct_init_ts = gen_struct_init_ts(&|content_ts: &dyn ToTokens|{
                                             quote!{
                                                 found_read_element.#content_ts.expect("2e8229f7").#ValueSc
                                             }
@@ -5790,7 +5790,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                         }
                                                         acc_04a67ef2.push(#ident_with_id_standart_not_null_read_ucc {
                                                             #IdSc: found_read_element.#IdSc,
-                                                            #struct_initializattion_ts
+                                                            #struct_init_ts
                                                         });
                                                     }
                                                     acc_04a67ef2

@@ -135,8 +135,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     let value_default_option_some_vec_one_el_ts = quote! {
         #ValueSc: #pg_crud_common_default_option_some_vec_one_el_call_ts
     };
-    let gen_struct_ts = |filter_initialized_with_try_new_result_is_ok: bool, should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn ToTokens, struct_additional_fields_ts: &dyn ToTokens| {
-        let maybe_pub_ts: &dyn ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_ts_new } else { &PubSc };
+    let gen_struct_ts = |filter_init_with_try_new_result_is_ok: bool, should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn ToTokens, struct_additional_fields_ts: &dyn ToTokens| {
+        let maybe_pub_ts: &dyn ToTokens = if filter_init_with_try_new_result_is_ok { &proc_macro2_ts_new } else { &PubSc };
         let maybe_declaration_of_struct_ident_generic_ts: &dyn ToTokens = match &should_add_declaration_of_struct_ident_generic {
             ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_ts_new,
             ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_ts } => {
@@ -150,7 +150,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         .derive_partial_eq()
         .derive_serde_serialize()
         .derive_serde_deserialize_if(
-            if filter_initialized_with_try_new_result_is_ok {
+            if filter_init_with_try_new_result_is_ok {
                 DeriveSerdeDeserialize::False
             } else {
                 DeriveSerdeDeserialize::True

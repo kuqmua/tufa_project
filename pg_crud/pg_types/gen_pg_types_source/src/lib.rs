@@ -4890,7 +4890,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let ok_query_ts = quote! {Ok(#QuerySc)};
             let (query_part_create_ts, bind_value_to_query_create_ts): Handle<'_> = {
                 let typical: Handle<'_> = { (&typical_query_part_ts, &typical_query_bind_ts) };
-                let default_initialized_by_pg: Handle<'_> = (&ok_string_from_default_ts, &ok_query_ts);
+                let default_init_by_pg: Handle<'_> = (&ok_string_from_default_ts, &ok_query_ts);
                 match &pg_type {
                     PgType::I16AsInt2
                     | PgType::I32AsInt4
@@ -4915,7 +4915,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                     | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
                     | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => typical,
-                    PgType::I16AsSmallSerialInitializedByPg | PgType::I32AsSerialInitializedByPg | PgType::I64AsBigSerialInitializedByPg => default_initialized_by_pg,
+                    PgType::I16AsSmallSerialInitializedByPg | PgType::I32AsSerialInitializedByPg | PgType::I64AsBigSerialInitializedByPg => default_init_by_pg,
                     PgType::SqlxTypesUuidUuidAsUuidV4InitializedByPg => (&ok_string_from_uuid_generate_v4_ts, &ok_query_ts),
                 }
             };

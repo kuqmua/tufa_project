@@ -1603,7 +1603,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     })
                     .collect::<Vec<Ts2>>();
-                let fields_initiation_ts = &fields
+                let fields_init_ts = &fields
                     .iter()
                     .map(|el_2bfe6afc| &el_2bfe6afc.field_ident)
                     .collect::<Vec<&Ident>>();
@@ -1620,7 +1620,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 #(#assignment_variants_without_primary_key_ts),*
                             }
                         }
-                        Ok(Self {#(#fields_initiation_ts),*})
+                        Ok(Self {#(#fields_init_ts),*})
                     }
                 }
             };
