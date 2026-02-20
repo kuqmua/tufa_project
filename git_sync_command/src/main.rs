@@ -27,7 +27,11 @@ fn main() {
         .filter_map(|el_0731ade5| {
             el_0731ade5.find(path_space_equal_space).map(|index| {
                 el_0731ade5
-                    .get(index.checked_add(path_space_equal_space.len()).expect("62d029a8")..)
+                    .get(
+                        index
+                            .checked_add(path_space_equal_space.len())
+                            .expect("62d029a8")..,
+                    )
                     .expect("dde185ef")
                     .to_owned()
             })

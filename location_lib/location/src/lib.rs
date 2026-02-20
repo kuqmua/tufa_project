@@ -18,9 +18,9 @@ use token_patterns::StringTs;
         eo_vec_to_err_string,
         eo_vec_to_err_string_serde,
         eo_vec_location,
-        eo_hashmap_key_string_value_to_err_string,
-        eo_hashmap_key_string_value_to_err_string_serde,
-        eo_hashmap_key_string_value_location,
+        eo_hashmap_k_string_v_to_err_string,
+        eo_hashmap_k_string_v_to_err_string_serde,
+        eo_hashmap_k_string_v_location,
     )
 )]
 pub fn location(input: Ts) -> Ts {
@@ -157,7 +157,7 @@ pub fn location(input: Ts) -> Ts {
                             }
                         )
                     );
-                    let fields_format_values_excluding_loc_ts = fields.iter()
+                    let fields_format_vs_excluding_loc_ts = fields.iter()
                     .filter(|el_48337db8| *el_48337db8.ident.as_ref().expect("f6f6fb24") != *loc_sc_str)
                     .map(|el_f00312fe| {
                         let el_f00312fe_ident = &el_f00312fe.ident.as_ref().expect("e97b25b9");
@@ -268,7 +268,7 @@ pub fn location(input: Ts) -> Ts {
                         } => {
                             format!(
                                 #fields_format_excluding_loc_ts,
-                                #(#fields_format_values_excluding_loc_ts),*
+                                #(#fields_format_vs_excluding_loc_ts),*
                             )
                         }
                     }

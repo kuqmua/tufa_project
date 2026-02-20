@@ -28,11 +28,11 @@ pub enum ErOne {
         eo_vec_serde: Vec<SerdeStruct>,
         #[eo_vec_location]
         eo_vec_location_field: Vec<ErUnnamedOne>, //IN SERIALIZE DESERIALIZE Vec<nested>
-        #[eo_hashmap_key_string_value_to_err_string]
+        #[eo_hashmap_k_string_v_to_err_string]
         hashmap_string_string: HashMap<String, DisplayStruct>,
-        #[eo_hashmap_key_string_value_to_err_string_serde]
+        #[eo_hashmap_k_string_v_to_err_string_serde]
         hashmap_string_serde: HashMap<String, SerdeStruct>,
-        #[eo_hashmap_key_string_value_location]
+        #[eo_hashmap_k_string_v_location]
         hashmap_string_location: HashMap<String, ErUnnamedOne>,
         loc: Loc,
     },
