@@ -1622,13 +1622,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 }};
                 let sqlx_types_mac_address_mac_address_field_type_new_field_0_value_ts = quote! {#inner_type_standart_not_null_ts::#NewSc(#field_0_value_ts)};
                 let array_u8_6_ts = quote! {[u8; 6]};
-                let gen_vec_field_index_values_ts = |length: usize|{
+                let gen_vec_field_index_ts = |length: usize|{
                     let fields_ts = (1..=length).collect::<Vec<_>>().into_iter().enumerate().map(|(index_a8d5119e, _)| gen_field_index_value_ts(index_a8d5119e));
                     quote!{#(#fields_ts),*}
                 };
                 let (sqlx_types_chrono_naive_time_origin_try_new_for_deserialize, match_origin_try_new_for_deserialize_one_ts, match_origin_try_new_for_deserialize_two_ts, match_origin_try_new_for_deserialize_four_ts) = {
                     let gen_match_origin_try_new_for_deserialize_ts = |length: usize| {
-                        let fields_ts = gen_vec_field_index_values_ts(length);
+                        let fields_ts = gen_vec_field_index_ts(length);
                         quote! {
                             match #ident_standart_not_null_origin_ucc::#TryNewForDeserializeSc(#fields_ts) {
                                 Ok(v_e81dd4a5) => Ok(v_e81dd4a5),
@@ -1645,7 +1645,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 };
                 let (origin_new_for_deserialize_two_ts, origin_new_for_deserialize_three_ts) = {
                     let gen_origin_new_for_deserialize_ts = |length: usize| {
-                        let fields_ts = gen_vec_field_index_values_ts(length);
+                        let fields_ts = gen_vec_field_index_ts(length);
                         quote! {
                             Ok(#ident_standart_not_null_origin_ucc::new_for_deserialize(#fields_ts))
                         }

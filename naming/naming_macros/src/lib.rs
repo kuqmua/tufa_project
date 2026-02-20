@@ -269,7 +269,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(input_ts: Ts) -> Ts {
     let Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("d26bf85e")
     };
-    let variants_matching_values_ts = data_enum
+    let variants_matching_ts = data_enum
         .variants
         .iter()
         .map(|el| match el.fields {
@@ -289,7 +289,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(input_ts: Ts) -> Ts {
         impl #trait_path_ts::AsRefStrToUccStr for #ident {
             fn case(&self) -> #StringTs {//todo maybe write duplicate Trait with &str instead of String
                 match self {
-                    #(#variants_matching_values_ts),*
+                    #(#variants_matching_ts),*
                 }
             }
         }
@@ -314,7 +314,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(input_ts: Ts) -> Ts {
     let Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("ed6efe2e");
     };
-    let variants_matching_values_ts = data_enum
+    let variants_matching_ts = data_enum
         .variants
         .iter()
         .map(|el| match el.fields {
@@ -334,7 +334,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(input_ts: Ts) -> Ts {
         impl #trait_path_ts::AsRefStrToScStr for #ident {
             fn case(&self) -> #StringTs {
                 match self {
-                    #(#variants_matching_values_ts),*
+                    #(#variants_matching_ts),*
                 }
             }
         }
@@ -359,7 +359,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(input_ts: Ts) -> Ts {
     let Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("b2263e7e");
     };
-    let variants_matching_values_ts = data_enum
+    let variants_matching_ts = data_enum
         .variants
         .iter()
         .map(|variant| match variant.fields {
@@ -378,7 +378,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(input_ts: Ts) -> Ts {
         impl #trait_path_ts::ToUpperScStr for #ident {
             fn case(&self) -> #StringTs {
                 match self {
-                    #(#variants_matching_values_ts),*
+                    #(#variants_matching_ts),*
                 }
             }
         }
