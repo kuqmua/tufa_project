@@ -108,10 +108,9 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, serde::Deserialize)]
     struct GenWhereFiltersConfig {
-        pg_types_content_write_into_gen_where_filters_pg_types: ShouldWriteTokenStreamIntoFile,
-        pg_json_types_content_write_into_gen_where_filters_pg_json_types:
-            ShouldWriteTokenStreamIntoFile,
-        whole_content_write_into_gen_where_filters: ShouldWriteTokenStreamIntoFile,
+        pg_types_write_into_file: ShouldWriteTokenStreamIntoFile,
+        pg_json_types_write_into_file: ShouldWriteTokenStreamIntoFile,
+        whole_write_into_file: ShouldWriteTokenStreamIntoFile,
     }
     panic_location();
     let gen_where_filters_config =
@@ -1226,7 +1225,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             PgTypeFilter::into_array().map(|el_7cfb1929| gen_filters_ts(&el_7cfb1929));
         let gend = quote! {#(#filter_array_ts)*};
         maybe_write_ts_into_file(
-            gen_where_filters_config.pg_types_content_write_into_gen_where_filters_pg_types,
+            gen_where_filters_config.pg_types_write_into_file,
             "gen_where_filters_pg_types",
             &gend,
             &FormatWithCargofmt::True,
@@ -2007,8 +2006,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             PgJsonTypeFilter::into_array().map(|el_6a4ac539| gen_filters_ts(&el_6a4ac539));
         let gend = quote! {#(#filter_array_ts)*};
         maybe_write_ts_into_file(
-            gen_where_filters_config
-                .pg_json_types_content_write_into_gen_where_filters_pg_json_types,
+            gen_where_filters_config.pg_json_types_write_into_file,
             "gen_where_filters_pg_json_types",
             &gend,
             &FormatWithCargofmt::True,
@@ -2020,7 +2018,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         #pg_json_type_ts
     };
     maybe_write_ts_into_file(
-        gen_where_filters_config.whole_content_write_into_gen_where_filters,
+        gen_where_filters_config.whole_write_into_file,
         "gen_where_filters",
         &gend,
         &FormatWithCargofmt::True,

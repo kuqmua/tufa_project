@@ -15,24 +15,24 @@ fn main() {
         .into_os_string()
         .into_string()
         .expect("9ce61c06");
-    let contents =
-        fs::read_to_string(format!("{parent_dir_pathbuf_as_string}.gitmodules")).expect("c6dd3528");
     let path_space_equal_space = "path = ";
-    let paths_vec: Vec<String> = contents
-        .lines()
-        .filter_map(|el_0731ade5| {
-            el_0731ade5.find(path_space_equal_space).map(|index| {
-                el_0731ade5
-                    .get(
-                        index
-                            .checked_add(path_space_equal_space.len())
-                            .expect("62d029a8")..,
-                    )
-                    .expect("dde185ef")
-                    .to_owned()
+    let paths_vec: Vec<String> =
+        fs::read_to_string(format!("{parent_dir_pathbuf_as_string}.gitmodules"))
+            .expect("c6dd3528")
+            .lines()
+            .filter_map(|el_0731ade5| {
+                el_0731ade5.find(path_space_equal_space).map(|index| {
+                    el_0731ade5
+                        .get(
+                            index
+                                .checked_add(path_space_equal_space.len())
+                                .expect("62d029a8")..,
+                        )
+                        .expect("dde185ef")
+                        .to_owned()
+                })
             })
-        })
-        .collect();
+            .collect();
     println!("{:#?} {}", paths_vec, paths_vec.len());
     println!("working..");
     let _unused_git_reset_hard = Command::new("git")

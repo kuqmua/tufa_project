@@ -11,9 +11,9 @@ use std::fmt::{Display, Formatter, Result as StdFmtResult, Write as _};
 use thiserror::Error;
 use utoipa::ToSchema;
 gen_where_filters::gen_where_filters!({
-    "pg_types_content_write_into_gen_where_filters_pg_types": "False",
-    "pg_json_types_content_write_into_gen_where_filters_pg_json_types": "False",
-    "whole_content_write_into_gen_where_filters": "False"
+    "pg_types_write_into_file": "False",
+    "pg_json_types_write_into_file": "False",
+    "whole_write_into_file": "False"
 });
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub enum EncodeFormat {
