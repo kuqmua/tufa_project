@@ -252,15 +252,19 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
     // println!("{generated}");
     generated.into()
 }
-/*
-only works if all enum variants without fields like this
-#[derive(macros_assistants::AsRefStrToUccStr)]
-enum Operation {
-     One,
-     Two,
-     Three,
+fn gen_impl_trait_for_ident_ts(
+    name_ts: &dyn ToTokens,
+    ident: &Ident,
+    variants_matching_ts: &[Ts2],
+) -> Ts2 {
+    quote! {
+        impl naming::#name_ts for #ident {
+            fn case(&self) -> #StringTs {//todo maybe write duplicate Trait with &str instead of String
+                match self {#(#variants_matching_ts),*}
+            }
+        }
+    }
 }
-*/
 #[proc_macro_derive(AsRefStrEnumWithUnitFieldsToUccStr)]
 pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(input_ts: Ts) -> Ts {
     panic_location();
@@ -269,43 +273,28 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(input_ts: Ts) -> Ts {
     let Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("d26bf85e")
     };
-    let variants_matching_ts = data_enum
-        .variants
-        .iter()
-        .map(|el| match el.fields {
-            Fields::Unit => {
-                let el_ident = &el.ident;
-                let el_ident_ucc_str = naming_common::ToTokensToUccStr::case(&el_ident);
-                let el_ident_ucc_dq_ts = dq_ts(&el_ident_ucc_str);
-                quote! {Self::#el_ident => #StringTs::from(#el_ident_ucc_dq_ts)}
-            }
-            Fields::Named(_) | Fields::Unnamed(_) => {
-                panic!("4955c50d")
-            }
-        })
-        .collect::<Vec<Ts2>>();
-    let trait_path_ts = trait_path_ts();
-    let generated = quote! {
-        impl #trait_path_ts::AsRefStrToUccStr for #ident {
-            fn case(&self) -> #StringTs {//todo maybe write duplicate Trait with &str instead of String
-                match self {
-                    #(#variants_matching_ts),*
+    let generated = gen_impl_trait_for_ident_ts(
+        &quote! {AsRefStrToUccStr},
+        ident,
+        &data_enum
+            .variants
+            .iter()
+            .map(|el| match el.fields {
+                Fields::Unit => {
+                    let el_ident = &el.ident;
+                    let el_ident_ucc_dq_ts =
+                        dq_ts(&naming_common::ToTokensToUccStr::case(&el_ident));
+                    quote! {Self::#el_ident => #StringTs::from(#el_ident_ucc_dq_ts)}
                 }
-            }
-        }
-    };
+                Fields::Named(_) | Fields::Unnamed(_) => {
+                    panic!("4955c50d")
+                }
+            })
+            .collect::<Vec<Ts2>>(),
+    );
     // println!("{generated}");
     generated.into()
 }
-/*
-only works if all enum variants without fields like this
- #[derive(macros_assistants::AsRefStrToScStr)]
- enum Operation {
-     One,
-     Two,
-     Three,
- }
-*/
 #[proc_macro_derive(AsRefStrEnumWithUnitFieldsToScStr)]
 pub fn as_ref_str_enum_with_unit_fields_to_sc_str(input_ts: Ts) -> Ts {
     panic_location();
@@ -314,43 +303,27 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(input_ts: Ts) -> Ts {
     let Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("ed6efe2e");
     };
-    let variants_matching_ts = data_enum
-        .variants
-        .iter()
-        .map(|el| match el.fields {
-            Fields::Unit => {
-                let el_ident = &el.ident;
-                let el_ident_sc_str = naming_common::ToTokensToScStr::case(&el_ident);
-                let el_ident_sc_dq_ts = dq_ts(&el_ident_sc_str);
-                quote! {Self::#el_ident => #StringTs::from(#el_ident_sc_dq_ts)}
-            }
-            Fields::Named(_) | Fields::Unnamed(_) => {
-                panic!("b3ef2657")
-            }
-        })
-        .collect::<Vec<Ts2>>();
-    let trait_path_ts = trait_path_ts();
-    let generated = quote! {
-        impl #trait_path_ts::AsRefStrToScStr for #ident {
-            fn case(&self) -> #StringTs {
-                match self {
-                    #(#variants_matching_ts),*
+    let generated = gen_impl_trait_for_ident_ts(
+        &quote! {AsRefStrToScStr},
+        ident,
+        &data_enum
+            .variants
+            .iter()
+            .map(|el| match el.fields {
+                Fields::Unit => {
+                    let el_ident = &el.ident;
+                    let el_ident_sc_dq_ts = dq_ts(&naming_common::ToTokensToScStr::case(&el_ident));
+                    quote! {Self::#el_ident => #StringTs::from(#el_ident_sc_dq_ts)}
                 }
-            }
-        }
-    };
+                Fields::Named(_) | Fields::Unnamed(_) => {
+                    panic!("b3ef2657")
+                }
+            })
+            .collect::<Vec<Ts2>>(),
+    );
     // println!("{generated}");
     generated.into()
 }
-/*
-only works if all enum variants without fields like this
- #[derive(macros_assistants::AsRefStrToUpperScStr)]
- enum Operation {
-     One,
-     Two,
-     Three,
- }
-*/
 #[proc_macro_derive(AsRefStrEnumWithUnitFieldsToUpperScStr)]
 pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(input_ts: Ts) -> Ts {
     panic_location();
@@ -359,33 +332,23 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(input_ts: Ts) -> Ts {
     let Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("b2263e7e");
     };
-    let variants_matching_ts = data_enum
-        .variants
-        .iter()
-        .map(|variant| match variant.fields {
-            Fields::Unit => {
-                let variant_ident = &variant.ident;
-                let variant_ident_sc_str =
-                    naming_common::ToTokensToUpperScStr::case(&variant_ident);
-                let variant_ident_sc_dq_ts = dq_ts(&variant_ident_sc_str);
-                quote! {Self::#variant_ident => #StringTs::from(#variant_ident_sc_dq_ts)}
-            }
-            Fields::Named(_) | Fields::Unnamed(_) => panic!("b6fedcff"),
-        })
-        .collect::<Vec<Ts2>>();
-    let trait_path_ts = trait_path_ts();
-    let generated = quote! {
-        impl #trait_path_ts::ToUpperScStr for #ident {
-            fn case(&self) -> #StringTs {
-                match self {
-                    #(#variants_matching_ts),*
+    let generated = gen_impl_trait_for_ident_ts(
+        &quote! {ToUpperScStr},
+        ident,
+        &data_enum
+            .variants
+            .iter()
+            .map(|el| match el.fields {
+                Fields::Unit => {
+                    let el_ident = &el.ident;
+                    let el_ident_sc_dq_ts =
+                        dq_ts(&naming_common::ToTokensToUpperScStr::case(&el_ident));
+                    quote! {Self::#el_ident => #StringTs::from(#el_ident_sc_dq_ts)}
                 }
-            }
-        }
-    };
+                Fields::Named(_) | Fields::Unnamed(_) => panic!("b6fedcff"),
+            })
+            .collect::<Vec<Ts2>>(),
+    );
     // println!("{generated}");
     generated.into()
-}
-fn trait_path_ts() -> Ts2 {
-    quote! {naming}
 }
