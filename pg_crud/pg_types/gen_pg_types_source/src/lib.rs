@@ -63,7 +63,7 @@ use std::{
 };
 use strum_macros::{Display as StrumDisplay, EnumIter};
 use token_patterns::{
-    AllowClippyArbitrarySourceItemOrdering, CoreDefaultDefaultDefault, F32, I16, I32, I64, MustUse,
+    AllowClippyArbitrarySourceItemOrdering, CoreDefault, F32, I16, I32, I64, MustUse,
     PgCrudCommonDefaultOptionSomeVecOneElCall,
     PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall, StringTs, U8, U32,
 };
@@ -3994,8 +3994,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         IsNullable::False => {
                             let pg_range_int_default_init_ts = quote! {
                                 sqlx::postgres::types::PgRange {
-                                    start: std::ops::Bound::Included(#CoreDefaultDefaultDefault),
-                                    end: std::ops::Bound::Excluded(#CoreDefaultDefaultDefault),
+                                    start: std::ops::Bound::Included(#CoreDefault),
+                                    end: std::ops::Bound::Excluded(#CoreDefault),
                                 }
                             };
                             let gen_as_default_option_some_vec_one_el_call_ts = |ident_ts_87626b85: &dyn ToTokens| {
@@ -4038,13 +4038,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 | PgType::SqlxTypesMacAddressMacAddressAsMacAddr
                                 | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => &quote! {#field_type_handle::default()},
                                 PgType::SqlxTypesUuidUuidAsUuidInitByClient => &quote! {#ident_inner_type_ts::default()},
-                                PgType::SqlxPgTypesPgMoneyAsMoney => &quote! {#inner_type_standart_not_null_ts(#CoreDefaultDefaultDefault)},
-                                PgType::StdVecVecU8AsBytea => &quote! {vec![#CoreDefaultDefaultDefault]},
+                                PgType::SqlxPgTypesPgMoneyAsMoney => &quote! {#inner_type_standart_not_null_ts(#CoreDefault)},
+                                PgType::StdVecVecU8AsBytea => &quote! {vec![#CoreDefault]},
                                 PgType::SqlxTypesTimeTimeAsTime => &gen_sqlx_types_time_time_from_hms_micro_unwrap_ts(&quote! {0,0,0,0}),
                                 PgType::SqlxPgTypesPgIntervalAsInterval => &quote! {#inner_type_standart_not_null_ts {
-                                    #MonthsSc: #CoreDefaultDefaultDefault,
-                                    #DaysSc: #CoreDefaultDefaultDefault,
-                                    #MicrosecondsSc: #CoreDefaultDefaultDefault
+                                    #MonthsSc: #CoreDefault,
+                                    #DaysSc: #CoreDefault,
+                                    #MicrosecondsSc: #CoreDefault
                                 }},
                                 PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
                                     #sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_option_some_vec_one_el_call_ts.0,
@@ -4055,7 +4055,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     #sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_option_some_vec_one_el_call_ts.0,
                                 })),
                                 PgType::SqlxTypesIpnetworkIpNetworkAsInet => &quote! {
-                                    sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSc(core::net::Ipv4Addr::UNSPECIFIED, #CoreDefaultDefaultDefault).expect("9e9c9b57"))
+                                    sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSc(core::net::Ipv4Addr::UNSPECIFIED, #CoreDefault).expect("9e9c9b57"))
                                 },
                                 PgType::SqlxPgTypesPgRangeI32AsInt4Range | PgType::SqlxPgTypesPgRangeI64AsInt8Range => &pg_range_int_default_init_ts,
                                 PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &gen_sqlx_pg_types_pg_range_default_option_some_vec_one_el_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc),

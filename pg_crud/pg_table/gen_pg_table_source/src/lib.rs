@@ -98,7 +98,7 @@ use syn::{
 };
 #[allow(unused_imports)]
 use token_patterns::{
-    AllowClippyArbitrarySourceItemOrdering, Bool, Char, CoreDefaultDefaultDefault,
+    AllowClippyArbitrarySourceItemOrdering, Bool, Char, CoreDefault,
     DeriveDebugSerdeSerializeSerdeDeserialize, DeriveDebugThiserrorErrorOccurence, Er0, Er1, Er2,
     Er3, F32, F64, FieldAttrSerdeSkipSerializingIfOptionIsNone, I8, I16, I32, I64, MustUse,
     PgCrudCommonDefaultOptionSomeVecOneEl, PgCrudCommonDefaultOptionSomeVecOneElCall,

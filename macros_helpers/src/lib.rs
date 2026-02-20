@@ -8,7 +8,7 @@ mod gen_impl_try_from_ts;
 mod gen_new_or_try_new;
 mod gen_pub_type_alias_ts;
 mod gen_simple_syn_punct;
-mod gen_std_default_default_ts;
+mod gen_impl_default_ts;
 mod get_macro_attr;
 mod loc_syn_field;
 mod location;
@@ -36,7 +36,7 @@ pub use gen_new_or_try_new::{
 };
 pub use gen_pub_type_alias_ts::gen_pub_type_alias_ts;
 pub use gen_simple_syn_punct::{gen_simple_syn_punct, string_syn_punct};
-pub use gen_std_default_default_ts::gen_std_default_default_ts;
+pub use gen_impl_default_ts::gen_impl_default_ts;
 pub use get_macro_attr::{get_macro_attr, get_macro_attr_meta_list_ts};
 pub use loc_syn_field::loc_syn_field;
 pub use location::{LocationFieldAttr, gen_serde_version_of_named_syn_variant};

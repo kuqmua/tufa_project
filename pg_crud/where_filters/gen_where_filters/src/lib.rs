@@ -21,7 +21,7 @@ use quote::{ToTokens, quote};
 use serde_json::from_str;
 use std::fmt::Display;
 use token_patterns::{
-    CoreDefaultDefaultDefault, PgCrudCommonDefaultOptionSomeVecOneEl,
+    CoreDefault, PgCrudCommonDefaultOptionSomeVecOneEl,
     PgCrudCommonDefaultOptionSomeVecOneElCall,
 };
 #[proc_macro]
@@ -121,7 +121,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     let t_ts = quote! {T};
     let t_annotation_generic_ts = quote! {<#t_ts>};
     let proc_macro2_ts_new = Ts2::new();
-    let core_default_default_default_ts = CoreDefaultDefaultDefault;
+    let core_default_ts = CoreDefault;
     let pg_crud_common_default_option_some_vec_one_el_ts = PgCrudCommonDefaultOptionSomeVecOneEl;
     let pg_crud_common_default_option_some_vec_one_el_call_ts =
         PgCrudCommonDefaultOptionSomeVecOneElCall;
@@ -770,7 +770,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             quote! {
                                 #maybe_dims_default_init_ts
                                 encode_format: #pg_crud_common_default_option_some_vec_one_el_call_ts,
-                                encoded_string_representation: #core_default_default_default_ts
+                                encoded_string_representation: #core_default_ts
                             },
                             IncrementParameterUnderscore::False,
                             {
@@ -1334,7 +1334,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                         quote! {
                             #maybe_dims_default_init_ts
-                            #ValueSc: #core_default_default_default_ts
+                            #ValueSc: #core_default_ts
                         },
                         {
                             let format_handle_ts = dq_ts(&format!(

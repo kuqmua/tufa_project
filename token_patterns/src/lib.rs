@@ -191,8 +191,8 @@ impl ToTokens for LocScDoubleDotSpaceLocationLibLocLoc {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct CoreDefaultDefaultDefault;
-impl ToTokens for CoreDefaultDefaultDefault {
+pub struct CoreDefault;
+impl ToTokens for CoreDefault {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {::core::default::Default::default()}.to_tokens(tokens);
     }
