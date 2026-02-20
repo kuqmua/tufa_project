@@ -1058,13 +1058,13 @@ pub fn gen_impl_pg_type_ts(
     ident_create_ucc: &dyn ToTokens,
     create_query_part_value_underscore: &CreateQueryPartValueUnderscore,
     create_query_part_increment_underscore: &CreateQueryPartIncrementUnderscore,
-    create_query_part_content_ts: &dyn ToTokens,
+    create_query_part_ts: &dyn ToTokens,
     create_query_bind_value_underscore: &CreateQueryBindValueUnderscore,
     is_create_query_bind_mutable: &IsCreateQueryBindMutable,
-    create_query_bind_content_ts: &dyn ToTokens,
+    create_query_bind_ts: &dyn ToTokens,
     ident_select_ucc: &dyn ToTokens,
     select_query_part_value_underscore: &SelectQueryPartValueUnderscore,
-    select_query_part_content_ts: &dyn ToTokens,
+    select_query_part_ts: &dyn ToTokens,
     ident_where_ucc: &dyn ToTokens,
     ident_read_ucc: &dyn ToTokens,
     normalize_ts: &dyn ToTokens,
@@ -1078,9 +1078,9 @@ pub fn gen_impl_pg_type_ts(
     update_query_part_jsonb_set_accumulator_underscore: &UpdateQueryPartJsonbSetAccumulatorUnderscore,
     update_query_part_jsonb_set_target_underscore: &UpdateQueryPartJsonbSetTargetUnderscore,
     update_query_part_jsonb_set_path_underscore: &UpdateQueryPartJsonbSetPathUnderscore,
-    update_query_part_content_ts: &dyn ToTokens,
+    update_query_part_ts: &dyn ToTokens,
     is_update_query_bind_mutable: &IsUpdateQueryBindMutable,
-    update_query_bind_content_ts: &dyn ToTokens,
+    update_query_bind_ts: &dyn ToTokens,
     select_only_updated_ids_query_part_ts: &dyn ToTokens,
     is_select_only_updated_ids_query_bind_mutable: &IsSelectOnlyUpdatedIdsQueryBindMutable,
     select_only_updated_ids_query_bind_ts: &dyn ToTokens,
@@ -1099,7 +1099,7 @@ pub fn gen_impl_pg_type_ts(
                 #create_query_part_value_underscore: &Self::#CreateUcc,
                 #create_query_part_increment_underscore: &mut #U64
             ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
-                #create_query_part_content_ts
+                #create_query_part_ts
             }
             fn #CreateQueryBindSc(
                 #create_query_bind_value_underscore: Self::#CreateUcc,
@@ -1108,14 +1108,14 @@ pub fn gen_impl_pg_type_ts(
                 #query_pg_arguments_ts,
                 String
             > {
-                #create_query_bind_content_ts
+                #create_query_bind_ts
             }
             type #SelectUcc = #ident_select_ucc;
             fn #SelectQueryPartSc(
                 #select_query_part_value_underscore: &Self::#SelectUcc,
                 #ColumnSc: #RefStr,
             ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
-                #select_query_part_content_ts
+                #select_query_part_ts
             }
             type #WhereUcc = #ident_where_ucc;
             type #ReadUcc = #ident_read_ucc;
@@ -1141,7 +1141,7 @@ pub fn gen_impl_pg_type_ts(
                 #update_query_part_jsonb_set_path_underscore: #RefStr,
                 #IncrementSc: &mut #U64
             ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
-                #update_query_part_content_ts
+                #update_query_part_ts
             }
             fn #UpdateQueryBindSc(
                 #ValueSc: Self::#UpdateForQueryUcc,
@@ -1150,7 +1150,7 @@ pub fn gen_impl_pg_type_ts(
                 sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
                 String
             > {
-                #update_query_bind_content_ts
+                #update_query_bind_ts
             }
             fn #SelectOnlyUpdatedIdsQueryPartSc(
                 #ValueSc: &Self::#UpdateForQueryUcc,
@@ -1184,7 +1184,7 @@ pub fn gen_impl_pg_type_not_primary_key_for_ident_ts(
 // fn gen_read_only_ids_merged_with_create_into_where_method_ts(
 //     import_path: &ImportPath,
 //     method_name_ts: &dyn ToTokens,
-//     content_ts: &dyn ToTokens,
+//     ts: &dyn ToTokens,
 //     pg_type_or_pg_json_type: &PgTypeOrPgJsonType,
 // ) -> Ts2 {
 //     let self_ucc = SelfUcc;
@@ -1207,125 +1207,125 @@ pub fn gen_impl_pg_type_not_primary_key_for_ident_ts(
 //             #ReadOnlyIdsSc: #self_pg_type_or_pg_json_type_as_pg_json_type_ts::#ReadOnlyIdsUcc,
 //             #CreateSc: #self_pg_type_or_pg_json_type_as_pg_json_type_ts::#CreateUcc
 //         ) -> Vec<#self_pg_type_or_pg_json_type_as_pg_json_type_ts::#WhereUcc> {
-//             #content_ts
+//             #ts
 //         }
 //     }
 // }
-fn gen_option_vec_create_ts(path_ts: &dyn ToTokens, content_ts: &dyn ToTokens) -> Ts2 {
+fn gen_option_vec_create_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
     quote! {
         fn #OptionVecCreateSc() -> Option<Vec<#path_ts::#CreateUcc>> {
-            #content_ts
+            #ts
         }
     }
 }
 fn gen_read_only_ids_to_two_dimal_vec_read_inner_ts(
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         fn #ReadOnlyIdsToTwoDimalVecReadInnerSc(
             #ReadOnlyIdsSc: &#path_ts::#ReadOnlyIdsUcc
         ) -> Vec<Vec<#path_ts::#ReadInnerUcc>> {
-            #content_ts
+            #ts
         }
     }
 }
 fn gen_read_inner_into_read_with_new_or_try_new_unwraped_ts(
     type_ts: &dyn ToTokens,
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         fn #ReadInnerIntoReadWithNewOrTryNewUnwrapedSc(
             #ValueSc: #type_ts
         ) -> #path_ts::#ReadUcc {
-            #content_ts
+            #ts
         }
     }
 }
 fn gen_read_inner_into_update_with_new_or_try_new_unwraped_ts(
     type_ts: &dyn ToTokens,
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         fn #ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc(#ValueSc: #type_ts) -> #path_ts::#UpdateUcc {
-            #content_ts
+            #ts
         }
     }
 }
-fn gen_update_to_read_only_ids_ts(path_ts: &dyn ToTokens, content_ts: &dyn ToTokens) -> Ts2 {
+fn gen_update_to_read_only_ids_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
     quote! {
         fn #UpdateToReadOnlyIdsSc(
             #ValueSc: &#path_ts::#UpdateUcc
         ) -> #path_ts::#ReadOnlyIdsUcc {
-            #content_ts
+            #ts
         }
     }
 }
 fn gen_read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         fn #ReadOnlyIdsToOptionValueReadDefaultOptionSomeVecOneElSc(
             #ValueSc: &#path_ts::#ReadOnlyIdsUcc
         ) -> Option<#import_path::#ValueUcc<#path_ts::#ReadUcc>> {
-            #content_ts
+            #ts
         }
     }
 }
 fn gen_previous_read_merged_with_option_update_into_read_ts(
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         fn #PreviousReadMergedWithOptionUpdateIntoReadSc(
             #ReadSc: #path_ts::#ReadUcc,
             #OptionUpdateSc: Option<#path_ts::#UpdateUcc>,
         ) -> #path_ts::#ReadUcc {
-            #content_ts
+            #ts
         }
     }
 }
 fn gen_read_only_ids_merged_with_create_into_read_ts(
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         fn #ReadOnlyIdsMergedWithCreateIntoReadSc(
             #ReadOnlyIdsSc: #path_ts::#ReadOnlyIdsUcc,
             #CreateSc: #path_ts::#CreateUcc
         ) -> #path_ts::#ReadUcc {
-            #content_ts
+            #ts
         }
     }
 }
 fn gen_read_only_ids_merged_with_create_into_option_value_read_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         fn #ReadOnlyIdsMergedWithCreateIntoOptionValueReadSc(
             #ReadOnlyIdsSc: #path_ts::#ReadOnlyIdsUcc,
             #CreateSc: #path_ts::#CreateUcc
         ) -> Option<#import_path::#ValueUcc<#path_ts::#ReadUcc>> {
-            #content_ts
+            #ts
         }
     }
 }
 fn gen_read_only_ids_merged_with_create_into_table_type_declaration_ts(
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         fn #ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSc(
             #ReadOnlyIdsSc: #path_ts::#ReadOnlyIdsUcc,
             #CreateSc: #path_ts::#CreateUcc
         ) -> #path_ts::#TableTypeDeclarationUcc {
-            #content_ts
+            #ts
         }
     }
 }
@@ -1333,14 +1333,14 @@ pub fn gen_read_only_ids_merged_with_create_into_where_equal_ts(
     read_only_ids_ts: &dyn ToTokens,
     create_ts: &dyn ToTokens,
     where_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         fn #ReadOnlyIdsMergedWithCreateIntoWhereEqualSc(
             #ReadOnlyIdsSc: #read_only_ids_ts,
             #CreateSc: #create_ts
         ) -> #where_ts {
-            #content_ts
+            #ts
         }
     }
 }
@@ -1349,14 +1349,14 @@ pub fn gen_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts
     read_only_ids_ts: &dyn ToTokens,
     create_ts: &dyn ToTokens,
     where_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         fn #ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc(
             #ReadOnlyIdsSc: #read_only_ids_ts,
             #CreateSc: #create_ts
         ) -> #import_path::NotEmptyUniqueVec<#where_ts> {
-            #content_ts
+            #ts
         }
     }
 }
@@ -1365,7 +1365,7 @@ fn gen_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_to_js
     read_only_ids_ts: &dyn ToTokens,
     create_ts: &dyn ToTokens,
     where_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
     pg_type_or_pg_json_type: PgTypeOrPgJsonType,
 ) -> Ts2 {
     let return_type_ts = {
@@ -1388,7 +1388,7 @@ fn gen_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_to_js
             #ReadOnlyIdsSc: #read_only_ids_ts,
             #CreateSc: #create_ts
         ) -> #return_type_ts {
-            #content_ts
+            #ts
         }
     }
 }
@@ -1397,14 +1397,14 @@ pub fn gen_read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_t
     read_only_ids_ts: &dyn ToTokens,
     create_ts: &dyn ToTokens,
     where_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_to_json_field_pg_type_or_pg_json_type_ts(
         import_path,
         &read_only_ids_ts,
         &create_ts,
         &where_ts,
-        &content_ts,
+        &ts,
         PgTypeOrPgJsonType::PgJsonType
     )
 }
@@ -1412,88 +1412,88 @@ fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_n
     import_path: ImportPath,
     name_ts: &dyn ToTokens,
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         fn #name_ts(
             #ReadOnlyIdsSc: #path_ts::#ReadOnlyIdsUcc,
             #CreateSc: #path_ts::#CreateUcc
         ) -> Option<#import_path::NotEmptyUniqueVec<#path_ts::#WhereUcc>> {
-            #content_ts
+            #ts
         }
     }
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_number_equal_ts(
         import_path,
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereDimOneEqualSc,
         &path_ts,
-        &content_ts,
+        &ts,
     )
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_number_equal_ts(
         import_path,
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereDimTwoEqualSc,
         &path_ts,
-        &content_ts,
+        &ts,
     )
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_three_equal_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_number_equal_ts(
         import_path,
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereDimThreeEqualSc,
         &path_ts,
-        &content_ts,
+        &ts,
     )
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_four_equal_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_number_equal_ts(
         import_path,
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereDimFourEqualSc,
         &path_ts,
-        &content_ts,
+        &ts,
     )
 }
 fn gen_create_into_pg_json_type_option_vec_where_length_equal_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         fn #CreateIntoPgJsonTypeOptionVecWhereLengthEqualSc(
             #CreateSc: #path_ts::#CreateUcc
         ) -> Option<#import_path::NotEmptyUniqueVec<#path_ts::#WhereUcc>> {
-            #content_ts
+            #ts
         }
     }
 }
 fn gen_create_into_pg_json_type_option_vec_where_length_greater_than_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         fn #CreateIntoPgJsonTypeOptionVecWhereLengthGreaterThanSc(
             #CreateSc: #path_ts::#CreateUcc
         ) -> Option<#import_path::NotEmptyUniqueVec<#path_ts::#WhereUcc>> {
-            #content_ts
+            #ts
         }
     }
 }
@@ -1501,87 +1501,87 @@ fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_not_empty_uniqu
     method_name_ts: &dyn ToTokens,
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         fn #method_name_ts(
             #ReadOnlyIdsSc: #path_ts::#ReadOnlyIdsUcc,
             #CreateSc: #path_ts::#CreateUcc
         ) -> Option<#import_path::NotEmptyUniqueVec<#import_path::SingleOrMultiple<#path_ts::#WhereUcc>>> {
-            #content_ts
+            #ts
         }
     }
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_greater_than_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereGreaterThanSc,
         import_path,
         path_ts,
-        content_ts,
+        ts,
     )
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_between_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereBetweenSc,
         import_path,
         path_ts,
-        content_ts,
+        ts,
     )
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_in_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereInSc,
         import_path,
         path_ts,
-        content_ts,
+        ts,
     )
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_regular_expression_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereRegularExpressionSc,
         import_path,
         path_ts,
-        content_ts,
+        ts,
     )
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_greater_than_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereContainsElGreaterThanSc,
         import_path,
         path_ts,
-        content_ts,
+        ts,
     )
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_regular_expression_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereContainsElRegularExpressionSc,
         import_path,
         path_ts,
-        content_ts,
+        ts,
     )
 }
 pub fn gen_impl_pg_type_test_cases_for_ident_ts(
@@ -2063,12 +2063,12 @@ pub fn pg_crud_common_query_part_er_checked_add_init_ts() -> Ts2 {
 }
 pub fn gen_impl_crate_is_string_empty_for_ident_content_ts(
     ident: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         impl pg_crud_common::IsStringEmpty for #ident {
             fn is_string_empty(&self) -> bool {
-                #content_ts
+                #ts
             }
         }
     }
