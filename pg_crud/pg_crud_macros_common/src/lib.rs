@@ -2364,12 +2364,12 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         };
     }
 }
-pub fn wrap_content_into_scopes_ts(ts: &dyn ToTokens) -> Ts2 {
+pub fn wrap_into_scopes_ts(ts: &dyn ToTokens) -> Ts2 {
     quote! {(#ts)}
 }
 pub fn maybe_wrap_into_braces_ts(ts: &dyn ToTokens, bool: bool) -> Ts2 {
     if bool {
-        wrap_content_into_scopes_ts(&ts)
+        wrap_into_scopes_ts(&ts)
     } else {
         quote! {#ts}
     }

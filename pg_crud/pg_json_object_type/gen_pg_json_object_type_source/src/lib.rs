@@ -73,7 +73,7 @@ use pg_crud_macros_common::{
     gen_read_only_ids_merged_with_create_into_where_equal_ts,
     gen_return_err_query_part_er_write_into_buffer_ts, gen_sqlx_types_json_type_declaration_ts,
     gen_value_init_ts, gen_vec_tokens_declaration_ts, impl_pg_type_where_filter_for_ident_ts,
-    maybe_wrap_into_braces_ts, wrap_content_into_scopes_ts,
+    maybe_wrap_into_braces_ts, wrap_into_scopes_ts,
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -659,8 +659,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let ident_array_not_null_update_for_query_ucc = SelfUpdateForQueryUcc::from_tokens(&ident_array_not_null_ucc);
             let ident_standart_not_null_read_inner_ucc = SelfReadInnerUcc::from_tokens(&ident_standart_not_null_ucc);
             let ident_with_id_standart_not_null_create_for_query_ucc = SelfCreateForQueryUcc::from_tokens(&ident_with_id_standart_not_null_ucc);
-            let wrap_into_scopes_ts = |content: &dyn ToTokens| {
-                quote! {(#content);}
+            let wrap_into_scopes_dot_comma_ts = |content: &dyn ToTokens| {
+                let ts = wrap_into_scopes_ts(&quote!{#content});
+                quote! {#ts;}
             };
             let gen_ident_table_type_declaration_or_ident_create_common_ts = |pg_json_type_subtype_table_type_declaration_or_create: &PgJsonTypeSubtypeTableTypeDeclarationOrCreate| {
                 let ident_table_type_declaration_or_ident_create_ucc: &dyn DisplayPlusToTokens = match &pg_json_type_subtype_table_type_declaration_or_create {
@@ -728,13 +729,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &match &pattern {
                         Pattern::Standart => match &is_nullable {
                             IsNullable::False => gen_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_ts(&is_standart_with_id_false, pg_json_type_subtype_table_type_declaration_or_create, &new_type_or_struct_declaration_struct_declaration),
-                            IsNullable::True => wrap_into_scopes_ts(&gen_opt_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(ident_standart_not_null_ucc))),
+                            IsNullable::True => wrap_into_scopes_dot_comma_ts(&gen_opt_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(ident_standart_not_null_ucc))),
                         },
                         Pattern::Array => match &is_nullable {
-                            IsNullable::False => wrap_into_scopes_ts(&gen_vec_tokens_declaration_ts(
+                            IsNullable::False => wrap_into_scopes_dot_comma_ts(&gen_vec_tokens_declaration_ts(
                                 &gen_tokens_table_type_declaration_or_create_ts(&ident_with_id_standart_not_null_ucc)
                             )),
-                            IsNullable::True => wrap_into_scopes_ts(&gen_opt_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(&ident_with_id_array_not_null_ucc))),
+                            IsNullable::True => wrap_into_scopes_dot_comma_ts(&gen_opt_tokens_declaration_ts(&gen_tokens_table_type_declaration_or_create_ts(&ident_with_id_array_not_null_ucc))),
                         },
                     }
                 );
@@ -967,7 +968,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             Pattern::Standart => match &is_nullable {
                                 IsNullable::False => gen_struct_standart_not_null_ts(&is_standart_with_id_false),
                                 IsNullable::True => {
-                                    wrap_into_scopes_ts(
+                                    wrap_into_scopes_dot_comma_ts(
                                         &gen_opt_tokens_declaration_ts(
                                             &gen_type_as_pg_json_type_subtype_ts(
                                                 &ident_standart_not_null_ucc,
@@ -978,12 +979,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 },
                             },
                             Pattern::Array => match &is_nullable {
-                                IsNullable::False => wrap_into_scopes_ts(
+                                IsNullable::False => wrap_into_scopes_dot_comma_ts(
                                     &gen_vec_tokens_declaration_ts(
                                         &ident_with_id_standart_not_null_create_for_query_ucc
                                     )
                                 ),
-                                IsNullable::True => wrap_into_scopes_ts(
+                                IsNullable::True => wrap_into_scopes_dot_comma_ts(
                                     &gen_opt_tokens_declaration_ts(
                                         &gen_type_as_pg_json_type_subtype_ts(
                                             &ident_array_not_null_ucc,
@@ -1086,7 +1087,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 Self(Some(#PgCrudDefaultOptSomeVecOneElMaxPageSizeCall))
             };
             let wrap_content_into_scopes_dot_comma_ts = |ts: &dyn ToTokens| {
-                let scopes_ts = wrap_content_into_scopes_ts(&ts);
+                let scopes_ts = wrap_into_scopes_ts(&ts);
                 quote! {#scopes_ts;}
             };
             let gen_type_as_pg_json_type_update_ts = |type_ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&type_ts, &pg_json_type_subtype_update);

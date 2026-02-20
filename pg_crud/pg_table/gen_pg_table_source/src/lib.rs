@@ -2378,47 +2378,46 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             }
         };
-    let wrap_content_into_pg_transaction_begin_commit_value_ts =
-        |operation: &Operation, ts: &dyn ToTokens| {
-            let pg_transaction_begin_ts = {
-                let ts_efebc55b = gen_operation_er_init_eprintln_res_creation_ts(
+    let wrap_into_pg_transaction_begin_commit_ts = |operation: &Operation, ts: &dyn ToTokens| {
+        let pg_transaction_begin_ts = {
+            let ts_efebc55b = gen_operation_er_init_eprintln_res_creation_ts(
+                operation,
+                &pg_syn_vrt_wrapper,
+                file!(),
+                line!(),
+                column!(),
+            );
+            quote! {
+                let mut #ExecutorSc = match #SqlxAcquire::#BeginSc(#ExecutorAcquireSc).await {
+                    Ok(v_1aaca28f) => v_1aaca28f,
+                    Err(#Er0) => {
+                        #ts_efebc55b
+                    }
+                };
+            }
+        };
+        let pg_transaction_commit_ts = {
+            let pg_syn_vrt_er_init_eprintln_res_creation_ts =
+                gen_operation_er_init_eprintln_res_creation_ts(
                     operation,
                     &pg_syn_vrt_wrapper,
                     file!(),
                     line!(),
                     column!(),
                 );
-                quote! {
-                    let mut #ExecutorSc = match #SqlxAcquire::#BeginSc(#ExecutorAcquireSc).await {
-                        Ok(v_1aaca28f) => v_1aaca28f,
-                        Err(#Er0) => {
-                            #ts_efebc55b
-                        }
-                    };
-                }
-            };
-            let pg_transaction_commit_ts = {
-                let pg_syn_vrt_er_init_eprintln_res_creation_ts =
-                    gen_operation_er_init_eprintln_res_creation_ts(
-                        operation,
-                        &pg_syn_vrt_wrapper,
-                        file!(),
-                        line!(),
-                        column!(),
-                    );
-                quote! {
-                    if let Err(#Er0) = #ExecutorSc.#CommitSc().await {
-                        #pg_syn_vrt_er_init_eprintln_res_creation_ts
-                    }
-                }
-            };
             quote! {
-                #pg_transaction_begin_ts
-                #ts
-                #pg_transaction_commit_ts
-                #ValueSc
+                if let Err(#Er0) = #ExecutorSc.#CommitSc().await {
+                    #pg_syn_vrt_er_init_eprintln_res_creation_ts
+                }
             }
         };
+        quote! {
+            #pg_transaction_begin_ts
+            #ts
+            #pg_transaction_commit_ts
+            #ValueSc
+        }
+    };
     let gen_location_vrt_ts = |er_vrt: &Variant| -> Ts2 {
         let vrt_ident = &er_vrt.ident;
         let Fields::Named(fields_named) = &er_vrt.fields else {
@@ -3257,7 +3256,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #QuerySc
                     }
                 };
-                let pg_logic_ts = wrap_content_into_pg_transaction_begin_commit_value_ts(
+                let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
                     &operation,
                     &gen_create_update_delete_many_fetch_ts(&CreateOrUpdateOrDeleteMany::Create),
                 );
@@ -3369,7 +3368,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #QuerySc
                     }
                 };
-                let pg_logic_ts = wrap_content_into_pg_transaction_begin_commit_value_ts(
+                let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
                     &operation,
                     // &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Create)
                     &{
@@ -4186,7 +4185,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #QuerySc
                     }
                 };
-                let pg_logic_ts = wrap_content_into_pg_transaction_begin_commit_value_ts(
+                let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
                     &operation,
                     &gen_create_update_delete_many_fetch_ts(&CreateOrUpdateOrDeleteMany::Update),
                 );
@@ -4403,7 +4402,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #QuerySc
                     }
                 };
-                let pg_logic_ts = wrap_content_into_pg_transaction_begin_commit_value_ts(
+                let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
                     &operation,
                     // &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Update)
                     &{
@@ -4526,7 +4525,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #QuerySc
                     }
                 };
-                let pg_logic_ts = wrap_content_into_pg_transaction_begin_commit_value_ts(
+                let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
                     &operation,
                     &gen_create_update_delete_many_fetch_ts(&CreateOrUpdateOrDeleteMany::Delete),
                 );
@@ -4639,7 +4638,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #QuerySc
                     }
                 };
-                let pg_logic_ts = wrap_content_into_pg_transaction_begin_commit_value_ts(
+                let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
                     &operation,
                     &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Delete),
                 );
