@@ -41,13 +41,12 @@ server_config = {path = "../../../server_config"}"#,
                 let gen_table_example_ts = |
                     should_add_gen_pg_table_primary_key: ShouldAddGenPgTablePrimaryKey
                 |{
-                    let allow_clippy_arbitrary_source_item_ordering_ts = AllowClippyArbitrarySourceItemOrdering;
                     let maybe_gen_pg_table_primary_key_ts = match should_add_gen_pg_table_primary_key {
                         ShouldAddGenPgTablePrimaryKey::False => Ts2::new(),
                         ShouldAddGenPgTablePrimaryKey::True => quote!{#[gen_pg_table_primary_key]},
                     };
                     quote!{
-                        #allow_clippy_arbitrary_source_item_ordering_ts
+                        #AllowClippyArbitrarySourceItemOrdering
                         #[derive(Debug, Clone, Copy)]
                         #[pg_crud::gen_pg_table_config{{
                             "create_many_write_into_file": "False",

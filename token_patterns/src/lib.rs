@@ -382,10 +382,9 @@ impl ToTokens for PgCrudDefaultOptSomeVecOneEl {
 pub struct PgCrudDefaultOptSomeVecOneElCall;
 impl ToTokens for PgCrudDefaultOptSomeVecOneElCall {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let pg_crud_default_opt_some_vec_one_el = PgCrudDefaultOptSomeVecOneEl;
         let path_default_opt_some_vec_one_el_call = path_default_opt_some_vec_one_el_call();
         quote! {
-            #pg_crud_default_opt_some_vec_one_el
+            #PgCrudDefaultOptSomeVecOneEl
             #path_default_opt_some_vec_one_el_call
         }
         .to_tokens(tokens);
@@ -408,10 +407,9 @@ impl ToTokens for PgCrudCommonDefaultOptSomeVecOneEl {
 pub struct PgCrudCommonDefaultOptSomeVecOneElCall;
 impl ToTokens for PgCrudCommonDefaultOptSomeVecOneElCall {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let pg_crud_common_default_opt_some_vec_one_el = PgCrudCommonDefaultOptSomeVecOneEl;
         let path_default_opt_some_vec_one_el_call = path_default_opt_some_vec_one_el_call();
         quote! {
-            #pg_crud_common_default_opt_some_vec_one_el
+            #PgCrudCommonDefaultOptSomeVecOneEl
             #path_default_opt_some_vec_one_el_call
         }
         .to_tokens(tokens);
@@ -691,6 +689,7 @@ impl ToTokens for AllowClippyArbitrarySourceItemOrdering {
         quote! {#[allow(clippy::arbitrary_source_item_ordering)]}.to_tokens(tokens);
     }
 }
+//todo better reuse
 fn path_all_vrts_default_opt_some_vec_one_el_max_page_size_call() -> Ts2 {
     quote! {::all_vrts_default_opt_some_vec_one_el_max_page_size()}
 }

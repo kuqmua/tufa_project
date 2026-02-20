@@ -671,10 +671,7 @@ pub fn gen_pg_type_where_ts(
         gen_impl_pg_crud_common_all_vrts_default_opt_some_vec_one_el_ts(&ident, &{
             let vrts_ts = vrts.iter().map(|el_b9724130| {
                 let el_ucc = el_b9724130.ucc();
-                let default_opt_some_vec_one_el_call_ts = PgCrudCommonDefaultOptSomeVecOneElCall;
-                quote! {
-                    Self::#el_ucc(#default_opt_some_vec_one_el_call_ts)
-                }
+                quote! {Self::#el_ucc(#PgCrudCommonDefaultOptSomeVecOneElCall)}
             });
             quote! {vec![#(#vrts_ts),*]}
         });

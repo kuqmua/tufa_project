@@ -285,7 +285,6 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let cfg_feature_test_utils = quote! {#[cfg(feature = "test-utils")]};
             let return_err_query_part_er_write_into_buffer_ts = gen_return_err_query_part_er_write_into_buffer_ts(import_path);
             let none_ts = quote!{None};
-            let must_use_ts = MustUse;
             let gen_import_path_value_init_ts = |ts: &dyn ToTokens|{
                 gen_value_init_ts(
                     &import_path,
@@ -777,7 +776,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     if matches!(&pattern, Pattern::Array) && matches!(&is_nullable, IsNullable::True) {
                         gen_impl_pub_new_for_ident_ts(
                             &ident_table_type_declaration_or_ident_create_ucc,
-                            &must_use_ts,
+                            &MustUse,
                             &parameters_ts,
                             &ts,
                         )
@@ -785,7 +784,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     else {
                         gen_impl_pub_const_new_for_ident_ts(
                             &ident_table_type_declaration_or_ident_create_ucc,
-                            &must_use_ts,
+                            &MustUse,
                             &parameters_ts,
                             &ts,
                         )
@@ -847,7 +846,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     );
                     let impl_pub_const_new_for_ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_ts = gen_impl_pub_const_new_for_ident_ts(
                         &ident_with_id_table_type_declaration_or_ident_with_id_standart_not_null_create_ucc,
-                        &must_use_ts,
+                        &MustUse,
                         &gen_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_ts(is_standart_with_id_240dfa72, pg_json_type_subtype_table_type_declaration_or_create, &new_type_or_struct_declaration_new_type),
                         &gen_self_content_for_ident_or_ident_with_id_table_type_declaration_or_create_ts(is_standart_with_id_240dfa72),
                     );
@@ -1073,7 +1072,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 quote! {#ValueSc: #type_ts}
             };
             let gen_pub_const_new_value_type_content_self_value_ts = |ts: &dyn ToTokens|gen_pub_const_new_ts(
-                &must_use_ts,
+                &MustUse,
                 &gen_value_type_ts(&ts),
                 &self_value_ts
             );
@@ -1247,14 +1246,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         };
                         if matches!(&pattern, Pattern::Standart) && matches!(&is_nullable, IsNullable::True) {
                             gen_pub_new_ts(
-                                &must_use_ts,
+                                &MustUse,
                                 &parameters_ts,
                                 &ts
                             )
                         }
                         else {
                              gen_pub_const_new_ts(
-                                &must_use_ts,
+                                &MustUse,
                                 &parameters_ts,
                                 &ts
                             )
@@ -2154,7 +2153,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             Pattern::Standart => match &is_nullable {
                                 IsNullable::False => gen_pub_try_new_for_ident_read_or_ident_with_id_standart_not_null_read_ts(&is_standart_with_id_false),
                                 IsNullable::True => gen_pub_const_new_ts(
-                                    &must_use_ts,
+                                    &MustUse,
                                     &gen_value_type_ts(
                                         &gen_opt_tokens_declaration_ts(
                                             &ident_standart_not_null_as_pg_json_type_read_ts
@@ -2165,14 +2164,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             },
                             Pattern::Array => match &is_nullable {
                                 IsNullable::False => gen_pub_const_new_ts(
-                                    &must_use_ts,
+                                    &MustUse,
                                     &gen_value_type_ts(
                                         &vec_ident_with_id_standart_not_null_read_ts
                                     ),
                                     &self_value_ts
                                 ),
                                 IsNullable::True => gen_pub_new_ts(
-                                    &must_use_ts,
+                                    &MustUse,
                                     &gen_value_type_ts(
                                         &gen_opt_tokens_declaration_ts(
                                             &vec_ident_with_id_standart_not_null_read_ts
@@ -2698,7 +2697,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 let impl_ident_update_ts = {
                     let maybe_pub_new_or_try_new_for_ident_update_ts = match &pattern {
                         Pattern::Standart => gen_pub_const_new_ts(
-                            &must_use_ts,
+                            &MustUse,
                             &gen_value_type_ts(&match &is_nullable {
                                 IsNullable::False => gen_unique_vec_wrapper_ts(&ident_standart_not_null_update_el_ucc),
                                 IsNullable::True => gen_opt_tokens_declaration_ts(&ident_standart_not_null_as_pg_json_type_update_ts)
@@ -3126,7 +3125,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     };
                     let impl_pub_new_for_ident_with_id_standart_not_null_update_el_ts = gen_impl_pub_const_new_for_ident_ts(
                         &ident_with_id_standart_not_null_update_el_ucc,
-                        &must_use_ts,
+                        &MustUse,
                         &ident_with_id_standart_not_null_update_el_fields_declaration_ts,
                         &quote! {Self {
                             #IdSc,
@@ -3576,7 +3575,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     );
                     let impl_pub_const_new_for_ident_with_id_standart_not_null_update_for_query_el_ts = gen_impl_pub_const_new_for_ident_ts(
                         &ident_with_id_standart_not_null_update_for_query_el_ucc,
-                        &must_use_ts,
+                        &MustUse,
                         &ident_with_id_standart_not_null_update_for_query_el_fields_declaration_ts,
                         &quote! {Self {
                             #IdSc,

@@ -119,9 +119,6 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     let t_ts = quote! {T};
     let t_annotation_generic_ts = quote! {<#t_ts>};
     let proc_macro2_ts_new = Ts2::new();
-    let core_default_ts = CoreDefault;
-    let pg_crud_common_default_opt_some_vec_one_el_ts = PgCrudCommonDefaultOptSomeVecOneEl;
-    let pg_crud_common_default_opt_some_vec_one_el_call_ts = PgCrudCommonDefaultOptSomeVecOneElCall;
     let pub_value_t_ts = quote! {pub #ValueSc: T};
     let unsigned_part_of_i32_ts = quote! {pg_crud_common::UnsignedPartOfI32};
     let not_zero_unsigned_part_of_i32_ts = quote! {pg_crud_common::NotZeroUnsignedPartOfI32};
@@ -130,7 +127,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     let pub_value_not_zero_unsigned_part_of_i32_declaration_ts =
         quote! {pub #value_not_zero_unsigned_part_of_i32_declaration_ts};
     let value_default_opt_some_vec_one_el_ts = quote! {
-        #ValueSc: #pg_crud_common_default_opt_some_vec_one_el_call_ts
+        #ValueSc: #PgCrudCommonDefaultOptSomeVecOneElCall
     };
     let gen_struct_ts = |filter_init_with_try_new_result_is_ok: bool, should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn ToTokens, struct_additional_fields_ts: &dyn ToTokens| {
         let maybe_pub_ts: &dyn ToTokens = if filter_init_with_try_new_result_is_ok { &proc_macro2_ts_new } else { &PubSc };
@@ -169,8 +166,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 ShouldAddDeclarationOfStructIdentGeneric::False => Ts2::new(),
                 ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_ts } => {
                     maybe_additional_traits_ts.as_ref().map_or_else(
-                        || quote! {<T: #pg_crud_common_default_opt_some_vec_one_el_ts>},
-                        |v_29913af7| quote! {<T: #v_29913af7 + #pg_crud_common_default_opt_some_vec_one_el_ts>}
+                        || quote! {<T: #PgCrudCommonDefaultOptSomeVecOneEl>},
+                        |v_29913af7| quote! {<T: #v_29913af7 + #PgCrudCommonDefaultOptSomeVecOneEl>}
                     )
                 }
             },
@@ -182,7 +179,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             },
             &quote! {
                 Self {
-                    logical_operator: #pg_crud_common_default_opt_some_vec_one_el_call_ts,
+                    logical_operator: #PgCrudCommonDefaultOptSomeVecOneElCall,
                     #impl_default_opt_some_vec_one_el_additional_fields_ts
                 }
             },
@@ -235,7 +232,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         pub value: RegexRegex
     };
     let regular_expression_case_and_value_default_init_ts = quote! {
-        regular_expression_case: #pg_crud_common_default_opt_some_vec_one_el_call_ts,
+        regular_expression_case: #PgCrudCommonDefaultOptSomeVecOneElCall,
         #value_default_opt_some_vec_one_el_ts
     };
     let if_let_err_query_try_bind_self_value_to_string_ts = quote! {
@@ -325,7 +322,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             &quote! {query_part},
         );
     let dims_default_init_ts = quote! {
-        #DimsSc: #pg_crud_common_default_opt_some_vec_one_el_call_ts
+        #DimsSc: #PgCrudCommonDefaultOptSomeVecOneElCall
     };
     let dims_default_init_comma_ts = quote! {#dims_default_init_ts,};
     let query_self_dims_query_bind_query_ts = quote! {
@@ -747,8 +744,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             },
                             quote! {
                                 #maybe_dims_default_init_ts
-                                encode_format: #pg_crud_common_default_opt_some_vec_one_el_call_ts,
-                                encoded_string_representation: #core_default_ts
+                                encode_format: #PgCrudCommonDefaultOptSomeVecOneElCall,
+                                encoded_string_representation: #CoreDefault
                             },
                             IncrParameterUnderscore::False,
                             {
@@ -1302,7 +1299,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                     quote! {
                         #maybe_dims_default_init_ts
-                        #ValueSc: #core_default_ts
+                        #ValueSc: #CoreDefault
                     },
                     {
                         let format_handle_ts = dq_ts(&format!(
