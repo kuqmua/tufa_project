@@ -2364,8 +2364,8 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
 pub fn wrap_into_scopes_ts(ts: &dyn ToTokens) -> Ts2 {
     quote! {(#ts)}
 }
-pub fn maybe_wrap_into_braces_ts(ts: &dyn ToTokens, bool: bool) -> Ts2 {
-    if bool {
+pub fn maybe_wrap_into_braces_ts(ts: &dyn ToTokens, wrap: bool) -> Ts2 {
+    if wrap {
         wrap_into_scopes_ts(&ts)
     } else {
         quote! {#ts}
