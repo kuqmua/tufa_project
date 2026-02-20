@@ -28,7 +28,7 @@ test-utils = []"#,
                             "whole_write_into_gen_pg_json_object_type": "False",
                             "vrt": {
                                 "is_nullable": "True",
-                                "pattern": "Array",
+                                "pattern": "Arr",
                                 "trait_gen": "PgTypeAndPgJsonType"
                             }
                         }
@@ -36,7 +36,7 @@ test-utils = []"#,
                     pub struct ObjectExample {
                         pub field_0: pg_crud::I8AsNotNullJsonbNumber,
                         pub field_1: pg_crud::OptI8AsNullableJsonbNumber,
-                        pub field_2: pg_crud::VecOfI8AsNotNullArrayOfNotNullJsonbNumber,
+                        pub field_2: pg_crud::VecOfI8AsNotNullArrOfNotNullJsonbNumber,
                     }
                 };
                 let ts = gen_pg_json_object_type_source::gen_pg_json_object_type(object_example_ts.clone());

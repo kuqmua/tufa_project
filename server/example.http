@@ -139,7 +139,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         #   }
         # },
         # {
-        #   "ContainsAllElementsOfArray": {
+        #   "ContainsAllElementsOfArr": {
         #     "logical_operator": "Or",
         #     "value": [
         #       {
@@ -151,7 +151,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         #   }
         # },
         # {
-        #   "OverlapsWithArray": {
+        #   "OverlapsWithArr": {
         #     "logical_operator": "Or",
         #     "value": [
         #       {
@@ -797,7 +797,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #             }
     #           },
     #           {
-    #             "ContainsAllElementsOfArray": {
+    #             "ContainsAllElementsOfArr": {
     #               "logical_operator": "Or",
     #               "value": [
     #                 {
@@ -808,7 +808,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #             }
     #           },
     #           {
-    #             "OverlapsWithArray": {
+    #             "OverlapsWithArr": {
     #               "logical_operator": "Or",
     #               "value": [
     #                 {
@@ -998,7 +998,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #               }
     #             },
     #             {
-    #               "ContainsAllElementsOfArray": {
+    #               "ContainsAllElementsOfArr": {
     #                 "logical_operator": "Or",
     #                 "value": [
     #                   {
@@ -1009,7 +1009,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #               }
     #             },
     #             {
-    #               "OverlapsWithArray": {
+    #               "OverlapsWithArr": {
     #                 "logical_operator": "Or",
     #                 "value": [
     #                   {

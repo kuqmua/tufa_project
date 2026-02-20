@@ -21,7 +21,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "I16AsInt2",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -30,7 +30,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "I16AsInt2",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -39,7 +39,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "I16AsInt2",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -48,7 +48,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "I16AsInt2",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -67,7 +67,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "I32AsInt4",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -76,7 +76,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "I32AsInt4",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -85,7 +85,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "I32AsInt4",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -94,7 +94,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "I32AsInt4",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -113,7 +113,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "I64AsInt8",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -122,7 +122,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "I64AsInt8",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -131,7 +131,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "I64AsInt8",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -140,7 +140,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "I64AsInt8",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -159,7 +159,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "F32AsFloat4",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -168,7 +168,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "F32AsFloat4",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -177,7 +177,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "F32AsFloat4",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -186,7 +186,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "F32AsFloat4",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -205,7 +205,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "F64AsFloat8",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -214,7 +214,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "F64AsFloat8",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -223,7 +223,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "F64AsFloat8",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -232,7 +232,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "F64AsFloat8",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -266,7 +266,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgMoneyAsMoney",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -275,7 +275,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgMoneyAsMoney",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -284,7 +284,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgMoneyAsMoney",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -293,7 +293,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgMoneyAsMoney",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -312,7 +312,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "BoolAsBool",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -321,7 +321,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "BoolAsBool",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -330,7 +330,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "BoolAsBool",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -339,7 +339,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "BoolAsBool",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -358,7 +358,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "StringAsText",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -367,7 +367,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "StringAsText",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -376,7 +376,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "StringAsText",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -385,7 +385,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "StringAsText",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -404,7 +404,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "StdVecVecU8AsBytea",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -413,7 +413,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "StdVecVecU8AsBytea",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -422,7 +422,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "StdVecVecU8AsBytea",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -431,7 +431,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "StdVecVecU8AsBytea",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -450,7 +450,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesChronoNaiveTimeAsTime",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -459,7 +459,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesChronoNaiveTimeAsTime",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -468,7 +468,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesChronoNaiveTimeAsTime",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -477,7 +477,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesChronoNaiveTimeAsTime",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -496,7 +496,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesTimeTimeAsTime",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -505,7 +505,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesTimeTimeAsTime",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -514,7 +514,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesTimeTimeAsTime",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -523,7 +523,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesTimeTimeAsTime",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -542,7 +542,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgIntervalAsInterval",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -551,7 +551,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgIntervalAsInterval",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -560,7 +560,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgIntervalAsInterval",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -569,7 +569,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgIntervalAsInterval",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -588,7 +588,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesChronoNaiveDateAsDate",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -597,7 +597,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesChronoNaiveDateAsDate",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -606,7 +606,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesChronoNaiveDateAsDate",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -615,7 +615,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesChronoNaiveDateAsDate",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -634,7 +634,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesChronoNaiveDateTimeAsTimestamp",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -643,7 +643,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesChronoNaiveDateTimeAsTimestamp",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -652,7 +652,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesChronoNaiveDateTimeAsTimestamp",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -661,7 +661,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesChronoNaiveDateTimeAsTimestamp",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -680,7 +680,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -689,7 +689,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -698,7 +698,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -707,7 +707,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -731,7 +731,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesUuidUuidAsUuidInitByClient",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -740,7 +740,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesUuidUuidAsUuidInitByClient",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -749,7 +749,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesUuidUuidAsUuidInitByClient",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -758,7 +758,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesUuidUuidAsUuidInitByClient",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -777,7 +777,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesIpnetworkIpNetworkAsInet",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -786,7 +786,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesIpnetworkIpNetworkAsInet",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -795,7 +795,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesIpnetworkIpNetworkAsInet",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -804,7 +804,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesIpnetworkIpNetworkAsInet",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -823,7 +823,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesMacAddressMacAddressAsMacAddr",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -832,7 +832,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesMacAddressMacAddressAsMacAddr",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -841,7 +841,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesMacAddressMacAddressAsMacAddr",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -850,7 +850,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxTypesMacAddressMacAddressAsMacAddr",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -869,7 +869,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeI32AsInt4Range",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -878,7 +878,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeI32AsInt4Range",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -887,7 +887,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeI32AsInt4Range",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -896,7 +896,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeI32AsInt4Range",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -915,7 +915,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeI64AsInt8Range",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -924,7 +924,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeI64AsInt8Range",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -933,7 +933,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeI64AsInt8Range",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -942,7 +942,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeI64AsInt8Range",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -961,7 +961,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -970,7 +970,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -979,7 +979,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -988,7 +988,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -1007,7 +1007,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -1016,7 +1016,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -1025,7 +1025,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -1034,7 +1034,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -1053,7 +1053,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -1062,7 +1062,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
@@ -1071,7 +1071,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange",
     //             "is_nullable": "False",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
@@ -1080,7 +1080,7 @@ gen_pg_types::gen_pg_types!({
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange",
     //             "is_nullable": "True",
     //             "pg_type_pattern": {
-    //                 "ArrayDim1": {
+    //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }

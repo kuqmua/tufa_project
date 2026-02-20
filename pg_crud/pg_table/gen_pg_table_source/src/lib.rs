@@ -110,7 +110,7 @@ use token_patterns::{
 //todo authorization for returning concrete er or just minimal info(user role)
 //todo gen rules and roles
 //todo maybe add unnest sql types?
-//todo maybe add unnest to filter params if its array ?
+//todo maybe add unnest to filter params if its arr ?
 //todo swagger ui https://github.com/juhaku/utoipa/blob/master/examples/todo-axum/src/main.rs
 //todo derive utoipa::ToSchema for what? original structs or with serialize deserialize?
 //todo need to add utoipa::ToSchema annotation #[schema(value_type = YourToSchemaTraitImplStruct)] for all fields
@@ -3792,7 +3792,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &read_one_ts,
         &FormatWithCargofmt::True,
     );
-    //todo update not only with array of objects with ids but with WHERE and one object
+    //todo update not only with arr of objects with ids but with WHERE and one object
     let update_many_ts = {
         let operation = Operation::UpdateMany;
         let type_vrts_from_req_res_syn_vrts = gen_type_vrts_from_req_res_syn_vrts(

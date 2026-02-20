@@ -134,10 +134,10 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["object", "with", "id", "self", "opt", "to", "update"],
     ["self", "update", "with", "id"],
     [
-        "std", "vec", "vec", "object", "with", "id", "self", "json", "array", "change"
+        "std", "vec", "vec", "object", "with", "id", "self", "json", "arr", "change"
     ],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "json", "array",
+        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "json", "arr",
         "change"
     ],
     [
@@ -146,22 +146,22 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     [
         "self", "opt", "to", "update", "try", "gen", "pg", "json", "type", "er", "with", "serde"
     ],
-    ["self", "json", "array", "change"],
+    ["self", "json", "arr", "change"],
     ["self", "to", "create", "origin"],
     ["self", "to", "create", "with", "generated", "id"],
     ["self", "to", "create", "without", "generated", "id"],
-    ["self", "json", "array", "change", "try", "gen", "er"],
+    ["self", "json", "arr", "change", "try", "gen", "er"],
     ["self", "field", "to", "update"],
     ["self", "gen", "pg", "json", "type", "to", "read", "er"],
     [
-        "self", "try", "gen", "json", "array", "element", "update", "bind", "incrs", "er"
+        "self", "try", "gen", "json", "arr", "element", "update", "bind", "incrs", "er"
     ],
     [
-        "std", "vec", "vec", "object", "with", "id", "self", "json", "array", "change", "try",
-        "new", "er"
+        "std", "vec", "vec", "object", "with", "id", "self", "json", "arr", "change", "try", "new",
+        "er"
     ],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "json", "array",
+        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "json", "arr",
         "change", "try", "new", "er"
     ],
     ["not", "unique", "field", "self"],
@@ -834,18 +834,18 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "er"
     ],
     [
-        "pg", "type", "self", "where", "contains", "all", "elements", "of", "array", "try", "new",
+        "pg", "type", "self", "where", "contains", "all", "elements", "of", "arr", "try", "new",
         "er"
     ],
     [
-        "pg", "json", "type", "self", "where", "contains", "all", "elements", "of", "array", "try",
+        "pg", "json", "type", "self", "where", "contains", "all", "elements", "of", "arr", "try",
         "new", "er"
     ],
     [
-        "pg", "type", "self", "where", "contains", "all", "elements", "of", "array"
+        "pg", "type", "self", "where", "contains", "all", "elements", "of", "arr"
     ],
     [
-        "pg", "json", "type", "self", "where", "contains", "all", "elements", "of", "array"
+        "pg", "json", "type", "self", "where", "contains", "all", "elements", "of", "arr"
     ],
     [
         "self", "where", "bit", "vec", "position", "equals", "try", "new", "er"
@@ -855,8 +855,8 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "not", "null", "try", "new", "er"],
     ["self", "to", "update", "query", "part", "er"],
     ["self", "length"],
-    ["vec", "self", "array", "not", "null"],
-    ["vec", "self", "array", "nullable"],
+    ["vec", "self", "arr", "not", "null"],
+    ["vec", "self", "arr", "nullable"],
     ["self", "opt", "to", "update", "try", "gen", "er"],
     [
         "pg", "json", "type", "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id",

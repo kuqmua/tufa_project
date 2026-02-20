@@ -6,7 +6,7 @@ pub fn enum_extension(input: Ts) -> Ts {
     panic_location::panic_location();
     //it only supported for enums without values
     let di: DeriveInput = parse(input).expect("c6b8e80e");
-    //todo to implement into_array() and into_vec - must implement Default for all inner vrt types
+    //todo to implement into_arr() and into_vec - must implement Default for all inner vrt types
     let len = match di.data.clone() {
         Data::Enum(enum_item) => enum_item.variants.len(),
         Data::Struct(_) | Data::Union(_) => {
@@ -42,7 +42,7 @@ pub fn enum_extension(input: Ts) -> Ts {
             pub fn get_length() -> usize {
                 #len
             }
-            pub fn into_array() -> [#ident; #len] {
+            pub fn into_arr() -> [#ident; #len] {
                 [ #(#ident::#vrts),* ]
             }
             pub fn into_vec() -> Vec<Self> {

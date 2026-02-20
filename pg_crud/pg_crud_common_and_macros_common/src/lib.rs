@@ -7,13 +7,13 @@ use std::fmt::{Display, Formatter, Result as StdFmtResult};
 pub trait DefaultOptSomeVecOneEl: Sized {
     fn default_opt_some_vec_one_el() -> Self;
 }
-pub trait AllEnumVrtsArrayDefaultOptSomeVecOneEl: Sized {
+pub trait AllEnumVrtsArrDefaultOptSomeVecOneEl: Sized {
     fn all_vrts_default_opt_some_vec_one_el() -> Vec<Self>;
 }
 pub trait DefaultOptSomeVecOneElMaxPageSize: Sized {
     fn default_opt_some_vec_one_el_max_page_size() -> Self;
 }
-pub trait AllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize: Sized {
+pub trait AllEnumVrtsArrDefaultOptSomeVecOneElMaxPageSize: Sized {
     fn all_vrts_default_opt_some_vec_one_el_max_page_size() -> Vec<Self>;
 }
 #[derive(Debug, Default, Clone, Copy, Serialize, Deserialize, Eq, PartialEq, JsonSchema)]

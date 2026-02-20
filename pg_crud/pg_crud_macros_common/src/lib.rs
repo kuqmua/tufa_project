@@ -49,12 +49,12 @@ use std::fmt::Display;
 use strum_macros::{Display, EnumIter};
 use syn::{Ident, Type};
 use token_patterns::{
-    AllowClippyArbitrarySourceItemOrdering, Bool, CrateAllEnumVrtsArrayDefaultOptSomeVecOneEl,
-    CrateAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize, CrateDefaultOptSomeVecOneEl,
-    CrateDefaultOptSomeVecOneElMaxPageSize, PgCrudAllEnumVrtsArrayDefaultOptSomeVecOneEl,
-    PgCrudAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize,
-    PgCrudCommonAllEnumVrtsArrayDefaultOptSomeVecOneEl,
-    PgCrudCommonAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize,
+    AllowClippyArbitrarySourceItemOrdering, Bool, CrateAllEnumVrtsArrDefaultOptSomeVecOneEl,
+    CrateAllEnumVrtsArrDefaultOptSomeVecOneElMaxPageSize, CrateDefaultOptSomeVecOneEl,
+    CrateDefaultOptSomeVecOneElMaxPageSize, PgCrudAllEnumVrtsArrDefaultOptSomeVecOneEl,
+    PgCrudAllEnumVrtsArrDefaultOptSomeVecOneElMaxPageSize,
+    PgCrudCommonAllEnumVrtsArrDefaultOptSomeVecOneEl,
+    PgCrudCommonAllEnumVrtsArrDefaultOptSomeVecOneElMaxPageSize,
     PgCrudCommonDefaultOptSomeVecOneEl, PgCrudCommonDefaultOptSomeVecOneElCall,
     PgCrudCommonDefaultOptSomeVecOneElMaxPageSize, PgCrudDefaultOptSomeVecOneEl,
     PgCrudDefaultOptSomeVecOneElMaxPageSize, RefStr, StdFmtDisplay, StringTs, U64,
@@ -134,16 +134,16 @@ pub enum ImportPath {
 impl ImportPath {
     fn all_vrts_default_opt_some_vec_one_el(&self) -> &dyn ToTokens {
         match &self {
-            Self::Crate => &CrateAllEnumVrtsArrayDefaultOptSomeVecOneEl,
-            Self::PgCrud => &PgCrudAllEnumVrtsArrayDefaultOptSomeVecOneEl,
-            Self::PgCrudCommon => &PgCrudCommonAllEnumVrtsArrayDefaultOptSomeVecOneEl,
+            Self::Crate => &CrateAllEnumVrtsArrDefaultOptSomeVecOneEl,
+            Self::PgCrud => &PgCrudAllEnumVrtsArrDefaultOptSomeVecOneEl,
+            Self::PgCrudCommon => &PgCrudCommonAllEnumVrtsArrDefaultOptSomeVecOneEl,
         }
     }
     fn all_vrts_default_opt_some_vec_one_el_max_page_size(&self) -> &dyn ToTokens {
         match &self {
-            Self::Crate => &CrateAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize,
-            Self::PgCrud => &PgCrudAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize,
-            Self::PgCrudCommon => &PgCrudCommonAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize,
+            Self::Crate => &CrateAllEnumVrtsArrDefaultOptSomeVecOneElMaxPageSize,
+            Self::PgCrud => &PgCrudAllEnumVrtsArrDefaultOptSomeVecOneElMaxPageSize,
+            Self::PgCrudCommon => &PgCrudCommonAllEnumVrtsArrDefaultOptSomeVecOneElMaxPageSize,
         }
     }
     fn default_opt_some_vec_one_el(&self) -> &dyn ToTokens {
@@ -2200,9 +2200,9 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         });
         quote! {#(#ts)*}
     };
-    let fields_array_elements_ts = {
-        let fields_array_elements_ts = vec_ident.iter().map(|el_43a33e0b| dq_ts(&el_43a33e0b));
-        quote! {#(#fields_array_elements_ts),*}
+    let fields_arr_elements_ts = {
+        let fields_arr_elements_ts = vec_ident.iter().map(|el_43a33e0b| dq_ts(&el_43a33e0b));
+        quote! {#(#fields_arr_elements_ts),*}
     };
     let ident_dq_ts = dq_ts(&ident);
     quote! {
@@ -2346,7 +2346,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                         }
                     }
                     #[doc(hidden)]
-                    const FIELDS: &[&str] = &[#fields_array_elements_ts];
+                    const FIELDS: &[&str] = &[#fields_arr_elements_ts];
                     _serde::Deserializer::deserialize_struct(
                         __deserializer,
                         #ident_dq_ts,
