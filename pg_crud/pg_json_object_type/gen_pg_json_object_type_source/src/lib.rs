@@ -5649,13 +5649,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                     ).expect("8f6fb6b6")
                                                 }).collect::<Vec<#ident_with_id_standart_not_null_read_ucc>>();
                                                 acc_5f587d35.sort_by(|first, second| {
-                                                    if let (Some(value_first), Some(value_second)) = (&first.id, &second.id) {
+                                                    if let (Some(v_first), Some(v_second)) = (&first.id, &second.id) {
                                                         //maybe remove .clone - add .get by ref method
                                                         #import_path_pg_json_type_uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_ts::into_inner(
-                                                            value_first.#ValueSc.clone()
+                                                            v_first.#ValueSc.clone()
                                                         )
                                                         .cmp(&#import_path_pg_json_type_uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_ts::into_inner(
-                                                            value_second.#ValueSc.clone()
+                                                            v_second.#ValueSc.clone()
                                                         ))
                                                     }
                                                     else {
