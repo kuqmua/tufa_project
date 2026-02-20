@@ -4912,11 +4912,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 }
             };
             let select_only_ids_and_select_only_updated_ids_query_common_ts = {
-                let format_handle_ts = dq_ts(&{
+                let format_ts = dq_ts(&{
                     let column_comma = "{column},";
                     if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) { column_comma.to_owned() } else { format!("'{{{{\\\"value\\\": null}}}}'::jsonb as {column_comma}") }
                 });
-                quote! {Ok(format!(#format_handle_ts))}
+                quote! {Ok(format!(#format_ts))}
             };
             gen_impl_pg_type_ts(
                 &import_path,
@@ -4971,27 +4971,27 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let space_additional_parameter = " {}";
                     match (&is_nullable, &can_be_primary_key) {
                         (IsNullable::False, CanBePrimaryKey::False) => {
-                            let format_handle_ts = dq_ts(&column_pg_query_type_not_null);
+                            let format_ts = dq_ts(&column_pg_query_type_not_null);
                             quote! {
-                                format!(#format_handle_ts)
+                                format!(#format_ts)
                             }
                         }
                         (IsNullable::False, CanBePrimaryKey::True) => {
-                            let format_handle_ts = dq_ts(&format!("{column_pg_query_type_not_null}{space_additional_parameter}"));
+                            let format_ts = dq_ts(&format!("{column_pg_query_type_not_null}{space_additional_parameter}"));
                             quote! {
-                                format!(#format_handle_ts, #maybe_primary_key_is_primary_key_ts)
+                                format!(#format_ts, #maybe_primary_key_is_primary_key_ts)
                             }
                         }
                         (IsNullable::True, CanBePrimaryKey::False) => {
-                            let format_handle_ts = dq_ts(&column_pg_query_type);
+                            let format_ts = dq_ts(&column_pg_query_type);
                             quote! {
-                                format!(#format_handle_ts)
+                                format!(#format_ts)
                             }
                         }
                         (IsNullable::True, CanBePrimaryKey::True) => {
-                            let format_handle_ts = dq_ts(&format!("{column_pg_query_type}{space_additional_parameter}"));
+                            let format_ts = dq_ts(&format!("{column_pg_query_type}{space_additional_parameter}"));
                             quote! {
-                                format!(#format_handle_ts, #maybe_primary_key_is_primary_key_ts)
+                                format!(#format_ts, #maybe_primary_key_is_primary_key_ts)
                             }
                         }
                     }
@@ -5021,7 +5021,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let ts = match &pg_type_pattern {
                         PgTypePattern::Standart => quote! {#ColumnSc.to_owned()},
                         PgTypePattern::ArrayDim1 { .. } => {
-                            let format_handle_ts = dq_ts(&{
+                            let format_ts = dq_ts(&{
                                 let acc = repeat_n("[{}:{}]", array_dims_number).collect::<String>();
                                 format!("{{column}}{acc}")
                             });
@@ -5036,7 +5036,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             });
                             quote! {format!(
-                                #format_handle_ts,
+                                #format_ts,
                                 #(#arguments_ts)*
                             )}
                         }

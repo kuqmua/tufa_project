@@ -2013,10 +2013,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             }
                         })
                     });
-                    let format_handle_ts = dq_ts(&format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value',({format_handle})))"));
+                    let format_ts = dq_ts(&format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value',({format_handle})))"));
                     quote! {
                         #(#maybe_dims_start_end_init)*
-                        Ok(format!(#format_handle_ts))
+                        Ok(format!(#format_ts))
                     }
                 },
                 &ident_where_ucc,
@@ -2165,10 +2165,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &ident_update_ucc,
                 &ident_update_for_query_ucc,
                 &{
-                    let format_handle_ts = dq_ts(&format!("jsonb_set({{{JsonbSetAccumulatorSc}}},'{{{{{{jsonb_set_path}}}}}}',${{v_26526e0f}})"));
+                    let format_ts = dq_ts(&format!("jsonb_set({{{JsonbSetAccumulatorSc}}},'{{{{{{jsonb_set_path}}}}}}',${{v_26526e0f}})"));
                     quote! {
                         match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
-                            Ok(v_26526e0f) => Ok(format!(#format_handle_ts)),
+                            Ok(v_26526e0f) => Ok(format!(#format_ts)),
                             Err(#ErSc) => Err(#ErSc),
                         }
                     }

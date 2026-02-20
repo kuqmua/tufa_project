@@ -434,12 +434,12 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             ),
                             IncrParameterUnderscore::False,
                             {
-                                let format_handle_ts = dq_ts(&gen_format_handle_str(&pg_type_kind));
+                                let format_ts = dq_ts(&gen_format_handle_str(&pg_type_kind));
                                 quote! {
                                     #maybe_dims_indexes_init_ts
                                     #value_match_incr_checked_add_one_init_ts
                                     Ok(format!(
-                                        #format_handle_ts,
+                                        #format_ts,
                                         &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                         #ColumnSc,
                                         #maybe_additional_parameters_ts
@@ -484,12 +484,12 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         gen_maybe_dims_default_init_value_default_ts(&maybe_dims_default_init_ts),
                         IncrParameterUnderscore::False,
                         {
-                            let format_handle_ts = dq_ts(&format!("{{}}({{}}{} {{}})", pg_type_kind.format_argument()));
+                            let format_ts = dq_ts(&format!("{{}}({{}}{} {{}})", pg_type_kind.format_argument()));
                             quote! {
                                 #maybe_dims_indexes_init_ts
                                 #value_match_self_value_query_part_init_ts
                                 Ok(format!(
-                                    #format_handle_ts,
+                                    #format_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     #ColumnSc,
                                     #maybe_additional_parameters_ts
@@ -526,7 +526,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         gen_maybe_dims_default_init_value_default_ts(&maybe_dims_default_init_ts),
                         IncrParameterUnderscore::False,
                         {
-                            let format_handle_ts = dq_ts(&format!(
+                            let format_ts = dq_ts(&format!(
                                 "{{}}({{}}{} in ({{}}))",
                                 pg_type_kind.format_argument()
                             ));
@@ -552,7 +552,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     acc_14596a52
                                 };
                                 Ok(format!(
-                                    #format_handle_ts,
+                                    #format_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     #ColumnSc,
                                     #maybe_additional_parameters_ts
@@ -593,7 +593,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                         IncrParameterUnderscore::False,
                         {
-                            let format_handle_ts = dq_ts(&format!(
+                            let format_ts = dq_ts(&format!(
                                 "{{}}({{}}{} {{}} ${{}})",
                                 pg_type_kind.format_argument()
                             ));
@@ -601,7 +601,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 #maybe_dims_indexes_init_ts
                                 #value_match_incr_checked_add_one_init_ts
                                 Ok(format!(
-                                    #format_handle_ts,
+                                    #format_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     #ColumnSc,
                                     #maybe_additional_parameters_ts
@@ -632,7 +632,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         gen_maybe_dims_default_init_value_default_ts(&maybe_dims_default_init_ts),
                         IncrParameterUnderscore::False,
                         {
-                            let format_handle_ts = dq_ts(&format!(
+                            let format_ts = dq_ts(&format!(
                                 "{{}}({{}}{} < ${{}})",
                                 pg_type_kind.format_argument()
                             ));
@@ -640,7 +640,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 #maybe_dims_indexes_init_ts
                                 #value_match_incr_checked_add_one_init_ts
                                 Ok(format!(
-                                    #format_handle_ts,
+                                    #format_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     #ColumnSc,
                                     #maybe_additional_parameters_ts
@@ -677,14 +677,14 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 | PgTypePatternHandle::ArrayDim4 => IncrParameterUnderscore::False,
                             },
                             {
-                                let format_handle_ts = dq_ts(&format!(
+                                let format_ts = dq_ts(&format!(
                                     "{{}}({{}}{} {pg_syntax})",
                                     pg_type_kind.format_argument()
                                 ));
                                 quote! {
                                     #maybe_dims_indexes_init_ts
                                     Ok(format!(
-                                        #format_handle_ts,
+                                        #format_ts,
                                         &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                         #ColumnSc,
                                         #maybe_additional_parameters_ts
@@ -749,7 +749,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             },
                             IncrParameterUnderscore::False,
                             {
-                                let format_handle_ts = dq_ts(&format!(
+                                let format_ts = dq_ts(&format!(
                                     "{{}}(encode({{}}{}, '{{}}') = ${{}})",
                                     pg_type_kind.format_argument()
                                 ));
@@ -757,7 +757,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     #maybe_dims_indexes_init_ts
                                     #value_match_incr_checked_add_one_init_ts
                                     Ok(format!(
-                                        #format_handle_ts,
+                                        #format_ts,
                                         &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                         #ColumnSc,
                                         #maybe_additional_parameters_ts
@@ -805,11 +805,11 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         value_default_opt_some_vec_one_el_ts.clone(),
                         IncrParameterUnderscore::False,
                         {
-                            let format_handle_ts =
+                            let format_ts =
                                 dq_ts(&format!("{{}}(array_length({{}}, 1) {operator} ${{}})"));
                             quote! {
                                 match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
-                                    Ok(v_f7988de8) => Ok(format!(#format_handle_ts, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #ColumnSc, v_f7988de8)),
+                                    Ok(v_f7988de8) => Ok(format!(#format_ts, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #ColumnSc, v_f7988de8)),
                                     Err(#ErSc) => Err(#ErSc),
                                 }
                             }
@@ -900,7 +900,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         gen_maybe_dims_default_init_value_default_ts(&maybe_dims_default_init_ts),
                         IncrParameterUnderscore::False,
                         {
-                            let format_handle_ts = dq_ts(&format!(
+                            let format_ts = dq_ts(&format!(
                                 "{{}}(upper({{}}{}) - lower({{}}{}) = ${{}})",
                                 pg_type_kind.format_argument(),
                                 pg_type_kind.format_argument(),
@@ -909,7 +909,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 #maybe_dims_indexes_init_ts
                                 #value_match_incr_checked_add_one_init_ts
                                 Ok(format!(
-                                    #format_handle_ts,
+                                    #format_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     #ColumnSc,
                                     #maybe_additional_parameters_ts
@@ -1241,12 +1241,12 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #value_default_opt_some_vec_one_el_ts
                         },
                         {
-                            let format_handle_ts = dq_ts(&gen_format_handle_str(&pg_type_kind));
+                            let format_ts = dq_ts(&gen_format_handle_str(&pg_type_kind));
                             quote! {
                                 #maybe_dims_indexes_init_ts
                                 #value_match_incr_checked_add_one_init_ts
                                 Ok(format!(
-                                    #format_handle_ts,
+                                    #format_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     #ColumnSc,
                                     #maybe_additional_parameters_ts
@@ -1302,7 +1302,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         #ValueSc: #CoreDefault
                     },
                     {
-                        let format_handle_ts = dq_ts(&format!(
+                        let format_ts = dq_ts(&format!(
                             "{{}}(jsonb_array_length({{}}{}) {operation} ${{}})",
                             pg_type_kind.format_argument()
                         ));
@@ -1310,7 +1310,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #maybe_dims_indexes_init_ts
                             #value_match_incr_checked_add_one_init_ts
                             Ok(format!(
-                                #format_handle_ts,
+                                #format_ts,
                                 &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 #ColumnSc,
                                 #maybe_additional_parameters_ts
@@ -1386,12 +1386,12 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             PgTypePatternHandle::ArrayDim3 |
                             PgTypePatternHandle::ArrayDim4 => &value_match_incr_checked_add_one_init_ts
                         };
-                        let format_handle_ts = dq_ts(&format!("{{}}({{}}{} {{}})", pg_type_kind.format_argument()));
+                        let format_ts = dq_ts(&format!("{{}}({{}}{} {{}})", pg_type_kind.format_argument()));
                         quote! {
                             #maybe_dims_indexes_init_ts
                             #ts
                             Ok(format!(
-                                #format_handle_ts,
+                                #format_ts,
                                 &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 #ColumnSc,
                                 #maybe_additional_parameters_ts
@@ -1443,7 +1443,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                     gen_maybe_dims_default_init_value_default_ts(&maybe_dims_default_init_ts),
                     {
-                        let format_handle_ts = dq_ts(&format!(
+                        let format_ts = dq_ts(&format!(
                             "{{}}({{}}{} in ({{}}))",
                             pg_type_kind.format_argument()
                         ));
@@ -1452,7 +1452,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #maybe_dims_indexes_init_ts
                             #value_init_ts
                             Ok(format!(
-                                #format_handle_ts,
+                                #format_ts,
                                 &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 #ColumnSc,
                                 #maybe_additional_parameters_ts
@@ -1514,7 +1514,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         #regular_expression_case_and_value_default_init_ts
                     },
                     {
-                        let format_handle_ts = dq_ts(&format!(
+                        let format_ts = dq_ts(&format!(
                             "{{}}(trim(both '\\\"' from ({{}}{})::text) {{}} ${{}})",
                             match &pg_type_kind {
                                 PgTypeKind::Standart => "",
@@ -1525,7 +1525,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #maybe_dims_indexes_init_ts
                             #value_match_incr_checked_add_one_init_ts
                             Ok(format!(
-                                #format_handle_ts,
+                                #format_ts,
                                 &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 #ColumnSc,
                                 #maybe_additional_parameters_ts
@@ -1562,7 +1562,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #regular_expression_case_and_value_default_init_ts
                         },
                         {
-                            let format_handle_ts = dq_ts(&format!(
+                            let format_ts = dq_ts(&format!(
                                 //todo test it properly using all strange string vrts
                                 "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where (el #>> '{{{{}}}}') {{}} ${{}}))",
                                 // "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) {{}} ${{}}))",
@@ -1572,7 +1572,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 #maybe_dims_indexes_init_ts
                                 #value_match_incr_checked_add_one_init_ts
                                 Ok(format!(
-                                    #format_handle_ts,
+                                    #format_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     #ColumnSc,
                                     #maybe_additional_parameters_ts
@@ -1609,7 +1609,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #regular_expression_case_and_value_default_init_ts
                         },
                         {
-                            let format_handle_ts = dq_ts(&format!(
+                            let format_ts = dq_ts(&format!(
                                 //todo test it properly using all strange string vrts
                                 "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el #>> '{{{{}}}}') !{{}} ${{}}))",
                                 // "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) !{{}} ${{}}))",
@@ -1619,7 +1619,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 #maybe_dims_indexes_init_ts
                                 #value_match_incr_checked_add_one_init_ts
                                 Ok(format!(
-                                    #format_handle_ts,
+                                    #format_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     #ColumnSc,
                                     #maybe_additional_parameters_ts
@@ -1657,7 +1657,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #value_default_opt_some_vec_one_el_ts
                         },
                         {
-                            let format_handle_ts = dq_ts(&format!(
+                            let format_ts = dq_ts(&format!(
                                 "{{}}({{}}{} @> {{}})",
                                 pg_type_kind.format_argument()
                             ));
@@ -1665,7 +1665,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 #maybe_dims_indexes_init_ts
                                 #value_match_self_value_query_part_init_ts
                                 Ok(format!(
-                                    #format_handle_ts,
+                                    #format_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     #ColumnSc,
                                     #maybe_additional_parameters_ts
@@ -1701,7 +1701,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         #value_default_opt_some_vec_one_el_ts
                     },
                     {
-                        let format_handle_ts = dq_ts(&format!(
+                        let format_ts = dq_ts(&format!(
                             "{{}}(exists (select 1 from jsonb_array_elements_text({{}}{}) as e1 join jsonb_array_elements_text({{}}) as e2 on e1.value = e2.value))",
                             pg_type_kind.format_argument()
                         ));
@@ -1709,7 +1709,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #maybe_dims_indexes_init_ts
                             #value_match_self_value_query_part_init_ts
                             Ok(format!(
-                                #format_handle_ts,
+                                #format_ts,
                                 &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 #ColumnSc,
                                 #maybe_additional_parameters_ts

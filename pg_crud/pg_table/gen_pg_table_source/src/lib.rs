@@ -2855,11 +2855,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             };
             let url_ts = {
-                let format_handle_ts = dq_ts(&format!(
+                let format_ts = dq_ts(&format!(
                     "{{endpoint_location}}/{{table}}/{}",
                     operation.self_sc_str()
                 ));
-                quote! {let #UrlSc = format!(#format_handle_ts);}
+                quote! {let #UrlSc = format!(#format_ts);}
             };
             let future_ts = {
                 let operation_http_method_sc_ts =

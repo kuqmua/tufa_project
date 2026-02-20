@@ -1322,7 +1322,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         &dq_ts(&ValueSc),
                                         &ColumnSc
                                     );
-                                    let format_handle_ts = dq_ts(&format!(
+                                    let format_ts = dq_ts(&format!(
                                         "(case when (jsonb_array_length({{column}}) = 0) then '[]'::jsonb else (select jsonb_agg(({{{ident_with_id_standart_not_null_select_sc}}})) from jsonb_array_elements((select {{column}})) with ordinality where ordinality between {{dim1_start}} and {{dim1_end}}) end)"
                                     ));
                                     quote! {
@@ -1335,11 +1335,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         };
                                         let dim1_start = self.#dim1_pagination_ts.start();
                                         let dim1_end = self.#dim1_pagination_ts.end();
-                                        Ok(format!(#format_handle_ts))
+                                        Ok(format!(#format_ts))
                                     }
                                 }
                                 IsNullable::True => {
-                                    let format_handle_ts = dq_ts(&"case when jsonb_typeof({column}) = 'null' then 'null'::jsonb else ({v_c2ca032e}) end");
+                                    let format_ts = dq_ts(&"case when jsonb_typeof({column}) = 'null' then 'null'::jsonb else ({v_c2ca032e}) end");
                                     let ident_with_id_array_not_null_as_pg_json_type_select_as_default_but_opt_is_some_ts = gen_ident_as_default_but_opt_is_some_ts(
                                         &ident_with_id_array_not_null_as_pg_json_type_select_ts
                                     );
@@ -1349,7 +1349,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             Clone::clone
                                         );
                                         match #ValueSc.#SelectQueryPartPgTypeSc(column) {
-                                            Ok(v_c2ca032e) => Ok(format!(#format_handle_ts)),
+                                            Ok(v_c2ca032e) => Ok(format!(#format_ts)),
                                             Err(#ErSc) => Err(#ErSc)
                                         }
                                     }
@@ -1694,12 +1694,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         let query_part_vrts_ts = get_vec_syn_field(is_standart_with_id).iter().map(|el_32d414b1| {
                             let field_ident_str = el_32d414b1.field_ident.to_string();
                             let field_ident_ucc_ts = AsRefStrToUccTs::case_or_panic(&field_ident_str);
-                            let format_handle_ts = dq_ts(&format!("{{column}}->'{field_ident_str}'"));
+                            let format_ts = dq_ts(&format!("{{column}}->'{field_ident_str}'"));
                             quote! {
                                 Self::#field_ident_ucc_ts(value) => #import_path::PgTypeWhereFilter::#QueryPartSc(
                                     value,
                                     incr,
-                                    &format!(#format_handle_ts),
+                                    &format!(#format_ts),
                                     is_need_to_add_logical_operator,
                                 )
                             }
@@ -2549,10 +2549,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let ident_with_id_standart_not_null_update_for_query_el_ucc = &SelfUpdateForQueryElementUcc::from_tokens(&ident_with_id_standart_not_null_ucc);
             let (gen_jsonb_set_target_sc, gen_jsonb_set_target_ts) = {
                 let gen_jsonb_set_target_ts = {
-                    let format_handle_ts = dq_ts(&format!("{{{JsonbSetTargetSc}}}->'{{v_12d082b5}}'"));
+                    let format_ts = dq_ts(&format!("{{{JsonbSetTargetSc}}}->'{{v_12d082b5}}'"));
                     quote! {
                         let #GenJsonbSetTargetSc = |v_12d082b5: &str|{
-                            format!(#format_handle_ts)
+                            format!(#format_ts)
                         };
                     }
                 };
@@ -3614,7 +3614,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 let pg_type_or_pg_json_type_pg_type = PgTypeOrPgJsonType::PgType;
                 let pg_type_or_pg_json_type_pg_json_type = PgTypeOrPgJsonType::PgJsonType;
                 let gen_update_query_part_standart_nullable_ts = |pg_type_or_pg_json_type: &PgTypeOrPgJsonType|{
-                    let format_handle_ts = dq_ts(&match &pg_type_or_pg_json_type {
+                    let format_ts = dq_ts(&match &pg_type_or_pg_json_type {
                         PgTypeOrPgJsonType::PgType => format!("jsonb_set({{{JsonbSetAccumulatorSc}}},'{{{{{{{JsonbSetPathSc}}}}}}}',${{v_27b8537f}})"),
                         PgTypeOrPgJsonType::PgJsonType => "${v_27b8537f}".to_owned(),
                     });
@@ -3628,13 +3628,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 incr,
                             ),
                             None => match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
-                                Ok(v_27b8537f) => Ok(format!(#format_handle_ts)),
+                                Ok(v_27b8537f) => Ok(format!(#format_ts)),
                                 Err(#ErSc) => Err(#ErSc),
                             }
                         }
                     }
                 };
-                let gen_update_delete_create_array_ts = |format_handle_ts: &dyn ToTokens|{
+                let gen_update_delete_create_array_ts = |format_ts: &dyn ToTokens|{
                     let if_write_is_err_ts = gen_if_write_is_err_ts(
                         &quote!{acc_2e2ad041, "{v_8333f8f4}"},
                         &return_err_query_part_er_write_into_buffer_ts
@@ -3723,7 +3723,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         } else {
                             format!(" || jsonb_build_array({create_query_part_acc})")
                         };
-                        Ok (format!(#format_handle_ts))
+                        Ok (format!(#format_ts))
                     }
                 };
                 let gen_update_query_part_array_not_null_ts = |pg_type_or_pg_json_type: &PgTypeOrPgJsonType|{
@@ -3805,7 +3805,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         &value_dq_ts,
                                     )
                                 };
-                                let format_handle_ts = dq_ts(&format!(
+                                let format_ts = dq_ts(&format!(
                                     "jsonb_build_object('{{field_ident}}',jsonb_build_object('value',case when (jsonb_array_length({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 0) then '[]'::jsonb else (select jsonb_agg(({{{ident_with_id_standart_not_null_select_sc}}})) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{dim1_start}} and {{dim1_end}}) end ))"
                                 ));
                                 quote! {
@@ -3818,11 +3818,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     };
                                     let dim1_start = #ValueSc.#dim1_pagination_ts.start();
                                     let dim1_end = #ValueSc.#dim1_pagination_ts.end();
-                                    Ok(format!(#format_handle_ts))
+                                    Ok(format!(#format_ts))
                                 }
                             }
                             IsNullable::True => {
-                                let format_handle_ts = dq_ts(
+                                let format_ts = dq_ts(
                                     &"case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value','null'::jsonb)) else ({v_d7bbd03c}) end"
                                 );
                                 let ident_with_id_array_not_null_as_pg_json_type_select_as_default_but_opt_is_some_ts = gen_ident_as_default_but_opt_is_some_ts(
@@ -3840,7 +3840,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         column_name_and_maybe_field_getter_for_er_message,
                                         true
                                     ) {
-                                        Ok(v_d7bbd03c) => Ok(format!(#format_handle_ts)),
+                                        Ok(v_d7bbd03c) => Ok(format!(#format_ts)),
                                         Err(#ErSc) => Err(#ErSc)
                                     }
                                 }
@@ -3859,19 +3859,19 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         Pattern::Array => &is_standart_with_id_true
                                     }).iter().map(|el_a6a15738| {
                                         let field_ident = &el_a6a15738.field_ident;
-                                        let format_handle_ts = dq_ts(&format!("jsonb_build_object('{field_ident}',{{}})||"));
+                                        let format_ts = dq_ts(&format!("jsonb_build_object('{field_ident}',{{}})||"));
                                         let field_type_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el_a6a15738.field_type);
                                         let ts = match &pattern {
                                             Pattern::Standart => {
-                                                let format_ts = dq_ts(&format!("{{column_name_and_maybe_field_getter}}->'{field_ident}'"));
-                                                quote! {&format!(#format_ts)}
+                                                let format_ts_14808143 = dq_ts(&format!("{{column_name_and_maybe_field_getter}}->'{field_ident}'"));
+                                                quote! {&format!(#format_ts_14808143)}
                                             },
                                             Pattern::Array => dq_ts(&format!("elem->'{field_ident}'"))
                                         };
                                         gen_if_write_is_err_curly_braces_ts(
                                             &quote!{
                                                 acc_2912b128,
-                                                #format_handle_ts,
+                                                #format_ts,
                                                 match #field_type_as_pg_json_type_ts::#SelectOnlyIdsQueryPartSc(#ts) {
                                                     Ok(v_2317e0af) => v_2317e0af,
                                                     Err(#ErSc) => {
@@ -3893,10 +3893,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 match &pattern {
                                     Pattern::Standart => ts,
                                     Pattern::Array => {
-                                        let format_handle_ts = dq_ts(
+                                        let format_ts = dq_ts(
                                             &format!("jsonb_build_object('value',(select jsonb_agg({{}}) from jsonb_array_elements({{{ColumnNameAndMaybeFieldGetterSc}}}) as elem))")
                                         );
-                                        quote! {format!(#format_handle_ts, #ts)}
+                                        quote! {format!(#format_ts, #ts)}
                                     },
                                 }
                             };
@@ -3907,12 +3907,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 Pattern::Standart => &ident_standart_not_null_as_pg_json_type_ts,
                                 Pattern::Array => &ident_with_id_array_not_null_as_pg_json_type_ts,
                             };
-                            let case_null_format_handle_ts = dq_ts(
+                            let case_null_format_ts = dq_ts(
                                 &format!("jsonb_build_object('value',case when jsonb_typeof({{{ColumnNameAndMaybeFieldGetterSc}}})='null' then 'null'::jsonb else {{v_21000130}} end)")
                             );
                             quote! {
                                 match #ts::#SelectOnlyIdsQueryPartSc(#ColumnNameAndMaybeFieldGetterSc) {
-                                    Ok(v_21000130) => Ok(format!(#case_null_format_handle_ts)),
+                                    Ok(v_21000130) => Ok(format!(#case_null_format_ts)),
                                     Err(#ErSc) => Err(#ErSc)
                                 }
                             }
@@ -3968,7 +3968,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &match &pattern {
                         Pattern::Standart => match &is_nullable {
                             IsNullable::False => {
-                                let format_handle_ts = dq_ts(&format!("jsonb_set({{{JsonbSetAccumulatorSc}}},'{{{{{{{JsonbSetPathSc}}}}}}}',{{{StdOptOptObjectAccSc}}})"));
+                                let format_ts = dq_ts(&format!("jsonb_set({{{JsonbSetAccumulatorSc}}},'{{{{{{{JsonbSetPathSc}}}}}}}',{{{StdOptOptObjectAccSc}}})"));
                                 let query_part_vrts_ts = vec_syn_field.iter().map(|el_ebd92dbf| {
                                     let vrt_ident_ucc_ts = AsRefStrToUccTs::case_or_panic(&el_ebd92dbf.field_ident.to_string());
                                     let field_ident_dq_ts = gen_field_ident_dq_ts(el_ebd92dbf);
@@ -3992,9 +3992,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         }
                                     }
                                 });
-                                let some_format_handle_ts = dq_ts(&format!("case when jsonb_typeof({{{JsonbSetTargetSc}}}) = 'object' then ({{{JsonbSetTargetSc}}})::jsonb else '{{{{}}}}'::jsonb end"));
+                                let some_format_ts = dq_ts(&format!("case when jsonb_typeof({{{JsonbSetTargetSc}}}) = 'object' then ({{{JsonbSetTargetSc}}})::jsonb else '{{{{}}}}'::jsonb end"));
                                 quote! {
-                                    let mut #StdOptOptObjectAccSc = format!(#some_format_handle_ts);
+                                    let mut #StdOptOptObjectAccSc = format!(#some_format_ts);
                                     #gen_jsonb_set_target_ts
                                     for el_157f4b80 in #ValueSc.0.to_vec() {
                                         match el_157f4b80 {
@@ -4005,7 +4005,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         Ok(#StdOptOptObjectAccSc)
                                     }
                                     else {
-                                        Ok(format!(#format_handle_ts))
+                                        Ok(format!(#format_ts))
                                     }
                                 }
                             },
@@ -4623,9 +4623,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &ident_table_type_declaration_ucc,
                     &IsPrimaryKeyUnderscore::True,
                     &{
-                        let format_handle_ts = dq_ts(&"{column} jsonb not null check (jsonb_matches_schema('{}', {column}))".to_owned());
+                        let format_ts = dq_ts(&"{column} jsonb not null check (jsonb_matches_schema('{}', {column}))".to_owned());
                         quote! {
-                            format!(#format_handle_ts, serde_json::to_string(&schemars::schema_for!(#ident_table_type_declaration_ucc)).expect("59a1654b"))
+                            format!(#format_ts, serde_json::to_string(&schemars::schema_for!(#ident_table_type_declaration_ucc)).expect("59a1654b"))
                         }
                     },
                     &ident_create_ucc,
