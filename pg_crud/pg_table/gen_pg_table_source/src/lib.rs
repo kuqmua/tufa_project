@@ -2261,10 +2261,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         );
         let derive_input: DeriveInput =
             parse2((*common_additional_er_variants_attr_ts).clone()).expect("1b80783d");
-        assert!(
-            derive_input.ident.to_string() == gen_pg_table_attr_str,
-            "8a66c852"
-        );
+        assert!(derive_input.ident == gen_pg_table_attr_str, "8a66c852");
         let variants = if let Data::Enum(data_enum) = derive_input.data {
             data_enum.variants
         } else {

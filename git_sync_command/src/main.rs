@@ -21,13 +21,13 @@ fn main() {
         .args(["version"])
         .output()
         .expect("6fb6579e");
-    let substring_value = "path = ";
+    let path_space_equal_space = "path = ";
     let paths_vec: Vec<String> = contents
         .lines()
         .filter_map(|el_0731ade5| {
-            el_0731ade5.find("path = ").map(|index| {
+            el_0731ade5.find(path_space_equal_space).map(|index| {
                 el_0731ade5
-                    .get(index.checked_add(substring_value.len()).expect("62d029a8")..)
+                    .get(index.checked_add(path_space_equal_space.len()).expect("62d029a8")..)
                     .expect("dde185ef")
                     .to_owned()
             })

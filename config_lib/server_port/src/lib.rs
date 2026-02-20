@@ -18,16 +18,16 @@ impl Display for ServerPort {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ServerPortEr {
     message: String,
-    server_port_max_value: u16,
-    server_port_min_value: u16,
-    value: u16,
+    server_port_max: u16,
+    server_port_min: u16,
+    v: u16,
 }
 impl Display for ServerPortEr {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         write!(
             f,
-            "server_port_min_value: {}, server_port_max_value: {}, value: {}",
-            self.server_port_min_value, self.server_port_max_value, self.value
+            "server_port_min: {}, server_port_max: {}, v: {}",
+            self.server_port_min, self.server_port_max, self.v
         )
     }
 }
@@ -37,18 +37,18 @@ impl TryFrom<u16> for ServerPort {
     fn try_from(v: u16) -> Result<Self, Self::Error> {
         if v < SERVER_PORT_MIN_VALUE {
             Err(Self::Error {
-                server_port_min_value: SERVER_PORT_MIN_VALUE,
-                server_port_max_value: SERVER_PORT_MAX_VALUE,
-                value: v,
+                server_port_min: SERVER_PORT_MIN_VALUE,
+                server_port_max: SERVER_PORT_MAX_VALUE,
+                v,
                 message: String::from(SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE),
             })
         } else if v <= SERVER_PORT_MAX_VALUE {
             Ok(Self(v))
         } else {
             Err(Self::Error {
-                server_port_min_value: SERVER_PORT_MIN_VALUE,
-                server_port_max_value: SERVER_PORT_MAX_VALUE,
-                value: v,
+                server_port_min: SERVER_PORT_MIN_VALUE,
+                server_port_max: SERVER_PORT_MAX_VALUE,
+                v,
                 message: String::from(SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE),
             })
         }
