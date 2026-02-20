@@ -423,7 +423,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             maybe_dims_default_init_ts,
                             maybe_dims_indexes_init_ts,
                             pg_type_kind,
-                            maybe_additional_parameters_ts,
+                            maybe_additional_params_ts,
                             maybe_dims_query_bind_ts,
                         ) = gen_pg_type_dims_helpers_pg_type(pg_type_pattern_handle);
                         (
@@ -442,7 +442,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                         #format_ts,
                                         &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                         #ColumnSc,
-                                        #maybe_additional_parameters_ts
+                                        #maybe_additional_params_ts
                                         #ValueSc
                                     ))
                                 }
@@ -472,7 +472,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         maybe_dims_default_init_ts,
                         maybe_dims_indexes_init_ts,
                         pg_type_kind,
-                        maybe_additional_parameters_ts,
+                        maybe_additional_params_ts,
                         maybe_dims_query_bind_ts,
                     ) = gen_pg_type_dims_helpers_pg_type(pg_type_pattern_handle);
                     (
@@ -492,7 +492,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     #format_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     #ColumnSc,
-                                    #maybe_additional_parameters_ts
+                                    #maybe_additional_params_ts
                                     #ValueSc
                                 ))
                             }
@@ -510,7 +510,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         maybe_dims_default_init_ts,
                         maybe_dims_indexes_init_ts,
                         pg_type_kind,
-                        maybe_additional_parameters_ts,
+                        maybe_additional_params_ts,
                         maybe_dims_query_bind_ts,
                     ) = gen_pg_type_dims_helpers_pg_type(pg_type_pattern_handle);
                     (
@@ -555,7 +555,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     #format_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     #ColumnSc,
-                                    #maybe_additional_parameters_ts
+                                    #maybe_additional_params_ts
                                     #ValueSc
                                 ))
                             }
@@ -578,7 +578,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         maybe_dims_default_init_ts,
                         maybe_dims_indexes_init_ts,
                         pg_type_kind,
-                        maybe_additional_parameters_ts,
+                        maybe_additional_params_ts,
                         maybe_dims_query_bind_ts,
                     ) = gen_pg_type_dims_helpers_pg_type(pg_type_pattern_handle);
                     (
@@ -604,7 +604,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     #format_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     #ColumnSc,
-                                    #maybe_additional_parameters_ts
+                                    #maybe_additional_params_ts
                                     #SelfSc.regular_expression_case.postgreql_syntax(),
                                     #ValueSc
                                 ))
@@ -623,7 +623,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         maybe_dims_default_init_ts,
                         maybe_dims_indexes_init_ts,
                         pg_type_kind,
-                        maybe_additional_parameters_ts,
+                        maybe_additional_params_ts,
                         maybe_dims_query_bind_ts,
                     ) = gen_pg_type_dims_helpers_pg_type(pg_type_pattern_handle);
                     (
@@ -643,7 +643,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     #format_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     #ColumnSc,
-                                    #maybe_additional_parameters_ts
+                                    #maybe_additional_params_ts
                                     #ValueSc
                                 ))
                             }
@@ -662,7 +662,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             maybe_dims_default_init_ts,
                             maybe_dims_indexes_init_ts,
                             pg_type_kind,
-                            maybe_additional_parameters_ts,
+                            maybe_additional_params_ts,
                             maybe_dims_query_bind_ts,
                         ) = gen_pg_type_dims_helpers_pg_type(pg_type_pattern_handle);
                         (
@@ -687,7 +687,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                         #format_ts,
                                         &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                         #ColumnSc,
-                                        #maybe_additional_parameters_ts
+                                        #maybe_additional_params_ts
                                     ))
                                 }
                             },
@@ -732,7 +732,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             maybe_dims_default_init_ts,
                             maybe_dims_indexes_init_ts,
                             pg_type_kind,
-                            maybe_additional_parameters_ts,
+                            maybe_additional_params_ts,
                             maybe_dims_query_bind_ts,
                         ) = gen_pg_type_dims_helpers_pg_type(pg_type_pattern_handle);
                         (
@@ -760,7 +760,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                         #format_ts,
                                         &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                         #ColumnSc,
-                                        #maybe_additional_parameters_ts
+                                        #maybe_additional_params_ts
                                         &#SelfSc.encode_format,
                                         #ValueSc
                                     ))
@@ -857,7 +857,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         maybe_dims_declaration_ts, maybe_dims_default_init_ts,
                         maybe_dims_indexes_init_ts,
                         pg_type_kind,
-                        maybe_additional_parameters_ts,
+                        maybe_additional_params_ts,
                         maybe_dims_query_bind_ts
                     ) = DimNumber::try_from(pg_type_pattern_handle).map_or_else(
                         |()| (Ts2::new(), Ts2::new(), Ts2::new(), PgTypeKind::Standart, quote! {#ColumnSc,}, Ts2::new()),
@@ -912,7 +912,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     #format_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     #ColumnSc,
-                                    #maybe_additional_parameters_ts
+                                    #maybe_additional_params_ts
                                     #ValueSc
                                 ))
                             }
@@ -1227,7 +1227,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         maybe_dims_default_init_ts,
                         maybe_dims_indexes_init_ts,
                         pg_type_kind,
-                        maybe_additional_parameters_ts,
+                        maybe_additional_params_ts,
                         maybe_dims_query_bind_ts,
                     ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
                     (
@@ -1249,7 +1249,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     #format_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     #ColumnSc,
-                                    #maybe_additional_parameters_ts
+                                    #maybe_additional_params_ts
                                     #ValueSc
                                 ))
                             }
@@ -1288,7 +1288,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     maybe_dims_default_init_ts,
                     maybe_dims_indexes_init_ts,
                     pg_type_kind,
-                    maybe_additional_parameters_ts,
+                    maybe_additional_params_ts,
                     maybe_dims_query_bind_ts,
                 ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
                 (
@@ -1313,7 +1313,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 #format_ts,
                                 &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 #ColumnSc,
-                                #maybe_additional_parameters_ts
+                                #maybe_additional_params_ts
                                 #ValueSc
                             ))
                         }
@@ -1357,7 +1357,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     maybe_dims_default_init_ts,
                     maybe_dims_indexes_init_ts,
                     pg_type_kind,
-                    maybe_additional_parameters_ts,
+                    maybe_additional_params_ts,
                     maybe_dims_query_bind_ts,
                 ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
                 (
@@ -1394,7 +1394,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 #format_ts,
                                 &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 #ColumnSc,
-                                #maybe_additional_parameters_ts
+                                #maybe_additional_params_ts
                                 #ValueSc
                             ))
                         }
@@ -1431,7 +1431,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     maybe_dims_default_init_ts,
                     maybe_dims_indexes_init_ts,
                     pg_type_kind,
-                    maybe_additional_parameters_ts,
+                    maybe_additional_params_ts,
                     maybe_dims_query_bind_ts,
                 ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
                 (
@@ -1455,7 +1455,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 #format_ts,
                                 &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 #ColumnSc,
-                                #maybe_additional_parameters_ts
+                                #maybe_additional_params_ts
                                 #ValueSc
                             ))
                         }
@@ -1480,7 +1480,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     maybe_dims_declaration_ts,
                     maybe_dims_default_init_ts,
                     maybe_dims_indexes_init_ts,
-                    pg_type_kind, maybe_additional_parameters_ts,
+                    pg_type_kind, maybe_additional_params_ts,
                     maybe_dims_query_bind_ts
                 ) = DimNumber::try_from(pg_type_pattern_handle).map_or_else(
                     |()| (Ts2::new(), Ts2::new(), Ts2::new(), PgTypeKind::Standart, Ts2::new(), Ts2::new()),
@@ -1528,7 +1528,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 #format_ts,
                                 &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 #ColumnSc,
-                                #maybe_additional_parameters_ts
+                                #maybe_additional_params_ts
                                 #SelfSc.regular_expression_case.postgreql_syntax(),
                                 #ValueSc
                             ))
@@ -1548,7 +1548,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         maybe_dims_default_init_ts,
                         maybe_dims_indexes_init_ts,
                         pg_type_kind,
-                        maybe_additional_parameters_ts,
+                        maybe_additional_params_ts,
                         maybe_dims_query_bind_ts,
                     ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
                     (
@@ -1575,7 +1575,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     #format_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     #ColumnSc,
-                                    #maybe_additional_parameters_ts
+                                    #maybe_additional_params_ts
                                     #SelfSc.regular_expression_case.postgreql_syntax(),
                                     #ValueSc
                                 ))
@@ -1595,7 +1595,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         maybe_dims_default_init_ts,
                         maybe_dims_indexes_init_ts,
                         pg_type_kind,
-                        maybe_additional_parameters_ts,
+                        maybe_additional_params_ts,
                         maybe_dims_query_bind_ts,
                     ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
                     (
@@ -1622,7 +1622,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     #format_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     #ColumnSc,
-                                    #maybe_additional_parameters_ts
+                                    #maybe_additional_params_ts
                                     #SelfSc.regular_expression_case.postgreql_syntax(),
                                     #ValueSc
                                 ))
@@ -1642,7 +1642,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         maybe_dims_default_init_ts,
                         maybe_dims_indexes_init_ts,
                         pg_type_kind,
-                        maybe_additional_parameters_ts,
+                        maybe_additional_params_ts,
                         maybe_dims_query_bind_ts,
                     ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
                     (
@@ -1668,7 +1668,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     #format_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     #ColumnSc,
-                                    #maybe_additional_parameters_ts
+                                    #maybe_additional_params_ts
                                     #ValueSc
                                 ))
                             }
@@ -1686,7 +1686,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     maybe_dims_default_init_ts,
                     maybe_dims_indexes_init_ts,
                     pg_type_kind,
-                    maybe_additional_parameters_ts,
+                    maybe_additional_params_ts,
                     maybe_dims_query_bind_ts,
                 ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
                 (
@@ -1712,7 +1712,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 #format_ts,
                                 &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 #ColumnSc,
-                                #maybe_additional_parameters_ts
+                                #maybe_additional_params_ts
                                 #ValueSc
                             ))
                         }

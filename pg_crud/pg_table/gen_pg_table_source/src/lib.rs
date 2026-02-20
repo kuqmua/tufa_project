@@ -8,7 +8,7 @@ use macros_helpers::{
     loc_syn_field, maybe_write_ts_into_file,
 };
 use naming::{
-    AdditionalParametersSc, AppStateSc, AsRefStrEnumWithUnitFieldsToScStr,
+    AdditionalParamsSc, AppStateSc, AsRefStrEnumWithUnitFieldsToScStr,
     AsRefStrEnumWithUnitFieldsToUccStr, AsRefStrToScStr, AsRefStrToScTs, BeginSc, BindedQuerySc,
     BodyBytesSc, BodySc, BodySizeErUcc, BySc, CheckBodySizeSc, CheckBodySizeUcc, ColumnSc,
     ColumnsSc, CommitSc, CommonAdditionalErVrtsSc, CommonAdditionalLogicSc,
@@ -27,11 +27,11 @@ use naming::{
     GenWhenColumnIdThenValueUpdateManyQueryPartSc, HeaderContentTypeApplicationJsonNotFoundUcc,
     HeadersSc, IdentCreateDefaultSc, IncrSc, IntoSerdeVersionSc, LocSc, NoFieldsProvidedUcc,
     NotUniqueFieldSc, NotUniqueFieldUcc, NotUniquePrimaryKeySc, NotUniquePrimaryKeyUcc,
-    OptVecCreateSc, OrderBySc, OrderByUcc, OrderSc, PaginationSc, ParametersSc, PayloadSc,
-    PayloadUcc, PgCrudSc, PgPoolForTokioSpawnSyncMoveSc, PgPoolSc, PgSc,
-    PgTypeOptVecWhereGreaterThanTestSc, PgTypeUcc, PgUcc, PoolConnectionSc, PoolSc, PrefixSc,
-    PrepareExtensionsSc, PreparePgSc, PreparePgTableSc, PreparePgUcc, PrimaryKeyQueryPartSc,
-    PrimaryKeySc, QueryBindSc, QueryPartErUcc, QueryPartSc, QueryPartUcc, QuerySc, QueryStringSc,
+    OptVecCreateSc, OrderBySc, OrderByUcc, OrderSc, PaginationSc, ParamsSc, PayloadSc, PayloadUcc,
+    PgCrudSc, PgPoolForTokioSpawnSyncMoveSc, PgPoolSc, PgSc, PgTypeOptVecWhereGreaterThanTestSc,
+    PgTypeUcc, PgUcc, PoolConnectionSc, PoolSc, PrefixSc, PrepareExtensionsSc, PreparePgSc,
+    PreparePgTableSc, PreparePgUcc, PrimaryKeyQueryPartSc, PrimaryKeySc, QueryBindSc,
+    QueryPartErUcc, QueryPartSc, QueryPartUcc, QuerySc, QueryStringSc,
     ReadIntoTableTypeDeclarationSc, ReadManyAdditionalErVrtsSc, ReadManyAdditionalLogicSc,
     ReadOneAdditionalErVrtsSc, ReadOneAdditionalLogicSc, ReadOnlyIdsIntoReadSc,
     ReadOnlyIdsIntoTableTypeDeclarationSc, ReadOnlyIdsIntoUpdateSc,
@@ -55,13 +55,13 @@ use naming::{
     UpdateQueryBindSc, UpdateQueryPartPrimaryKeySc, UpdateQueryPartSc, UpdateSc, UpdateUcc, UrlSc,
     ValueSc, ValueUcc, WhereManySc, WhereUcc,
     parameter::{
-        ErSelfSc, IsSelfUpdateExistSc, SelfCreateUcc, SelfDeleteManyParametersUcc,
-        SelfDeleteManyPayloadUcc, SelfDeleteOneErWithSerdeUcc, SelfDeleteOneParametersUcc,
+        ErSelfSc, IsSelfUpdateExistSc, SelfCreateUcc, SelfDeleteManyParamsUcc,
+        SelfDeleteManyPayloadUcc, SelfDeleteOneErWithSerdeUcc, SelfDeleteOneParamsUcc,
         SelfDeleteOnePayloadUcc, SelfErWithSerdeSc, SelfGenPgTableModSc, SelfHandleSc,
         SelfPayloadExampleSc, SelfPreparePgErUcc, SelfReadOneErWithSerdeUcc,
         SelfReadOnlyIdsToTwoDimalVecReadInnerAccSc, SelfReadOnlyIdsUcc, SelfReadUcc, SelfSelectUcc,
         SelfTableTypeDeclarationUcc, SelfTestsSc, SelfTryDeleteOneErUcc, SelfTryReadOneErUcc,
-        SelfUpdateForQueryUcc, SelfUpdateManyParametersUcc, SelfUpdateManyPayloadUcc,
+        SelfUpdateForQueryUcc, SelfUpdateManyParamsUcc, SelfUpdateManyPayloadUcc,
         SelfUpdateTryNewErUcc, SelfUpdateUcc, SelfWhereManyTryNewErUcc, SelfWhereManyUcc,
         SelfWhereUcc, StdOptOptSelfWhereManyUcc,
         TryFromSqlxPgPgRowWithNotEmptyUniqueVecSelfSelectSc, TrySelfHandleSc, TrySelfSc,
@@ -111,7 +111,7 @@ use token_patterns::{
 //todo authorization for returning concrete er or just minimal info(user role)
 //todo gen rules and roles
 //todo maybe add unnest sql types?
-//todo maybe add unnest to filter parameters if its array ?
+//todo maybe add unnest to filter params if its array ?
 //todo swagger ui https://github.com/juhaku/utoipa/blob/master/examples/todo-axum/src/main.rs
 //todo derive utoipa::ToSchema for what? original structs or with serialize deserialize?
 //todo need to add utoipa::ToSchema annotation #[schema(value_type = YourToSchemaTraitImplStruct)] for all fields
@@ -517,9 +517,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let primary_key_field_type_as_pg_type_read_ucc =
         quote! {<#primary_key_field_type as pg_crud::#PgTypeUcc>::#ReadUcc};
     let ident_read_only_ids_ucc = SelfReadOnlyIdsUcc::from_tokens(&ident);
-    let ident_delete_many_parameters_ucc = SelfDeleteManyParametersUcc::from_tokens(&ident);
+    let ident_delete_many_params_ucc = SelfDeleteManyParamsUcc::from_tokens(&ident);
     let ident_delete_many_payload_ucc = SelfDeleteManyPayloadUcc::from_tokens(&ident);
-    let ident_delete_one_parameters_ucc = SelfDeleteOneParametersUcc::from_tokens(&ident);
+    let ident_delete_one_params_ucc = SelfDeleteOneParamsUcc::from_tokens(&ident);
     let ident_delete_one_payload_ucc = SelfDeleteOnePayloadUcc::from_tokens(&ident);
     let ident_try_read_one_er_ucc = SelfTryReadOneErUcc::from_tokens(&ident);
     let ident_read_one_er_with_serde_ucc = SelfReadOneErWithSerdeUcc::from_tokens(&ident);
@@ -927,7 +927,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             gen_simple_syn_punct(&[&PgCrudSc.to_string(), &QueryPartErUcc.to_string()]),
         )],
     );
-    let gen_select_query_part_parameters_payload_select_ts = |operation: &Operation| {
+    let gen_select_query_part_params_payload_select_ts = |operation: &Operation| {
         let ts_59c8df3f = gen_operation_er_init_eprintln_res_creation_ts(
             operation,
             &query_part_syn_vrt_wrapper,
@@ -936,7 +936,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             column!(),
         );
         quote! {
-            match Self::#GenSelectQueryPartSc(&#ParametersSc.#PayloadSc.#SelectSc) {
+            match Self::#GenSelectQueryPartSc(&#ParamsSc.#PayloadSc.#SelectSc) {
                 Ok(v_357219fb) => v_357219fb,
                 Err(#Er0) => {
                     #ts_59c8df3f
@@ -1240,13 +1240,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &ColumnParameterUnderscore::True,
                 &IsNeedToAddLogicalOperatorUnderscore::True,
                 &{
-                    let additional_parameters_modification_ts = fields.iter().enumerate().map(|(index, element)| {
+                    let additional_params_modification_ts = fields.iter().enumerate().map(|(index, element)| {
                     let field_ident = &element.field_ident;
                     let field_ident_dq_ts = dq_ts(&field_ident);
-                    let maybe_is_first_push_to_additional_parameters_already_happend_true_ts = if index == fields_len_without_primary_key {
+                    let maybe_is_first_push_to_additional_params_already_happend_true_ts = if index == fields_len_without_primary_key {
                         Ts2::new()
                     } else {
-                        quote! {is_first_push_to_additional_parameters_already_happend = true;}
+                        quote! {is_first_push_to_additional_params_already_happend = true;}
                     };
                     quote! {
                         if let Some(v_da0f0616) = &#ValueSc.#field_ident {
@@ -1254,11 +1254,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 v_da0f0616,
                                 incr,
                                 &#field_ident_dq_ts,
-                                is_first_push_to_additional_parameters_already_happend,
+                                is_first_push_to_additional_params_already_happend,
                             ) {
                                 Ok(v_9e3f8fdd) => {
-                                    #AdditionalParametersSc.push_str(&v_9e3f8fdd);
-                                    #maybe_is_first_push_to_additional_parameters_already_happend_true_ts
+                                    #AdditionalParamsSc.push_str(&v_9e3f8fdd);
+                                    #maybe_is_first_push_to_additional_params_already_happend_true_ts
                                 }
                                 Err(#Er0) => {
                                     return Err(#Er0);
@@ -1270,10 +1270,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     quote! {
                         Ok(match &self.0 {
                             Some(value) => {
-                                let mut #AdditionalParametersSc = #StringTs::from("where");
-                                let mut is_first_push_to_additional_parameters_already_happend = false;
-                                #(#additional_parameters_modification_ts)*
-                                #AdditionalParametersSc
+                                let mut #AdditionalParamsSc = #StringTs::from("where");
+                                let mut is_first_push_to_additional_params_already_happend = false;
+                                #(#additional_params_modification_ts)*
+                                #AdditionalParamsSc
                             },
                             None => #StringTs::default()
                         })
@@ -1334,7 +1334,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             );
             quote! {
                 match pg_crud::PgTypeWhereFilter::query_part(
-                    &#ParametersSc.#PayloadSc.#WhereManySc,
+                    &#ParamsSc.#PayloadSc.#WhereManySc,
                     &mut #IncrSc,
                     &"",//useless //todo check if can be optimized
                     false//useless
@@ -1358,7 +1358,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             string_syn_punct.clone(),
         )],
     );
-    let gen_query_pg_type_where_filter_query_bind_parameters_payload_where_many_query_ts =
+    let gen_query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts =
         |operation: &Operation| {
             let ts_818208f4 = gen_operation_er_init_eprintln_res_creation_ts(
                 operation,
@@ -1368,7 +1368,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 column!(),
             );
             quote! {
-                match pg_crud::PgTypeWhereFilter::query_bind(#ParametersSc.#PayloadSc.#WhereManySc, #QuerySc) {
+                match pg_crud::PgTypeWhereFilter::query_bind(#ParamsSc.#PayloadSc.#WhereManySc, #QuerySc) {
                     Ok(v_03a58371) => {
                         #QuerySc = v_03a58371;
                     },
@@ -1404,7 +1404,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             quote! {
                 match #ident_read_ucc::#try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_sc(
                     &v_b27d7d79,
-                    &#ParametersSc.#PayloadSc.#SelectSc
+                    &#ParamsSc.#PayloadSc.#SelectSc
                 ) {
                     Ok(v_90535a1d) => v_90535a1d,
                     Err(#Er0) => {
@@ -1749,7 +1749,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let pg_crud_order_by_ts = quote! {#PgCrudSc::#OrderByUcc};
     let ident_update_ucc = SelfUpdateUcc::from_tokens(&ident);
-    let ident_update_many_parameters_ucc = SelfUpdateManyParametersUcc::from_tokens(&ident);
+    let ident_update_many_params_ucc = SelfUpdateManyParamsUcc::from_tokens(&ident);
     let ident_update_many_payload_ucc = SelfUpdateManyPayloadUcc::from_tokens(&ident);
     let ident_update_try_new_er_ucc = SelfUpdateTryNewErUcc::from_tokens(&ident);
     let ident_update_for_query_ucc = SelfUpdateForQueryUcc::from_tokens(&ident);
@@ -2552,30 +2552,25 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .parse::<Ts2>()
             .expect("c042f504"),
     };
-    let gen_ident_operation_parameters_ucc = |operation: &Operation| {
-        format!("{ident}{operation}Parameters")
+    let gen_ident_operation_params_ucc = |operation: &Operation| {
+        format!("{ident}{operation}Params")
             .parse::<Ts2>()
             .expect("c1203fc6")
     };
-    let gen_parameters_pattern_ts = |operation: &Operation, payload_ts: Ts2| -> Ts2 {
-        let parameters_ts = {
+    let gen_params_pattern_ts = |operation: &Operation, payload_ts: Ts2| -> Ts2 {
+        let params_ts = {
             let (derive_clone, derive_copy) = operation.derive_clone_and_copy();
             let ts_0d032fce = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone_if(derive_clone)
                 .derive_copy_if(derive_copy)
-                .build_struct(
-                    &gen_ident_operation_parameters_ucc(operation),
-                    &Ts2::new(),
-                    &{
-                        let ident_operation_payload_ucc =
-                            gen_ident_operation_payload_ucc(operation);
-                        quote! {{
-                            pub #PayloadSc: #ident_operation_payload_ucc,
-                        }}
-                    },
-                );
+                .build_struct(&gen_ident_operation_params_ucc(operation), &Ts2::new(), &{
+                    let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
+                    quote! {{
+                        pub #PayloadSc: #ident_operation_payload_ucc,
+                    }}
+                });
             quote! {
                 #AllowClippyArbitrarySourceItemOrdering
                 #ts_0d032fce
@@ -2583,10 +2578,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         quote! {
             #payload_ts
-            #parameters_ts
+            #params_ts
         }
     };
-    let gen_parameters_payload_and_default_ts =
+    let gen_params_payload_and_default_ts =
         |operation: &Operation, declaration_ts: &dyn ToTokens, default_init_ts: &dyn ToTokens| {
             let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
             let ident_operation_payload_ts = {
@@ -2668,7 +2663,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         quote! {std::sync::Arc<dyn #PgCrudSc::CombinationOfAppStateLogicTraits>};
     let gen_operation_ts = |operation: &Operation,
                             additional_logic_ts_20466f5c: &dyn ToTokens,
-                            parameters_logic_ts: &dyn ToTokens,
+                            params_logic_ts: &dyn ToTokens,
                             expected_updated_primary_keys_ts: &dyn ToTokens,
                             query_string_ts: &dyn ToTokens,
                             binded_query_ts: &dyn ToTokens,
@@ -2780,7 +2775,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             ) -> axum::response::Response {
                 #req_parts_preparation_ts
                 #additional_validators_ts
-                #parameters_logic_ts
+                #params_logic_ts
                 #expected_updated_primary_keys_ts
                 let #QueryStringSc = #query_string_ts;
                 // println!("{}", #QueryStringSc);
@@ -2802,7 +2797,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         }
     };
-    let gen_parameters_logic_ts = |operation: &Operation| -> Ts2 {
+    let gen_params_logic_ts = |operation: &Operation| -> Ts2 {
         let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
         let serde_json_syn_vrt_wrapper_er_init_eprintln_res_creation_ts =
             gen_operation_er_init_eprintln_res_creation_ts(
@@ -2812,10 +2807,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 line!(),
                 column!(),
             );
-        let ident_operation_parameters_ucc = gen_ident_operation_parameters_ucc(operation);
+        let ident_operation_params_ucc = gen_ident_operation_params_ucc(operation);
         //todo in case of large type there is a stackoverflow. for example it was a 3.5md json file gend by create_many_payload_example. 3400 fields = success. 16000 = stackoverflow
         quote! {
-            let #ParametersSc = #ident_operation_parameters_ucc {
+            let #ParamsSc = #ident_operation_params_ucc {
                 #PayloadSc: match serde_json::from_slice::<#ident_operation_payload_ucc>(
                     &#BodyBytesSc,
                 ) {
@@ -2835,7 +2830,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let try_operation_sc_ts = operation.try_self_sc_ts();
             let try_operation_handle_sc_ts = operation.try_self_handle_sc_ts();
             let ident_try_operation_er_ucc = gen_ident_try_operation_er_ucc(operation);
-            let ident_operation_parameters_ucc = gen_ident_operation_parameters_ucc(operation);
+            let ident_operation_params_ucc = gen_ident_operation_params_ucc(operation);
             let payload_ts = {
                 let serde_json_to_string_syn_vrt_init_ts = gen_init_ts(
                     &serde_json_to_string_syn_vrt_wrapper,
@@ -2845,7 +2840,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 );
                 quote! {
                     let #PayloadSc = {
-                        match serde_json::to_string(&#ParametersSc.#PayloadSc) {
+                        match serde_json::to_string(&#ParamsSc.#PayloadSc) {
                             Ok(v_1772a83e) => v_1772a83e,
                             Err(#Er0) => {
                                 return Err(#ident_try_operation_er_ucc::#serde_json_to_string_syn_vrt_init_ts);
@@ -2974,7 +2969,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #[allow(clippy::single_call_fn)]
                 async fn #try_operation_handle_sc_ts(
                     #EndpointLocationSc: #RefStr,
-                    #ParametersSc: #ident_operation_parameters_ucc,
+                    #ParamsSc: #ident_operation_params_ucc,
                     #TableSc: &str,
                 ) -> Result<#result_ok_type_ts, #ident_try_operation_er_ucc> {
                     #payload_ts
@@ -2990,11 +2985,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
                 pub async fn #try_operation_sc_ts(
                     #EndpointLocationSc: #RefStr,
-                    #ParametersSc: #ident_operation_parameters_ucc
+                    #ParamsSc: #ident_operation_params_ucc
                 ) -> Result<#result_ok_type_ts, #ident_try_operation_er_ucc> {
                     Self::#try_operation_handle_sc_ts(
                         #EndpointLocationSc,
-                        #ParametersSc,
+                        #ParamsSc,
                         #self_table_name_call_ts
                     ).await
                 }
@@ -3171,9 +3166,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let parameters_ts = gen_parameters_pattern_ts(
+        let params_ts = gen_params_pattern_ts(
             &operation,
-            gen_parameters_payload_and_default_ts(
+            gen_params_payload_and_default_ts(
                 &operation,
                 &{
                     let vec_ident_create_ts = gen_vec_tokens_declaration_ts(&ident_create_ucc);
@@ -3190,7 +3185,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &type_vrts_from_req_res_syn_vrts,
                 );
             {
-                let parameters_logic_ts = gen_parameters_logic_ts(&operation);
+                let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = {
                     let if_write_is_err_ts = gen_if_write_is_err_ts(
                         &quote! {
@@ -3216,7 +3211,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &{
                             #incr_init_ts
                             let mut acc_8a58994e = #StringTs::default();
-                            for el_1651705d in &#ParametersSc.#PayloadSc.0 {
+                            for el_1651705d in &#ParamsSc.#PayloadSc.0 {
                                 match el_1651705d.#CreateQueryPartSc(&mut #IncrSc) {
                                     Ok(v_f4fdd10d) => {
                                         #if_write_is_err_ts
@@ -3243,7 +3238,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         );
                     quote! {
                         let mut #QuerySc = sqlx::query::<sqlx::Postgres>(&#QueryStringSc);
-                        for el_7f862135 in #ParametersSc.#PayloadSc.0 {
+                        for el_7f862135 in #ParamsSc.#PayloadSc.0 {
                             match el_7f862135.#CreateQueryBindSc(#QuerySc) {
                                 Ok(v_011a3eb4) => {
                                     #QuerySc = v_011a3eb4;
@@ -3263,7 +3258,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_additional_logic_ts,
-                    &parameters_logic_ts,
+                    &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
@@ -3289,7 +3284,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         impl_ident_vec_ts.push(gen_operation_payload_example_ts(&operation));
         quote! {
-            #parameters_ts
+            #params_ts
             #operation_ts
             #try_operation_ts
         }
@@ -3312,7 +3307,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let parameters_ts = gen_parameters_pattern_ts(&operation, Ts2::new());
+        let params_ts = gen_params_pattern_ts(&operation, Ts2::new());
         let operation_ts = {
             let try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts =
                 gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
@@ -3321,7 +3316,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &type_vrts_from_req_res_syn_vrts,
                 );
             {
-                let parameters_logic_ts = gen_parameters_logic_ts(&operation);
+                let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = {
                     let ts_cfcf1c2a = gen_operation_er_init_eprintln_res_creation_ts(
                         &operation,
@@ -3336,7 +3331,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #PgCrudSc::gen_create_one_query_string(
                             #TableSc,
                             #column_names_dq_ts,
-                            &match #ParametersSc.#PayloadSc.#CreateQueryPartSc(&mut 0) {
+                            &match #ParamsSc.#PayloadSc.#CreateQueryPartSc(&mut 0) {
                                 Ok(v_3267d57d) => v_3267d57d,
                                 Err(#Er0) => {
                                     #ts_cfcf1c2a
@@ -3357,7 +3352,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         );
                     quote! {
                         let mut #QuerySc = #sqlx_query_sqlx_pg_ts(&#QueryStringSc);
-                        match #ParametersSc.#PayloadSc.#CreateQueryBindSc(#QuerySc) {
+                        match #ParamsSc.#PayloadSc.#CreateQueryBindSc(#QuerySc) {
                             Ok(v_06f852cd) => {
                                 #QuerySc = v_06f852cd;
                             },
@@ -3403,7 +3398,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_additional_logic_ts,
-                    &parameters_logic_ts,
+                    &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
@@ -3429,7 +3424,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         impl_ident_vec_ts.push(gen_operation_payload_example_ts(&operation));
         quote! {
-            #parameters_ts
+            #params_ts
             #operation_ts
             #try_operation_ts
         }
@@ -3452,9 +3447,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let parameters_ts = gen_parameters_pattern_ts(
+        let params_ts = gen_params_pattern_ts(
             &operation,
-            gen_parameters_payload_and_default_ts(
+            gen_params_payload_and_default_ts(
                 &operation,
                 &quote! {{
                     #pub_where_many_opt_ident_where_many_ts,
@@ -3485,15 +3480,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &type_vrts_from_req_res_syn_vrts,
                 );
             {
-                let parameters_logic_ts = gen_parameters_logic_ts(&operation);
+                let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = {
-                    let select_query_part_parameters_payload_select_ts =
-                        gen_select_query_part_parameters_payload_select_ts(&operation);
+                    let select_query_part_params_payload_select_ts =
+                        gen_select_query_part_params_payload_select_ts(&operation);
                     let additional_paramaters_init_ts =
                         gen_read_or_delete_many_additional_paramaters_init_ts(
                             &ReadManyOrDeleteMany::ReadMany,
                         );
-                    let additional_parameters_order_by_handle_ts =
+                    let additional_params_order_by_handle_ts =
                         dq_ts(&format!("{{}}{OrderSc} {BySc} {{}} {{}}"));
                     let ts_0ec756e2 = gen_operation_er_init_eprintln_res_creation_ts(
                         &operation,
@@ -3513,13 +3508,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         });
                     let if_write_is_err_curly_braces_0_ts = gen_if_write_is_err_curly_braces_ts(
                         &quote! {
-                            #AdditionalParametersSc,
-                            #additional_parameters_order_by_handle_ts,
+                            #AdditionalParamsSc,
+                            #additional_params_order_by_handle_ts,
                             #PrefixSc,
-                            &match &#ParametersSc.#PayloadSc.#OrderBySc.#ColumnSc {
+                            &match &#ParamsSc.#PayloadSc.#OrderBySc.#ColumnSc {
                                 #order_by_column_match_ts
                             },
-                            #ParametersSc.#PayloadSc.#OrderBySc.#OrderSc.as_ref().map_or_else(
+                            #ParamsSc.#PayloadSc.#OrderBySc.#OrderSc.as_ref().map_or_else(
                                 || pg_crud::Order::default().to_sc_str(),
                                 #import_path::Order::to_sc_str
                             )
@@ -3530,10 +3525,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     );
                     let if_write_is_err_curly_braces_1_ts = gen_if_write_is_err_curly_braces_ts(
                         &quote! {
-                            #AdditionalParametersSc,
+                            #AdditionalParamsSc,
                             "{prefix}{}",
                             match #pg_crud_pg_type_where_filter_query_part_ts(
-                                &#ParametersSc.#PayloadSc.pagination,
+                                &#ParamsSc.#PayloadSc.pagination,
                                 &mut #IncrSc,
                                 &"",
                                 bool::default()
@@ -3550,19 +3545,19 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     );
                     quote! {#PgCrudSc::gen_read_many_query_string(
                         #TableSc,
-                        &#select_query_part_parameters_payload_select_ts,
+                        &#select_query_part_params_payload_select_ts,
                         &{
                             #incr_init_ts
-                            let mut #AdditionalParametersSc = #additional_paramaters_init_ts;
-                            let #PrefixSc = if additional_parameters.is_empty() {""} else {" "};
+                            let mut #AdditionalParamsSc = #additional_paramaters_init_ts;
+                            let #PrefixSc = if additional_params.is_empty() {""} else {" "};
                             #if_write_is_err_curly_braces_0_ts
                             #if_write_is_err_curly_braces_1_ts
-                            #AdditionalParametersSc
+                            #AdditionalParamsSc
                         }
                     )}
                 };
                 let binded_query_ts = {
-                    let query_pg_type_where_filter_query_bind_parameters_payload_where_many_query_ts = gen_query_pg_type_where_filter_query_bind_parameters_payload_where_many_query_ts(&operation);
+                    let query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts = gen_query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts(&operation);
                     let pg_syn_vrt_er_init_eprintln_res_creation_ts =
                         gen_operation_er_init_eprintln_res_creation_ts(
                             &operation,
@@ -3573,9 +3568,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         );
                     quote! {
                         let mut #QuerySc = #sqlx_query_sqlx_pg_ts(&#QueryStringSc);
-                        #query_pg_type_where_filter_query_bind_parameters_payload_where_many_query_ts
+                        #query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts
                         match #pg_crud_pg_type_where_filter_query_bind_ts(
-                            #ParametersSc.#PayloadSc.pagination,
+                            #ParamsSc.#PayloadSc.pagination,
                             #QuerySc,
                         ) {
                             Ok(v_9f7e487b) => {
@@ -3611,7 +3606,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_additional_logic_ts,
-                    &parameters_logic_ts,
+                    &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
@@ -3647,7 +3642,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         impl_ident_vec_ts.push(gen_operation_payload_example_ts(&operation));
         quote! {
-            #parameters_ts
+            #params_ts
             #operation_ts
             #try_operation_ts
         }
@@ -3670,9 +3665,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let parameters_ts = gen_parameters_pattern_ts(
+        let params_ts = gen_params_pattern_ts(
             &operation,
-            gen_parameters_payload_and_default_ts(
+            gen_params_payload_and_default_ts(
                 &operation,
                 &{
                     let pub_handle_primary_key_field_ident_primary_key_inner_type_handle_ts =
@@ -3698,10 +3693,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &type_vrts_from_req_res_syn_vrts,
                 );
             {
-                let parameters_logic_ts = gen_parameters_logic_ts(&operation);
+                let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = {
-                    let select_query_part_parameters_payload_select_ts =
-                        gen_select_query_part_parameters_payload_select_ts(&operation);
+                    let select_query_part_params_payload_select_ts =
+                        gen_select_query_part_params_payload_select_ts(&operation);
                     let ts_1ead7cf9 = gen_operation_er_init_eprintln_res_creation_ts(
                         &operation,
                         &query_part_syn_vrt_wrapper,
@@ -3711,9 +3706,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     );
                     quote! {#PgCrudSc::gen_read_one_query_string(
                         #TableSc,
-                        &#select_query_part_parameters_payload_select_ts,
+                        &#select_query_part_params_payload_select_ts,
                         &match #pg_crud_pg_type_where_filter_query_part_ts(
-                            &#ParametersSc.#PayloadSc.#primary_key_field_ident,
+                            &#ParamsSc.#PayloadSc.#primary_key_field_ident,
                             &mut 0,
                             &Self::#PrimaryKeySc(),
                             false
@@ -3736,7 +3731,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 column!(),
                             );
                         quote! {
-                            match #pg_crud_pg_type_where_filter_query_bind_ts(#ParametersSc.#PayloadSc.#primary_key_field_ident, #QuerySc) {
+                            match #pg_crud_pg_type_where_filter_query_bind_ts(#ParamsSc.#PayloadSc.#primary_key_field_ident, #QuerySc) {
                                 Ok(v_80ee6983) => {
                                     #QuerySc = v_80ee6983;
                                 },
@@ -3760,7 +3755,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_additional_logic_ts,
-                    &parameters_logic_ts,
+                    &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
@@ -3789,7 +3784,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         impl_ident_vec_ts.push(gen_operation_payload_example_ts(&operation));
         quote! {
-            #parameters_ts
+            #params_ts
             #operation_ts
             #try_operation_ts
         }
@@ -3813,7 +3808,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let parameters_ts = gen_parameters_pattern_ts(&operation, {
+        let params_ts = gen_params_pattern_ts(&operation, {
             let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(&operation);
             let vec_ident_update_ts = gen_vec_tokens_declaration_ts(&ident_update_ucc);
             let ident_operation_payload_vec_ts = StructOrEnumDeriveTsStreamBuilder::new()
@@ -3967,11 +3962,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &type_vrts_from_req_res_syn_vrts,
                 );
             {
-                let parameters_logic_ts = {
-                    let parameters_logic_ts = gen_parameters_logic_ts(&operation);
+                let params_logic_ts = {
+                    let params_logic_ts = gen_params_logic_ts(&operation);
                     quote! {
-                        #parameters_logic_ts
-                        let #UpdateForQueryVecSc = #ParametersSc.#PayloadSc.0.into_iter()
+                        #params_logic_ts
+                        let #UpdateForQueryVecSc = #ParamsSc.#PayloadSc.0.into_iter()
                         .map(#ident_update_for_query_ucc::#FromHandleSc)
                         .collect::<Vec<#ident_update_for_query_ucc>>();
                     }
@@ -4192,7 +4187,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_additional_logic_ts,
-                    &parameters_logic_ts,
+                    &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
@@ -4218,7 +4213,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         impl_ident_vec_ts.push(gen_operation_payload_example_ts(&operation));
         quote! {
-            #parameters_ts
+            #params_ts
             #operation_ts
             #try_operation_ts
         }
@@ -4241,7 +4236,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let parameters_ts = gen_parameters_pattern_ts(&operation, Ts2::new());
+        let params_ts = gen_params_pattern_ts(&operation, Ts2::new());
         let operation_ts = {
             let try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts =
                 gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
@@ -4250,15 +4245,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &type_vrts_from_req_res_syn_vrts,
                 );
             {
-                let parameters_logic_ts = {
-                    let parameters_logic_ts = gen_parameters_logic_ts(&operation);
+                let params_logic_ts = {
+                    let params_logic_ts = gen_params_logic_ts(&operation);
                     quote! {
-                        #parameters_logic_ts
-                        let #UpdateForQuerySc = #ident_update_for_query_ucc::#FromHandleSc(#ParametersSc.#PayloadSc);
+                        #params_logic_ts
+                        let #UpdateForQuerySc = #ident_update_for_query_ucc::#FromHandleSc(#ParamsSc.#PayloadSc);
                     }
                 };
                 let query_string_ts = {
-                    let additional_parameters_modification_ts =
+                    let additional_params_modification_ts =
                         gen_fields_named_without_primary_key_without_comma_ts(
                             &|element: &SynFieldWrapper| {
                                 let field_ident = &element.field_ident;
@@ -4289,7 +4284,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 }
                             },
                         );
-                    let additional_parameters_primary_key_modification_ts =
+                    let additional_params_primary_key_modification_ts =
                         gen_match_update_query_part_primary_key_ts(
                             &operation,
                             &quote! {#UpdateForQuerySc},
@@ -4306,11 +4301,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #incr_init_ts
                             let #ColumnsSc = {
                                 let mut acc_683e37b8 = #StringTs::default();
-                                #additional_parameters_modification_ts
+                                #additional_params_modification_ts
                                 let _: Option<char> = acc_683e37b8.pop();
                                 acc_683e37b8
                             };
-                            let #PrimaryKeyQueryPartSc = #additional_parameters_primary_key_modification_ts;
+                            let #PrimaryKeyQueryPartSc = #additional_params_primary_key_modification_ts;
                             let return_columns = match #UpdateForQuerySc.select_only_updated_ids_query_part(&mut #IncrSc) {
                                 Ok(v_7f0d86a1) => v_7f0d86a1,
                                 Err(#Er0) => {
@@ -4436,7 +4431,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_additional_logic_ts,
-                    &parameters_logic_ts,
+                    &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
@@ -4462,7 +4457,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         impl_ident_vec_ts.push(gen_operation_payload_example_ts(&operation));
         quote! {
-            #parameters_ts
+            #params_ts
             #operation_ts
             #try_operation_ts
         }
@@ -4486,9 +4481,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let parameters_ts = gen_parameters_pattern_ts(
+        let params_ts = gen_params_pattern_ts(
             &operation,
-            gen_parameters_payload_and_default_ts(
+            gen_params_payload_and_default_ts(
                 &operation,
                 &quote! {{#pub_where_many_opt_ident_where_many_ts}},
                 &quote! {{#where_many_pg_crud_default_opt_some_vec_one_el_call_ts}},
@@ -4502,7 +4497,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &type_vrts_from_req_res_syn_vrts,
                 );
             {
-                let parameters_logic_ts = gen_parameters_logic_ts(&operation);
+                let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = {
                     let additional_paramaters_init_ts =
                         gen_read_or_delete_many_additional_paramaters_init_ts(
@@ -4518,10 +4513,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     )}
                 };
                 let binded_query_ts = {
-                    let query_pg_type_where_filter_query_bind_parameters_payload_where_many_query_ts = gen_query_pg_type_where_filter_query_bind_parameters_payload_where_many_query_ts(&operation);
+                    let query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts = gen_query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts(&operation);
                     quote! {
                         let mut #QuerySc = #sqlx_query_sqlx_pg_ts(&#QueryStringSc);
-                        #query_pg_type_where_filter_query_bind_parameters_payload_where_many_query_ts
+                        #query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts
                         #QuerySc
                     }
                 };
@@ -4532,7 +4527,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_additional_logic_ts,
-                    &parameters_logic_ts,
+                    &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
@@ -4558,7 +4553,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         impl_ident_vec_ts.push(gen_operation_payload_example_ts(&operation));
         quote! {
-            #parameters_ts
+            #params_ts
             #operation_ts
             #try_operation_ts
         }
@@ -4580,9 +4575,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let parameters_ts = gen_parameters_pattern_ts(
+        let params_ts = gen_params_pattern_ts(
             &operation,
-            gen_parameters_payload_and_default_ts(
+            gen_params_payload_and_default_ts(
                 &operation,
                 &{
                     let ts =
@@ -4609,7 +4604,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &type_vrts_from_req_res_syn_vrts,
                 );
             {
-                let parameters_logic_ts = gen_parameters_logic_ts(&operation);
+                let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = quote! {#PgCrudSc::gen_delete_one_query_string(
                     #TableSc,
                     Self::#PrimaryKeySc(),
@@ -4625,7 +4620,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     quote! {
                         let mut #QuerySc = #sqlx_query_sqlx_pg_ts(&#QueryStringSc);
                         match pg_crud::PgTypeWhereFilter::query_bind(
-                            #ParametersSc.#PayloadSc.#primary_key_field_ident,
+                            #ParamsSc.#PayloadSc.#primary_key_field_ident,
                             #QuerySc
                         ) {
                             Ok(v_3099ea0f) => {
@@ -4645,7 +4640,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_additional_logic_ts,
-                    &parameters_logic_ts,
+                    &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
@@ -4671,7 +4666,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         impl_ident_vec_ts.push(gen_operation_payload_example_ts(&operation));
         quote! {
-            #parameters_ts
+            #params_ts
             #operation_ts
             #try_operation_ts
         }
@@ -4755,18 +4750,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let ident_tests_ts = {
         let ident_tests_sc = SelfTestsSc::from_display(&ident);
         let ident_dq_ts = dq_ts(&DisplayToScStr::case(&ident));
-        let ident_create_many_parameters_ucc =
-            gen_ident_operation_parameters_ucc(&Operation::CreateMany);
-        let ident_read_many_parameters_ucc =
-            gen_ident_operation_parameters_ucc(&Operation::ReadMany);
+        let ident_create_many_params_ucc = gen_ident_operation_params_ucc(&Operation::CreateMany);
+        let ident_read_many_params_ucc = gen_ident_operation_params_ucc(&Operation::ReadMany);
         let ident_create_many_payload_ucc = gen_ident_operation_payload_ucc(&Operation::CreateMany);
         let ident_read_many_payload_ucc = gen_ident_operation_payload_ucc(&Operation::ReadMany);
-        let ident_create_one_parameters_ucc =
-            gen_ident_operation_parameters_ucc(&Operation::CreateOne);
-        let ident_read_one_parameters_ucc = gen_ident_operation_parameters_ucc(&Operation::ReadOne);
+        let ident_create_one_params_ucc = gen_ident_operation_params_ucc(&Operation::CreateOne);
+        let ident_read_one_params_ucc = gen_ident_operation_params_ucc(&Operation::ReadOne);
         let ident_read_one_payload_ucc = gen_ident_operation_payload_ucc(&Operation::ReadOne);
-        let ident_update_one_parameters_ucc =
-            gen_ident_operation_parameters_ucc(&Operation::UpdateOne);
+        let ident_update_one_params_ucc = gen_ident_operation_params_ucc(&Operation::UpdateOne);
         let config_path_ts = quote! {server_config::Config};
         let underscore_unused_ts = quote! {_unused};
         //todo maybe remove it?\
@@ -4830,14 +4821,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let gen_primary_key_field_type_as_pg_type_primary_key_method_call_ts =
-            |method_ts: &dyn ToTokens, parameters_ts: &dyn ToTokens| {
+            |method_ts: &dyn ToTokens, params_ts: &dyn ToTokens| {
                 quote! {
                     <
                         #primary_key_field_type
                         as
                         pg_crud::PgTypePrimaryKey
                     >::#method_ts(
-                        #parameters_ts
+                        #params_ts
                     )
                 }
             };
@@ -5170,7 +5161,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 .map(Vec::from)
                                 .map(|el_8e425cb1| futures::FutureExt::boxed(async move { #ident::try_create_many_handle(
                                     url,
-                                    #ident_create_many_parameters_ucc {
+                                    #ident_create_many_params_ucc {
                                         payload: #ident_create_many_payload_ucc(el_8e425cb1)
                                     },
                                     table_9c259e1c
@@ -5265,7 +5256,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 };
                                 let read_only_ids_from_try_create_many = #ident::try_create_many_handle(
                                     &url_cloned,
-                                    #ident_create_many_parameters_ucc {
+                                    #ident_create_many_params_ucc {
                                         #PayloadSc: #ident_create_many_payload_ucc(ident_vec_create.clone())
                                     },
                                     &table_create_many_cloned.clone()
@@ -5305,7 +5296,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 let read_only_ids_from_try_delete_many = itertools::Itertools::sorted(
                                     #ident::try_delete_many_handle(
                                         &url_cloned,
-                                        #ident_delete_many_parameters_ucc {
+                                        #ident_delete_many_params_ucc {
                                             //todo rewrite it using new\try_new?
                                             payload: #ident_delete_many_payload_ucc {
                                                 where_many: #opt_ident_where_many_ucc(Some(
@@ -5505,7 +5496,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         ).collect::<Vec<#ident_create_ucc>>();
                         let read_only_ids_from_try_create_many = #ident::try_create_many_handle(
                             &url_cloned,
-                            #ident_create_many_parameters_ucc {
+                            #ident_create_many_params_ucc {
                                 payload: #ident_create_many_payload_ucc(ident_vec_create.clone())
                             },
                             &table_7e35b1ce
@@ -5544,7 +5535,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let read_only_ids_from_try_delete_many = itertools::Itertools::sorted(
                             #ident::try_delete_many_handle(
                                 &url_cloned,
-                                #ident_delete_many_parameters_ucc {
+                                #ident_delete_many_params_ucc {
                                     payload: #ident_delete_many_payload_ucc {
                                         where_many: #opt_ident_where_many_ucc(Some(
                                             #ident_where_many_ucc {
@@ -5617,7 +5608,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             };
             let gen_read_only_ids_merged_with_create_into_where_assert_eq_ts =
-                |ident_where_many_try_new_parameters_ts: &dyn ToTokens| {
+                |ident_where_many_try_new_params_ts: &dyn ToTokens| {
                     quote! {
                         assert_eq!(
                             vec![
@@ -5634,7 +5625,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             ],
                             gen_try_read_many_order_by_primary_key_with_big_pagination(
                                 &url_cloned,
-                                #ident_where_many_ucc::try_new(#ident_where_many_try_new_parameters_ts).expect("83c2d430"),
+                                #ident_where_many_ucc::try_new(#ident_where_many_try_new_params_ts).expect("83c2d430"),
                                 #select_default_all_with_max_page_size_cloned_clone_ts,
                                 &table_7e35b1ce
                             ).await.expect("c3e316c0"),
@@ -5694,7 +5685,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         let read_only_ids_from_try_delete_many = itertools::Itertools::sorted(
                                             #ident::try_delete_many_handle(
                                                 &url_cloned,
-                                                #ident_delete_many_parameters_ucc {
+                                                #ident_delete_many_params_ucc {
                                                     payload: #ident_delete_many_payload_ucc {
                                                         where_many: #opt_ident_where_many_ucc(Some(
                                                             #ident_where_many_ucc {
@@ -6204,7 +6195,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     }
                                 },
                             );
-                        let ident_update_parameters_init_without_primary_key_ts =
+                        let ident_update_params_init_without_primary_key_ts =
                             gen_fields_named_without_primary_key_with_comma_ts(
                                 &|syn_field_wrapper: &SynFieldWrapper| {
                                     let field_ident_f56e8e3f = &syn_field_wrapper.field_ident;
@@ -6311,11 +6302,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         ],
                                         #ident::try_update_many_handle(
                                             &url_cloned,
-                                            #ident_update_many_parameters_ucc {
+                                            #ident_update_many_params_ucc {
                                                 payload: #ident_update_many_payload_ucc::try_new(vec![
                                                     #ident_update_ucc::try_new(
                                                         #primary_key_field_type_as_pg_type_update_as_pg_type_primary_key_read_only_ids_into_update_ts,
-                                                        #ident_update_parameters_init_without_primary_key_ts
+                                                        #ident_update_params_init_without_primary_key_ts
                                                     ).expect("42dc87b3")
                                                 ]).expect("69e1bd8a")
                                             },
@@ -6402,7 +6393,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     }
                                 },
                             );
-                        let ident_update_parameters_init_without_primary_key_ts =
+                        let ident_update_params_init_without_primary_key_ts =
                             gen_fields_named_without_primary_key_with_comma_ts(
                                 &|element: &SynFieldWrapper| {
                                     let field_ident_6ea8afd1 = &element.field_ident;
@@ -6495,10 +6486,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         },
                                         #ident::try_update_one_handle(
                                             &url_cloned,
-                                            #ident_update_one_parameters_ucc {
+                                            #ident_update_one_params_ucc {
                                                 payload: #ident_update_ucc::try_new(
                                                     #primary_key_field_type_as_pg_type_update_as_pg_type_primary_key_read_only_ids_into_update_ts,
-                                                    #ident_update_parameters_init_without_primary_key_ts
+                                                    #ident_update_params_init_without_primary_key_ts
                                                 ).expect("0e5d65a5")//todo add column ident
                                             },
                                             &table_update_one_cloned
@@ -6532,7 +6523,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     assert!(
                         #ident::try_delete_many_handle(
                             &url_cloned,
-                            #ident_delete_many_parameters_ucc {
+                            #ident_delete_many_params_ucc {
                                 payload: #ident_delete_many_payload_ucc {
                                     where_many: #opt_ident_where_many_ucc(Some(#ident_where_many_ucc {
                                         #primary_key_field_ident: Some(
@@ -6583,7 +6574,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     quote! {
                         let read_only_ids_from_try_create_many = #ident::try_create_many_handle(
                             &url_cloned,
-                            #ident_create_many_parameters_ucc {
+                            #ident_create_many_params_ucc {
                                 payload: #ident_create_many_payload_ucc(
                                     std::iter::repeat_n(ident_create_default_cloned, el_56409d32).collect()
                                 )
@@ -6592,7 +6583,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         ).await.expect("b8695890");
                         let read_only_ids_from_try_delete_many = #ident::try_delete_many_handle(
                             &url_cloned,
-                            #ident_delete_many_parameters_ucc {
+                            #ident_delete_many_params_ucc {
                                 payload: #ident_delete_many_payload_ucc {
                                     where_many: #opt_ident_where_many_ucc(Some(#ident_where_many_ucc {
                                         #primary_key_field_ident: Some(
@@ -6780,7 +6771,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     ) -> Result<Vec<#ident_read_ucc>, #ident_try_read_many_er_ucc> {
                         #ident::try_read_many_handle(
                             endpoint_location,
-                            #ident_read_many_parameters_ucc {
+                            #ident_read_many_params_ucc {
                                 payload: #ident_read_many_payload_ucc {
                                     where_many: #opt_ident_where_many_ucc(Some(
                                         ident_where_many_6b1fab92
@@ -6807,7 +6798,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     ) -> Result<#ident_read_ucc, #ident_try_read_one_er_ucc> {
                         #ident::try_read_one_handle(
                             url,
-                            #ident_read_one_parameters_ucc {
+                            #ident_read_one_params_ucc {
                                 payload: #ident_read_one_payload_ucc {
                                     primary_key_column,
                                     select,
@@ -6857,7 +6848,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     ) -> #ident_read_only_ids_ucc {
                         #ident::try_create_one_handle(
                             #UrlSc,
-                            #ident_create_one_parameters_ucc {
+                            #ident_create_one_params_ucc {
                                 #PayloadSc
                             },
                             table
@@ -6880,7 +6871,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     ) -> Result<#primary_key_field_type_as_pg_type_read_ts, #ident_try_delete_one_er_ucc> {
                         #ident::try_delete_one_handle(
                             #UrlSc,
-                            #ident_delete_one_parameters_ucc {
+                            #ident_delete_one_params_ucc {
                                 payload: #ident_delete_one_payload_ucc {
                                     #primary_key_field_ident
                                 }

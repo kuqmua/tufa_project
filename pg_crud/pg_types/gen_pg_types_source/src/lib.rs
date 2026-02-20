@@ -2906,9 +2906,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 (&sqlx_types_chrono_naive_time_ten_function_ts, &quote!{10,10,10,10}),
                                 (&sqlx_types_chrono_naive_time_twenty_function_ts, &quote!{20,20,20,20}),
                                 (&sqlx_types_chrono_naive_time_max_function_ts, &quote!{23,59,59,999_999}),
-                            ].iter().map(|(name_ts, parameters_ts)| quote! {
+                            ].iter().map(|(name_ts, params_ts)| quote! {
                                 const fn #name_ts() -> #ident_inner_type_ts {
-                                    #ident_inner_type_ts::from_hms_micro_opt(#parameters_ts).expect("149e01cc")
+                                    #ident_inner_type_ts::from_hms_micro_opt(#params_ts).expect("149e01cc")
                                 }
                             }).collect::<Vec<Ts2>>();
                             quote!{#(#ts_80e0683c)*}
@@ -2943,11 +2943,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         (&sqlx_types_chrono_naive_date_positive_more_typical_function_ts, &quote! { 2000, 1, 1 }),
                                     ]
                                     .into_iter()
-                                    .map(|(name_ts, parameters_ts)| {
+                                    .map(|(name_ts, params_ts)| {
                                         gen_function_ident_inner_type_ts(
                                             name_ts,
                                             &quote! {
-                                                from_ymd_opt(#parameters_ts)
+                                                from_ymd_opt(#params_ts)
                                                     .expect("d25ee0e9")
                                             }
                                         )
@@ -3605,7 +3605,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             PgTypeDeserialize::Derive => Ts2::new(),
                             PgTypeDeserialize::ImplNewForDeserializeOrTryNewForDeserialize(pg_type_impl_new_for_deserialize_or_try_new_for_deserialize) => match &pg_type_impl_new_for_deserialize_or_try_new_for_deserialize {
                                 PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(pg_type_impl_new_for_deserialize) => {
-                                    let parameters_ts = {
+                                    let params_ts = {
                                         let gen_start_end_std_std_ops_bound_ts = |ident_ts_46d9ac26: &dyn ToTokens| {
                                             quote! {
                                                 #StartSc: std::ops::Bound<#ident_ts_46d9ac26>,
@@ -3670,13 +3670,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         }
                                     };
                                     quote! {
-                                        const fn new_for_deserialize(#parameters_ts) -> Self {
+                                        const fn new_for_deserialize(#params_ts) -> Self {
                                             #ts
                                         }
                                     }
                                 }
                                 PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(pg_type_impl_try_new_for_deserialize) => {
-                                    let parameters_ts = {
+                                    let params_ts = {
                                         let gen_value_pg_range_int_type_ts = |int_range_type: &IntRangeType| {
                                             let type_ts = {
                                                 let ts = int_range_type_to_range_inner_type_ts(int_range_type);
@@ -3712,9 +3712,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         }
                                     };
                                     let ts = {
-                                        let gen_self_match_try_new_ts = |parameters_ts_04a82119: &dyn ToTokens, match_er_vrts_ts: &dyn ToTokens| {
+                                        let gen_self_match_try_new_ts = |params_ts_04a82119: &dyn ToTokens, match_er_vrts_ts: &dyn ToTokens| {
                                             quote! {
-                                                match Self::#TryNewSc(#parameters_ts_04a82119) {
+                                                match Self::#TryNewSc(#params_ts_04a82119) {
                                                     Ok(v_b318fc86) => Ok(v_b318fc86),
                                                     Err(er) => match er {
                                                         #match_er_vrts_ts
@@ -3858,7 +3858,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         }
                                     };
                                     quote! {
-                                        fn #TryNewForDeserializeSc(#parameters_ts) -> Result<Self, #ident_standart_not_null_origin_try_new_for_deserialize_er_ucc> {
+                                        fn #TryNewForDeserializeSc(#params_ts) -> Result<Self, #ident_standart_not_null_origin_try_new_for_deserialize_er_ucc> {
                                             #ts
                                         }
                                     }

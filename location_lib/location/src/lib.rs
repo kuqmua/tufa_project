@@ -32,7 +32,7 @@ pub fn location(input: Ts) -> Ts {
     panic_location::panic_location();
     let di: DeriveInput = parse(input).expect("d94f091a");
     let ident = &di.ident;
-    let generic_parameters = &di
+    let generic_params = &di
         .generics
         .params
         .iter()
@@ -71,16 +71,16 @@ pub fn location(input: Ts) -> Ts {
         });
         all_equal.expect("b9da972a")
     };
-    let maybe_generic_parameters_ts = if generic_parameters.is_empty() {
+    let maybe_generic_params_ts = if generic_params.is_empty() {
         Ts2::new()
     } else {
-        quote! {<#(#generic_parameters),*>}
+        quote! {<#(#generic_params),*>}
     };
-    let maybe_generic_parameters_location_lib_to_err_string_annotations_ts =
-        if generic_parameters.is_empty() {
+    let maybe_generic_params_location_lib_to_err_string_annotations_ts =
+        if generic_params.is_empty() {
             Ts2::new()
         } else {
-            let v = generic_parameters
+            let v = generic_params
                 .iter()
                 .map(|el_4ee89bd7| quote! {#el_4ee89bd7: location_lib::ToErrString});
             quote! {<#(#v),*>}
@@ -88,15 +88,15 @@ pub fn location(input: Ts) -> Ts {
     let gen_enum_ident_with_serde_ts = |vrts_ts: &dyn ToTokens| {
         quote! {
             #[derive(Debug, thiserror::Error, serde::Serialize, serde::Deserialize)]
-            pub enum #ident_with_serde_ucc #maybe_generic_parameters_ts {
+            pub enum #ident_with_serde_ucc #maybe_generic_params_ts {
                 #vrts_ts
             }
         }
     };
     let gen_impl_ident_into_serde_version_ts = |vrts: &dyn ToTokens| {
         quote! {
-            impl #maybe_generic_parameters_ts #ident #maybe_generic_parameters_ts {
-                pub fn #IntoSerdeVersionSc(self) -> #ident_with_serde_ucc #maybe_generic_parameters_ts {
+            impl #maybe_generic_params_ts #ident #maybe_generic_params_ts {
+                pub fn #IntoSerdeVersionSc(self) -> #ident_with_serde_ucc #maybe_generic_params_ts {
                     #[allow(clippy::redundant_closure_for_method_calls)]
                     match self {
                         #vrts
@@ -301,9 +301,9 @@ pub fn location(input: Ts) -> Ts {
                 }
             };
             let impl_display_for_ident_ts = gen_impl_display_ts(
-                &maybe_generic_parameters_location_lib_to_err_string_annotations_ts,
+                &maybe_generic_params_location_lib_to_err_string_annotations_ts,
                 &ident,
-                &maybe_generic_parameters_ts,
+                &maybe_generic_params_ts,
                 &impl_display_handle_ts,
             );
             let impl_ident_into_serde_version_ts = {
@@ -393,16 +393,16 @@ pub fn location(input: Ts) -> Ts {
                 gen_enum_ident_with_serde_ts(&quote! {#(#vrts_ts),*})
             };
             let impl_display_for_ident_with_serde_ts = gen_impl_display_ts(
-                &maybe_generic_parameters_location_lib_to_err_string_annotations_ts,
+                &maybe_generic_params_location_lib_to_err_string_annotations_ts,
                 &ident_with_serde_ucc,
-                &maybe_generic_parameters_ts,
+                &maybe_generic_params_ts,
                 &impl_display_handle_ts,
             );
             let impl_location_lib_to_err_string_to_err_string_for_ident_with_serde_ts =
                 gen_impl_to_err_string_ts(
-                    &maybe_generic_parameters_location_lib_to_err_string_annotations_ts,
+                    &maybe_generic_params_location_lib_to_err_string_annotations_ts,
                     &ident_with_serde_ucc,
-                    &maybe_generic_parameters_ts,
+                    &maybe_generic_params_ts,
                     &quote! {format!("{self}")},
                 );
             quote! {
@@ -422,9 +422,9 @@ pub fn location(input: Ts) -> Ts {
                 quote! {match self { #(#vrts_ts),* }}
             };
             let impl_display_for_ident_ts = gen_impl_display_ts(
-                &maybe_generic_parameters_location_lib_to_err_string_annotations_ts,
+                &maybe_generic_params_location_lib_to_err_string_annotations_ts,
                 &ident,
-                &maybe_generic_parameters_ts,
+                &maybe_generic_params_ts,
                 &{
                     let display_formatter_unnamed_ts = gen_display_formatter_unnamed_ts();
                     quote! {
@@ -473,9 +473,9 @@ pub fn location(input: Ts) -> Ts {
                 gen_enum_ident_with_serde_ts(&quote! {#(#vrts_ts),*})
             };
             let impl_display_for_ident_with_serde_ts = gen_impl_display_ts(
-                &maybe_generic_parameters_location_lib_to_err_string_annotations_ts,
+                &maybe_generic_params_location_lib_to_err_string_annotations_ts,
                 &ident_with_serde_ucc,
-                &maybe_generic_parameters_ts,
+                &maybe_generic_params_ts,
                 &{
                     let display_formatter_unnamed_ts = gen_display_formatter_unnamed_ts();
                     quote! {

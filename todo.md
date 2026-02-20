@@ -30,7 +30,7 @@
 * Const destructors
 * Compile time functions as constants
 * Const generic functions
-* Trait bounds on generic parameters for constant function
+* Trait bounds on generic params for constant function
 
 
 # Development Tools

@@ -2,7 +2,7 @@
 use proc_macro2::TokenStream as Ts2;
 use quote::ToTokens;
 naming_macros::gen_self_ucc_and_sc_str_and_ts!([
-    ["self", "parameters"],
+    ["self", "params"],
     ["self", "payload"],
     ["self", "payload", "with", "serde"],
     [
@@ -916,13 +916,13 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["jsonb", "self"],
     ["self", "create", "for", "query"],
     ["self", "update", "for", "query", "element"],
-    ["self", "delete", "many", "parameters"],
+    ["self", "delete", "many", "params"],
     ["self", "delete", "many", "payload"],
-    ["self", "delete", "one", "parameters"],
+    ["self", "delete", "one", "params"],
     ["self", "delete", "one", "payload"],
     ["self", "try", "read", "one", "er"],
     ["self", "read", "one", "er", "with", "serde"],
-    ["self", "update", "many", "parameters"],
+    ["self", "update", "many", "params"],
     ["self", "update", "many", "payload"],
     ["self", "try", "delete", "one", "er"],
     ["self", "delete", "one", "er", "with", "serde"],
