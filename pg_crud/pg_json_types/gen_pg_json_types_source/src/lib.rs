@@ -34,7 +34,7 @@ use pg_crud_macros_common::{
     gen_impl_pg_crud_common_default_opt_some_vec_one_el_ts,
     gen_impl_pg_json_type_test_cases_for_ident_ts, gen_impl_pg_json_type_ts,
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_for_ident_ts,
-    gen_opt_tokens_declaration_ts, gen_pg_type_where_ts, gen_sqlx_types_json_type_declaration_ts,
+    gen_opt_type_decl_ts, gen_pg_type_where_ts, gen_sqlx_types_json_type_declaration_ts,
     gen_value_init_ts, gen_vec_tokens_declaration_ts,
 };
 use proc_macro2::TokenStream as Ts2;
@@ -770,7 +770,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 let value = gen_ident_origin_non_wrapping_6c0934a6(is_nullable_70fb22e6, pattern_042c1c1d);
                                 match &is_nullable {
                                     IsNullable::False => gen_vec_tokens_declaration_ts(&value),
-                                    IsNullable::True => gen_opt_tokens_declaration_ts(&value),
+                                    IsNullable::True => gen_opt_type_decl_ts(&value),
                                 }
                             };
                             let gen_dims_ts = |dim1_is_nullable_a5c667cd: &IsNullable|{
@@ -783,7 +783,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             match &pattern {
                                 Pattern::Standart => match &is_nullable {
                                     IsNullable::False => &ident_read_inner_standart_not_null_alias_ts,
-                                    IsNullable::True => &gen_opt_tokens_declaration_ts(&ident_standart_not_null_origin_ucc),
+                                    IsNullable::True => &gen_opt_type_decl_ts(&ident_standart_not_null_origin_ucc),
                                 },
                                 Pattern::ArrayDim1 { dim1_is_nullable } |
                                 Pattern::ArrayDim2 { dim1_is_nullable, .. } |
@@ -1586,40 +1586,40 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &ident_read_only_ids_ucc,
                 &Ts2::new(),
                 &{
-                    let opt_unit_ts = gen_opt_tokens_declaration_ts(&quote! {()});
+                    let opt_unit_ts = gen_opt_type_decl_ts(&quote! {()});
                     let vec_ts = |v: &dyn ToTokens| gen_vec_tokens_declaration_ts(&v);
                     let content_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                         match &pattern {
                             Pattern::Standart => {
                                 let ts1 = match &is_nullable {
                                     IsNullable::False => quote! {#ident_read_inner_standart_not_null_alias_ts},
-                                    IsNullable::True => gen_opt_tokens_declaration_ts(&ident_read_inner_standart_not_null_alias_ts),
+                                    IsNullable::True => gen_opt_type_decl_ts(&ident_read_inner_standart_not_null_alias_ts),
                                 };
                                 quote! {#ts1}
                             }
                             Pattern::ArrayDim1 { dim1_is_nullable } => {
                                 let ts1 = vec_ts(&match &dim1_is_nullable {
                                     IsNullable::False => quote! {#ident_read_inner_standart_not_null_alias_ts},
-                                    IsNullable::True => gen_opt_tokens_declaration_ts(&ident_read_inner_standart_not_null_alias_ts),
+                                    IsNullable::True => gen_opt_type_decl_ts(&ident_read_inner_standart_not_null_alias_ts),
                                 });
                                 let ts2 = match &is_nullable {
                                     IsNullable::False => ts1,
-                                    IsNullable::True => gen_opt_tokens_declaration_ts(&ts1),
+                                    IsNullable::True => gen_opt_type_decl_ts(&ts1),
                                 };
                                 quote! {#ts2}
                             }
                             Pattern::ArrayDim2 { dim1_is_nullable, dim2_is_nullable } => {
                                 let ts1 = vec_ts(&match &dim2_is_nullable {
                                     IsNullable::False => quote! {#ident_read_inner_standart_not_null_alias_ts},
-                                    IsNullable::True => gen_opt_tokens_declaration_ts(&ident_read_inner_standart_not_null_alias_ts),
+                                    IsNullable::True => gen_opt_type_decl_ts(&ident_read_inner_standart_not_null_alias_ts),
                                 });
                                 let ts2 = vec_ts(&match &dim1_is_nullable {
                                     IsNullable::False => ts1,
-                                    IsNullable::True => gen_opt_tokens_declaration_ts(&ts1),
+                                    IsNullable::True => gen_opt_type_decl_ts(&ts1),
                                 });
                                 let ts3 = match &is_nullable {
                                     IsNullable::False => ts2,
-                                    IsNullable::True => gen_opt_tokens_declaration_ts(&ts2),
+                                    IsNullable::True => gen_opt_type_decl_ts(&ts2),
                                 };
                                 quote! {#ts3}
                             }
@@ -1630,19 +1630,19 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             } => {
                                 let ts1 = vec_ts(&match &dim3_is_nullable {
                                     IsNullable::False => quote! {#ident_read_inner_standart_not_null_alias_ts},
-                                    IsNullable::True => gen_opt_tokens_declaration_ts(&ident_read_inner_standart_not_null_alias_ts),
+                                    IsNullable::True => gen_opt_type_decl_ts(&ident_read_inner_standart_not_null_alias_ts),
                                 });
                                 let ts2 = vec_ts(&match &dim2_is_nullable {
                                     IsNullable::False => ts1,
-                                    IsNullable::True => gen_opt_tokens_declaration_ts(&ts1),
+                                    IsNullable::True => gen_opt_type_decl_ts(&ts1),
                                 });
                                 let ts3 = vec_ts(&match &dim1_is_nullable {
                                     IsNullable::False => ts2,
-                                    IsNullable::True => gen_opt_tokens_declaration_ts(&ts2),
+                                    IsNullable::True => gen_opt_type_decl_ts(&ts2),
                                 });
                                 let ts4 = match &is_nullable {
                                     IsNullable::False => ts3,
-                                    IsNullable::True => gen_opt_tokens_declaration_ts(&ts3),
+                                    IsNullable::True => gen_opt_type_decl_ts(&ts3),
                                 };
                                 quote! {#ts4}
                             }
@@ -1654,23 +1654,23 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             } => {
                                 let ts1 = vec_ts(&match &dim4_is_nullable {
                                     IsNullable::False => quote! {#ident_read_inner_standart_not_null_alias_ts},
-                                    IsNullable::True => gen_opt_tokens_declaration_ts(&ident_read_inner_standart_not_null_alias_ts),
+                                    IsNullable::True => gen_opt_type_decl_ts(&ident_read_inner_standart_not_null_alias_ts),
                                 });
                                 let ts2 = vec_ts(&match &dim3_is_nullable {
                                     IsNullable::False => ts1,
-                                    IsNullable::True => gen_opt_tokens_declaration_ts(&ts1),
+                                    IsNullable::True => gen_opt_type_decl_ts(&ts1),
                                 });
                                 let ts3 = vec_ts(&match &dim2_is_nullable {
                                     IsNullable::False => ts2,
-                                    IsNullable::True => gen_opt_tokens_declaration_ts(&ts2),
+                                    IsNullable::True => gen_opt_type_decl_ts(&ts2),
                                 });
                                 let ts4 = vec_ts(&match &dim1_is_nullable {
                                     IsNullable::False => ts3,
-                                    IsNullable::True => gen_opt_tokens_declaration_ts(&ts3),
+                                    IsNullable::True => gen_opt_type_decl_ts(&ts3),
                                 });
                                 let ts5 = match &is_nullable {
                                     IsNullable::False => ts4,
-                                    IsNullable::True => gen_opt_tokens_declaration_ts(&ts4),
+                                    IsNullable::True => gen_opt_type_decl_ts(&ts4),
                                 };
                                 quote! {#ts5}
                             }
@@ -1685,7 +1685,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             let type_ts = match &pattern {
                 Pattern::Standart => match &is_nullable {
                     IsNullable::False => &ident_read_inner_standart_not_null_alias_ts,
-                    IsNullable::True => &gen_opt_tokens_declaration_ts(&ident_read_inner_standart_not_null_alias_ts),
+                    IsNullable::True => &gen_opt_type_decl_ts(&ident_read_inner_standart_not_null_alias_ts),
                 },
                 Pattern::ArrayDim1 { dim1_is_nullable } => &{
                     let dim1_type = dim1_is_nullable.maybe_opt_wrap(quote! {#ident_read_inner_standart_not_null_alias_ts});

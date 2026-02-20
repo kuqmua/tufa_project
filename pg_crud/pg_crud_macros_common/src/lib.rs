@@ -701,7 +701,7 @@ pub fn gen_tuple_struct_ident_dq_ts(v: &dyn Display) -> Ts2 {
 pub fn gen_sqlx_types_json_type_declaration_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {sqlx::types::Json<#type_ts>}
 }
-pub fn gen_opt_tokens_declaration_ts(type_ts: &dyn ToTokens) -> Ts2 {
+pub fn gen_opt_type_decl_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {Option<#type_ts>}
 }
 pub fn gen_vec_tokens_declaration_ts(type_ts: &dyn ToTokens) -> Ts2 {
@@ -1359,7 +1359,7 @@ fn gen_read_only_ids_merged_with_create_into_vec_or_opt_vec_where_equal_to_json_
     let return_type_ts = {
         let return_type_handle_ts = quote! {#import_path::NotEmptyUniqueVec<#where_ts>};
         match &pg_type_or_pg_json_type {
-            PgTypeOrPgJsonType::PgType => gen_opt_tokens_declaration_ts(&return_type_handle_ts),
+            PgTypeOrPgJsonType::PgType => gen_opt_type_decl_ts(&return_type_handle_ts),
             PgTypeOrPgJsonType::PgJsonType => return_type_handle_ts,
         }
     };

@@ -46,11 +46,10 @@ use pg_crud_macros_common::{
     gen_impl_pg_type_not_primary_key_for_ident_ts, gen_impl_pg_type_test_cases_for_ident_ts,
     gen_impl_pg_type_ts, gen_impl_sqlx_decode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_for_ident_ts,
-    gen_opt_tokens_declaration_ts, gen_pg_type_where_ts,
-    gen_return_err_query_part_er_write_into_buffer_ts, gen_struct_ident_dq_ts,
-    gen_struct_ident_with_number_elements_dq_ts, gen_tuple_struct_ident_dq_ts, gen_value_init_ts,
-    gen_vec_tokens_declaration_ts, impl_pg_type_equal_operator_for_ident_ts,
-    impl_pg_type_where_filter_for_ident_ts,
+    gen_opt_type_decl_ts, gen_pg_type_where_ts, gen_return_err_query_part_er_write_into_buffer_ts,
+    gen_struct_ident_dq_ts, gen_struct_ident_with_number_elements_dq_ts,
+    gen_tuple_struct_ident_dq_ts, gen_value_init_ts, gen_vec_tokens_declaration_ts,
+    impl_pg_type_equal_operator_for_ident_ts, impl_pg_type_where_filter_for_ident_ts,
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -1165,7 +1164,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             match &pg_type_pattern {
                 PgTypePattern::Standart => match &is_nullable {
                     IsNullable::False => &inner_type_standart_not_null_ts,
-                    IsNullable::True => &gen_opt_tokens_declaration_ts(&ident_standart_not_null_origin_ucc),
+                    IsNullable::True => &gen_opt_type_decl_ts(&ident_standart_not_null_origin_ucc),
                 },
                 PgTypePattern::ArrayDim1 { dim1_is_nullable } => &{
                     let (pg_type_pattern_7790d04a, is_nullable_86d888a6): (&PgTypePattern, &IsNullable) = match &is_nullable {
@@ -1175,7 +1174,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let value = gen_ident_origin_non_wrapping_8ad5380a(pg_type_pattern_7790d04a, is_nullable_86d888a6);
                     match &is_nullable {
                         IsNullable::False => gen_vec_tokens_declaration_ts(&value),
-                        IsNullable::True => gen_opt_tokens_declaration_ts(&value),
+                        IsNullable::True => gen_opt_type_decl_ts(&value),
                     }
                 },
             }
@@ -1198,7 +1197,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let ident_inner_type_ts = match &element.pg_type_pattern {
             PgTypePattern::Standart => match &is_nullable {
                 IsNullable::False => &inner_type_standart_not_null_ts,
-                IsNullable::True => &gen_opt_tokens_declaration_ts(&inner_type_standart_not_null_ts),
+                IsNullable::True => &gen_opt_type_decl_ts(&inner_type_standart_not_null_ts),
             },
             PgTypePattern::ArrayDim1 { dim1_is_nullable } => &{
                 let dim1_type = dim1_is_nullable.maybe_opt_wrap(quote! {#inner_type_standart_not_null_ts});

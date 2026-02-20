@@ -74,7 +74,7 @@ use pg_crud_macros_common::{
     IsNeedToAddLogicalOperatorUnderscore, IsQueryBindMutable,
     gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_ts,
     gen_impl_pg_crud_default_opt_some_vec_one_el_ts, gen_impl_serde_deserialize_for_struct_ts,
-    gen_match_try_new_in_deserialize_ts, gen_opt_tokens_declaration_ts,
+    gen_match_try_new_in_deserialize_ts, gen_opt_type_decl_ts,
     gen_query_part_er_write_into_buffer_ts, gen_return_err_query_part_er_write_into_buffer_ts,
     gen_value_init_ts, gen_vec_tokens_declaration_ts, impl_pg_type_where_filter_for_ident_ts,
     maybe_wrap_into_braces_ts,
@@ -722,7 +722,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 quote! {#ident_select_ucc::#field_ident_ucc_ts(#ColumnSc) #init_ts}
             });
-            let opt_char_ts = gen_opt_tokens_declaration_ts(&Char);
+            let opt_char_ts = gen_opt_type_decl_ts(&Char);
             quote! {
                 fn #GenSelectQueryPartSc(#select_borrow_pg_crud_not_empty_unique_vec_ident_select_ts) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                     let mut acc_37c883c3 = #StringTs::default();
@@ -1115,10 +1115,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let field_ident = &element.field_ident;
                 let el_syn_field_ty_as_pg_type_where_ts =
                     gen_as_pg_type_where_ts(&element.field_type);
-                let opt_pg_type_where_syn_field_ty_as_pg_type_where_ts =
-                    gen_opt_tokens_declaration_ts(
-                        &quote! {pg_crud::PgTypeWhere<#el_syn_field_ty_as_pg_type_where_ts>},
-                    );
+                let opt_pg_type_where_syn_field_ty_as_pg_type_where_ts = gen_opt_type_decl_ts(
+                    &quote! {pg_crud::PgTypeWhere<#el_syn_field_ty_as_pg_type_where_ts>},
+                );
                 quote! {
                     #field_ident: #opt_pg_type_where_syn_field_ty_as_pg_type_where_ts
                 }
@@ -1188,7 +1187,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 fields_len,
                 &|_: &Ident, syn_type: &Type| {
                     let syn_type_as_pg_type_where_ts = gen_as_pg_type_where_ts(&syn_type);
-                    gen_opt_tokens_declaration_ts(
+                    gen_opt_type_decl_ts(
                         &quote! {pg_crud::PgTypeWhere<#syn_type_as_pg_type_where_ts>},
                     )
                 },
@@ -1228,7 +1227,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .derive_utoipa_to_schema()
             .build_struct(&opt_ident_where_many_ucc, &Ts2::new(), &{
                 let opt_ident_read_only_ids_standart_not_null_ts =
-                    gen_opt_tokens_declaration_ts(&ident_where_many_ucc);
+                    gen_opt_type_decl_ts(&ident_where_many_ucc);
                 quote! {(pub #opt_ident_read_only_ids_standart_not_null_ts);}
             });
         let impl_pg_type_where_filter_for_opt_ident_where_many_ts =
@@ -1490,7 +1489,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &Ts2::new(),
                 &{
                     let field_opt_primary_key_ts = {
-                        let opt_value_primary_key_field_type_as_pg_type_read_ts = gen_opt_tokens_declaration_ts(&gen_value_declaration_ts(&gen_as_pg_type_read_ts(&primary_key_field_type)));
+                        let opt_value_primary_key_field_type_as_pg_type_read_ts = gen_opt_type_decl_ts(&gen_value_declaration_ts(&gen_as_pg_type_read_ts(&primary_key_field_type)));
                         quote! {
                             #FieldAttrSerdeSkipSerializingIfOptIsNone
                             pub #primary_key_field_ident: #opt_value_primary_key_field_type_as_pg_type_read_ts
@@ -1499,7 +1498,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let fields_opts_without_primary_key_ts = gen_fields_named_without_primary_key_with_comma_ts(&|element: &SynFieldWrapper| -> Ts2 {
                         let field_vis = &element.field_vis;
                         let field_ident = &element.field_ident;
-                        let opt_value_field_type_as_pg_type_read_ts = gen_opt_tokens_declaration_ts(&gen_value_declaration_ts(&gen_as_pg_type_read_ts(&element.field_type)));
+                        let opt_value_field_type_as_pg_type_read_ts = gen_opt_type_decl_ts(&gen_value_declaration_ts(&gen_as_pg_type_read_ts(&element.field_type)));
                         quote! {
                             #FieldAttrSerdeSkipSerializingIfOptIsNone
                             #field_vis #field_ident: #opt_value_field_type_as_pg_type_read_ts
@@ -1519,10 +1518,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let impl_ident_read_ts = {
             let fn_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts = {
                 let declaration_primary_key_ts = {
-                    let opt_value_primary_key_field_type_as_primary_key_ts =
-                        gen_opt_tokens_declaration_ts(&gen_value_declaration_ts(
-                            &primary_key_field_type_as_pg_type_read_ucc,
-                        ));
+                    let opt_value_primary_key_field_type_as_primary_key_ts = gen_opt_type_decl_ts(
+                        &gen_value_declaration_ts(&primary_key_field_type_as_pg_type_read_ucc),
+                    );
                     quote! {
                         let mut #primary_key_field_ident: #opt_value_primary_key_field_type_as_primary_key_ts = None;
                     }
@@ -1532,7 +1530,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &|element: &SynFieldWrapper| {
                             let field_ident = &element.field_ident;
                             let opt_value_field_type_as_pg_type_read_ts =
-                                gen_opt_tokens_declaration_ts(&gen_value_declaration_ts(
+                                gen_opt_type_decl_ts(&gen_value_declaration_ts(
                                     &gen_as_pg_type_read_ts(&element.field_type),
                                 ));
                             quote! {
@@ -1637,7 +1635,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                          wrap_into_opt: &WrapIntoOpt| {
                             let field_type_ts = match &wrap_into_opt {
                                 WrapIntoOpt::False => gen_as_pg_type_read_only_ids_ts(&field_type),
-                                WrapIntoOpt::True => gen_opt_tokens_declaration_ts(
+                                WrapIntoOpt::True => gen_opt_type_decl_ts(
                                     &gen_as_pg_type_read_only_ids_ts(&field_type),
                                 ),
                             };
@@ -1760,7 +1758,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 value.parse::<Ts2>().expect("dbdbb7f2")
             };
             let syn_type_as_pg_type_update_ts = gen_as_pg_type_update_ts(&syn_type);
-            gen_opt_tokens_declaration_ts(&quote! {#path_value_ts<#syn_type_as_pg_type_update_ts>})
+            gen_opt_type_decl_ts(&quote! {#path_value_ts<#syn_type_as_pg_type_update_ts>})
         };
         let fields_declaration_ts = {
             let fields_named_without_primary_key_ts =
@@ -1916,7 +1914,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 value.parse::<Ts2>().expect("2b09d4ae")
                             };
                             let syn_type_as_pg_type_update_for_query_ts = gen_as_pg_type_update_for_query_ts(&element.field_type);
-                            gen_opt_tokens_declaration_ts(&quote! {#path_value_ts<#syn_type_as_pg_type_update_for_query_ts>})
+                            gen_opt_type_decl_ts(&quote! {#path_value_ts<#syn_type_as_pg_type_update_for_query_ts>})
                         };
                         quote! {#field_ident: #opt_value_field_type_as_pg_type_update_for_query_ts}
                     });
