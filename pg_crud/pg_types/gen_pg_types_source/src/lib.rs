@@ -16,7 +16,7 @@ use naming::{
     IncludedStartGreaterThanIncludedEndUcc, IncludedUcc, IncrSc,
     InvalidHourOrMinuteOrSecondOrMicrosecondUcc, MaxSc, MicroSc, MicrosecondSc, MicrosecondsSc,
     MinSc, MinuteSc, MonthsSc, NanosecondPrecisionIsNotSupportedUcc, NanosecondSc, NearZeroSc,
-    NegativeLessTypicalSc, NegativeMoreTypicalSc, NewSc, OptionUpdateSc, OptionVecCreateSc,
+    NegativeLessTypicalSc, NegativeMoreTypicalSc, NewSc, OptUpdateSc, OptVecCreateSc,
     PgTypePrimaryKeyUcc, PgTypeUcc, PositiveLessTypicalSc, PositiveMoreTypicalSc, QuerySc,
     ReadIntoTableTypeDeclarationSc, ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeDeclarationSc,
     ReadOnlyIdsIntoUpdateSc, ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsSc,
@@ -41,12 +41,12 @@ use pg_crud_macros_common::{
     ShouldDeriveUtoipaToSchema, UpdateQueryPartJsonbSetAccumulatorUnderscore,
     UpdateQueryPartJsonbSetPathUnderscore, UpdateQueryPartJsonbSetTargetUnderscore,
     UpdateQueryPartValueUnderscore, gen_impl_crate_is_string_empty_for_ident_ts,
-    gen_impl_pg_crud_common_default_option_some_vec_one_el_max_page_size_ts,
-    gen_impl_pg_crud_common_default_option_some_vec_one_el_ts,
+    gen_impl_pg_crud_common_default_opt_some_vec_one_el_max_page_size_ts,
+    gen_impl_pg_crud_common_default_opt_some_vec_one_el_ts,
     gen_impl_pg_type_not_primary_key_for_ident_ts, gen_impl_pg_type_test_cases_for_ident_ts,
     gen_impl_pg_type_ts, gen_impl_sqlx_decode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_for_ident_ts,
-    gen_option_tokens_declaration_ts, gen_pg_type_where_ts,
+    gen_opt_tokens_declaration_ts, gen_pg_type_where_ts,
     gen_return_err_query_part_er_write_into_buffer_ts, gen_struct_ident_dq_ts,
     gen_struct_ident_with_number_elements_dq_ts, gen_tuple_struct_ident_dq_ts, gen_value_init_ts,
     gen_vec_tokens_declaration_ts, impl_pg_type_equal_operator_for_ident_ts,
@@ -64,8 +64,8 @@ use std::{
 use strum_macros::{Display as StrumDisplay, EnumIter};
 use token_patterns::{
     AllowClippyArbitrarySourceItemOrdering, CoreDefault, F32, I16, I32, I64, MustUse,
-    PgCrudCommonDefaultOptionSomeVecOneElCall,
-    PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall, StringTs, U8, U32,
+    PgCrudCommonDefaultOptSomeVecOneElCall, PgCrudCommonDefaultOptSomeVecOneElMaxPageSizeCall,
+    StringTs, U8, U32,
 };
 #[must_use]
 pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
@@ -1166,7 +1166,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             match &pg_type_pattern {
                 PgTypePattern::Standart => match &is_nullable {
                     IsNullable::False => &inner_type_standart_not_null_ts,
-                    IsNullable::True => &gen_option_tokens_declaration_ts(&ident_standart_not_null_origin_ucc),
+                    IsNullable::True => &gen_opt_tokens_declaration_ts(&ident_standart_not_null_origin_ucc),
                 },
                 PgTypePattern::ArrayDim1 { dim1_is_nullable } => &{
                     let (pg_type_pattern_7790d04a, is_nullable_86d888a6): (&PgTypePattern, &IsNullable) = match &is_nullable {
@@ -1176,7 +1176,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let value = gen_ident_origin_non_wrapping_8ad5380a(pg_type_pattern_7790d04a, is_nullable_86d888a6);
                     match &is_nullable {
                         IsNullable::False => gen_vec_tokens_declaration_ts(&value),
-                        IsNullable::True => gen_option_tokens_declaration_ts(&value),
+                        IsNullable::True => gen_opt_tokens_declaration_ts(&value),
                     }
                 },
             }
@@ -1199,11 +1199,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let ident_inner_type_ts = match &element.pg_type_pattern {
             PgTypePattern::Standart => match &is_nullable {
                 IsNullable::False => &inner_type_standart_not_null_ts,
-                IsNullable::True => &gen_option_tokens_declaration_ts(&inner_type_standart_not_null_ts),
+                IsNullable::True => &gen_opt_tokens_declaration_ts(&inner_type_standart_not_null_ts),
             },
             PgTypePattern::ArrayDim1 { dim1_is_nullable } => &{
-                let dim1_type = dim1_is_nullable.maybe_option_wrap(quote! {#inner_type_standart_not_null_ts});
-                is_nullable.maybe_option_wrap(gen_vec_tokens_declaration_ts(&dim1_type))
+                let dim1_type = dim1_is_nullable.maybe_opt_wrap(quote! {#inner_type_standart_not_null_ts});
+                is_nullable.maybe_opt_wrap(gen_vec_tokens_declaration_ts(&dim1_type))
             },
         };
         let can_be_primary_key = match &pg_type {
@@ -1928,14 +1928,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     fn_visit_map_sqlx_pg_types_pg_range_sqlx_pg_types_pg_range_i64_ts,
                     fn_visit_map_sqlx_pg_types_pg_interval_ts,
                 ) = {
-                    let gen_fn_visit_map_ts = |field_option_none_init_ts: &dyn ToTokens, while_some_next_key_field_ts: &dyn ToTokens, match_field_init_ts: &dyn ToTokens, serde_private_ok_ts: &dyn ToTokens| {
+                    let gen_fn_visit_map_ts = |field_opt_none_init_ts: &dyn ToTokens, while_some_next_key_field_ts: &dyn ToTokens, match_field_init_ts: &dyn ToTokens, serde_private_ok_ts: &dyn ToTokens| {
                         quote! {
                             #[inline]
                             fn visit_map<__A>(self, mut __map: __A) -> Result<Self::Value, __A::Error>
                             where
                                 __A: serde::de::MapAccess<'de>,
                             {
-                                #field_option_none_init_ts
+                                #field_opt_none_init_ts
                                 #while_some_next_key_field_ts
                                 #match_field_init_ts
                                 #serde_private_ok_ts
@@ -1943,18 +1943,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     };
                     let (
-                        field_option_none_init_sqlx_types_chrono_naive_time_ts,
-                        field_option_none_init_sqlx_types_time_time_ts,
-                        field_option_none_init_sqlx_types_chrono_naive_date_time_ts,
-                        field_option_none_init_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
-                        field_option_none_init_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
-                        field_option_none_init_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
-                        field_option_none_init_sqlx_pg_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
-                        field_option_none_init_sqlx_pg_types_pg_range_i32_ts,
-                        field_option_none_init_sqlx_pg_types_pg_range_i64_ts,
-                        field_option_none_init_sqlx_pg_types_pg_interval_ts,
+                        field_opt_none_init_sqlx_types_chrono_naive_time_ts,
+                        field_opt_none_init_sqlx_types_time_time_ts,
+                        field_opt_none_init_sqlx_types_chrono_naive_date_time_ts,
+                        field_opt_none_init_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
+                        field_opt_none_init_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
+                        field_opt_none_init_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
+                        field_opt_none_init_sqlx_pg_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
+                        field_opt_none_init_sqlx_pg_types_pg_range_i32_ts,
+                        field_opt_none_init_sqlx_pg_types_pg_range_i64_ts,
+                        field_opt_none_init_sqlx_pg_types_pg_interval_ts,
                     ) = {
-                        let gen_field_option_none_init_ts = |vec_ts: &[&dyn ToTokens]| {
+                        let gen_field_opt_none_init_ts = |vec_ts: &[&dyn ToTokens]| {
                             let fields_init_ts = vec_ts.iter().enumerate().map(|(index_d9ee264a, el_de75f565)| {
                                 let field_index_name_ts = gen_field_index_ts(index_d9ee264a);
                                 quote! {let mut #field_index_name_ts: Option<#el_de75f565> = None;}
@@ -1962,16 +1962,16 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             quote! {#(#fields_init_ts)*}
                         };
                         (
-                            gen_field_option_none_init_ts(&[&U32, &U32, &U32, &U32]),
-                            gen_field_option_none_init_ts(&[&U8, &U8, &U8, &U32]),
-                            gen_field_option_none_init_ts(&[&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc, &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc]),
-                            gen_field_option_none_init_ts(&[&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc, &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc]),
-                            gen_field_option_none_init_ts(&[&std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts, &std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts]),
-                            gen_field_option_none_init_ts(&[&std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ts, &std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ts]),
-                            gen_field_option_none_init_ts(&[&std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ts, &std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ts]),
-                            gen_field_option_none_init_ts(&[&std_ops_bound_i32_ts, &std_ops_bound_i32_ts]),
-                            gen_field_option_none_init_ts(&[&std_ops_bound_i64_ts, &std_ops_bound_i64_ts]),
-                            gen_field_option_none_init_ts(&[&I32, &I32, &I64]),
+                            gen_field_opt_none_init_ts(&[&U32, &U32, &U32, &U32]),
+                            gen_field_opt_none_init_ts(&[&U8, &U8, &U8, &U32]),
+                            gen_field_opt_none_init_ts(&[&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc, &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc]),
+                            gen_field_opt_none_init_ts(&[&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc, &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc]),
+                            gen_field_opt_none_init_ts(&[&std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts, &std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts]),
+                            gen_field_opt_none_init_ts(&[&std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ts, &std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ts]),
+                            gen_field_opt_none_init_ts(&[&std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ts, &std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ts]),
+                            gen_field_opt_none_init_ts(&[&std_ops_bound_i32_ts, &std_ops_bound_i32_ts]),
+                            gen_field_opt_none_init_ts(&[&std_ops_bound_i64_ts, &std_ops_bound_i64_ts]),
+                            gen_field_opt_none_init_ts(&[&I32, &I32, &I64]),
                         )
                     };
                     let (
@@ -2053,61 +2053,61 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     };
                     (
                         gen_fn_visit_map_ts(
-                            &field_option_none_init_sqlx_types_chrono_naive_time_ts,
+                            &field_opt_none_init_sqlx_types_chrono_naive_time_ts,
                             &while_some_next_key_field_sqlx_types_chrono_naive_time_ts,
                             &match_field_init_hour_min_sec_micro_ts,
                             &sqlx_types_chrono_naive_time_origin_try_new_for_deserialize,
                         ),
                         gen_fn_visit_map_ts(
-                            &field_option_none_init_sqlx_types_time_time_ts,
+                            &field_opt_none_init_sqlx_types_time_time_ts,
                             &while_some_next_key_field_sqlx_types_time_time_ts,
                             &match_field_init_hour_minute_second_microsecond_ts,
                             &match_origin_try_new_for_deserialize_four_ts,
                         ),
                         gen_fn_visit_map_ts(
-                            &field_option_none_init_sqlx_types_chrono_naive_date_time_ts,
+                            &field_opt_none_init_sqlx_types_chrono_naive_date_time_ts,
                             &while_some_next_key_field_sqlx_types_chrono_naive_date_time_ts,
                             &match_field_init_date_time_ts,
                             &origin_new_for_deserialize_two_ts,
                         ),
                         gen_fn_visit_map_ts(
-                            &field_option_none_init_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
+                            &field_opt_none_init_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
                             &while_some_next_key_field_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
                             &match_field_init_date_naive_time_ts,
                             &origin_new_for_deserialize_two_ts,
                         ),
                         gen_fn_visit_map_ts(
-                            &field_option_none_init_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
+                            &field_opt_none_init_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
                             &while_some_next_key_field_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
                             &match_field_init_start_end_ts,
                             &origin_new_for_deserialize_two_ts,
                         ),
                         gen_fn_visit_map_ts(
-                            &field_option_none_init_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
+                            &field_opt_none_init_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
                             &while_some_next_key_field_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
                             &match_field_init_start_end_ts,
                             &origin_new_for_deserialize_two_ts,
                         ),
                         gen_fn_visit_map_ts(
-                            &field_option_none_init_sqlx_pg_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
+                            &field_opt_none_init_sqlx_pg_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
                             &while_some_next_key_field_sqlx_pg_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
                             &match_field_init_start_end_ts,
                             &origin_new_for_deserialize_two_ts,
                         ),
                         gen_fn_visit_map_ts(
-                            &field_option_none_init_sqlx_pg_types_pg_range_i32_ts,
+                            &field_opt_none_init_sqlx_pg_types_pg_range_i32_ts,
                             &while_some_next_key_field_sqlx_pg_types_pg_range_i32_ts,
                             &match_field_init_start_end_ts,
                             &match_origin_try_new_for_deserialize_two_ts,
                         ),
                         gen_fn_visit_map_ts(
-                            &field_option_none_init_sqlx_pg_types_pg_range_i64_ts,
+                            &field_opt_none_init_sqlx_pg_types_pg_range_i64_ts,
                             &while_some_next_key_field_sqlx_pg_types_pg_range_i64_ts,
                             &match_field_init_start_end_ts,
                             &match_origin_try_new_for_deserialize_two_ts,
                         ),
                         gen_fn_visit_map_ts(
-                            &field_option_none_init_sqlx_pg_types_pg_interval_ts,
+                            &field_opt_none_init_sqlx_pg_types_pg_interval_ts,
                             &while_some_next_key_field_sqlx_pg_types_pg_interval_ts,
                             &match_field_init_months_days_microseconds_ts,
                             &origin_new_for_deserialize_three_ts,
@@ -3270,12 +3270,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 |()| {
                     let ts = {
                         let ts = {
-                            let gen_match_option_ts = |type_ts: &dyn ToTokens| {
+                            let gen_match_opt_ts = |type_ts: &dyn ToTokens| {
                                 quote! {value.map(#type_ts::#NewSc)}
                             };
                             let gen_array_dims_init_ts = |type_ts: &dyn ToTokens| match &is_nullable {
                                 IsNullable::False => quote! {value.into_iter().map(#type_ts::#NewSc).collect()},
-                                IsNullable::True => gen_match_option_ts(&type_ts),
+                                IsNullable::True => gen_match_opt_ts(&type_ts),
                             };
                             match &pg_type_pattern {
                                 PgTypePattern::Standart => match &is_nullable {
@@ -3291,7 +3291,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             )
                                         )
                                     }
-                                    IsNullable::True => gen_match_option_ts(&ident_standart_not_null_origin_ucc),
+                                    IsNullable::True => gen_match_opt_ts(&ident_standart_not_null_origin_ucc),
                                 },
                                 PgTypePattern::ArrayDim1 { dim1_is_nullable } => gen_array_dims_init_ts(&{
                                     let (pg_type_pattern_ce191343, is_nullable_b772ed8a): (&PgTypePattern, &IsNullable) = match &is_nullable {
@@ -3326,7 +3326,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 },
                 |pg_type_init_try_new| {
                     let ts = {
-                        let gen_match_option_ts = |type_ts: &dyn ToTokens| {
+                        let gen_match_opt_ts = |type_ts: &dyn ToTokens| {
                             quote! {Ok(Self(match #ValueSc {
                                 Some(v_989d943e) => Some(match #type_ts::#TryNewSc(v_989d943e) {
                                     Ok(v_ea2a4a8c) => v_ea2a4a8c,
@@ -3354,7 +3354,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     acc_4ce2782a
                                 }))
                             },
-                            IsNullable::True => gen_match_option_ts(&type_ts),
+                            IsNullable::True => gen_match_opt_ts(&type_ts),
                         };
                         match &pg_type_pattern {
                             PgTypePattern::Standart => match &is_nullable {
@@ -3583,7 +3583,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         PgTypeInitTryNew::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => gen_ok_self_sqlx_pg_types_pg_range_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc),
                                     }
                                 }
-                                IsNullable::True => gen_match_option_ts(&ident_standart_not_null_origin_ucc),
+                                IsNullable::True => gen_match_opt_ts(&ident_standart_not_null_origin_ucc),
                             },
                             PgTypePattern::ArrayDim1 { dim1_is_nullable } => gen_array_dims_init_ts(&{
                                 let (pg_type_pattern_fb8e939d, is_nullable_104968f1): (&PgTypePattern, &IsNullable) = match &is_nullable {
@@ -3981,7 +3981,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             };
             let impl_display_for_ident_origin_ts = gen_impl_display_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
             let impl_location_lib_to_err_string_for_ident_origin_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {self.to_string()});
-            let impl_default_option_some_vec_one_el_for_ident_origin_ts = gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_origin_ucc, &{
+            let impl_default_opt_some_vec_one_el_for_ident_origin_ts = gen_impl_pg_crud_common_default_opt_some_vec_one_el_ts(&ident_origin_ucc, &{
                 let ts = match &pg_type_pattern {
                     PgTypePattern::Standart => match &is_nullable {
                         IsNullable::False => {
@@ -3991,30 +3991,30 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     end: std::ops::Bound::Excluded(#CoreDefault),
                                 }
                             };
-                            let gen_as_default_option_some_vec_one_el_call_ts = |ident_ts_87626b85: &dyn ToTokens| {
+                            let gen_as_default_opt_some_vec_one_el_call_ts = |ident_ts_87626b85: &dyn ToTokens| {
                                 quote! {
                                     <
                                         #ident_ts_87626b85
                                         as
-                                        #import_path::DefaultOptionSomeVecOneEl
-                                    >::default_option_some_vec_one_el()
+                                        #import_path::DefaultOptSomeVecOneEl
+                                    >::default_opt_some_vec_one_el()
                                 }
                             };
-                            let gen_sqlx_pg_types_pg_range_default_option_some_vec_one_el_ts = |ident_ts_a0b3ffd9: &dyn ToTokens| {
-                                let ident_as_default_option_some_vec_one_el_call_ts_d8b3f916 = gen_as_default_option_some_vec_one_el_call_ts(&ident_ts_a0b3ffd9);
+                            let gen_sqlx_pg_types_pg_range_default_opt_some_vec_one_el_ts = |ident_ts_a0b3ffd9: &dyn ToTokens| {
+                                let ident_as_default_opt_some_vec_one_el_call_ts_d8b3f916 = gen_as_default_opt_some_vec_one_el_call_ts(&ident_ts_a0b3ffd9);
                                 quote! {
                                     sqlx::postgres::types::PgRange {
                                         #StartSc: std::ops::Bound::Included(
-                                            #ident_as_default_option_some_vec_one_el_call_ts_d8b3f916.0
+                                            #ident_as_default_opt_some_vec_one_el_call_ts_d8b3f916.0
                                         ),
                                         #EndSc: std::ops::Bound::Excluded(
-                                            #ident_as_default_option_some_vec_one_el_call_ts_d8b3f916.0
+                                            #ident_as_default_opt_some_vec_one_el_call_ts_d8b3f916.0
                                         ),
                                     }
                                 }
                             };
-                            let sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_option_some_vec_one_el_call_ts = gen_as_default_option_some_vec_one_el_call_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc);
-                            let sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_option_some_vec_one_el_call_ts = gen_as_default_option_some_vec_one_el_call_ts(&sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc);
+                            let sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_opt_some_vec_one_el_call_ts = gen_as_default_opt_some_vec_one_el_call_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc);
+                            let sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_opt_some_vec_one_el_call_ts = gen_as_default_opt_some_vec_one_el_call_ts(&sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc);
                             let init_ts: &dyn ToTokens = match &pg_type {
                                 PgType::I16AsInt2
                                 | PgType::I32AsInt4
@@ -4040,28 +4040,28 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     #MicrosecondsSc: #CoreDefault
                                 }},
                                 PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
-                                    #sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_option_some_vec_one_el_call_ts.0,
-                                    #sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_option_some_vec_one_el_call_ts.0,
+                                    #sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_opt_some_vec_one_el_call_ts.0,
+                                    #sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_opt_some_vec_one_el_call_ts.0,
                                 }),
                                 PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
-                                    #sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_option_some_vec_one_el_call_ts.0,
-                                    #sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_option_some_vec_one_el_call_ts.0,
+                                    #sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_opt_some_vec_one_el_call_ts.0,
+                                    #sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_opt_some_vec_one_el_call_ts.0,
                                 })),
                                 PgType::SqlxTypesIpnetworkIpNetworkAsInet => &quote! {
                                     sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSc(core::net::Ipv4Addr::UNSPECIFIED, #CoreDefault).expect("9e9c9b57"))
                                 },
                                 PgType::SqlxPgTypesPgRangeI32AsInt4Range | PgType::SqlxPgTypesPgRangeI64AsInt8Range => &pg_range_int_default_init_ts,
-                                PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &gen_sqlx_pg_types_pg_range_default_option_some_vec_one_el_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc),
-                                PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &gen_sqlx_pg_types_pg_range_default_option_some_vec_one_el_ts(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc),
-                                PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &gen_sqlx_pg_types_pg_range_default_option_some_vec_one_el_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc),
+                                PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &gen_sqlx_pg_types_pg_range_default_opt_some_vec_one_el_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc),
+                                PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &gen_sqlx_pg_types_pg_range_default_opt_some_vec_one_el_ts(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc),
+                                PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &gen_sqlx_pg_types_pg_range_default_opt_some_vec_one_el_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc),
                             };
                             quote! {#init_ts}
                         }
-                        IsNullable::True => quote! {Some(#PgCrudCommonDefaultOptionSomeVecOneElCall)},
+                        IsNullable::True => quote! {Some(#PgCrudCommonDefaultOptSomeVecOneElCall)},
                     },
                     PgTypePattern::ArrayDim1 { .. } => match &is_nullable {
-                        IsNullable::False => quote! {vec![#PgCrudCommonDefaultOptionSomeVecOneElCall]},
-                        IsNullable::True => quote! {Some(#PgCrudCommonDefaultOptionSomeVecOneElCall)},
+                        IsNullable::False => quote! {vec![#PgCrudCommonDefaultOptSomeVecOneElCall]},
+                        IsNullable::True => quote! {Some(#PgCrudCommonDefaultOptSomeVecOneElCall)},
                     },
                 };
                 quote! {Self(#ts)}
@@ -4137,7 +4137,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #maybe_impl_serde_deserialize_for_ident_standart_not_null_origin_ts
                 #impl_display_for_ident_origin_ts
                 #impl_location_lib_to_err_string_for_ident_origin_ts
-                #impl_default_option_some_vec_one_el_for_ident_origin_ts
+                #impl_default_opt_some_vec_one_el_for_ident_origin_ts
                 #impl_sqlx_type_for_ident_origin_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_origin_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_origin_ts
@@ -4210,8 +4210,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     &ident_origin_struct_ts
                 );
             let impl_ident_table_type_declaration_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_table_type_declaration_ucc);
-            let impl_default_option_some_vec_one_el_for_ident_table_type_declaration_ts =
-                gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_table_type_declaration_ucc, &quote! {Self(#PgCrudCommonDefaultOptionSomeVecOneElCall)});
+            let impl_default_opt_some_vec_one_el_for_ident_table_type_declaration_ts =
+                gen_impl_pg_crud_common_default_opt_some_vec_one_el_ts(&ident_table_type_declaration_ucc, &quote! {Self(#PgCrudCommonDefaultOptSomeVecOneElCall)});
             let impl_sqlx_type_for_ident_table_type_declaration_ts = gen_impl_sqlx_type_for_ident_ts(&ident_table_type_declaration_ucc, &ident_origin_ucc);
             let impl_sqlx_encode_sqlx_pg_for_ident_table_type_declaration_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_table_type_declaration_ucc, &quote! {#SelfSc.0});
             let impl_sqlx_decode_sqlx_pg_for_ident_table_type_declaration_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(&ident_table_type_declaration_ucc, &ident_origin_ucc, &quote! {Ok(Self(v))});
@@ -4258,7 +4258,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             quote! {
                 #ident_table_type_declaration_ts
                 #impl_ident_table_type_declaration_ts
-                #impl_default_option_some_vec_one_el_for_ident_table_type_declaration_ts
+                #impl_default_opt_some_vec_one_el_for_ident_table_type_declaration_ts
                 #impl_sqlx_type_for_ident_table_type_declaration_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_table_type_declaration_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_table_type_declaration_ts
@@ -4288,9 +4288,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 CanBePrimaryKey::False => gen_pub_const_new_or_pub_try_new_ts(&ident_create_ucc),
                 CanBePrimaryKey::True => Ts2::new(),
             };
-            let impl_default_option_some_vec_one_el_for_ident_create_ts = gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_create_ucc, &{
+            let impl_default_opt_some_vec_one_el_for_ident_create_ts = gen_impl_pg_crud_common_default_opt_some_vec_one_el_ts(&ident_create_ucc, &{
                 let ts: &dyn ToTokens = match &can_be_primary_key {
-                    CanBePrimaryKey::False => &PgCrudCommonDefaultOptionSomeVecOneElCall,
+                    CanBePrimaryKey::False => &PgCrudCommonDefaultOptSomeVecOneElCall,
                     CanBePrimaryKey::True => &quote! {()},
                 };
                 quote! {Self(#ts)}
@@ -4306,7 +4306,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             quote! {
                 #ident_create_ts
                 #maybe_impl_ident_create_ts
-                #impl_default_option_some_vec_one_el_for_ident_create_ts
+                #impl_default_opt_some_vec_one_el_for_ident_create_ts
                 #maybe_impl_sqlx_encode_sqlx_pg_for_ident_create_ts
                 #maybe_impl_sqlx_type_for_ident_create_ts
             }
@@ -4330,13 +4330,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 },
                 DeriveDefault::True,
             );
-            let (impl_default_option_some_vec_one_el_for_ident_select_ts, impl_default_option_some_vec_one_el_max_page_size_for_ident_select_ts) = {
+            let (impl_default_opt_some_vec_one_el_for_ident_select_ts, impl_default_opt_some_vec_one_el_max_page_size_for_ident_select_ts) = {
                 let gen_default_ts = |default_some_one_or_default_some_one_with_max_page_size: &DefaultSomeOneOrDefaultSomeOneWithMaxPageSize| match &pg_type_pattern {
                     PgTypePattern::Standart => quote! {Self},
                     PgTypePattern::ArrayDim1 { .. } => {
                         let ts: &dyn ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
-                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudCommonDefaultOptionSomeVecOneElCall,
-                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall,
+                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudCommonDefaultOptSomeVecOneElCall,
+                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudCommonDefaultOptSomeVecOneElMaxPageSizeCall,
                         };
                         let mut arguments_ts = Vec::new();
                         for el_a227c2ba in 1..=array_dims_number {
@@ -4349,14 +4349,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 };
                 (
-                    gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_select_ucc, &gen_default_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)),
-                    gen_impl_pg_crud_common_default_option_some_vec_one_el_max_page_size_ts(&ident_select_ucc, &gen_default_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)),
+                    gen_impl_pg_crud_common_default_opt_some_vec_one_el_ts(&ident_select_ucc, &gen_default_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)),
+                    gen_impl_pg_crud_common_default_opt_some_vec_one_el_max_page_size_ts(&ident_select_ucc, &gen_default_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)),
                 )
             };
             quote! {
                 #pub_struct_ident_select_ts
-                #impl_default_option_some_vec_one_el_for_ident_select_ts
-                #impl_default_option_some_vec_one_el_max_page_size_for_ident_select_ts
+                #impl_default_opt_some_vec_one_el_for_ident_select_ts
+                #impl_default_opt_some_vec_one_el_max_page_size_for_ident_select_ts
             }
         };
         let ident_read_ucc = SelfReadUcc::from_tokens(&ident);
@@ -4732,8 +4732,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             };
             let impl_ident_read_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_read_ucc);
             let impl_location_lib_to_err_string_for_ident_read_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_read_ucc, &Ts2::new(), &quote! {self.0.to_string()});
-            let impl_crate_default_option_some_vec_one_el_for_ident_read_ts =
-                gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_read_ucc, &quote! {Self(#PgCrudCommonDefaultOptionSomeVecOneElCall)});
+            let impl_crate_default_opt_some_vec_one_el_for_ident_read_ts =
+                gen_impl_pg_crud_common_default_opt_some_vec_one_el_ts(&ident_read_ucc, &quote! {Self(#PgCrudCommonDefaultOptSomeVecOneElCall)});
             let impl_sqlx_encode_sqlx_pg_for_ident_origin_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_read_ucc, &quote! {#SelfSc.0});
             let impl_sqlx_decode_sqlx_pg_for_ident_read_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
                 &ident_read_ucc,
@@ -4766,7 +4766,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #ident_read_ts
                 #impl_ident_read_ts
                 #impl_location_lib_to_err_string_for_ident_read_ts
-                #impl_crate_default_option_some_vec_one_el_for_ident_read_ts
+                #impl_crate_default_opt_some_vec_one_el_for_ident_read_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_origin_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_read_ts
                 #impl_sqlx_type_for_ident_read_ts
@@ -4821,13 +4821,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     &ident_origin_struct_ts
                 );
             let impl_ident_update_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_update_ucc);
-            let impl_default_option_some_vec_one_el_for_ident_update_ts =
-                gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_update_ucc, &quote! {Self(#PgCrudCommonDefaultOptionSomeVecOneElCall)});
+            let impl_default_opt_some_vec_one_el_for_ident_update_ts =
+                gen_impl_pg_crud_common_default_opt_some_vec_one_el_ts(&ident_update_ucc, &quote! {Self(#PgCrudCommonDefaultOptSomeVecOneElCall)});
             let impl_location_lib_to_err_string_for_ident_update_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_update_ucc, &Ts2::new(), &quote! {self.0.#ToErrStringSc()});
             quote! {
                 #ident_update_ts
                 #impl_ident_update_ts
-                #impl_default_option_some_vec_one_el_for_ident_update_ts
+                #impl_default_opt_some_vec_one_el_for_ident_update_ts
                 #impl_location_lib_to_err_string_for_ident_update_ts
             }
         };
@@ -5788,7 +5788,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     ),
                 }
             };
-            let option_vec_create_ts = {
+            let opt_vec_create_ts = {
                 let gen_some_acc_ts = |
                     is_nullable_27c3e340: &IsNullable,
                     ident_ts_3fadfa9d: &dyn ToTokens,
@@ -5806,7 +5806,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let ident_as_pg_type_test_cases_ts = gen_as_pg_type_test_cases_ts(&ident_ts_3fadfa9d);
                     quote! {Some({
                         let mut acc_0b59a062 = Vec::new();
-                        for el_0fd5865b in #ident_as_pg_type_test_cases_ts::#OptionVecCreateSc().unwrap_or(Vec::new()) {
+                        for el_0fd5865b in #ident_as_pg_type_test_cases_ts::#OptVecCreateSc().unwrap_or(Vec::new()) {
                             acc_0b59a062.push(#self_as_pg_type_ts::Create::#new_or_try_new_ts);
                         }
                         #maybe_acc_push_none_ts
@@ -5902,7 +5902,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     };
                                     (
                                         gen_new_or_try_new_ts(&quote! {
-                                            #ts::#OptionVecCreateSc().unwrap_or(Vec::new())
+                                            #ts::#OptVecCreateSc().unwrap_or(Vec::new())
                                             .into_iter()
                                             .map(|el_ffb375dd|el_ffb375dd.0.into())
                                             .collect()
@@ -5913,7 +5913,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 };
                                 quote! {
                                     acc_0b59a062.push(#self_as_pg_type_ts::Create::#first_ts);
-                                    if let Some(v_6465e8ae) = #ts::#OptionVecCreateSc().unwrap_or(Vec::new()).first() {
+                                    if let Some(v_6465e8ae) = #ts::#OptVecCreateSc().unwrap_or(Vec::new()).first() {
                                         acc_0b59a062.push(#self_as_pg_type_ts::Create::#second_ts);
                                         acc_0b59a062.push(#self_as_pg_type_ts::Create::#third_ts);
                                     }
@@ -5974,15 +5974,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 quote! {
                                     let mut acc_abf96c9f = Vec::new();
                                     let read_only_ids_to_two_dimal_vec_read_inner = #ident_standart_not_null_as_pg_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(#ReadOnlyIdsSc);
-                                    let option_additional = {
-                                        let mut option_additional = None;
+                                    let opt_additional = {
+                                        let mut opt_additional = None;
                                         for el_cb3f4b45 in &read_only_ids_to_two_dimal_vec_read_inner {
-                                            if option_additional.is_some() {
+                                            if opt_additional.is_some() {
                                                 break;
                                             }
                                             for el_d27d1981 in el_cb3f4b45 {
-                                                if option_additional.is_none() {
-                                                    option_additional = Some((vec![
+                                                if opt_additional.is_none() {
+                                                    opt_additional = Some((vec![
                                                         vec![#el_d27d1981_ts]],
                                                         vec![vec![#el_d27d1981_ts, #el_d27d1981_ts]
                                                     ]));
@@ -5992,7 +5992,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 }
                                             }
                                         }
-                                        option_additional
+                                        opt_additional
                                     };
                                     let has_len_greater_than_one = {
                                         let mut has_len_greater_than_one = false;
@@ -6007,7 +6007,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     for el_cb836246 in read_only_ids_to_two_dimal_vec_read_inner {
                                         acc_abf96c9f.push(vec![el_cb836246]);
                                     }
-                                    if let Some(v_e22f9ad2) = option_additional {
+                                    if let Some(v_e22f9ad2) = opt_additional {
                                         if has_len_greater_than_one {
                                             acc_abf96c9f.push(v_e22f9ad2.0);
                                         }
@@ -6023,15 +6023,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 quote! {
                                     let mut acc_68eba82f = Vec::new();
                                     let read_only_ids_to_two_dimal_vec_read_inner = #ident_standart_nullable_as_pg_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(#ReadOnlyIdsSc);
-                                    let option_additional = {
-                                        let mut option_additional = None;
+                                    let opt_additional = {
+                                        let mut opt_additional = None;
                                         for el_b04183c6 in &read_only_ids_to_two_dimal_vec_read_inner {
-                                            if option_additional.is_some() {
+                                            if opt_additional.is_some() {
                                                 break;
                                             }
                                             for el_6b831e7c in el_b04183c6 {
-                                                if option_additional.is_none() {
-                                                    option_additional = Some((
+                                                if opt_additional.is_none() {
+                                                    opt_additional = Some((
                                                         vec![vec![#el_6b831e7c_ts]],
                                                         vec![vec![#el_6b831e7c_ts, #el_6b831e7c_ts]]
                                                     ));
@@ -6041,7 +6041,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 }
                                             }
                                         }
-                                        option_additional
+                                        opt_additional
                                     };
                                     let has_len_greater_than_one = read_only_ids_to_two_dimal_vec_read_inner.len() > 1;
                                     acc_68eba82f.push(vec![
@@ -6050,7 +6050,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         .flat_map(IntoIterator::into_iter)
                                         .collect()
                                     ]);
-                                    if let Some(v_a0f0f172) = option_additional {
+                                    if let Some(v_a0f0f172) = opt_additional {
                                         if has_len_greater_than_one {
                                             acc_68eba82f.push(v_a0f0f172.0);
                                         }
@@ -6071,19 +6071,19 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             quote! {
                                 let mut acc_5f7f59ac = Vec::new();
                                 let read_only_ids_to_two_dimal_vec_read_inner = #ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(#ReadOnlyIdsSc);
-                                let option_additional = {
-                                    let mut option_additional = None;
+                                let opt_additional = {
+                                    let mut opt_additional = None;
                                     for el_12a259ab in &read_only_ids_to_two_dimal_vec_read_inner {
-                                        if option_additional.is_some() {
+                                        if opt_additional.is_some() {
                                             break;
                                         }
                                         for el_16a61773 in el_12a259ab {
-                                            if option_additional.is_some() {
+                                            if opt_additional.is_some() {
                                                 break;
                                             }
                                             for el_31abc64a in el_16a61773 {
-                                                if option_additional.is_none() {
-                                                    option_additional = Some((
+                                                if opt_additional.is_none() {
+                                                    opt_additional = Some((
                                                         vec![Some(vec![#el_31abc64a_ts])],
                                                         vec![Some(vec![#el_31abc64a_ts, #el_31abc64a_ts])]
                                                     ));
@@ -6094,7 +6094,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             }
                                         }
                                     }
-                                    option_additional
+                                    opt_additional
                                 };
                                 let has_len_greater_than_one = {
                                     let mut has_len_greater_than_one = false;
@@ -6116,7 +6116,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     .collect()
                                 )]);
                                 acc_5f7f59ac.push(vec![None]);
-                                if let Some(v_3530786a) = option_additional {
+                                if let Some(v_3530786a) = opt_additional {
                                     if has_len_greater_than_one {
                                         acc_5f7f59ac.push(v_3530786a.0);
                                     }
@@ -6142,20 +6142,20 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     #import_path_non_primary_key_pg_type_read_only_ids_ts(#value_init_ts)
                 }
             };
-            let read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts = {
+            let read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts = {
                 //todo that is not correct for array of generated by pg primary keys but maybe just need to remove this vrts and thats it?
                 let value_init_ts = gen_import_path_value_init_ts(&{
                     let ts: &dyn ToTokens = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
                         &quote! {#ValueSc.0 #maybe_dot_clone_ts}
                     } else {
-                        &PgCrudCommonDefaultOptionSomeVecOneElCall
+                        &PgCrudCommonDefaultOptSomeVecOneElCall
                     };
                     quote! {#self_pg_type_as_pg_type_ts::normalize(#ts)}
                 });
                 quote! {Some(#value_init_ts)}
             };
-            let previous_read_merged_with_option_update_into_read_ts = quote! {
-                #OptionUpdateSc.map_or(#ReadSc, |#ValueSc| #ident_read_ucc(#ValueSc.0))
+            let previous_read_merged_with_opt_update_into_read_ts = quote! {
+                #OptUpdateSc.map_or(#ReadSc, |#ValueSc| #ident_read_ucc(#ValueSc.0))
             };
             let read_only_ids_merged_with_create_into_read_ts = {
                 let ts = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
@@ -6167,7 +6167,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     #self_pg_type_as_pg_type_ts::normalize(#ts)
                 }
             };
-            let read_only_ids_merged_with_create_into_option_value_read_ts = {
+            let read_only_ids_merged_with_create_into_opt_value_read_ts = {
                 let value_init_ts = gen_import_path_value_init_ts(&quote! {
                     <Self as #import_path::PgTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoReadSc(
                         #ReadOnlyIdsSc,
@@ -6206,8 +6206,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     #read_only_ids_merged_with_create_into_where_equal_ts
                 ]).expect("4c08b551")
             };
-            let read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_ts = none_ts.clone();
-            let create_into_pg_type_option_vec_where_dim_one_equal_ts = match &pg_type_pattern {
+            let read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts = none_ts.clone();
+            let create_into_pg_type_opt_vec_where_dim_one_equal_ts = match &pg_type_pattern {
                 PgTypePattern::Standart => none_ts.clone(),
                 PgTypePattern::ArrayDim1 { dim1_is_nullable } => {
                     let ident_standart_is_nullable_table_type_declaration_ucc: &dyn ToTokens = match &dim1_is_nullable {
@@ -6260,7 +6260,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let pg_type_option_vec_where_greater_than_test_ts = {
+            let pg_type_opt_vec_where_greater_than_test_ts = {
                 let greater_than = PgTypeGreaterThanVrt::GreaterThan;
                 let not_greater_than = PgTypeGreaterThanVrt::NotGreaterThan;
                 let equal_not_greater_than = PgTypeGreaterThanVrt::EqualNotGreaterThan;
@@ -6466,7 +6466,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                         IsNullable::True => quote! {
-                            <#ident_standart_not_null_ucc as #import_path::PgTypeTestCases>::pg_type_option_vec_where_greater_than_test().map(
+                            <#ident_standart_not_null_ucc as #import_path::PgTypeTestCases>::pg_type_opt_vec_where_greater_than_test().map(
                                 |el_e4af7fd9|
                                 #import_path::NotEmptyUniqueVec::try_new(
                                     el_e4af7fd9
@@ -6485,7 +6485,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgTypePattern::ArrayDim1 { .. } => none_ts.clone(),
                 }
             };
-            let read_only_ids_merged_with_table_type_declaration_into_pg_type_option_where_greater_than_ts = match &pg_type_pattern {
+            let read_only_ids_merged_with_table_type_declaration_into_pg_type_opt_where_greater_than_ts = match &pg_type_pattern {
                 PgTypePattern::Standart => {
                     enum IsNeedToImplPgTypeGreaterThanTest {
                         False,
@@ -6559,51 +6559,51 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 }
                 PgTypePattern::ArrayDim1 { .. } => none_ts.clone(),
             };
-            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_ts = none_ts.clone();
-            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_ts = none_ts.clone();
-            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_three_equal_ts = none_ts.clone();
-            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_four_equal_ts = none_ts.clone();
-            let create_into_pg_json_type_option_vec_where_length_equal_ts = none_ts.clone();
-            let create_into_pg_json_type_option_vec_where_length_greater_than_ts = none_ts.clone();
-            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_greater_than_ts = none_ts.clone();
-            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_between_ts = none_ts.clone();
-            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_in_ts = none_ts.clone();
-            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_regular_expression_ts = none_ts.clone();
-            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_greater_than_ts = none_ts.clone();
-            let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_regular_expression_ts = none_ts;
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts = none_ts.clone();
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts = none_ts.clone();
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts = none_ts.clone();
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts = none_ts.clone();
+            let create_into_pg_json_type_opt_vec_where_length_equal_ts = none_ts.clone();
+            let create_into_pg_json_type_opt_vec_where_length_greater_than_ts = none_ts.clone();
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts = none_ts.clone();
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts = none_ts.clone();
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts = none_ts.clone();
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts = none_ts.clone();
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts = none_ts.clone();
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts = none_ts;
             gen_impl_pg_type_test_cases_for_ident_ts(
                 &quote! {#[cfg(feature = "test-utils")]},
                 &import_path,
                 &ident_inner_type_ts,
                 &ident,
-                &option_vec_create_ts,
+                &opt_vec_create_ts,
                 &read_only_ids_to_two_dimal_vec_read_inner_ts,
                 &read_inner_into_read_with_new_or_try_new_unwraped_ts,
                 &read_inner_into_update_with_new_or_try_new_unwraped_ts,
                 &update_to_read_only_ids_ts,
-                &read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts,
-                &previous_read_merged_with_option_update_into_read_ts,
+                &read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts,
+                &previous_read_merged_with_opt_update_into_read_ts,
                 &read_only_ids_merged_with_create_into_read_ts,
-                &read_only_ids_merged_with_create_into_option_value_read_ts,
+                &read_only_ids_merged_with_create_into_opt_value_read_ts,
                 &read_only_ids_merged_with_create_into_table_type_declaration_ts,
                 &read_only_ids_merged_with_create_into_where_equal_ts,
                 &read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts,
-                &read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_ts,
-                &create_into_pg_type_option_vec_where_dim_one_equal_ts,
-                &pg_type_option_vec_where_greater_than_test_ts,
-                &read_only_ids_merged_with_table_type_declaration_into_pg_type_option_where_greater_than_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_three_equal_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_four_equal_ts,
-                &create_into_pg_json_type_option_vec_where_length_equal_ts,
-                &create_into_pg_json_type_option_vec_where_length_greater_than_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_greater_than_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_between_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_in_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_regular_expression_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_greater_than_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_regular_expression_ts,
+                &read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts,
+                &create_into_pg_type_opt_vec_where_dim_one_equal_ts,
+                &pg_type_opt_vec_where_greater_than_test_ts,
+                &read_only_ids_merged_with_table_type_declaration_into_pg_type_opt_where_greater_than_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts,
+                &create_into_pg_json_type_opt_vec_where_length_equal_ts,
+                &create_into_pg_json_type_opt_vec_where_length_greater_than_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts,
             )
         };
         let maybe_impl_pg_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_ts = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {

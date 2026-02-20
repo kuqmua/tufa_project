@@ -49,7 +49,7 @@ impl FromStr for LocationFieldAttr {
 impl TryFrom<&Field> for LocationFieldAttr {
     type Error = String;
     fn try_from(syn_field: &Field) -> Result<Self, Self::Error> {
-        let mut option_attr = None;
+        let mut opt_attr = None;
         for el_adfb232c in &syn_field.attrs {
             if el_adfb232c.path().segments.len() == 1 {
                 let first_segment_ident = match el_adfb232c.path().segments.first() {
@@ -59,14 +59,14 @@ impl TryFrom<&Field> for LocationFieldAttr {
                     }
                 };
                 if let Ok(v) = FromStr::from_str(&first_segment_ident.to_string()) {
-                    if option_attr.is_some() {
+                    if opt_attr.is_some() {
                         return Err("two or more supported attrs!".to_owned());
                     }
-                    option_attr = Some(v);
+                    opt_attr = Some(v);
                 }
             } //other attrs are not for this proc_macro
         }
-        option_attr.map_or_else(|| Err("option attr is None".to_owned()), Ok)
+        opt_attr.map_or_else(|| Err("opt attr is None".to_owned()), Ok)
     }
 }
 impl AttrIdentStr for LocationFieldAttr {

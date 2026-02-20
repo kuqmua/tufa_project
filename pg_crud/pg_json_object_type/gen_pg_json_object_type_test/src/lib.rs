@@ -35,7 +35,7 @@ test-utils = []"#,
                     }]
                     pub struct ObjectExample {
                         pub field_0: pg_crud::I8AsNotNullJsonbNumber,
-                        pub field_1: pg_crud::OptionI8AsNullableJsonbNumber,
+                        pub field_1: pg_crud::OptI8AsNullableJsonbNumber,
                         pub field_2: pg_crud::VecOfI8AsNotNullArrayOfNotNullJsonbNumber,
                     }
                 };

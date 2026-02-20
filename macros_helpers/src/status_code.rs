@@ -421,7 +421,7 @@ impl TryFrom<&String> for StatusCode {
 }
 #[must_use]
 pub fn get_only_one(vrt: &Variant) -> StatusCode {
-    let mut option_self = None;
+    let mut opt_self = None;
     vrt.attrs.iter().for_each(|attr| {
         if attr.path().segments.len() == 1
             && let Ok(named_attr) = StatusCode::try_from(
@@ -434,12 +434,12 @@ pub fn get_only_one(vrt: &Variant) -> StatusCode {
                     .to_string(),
             )
         {
-            if option_self.is_some() {
+            if opt_self.is_some() {
                 panic!("07286cf0");
             } else {
-                option_self = Some(named_attr);
+                opt_self = Some(named_attr);
             }
         }
     });
-    option_self.expect("19fc6512")
+    opt_self.expect("19fc6512")
 }

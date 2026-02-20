@@ -1,7 +1,7 @@
 use location_lib::loc::Loc;
 use location_lib::{Location, loc};
 use pg_crud_common::{
-    DEFAULT_PAGINATION_LIMIT, DefaultOptionSomeVecOneEl, DefaultOptionSomeVecOneElMaxPageSize,
+    DEFAULT_PAGINATION_LIMIT, DefaultOptSomeVecOneEl, DefaultOptSomeVecOneElMaxPageSize,
     PaginationBase, PgTypeWhereFilter, QueryPartEr,
 };
 use schemars::JsonSchema;
@@ -239,15 +239,15 @@ impl<'lifetime> PgTypeWhereFilter<'lifetime> for PaginationStartsWithOne {
             .query_part(incr, column, is_need_to_add_logical_operator)
     }
 }
-impl DefaultOptionSomeVecOneEl for PaginationStartsWithOne {
+impl DefaultOptSomeVecOneEl for PaginationStartsWithOne {
     #[inline]
-    fn default_option_some_vec_one_el() -> Self {
+    fn default_opt_some_vec_one_el() -> Self {
         Self(PaginationBase::new_unchecked(DEFAULT_PAGINATION_LIMIT, 1))
     }
 }
-impl DefaultOptionSomeVecOneElMaxPageSize for PaginationStartsWithOne {
+impl DefaultOptSomeVecOneElMaxPageSize for PaginationStartsWithOne {
     #[inline]
-    fn default_option_some_vec_one_el_max_page_size() -> Self {
+    fn default_opt_some_vec_one_el_max_page_size() -> Self {
         let one: i32 = 1;
         Self(PaginationBase::new_unchecked(
             i32::MAX.checked_sub(one).expect("c0f03c51").into(),

@@ -1,6 +1,6 @@
 use location_lib::{Location, loc, loc::Loc};
 use pg_crud_common::{
-    DefaultOptionSomeVecOneEl, NotEmptyUniqueVecTryNewEr, PgTypeWhereFilter, QueryPartEr,
+    DefaultOptSomeVecOneEl, NotEmptyUniqueVecTryNewEr, PgTypeWhereFilter, QueryPartEr,
     incr_checked_add_one_returning_incr,
 };
 use regex::Regex;
@@ -31,12 +31,12 @@ impl Display for EncodeFormat {
         }
     }
 }
-impl DefaultOptionSomeVecOneEl for EncodeFormat {
-    fn default_option_some_vec_one_el() -> Self {
+impl DefaultOptSomeVecOneEl for EncodeFormat {
+    fn default_opt_some_vec_one_el() -> Self {
         Self::default()
     }
 }
-//difference between NotEmptyUniqueVec and PgJsonTypeNotEmptyUniqueVec only in pg_crud_common::DefaultOptionSomeVecOneEl impl with different generic requirement and PgTypeWhereFilter
+//difference between NotEmptyUniqueVec and PgJsonTypeNotEmptyUniqueVec only in pg_crud_common::DefaultOptSomeVecOneEl impl with different generic requirement and PgTypeWhereFilter
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
 pub struct PgJsonTypeNotEmptyUniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
@@ -178,11 +178,9 @@ const _: () = {
         }
     }
 };
-impl<T: DefaultOptionSomeVecOneEl> DefaultOptionSomeVecOneEl for PgJsonTypeNotEmptyUniqueVec<T> {
-    fn default_option_some_vec_one_el() -> Self {
-        Self(vec![
-            DefaultOptionSomeVecOneEl::default_option_some_vec_one_el(),
-        ])
+impl<T: DefaultOptSomeVecOneEl> DefaultOptSomeVecOneEl for PgJsonTypeNotEmptyUniqueVec<T> {
+    fn default_opt_some_vec_one_el() -> Self {
+        Self(vec![DefaultOptSomeVecOneEl::default_opt_some_vec_one_el()])
     }
 }
 impl<T> Default for PgJsonTypeNotEmptyUniqueVec<T> {
@@ -351,8 +349,8 @@ impl Display for RegexRegex {
         write!(f, "{}", self.0)
     }
 }
-impl DefaultOptionSomeVecOneEl for RegexRegex {
-    fn default_option_some_vec_one_el() -> Self {
+impl DefaultOptSomeVecOneEl for RegexRegex {
+    fn default_opt_some_vec_one_el() -> Self {
         Self(Regex::new("[a-z]+").expect("22a9eda5"))
     }
 }
@@ -361,8 +359,8 @@ pub enum RegularExpressionCase {
     Insensitive,
     Sensitive,
 }
-impl DefaultOptionSomeVecOneEl for RegularExpressionCase {
-    fn default_option_some_vec_one_el() -> Self {
+impl DefaultOptSomeVecOneEl for RegularExpressionCase {
+    fn default_opt_some_vec_one_el() -> Self {
         Self::Sensitive
     }
 }
@@ -589,13 +587,13 @@ const _: () = {
         }
     }
 };
-impl<T: DefaultOptionSomeVecOneEl + Type<Postgres> + for<'__> Encode<'__, Postgres>>
-    DefaultOptionSomeVecOneEl for Between<T>
+impl<T: DefaultOptSomeVecOneEl + Type<Postgres> + for<'__> Encode<'__, Postgres>>
+    DefaultOptSomeVecOneEl for Between<T>
 {
-    fn default_option_some_vec_one_el() -> Self {
+    fn default_opt_some_vec_one_el() -> Self {
         Self {
-            start: DefaultOptionSomeVecOneEl::default_option_some_vec_one_el(),
-            end: DefaultOptionSomeVecOneEl::default_option_some_vec_one_el(),
+            start: DefaultOptSomeVecOneEl::default_opt_some_vec_one_el(),
+            end: DefaultOptSomeVecOneEl::default_opt_some_vec_one_el(),
         }
     }
 }
@@ -734,11 +732,9 @@ const _: () = {
         }
     }
 };
-impl<T: DefaultOptionSomeVecOneEl> DefaultOptionSomeVecOneEl for PgTypeNotEmptyUniqueVec<T> {
-    fn default_option_some_vec_one_el() -> Self {
-        Self(vec![
-            DefaultOptionSomeVecOneEl::default_option_some_vec_one_el(),
-        ])
+impl<T: DefaultOptSomeVecOneEl> DefaultOptSomeVecOneEl for PgTypeNotEmptyUniqueVec<T> {
+    fn default_opt_some_vec_one_el() -> Self {
+        Self(vec![DefaultOptSomeVecOneEl::default_opt_some_vec_one_el()])
     }
 }
 impl<T> Default for PgTypeNotEmptyUniqueVec<T> {
@@ -980,12 +976,12 @@ const _: () = {
         }
     }
 };
-impl<T: Clone + DefaultOptionSomeVecOneEl, const LENGTH: usize> DefaultOptionSomeVecOneEl
+impl<T: Clone + DefaultOptSomeVecOneEl, const LENGTH: usize> DefaultOptSomeVecOneEl
     for BoundedStdVecVec<T, LENGTH>
 {
-    fn default_option_some_vec_one_el() -> Self {
+    fn default_opt_some_vec_one_el() -> Self {
         Self(vec![
-                <T as DefaultOptionSomeVecOneEl>::default_option_some_vec_one_el();
+                <T as DefaultOptSomeVecOneEl>::default_opt_some_vec_one_el();
                 LENGTH
             ])
     }

@@ -4,17 +4,17 @@ use quote::{ToTokens, quote};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter, Result as StdFmtResult};
-pub trait DefaultOptionSomeVecOneEl: Sized {
-    fn default_option_some_vec_one_el() -> Self;
+pub trait DefaultOptSomeVecOneEl: Sized {
+    fn default_opt_some_vec_one_el() -> Self;
 }
-pub trait AllEnumVrtsArrayDefaultOptionSomeVecOneEl: Sized {
-    fn all_vrts_default_option_some_vec_one_el() -> Vec<Self>;
+pub trait AllEnumVrtsArrayDefaultOptSomeVecOneEl: Sized {
+    fn all_vrts_default_opt_some_vec_one_el() -> Vec<Self>;
 }
-pub trait DefaultOptionSomeVecOneElMaxPageSize: Sized {
-    fn default_option_some_vec_one_el_max_page_size() -> Self;
+pub trait DefaultOptSomeVecOneElMaxPageSize: Sized {
+    fn default_opt_some_vec_one_el_max_page_size() -> Self;
 }
-pub trait AllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize: Sized {
-    fn all_vrts_default_option_some_vec_one_el_max_page_size() -> Vec<Self>;
+pub trait AllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize: Sized {
+    fn all_vrts_default_opt_some_vec_one_el_max_page_size() -> Vec<Self>;
 }
 #[derive(Debug, Default, Clone, Copy, Serialize, Deserialize, Eq, PartialEq, JsonSchema)]
 pub enum LogicalOperator {
@@ -50,8 +50,8 @@ impl Display for LogicalOperator {
         write!(f, "{self:?}")
     }
 }
-impl DefaultOptionSomeVecOneEl for LogicalOperator {
-    fn default_option_some_vec_one_el() -> Self {
+impl DefaultOptSomeVecOneEl for LogicalOperator {
+    fn default_opt_some_vec_one_el() -> Self {
         Self::default()
     }
 }

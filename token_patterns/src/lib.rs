@@ -240,8 +240,8 @@ impl ToTokens for Er3 {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct FieldAttrSerdeSkipSerializingIfOptionIsNone;
-impl ToTokens for FieldAttrSerdeSkipSerializingIfOptionIsNone {
+pub struct FieldAttrSerdeSkipSerializingIfOptIsNone;
+impl ToTokens for FieldAttrSerdeSkipSerializingIfOptIsNone {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {#[serde(skip_serializing_if = "Option::is_none")]}.to_tokens(tokens);
     }
@@ -338,344 +338,341 @@ impl ToTokens for StdFmtDisplay {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct CrateDefaultOptionSomeVecOneEl;
-impl ToTokens for CrateDefaultOptionSomeVecOneEl {
+pub struct CrateDefaultOptSomeVecOneEl;
+impl ToTokens for CrateDefaultOptSomeVecOneEl {
     fn to_tokens(&self, tokens: &mut Ts2) {
         let crate_path_ts = crate_path_ts();
-        let default_option_some_vec_one_el_ucc = default_option_some_vec_one_el_ucc();
+        let default_opt_some_vec_one_el_ucc = default_opt_some_vec_one_el_ucc();
         quote! {
             #crate_path_ts
-            #default_option_some_vec_one_el_ucc
+            #default_opt_some_vec_one_el_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct CrateDefaultOptionSomeVecOneElCall;
-impl ToTokens for CrateDefaultOptionSomeVecOneElCall {
+pub struct CrateDefaultOptSomeVecOneElCall;
+impl ToTokens for CrateDefaultOptSomeVecOneElCall {
     fn to_tokens(&self, tokens: &mut Ts2) {
         let crate_path_ts = crate_path_ts();
-        let default_option_some_vec_one_el_ucc = default_option_some_vec_one_el_ucc();
-        let path_default_option_some_vec_one_el_call = path_default_option_some_vec_one_el_call();
+        let default_opt_some_vec_one_el_ucc = default_opt_some_vec_one_el_ucc();
+        let path_default_opt_some_vec_one_el_call = path_default_opt_some_vec_one_el_call();
         quote! {
             #crate_path_ts
-            #default_option_some_vec_one_el_ucc
-            #path_default_option_some_vec_one_el_call
+            #default_opt_some_vec_one_el_ucc
+            #path_default_opt_some_vec_one_el_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PgCrudDefaultOptionSomeVecOneEl;
-impl ToTokens for PgCrudDefaultOptionSomeVecOneEl {
+pub struct PgCrudDefaultOptSomeVecOneEl;
+impl ToTokens for PgCrudDefaultOptSomeVecOneEl {
     fn to_tokens(&self, tokens: &mut Ts2) {
         let pg_crud = pg_crud();
-        let default_option_some_vec_one_el_ucc = default_option_some_vec_one_el_ucc();
+        let default_opt_some_vec_one_el_ucc = default_opt_some_vec_one_el_ucc();
         quote! {
             #pg_crud
-            #default_option_some_vec_one_el_ucc
+            #default_opt_some_vec_one_el_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PgCrudDefaultOptionSomeVecOneElCall;
-impl ToTokens for PgCrudDefaultOptionSomeVecOneElCall {
+pub struct PgCrudDefaultOptSomeVecOneElCall;
+impl ToTokens for PgCrudDefaultOptSomeVecOneElCall {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let pg_crud_default_option_some_vec_one_el = PgCrudDefaultOptionSomeVecOneEl;
-        let path_default_option_some_vec_one_el_call = path_default_option_some_vec_one_el_call();
+        let pg_crud_default_opt_some_vec_one_el = PgCrudDefaultOptSomeVecOneEl;
+        let path_default_opt_some_vec_one_el_call = path_default_opt_some_vec_one_el_call();
         quote! {
-            #pg_crud_default_option_some_vec_one_el
-            #path_default_option_some_vec_one_el_call
+            #pg_crud_default_opt_some_vec_one_el
+            #path_default_opt_some_vec_one_el_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PgCrudCommonDefaultOptionSomeVecOneEl;
-impl ToTokens for PgCrudCommonDefaultOptionSomeVecOneEl {
+pub struct PgCrudCommonDefaultOptSomeVecOneEl;
+impl ToTokens for PgCrudCommonDefaultOptSomeVecOneEl {
     fn to_tokens(&self, tokens: &mut Ts2) {
         let pg_crud_common = pg_crud_common();
-        let default_option_some_vec_one_el_ucc = default_option_some_vec_one_el_ucc();
+        let default_opt_some_vec_one_el_ucc = default_opt_some_vec_one_el_ucc();
         quote! {
             #pg_crud_common
-            #default_option_some_vec_one_el_ucc
+            #default_opt_some_vec_one_el_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PgCrudCommonDefaultOptionSomeVecOneElCall;
-impl ToTokens for PgCrudCommonDefaultOptionSomeVecOneElCall {
+pub struct PgCrudCommonDefaultOptSomeVecOneElCall;
+impl ToTokens for PgCrudCommonDefaultOptSomeVecOneElCall {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let pg_crud_common_default_option_some_vec_one_el = PgCrudCommonDefaultOptionSomeVecOneEl;
-        let path_default_option_some_vec_one_el_call = path_default_option_some_vec_one_el_call();
+        let pg_crud_common_default_opt_some_vec_one_el = PgCrudCommonDefaultOptSomeVecOneEl;
+        let path_default_opt_some_vec_one_el_call = path_default_opt_some_vec_one_el_call();
         quote! {
-            #pg_crud_common_default_option_some_vec_one_el
-            #path_default_option_some_vec_one_el_call
+            #pg_crud_common_default_opt_some_vec_one_el
+            #path_default_opt_some_vec_one_el_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct CrateAllEnumVrtsArrayDefaultOptionSomeVecOneEl;
-impl ToTokens for CrateAllEnumVrtsArrayDefaultOptionSomeVecOneEl {
+pub struct CrateAllEnumVrtsArrayDefaultOptSomeVecOneEl;
+impl ToTokens for CrateAllEnumVrtsArrayDefaultOptSomeVecOneEl {
     fn to_tokens(&self, tokens: &mut Ts2) {
         let crate_path_ts = crate_path_ts();
-        let all_vrts_default_option_some_vec_one_el_ucc =
-            all_vrts_default_option_some_vec_one_el_ucc();
+        let all_vrts_default_opt_some_vec_one_el_ucc = all_vrts_default_opt_some_vec_one_el_ucc();
         quote! {
             #crate_path_ts
-            #all_vrts_default_option_some_vec_one_el_ucc
+            #all_vrts_default_opt_some_vec_one_el_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct CrateAllEnumVrtsArrayDefaultOptionSomeVecOneElCall;
-impl ToTokens for CrateAllEnumVrtsArrayDefaultOptionSomeVecOneElCall {
+pub struct CrateAllEnumVrtsArrayDefaultOptSomeVecOneElCall;
+impl ToTokens for CrateAllEnumVrtsArrayDefaultOptSomeVecOneElCall {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let crate_all_vrts_default_option_some_vec_one_el =
-            CrateAllEnumVrtsArrayDefaultOptionSomeVecOneEl;
-        let path_all_vrts_default_option_some_vec_one_el_call =
-            path_all_vrts_default_option_some_vec_one_el_call();
+        let crate_all_vrts_default_opt_some_vec_one_el =
+            CrateAllEnumVrtsArrayDefaultOptSomeVecOneEl;
+        let path_all_vrts_default_opt_some_vec_one_el_call =
+            path_all_vrts_default_opt_some_vec_one_el_call();
         quote! {
-            #crate_all_vrts_default_option_some_vec_one_el
-            #path_all_vrts_default_option_some_vec_one_el_call
+            #crate_all_vrts_default_opt_some_vec_one_el
+            #path_all_vrts_default_opt_some_vec_one_el_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PgCrudAllEnumVrtsArrayDefaultOptionSomeVecOneEl;
-impl ToTokens for PgCrudAllEnumVrtsArrayDefaultOptionSomeVecOneEl {
+pub struct PgCrudAllEnumVrtsArrayDefaultOptSomeVecOneEl;
+impl ToTokens for PgCrudAllEnumVrtsArrayDefaultOptSomeVecOneEl {
     fn to_tokens(&self, tokens: &mut Ts2) {
         let pg_crud = pg_crud();
-        let all_vrts_default_option_some_vec_one_el_ucc =
-            all_vrts_default_option_some_vec_one_el_ucc();
+        let all_vrts_default_opt_some_vec_one_el_ucc = all_vrts_default_opt_some_vec_one_el_ucc();
         quote! {
             #pg_crud
-            #all_vrts_default_option_some_vec_one_el_ucc
+            #all_vrts_default_opt_some_vec_one_el_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PgCrudAllEnumVrtsArrayDefaultOptionSomeVecOneElCall;
-impl ToTokens for PgCrudAllEnumVrtsArrayDefaultOptionSomeVecOneElCall {
+pub struct PgCrudAllEnumVrtsArrayDefaultOptSomeVecOneElCall;
+impl ToTokens for PgCrudAllEnumVrtsArrayDefaultOptSomeVecOneElCall {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let pg_crud_all_vrts_default_option_some_vec_one_el =
-            PgCrudAllEnumVrtsArrayDefaultOptionSomeVecOneEl;
-        let path_all_vrts_default_option_some_vec_one_el_call =
-            path_all_vrts_default_option_some_vec_one_el_call();
+        let pg_crud_all_vrts_default_opt_some_vec_one_el =
+            PgCrudAllEnumVrtsArrayDefaultOptSomeVecOneEl;
+        let path_all_vrts_default_opt_some_vec_one_el_call =
+            path_all_vrts_default_opt_some_vec_one_el_call();
         quote! {
-            #pg_crud_all_vrts_default_option_some_vec_one_el
-            #path_all_vrts_default_option_some_vec_one_el_call
+            #pg_crud_all_vrts_default_opt_some_vec_one_el
+            #path_all_vrts_default_opt_some_vec_one_el_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PgCrudCommonAllEnumVrtsArrayDefaultOptionSomeVecOneEl;
-impl ToTokens for PgCrudCommonAllEnumVrtsArrayDefaultOptionSomeVecOneEl {
+pub struct PgCrudCommonAllEnumVrtsArrayDefaultOptSomeVecOneEl;
+impl ToTokens for PgCrudCommonAllEnumVrtsArrayDefaultOptSomeVecOneEl {
     fn to_tokens(&self, tokens: &mut Ts2) {
         let pg_crud_common = pg_crud_common();
-        let all_vrts_default_option_some_vec_one_el_ucc =
-            all_vrts_default_option_some_vec_one_el_ucc();
+        let all_vrts_default_opt_some_vec_one_el_ucc = all_vrts_default_opt_some_vec_one_el_ucc();
         quote! {
             #pg_crud_common
-            #all_vrts_default_option_some_vec_one_el_ucc
+            #all_vrts_default_opt_some_vec_one_el_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PgCrudCommonAllEnumVrtsArrayDefaultOptionSomeVecOneElCall;
-impl ToTokens for PgCrudCommonAllEnumVrtsArrayDefaultOptionSomeVecOneElCall {
+pub struct PgCrudCommonAllEnumVrtsArrayDefaultOptSomeVecOneElCall;
+impl ToTokens for PgCrudCommonAllEnumVrtsArrayDefaultOptSomeVecOneElCall {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let pg_crud_common_all_vrts_default_option_some_vec_one_el =
-            PgCrudCommonAllEnumVrtsArrayDefaultOptionSomeVecOneEl;
-        let path_all_vrts_default_option_some_vec_one_el_call =
-            path_all_vrts_default_option_some_vec_one_el_call();
+        let pg_crud_common_all_vrts_default_opt_some_vec_one_el =
+            PgCrudCommonAllEnumVrtsArrayDefaultOptSomeVecOneEl;
+        let path_all_vrts_default_opt_some_vec_one_el_call =
+            path_all_vrts_default_opt_some_vec_one_el_call();
         quote! {
-            #pg_crud_common_all_vrts_default_option_some_vec_one_el
-            #path_all_vrts_default_option_some_vec_one_el_call
+            #pg_crud_common_all_vrts_default_opt_some_vec_one_el
+            #path_all_vrts_default_opt_some_vec_one_el_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct CrateDefaultOptionSomeVecOneElMaxPageSize;
-impl ToTokens for CrateDefaultOptionSomeVecOneElMaxPageSize {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        let crate_path_ts = crate_path_ts();
-        let default_option_some_vec_one_el_max_page_size_ucc =
-            default_option_some_vec_one_el_max_page_size_ucc();
-        quote! {
-            #crate_path_ts
-            #default_option_some_vec_one_el_max_page_size_ucc
-        }
-        .to_tokens(tokens);
-    }
-}
-#[derive(Debug, Clone, Copy)]
-pub struct CrateDefaultOptionSomeVecOneElMaxPageSizeCall;
-impl ToTokens for CrateDefaultOptionSomeVecOneElMaxPageSizeCall {
+pub struct CrateDefaultOptSomeVecOneElMaxPageSize;
+impl ToTokens for CrateDefaultOptSomeVecOneElMaxPageSize {
     fn to_tokens(&self, tokens: &mut Ts2) {
         let crate_path_ts = crate_path_ts();
-        let default_option_some_vec_one_el_max_page_size_ucc =
-            default_option_some_vec_one_el_max_page_size_ucc();
-        let path_default_option_some_vec_one_el_max_page_size_call =
-            path_default_option_some_vec_one_el_max_page_size_call();
+        let default_opt_some_vec_one_el_max_page_size_ucc =
+            default_opt_some_vec_one_el_max_page_size_ucc();
         quote! {
             #crate_path_ts
-            #default_option_some_vec_one_el_max_page_size_ucc
-            #path_default_option_some_vec_one_el_max_page_size_call
+            #default_opt_some_vec_one_el_max_page_size_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PgCrudDefaultOptionSomeVecOneElMaxPageSize;
-impl ToTokens for PgCrudDefaultOptionSomeVecOneElMaxPageSize {
+pub struct CrateDefaultOptSomeVecOneElMaxPageSizeCall;
+impl ToTokens for CrateDefaultOptSomeVecOneElMaxPageSizeCall {
+    fn to_tokens(&self, tokens: &mut Ts2) {
+        let crate_path_ts = crate_path_ts();
+        let default_opt_some_vec_one_el_max_page_size_ucc =
+            default_opt_some_vec_one_el_max_page_size_ucc();
+        let path_default_opt_some_vec_one_el_max_page_size_call =
+            path_default_opt_some_vec_one_el_max_page_size_call();
+        quote! {
+            #crate_path_ts
+            #default_opt_some_vec_one_el_max_page_size_ucc
+            #path_default_opt_some_vec_one_el_max_page_size_call
+        }
+        .to_tokens(tokens);
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct PgCrudDefaultOptSomeVecOneElMaxPageSize;
+impl ToTokens for PgCrudDefaultOptSomeVecOneElMaxPageSize {
     fn to_tokens(&self, tokens: &mut Ts2) {
         let pg_crud = pg_crud();
-        let default_option_some_vec_one_el_max_page_size_ucc =
-            default_option_some_vec_one_el_max_page_size_ucc();
+        let default_opt_some_vec_one_el_max_page_size_ucc =
+            default_opt_some_vec_one_el_max_page_size_ucc();
         quote! {
             #pg_crud
-            #default_option_some_vec_one_el_max_page_size_ucc
+            #default_opt_some_vec_one_el_max_page_size_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PgCrudDefaultOptionSomeVecOneElMaxPageSizeCall;
-impl ToTokens for PgCrudDefaultOptionSomeVecOneElMaxPageSizeCall {
+pub struct PgCrudDefaultOptSomeVecOneElMaxPageSizeCall;
+impl ToTokens for PgCrudDefaultOptSomeVecOneElMaxPageSizeCall {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let pg_crud_default_option_some_vec_one_el_max_page_size =
-            PgCrudDefaultOptionSomeVecOneElMaxPageSize;
-        let path_default_option_some_vec_one_el_max_page_size_call =
-            path_default_option_some_vec_one_el_max_page_size_call();
+        let pg_crud_default_opt_some_vec_one_el_max_page_size =
+            PgCrudDefaultOptSomeVecOneElMaxPageSize;
+        let path_default_opt_some_vec_one_el_max_page_size_call =
+            path_default_opt_some_vec_one_el_max_page_size_call();
         quote! {
-            #pg_crud_default_option_some_vec_one_el_max_page_size
-            #path_default_option_some_vec_one_el_max_page_size_call
+            #pg_crud_default_opt_some_vec_one_el_max_page_size
+            #path_default_opt_some_vec_one_el_max_page_size_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PgCrudCommonDefaultOptionSomeVecOneElMaxPageSize;
-impl ToTokens for PgCrudCommonDefaultOptionSomeVecOneElMaxPageSize {
+pub struct PgCrudCommonDefaultOptSomeVecOneElMaxPageSize;
+impl ToTokens for PgCrudCommonDefaultOptSomeVecOneElMaxPageSize {
     fn to_tokens(&self, tokens: &mut Ts2) {
         let pg_crud_common = pg_crud_common();
-        let default_option_some_vec_one_el_max_page_size_ucc =
-            default_option_some_vec_one_el_max_page_size_ucc();
+        let default_opt_some_vec_one_el_max_page_size_ucc =
+            default_opt_some_vec_one_el_max_page_size_ucc();
         quote! {
             #pg_crud_common
-            #default_option_some_vec_one_el_max_page_size_ucc
+            #default_opt_some_vec_one_el_max_page_size_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall;
-impl ToTokens for PgCrudCommonDefaultOptionSomeVecOneElMaxPageSizeCall {
+pub struct PgCrudCommonDefaultOptSomeVecOneElMaxPageSizeCall;
+impl ToTokens for PgCrudCommonDefaultOptSomeVecOneElMaxPageSizeCall {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let pg_crud_common_default_option_some_vec_one_el_max_page_size =
-            PgCrudCommonDefaultOptionSomeVecOneElMaxPageSize;
-        let path_default_option_some_vec_one_el_max_page_size_call =
-            path_default_option_some_vec_one_el_max_page_size_call();
+        let pg_crud_common_default_opt_some_vec_one_el_max_page_size =
+            PgCrudCommonDefaultOptSomeVecOneElMaxPageSize;
+        let path_default_opt_some_vec_one_el_max_page_size_call =
+            path_default_opt_some_vec_one_el_max_page_size_call();
         quote! {
-            #pg_crud_common_default_option_some_vec_one_el_max_page_size
-            #path_default_option_some_vec_one_el_max_page_size_call
+            #pg_crud_common_default_opt_some_vec_one_el_max_page_size
+            #path_default_opt_some_vec_one_el_max_page_size_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct CrateAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize;
-impl ToTokens for CrateAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize {
+pub struct CrateAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize;
+impl ToTokens for CrateAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize {
     fn to_tokens(&self, tokens: &mut Ts2) {
         let crate_path_ts = crate_path_ts();
-        let all_vrts_default_option_some_vec_one_el_max_page_size_ucc =
-            all_vrts_default_option_some_vec_one_el_max_page_size_ucc();
+        let all_vrts_default_opt_some_vec_one_el_max_page_size_ucc =
+            all_vrts_default_opt_some_vec_one_el_max_page_size_ucc();
         quote! {
             #crate_path_ts
-            #all_vrts_default_option_some_vec_one_el_max_page_size_ucc
+            #all_vrts_default_opt_some_vec_one_el_max_page_size_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct CrateAllEnumVrtsArrayDefaultOptionSomeVecOneElCallWithMaxPageSize;
-impl ToTokens for CrateAllEnumVrtsArrayDefaultOptionSomeVecOneElCallWithMaxPageSize {
+pub struct CrateAllEnumVrtsArrayDefaultOptSomeVecOneElCallWithMaxPageSize;
+impl ToTokens for CrateAllEnumVrtsArrayDefaultOptSomeVecOneElCallWithMaxPageSize {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let crate_all_vrts_default_option_some_vec_one_el_max_page_size =
-            CrateAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize;
-        let path_all_vrts_default_option_some_vec_one_el_max_page_size_call =
-            path_all_vrts_default_option_some_vec_one_el_max_page_size_call();
+        let crate_all_vrts_default_opt_some_vec_one_el_max_page_size =
+            CrateAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize;
+        let path_all_vrts_default_opt_some_vec_one_el_max_page_size_call =
+            path_all_vrts_default_opt_some_vec_one_el_max_page_size_call();
         quote! {
-            #crate_all_vrts_default_option_some_vec_one_el_max_page_size
-            #path_all_vrts_default_option_some_vec_one_el_max_page_size_call
+            #crate_all_vrts_default_opt_some_vec_one_el_max_page_size
+            #path_all_vrts_default_opt_some_vec_one_el_max_page_size_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PgCrudAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize;
-impl ToTokens for PgCrudAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize {
+pub struct PgCrudAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize;
+impl ToTokens for PgCrudAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize {
     fn to_tokens(&self, tokens: &mut Ts2) {
         let pg_crud = pg_crud();
-        let all_vrts_default_option_some_vec_one_el_max_page_size_ucc =
-            all_vrts_default_option_some_vec_one_el_max_page_size_ucc();
+        let all_vrts_default_opt_some_vec_one_el_max_page_size_ucc =
+            all_vrts_default_opt_some_vec_one_el_max_page_size_ucc();
         quote! {
             #pg_crud
-            #all_vrts_default_option_some_vec_one_el_max_page_size_ucc
+            #all_vrts_default_opt_some_vec_one_el_max_page_size_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PgCrudAllEnumVrtsArrayDefaultOptionSomeVecOneElCallWithMaxPageSize;
-impl ToTokens for PgCrudAllEnumVrtsArrayDefaultOptionSomeVecOneElCallWithMaxPageSize {
+pub struct PgCrudAllEnumVrtsArrayDefaultOptSomeVecOneElCallWithMaxPageSize;
+impl ToTokens for PgCrudAllEnumVrtsArrayDefaultOptSomeVecOneElCallWithMaxPageSize {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let pg_crud_all_vrts_default_option_some_vec_one_el_max_page_size =
-            PgCrudAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize;
-        let path_all_vrts_default_option_some_vec_one_el_max_page_size_call =
-            path_all_vrts_default_option_some_vec_one_el_max_page_size_call();
+        let pg_crud_all_vrts_default_opt_some_vec_one_el_max_page_size =
+            PgCrudAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize;
+        let path_all_vrts_default_opt_some_vec_one_el_max_page_size_call =
+            path_all_vrts_default_opt_some_vec_one_el_max_page_size_call();
         quote! {
-            #pg_crud_all_vrts_default_option_some_vec_one_el_max_page_size
-            #path_all_vrts_default_option_some_vec_one_el_max_page_size_call
+            #pg_crud_all_vrts_default_opt_some_vec_one_el_max_page_size
+            #path_all_vrts_default_opt_some_vec_one_el_max_page_size_call
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PgCrudCommonAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize;
-impl ToTokens for PgCrudCommonAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize {
+pub struct PgCrudCommonAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize;
+impl ToTokens for PgCrudCommonAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize {
     fn to_tokens(&self, tokens: &mut Ts2) {
         let pg_crud_common = pg_crud_common();
-        let all_vrts_default_option_some_vec_one_el_max_page_size_ucc =
-            all_vrts_default_option_some_vec_one_el_max_page_size_ucc();
+        let all_vrts_default_opt_some_vec_one_el_max_page_size_ucc =
+            all_vrts_default_opt_some_vec_one_el_max_page_size_ucc();
         quote! {
             #pg_crud_common
-            #all_vrts_default_option_some_vec_one_el_max_page_size_ucc
+            #all_vrts_default_opt_some_vec_one_el_max_page_size_ucc
         }
         .to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct PgCrudCommonAllEnumVrtsArrayDefaultOptionSomeVecOneElCallWithMaxPageSize;
-impl ToTokens for PgCrudCommonAllEnumVrtsArrayDefaultOptionSomeVecOneElCallWithMaxPageSize {
+pub struct PgCrudCommonAllEnumVrtsArrayDefaultOptSomeVecOneElCallWithMaxPageSize;
+impl ToTokens for PgCrudCommonAllEnumVrtsArrayDefaultOptSomeVecOneElCallWithMaxPageSize {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        let pg_crud_common_all_vrts_default_option_some_vec_one_el_max_page_size =
-            PgCrudCommonAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize;
-        let path_all_vrts_default_option_some_vec_one_el_max_page_size_call =
-            path_all_vrts_default_option_some_vec_one_el_max_page_size_call();
+        let pg_crud_common_all_vrts_default_opt_some_vec_one_el_max_page_size =
+            PgCrudCommonAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize;
+        let path_all_vrts_default_opt_some_vec_one_el_max_page_size_call =
+            path_all_vrts_default_opt_some_vec_one_el_max_page_size_call();
         quote! {
-            #pg_crud_common_all_vrts_default_option_some_vec_one_el_max_page_size
-            #path_all_vrts_default_option_some_vec_one_el_max_page_size_call
+            #pg_crud_common_all_vrts_default_opt_some_vec_one_el_max_page_size
+            #path_all_vrts_default_opt_some_vec_one_el_max_page_size_call
         }
         .to_tokens(tokens);
     }
@@ -694,11 +691,11 @@ impl ToTokens for AllowClippyArbitrarySourceItemOrdering {
         quote! {#[allow(clippy::arbitrary_source_item_ordering)]}.to_tokens(tokens);
     }
 }
-fn path_all_vrts_default_option_some_vec_one_el_max_page_size_call() -> Ts2 {
-    quote! {::all_vrts_default_option_some_vec_one_el_max_page_size()}
+fn path_all_vrts_default_opt_some_vec_one_el_max_page_size_call() -> Ts2 {
+    quote! {::all_vrts_default_opt_some_vec_one_el_max_page_size()}
 }
-fn default_option_some_vec_one_el_max_page_size_ucc() -> Ts2 {
-    quote! {DefaultOptionSomeVecOneElMaxPageSize}
+fn default_opt_some_vec_one_el_max_page_size_ucc() -> Ts2 {
+    quote! {DefaultOptSomeVecOneElMaxPageSize}
 }
 fn crate_path_ts() -> Ts2 {
     quote! {crate::}
@@ -709,21 +706,21 @@ fn pg_crud() -> Ts2 {
 fn pg_crud_common() -> Ts2 {
     quote! {pg_crud_common::}
 }
-fn default_option_some_vec_one_el_ucc() -> Ts2 {
-    quote! {DefaultOptionSomeVecOneEl}
+fn default_opt_some_vec_one_el_ucc() -> Ts2 {
+    quote! {DefaultOptSomeVecOneEl}
 }
-fn all_vrts_default_option_some_vec_one_el_ucc() -> Ts2 {
-    quote! {AllEnumVrtsArrayDefaultOptionSomeVecOneEl}
+fn all_vrts_default_opt_some_vec_one_el_ucc() -> Ts2 {
+    quote! {AllEnumVrtsArrayDefaultOptSomeVecOneEl}
 }
-fn path_default_option_some_vec_one_el_call() -> Ts2 {
-    quote! {::default_option_some_vec_one_el()}
+fn path_default_opt_some_vec_one_el_call() -> Ts2 {
+    quote! {::default_opt_some_vec_one_el()}
 }
-fn path_default_option_some_vec_one_el_max_page_size_call() -> Ts2 {
-    quote! {::default_option_some_vec_one_el_max_page_size()}
+fn path_default_opt_some_vec_one_el_max_page_size_call() -> Ts2 {
+    quote! {::default_opt_some_vec_one_el_max_page_size()}
 }
-fn all_vrts_default_option_some_vec_one_el_max_page_size_ucc() -> Ts2 {
-    quote! {AllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize}
+fn all_vrts_default_opt_some_vec_one_el_max_page_size_ucc() -> Ts2 {
+    quote! {AllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize}
 }
-fn path_all_vrts_default_option_some_vec_one_el_call() -> Ts2 {
-    quote! {::all_vrts_default_option_some_vec_one_el()}
+fn path_all_vrts_default_opt_some_vec_one_el_call() -> Ts2 {
+    quote! {::all_vrts_default_opt_some_vec_one_el()}
 }

@@ -12,7 +12,7 @@ use panic_location::panic_location;
 use pg_crud_macros_common::{
     ColumnParameterUnderscore, ImportPath, IncrParameterUnderscore,
     IsNeedToAddLogicalOperatorUnderscore, IsQueryBindMutable, PgJsonTypeFilter, PgTypeFilter,
-    PgTypeOrPgJsonType, gen_impl_default_option_some_vec_one_el_ts,
+    PgTypeOrPgJsonType, gen_impl_default_opt_some_vec_one_el_ts,
     impl_pg_type_where_filter_for_ident_ts,
 };
 use proc_macro::TokenStream as Ts;
@@ -21,7 +21,7 @@ use quote::{ToTokens, quote};
 use serde_json::from_str;
 use std::fmt::Display;
 use token_patterns::{
-    CoreDefault, PgCrudCommonDefaultOptionSomeVecOneEl, PgCrudCommonDefaultOptionSomeVecOneElCall,
+    CoreDefault, PgCrudCommonDefaultOptSomeVecOneEl, PgCrudCommonDefaultOptSomeVecOneElCall,
 };
 #[proc_macro]
 pub fn gen_where_filters(input_ts: Ts) -> Ts {
@@ -121,9 +121,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     let t_annotation_generic_ts = quote! {<#t_ts>};
     let proc_macro2_ts_new = Ts2::new();
     let core_default_ts = CoreDefault;
-    let pg_crud_common_default_option_some_vec_one_el_ts = PgCrudCommonDefaultOptionSomeVecOneEl;
-    let pg_crud_common_default_option_some_vec_one_el_call_ts =
-        PgCrudCommonDefaultOptionSomeVecOneElCall;
+    let pg_crud_common_default_opt_some_vec_one_el_ts = PgCrudCommonDefaultOptSomeVecOneEl;
+    let pg_crud_common_default_opt_some_vec_one_el_call_ts = PgCrudCommonDefaultOptSomeVecOneElCall;
     let pub_value_t_ts = quote! {pub #ValueSc: T};
     let unsigned_part_of_i32_ts = quote! {pg_crud_common::UnsignedPartOfI32};
     let not_zero_unsigned_part_of_i32_ts = quote! {pg_crud_common::NotZeroUnsignedPartOfI32};
@@ -131,8 +130,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         quote! {#ValueSc: #not_zero_unsigned_part_of_i32_ts};
     let pub_value_not_zero_unsigned_part_of_i32_declaration_ts =
         quote! {pub #value_not_zero_unsigned_part_of_i32_declaration_ts};
-    let value_default_option_some_vec_one_el_ts = quote! {
-        #ValueSc: #pg_crud_common_default_option_some_vec_one_el_call_ts
+    let value_default_opt_some_vec_one_el_ts = quote! {
+        #ValueSc: #pg_crud_common_default_opt_some_vec_one_el_call_ts
     };
     let gen_struct_ts = |filter_init_with_try_new_result_is_ok: bool, should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn ToTokens, struct_additional_fields_ts: &dyn ToTokens| {
         let maybe_pub_ts: &dyn ToTokens = if filter_init_with_try_new_result_is_ok { &proc_macro2_ts_new } else { &PubSc };
@@ -165,14 +164,14 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             }}
         )
     };
-    let gen_impl_default_option_some_vec_one_el_ts = |should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn ToTokens, impl_default_option_some_vec_one_el_additional_fields_ts: &dyn ToTokens| {
-        gen_impl_default_option_some_vec_one_el_ts(
+    let gen_impl_default_opt_some_vec_one_el_ts = |should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn ToTokens, impl_default_opt_some_vec_one_el_additional_fields_ts: &dyn ToTokens| {
+        gen_impl_default_opt_some_vec_one_el_ts(
             &match &should_add_declaration_of_struct_ident_generic {
                 ShouldAddDeclarationOfStructIdentGeneric::False => Ts2::new(),
                 ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_ts } => {
                     maybe_additional_traits_ts.as_ref().map_or_else(
-                        || quote! {<T: #pg_crud_common_default_option_some_vec_one_el_ts>},
-                        |v_29913af7| quote! {<T: #v_29913af7 + #pg_crud_common_default_option_some_vec_one_el_ts>}
+                        || quote! {<T: #pg_crud_common_default_opt_some_vec_one_el_ts>},
+                        |v_29913af7| quote! {<T: #v_29913af7 + #pg_crud_common_default_opt_some_vec_one_el_ts>}
                     )
                 }
             },
@@ -184,8 +183,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             },
             &quote! {
                 Self {
-                    logical_operator: #pg_crud_common_default_option_some_vec_one_el_call_ts,
-                    #impl_default_option_some_vec_one_el_additional_fields_ts
+                    logical_operator: #pg_crud_common_default_opt_some_vec_one_el_call_ts,
+                    #impl_default_opt_some_vec_one_el_additional_fields_ts
                 }
             },
         )
@@ -237,8 +236,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         pub value: RegexRegex
     };
     let regular_expression_case_and_value_default_init_ts = quote! {
-        regular_expression_case: #pg_crud_common_default_option_some_vec_one_el_call_ts,
-        #value_default_option_some_vec_one_el_ts
+        regular_expression_case: #pg_crud_common_default_opt_some_vec_one_el_call_ts,
+        #value_default_opt_some_vec_one_el_ts
     };
     let if_let_err_query_try_bind_self_value_to_string_ts = quote! {
         if let Err(#ErSc) = #QuerySc.try_bind(#SelfSc.#ValueSc.to_string()) {
@@ -327,7 +326,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             &quote! {query_part},
         );
     let dims_default_init_ts = quote! {
-        #DimsSc: #pg_crud_common_default_option_some_vec_one_el_call_ts
+        #DimsSc: #pg_crud_common_default_opt_some_vec_one_el_call_ts
     };
     let dims_default_init_comma_ts = quote! {#dims_default_init_ts,};
     let query_self_dims_query_bind_query_ts = quote! {
@@ -351,7 +350,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         |maybe_dims_default_init_ts: &dyn ToTokens| {
             quote! {
                 #maybe_dims_default_init_ts
-                #value_default_option_some_vec_one_el_ts
+                #value_default_opt_some_vec_one_el_ts
             }
         };
     let is_query_bind_mutable_true = IsQueryBindMutable::True;
@@ -400,7 +399,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let (
                 should_add_declaration_of_struct_ident_generic,
                 struct_additional_fields_ts,
-                impl_default_option_some_vec_one_el_additional_fields_ts,
+                impl_default_opt_some_vec_one_el_additional_fields_ts,
                 incr_parameter_underscore,
                 query_part_ts,
                 is_query_bind_mutable,
@@ -770,7 +769,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             },
                             quote! {
                                 #maybe_dims_default_init_ts
-                                encode_format: #pg_crud_common_default_option_some_vec_one_el_call_ts,
+                                encode_format: #pg_crud_common_default_opt_some_vec_one_el_call_ts,
                                 encoded_string_representation: #core_default_ts
                             },
                             IncrParameterUnderscore::False,
@@ -828,7 +827,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     (
                         should_add_declaration_of_struct_ident_generic_false.clone(),
                         pub_value_not_zero_unsigned_part_of_i32_declaration_ts.clone(),
-                        value_default_option_some_vec_one_el_ts.clone(),
+                        value_default_opt_some_vec_one_el_ts.clone(),
                         IncrParameterUnderscore::False,
                         {
                             let format_handle_ts =
@@ -1201,10 +1200,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 &ident,
                 &struct_additional_fields_ts,
             );
-            let impl_default_option_some_vec_one_el_ts = gen_impl_default_option_some_vec_one_el_ts(
+            let impl_default_opt_some_vec_one_el_ts = gen_impl_default_opt_some_vec_one_el_ts(
                 &should_add_declaration_of_struct_ident_generic,
                 &ident,
-                &impl_default_option_some_vec_one_el_additional_fields_ts,
+                &impl_default_opt_some_vec_one_el_additional_fields_ts,
             );
             let impl_pg_type_where_filter_ts = gen_impl_pg_type_where_filter_ts(
                 &FilterType::PgType,
@@ -1218,7 +1217,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             );
             let gend = quote! {
                 #struct_ts
-                #impl_default_option_some_vec_one_el_ts
+                #impl_default_opt_some_vec_one_el_ts
                 #impl_pg_type_where_filter_ts
             };
             gend
@@ -1268,7 +1267,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                         quote! {
                             #maybe_dims_default_init_ts
-                            #value_default_option_some_vec_one_el_ts
+                            #value_default_opt_some_vec_one_el_ts
                         },
                         {
                             let format_handle_ts = dq_ts(&gen_format_handle_str(&pg_type_kind));
@@ -1696,7 +1695,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                         quote! {
                             #maybe_dims_default_init_ts
-                            #value_default_option_some_vec_one_el_ts
+                            #value_default_opt_some_vec_one_el_ts
                         },
                         {
                             let format_handle_ts = dq_ts(&format!(
@@ -1740,7 +1739,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                     quote! {
                         #maybe_dims_default_init_ts
-                        #value_default_option_some_vec_one_el_ts
+                        #value_default_opt_some_vec_one_el_ts
                     },
                     {
                         let format_handle_ts = dq_ts(&format!(
@@ -1769,7 +1768,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let (
                 should_add_declaration_of_struct_ident_generic,
                 struct_additional_fields_ts,
-                impl_default_option_some_vec_one_el_additional_fields_ts,
+                impl_default_opt_some_vec_one_el_additional_fields_ts,
                 query_part_ts,
                 is_query_bind_mutable,
                 query_bind_ts,
@@ -1982,10 +1981,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 &ident,
                 &struct_additional_fields_ts,
             );
-            let impl_default_option_some_vec_one_el_ts = gen_impl_default_option_some_vec_one_el_ts(
+            let impl_default_opt_some_vec_one_el_ts = gen_impl_default_opt_some_vec_one_el_ts(
                 &should_add_declaration_of_struct_ident_generic,
                 &ident,
-                &impl_default_option_some_vec_one_el_additional_fields_ts,
+                &impl_default_opt_some_vec_one_el_additional_fields_ts,
             );
             let impl_pg_type_where_filter_ts = gen_impl_pg_type_where_filter_ts(
                 &FilterType::PgJsonType,
@@ -1999,7 +1998,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             );
             let gend = quote! {
                 #struct_ts
-                #impl_default_option_some_vec_one_el_ts
+                #impl_default_opt_some_vec_one_el_ts
                 #impl_pg_type_where_filter_ts
             };
             gend

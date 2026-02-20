@@ -4,38 +4,37 @@ pub use filters::*;
 use gen_quotes::{dq_str, dq_ts};
 use macros_helpers::gen_impl_to_err_string_ts;
 use naming::{
-    AllVrtsDefaultOptionSomeVecOneElMaxPageSizeSc, AllVrtsDefaultOptionSomeVecOneElSc,
+    AllVrtsDefaultOptSomeVecOneElMaxPageSizeSc, AllVrtsDefaultOptSomeVecOneElSc,
     ColumnNameAndMaybeFieldGetterForErMessageSc, ColumnNameAndMaybeFieldGetterSc, ColumnSc,
-    CreateForQueryUcc, CreateIntoPgJsonTypeOptionVecWhereLengthEqualSc,
-    CreateIntoPgJsonTypeOptionVecWhereLengthGreaterThanSc,
-    CreateIntoPgTypeOptionVecWhereDimOneEqualSc, CreateQueryBindSc, CreateQueryPartSc, CreateSc,
-    CreateTableColumnQueryPartSc, CreateUcc, DefaultOptionSomeVecOneElMaxPageSizeSc,
-    DefaultOptionSomeVecOneElSc, DisplayPlusToTokens, EqualOperatorUcc, FieldIdentSc, IncrSc,
-    IsNeedToAddLogicalOperatorSc, IsPrimaryKeySc, JsonbSetAccumulatorSc, JsonbSetPathSc,
-    JsonbSetTargetSc, MutSc, NormalizeSc, OptionUcc, OptionUpdateSc, OptionVecCreateSc,
-    PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeEqualOperatorUcc, PgTypeNotPrimaryKeyUcc,
-    PgTypeOptionVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc, PgTypeWhereFilterUcc,
-    PreviousReadMergedWithOptionUpdateIntoReadSc, QueryBindSc, QueryPartErUcc, QueryPartSc,
-    QuerySc, ReadInnerIntoReadWithNewOrTryNewUnwrapedSc,
-    ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc, ReadInnerUcc,
-    ReadOnlyIdsIntoOptionValueReadInnerSc, ReadOnlyIdsMergedWithCreateIntoOptionValueReadSc,
-    ReadOnlyIdsMergedWithCreateIntoOptionVecWhereEqualToJsonFieldSc,
-    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereBetweenSc,
-    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereContainsElGreaterThanSc,
-    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereContainsElRegularExpressionSc,
-    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereDimFourEqualSc,
-    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereDimOneEqualSc,
-    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereDimThreeEqualSc,
-    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereDimTwoEqualSc,
-    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereGreaterThanSc,
-    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereInSc,
-    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereRegularExpressionSc,
+    CreateForQueryUcc, CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
+    CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateIntoPgTypeOptVecWhereDimOneEqualSc,
+    CreateQueryBindSc, CreateQueryPartSc, CreateSc, CreateTableColumnQueryPartSc, CreateUcc,
+    DefaultOptSomeVecOneElMaxPageSizeSc, DefaultOptSomeVecOneElSc, DisplayPlusToTokens,
+    EqualOperatorUcc, FieldIdentSc, IncrSc, IsNeedToAddLogicalOperatorSc, IsPrimaryKeySc,
+    JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc, MutSc, NormalizeSc, OptUcc,
+    OptUpdateSc, OptVecCreateSc, PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeEqualOperatorUcc,
+    PgTypeNotPrimaryKeyUcc, PgTypeOptVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc,
+    PgTypeWhereFilterUcc, PreviousReadMergedWithOptUpdateIntoReadSc, QueryBindSc, QueryPartErUcc,
+    QueryPartSc, QuerySc, ReadInnerIntoReadWithNewOrTryNewUnwrapedSc,
+    ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc, ReadInnerUcc, ReadOnlyIdsIntoOptValueReadInnerSc,
+    ReadOnlyIdsMergedWithCreateIntoOptValueReadSc,
+    ReadOnlyIdsMergedWithCreateIntoOptVecWhereEqualToJsonFieldSc,
+    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereBetweenSc,
+    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc,
+    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegularExpressionSc,
+    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimFourEqualSc,
+    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimOneEqualSc,
+    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimThreeEqualSc,
+    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimTwoEqualSc,
+    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereGreaterThanSc,
+    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereInSc,
+    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereRegularExpressionSc,
     ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSc,
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSc,
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
     ReadOnlyIdsMergedWithCreateIntoWhereEqualSc,
-    ReadOnlyIdsMergedWithTableTypeDeclarationIntoPgTypeOptionWhereGreaterThanSc, ReadOnlyIdsSc,
-    ReadOnlyIdsToOptionValueReadDefaultOptionSomeVecOneElSc, ReadOnlyIdsToTwoDimalVecReadInnerSc,
+    ReadOnlyIdsMergedWithTableTypeDeclarationIntoPgTypeOptWhereGreaterThanSc, ReadOnlyIdsSc,
+    ReadOnlyIdsToOptValueReadDefaultOptSomeVecOneElSc, ReadOnlyIdsToTwoDimalVecReadInnerSc,
     ReadOnlyIdsUcc, ReadSc, ReadUcc, SelectOnlyCreatedIdsQueryBindSc,
     SelectOnlyCreatedIdsQueryPartSc, SelectOnlyIdsQueryPartSc, SelectOnlyUpdatedIdsQueryBindSc,
     SelectOnlyUpdatedIdsQueryPartSc, SelectQueryPartSc, SelectUcc, SelfUcc, TableTypeDeclarationSc,
@@ -50,15 +49,15 @@ use std::fmt::Display;
 use strum_macros::{Display, EnumIter};
 use syn::{Ident, Type};
 use token_patterns::{
-    AllowClippyArbitrarySourceItemOrdering, Bool, CrateAllEnumVrtsArrayDefaultOptionSomeVecOneEl,
-    CrateAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize, CrateDefaultOptionSomeVecOneEl,
-    CrateDefaultOptionSomeVecOneElMaxPageSize, PgCrudAllEnumVrtsArrayDefaultOptionSomeVecOneEl,
-    PgCrudAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize,
-    PgCrudCommonAllEnumVrtsArrayDefaultOptionSomeVecOneEl,
-    PgCrudCommonAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize,
-    PgCrudCommonDefaultOptionSomeVecOneEl, PgCrudCommonDefaultOptionSomeVecOneElCall,
-    PgCrudCommonDefaultOptionSomeVecOneElMaxPageSize, PgCrudDefaultOptionSomeVecOneEl,
-    PgCrudDefaultOptionSomeVecOneElMaxPageSize, RefStr, StdFmtDisplay, StringTs, U64,
+    AllowClippyArbitrarySourceItemOrdering, Bool, CrateAllEnumVrtsArrayDefaultOptSomeVecOneEl,
+    CrateAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize, CrateDefaultOptSomeVecOneEl,
+    CrateDefaultOptSomeVecOneElMaxPageSize, PgCrudAllEnumVrtsArrayDefaultOptSomeVecOneEl,
+    PgCrudAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize,
+    PgCrudCommonAllEnumVrtsArrayDefaultOptSomeVecOneEl,
+    PgCrudCommonAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize,
+    PgCrudCommonDefaultOptSomeVecOneEl, PgCrudCommonDefaultOptSomeVecOneElCall,
+    PgCrudCommonDefaultOptSomeVecOneElMaxPageSize, PgCrudDefaultOptSomeVecOneEl,
+    PgCrudDefaultOptSomeVecOneElMaxPageSize, RefStr, StdFmtDisplay, StringTs, U64,
 };
 #[derive(Debug, Clone)]
 pub enum DeriveOrImpl {
@@ -91,7 +90,7 @@ pub enum IsNullable {
 }
 impl IsNullable {
     #[must_use]
-    pub fn maybe_option_wrap(&self, ts: Ts2) -> Ts2 {
+    pub fn maybe_opt_wrap(&self, ts: Ts2) -> Ts2 {
         match &self {
             Self::False => ts,
             Self::True => quote! {Option<#ts>},
@@ -115,14 +114,14 @@ impl IsNullable {
     pub fn prefix_str(&self) -> String {
         match &self {
             Self::False => String::default(),
-            Self::True => String::from("StdOptionOption"),
+            Self::True => String::from("StdOptOpt"),
         }
     }
     #[must_use]
     pub fn rust(&self) -> &'static dyn Display {
         match &self {
             Self::False => &"",
-            Self::True => &OptionUcc,
+            Self::True => &OptUcc,
         }
     }
 }
@@ -133,32 +132,32 @@ pub enum ImportPath {
     PgCrudCommon,
 }
 impl ImportPath {
-    fn all_vrts_default_option_some_vec_one_el(&self) -> &dyn ToTokens {
+    fn all_vrts_default_opt_some_vec_one_el(&self) -> &dyn ToTokens {
         match &self {
-            Self::Crate => &CrateAllEnumVrtsArrayDefaultOptionSomeVecOneEl,
-            Self::PgCrud => &PgCrudAllEnumVrtsArrayDefaultOptionSomeVecOneEl,
-            Self::PgCrudCommon => &PgCrudCommonAllEnumVrtsArrayDefaultOptionSomeVecOneEl,
+            Self::Crate => &CrateAllEnumVrtsArrayDefaultOptSomeVecOneEl,
+            Self::PgCrud => &PgCrudAllEnumVrtsArrayDefaultOptSomeVecOneEl,
+            Self::PgCrudCommon => &PgCrudCommonAllEnumVrtsArrayDefaultOptSomeVecOneEl,
         }
     }
-    fn all_vrts_default_option_some_vec_one_el_max_page_size(&self) -> &dyn ToTokens {
+    fn all_vrts_default_opt_some_vec_one_el_max_page_size(&self) -> &dyn ToTokens {
         match &self {
-            Self::Crate => &CrateAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize,
-            Self::PgCrud => &PgCrudAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize,
-            Self::PgCrudCommon => &PgCrudCommonAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize,
+            Self::Crate => &CrateAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize,
+            Self::PgCrud => &PgCrudAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize,
+            Self::PgCrudCommon => &PgCrudCommonAllEnumVrtsArrayDefaultOptSomeVecOneElMaxPageSize,
         }
     }
-    fn default_option_some_vec_one_el(&self) -> &dyn ToTokens {
+    fn default_opt_some_vec_one_el(&self) -> &dyn ToTokens {
         match &self {
-            Self::Crate => &CrateDefaultOptionSomeVecOneEl,
-            Self::PgCrud => &PgCrudDefaultOptionSomeVecOneEl,
-            Self::PgCrudCommon => &PgCrudCommonDefaultOptionSomeVecOneEl,
+            Self::Crate => &CrateDefaultOptSomeVecOneEl,
+            Self::PgCrud => &PgCrudDefaultOptSomeVecOneEl,
+            Self::PgCrudCommon => &PgCrudCommonDefaultOptSomeVecOneEl,
         }
     }
-    fn default_option_some_vec_one_el_max_page_size(&self) -> &dyn ToTokens {
+    fn default_opt_some_vec_one_el_max_page_size(&self) -> &dyn ToTokens {
         match &self {
-            Self::Crate => &CrateDefaultOptionSomeVecOneElMaxPageSize,
-            Self::PgCrud => &PgCrudDefaultOptionSomeVecOneElMaxPageSize,
-            Self::PgCrudCommon => &PgCrudCommonDefaultOptionSomeVecOneElMaxPageSize,
+            Self::Crate => &CrateDefaultOptSomeVecOneElMaxPageSize,
+            Self::PgCrud => &PgCrudDefaultOptSomeVecOneElMaxPageSize,
+            Self::PgCrudCommon => &PgCrudCommonDefaultOptSomeVecOneElMaxPageSize,
         }
     }
     #[must_use]
@@ -451,21 +450,21 @@ pub enum Dim {
 }
 impl Dim {
     #[must_use]
-    pub fn read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_number_equal_sc(
+    pub fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_sc(
         &self,
     ) -> Box<dyn DisplayPlusToTokens> {
         match self {
             Self::One => {
-                Box::new(ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereDimOneEqualSc)
+                Box::new(ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimOneEqualSc)
             }
             Self::Two => {
-                Box::new(ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereDimTwoEqualSc)
+                Box::new(ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimTwoEqualSc)
             }
             Self::Three => {
-                Box::new(ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereDimThreeEqualSc)
+                Box::new(ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimThreeEqualSc)
             }
             Self::Four => {
-                Box::new(ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereDimFourEqualSc)
+                Box::new(ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimFourEqualSc)
             }
         }
     }
@@ -605,8 +604,8 @@ pub fn gen_pg_type_where_ts(
         let vrts_ts = vrts.iter().map(|el_a9dc0e35| {
             let el_ucc = el_a9dc0e35.ucc();
             let prefix_where_self_ucc = el_a9dc0e35.prefix_where_self_ucc();
-            let option_type_ts: Option<Ts2> = el_a9dc0e35.maybe_generic();
-            let type_ts = option_type_ts.map_or_else(Ts2::new, |v| quote! {<#v>});
+            let opt_type_ts: Option<Ts2> = el_a9dc0e35.maybe_generic();
+            let type_ts = opt_type_ts.map_or_else(Ts2::new, |v| quote! {<#v>});
             quote! {#el_ucc(where_filters::#prefix_where_self_ucc #type_ts)}
         });
         quote! {
@@ -668,14 +667,13 @@ pub fn gen_pg_type_where_ts(
         &Ts2::new(),
         &quote! {format!("{self:#?}")},
     );
-    let impl_all_vrts_default_option_some_vec_one_el_for_pg_type_tokens_where_ts =
-        gen_impl_pg_crud_common_all_vrts_default_option_some_vec_one_el_ts(&ident, &{
+    let impl_all_vrts_default_opt_some_vec_one_el_for_pg_type_tokens_where_ts =
+        gen_impl_pg_crud_common_all_vrts_default_opt_some_vec_one_el_ts(&ident, &{
             let vrts_ts = vrts.iter().map(|el_b9724130| {
                 let el_ucc = el_b9724130.ucc();
-                let default_option_some_vec_one_el_call_ts =
-                    PgCrudCommonDefaultOptionSomeVecOneElCall;
+                let default_opt_some_vec_one_el_call_ts = PgCrudCommonDefaultOptSomeVecOneElCall;
                 quote! {
-                    Self::#el_ucc(#default_option_some_vec_one_el_call_ts)
+                    Self::#el_ucc(#default_opt_some_vec_one_el_call_ts)
                 }
             });
             quote! {vec![#(#vrts_ts),*]}
@@ -684,7 +682,7 @@ pub fn gen_pg_type_where_ts(
         #pg_type_tokens_where_ts
         #impl_pg_type_pg_type_where_filter_for_pg_type_tokens_where_ts
         #impl_location_lib_to_err_string_for_pg_type_tokens_where_ts
-        #impl_all_vrts_default_option_some_vec_one_el_for_pg_type_tokens_where_ts
+        #impl_all_vrts_default_opt_some_vec_one_el_for_pg_type_tokens_where_ts
     }
 }
 #[must_use]
@@ -706,7 +704,7 @@ pub fn gen_tuple_struct_ident_dq_ts(v: &dyn Display) -> Ts2 {
 pub fn gen_sqlx_types_json_type_declaration_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {sqlx::types::Json<#type_ts>}
 }
-pub fn gen_option_tokens_declaration_ts(type_ts: &dyn ToTokens) -> Ts2 {
+pub fn gen_opt_tokens_declaration_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {Option<#type_ts>}
 }
 pub fn gen_vec_tokens_declaration_ts(type_ts: &dyn ToTokens) -> Ts2 {
@@ -840,73 +838,73 @@ pub fn gen_impl_pg_json_type_ts(
         }
     }
 }
-pub fn gen_impl_default_option_some_vec_one_el_ts(
+pub fn gen_impl_default_opt_some_vec_one_el_ts(
     impl_generic_ts: &dyn ToTokens,
     import_path: &ImportPath,
     ident: &dyn ToTokens,
     ident_generic_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    let path_trait_ts = import_path.default_option_some_vec_one_el();
+    let path_trait_ts = import_path.default_opt_some_vec_one_el();
     quote! {
         impl #impl_generic_ts #path_trait_ts for #ident #ident_generic_ts {
-            fn #DefaultOptionSomeVecOneElSc() -> Self {
+            fn #DefaultOptSomeVecOneElSc() -> Self {
                 #ts
             }
         }
     }
 }
-pub fn gen_impl_all_vrts_default_option_some_vec_one_el_ts(
+pub fn gen_impl_all_vrts_default_opt_some_vec_one_el_ts(
     import_path: &ImportPath,
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    let path_trait_ts = import_path.all_vrts_default_option_some_vec_one_el();
+    let path_trait_ts = import_path.all_vrts_default_opt_some_vec_one_el();
     quote! {
         impl #path_trait_ts for #ident {
-            fn #AllVrtsDefaultOptionSomeVecOneElSc() -> Vec<Self> {
+            fn #AllVrtsDefaultOptSomeVecOneElSc() -> Vec<Self> {
                 #ts
             }
         }
     }
 }
-pub fn gen_impl_default_option_some_vec_one_el_max_page_size_ts(
+pub fn gen_impl_default_opt_some_vec_one_el_max_page_size_ts(
     impl_generic_ts: &dyn ToTokens,
     import_path: &ImportPath,
     ident: &dyn ToTokens,
     ident_generic_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    let path_trait_ts = import_path.default_option_some_vec_one_el_max_page_size();
+    let path_trait_ts = import_path.default_opt_some_vec_one_el_max_page_size();
     quote! {
         impl #impl_generic_ts #path_trait_ts for #ident #ident_generic_ts {
-            fn #DefaultOptionSomeVecOneElMaxPageSizeSc() -> Self {
+            fn #DefaultOptSomeVecOneElMaxPageSizeSc() -> Self {
                 #ts
             }
         }
     }
 }
-pub fn gen_impl_all_vrts_default_option_some_vec_one_el_max_page_size_ts(
+pub fn gen_impl_all_vrts_default_opt_some_vec_one_el_max_page_size_ts(
     import_path: &ImportPath,
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    let path_trait_ts = import_path.all_vrts_default_option_some_vec_one_el_max_page_size();
-    let all_vrts_default_option_some_vec_one_el_max_page_size_sc =
-        AllVrtsDefaultOptionSomeVecOneElMaxPageSizeSc;
+    let path_trait_ts = import_path.all_vrts_default_opt_some_vec_one_el_max_page_size();
+    let all_vrts_default_opt_some_vec_one_el_max_page_size_sc =
+        AllVrtsDefaultOptSomeVecOneElMaxPageSizeSc;
     quote! {
         impl #path_trait_ts for #ident {
-            fn #all_vrts_default_option_some_vec_one_el_max_page_size_sc() -> Vec<Self> {
+            fn #all_vrts_default_opt_some_vec_one_el_max_page_size_sc() -> Vec<Self> {
                 #ts
             }
         }
     }
 }
-pub fn gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(
+pub fn gen_impl_pg_crud_common_default_opt_some_vec_one_el_ts(
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_default_option_some_vec_one_el_ts(
+    gen_impl_default_opt_some_vec_one_el_ts(
         &Ts2::new(),
         &ImportPath::PgCrudCommon,
         ident,
@@ -914,12 +912,12 @@ pub fn gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(
         ts,
     )
 }
-pub fn gen_impl_pg_crud_default_option_some_vec_one_el_ts(
+pub fn gen_impl_pg_crud_default_opt_some_vec_one_el_ts(
     ident: &dyn ToTokens,
     lifetime_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_default_option_some_vec_one_el_ts(
+    gen_impl_default_opt_some_vec_one_el_ts(
         &Ts2::new(),
         &ImportPath::PgCrud,
         ident,
@@ -927,23 +925,23 @@ pub fn gen_impl_pg_crud_default_option_some_vec_one_el_ts(
         ts,
     )
 }
-pub fn gen_impl_pg_crud_common_all_vrts_default_option_some_vec_one_el_ts(
+pub fn gen_impl_pg_crud_common_all_vrts_default_opt_some_vec_one_el_ts(
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_all_vrts_default_option_some_vec_one_el_ts(&ImportPath::PgCrudCommon, ident, ts)
+    gen_impl_all_vrts_default_opt_some_vec_one_el_ts(&ImportPath::PgCrudCommon, ident, ts)
 }
-pub fn gen_impl_pg_crud_all_vrts_default_option_some_vec_one_el_ts(
+pub fn gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_ts(
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_all_vrts_default_option_some_vec_one_el_ts(&ImportPath::PgCrud, ident, ts)
+    gen_impl_all_vrts_default_opt_some_vec_one_el_ts(&ImportPath::PgCrud, ident, ts)
 }
-pub fn gen_impl_pg_crud_common_default_option_some_vec_one_el_max_page_size_ts(
+pub fn gen_impl_pg_crud_common_default_opt_some_vec_one_el_max_page_size_ts(
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_default_option_some_vec_one_el_max_page_size_ts(
+    gen_impl_default_opt_some_vec_one_el_max_page_size_ts(
         &Ts2::new(),
         &ImportPath::PgCrudCommon,
         ident,
@@ -951,12 +949,12 @@ pub fn gen_impl_pg_crud_common_default_option_some_vec_one_el_max_page_size_ts(
         ts,
     )
 }
-pub fn gen_impl_pg_crud_default_option_some_vec_one_el_max_page_size_ts(
+pub fn gen_impl_pg_crud_default_opt_some_vec_one_el_max_page_size_ts(
     ident: &dyn ToTokens,
     lifetime_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_default_option_some_vec_one_el_max_page_size_ts(
+    gen_impl_default_opt_some_vec_one_el_max_page_size_ts(
         &Ts2::new(),
         &ImportPath::PgCrud,
         ident,
@@ -964,15 +962,11 @@ pub fn gen_impl_pg_crud_default_option_some_vec_one_el_max_page_size_ts(
         ts,
     )
 }
-pub fn gen_impl_pg_crud_all_vrts_default_option_some_vec_one_el_max_page_size_ts(
+pub fn gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_max_page_size_ts(
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_all_vrts_default_option_some_vec_one_el_max_page_size_ts(
-        &ImportPath::PgCrud,
-        ident,
-        ts,
-    )
+    gen_impl_all_vrts_default_opt_some_vec_one_el_max_page_size_ts(&ImportPath::PgCrud, ident, ts)
 }
 pub fn impl_pg_type_where_filter_for_ident_ts(
     impl_generic_ts: &dyn ToTokens,
@@ -1208,9 +1202,9 @@ pub fn gen_impl_pg_type_not_primary_key_for_ident_ts(
 //         }
 //     }
 // }
-fn gen_option_vec_create_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
+fn gen_opt_vec_create_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
     quote! {
-        fn #OptionVecCreateSc() -> Option<Vec<#path_ts::#CreateUcc>> {
+        fn #OptVecCreateSc() -> Option<Vec<#path_ts::#CreateUcc>> {
             #ts
         }
     }
@@ -1260,27 +1254,27 @@ fn gen_update_to_read_only_ids_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> 
         }
     }
 }
-fn gen_read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts(
+fn gen_read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #ReadOnlyIdsToOptionValueReadDefaultOptionSomeVecOneElSc(
+        fn #ReadOnlyIdsToOptValueReadDefaultOptSomeVecOneElSc(
             #ValueSc: &#path_ts::#ReadOnlyIdsUcc
         ) -> Option<#import_path::#ValueUcc<#path_ts::#ReadUcc>> {
             #ts
         }
     }
 }
-fn gen_previous_read_merged_with_option_update_into_read_ts(
+fn gen_previous_read_merged_with_opt_update_into_read_ts(
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #PreviousReadMergedWithOptionUpdateIntoReadSc(
+        fn #PreviousReadMergedWithOptUpdateIntoReadSc(
             #ReadSc: #path_ts::#ReadUcc,
-            #OptionUpdateSc: Option<#path_ts::#UpdateUcc>,
+            #OptUpdateSc: Option<#path_ts::#UpdateUcc>,
         ) -> #path_ts::#ReadUcc {
             #ts
         }
@@ -1299,13 +1293,13 @@ fn gen_read_only_ids_merged_with_create_into_read_ts(
         }
     }
 }
-fn gen_read_only_ids_merged_with_create_into_option_value_read_ts(
+fn gen_read_only_ids_merged_with_create_into_opt_value_read_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #ReadOnlyIdsMergedWithCreateIntoOptionValueReadSc(
+        fn #ReadOnlyIdsMergedWithCreateIntoOptValueReadSc(
             #ReadOnlyIdsSc: #path_ts::#ReadOnlyIdsUcc,
             #CreateSc: #path_ts::#CreateUcc
         ) -> Option<#import_path::#ValueUcc<#path_ts::#ReadUcc>> {
@@ -1357,7 +1351,7 @@ pub fn gen_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts
         }
     }
 }
-fn gen_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_to_json_field_pg_type_or_pg_json_type_ts(
+fn gen_read_only_ids_merged_with_create_into_vec_or_opt_vec_where_equal_to_json_field_pg_type_or_pg_json_type_ts(
     import_path: ImportPath,
     read_only_ids_ts: &dyn ToTokens,
     create_ts: &dyn ToTokens,
@@ -1368,14 +1362,12 @@ fn gen_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_to_js
     let return_type_ts = {
         let return_type_handle_ts = quote! {#import_path::NotEmptyUniqueVec<#where_ts>};
         match &pg_type_or_pg_json_type {
-            PgTypeOrPgJsonType::PgType => gen_option_tokens_declaration_ts(&return_type_handle_ts),
+            PgTypeOrPgJsonType::PgType => gen_opt_tokens_declaration_ts(&return_type_handle_ts),
             PgTypeOrPgJsonType::PgJsonType => return_type_handle_ts,
         }
     };
     let name_ts: &dyn ToTokens = match &pg_type_or_pg_json_type {
-        PgTypeOrPgJsonType::PgType => {
-            &ReadOnlyIdsMergedWithCreateIntoOptionVecWhereEqualToJsonFieldSc
-        }
+        PgTypeOrPgJsonType::PgType => &ReadOnlyIdsMergedWithCreateIntoOptVecWhereEqualToJsonFieldSc,
         PgTypeOrPgJsonType::PgJsonType => {
             &ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSc
         }
@@ -1396,7 +1388,7 @@ pub fn gen_read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_t
     where_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_to_json_field_pg_type_or_pg_json_type_ts(
+    gen_read_only_ids_merged_with_create_into_vec_or_opt_vec_where_equal_to_json_field_pg_type_or_pg_json_type_ts(
         import_path,
         &read_only_ids_ts,
         &create_ts,
@@ -1405,7 +1397,7 @@ pub fn gen_read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_t
         PgTypeOrPgJsonType::PgJsonType
     )
 }
-fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_number_equal_ts(
+fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_ts(
     import_path: ImportPath,
     name_ts: &dyn ToTokens,
     path_ts: &dyn ToTokens,
@@ -1420,81 +1412,81 @@ fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_n
         }
     }
 }
-fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_ts(
+fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_number_equal_ts(
+    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_ts(
         import_path,
-        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereDimOneEqualSc,
+        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimOneEqualSc,
         &path_ts,
         &ts,
     )
 }
-fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_ts(
+fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_number_equal_ts(
+    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_ts(
         import_path,
-        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereDimTwoEqualSc,
+        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimTwoEqualSc,
         &path_ts,
         &ts,
     )
 }
-fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_three_equal_ts(
+fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_number_equal_ts(
+    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_ts(
         import_path,
-        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereDimThreeEqualSc,
+        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimThreeEqualSc,
         &path_ts,
         &ts,
     )
 }
-fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_four_equal_ts(
+fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_number_equal_ts(
+    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_ts(
         import_path,
-        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereDimFourEqualSc,
+        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimFourEqualSc,
         &path_ts,
         &ts,
     )
 }
-fn gen_create_into_pg_json_type_option_vec_where_length_equal_ts(
+fn gen_create_into_pg_json_type_opt_vec_where_length_equal_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #CreateIntoPgJsonTypeOptionVecWhereLengthEqualSc(
+        fn #CreateIntoPgJsonTypeOptVecWhereLengthEqualSc(
             #CreateSc: #path_ts::#CreateUcc
         ) -> Option<#import_path::NotEmptyUniqueVec<#path_ts::#WhereUcc>> {
             #ts
         }
     }
 }
-fn gen_create_into_pg_json_type_option_vec_where_length_greater_than_ts(
+fn gen_create_into_pg_json_type_opt_vec_where_length_greater_than_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #CreateIntoPgJsonTypeOptionVecWhereLengthGreaterThanSc(
+        fn #CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc(
             #CreateSc: #path_ts::#CreateUcc
         ) -> Option<#import_path::NotEmptyUniqueVec<#path_ts::#WhereUcc>> {
             #ts
         }
     }
 }
-fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
+fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_not_empty_unique_vec_single_or_multiple_where_ts(
     method_name_ts: &dyn ToTokens,
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
@@ -1509,73 +1501,73 @@ fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_not_empty_uniqu
         }
     }
 }
-fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_greater_than_ts(
+fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_only_ids_merged_with_create_into_pg_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
-        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereGreaterThanSc,
+    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_not_empty_unique_vec_single_or_multiple_where_ts(
+        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereGreaterThanSc,
         import_path,
         path_ts,
         ts,
     )
 }
-fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_between_ts(
+fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_only_ids_merged_with_create_into_pg_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
-        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereBetweenSc,
+    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_not_empty_unique_vec_single_or_multiple_where_ts(
+        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereBetweenSc,
         import_path,
         path_ts,
         ts,
     )
 }
-fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_in_ts(
+fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_only_ids_merged_with_create_into_pg_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
-        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereInSc,
+    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_not_empty_unique_vec_single_or_multiple_where_ts(
+        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereInSc,
         import_path,
         path_ts,
         ts,
     )
 }
-fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_regular_expression_ts(
+fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_only_ids_merged_with_create_into_pg_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
-        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereRegularExpressionSc,
+    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_not_empty_unique_vec_single_or_multiple_where_ts(
+        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereRegularExpressionSc,
         import_path,
         path_ts,
         ts,
     )
 }
-fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_greater_than_ts(
+fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_only_ids_merged_with_create_into_pg_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
-        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereContainsElGreaterThanSc,
+    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_not_empty_unique_vec_single_or_multiple_where_ts(
+        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc,
         import_path,
         path_ts,
         ts,
     )
 }
-fn gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_regular_expression_ts(
+fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_only_ids_merged_with_create_into_pg_json_type_option_not_empty_unique_vec_single_or_multiple_where_ts(
-        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptionVecWhereContainsElRegularExpressionSc,
+    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_not_empty_unique_vec_single_or_multiple_where_ts(
+        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegularExpressionSc,
         import_path,
         path_ts,
         ts,
@@ -1586,34 +1578,34 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     import_path: &ImportPath,
     type_ts: &dyn ToTokens,
     ident: &dyn ToTokens,
-    option_vec_create_ts: &dyn ToTokens,
+    opt_vec_create_ts: &dyn ToTokens,
     read_only_ids_to_two_dimal_vec_read_inner_ts: &dyn ToTokens,
     read_inner_into_read_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
     read_inner_into_update_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
     update_to_read_only_ids_ts: &dyn ToTokens,
-    read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts: &dyn ToTokens,
-    previous_read_merged_with_option_update_into_read_ts: &dyn ToTokens,
+    read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts: &dyn ToTokens,
+    previous_read_merged_with_opt_update_into_read_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_read_ts: &dyn ToTokens,
-    read_only_ids_merged_with_create_into_option_value_read_ts: &dyn ToTokens,
+    read_only_ids_merged_with_create_into_opt_value_read_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_table_type_declaration_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_where_equal_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts: &dyn ToTokens,
-    read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_ts: &dyn ToTokens,
-    create_into_pg_type_option_vec_where_dim_one_equal_ts: &dyn ToTokens,
-    pg_type_option_vec_where_greater_than_test_ts: &dyn ToTokens,
-    read_only_ids_merged_with_table_type_declaration_into_pg_type_option_where_greater_than_ts: &dyn ToTokens,
-    create_into_pg_json_type_option_vec_where_dim_one_equal_ts: &dyn ToTokens,
-    create_into_pg_json_type_option_vec_where_dim_two_equal_ts: &dyn ToTokens,
-    create_into_pg_json_type_option_vec_where_dim_three_equal_ts: &dyn ToTokens,
-    create_into_pg_json_type_option_vec_where_dim_four_equal_ts: &dyn ToTokens,
-    create_into_pg_json_type_option_vec_where_length_equal_ts: &dyn ToTokens,
-    create_into_pg_json_type_option_vec_where_length_greater_than_ts: &dyn ToTokens,
-    read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_greater_than_ts: &dyn ToTokens,
-    read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_between_ts: &dyn ToTokens,
-    read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_in_ts: &dyn ToTokens,
-    read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_regular_expression_ts: &dyn ToTokens,
-    read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_greater_than_ts: &dyn ToTokens,
-    read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_regular_expression_ts: &dyn ToTokens,
+    read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts: &dyn ToTokens,
+    create_into_pg_type_opt_vec_where_dim_one_equal_ts: &dyn ToTokens,
+    pg_type_opt_vec_where_greater_than_test_ts: &dyn ToTokens,
+    read_only_ids_merged_with_table_type_declaration_into_pg_type_opt_where_greater_than_ts: &dyn ToTokens,
+    create_into_pg_json_type_opt_vec_where_dim_one_equal_ts: &dyn ToTokens,
+    create_into_pg_json_type_opt_vec_where_dim_two_equal_ts: &dyn ToTokens,
+    create_into_pg_json_type_opt_vec_where_dim_three_equal_ts: &dyn ToTokens,
+    create_into_pg_json_type_opt_vec_where_dim_four_equal_ts: &dyn ToTokens,
+    create_into_pg_json_type_opt_vec_where_length_equal_ts: &dyn ToTokens,
+    create_into_pg_json_type_opt_vec_where_length_greater_than_ts: &dyn ToTokens,
+    read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts: &dyn ToTokens,
+    read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts: &dyn ToTokens,
+    read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts: &dyn ToTokens,
+    read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts: &dyn ToTokens,
+    read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts: &dyn ToTokens,
+    read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts: &dyn ToTokens,
 ) -> Ts2 {
     let self_pg_type_as_pg_type_ts = quote! {<#SelfUcc::#PgTypeUcc as #import_path::#PgTypeUcc>};
     let self_pg_type_as_pg_type_read_only_ids_ts =
@@ -1621,8 +1613,8 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     let self_pg_type_as_pg_type_create_ts = quote! {#self_pg_type_as_pg_type_ts::#CreateUcc};
     let self_pg_type_as_pg_type_where_ts = quote! {#self_pg_type_as_pg_type_ts::#WhereUcc};
     let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
-    let option_vec_create_ts_2d58042f =
-        gen_option_vec_create_ts(&self_pg_type_as_pg_type_ts, &option_vec_create_ts);
+    let opt_vec_create_ts_2d58042f =
+        gen_opt_vec_create_ts(&self_pg_type_as_pg_type_ts, &opt_vec_create_ts);
     let read_only_ids_to_two_dimal_vec_read_inner_ts_513b8046 =
         gen_read_only_ids_to_two_dimal_vec_read_inner_ts(
             &self_pg_type_as_pg_type_ts,
@@ -1642,27 +1634,27 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         );
     let update_to_read_only_ids_ts_ee17b828 =
         gen_update_to_read_only_ids_ts(&self_pg_type_as_pg_type_ts, &update_to_read_only_ids_ts);
-    let read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts_18ef45e8 =
-        gen_read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts(
+    let read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts_18ef45e8 =
+        gen_read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts(
             *import_path,
             &self_pg_type_as_pg_type_ts,
-            &read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts,
+            &read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts,
         );
-    let previous_read_merged_with_option_update_into_read_ts_c48b8ede =
-        gen_previous_read_merged_with_option_update_into_read_ts(
+    let previous_read_merged_with_opt_update_into_read_ts_c48b8ede =
+        gen_previous_read_merged_with_opt_update_into_read_ts(
             &self_pg_type_as_pg_type_ts,
-            &previous_read_merged_with_option_update_into_read_ts,
+            &previous_read_merged_with_opt_update_into_read_ts,
         );
     let read_only_ids_merged_with_create_into_read_ts_df48e4b7 =
         gen_read_only_ids_merged_with_create_into_read_ts(
             &self_pg_type_as_pg_type_ts,
             &read_only_ids_merged_with_create_into_read_ts,
         );
-    let read_only_ids_merged_with_create_into_option_value_read_ts_8b7e9688 =
-        gen_read_only_ids_merged_with_create_into_option_value_read_ts(
+    let read_only_ids_merged_with_create_into_opt_value_read_ts_8b7e9688 =
+        gen_read_only_ids_merged_with_create_into_opt_value_read_ts(
             *import_path,
             &self_pg_type_as_pg_type_ts,
-            &read_only_ids_merged_with_create_into_option_value_read_ts,
+            &read_only_ids_merged_with_create_into_opt_value_read_ts,
         );
     let read_only_ids_merged_with_create_into_table_type_declaration_ts_f227db63 =
         gen_read_only_ids_merged_with_create_into_table_type_declaration_ts(
@@ -1684,89 +1676,89 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             &self_pg_type_as_pg_type_where_ts,
             &read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts,
         );
-    let read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_ts_948ce180 = gen_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_to_json_field_pg_type_or_pg_json_type_ts(
+    let read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts_948ce180 = gen_read_only_ids_merged_with_create_into_vec_or_opt_vec_where_equal_to_json_field_pg_type_or_pg_json_type_ts(
         *import_path,
         &self_pg_type_as_pg_type_read_only_ids_ts,
         &self_pg_type_as_pg_type_create_ts,
         &self_pg_type_as_pg_type_where_ts,
-        &read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_ts,
+        &read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts,
         PgTypeOrPgJsonType::PgType,
     );
-    let create_into_pg_type_option_vec_where_dim_one_equal_sc =
-        CreateIntoPgTypeOptionVecWhereDimOneEqualSc;
-    let read_only_ids_merged_with_table_type_declaration_into_pg_type_option_where_greater_than_sc =
-        ReadOnlyIdsMergedWithTableTypeDeclarationIntoPgTypeOptionWhereGreaterThanSc;
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_ts_33093313 =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_ts(
+    let create_into_pg_type_opt_vec_where_dim_one_equal_sc =
+        CreateIntoPgTypeOptVecWhereDimOneEqualSc;
+    let read_only_ids_merged_with_table_type_declaration_into_pg_type_opt_where_greater_than_sc =
+        ReadOnlyIdsMergedWithTableTypeDeclarationIntoPgTypeOptWhereGreaterThanSc;
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts_33093313 =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts(
             *import_path,
             &self_pg_type_as_pg_type_ts,
-            &create_into_pg_json_type_option_vec_where_dim_one_equal_ts,
+            &create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
         );
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_ts_9522c7a5 =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_ts(
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts_9522c7a5 =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts(
             *import_path,
             &self_pg_type_as_pg_type_ts,
-            &create_into_pg_json_type_option_vec_where_dim_two_equal_ts,
+            &create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
         );
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_three_equal_ts_81696b49 =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_three_equal_ts(
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts_81696b49 =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts(
             *import_path,
             &self_pg_type_as_pg_type_ts,
-            &create_into_pg_json_type_option_vec_where_dim_three_equal_ts,
+            &create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
         );
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_four_equal_ts_2631549b =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_four_equal_ts(
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts_2631549b =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts(
             *import_path,
             &self_pg_type_as_pg_type_ts,
-            &create_into_pg_json_type_option_vec_where_dim_four_equal_ts,
+            &create_into_pg_json_type_opt_vec_where_dim_four_equal_ts,
         );
-    let create_into_pg_json_type_option_vec_where_length_equal_ts_34b74d66 =
-        gen_create_into_pg_json_type_option_vec_where_length_equal_ts(
+    let create_into_pg_json_type_opt_vec_where_length_equal_ts_34b74d66 =
+        gen_create_into_pg_json_type_opt_vec_where_length_equal_ts(
             *import_path,
             &self_pg_type_as_pg_type_ts,
-            &create_into_pg_json_type_option_vec_where_length_equal_ts,
+            &create_into_pg_json_type_opt_vec_where_length_equal_ts,
         );
-    let create_into_pg_json_type_option_vec_where_length_greater_than_ts_b196c70f =
-        gen_create_into_pg_json_type_option_vec_where_length_greater_than_ts(
+    let create_into_pg_json_type_opt_vec_where_length_greater_than_ts_b196c70f =
+        gen_create_into_pg_json_type_opt_vec_where_length_greater_than_ts(
             *import_path,
             &self_pg_type_as_pg_type_ts,
-            &create_into_pg_json_type_option_vec_where_length_greater_than_ts,
+            &create_into_pg_json_type_opt_vec_where_length_greater_than_ts,
         );
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_greater_than_ts_498680a8 =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_greater_than_ts(
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts_498680a8 =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts(
             *import_path,
             &self_pg_type_as_pg_type_ts,
-            &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_greater_than_ts,
+            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts,
         );
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_between_ts_b685b98f =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_between_ts(
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts_b685b98f =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts(
             *import_path,
             &self_pg_type_as_pg_type_ts,
-            &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_between_ts,
+            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts,
         );
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_in_ts_ac82295e =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_in_ts(
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts_ac82295e =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts(
             *import_path,
             &self_pg_type_as_pg_type_ts,
-            &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_in_ts,
+            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts,
         );
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_regular_expression_ts_bfe19de1 =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_regular_expression_ts(
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts_bfe19de1 =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts(
             *import_path,
             &self_pg_type_as_pg_type_ts,
-            &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_regular_expression_ts,
+            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts,
         );
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_greater_than_ts_8d2a6cb8 =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_greater_than_ts(
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts_8d2a6cb8 =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts(
             *import_path,
             &self_pg_type_as_pg_type_ts,
-            &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_greater_than_ts,
+            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
         );
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_regular_expression_ts_ff2d3a76 =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_regular_expression_ts(
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts_ff2d3a76 =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts(
             *import_path,
             &self_pg_type_as_pg_type_ts,
-            &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_regular_expression_ts,
+            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts,
         );
     quote! {
         #[allow(unused_qualifications)]
@@ -1777,52 +1769,52 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         impl #import_path::#PgTypeTestCasesUcc for #ident {
             type #PgTypeUcc = #SelfUcc;
             type #SelectUcc = #ident_select_ucc;
-            #option_vec_create_ts_2d58042f
+            #opt_vec_create_ts_2d58042f
             #read_only_ids_to_two_dimal_vec_read_inner_ts_513b8046
             #read_inner_into_read_with_new_or_try_new_unwraped_ts_affc58f5
             #read_inner_into_update_with_new_or_try_new_unwraped_ts_c38e6621
             #update_to_read_only_ids_ts_ee17b828
-            #read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts_18ef45e8
-            #previous_read_merged_with_option_update_into_read_ts_c48b8ede
+            #read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts_18ef45e8
+            #previous_read_merged_with_opt_update_into_read_ts_c48b8ede
             #read_only_ids_merged_with_create_into_read_ts_df48e4b7
-            #read_only_ids_merged_with_create_into_option_value_read_ts_8b7e9688
+            #read_only_ids_merged_with_create_into_opt_value_read_ts_8b7e9688
             #read_only_ids_merged_with_create_into_table_type_declaration_ts_f227db63
             #read_only_ids_merged_with_create_into_where_equal_ts_dcde170f
             #read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts_076c6ebd
-            #read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_ts_948ce180
-            fn #create_into_pg_type_option_vec_where_dim_one_equal_sc(
+            #read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts_948ce180
+            fn #create_into_pg_type_opt_vec_where_dim_one_equal_sc(
                 #CreateSc: #self_pg_type_as_pg_type_ts::#CreateUcc
             ) -> Option<#import_path::NotEmptyUniqueVec<#self_pg_type_as_pg_type_ts::#WhereUcc>> {
-                #create_into_pg_type_option_vec_where_dim_one_equal_ts
+                #create_into_pg_type_opt_vec_where_dim_one_equal_ts
             }
-            fn #PgTypeOptionVecWhereGreaterThanTestSc() -> Option<
+            fn #PgTypeOptVecWhereGreaterThanTestSc() -> Option<
                 #import_path::NotEmptyUniqueVec<
                     #import_path::PgTypeGreaterThanTest<
                         #SelfUcc::#PgTypeUcc
                     >
                 >
             > {
-                #pg_type_option_vec_where_greater_than_test_ts
+                #pg_type_opt_vec_where_greater_than_test_ts
             }
-            fn #read_only_ids_merged_with_table_type_declaration_into_pg_type_option_where_greater_than_sc(
+            fn #read_only_ids_merged_with_table_type_declaration_into_pg_type_opt_where_greater_than_sc(
                 greater_than_vrt: #import_path::PgTypeGreaterThanVrt,
                 #ReadOnlyIdsSc: #self_pg_type_as_pg_type_ts::#ReadOnlyIdsUcc,
                 #TableTypeDeclarationSc: #self_pg_type_as_pg_type_ts::#TableTypeDeclarationUcc,
             ) -> Option<#self_pg_type_as_pg_type_ts::#WhereUcc> {
-                #read_only_ids_merged_with_table_type_declaration_into_pg_type_option_where_greater_than_ts
+                #read_only_ids_merged_with_table_type_declaration_into_pg_type_opt_where_greater_than_ts
             }
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_ts_33093313
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_ts_9522c7a5
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_three_equal_ts_81696b49
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_four_equal_ts_2631549b
-            #create_into_pg_json_type_option_vec_where_length_equal_ts_34b74d66
-            #create_into_pg_json_type_option_vec_where_length_greater_than_ts_b196c70f
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_greater_than_ts_498680a8
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_between_ts_b685b98f
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_in_ts_ac82295e
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_regular_expression_ts_bfe19de1
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_greater_than_ts_8d2a6cb8
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_regular_expression_ts_ff2d3a76
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts_33093313
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts_9522c7a5
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts_81696b49
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts_2631549b
+            #create_into_pg_json_type_opt_vec_where_length_equal_ts_34b74d66
+            #create_into_pg_json_type_opt_vec_where_length_greater_than_ts_b196c70f
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts_498680a8
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts_b685b98f
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts_ac82295e
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts_bfe19de1
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts_8d2a6cb8
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts_ff2d3a76
         }
     }
 }
@@ -1831,32 +1823,32 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
     import_path: &ImportPath,
     type_ts: &dyn ToTokens,
     ident: &dyn ToTokens,
-    option_vec_create_ts: &dyn ToTokens,
+    opt_vec_create_ts: &dyn ToTokens,
     read_only_ids_to_two_dimal_vec_read_inner_ts: &dyn ToTokens,
     read_inner_into_read_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
     read_inner_into_update_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
-    read_only_ids_into_option_value_read_inner_ts: &dyn ToTokens,
+    read_only_ids_into_opt_value_read_inner_ts: &dyn ToTokens,
     update_to_read_only_ids_ts: &dyn ToTokens,
-    read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts: &dyn ToTokens,
-    previous_read_merged_with_option_update_into_read_ts: &dyn ToTokens,
+    read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts: &dyn ToTokens,
+    previous_read_merged_with_opt_update_into_read_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_read_ts: &dyn ToTokens,
-    read_only_ids_merged_with_create_into_option_value_read_ts: &dyn ToTokens,
+    read_only_ids_merged_with_create_into_opt_value_read_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_table_type_declaration_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_where_equal_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts: &dyn ToTokens,
-    create_into_pg_json_type_option_vec_where_dim_one_equal_ts: &dyn ToTokens,
-    create_into_pg_json_type_option_vec_where_dim_two_equal_ts: &dyn ToTokens,
-    create_into_pg_json_type_option_vec_where_dim_three_equal_ts: &dyn ToTokens,
-    create_into_pg_json_type_option_vec_where_dim_four_equal_ts: &dyn ToTokens,
-    create_into_pg_json_type_option_vec_where_length_equal_ts: &dyn ToTokens,
-    create_into_pg_json_type_option_vec_where_length_greater_than_ts: &dyn ToTokens,
-    read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_greater_than_ts: &dyn ToTokens,
-    read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_between_ts: &dyn ToTokens,
-    read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_in_ts: &dyn ToTokens,
-    read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_regular_expression_ts: &dyn ToTokens,
-    read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_greater_than_ts: &dyn ToTokens,
-    read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_regular_expression_ts: &dyn ToTokens,
+    create_into_pg_json_type_opt_vec_where_dim_one_equal_ts: &dyn ToTokens,
+    create_into_pg_json_type_opt_vec_where_dim_two_equal_ts: &dyn ToTokens,
+    create_into_pg_json_type_opt_vec_where_dim_three_equal_ts: &dyn ToTokens,
+    create_into_pg_json_type_opt_vec_where_dim_four_equal_ts: &dyn ToTokens,
+    create_into_pg_json_type_opt_vec_where_length_equal_ts: &dyn ToTokens,
+    create_into_pg_json_type_opt_vec_where_length_greater_than_ts: &dyn ToTokens,
+    read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts: &dyn ToTokens,
+    read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts: &dyn ToTokens,
+    read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts: &dyn ToTokens,
+    read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts: &dyn ToTokens,
+    read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts: &dyn ToTokens,
+    read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts: &dyn ToTokens,
 ) -> Ts2 {
     let self_pg_json_type_as_pg_json_type_ts =
         quote! {<#SelfUcc::#PgJsonTypeUcc as #import_path::#PgJsonTypeUcc>};
@@ -1867,8 +1859,8 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
     let self_pg_json_type_as_pg_json_type_where_ts =
         quote! {#self_pg_json_type_as_pg_json_type_ts::#WhereUcc};
     let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
-    let option_vec_create_ts_a442630a =
-        gen_option_vec_create_ts(&self_pg_json_type_as_pg_json_type_ts, &option_vec_create_ts);
+    let opt_vec_create_ts_a442630a =
+        gen_opt_vec_create_ts(&self_pg_json_type_as_pg_json_type_ts, &opt_vec_create_ts);
     let read_only_ids_to_two_dimal_vec_read_inner_ts_da1a7cf8 =
         gen_read_only_ids_to_two_dimal_vec_read_inner_ts(
             &self_pg_json_type_as_pg_json_type_ts,
@@ -1890,27 +1882,27 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
         &self_pg_json_type_as_pg_json_type_ts,
         &update_to_read_only_ids_ts,
     );
-    let read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts_f5d1b395 =
-        gen_read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts(
+    let read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts_f5d1b395 =
+        gen_read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts(
             *import_path,
             &self_pg_json_type_as_pg_json_type_ts,
-            &read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts,
+            &read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts,
         );
-    let previous_read_merged_with_option_update_into_read_ts_ab0384b9 =
-        gen_previous_read_merged_with_option_update_into_read_ts(
+    let previous_read_merged_with_opt_update_into_read_ts_ab0384b9 =
+        gen_previous_read_merged_with_opt_update_into_read_ts(
             &self_pg_json_type_as_pg_json_type_ts,
-            &previous_read_merged_with_option_update_into_read_ts,
+            &previous_read_merged_with_opt_update_into_read_ts,
         );
     let read_only_ids_merged_with_create_into_read_ts_7df2fa10 =
         gen_read_only_ids_merged_with_create_into_read_ts(
             &self_pg_json_type_as_pg_json_type_ts,
             &read_only_ids_merged_with_create_into_read_ts,
         );
-    let read_only_ids_merged_with_create_into_option_value_read_ts_1f54e2bf =
-        gen_read_only_ids_merged_with_create_into_option_value_read_ts(
+    let read_only_ids_merged_with_create_into_opt_value_read_ts_1f54e2bf =
+        gen_read_only_ids_merged_with_create_into_opt_value_read_ts(
             *import_path,
             &self_pg_json_type_as_pg_json_type_ts,
-            &read_only_ids_merged_with_create_into_option_value_read_ts,
+            &read_only_ids_merged_with_create_into_opt_value_read_ts,
         );
     let read_only_ids_merged_with_create_into_table_type_declaration_ts_b605767e =
         gen_read_only_ids_merged_with_create_into_table_type_declaration_ts(
@@ -1940,77 +1932,77 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
             &self_pg_json_type_as_pg_json_type_where_ts,
             &read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts,
         );
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_ts_aaaa85b2 =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_ts(
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts_aaaa85b2 =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts(
             *import_path,
             &self_pg_json_type_as_pg_json_type_ts,
-            &create_into_pg_json_type_option_vec_where_dim_one_equal_ts,
+            &create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
         );
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_ts_6da8ece7 =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_ts(
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts_6da8ece7 =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts(
             *import_path,
             &self_pg_json_type_as_pg_json_type_ts,
-            &create_into_pg_json_type_option_vec_where_dim_two_equal_ts,
+            &create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
         );
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_three_equal_ts_6b473c12 =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_three_equal_ts(
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts_6b473c12 =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts(
             *import_path,
             &self_pg_json_type_as_pg_json_type_ts,
-            &create_into_pg_json_type_option_vec_where_dim_three_equal_ts,
+            &create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
         );
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_four_equal_ts_b427508f =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_four_equal_ts(
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts_b427508f =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts(
             *import_path,
             &self_pg_json_type_as_pg_json_type_ts,
-            &create_into_pg_json_type_option_vec_where_dim_four_equal_ts,
+            &create_into_pg_json_type_opt_vec_where_dim_four_equal_ts,
         );
-    let create_into_pg_json_type_option_vec_where_length_equal_ts_5266addf =
-        gen_create_into_pg_json_type_option_vec_where_length_equal_ts(
+    let create_into_pg_json_type_opt_vec_where_length_equal_ts_5266addf =
+        gen_create_into_pg_json_type_opt_vec_where_length_equal_ts(
             *import_path,
             &self_pg_json_type_as_pg_json_type_ts,
-            &create_into_pg_json_type_option_vec_where_length_equal_ts,
+            &create_into_pg_json_type_opt_vec_where_length_equal_ts,
         );
-    let create_into_pg_json_type_option_vec_where_length_greater_than_ts_93196cce =
-        gen_create_into_pg_json_type_option_vec_where_length_greater_than_ts(
+    let create_into_pg_json_type_opt_vec_where_length_greater_than_ts_93196cce =
+        gen_create_into_pg_json_type_opt_vec_where_length_greater_than_ts(
             *import_path,
             &self_pg_json_type_as_pg_json_type_ts,
-            &create_into_pg_json_type_option_vec_where_length_greater_than_ts,
+            &create_into_pg_json_type_opt_vec_where_length_greater_than_ts,
         );
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_greater_than_ts_e0be3ff7 =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_greater_than_ts(
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts_e0be3ff7 =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts(
             *import_path,
             &self_pg_json_type_as_pg_json_type_ts,
-            &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_greater_than_ts,
+            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts,
         );
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_between_ts_9bdb444a =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_between_ts(
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts_9bdb444a =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts(
             *import_path,
             &self_pg_json_type_as_pg_json_type_ts,
-            &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_between_ts,
+            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts,
         );
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_in_ts_09ea1f4b =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_in_ts(
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts_09ea1f4b =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts(
             *import_path,
             &self_pg_json_type_as_pg_json_type_ts,
-            &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_in_ts,
+            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts,
         );
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_regular_expression_ts_1b1057eb =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_regular_expression_ts(
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts_1b1057eb =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts(
             *import_path,
             &self_pg_json_type_as_pg_json_type_ts,
-            &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_regular_expression_ts,
+            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts,
         );
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_greater_than_ts_5dc0a6c8 =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_greater_than_ts(
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts_5dc0a6c8 =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts(
             *import_path,
             &self_pg_json_type_as_pg_json_type_ts,
-            &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_greater_than_ts,
+            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
         );
-    let read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_regular_expression_ts_972d3e87 =
-        gen_read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_regular_expression_ts(
+    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts_972d3e87 =
+        gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts(
             *import_path,
             &self_pg_json_type_as_pg_json_type_ts,
-            &read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_regular_expression_ts,
+            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts,
         );
     quote! {
         #[allow(unused_qualifications)]
@@ -2021,36 +2013,36 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
         impl #import_path::#PgJsonTypeTestCasesUcc for #ident {
             type #PgJsonTypeUcc = #SelfUcc;
             type #SelectUcc = #ident_select_ucc;
-            #option_vec_create_ts_a442630a
+            #opt_vec_create_ts_a442630a
             #read_only_ids_to_two_dimal_vec_read_inner_ts_da1a7cf8
             #read_inner_into_read_with_new_or_try_new_unwraped_ts_ccead2b6
             #read_inner_into_update_with_new_or_try_new_unwraped_ts_b45cde72
-            fn #ReadOnlyIdsIntoOptionValueReadInnerSc(
+            fn #ReadOnlyIdsIntoOptValueReadInnerSc(
                 #ValueSc: #self_pg_json_type_as_pg_json_type_ts::#ReadOnlyIdsUcc
             ) -> Option<#import_path::#ValueUcc<#self_pg_json_type_as_pg_json_type_ts::#ReadInnerUcc>> {
-                #read_only_ids_into_option_value_read_inner_ts
+                #read_only_ids_into_opt_value_read_inner_ts
             }
             #update_to_read_only_ids_ts_d7e0cbf0
-            #read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts_f5d1b395
-            #previous_read_merged_with_option_update_into_read_ts_ab0384b9
+            #read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts_f5d1b395
+            #previous_read_merged_with_opt_update_into_read_ts_ab0384b9
             #read_only_ids_merged_with_create_into_read_ts_7df2fa10
-            #read_only_ids_merged_with_create_into_option_value_read_ts_1f54e2bf
+            #read_only_ids_merged_with_create_into_opt_value_read_ts_1f54e2bf
             #read_only_ids_merged_with_create_into_table_type_declaration_ts_b605767e
             #read_only_ids_merged_with_create_into_where_equal_ts_1009eb88
             #read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts_876245c5
             #read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts_11560e7f
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_one_equal_ts_aaaa85b2
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_two_equal_ts_6da8ece7
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_three_equal_ts_6b473c12
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_dim_four_equal_ts_b427508f
-            #create_into_pg_json_type_option_vec_where_length_equal_ts_5266addf
-            #create_into_pg_json_type_option_vec_where_length_greater_than_ts_93196cce
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_greater_than_ts_e0be3ff7
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_between_ts_9bdb444a
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_in_ts_09ea1f4b
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_regular_expression_ts_1b1057eb
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_greater_than_ts_5dc0a6c8
-            #read_only_ids_merged_with_create_into_pg_json_type_option_vec_where_contains_el_regular_expression_ts_972d3e87
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts_aaaa85b2
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts_6da8ece7
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts_6b473c12
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts_b427508f
+            #create_into_pg_json_type_opt_vec_where_length_equal_ts_5266addf
+            #create_into_pg_json_type_opt_vec_where_length_greater_than_ts_93196cce
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts_e0be3ff7
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts_9bdb444a
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts_09ea1f4b
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts_1b1057eb
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts_5dc0a6c8
+            #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts_972d3e87
         }
     }
 }
@@ -2149,10 +2141,10 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         let ts = vec_ident_type.iter().enumerate().map(|(index, (el_ident, el_type))| {
             let field_index_handle_ts = gen_underscore_underscore_field_index_handle_ts(index);
             let type_ts = gen_type_ts(el_ident, el_type);
-            let struct_ident_options_with_dq_ts = dq_ts(&format!("struct {ident} with {len} elements"));
+            let struct_ident_opts_with_dq_ts = dq_ts(&format!("struct {ident} with {len} elements"));
             quote! {
                 let Some(#field_index_handle_ts) = serde::de::SeqAccess::next_element::<#type_ts>(&mut __seq)? else {
-                    return Err(serde::de::Error::invalid_length(0usize, &#struct_ident_options_with_dq_ts));
+                    return Err(serde::de::Error::invalid_length(0usize, &#struct_ident_opts_with_dq_ts));
                 };
             }
         });
