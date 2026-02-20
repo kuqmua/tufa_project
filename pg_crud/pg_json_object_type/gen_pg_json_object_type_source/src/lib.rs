@@ -1067,7 +1067,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let gen_impl_sqlx_decode_sqlx_pg_for_ident_wrapper_ts = |ident_ts_65e11453: &dyn ToTokens| gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
                 &ident_ts_65e11453,
                 &gen_sqlx_types_json_type_declaration_ts(&SelfUcc),
-                &quote! {Ok(value_147c3532.0)}
+                &quote! {Ok(v.0)}
             );
             let gen_value_type_ts = |type_ts: &dyn ToTokens| {
                 quote! {#ValueSc: #type_ts}
@@ -2318,7 +2318,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
                     &ident_ts_caa12b2f,
                     &quote!{sqlx::types::Json<Self>},
-                    &quote!{Ok(value_147c3532.0)}
+                    &quote!{Ok(v.0)}
                 )
             };
             let gen_impl_sqlx_type_ts = |ident_ts_58d92fbf: &dyn ToTokens|{

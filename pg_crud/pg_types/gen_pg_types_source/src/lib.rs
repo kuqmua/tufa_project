@@ -4076,8 +4076,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let impl_sqlx_type_for_ident_origin_ts = gen_impl_sqlx_type_for_ident_ts(&ident_origin_ucc, &field_type_handle);
             let impl_sqlx_encode_sqlx_pg_for_ident_origin_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_origin_ucc, &quote! {#SelfSc.0});
             let impl_sqlx_decode_sqlx_pg_for_ident_origin_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(&ident_origin_ucc, &field_type_handle, &{
-                let scopes_value_ts = quote! {(value_147c3532)};
-                let ok_self_scopes_value_ts = quote! {Ok(Self #scopes_value_ts)};
+                let scopes_v_ts = quote! {(v)};
+                let ok_self_scopes_v_ts = quote! {Ok(Self #scopes_v_ts)};
                 match &pg_type_pattern {
                     PgTypePattern::Standart => match &is_nullable {
                         IsNullable::False => match &pg_type {
@@ -4104,17 +4104,17 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             | PgType::SqlxTypesMacAddressMacAddressAsMacAddr
                             | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                             | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
-                            | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => ok_self_scopes_value_ts,
+                            | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => ok_self_scopes_v_ts,
                             PgType::SqlxTypesChronoNaiveDateAsDate | PgType::SqlxPgTypesPgRangeI32AsInt4Range | PgType::SqlxPgTypesPgRangeI64AsInt8Range => quote! {
-                                match Self::#TryNewSc #scopes_value_ts {
+                                match Self::#TryNewSc #scopes_v_ts {
                                     Ok(value_93eb5329) => Ok(value_93eb5329),
                                     Err(er) => Err(Box::#NewSc(er)),
                                 }
                             },
                         },
-                        IsNullable::True => ok_self_scopes_value_ts,
+                        IsNullable::True => ok_self_scopes_v_ts,
                     },
-                    PgTypePattern::ArrayDim1 { .. } => ok_self_scopes_value_ts,
+                    PgTypePattern::ArrayDim1 { .. } => ok_self_scopes_v_ts,
                 }
             });
             let impl_sqlx_pg_pg_has_array_type_for_ident_origin_ts = {
@@ -4221,7 +4221,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(&ident_table_type_declaration_ucc, &quote! {Self(#PgCrudCommonDefaultOptionSomeVecOneElCall)});
             let impl_sqlx_type_for_ident_table_type_declaration_ts = gen_impl_sqlx_type_for_ident_ts(&ident_table_type_declaration_ucc, &ident_origin_ucc);
             let impl_sqlx_encode_sqlx_pg_for_ident_table_type_declaration_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_table_type_declaration_ucc, &quote! {#SelfSc.0});
-            let impl_sqlx_decode_sqlx_pg_for_ident_table_type_declaration_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(&ident_table_type_declaration_ucc, &ident_origin_ucc, &quote! {Ok(Self(value_147c3532))});
+            let impl_sqlx_decode_sqlx_pg_for_ident_table_type_declaration_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(&ident_table_type_declaration_ucc, &ident_origin_ucc, &quote! {Ok(Self(v))});
             //todo rewrite as dependency of PgType trait?
             let impl_pg_type_equal_operator_for_ident_table_type_declaration_ts = impl_pg_type_equal_operator_for_ident_ts(
                 &import_path,
@@ -4745,7 +4745,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let impl_sqlx_decode_sqlx_pg_for_ident_read_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
                 &ident_read_ucc,
                 &ident_origin_ucc,
-                &quote! {Ok(Self(value_147c3532))}
+                &quote! {Ok(Self(v))}
             );
             let impl_sqlx_type_for_ident_read_ts = gen_impl_sqlx_type_for_ident_ts(&ident_read_ucc, &ident_origin_ucc);
             let maybe_impl_pg_type_where_filter_for_ident_read_if_can_be_primary_key_ts = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
@@ -4798,7 +4798,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let impl_sqlx_decode_sqlx_pg_for_ident_read_only_ids_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
                 &ident_read_only_ids_ucc,
                 &ident_read_ucc,
-                &quote! {Ok(Self(value_147c3532))}
+                &quote! {Ok(Self(v))}
             );
             let impl_sqlx_type_for_ident_read_only_ids_ts = gen_impl_sqlx_type_for_ident_ts(&ident_read_only_ids_ucc, &ident_read_ucc);
             quote! {

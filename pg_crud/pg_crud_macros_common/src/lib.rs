@@ -1028,13 +1028,13 @@ pub fn gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(
 pub fn gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
     ident_ts: &dyn ToTokens,
     type_ts: &dyn ToTokens,
-    ok_value_match_ts: &dyn ToTokens,
+    ok_v_match_ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         impl sqlx::Decode<'_, sqlx::Postgres> for #ident_ts {
             fn decode(#ValueSc: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
                 match <#type_ts as sqlx::Decode<sqlx::Postgres>>::decode(#ValueSc) {
-                    Ok(value_147c3532) => #ok_value_match_ts,
+                    Ok(v) => #ok_v_match_ts,
                     Err(er) => Err(er),
                 }
             }
