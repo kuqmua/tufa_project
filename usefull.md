@@ -12,7 +12,7 @@ A collection of useful Rust resources, libraries, patterns, and code examples.
 - [Builder Pattern](#builder-pattern)
 - [Best Practices](#best-practices)
 - [Validation](#validation)
-- [Compile-time Initialization](#compile-time-init)
+- [Compile-time Init](#compile-time-init)
 - [gRPC Implementation](#grpc-implementation)
 - [PostgreSQL](#postgresql)
 - [Procedural Macro Reexports](#procedural-macro-reexports)
@@ -99,7 +99,7 @@ Video: [5 Better ways to code in Rust](https://www.youtube.com/watch?v=BU1LYFkpJ
 
 Crate to validate string length and other values: [validator](https://crates.io/crates/validator)
 
-## Compile-time Initialization
+## Compile-time Init
 
 ### Basic Example
 

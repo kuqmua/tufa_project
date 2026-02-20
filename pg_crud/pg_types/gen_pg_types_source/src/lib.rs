@@ -699,7 +699,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug)]
-    enum PgTypeInitializationTryNew {
+    enum PgTypeInitTryNew {
         StringAsText,
         SqlxTypesChronoNaiveTimeAsTime,
         SqlxTypesTimeTimeAsTime,
@@ -712,7 +712,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange,
         SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange,
     }
-    impl TryFrom<&PgType> for PgTypeInitializationTryNew {
+    impl TryFrom<&PgType> for PgTypeInitTryNew {
         type Error = ();
         fn try_from(v: &PgType) -> Result<Self, Self::Error> {
             match v {
@@ -746,20 +746,20 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             }
         }
     }
-    impl From<&PgTypeInitializationTryNew> for PgType {
-        fn from(v: &PgTypeInitializationTryNew) -> Self {
+    impl From<&PgTypeInitTryNew> for PgType {
+        fn from(v: &PgTypeInitTryNew) -> Self {
             match v {
-                PgTypeInitializationTryNew::StringAsText => Self::StringAsText,
-                PgTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime => Self::SqlxTypesChronoNaiveTimeAsTime,
-                PgTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => Self::SqlxTypesTimeTimeAsTime,
-                PgTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => Self::SqlxTypesChronoNaiveDateAsDate,
-                PgTypeInitializationTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => Self::SqlxTypesChronoNaiveDateTimeAsTimestamp,
-                PgTypeInitializationTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz,
-                PgTypeInitializationTryNew::SqlxPgTypesPgRangeI32AsInt4Range => Self::SqlxPgTypesPgRangeI32AsInt4Range,
-                PgTypeInitializationTryNew::SqlxPgTypesPgRangeI64AsInt8Range => Self::SqlxPgTypesPgRangeI64AsInt8Range,
-                PgTypeInitializationTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Self::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange,
-                PgTypeInitializationTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => Self::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange,
-                PgTypeInitializationTryNew::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Self::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange,
+                PgTypeInitTryNew::StringAsText => Self::StringAsText,
+                PgTypeInitTryNew::SqlxTypesChronoNaiveTimeAsTime => Self::SqlxTypesChronoNaiveTimeAsTime,
+                PgTypeInitTryNew::SqlxTypesTimeTimeAsTime => Self::SqlxTypesTimeTimeAsTime,
+                PgTypeInitTryNew::SqlxTypesChronoNaiveDateAsDate => Self::SqlxTypesChronoNaiveDateAsDate,
+                PgTypeInitTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => Self::SqlxTypesChronoNaiveDateTimeAsTimestamp,
+                PgTypeInitTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz,
+                PgTypeInitTryNew::SqlxPgTypesPgRangeI32AsInt4Range => Self::SqlxPgTypesPgRangeI32AsInt4Range,
+                PgTypeInitTryNew::SqlxPgTypesPgRangeI64AsInt8Range => Self::SqlxPgTypesPgRangeI64AsInt8Range,
+                PgTypeInitTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Self::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange,
+                PgTypeInitTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => Self::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange,
+                PgTypeInitTryNew::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Self::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange,
             }
         }
     }
@@ -1020,7 +1020,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let pg_type = &element.pg_type;
         let is_nullable = &element.is_nullable;
         let pg_type_pattern = &element.pg_type_pattern;
-        let pg_type_init_try_new_try_from_pg_type = PgTypeInitializationTryNew::try_from(pg_type);
+        let pg_type_init_try_new_try_from_pg_type = PgTypeInitTryNew::try_from(pg_type);
         let pg_type_deserialize = PgTypeDeserialize::from(pg_type);
         let array_dims_number = pg_type_pattern.array_dims_number();
         let range_try_from_pg_type = Range::try_from(pg_type);
@@ -3155,10 +3155,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             };
                             let content_ts: &dyn ToTokens = match &pg_type_init_try_new {
-                                PgTypeInitializationTryNew::StringAsText => &string_as_text_try_new_er_variants_ts,
-                                PgTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime | PgTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => &nanosecond_precision_is_not_supported_variant_try_new_ts,
-                                PgTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_er_variants_ts,
-                                PgTypeInitializationTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => &quote! {
+                                PgTypeInitTryNew::StringAsText => &string_as_text_try_new_er_variants_ts,
+                                PgTypeInitTryNew::SqlxTypesChronoNaiveTimeAsTime | PgTypeInitTryNew::SqlxTypesTimeTimeAsTime => &nanosecond_precision_is_not_supported_variant_try_new_ts,
+                                PgTypeInitTryNew::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_er_variants_ts,
+                                PgTypeInitTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => &quote! {
                                     #DateUcc {
                                         #[eo_location]
                                         #ErSc: #sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_er_ucc,
@@ -3170,7 +3170,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         loc: location_lib::loc::Loc,
                                     },
                                 },
-                                PgTypeInitializationTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &quote! {
+                                PgTypeInitTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &quote! {
                                     #DateNaiveUcc {
                                         #[eo_location]
                                         #ErSc: #sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_er_ucc,
@@ -3182,15 +3182,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         loc: location_lib::loc::Loc,
                                     },
                                 },
-                                PgTypeInitializationTryNew::SqlxPgTypesPgRangeI32AsInt4Range => &gen_int_range_type_er_variants_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
-                                PgTypeInitializationTryNew::SqlxPgTypesPgRangeI64AsInt8Range => &gen_int_range_type_er_variants_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
-                                PgTypeInitializationTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &gen_start_end_ts(
+                                PgTypeInitTryNew::SqlxPgTypesPgRangeI32AsInt4Range => &gen_int_range_type_er_variants_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
+                                PgTypeInitTryNew::SqlxPgTypesPgRangeI64AsInt8Range => &gen_int_range_type_er_variants_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
+                                PgTypeInitTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &gen_start_end_ts(
                                     &sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_er_ucc
                                 ),
-                                PgTypeInitializationTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &gen_start_end_ts(
+                                PgTypeInitTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &gen_start_end_ts(
                                     &sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_try_new_er_ucc
                                 ),
-                                PgTypeInitializationTryNew::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &gen_start_end_ts(
+                                PgTypeInitTryNew::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &gen_start_end_ts(
                                     &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_try_new_er_ucc
                                 ),
                             };
@@ -3490,7 +3490,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         }))
                                     };
                                     match &pg_type_init_try_new {
-                                        PgTypeInitializationTryNew::StringAsText => quote! {
+                                        PgTypeInitTryNew::StringAsText => quote! {
                                             if #ValueSc.find('\0').is_some() {
                                                 Err(#ident_standart_not_null_origin_try_new_er_ucc::#ContainsNullByteUcc {
                                                     #ValueSc,
@@ -3500,7 +3500,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 Ok(Self(#ValueSc))
                                             }
                                         },
-                                        PgTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime => quote! {
+                                        PgTypeInitTryNew::SqlxTypesChronoNaiveTimeAsTime => quote! {
                                             if <#inner_type_standart_not_null_ts as chrono::Timelike>::nanosecond(&#ValueSc).checked_rem(1000).expect("7c8b4e12") != 0 {
                                                 return Err(#ident_standart_not_null_origin_try_new_er_ucc::#NanosecondPrecisionIsNotSupportedUcc {
                                                     #ValueSc: #ValueSc.to_string(),
@@ -3509,7 +3509,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             }
                                             Ok(Self(#ValueSc))
                                         },
-                                        PgTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => quote! {
+                                        PgTypeInitTryNew::SqlxTypesTimeTimeAsTime => quote! {
                                             if #ValueSc.nanosecond().checked_rem(1000).expect("ce47524f") != 0 {
                                                 return Err(#ident_standart_not_null_origin_try_new_er_ucc::#NanosecondPrecisionIsNotSupportedUcc {
                                                     #ValueSc: #ValueSc.to_string(),
@@ -3518,7 +3518,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             }
                                             Ok(Self(#ValueSc))
                                         },
-                                        PgTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => quote! {
+                                        PgTypeInitTryNew::SqlxTypesChronoNaiveDateAsDate => quote! {
                                             let #EarliestSupportedDateSc = #inner_type_standart_not_null_ts::from_ymd_opt(-4713, 12, 31).expect("9f6241e5");
                                             if #ValueSc >= #EarliestSupportedDateSc {
                                                 Ok(Self(#ValueSc))
@@ -3531,7 +3531,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 })
                                             }
                                         },
-                                        PgTypeInitializationTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote! {
+                                        PgTypeInitTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote! {
                                             let #DateSc = match #sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc::#TryNewSc(
                                                 #ValueSc.#DateSc()
                                             ) {
@@ -3556,7 +3556,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             };
                                             Ok(Self(#inner_type_standart_not_null_ts::#NewSc(#DateSc.0, #TimeSc.0)))
                                         },
-                                        PgTypeInitializationTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
+                                        PgTypeInitTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
                                             let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts = gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
                                                 #DateNaiveSc.0,
                                                 #TimeSc.0
@@ -3583,11 +3583,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 Ok(Self(#sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts))
                                             }
                                         }
-                                        PgTypeInitializationTryNew::SqlxPgTypesPgRangeI32AsInt4Range => gen_int_range_check_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
-                                        PgTypeInitializationTryNew::SqlxPgTypesPgRangeI64AsInt8Range => gen_int_range_check_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
-                                        PgTypeInitializationTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => gen_ok_self_sqlx_pg_types_pg_range_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc),
-                                        PgTypeInitializationTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => gen_ok_self_sqlx_pg_types_pg_range_ts(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc),
-                                        PgTypeInitializationTryNew::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => gen_ok_self_sqlx_pg_types_pg_range_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc),
+                                        PgTypeInitTryNew::SqlxPgTypesPgRangeI32AsInt4Range => gen_int_range_check_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
+                                        PgTypeInitTryNew::SqlxPgTypesPgRangeI64AsInt8Range => gen_int_range_check_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
+                                        PgTypeInitTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => gen_ok_self_sqlx_pg_types_pg_range_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc),
+                                        PgTypeInitTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => gen_ok_self_sqlx_pg_types_pg_range_ts(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc),
+                                        PgTypeInitTryNew::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => gen_ok_self_sqlx_pg_types_pg_range_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc),
                                     }
                                 }
                                 IsNullable::True => gen_match_option_ts(&ident_standart_not_null_origin_ucc),
