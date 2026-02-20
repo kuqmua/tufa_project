@@ -56,7 +56,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["order", "by"],
     ["primary", "keys"],
     ["not", "unique", "primary", "key"],
-    ["response", "variants"],
+    ["response", "vrts"],
     ["tvfrr", "extraction", "logic"],
     ["bind", "query"],
     ["into", "serde", "version"],
@@ -198,15 +198,15 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["expected", "response"],
     ["pg", "crud"],
     ["check", "body", "size", "er"],
-    ["create", "many", "additional", "er", "variants"],
-    ["create", "one", "additional", "er", "variants"],
-    ["read", "many", "additional", "er", "variants"],
-    ["read", "one", "additional", "er", "variants"],
-    ["update", "many", "additional", "er", "variants"],
-    ["update", "one", "additional", "er", "variants"],
-    ["delete", "many", "additional", "er", "variants"],
-    ["delete", "one", "additional", "er", "variants"],
-    ["common", "additional", "er", "variants"],
+    ["create", "many", "additional", "er", "vrts"],
+    ["create", "one", "additional", "er", "vrts"],
+    ["read", "many", "additional", "er", "vrts"],
+    ["read", "one", "additional", "er", "vrts"],
+    ["update", "many", "additional", "er", "vrts"],
+    ["update", "one", "additional", "er", "vrts"],
+    ["delete", "many", "additional", "er", "vrts"],
+    ["delete", "one", "additional", "er", "vrts"],
+    ["common", "additional", "er", "vrts"],
     ["create", "many", "additional", "logic"],
     ["create", "one", "additional", "logic"],
     ["read", "many", "additional", "logic"],
@@ -256,7 +256,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["deserialize"],
     ["request"],
     ["response"],
-    ["variants"],
+    ["vrts"],
     ["options"],
     ["code"],
     ["config"],
@@ -467,7 +467,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["gen", "pg", "crud", "primary", "key"],
     ["default", "option", "some", "vec", "one", "el"],
     [
-        "all", "variants", "default", "option", "some", "vec", "one", "el"
+        "all", "vrts", "default", "option", "some", "vec", "one", "el"
     ],
     ["gen", "pg", "json", "type"],
     ["to", "std", "string", "string"],
@@ -876,7 +876,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
         "default", "option", "some", "vec", "one", "el", "max", "page", "size"
     ],
     [
-        "all", "variants", "default", "option", "some", "vec", "one", "el", "max", "page", "size"
+        "all", "vrts", "default", "option", "some", "vec", "one", "el", "max", "page", "size"
     ],
     ["ids", "are", "not", "unique"],
     ["pg", "type", "primary", "key"],

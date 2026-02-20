@@ -7,14 +7,14 @@ use std::fmt::{Display, Formatter, Result as StdFmtResult};
 pub trait DefaultOptionSomeVecOneEl: Sized {
     fn default_option_some_vec_one_el() -> Self;
 }
-pub trait AllEnumVariantsArrayDefaultOptionSomeVecOneEl: Sized {
-    fn all_variants_default_option_some_vec_one_el() -> Vec<Self>;
+pub trait AllEnumVrtsArrayDefaultOptionSomeVecOneEl: Sized {
+    fn all_vrts_default_option_some_vec_one_el() -> Vec<Self>;
 }
 pub trait DefaultOptionSomeVecOneElMaxPageSize: Sized {
     fn default_option_some_vec_one_el_max_page_size() -> Self;
 }
-pub trait AllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize: Sized {
-    fn all_variants_default_option_some_vec_one_el_max_page_size() -> Vec<Self>;
+pub trait AllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize: Sized {
+    fn all_vrts_default_option_some_vec_one_el_max_page_size() -> Vec<Self>;
 }
 #[derive(Debug, Default, Clone, Copy, Serialize, Deserialize, Eq, PartialEq, JsonSchema)]
 pub enum LogicalOperator {
@@ -67,12 +67,12 @@ impl ToTokens for LogicalOperator {
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq)]
-pub enum PgTypeGreaterThanVariant {
+pub enum PgTypeGreaterThanVrt {
     EqualNotGreaterThan,
     GreaterThan,
     NotGreaterThan,
 }
-impl PgTypeGreaterThanVariant {
+impl PgTypeGreaterThanVrt {
     #[must_use]
     pub const fn logical_operator(&self) -> LogicalOperator {
         match *self {
@@ -81,7 +81,7 @@ impl PgTypeGreaterThanVariant {
         }
     }
 }
-impl ToTokens for PgTypeGreaterThanVariant {
+impl ToTokens for PgTypeGreaterThanVrt {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match *self {
             Self::EqualNotGreaterThan => quote! {EqualNotGreaterThan},
@@ -92,12 +92,12 @@ impl ToTokens for PgTypeGreaterThanVariant {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub enum PgJsonTypeLengthGreaterThanVariant {
+pub enum PgJsonTypeLengthGreaterThanVrt {
     EqualNotLengthGreaterThan,
     LengthGreaterThan,
     NotLengthGreaterThan,
 }
-impl PgJsonTypeLengthGreaterThanVariant {
+impl PgJsonTypeLengthGreaterThanVrt {
     #[must_use]
     pub const fn logical_operator(&self) -> LogicalOperator {
         match *self {
@@ -106,7 +106,7 @@ impl PgJsonTypeLengthGreaterThanVariant {
         }
     }
 }
-impl ToTokens for PgJsonTypeLengthGreaterThanVariant {
+impl ToTokens for PgJsonTypeLengthGreaterThanVrt {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match *self {
             Self::EqualNotLengthGreaterThan => quote! {EqualNotLengthGreaterThan},

@@ -106,7 +106,7 @@ pub trait PgJsonType {
     ) -> Result<String, QueryPartEr>;
     type Where: WhereAlias
         + UtoipaToSchemaAndSchemarsJsonSchemaAlias
-        + AllEnumVariantsArrayDefaultOptionSomeVecOneEl
+        + AllEnumVrtsArrayDefaultOptionSomeVecOneEl
         + ToErrString;
     //todo impl get fields from read
     //todo maybe add Decode trait here and Type
@@ -248,7 +248,7 @@ pub trait PgTypeTestCases {
     fn pg_type_option_vec_where_greater_than_test()
     -> Option<NotEmptyUniqueVec<PgTypeGreaterThanTest<Self::PgType>>>;
     fn read_only_ids_merged_with_table_type_declaration_into_pg_type_option_where_greater_than(
-        greater_than_variant: PgTypeGreaterThanVariant,
+        greater_than_vrt: PgTypeGreaterThanVrt,
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         table_type_declaration: <Self::PgType as PgType>::TableTypeDeclaration,
     ) -> Option<<Self::PgType as PgType>::Where>;
@@ -302,21 +302,21 @@ pub trait PgTypeTestCases {
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, PartialEq)]
 pub struct PgTypeGreaterThanTest<T: PgType> {
-    pub variant: PgTypeGreaterThanVariant,
+    pub vrt: PgTypeGreaterThanVrt,
     pub create: <T as PgType>::Create,
     pub greater_than: <T as PgType>::TableTypeDeclaration,
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug)]
 pub struct PgTypeLengthGreaterThanTest<T: PgType> {
-    pub variant: PgJsonTypeLengthGreaterThanVariant,
+    pub vrt: PgJsonTypeLengthGreaterThanVrt,
     pub create: <T as PgType>::Create,
     pub length_greater_than: UnsignedPartOfI32,
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug)]
 pub struct PgJsonTypeLengthGreaterThanTest<T: PgJsonType> {
-    pub variant: PgJsonTypeLengthGreaterThanVariant,
+    pub vrt: PgJsonTypeLengthGreaterThanVrt,
     pub create: <T as PgJsonType>::Create,
     pub length_greater_than: UnsignedPartOfI32,
 }
@@ -440,7 +440,7 @@ pub struct NullableJsonObjectPgTypeWhereFilter<
         + PartialEq
         + Clone
         + for<'lifetime> PgTypeWhereFilter<'lifetime>
-        + AllEnumVariantsArrayDefaultOptionSomeVecOneEl,
+        + AllEnumVrtsArrayDefaultOptionSomeVecOneEl,
 >(pub Option<NotEmptyUniqueVec<T>>);
 impl<'query_lifetime, T> PgTypeWhereFilter<'query_lifetime>
     for NullableJsonObjectPgTypeWhereFilter<T>
@@ -449,7 +449,7 @@ where
         + PartialEq
         + Clone
         + for<'t_lifetime> PgTypeWhereFilter<'t_lifetime>
-        + AllEnumVariantsArrayDefaultOptionSomeVecOneEl,
+        + AllEnumVrtsArrayDefaultOptionSomeVecOneEl,
 {
     fn query_bind(
         self,
@@ -478,21 +478,21 @@ where
         + PartialEq
         + Clone
         + for<'t_lifetime> PgTypeWhereFilter<'t_lifetime>
-        + AllEnumVariantsArrayDefaultOptionSomeVecOneEl,
+        + AllEnumVrtsArrayDefaultOptionSomeVecOneEl,
 {
     fn to_err_string(&self) -> String {
         format!("{self:#?}")
     }
 }
-impl<T> AllEnumVariantsArrayDefaultOptionSomeVecOneEl for NullableJsonObjectPgTypeWhereFilter<T>
+impl<T> AllEnumVrtsArrayDefaultOptionSomeVecOneEl for NullableJsonObjectPgTypeWhereFilter<T>
 where
     T: Debug
         + PartialEq
         + Clone
         + for<'t_lifetime> PgTypeWhereFilter<'t_lifetime>
-        + AllEnumVariantsArrayDefaultOptionSomeVecOneEl,
+        + AllEnumVrtsArrayDefaultOptionSomeVecOneEl,
 {
-    fn all_variants_default_option_some_vec_one_el() -> Vec<Self> {
+    fn all_vrts_default_option_some_vec_one_el() -> Vec<Self> {
         vec![Self(Some(
             DefaultOptionSomeVecOneEl::default_option_some_vec_one_el(),
         ))]
@@ -758,15 +758,17 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
         ))
     }
 }
-impl<T: Debug + PartialEq + Clone + AllEnumVariantsArrayDefaultOptionSomeVecOneEl>
+impl<T: Debug + PartialEq + Clone + AllEnumVrtsArrayDefaultOptionSomeVecOneEl>
     DefaultOptionSomeVecOneEl for PgTypeWhere<T>
 {
     fn default_option_some_vec_one_el() -> Self {
         Self {
             logical_operator: DefaultOptionSomeVecOneEl::default_option_some_vec_one_el(),
             value: NotEmptyUniqueVec::try_new(
-                AllEnumVariantsArrayDefaultOptionSomeVecOneEl::all_variants_default_option_some_vec_one_el()
-            ).expect("a918b427"),
+                AllEnumVrtsArrayDefaultOptionSomeVecOneEl::all_vrts_default_option_some_vec_one_el(
+                ),
+            )
+            .expect("a918b427"),
         }
     }
 }
@@ -1225,18 +1227,18 @@ const _: () = {
         }
     }
 };
-impl<T: AllEnumVariantsArrayDefaultOptionSomeVecOneEl> DefaultOptionSomeVecOneEl
+impl<T: AllEnumVrtsArrayDefaultOptionSomeVecOneEl> DefaultOptionSomeVecOneEl
     for NotEmptyUniqueVec<T>
 {
     fn default_option_some_vec_one_el() -> Self {
-        Self(AllEnumVariantsArrayDefaultOptionSomeVecOneEl::all_variants_default_option_some_vec_one_el())
+        Self(AllEnumVrtsArrayDefaultOptionSomeVecOneEl::all_vrts_default_option_some_vec_one_el())
     }
 }
-impl<T: AllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize>
-    DefaultOptionSomeVecOneElMaxPageSize for NotEmptyUniqueVec<T>
+impl<T: AllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize> DefaultOptionSomeVecOneElMaxPageSize
+    for NotEmptyUniqueVec<T>
 {
     fn default_option_some_vec_one_el_max_page_size() -> Self {
-        Self(AllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize::all_variants_default_option_some_vec_one_el_max_page_size())
+        Self(AllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize::all_vrts_default_option_some_vec_one_el_max_page_size())
     }
 }
 impl<T> Default for NotEmptyUniqueVec<T> {
@@ -1260,7 +1262,7 @@ where
         + PartialEq
         + Clone
         + for<'t_lifetime> PgTypeWhereFilter<'t_lifetime>
-        + AllEnumVariantsArrayDefaultOptionSomeVecOneEl,
+        + AllEnumVrtsArrayDefaultOptionSomeVecOneEl,
 {
     fn query_bind(
         self,

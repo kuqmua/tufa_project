@@ -4,7 +4,7 @@ pub use filters::*;
 use gen_quotes::{dq_str, dq_ts};
 use macros_helpers::gen_impl_to_err_string_ts;
 use naming::{
-    AllVariantsDefaultOptionSomeVecOneElMaxPageSizeSc, AllVariantsDefaultOptionSomeVecOneElSc,
+    AllVrtsDefaultOptionSomeVecOneElMaxPageSizeSc, AllVrtsDefaultOptionSomeVecOneElSc,
     ColumnNameAndMaybeFieldGetterForErMessageSc, ColumnNameAndMaybeFieldGetterSc, ColumnSc,
     CreateForQueryUcc, CreateIntoPgJsonTypeOptionVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptionVecWhereLengthGreaterThanSc,
@@ -50,13 +50,12 @@ use std::fmt::Display;
 use strum_macros::{Display, EnumIter};
 use syn::{Ident, Type};
 use token_patterns::{
-    AllowClippyArbitrarySourceItemOrdering, Bool,
-    CrateAllEnumVariantsArrayDefaultOptionSomeVecOneEl,
-    CrateAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize, CrateDefaultOptionSomeVecOneEl,
-    CrateDefaultOptionSomeVecOneElMaxPageSize, PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneEl,
-    PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize,
-    PgCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneEl,
-    PgCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize,
+    AllowClippyArbitrarySourceItemOrdering, Bool, CrateAllEnumVrtsArrayDefaultOptionSomeVecOneEl,
+    CrateAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize, CrateDefaultOptionSomeVecOneEl,
+    CrateDefaultOptionSomeVecOneElMaxPageSize, PgCrudAllEnumVrtsArrayDefaultOptionSomeVecOneEl,
+    PgCrudAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize,
+    PgCrudCommonAllEnumVrtsArrayDefaultOptionSomeVecOneEl,
+    PgCrudCommonAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize,
     PgCrudCommonDefaultOptionSomeVecOneEl, PgCrudCommonDefaultOptionSomeVecOneElCall,
     PgCrudCommonDefaultOptionSomeVecOneElMaxPageSize, PgCrudDefaultOptionSomeVecOneEl,
     PgCrudDefaultOptionSomeVecOneElMaxPageSize, RefStr, StdFmtDisplay, StringTs, U64,
@@ -134,20 +133,18 @@ pub enum ImportPath {
     PgCrudCommon,
 }
 impl ImportPath {
-    fn all_variants_default_option_some_vec_one_el(&self) -> &dyn ToTokens {
+    fn all_vrts_default_option_some_vec_one_el(&self) -> &dyn ToTokens {
         match &self {
-            Self::Crate => &CrateAllEnumVariantsArrayDefaultOptionSomeVecOneEl,
-            Self::PgCrud => &PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneEl,
-            Self::PgCrudCommon => &PgCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneEl,
+            Self::Crate => &CrateAllEnumVrtsArrayDefaultOptionSomeVecOneEl,
+            Self::PgCrud => &PgCrudAllEnumVrtsArrayDefaultOptionSomeVecOneEl,
+            Self::PgCrudCommon => &PgCrudCommonAllEnumVrtsArrayDefaultOptionSomeVecOneEl,
         }
     }
-    fn all_variants_default_option_some_vec_one_el_max_page_size(&self) -> &dyn ToTokens {
+    fn all_vrts_default_option_some_vec_one_el_max_page_size(&self) -> &dyn ToTokens {
         match &self {
-            Self::Crate => &CrateAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize,
-            Self::PgCrud => &PgCrudAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize,
-            Self::PgCrudCommon => {
-                &PgCrudCommonAllEnumVariantsArrayDefaultOptionSomeVecOneElMaxPageSize
-            }
+            Self::Crate => &CrateAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize,
+            Self::PgCrud => &PgCrudAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize,
+            Self::PgCrudCommon => &PgCrudCommonAllEnumVrtsArrayDefaultOptionSomeVecOneElMaxPageSize,
         }
     }
     fn default_option_some_vec_one_el(&self) -> &dyn ToTokens {
@@ -597,7 +594,7 @@ impl ToTokens for UpdateQueryPartJsonbSetPathUnderscore {
 }
 pub fn gen_pg_type_where_ts(
     attrs_ts: &dyn ToTokens,
-    variants: &Vec<&dyn PgFilter>,
+    vrts: &Vec<&dyn PgFilter>,
     prefix: &dyn ToTokens,
     should_derive_utoipa_to_schema: &ShouldDeriveUtoipaToSchema,
     should_derive_schemars_json_schema: &ShouldDeriveSchemarsJsonSchema,
@@ -605,7 +602,7 @@ pub fn gen_pg_type_where_ts(
 ) -> Ts2 {
     let ident = SelfWhereUcc::from_tokens(&prefix);
     let pg_type_tokens_where_ts = {
-        let variants_ts = variants.iter().map(|el_a9dc0e35| {
+        let vrts_ts = vrts.iter().map(|el_a9dc0e35| {
             let el_ucc = el_a9dc0e35.ucc();
             let prefix_where_self_ucc = el_a9dc0e35.prefix_where_self_ucc();
             let option_type_ts: Option<Ts2> = el_a9dc0e35.maybe_generic();
@@ -616,7 +613,7 @@ pub fn gen_pg_type_where_ts(
             #attrs_ts
             #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize #should_derive_utoipa_to_schema #should_derive_schemars_json_schema)]
             pub enum #ident {
-                #(#variants_ts),*
+                #(#vrts_ts),*
             }
         }
     };
@@ -629,7 +626,7 @@ pub fn gen_pg_type_where_ts(
             &ColumnParameterUnderscore::False,
             &IsNeedToAddLogicalOperatorUnderscore::False,
             &{
-                let variants_ts = variants.iter().map(|el_8bf490d9| {
+                let vrts_ts = vrts.iter().map(|el_8bf490d9| {
                     let el_ucc = el_8bf490d9.ucc();
                     quote! {
                         Self::#el_ucc(#ValueSc) => pg_crud_common::PgTypeWhereFilter::query_part(
@@ -642,13 +639,13 @@ pub fn gen_pg_type_where_ts(
                 });
                 quote! {
                     match &self {
-                        #(#variants_ts),*
+                        #(#vrts_ts),*
                     }
                 }
             },
             is_query_bind_mutable,
             &{
-                let variants_ts = variants.iter().map(|el_93e5c1bc| {
+                let vrts_ts = vrts.iter().map(|el_93e5c1bc| {
                     let el_ucc = el_93e5c1bc.ucc();
                     quote! {
                         Self::#el_ucc(#ValueSc) => pg_crud_common::PgTypeWhereFilter::query_bind(
@@ -659,7 +656,7 @@ pub fn gen_pg_type_where_ts(
                 });
                 quote! {
                     match self {
-                        #(#variants_ts),*
+                        #(#vrts_ts),*
                     }
                 }
             },
@@ -671,9 +668,9 @@ pub fn gen_pg_type_where_ts(
         &Ts2::new(),
         &quote! {format!("{self:#?}")},
     );
-    let impl_all_variants_default_option_some_vec_one_el_for_pg_type_tokens_where_ts =
-        gen_impl_pg_crud_common_all_variants_default_option_some_vec_one_el_ts(&ident, &{
-            let variants_ts = variants.iter().map(|el_b9724130| {
+    let impl_all_vrts_default_option_some_vec_one_el_for_pg_type_tokens_where_ts =
+        gen_impl_pg_crud_common_all_vrts_default_option_some_vec_one_el_ts(&ident, &{
+            let vrts_ts = vrts.iter().map(|el_b9724130| {
                 let el_ucc = el_b9724130.ucc();
                 let default_option_some_vec_one_el_call_ts =
                     PgCrudCommonDefaultOptionSomeVecOneElCall;
@@ -681,13 +678,13 @@ pub fn gen_pg_type_where_ts(
                     Self::#el_ucc(#default_option_some_vec_one_el_call_ts)
                 }
             });
-            quote! {vec![#(#variants_ts),*]}
+            quote! {vec![#(#vrts_ts),*]}
         });
     quote! {
         #pg_type_tokens_where_ts
         #impl_pg_type_pg_type_where_filter_for_pg_type_tokens_where_ts
         #impl_location_lib_to_err_string_for_pg_type_tokens_where_ts
-        #impl_all_variants_default_option_some_vec_one_el_for_pg_type_tokens_where_ts
+        #impl_all_vrts_default_option_some_vec_one_el_for_pg_type_tokens_where_ts
     }
 }
 #[must_use]
@@ -859,15 +856,15 @@ pub fn gen_impl_default_option_some_vec_one_el_ts(
         }
     }
 }
-pub fn gen_impl_all_variants_default_option_some_vec_one_el_ts(
+pub fn gen_impl_all_vrts_default_option_some_vec_one_el_ts(
     import_path: &ImportPath,
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    let path_trait_ts = import_path.all_variants_default_option_some_vec_one_el();
+    let path_trait_ts = import_path.all_vrts_default_option_some_vec_one_el();
     quote! {
         impl #path_trait_ts for #ident {
-            fn #AllVariantsDefaultOptionSomeVecOneElSc() -> Vec<Self> {
+            fn #AllVrtsDefaultOptionSomeVecOneElSc() -> Vec<Self> {
                 #ts
             }
         }
@@ -889,17 +886,17 @@ pub fn gen_impl_default_option_some_vec_one_el_max_page_size_ts(
         }
     }
 }
-pub fn gen_impl_all_variants_default_option_some_vec_one_el_max_page_size_ts(
+pub fn gen_impl_all_vrts_default_option_some_vec_one_el_max_page_size_ts(
     import_path: &ImportPath,
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    let path_trait_ts = import_path.all_variants_default_option_some_vec_one_el_max_page_size();
-    let all_variants_default_option_some_vec_one_el_max_page_size_sc =
-        AllVariantsDefaultOptionSomeVecOneElMaxPageSizeSc;
+    let path_trait_ts = import_path.all_vrts_default_option_some_vec_one_el_max_page_size();
+    let all_vrts_default_option_some_vec_one_el_max_page_size_sc =
+        AllVrtsDefaultOptionSomeVecOneElMaxPageSizeSc;
     quote! {
         impl #path_trait_ts for #ident {
-            fn #all_variants_default_option_some_vec_one_el_max_page_size_sc() -> Vec<Self> {
+            fn #all_vrts_default_option_some_vec_one_el_max_page_size_sc() -> Vec<Self> {
                 #ts
             }
         }
@@ -930,17 +927,17 @@ pub fn gen_impl_pg_crud_default_option_some_vec_one_el_ts(
         ts,
     )
 }
-pub fn gen_impl_pg_crud_common_all_variants_default_option_some_vec_one_el_ts(
+pub fn gen_impl_pg_crud_common_all_vrts_default_option_some_vec_one_el_ts(
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_all_variants_default_option_some_vec_one_el_ts(&ImportPath::PgCrudCommon, ident, ts)
+    gen_impl_all_vrts_default_option_some_vec_one_el_ts(&ImportPath::PgCrudCommon, ident, ts)
 }
-pub fn gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_ts(
+pub fn gen_impl_pg_crud_all_vrts_default_option_some_vec_one_el_ts(
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_all_variants_default_option_some_vec_one_el_ts(&ImportPath::PgCrud, ident, ts)
+    gen_impl_all_vrts_default_option_some_vec_one_el_ts(&ImportPath::PgCrud, ident, ts)
 }
 pub fn gen_impl_pg_crud_common_default_option_some_vec_one_el_max_page_size_ts(
     ident: &dyn ToTokens,
@@ -967,11 +964,11 @@ pub fn gen_impl_pg_crud_default_option_some_vec_one_el_max_page_size_ts(
         ts,
     )
 }
-pub fn gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_max_page_size_ts(
+pub fn gen_impl_pg_crud_all_vrts_default_option_some_vec_one_el_max_page_size_ts(
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_all_variants_default_option_some_vec_one_el_max_page_size_ts(
+    gen_impl_all_vrts_default_option_some_vec_one_el_max_page_size_ts(
         &ImportPath::PgCrud,
         ident,
         ts,
@@ -1808,7 +1805,7 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
                 #pg_type_option_vec_where_greater_than_test_ts
             }
             fn #read_only_ids_merged_with_table_type_declaration_into_pg_type_option_where_greater_than_sc(
-                greater_than_variant: #import_path::PgTypeGreaterThanVariant,
+                greater_than_vrt: #import_path::PgTypeGreaterThanVrt,
                 #ReadOnlyIdsSc: #self_pg_type_as_pg_type_ts::#ReadOnlyIdsUcc,
                 #TableTypeDeclarationSc: #self_pg_type_as_pg_type_ts::#TableTypeDeclarationUcc,
             ) -> Option<#self_pg_type_as_pg_type_ts::#WhereUcc> {
@@ -2111,14 +2108,14 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         .iter()
         .map(|el_00a99fdb| el_00a99fdb.0)
         .collect::<Vec<&Ident>>();
-    let field_enum_variants_ts = {
-        let field_enum_variants_ts = (0..len)
+    let field_enum_vrts_ts = {
+        let field_enum_vrts_ts = (0..len)
             .map(|i| format!("__{FieldSc}{i}").parse::<Ts2>().expect("c46314b0"))
             .collect::<Vec<Ts2>>();
-        quote! {#(#field_enum_variants_ts),*}
+        quote! {#(#field_enum_vrts_ts),*}
     };
-    let visit_u64_value_enum_variants_ts = {
-        let visit_u64_value_enum_variants_ts = (0..len).map(|index| {
+    let visit_u64_value_enum_vrts_ts = {
+        let visit_u64_value_enum_vrts_ts = (0..len).map(|index| {
             let index_u64_ts = {
                 let value = format!("{index}u64");
                 value.parse::<Ts2>().expect("828ff7b4")
@@ -2126,18 +2123,17 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
             let field_index_ts = gen_underscore_underscore_field_index_ts(index);
             quote! {#index_u64_ts => Ok(__Field::#field_index_ts)}
         });
-        quote! {#(#visit_u64_value_enum_variants_ts),*}
+        quote! {#(#visit_u64_value_enum_vrts_ts),*}
     };
-    let visit_str_value_enum_variants_ts = {
-        let visit_str_value_enum_variants_ts =
-            vec_ident.iter().enumerate().map(|(index, element)| {
-                let field_name_dq_ts = dq_ts(&element);
-                gen_field_ident_dq_serde_private_ok_field_ts(&field_name_dq_ts, index)
-            });
-        quote! {#(#visit_str_value_enum_variants_ts),*,}
+    let visit_str_value_enum_vrts_ts = {
+        let visit_str_value_enum_vrts_ts = vec_ident.iter().enumerate().map(|(index, element)| {
+            let field_name_dq_ts = dq_ts(&element);
+            gen_field_ident_dq_serde_private_ok_field_ts(&field_name_dq_ts, index)
+        });
+        quote! {#(#visit_str_value_enum_vrts_ts),*,}
     };
-    let visit_bytes_value_enum_variants_ts = {
-        let visit_bytes_value_enum_variants_ts =
+    let visit_bytes_value_enum_vrts_ts = {
+        let visit_bytes_value_enum_vrts_ts =
             vec_ident.iter().enumerate().map(|(index, element)| {
                 let b_field_name_dq_ts = {
                     let el_ident_dq_str = dq_str(&element.to_string());
@@ -2146,7 +2142,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                 };
                 gen_field_ident_dq_serde_private_ok_field_ts(&b_field_name_dq_ts, index)
             });
-        quote! {#(#visit_bytes_value_enum_variants_ts),*,}
+        quote! {#(#visit_bytes_value_enum_vrts_ts),*,}
     };
     let struct_ident_dq_ts = gen_struct_ident_dq_ts(&ident);
     let visit_seq_fields_init_ts = {
@@ -2179,8 +2175,8 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
             });
         quote! {#(#ts)*}
     };
-    let visit_map_match_variants_ts = {
-        let visit_map_match_variants_ts = vec_ident_type.iter().enumerate().map(|(index, (el_ident, el_type))| {
+    let visit_map_match_vrts_ts = {
+        let visit_map_match_vrts_ts = vec_ident_type.iter().enumerate().map(|(index, (el_ident, el_type))| {
             let field_index_ts = gen_underscore_underscore_field_index_ts(index);
             let field_ident_dq_ts = dq_ts(&el_ident);
             let type_ts = gen_type_ts(el_ident, el_type);
@@ -2197,7 +2193,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                 }
             }
         });
-        quote! {#(#visit_map_match_variants_ts)*}
+        quote! {#(#visit_map_match_vrts_ts)*}
     };
     let visit_map_missing_fields_check_ts = {
         let ts = vec_ident.iter().enumerate().map(|(index, el_a1d37c97)| {
@@ -2238,7 +2234,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                     #[allow(non_camel_case_types)]
                     #[doc(hidden)]
                     enum __Field {
-                        #field_enum_variants_ts,
+                        #field_enum_vrts_ts,
                         __ignore,
                     }
                     #[doc(hidden)]
@@ -2263,7 +2259,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                             __E: _serde::de::Error,
                         {
                             match __value {
-                                #visit_u64_value_enum_variants_ts,
+                                #visit_u64_value_enum_vrts_ts,
                                 _ => Ok(__Field::__ignore),
                             }
                         }
@@ -2275,7 +2271,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                             __E: _serde::de::Error,
                         {
                             match __value {
-                                #visit_str_value_enum_variants_ts
+                                #visit_str_value_enum_vrts_ts
                                 _ => Ok(__Field::__ignore),
                             }
                         }
@@ -2287,7 +2283,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                             __E: _serde::de::Error,
                         {
                             match __value {
-                                #visit_bytes_value_enum_variants_ts
+                                #visit_bytes_value_enum_vrts_ts
                                 _ => Ok(__Field::__ignore),
                             }
                         }
@@ -2348,7 +2344,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                                 __Field,
                             >(&mut __map)? {
                                 match __key {
-                                    #visit_map_match_variants_ts
+                                    #visit_map_match_vrts_ts
                                     __Field::__ignore => {
                                         let _: serde::de::IgnoredAny = _serde::de::MapAccess::next_value::<
                                             _serde::de::IgnoredAny,

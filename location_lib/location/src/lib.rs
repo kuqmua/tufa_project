@@ -1,7 +1,7 @@
 use gen_quotes::dq_ts;
 use macros_helpers::{
     LocationFieldAttr, gen_if_write_is_err_ts, gen_impl_display_ts, gen_impl_to_err_string_ts,
-    gen_serde_version_of_named_syn_variant,
+    gen_serde_version_of_named_syn_vrt,
 };
 use naming::{IntoSerdeVersionSc, LocSc, ValueSc, WithSerdeUcc, parameter::SelfWithSerdeUcc};
 use proc_macro::TokenStream as Ts;
@@ -25,7 +25,7 @@ use token_patterns::StringTs;
 )]
 pub fn location(input: Ts) -> Ts {
     #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-    enum SuportedEnumVariant {
+    enum SuportedEnumVrt {
         Named,
         Unnamed,
     }
@@ -47,37 +47,28 @@ pub fn location(input: Ts) -> Ts {
     let Data::Enum(data_enum) = di.data else {
         panic!("d98214f7");
     };
-    let supported_enum_variant = {
-        let mut all_equal: Option<SuportedEnumVariant> = None;
+    let supported_enum_vrt = {
+        let mut all_equal: Option<SuportedEnumVrt> = None;
         assert!(!data_enum.variants.is_empty(), "27275ae6");
-        data_enum
-            .variants
-            .iter()
-            .for_each(|variant| match &variant.fields {
-                Fields::Named(_) => match &all_equal {
-                    Some(supported_variant) => {
-                        assert!(
-                            !(*supported_variant == SuportedEnumVariant::Unnamed),
-                            "bf6be520"
-                        );
-                    }
-                    None => {
-                        all_equal = Some(SuportedEnumVariant::Named);
-                    }
-                },
-                Fields::Unnamed(_) => match &all_equal {
-                    Some(supported_variant) => {
-                        assert!(
-                            !(*supported_variant == SuportedEnumVariant::Named),
-                            "02090d85"
-                        );
-                    }
-                    None => {
-                        all_equal = Some(SuportedEnumVariant::Unnamed);
-                    }
-                },
-                Fields::Unit => panic!("2f2e9385"),
-            });
+        data_enum.variants.iter().for_each(|vrt| match &vrt.fields {
+            Fields::Named(_) => match &all_equal {
+                Some(supported_vrt) => {
+                    assert!(!(*supported_vrt == SuportedEnumVrt::Unnamed), "bf6be520");
+                }
+                None => {
+                    all_equal = Some(SuportedEnumVrt::Named);
+                }
+            },
+            Fields::Unnamed(_) => match &all_equal {
+                Some(supported_vrt) => {
+                    assert!(!(*supported_vrt == SuportedEnumVrt::Named), "02090d85");
+                }
+                None => {
+                    all_equal = Some(SuportedEnumVrt::Unnamed);
+                }
+            },
+            Fields::Unit => panic!("2f2e9385"),
+        });
         all_equal.expect("b9da972a")
     };
     let maybe_generic_parameters_ts = if generic_parameters.is_empty() {
@@ -94,32 +85,32 @@ pub fn location(input: Ts) -> Ts {
                 .map(|el_4ee89bd7| quote! {#el_4ee89bd7: location_lib::ToErrString});
             quote! {<#(#v),*>}
         };
-    let gen_enum_ident_with_serde_ts = |variants_ts: &dyn ToTokens| {
+    let gen_enum_ident_with_serde_ts = |vrts_ts: &dyn ToTokens| {
         quote! {
             #[derive(Debug, thiserror::Error, serde::Serialize, serde::Deserialize)]
             pub enum #ident_with_serde_ucc #maybe_generic_parameters_ts {
-                #variants_ts
+                #vrts_ts
             }
         }
     };
-    let gen_impl_ident_into_serde_version_ts = |variants: &dyn ToTokens| {
+    let gen_impl_ident_into_serde_version_ts = |vrts: &dyn ToTokens| {
         quote! {
             impl #maybe_generic_parameters_ts #ident #maybe_generic_parameters_ts {
                 pub fn #IntoSerdeVersionSc(self) -> #ident_with_serde_ucc #maybe_generic_parameters_ts {
                     #[allow(clippy::redundant_closure_for_method_calls)]
                     match self {
-                        #variants
+                        #vrts
                     }
                 }
             }
         }
     };
-    let tokens = match supported_enum_variant {
-        SuportedEnumVariant::Named => {
+    let tokens = match supported_enum_vrt {
+        SuportedEnumVrt::Named => {
             let loc_sc_str = LocSc.to_string();
             //todo maybe impl display was a bad idea. .to_string() casts is dangerous
             let impl_display_handle_ts = {
-                let variants_ts = data_enum.variants.iter().map(|el_f497ea11| {
+                let vrts_ts = data_enum.variants.iter().map(|el_f497ea11| {
                     let el_ident = &el_f497ea11.ident;
                     let fields = if let Fields::Named(fields) = &el_f497ea11.fields {
                         &fields.named
@@ -273,38 +264,37 @@ pub fn location(input: Ts) -> Ts {
                         }
                     }
                 });
-                let loc_variants_ts =
-                    data_enum
-                        .variants
-                        .iter()
-                        .enumerate()
-                        .map(|(index, element)| {
-                            let el_ident = &element.ident;
-                            if index == 0 {
-                                quote! {
-                                    Self::#el_ident {
-                                        #LocSc,
-                                        ..
-                                    }
-                                }
-                            } else {
-                                quote! {
-                                    | Self::#el_ident {
-                                        #LocSc,
-                                        ..
-                                    }
+                let loc_vrts_ts = data_enum
+                    .variants
+                    .iter()
+                    .enumerate()
+                    .map(|(index, element)| {
+                        let el_ident = &element.ident;
+                        if index == 0 {
+                            quote! {
+                                Self::#el_ident {
+                                    #LocSc,
+                                    ..
                                 }
                             }
-                        });
+                        } else {
+                            quote! {
+                                | Self::#el_ident {
+                                    #LocSc,
+                                    ..
+                                }
+                            }
+                        }
+                    });
                 quote! {
                     write!(
                         f,
                         "{}{}",
                         match self {
-                            #(#variants_ts),*
+                            #(#vrts_ts),*
                         },
                         match self {
-                            #(#loc_variants_ts)*
+                            #(#loc_vrts_ts)*
                             => #LocSc
                         }
                     )
@@ -317,7 +307,7 @@ pub fn location(input: Ts) -> Ts {
                 &impl_display_handle_ts,
             );
             let impl_ident_into_serde_version_ts = {
-                let variants_ts = data_enum.variants.iter().map(|el_7d5a4c39| {
+                let vrts_ts = data_enum.variants.iter().map(|el_7d5a4c39| {
                     let el_ident = &el_7d5a4c39.ident;
                     let fields = if let Fields::Named(fields) = &el_7d5a4c39.fields {
                         &fields.named
@@ -393,14 +383,14 @@ pub fn location(input: Ts) -> Ts {
                         }
                     }
                 });
-                gen_impl_ident_into_serde_version_ts(&quote! {#(#variants_ts),*})
+                gen_impl_ident_into_serde_version_ts(&quote! {#(#vrts_ts),*})
             };
             let enum_ident_with_serde_ts = {
-                let variants_ts = data_enum
+                let vrts_ts = data_enum
                     .variants
                     .iter()
-                    .map(gen_serde_version_of_named_syn_variant);
-                gen_enum_ident_with_serde_ts(&quote! {#(#variants_ts),*})
+                    .map(gen_serde_version_of_named_syn_vrt);
+                gen_enum_ident_with_serde_ts(&quote! {#(#vrts_ts),*})
             };
             let impl_display_for_ident_with_serde_ts = gen_impl_display_ts(
                 &maybe_generic_parameters_location_lib_to_err_string_annotations_ts,
@@ -423,13 +413,13 @@ pub fn location(input: Ts) -> Ts {
                 #impl_location_lib_to_err_string_to_err_string_for_ident_with_serde_ts
             }
         }
-        SuportedEnumVariant::Unnamed => {
+        SuportedEnumVrt::Unnamed => {
             let gen_display_formatter_unnamed_ts = || {
-                let variants_ts = data_enum.variants.iter().map(|el_f99bd80d| {
+                let vrts_ts = data_enum.variants.iter().map(|el_f99bd80d| {
                     let el_ident = &el_f99bd80d.ident;
                     quote! {Self::#el_ident(v) => v}
                 });
-                quote! {match self { #(#variants_ts),* }}
+                quote! {match self { #(#vrts_ts),* }}
             };
             let impl_display_for_ident_ts = gen_impl_display_ts(
                 &maybe_generic_parameters_location_lib_to_err_string_annotations_ts,
@@ -447,7 +437,7 @@ pub fn location(input: Ts) -> Ts {
                 },
             );
             let impl_ident_into_serde_version_ts = {
-                let variants_ts = data_enum.variants.iter().map(|el_0e2b2f9c| {
+                let vrts_ts = data_enum.variants.iter().map(|el_0e2b2f9c| {
                     let el_ident = &el_0e2b2f9c.ident;
                     quote! {
                         Self::#el_ident(v) => #ident_with_serde_ucc::#el_ident(
@@ -455,10 +445,10 @@ pub fn location(input: Ts) -> Ts {
                         )
                     }
                 });
-                gen_impl_ident_into_serde_version_ts(&quote! {#(#variants_ts),*})
+                gen_impl_ident_into_serde_version_ts(&quote! {#(#vrts_ts),*})
             };
             let enum_ident_with_serde_ts = {
-                let variants_ts = data_enum.variants.iter().map(|el_0f06fa87| {
+                let vrts_ts = data_enum.variants.iter().map(|el_0f06fa87| {
                     let el_ident = &el_0f06fa87.ident;
                     let fields = if let Fields::Unnamed(fields) = &el_0f06fa87.fields {
                         &fields.unnamed
@@ -480,7 +470,7 @@ pub fn location(input: Ts) -> Ts {
                     };
                     quote! {#el_ident(#inner_type_with_serde_ts)}
                 });
-                gen_enum_ident_with_serde_ts(&quote! {#(#variants_ts),*})
+                gen_enum_ident_with_serde_ts(&quote! {#(#vrts_ts),*})
             };
             let impl_display_for_ident_with_serde_ts = gen_impl_display_ts(
                 &maybe_generic_parameters_location_lib_to_err_string_annotations_ts,

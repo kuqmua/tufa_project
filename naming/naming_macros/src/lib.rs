@@ -255,12 +255,12 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
 fn gen_impl_trait_for_ident_ts(
     name_ts: &dyn ToTokens,
     ident: &Ident,
-    variants_matching_ts: &[Ts2],
+    vrts_matching_ts: &[Ts2],
 ) -> Ts2 {
     quote! {
         impl naming::#name_ts for #ident {
             fn case(&self) -> #StringTs {//todo maybe write duplicate Trait with &str instead of String
-                match self {#(#variants_matching_ts),*}
+                match self {#(#vrts_matching_ts),*}
             }
         }
     }

@@ -776,7 +776,7 @@ enum PgTypeOrPgJsonType {
     PgJsonType,
     PgType,
 }
-enum Variant {
+enum Vrt {
     MinusOne,
     Normal,
 }
@@ -798,7 +798,7 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
             column,
             is_need_to_add_logical_operator,
             &PgTypeOrPgJsonType::PgJsonType,
-            &Variant::Normal,
+            &Vrt::Normal,
         )
     }
     pub fn pg_json_type_query_part_minus_one(
@@ -812,7 +812,7 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
             column,
             is_need_to_add_logical_operator,
             &PgTypeOrPgJsonType::PgJsonType,
-            &Variant::MinusOne,
+            &Vrt::MinusOne,
         )
     }
     pub fn pg_type_query_part(
@@ -826,7 +826,7 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
             column,
             is_need_to_add_logical_operator,
             &PgTypeOrPgJsonType::PgType,
-            &Variant::Normal,
+            &Vrt::Normal,
         )
     }
     pub fn pg_type_query_part_minus_one(
@@ -840,7 +840,7 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
             column,
             is_need_to_add_logical_operator,
             &PgTypeOrPgJsonType::PgType,
-            &Variant::MinusOne,
+            &Vrt::MinusOne,
         )
     }
     pub fn query_bind(
@@ -860,12 +860,12 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
         _: &dyn Display,
         _is_need_to_add_logical_operator: bool,
         pg_type_or_pg_json_type: &PgTypeOrPgJsonType,
-        variant: &Variant,
+        vrt: &Vrt,
     ) -> Result<String, QueryPartEr> {
         let mut acc = String::new();
-        let len_27270409 = match &variant {
-            Variant::MinusOne => self.0.len().saturating_sub(1),
-            Variant::Normal => self.0.len(),
+        let len_27270409 = match &vrt {
+            Vrt::MinusOne => self.0.len().saturating_sub(1),
+            Vrt::Normal => self.0.len(),
         };
         for _ in 0..len_27270409 {
             match increment_checked_add_one_returning_increment(increment) {

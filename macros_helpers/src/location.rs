@@ -95,7 +95,7 @@ impl LocationFieldAttr {
     }
 }
 #[must_use]
-pub fn gen_serde_version_of_named_syn_variant(v: &Variant) -> Ts2 {
+pub fn gen_serde_version_of_named_syn_vrt(v: &Variant) -> Ts2 {
     let el_ident = &v.ident;
     let fields = if let Fields::Named(fields) = &v.fields {
         &fields.named

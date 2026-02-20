@@ -4,39 +4,39 @@ pub fn gen_pg_table_config(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn create_many_additional_er_variants(_attr: Ts, item: Ts) -> Ts {
+pub fn create_many_additional_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn create_one_additional_er_variants(_attr: Ts, item: Ts) -> Ts {
+pub fn create_one_additional_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn read_one_additional_er_variants(_attr: Ts, item: Ts) -> Ts {
+pub fn read_one_additional_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn read_many_additional_er_variants(_attr: Ts, item: Ts) -> Ts {
+pub fn read_many_additional_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn update_one_additional_er_variants(_attr: Ts, item: Ts) -> Ts {
+pub fn update_one_additional_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn update_many_additional_er_variants(_attr: Ts, item: Ts) -> Ts {
+pub fn update_many_additional_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn delete_one_additional_er_variants(_attr: Ts, item: Ts) -> Ts {
+pub fn delete_one_additional_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn delete_many_additional_er_variants(_attr: Ts, item: Ts) -> Ts {
+pub fn delete_many_additional_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn common_additional_er_variants(_attr: Ts, item: Ts) -> Ts {
+pub fn common_additional_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]

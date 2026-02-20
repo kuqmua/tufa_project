@@ -6,16 +6,17 @@ pub fn enum_extension(input: Ts) -> Ts {
     panic_location::panic_location();
     //it only supported for enums without values
     let di: DeriveInput = parse(input).expect("c6b8e80e");
-    //todo to implement into_array() and into_vec - must implement Default for all inner variant types
+    //todo to implement into_array() and into_vec - must implement Default for all inner vrt types
     let len = match di.data.clone() {
         Data::Enum(enum_item) => enum_item.variants.len(),
         Data::Struct(_) | Data::Union(_) => {
             panic!("bcbaca28")
         }
     };
-    let variants = match di.data {
-        Data::Enum(enum_item) => enum_item.variants.into_iter().map(|el_f0467eb6| {
-            let variant_ident = el_f0467eb6.ident;
+    let vrts = match di.data {
+        Data::Enum(enum_item) => enum_item.variants
+        .into_iter().map(|el_f0467eb6| {
+            let vrt_ident = el_f0467eb6.ident;
             match el_f0467eb6.fields {
                 Fields::Named(fields_named) => {
                     let generated = fields_named.named.into_iter().map(|field| {
@@ -23,13 +24,13 @@ pub fn enum_extension(input: Ts) -> Ts {
                         quote! { #field_ident: Default::default() }
                     });
                     quote! {
-                       #variant_ident {
+                       #vrt_ident {
                            #(#generated),*
                        }
                     }
                 }
-                Fields::Unnamed(_) => quote! { #variant_ident(Default::default()) },
-                Fields::Unit => quote! { #variant_ident },
+                Fields::Unnamed(_) => quote! { #vrt_ident(Default::default()) },
+                Fields::Unit => quote! { #vrt_ident },
             }
         }),
         Data::Struct(_) | Data::Union(_) => {
@@ -43,7 +44,7 @@ pub fn enum_extension(input: Ts) -> Ts {
                 #len
             }
             pub fn into_array() -> [#ident; #len] {
-                [ #(#ident::#variants),* ]
+                [ #(#ident::#vrts),* ]
             }
             pub fn into_vec() -> Vec<Self> {
                 let mut self_vec = Vec::with_capacity(Self::get_length());
@@ -55,26 +56,26 @@ pub fn enum_extension(input: Ts) -> Ts {
                 }
                 self_vec
             }
-            pub fn into_string_name_and_variant_hashmap() -> std::collections::HashMap<String, Self> {
-                let mut variants_hashmap: std::collections::HashMap<String, Self> =
+            pub fn into_string_name_and_vrt_hashmap() -> std::collections::HashMap<String, Self> {
+                let mut vrts_hashmap: std::collections::HashMap<String, Self> =
                     std::collections::HashMap::with_capacity(Self::get_length());
                 for el_dfeecd17 in {
                     use enum_extension_lib::IntoEnumIterator;
                     Self::iter()
                 } {
-                    variants_hashmap.insert(format!("{}", el_dfeecd17), el_dfeecd17);
+                    vrts_hashmap.insert(format!("{}", el_dfeecd17), el_dfeecd17);
                 }
-                variants_hashmap
+                vrts_hashmap
             }
-            pub fn into_string_name_and_variant_tuple_vec() -> Vec<(String, Self)> {
-                let mut variants_vec = Vec::with_capacity(Self::get_length());
+            pub fn into_string_name_and_vrt_tuple_vec() -> Vec<(String, Self)> {
+                let mut vrts_vec = Vec::with_capacity(Self::get_length());
                 for el_538a15df in {
                     use enum_extension_lib::IntoEnumIterator;
                     Self::iter()
                 } {
-                    variants_vec.push((format!("{}", el_538a15df), el_538a15df));
+                    vrts_vec.push((format!("{}", el_538a15df), el_538a15df));
                 }
-                variants_vec
+                vrts_vec
             }
             //todo - it can be done in compile time
             pub fn to_ucc(&self) -> String {

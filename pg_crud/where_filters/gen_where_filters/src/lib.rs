@@ -1603,7 +1603,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                         {
                             let format_handle_ts = dq_ts(&format!(
-                                //todo test it properly using all strange string variants
+                                //todo test it properly using all strange string vrts
                                 "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where (el #>> '{{{{}}}}') {{}} ${{}}))",
                                 // "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) {{}} ${{}}))",
                                 pg_type_kind.format_argument()
@@ -1650,7 +1650,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                         {
                             let format_handle_ts = dq_ts(&format!(
-                                //todo test it properly using all strange string variants
+                                //todo test it properly using all strange string vrts
                                 "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el #>> '{{{{}}}}') !{{}} ${{}}))",
                                 // "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) !{{}} ${{}}))",
                                 pg_type_kind.format_argument()

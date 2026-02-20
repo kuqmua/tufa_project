@@ -13,16 +13,16 @@
     "common_content_write_into_gen_pg_table_common": "False",
     "whole_content_write_into_gen_pg_table": "False"
 }}]
-#[pg_crud::create_many_additional_er_variants{enum CreateManyAdditionalErVariants{}}]
-#[pg_crud::create_one_additional_er_variants{enum CreateOneAdditionalErVariants{}}]
-#[pg_crud::read_many_additional_er_variants{enum ReadManyAdditionalErVariants{}}]
-#[pg_crud::read_one_additional_er_variants{enum ReadOneAdditionalErVariants{}}]
-#[pg_crud::update_many_additional_er_variants{enum UpdateManyAdditionalErVariants{}}]
-#[pg_crud::update_one_additional_er_variants{enum UpdateOneAdditionalErVariants{}}]
-#[pg_crud::delete_many_additional_er_variants{enum DeleteManyAdditionalErVariants{}}]
-#[pg_crud::delete_one_additional_er_variants{enum DeleteOneAdditionalErVariants{}}]
-#[pg_crud::common_additional_er_variants{
-    enum CommonAdditionalErVariants {
+#[pg_crud::create_many_additional_er_vrts{enum CreateManyAdditionalErVrts{}}]
+#[pg_crud::create_one_additional_er_vrts{enum CreateOneAdditionalErVrts{}}]
+#[pg_crud::read_many_additional_er_vrts{enum ReadManyAdditionalErVrts{}}]
+#[pg_crud::read_one_additional_er_vrts{enum ReadOneAdditionalErVrts{}}]
+#[pg_crud::update_many_additional_er_vrts{enum UpdateManyAdditionalErVrts{}}]
+#[pg_crud::update_one_additional_er_vrts{enum UpdateOneAdditionalErVrts{}}]
+#[pg_crud::delete_many_additional_er_vrts{enum DeleteManyAdditionalErVrts{}}]
+#[pg_crud::delete_one_additional_er_vrts{enum DeleteOneAdditionalErVrts{}}]
+#[pg_crud::common_additional_er_vrts{
+    enum CommonAdditionalErVrts {
         // CheckCommit {
         //     #[eo_location]
         //     check_commit: pg_crud::check_commit::CommitEr,

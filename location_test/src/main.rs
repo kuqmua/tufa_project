@@ -14,8 +14,8 @@ use thiserror::Error;
 pub enum ErOne {
     //use ToErrString for hashmap keys instead of Display
     //todo even for String in serialize deserialize version of er must be using ToErrString impl instead of std::fmt::Display
-    //todo test on using only loc as pnly field in named variant
-    Variant {
+    //todo test on using only loc as pnly field in named vrt
+    Vrt {
         #[eo_to_err_string]
         eo_display_field: DisplayStruct, //IN SERIALIZE DESERIALIZE String
         #[eo_to_err_string_serde]
@@ -44,7 +44,7 @@ pub enum ErTwo {
         sdasdasd: String,
         loc: Loc,
     },
-    Variant {
+    Vrt {
         #[eo_to_err_string_serde]
         eo_display_with_serde_field: String,
         loc: Loc,
@@ -78,7 +78,7 @@ impl ToErrString for SerdeStruct {
     }
 }
 fn main() {
-    let er = ErOne::Variant {
+    let er = ErOne::Vrt {
         eo_display_field: DisplayStruct {
             display: String::from("value"),
             something: true,
@@ -88,7 +88,7 @@ fn main() {
             two: true,
             three: 42,
         },
-        eo_location_field: ErTwo::Variant {
+        eo_location_field: ErTwo::Vrt {
             eo_display_with_serde_field: String::from("value"),
             loc: loc!(),
         },
@@ -115,11 +115,11 @@ fn main() {
             },
         ],
         eo_vec_location_field: vec![
-            ErUnnamedOne::Something(ErTwo::Variant {
+            ErUnnamedOne::Something(ErTwo::Vrt {
                 eo_display_with_serde_field: String::from("value"),
                 loc: loc!(),
             }),
-            ErUnnamedOne::Something(ErTwo::Variant {
+            ErUnnamedOne::Something(ErTwo::Vrt {
                 eo_display_with_serde_field: String::from("123"),
                 loc: loc!(),
             }),
@@ -161,14 +161,14 @@ fn main() {
         hashmap_string_location: HashMap::from([
             (
                 String::from("ksdfgadsfgsdfgdfgey"),
-                ErUnnamedOne::Something(ErTwo::Variant {
+                ErUnnamedOne::Something(ErTwo::Vrt {
                     eo_display_with_serde_field: String::from("vasdfgdgdfglue"),
                     loc: loc!(),
                 }),
             ),
             (
                 String::from("kesdfgsdgfdfgy"),
-                ErUnnamedOne::Something(ErTwo::Variant {
+                ErUnnamedOne::Something(ErTwo::Vrt {
                     eo_display_with_serde_field: String::from("valsdfgdsafgdsgue"),
                     loc: loc!(),
                 }),

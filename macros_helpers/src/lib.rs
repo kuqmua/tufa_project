@@ -39,7 +39,7 @@ pub use gen_pub_type_alias_ts::gen_pub_type_alias_ts;
 pub use gen_simple_syn_punct::{gen_simple_syn_punct, string_syn_punct};
 pub use get_macro_attr::{get_macro_attr, get_macro_attr_meta_list_ts};
 pub use loc_syn_field::loc_syn_field;
-pub use location::{LocationFieldAttr, gen_serde_version_of_named_syn_variant};
+pub use location::{LocationFieldAttr, gen_serde_version_of_named_syn_vrt};
 pub use pagination_start_end_init_ts::pagination_start_end_init_ts;
 pub use status_code::{StatusCode, get_only_one};
 pub use struct_or_enum_derive_ts_builder::{

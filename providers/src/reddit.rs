@@ -180,7 +180,7 @@ pub struct DataChildrenElementData {
 // "height": 703
 // }
 // ],
-// "variants": {},
+// "vrts": {},
 // "id": "aaJ1jfcNT4SwBGhciv45q_v9Wy3VchZY-UAP5pbc94c"
 // }
 // ],

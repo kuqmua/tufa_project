@@ -25,7 +25,7 @@ pub fn try_from_env(input: Ts) -> Ts {
         }
     };
     let er_ts = {
-        let variants_ts = fields_named.iter().map(|el_f931deb2| {
+        let vrts_ts = fields_named.iter().map(|el_f931deb2| {
             let el_ident = &el_f931deb2.ident.as_ref().expect("2ecb63c1");
             let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
             let try_from_std_env_var_ok_self_er_ucc =
@@ -46,12 +46,12 @@ pub fn try_from_env(input: Ts) -> Ts {
                     #StdEnvVarErSc: std::env::VarError,
                     env_var_name: String,
                 },
-                #(#variants_ts),*
+                #(#vrts_ts),*
             }
         }
     };
     let display_er_ts = {
-        let variants_ts = fields_named.iter().map(|el_f931deb2| {
+        let vrts_ts = fields_named.iter().map(|el_f931deb2| {
             let el_ident = &el_f931deb2.ident.as_ref().expect("8b79a379");
             let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
             quote! {
@@ -71,7 +71,7 @@ pub fn try_from_env(input: Ts) -> Ts {
                         #StdEnvVarErSc,
                         env_var_name
                     } => write!(f, "{} {}", #StdEnvVarErSc, env_var_name),
-                    #(#variants_ts),*
+                    #(#vrts_ts),*
                 }
             },
         )

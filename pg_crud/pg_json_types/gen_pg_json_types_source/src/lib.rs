@@ -316,7 +316,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, Deserialize)]
-    enum ConfigVariant {
+    enum ConfigVrt {
         All,
         WithoutDims,
         WithDimOne,
@@ -331,13 +331,13 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         pg_table_columns_content_write_into_pg_table_columns_using_pg_json_types:
             ShouldWriteTokenStreamIntoFile,
         whole_content_write_into_gen_pg_json_types: ShouldWriteTokenStreamIntoFile,
-        variant: ConfigVariant,
+        vrt: ConfigVrt,
     }
     panic_location();
     let config = from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("1123f78f");
     let (fields_ts, pg_json_type_array) = {
         let acc_d97120ed = {
-            let gen_variants = |max_dim: Option<i32>|{
+            let gen_vrts = |max_dim: Option<i32>|{
                 PgJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, pg_json_type| {
                     for pattern in Pattern::into_array() {
                         let include = match max_dim {
@@ -441,14 +441,14 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     acc
                 })
             };
-            match config.variant {
-                ConfigVariant::All => gen_variants(None),
-                ConfigVariant::WithoutDims => gen_variants(Some(0i32)),
-                ConfigVariant::WithDimOne => gen_variants(Some(1i32)),
-                ConfigVariant::WithDimTwo => gen_variants(Some(2i32)),
-                ConfigVariant::WithDimThree => gen_variants(Some(3i32)),
-                ConfigVariant::WithDimFour => gen_variants(Some(4i32)),
-                ConfigVariant::Concrete(v) => v,
+            match config.vrt {
+                ConfigVrt::All => gen_vrts(None),
+                ConfigVrt::WithoutDims => gen_vrts(Some(0i32)),
+                ConfigVrt::WithDimOne => gen_vrts(Some(1i32)),
+                ConfigVrt::WithDimTwo => gen_vrts(Some(2i32)),
+                ConfigVrt::WithDimThree => gen_vrts(Some(3i32)),
+                ConfigVrt::WithDimFour => gen_vrts(Some(4i32)),
+                ConfigVrt::Concrete(v) => v,
             }
         };
         let mut seen = HashSet::new();
@@ -3305,7 +3305,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     PgJsonType::U64AsJsonbNumber |
                     PgJsonType::F32AsJsonbNumber |
                     PgJsonType::F64AsJsonbNumber => {
-                        //todo additional variants to test
+                        //todo additional vrts to test
                         quote!{
                             match #import_path::NotEmptyUniqueVec::try_new(vec![
                                 #import_path::SingleOrMultiple::Single(

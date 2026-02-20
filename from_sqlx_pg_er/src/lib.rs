@@ -6,8 +6,8 @@
 //     let ident = &di.ident;
 //     let proc_macro_name_ucc_ident_str =
 //         format!("{proc_macro_name_ucc} {ident}");
-//     // let sqlx_pg_er_syn_variants = enum_variants::sqlx_pg_er_syn_variants(&proc_macro_name_ucc_ident_str);
-//     // sqlx_pg_er_syn_variants.iter().map(|el_ea7f6dd1|{
+//     // let sqlx_pg_er_syn_vrts = enum_vrts::sqlx_pg_er_syn_vrts(&proc_macro_name_ucc_ident_str);
+//     // sqlx_pg_er_syn_vrts.iter().map(|el_ea7f6dd1|{
 //     //     let field_ident = field.ident;
 //     //     let field_ty =
 //     //     quote! {}

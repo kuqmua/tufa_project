@@ -71,7 +71,7 @@ pub enum StatusCode {
     ServiceUnavailable503,
     GatewayTimeout504,
     HttpVersionNotSupported505,
-    VariantAlsoNegotiates506,
+    VrtAlsoNegotiates506,
     InsufficientStorage507,
     LoopDetected508,
     NotExtended510,
@@ -136,7 +136,7 @@ impl StatusCode {
             Self::ServiceUnavailable503 => quote! {SERVICE_UNAVAILABLE},
             Self::GatewayTimeout504 => quote! {GATEWAY_TIMEOUT},
             Self::HttpVersionNotSupported505 => quote! {HTTP_VERSION_NOT_SUPPORTED},
-            Self::VariantAlsoNegotiates506 => quote! {VARIANT_ALSO_NEGOTIATES},
+            Self::VrtAlsoNegotiates506 => quote! {VARIANT_ALSO_NEGOTIATES},
             Self::InsufficientStorage507 => quote! {INSUFFICIENT_STORAGE},
             Self::LoopDetected508 => quote! {LOOP_DETECTED},
             Self::NotExtended510 => quote! {NOT_EXTENDED},
@@ -216,7 +216,7 @@ impl StatusCode {
             Self::HttpVersionNotSupported505 => {
                 quote! {"http version not supported"}
             }
-            Self::VariantAlsoNegotiates506 => quote! {"variant also negotiates"},
+            Self::VrtAlsoNegotiates506 => quote! {"vrt also negotiates"},
             Self::InsufficientStorage507 => quote! {"insufficient storage"},
             Self::LoopDetected508 => quote! {"loop detected"},
             Self::NotExtended510 => quote! {"not extended"},
@@ -283,7 +283,7 @@ impl StatusCode {
             Self::ServiceUnavailable503 => quote! {503},
             Self::GatewayTimeout504 => quote! {504},
             Self::HttpVersionNotSupported505 => quote! {505},
-            Self::VariantAlsoNegotiates506 => quote! {506},
+            Self::VrtAlsoNegotiates506 => quote! {506},
             Self::InsufficientStorage507 => quote! {507},
             Self::LoopDetected508 => quote! {508},
             Self::NotExtended510 => quote! {510},
@@ -404,8 +404,8 @@ impl TryFrom<&String> for StatusCode {
             Ok(Self::GatewayTimeout504)
         } else if v == "http_version_not_supported_505" {
             Ok(Self::HttpVersionNotSupported505)
-        } else if v == "variant_also_negotiates_506" {
-            Ok(Self::VariantAlsoNegotiates506)
+        } else if v == "vrt_also_negotiates_506" {
+            Ok(Self::VrtAlsoNegotiates506)
         } else if v == "insufficient_storage_507" {
             Ok(Self::InsufficientStorage507)
         } else if v == "loop_detected_508" {
@@ -420,9 +420,9 @@ impl TryFrom<&String> for StatusCode {
     }
 }
 #[must_use]
-pub fn get_only_one(variant: &Variant) -> StatusCode {
+pub fn get_only_one(vrt: &Variant) -> StatusCode {
     let mut option_self = None;
-    variant.attrs.iter().for_each(|attr| {
+    vrt.attrs.iter().for_each(|attr| {
         if attr.path().segments.len() == 1
             && let Ok(named_attr) = StatusCode::try_from(
                 &attr

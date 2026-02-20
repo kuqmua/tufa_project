@@ -11,41 +11,38 @@ pub fn from_str(input: Ts) -> Ts {
     let Data::Enum(data_enum) = di.data else {
         panic!("d35db256");
     };
-    let variant_idents = data_enum
+    let vrt_idents = data_enum
         .variants
         .into_iter()
-        .map(|variant| match variant.fields {
-            Fields::Unit => variant.ident,
+        .map(|vrt| match vrt.fields {
+            Fields::Unit => vrt.ident,
             Fields::Named(_) | Fields::Unnamed(_) => {
                 panic!("23575b02")
             }
         })
         .collect::<Vec<Ident>>();
-    let variants_ts = variant_idents.iter().map(|variant_ident| {
-        let variant_ident_sc_ts = {
-            let variant_ident_sc_str =
-                Casing::to_case(&format!("\"{variant_ident}\""), Case::Snake);
-            variant_ident_sc_str.parse::<Ts2>().expect("791603c1")
+    let vrts_ts = vrt_idents.iter().map(|vrt_ident| {
+        let vrt_ident_sc_ts = {
+            let vrt_ident_sc_str = Casing::to_case(&format!("\"{vrt_ident}\""), Case::Snake);
+            vrt_ident_sc_str.parse::<Ts2>().expect("791603c1")
         };
         quote! {
-            #variant_ident_sc_ts => Ok(Self::#variant_ident),
+            #vrt_ident_sc_ts => Ok(Self::#vrt_ident),
         }
     });
-    let er_variants_str =
-        variant_idents
-            .iter()
-            .fold(String::default(), |mut acc_d6966473, variant_ident| {
-                use std::fmt::Write as _;
-                let variant_ident_sc_str =
-                    Casing::to_case(&format!("{variant_ident}"), Case::Snake);
-                assert!(
-                    write!(acc_d6966473, "\'{variant_ident_sc_str}\',").is_ok(),
-                    "09c49558"
-                );
-                acc_d6966473
-            });
+    let er_vrts_str = vrt_idents
+        .iter()
+        .fold(String::default(), |mut acc_d6966473, vrt_ident| {
+            use std::fmt::Write as _;
+            let vrt_ident_sc_str = Casing::to_case(&format!("{vrt_ident}"), Case::Snake);
+            assert!(
+                write!(acc_d6966473, "\'{vrt_ident_sc_str}\',").is_ok(),
+                "09c49558"
+            );
+            acc_d6966473
+        });
     let er_ts = {
-        let er_str = format!("\"Invalid {ident}, expected one of {er_variants_str} found {{v}}\"");
+        let er_str = format!("\"Invalid {ident}, expected one of {er_vrts_str} found {{v}}\"");
         er_str.parse::<Ts2>().expect("1b778757")
     };
     let generated = quote! {
@@ -53,7 +50,7 @@ pub fn from_str(input: Ts) -> Ts {
             type Err = String;
             fn from_str(v: &str) -> Result<Self, Self::Err> {
                 match v {
-                    #(#variants_ts)*
+                    #(#vrts_ts)*
                     _ => Err(format!(#er_ts)),
                 }
             }

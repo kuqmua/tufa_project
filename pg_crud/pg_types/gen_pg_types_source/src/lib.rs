@@ -30,7 +30,7 @@ use naming::{
     },
 };
 use panic_location::panic_location;
-use pg_crud_common_and_macros_common::PgTypeGreaterThanVariant;
+use pg_crud_common_and_macros_common::PgTypeGreaterThanVrt;
 use pg_crud_macros_common::{
     ColumnParameterUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrementUnderscore,
     CreateQueryPartValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl,
@@ -632,12 +632,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     impl TryFrom<(PgType, IsNullable, PgTypePattern)> for PgTypeRecord {
         type Error = String;
         fn try_from(v: (PgType, IsNullable, PgTypePattern)) -> Result<Self, Self::Error> {
-            let cant_support_nullable_variants_message = "cant support nullable variants: ";
+            let cant_support_nullable_vrts_message = "cant support nullable vrts: ";
             let cant_support_array_version_message = "cant support array_version: ";
             match &v.0.can_be_nullable() {
                 CanBeNullable::False => {
                     if matches!(&v.1, IsNullable::True) {
-                        return Err(format!("{cant_support_nullable_variants_message}{v:#?}"));
+                        return Err(format!("{cant_support_nullable_vrts_message}{v:#?}"));
                     }
                     match &v.2 {
                         PgTypePattern::Standart => Ok(Self {
@@ -656,9 +656,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         is_nullable: v.1,
                                         pg_type_pattern: v.2,
                                     }),
-                                    IsNullable::True => Err(format!(
-                                        "{cant_support_nullable_variants_message}{v:#?}"
-                                    )),
+                                    IsNullable::True => {
+                                        Err(format!("{cant_support_nullable_vrts_message}{v:#?}"))
+                                    }
                                 },
                             }
                         }
@@ -685,7 +685,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     #[derive(Debug, serde::Deserialize)]
-    enum GenPgTypesConfigVariant {
+    enum GenPgTypesConfigVrt {
         All,
         Concrete(Vec<PgTypeRecord>),
     }
@@ -695,7 +695,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         pg_table_columns_content_write_into_pg_table_columns_using_pg_types:
             ShouldWriteTokenStreamIntoFile,
         whole_content_write_into_gen_pg_types: ShouldWriteTokenStreamIntoFile,
-        variant: GenPgTypesConfigVariant,
+        vrt: GenPgTypesConfigVrt,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug)]
@@ -832,8 +832,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     let gen_pg_json_types_config =
         from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("80485f71");
     let (columns_ts, pg_type_array) = {
-        let acc_5464fefe = match gen_pg_json_types_config.variant {
-            GenPgTypesConfigVariant::All => PgType::into_array().into_iter().fold(Vec::new(), |mut acc_4351207e, el_a897c529| {
+        let acc_5464fefe = match gen_pg_json_types_config.vrt {
+            GenPgTypesConfigVrt::All => PgType::into_array().into_iter().fold(Vec::new(), |mut acc_4351207e, el_a897c529| {
                 for el_a7126978 in PgTypePattern::into_array().into_iter().fold(Vec::new(), |mut acc_f806f6d2, el_8ae86bf2| {
                     match &el_8ae86bf2 {
                         PgTypePattern::Standart => {
@@ -891,7 +891,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 }
                 acc_4351207e
             }),
-            GenPgTypesConfigVariant::Concrete(v) => v,
+            GenPgTypesConfigVrt::Concrete(v) => v,
         };
         {
             let mut check_acc = Vec::new();
@@ -1829,9 +1829,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let gen_fn_visit_u64_ts = |parameter_number: &ParameterNumber| {
                         let fields_ts = {
                             parameter_number.get_vec_from_index_starting_with_zero().into_iter().map(|el_7298ebde| {
-                                let index_variant_ts = format!("{el_7298ebde}u64").parse::<Ts2>().expect("5aee0393");
+                                let index_vrt_ts = format!("{el_7298ebde}u64").parse::<Ts2>().expect("5aee0393");
                                 let field_index_ts = gen_field_index_ts(el_7298ebde);
-                                quote! {#index_variant_ts => Ok(__Field::#field_index_ts)}
+                                quote! {#index_vrt_ts => Ok(__Field::#field_index_ts)}
                             })
                         };
                         quote! {
@@ -3060,7 +3060,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     &Ts2::new(),
                     &quote!{(#field_type_handle);},
                 );
-            let gen_int_range_type_er_variants_ts = |int_range_type: &IntRangeType| {
+            let gen_int_range_type_er_vrts_ts = |int_range_type: &IntRangeType| {
                 let range_inner_type_ts = int_range_type_to_range_inner_type_ts(int_range_type);
                 quote! {
                     #IncludedStartGreaterThanIncludedEndUcc {
@@ -3098,14 +3098,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     },
                 }
             };
-            let nanosecond_precision_is_not_supported_variant_try_new_ts = quote! {
+            let nanosecond_precision_is_not_supported_vrt_try_new_ts = quote! {
                 #NanosecondPrecisionIsNotSupportedUcc {
                     #[eo_to_err_string_serde]
                     #ValueSc: #StringTs,
                     loc: location_lib::loc::Loc,
                 }
             };
-            let sqlx_types_chrono_naive_date_as_date_try_new_er_variants_ts = quote! {
+            let sqlx_types_chrono_naive_date_as_date_try_new_er_vrts_ts = quote! {
                 #EarlierDateNotSupportedUcc {
                     #[eo_to_err_string_serde]
                     #ValueSc: #StringTs,
@@ -3114,7 +3114,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     loc: location_lib::loc::Loc,
                 }
             };
-            let string_as_text_try_new_er_variants_ts = quote! {
+            let string_as_text_try_new_er_vrts_ts = quote! {
                 #ContainsNullByteUcc {
                     #[eo_to_err_string_serde]
                     #ValueSc: #ident_inner_type_ts,
@@ -3136,8 +3136,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         &Ts2::new(),
                         &{
                             let gen_start_end_ts = |ts: &dyn ToTokens| {
-                                let (start_variant_ts, end_variant_ts) = {
-                                    let gen_variant_ts = |start_or_end: &StartOrEnd| {
+                                let (start_vrt_ts, end_vrt_ts) = {
+                                    let gen_vrt_ts = |start_or_end: &StartOrEnd| {
                                         let start_or_end_ucc = gen_start_or_end_ucc(start_or_end);
                                         quote! {
                                             #start_or_end_ucc {
@@ -3147,17 +3147,17 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             }
                                         }
                                     };
-                                    (gen_variant_ts(&StartOrEnd::Start), gen_variant_ts(&StartOrEnd::End))
+                                    (gen_vrt_ts(&StartOrEnd::Start), gen_vrt_ts(&StartOrEnd::End))
                                 };
                                 quote! {
-                                    #start_variant_ts,
-                                    #end_variant_ts,
+                                    #start_vrt_ts,
+                                    #end_vrt_ts,
                                 }
                             };
                             let ts: &dyn ToTokens = match &pg_type_init_try_new {
-                                PgTypeInitTryNew::StringAsText => &string_as_text_try_new_er_variants_ts,
-                                PgTypeInitTryNew::SqlxTypesChronoNaiveTimeAsTime | PgTypeInitTryNew::SqlxTypesTimeTimeAsTime => &nanosecond_precision_is_not_supported_variant_try_new_ts,
-                                PgTypeInitTryNew::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_er_variants_ts,
+                                PgTypeInitTryNew::StringAsText => &string_as_text_try_new_er_vrts_ts,
+                                PgTypeInitTryNew::SqlxTypesChronoNaiveTimeAsTime | PgTypeInitTryNew::SqlxTypesTimeTimeAsTime => &nanosecond_precision_is_not_supported_vrt_try_new_ts,
+                                PgTypeInitTryNew::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_er_vrts_ts,
                                 PgTypeInitTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => &quote! {
                                     #DateUcc {
                                         #[eo_location]
@@ -3182,8 +3182,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         loc: location_lib::loc::Loc,
                                     },
                                 },
-                                PgTypeInitTryNew::SqlxPgTypesPgRangeI32AsInt4Range => &gen_int_range_type_er_variants_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
-                                PgTypeInitTryNew::SqlxPgTypesPgRangeI64AsInt8Range => &gen_int_range_type_er_variants_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
+                                PgTypeInitTryNew::SqlxPgTypesPgRangeI32AsInt4Range => &gen_int_range_type_er_vrts_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
+                                PgTypeInitTryNew::SqlxPgTypesPgRangeI64AsInt8Range => &gen_int_range_type_er_vrts_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
                                 PgTypeInitTryNew::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &gen_start_end_ts(
                                     &sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_er_ucc
                                 ),
@@ -3224,7 +3224,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 &Ts2::new(),
                                 &{
                                     let ts: &dyn ToTokens = match &pg_type_impl_try_new_for_deserialize {
-                                        PgTypeImplTryNewForDeserialize::StringAsText => &string_as_text_try_new_er_variants_ts,
+                                        PgTypeImplTryNewForDeserialize::StringAsText => &string_as_text_try_new_er_vrts_ts,
                                         PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => &quote! {
                                             #InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
                                                 #[eo_to_err_string_serde]
@@ -3237,7 +3237,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 #MicroSc: #U32,
                                                 loc: location_lib::loc::Loc,
                                             },
-                                            #nanosecond_precision_is_not_supported_variant_try_new_ts
+                                            #nanosecond_precision_is_not_supported_vrt_try_new_ts
                                         },
                                         PgTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => &quote! {
                                             #InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
@@ -3253,11 +3253,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 #ErSc: #StringTs,
                                                 loc: location_lib::loc::Loc,
                                             },
-                                            #nanosecond_precision_is_not_supported_variant_try_new_ts
+                                            #nanosecond_precision_is_not_supported_vrt_try_new_ts
                                         },
-                                        PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_er_variants_ts,
-                                        PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI32AsInt4Range => &gen_int_range_type_er_variants_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
-                                        PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI64AsInt8Range => &gen_int_range_type_er_variants_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
+                                        PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_er_vrts_ts,
+                                        PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI32AsInt4Range => &gen_int_range_type_er_vrts_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
+                                        PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI64AsInt8Range => &gen_int_range_type_er_vrts_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
                                     };
                                     quote!{{#ts}}
                                 }
@@ -3720,12 +3720,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         }
                                     };
                                     let ts = {
-                                        let gen_self_match_try_new_ts = |parameters_ts_04a82119: &dyn ToTokens, match_er_variants_ts: &dyn ToTokens| {
+                                        let gen_self_match_try_new_ts = |parameters_ts_04a82119: &dyn ToTokens, match_er_vrts_ts: &dyn ToTokens| {
                                             quote! {
                                                 match Self::#TryNewSc(#parameters_ts_04a82119) {
                                                     Ok(v_b318fc86) => Ok(v_b318fc86),
                                                     Err(er) => match er {
-                                                        #match_er_variants_ts
+                                                        #match_er_vrts_ts
                                                     }
                                                 }
                                             }
@@ -3780,7 +3780,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         );
                                         match &pg_type_impl_try_new_for_deserialize {
                                             PgTypeImplTryNewForDeserialize::StringAsText => {
-                                                let variant_ts = quote! {
+                                                let vrt_ts = quote! {
                                                     #ContainsNullByteUcc {
                                                         #ValueSc,
                                                         loc,
@@ -3789,7 +3789,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 gen_self_match_try_new_ts(
                                                     &quote!{v_356f2a0b},
                                                     &quote! {
-                                                        #ident_standart_not_null_origin_try_new_er_ucc::#variant_ts => Err(#ident_standart_not_null_origin_try_new_for_deserialize_er_ucc::#variant_ts),
+                                                        #ident_standart_not_null_origin_try_new_er_ucc::#vrt_ts => Err(#ident_standart_not_null_origin_try_new_for_deserialize_er_ucc::#vrt_ts),
                                                     },
                                                 )
                                             }
@@ -6150,7 +6150,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 }
             };
             let read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts = {
-                //todo that is not correct for array of generated by pg primary keys but maybe just need to remove this variants and thats it?
+                //todo that is not correct for array of generated by pg primary keys but maybe just need to remove this vrts and thats it?
                 let value_init_ts = gen_import_path_value_init_ts(&{
                     let ts: &dyn ToTokens = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {
                         &quote! {#ValueSc.0 #maybe_dot_clone_ts}
@@ -6268,23 +6268,23 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 }
             };
             let pg_type_option_vec_where_greater_than_test_ts = {
-                let greater_than = PgTypeGreaterThanVariant::GreaterThan;
-                let not_greater_than = PgTypeGreaterThanVariant::NotGreaterThan;
-                let equal_not_greater_than = PgTypeGreaterThanVariant::EqualNotGreaterThan;
-                let gen_greater_than_test_ts = |greater_than_variant_ts: &PgTypeGreaterThanVariant, create_ts: &dyn ToTokens, table_type_declaration_ts: &dyn ToTokens| {
+                let greater_than = PgTypeGreaterThanVrt::GreaterThan;
+                let not_greater_than = PgTypeGreaterThanVrt::NotGreaterThan;
+                let equal_not_greater_than = PgTypeGreaterThanVrt::EqualNotGreaterThan;
+                let gen_greater_than_test_ts = |greater_than_vrt_ts: &PgTypeGreaterThanVrt, create_ts: &dyn ToTokens, table_type_declaration_ts: &dyn ToTokens| {
                     quote! {
                         #import_path::PgTypeGreaterThanTest {
-                            variant: #import_path::PgTypeGreaterThanVariant::#greater_than_variant_ts,
+                            vrt: #import_path::PgTypeGreaterThanVrt::#greater_than_vrt_ts,
                             create: #self_as_pg_type_ts::Create::#create_ts,
                             greater_than: #self_as_pg_type_ts::TableTypeDeclaration::#table_type_declaration_ts,
                         }
                     }
                 };
                 let gen_greater_than_test_new_new_ts =
-                    |greater_than_variant_ts: &PgTypeGreaterThanVariant, create_ts: &dyn ToTokens, greater_than_ts: &dyn ToTokens| gen_greater_than_test_ts(greater_than_variant_ts, &quote! {new(#create_ts)}, &quote! {new(#greater_than_ts)});
-                let gen_greater_than_test_try_new_try_new_ts = |greater_than_variant_ts: &PgTypeGreaterThanVariant, create_ts: &dyn ToTokens, greater_than_ts: &dyn ToTokens| {
+                    |greater_than_vrt_ts: &PgTypeGreaterThanVrt, create_ts: &dyn ToTokens, greater_than_ts: &dyn ToTokens| gen_greater_than_test_ts(greater_than_vrt_ts, &quote! {new(#create_ts)}, &quote! {new(#greater_than_ts)});
+                let gen_greater_than_test_try_new_try_new_ts = |greater_than_vrt_ts: &PgTypeGreaterThanVrt, create_ts: &dyn ToTokens, greater_than_ts: &dyn ToTokens| {
                     gen_greater_than_test_ts(
-                        greater_than_variant_ts,
+                        greater_than_vrt_ts,
                         &quote! {try_new(#create_ts).expect("8327c651")},
                         &quote! {try_new(#greater_than_ts).expect("c369e6ea")},
                     )
@@ -6480,7 +6480,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     .into_vec()
                                     .into_iter()
                                     .map(|el_504739e6| #import_path::PgTypeGreaterThanTest {
-                                        variant: el_504739e6.variant,
+                                        vrt: el_504739e6.vrt,
                                         create: #ident_create_ucc(#ident_origin_ucc(Some(el_504739e6.create.0))),
                                         greater_than: #ident_table_type_declaration_ucc(#ident_origin_ucc(Some(el_504739e6.greater_than.0))),
                                     })
@@ -6540,7 +6540,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             };
                             quote! {Some(#ident_where_ucc::GreaterThan(
                                 where_filters::PgTypeWhereGreaterThan {
-                                    logical_operator: greater_than_variant.logical_operator(),
+                                    logical_operator: greater_than_vrt.logical_operator(),
                                     #ValueSc: #ts,
                                 }
                             ))}
@@ -6552,7 +6552,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             };
                             quote! {
                                 #ts.map(|el_886032ca| #ident_where_ucc::GreaterThan(where_filters::PgTypeWhereGreaterThan {
-                                    logical_operator: greater_than_variant.logical_operator(),
+                                    logical_operator: greater_than_vrt.logical_operator(),
                                     value: #ident_standart_not_null_table_type_declaration_ucc(el_886032ca),
                                 }))
                             }
