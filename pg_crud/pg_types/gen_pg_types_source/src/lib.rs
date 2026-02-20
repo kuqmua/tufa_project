@@ -685,9 +685,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, serde::Deserialize)]
     struct GenPgJsonTypesConfig {
-        pg_table_columns_content_write_into_pg_table_columns_using_pg_types:
+        pg_table_columns_write_into_file:
             ShouldWriteTokenStreamIntoFile,
-        whole_content_write_into_gen_pg_types: ShouldWriteTokenStreamIntoFile,
+        whole_write_into_file: ShouldWriteTokenStreamIntoFile,
         vrt: GenPgTypesConfigVrt,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
@@ -6668,7 +6668,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     .collect::<(Vec<String>, Vec<String>)>();
     maybe_write_ts_into_file(
         gen_pg_json_types_config
-            .pg_table_columns_content_write_into_pg_table_columns_using_pg_types,
+            .pg_table_columns_write_into_file,
         "pg_table_columns_using_pg_types",
         &{
             let ts = columns_ts
@@ -6698,7 +6698,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     };
     maybe_write_ts_into_file(
-        gen_pg_json_types_config.whole_content_write_into_gen_pg_types,
+        gen_pg_json_types_config.whole_write_into_file,
         "gen_pg_types",
         &generated,
         &FormatWithCargofmt::True,

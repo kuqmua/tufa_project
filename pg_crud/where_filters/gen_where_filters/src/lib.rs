@@ -985,14 +985,18 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 #maybe_dims_indexes_init_ts
                                 let operator = <T as pg_crud_common::PgTypeEqualOperator>::operator(&#SelfSc.#ValueSc);
                                 let operator_query_str = operator.to_query_str();
-                                let content = match operator {
-                                    pg_crud_common::EqualOperator::Equal => {
-                                        #value_match_incr_checked_add_one_init_ts
-                                        format!("{operator_query_str} ${value}")
-                                    },
-                                    pg_crud_common::EqualOperator::IsNull => operator_query_str.to_owned(),
-                                };
-                                Ok(format!("{}({} {content})", &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator), #ColumnSc))
+                                Ok(format!(
+                                    "{}({} {})",
+                                    &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    #ColumnSc,
+                                    match operator {
+                                        pg_crud_common::EqualOperator::Equal => {
+                                            #value_match_incr_checked_add_one_init_ts
+                                            format!("{operator_query_str} ${value}")
+                                        },
+                                        pg_crud_common::EqualOperator::IsNull => operator_query_str.to_owned(),
+                                    }
+                                ))
                             },
                             is_query_bind_mutable_true,
                             quote! {
@@ -1028,14 +1032,18 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 #maybe_dims_indexes_init_ts
                                 let operator = <T as pg_crud_common::PgTypeEqualOperator>::operator(&#SelfSc.#ValueSc);
                                 let operator_query_str = operator.to_query_str();
-                                let content = match operator {
-                                    pg_crud_common::EqualOperator::Equal => {
-                                        #value_match_incr_checked_add_one_init_ts
-                                        format!("{operator_query_str} ${value}")
+                                Ok(format!(
+                                    "{}({}{dims_indexes} {})",
+                                    &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    #ColumnSc,
+                                    match operator {
+                                        pg_crud_common::EqualOperator::Equal => {
+                                            #value_match_incr_checked_add_one_init_ts
+                                            format!("{operator_query_str} ${value}")
+                                        }
+                                        pg_crud_common::EqualOperator::IsNull => operator_query_str.to_owned(),
                                     }
-                                    pg_crud_common::EqualOperator::IsNull => operator_query_str.to_owned(),
-                                };
-                                Ok(format!("{}({}{dims_indexes} {content})", &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator), #ColumnSc))
+                                ))
                             },
                             is_query_bind_mutable_true,
                             quote! {

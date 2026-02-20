@@ -21,8 +21,8 @@ where_filters = {path = "../../where_filters"}
 test-utils = []"#,
             &gen_pg_types_source::gen_pg_types(&quote! {
                 {
-                    "pg_table_columns_content_write_into_pg_table_columns_using_pg_types": "False",
-                    "whole_content_write_into_gen_pg_types": "False",
+                    "pg_table_columns_write_into_file": "False",
+                    "whole_write_into_file": "False",
                     "vrt": "All"
                 }
             })
