@@ -21,8 +21,7 @@ use quote::{ToTokens, quote};
 use serde_json::from_str;
 use std::fmt::Display;
 use token_patterns::{
-    CoreDefault, PgCrudCommonDefaultOptionSomeVecOneEl,
-    PgCrudCommonDefaultOptionSomeVecOneElCall,
+    CoreDefault, PgCrudCommonDefaultOptionSomeVecOneEl, PgCrudCommonDefaultOptionSomeVecOneElCall,
 };
 #[proc_macro]
 pub fn gen_where_filters(input_ts: Ts) -> Ts {
@@ -197,9 +196,9 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         ident: &dyn ToTokens,
         increment_parameter_underscore: &IncrementParameterUnderscore,
         is_need_to_add_logical_operator_underscore: &IsNeedToAddLogicalOperatorUnderscore,
-        query_part_content_ts: &dyn ToTokens,
+        query_part_ts: &dyn ToTokens,
         is_query_bind_mutable: &IsQueryBindMutable,
-        query_bind_content_ts: &dyn ToTokens
+        query_bind_ts: &dyn ToTokens
     | {
         impl_pg_type_where_filter_for_ident_ts(
             &{
@@ -227,9 +226,9 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             increment_parameter_underscore,
             &ColumnParameterUnderscore::False,
             is_need_to_add_logical_operator_underscore,
-            &query_part_content_ts,
+            &query_part_ts,
             is_query_bind_mutable,
-            &query_bind_content_ts,
+            &query_bind_ts,
             &ImportPath::PgCrudCommon,
         )
     };
@@ -1409,7 +1408,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                     gen_maybe_dims_default_init_value_default_ts(&maybe_dims_default_init_ts),
                     {
-                        let content_ts: &dyn ToTokens = match pg_type_pattern_handle {
+                        let ts: &dyn ToTokens = match pg_type_pattern_handle {
                             PgTypePatternHandle::Standart => &quote!{
                                 let value = match self.value.query_part(
                                     increment,
@@ -1430,7 +1429,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         let format_handle_ts = dq_ts(&format!("{{}}({{}}{} {{}})", pg_type_kind.format_argument()));
                         quote! {
                             #maybe_dims_indexes_init_ts
-                            #content_ts
+                            #ts
                             Ok(format!(
                                 #format_handle_ts,
                                 &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1442,7 +1441,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                     is_query_bind_mutable_true,
                     {
-                        let content_ts: &dyn ToTokens = match pg_type_pattern_handle {
+                        let ts: &dyn ToTokens = match pg_type_pattern_handle {
                             PgTypePatternHandle::Standart => &quote!{
                                 match self.value.query_bind(query) {
                                     Ok(v) => {
@@ -1461,7 +1460,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         };
                         quote! {
                             #maybe_dims_query_bind_content_ts
-                            #content_ts
+                            #ts
                         }
                     },
                 )

@@ -1600,20 +1600,20 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     (gen_enum_field_ts(&parameter_number_two), gen_enum_field_ts(&parameter_number_three), gen_enum_field_ts(&parameter_number_four))
                 };
                 let (fn_expecting_struct_ident_dq_ts, fn_expecting_tuple_struct_ident_dq_ts, fn_expecting_field_identifier_ts) = {
-                    let gen_fn_expecting_ts = |content_ts: &dyn ToTokens| {
+                    let gen_fn_expecting_ts = |ts: &dyn ToTokens| {
                         quote! {
                             fn expecting(&self, __f: &mut serde::__private228::Formatter<'_>) -> serde::__private228::fmt::Result {
-                                serde::__private228::Formatter::write_str(__f, #content_ts)
+                                serde::__private228::Formatter::write_str(__f, #ts)
                             }
                         }
                     };
                     (gen_fn_expecting_ts(&struct_ident_dq_ts), gen_fn_expecting_ts(&tuple_struct_ident_dq_ts), gen_fn_expecting_ts(&quote! {"field identifier"}))
                 };
                 let field_0_value_ts = gen_field_index_value_ts(parameter_number_one.get_index());
-                let gen_serde_private_ok_ts = |content_ts: &dyn ToTokens| {
-                    quote! {Ok(#content_ts)}
+                let gen_serde_private_ok_ts = |ts: &dyn ToTokens| {
+                    quote! {Ok(#ts)}
                 };
-                let gen_serde_private_ok_pg_type_ts = |content_ts: &dyn ToTokens| gen_serde_private_ok_ts(&quote! {#ident_standart_not_null_origin_ucc(#content_ts)});
+                let gen_serde_private_ok_pg_type_ts = |ts: &dyn ToTokens| gen_serde_private_ok_ts(&quote! {#ident_standart_not_null_origin_ucc(#ts)});
                 let match_uuid_uuid_field_type_try_parse_ts = quote! {match #inner_type_standart_not_null_ts::try_parse(&#field_0_value_ts) {
                     Ok(v_3c0b34fb) => v_3c0b34fb,
                     Err(er) => {
