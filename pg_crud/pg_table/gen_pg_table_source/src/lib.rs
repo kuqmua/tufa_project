@@ -2963,12 +2963,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             };
             let return_er_ts = {
-                let field_loc_new_6ac7b78e_da5d_4274_b58c_67bb9625d008_ts =
-                    gen_field_loc_new_ts(file!(), line!(), column!());
+                let field_loc_new_6ac7b78e_ts = gen_field_loc_new_ts(file!(), line!(), column!());
                 quote! {
                     Err(#ident_try_operation_er_ucc::#try_operation_logic_er_with_serde_ucc {
                         #operation_er_with_serde_sc,
-                        #field_loc_new_6ac7b78e_da5d_4274_b58c_67bb9625d008_ts,
+                        #field_loc_new_6ac7b78e_ts,
                     })
                 }
             };
@@ -5057,40 +5056,36 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 );
             }
         };
-        let table_read_only_ids_merged_with_create_into_where_equal_name =
-            "8e427ad7_5231_4f1e_8579_2e1aaa5da988";
+        let table_read_only_ids_merged_with_create_into_where_equal_name = "8e427ad7";
         let table_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_name =
-            "eb24448c_fa63_4259_bb05_3215802a78f6";
+            "eb24448c";
         let table_read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_name =
-            "9ac6d79a_2673_4c07_be4a_01c5c20ff1ab";
-        let table_create_into_pg_type_opt_vec_where_dim_one_equal_name =
-            "72940b0e_cd26_493f_9ec1_2d999d9a4401";
+            "9ac6d79a";
+        let table_create_into_pg_type_opt_vec_where_dim_one_equal_name = "72940b0e";
         let table_read_only_ids_merged_with_table_type_declaration_into_pg_type_opt_where_greater_than_name =
-            "5a52af33_a590_403b_808e_961df6d7e7aa";
+            "5a52af33";
         let table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_name =
-            "1f388ef8_dc28_489d_bed9_ca4e7f640dd5";
+            "1f388ef8";
         let table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_name =
-            "581c947f_9b0f_452f_8e52_524088bbb2e7";
+            "581c947f";
         let table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_name =
-            "de556c26_9297_4adb_9483_22d474cf1e7d";
+            "de556c26";
         let table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_name =
-            "35b26a97_abdd_4cf9_b4e5_aa9b47aa1a0d";
-        let table_create_into_pg_json_type_opt_vec_where_length_equal_name =
-            "1ce53b67_1e94_413e_83cf_c6d7094289a8";
-        let table_create_into_pg_json_type_opt_vec_where_length_greater_than_name =
-            "6b6bdfe0_c7b8_43fd_ac2e_854a47c0b64c";
+            "35b26a97";
+        let table_create_into_pg_json_type_opt_vec_where_length_equal_name = "1ce53b67";
+        let table_create_into_pg_json_type_opt_vec_where_length_greater_than_name = "6b6bdfe0";
         let table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_name =
-            "35a01678_f7e2_482d_9803_c3b5a23d36ad";
+            "35a01678";
         let table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_name =
-            "33a3706a_ef28_4c80_88e0_b8e7fb720de2";
+            "33a3706a";
         let table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_name =
-            "a3e2165c_e030_4b31_ab3d_dcd29f27f90b";
+            "a3e2165c";
         let table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_name =
-            "427ac837_383b_4af1_b956_3e64a78e1449";
+            "427ac837";
         let table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_name =
-            "fe3267a0_f49a_42ce_8e51_2a10e5360eb8";
+            "fe3267a0";
         let table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_name =
-            "b4504737_4463_4e47_bb30_9512275c66b1";
+            "b4504737";
         fill_table_field_idents_vec_ts(vec![
             &table_read_only_ids_merged_with_create_into_where_equal_name,
             &table_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_name,

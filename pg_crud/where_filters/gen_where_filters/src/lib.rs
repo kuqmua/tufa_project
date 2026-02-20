@@ -418,7 +418,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             &PgTypeOrPgJsonType::PgType,
                         )
                     };
-                let gen_32abfefc_c087_480b_b502_cb78533dafb0_ts =
+                let gen_32abfefc_ts =
                     |pg_type_pattern_handle: &PgTypePatternHandle,
                      gen_format_handle_str: &dyn Fn(&PgTypeKind) -> String| {
                         let (
@@ -457,20 +457,17 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             },
                         )
                     };
-                let gen_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_ts =
+                let gen_a2ca84d5_ts =
                     |pg_type_pattern_handle: &PgTypePatternHandle, operator: &dyn Display| {
-                        gen_32abfefc_c087_480b_b502_cb78533dafb0_ts(
-                            pg_type_pattern_handle,
-                            &|pg_type_kind: &PgTypeKind| {
-                                format!(
-                                    "{{}}({{}}{} {operator} ${{}})",
-                                    pg_type_kind.format_argument()
-                                )
-                            },
-                        )
+                        gen_32abfefc_ts(pg_type_pattern_handle, &|pg_type_kind: &PgTypeKind| {
+                            format!(
+                                "{{}}({{}}{} {operator} ${{}})",
+                                pg_type_kind.format_argument()
+                            )
+                        })
                     };
                 let gen_greater_than_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
-                    gen_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_ts(pg_type_pattern_handle, &">")
+                    gen_a2ca84d5_ts(pg_type_pattern_handle, &">")
                 };
                 let gen_between_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
@@ -661,7 +658,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                     )
                 };
-                let gen_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_ts =
+                let gen_1fa0bbf4_ts =
                     |pg_type_pattern_handle: &PgTypePatternHandle, pg_syntax: &dyn Display| {
                         let (
                             maybe_dims_declaration_ts,
@@ -711,43 +708,25 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         )
                     };
                 let gen_current_date_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
-                    gen_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_ts(
-                        pg_type_pattern_handle,
-                        &"= current_date",
-                    )
+                    gen_1fa0bbf4_ts(pg_type_pattern_handle, &"= current_date")
                 };
                 let gen_greater_than_current_date_ts =
                     |pg_type_pattern_handle: &PgTypePatternHandle| {
-                        gen_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_ts(
-                            pg_type_pattern_handle,
-                            &"> current_date",
-                        )
+                        gen_1fa0bbf4_ts(pg_type_pattern_handle, &"> current_date")
                     };
                 let gen_current_timestamp_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
-                    gen_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_ts(
-                        pg_type_pattern_handle,
-                        &"= current_timestamp",
-                    )
+                    gen_1fa0bbf4_ts(pg_type_pattern_handle, &"= current_timestamp")
                 };
                 let gen_greater_than_current_timestamp_ts =
                     |pg_type_pattern_handle: &PgTypePatternHandle| {
-                        gen_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_ts(
-                            pg_type_pattern_handle,
-                            &"> current_timestamp",
-                        )
+                        gen_1fa0bbf4_ts(pg_type_pattern_handle, &"> current_timestamp")
                     };
                 let gen_current_time_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
-                    gen_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_ts(
-                        pg_type_pattern_handle,
-                        &"= current_time",
-                    )
+                    gen_1fa0bbf4_ts(pg_type_pattern_handle, &"= current_time")
                 };
                 let gen_greater_than_current_time_ts =
                     |pg_type_pattern_handle: &PgTypePatternHandle| {
-                        gen_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_ts(
-                            pg_type_pattern_handle,
-                            &"> current_time",
-                        )
+                        gen_1fa0bbf4_ts(pg_type_pattern_handle, &"> current_time")
                     };
                 let gen_equal_to_encoded_string_representation_ts =
                     |pg_type_pattern_handle: &PgTypePatternHandle| {
@@ -802,25 +781,25 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     };
                 let gen_find_ranges_within_given_range_ts =
                     |pg_type_pattern_handle: &PgTypePatternHandle| {
-                        gen_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_ts(pg_type_pattern_handle, &"<@")
+                        gen_a2ca84d5_ts(pg_type_pattern_handle, &"<@")
                     };
                 let gen_find_ranges_that_fully_contain_the_given_range_ts =
                     |pg_type_pattern_handle: &PgTypePatternHandle| {
-                        gen_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_ts(pg_type_pattern_handle, &"@>")
+                        gen_a2ca84d5_ts(pg_type_pattern_handle, &"@>")
                     };
                 let gen_strictly_to_left_of_range_ts =
                     |pg_type_pattern_handle: &PgTypePatternHandle| {
-                        gen_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_ts(pg_type_pattern_handle, &"&<")
+                        gen_a2ca84d5_ts(pg_type_pattern_handle, &"&<")
                     };
                 let gen_strictly_to_right_of_range_ts =
                     |pg_type_pattern_handle: &PgTypePatternHandle| {
-                        gen_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_ts(pg_type_pattern_handle, &"&>")
+                        gen_a2ca84d5_ts(pg_type_pattern_handle, &"&>")
                     };
                 let gen_overlap_with_range_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
-                    gen_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_ts(pg_type_pattern_handle, &"&&")
+                    gen_a2ca84d5_ts(pg_type_pattern_handle, &"&&")
                 };
                 let gen_adjacent_with_range_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
-                    gen_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_ts(pg_type_pattern_handle, &"-|-")
+                    gen_a2ca84d5_ts(pg_type_pattern_handle, &"-|-")
                 };
                 let gen_length_filter_pattern_ts = |operator: &dyn Display| {
                     (
@@ -843,50 +822,38 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     )
                 };
                 let gen_included_lower_bound_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
-                    gen_32abfefc_c087_480b_b502_cb78533dafb0_ts(
-                        pg_type_pattern_handle,
-                        &|pg_type_kind: &PgTypeKind| {
-                            format!(
-                                "{{}}(lower({{}}{}) = ${{}})",
-                                pg_type_kind.format_argument()
-                            )
-                        },
-                    )
+                    gen_32abfefc_ts(pg_type_pattern_handle, &|pg_type_kind: &PgTypeKind| {
+                        format!(
+                            "{{}}(lower({{}}{}) = ${{}})",
+                            pg_type_kind.format_argument()
+                        )
+                    })
                 };
                 let gen_excluded_upper_bound_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
-                    gen_32abfefc_c087_480b_b502_cb78533dafb0_ts(
-                        pg_type_pattern_handle,
-                        &|pg_type_kind: &PgTypeKind| {
-                            format!(
-                                "{{}}(upper({{}}{}) = ${{}})",
-                                pg_type_kind.format_argument()
-                            )
-                        },
-                    )
+                    gen_32abfefc_ts(pg_type_pattern_handle, &|pg_type_kind: &PgTypeKind| {
+                        format!(
+                            "{{}}(upper({{}}{}) = ${{}})",
+                            pg_type_kind.format_argument()
+                        )
+                    })
                 };
                 let gen_greater_than_included_lower_bound_ts =
                     |pg_type_pattern_handle: &PgTypePatternHandle| {
-                        gen_32abfefc_c087_480b_b502_cb78533dafb0_ts(
-                            pg_type_pattern_handle,
-                            &|pg_type_kind: &PgTypeKind| {
-                                format!(
-                                    "{{}}(lower({{}}{}) > ${{}})",
-                                    pg_type_kind.format_argument()
-                                )
-                            },
-                        )
+                        gen_32abfefc_ts(pg_type_pattern_handle, &|pg_type_kind: &PgTypeKind| {
+                            format!(
+                                "{{}}(lower({{}}{}) > ${{}})",
+                                pg_type_kind.format_argument()
+                            )
+                        })
                     };
                 let gen_greater_than_excluded_upper_bound_ts =
                     |pg_type_pattern_handle: &PgTypePatternHandle| {
-                        gen_32abfefc_c087_480b_b502_cb78533dafb0_ts(
-                            pg_type_pattern_handle,
-                            &|pg_type_kind: &PgTypeKind| {
-                                format!(
-                                    "{{}}(upper({{}}{}) > ${{}})",
-                                    pg_type_kind.format_argument()
-                                )
-                            },
-                        )
+                        gen_32abfefc_ts(pg_type_pattern_handle, &|pg_type_kind: &PgTypeKind| {
+                            format!(
+                                "{{}}(upper({{}}{}) > ${{}})",
+                                pg_type_kind.format_argument()
+                            )
+                        })
                     };
                 let gen_range_length_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
@@ -1255,7 +1222,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_pg_json_type_dims_helpers = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 gen_pg_type_dims_helpers(pg_type_pattern_handle, &PgTypeOrPgJsonType::PgJsonType)
             };
-            let gen_1763ccf3_10be_4527_912b_363d8ea05f4b_ts =
+            let gen_1763ccf3_ts =
                 |pg_type_pattern_handle: &PgTypePatternHandle,
                  gen_format_handle_str: &dyn Fn(&PgTypeKind) -> String| {
                     let (
@@ -1297,107 +1264,95 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                     )
                 };
-            let gen_7cc8e29b_53e1_4bee_9947_71987439148c_ts =
-                |pg_type_pattern_handle: &PgTypePatternHandle, operator: &dyn Display| {
-                    gen_1763ccf3_10be_4527_912b_363d8ea05f4b_ts(
-                        pg_type_pattern_handle,
-                        &|pg_type_kind: &PgTypeKind| {
-                            format!(
-                                "{{}}({{}}{} {operator} ${{}})",
-                                pg_type_kind.format_argument()
-                            )
-                        },
+            let gen_7cc8e29b_ts = |pg_type_pattern_handle: &PgTypePatternHandle,
+                                   operator: &dyn Display| {
+                gen_1763ccf3_ts(pg_type_pattern_handle, &|pg_type_kind: &PgTypeKind| {
+                    format!(
+                        "{{}}({{}}{} {operator} ${{}})",
+                        pg_type_kind.format_argument()
                     )
-                };
+                })
+            };
             let gen_equal_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
-                gen_7cc8e29b_53e1_4bee_9947_71987439148c_ts(pg_type_pattern_handle, &"=")
+                gen_7cc8e29b_ts(pg_type_pattern_handle, &"=")
             };
             let gen_all_elements_equal_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
-                gen_1763ccf3_10be_4527_912b_363d8ea05f4b_ts(
-                    pg_type_pattern_handle,
-                    &|pg_type_kind: &PgTypeKind| {
-                        format!(
-                            "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) <> ${{}}))",
+                gen_1763ccf3_ts(pg_type_pattern_handle, &|pg_type_kind: &PgTypeKind| {
+                    format!(
+                        "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) <> ${{}}))",
+                        pg_type_kind.format_argument()
+                    )
+                })
+            };
+            let gen_ae2fa44d_ts = |pg_type_pattern_handle: &PgTypePatternHandle,
+                                   operation: &dyn Display| {
+                let (
+                    maybe_dims_declaration_ts,
+                    maybe_dims_default_init_ts,
+                    maybe_dims_indexes_init_ts,
+                    pg_type_kind,
+                    maybe_additional_parameters_ts,
+                    maybe_dims_query_bind_ts,
+                ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
+                (
+                    should_add_declaration_of_struct_ident_generic_false.clone(),
+                    quote! {
+                        #maybe_dims_declaration_ts
+                        pub #ValueSc: #unsigned_part_of_i32_ts
+                    },
+                    quote! {
+                        #maybe_dims_default_init_ts
+                        #ValueSc: #core_default_ts
+                    },
+                    {
+                        let format_handle_ts = dq_ts(&format!(
+                            "{{}}(jsonb_array_length({{}}{}) {operation} ${{}})",
                             pg_type_kind.format_argument()
-                        )
+                        ));
+                        quote! {
+                            #maybe_dims_indexes_init_ts
+                            #value_match_incr_checked_add_one_init_ts
+                            Ok(format!(
+                                #format_handle_ts,
+                                &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #ColumnSc,
+                                #maybe_additional_parameters_ts
+                                #ValueSc
+                            ))
+                        }
+                    },
+                    is_query_bind_mutable_true,
+                    quote! {
+                        #maybe_dims_query_bind_ts
+                        #query_bind_one_value_ts
                     },
                 )
             };
-            let gen_ae2fa44d_9035_49fd_ba20_eed1bd4680d4_ts =
-                |pg_type_pattern_handle: &PgTypePatternHandle, operation: &dyn Display| {
-                    let (
-                        maybe_dims_declaration_ts,
-                        maybe_dims_default_init_ts,
-                        maybe_dims_indexes_init_ts,
-                        pg_type_kind,
-                        maybe_additional_parameters_ts,
-                        maybe_dims_query_bind_ts,
-                    ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
-                    (
-                        should_add_declaration_of_struct_ident_generic_false.clone(),
-                        quote! {
-                            #maybe_dims_declaration_ts
-                            pub #ValueSc: #unsigned_part_of_i32_ts
-                        },
-                        quote! {
-                            #maybe_dims_default_init_ts
-                            #ValueSc: #core_default_ts
-                        },
-                        {
-                            let format_handle_ts = dq_ts(&format!(
-                                "{{}}(jsonb_array_length({{}}{}) {operation} ${{}})",
-                                pg_type_kind.format_argument()
-                            ));
-                            quote! {
-                                #maybe_dims_indexes_init_ts
-                                #value_match_incr_checked_add_one_init_ts
-                                Ok(format!(
-                                    #format_handle_ts,
-                                    &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    #ColumnSc,
-                                    #maybe_additional_parameters_ts
-                                    #ValueSc
-                                ))
-                            }
-                        },
-                        is_query_bind_mutable_true,
-                        quote! {
-                            #maybe_dims_query_bind_ts
-                            #query_bind_one_value_ts
-                        },
-                    )
-                };
             let gen_length_equal_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
-                gen_ae2fa44d_9035_49fd_ba20_eed1bd4680d4_ts(pg_type_pattern_handle, &"=")
+                gen_ae2fa44d_ts(pg_type_pattern_handle, &"=")
             };
             let gen_length_greater_than_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
-                gen_ae2fa44d_9035_49fd_ba20_eed1bd4680d4_ts(pg_type_pattern_handle, &">")
+                gen_ae2fa44d_ts(pg_type_pattern_handle, &">")
             };
             let gen_greater_than_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
-                gen_7cc8e29b_53e1_4bee_9947_71987439148c_ts(pg_type_pattern_handle, &">")
+                gen_7cc8e29b_ts(pg_type_pattern_handle, &">")
             };
             let gen_contains_el_greater_than_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
-                gen_1763ccf3_10be_4527_912b_363d8ea05f4b_ts(
-                    pg_type_pattern_handle,
-                    &|pg_type_kind: &PgTypeKind| {
-                        format!(
-                            "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) > ${{}}))",
-                            pg_type_kind.format_argument()
-                        )
-                    },
-                )
+                gen_1763ccf3_ts(pg_type_pattern_handle, &|pg_type_kind: &PgTypeKind| {
+                    format!(
+                        "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) > ${{}}))",
+                        pg_type_kind.format_argument()
+                    )
+                })
             };
             let gen_all_elements_greater_than_ts =
                 |pg_type_pattern_handle: &PgTypePatternHandle| {
-                    gen_1763ccf3_10be_4527_912b_363d8ea05f4b_ts(
-                        pg_type_pattern_handle,
-                        &|pg_type_kind: &PgTypeKind| {
-                            format!(
-                                "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) <= ${{}}))",
-                                pg_type_kind.format_argument()
-                            )
-                        },
-                    )
+                    gen_1763ccf3_ts(pg_type_pattern_handle, &|pg_type_kind: &PgTypeKind| {
+                        format!(
+                            "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) <= ${{}}))",
+                            pg_type_kind.format_argument()
+                        )
+                    })
                 };
             let gen_between_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 let (
