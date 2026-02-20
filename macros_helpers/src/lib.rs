@@ -7,7 +7,7 @@ mod gen_impl_from_ts;
 mod gen_impl_to_err_string_ts;
 mod gen_impl_try_from_ts;
 mod gen_new_or_try_new;
-mod gen_pub_type_alias_ts;
+mod gen_pub_type_al_ts;
 mod gen_simple_syn_punct;
 mod get_macro_attr;
 mod loc_syn_field;
@@ -35,7 +35,7 @@ pub use gen_new_or_try_new::{
     gen_impl_try_new_for_ident_ts, gen_new_ts, gen_pub_const_new_ts, gen_pub_const_try_new_ts,
     gen_pub_new_ts, gen_pub_try_new_ts, gen_try_new_ts,
 };
-pub use gen_pub_type_alias_ts::gen_pub_type_alias_ts;
+pub use gen_pub_type_al_ts::gen_pub_type_al_ts;
 pub use gen_simple_syn_punct::{gen_simple_syn_punct, string_syn_punct};
 pub use get_macro_attr::{get_macro_attr, get_macro_attr_meta_list_ts};
 pub use loc_syn_field::loc_syn_field;

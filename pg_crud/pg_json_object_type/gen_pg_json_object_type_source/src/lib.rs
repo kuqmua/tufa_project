@@ -5,7 +5,7 @@ use macros_helpers::{
     StructOrEnumDeriveTsStreamBuilder, SynFieldWrapper, gen_if_write_is_err_curly_braces_ts,
     gen_if_write_is_err_ts, gen_impl_display_ts, gen_impl_from_ts,
     gen_impl_pub_const_new_for_ident_ts, gen_impl_pub_new_for_ident_ts, gen_impl_to_err_string_ts,
-    gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts, gen_pub_type_alias_ts,
+    gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts, gen_pub_type_al_ts,
     gen_simple_syn_punct, get_macro_attr_meta_list_ts, maybe_write_ts_into_file,
 };
 use naming::{
@@ -2507,13 +2507,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     }
                 };
                 let ident_read_inner_ts = {
-                    let gen_pub_type_ident_read_inner_alias_ts = |ts: &dyn ToTokens| gen_pub_type_alias_ts(&ident_read_inner_ucc, &ts);
+                    let gen_pub_type_ident_read_inner_al_ts = |ts: &dyn ToTokens| gen_pub_type_al_ts(&ident_read_inner_ucc, &ts);
                     match &pattern {
                         Pattern::Standart => match &is_nullable {
                             IsNullable::False => gen_ident_read_inner_or_ident_with_id_standart_not_null_read_inner_ts(&IsStandartWithId::False),
-                            IsNullable::True => gen_pub_type_ident_read_inner_alias_ts(&gen_opt_type_decl_ts(&gen_type_as_pg_json_type_read_inner_ts(&ident_standart_not_null_ucc))),
+                            IsNullable::True => gen_pub_type_ident_read_inner_al_ts(&gen_opt_type_decl_ts(&gen_type_as_pg_json_type_read_inner_ts(&ident_standart_not_null_ucc))),
                         },
-                        Pattern::Arr => gen_pub_type_ident_read_inner_alias_ts(&match &is_nullable {
+                        Pattern::Arr => gen_pub_type_ident_read_inner_al_ts(&match &is_nullable {
                             IsNullable::False => gen_vec_tokens_declaration_ts(
                                 &ident_with_id_standart_not_null_read_inner_ucc
                             ),
@@ -3093,9 +3093,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     // }
                     // #[derive(PartialEq)]
                     // pub struct WrapperOfMyTrait<T: MyTrait>(<T as MyTrait>::AdditionalType);
-                    // pub type WrapperOfMyTraitAlias = WrapperOfMyTrait<MyStruct>;
+                    // pub type WrapperOfMyTraitAl = WrapperOfMyTrait<MyStruct>;
                     // #[derive(PartialEq)]
-                    // pub struct WrapperOfWrapperOfMyTraitAlias(WrapperOfMyTraitAlias);
+                    // pub struct WrapperOfWrapperOfMyTraitAl(WrapperOfMyTraitAl);
                     // // er[E0369]: binary operation `==` cannot be applied to type `WrapperOfMyTrait<MyStruct>`
                     let ident_with_id_standart_not_null_update_el_fields_declaration_ts = quote! {
                         #IdSc: #pg_crud_path_pg_json_type_uuid_uuid_update_ts,
