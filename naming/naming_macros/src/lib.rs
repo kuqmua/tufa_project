@@ -268,9 +268,9 @@ fn gen_impl_trait_for_ident_ts(
 #[proc_macro_derive(AsRefStrEnumWithUnitFieldsToUccStr)]
 pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(input_ts: Ts) -> Ts {
     panic_location();
-    let syn_derive_input: DeriveInput = parse(input_ts).expect("a8f22481");
-    let ident = &syn_derive_input.ident;
-    let Data::Enum(data_enum) = syn_derive_input.data else {
+    let di: DeriveInput = parse(input_ts).expect("a8f22481");
+    let ident = &di.ident;
+    let Data::Enum(data_enum) = di.data else {
         panic!("d26bf85e")
     };
     let generated = gen_impl_trait_for_ident_ts(
@@ -298,9 +298,9 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(input_ts: Ts) -> Ts {
 #[proc_macro_derive(AsRefStrEnumWithUnitFieldsToScStr)]
 pub fn as_ref_str_enum_with_unit_fields_to_sc_str(input_ts: Ts) -> Ts {
     panic_location();
-    let syn_derive_input: DeriveInput = parse(input_ts).expect("dea5cbcf");
-    let ident = &syn_derive_input.ident;
-    let Data::Enum(data_enum) = syn_derive_input.data else {
+    let di: DeriveInput = parse(input_ts).expect("dea5cbcf");
+    let ident = &di.ident;
+    let Data::Enum(data_enum) = di.data else {
         panic!("ed6efe2e");
     };
     let generated = gen_impl_trait_for_ident_ts(
@@ -327,9 +327,9 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(input_ts: Ts) -> Ts {
 #[proc_macro_derive(AsRefStrEnumWithUnitFieldsToUpperScStr)]
 pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(input_ts: Ts) -> Ts {
     panic_location();
-    let syn_derive_input: DeriveInput = parse(input_ts).expect("edabbc24");
-    let ident = &syn_derive_input.ident;
-    let Data::Enum(data_enum) = syn_derive_input.data else {
+    let di: DeriveInput = parse(input_ts).expect("edabbc24");
+    let ident = &di.ident;
+    let Data::Enum(data_enum) = di.data else {
         panic!("b2263e7e");
     };
     let generated = gen_impl_trait_for_ident_ts(

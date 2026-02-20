@@ -410,21 +410,21 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let import_path = ImportPath::PgCrud;
     let return_err_query_part_er_write_into_buffer_ts =
         gen_return_err_query_part_er_write_into_buffer_ts(import_path);
-    let syn_derive_input: DeriveInput = parse2(input).expect("991c614f");
+    let di: DeriveInput = parse2(input).expect("991c614f");
     let gen_pg_table_config = from_str::<GenPgTableConfig>(
         &get_macro_attr_meta_list_ts(
-            &syn_derive_input.attrs,
+            &di.attrs,
             &format!("{}::gen_pg_table_config", import_path.sc_str()),
         )
         .to_string(),
     )
     .expect("1b6adf7e");
-    let ident = &syn_derive_input.ident;
+    let ident = &di.ident;
     let ident_sc_str = ToTokensToScStr::case(&ident);
     let ident_sc_dq_ts = dq_ts(&ident_sc_str);
     let self_table_name_call_ts = quote! {Self::#TableNameSc()};
     let (primary_key_field, fields, fields_without_primary_key) =
-        if let Data::Struct(data_struct) = &syn_derive_input.data {
+        if let Data::Struct(data_struct) = &di.data {
             if let Fields::Named(fields_named) = &data_struct.fields {
                 let mut option_primary_key_field: Option<SynFieldWrapper> = None;
                 let mut fields = Vec::new();
@@ -2251,28 +2251,24 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             reqwest_syn_variant_wrapper.get_syn_variant().clone(),
         ]
     };
-    let gen_additional_er_variants = |syn_derive_input_bde7efb1: &DeriveInput,
+    let gen_additional_er_variants = |di_bde7efb1: &DeriveInput,
                                       gen_pg_table_attr: GenPgTableAttr|
      -> Vec<Variant> {
         let gen_pg_table_attr_str = gen_pg_table_attr.to_string();
-        let common_additional_er_variants_attr_ts = get_macro_attr_meta_list_ts(
-            &syn_derive_input_bde7efb1.attrs,
-            &gen_pg_table_attr.gen_path_to_attr(),
-        );
-        let derive_input: DeriveInput =
+        let common_additional_er_variants_attr_ts =
+            get_macro_attr_meta_list_ts(&di_bde7efb1.attrs, &gen_pg_table_attr.gen_path_to_attr());
+        let di_894e3269: DeriveInput =
             parse2((*common_additional_er_variants_attr_ts).clone()).expect("1b80783d");
-        assert!(derive_input.ident == gen_pg_table_attr_str, "8a66c852");
-        let variants = if let Data::Enum(data_enum) = derive_input.data {
+        assert!(di_894e3269.ident == gen_pg_table_attr_str, "8a66c852");
+        let variants = if let Data::Enum(data_enum) = di_894e3269.data {
             data_enum.variants
         } else {
             panic!("f3ddc78c");
         };
         variants.into_iter().collect()
     };
-    let common_additional_er_variants = gen_additional_er_variants(
-        &syn_derive_input,
-        GenPgTableAttr::CommonAdditionalErVariants,
-    );
+    let common_additional_er_variants =
+        gen_additional_er_variants(&di, GenPgTableAttr::CommonAdditionalErVariants);
     let common_route_syn_variants = {
         let mut acc_94f701ab = vec![
             check_body_size_syn_variant_wrapper.get_syn_variant(),
@@ -2286,7 +2282,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         acc_94f701ab
     };
     let common_additional_logic_ts = get_macro_attr_meta_list_ts(
-        &syn_derive_input.attrs,
+        &di.attrs,
         &GenPgTableAttr::CommonAdditionalLogic.gen_path_to_attr(),
     );
     let gen_pub_handle_ts = |is_pub: bool| {
@@ -2660,20 +2656,20 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #impl_pg_crud_default_option_some_vec_one_el_for_operation_payload_ts
             }
         };
-    let gen_type_variants_from_request_response_syn_variants =
-        |syn_variants: &Vec<&Variant>, operation: &Operation| -> Vec<Variant> {
-            let mut type_variants_from_request_response_syn_variants = Vec::new();
-            for el_21f2d46c in syn_variants {
-                type_variants_from_request_response_syn_variants.push((*el_21f2d46c).clone());
-            }
-            for el_60533068 in gen_additional_er_variants(
-                &syn_derive_input,
-                operation.gen_pg_table_attr_additional_er_variants(),
-            ) {
-                type_variants_from_request_response_syn_variants.push(el_60533068.clone());
-            }
-            type_variants_from_request_response_syn_variants
-        };
+    let gen_type_variants_from_request_response_syn_variants = |syn_variants: &Vec<&Variant>,
+                                                                operation: &Operation|
+     -> Vec<Variant> {
+        let mut type_variants_from_request_response_syn_variants = Vec::new();
+        for el_21f2d46c in syn_variants {
+            type_variants_from_request_response_syn_variants.push((*el_21f2d46c).clone());
+        }
+        for el_60533068 in
+            gen_additional_er_variants(&di, operation.gen_pg_table_attr_additional_er_variants())
+        {
+            type_variants_from_request_response_syn_variants.push(el_60533068.clone());
+        }
+        type_variants_from_request_response_syn_variants
+    };
     let gen_ident_try_operation_er_ts =
         |operation: &Operation, syn_variants: &Vec<Variant>| -> Ts2 {
             let content_ts_930e1a93 = StructOrEnumDeriveTokenStreamBuilder::new()
@@ -2776,7 +2772,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let additional_validators_ts = {
             let operation_additional_logic_ts = get_macro_attr_meta_list_ts(
-                &syn_derive_input.attrs,
+                &di.attrs,
                 &operation
                     .gen_pg_table_attr_additional_logic()
                     .gen_path_to_attr(),

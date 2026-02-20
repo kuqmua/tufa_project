@@ -7,9 +7,9 @@ use syn::{Data, DeriveInput, Fields, parse};
 #[proc_macro_derive(GenGetterTraitsForStructFields)]
 pub fn gen_getter_traits_for_struct_fields(input: Ts) -> Ts {
     panic_location::panic_location();
-    let syn_derive_input: DeriveInput = parse(input).expect("49780295");
-    let ident = &syn_derive_input.ident;
-    let datastruct = match syn_derive_input.data {
+    let di: DeriveInput = parse(input).expect("49780295");
+    let ident = &di.ident;
+    let datastruct = match di.data {
         Data::Struct(v) => v,
         Data::Enum(_) | Data::Union(_) => panic!("15cd72a2"),
     };
@@ -44,9 +44,9 @@ pub fn gen_getter_traits_for_struct_fields(input: Ts) -> Ts {
 #[proc_macro_derive(GenGetterTrait)]
 pub fn gen_getter_trait(input: Ts) -> Ts {
     panic_location::panic_location();
-    let syn_derive_input: DeriveInput = parse(input).expect("195b48f5");
-    let ident = &syn_derive_input.ident;
-    let data_struct = match syn_derive_input.data {
+    let di: DeriveInput = parse(input).expect("195b48f5");
+    let ident = &di.ident;
+    let data_struct = match di.data {
         Data::Struct(v) => v,
         Data::Enum(_) | Data::Union(_) => panic!("cd6bbc4e"),
     };

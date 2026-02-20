@@ -120,11 +120,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         whole_content_write_into_gen_pg_json_object_type: ShouldWriteTokenStreamIntoFile,
     }
     panic_location();
-    let syn_derive_input: DeriveInput = parse2(input_ts).expect("e5f0e27b");
+    let di: DeriveInput = parse2(input_ts).expect("e5f0e27b");
     let import_path = ImportPath::PgCrud;
     let gen_pg_json_object_type_config = from_str::<GenPgJsonTypesConfig>(
         &get_macro_attr_meta_list_ts(
-            &syn_derive_input.attrs,
+            &di.attrs,
             &format!("{}::pg_json_object_type_config", import_path.sc_str()),
         )
         .to_string(),
@@ -318,8 +318,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let wrap_into_value_initialization_ts = |content_ts: &dyn ToTokens|{
                 quote!{#import_path_value_ts { #ValueSc: #content_ts }}
             };
-            let syn_derive_input_ident = &syn_derive_input.ident;
-            let vec_syn_field = if let Data::Struct(data_struct) = &syn_derive_input.data {
+            let di_ident = &di.ident;
+            let vec_syn_field = if let Data::Struct(data_struct) = &di.data {
                 if let Fields::Named(fields_named) = &data_struct.fields {
                     fields_named.named.iter()
                     .collect::<Vec<&Field>>()
@@ -340,16 +340,16 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let is_standart_with_id_true = IsStandartWithId::True;
             let gen_ident_ucc = |ident_pattern: &IdentPattern| {
                 let (rust_part, pg_part, is_nullable_325dc715) = {
-                    let syn_derive_input_ident_str = syn_derive_input_ident.to_string();
-                    let vec_of_syn_derive_input_ident_with_id = format!("{VecOfUcc}{syn_derive_input_ident}{WithIdUcc}");
+                    let di_ident_str = di_ident.to_string();
+                    let vec_of_di_ident_with_id = format!("{VecOfUcc}{di_ident}{WithIdUcc}");
                     let jsonb_object_ucc_str = JsonbObjectUcc.to_string();
                     let array_of_not_null_jsonb_object_with_id = format!("{ArrayOfUcc}{}{JsonbObjectUcc}{WithIdUcc}", IsNullable::False.not_null_or_nullable_str());
                     match &ident_pattern {
-                        IdentPattern::StandartNotNullWithoutId => (syn_derive_input_ident_str, jsonb_object_ucc_str, IsNullable::False),
-                        IdentPattern::StandartNotNullWithId => (format!("{syn_derive_input_ident}{WithIdUcc}"), format!("{JsonbObjectUcc}{WithIdUcc}"), IsNullable::False),
-                        IdentPattern::StandartNullableWithoutId => (syn_derive_input_ident_str, jsonb_object_ucc_str, IsNullable::True),
-                        IdentPattern::ArrayNotNullWithId => (vec_of_syn_derive_input_ident_with_id, array_of_not_null_jsonb_object_with_id, IsNullable::False),
-                        IdentPattern::ArrayNullableWithIdentifier => (vec_of_syn_derive_input_ident_with_id, array_of_not_null_jsonb_object_with_id, IsNullable::True),
+                        IdentPattern::StandartNotNullWithoutId => (di_ident_str, jsonb_object_ucc_str, IsNullable::False),
+                        IdentPattern::StandartNotNullWithId => (format!("{di_ident}{WithIdUcc}"), format!("{JsonbObjectUcc}{WithIdUcc}"), IsNullable::False),
+                        IdentPattern::StandartNullableWithoutId => (di_ident_str, jsonb_object_ucc_str, IsNullable::True),
+                        IdentPattern::ArrayNotNullWithId => (vec_of_di_ident_with_id, array_of_not_null_jsonb_object_with_id, IsNullable::False),
+                        IdentPattern::ArrayNullableWithIdentifier => (vec_of_di_ident_with_id, array_of_not_null_jsonb_object_with_id, IsNullable::True),
                     }
                 };
                 let is_nullable_325dc715_rust = is_nullable_325dc715.rust();
@@ -7061,7 +7061,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
     );
     let generated: Ts2 = {
         let ident_gen_pg_json_object_type_mod =
-            SelfGenPgJsonObjectTypeModSc::from_tokens(&syn_derive_input.ident);
+            SelfGenPgJsonObjectTypeModSc::from_tokens(&di.ident);
         quote! {
             #[allow(unused_qualifications)]
             #[allow(clippy::absolute_paths)]

@@ -2,8 +2,8 @@
 // pub fn from_sqlx_pg_er(input: Ts) -> Ts {
 //     panic_location::panic_location();
 //     let proc_macro_name_ucc = "FromSqlxPgEr";
-//     let syn_derive_input: DeriveInput = parse(input).expect("cd5c05b1");
-//     let ident = &syn_derive_input.ident;
+//     let di: DeriveInput = parse(input).expect("cd5c05b1");
+//     let ident = &di.ident;
 //     let proc_macro_name_ucc_ident_str =
 //         format!("{proc_macro_name_ucc} {ident}");
 //     // let sqlx_pg_er_syn_variants = enum_variants::sqlx_pg_er_syn_variants(&proc_macro_name_ucc_ident_str);

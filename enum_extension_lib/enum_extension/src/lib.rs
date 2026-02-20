@@ -5,15 +5,15 @@ use syn::{Data, DeriveInput, Fields, parse};
 pub fn enum_extension(input: Ts) -> Ts {
     panic_location::panic_location();
     //it only supported for enums without values
-    let syn_derive_input: DeriveInput = parse(input).expect("c6b8e80e");
+    let di: DeriveInput = parse(input).expect("c6b8e80e");
     //todo to implement into_array() and into_vec - must implement Default for all inner variant types
-    let len = match syn_derive_input.data.clone() {
+    let len = match di.data.clone() {
         Data::Enum(enum_item) => enum_item.variants.len(),
         Data::Struct(_) | Data::Union(_) => {
             panic!("bcbaca28")
         }
     };
-    let variants = match syn_derive_input.data {
+    let variants = match di.data {
         Data::Enum(enum_item) => enum_item.variants.into_iter().map(|el_f0467eb6| {
             let variant_ident = el_f0467eb6.ident;
             match el_f0467eb6.fields {
@@ -36,7 +36,7 @@ pub fn enum_extension(input: Ts) -> Ts {
             panic!("4ba8c781")
         }
     };
-    let ident = &syn_derive_input.ident;
+    let ident = &di.ident;
     let generated = quote! {
         impl #ident {
             pub fn get_length() -> usize {

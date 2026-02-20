@@ -30,9 +30,9 @@ pub fn location(input: Ts) -> Ts {
         Unnamed,
     }
     panic_location::panic_location();
-    let syn_derive_input: DeriveInput = parse(input).expect("d94f091a");
-    let ident = &syn_derive_input.ident;
-    let generic_parameters = &syn_derive_input
+    let di: DeriveInput = parse(input).expect("d94f091a");
+    let ident = &di.ident;
+    let generic_parameters = &di
         .generics
         .params
         .iter()
@@ -44,7 +44,7 @@ pub fn location(input: Ts) -> Ts {
         })
         .collect::<Vec<&Ident>>();
     let ident_with_serde_ucc = SelfWithSerdeUcc::from_tokens(&ident);
-    let Data::Enum(data_enum) = syn_derive_input.data else {
+    let Data::Enum(data_enum) = di.data else {
         panic!("d98214f7");
     };
     let supported_enum_variant = {

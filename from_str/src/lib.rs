@@ -6,9 +6,9 @@ use syn::{Data, DeriveInput, Fields, Ident, parse};
 #[proc_macro_derive(FromStr)]
 pub fn from_str(input: Ts) -> Ts {
     panic_location::panic_location();
-    let syn_derive_input: DeriveInput = parse(input).expect("f83fcd2d");
-    let ident = &syn_derive_input.ident;
-    let Data::Enum(data_enum) = syn_derive_input.data else {
+    let di: DeriveInput = parse(input).expect("f83fcd2d");
+    let ident = &di.ident;
+    let Data::Enum(data_enum) = di.data else {
         panic!("d35db256");
     };
     let variant_idents = data_enum

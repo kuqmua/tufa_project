@@ -6,8 +6,8 @@ use syn::{DeriveInput, parse};
 #[proc_macro_derive(ImplDisplayAsDebug)]
 pub fn impl_display_as_debug(input: Ts) -> Ts {
     panic_location::panic_location();
-    let syn_derive_input: DeriveInput = parse(input).expect("d5385b71");
-    let ident = &syn_derive_input.ident;
+    let di: DeriveInput = parse(input).expect("d5385b71");
+    let ident = &di.ident;
     let generated = gen_impl_display_ts(
         &Ts2::new(),
         &ident,
