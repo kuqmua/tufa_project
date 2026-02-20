@@ -387,17 +387,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, Deserialize)]
     struct GenPgTableConfig {
-        create_many_write_into_gen_pg_table_create_many: ShouldWriteTokenStreamIntoFile,
-        create_one_write_into_gen_pg_table_create_one: ShouldWriteTokenStreamIntoFile,
-        read_many_write_into_gen_pg_table_read_many: ShouldWriteTokenStreamIntoFile,
-        read_one_write_into_gen_pg_table_read_one: ShouldWriteTokenStreamIntoFile,
-        update_many_write_into_gen_pg_table_update_many: ShouldWriteTokenStreamIntoFile,
-        update_one_write_into_gen_pg_table_update_one: ShouldWriteTokenStreamIntoFile,
-        delete_many_write_into_gen_pg_table_delete_many: ShouldWriteTokenStreamIntoFile,
-        delete_one_write_into_gen_pg_table_delete_one: ShouldWriteTokenStreamIntoFile,
-        tests_write_into_gen_pg_table_tests: ShouldWriteTokenStreamIntoFile,
-        common_write_into_gen_pg_table_common: ShouldWriteTokenStreamIntoFile,
-        whole_write_into_gen_pg_table: ShouldWriteTokenStreamIntoFile,
+        create_many_write_into_file: ShouldWriteTokenStreamIntoFile,
+        create_one_write_into_file: ShouldWriteTokenStreamIntoFile,
+        read_many_write_into_file: ShouldWriteTokenStreamIntoFile,
+        read_one_write_into_file: ShouldWriteTokenStreamIntoFile,
+        update_many_write_into_file: ShouldWriteTokenStreamIntoFile,
+        update_one_write_into_file: ShouldWriteTokenStreamIntoFile,
+        delete_many_write_into_file: ShouldWriteTokenStreamIntoFile,
+        delete_one_write_into_file: ShouldWriteTokenStreamIntoFile,
+        tests_write_into_file: ShouldWriteTokenStreamIntoFile,
+        common_write_into_file: ShouldWriteTokenStreamIntoFile,
+        whole_write_into_file: ShouldWriteTokenStreamIntoFile,
     }
     panic_location();
     let import_path = ImportPath::PgCrud;
@@ -3297,7 +3297,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     };
     maybe_write_ts_into_file(
-        gen_pg_table_config.create_many_write_into_gen_pg_table_create_many,
+        gen_pg_table_config.create_many_write_into_file,
         "gen_pg_table_create_many",
         &create_many_ts,
         &FormatWithCargofmt::True,
@@ -3437,7 +3437,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     };
     maybe_write_ts_into_file(
-        gen_pg_table_config.create_one_write_into_gen_pg_table_create_one,
+        gen_pg_table_config.create_one_write_into_file,
         "gen_pg_table_create_one",
         &create_one_ts,
         &FormatWithCargofmt::True,
@@ -3655,7 +3655,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     };
     maybe_write_ts_into_file(
-        gen_pg_table_config.read_many_write_into_gen_pg_table_read_many,
+        gen_pg_table_config.read_many_write_into_file,
         "gen_pg_table_read_many",
         &read_many_ts,
         &FormatWithCargofmt::True,
@@ -3797,7 +3797,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     };
     maybe_write_ts_into_file(
-        gen_pg_table_config.read_one_write_into_gen_pg_table_read_one,
+        gen_pg_table_config.read_one_write_into_file,
         "gen_pg_table_read_one",
         &read_one_ts,
         &FormatWithCargofmt::True,
@@ -4226,7 +4226,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     };
     maybe_write_ts_into_file(
-        gen_pg_table_config.update_many_write_into_gen_pg_table_update_many,
+        gen_pg_table_config.update_many_write_into_file,
         "gen_pg_table_update_many",
         &update_many_ts,
         &FormatWithCargofmt::True,
@@ -4470,7 +4470,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     };
     maybe_write_ts_into_file(
-        gen_pg_table_config.update_one_write_into_gen_pg_table_update_one,
+        gen_pg_table_config.update_one_write_into_file,
         "gen_pg_table_update_one",
         &update_one_ts,
         &FormatWithCargofmt::True,
@@ -4566,7 +4566,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     };
     maybe_write_ts_into_file(
-        gen_pg_table_config.delete_many_write_into_gen_pg_table_delete_many,
+        gen_pg_table_config.delete_many_write_into_file,
         "gen_pg_table_delete_many",
         &delete_many_ts,
         &FormatWithCargofmt::True,
@@ -4679,7 +4679,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     };
     maybe_write_ts_into_file(
-        gen_pg_table_config.delete_one_write_into_gen_pg_table_delete_one,
+        gen_pg_table_config.delete_one_write_into_file,
         "gen_pg_table_delete_one",
         &delete_one_ts,
         &FormatWithCargofmt::True,
@@ -7065,7 +7065,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     };
     maybe_write_ts_into_file(
-        gen_pg_table_config.tests_write_into_gen_pg_table_tests,
+        gen_pg_table_config.tests_write_into_file,
         "gen_pg_table_Tests",
         &ident_tests_ts,
         &FormatWithCargofmt::True,
@@ -7083,7 +7083,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         #ident_update_for_query_ts
     };
     maybe_write_ts_into_file(
-        gen_pg_table_config.common_write_into_gen_pg_table_common,
+        gen_pg_table_config.common_write_into_file,
         "gen_pg_table_common",
         &common_ts,
         &FormatWithCargofmt::True,
@@ -7117,7 +7117,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     };
     maybe_write_ts_into_file(
-        gen_pg_table_config.whole_write_into_gen_pg_table,
+        gen_pg_table_config.whole_write_into_file,
         "gen_pg_table",
         &gend,
         &FormatWithCargofmt::True,
