@@ -4,12 +4,12 @@ use quote::{ToTokens, quote};
 pub fn gen_impl_from_ts(
     from_type_ts: &dyn ToTokens,
     for_type_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         impl From<#from_type_ts> for #for_type_ts {
             fn from(#ValueSc: #from_type_ts) -> Self {
-                #content_ts
+                #ts
             }
         }
     }

@@ -80,7 +80,7 @@ pub enum StatusCode {
 impl StatusCode {
     #[must_use]
     pub fn to_http_status_code_ts(&self) -> Ts2 {
-        let content_ts = match *self {
+        let ts = match *self {
             Self::Continue100 => quote! {CONTINUE},
             Self::SwitchingProtocols101 => quote! {SWITCHING_PROTOCOLS},
             Self::Processing102 => quote! {PROCESSING},
@@ -142,7 +142,7 @@ impl StatusCode {
             Self::NotExtended510 => quote! {NOT_EXTENDED},
             Self::NetworkAuthenticationRequired511 => quote! {NETWORK_AUTHENTICATION_REQUIRED},
         };
-        quote::quote! {http::StatusCode::#content_ts}
+        quote::quote! {http::StatusCode::#ts}
     }
     #[must_use]
     pub fn to_proc_macro_attr_view_ts(&self) -> Ts2 {

@@ -118,7 +118,7 @@ pub fn location(input: Ts) -> Ts {
         SuportedEnumVariant::Named => {
             let loc_sc_str = LocSc.to_string();
             //todo maybe impl display was a bad idea. .to_string() casts is dangerous
-            let impl_display_handle_content_ts = {
+            let impl_display_handle_ts = {
                 let variants_ts = data_enum.variants.iter().map(|el_f497ea11| {
                     let el_ident = &el_f497ea11.ident;
                     let fields = if let Fields::Named(fields) = &el_f497ea11.fields {
@@ -314,7 +314,7 @@ pub fn location(input: Ts) -> Ts {
                 &maybe_generic_parameters_location_lib_to_err_string_annotations_ts,
                 &ident,
                 &maybe_generic_parameters_ts,
-                &impl_display_handle_content_ts,
+                &impl_display_handle_ts,
             );
             let impl_ident_into_serde_version_ts = {
                 let variants_ts = data_enum.variants.iter().map(|el_7d5a4c39| {
@@ -406,7 +406,7 @@ pub fn location(input: Ts) -> Ts {
                 &maybe_generic_parameters_location_lib_to_err_string_annotations_ts,
                 &ident_with_serde_ucc,
                 &maybe_generic_parameters_ts,
-                &impl_display_handle_content_ts,
+                &impl_display_handle_ts,
             );
             let impl_location_lib_to_err_string_to_err_string_for_ident_with_serde_ts =
                 gen_impl_to_err_string_ts(

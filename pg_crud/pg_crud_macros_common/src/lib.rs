@@ -92,17 +92,17 @@ pub enum IsNullable {
 }
 impl IsNullable {
     #[must_use]
-    pub fn maybe_option_wrap(&self, content_ts: Ts2) -> Ts2 {
+    pub fn maybe_option_wrap(&self, ts: Ts2) -> Ts2 {
         match &self {
-            Self::False => content_ts,
-            Self::True => quote! {Option<#content_ts>},
+            Self::False => ts,
+            Self::True => quote! {Option<#ts>},
         }
     }
     #[must_use]
-    pub fn maybe_some_wrap(&self, content_ts: Ts2) -> Ts2 {
+    pub fn maybe_some_wrap(&self, ts: Ts2) -> Ts2 {
         match &self {
-            Self::False => content_ts,
-            Self::True => quote! {Some(#content_ts)},
+            Self::False => ts,
+            Self::True => quote! {Some(#ts)},
         }
     }
     #[must_use]
@@ -436,11 +436,11 @@ pub enum EqualOperatorHandle {
 impl EqualOperatorHandle {
     #[must_use]
     pub fn to_tokens_path(&self, import_path: &ImportPath) -> Ts2 {
-        let content_ts = match &self {
+        let ts = match &self {
             Self::Equal => quote! {Equal},
             Self::IsNull => quote! {IsNull},
         };
-        quote! {#import_path::#EqualOperatorUcc::#content_ts}
+        quote! {#import_path::#EqualOperatorUcc::#ts}
     }
 }
 //todo maybe reuse with other structs
@@ -848,13 +848,13 @@ pub fn gen_impl_default_option_some_vec_one_el_ts(
     import_path: &ImportPath,
     ident: &dyn ToTokens,
     ident_generic_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     let path_trait_ts = import_path.default_option_some_vec_one_el();
     quote! {
         impl #impl_generic_ts #path_trait_ts for #ident #ident_generic_ts {
             fn #DefaultOptionSomeVecOneElSc() -> Self {
-                #content_ts
+                #ts
             }
         }
     }
@@ -862,13 +862,13 @@ pub fn gen_impl_default_option_some_vec_one_el_ts(
 pub fn gen_impl_all_variants_default_option_some_vec_one_el_ts(
     import_path: &ImportPath,
     ident: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     let path_trait_ts = import_path.all_variants_default_option_some_vec_one_el();
     quote! {
         impl #path_trait_ts for #ident {
             fn #AllVariantsDefaultOptionSomeVecOneElSc() -> Vec<Self> {
-                #content_ts
+                #ts
             }
         }
     }
@@ -878,13 +878,13 @@ pub fn gen_impl_default_option_some_vec_one_el_max_page_size_ts(
     import_path: &ImportPath,
     ident: &dyn ToTokens,
     ident_generic_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     let path_trait_ts = import_path.default_option_some_vec_one_el_max_page_size();
     quote! {
         impl #impl_generic_ts #path_trait_ts for #ident #ident_generic_ts {
             fn #DefaultOptionSomeVecOneElMaxPageSizeSc() -> Self {
-                #content_ts
+                #ts
             }
         }
     }
@@ -892,7 +892,7 @@ pub fn gen_impl_default_option_some_vec_one_el_max_page_size_ts(
 pub fn gen_impl_all_variants_default_option_some_vec_one_el_max_page_size_ts(
     import_path: &ImportPath,
     ident: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     let path_trait_ts = import_path.all_variants_default_option_some_vec_one_el_max_page_size();
     let all_variants_default_option_some_vec_one_el_max_page_size_sc =
@@ -900,85 +900,81 @@ pub fn gen_impl_all_variants_default_option_some_vec_one_el_max_page_size_ts(
     quote! {
         impl #path_trait_ts for #ident {
             fn #all_variants_default_option_some_vec_one_el_max_page_size_sc() -> Vec<Self> {
-                #content_ts
+                #ts
             }
         }
     }
 }
 pub fn gen_impl_pg_crud_common_default_option_some_vec_one_el_ts(
     ident: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_impl_default_option_some_vec_one_el_ts(
         &Ts2::new(),
         &ImportPath::PgCrudCommon,
         ident,
         &Ts2::new(),
-        content_ts,
+        ts,
     )
 }
 pub fn gen_impl_pg_crud_default_option_some_vec_one_el_ts(
     ident: &dyn ToTokens,
     lifetime_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_impl_default_option_some_vec_one_el_ts(
         &Ts2::new(),
         &ImportPath::PgCrud,
         ident,
         lifetime_ts,
-        content_ts,
+        ts,
     )
 }
 pub fn gen_impl_pg_crud_common_all_variants_default_option_some_vec_one_el_ts(
     ident: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_all_variants_default_option_some_vec_one_el_ts(
-        &ImportPath::PgCrudCommon,
-        ident,
-        content_ts,
-    )
+    gen_impl_all_variants_default_option_some_vec_one_el_ts(&ImportPath::PgCrudCommon, ident, ts)
 }
 pub fn gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_ts(
     ident: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_all_variants_default_option_some_vec_one_el_ts(&ImportPath::PgCrud, ident, content_ts)
+    gen_impl_all_variants_default_option_some_vec_one_el_ts(&ImportPath::PgCrud, ident, ts)
 }
 pub fn gen_impl_pg_crud_common_default_option_some_vec_one_el_max_page_size_ts(
     ident: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_impl_default_option_some_vec_one_el_max_page_size_ts(
         &Ts2::new(),
         &ImportPath::PgCrudCommon,
         ident,
         &Ts2::new(),
-        content_ts,
+        ts,
     )
 }
 pub fn gen_impl_pg_crud_default_option_some_vec_one_el_max_page_size_ts(
     ident: &dyn ToTokens,
     lifetime_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_impl_default_option_some_vec_one_el_max_page_size_ts(
         &Ts2::new(),
         &ImportPath::PgCrud,
         ident,
         lifetime_ts,
-        content_ts,
+        ts,
     )
 }
 pub fn gen_impl_pg_crud_all_variants_default_option_some_vec_one_el_max_page_size_ts(
     ident: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_impl_all_variants_default_option_some_vec_one_el_max_page_size_ts(
         &ImportPath::PgCrud,
         ident,
-        content_ts,
+        ts,
     )
 }
 pub fn impl_pg_type_where_filter_for_ident_ts(
@@ -988,9 +984,9 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
     increment_parameter_underscore: &IncrementParameterUnderscore,
     column_parameter_underscore: &ColumnParameterUnderscore,
     is_need_to_add_logical_operator_underscore: &IsNeedToAddLogicalOperatorUnderscore,
-    query_part_content_ts: &dyn ToTokens,
+    query_part_ts: &dyn ToTokens,
     is_query_bind_mutable: &IsQueryBindMutable,
-    query_bind_content_ts: &dyn ToTokens,
+    query_bind_ts: &dyn ToTokens,
     import_path: &ImportPath,
 ) -> Ts2 {
     quote! {
@@ -1002,25 +998,25 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
                 #column_parameter_underscore: &dyn #StdFmtDisplay,
                 #is_need_to_add_logical_operator_underscore: #Bool
             ) -> Result<#StringTs, #import_path::#QueryPartErUcc> {
-                #query_part_content_ts
+                #query_part_ts
             }
             fn #QueryBindSc(self, #is_query_bind_mutable query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
                 sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
                 String
             > {
-                #query_bind_content_ts
+                #query_bind_ts
             }
         }
     }
 }
 pub fn gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(
     ident_ts: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         impl sqlx::Encode<'_, sqlx::Postgres> for #ident_ts {
             fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
-                sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&#content_ts, buf)
+                sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&#ts, buf)
             }
         }
     }

@@ -162,7 +162,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
                 struct_or_enum: #struct_or_enum_ucc,
                 ident_d8cbb733: &dyn #quote_to_tokens_ts,
                 generics_7d48c97a: &dyn #quote_to_tokens_ts,
-                content_ts: &dyn #quote_to_tokens_ts,
+                ts: &dyn #quote_to_tokens_ts,
             ) -> Ts2 {
                 let maybe_pub_ts = self.#make_pub_sc_ts.then(|| quote::quote!{pub});
                 let derive_ts = {
@@ -176,7 +176,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
                 };
                 // quote::quote! {
                 //     #[derive(#(#derive_ts),*)]
-                //     #maybe_pub_ts #struct_or_enum_ts #ident_d8cbb733 #content_ts
+                //     #maybe_pub_ts #struct_or_enum_ts #ident_d8cbb733 #ts
                 // }
                 // this is cargo expand ouput coz double quote::quote!{quote::quote!{}}
                 {
@@ -226,7 +226,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
                     ::#quote_to_tokens_ts::to_tokens(&struct_or_enum_ts, &mut _s);
                     ::#quote_to_tokens_ts::to_tokens(&ident_d8cbb733, &mut _s);
                     ::#quote_to_tokens_ts::to_tokens(&generics_7d48c97a, &mut _s);
-                    ::#quote_to_tokens_ts::to_tokens(&content_ts, &mut _s);
+                    ::#quote_to_tokens_ts::to_tokens(&ts, &mut _s);
                     _s
                 }
             }
@@ -234,26 +234,26 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
                 self,
                 ident_d87c6809: &dyn #quote_to_tokens_ts,
                 generics_c33a0ef2: &dyn #quote_to_tokens_ts,
-                content_ts: &dyn #quote_to_tokens_ts,
+                ts: &dyn #quote_to_tokens_ts,
             ) -> Ts2 {
                 self.build_handle(
                     #struct_or_enum_ucc::Struct,
                     ident_d87c6809,
                     generics_c33a0ef2,
-                    content_ts
+                    ts
                 )
             }
             pub fn build_enum(
                 self,
                 ident_273dd063: &dyn #quote_to_tokens_ts,
                 generics_84bc3f7f: &dyn #quote_to_tokens_ts,
-                content_ts: &dyn #quote_to_tokens_ts,
+                ts: &dyn #quote_to_tokens_ts,
             ) -> Ts2 {
                 self.build_handle(
                     #struct_or_enum_ucc::Enum,
                     ident_273dd063,
                     generics_84bc3f7f,
-                    content_ts
+                    ts
                 )
             }
         }
