@@ -2,7 +2,7 @@ use enum_extension_lib::EnumExtension;
 use gen_quotes::dq_ts;
 use macros_helpers::{
     DeriveCopy, DeriveSchemarsJsonSchema, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
-    StructOrEnumDeriveTokenStreamBuilder, gen_impl_display_ts, gen_impl_from_ts,
+    StructOrEnumDeriveTsStreamBuilder, gen_impl_display_ts, gen_impl_from_ts,
     gen_impl_to_err_string_ts, gen_pub_const_new_ts, gen_pub_new_ts, maybe_write_ts_into_file,
 };
 use naming::{
@@ -632,7 +632,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         let ident_read_only_ids_ucc = SelfReadOnlyIdsUcc::from_tokens(&ident);
         let ident_not_null_ts = gen_ident_ts(&IsNullable::False, pattern);
         let ident_ts = {
-            let ident_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_ts = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -730,7 +730,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 is_nullable_e7d1d83c: &IsNullable,
                 pattern_1ca83c6c: &Pattern
             | SelfOriginUcc::from_tokens(&gen_ident_ts(is_nullable_e7d1d83c, pattern_1ca83c6c));
-            let ident_origin_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_origin_ts = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -975,7 +975,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         };
         let ident_origin_struct_content_ts = quote!{(#ident_origin_ucc);};
         let ident_table_type_declaration_ts = {
-            let ident_table_type_declaration_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_table_type_declaration_ts = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -1013,7 +1013,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             }
         };
         let ident_create_ts = {
-            let ident_create_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_create_ts = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -1044,7 +1044,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             }
         };
         let ident_create_for_query_ts = {
-            let ident_create_for_query_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_create_for_query_ts = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -1082,7 +1082,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         };
         let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
         let ident_select_ts = {
-            let ident_select_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_select_ts = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -1539,7 +1539,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         //exists because need to implement .into_inner() for fields (only for read subtype)
         let ident_read_ts = {
             //todo maybe add some derive\impl to trait
-            let ident_read_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_read_ts = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -1575,7 +1575,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             }
         };
         let ident_read_only_ids_standart_not_null_ucc = SelfReadOnlyIdsUcc::from_tokens(&ident_standart_not_null_ucc);
-        let ident_read_only_ids_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+        let ident_read_only_ids_ts = StructOrEnumDeriveTsStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_clone()
@@ -1749,7 +1749,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             }
         };
         let ident_update_ts = {
-            let ident_update_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_update_ts = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -1786,7 +1786,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             }
         };
         let ident_update_for_query_ts = {
-            let ident_update_for_query_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_update_for_query_ts = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()

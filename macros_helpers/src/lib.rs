@@ -46,7 +46,7 @@ pub use struct_or_enum_derive_ts_builder::{
     DeriveClone, DeriveCopy, DeriveDebug, DeriveDefault, DeriveEq, DeriveLocationLibLocation,
     DeriveOrd, DerivePartialEq, DerivePartialOrd, DeriveSchemarsJsonSchema, DeriveSerdeDeserialize,
     DeriveSerdeSerialize, DeriveThiserrorError, DeriveUtoipaToSchema, MakePub,
-    StructOrEnumDeriveTokenStreamBuilder,
+    StructOrEnumDeriveTsStreamBuilder,
 };
 pub use syn_field_wrapper::SynFieldWrapper;
 pub use wrap_derive::wrap_derive;

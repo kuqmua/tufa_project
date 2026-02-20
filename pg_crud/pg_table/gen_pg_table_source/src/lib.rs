@@ -1,11 +1,11 @@
 use gen_quotes::dq_ts;
 use macros_helpers::{
     AttrIdentStr, DeriveClone, DeriveCopy, FormatWithCargofmt, LocationFieldAttr,
-    ShouldWriteTokenStreamIntoFile, StatusCode, StructOrEnumDeriveTokenStreamBuilder,
-    SynFieldWrapper, gen_field_loc_new_ts, gen_if_write_is_err_curly_braces_ts,
-    gen_if_write_is_err_ts, gen_impl_display_ts, gen_impl_pub_try_new_for_ident_ts,
-    gen_impl_to_err_string_ts, gen_serde_version_of_named_syn_vrt, gen_simple_syn_punct,
-    get_macro_attr_meta_list_ts, loc_syn_field, maybe_write_ts_into_file,
+    ShouldWriteTokenStreamIntoFile, StatusCode, StructOrEnumDeriveTsStreamBuilder, SynFieldWrapper,
+    gen_field_loc_new_ts, gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts,
+    gen_impl_display_ts, gen_impl_pub_try_new_for_ident_ts, gen_impl_to_err_string_ts,
+    gen_serde_version_of_named_syn_vrt, gen_simple_syn_punct, get_macro_attr_meta_list_ts,
+    loc_syn_field, maybe_write_ts_into_file,
 };
 use naming::{
     AdditionalParametersSc, AppStateSc, AsRefStrEnumWithUnitFieldsToScStr,
@@ -92,7 +92,7 @@ use std::{
 use strum_macros::Display;
 use syn::{
     AttrStyle, Attribute, Data, DeriveInput, Field, FieldMutability, Fields, FieldsNamed, Ident,
-    Meta, Path, PathArguments, PathSegment, Type, TypePath, Visibility, Variant, parse2,
+    Meta, Path, PathArguments, PathSegment, Type, TypePath, Variant, Visibility, parse2,
     punctuated::Punctuated, token::Brace, token::Bracket, token::Colon, token::Comma,
     token::PathSep, token::Pound,
 };
@@ -587,7 +587,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             er: sqlx::Error,
             loc: location_lib::loc::Loc,
         };
-        let ident_prepare_pg_er_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+        let ident_prepare_pg_er_ts = StructOrEnumDeriveTsStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_thiserror_error()
@@ -957,7 +957,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
     let ident_create_ucc = SelfCreateUcc::from_tokens(&ident);
     let ident_create_ts = {
-        let ident_create_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+        let ident_create_ts = StructOrEnumDeriveTsStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_clone()
@@ -1126,7 +1126,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             });
         let ident_where_many_ts = {
-            let ts_2ecd6da8 = StructOrEnumDeriveTokenStreamBuilder::new()
+            let ts_2ecd6da8 = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -1142,7 +1142,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #ts_2ecd6da8
             }
         };
-        let ident_where_many_try_new_er_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+        let ident_where_many_try_new_er_ts = StructOrEnumDeriveTsStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_thiserror_error()
@@ -1221,7 +1221,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let option_ident_where_many_ucc = StdOptionOptionSelfWhereManyUcc::from_tokens(&ident);
     let option_ident_where_many_ts = {
-        let option_ident_where_many_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+        let option_ident_where_many_ts = StructOrEnumDeriveTsStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_clone()
@@ -1417,7 +1417,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
     let select_ts = {
         let ident_select_ts = {
-            let ts_179037cd = StructOrEnumDeriveTokenStreamBuilder::new()
+            let ts_179037cd = StructOrEnumDeriveTsStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_clone()
@@ -1481,7 +1481,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let ident_read_ts = {
         let ident_read_ts = {
-            let ts_f80f1f3e = StructOrEnumDeriveTokenStreamBuilder::new()
+            let ts_f80f1f3e = StructOrEnumDeriveTsStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_partial_eq()
@@ -1621,7 +1621,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let ident_read_only_ids_ts = {
         let ident_read_only_ids_ts = {
-            let ts_472e3ebf = StructOrEnumDeriveTokenStreamBuilder::new()
+            let ts_472e3ebf = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -1786,7 +1786,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let ident_update_ts = {
-            let ts_a09c0471 = StructOrEnumDeriveTokenStreamBuilder::new()
+            let ts_a09c0471 = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_serde_serialize()
@@ -1801,7 +1801,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #ts_a09c0471
             }
         };
-        let ident_update_try_new_er_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+        let ident_update_try_new_er_ts = StructOrEnumDeriveTsStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_thiserror_error()
@@ -1905,7 +1905,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let ident_update_for_query_ts = {
         let ident_update_for_query_ts = {
-            let ts_50ae0c5f = StructOrEnumDeriveTokenStreamBuilder::new()
+            let ts_50ae0c5f = StructOrEnumDeriveTsStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_serde_serialize()
@@ -2474,7 +2474,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let ident_operation_response_vrts_ucc =
                 gen_ident_operation_response_vrts_ucc(operation);
             let ident_try_operation_logic_response_vrts_ts = {
-                let ts_c997a274 = StructOrEnumDeriveTokenStreamBuilder::new()
+                let ts_c997a274 = StructOrEnumDeriveTsStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_serde_serialize()
@@ -2532,7 +2532,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             };
             let ident_operation_er_ts = {
-                let ts_685e0be8 = StructOrEnumDeriveTokenStreamBuilder::new()
+                let ts_685e0be8 = StructOrEnumDeriveTsStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_thiserror_error()
@@ -2574,7 +2574,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let gen_parameters_pattern_ts = |operation: &Operation, payload_ts: Ts2| -> Ts2 {
         let parameters_ts = {
             let (derive_clone, derive_copy) = operation.derive_clone_and_copy();
-            let ts_0d032fce = StructOrEnumDeriveTokenStreamBuilder::new()
+            let ts_0d032fce = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone_if(derive_clone)
@@ -2605,7 +2605,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
             let ident_operation_payload_ts = {
                 let (derive_clone, derive_copy) = operation.derive_clone_and_copy();
-                let ts_ec5b096c = StructOrEnumDeriveTokenStreamBuilder::new()
+                let ts_ec5b096c = StructOrEnumDeriveTsStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone_if(derive_clone)
@@ -2643,7 +2643,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             type_vrts_from_request_response_syn_vrts
         };
     let gen_ident_try_operation_er_ts = |operation: &Operation, syn_vrts: &Vec<Variant>| -> Ts2 {
-        let ts_930e1a93 = StructOrEnumDeriveTokenStreamBuilder::new()
+        let ts_930e1a93 = StructOrEnumDeriveTsStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_thiserror_error()
@@ -3829,7 +3829,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let parameters_ts = gen_parameters_pattern_ts(&operation, {
             let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(&operation);
             let vec_ident_update_ts = gen_vec_tokens_declaration_ts(&ident_update_ucc);
-            let ident_operation_payload_vec_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_operation_payload_vec_ts = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_serde_serialize()
@@ -3843,7 +3843,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 format!("{ident}{operation}PayloadTryNewEr")
                     .parse::<Ts2>()
                     .expect("3da248bb");
-            let ident_operation_payload_try_new_er_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+            let ident_operation_payload_try_new_er_ts = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_thiserror_error()

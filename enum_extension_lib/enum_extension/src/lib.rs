@@ -14,8 +14,7 @@ pub fn enum_extension(input: Ts) -> Ts {
         }
     };
     let vrts = match di.data {
-        Data::Enum(enum_item) => enum_item.variants
-        .into_iter().map(|el_f0467eb6| {
+        Data::Enum(enum_item) => enum_item.variants.into_iter().map(|el_f0467eb6| {
             let vrt_ident = el_f0467eb6.ident;
             match el_f0467eb6.fields {
                 Fields::Named(fields_named) => {

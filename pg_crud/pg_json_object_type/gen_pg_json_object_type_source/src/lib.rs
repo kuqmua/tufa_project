@@ -2,7 +2,7 @@ use enum_extension_lib::EnumExtension;
 use gen_quotes::dq_ts;
 use macros_helpers::{
     DeriveSerdeDeserialize, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
-    StructOrEnumDeriveTokenStreamBuilder, SynFieldWrapper, gen_if_write_is_err_curly_braces_ts,
+    StructOrEnumDeriveTsStreamBuilder, SynFieldWrapper, gen_if_write_is_err_curly_braces_ts,
     gen_if_write_is_err_ts, gen_impl_display_ts, gen_impl_from_ts,
     gen_impl_pub_const_new_for_ident_ts, gen_impl_pub_new_for_ident_ts, gen_impl_to_err_string_ts,
     gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts, gen_pub_type_alias_ts,
@@ -451,7 +451,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let ident_with_id_standart_not_null_read_only_ids_ucc = SelfReadOnlyIdsUcc::from_tokens(&ident_with_id_standart_not_null_ucc);
             let ident_with_id_standart_not_null_where_ucc = SelfWhereUcc::from_tokens(&ident_with_id_standart_not_null_ucc);
             let ident_ts = {
-                let gen_struct_ident_ts = |ident_2c1c6b9c: &dyn ToTokens| StructOrEnumDeriveTokenStreamBuilder::new()
+                let gen_struct_ident_ts = |ident_2c1c6b9c: &dyn ToTokens| StructOrEnumDeriveTsStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
@@ -673,7 +673,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     ident_ts_20954cb5: &dyn ToTokens,
                     ts: &dyn ToTokens
                 | {
-                    let ts_44f35e48 = StructOrEnumDeriveTokenStreamBuilder::new()
+                    let ts_44f35e48 = StructOrEnumDeriveTsStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
@@ -921,7 +921,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 ident_ts_d8fa00d3: &dyn ToTokens,
                 ts_153ac202: &dyn ToTokens
             | {
-                let ts_6ea2da58 = StructOrEnumDeriveTokenStreamBuilder::new()
+                let ts_6ea2da58 = StructOrEnumDeriveTsStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
@@ -1159,7 +1159,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     ident_ts_6fce2985: &dyn ToTokens,
                     ts_fc7ad384: &dyn ToTokens
                 | {
-                    let ts_83d3ad18 = StructOrEnumDeriveTokenStreamBuilder::new()
+                    let ts_83d3ad18 = StructOrEnumDeriveTsStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
@@ -1453,7 +1453,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         IsStandartWithId::True => &ident_with_id_standart_not_null_select_el_ucc,
                     };
                     let ident_select_el_or_ident_with_id_standart_not_null_select_el_ts = {
-                        let ts_bf3bd19e = StructOrEnumDeriveTokenStreamBuilder::new()
+                        let ts_bf3bd19e = StructOrEnumDeriveTsStreamBuilder::new()
                         .make_pub()
                         .derive_debug()
                         .derive_clone()
@@ -1598,7 +1598,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         ident_ts_90ecb979: &dyn ToTokens,
                         ts_e1af2d89: &dyn ToTokens
                     | {
-                        let ts_60d5d187 = StructOrEnumDeriveTokenStreamBuilder::new()
+                        let ts_60d5d187 = StructOrEnumDeriveTsStreamBuilder::new()
                         .make_pub()
                         .derive_debug()
                         .derive_clone()
@@ -2017,7 +2017,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     ts_1c85ea2c: &dyn ToTokens,
                     derive_serde_deserialize: DeriveSerdeDeserialize
                 | {
-                    let ts_3a67b41f = StructOrEnumDeriveTokenStreamBuilder::new()
+                    let ts_3a67b41f = StructOrEnumDeriveTsStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
@@ -2058,7 +2058,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     };
                     gen_ident_read_ts(&ident_read_ucc, &ts, derive_serde_deserialize)
                 };
-                let gen_ident_read_try_from_er_ts = |ident_ts_df27c0c4: &dyn ToTokens|StructOrEnumDeriveTokenStreamBuilder::new()
+                let gen_ident_read_try_from_er_ts = |ident_ts_df27c0c4: &dyn ToTokens|StructOrEnumDeriveTsStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_serde_serialize()
@@ -2362,7 +2362,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             };
             let ident_read_only_ids_ts = {
                 let maybe_ident_read_only_ids_handle_ts = if is_standart_not_null {
-                    let ts_1e087f4d = StructOrEnumDeriveTokenStreamBuilder::new()
+                    let ts_1e087f4d = StructOrEnumDeriveTsStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
@@ -2382,7 +2382,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 else {
                     Ts2::new()
                 };
-                let ident_read_only_ids_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+                let ident_read_only_ids_ts = StructOrEnumDeriveTsStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
@@ -2430,7 +2430,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 let maybe_ident_with_id_standart_not_null_read_only_ids_ts = if is_standart_not_null {
                     let ident_with_id_standart_not_null_read_only_ids_ts = {
                         let ident_with_id_standart_not_null_read_only_ids_handle_ts = {
-                            let ts_fe644945 = StructOrEnumDeriveTokenStreamBuilder::new()
+                            let ts_fe644945 = StructOrEnumDeriveTsStreamBuilder::new()
                             .make_pub()
                             .derive_debug()
                             .derive_clone()
@@ -2447,7 +2447,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 #ts_fe644945
                             }
                         };
-                        let ident_with_id_standart_not_null_read_only_ids_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+                        let ident_with_id_standart_not_null_read_only_ids_ts = StructOrEnumDeriveTsStreamBuilder::new()
                             .make_pub()
                             .derive_debug()
                             .derive_clone()
@@ -2489,7 +2489,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             };
             let ident_read_inner_ts = {
                 let gen_ident_read_inner_or_ident_with_id_standart_not_null_read_inner_ts = |is_standart_with_id: &IsStandartWithId| {
-                    let ts_3d7e760e = StructOrEnumDeriveTokenStreamBuilder::new()
+                    let ts_3d7e760e = StructOrEnumDeriveTsStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
@@ -2642,7 +2642,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             ),
                         },
                     };
-                    let ts_c9a843aa = StructOrEnumDeriveTokenStreamBuilder::new()
+                    let ts_c9a843aa = StructOrEnumDeriveTsStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
@@ -2665,7 +2665,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 let maybe_ident_update_try_new_er_ts = match &pattern {
                     Pattern::Standart => Ts2::new(),
                     Pattern::Array => match &is_nullable {
-                        IsNullable::False => StructOrEnumDeriveTokenStreamBuilder::new()
+                        IsNullable::False => StructOrEnumDeriveTsStreamBuilder::new()
                             .make_pub()
                             .derive_debug()
                             .derive_serde_serialize()
@@ -3036,7 +3036,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 });
                 let maybe_ident_update_el_ts = if is_standart_not_null {
                     let ident_update_el_ts = {
-                        let ts_b258e2eb = StructOrEnumDeriveTokenStreamBuilder::new()
+                        let ts_b258e2eb = StructOrEnumDeriveTsStreamBuilder::new()
                         .make_pub()
                         .derive_debug()
                         .derive_clone()
@@ -3109,7 +3109,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         #FieldsSc: #ident_standart_not_null_as_pg_json_type_update_ts
                     };
                     let ident_with_id_standart_not_null_update_el_ts = {
-                        let ts_d18600a2 = StructOrEnumDeriveTokenStreamBuilder::new()
+                        let ts_d18600a2 = StructOrEnumDeriveTsStreamBuilder::new()
                         .make_pub()
                         .derive_debug()
                         .derive_clone()
@@ -3512,7 +3512,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     }
                 );
                 let maybe_ident_update_for_query_el_ts = if is_standart_not_null {
-                    let ident_standart_not_null_update_for_query_el_ts = StructOrEnumDeriveTokenStreamBuilder::new()
+                    let ident_standart_not_null_update_for_query_el_ts = StructOrEnumDeriveTsStreamBuilder::new()
                         .make_pub()
                         .derive_debug()
                         .derive_clone()

@@ -135,7 +135,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
             }
         }
     });
-    let struct_or_enum_derive_ts_builder_ucc = quote! {StructOrEnumDeriveTokenStreamBuilder};
+    let struct_or_enum_derive_ts_builder_ucc = quote! {StructOrEnumDeriveTsStreamBuilder};
     let struct_or_enum_ucc = quote! {StructOrEnum};
     let quote_to_tokens_ts = quote! {quote::ToTokens};
     let generated: Ts2 = quote! {
