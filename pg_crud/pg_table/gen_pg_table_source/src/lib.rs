@@ -2259,11 +2259,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &syn_derive_input_bde7efb1.attrs,
             &gen_pg_table_attr.gen_path_to_attr(),
         );
-        let value: DeriveInput =
+        let derive_input: DeriveInput =
             parse2((*common_additional_er_variants_attr_ts).clone()).expect("1b80783d");
-        let value_ident_str = value.ident.to_string();
-        assert!(value_ident_str == gen_pg_table_attr_str, "8a66c852");
-        let variants = if let Data::Enum(data_enum) = value.data {
+        assert!(
+            derive_input.ident.to_string() == gen_pg_table_attr_str,
+            "8a66c852"
+        );
+        let variants = if let Data::Enum(data_enum) = derive_input.data {
             data_enum.variants
         } else {
             panic!("f3ddc78c");
