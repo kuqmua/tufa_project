@@ -1,7 +1,7 @@
 use location_lib::{Location, loc, loc::Loc};
 use pg_crud_common::{
     DefaultOptionSomeVecOneEl, NotEmptyUniqueVecTryNewEr, PgTypeWhereFilter, QueryPartEr,
-    increment_checked_add_one_returning_increment,
+    incr_checked_add_one_returning_incr,
 };
 use regex::Regex;
 use schemars::{_private::alloc::borrow, JsonSchema, Schema, SchemaGenerator};
@@ -84,13 +84,13 @@ impl<T: PartialEq + Clone + Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
     }
     pub fn query_part_one_by_one(
         &self,
-        increment: &mut u64,
+        incr: &mut u64,
         _: &dyn Display,
         _is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartEr> {
         let mut acc = String::default();
         for _ in self.to_vec() {
-            match increment_checked_add_one_returning_increment(increment) {
+            match incr_checked_add_one_returning_incr(incr) {
                 Ok(v) => {
                     if write!(acc, "${v},").is_err() {
                         return Err(QueryPartEr::WriteIntoBuffer { loc: loc!() });
@@ -210,11 +210,11 @@ where
     }
     fn query_part(
         &self,
-        increment: &mut u64,
+        incr: &mut u64,
         _: &dyn Display,
         _is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartEr> {
-        match increment_checked_add_one_returning_increment(increment) {
+        match incr_checked_add_one_returning_incr(incr) {
             Ok(v) => Ok(format!("${v}")),
             Err(er) => Err(er),
         }
@@ -618,25 +618,20 @@ impl<'lifetime, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lif
         }
         Ok(query)
     }
-    fn query_part(
-        &self,
-        increment: &mut u64,
-        _: &dyn Display,
-        _: bool,
-    ) -> Result<String, QueryPartEr> {
-        let start_increment = match increment_checked_add_one_returning_increment(increment) {
+    fn query_part(&self, incr: &mut u64, _: &dyn Display, _: bool) -> Result<String, QueryPartEr> {
+        let start_incr = match incr_checked_add_one_returning_incr(incr) {
             Ok(v) => v,
             Err(er) => {
                 return Err(er);
             }
         };
-        let end_increment = match increment_checked_add_one_returning_increment(increment) {
+        let end_incr = match incr_checked_add_one_returning_incr(incr) {
             Ok(v) => v,
             Err(er) => {
                 return Err(er);
             }
         };
-        Ok(format!("between ${start_increment} and ${end_increment}"))
+        Ok(format!("between ${start_incr} and ${end_incr}"))
     }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
@@ -789,12 +784,12 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
     }
     pub fn pg_json_type_query_part(
         &self,
-        increment: &mut u64,
+        incr: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartEr> {
         self.query_part(
-            increment,
+            incr,
             column,
             is_need_to_add_logical_operator,
             &PgTypeOrPgJsonType::PgJsonType,
@@ -803,12 +798,12 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
     }
     pub fn pg_json_type_query_part_minus_one(
         &self,
-        increment: &mut u64,
+        incr: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartEr> {
         self.query_part(
-            increment,
+            incr,
             column,
             is_need_to_add_logical_operator,
             &PgTypeOrPgJsonType::PgJsonType,
@@ -817,12 +812,12 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
     }
     pub fn pg_type_query_part(
         &self,
-        increment: &mut u64,
+        incr: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartEr> {
         self.query_part(
-            increment,
+            incr,
             column,
             is_need_to_add_logical_operator,
             &PgTypeOrPgJsonType::PgType,
@@ -831,12 +826,12 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
     }
     pub fn pg_type_query_part_minus_one(
         &self,
-        increment: &mut u64,
+        incr: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartEr> {
         self.query_part(
-            increment,
+            incr,
             column,
             is_need_to_add_logical_operator,
             &PgTypeOrPgJsonType::PgType,
@@ -856,7 +851,7 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
     }
     fn query_part(
         &self,
-        increment: &mut u64,
+        incr: &mut u64,
         _: &dyn Display,
         _is_need_to_add_logical_operator: bool,
         pg_type_or_pg_json_type: &PgTypeOrPgJsonType,
@@ -868,7 +863,7 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
             Vrt::Normal => self.0.len(),
         };
         for _ in 0..len_27270409 {
-            match increment_checked_add_one_returning_increment(increment) {
+            match incr_checked_add_one_returning_incr(incr) {
                 Ok(v) => {
                     if write!(
                         acc,

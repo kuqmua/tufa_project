@@ -53,7 +53,7 @@ pub trait PgType {
     type TableTypeDeclaration: TableTypeDeclarationAlias;
     fn create_table_column_query_part(column: &dyn Display, _: bool) -> impl Display;
     type Create: CreateAlias;
-    fn create_query_part(value: &Self::Create, increment: &mut u64) -> Result<String, QueryPartEr>;
+    fn create_query_part(value: &Self::Create, incr: &mut u64) -> Result<String, QueryPartEr>;
     fn create_query_bind(
         value: Self::Create,
         query: Query<'_, Postgres, PgArguments>,
@@ -74,7 +74,7 @@ pub trait PgType {
         jsonb_set_accumulator: &str,
         jsonb_set_target: &str,
         jsonb_set_path: &str,
-        increment: &mut u64,
+        incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
     fn update_query_bind(
         value: Self::UpdateForQuery,
@@ -83,7 +83,7 @@ pub trait PgType {
     fn select_only_updated_ids_query_part(
         value: &Self::UpdateForQuery,
         column: &str,
-        increment: &mut u64,
+        incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
     fn select_only_updated_ids_query_bind<'lifetime>(
         value: &'lifetime Self::UpdateForQuery,
@@ -124,7 +124,7 @@ pub trait PgJsonType {
         jsonb_set_accumulator: &str,
         jsonb_set_target: &str,
         jsonb_set_path: &str,
-        increment: &mut u64,
+        incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
     fn update_query_bind(
         value: Self::UpdateForQuery,
@@ -134,7 +134,7 @@ pub trait PgJsonType {
         value: &Self::UpdateForQuery,
         field_ident: &str,
         column_name_and_maybe_field_getter: &str,
-        increment: &mut u64,
+        incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
     fn select_only_updated_ids_query_bind<'lifetime>(
         value: &'lifetime Self::UpdateForQuery,
@@ -144,7 +144,7 @@ pub trait PgJsonType {
         value: &Self::CreateForQuery,
         field_ident: &str,
         column_name_and_maybe_field_getter: &str,
-        increment: &mut u64,
+        incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
     fn select_only_created_ids_query_bind<'lifetime>(
         value: &'lifetime Self::CreateForQuery,
@@ -190,7 +190,7 @@ pub trait PgJsonTypeObjectVecElementId {
         query: Query<'_, Postgres, PgArguments>,
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
     fn get_inner(value: &<Self::PgJsonType as PgJsonType>::CreateForQuery) -> &Self::ReadInner;
-    fn increment_checked_add_one(increment: &mut u64) -> Result<u64, QueryPartEr>;
+    fn incr_checked_add_one(incr: &mut u64) -> Result<u64, QueryPartEr>;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[cfg(feature = "test-utils")]
@@ -428,7 +428,7 @@ pub trait PgTypeWhereFilter<'query_lifetime> {
     ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String>;
     fn query_part(
         &self,
-        increment: &mut u64,
+        incr: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartEr>;
@@ -462,13 +462,13 @@ where
     }
     fn query_part(
         &self,
-        increment: &mut u64,
+        incr: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartEr> {
         self.0.as_ref().map_or_else(
             || Ok(format!("{column} = 'null'")),
-            |v_b4a9fcfb| v_b4a9fcfb.query_part(increment, column, is_need_to_add_logical_operator),
+            |v_b4a9fcfb| v_b4a9fcfb.query_part(incr, column, is_need_to_add_logical_operator),
         )
     }
 }
@@ -724,7 +724,7 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
     }
     fn query_part(
         &self,
-        increment: &mut u64,
+        incr: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartEr> {
@@ -733,7 +733,7 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
         for el_a38b9c67 in &self.value.0 {
             match PgTypeWhereFilter::query_part(
                 el_a38b9c67,
-                increment,
+                incr,
                 column,
                 is_need_to_add_logical_operator_inner_handle,
             ) {
@@ -840,27 +840,20 @@ impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PaginationBase {
         }
         Ok(query)
     }
-    fn query_part(
-        &self,
-        increment: &mut u64,
-        _: &dyn Display,
-        _: bool,
-    ) -> Result<String, QueryPartEr> {
-        let limit_increment = match increment_checked_add_one_returning_increment(increment) {
+    fn query_part(&self, incr: &mut u64, _: &dyn Display, _: bool) -> Result<String, QueryPartEr> {
+        let limit_incr = match incr_checked_add_one_returning_incr(incr) {
             Ok(v) => v,
             Err(er) => {
                 return Err(er);
             }
         };
-        let offset_increment = match increment_checked_add_one_returning_increment(increment) {
+        let offset_incr = match incr_checked_add_one_returning_incr(incr) {
             Ok(v) => v,
             Err(er) => {
                 return Err(er);
             }
         };
-        Ok(format!(
-            "limit ${limit_increment} offset ${offset_increment}"
-        ))
+        Ok(format!("limit ${limit_incr} offset ${offset_incr}"))
     }
 }
 impl Default for PaginationBase {
@@ -1090,12 +1083,12 @@ impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PaginationStartsWit
     }
     fn query_part(
         &self,
-        increment: &mut u64,
+        incr: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartEr> {
         self.0
-            .query_part(increment, column, is_need_to_add_logical_operator)
+            .query_part(incr, column, is_need_to_add_logical_operator)
     }
 }
 impl DefaultOptionSomeVecOneEl for PaginationStartsWithZero {
@@ -1282,14 +1275,14 @@ where
     }
     fn query_part(
         &self,
-        increment: &mut u64,
+        incr: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartEr> {
         let mut acc_57b31116 = String::default();
         for (index, v_953208ce) in self.0.iter().enumerate() {
             match v_953208ce.query_part(
-                increment,
+                incr,
                 column,
                 if index == 0 {
                     is_need_to_add_logical_operator
@@ -1607,13 +1600,11 @@ pub enum SingleOrMultiple<T: Debug + PartialEq + Clone> {
     Multiple(NotEmptyUniqueVec<T>),
     Single(T),
 }
-pub fn increment_checked_add_one_returning_increment(
-    increment: &mut u64,
-) -> Result<u64, QueryPartEr> {
-    increment.checked_add(1).map_or_else(
+pub fn incr_checked_add_one_returning_incr(incr: &mut u64) -> Result<u64, QueryPartEr> {
+    incr.checked_add(1).map_or_else(
         || Err(QueryPartEr::CheckedAdd { loc: loc!() }),
         |v| {
-            *increment = v;
+            *incr = v;
             Ok(v)
         },
     )

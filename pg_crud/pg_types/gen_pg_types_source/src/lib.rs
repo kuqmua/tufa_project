@@ -13,7 +13,7 @@ use naming::{
     EndSc, EndUcc, EqualUcc, ErSc, ExcludedStartGreaterThanExcludedEndUcc,
     ExcludedStartGreaterThanIncludedEndUcc, ExcludedUcc, GenPgTypesModSc, HourSc,
     IncludedEndCannotBeMaxUcc, IncludedStartGreaterThanExcludedEndUcc,
-    IncludedStartGreaterThanIncludedEndUcc, IncludedUcc, IncrementSc,
+    IncludedStartGreaterThanIncludedEndUcc, IncludedUcc, IncrSc,
     InvalidHourOrMinuteOrSecondOrMicrosecondUcc, MaxSc, MicroSc, MicrosecondSc, MicrosecondsSc,
     MinSc, MinuteSc, MonthsSc, NanosecondPrecisionIsNotSupportedUcc, NanosecondSc, NearZeroSc,
     NegativeLessTypicalSc, NegativeMoreTypicalSc, NewSc, OptionUpdateSc, OptionVecCreateSc,
@@ -32,9 +32,9 @@ use naming::{
 use panic_location::panic_location;
 use pg_crud_common_and_macros_common::PgTypeGreaterThanVrt;
 use pg_crud_macros_common::{
-    ColumnParameterUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrementUnderscore,
+    ColumnParameterUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrUnderscore,
     CreateQueryPartValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl,
-    EqualOperatorHandle, ImportPath, IncrementParameterUnderscore, IsCreateQueryBindMutable,
+    EqualOperatorHandle, ImportPath, IncrParameterUnderscore, IsCreateQueryBindMutable,
     IsNeedToAddLogicalOperatorUnderscore, IsNullable, IsPrimaryKeyUnderscore, IsQueryBindMutable,
     IsSelectOnlyUpdatedIdsQueryBindMutable, IsStandartNotNull, IsUpdateQueryBindMutable, PgFilter,
     PgTypeFilter, ReadOrUpdate, SelectQueryPartValueUnderscore, ShouldDeriveSchemarsJsonSchema,
@@ -4753,11 +4753,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     &quote! {<'lifetime>},
                     &ident_standart_not_null_read_ucc,
                     &Ts2::new(),
-                    &IncrementParameterUnderscore::False,
+                    &IncrParameterUnderscore::False,
                     &ColumnParameterUnderscore::False,
                     &IsNeedToAddLogicalOperatorUnderscore::True,
                     &quote! {
-                        match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
+                        match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
                             Ok(v_8da76391) => Ok(format!("({column} = ${v_8da76391})")),
                             Err(er) => Err(er)
                         }
@@ -4876,7 +4876,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 );
                 quote! {
                     let mut acc_c7df00f5 = String::default();
-                    match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
+                    match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
                         Ok(v_ba581e0f) => {
                             #if_write_is_err_ts
                         },
@@ -5007,8 +5007,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &ident_create_ucc,
                 &CreateQueryPartValueUnderscore::True,
                 &match &can_be_primary_key {
-                    CanBePrimaryKey::False => CreateQueryPartIncrementUnderscore::False,
-                    CanBePrimaryKey::True => CreateQueryPartIncrementUnderscore::True,
+                    CanBePrimaryKey::False => CreateQueryPartIncrUnderscore::False,
+                    CanBePrimaryKey::True => CreateQueryPartIncrUnderscore::True,
                 },
                 &query_part_create_ts,
                 &match &can_be_primary_key {

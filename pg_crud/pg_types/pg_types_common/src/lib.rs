@@ -231,12 +231,12 @@ impl<'lifetime> PgTypeWhereFilter<'lifetime> for PaginationStartsWithOne {
     }
     fn query_part(
         &self,
-        increment: &mut u64,
+        incr: &mut u64,
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartEr> {
         self.0
-            .query_part(increment, column, is_need_to_add_logical_operator)
+            .query_part(incr, column, is_need_to_add_logical_operator)
     }
 }
 impl DefaultOptionSomeVecOneEl for PaginationStartsWithOne {

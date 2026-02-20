@@ -14,7 +14,7 @@ use naming::{
     CreateIntoPgJsonTypeOptionVecWhereLengthGreaterThanSc, CreateSc, CreateUpdateDeleteAreEmptyUcc,
     DefaultOptionSomeVecOneElSc, DefaultOptionSomeVecOneElUcc, DeleteSc, DimOneEqualUcc,
     DimOneInUcc, DisplayPlusToTokens, EqualUcc, ErSc, FieldsSc, GenJsonbSetTargetSc, IdSc,
-    IdsAreNotUniqueUcc, InUcc, IncrementSc, IsNeedToAddLogicalOperatorSc, JsonbObjectUcc,
+    IdsAreNotUniqueUcc, InUcc, IncrSc, IsNeedToAddLogicalOperatorSc, JsonbObjectUcc,
     JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc, LengthEqualUcc, LengthGreaterThanUcc,
     NotUniqueIdInJsonDeleteArrayUcc, NotUniqueIdInJsonUpdateAndDeleteArraysUcc, OptionUpdateSc,
     OptionVecCreateSc, OverlapsWithArrayUcc, PgJsonTypeTestCasesUcc, PgJsonTypeUcc,
@@ -49,9 +49,9 @@ use naming::{
 };
 use panic_location::panic_location;
 use pg_crud_macros_common::{
-    ColumnParameterUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrementUnderscore,
+    ColumnParameterUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrUnderscore,
     CreateQueryPartValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, ImportPath,
-    IncrementParameterUnderscore, IsCreateQueryBindMutable, IsNeedToAddLogicalOperatorUnderscore,
+    IncrParameterUnderscore, IsCreateQueryBindMutable, IsNeedToAddLogicalOperatorUnderscore,
     IsNullable, IsPrimaryKeyUnderscore, IsQueryBindMutable, IsSelectOnlyCreatedIdsQueryBindMutable,
     IsSelectOnlyUpdatedIdsQueryBindMutable,
     IsSelectQueryPartColumnNameAndMaybeFieldGetterForErMessageUsed, IsSelectQueryPartIsPgTypeUsed,
@@ -1621,7 +1621,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     let equal_vrt_query_part_ts = quote!{
                         #SelfUcc::#EqualUcc(#ValueSc) => #import_path::PgTypeWhereFilter::query_part(
                             #ValueSc,
-                            #IncrementSc,
+                            #IncrSc,
                             &#ColumnSc,
                             is_need_to_add_logical_operator
                         )
@@ -1703,7 +1703,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             quote! {
                                 Self::#field_ident_ucc_ts(value) => #import_path::PgTypeWhereFilter::#QueryPartSc(
                                     value,
-                                    increment,
+                                    incr,
                                     &format!(#format_handle_ts),
                                     is_need_to_add_logical_operator,
                                 )
@@ -1730,7 +1730,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             &quote! {<'lifetime>},
                             &ident_ts_e0f20014,
                             &Ts2::new(),
-                            &IncrementParameterUnderscore::False,
+                            &IncrParameterUnderscore::False,
                             &ColumnParameterUnderscore::False,
                             &IsNeedToAddLogicalOperatorUnderscore::False,
                             &query_part_ts,
@@ -1792,7 +1792,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     ].into_iter().map(|el_ts|quote!{
                                         Self::#el_ts(#ValueSc) => #import_path::PgTypeWhereFilter::#QueryPartSc(
                                             #ValueSc,
-                                            #IncrementSc,
+                                            #IncrSc,
                                             #ColumnSc,
                                             #IsNeedToAddLogicalOperatorSc
                                         ),
@@ -1807,7 +1807,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             let elem = "elem";
                                             let v_9696ee60 = match #import_path::PgTypeWhereFilter::#QueryPartSc(
                                                 #ValueSc,
-                                                #IncrementSc,
+                                                #IncrSc,
                                                 &format!("{elem}->'{field}'"),
                                                 false
                                             ) {
@@ -1913,7 +1913,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         #fields_ts,
                                         Self::#EqualUcc(#ValueSc) => pg_crud::PgTypeWhereFilter::query_part(
                                             #ValueSc,
-                                            #IncrementSc,
+                                            #IncrSc,
                                             &#ColumnSc,
                                             is_need_to_add_logical_operator
                                         ),//todo maybe reuse? vrt generation
@@ -3241,7 +3241,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                     &#ValueSc.#ValueSc,
                                                     #field_ident_dq_ts,
                                                     column_name_and_maybe_field_getter,
-                                                    #IncrementSc
+                                                    #IncrSc
                                                 ) {
                                                     Ok(mut v_c3ae3be4) => {
                                                         let _: Option<char> = v_c3ae3be4.pop();
@@ -3283,7 +3283,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 &v_92d002a5.#ValueSc,
                                                 #field_ident_dq_ts,
                                                 column_name_and_maybe_field_getter,
-                                                #IncrementSc
+                                                #IncrSc
                                             ) {
                                                 Ok(mut #ValueSc) => {
                                                     let _: Option<char> = #ValueSc.pop();
@@ -3329,7 +3329,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 &#ValueSc.#ValueSc,
                                                 #field_ident_dq_ts,
                                                 "elem",
-                                                #IncrementSc
+                                                #IncrSc
                                             ) {
                                                 Ok(mut v_33d3b52e) => {
                                                     let _: Option<char> = v_33d3b52e.pop();
@@ -3354,7 +3354,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 &el_b1359d90.#field_ident,
                                                 #field_ident_dq_ts,
                                                 "elem",
-                                                #IncrementSc
+                                                #IncrSc
                                             ) {
                                                 Ok(mut #ValueSc) => {
                                                     let _: Option<char> = #ValueSc.pop();
@@ -3394,7 +3394,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                         &el_d7561f40.id,
                                                         "id",
                                                         "elem",
-                                                        #IncrementSc
+                                                        #IncrSc
                                                     ) {
                                                         Ok(mut #ValueSc) => {
                                                             let _: Option<char> = #ValueSc.pop();
@@ -3424,7 +3424,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             {
                                                 let mut acc_d497e8a5 = #StringTs::new();
                                                 for _ in self.#UpdateSc.to_vec() {
-                                                    match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
+                                                    match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
                                                         Ok(v_c31cb081) => {
                                                             #if_write_is_err_0_ts
                                                         },
@@ -3434,7 +3434,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                     }
                                                 }
                                                 for _ in &self.#CreateSc {
-                                                    match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
+                                                    match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
                                                         Ok(v_b52c3fe1) => {
                                                             #if_write_is_err_1_ts
                                                         },
@@ -3456,7 +3456,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             match #ident_array_not_null_update_for_query_ucc::#SelectOnlyUpdatedIdsQueryPartSc(
                                                 v_bc509c9a,
                                                 column_name_and_maybe_field_getter,
-                                                #IncrementSc
+                                                #IncrSc
                                             ) {
                                                 Ok(v_1e016751) => v_1e016751,
                                                 Err(#ErSc) => {
@@ -3474,7 +3474,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             fn #SelectOnlyUpdatedIdsQueryPartSc(
                                 &self,
                                 column_name_and_maybe_field_getter: &str,
-                                #IncrementSc: &mut u64
+                                #IncrSc: &mut u64
                             ) -> Result<#StringTs, #import_path_query_part_er_ts> {
                                 #ts
                             }
@@ -3630,9 +3630,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 jsonb_set_accumulator,
                                 jsonb_set_target,
                                 jsonb_set_path,
-                                increment,
+                                incr,
                             ),
-                            None => match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
+                            None => match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
                                 Ok(v_27b8537f) => Ok(format!(#format_handle_ts)),
                                 Err(#ErSc) => Err(#ErSc),
                             }
@@ -3645,11 +3645,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &return_err_query_part_er_write_into_buffer_ts
                     );
                     let if_write_is_err_curly_braces_0_ts = gen_if_write_is_err_curly_braces_ts(
-                        &quote!{acc_5b4cd920, "{maybe_space_and_space}elem->>'id' <> ${increment_cb6ba4a7}"},
+                        &quote!{acc_5b4cd920, "{maybe_space_and_space}elem->>'id' <> ${incr_cb6ba4a7}"},
                         &return_err_query_part_er_write_into_buffer_ts
                     );
                     let if_write_is_err_curly_braces_1_ts = gen_if_write_is_err_curly_braces_ts(
-                        &quote!{acc_8554f572, "${increment_5bbc4961},"},
+                        &quote!{acc_8554f572, "${incr_5bbc4961},"},
                         &return_err_query_part_er_write_into_buffer_ts
                     );
                     quote! {
@@ -3660,7 +3660,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 let mut acc_2e2ad041 = #StringTs::default();
                                 for el_a0a61823 in v_58d685d3.#UpdateSc.to_vec() {
                                     let ident_with_id_handle = {
-                                        let id_increment = match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_object_vec_el_id_ts::increment_checked_add_one(#IncrementSc) {
+                                        let id_incr = match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_object_vec_el_id_ts::incr_checked_add_one(#IncrSc) {
                                             Ok(v_15b44b54) => v_15b44b54,
                                             Err(#ErSc) => {
                                                 return Err(#ErSc);
@@ -3671,9 +3671,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             "",
                                             "elem",
                                             "",
-                                            #IncrementSc
+                                            #IncrSc
                                         ) {
-                                            Ok(v_56c44461) => Ok(format!("when elem->>'id' = ${id_increment} then {v_56c44461} ")),
+                                            Ok(v_56c44461) => Ok(format!("when elem->>'id' = ${id_incr} then {v_56c44461} ")),
                                             Err(#ErSc) => Err(#ErSc)
                                         }
                                     };
@@ -3693,7 +3693,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         let delete_query_part_acc = {
                             let mut acc_5b4cd920 = #StringTs::default();
                             for _ in &v_58d685d3.#DeleteSc {
-                                let increment_cb6ba4a7 = match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_object_vec_el_id_ts::increment_checked_add_one(#IncrementSc) {
+                                let incr_cb6ba4a7 = match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_object_vec_el_id_ts::incr_checked_add_one(#IncrSc) {
                                     Ok(v_110650cc) => v_110650cc,
                                     Err(#ErSc) => {
                                         return Err(#ErSc);
@@ -3707,7 +3707,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         let create_query_part_acc = {
                             let mut acc_8554f572 = #StringTs::default();
                             for _ in &v_58d685d3.#CreateSc {
-                                let increment_5bbc4961 = match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_object_vec_el_id_ts::increment_checked_add_one(#IncrementSc) {
+                                let incr_5bbc4961 = match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_object_vec_el_id_ts::incr_checked_add_one(#IncrSc) {
                                     Ok(v_27487842) => v_27487842,
                                     Err(#ErSc) => {
                                         return Err(#ErSc);
@@ -3985,7 +3985,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 &#StdOptionOptionObjectAccSc,
                                                 &#gen_jsonb_set_target_sc(#field_ident_dq_ts),
                                                 #field_ident_dq_ts,
-                                                #IncrementSc,
+                                                #IncrSc,
                                             ) {
                                                 Ok(v_5edc1648) => {
                                                     #StdOptionOptionObjectAccSc = v_5edc1648;
@@ -4029,9 +4029,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         jsonb_set_accumulator,
                                         jsonb_set_target,
                                         jsonb_set_path,
-                                        #IncrementSc,
+                                        #IncrSc,
                                     ),
-                                    None => match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
+                                    None => match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
                                         Ok(v_87e08bec) => Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${v_87e08bec})")),
                                         Err(#ErSc) => Err(#ErSc)
                                     }
@@ -4155,7 +4155,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &quote!{
                         match #ValueSc.#SelectOnlyUpdatedIdsQueryPartSc(
                             &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
-                            #IncrementSc
+                            #IncrSc
                         ) {
                             Ok(v_e137951b) => Ok(format!("'{field_ident}',jsonb_build_object('value',{v_e137951b}),")),
                             Err(#ErSc) => Err(#ErSc)
@@ -4318,7 +4318,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             &#ValueSc.#field_ident,
                                             #field_ident_dq_ts,
                                             &format!(#column_name_and_maybe_field_getter_field_ident_dq_ts),
-                                            #IncrementSc
+                                            #IncrSc
                                         ) {
                                             Ok(mut v_cddc8a0a) => {
                                                 let _: Option<char> = v_cddc8a0a.pop();
@@ -4360,7 +4360,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             &v_90219286.#field_ident,
                                             #field_ident_dq_ts,
                                             &format!(#column_name_and_maybe_field_getter_field_ident_dq_ts),
-                                            #IncrementSc
+                                            #IncrSc
                                         ) {
                                             Ok(mut v_93015133) => {
                                                 let _: Option<char> = v_93015133.pop();
@@ -4407,7 +4407,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             &el_3c1dab62.#field_ident,
                                             #field_ident_dq_ts,
                                             "elem",
-                                            #IncrementSc
+                                            #IncrSc
                                         ) {
                                             Ok(mut v_6d76c065) => {
                                                 let _: Option<char> = v_6d76c065.pop();
@@ -4439,7 +4439,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         {
                                             let mut acc_44b1f772 = #StringTs::new();
                                             for _ in &#ValueSc.0 {
-                                                match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
+                                                match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
                                                     Ok(v_73b58d3a) => {
                                                         #if_write_is_err_ts
                                                     },
@@ -4468,7 +4468,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             &el_9bdcd847.#field_ident,
                                             #field_ident_dq_ts,
                                             "elem",
-                                            #IncrementSc
+                                            #IncrSc
                                         ) {
                                             Ok(mut v_d49fe9d8) => {
                                                 let _: Option<char> = v_d49fe9d8.pop();
@@ -4503,7 +4503,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 {
                                                     let mut acc_857ce631 = #StringTs::new();
                                                     for _ in &v_3c415c92.0 {
-                                                        match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
+                                                        match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
                                                             Ok(v_7f11bec0) => {
                                                                 #if_write_is_err_ts
                                                             },
@@ -4635,9 +4635,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     },
                     &ident_create_ucc,
                     &CreateQueryPartValueUnderscore::True,
-                    &CreateQueryPartIncrementUnderscore::False,
+                    &CreateQueryPartIncrUnderscore::False,
                     &quote!{
-                        match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
+                        match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
                             Ok(v_7df9eb00) => Ok(format!("${v_7df9eb00}")),
                             Err(#ErSc) => Err(#ErSc)
                         }
@@ -4685,7 +4685,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 jsonb_set_accumulator,
                                 jsonb_set_target,
                                 jsonb_set_path,
-                                increment
+                                incr
                             )},
                             IsNullable::True => gen_update_query_part_standart_nullable_ts(
                                 &pg_type_or_pg_json_type_pg_json_type
@@ -4704,7 +4704,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         Some(v_58d685d3) => {
                                             #ts
                                         },
-                                        None => match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
+                                        None => match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
                                             Ok(v_d31ab6f0) => Ok(format!("${v_d31ab6f0}")),
                                             Err(#ErSc) => Err(#ErSc)
                                         }
@@ -4721,7 +4721,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &quote!{
                         match #ValueSc.#SelectOnlyUpdatedIdsQueryPartSc(
                             #ColumnSc,
-                            #IncrementSc
+                            #IncrSc
                         ) {
                             Ok(v_f0787243) => Ok(format!("jsonb_build_object('value',{v_f0787243}) as {column},")),
                             Err(#ErSc) => Err(#ErSc)

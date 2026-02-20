@@ -160,16 +160,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "field", "to", "update"],
     ["self", "gen", "pg", "json", "type", "to", "read", "er"],
     [
-        "self",
-        "try",
-        "gen",
-        "json",
-        "array",
-        "element",
-        "update",
-        "bind",
-        "increments",
-        "er"
+        "self", "try", "gen", "json", "array", "element", "update", "bind", "incrs", "er"
     ],
     [
         "std", "vec", "vec", "object", "with", "id", "self", "json", "array", "change", "try",

@@ -11,12 +11,12 @@ use naming::{
     CreateIntoPgTypeOptionVecWhereDimOneEqualSc, CreateQueryBindSc, CreateQueryPartSc, CreateSc,
     CreateTableColumnQueryPartSc, CreateUcc, DefaultOptionSomeVecOneElMaxPageSizeSc,
     DefaultOptionSomeVecOneElSc, DisplayPlusToTokens, EqualOperatorUcc, FieldIdentSc, FieldSc,
-    IncrementSc, IsNeedToAddLogicalOperatorSc, IsPrimaryKeySc, JsonbSetAccumulatorSc,
-    JsonbSetPathSc, JsonbSetTargetSc, MutSc, NormalizeSc, OptionUcc, OptionUpdateSc,
-    OptionVecCreateSc, PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeEqualOperatorUcc,
-    PgTypeNotPrimaryKeyUcc, PgTypeOptionVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc,
-    PgTypeWhereFilterUcc, PreviousReadMergedWithOptionUpdateIntoReadSc, QueryBindSc,
-    QueryPartErUcc, QueryPartSc, QuerySc, ReadInnerIntoReadWithNewOrTryNewUnwrapedSc,
+    IncrSc, IsNeedToAddLogicalOperatorSc, IsPrimaryKeySc, JsonbSetAccumulatorSc, JsonbSetPathSc,
+    JsonbSetTargetSc, MutSc, NormalizeSc, OptionUcc, OptionUpdateSc, OptionVecCreateSc,
+    PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeEqualOperatorUcc, PgTypeNotPrimaryKeyUcc,
+    PgTypeOptionVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc, PgTypeWhereFilterUcc,
+    PreviousReadMergedWithOptionUpdateIntoReadSc, QueryBindSc, QueryPartErUcc, QueryPartSc,
+    QuerySc, ReadInnerIntoReadWithNewOrTryNewUnwrapedSc,
     ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc, ReadInnerUcc,
     ReadOnlyIdsIntoOptionValueReadInnerSc, ReadOnlyIdsMergedWithCreateIntoOptionValueReadSc,
     ReadOnlyIdsMergedWithCreateIntoOptionVecWhereEqualToJsonFieldSc,
@@ -345,14 +345,14 @@ impl ToTokens for IsQueryBindMutable {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub enum IncrementParameterUnderscore {
+pub enum IncrParameterUnderscore {
     False,
     True,
 }
-impl ToTokens for IncrementParameterUnderscore {
+impl ToTokens for IncrParameterUnderscore {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
-            Self::False => IncrementSc.to_tokens(tokens),
+            Self::False => IncrSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
         }
     }
@@ -502,14 +502,14 @@ impl ToTokens for CreateQueryPartValueUnderscore {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub enum CreateQueryPartIncrementUnderscore {
+pub enum CreateQueryPartIncrUnderscore {
     False,
     True,
 }
-impl ToTokens for CreateQueryPartIncrementUnderscore {
+impl ToTokens for CreateQueryPartIncrUnderscore {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
-            Self::False => IncrementSc.to_tokens(tokens),
+            Self::False => IncrSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
         }
     }
@@ -622,7 +622,7 @@ pub fn gen_pg_type_where_ts(
             &quote! {<'lifetime>},
             &ident,
             &Ts2::new(),
-            &IncrementParameterUnderscore::False,
+            &IncrParameterUnderscore::False,
             &ColumnParameterUnderscore::False,
             &IsNeedToAddLogicalOperatorUnderscore::False,
             &{
@@ -631,7 +631,7 @@ pub fn gen_pg_type_where_ts(
                     quote! {
                         Self::#el_ucc(#ValueSc) => pg_crud_common::PgTypeWhereFilter::query_part(
                             #ValueSc,
-                            #IncrementSc,
+                            #IncrSc,
                             #ColumnSc,
                             #IsNeedToAddLogicalOperatorSc,
                         )
@@ -799,7 +799,7 @@ pub fn gen_impl_pg_json_type_ts(
                 #JsonbSetAccumulatorSc: #RefStr,
                 #is_update_query_part_jsonb_set_target_used: #RefStr,
                 #JsonbSetPathSc: #RefStr,
-                #IncrementSc: #reference_mut_u64_ts,
+                #IncrSc: #reference_mut_u64_ts,
             ) -> Result<#StringTs, #path_ts #QueryPartErUcc> {
                 #update_query_part_ts
             }
@@ -813,7 +813,7 @@ pub fn gen_impl_pg_json_type_ts(
                 #ValueSc: &Self::#UpdateForQueryUcc,
                 #FieldIdentSc: #RefStr,
                 #ColumnNameAndMaybeFieldGetterSc: #RefStr,
-                #IncrementSc: &mut #U64
+                #IncrSc: &mut #U64
             ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                 #select_only_updated_ids_query_part_ts
             }
@@ -827,7 +827,7 @@ pub fn gen_impl_pg_json_type_ts(
                 #ValueSc: &Self::#CreateForQueryUcc,
                 #FieldIdentSc: #RefStr,
                 #ColumnNameAndMaybeFieldGetterSc: #RefStr,
-                #IncrementSc: &mut #U64
+                #IncrSc: &mut #U64
             ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                 #select_only_created_ids_query_part_ts
             }
@@ -978,7 +978,7 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
     impl_generic_ts: &dyn ToTokens,
     ident_ts: &dyn ToTokens,
     ident_generic_ts: &dyn ToTokens,
-    increment_parameter_underscore: &IncrementParameterUnderscore,
+    incr_parameter_underscore: &IncrParameterUnderscore,
     column_parameter_underscore: &ColumnParameterUnderscore,
     is_need_to_add_logical_operator_underscore: &IsNeedToAddLogicalOperatorUnderscore,
     query_part_ts: &dyn ToTokens,
@@ -991,7 +991,7 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
         impl #impl_generic_ts #import_path ::#PgTypeWhereFilterUcc<'lifetime> for #ident_ts #ident_generic_ts {
             fn #QueryPartSc(
                 &self,
-                #increment_parameter_underscore: &mut #U64,
+                #incr_parameter_underscore: &mut #U64,
                 #column_parameter_underscore: &dyn #StdFmtDisplay,
                 #is_need_to_add_logical_operator_underscore: #Bool
             ) -> Result<#StringTs, #import_path::#QueryPartErUcc> {
@@ -1054,7 +1054,7 @@ pub fn gen_impl_pg_type_ts(
     create_table_column_query_part_ts: &dyn ToTokens,
     ident_create_ucc: &dyn ToTokens,
     create_query_part_value_underscore: &CreateQueryPartValueUnderscore,
-    create_query_part_increment_underscore: &CreateQueryPartIncrementUnderscore,
+    create_query_part_incr_underscore: &CreateQueryPartIncrUnderscore,
     create_query_part_ts: &dyn ToTokens,
     create_query_bind_value_underscore: &CreateQueryBindValueUnderscore,
     is_create_query_bind_mutable: &IsCreateQueryBindMutable,
@@ -1094,7 +1094,7 @@ pub fn gen_impl_pg_type_ts(
             type #CreateUcc = #ident_create_ucc;
             fn #CreateQueryPartSc(
                 #create_query_part_value_underscore: &Self::#CreateUcc,
-                #create_query_part_increment_underscore: &mut #U64
+                #create_query_part_incr_underscore: &mut #U64
             ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                 #create_query_part_ts
             }
@@ -1136,7 +1136,7 @@ pub fn gen_impl_pg_type_ts(
                 #update_query_part_jsonb_set_accumulator_underscore: #RefStr,
                 #update_query_part_jsonb_set_target_underscore: #RefStr,
                 #update_query_part_jsonb_set_path_underscore: #RefStr,
-                #IncrementSc: &mut #U64
+                #IncrSc: &mut #U64
             ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                 #update_query_part_ts
             }
@@ -1152,7 +1152,7 @@ pub fn gen_impl_pg_type_ts(
             fn #SelectOnlyUpdatedIdsQueryPartSc(
                 #ValueSc: &Self::#UpdateForQueryUcc,
                 #ColumnSc: #RefStr,
-                #IncrementSc: &mut #U64,
+                #IncrSc: &mut #U64,
             ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                 #select_only_updated_ids_query_part_ts
             }

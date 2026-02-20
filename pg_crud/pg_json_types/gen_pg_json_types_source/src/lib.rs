@@ -7,7 +7,7 @@ use macros_helpers::{
 };
 use naming::{
     ArrayOfUcc, AsUcc, BooleanUcc, ColumnNameAndMaybeFieldGetterSc, CreateForQueryUcc, CreateSc,
-    EqualUcc, ErSc, GenPgJsonTypesModSc, IncrementSc, JsonbSetAccumulatorSc, NewSc, NumberUcc,
+    EqualUcc, ErSc, GenPgJsonTypesModSc, IncrSc, JsonbSetAccumulatorSc, NewSc, NumberUcc,
     OptionUpdateSc, OptionVecCreateSc, PgJsonTypeUcc, QuerySc, ReadInnerUcc,
     ReadOnlyIdsMergedWithCreateIntoReadSc,
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
@@ -1824,7 +1824,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             let gen_dim_number_end_str = |dims_number: usize| format!("{}_end", gen_dim_number_str(dims_number));
             let select_only_created_or_updated_ids_query_part_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                 quote! {
-                    match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
+                    match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
                         Ok(v_f06128be) => Ok(format!("'{field_ident}',jsonb_build_object('value',${v_f06128be}),")),
                         Err(#ErSc) => Err(#ErSc),
                     }
@@ -2167,7 +2167,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &{
                     let format_handle_ts = dq_ts(&format!("jsonb_set({{{JsonbSetAccumulatorSc}}},'{{{{{{jsonb_set_path}}}}}}',${{v_26526e0f}})"));
                     quote! {
-                        match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
+                        match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
                             Ok(v_26526e0f) => Ok(format!(#format_handle_ts)),
                             Err(#ErSc) => Err(#ErSc),
                         }
@@ -2247,8 +2247,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     fn get_inner(#ValueSc: &<Self::PgJsonType as #import_path::PgJsonType>::#CreateForQueryUcc) -> &Self::#ReadInnerUcc {
                         &#ValueSc.0.0
                     }
-                    fn increment_checked_add_one(#IncrementSc: &mut #U64) -> Result<#U64, #import_path::QueryPartEr> {
-                        #import_path::increment_checked_add_one_returning_increment(#IncrementSc)
+                    fn incr_checked_add_one(#IncrSc: &mut #U64) -> Result<#U64, #import_path::QueryPartEr> {
+                        #import_path::incr_checked_add_one_returning_incr(#IncrSc)
                     }
                 }
             }
@@ -2440,21 +2440,21 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                             .copied(),
                                     ).collect::<Vec<&IsNullable>>()
                                 );
-                                let index_74ae6d77_increment_by_1 = index_74ae6d77.checked_add(1).expect("96e90e72");
+                                let index_74ae6d77_incr_by_1 = index_74ae6d77.checked_add(1).expect("96e90e72");
                                 match &is_nullable_vec_e7e7f6f8.last().expect("88548240") {
                                     IsNullable::False => gen_for_value_index_dot_zero_into_iter_enumerate_ts(
                                         is_nullable_vec_e7e7f6f8_len,
-                                        index_74ae6d77_increment_by_1,
+                                        index_74ae6d77_incr_by_1,
                                         index_74ae6d77,
                                         &content_ts_4c106eea,
                                     ),
                                     IsNullable::True => gen_if_let_some_equals_value_index_dot_zero_ts(
-                                        index_74ae6d77_increment_by_1,
+                                        index_74ae6d77_incr_by_1,
                                         index_74ae6d77,
                                         &gen_for_value_index_dot_zero_into_iter_enumerate_ts(
                                             is_nullable_vec_e7e7f6f8_len,
                                             index_74ae6d77.checked_add(2).expect("00da046c"),
-                                            index_74ae6d77_increment_by_1,
+                                            index_74ae6d77_incr_by_1,
                                             &content_ts_4c106eea,
                                         )
                                     )
