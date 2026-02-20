@@ -636,7 +636,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["boolean"],
     ["object"],
     ["arr"],
-    ["number"],
+    ["nbr"],
     ["integer"],
     ["not", "null"],
     ["nullable"],

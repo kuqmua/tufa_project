@@ -4734,7 +4734,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let self_pg_json_type_ts = quote!{#SelfUcc::#PgJsonTypeUcc};
             let (impl_pg_json_type_test_cases_for_ident_ts, impl_pg_type_test_cases_for_ident_ts) = {
                 let gen_dim_equal_ts = |dim: &Dim|{
-                    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_sc = dim.read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_sc();
+                    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc = dim.read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc();
                     let gen_nullable_ts = |ts: &dyn ToTokens|quote! {
                         match #import_path::NotEmptyUniqueVec::try_new(
                             match (#ReadOnlyIdsSc.0.#ValueSc, #CreateSc.0) {
@@ -4742,7 +4742,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     #ts
                                     as
                                     #import_path::PgJsonTypeTestCases
-                                >::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_sc(
+                                >::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc(
                                     read_only_ids_cdcb6239,
                                     create_fdd53941
                                 ) {
@@ -4793,7 +4793,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     let field_ident_ucc = &ToTokensToUccTs::case_or_panic(&field_ident);
                                     let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el_3a1eac56.field_type);
                                     quote! {
-                                        if let Some(v_2bbd2c96) = #field_type_as_pg_json_type_test_cases_ts::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_sc(
+                                        if let Some(v_2bbd2c96) = #field_type_as_pg_json_type_test_cases_ts::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc(
                                             #ReadOnlyIdsSc.0.#ValueSc.#field_ident,
                                             #CreateSc.#field_ident
                                         ) {
@@ -4843,7 +4843,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         let el_field_ident_ucc = ElementSelfUcc::from_tokens(&field_ident);
                                         let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el_18682ae5.field_type);
                                         quote! {
-                                            if let Some(v_bf84026e) = #field_type_as_pg_json_type_test_cases_ts::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_sc(
+                                            if let Some(v_bf84026e) = #field_type_as_pg_json_type_test_cases_ts::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc(
                                                 read_only_ids_420d38ca.0.#ValueSc.#field_ident.clone(),
                                                 create_76f032c1.#field_ident.clone()
                                             ) {
@@ -6931,8 +6931,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts
                         ) = {
                             let gen_dim_equal_handle_ts = |dim: &Dim|{
-                                let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_sc = dim.read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_sc();
-                                quote!{#self_as_pg_json_type_test_cases_ts::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_sc(
+                                let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc = dim.read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc();
+                                quote!{#self_as_pg_json_type_test_cases_ts::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc(
                                     #ReadOnlyIdsSc,
                                     #CreateSc
                                 )}

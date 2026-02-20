@@ -450,7 +450,7 @@ pub enum Dim {
 }
 impl Dim {
     #[must_use]
-    pub fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_sc(
+    pub fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc(
         &self,
     ) -> Box<dyn DisplayPlusToTokens> {
         match self {
@@ -471,13 +471,13 @@ impl Dim {
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy)]
-pub enum DimIndexNumber {
+pub enum DimIndexNbr {
     Zero,
     One,
     Two,
     Three,
 }
-impl From<&Dim> for DimIndexNumber {
+impl From<&Dim> for DimIndexNbr {
     fn from(v: &Dim) -> Self {
         match &v {
             Dim::One => Self::Zero,
@@ -689,7 +689,7 @@ pub fn pg_crud_common_query_part_er_ts() -> Ts2 {
 pub fn gen_struct_ident_dq_ts(v: &dyn Display) -> Ts2 {
     dq_ts(&format!("struct {v}"))
 }
-pub fn gen_struct_ident_with_number_elements_dq_ts(
+pub fn gen_struct_ident_with_nbr_elements_dq_ts(
     ident: &dyn DisplayPlusToTokens,
     length: usize,
 ) -> Ts2 {
@@ -712,12 +712,12 @@ pub fn gen_serde_deserialize_dq_ts(
     length: usize,
 ) -> (Ts2, Ts2, Ts2) {
     let struct_pg_type_ident_where_tokens_dq_ts = gen_struct_ident_dq_ts(ident);
-    let struct_pg_type_ident_where_tokens_with_number_elements_dq_ts =
-        gen_struct_ident_with_number_elements_dq_ts(ident, length);
+    let struct_pg_type_ident_where_tokens_with_nbr_elements_dq_ts =
+        gen_struct_ident_with_nbr_elements_dq_ts(ident, length);
     let pg_type_ident_where_tokens_dq_ts = dq_ts(&ident);
     (
         struct_pg_type_ident_where_tokens_dq_ts,
-        struct_pg_type_ident_where_tokens_with_number_elements_dq_ts,
+        struct_pg_type_ident_where_tokens_with_nbr_elements_dq_ts,
         pg_type_ident_where_tokens_dq_ts,
     )
 }
@@ -1394,7 +1394,7 @@ pub fn gen_read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_t
         PgTypeOrPgJsonType::PgJsonType
     )
 }
-fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_ts(
+fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts(
     import_path: ImportPath,
     name_ts: &dyn ToTokens,
     path_ts: &dyn ToTokens,
@@ -1414,7 +1414,7 @@ fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_ts(
+    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts(
         import_path,
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimOneEqualSc,
         &path_ts,
@@ -1426,7 +1426,7 @@ fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_ts(
+    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts(
         import_path,
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimTwoEqualSc,
         &path_ts,
@@ -1438,7 +1438,7 @@ fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_thre
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_ts(
+    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts(
         import_path,
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimThreeEqualSc,
         &path_ts,
@@ -1450,7 +1450,7 @@ fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_ts(
+    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts(
         import_path,
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimFourEqualSc,
         &path_ts,

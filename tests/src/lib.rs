@@ -514,9 +514,9 @@ mod tests {
             {
                 continue;
             }
-            for (line_number, line) in v.lines().enumerate() {
+            for (line_nbr, line) in v.lines().enumerate() {
                 if line.trim().is_empty() {
-                    ers.push(format!("{}:{} empty line", path.display(), line_number + 1));
+                    ers.push(format!("{}:{} empty line", path.display(), line_nbr + 1));
                 }
             }
         }

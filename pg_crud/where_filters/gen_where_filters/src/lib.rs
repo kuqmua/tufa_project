@@ -45,7 +45,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         ArrDim3,
         ArrDim4,
     }
-    impl TryFrom<&PgTypePatternHandle> for DimNumber {
+    impl TryFrom<&PgTypePatternHandle> for DimNbr {
         type Error = ();
         fn try_from(v: &PgTypePatternHandle) -> Result<Self, Self::Error> {
             match &v {
@@ -59,13 +59,13 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Clone)]
-    enum DimNumber {
+    enum DimNbr {
         One,
         Two,
         Three,
         Four,
     }
-    impl DimNumber {
+    impl DimNbr {
         fn dim_ts(&self) -> Ts2 {
             self.dim_u8().to_string().parse::<Ts2>().expect("18c32bc0")
         }
@@ -351,28 +351,25 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         };
     let is_query_bind_mutable_true = IsQueryBindMutable::True;
     let is_query_bind_mutable_false = IsQueryBindMutable::False;
-    let gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts =
-        |dim_number: &DimNumber| {
-            let pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_ts = gen_pub_dims_bounded_vec_ts(
-                &dim_number.dim_ts(),
-                &KindOfUnsignedPartOfI32::CanNotBeZero,
-            );
-            quote! {#pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_ts,}
-        };
-    let gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts = |dim_number: &DimNumber| {
+    let gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts = |dim_nbr: &DimNbr| {
+        let pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_ts =
+            gen_pub_dims_bounded_vec_ts(&dim_nbr.dim_ts(), &KindOfUnsignedPartOfI32::CanNotBeZero);
+        quote! {#pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_ts,}
+    };
+    let gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts = |dim_nbr: &DimNbr| {
         let pub_dims_bounded_vec_unsigned_part_of_i32_ts =
-            gen_pub_dims_bounded_vec_ts(&dim_number.dim_ts(), &KindOfUnsignedPartOfI32::CanBeZero);
+            gen_pub_dims_bounded_vec_ts(&dim_nbr.dim_ts(), &KindOfUnsignedPartOfI32::CanBeZero);
         quote! {#pub_dims_bounded_vec_unsigned_part_of_i32_ts,}
     };
     let gen_pg_type_dims_helpers =
         |pg_type_pattern_handle: &PgTypePatternHandle,
          pg_type_or_pg_json_type: &PgTypeOrPgJsonType| {
-            DimNumber::try_from(pg_type_pattern_handle).map_or_else(
+            DimNbr::try_from(pg_type_pattern_handle).map_or_else(
             |()| (Ts2::new(),Ts2::new(), Ts2::new(), PgTypeKind::Standart, Ts2::new(), Ts2::new()),
-            |dim_number| (
+            |dim_nbr| (
                 match &pg_type_or_pg_json_type {
-                    PgTypeOrPgJsonType::PgType => gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(&dim_number),
-                    PgTypeOrPgJsonType::PgJsonType => gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts(&dim_number),
+                    PgTypeOrPgJsonType::PgType => gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(&dim_nbr),
+                    PgTypeOrPgJsonType::PgJsonType => gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts(&dim_nbr),
                 },
                 dims_default_init_comma_ts.clone(),
                 gen_ident_match_self_field_function_incr_column_is_need_to_add_logical_operator_init_ts(
@@ -859,10 +856,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         pg_type_kind,
                         maybe_additional_params_ts,
                         maybe_dims_query_bind_ts
-                    ) = DimNumber::try_from(pg_type_pattern_handle).map_or_else(
+                    ) = DimNbr::try_from(pg_type_pattern_handle).map_or_else(
                         |()| (Ts2::new(), Ts2::new(), Ts2::new(), PgTypeKind::Standart, quote! {#ColumnSc,}, Ts2::new()),
-                        |dim_number| (
-                            gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(&dim_number),
+                        |dim_nbr| (
+                            gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(&dim_nbr),
                             dims_default_init_comma_ts.clone(),
                             {
                                 let dims_indexes1_ts = gen_ident_match_self_field_function_incr_column_is_need_to_add_logical_operator_init_ts(&quote! {dims_indexes1}, &DimsSc, &quote! {pg_type_query_part});
@@ -1482,10 +1479,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     maybe_dims_indexes_init_ts,
                     pg_type_kind, maybe_additional_params_ts,
                     maybe_dims_query_bind_ts
-                ) = DimNumber::try_from(pg_type_pattern_handle).map_or_else(
+                ) = DimNbr::try_from(pg_type_pattern_handle).map_or_else(
                     |()| (Ts2::new(), Ts2::new(), Ts2::new(), PgTypeKind::Standart, Ts2::new(), Ts2::new()),
-                    |dim_number| (
-                        gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts(&dim_number),
+                    |dim_nbr| (
+                        gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts(&dim_nbr),
                         dims_default_init_comma_ts.clone(),
                         {
                             let dims_indexes_init_ts = gen_ident_match_self_field_function_incr_column_is_need_to_add_logical_operator_init_ts(&DimsIndexesSc, &DimsSc, &quote! {pg_json_type_query_part_minus_one});

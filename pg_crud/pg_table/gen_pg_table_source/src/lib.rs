@@ -463,7 +463,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         });
                     }
                 }
-                // explicitly not supporting number of columns more than 100 so its less possibility to cause stack overflow or build process exit
+                // explicitly not supporting nbr of columns more than 100 so its less possibility to cause stack overflow or build process exit
                 // assert!((fields.len() <= 100), "d9963f32");
                 (
                     opt_primary_key_field.expect("6a529a99"),
@@ -5922,9 +5922,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts,
             ) = {
                 //todo if vec_create is empty then do different logic (for uuid). now uuid Tested using one default case
-                let gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_ts =
+                let gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts =
                     |test_name: &str, dim: &Dim| {
-                        let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_sc = dim.read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_sc();
+                        let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc = dim.read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc();
                         gen_read_test_ts(test_name, &gen_opt_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_ts, &gen_ident_create_content_el_ts, &|element: &SynFieldWrapper| {
                         let field_ident = &element.field_ident;
                         let field_type = &element.field_type;
@@ -5939,7 +5939,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             }
                         }));
                         quote! {
-                            if let Some(v_bb67b871) = <#field_type as pg_crud::PgTypeTestCases>::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_sc(
+                            if let Some(v_bb67b871) = <#field_type as pg_crud::PgTypeTestCases>::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc(
                                 read_only_ids_returned_from_create_one.#field_ident.clone().expect("2ed000a5"),
                                 ident_create.#field_ident.clone()
                             ) {
@@ -5951,10 +5951,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     })
                     };
                 (
-                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_name, &Dim::One),
-                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_name, &Dim::Two),
-                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_name, &Dim::Three),
-                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_number_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_name, &Dim::Four),
+                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_name, &Dim::One),
+                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_name, &Dim::Two),
+                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_name, &Dim::Three),
+                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_name, &Dim::Four),
                 )
             };
             let create_into_pg_json_type_opt_vec_where_length_equal_ts = gen_read_test_ts(
