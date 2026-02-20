@@ -140,7 +140,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         let maybe_declaration_of_struct_ident_generic_ts: &dyn ToTokens = match &should_add_declaration_of_struct_ident_generic {
             ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_ts_new,
             ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_ts } => {
-                &maybe_additional_traits_ts.as_ref().map_or_else(|| quote! {<#t_ts>}, |value_d05f3d4f| quote! {<#t_ts: #value_d05f3d4f>})
+                &maybe_additional_traits_ts.as_ref().map_or_else(|| quote! {<#t_ts>}, |v_d05f3d4f| quote! {<#t_ts: #v_d05f3d4f>})
             }
         };
         StructOrEnumDeriveTokenStreamBuilder::new()
@@ -173,7 +173,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_ts } => {
                     maybe_additional_traits_ts.as_ref().map_or_else(
                         || quote! {<T: #pg_crud_common_default_option_some_vec_one_el_ts>},
-                        |value_29913af7| quote! {<T: #value_29913af7 + #pg_crud_common_default_option_some_vec_one_el_ts>}
+                        |v_29913af7| quote! {<T: #v_29913af7 + #pg_crud_common_default_option_some_vec_one_el_ts>}
                     )
                 }
             },
@@ -265,7 +265,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     let gen_match_increment_checked_add_one_initialization_ts = |ident_ts: &dyn ToTokens| {
         quote! {
             let #ident_ts = match pg_crud_common::increment_checked_add_one_returning_increment(#IncrementSc) {
-                Ok(value_25d59e01) => value_25d59e01,
+                Ok(v_25d59e01) => v_25d59e01,
                 Err(#ErSc) => {
                     return Err(#ErSc);
                 },
@@ -291,8 +291,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     let pub_value_between_t_ts = quote! {pub #value_between_t_ts};
     let query_self_value_query_bind_ts = quote! {
         match #SelfSc.#ValueSc.query_bind(#QuerySc) {
-            Ok(value_f6d31bdd) => {
-                #QuerySc = value_f6d31bdd;
+            Ok(v_f6d31bdd) => {
+                #QuerySc = v_f6d31bdd;
             },
             Err(#ErSc) => {
                 return Err(#ErSc);
@@ -315,7 +315,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         |ident_ts: &dyn ToTokens, field_ts: &dyn ToTokens, function_ts: &dyn ToTokens| {
             quote! {
                 let #ident_ts = match self.#field_ts.#function_ts(#IncrementSc, #ColumnSc, is_need_to_add_logical_operator) {
-                    Ok(value_0a22ee9a) => value_0a22ee9a,
+                    Ok(v_0a22ee9a) => v_0a22ee9a,
                     Err(#ErSc) => {
                         return Err(#ErSc);
                     }
@@ -329,8 +329,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     let dims_default_initialization_comma_ts = quote! {#dims_default_initialization_ts,};
     let query_self_dims_query_bind_query_ts = quote! {
         match #SelfSc.#DimsSc.query_bind(#QuerySc) {
-            Ok(value_ed6f1157) => {
-                #QuerySc = value_ed6f1157;
+            Ok(v_ed6f1157) => {
+                #QuerySc = v_ed6f1157;
             }
             Err(#ErSc) => {
                 return Err(#ErSc);
@@ -538,7 +538,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 pg_type_kind.format_argument()
                             ));
                             let if_write_is_err_ts = gen_if_write_is_err_ts(
-                                &quote! {acc_14596a52, "${value_daedba9c},"},
+                                &quote! {acc_14596a52, "${v_daedba9c},"},
                                 &quote! {panic!("87f47f75");},
                             );
                             quote! {
@@ -547,7 +547,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     let mut acc_14596a52 = String::default();
                                     for _ in #SelfSc.#ValueSc.to_vec() {
                                         match pg_crud_common::increment_checked_add_one_returning_increment(#IncrementSc) {
-                                            Ok(value_daedba9c) => {
+                                            Ok(v_daedba9c) => {
                                                 #if_write_is_err_ts
                                             },
                                             Err(#ErSc) => {
@@ -838,7 +838,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 dq_ts(&format!("{{}}(array_length({{}}, 1) {operator} ${{}})"));
                             quote! {
                                 match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
-                                    Ok(value_f7988de8) => Ok(format!(#format_handle_ts, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #ColumnSc, value_f7988de8)),
+                                    Ok(v_f7988de8) => Ok(format!(#format_handle_ts, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #ColumnSc, v_f7988de8)),
                                     Err(#ErSc) => Err(#ErSc),
                                 }
                             }
@@ -921,8 +921,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             },
                             quote! {
                                 match #SelfSc.#DimsSc.clone().query_bind(#QuerySc) {
-                                    Ok(value_6cb14cdc) => {
-                                        #QuerySc = value_6cb14cdc;
+                                    Ok(v_6cb14cdc) => {
+                                        #QuerySc = v_6cb14cdc;
                                     },
                                     Err(#ErSc) => {
                                         return Err(#ErSc);
@@ -1422,7 +1422,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     column,
                                     is_need_to_add_logical_operator
                                 ) {
-                                    Ok(value_cc8dda2f) => value_cc8dda2f,
+                                    Ok(v_cc8dda2f) => v_cc8dda2f,
                                     Err(er) => {
                                         return Err(er);
                                     }
@@ -1513,8 +1513,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     quote! {
                         #maybe_dims_query_bind_content_ts
                         match #SelfSc.#ValueSc.query_bind_one_by_one(#QuerySc) {
-                            Ok(value_c79b2256) => {
-                                #QuerySc = value_c79b2256;
+                            Ok(v_c79b2256) => {
+                                #QuerySc = v_c79b2256;
                             }
                             Err(#ErSc) => {
                                 return Err(#ErSc);

@@ -468,9 +468,7 @@ where
     ) -> Result<String, QueryPartEr> {
         self.0.as_ref().map_or_else(
             || Ok(format!("{column} = 'null'")),
-            |value_b4a9fcfb| {
-                value_b4a9fcfb.query_part(increment, column, is_need_to_add_logical_operator)
-            },
+            |v_b4a9fcfb| v_b4a9fcfb.query_part(increment, column, is_need_to_add_logical_operator),
         )
     }
 }
@@ -1287,8 +1285,8 @@ where
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartEr> {
         let mut acc_57b31116 = String::default();
-        for (index, value_953208ce) in self.0.iter().enumerate() {
-            match value_953208ce.query_part(
+        for (index, v_953208ce) in self.0.iter().enumerate() {
+            match v_953208ce.query_part(
                 increment,
                 column,
                 if index == 0 {

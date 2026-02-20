@@ -274,12 +274,12 @@ mod tests {
     }
     #[test]
     fn check_workspace_dependencies_having_exact_version() {
-        for (_, value_5c36cb98) in match toml_value_from_from_cargo_toml_workspace()
+        for (_, v_5c36cb98) in match toml_value_from_from_cargo_toml_workspace()
             .get("dependencies")
             .expect("2376f58e")
             .clone()
         {
-            Value::Table(value_270f9bd5) => value_270f9bd5,
+            Value::Table(v_270f9bd5) => v_270f9bd5,
             Value::String(_)
             | Value::Integer(_)
             | Value::Float(_)
@@ -287,8 +287,8 @@ mod tests {
             | Value::Datetime(_)
             | Value::Array(_) => panic!("e117fa5a"),
         } {
-            let value_table = match value_5c36cb98 {
-                Value::Table(value_31495eb6) => value_31495eb6,
+            let value_table = match v_5c36cb98 {
+                Value::Table(v_31495eb6) => v_31495eb6,
                 Value::String(_)
                 | Value::Integer(_)
                 | Value::Float(_)
@@ -297,34 +297,31 @@ mod tests {
                 | Value::Array(_) => panic!("cb693a3f"),
             };
             let value_table_len = value_table.len();
-            let check_version = |value_df993c3d: &Table| match value_df993c3d
-                .get("version")
-                .expect("d5b2b269")
-                .clone()
-            {
-                Value::String(version_string) => {
-                    fn check_version_string(v: &str) -> Option<()> {
-                        let rest = v.strip_prefix('=')?;
-                        let mut iter = rest.split('.');
-                        let _: u64 = iter.next()?.parse::<u64>().ok()?;
-                        let _: u64 = iter.next()?.parse::<u64>().ok()?;
-                        let _: u64 = iter.next()?.parse::<u64>().ok()?;
-                        if iter.next().is_some() {
-                            return None;
+            let check_version =
+                |v_df993c3d: &Table| match v_df993c3d.get("version").expect("d5b2b269").clone() {
+                    Value::String(version_string) => {
+                        fn check_version_string(v: &str) -> Option<()> {
+                            let rest = v.strip_prefix('=')?;
+                            let mut iter = rest.split('.');
+                            let _: u64 = iter.next()?.parse::<u64>().ok()?;
+                            let _: u64 = iter.next()?.parse::<u64>().ok()?;
+                            let _: u64 = iter.next()?.parse::<u64>().ok()?;
+                            if iter.next().is_some() {
+                                return None;
+                            }
+                            Some(())
                         }
-                        Some(())
+                        check_version_string(&version_string).expect("6640b9bf");
                     }
-                    check_version_string(&version_string).expect("6640b9bf");
-                }
-                Value::Table(_)
-                | Value::Integer(_)
-                | Value::Float(_)
-                | Value::Boolean(_)
-                | Value::Datetime(_)
-                | Value::Array(_) => panic!("a3410a37"),
-            };
+                    Value::Table(_)
+                    | Value::Integer(_)
+                    | Value::Float(_)
+                    | Value::Boolean(_)
+                    | Value::Datetime(_)
+                    | Value::Array(_) => panic!("a3410a37"),
+                };
             let check_features =
-                |value_121eb307: &Table| match value_121eb307.get("features").expect("473577d5") {
+                |v_121eb307: &Table| match v_121eb307.get("features").expect("473577d5") {
                     &Value::Array(_) => (),
                     &Value::String(_)
                     | &Value::Table(_)
@@ -411,10 +408,10 @@ mod tests {
             if !path.is_file()
                 || !path
                     .extension()
-                    .and_then(|value_56829539| value_56829539.to_str())
-                    .is_some_and(|value_c980b45f| {
+                    .and_then(|v_56829539| v_56829539.to_str())
+                    .is_some_and(|v_c980b45f| {
                         matches!(
-                            value_c980b45f,
+                            v_c980b45f,
                             "rs" | "toml" | "md" | "txt" | "yml" | "yaml" | "json"
                         )
                     })
@@ -427,8 +424,8 @@ mod tests {
             let Ok(content) = read_to_string(path) else {
                 continue; //skip binary non-utf8 files
             };
-            for (key_0fa16fc1, value_3d676d2e) in content.lines().enumerate() {
-                for el_c0fa9fc2 in value_3d676d2e.chars() {
+            for (key_0fa16fc1, v_3d676d2e) in content.lines().enumerate() {
+                for el_c0fa9fc2 in v_3d676d2e.chars() {
                     if !(matches!(el_c0fa9fc2, '\n' | '\r' | '\t') || el_c0fa9fc2.is_ascii()) {
                         ers.push(format!(
                             "{}:{} non-english symbol `{}` (U+{:04X})",
@@ -465,9 +462,9 @@ mod tests {
                 if let Some(deps) = parsed
                     .get(el_3c618c8f)
                     .clone()
-                    .and_then(|value_5e0a4d6a| value_5e0a4d6a.as_table())
+                    .and_then(|v_5e0a4d6a| v_5e0a4d6a.as_table())
                 {
-                    for (key_794900d4, value_07583f81) in deps {
+                    for (key_794900d4, v_07583f81) in deps {
                         let panic_with_message = || {
                             panic!(
                                 "{}: dependency `{}` in [{}] must use `.workspace = true` \
@@ -477,11 +474,10 @@ mod tests {
                                 el_3c618c8f
                             )
                         };
-                        match value_07583f81.clone() {
-                            Value::Table(value_bba39a72) => {
-                                if !(value_bba39a72.contains_key("path")
-                                    || (value_bba39a72.get("workspace")
-                                        == Some(&Value::Boolean(true))))
+                        match v_07583f81.clone() {
+                            Value::Table(v_bba39a72) => {
+                                if !(v_bba39a72.contains_key("path")
+                                    || (v_bba39a72.get("workspace") == Some(&Value::Boolean(true))))
                                 {
                                     panic_with_message();
                                 }

@@ -344,7 +344,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         let include = match max_dim {
                             None => true,
                             Some(0i32) => matches!(pattern, Pattern::Standart),
-                            Some(value_b6fece15) => {
+                            Some(v_b6fece15) => {
                                 let dim = match pattern {
                                     Pattern::Standart => 0i32,
                                     Pattern::ArrayDim1 { .. } => 1i32,
@@ -352,7 +352,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     Pattern::ArrayDim3 { .. } => 3i32,
                                     Pattern::ArrayDim4 { .. } => 4i32,
                                 };
-                                dim <= value_b6fece15
+                                dim <= v_b6fece15
                             }
                         };
                         if include {
@@ -1826,7 +1826,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             let select_only_created_or_updated_ids_query_part_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                 quote! {
                     match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
-                        Ok(value_f06128be) => Ok(format!("'{field_ident}',jsonb_build_object('value',${value_f06128be}),")),
+                        Ok(v_f06128be) => Ok(format!("'{field_ident}',jsonb_build_object('value',${v_f06128be}),")),
                         Err(#ErSc) => Err(#ErSc),
                     }
                 }
@@ -1932,7 +1932,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                         let one = 1;
                                         gen_jsonb_agg(
                                             &{
-                                                let mut usize_value_0ff8cf42 = match &array_dim_select_pattern {
+                                                let mut usize_v_0ff8cf42 = match &array_dim_select_pattern {
                                                     ArrayDimSelectPattern::ArrayDim2 { .. } => 2,
                                                     ArrayDimSelectPattern::ArrayDim3 { .. } => 3,
                                                     ArrayDimSelectPattern::ArrayDim4 { .. } => 4,
@@ -1959,14 +1959,14 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                                     ],
                                                 }
                                                 .into_iter()
-                                                .fold(gen_dot_value(&gen_d_number_elem(usize_value_0ff8cf42)), |mut acc_64e08e3a, is_nullable_0ff8cf42| {
-                                                    let usize_value_minus_one_0ff8cf42 = usize_value_0ff8cf42.checked_sub(one).expect("a35e873e");
+                                                .fold(gen_dot_value(&gen_d_number_elem(usize_v_0ff8cf42)), |mut acc_64e08e3a, is_nullable_0ff8cf42| {
+                                                    let usize_value_minus_one_0ff8cf42 = usize_v_0ff8cf42.checked_sub(one).expect("a35e873e");
                                                     let d_usize_minus_one_elem_value = gen_dot_value(&gen_d_number_elem(usize_value_minus_one_0ff8cf42));
                                                     let value = gen_jsonb_agg(
                                                         &acc_64e08e3a,
                                                         &d_usize_minus_one_elem_value,
-                                                        &gen_as_value_where(&gen_d_number_elem(usize_value_0ff8cf42), &gen_d_number_ord(usize_value_0ff8cf42)),
-                                                        usize_value_0ff8cf42,
+                                                        &gen_as_value_where(&gen_d_number_elem(usize_v_0ff8cf42), &gen_d_number_ord(usize_v_0ff8cf42)),
+                                                        usize_v_0ff8cf42,
                                                     );
                                                     acc_64e08e3a = match &is_nullable_0ff8cf42 {
                                                         IsNullable::False => value,
@@ -1974,7 +1974,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                                             format!("case when jsonb_typeof({d_usize_minus_one_elem_value})='array' then ({value}) else null end")
                                                         }
                                                     };
-                                                    usize_value_0ff8cf42 = usize_value_minus_one_0ff8cf42;
+                                                    usize_v_0ff8cf42 = usize_value_minus_one_0ff8cf42;
                                                     acc_64e08e3a
                                                 })
                                             },
@@ -2057,7 +2057,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 IsNullable::False => quote! {#el_ts.0},
                                 IsNullable::True => gen_match_el_zero_ts(
                                     &quote! {#el_ts.0},
-                                    &quote! {value_f8b0b01d},
+                                    &quote! {v_f8b0b01d},
                                     &Ts2::new()
                                 )
                             }
@@ -2097,7 +2097,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             );
                             gen_into_iter_map_el_collect_is_nullable_content_ts(
                                 &quote!{el_cf5646e9},
-                                &quote!{value_1c90c80c},
+                                &quote!{v_1c90c80c},
                                 dim1_is_nullable,
                                 &dim2_is_nullable_content_ts
                             )
@@ -2113,13 +2113,13 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             );
                             let dim2_is_nullable_content_ts = gen_into_iter_map_el_collect_is_nullable_content_ts(
                                 &quote!{el_dc9e788b},
-                                &quote!{value_3d1307e8},
+                                &quote!{v_3d1307e8},
                                 dim2_is_nullable,
                                 &dim3_is_nullable_content_ts
                             );
                             gen_into_iter_map_el_collect_is_nullable_content_ts(
                                 &quote!{el_bf67606b},
-                                &quote!{value_721e4164},
+                                &quote!{v_721e4164},
                                 dim1_is_nullable,
                                 &dim2_is_nullable_content_ts
                             )
@@ -2136,19 +2136,19 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             );
                             let dim3_is_nullable_content_ts = gen_into_iter_map_el_collect_is_nullable_content_ts(
                                 &quote!{el_98961cb7},
-                                &quote!{value_995a5fbe},
+                                &quote!{v_995a5fbe},
                                 dim3_is_nullable,
                                 &dim4_is_nullable_content_ts
                             );
                             let dim2_is_nullable_content_ts = gen_into_iter_map_el_collect_is_nullable_content_ts(
                                 &quote!{el_34e95172},
-                                &quote!{value_75b18ade},
+                                &quote!{v_75b18ade},
                                 dim2_is_nullable,
                                 &dim3_is_nullable_content_ts
                             );
                             gen_into_iter_map_el_collect_is_nullable_content_ts(
                                 &quote!{el_f64124e2},
-                                &quote!{value_7fc1b146},
+                                &quote!{v_7fc1b146},
                                 dim1_is_nullable,
                                 &dim2_is_nullable_content_ts
                             )
@@ -2158,7 +2158,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         IsNullable::False => quote! {#content_ts_0ff8cf42 #into_inner_content_ts},
                         IsNullable::True => gen_match_el_zero_ts(
                             &content_ts_0ff8cf42,
-                            &quote!{value_3432e728},
+                            &quote!{v_3432e728},
                             &into_inner_content_ts
                         ),
                     }
@@ -2166,10 +2166,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &ident_update_ucc,
                 &ident_update_for_query_ucc,
                 &{
-                    let format_handle_ts = dq_ts(&format!("jsonb_set({{{JsonbSetAccumulatorSc}}},'{{{{{{jsonb_set_path}}}}}}',${{value_26526e0f}})"));
+                    let format_handle_ts = dq_ts(&format!("jsonb_set({{{JsonbSetAccumulatorSc}}},'{{{{{{jsonb_set_path}}}}}}',${{v_26526e0f}})"));
                     quote! {
                         match #import_path::increment_checked_add_one_returning_increment(#IncrementSc) {
-                            Ok(value_26526e0f) => Ok(format!(#format_handle_ts)),
+                            Ok(v_26526e0f) => Ok(format!(#format_handle_ts)),
                             Err(#ErSc) => Err(#ErSc),
                         }
                     }
@@ -2407,8 +2407,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 IsNullable::False => quote! {acc_049ff0b3.push(#content_ts_f1ffd3b2);},
                                 IsNullable::True => quote! {
                                     match #import_path::NotEmptyUniqueVec::try_new(vec![#content_ts_f1ffd3b2]) {
-                                        Ok(value_9328b66f) => {
-                                            acc_049ff0b3.push(#import_path::NullableJsonObjectPgTypeWhereFilter(Some(value_9328b66f)));
+                                        Ok(v_9328b66f) => {
+                                            acc_049ff0b3.push(#import_path::NullableJsonObjectPgTypeWhereFilter(Some(v_9328b66f)));
                                         },
                                         Err(er) => match er {
                                             #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => (),
@@ -2566,7 +2566,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     let maybe_acc_push_long_vec_ts = match &is_nullable {
                         IsNullable::False => quote! {
                             let mut acc_27624e5e = Vec::new();
-                            for el_0dcb405a in value_8de026a4 {
+                            for el_0dcb405a in v_8de026a4 {
                                 acc_27624e5e.push(el_0dcb405a.0.into());
                             }
                             if !acc_27624e5e.is_empty() {
@@ -2581,8 +2581,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     };
                     quote! {Some({
                         let mut acc_50e99088 = Vec::new();
-                        if let Some(value_8de026a4) = <#ident_ts_dc0d5797 as #import_path::PgJsonTypeTestCases>::#OptionVecCreateSc() {
-                            for el_88131059 in value_8de026a4 #maybe_dot_clone_ts {
+                        if let Some(v_8de026a4) = <#ident_ts_dc0d5797 as #import_path::PgJsonTypeTestCases>::#OptionVecCreateSc() {
+                            for el_88131059 in v_8de026a4 #maybe_dot_clone_ts {
                                 acc_50e99088.push(<Self as #import_path::PgJsonType>::Create::new(#new_content_ts));
                             }
                             #maybe_acc_push_long_vec_ts
@@ -2732,12 +2732,12 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         #has_len_greater_than_one_content_ts
                         #acc_push_vec_content_ts
                         #maybe_acc_push_vec_none_ts
-                        if let Some(value_3de7fba4) = option_additional {
+                        if let Some(v_3de7fba4) = option_additional {
                             if has_len_greater_than_one {
-                                acc_0a07db18.push(value_3de7fba4.0);
+                                acc_0a07db18.push(v_3de7fba4.0);
                             }
                             else {
-                                acc_0a07db18.push(value_3de7fba4.1);
+                                acc_0a07db18.push(v_3de7fba4.1);
                             }
                         }
                         acc_0a07db18
@@ -2815,7 +2815,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             let content_ts = {
                                 let content_ts = match &update_is_nullable_69216aba {
                                     IsNullable::False => quote! {el_aa999306.clone()},
-                                    IsNullable::True => quote! {value_92de91cc.clone()},
+                                    IsNullable::True => quote! {v_92de91cc.clone()},
                                 };
                                 quote! {#ident_update_ts_7c40250a(#content_ts)}
                             };
@@ -2832,7 +2832,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 #value_zero_zero_ts.iter().map(|el_aa999306|#content_ts).collect()
                             },
                             IsNullable::True => quote! {
-                                #value_zero_zero_ts.as_ref().map(|value_92de91cc| #content_ts)
+                                #value_zero_zero_ts.as_ref().map(|v_92de91cc| #content_ts)
                             },
                         }
                     };
@@ -2916,7 +2916,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 quote! {Some(#value_initialization_ts)}
             };
             let previous_read_merged_with_option_update_into_read_ts = quote! {
-                #OptionUpdateSc.map_or(#ReadSc, |value_f6e37412| #ident_read_ucc(value_f6e37412.into()))
+                #OptionUpdateSc.map_or(#ReadSc, |v_f6e37412| #ident_read_ucc(v_f6e37412.into()))
             };
             let read_only_ids_merged_with_create_into_read_ts = {
                 let content_ts = if matches!(&is_standart_not_null_uuid, IsStandartNotNullUuid::True) {
@@ -2960,10 +2960,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     IsNullable::True => {
                         let ident_where_ucc_029b3848 = SelfWhereUcc::from_tokens(&ident_not_null_ts);
                         let ident_table_type_declaration_ucc_db49334a = SelfTableTypeDeclarationUcc::from_tokens(&ident_not_null_ts);
-                        let equal_ts = gen_equal_ts(&quote! {#ident_table_type_declaration_ucc_db49334a::new(value_18544acf.into())});
+                        let equal_ts = gen_equal_ts(&quote! {#ident_table_type_declaration_ucc_db49334a::new(v_18544acf.into())});
                         quote! {
                             #import_path::NullableJsonObjectPgTypeWhereFilter(
-                                #CreateSc.0.0.map(|value_18544acf| pg_crud_common::NotEmptyUniqueVec::try_new(
+                                #CreateSc.0.0.map(|v_18544acf| pg_crud_common::NotEmptyUniqueVec::try_new(
                                     vec![#ident_where_ucc_029b3848::#EqualUcc(#equal_ts)]
                                 ).expect("88bfa095"))
                             )
@@ -2995,7 +2995,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         let content_ts = {
                             let content_ts: &dyn ToTokens = match &is_nullable {
                                 IsNullable::False => &create_dot_zero_dot_zero,
-                                IsNullable::True => &quote! {value_1bbf74bc.0},
+                                IsNullable::True => &quote! {v_1bbf74bc.0},
                             };
                             quote! {
                                 ::LengthEqual(
@@ -3015,10 +3015,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 quote! {
                                     #import_path::NullableJsonObjectPgTypeWhereFilter(
                                         match #create_dot_zero_dot_zero {
-                                            Some(value_1bbf74bc) => match #import_path::NotEmptyUniqueVec::try_new(
+                                            Some(v_1bbf74bc) => match #import_path::NotEmptyUniqueVec::try_new(
                                                 vec![#ident_where_ucc_db49334a #content_ts]
                                             ) {
-                                                Ok(value_d82bbdbe) => Some(value_d82bbdbe),
+                                                Ok(v_d82bbdbe) => Some(v_d82bbdbe),
                                                 Err(er) => match er {
                                                     #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => {
                                                         return None;
@@ -3037,7 +3037,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         match #import_path::NotEmptyUniqueVec::try_new(vec![
                             #content_ts
                         ]) {
-                            Ok(value_e196e86d) => Some(value_e196e86d),
+                            Ok(v_e196e86d) => Some(v_e196e86d),
                             Err(er) => match er {
                                 #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
                                 #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("e9f9b021")
@@ -3057,29 +3057,29 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         let content_ts = {
                             let content_ts: &dyn ToTokens = match &is_nullable {
                                 IsNullable::False => &create_dot_zero_dot_zero,
-                                IsNullable::True => &quote! {value_68880991.0},
+                                IsNullable::True => &quote! {v_68880991.0},
                             };
                             quote! {
                                 ::LengthGreaterThan(
                                     where_filters::PgJsonTypeWhereLengthGreaterThan {
                                         logical_operator: #import_path::LogicalOperator::Or,
-                                        #ValueSc: if let Ok(value_762dae1f) = pg_crud_common::UnsignedPartOfI32::try_from(
-                                            if let Ok(value_9dca0200) = i32::try_from(
+                                        #ValueSc: if let Ok(v_762dae1f) = pg_crud_common::UnsignedPartOfI32::try_from(
+                                            if let Ok(v_9dca0200) = i32::try_from(
                                                 //todo temp code. make it better checking all cases
                                                 match #content_ts.len().checked_sub(1) {
-                                                    Some(value_92860143) => value_92860143,
+                                                    Some(v_92860143) => v_92860143,
                                                     None => {
                                                         return None;
                                                     }
                                                 }
                                             ) {
-                                                value_9dca0200
+                                                v_9dca0200
                                             }
                                             else {
                                                 return None;
                                             }
                                         ) {
-                                            value_762dae1f
+                                            v_762dae1f
                                         }
                                         else {
                                             return None;
@@ -3094,10 +3094,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 let ident_where_ucc_8a412c1a = SelfWhereUcc::from_tokens(&ident_not_null_ts);
                                 quote! {
                                     #import_path::NullableJsonObjectPgTypeWhereFilter(match #create_dot_zero_dot_zero {
-                                        Some(value_68880991) => match #import_path::NotEmptyUniqueVec::try_new(
+                                        Some(v_68880991) => match #import_path::NotEmptyUniqueVec::try_new(
                                             vec![#ident_where_ucc_8a412c1a #content_ts]
                                         ) {
-                                            Ok(value_cdc120a8) => Some(value_cdc120a8),
+                                            Ok(v_cdc120a8) => Some(v_cdc120a8),
                                             Err(er) => match er {
                                                 #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => {
                                                     return None;
@@ -3113,7 +3113,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     };
                     quote! {
                         match #import_path::NotEmptyUniqueVec::try_new(vec![#content_ts]) {
-                            Ok(value_cee8d0ab) => Some(value_cee8d0ab),
+                            Ok(v_cee8d0ab) => Some(v_cee8d0ab),
                             Err(er) => match er {
                                 #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
                                 #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("497359a5")
@@ -3160,20 +3160,20 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     float_64_greater_than_one_less_ts,
                 ) = {
                     let gen_greater_than_one_less_ts = |content_ts: &dyn ToTokens|quote!{
-                        let value_7aa498e8 = #content_ts?;
+                        let v_7aa498e8 = #content_ts?;
                         match #import_path::NotEmptyUniqueVec::try_new(
                             vec![
                                 #import_path::SingleOrMultiple::Single(#ident_where_ucc::GreaterThan(
                                     where_filters::PgJsonTypeWhereGreaterThan {
                                         logical_operator: #import_path::LogicalOperator::Or,
                                         value: #ident_table_type_declaration_ucc(
-                                            #ident_origin_ucc(value_7aa498e8)
+                                            #ident_origin_ucc(v_7aa498e8)
                                         ),
                                     }
                                 ))
                             ]
                         ) {
-                            Ok(value_6f3e23b5) => Some(value_6f3e23b5),
+                            Ok(v_6f3e23b5) => Some(v_6f3e23b5),
                             Err(er) => match er {
                                 #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty { .. } => None,
                                 #import_path::NotEmptyUniqueVecTryNewEr::NotUnique { .. } => panic!("11287f54"),
@@ -3230,17 +3230,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 #ident_table_type_declaration_ucc::new(start),
                                 #ident_table_type_declaration_ucc::new(end)
                             ) {
-                                Ok(value_cdde02cc) => match pg_crud_common::NotEmptyUniqueVec::try_new(vec![
+                                Ok(v_cdde02cc) => match pg_crud_common::NotEmptyUniqueVec::try_new(vec![
                                     #import_path::SingleOrMultiple::Single(
                                         #ident_where_ucc::Between(
                                             where_filters::PgJsonTypeWhereBetween {
                                                 logical_operator: pg_crud_common::LogicalOperator::Or,
-                                                value: value_cdde02cc,
+                                                value: v_cdde02cc,
                                             }
                                         )
                                     )
                                 ]) {
-                                    Ok(value_41af48fb) => Some(value_41af48fb),
+                                    Ok(v_41af48fb) => Some(v_41af48fb),
                                     Err(er) => match er {
                                         #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
                                         #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("5edabfcc")
@@ -3320,7 +3320,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     ),
                                 )
                             ]) {
-                                Ok(value_1c4f89a4) => Some(value_1c4f89a4),
+                                Ok(v_1c4f89a4) => Some(v_1c4f89a4),
                                 Err(er) => match er {
                                     #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
                                     #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("16ae359d")
@@ -3364,7 +3364,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 ),
                             )
                         ]) {
-                            Ok(value_75ae8964) => Some(value_75ae8964),
+                            Ok(v_75ae8964) => Some(v_75ae8964),
                             Err(er) => match er {
                                 #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
                                 #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("b9713787")
@@ -3392,16 +3392,16 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 match #import_path::NotEmptyUniqueVec::try_new({
                                     let mut acc_f95ec4f2 = vec![];
                                     for el_ba78af60 in create.0.0 {
-                                        let value_027d0d3a = #content_ts;
-                                        match value_027d0d3a {
-                                            Some(value_0cd93c25) => {
+                                        let v_027d0d3a = #content_ts;
+                                        match v_027d0d3a {
+                                            Some(v_0cd93c25) => {
                                                 acc_f95ec4f2.push(
                                                     #import_path::SingleOrMultiple::Single(
                                                         #ident_where_ucc::ContainsElGreaterThan(
                                                             where_filters::PgJsonTypeWhereContainsElGreaterThan {
                                                                 logical_operator: #import_path::LogicalOperator::Or,
                                                                 value: #ident_standart_not_null_table_type_declaration_ucc(
-                                                                    #ident_standart_not_null_origin_ucc(value_0cd93c25)
+                                                                    #ident_standart_not_null_origin_ucc(v_0cd93c25)
                                                                 )
                                                             }
                                                         )
@@ -3415,7 +3415,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     }
                                     acc_f95ec4f2
                                 }) {
-                                    Ok(value_69c93ec5) => Some(value_69c93ec5),
+                                    Ok(v_69c93ec5) => Some(v_69c93ec5),
                                     Err(er) => match er {
                                         #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
                                         #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("47e44ecd")
@@ -3502,7 +3502,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     )
                                 })
                                 .collect()) {
-                                    Ok(value_0363f494) => Some(value_0363f494),
+                                    Ok(v_0363f494) => Some(v_0363f494),
                                     Err(er) => match er {
                                         #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
                                         #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("415a73d9")

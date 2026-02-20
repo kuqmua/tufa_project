@@ -51,9 +51,9 @@ pub fn check_commit(
                     loc: loc!(),
                 })
             },
-            |value_9c98ee60| match value_9c98ee60.to_str() {
-                Ok(value_16408fd2) => {
-                    if value_16408fd2 == PROJECT_GIT_INFO.commit {
+            |v_9c98ee60| match v_9c98ee60.to_str() {
+                Ok(v_16408fd2) => {
+                    if v_16408fd2 == PROJECT_GIT_INFO.commit {
                         Ok(())
                     } else {
                         Err(CommitEr::CommitNotEqual {
