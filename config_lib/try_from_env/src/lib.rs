@@ -77,7 +77,7 @@ pub fn try_from_env(input: Ts) -> Ts {
         )
     };
     let try_from_env_ts = {
-        let fields_initialization_ts = fields_named.iter().map(|el_0b2240f0| {
+        let fields_init_ts = fields_named.iter().map(|el_0b2240f0| {
             let el_ident = &el_0b2240f0.ident.as_ref().expect("ebf4e1b2");
             let el_ident_quotes_upper_sc_string =
                 LitStr::new(&ToTokensToUpperScStr::case(&el_ident), ident.span());
@@ -117,7 +117,7 @@ pub fn try_from_env(input: Ts) -> Ts {
                             #DotenvSc: er,
                         });
                     }
-                    #(#fields_initialization_ts)*
+                    #(#fields_init_ts)*
                     Ok(Self {
                         #(#fields_ts),*
                     })

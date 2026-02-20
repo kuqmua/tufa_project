@@ -73,8 +73,8 @@ use pg_crud_macros_common::{
     gen_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts,
     gen_read_only_ids_merged_with_create_into_where_equal_ts,
     gen_return_err_query_part_er_write_into_buffer_ts, gen_sqlx_types_json_type_declaration_ts,
-    gen_value_initialization_ts, gen_vec_tokens_declaration_ts,
-    impl_pg_type_where_filter_for_ident_ts, maybe_wrap_into_braces_ts, wrap_content_into_scopes_ts,
+    gen_value_init_ts, gen_vec_tokens_declaration_ts, impl_pg_type_where_filter_for_ident_ts,
+    maybe_wrap_into_braces_ts, wrap_content_into_scopes_ts,
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -287,8 +287,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let return_err_query_part_er_write_into_buffer_ts = gen_return_err_query_part_er_write_into_buffer_ts(import_path);
             let none_ts = quote!{None};
             let must_use_ts = MustUse;
-            let gen_import_path_value_initialization_ts = |content_ts: &dyn ToTokens|{
-                gen_value_initialization_ts(
+            let gen_import_path_value_init_ts = |content_ts: &dyn ToTokens|{
+                gen_value_init_ts(
                     &import_path,
                     &content_ts
                 )
@@ -315,7 +315,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let wrap_into_value_declaration_ts = |ident_ts: &dyn ToTokens|{
                 quote!{#import_path_value_ts<#ident_ts>}
             };
-            let wrap_into_value_initialization_ts = |content_ts: &dyn ToTokens|{
+            let wrap_into_value_init_ts = |content_ts: &dyn ToTokens|{
                 quote!{#import_path_value_ts { #ValueSc: #content_ts }}
             };
             let di_ident = &di.ident;
@@ -2220,7 +2220,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     gen_impl_pg_crud_default_option_some_vec_one_el_ts(&gen_ident_read_or_ident_with_id_standart_not_null_read_ucc(is_standart_with_id), &Ts2::new(), &{
                         let fields_ts = get_vec_syn_field(is_standart_with_id).iter().map(|el_6a2035df| {
                             let field_ident = &el_6a2035df.field_ident;
-                            let value_content_ts = wrap_into_value_initialization_ts(
+                            let value_content_ts = wrap_into_value_init_ts(
                                 &PgCrudDefaultOptionSomeVecOneElCall
                             );
                             quote! {#field_ident: Some(#value_content_ts)}
@@ -2338,7 +2338,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     let field_type_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&field_type);
                     let field_type_as_pg_json_type_read_ts = gen_type_as_pg_json_type_subtype_ts(&field_type, &PgJsonTypeSubtype::Read);
                     let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&field_type);
-                    let value_content_ts = wrap_into_value_initialization_ts(&{
+                    let value_content_ts = wrap_into_value_init_ts(&{
                         let default_but_option_is_some_call_ts_f378bbab = gen_ident_as_default_but_option_is_some_call_ts(
                             &field_type_as_pg_json_type_read_ts
                         );
@@ -2353,7 +2353,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         )
                     }
                 });
-                let value_content_ts = wrap_into_value_initialization_ts(&quote!{
+                let value_content_ts = wrap_into_value_init_ts(&quote!{
                     #ident_ts_6ad36393 {
                         #(#content_ts),*
                     }
@@ -3073,7 +3073,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         let elements_ts = vec_syn_field.iter().map(|el_2080bd7e| {
                             let field_ident = &el_2080bd7e.field_ident;
                             let variant_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&field_ident);
-                            let value_content_ts = wrap_into_value_initialization_ts(
+                            let value_content_ts = wrap_into_value_init_ts(
                                 &PgCrudDefaultOptionSomeVecOneElCall
                             );
                             quote! {#SelfUcc::#variant_ident_ucc_ts(#value_content_ts)}
@@ -3542,7 +3542,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             let variants_ts = vec_syn_field.iter().map(|el_2a5d6ff3| {
                                 let field_ident = &el_2a5d6ff3.field_ident;
                                 let variant_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&field_ident);
-                                let value_initialization_ts = gen_import_path_value_initialization_ts(&{
+                                let value_init_ts = gen_import_path_value_init_ts(&{
                                     let field_type_as_json_type_update_for_query_ts = gen_type_as_pg_json_type_update_for_query_ts(
                                         &el_2a5d6ff3.field_type
                                     );
@@ -3551,7 +3551,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 });
                                 quote! {
-                                    #ident_standart_not_null_update_el_ucc::#variant_ident_ucc_ts(v_121f1c54) => #SelfUcc::#variant_ident_ucc_ts(#value_initialization_ts)
+                                    #ident_standart_not_null_update_el_ucc::#variant_ident_ucc_ts(v_121f1c54) => #SelfUcc::#variant_ident_ucc_ts(#value_init_ts)
                                 }
                             });
                             quote!{
@@ -3935,7 +3935,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             };
                             let content_ts = get_vec_syn_field(is_standart_with_id).iter().map(|el_d2c28655| {
                                 let field_ident = &el_d2c28655.field_ident;
-                                let content_ts = wrap_into_value_initialization_ts(&gen_into_inner_ts(
+                                let content_ts = wrap_into_value_init_ts(&gen_into_inner_ts(
                                     &gen_type_as_pg_json_type_ts(&el_d2c28655.field_type),
                                     &quote!{v_6e5af985.#ValueSc},
                                 ));
@@ -5122,7 +5122,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         let read_only_ids_to_two_dimal_vec_read_inner_ts = match &pattern {
                             Pattern::Standart => match &is_nullable {
                                 IsNullable::False => {
-                                    let fields_last_initialization_ts = {
+                                    let fields_last_init_ts = {
                                         if vec_syn_field.len() == 1 {
                                             Ts2::new()
                                         }
@@ -5162,7 +5162,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             quote! {#field_ident_84b52e71: #content_ts.clone()}
                                         });
                                         let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el_9b199f7f.field_type);
-                                        let value_content_ts = wrap_into_value_initialization_ts(&quote!{el_2720df8a});
+                                        let value_content_ts = wrap_into_value_init_ts(&quote!{el_2720df8a});
                                         quote! {
                                             for el_7bf83754 in #field_type_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(&#ReadOnlyIdsSc.0.value.#field_ident) {
                                                 for el_2720df8a in el_7bf83754 {
@@ -5181,7 +5181,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     });
                                     quote! {
                                         let mut acc_ef081dc3 = Vec::new();
-                                        #fields_last_initialization_ts
+                                        #fields_last_init_ts
                                         #(#content_ts)*
                                         acc_ef081dc3
                                     }
@@ -5208,7 +5208,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         let fields_ts = vec_syn_field.iter().map(|el_value| {
                                             let field_ident_dd46e0cb = &el_value.field_ident;
                                             if field_ident == field_ident_dd46e0cb {
-                                                let value_content_ts = wrap_into_value_initialization_ts(&quote!{el_18d1f553});
+                                                let value_content_ts = wrap_into_value_init_ts(&quote!{el_18d1f553});
                                                 quote! {
                                                     #field_ident_dd46e0cb: Some(#value_content_ts)
                                                 }
@@ -5222,7 +5222,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             }
                                         });
                                         let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el_bb247316.field_type);
-                                        let value_content_ts = wrap_into_value_initialization_ts(&quote!{el_49a5bb62.0.#ValueSc.#IdSc.0.#ValueSc});
+                                        let value_content_ts = wrap_into_value_init_ts(&quote!{el_49a5bb62.0.#ValueSc.#IdSc.0.#ValueSc});
                                         quote! {
                                             for el_4b4da5aa in #field_type_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(
                                                 &el_49a5bb62.0.#ValueSc.#field_ident.clone()
@@ -5272,7 +5272,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     let parameters_ts = vec_syn_field.iter().map(|el_13640e7f| {
                                         let field_ident = &el_13640e7f.field_ident;
                                         let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el_13640e7f.field_type);
-                                        let value_content_ts = wrap_into_value_initialization_ts(&quote!{
+                                        let value_content_ts = wrap_into_value_init_ts(&quote!{
                                             #field_type_as_pg_json_type_test_cases_ts::#ReadInnerIntoReadWithNewOrTryNewUnwrapedSc(v_8ff65e09.#ValueSc)
                                         });
                                         quote! {#ValueSc.#field_ident.map(|v_8ff65e09|#value_content_ts)}
@@ -5293,7 +5293,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     let content_ts = vec_syn_field_with_id.iter().map(|el_96f7b50a| {
                                         let field_ident = &el_96f7b50a.field_ident;
                                         let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el_96f7b50a.field_type);
-                                        let value_content_ts = wrap_into_value_initialization_ts(&quote!{
+                                        let value_content_ts = wrap_into_value_init_ts(&quote!{
                                             #field_type_as_pg_json_type_test_cases_ts::#ReadInnerIntoReadWithNewOrTryNewUnwrapedSc(v_3ac52220.#ValueSc)
                                         });
                                         quote! {#field_ident: el_ffed1bfc.#field_ident.map(|v_3ac52220|#value_content_ts)}
@@ -5316,7 +5316,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         // else {
                                         //     quote!{.clone()}
                                         // };
-                                        let value_content_ts = wrap_into_value_initialization_ts(&quote!{
+                                        let value_content_ts = wrap_into_value_init_ts(&quote!{
                                             #field_type_as_pg_json_type_test_cases_ts::#ReadInnerIntoReadWithNewOrTryNewUnwrapedSc(
                                                 el_5c1f7f63.#ValueSc
                                                 // #maybe_dot_clone_ts
@@ -5350,7 +5350,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         let field_ident = &el_cefffeeb.field_ident;
                                         let field_ident_ucc = &ToTokensToUccTs::case_or_panic(&field_ident);
                                         let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el_cefffeeb.field_type);
-                                        let value_content_ts = wrap_into_value_initialization_ts(&quote!{
+                                        let value_content_ts = wrap_into_value_init_ts(&quote!{
                                             #field_type_as_pg_json_type_test_cases_ts::#ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc(el_23bdfe1e.#ValueSc)
                                         });
                                         quote! {
@@ -5412,7 +5412,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             Pattern::Standart => match &is_nullable {
                                 IsNullable::False => gen_fields_read_only_ids_into_option_value_read_inner_ts(&is_standart_with_id_false, &ValueSc),
                                 IsNullable::True => {
-                                    let value_content_ts = wrap_into_value_initialization_ts(&quote!{
+                                    let value_content_ts = wrap_into_value_init_ts(&quote!{
                                         #ValueSc.0.#ValueSc.and_then(|v_5d7e3961| match #ident_standart_not_null_as_pg_json_type_test_cases_ts::read_only_ids_into_option_value_read_inner(
                                             v_5d7e3961
                                         ) {
@@ -5425,14 +5425,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             },
                             Pattern::Array => match &is_nullable {
                                 IsNullable::False => {
-                                    let value_content_ts = wrap_into_value_initialization_ts(&{
+                                    let value_content_ts = wrap_into_value_init_ts(&{
                                         let content_ts = vec_syn_field_with_id.iter().map(|el_3ebdd830| {
                                             let field_ident = &el_3ebdd830.field_ident;
                                             let field_type = &el_3ebdd830.field_type;
                                             let field_type_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&field_type);
                                             let field_type_as_pg_json_type_read_ts = gen_type_as_pg_json_type_subtype_ts(&field_type, &PgJsonTypeSubtype::Read);
                                             let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&field_type);
-                                            let value_content_ts = wrap_into_value_initialization_ts(&{
+                                            let value_content_ts = wrap_into_value_init_ts(&{
                                                 let default_but_option_is_some_call_ts_a3f714b3 = gen_ident_as_default_but_option_is_some_call_ts(
                                                     &field_type_as_pg_json_type_read_ts
                                                 );
@@ -5456,7 +5456,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     quote! {Some(#value_content_ts)}
                                 }
                                 IsNullable::True => {
-                                    let value_content_ts = wrap_into_value_initialization_ts(&quote!{
+                                    let value_content_ts = wrap_into_value_init_ts(&quote!{
                                         #ValueSc.0.#ValueSc.and_then(|v_f816032d| match #ident_array_not_null_as_pg_json_type_test_cases_ts::#ReadOnlyIdsIntoOptionValueReadInnerSc(
                                             v_f816032d
                                         ) {
@@ -5471,7 +5471,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         let update_to_read_only_ids_ts = match &pattern {
                             Pattern::Standart => match &is_nullable {
                                 IsNullable::False => {
-                                    let fields_initialization_content_ts = vec_syn_field.iter().map(|el_3f07f901| {
+                                    let fields_init_content_ts = vec_syn_field.iter().map(|el_3f07f901| {
                                         let field_ident = &el_3f07f901.field_ident;
                                         quote! {let mut #field_ident = None;}
                                     });
@@ -5489,13 +5489,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         let field_ident = &el_af4d3d80.field_ident;
                                         quote! {#field_ident: #field_ident.expect("106f16f2")}
                                     });
-                                    let value_content_ts = wrap_into_value_initialization_ts(&quote!{
+                                    let value_content_ts = wrap_into_value_init_ts(&quote!{
                                         #ident_read_only_ids_handle_ucc{
                                             #(#struct_fields_content_ts),*
                                         }
                                     });
                                     quote! {
-                                        #(#fields_initialization_content_ts)*
+                                        #(#fields_init_content_ts)*
                                         for el_b3974846 in #ValueSc.0.to_vec() {
                                             match el_b3974846 {
                                                 #(#match_content_ts),*
@@ -5505,7 +5505,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                                 IsNullable::True => {
-                                    let value_content_ts = wrap_into_value_initialization_ts(&{
+                                    let value_content_ts = wrap_into_value_init_ts(&{
                                         quote!{
                                             #ValueSc.0.as_ref().map(#ident_standart_not_null_as_pg_json_type_test_cases_ts::#UpdateToReadOnlyIdsSc)
                                         }
@@ -5515,8 +5515,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             },
                             Pattern::Array => match &is_nullable {
                                 IsNullable::False => {
-                                    let value_content_ts = wrap_into_value_initialization_ts(&{
-                                        let initialization_ts = vec_syn_field.iter().map(|el_09cee28c| {
+                                    let value_content_ts = wrap_into_value_init_ts(&{
+                                        let init_ts = vec_syn_field.iter().map(|el_09cee28c| {
                                             let field_ident = &el_09cee28c.field_ident;
                                             quote! {let mut #field_ident = None;}
                                         });
@@ -5566,7 +5566,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 }
                                             }
                                         });
-                                        let value_content_ts = wrap_into_value_initialization_ts(&{
+                                        let value_content_ts = wrap_into_value_init_ts(&{
                                             let uuid_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&uuid_uuid_as_not_null_jsonb_string_ts);
                                             let fields_ts = vec_syn_field.iter().map(|el_134779da| {
                                                 let field_ident = &el_134779da.field_ident;
@@ -5584,7 +5584,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         });
                                         quote!{
                                             #ValueSc.#UpdateSc.to_vec().iter().map(|el_4634bb8a|{
-                                                #(#initialization_ts)*
+                                                #(#init_ts)*
                                                 #(#for_loop_ts)*
                                                 #ident_with_id_standart_not_null_read_only_ids_ucc(#value_content_ts)
                                             }).collect()
@@ -5593,7 +5593,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     quote! {#ident_read_only_ids_ucc(#value_content_ts)}
                                 }
                                 IsNullable::True => {
-                                    let value_content_ts = wrap_into_value_initialization_ts(&quote!{
+                                    let value_content_ts = wrap_into_value_init_ts(&quote!{
                                         #ValueSc.0.as_ref().map(#ident_array_not_null_as_pg_json_type_test_cases_ts::#UpdateToReadOnlyIdsSc)
                                     });
                                     quote! {#ident_read_only_ids_ucc(#value_content_ts)}
@@ -5601,7 +5601,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             },
                         };
                         let read_only_ids_to_option_value_read_default_option_some_vec_one_el_ts = {
-                            let value_initialization_ts = gen_import_path_value_initialization_ts(&match &pattern {
+                            let value_init_ts = gen_import_path_value_init_ts(&match &pattern {
                                 Pattern::Standart => match &is_nullable {
                                     IsNullable::False => {
                                         let parameters_ts = vec_syn_field.iter().map(|el_2b018c89| {
@@ -5678,10 +5678,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 },
                             });
-                            quote!{Some(#value_initialization_ts)}
+                            quote!{Some(#value_init_ts)}
                         };
                         let previous_read_merged_with_option_update_into_read_ts = {
-                            let fields_initialization_content_ts = vec_syn_field.iter().map(|el_8caae90c| {
+                            let fields_init_content_ts = vec_syn_field.iter().map(|el_8caae90c| {
                                 let field_ident = &el_8caae90c.field_ident;
                                 quote! {let mut #field_ident = None;}
                             });
@@ -5694,10 +5694,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                             });
-                            let gen_struct_initialization_ts = |function: &dyn Fn(&dyn ToTokens) -> Ts2|{//content_ts: &dyn ToTokens
+                            let gen_struct_init_ts = |function: &dyn Fn(&dyn ToTokens) -> Ts2|{//content_ts: &dyn ToTokens
                                 let ts = vec_syn_field.iter().map(|el_96e0a086| {
                                     let field_ident = &el_96e0a086.field_ident;
-                                    let value_initialization_ts = gen_import_path_value_initialization_ts(&{
+                                    let value_init_ts = gen_import_path_value_init_ts(&{
                                         let content_ts = function(&field_ident);
                                         let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el_96e0a086.field_type);
                                         quote!{
@@ -5707,7 +5707,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             )
                                         }
                                     });
-                                    quote! {#field_ident: Some(#value_initialization_ts)}
+                                    quote! {#field_ident: Some(#value_init_ts)}
                                 });
                                 quote!{#(#ts),*}
                             };
@@ -5736,7 +5736,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             match &is_nullable {
                                 IsNullable::False => match &pattern {
                                     Pattern::Standart => {
-                                        let struct_initializattion_ts = gen_struct_initialization_ts(&|content_ts: &dyn ToTokens|{
+                                        let struct_initializattion_ts = gen_struct_init_ts(&|content_ts: &dyn ToTokens|{
                                             quote!{
                                                 #ReadSc.#content_ts.expect("a2d26e36").#ValueSc
                                             }
@@ -5744,7 +5744,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         quote!{
                                             match #OptionUpdateSc {
                                                 Some(v_e5377436) => {
-                                                    #(#fields_initialization_content_ts)*
+                                                    #(#fields_init_content_ts)*
                                                     for el_629b1544 in v_e5377436.0.into_vec() {
                                                         match el_629b1544 {
                                                             #(#match_content_ts),*
@@ -5759,7 +5759,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         }
                                     },
                                     Pattern::Array => {
-                                        let struct_initializattion_ts = gen_struct_initialization_ts(&|content_ts: &dyn ToTokens|{
+                                        let struct_initializattion_ts = gen_struct_init_ts(&|content_ts: &dyn ToTokens|{
                                             quote!{
                                                 found_read_element.#content_ts.expect("2e8229f7").#ValueSc
                                             }
@@ -5782,7 +5782,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                             }
                                                         }
                                                         let found_read_element = option_read_element.expect("139882b9");
-                                                        #(#fields_initialization_content_ts)*
+                                                        #(#fields_init_content_ts)*
                                                         for el_629b1544 in el_377d1bb4.fields.0.into_vec() {
                                                             match el_629b1544 {
                                                                 #(#match_content_ts),*
@@ -5894,13 +5894,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             }
                         };
                         let read_only_ids_merged_with_create_into_option_value_read_ts = {
-                            let value_initialization_ts = gen_import_path_value_initialization_ts(&quote!{
+                            let value_init_ts = gen_import_path_value_init_ts(&quote!{
                                 <#SelfUcc as #import_path::PgJsonTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoReadSc(
                                     #ReadOnlyIdsSc,
                                     #CreateSc
                                 )
                             });
-                            quote!{Some(#value_initialization_ts)}
+                            quote!{Some(#value_init_ts)}
                         };
                         let read_only_ids_merged_with_create_into_table_type_declaration_ts = {
                             let gen_nullable_ts = |ident_ts_971139d7: &dyn ToTokens, content_ts: &dyn ToTokens|{
@@ -6662,7 +6662,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         }
                                     },
                                     Pattern::Array => {
-                                        let initialization_ts = vec_syn_field.iter().map(|el_3fde3bb4| {
+                                        let init_ts = vec_syn_field.iter().map(|el_3fde3bb4| {
                                             let field_ident = &el_3fde3bb4.field_ident;
                                             let field_type = &el_3fde3bb4.field_type;
                                             let field_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&field_type);
@@ -6770,7 +6770,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                         )
                                                         .expect("31db8e1e"),
                                                     );
-                                                    #(#initialization_ts)*
+                                                    #(#init_ts)*
                                                     if #if_some_content_ts {
                                                         let mut all_fields_acc = vec![];
                                                         #(#content_ts)*

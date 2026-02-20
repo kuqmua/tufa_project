@@ -250,7 +250,7 @@
 
 ## Procedural Macros
 * Cut enum extension into few different proc macroses
-* Write match should trace inside init or new function of er initialization
+* Write match should trace inside init or new function of er init
 * https://blog.turbo.fish/proc-macro-er-handling/
 * Some logic around location() file!() line!() column!() - maybe gen all other functions - github link and others on compile time instead of runtime?
 

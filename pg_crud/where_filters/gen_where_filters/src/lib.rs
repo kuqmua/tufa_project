@@ -237,7 +237,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         pub regular_expression_case: RegularExpressionCase,
         pub value: RegexRegex
     };
-    let regular_expression_case_and_value_default_initialization_ts = quote! {
+    let regular_expression_case_and_value_default_init_ts = quote! {
         regular_expression_case: #pg_crud_common_default_option_some_vec_one_el_call_ts,
         #value_default_option_some_vec_one_el_ts
     };
@@ -262,7 +262,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         ShouldAddDeclarationOfStructIdentGeneric::True {
             maybe_additional_traits_ts: None,
         };
-    let gen_match_increment_checked_add_one_initialization_ts = |ident_ts: &dyn ToTokens| {
+    let gen_match_increment_checked_add_one_init_ts = |ident_ts: &dyn ToTokens| {
         quote! {
             let #ident_ts = match pg_crud_common::increment_checked_add_one_returning_increment(#IncrementSc) {
                 Ok(v_25d59e01) => v_25d59e01,
@@ -309,9 +309,9 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         |vec_length_ts: &dyn ToTokens, kind_of_unsigned_part_of_i32: &KindOfUnsignedPartOfI32| {
             quote! {pub #DimsSc: BoundedStdVecVec<pg_crud_common::#kind_of_unsigned_part_of_i32, #vec_length_ts>}
         };
-    let value_match_increment_checked_add_one_initialization_ts =
-        gen_match_increment_checked_add_one_initialization_ts(&ValueSc);
-    let gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts =
+    let value_match_increment_checked_add_one_init_ts =
+        gen_match_increment_checked_add_one_init_ts(&ValueSc);
+    let gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_init_ts =
         |ident_ts: &dyn ToTokens, field_ts: &dyn ToTokens, function_ts: &dyn ToTokens| {
             quote! {
                 let #ident_ts = match self.#field_ts.#function_ts(#IncrementSc, #ColumnSc, is_need_to_add_logical_operator) {
@@ -322,11 +322,11 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 };
             }
         };
-    let value_match_self_value_query_part_initialization_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&ValueSc, &ValueSc, &quote! {query_part});
-    let dims_default_initialization_ts = quote! {
+    let value_match_self_value_query_part_init_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_init_ts(&ValueSc, &ValueSc, &quote! {query_part});
+    let dims_default_init_ts = quote! {
         #DimsSc: #pg_crud_common_default_option_some_vec_one_el_call_ts
     };
-    let dims_default_initialization_comma_ts = quote! {#dims_default_initialization_ts,};
+    let dims_default_init_comma_ts = quote! {#dims_default_init_ts,};
     let query_self_dims_query_bind_query_ts = quote! {
         match #SelfSc.#DimsSc.query_bind(#QuerySc) {
             Ok(v_ed6f1157) => {
@@ -344,10 +344,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             #pub_value_t_ts
         }
     };
-    let gen_maybe_dims_default_initialization_value_default_ts =
-        |maybe_dims_default_initialization_ts: &dyn ToTokens| {
+    let gen_maybe_dims_default_init_value_default_ts =
+        |maybe_dims_default_init_ts: &dyn ToTokens| {
             quote! {
-                #maybe_dims_default_initialization_ts
+                #maybe_dims_default_init_ts
                 #value_default_option_some_vec_one_el_ts
             }
         };
@@ -376,8 +376,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     PgTypeOrPgJsonType::PgType => gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(&dim_number),
                     PgTypeOrPgJsonType::PgJsonType => gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts(&dim_number),
                 },
-                dims_default_initialization_comma_ts.clone(),
-                gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(
+                dims_default_init_comma_ts.clone(),
+                gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_init_ts(
                     &DimsIndexesSc,
                     &DimsSc,
                     &match &pg_type_or_pg_json_type {
@@ -422,8 +422,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                      gen_format_handle_str: &dyn Fn(&PgTypeKind) -> String| {
                         let (
                             maybe_dims_declaration_ts,
-                            maybe_dims_default_initialization_ts,
-                            maybe_dims_indexes_initialization_ts,
+                            maybe_dims_default_init_ts,
+                            maybe_dims_indexes_init_ts,
                             pg_type_kind,
                             maybe_additional_parameters_ts,
                             maybe_dims_query_bind_content_ts,
@@ -431,15 +431,15 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         (
                             should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
                             gen_maybe_dims_declaration_pub_value_t_ts(&maybe_dims_declaration_ts),
-                            gen_maybe_dims_default_initialization_value_default_ts(
-                                &maybe_dims_default_initialization_ts,
+                            gen_maybe_dims_default_init_value_default_ts(
+                                &maybe_dims_default_init_ts,
                             ),
                             IncrementParameterUnderscore::False,
                             {
                                 let format_handle_ts = dq_ts(&gen_format_handle_str(&pg_type_kind));
                                 quote! {
-                                    #maybe_dims_indexes_initialization_ts
-                                    #value_match_increment_checked_add_one_initialization_ts
+                                    #maybe_dims_indexes_init_ts
+                                    #value_match_increment_checked_add_one_init_ts
                                     Ok(format!(
                                         #format_handle_ts,
                                         &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -474,8 +474,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 let gen_between_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
                         maybe_dims_declaration_ts,
-                        maybe_dims_default_initialization_ts,
-                        maybe_dims_indexes_initialization_ts,
+                        maybe_dims_default_init_ts,
+                        maybe_dims_indexes_init_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
                         maybe_dims_query_bind_content_ts,
@@ -486,13 +486,13 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #maybe_dims_declaration_ts
                             #pub_value_between_t_ts
                         },
-                        gen_maybe_dims_default_initialization_value_default_ts(&maybe_dims_default_initialization_ts),
+                        gen_maybe_dims_default_init_value_default_ts(&maybe_dims_default_init_ts),
                         IncrementParameterUnderscore::False,
                         {
                             let format_handle_ts = dq_ts(&format!("{{}}({{}}{} {{}})", pg_type_kind.format_argument()));
                             quote! {
-                                #maybe_dims_indexes_initialization_ts
-                                #value_match_self_value_query_part_initialization_ts
+                                #maybe_dims_indexes_init_ts
+                                #value_match_self_value_query_part_init_ts
                                 Ok(format!(
                                     #format_handle_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -512,8 +512,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 let gen_in_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
                         maybe_dims_declaration_ts,
-                        maybe_dims_default_initialization_ts,
-                        maybe_dims_indexes_initialization_ts,
+                        maybe_dims_default_init_ts,
+                        maybe_dims_indexes_init_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
                         maybe_dims_query_bind_content_ts,
@@ -528,9 +528,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #maybe_dims_declaration_ts
                             #pub_value_pg_type_not_empty_unique_vec_t_ts
                         },
-                        gen_maybe_dims_default_initialization_value_default_ts(
-                            &maybe_dims_default_initialization_ts,
-                        ),
+                        gen_maybe_dims_default_init_value_default_ts(&maybe_dims_default_init_ts),
                         IncrementParameterUnderscore::False,
                         {
                             let format_handle_ts = dq_ts(&format!(
@@ -542,7 +540,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 &quote! {panic!("87f47f75");},
                             );
                             quote! {
-                                #maybe_dims_indexes_initialization_ts
+                                #maybe_dims_indexes_init_ts
                                 let #ValueSc = {
                                     let mut acc_14596a52 = String::default();
                                     for _ in #SelfSc.#ValueSc.to_vec() {
@@ -582,8 +580,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 let gen_regular_expression_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
                         maybe_dims_declaration_ts,
-                        maybe_dims_default_initialization_ts,
-                        maybe_dims_indexes_initialization_ts,
+                        maybe_dims_default_init_ts,
+                        maybe_dims_indexes_init_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
                         maybe_dims_query_bind_content_ts,
@@ -595,8 +593,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #regular_expression_case_and_value_declaration_ts
                         },
                         quote! {
-                            #maybe_dims_default_initialization_ts
-                            #regular_expression_case_and_value_default_initialization_ts
+                            #maybe_dims_default_init_ts
+                            #regular_expression_case_and_value_default_init_ts
                         },
                         IncrementParameterUnderscore::False,
                         {
@@ -605,8 +603,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 pg_type_kind.format_argument()
                             ));
                             quote! {
-                                #maybe_dims_indexes_initialization_ts
-                                #value_match_increment_checked_add_one_initialization_ts
+                                #maybe_dims_indexes_init_ts
+                                #value_match_increment_checked_add_one_init_ts
                                 Ok(format!(
                                     #format_handle_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -627,8 +625,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 let gen_before_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
                         maybe_dims_declaration_ts,
-                        maybe_dims_default_initialization_ts,
-                        maybe_dims_indexes_initialization_ts,
+                        maybe_dims_default_init_ts,
+                        maybe_dims_indexes_init_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
                         maybe_dims_query_bind_content_ts,
@@ -636,9 +634,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
                         gen_maybe_dims_declaration_pub_value_t_ts(&maybe_dims_declaration_ts),
-                        gen_maybe_dims_default_initialization_value_default_ts(
-                            &maybe_dims_default_initialization_ts,
-                        ),
+                        gen_maybe_dims_default_init_value_default_ts(&maybe_dims_default_init_ts),
                         IncrementParameterUnderscore::False,
                         {
                             let format_handle_ts = dq_ts(&format!(
@@ -646,8 +642,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 pg_type_kind.format_argument()
                             ));
                             quote! {
-                                #maybe_dims_indexes_initialization_ts
-                                #value_match_increment_checked_add_one_initialization_ts
+                                #maybe_dims_indexes_init_ts
+                                #value_match_increment_checked_add_one_init_ts
                                 Ok(format!(
                                     #format_handle_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -668,8 +664,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     |pg_type_pattern_handle: &PgTypePatternHandle, pg_syntax: &dyn Display| {
                         let (
                             maybe_dims_declaration_ts,
-                            maybe_dims_default_initialization_ts,
-                            maybe_dims_indexes_initialization_ts,
+                            maybe_dims_default_init_ts,
+                            maybe_dims_indexes_init_ts,
                             pg_type_kind,
                             maybe_additional_parameters_ts,
                             maybe_dims_query_bind_content_ts,
@@ -677,7 +673,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         (
                             should_add_declaration_of_struct_ident_generic_false.clone(),
                             maybe_dims_declaration_ts,
-                            maybe_dims_default_initialization_ts,
+                            maybe_dims_default_init_ts,
                             match &pg_type_pattern_handle {
                                 PgTypePatternHandle::Standart => IncrementParameterUnderscore::True,
                                 PgTypePatternHandle::ArrayDim1
@@ -693,7 +689,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     pg_type_kind.format_argument()
                                 ));
                                 quote! {
-                                    #maybe_dims_indexes_initialization_ts
+                                    #maybe_dims_indexes_init_ts
                                     Ok(format!(
                                         #format_handle_ts,
                                         &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -758,8 +754,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     |pg_type_pattern_handle: &PgTypePatternHandle| {
                         let (
                             maybe_dims_declaration_ts,
-                            maybe_dims_default_initialization_ts,
-                            maybe_dims_indexes_initialization_ts,
+                            maybe_dims_default_init_ts,
+                            maybe_dims_indexes_init_ts,
                             pg_type_kind,
                             maybe_additional_parameters_ts,
                             maybe_dims_query_bind_content_ts,
@@ -772,7 +768,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 pub encoded_string_representation: String,
                             },
                             quote! {
-                                #maybe_dims_default_initialization_ts
+                                #maybe_dims_default_init_ts
                                 encode_format: #pg_crud_common_default_option_some_vec_one_el_call_ts,
                                 encoded_string_representation: #core_default_default_default_ts
                             },
@@ -783,8 +779,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     pg_type_kind.format_argument()
                                 ));
                                 quote! {
-                                    #maybe_dims_indexes_initialization_ts
-                                    #value_match_increment_checked_add_one_initialization_ts
+                                    #maybe_dims_indexes_init_ts
+                                    #value_match_increment_checked_add_one_init_ts
                                     Ok(format!(
                                         #format_handle_ts,
                                         &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -895,8 +891,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     };
                 let gen_range_length_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
-                        maybe_dims_declaration_ts, maybe_dims_default_initialization_ts,
-                        maybe_dims_indexes_initialization_ts,
+                        maybe_dims_declaration_ts, maybe_dims_default_init_ts,
+                        maybe_dims_indexes_init_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
                         maybe_dims_query_bind_content_ts
@@ -904,10 +900,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         |()| (Ts2::new(), Ts2::new(), Ts2::new(), PgTypeKind::Standart, quote! {#ColumnSc,}, Ts2::new()),
                         |dim_number| (
                             gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(&dim_number),
-                            dims_default_initialization_comma_ts.clone(),
+                            dims_default_init_comma_ts.clone(),
                             {
-                                let dims_indexes1_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&quote! {dims_indexes1}, &DimsSc, &quote! {pg_type_query_part});
-                                let dims_indexes2_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&quote! {dims_indexes2}, &DimsSc, &quote! {pg_type_query_part});
+                                let dims_indexes1_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_init_ts(&quote! {dims_indexes1}, &DimsSc, &quote! {pg_type_query_part});
+                                let dims_indexes2_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_init_ts(&quote! {dims_indexes2}, &DimsSc, &quote! {pg_type_query_part});
                                 quote! {
                                     #dims_indexes1_ts
                                     #dims_indexes2_ts
@@ -938,9 +934,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #maybe_dims_declaration_ts
                             #pub_value_not_zero_unsigned_part_of_i32_declaration_ts
                         },
-                        gen_maybe_dims_default_initialization_value_default_ts(
-                            &maybe_dims_default_initialization_ts,
-                        ),
+                        gen_maybe_dims_default_init_value_default_ts(&maybe_dims_default_init_ts),
                         IncrementParameterUnderscore::False,
                         {
                             let format_handle_ts = dq_ts(&format!(
@@ -949,8 +943,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 pg_type_kind.format_argument(),
                             ));
                             quote! {
-                                #maybe_dims_indexes_initialization_ts
-                                #value_match_increment_checked_add_one_initialization_ts
+                                #maybe_dims_indexes_init_ts
+                                #value_match_increment_checked_add_one_init_ts
                                 Ok(format!(
                                     #format_handle_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -971,8 +965,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     PgTypeFilter::Equal { .. } => {
                         let (
                             maybe_dims_declaration_ts,
-                            maybe_dims_default_initialization_ts,
-                            maybe_dims_indexes_initialization_ts,
+                            maybe_dims_default_init_ts,
+                            maybe_dims_indexes_init_ts,
                             _,
                             _,
                             maybe_dims_query_bind_content_ts,
@@ -984,17 +978,17 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 ),
                             },
                             gen_maybe_dims_declaration_pub_value_t_ts(&maybe_dims_declaration_ts),
-                            gen_maybe_dims_default_initialization_value_default_ts(
-                                &maybe_dims_default_initialization_ts,
+                            gen_maybe_dims_default_init_value_default_ts(
+                                &maybe_dims_default_init_ts,
                             ),
                             IncrementParameterUnderscore::False,
                             quote! {
-                                #maybe_dims_indexes_initialization_ts
+                                #maybe_dims_indexes_init_ts
                                 let operator = <T as pg_crud_common::PgTypeEqualOperator>::operator(&#SelfSc.#ValueSc);
                                 let operator_query_str = operator.to_query_str();
                                 let content = match operator {
                                     pg_crud_common::EqualOperator::Equal => {
-                                        #value_match_increment_checked_add_one_initialization_ts
+                                        #value_match_increment_checked_add_one_init_ts
                                         format!("{operator_query_str} ${value}")
                                     },
                                     pg_crud_common::EqualOperator::IsNull => operator_query_str.to_owned(),
@@ -1014,8 +1008,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     PgTypeFilter::DimOneEqual { .. } => {
                         let (
                             maybe_dims_declaration_ts,
-                            maybe_dims_default_initialization_ts,
-                            maybe_dims_indexes_initialization_ts,
+                            maybe_dims_default_init_ts,
+                            maybe_dims_indexes_init_ts,
                             _,
                             _,
                             maybe_dims_query_bind_content_ts,
@@ -1027,17 +1021,17 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 ),
                             },
                             gen_maybe_dims_declaration_pub_value_t_ts(&maybe_dims_declaration_ts),
-                            gen_maybe_dims_default_initialization_value_default_ts(
-                                &maybe_dims_default_initialization_ts,
+                            gen_maybe_dims_default_init_value_default_ts(
+                                &maybe_dims_default_init_ts,
                             ),
                             IncrementParameterUnderscore::False,
                             quote! {
-                                #maybe_dims_indexes_initialization_ts
+                                #maybe_dims_indexes_init_ts
                                 let operator = <T as pg_crud_common::PgTypeEqualOperator>::operator(&#SelfSc.#ValueSc);
                                 let operator_query_str = operator.to_query_str();
                                 let content = match operator {
                                     pg_crud_common::EqualOperator::Equal => {
-                                        #value_match_increment_checked_add_one_initialization_ts
+                                        #value_match_increment_checked_add_one_init_ts
                                         format!("{operator_query_str} ${value}")
                                     }
                                     pg_crud_common::EqualOperator::IsNull => operator_query_str.to_owned(),
@@ -1259,8 +1253,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                  gen_format_handle_str: &dyn Fn(&PgTypeKind) -> String| {
                     let (
                         maybe_dims_declaration_ts,
-                        maybe_dims_default_initialization_ts,
-                        maybe_dims_indexes_initialization_ts,
+                        maybe_dims_default_init_ts,
+                        maybe_dims_indexes_init_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
                         maybe_dims_query_bind_content_ts,
@@ -1272,14 +1266,14 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #pub_value_t_ts
                         },
                         quote! {
-                            #maybe_dims_default_initialization_ts
+                            #maybe_dims_default_init_ts
                             #value_default_option_some_vec_one_el_ts
                         },
                         {
                             let format_handle_ts = dq_ts(&gen_format_handle_str(&pg_type_kind));
                             quote! {
-                                #maybe_dims_indexes_initialization_ts
-                                #value_match_increment_checked_add_one_initialization_ts
+                                #maybe_dims_indexes_init_ts
+                                #value_match_increment_checked_add_one_init_ts
                                 Ok(format!(
                                     #format_handle_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1326,8 +1320,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 |pg_type_pattern_handle: &PgTypePatternHandle, operation: &dyn Display| {
                     let (
                         maybe_dims_declaration_ts,
-                        maybe_dims_default_initialization_ts,
-                        maybe_dims_indexes_initialization_ts,
+                        maybe_dims_default_init_ts,
+                        maybe_dims_indexes_init_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
                         maybe_dims_query_bind_content_ts,
@@ -1339,7 +1333,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             pub #ValueSc: #unsigned_part_of_i32_ts
                         },
                         quote! {
-                            #maybe_dims_default_initialization_ts
+                            #maybe_dims_default_init_ts
                             #ValueSc: #core_default_default_default_ts
                         },
                         {
@@ -1348,8 +1342,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 pg_type_kind.format_argument()
                             ));
                             quote! {
-                                #maybe_dims_indexes_initialization_ts
-                                #value_match_increment_checked_add_one_initialization_ts
+                                #maybe_dims_indexes_init_ts
+                                #value_match_increment_checked_add_one_init_ts
                                 Ok(format!(
                                     #format_handle_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1401,8 +1395,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_between_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 let (
                     maybe_dims_declaration_ts,
-                    maybe_dims_default_initialization_ts,
-                    maybe_dims_indexes_initialization_ts,
+                    maybe_dims_default_init_ts,
+                    maybe_dims_indexes_init_ts,
                     pg_type_kind,
                     maybe_additional_parameters_ts,
                     maybe_dims_query_bind_content_ts,
@@ -1413,7 +1407,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         #maybe_dims_declaration_ts
                         #pub_value_between_t_ts
                     },
-                    gen_maybe_dims_default_initialization_value_default_ts(&maybe_dims_default_initialization_ts),
+                    gen_maybe_dims_default_init_value_default_ts(&maybe_dims_default_init_ts),
                     {
                         let content_ts: &dyn ToTokens = match pg_type_pattern_handle {
                             PgTypePatternHandle::Standart => &quote!{
@@ -1431,11 +1425,11 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             PgTypePatternHandle::ArrayDim1 |
                             PgTypePatternHandle::ArrayDim2 |
                             PgTypePatternHandle::ArrayDim3 |
-                            PgTypePatternHandle::ArrayDim4 => &value_match_increment_checked_add_one_initialization_ts
+                            PgTypePatternHandle::ArrayDim4 => &value_match_increment_checked_add_one_init_ts
                         };
                         let format_handle_ts = dq_ts(&format!("{{}}({{}}{} {{}})", pg_type_kind.format_argument()));
                         quote! {
-                            #maybe_dims_indexes_initialization_ts
+                            #maybe_dims_indexes_init_ts
                             #content_ts
                             Ok(format!(
                                 #format_handle_ts,
@@ -1475,8 +1469,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_in_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 let (
                     maybe_dims_declaration_ts,
-                    maybe_dims_default_initialization_ts,
-                    maybe_dims_indexes_initialization_ts,
+                    maybe_dims_default_init_ts,
+                    maybe_dims_indexes_init_ts,
                     pg_type_kind,
                     maybe_additional_parameters_ts,
                     maybe_dims_query_bind_content_ts,
@@ -1488,18 +1482,16 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         #maybe_dims_declaration_ts
                         #pub_value_pg_json_type_not_empty_unique_vec_t_ts
                     },
-                    gen_maybe_dims_default_initialization_value_default_ts(
-                        &maybe_dims_default_initialization_ts,
-                    ),
+                    gen_maybe_dims_default_init_value_default_ts(&maybe_dims_default_init_ts),
                     {
                         let format_handle_ts = dq_ts(&format!(
                             "{{}}({{}}{} in ({{}}))",
                             pg_type_kind.format_argument()
                         ));
-                        let value_initialization_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&ValueSc, &ValueSc, &quote! {query_part_one_by_one});
+                        let value_init_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_init_ts(&ValueSc, &ValueSc, &quote! {query_part_one_by_one});
                         quote! {
-                            #maybe_dims_indexes_initialization_ts
-                            #value_initialization_ts
+                            #maybe_dims_indexes_init_ts
+                            #value_init_ts
                             Ok(format!(
                                 #format_handle_ts,
                                 &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1527,20 +1519,20 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_regular_expression_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 let (
                     maybe_dims_declaration_ts,
-                    maybe_dims_default_initialization_ts,
-                    maybe_dims_indexes_initialization_ts,
+                    maybe_dims_default_init_ts,
+                    maybe_dims_indexes_init_ts,
                     pg_type_kind, maybe_additional_parameters_ts,
                     maybe_dims_query_bind_content_ts
                 ) = DimNumber::try_from(pg_type_pattern_handle).map_or_else(
                     |()| (Ts2::new(), Ts2::new(), Ts2::new(), PgTypeKind::Standart, Ts2::new(), Ts2::new()),
                     |dim_number| (
                         gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts(&dim_number),
-                        dims_default_initialization_comma_ts.clone(),
+                        dims_default_init_comma_ts.clone(),
                         {
-                            let dims_indexes_initialization_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_ts(&DimsIndexesSc, &DimsSc, &quote! {pg_json_type_query_part_minus_one});
-                            let last_dims_index_intialization_ts = gen_match_increment_checked_add_one_initialization_ts(&quote! {last_dims_index});
+                            let dims_indexes_init_ts = gen_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_init_ts(&DimsIndexesSc, &DimsSc, &quote! {pg_json_type_query_part_minus_one});
+                            let last_dims_index_intialization_ts = gen_match_increment_checked_add_one_init_ts(&quote! {last_dims_index});
                             quote! {
-                                #dims_indexes_initialization_ts
+                                #dims_indexes_init_ts
                                 #last_dims_index_intialization_ts
                             }
                         },
@@ -1559,8 +1551,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         #regular_expression_case_and_value_declaration_ts
                     },
                     quote! {
-                        #maybe_dims_default_initialization_ts
-                        #regular_expression_case_and_value_default_initialization_ts
+                        #maybe_dims_default_init_ts
+                        #regular_expression_case_and_value_default_init_ts
                     },
                     {
                         let format_handle_ts = dq_ts(&format!(
@@ -1571,8 +1563,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             }
                         ));
                         quote! {
-                            #maybe_dims_indexes_initialization_ts
-                            #value_match_increment_checked_add_one_initialization_ts
+                            #maybe_dims_indexes_init_ts
+                            #value_match_increment_checked_add_one_init_ts
                             Ok(format!(
                                 #format_handle_ts,
                                 &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1594,8 +1586,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
                         maybe_dims_declaration_ts,
-                        maybe_dims_default_initialization_ts,
-                        maybe_dims_indexes_initialization_ts,
+                        maybe_dims_default_init_ts,
+                        maybe_dims_indexes_init_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
                         maybe_dims_query_bind_content_ts,
@@ -1607,8 +1599,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #regular_expression_case_and_value_declaration_ts
                         },
                         quote! {
-                            #maybe_dims_default_initialization_ts
-                            #regular_expression_case_and_value_default_initialization_ts
+                            #maybe_dims_default_init_ts
+                            #regular_expression_case_and_value_default_init_ts
                         },
                         {
                             let format_handle_ts = dq_ts(&format!(
@@ -1618,8 +1610,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 pg_type_kind.format_argument()
                             ));
                             quote! {
-                                #maybe_dims_indexes_initialization_ts
-                                #value_match_increment_checked_add_one_initialization_ts
+                                #maybe_dims_indexes_init_ts
+                                #value_match_increment_checked_add_one_init_ts
                                 Ok(format!(
                                     #format_handle_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1641,8 +1633,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
                         maybe_dims_declaration_ts,
-                        maybe_dims_default_initialization_ts,
-                        maybe_dims_indexes_initialization_ts,
+                        maybe_dims_default_init_ts,
+                        maybe_dims_indexes_init_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
                         maybe_dims_query_bind_content_ts,
@@ -1654,8 +1646,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #regular_expression_case_and_value_declaration_ts
                         },
                         quote! {
-                            #maybe_dims_default_initialization_ts
-                            #regular_expression_case_and_value_default_initialization_ts
+                            #maybe_dims_default_init_ts
+                            #regular_expression_case_and_value_default_init_ts
                         },
                         {
                             let format_handle_ts = dq_ts(&format!(
@@ -1665,8 +1657,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 pg_type_kind.format_argument()
                             ));
                             quote! {
-                                #maybe_dims_indexes_initialization_ts
-                                #value_match_increment_checked_add_one_initialization_ts
+                                #maybe_dims_indexes_init_ts
+                                #value_match_increment_checked_add_one_init_ts
                                 Ok(format!(
                                     #format_handle_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1688,8 +1680,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
                         maybe_dims_declaration_ts,
-                        maybe_dims_default_initialization_ts,
-                        maybe_dims_indexes_initialization_ts,
+                        maybe_dims_default_init_ts,
+                        maybe_dims_indexes_init_ts,
                         pg_type_kind,
                         maybe_additional_parameters_ts,
                         maybe_dims_query_bind_content_ts,
@@ -1702,7 +1694,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #pub_value_pg_json_type_not_empty_unique_vec_t_ts
                         },
                         quote! {
-                            #maybe_dims_default_initialization_ts
+                            #maybe_dims_default_init_ts
                             #value_default_option_some_vec_one_el_ts
                         },
                         {
@@ -1711,8 +1703,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 pg_type_kind.format_argument()
                             ));
                             quote! {
-                                #maybe_dims_indexes_initialization_ts
-                                #value_match_self_value_query_part_initialization_ts
+                                #maybe_dims_indexes_init_ts
+                                #value_match_self_value_query_part_init_ts
                                 Ok(format!(
                                     #format_handle_ts,
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1732,8 +1724,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_overlaps_with_array_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 let (
                     maybe_dims_declaration_ts,
-                    maybe_dims_default_initialization_ts,
-                    maybe_dims_indexes_initialization_ts,
+                    maybe_dims_default_init_ts,
+                    maybe_dims_indexes_init_ts,
                     pg_type_kind,
                     maybe_additional_parameters_ts,
                     maybe_dims_query_bind_content_ts,
@@ -1746,7 +1738,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         #pub_value_pg_json_type_not_empty_unique_vec_t_ts
                     },
                     quote! {
-                        #maybe_dims_default_initialization_ts
+                        #maybe_dims_default_init_ts
                         #value_default_option_some_vec_one_el_ts
                     },
                     {
@@ -1755,8 +1747,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             pg_type_kind.format_argument()
                         ));
                         quote! {
-                            #maybe_dims_indexes_initialization_ts
-                            #value_match_self_value_query_part_initialization_ts
+                            #maybe_dims_indexes_init_ts
+                            #value_match_self_value_query_part_init_ts
                             Ok(format!(
                                 #format_handle_ts,
                                 &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),

@@ -2062,7 +2062,7 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
     }
 }
 #[must_use]
-pub fn pg_crud_common_query_part_er_checked_add_initialization_ts() -> Ts2 {
+pub fn pg_crud_common_query_part_er_checked_add_init_ts() -> Ts2 {
     quote! {pg_crud_common::QueryPartEr::CheckedAdd { loc: location_lib::loc!() }}
 }
 pub fn gen_impl_crate_is_string_empty_for_ident_content_ts(
@@ -2077,12 +2077,9 @@ pub fn gen_impl_crate_is_string_empty_for_ident_content_ts(
         }
     }
 }
-pub fn gen_match_try_new_in_deserialize_ts(
-    ident: &dyn ToTokens,
-    initialization_ts: &dyn ToTokens,
-) -> Ts2 {
+pub fn gen_match_try_new_in_deserialize_ts(ident: &dyn ToTokens, init_ts: &dyn ToTokens) -> Ts2 {
     quote! {
-        match #ident::try_new(#initialization_ts) {
+        match #ident::try_new(#init_ts) {
             Ok(v) => Ok(v),
             Err(er) => Err(serde::de::Error::custom(format!("{er:?}")))
         }
@@ -2159,7 +2156,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         quote! {#(#visit_bytes_value_enum_variants_ts),*,}
     };
     let struct_ident_dq_ts = gen_struct_ident_dq_ts(&ident);
-    let visit_seq_fields_initialization_ts = {
+    let visit_seq_fields_init_ts = {
         let content_ts = vec_ident_type.iter().enumerate().map(|(index, (el_ident, el_type))| {
             let field_index_handle_ts = gen_underscore_underscore_field_index_handle_ts(index);
             let type_ts = gen_type_ts(el_ident, el_type);
@@ -2176,7 +2173,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         let fields_ts = (0..len).map(gen_underscore_underscore_field_index_handle_ts);
         quote! {#(#fields_ts),*}
     });
-    let visit_map_fields_initialization_ts = {
+    let visit_map_fields_init_ts = {
         let content_ts = vec_ident_type
             .iter()
             .enumerate()
@@ -2342,7 +2339,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                         where
                             __A: _serde::de::SeqAccess<'de>,
                         {
-                            #visit_seq_fields_initialization_ts
+                            #visit_seq_fields_init_ts
                             #match_try_new_in_deserialize_ts
                         }
                         #[inline]
@@ -2353,7 +2350,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                         where
                             __A: _serde::de::MapAccess<'de>,
                         {
-                            #visit_map_fields_initialization_ts
+                            #visit_map_fields_init_ts
                             while let Some(__key) = _serde::de::MapAccess::next_key::<
                                 __Field,
                             >(&mut __map)? {
@@ -2396,7 +2393,7 @@ pub fn maybe_wrap_into_braces_ts(content_ts: &dyn ToTokens, bool: bool) -> Ts2 {
         quote! {#content_ts}
     }
 }
-pub fn gen_value_initialization_ts(import_path: &ImportPath, content_ts: &dyn ToTokens) -> Ts2 {
+pub fn gen_value_init_ts(import_path: &ImportPath, content_ts: &dyn ToTokens) -> Ts2 {
     quote! {#import_path::Value { #ValueSc: #content_ts }}
 }
 pub fn impl_pg_type_equal_operator_for_ident_ts(

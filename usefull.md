@@ -12,7 +12,7 @@ A collection of useful Rust resources, libraries, patterns, and code examples.
 - [Builder Pattern](#builder-pattern)
 - [Best Practices](#best-practices)
 - [Validation](#validation)
-- [Compile-time Initialization](#compile-time-initialization)
+- [Compile-time Initialization](#compile-time-init)
 - [gRPC Implementation](#grpc-implementation)
 - [PostgreSQL](#postgresql)
 - [Procedural Macro Reexports](#procedural-macro-reexports)

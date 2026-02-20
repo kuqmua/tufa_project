@@ -12,7 +12,7 @@ mod gen_std_default_default_ts;
 mod get_macro_attr;
 mod loc_syn_field;
 mod location;
-mod pagination_start_end_initialization_ts;
+mod pagination_start_end_init_ts;
 mod status_code;
 mod struct_or_enum_derive_ts_builder;
 mod syn_field_wrapper;
@@ -40,7 +40,7 @@ pub use gen_std_default_default_ts::gen_std_default_default_ts;
 pub use get_macro_attr::{get_macro_attr, get_macro_attr_meta_list_ts};
 pub use loc_syn_field::loc_syn_field;
 pub use location::{LocationFieldAttr, gen_serde_version_of_named_syn_variant};
-pub use pagination_start_end_initialization_ts::pagination_start_end_initialization_ts;
+pub use pagination_start_end_init_ts::pagination_start_end_init_ts;
 pub use status_code::{StatusCode, get_only_one};
 pub use struct_or_enum_derive_ts_builder::{
     DeriveClone, DeriveCopy, DeriveDebug, DeriveDefault, DeriveEq, DeriveLocationLibLocation,
