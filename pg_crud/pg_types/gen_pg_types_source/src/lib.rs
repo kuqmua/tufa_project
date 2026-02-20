@@ -40,7 +40,7 @@ use pg_crud_macros_common::{
     PgTypeFilter, ReadOrUpdate, SelectQueryPartValueUnderscore, ShouldDeriveSchemarsJsonSchema,
     ShouldDeriveUtoipaToSchema, UpdateQueryPartJsonbSetAccumulatorUnderscore,
     UpdateQueryPartJsonbSetPathUnderscore, UpdateQueryPartJsonbSetTargetUnderscore,
-    UpdateQueryPartValueUnderscore, gen_impl_crate_is_string_empty_for_ident_content_ts,
+    UpdateQueryPartValueUnderscore, gen_impl_crate_is_string_empty_for_ident_ts,
     gen_impl_pg_crud_common_default_option_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_common_default_option_some_vec_one_el_ts,
     gen_impl_pg_type_not_primary_key_for_ident_ts, gen_impl_pg_type_test_cases_for_ident_ts,
@@ -3962,13 +3962,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Ts2::new(),
-                        PgType::StringAsText => gen_impl_crate_is_string_empty_for_ident_content_ts(
+                        PgType::StringAsText => gen_impl_crate_is_string_empty_for_ident_ts(
                             &ident_origin_ucc,
                             &quote! {self.0.clone().is_empty()},
                         ),
                         PgType::SqlxTypesUuidUuidAsUuidV4InitByPg |
                         PgType::SqlxTypesUuidUuidAsUuidInitByClient |
-                        PgType::SqlxTypesMacAddressMacAddressAsMacAddr => gen_impl_crate_is_string_empty_for_ident_content_ts(
+                        PgType::SqlxTypesMacAddressMacAddressAsMacAddr => gen_impl_crate_is_string_empty_for_ident_ts(
                             &ident_origin_ucc,
                             &quote! {self.0.to_string().is_empty()},
                         ),

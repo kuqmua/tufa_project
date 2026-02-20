@@ -29,7 +29,7 @@ use pg_crud_macros_common::{
     IsSelectQueryPartSelfSelectUsed, IsStandartNotNull, IsUpdateQueryBindMutable,
     IsUpdateQueryPartJsonbSetTargetUsed, IsUpdateQueryPartSelfUpdateUsed, PgFilter,
     PgJsonTypeFilter, ReadOrUpdate, ShouldDeriveSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
-    gen_impl_crate_is_string_empty_for_ident_content_ts,
+    gen_impl_crate_is_string_empty_for_ident_ts,
     gen_impl_pg_crud_common_default_option_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_common_default_option_some_vec_one_el_ts,
     gen_impl_pg_json_type_test_cases_for_ident_ts, gen_impl_pg_json_type_ts,
@@ -916,11 +916,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     | PgJsonType::F32AsJsonbNumber
                     | PgJsonType::F64AsJsonbNumber
                     | PgJsonType::BoolAsJsonbBoolean => Ts2::new(),
-                    PgJsonType::StringAsJsonbString => gen_impl_crate_is_string_empty_for_ident_content_ts(
+                    PgJsonType::StringAsJsonbString => gen_impl_crate_is_string_empty_for_ident_ts(
                         &ident_origin_ucc,
                         &quote!{self.0.clone().is_empty()}
                     ),
-                    PgJsonType::UuidUuidAsJsonbString => gen_impl_crate_is_string_empty_for_ident_content_ts(
+                    PgJsonType::UuidUuidAsJsonbString => gen_impl_crate_is_string_empty_for_ident_ts(
                         &ident_origin_ucc,
                         &quote!{self.0.to_string().is_empty()}
                     ),
