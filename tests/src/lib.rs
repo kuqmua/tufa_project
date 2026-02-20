@@ -102,11 +102,11 @@ mod tests {
                             ..
                         }) = i.args.get(0).expect("d5ad7bff").clone()
                         {
-                            let value = lit_str.value();
-                            if value.len() == 8 {
-                                self.uuids.push(value);
+                            let v = lit_str.value();
+                            if v.len() == 8 {
+                                self.uuids.push(v);
                             } else {
-                                self.ers.push(format!("arg len is not 8: {value}"));
+                                self.ers.push(format!("arg len is not 8: {v}"));
                             }
                         } else {
                             self.ers.push("arg is not string literal".to_owned());
