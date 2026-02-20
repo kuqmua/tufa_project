@@ -15,7 +15,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "self", "payload", "with", "serde", "try", "from", "self", "payload", "er"
     ],
     ["try", "self"],
-    ["try", "self", "response", "vrts"],
+    ["try", "self", "res", "vrts"],
     ["self", "payload", "element", "with", "serde"],
     ["self", "payload", "element"],
     [
@@ -35,7 +35,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["try", "self", "generated", "logic", "er"],
     ["try", "self", "generated", "logic", "desirable"],
     ["try", "self", "logic"],
-    ["try", "self", "logic", "response", "vrts"],
+    ["try", "self", "logic", "res", "vrts"],
     ["try", "self", "logic", "er"],
     ["self", "er", "with", "serde"],
     ["try", "self", "generated", "logic", "er", "with", "serde"],

@@ -15,8 +15,8 @@ impl ToTokens for AxumExtractRejectionJsonRejection {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct AxumResponseIntoResponse;
-impl ToTokens for AxumResponseIntoResponse {
+pub struct AxumResIntoRes;
+impl ToTokens for AxumResIntoRes {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {axum::response::IntoResponse}.to_tokens(tokens);
     }
