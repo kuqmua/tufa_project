@@ -1123,14 +1123,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         IsStandartWithId::True => &ident_with_id_standart_not_null_select_el_ucc,
                     };
                     quote! {
-                        #ident_or_ident_with_id_standart_not_null_select_el_ucc::#variant_name_ts(value_3c8acf6a) => match #field_type_as_crud_pg_json_type_from_field_ts::#SelectQueryPartSc(
-                            value_3c8acf6a,
+                        #ident_or_ident_with_id_standart_not_null_select_el_ucc::#variant_name_ts(v_3c8acf6a) => match #field_type_as_crud_pg_json_type_from_field_ts::#SelectQueryPartSc(
+                            v_3c8acf6a,
                             #field_ident_dq_ts,
                             #column_name_and_maybe_field_getter_field_ident_ts,
                             #column_name_and_maybe_field_getter_for_er_message_field_ident_ts,
                             false,
                         ) {
-                            Ok(value_d54cf786) => value_d54cf786,
+                            Ok(v_d54cf786) => v_d54cf786,
                             Err(#ErSc) => {
                                 return Err(#ErSc);
                             }
