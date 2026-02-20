@@ -2216,7 +2216,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
             let field_ident_dq_ts = dq_ts(&el_a1d37c97);
             quote! {
                 let #field_index_handle_ts = match #field_index_ts {
-                    Some(value_4f8faf03) => value_4f8faf03,
+                    Some(v) => v,
                     None => {
                         serde::__private228::de::missing_field(#field_ident_dq_ts)?
                     }
