@@ -37,7 +37,7 @@ pub enum StatusCode {
     UseProxy305,
     TemporaryRedirect307,
     PermanentRedirect308,
-    BadRequest400,
+    BadReq400,
     Unauthorized401,
     PaymentRequired402,
     Forbidden403,
@@ -45,7 +45,7 @@ pub enum StatusCode {
     MethodNotAllowed405,
     NotAcceptable406,
     ProxyAuthenticationRequired407,
-    RequestTimeout408,
+    ReqTimeout408,
     Conflict409,
     Gone410,
     LengthRequired411,
@@ -56,14 +56,14 @@ pub enum StatusCode {
     RangeNotSatisfiable416,
     ExpectationFailed417,
     ImATeapot418,
-    MisdirectedRequest421,
+    MisdirectedReq421,
     UnprocessableEntity422,
     Locked423,
     FailedDependency424,
     UpgradeRequired426,
     PreconditionRequired428,
-    TooManyRequests429,
-    RequestHeaderFieldsTooLarge431,
+    TooManyReqs429,
+    ReqHeaderFieldsTooLarge431,
     UnavailableForLegalReasons451,
     InternalServerEr500,
     NotImplemented501,
@@ -102,7 +102,7 @@ impl StatusCode {
             Self::UseProxy305 => quote! {USE_PROXY},
             Self::TemporaryRedirect307 => quote! {TEMPORARY_REDIRECT},
             Self::PermanentRedirect308 => quote! {PERMANENT_REDIRECT},
-            Self::BadRequest400 => quote! {BAD_REQUEST},
+            Self::BadReq400 => quote! {BAD_REQUEST},
             Self::Unauthorized401 => quote! {UNAUTHORIZED},
             Self::PaymentRequired402 => quote! {PAYMENT_REQUIRED},
             Self::Forbidden403 => quote! {FORBIDDEN},
@@ -110,7 +110,7 @@ impl StatusCode {
             Self::MethodNotAllowed405 => quote! {METHOD_NOT_ALLOWED},
             Self::NotAcceptable406 => quote! {NOT_ACCEPTABLE},
             Self::ProxyAuthenticationRequired407 => quote! {PROXY_AUTHENTICATION_REQUIRED},
-            Self::RequestTimeout408 => quote! {REQUEST_TIMEOUT},
+            Self::ReqTimeout408 => quote! {REQUEST_TIMEOUT},
             Self::Conflict409 => quote! {CONFLICT},
             Self::Gone410 => quote! {GONE},
             Self::LengthRequired411 => quote! {LENGTH_REQUIRED},
@@ -121,14 +121,14 @@ impl StatusCode {
             Self::RangeNotSatisfiable416 => quote! {RANGE_NOT_SATISFIABLE},
             Self::ExpectationFailed417 => quote! {EXPECTATION_FAILED},
             Self::ImATeapot418 => quote! {IM_A_TEAPOT},
-            Self::MisdirectedRequest421 => quote! {MISDIRECTED_REQUEST},
+            Self::MisdirectedReq421 => quote! {MISDIRECTED_REQUEST},
             Self::UnprocessableEntity422 => quote! {UNPROCESSABLE_ENTITY},
             Self::Locked423 => quote! {LOCKED},
             Self::FailedDependency424 => quote! {FAILED_DEPENDENCY},
             Self::UpgradeRequired426 => quote! {UPGRADE_REQUIRED},
             Self::PreconditionRequired428 => quote! {PRECONDITION_REQUIRED},
-            Self::TooManyRequests429 => quote! {TOO_MANY_REQUESTS},
-            Self::RequestHeaderFieldsTooLarge431 => quote! {REQUEST_HEADER_FIELDS_TOO_LARGE},
+            Self::TooManyReqs429 => quote! {TOO_MANY_REQUESTS},
+            Self::ReqHeaderFieldsTooLarge431 => quote! {REQUEST_HEADER_FIELDS_TOO_LARGE},
             Self::UnavailableForLegalReasons451 => quote! {UNAVAILABLE_FOR_LEGAL_REASONS},
             Self::InternalServerEr500 => quote! {INTERNAL_SERVER_ERROR},
             Self::NotImplemented501 => quote! {NOT_IMPLEMENTED},
@@ -174,7 +174,7 @@ impl StatusCode {
             Self::UseProxy305 => quote! {"use proxy"},
             Self::TemporaryRedirect307 => quote! {"temporary redirect"},
             Self::PermanentRedirect308 => quote! {"permanent redirect"},
-            Self::BadRequest400 => quote! {"bad request"},
+            Self::BadReq400 => quote! {"bad req"},
             Self::Unauthorized401 => quote! {"unauthorized"},
             Self::PaymentRequired402 => quote! {"payment required"},
             Self::Forbidden403 => quote! {"forbidden"},
@@ -184,7 +184,7 @@ impl StatusCode {
             Self::ProxyAuthenticationRequired407 => {
                 quote! {"proxy authentication required"}
             }
-            Self::RequestTimeout408 => quote! {"request timeout"},
+            Self::ReqTimeout408 => quote! {"req timeout"},
             Self::Conflict409 => quote! {"conflict"},
             Self::Gone410 => quote! {"gone"},
             Self::LengthRequired411 => quote! {"length required"},
@@ -195,15 +195,15 @@ impl StatusCode {
             Self::RangeNotSatisfiable416 => quote! {"range not satisfiable"},
             Self::ExpectationFailed417 => quote! {"expectation failed"},
             Self::ImATeapot418 => quote! {"im a teapot"},
-            Self::MisdirectedRequest421 => quote! {"misdirected request"},
+            Self::MisdirectedReq421 => quote! {"misdirected req"},
             Self::UnprocessableEntity422 => quote! {"unprocessable entity"},
             Self::Locked423 => quote! {"locked"},
             Self::FailedDependency424 => quote! {"failed dependency"},
             Self::UpgradeRequired426 => quote! {"upgrade required"},
             Self::PreconditionRequired428 => quote! {"precondition required"},
-            Self::TooManyRequests429 => quote! {"too many requests"},
-            Self::RequestHeaderFieldsTooLarge431 => {
-                quote! {"request header fields too large"}
+            Self::TooManyReqs429 => quote! {"too many reqs"},
+            Self::ReqHeaderFieldsTooLarge431 => {
+                quote! {"req header fields too large"}
             }
             Self::UnavailableForLegalReasons451 => {
                 quote! {"unavailable for legal reasons"}
@@ -249,7 +249,7 @@ impl StatusCode {
             Self::UseProxy305 => quote! {305},
             Self::TemporaryRedirect307 => quote! {307},
             Self::PermanentRedirect308 => quote! {308},
-            Self::BadRequest400 => quote! {400},
+            Self::BadReq400 => quote! {400},
             Self::Unauthorized401 => quote! {401},
             Self::PaymentRequired402 => quote! {402},
             Self::Forbidden403 => quote! {403},
@@ -257,7 +257,7 @@ impl StatusCode {
             Self::MethodNotAllowed405 => quote! {405},
             Self::NotAcceptable406 => quote! {406},
             Self::ProxyAuthenticationRequired407 => quote! {407},
-            Self::RequestTimeout408 => quote! {408},
+            Self::ReqTimeout408 => quote! {408},
             Self::Conflict409 => quote! {409},
             Self::Gone410 => quote! {410},
             Self::LengthRequired411 => quote! {411},
@@ -268,14 +268,14 @@ impl StatusCode {
             Self::RangeNotSatisfiable416 => quote! {416},
             Self::ExpectationFailed417 => quote! {417},
             Self::ImATeapot418 => quote! {418},
-            Self::MisdirectedRequest421 => quote! {421},
+            Self::MisdirectedReq421 => quote! {421},
             Self::UnprocessableEntity422 => quote! {422},
             Self::Locked423 => quote! {423},
             Self::FailedDependency424 => quote! {424},
             Self::UpgradeRequired426 => quote! {426},
             Self::PreconditionRequired428 => quote! {428},
-            Self::TooManyRequests429 => quote! {429},
-            Self::RequestHeaderFieldsTooLarge431 => quote! {431},
+            Self::TooManyReqs429 => quote! {429},
+            Self::ReqHeaderFieldsTooLarge431 => quote! {431},
             Self::UnavailableForLegalReasons451 => quote! {451},
             Self::InternalServerEr500 => quote! {500},
             Self::NotImplemented501 => quote! {501},
@@ -336,8 +336,8 @@ impl TryFrom<&String> for StatusCode {
             Ok(Self::TemporaryRedirect307)
         } else if v == "permanent_redirect_308" {
             Ok(Self::PermanentRedirect308)
-        } else if v == "bad_request_400" {
-            Ok(Self::BadRequest400)
+        } else if v == "bad_req_400" {
+            Ok(Self::BadReq400)
         } else if v == "unauthorized_401" {
             Ok(Self::Unauthorized401)
         } else if v == "payment_required_402" {
@@ -352,8 +352,8 @@ impl TryFrom<&String> for StatusCode {
             Ok(Self::NotAcceptable406)
         } else if v == "proxy_authentication_required_407" {
             Ok(Self::ProxyAuthenticationRequired407)
-        } else if v == "request_timeout_408" {
-            Ok(Self::RequestTimeout408)
+        } else if v == "req_timeout_408" {
+            Ok(Self::ReqTimeout408)
         } else if v == "conflict_409" {
             Ok(Self::Conflict409)
         } else if v == "gone_410" {
@@ -374,8 +374,8 @@ impl TryFrom<&String> for StatusCode {
             Ok(Self::ExpectationFailed417)
         } else if v == "im_a_teapot_418" {
             Ok(Self::ImATeapot418)
-        } else if v == "misdirected_request_421" {
-            Ok(Self::MisdirectedRequest421)
+        } else if v == "misdirected_req_421" {
+            Ok(Self::MisdirectedReq421)
         } else if v == "unprocessable_entity_422" {
             Ok(Self::UnprocessableEntity422)
         } else if v == "locked_423" {
@@ -386,10 +386,10 @@ impl TryFrom<&String> for StatusCode {
             Ok(Self::UpgradeRequired426)
         } else if v == "precondition_required_428" {
             Ok(Self::PreconditionRequired428)
-        } else if v == "too_many_requests_429" {
-            Ok(Self::TooManyRequests429)
-        } else if v == "request_header_fields_too_large_431" {
-            Ok(Self::RequestHeaderFieldsTooLarge431)
+        } else if v == "too_many_reqs_429" {
+            Ok(Self::TooManyReqs429)
+        } else if v == "req_header_fields_too_large_431" {
+            Ok(Self::ReqHeaderFieldsTooLarge431)
         } else if v == "unavailable_for_legal_reasons_451" {
             Ok(Self::UnavailableForLegalReasons451)
         } else if v == "internal_server_er_500" {

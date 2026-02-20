@@ -46,15 +46,15 @@ use naming::{
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
     ReadOnlyIdsMergedWithCreateIntoWhereEqualSc,
     ReadOnlyIdsMergedWithTableTypeDeclarationIntoPgTypeOptionWhereGreaterThanSc, ReadOnlyIdsSc,
-    ReadOnlyIdsUcc, ReadUcc, RequestSc, ReqwestSc, ReqwestUcc, ResponseSc, ResponseTextSc,
-    RollbackSc, RoutesHandleSc, RoutesSc, RowAndRollbackUcc, RowSc, RowsSc,
-    SelectOnlyIdsQueryPartSc, SelectOnlyUpdatedIdsQueryPartSc, SelectPrimaryKeySc,
-    SelectQueryPartSc, SelectSc, SelectUcc, SerdeJsonSc, SerdeJsonToStringSc, SerdeJsonToStringUcc,
-    SerdeJsonUcc, SerdeSc, StatusCodeSc, TableNameSc, TableSc, ToTokensToScStr, ToTokensToUccTs,
-    TrueSc, TryBindSc, TryBindUcc, UpdateForQuerySc, UpdateForQueryUcc, UpdateForQueryVecSc,
-    UpdateManyAdditionalErVrtsSc, UpdateManyAdditionalLogicSc, UpdateOneAdditionalErVrtsSc,
-    UpdateOneAdditionalLogicSc, UpdateQueryBindSc, UpdateQueryPartPrimaryKeySc, UpdateQueryPartSc,
-    UpdateSc, UpdateUcc, UrlSc, ValueSc, ValueUcc, WhereManySc, WhereUcc,
+    ReadOnlyIdsUcc, ReadUcc, ReqSc, ReqwestSc, ReqwestUcc, ResponseSc, ResponseTextSc, RollbackSc,
+    RoutesHandleSc, RoutesSc, RowAndRollbackUcc, RowSc, RowsSc, SelectOnlyIdsQueryPartSc,
+    SelectOnlyUpdatedIdsQueryPartSc, SelectPrimaryKeySc, SelectQueryPartSc, SelectSc, SelectUcc,
+    SerdeJsonSc, SerdeJsonToStringSc, SerdeJsonToStringUcc, SerdeJsonUcc, SerdeSc, StatusCodeSc,
+    TableNameSc, TableSc, ToTokensToScStr, ToTokensToUccTs, TrueSc, TryBindSc, TryBindUcc,
+    UpdateForQuerySc, UpdateForQueryUcc, UpdateForQueryVecSc, UpdateManyAdditionalErVrtsSc,
+    UpdateManyAdditionalLogicSc, UpdateOneAdditionalErVrtsSc, UpdateOneAdditionalLogicSc,
+    UpdateQueryBindSc, UpdateQueryPartPrimaryKeySc, UpdateQueryPartSc, UpdateSc, UpdateUcc, UrlSc,
+    ValueSc, ValueUcc, WhereManySc, WhereUcc,
     parameter::{
         ErSelfSc, IsSelfUpdateExistSc, SelfCreateUcc, SelfDeleteManyParametersUcc,
         SelfDeleteManyPayloadUcc, SelfDeleteOneErWithSerdeUcc, SelfDeleteOneParametersUcc,
@@ -922,7 +922,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let query_part_syn_vrt_wrapper = new_syn_vrt_wrapper(
         &QueryPartUcc,
-        Some(StatusCode::BadRequest400),
+        Some(StatusCode::BadReq400),
         vec![(
             LocationFieldAttr::EoLocation,
             &ErSc,
@@ -2111,7 +2111,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let vec_struct_options_ident_ts = gen_vec_tokens_declaration_ts(&ident_read_ucc);
     let not_unique_field_syn_vrt_wrapper = new_syn_vrt_wrapper(
         &NotUniqueFieldUcc,
-        Some(StatusCode::BadRequest400),
+        Some(StatusCode::BadReq400),
         vec![(
             macros_helpers_location_location_field_attr_eo_to_err_string_serde,
             &NotUniqueFieldSc,
@@ -2131,7 +2131,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let simple_syn_punct_reqwest_error = gen_simple_syn_punct(&["reqwest", "Error"]);
     let failed_to_get_response_text_syn_vrt_wrapper = new_syn_vrt_wrapper(
         &FailedToGetResponseTextUcc,
-        Some(StatusCode::BadRequest400),
+        Some(StatusCode::BadReq400),
         vec![
             (
                 macros_helpers_location_location_field_attr_eo_to_err_string,
@@ -2187,7 +2187,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     );
     let check_body_size_syn_vrt_wrapper = new_syn_vrt_wrapper(
         &CheckBodySizeUcc,
-        Some(StatusCode::BadRequest400),
+        Some(StatusCode::BadReq400),
         vec![(
             LocationFieldAttr::EoLocation,
             &CheckBodySizeSc,
@@ -2200,7 +2200,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     );
     let serde_json_syn_vrt_wrapper = new_syn_vrt_wrapper(
         &SerdeJsonUcc,
-        Some(StatusCode::BadRequest400),
+        Some(StatusCode::BadReq400),
         vec![(
             macros_helpers_location_location_field_attr_eo_to_err_string,
             &SerdeJsonSc,
@@ -2209,14 +2209,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     );
     let header_content_type_application_json_not_found_syn_vrt_wrapper = new_syn_vrt_wrapper(
         &HeaderContentTypeApplicationJsonNotFoundUcc,
-        Some(StatusCode::BadRequest400),
+        Some(StatusCode::BadReq400),
         Vec::<(
             LocationFieldAttr,
             &'static dyn Display,
             Punctuated<PathSegment, PathSep>,
         )>::default(),
     );
-    let common_http_request_syn_vrts = {
+    let common_http_req_syn_vrts = {
         vec![
             serde_json_to_string_syn_vrt_wrapper.get_syn_vrt().clone(),
             failed_to_get_response_text_syn_vrt_wrapper
@@ -2469,7 +2469,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let gen_ident_try_operation_logic_response_vrts_ident_operation_er_convert_ts =
         |operation: &Operation,
          desirable_type_ts: &dyn ToTokens,
-         type_vrts_from_request_response_syn_vrts: &Vec<Variant>|
+         type_vrts_from_req_response_syn_vrts: &Vec<Variant>|
          -> Ts2 {
             let ident_operation_response_vrts_ucc =
                 gen_ident_operation_response_vrts_ucc(operation);
@@ -2480,7 +2480,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     .derive_serde_serialize()
                     .derive_serde_deserialize()
                     .build_enum(&ident_operation_response_vrts_ucc, &Ts2::new(), &{
-                        let vrts_ts = type_vrts_from_request_response_syn_vrts
+                        let vrts_ts = type_vrts_from_req_response_syn_vrts
                             .iter()
                             .map(gen_serde_version_of_named_syn_vrt);
                         quote! {{
@@ -2496,29 +2496,27 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let ident_operation_er_ucc = gen_ident_operation_er_ucc(operation);
             let impl_ident_operation_response_vrts_ts = {
                 let from_handle_ts = gen_from_handle_ts(&ident_operation_er_ucc, &{
-                    let vrts_ts =
-                        type_vrts_from_request_response_syn_vrts
-                            .iter()
-                            .map(|el_d80f0707| {
-                                let vrt_ident = &el_d80f0707.ident;
-                                let Fields::Named(fields_named) = &el_d80f0707.fields else {
-                                    panic!("10764d2b");
-                                };
-                                let fields_mapped_into_ts = {
-                                    let fields_ts =
-                                        fields_named.named.iter().map(|field| &field.ident);
-                                    quote! {#(#fields_ts),*}
-                                };
-                                let ident_operation_er_with_serde_ucc =
-                                    gen_ident_operation_er_with_serde_ucc(operation);
-                                quote! {
-                                    #ident_operation_er_with_serde_ucc::#vrt_ident {
-                                        #fields_mapped_into_ts
-                                    } => Self::#vrt_ident {
-                                        #fields_mapped_into_ts
-                                    }
+                    let vrts_ts = type_vrts_from_req_response_syn_vrts
+                        .iter()
+                        .map(|el_d80f0707| {
+                            let vrt_ident = &el_d80f0707.ident;
+                            let Fields::Named(fields_named) = &el_d80f0707.fields else {
+                                panic!("10764d2b");
+                            };
+                            let fields_mapped_into_ts = {
+                                let fields_ts = fields_named.named.iter().map(|field| &field.ident);
+                                quote! {#(#fields_ts),*}
+                            };
+                            let ident_operation_er_with_serde_ucc =
+                                gen_ident_operation_er_with_serde_ucc(operation);
+                            quote! {
+                                #ident_operation_er_with_serde_ucc::#vrt_ident {
+                                    #fields_mapped_into_ts
+                                } => Self::#vrt_ident {
+                                    #fields_mapped_into_ts
                                 }
-                            });
+                            }
+                        });
                     quote! {
                         match #ValueSc.#IntoSerdeVersionSc() {
                             #(#vrts_ts),*
@@ -2538,7 +2536,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     .derive_thiserror_error()
                     .derive_location_lib_location()
                     .build_enum(&ident_operation_er_ucc, &Ts2::new(), &{
-                        let vrts_ts = type_vrts_from_request_response_syn_vrts
+                        let vrts_ts = type_vrts_from_req_response_syn_vrts
                             .iter()
                             .map(gen_location_vrt_ts);
                         quote! {{#(#vrts_ts),*}}
@@ -2629,18 +2627,18 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #impl_pg_crud_default_option_some_vec_one_el_for_operation_payload_ts
             }
         };
-    let gen_type_vrts_from_request_response_syn_vrts =
+    let gen_type_vrts_from_req_response_syn_vrts =
         |syn_vrts: &Vec<&Variant>, operation: &Operation| -> Vec<Variant> {
-            let mut type_vrts_from_request_response_syn_vrts = Vec::new();
+            let mut type_vrts_from_req_response_syn_vrts = Vec::new();
             for el_21f2d46c in syn_vrts {
-                type_vrts_from_request_response_syn_vrts.push((*el_21f2d46c).clone());
+                type_vrts_from_req_response_syn_vrts.push((*el_21f2d46c).clone());
             }
             for el_60533068 in
                 gen_additional_er_vrts(&di, operation.gen_pg_table_attr_additional_er_vrts())
             {
-                type_vrts_from_request_response_syn_vrts.push(el_60533068.clone());
+                type_vrts_from_req_response_syn_vrts.push(el_60533068.clone());
             }
-            type_vrts_from_request_response_syn_vrts
+            type_vrts_from_req_response_syn_vrts
         };
     let gen_ident_try_operation_er_ts = |operation: &Operation, syn_vrts: &Vec<Variant>| -> Ts2 {
         let ts_930e1a93 = StructOrEnumDeriveTsStreamBuilder::new()
@@ -2690,7 +2688,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
      -> Ts2 {
         let operation_handle_sc_ts = operation.self_handle_sc_ts();
         let operation_sc_ts = operation.self_sc_ts();
-        let request_parts_preparation_ts = {
+        let req_parts_preparation_ts = {
             let header_content_type_application_json_not_found_syn_vrt_wrapper_er_init_eprintln_response_creation_ts =
                 &gen_operation_er_init_eprintln_response_creation_ts(
                     operation,
@@ -2708,7 +2706,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     column!(),
                 );
             quote! {
-                let (parts, #BodySc) = #RequestSc.into_parts();
+                let (parts, #BodySc) = #ReqSc.into_parts();
                 let headers = parts.headers;
                 if !matches!(
                     headers.get(http::header::CONTENT_TYPE),
@@ -2790,10 +2788,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #[allow(clippy::single_call_fn)]
             async fn #operation_handle_sc_ts(
                 #AppStateSc: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_ts>,
-                #RequestSc: axum::extract::Request,
+                #ReqSc: axum::extract::Request,
                 #TableSc: &str,
             ) -> axum::response::Response {
-                #request_parts_preparation_ts
+                #req_parts_preparation_ts
                 #additional_validators_ts
                 #parameters_logic_ts
                 #expected_updated_primary_keys_ts
@@ -2811,9 +2809,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #[allow(clippy::single_call_fn)]
             pub async fn #operation_sc_ts(
                 #AppStateSc: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_ts>,
-                #RequestSc: axum::extract::Request,
+                #ReqSc: axum::extract::Request,
             ) -> axum::response::Response {
-                Self::#operation_handle_sc_ts(#AppStateSc, #RequestSc, #self_table_name_call_ts).await
+                Self::#operation_handle_sc_ts(#AppStateSc, #ReqSc, #self_table_name_call_ts).await
             }
         }
     };
@@ -2844,7 +2842,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let gen_try_operation_ts =
         |operation: &Operation,
-         type_vrts_from_request_response_syn_vrts: &[Variant],
+         type_vrts_from_req_response_syn_vrts: &[Variant],
          result_ok_type_ts: &dyn ToTokens,
          desirable_from_or_try_from_desirable_with_serde_ts: &dyn ToTokens| {
             let try_operation_sc_ts = operation.try_self_sc_ts();
@@ -2954,7 +2952,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 gen_ident_operation_er_with_serde_ucc(operation);
             let operation_er_with_serde_sc = &operation.operation_er_with_serde_sc();
             let try_operation_logic_er_with_serde_ts = {
-                let try_operation_logic_response_vrts_to_try_operation_logic_er_with_serde = type_vrts_from_request_response_syn_vrts.iter().map(|el_f83d5272| {
+                let try_operation_logic_response_vrts_to_try_operation_logic_er_with_serde = type_vrts_from_req_response_syn_vrts.iter().map(|el_f83d5272| {
                 let vrt_ident = &el_f83d5272.ident;
                 let fields_idents_ts = if let Fields::Named(fields_named) = &el_f83d5272.fields {
                     let fields_idents = fields_named.named.iter().map(|field| &field.ident);
@@ -3178,7 +3176,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
     let create_many_ts = {
         let operation = Operation::CreateMany;
-        let type_vrts_from_request_response_syn_vrts = gen_type_vrts_from_request_response_syn_vrts(
+        let type_vrts_from_req_response_syn_vrts = gen_type_vrts_from_req_response_syn_vrts(
             &common_route_syn_vrts
                 .iter()
                 .copied()
@@ -3204,7 +3202,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 gen_ident_try_operation_logic_response_vrts_ident_operation_er_convert_ts(
                     &operation,
                     &vec_ident_read_only_ids_ts,
-                    &type_vrts_from_request_response_syn_vrts,
+                    &type_vrts_from_req_response_syn_vrts,
                 );
             {
                 let parameters_logic_ts = gen_parameters_logic_ts(&operation);
@@ -3293,10 +3291,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let try_operation_ts = {
             let try_operation_er_ts =
-                gen_ident_try_operation_er_ts(&operation, &common_http_request_syn_vrts);
+                gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
             impl_ident_vec_ts.push(gen_try_operation_ts(
                 &operation,
-                &type_vrts_from_request_response_syn_vrts,
+                &type_vrts_from_req_response_syn_vrts,
                 &vec_ident_read_only_ids_ts,
                 &ValueSc,
             ));
@@ -3319,7 +3317,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     );
     let create_one_ts = {
         let operation = Operation::CreateOne;
-        let type_vrts_from_request_response_syn_vrts = gen_type_vrts_from_request_response_syn_vrts(
+        let type_vrts_from_req_response_syn_vrts = gen_type_vrts_from_req_response_syn_vrts(
             &common_route_syn_vrts
                 .iter()
                 .copied()
@@ -3335,7 +3333,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 gen_ident_try_operation_logic_response_vrts_ident_operation_er_convert_ts(
                     &operation,
                     &ident_read_only_ids_ucc,
-                    &type_vrts_from_request_response_syn_vrts,
+                    &type_vrts_from_req_response_syn_vrts,
                 );
             {
                 let parameters_logic_ts = gen_parameters_logic_ts(&operation);
@@ -3433,10 +3431,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let try_operation_ts = {
             let try_operation_er_ts =
-                gen_ident_try_operation_er_ts(&operation, &common_http_request_syn_vrts);
+                gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
             impl_ident_vec_ts.push(gen_try_operation_ts(
                 &operation,
-                &type_vrts_from_request_response_syn_vrts,
+                &type_vrts_from_req_response_syn_vrts,
                 &ident_read_only_ids_ucc,
                 &ValueSc,
             ));
@@ -3459,7 +3457,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     );
     let read_many_ts = {
         let operation = Operation::ReadMany;
-        let type_vrts_from_request_response_syn_vrts = gen_type_vrts_from_request_response_syn_vrts(
+        let type_vrts_from_req_response_syn_vrts = gen_type_vrts_from_req_response_syn_vrts(
             &common_route_syn_vrts
                 .iter()
                 .copied()
@@ -3499,7 +3497,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 gen_ident_try_operation_logic_response_vrts_ident_operation_er_convert_ts(
                     &operation,
                     &vec_struct_options_ident_ts,
-                    &type_vrts_from_request_response_syn_vrts,
+                    &type_vrts_from_req_response_syn_vrts,
                 );
             {
                 let parameters_logic_ts = gen_parameters_logic_ts(&operation);
@@ -3637,13 +3635,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let try_operation_ts = {
             let try_operation_er_ts = gen_ident_try_operation_er_ts(&operation, &{
-                let mut value = common_http_request_syn_vrts.clone();
+                let mut value = common_http_req_syn_vrts.clone();
                 value.push(not_unique_field_syn_vrt_wrapper.get_syn_vrt().clone());
                 value
             });
             impl_ident_vec_ts.push(gen_try_operation_ts(
                 &operation,
-                &type_vrts_from_request_response_syn_vrts,
+                &type_vrts_from_req_response_syn_vrts,
                 &vec_struct_options_ident_ts,
                 &quote! {
                     #ValueSc
@@ -3673,7 +3671,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     );
     let read_one_ts = {
         let operation = Operation::ReadOne;
-        let type_vrts_from_request_response_syn_vrts = gen_type_vrts_from_request_response_syn_vrts(
+        let type_vrts_from_req_response_syn_vrts = gen_type_vrts_from_req_response_syn_vrts(
             &common_route_syn_vrts
                 .iter()
                 .copied()
@@ -3708,7 +3706,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 gen_ident_try_operation_logic_response_vrts_ident_operation_er_convert_ts(
                     &operation,
                     &ident_read_ucc,
-                    &type_vrts_from_request_response_syn_vrts,
+                    &type_vrts_from_req_response_syn_vrts,
                 );
             {
                 let parameters_logic_ts = gen_parameters_logic_ts(&operation);
@@ -3786,13 +3784,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let try_operation_ts = {
             let try_operation_er_ts = gen_ident_try_operation_er_ts(&operation, &{
-                let mut value = common_http_request_syn_vrts.clone();
+                let mut value = common_http_req_syn_vrts.clone();
                 value.push(not_unique_field_syn_vrt_wrapper.get_syn_vrt().clone());
                 value
             });
             impl_ident_vec_ts.push(gen_try_operation_ts(
                 &operation,
-                &type_vrts_from_request_response_syn_vrts,
+                &type_vrts_from_req_response_syn_vrts,
                 &ident_read_ucc,
                 &ValueSc,
             ));
@@ -3816,7 +3814,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     //todo update not only with array of objects with ids but with WHERE and one object
     let update_many_ts = {
         let operation = Operation::UpdateMany;
-        let type_vrts_from_request_response_syn_vrts = gen_type_vrts_from_request_response_syn_vrts(
+        let type_vrts_from_req_response_syn_vrts = gen_type_vrts_from_req_response_syn_vrts(
             &common_route_syn_vrts
                 .iter()
                 .copied()
@@ -3980,7 +3978,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 gen_ident_try_operation_logic_response_vrts_ident_operation_er_convert_ts(
                     &operation,
                     &vec_ident_read_only_ids_ts,
-                    &type_vrts_from_request_response_syn_vrts,
+                    &type_vrts_from_req_response_syn_vrts,
                 );
             {
                 let parameters_logic_ts = {
@@ -4220,10 +4218,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let try_operation_ts = {
             let try_operation_er_ts =
-                gen_ident_try_operation_er_ts(&operation, &common_http_request_syn_vrts);
+                gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
             impl_ident_vec_ts.push(gen_try_operation_ts(
                 &operation,
-                &type_vrts_from_request_response_syn_vrts,
+                &type_vrts_from_req_response_syn_vrts,
                 &vec_ident_read_only_ids_ts,
                 &ValueSc,
             ));
@@ -4246,7 +4244,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     );
     let update_one_ts = {
         let operation = Operation::UpdateOne;
-        let type_vrts_from_request_response_syn_vrts = gen_type_vrts_from_request_response_syn_vrts(
+        let type_vrts_from_req_response_syn_vrts = gen_type_vrts_from_req_response_syn_vrts(
             &common_route_syn_vrts
                 .iter()
                 .copied()
@@ -4262,7 +4260,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 gen_ident_try_operation_logic_response_vrts_ident_operation_er_convert_ts(
                     &operation,
                     &ident_read_only_ids_ucc,
-                    &type_vrts_from_request_response_syn_vrts,
+                    &type_vrts_from_req_response_syn_vrts,
                 );
             {
                 let parameters_logic_ts = {
@@ -4465,10 +4463,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let try_operation_ts = {
             let try_operation_er_ts =
-                gen_ident_try_operation_er_ts(&operation, &common_http_request_syn_vrts);
+                gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
             impl_ident_vec_ts.push(gen_try_operation_ts(
                 &operation,
-                &type_vrts_from_request_response_syn_vrts,
+                &type_vrts_from_req_response_syn_vrts,
                 &ident_read_only_ids_ucc,
                 &ValueSc,
             ));
@@ -4492,7 +4490,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     //todo return deleted rows ids vec
     let delete_many_ts = {
         let operation = Operation::DeleteMany;
-        let type_vrts_from_request_response_syn_vrts = gen_type_vrts_from_request_response_syn_vrts(
+        let type_vrts_from_req_response_syn_vrts = gen_type_vrts_from_req_response_syn_vrts(
             &common_route_syn_vrts
                 .iter()
                 .copied()
@@ -4515,7 +4513,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 gen_ident_try_operation_logic_response_vrts_ident_operation_er_convert_ts(
                     &operation,
                     &vec_primary_key_field_type_read_ts,
-                    &type_vrts_from_request_response_syn_vrts,
+                    &type_vrts_from_req_response_syn_vrts,
                 );
             {
                 let parameters_logic_ts = gen_parameters_logic_ts(&operation);
@@ -4561,10 +4559,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let try_operation_ts = {
             let try_operation_er_ts =
-                gen_ident_try_operation_er_ts(&operation, &common_http_request_syn_vrts);
+                gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
             impl_ident_vec_ts.push(gen_try_operation_ts(
                 &operation,
-                &type_vrts_from_request_response_syn_vrts,
+                &type_vrts_from_req_response_syn_vrts,
                 &vec_primary_key_field_type_read_ts,
                 &ValueSc,
             ));
@@ -4587,7 +4585,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     );
     let delete_one_ts = {
         let operation = Operation::DeleteOne;
-        let type_vrts_from_request_response_syn_vrts = gen_type_vrts_from_request_response_syn_vrts(
+        let type_vrts_from_req_response_syn_vrts = gen_type_vrts_from_req_response_syn_vrts(
             &common_route_syn_vrts
                 .iter()
                 .copied()
@@ -4622,7 +4620,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 gen_ident_try_operation_logic_response_vrts_ident_operation_er_convert_ts(
                     &operation,
                     &primary_key_field_type_as_pg_type_read_ucc,
-                    &type_vrts_from_request_response_syn_vrts,
+                    &type_vrts_from_req_response_syn_vrts,
                 );
             {
                 let parameters_logic_ts = gen_parameters_logic_ts(&operation);
@@ -4674,10 +4672,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let try_operation_ts = {
             let try_operation_er_ts =
-                gen_ident_try_operation_er_ts(&operation, &common_http_request_syn_vrts);
+                gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
             impl_ident_vec_ts.push(gen_try_operation_ts(
                 &operation,
-                &type_vrts_from_request_response_syn_vrts,
+                &type_vrts_from_req_response_syn_vrts,
                 &primary_key_field_type_as_pg_type_read_ucc,
                 &ValueSc,
             ));
@@ -4740,8 +4738,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let table_owned = table.to_owned();
                         async move |
                             app_state_99328dfe: axum::extract::State<std::sync::Arc<dyn pg_crud::CombinationOfAppStateLogicTraits>>,
-                            request: axum::extract::Request
-                        | Self::#operation_sc_ts(app_state_99328dfe, request, &table_owned).await
+                            req: axum::extract::Request
+                        | Self::#operation_sc_ts(app_state_99328dfe, req, &table_owned).await
                     }))
                     .route(#slash_operation_payload_example_dq_ts, axum::routing::get(async move||Self::#operation_payload_example_sc()))
                 }

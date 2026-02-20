@@ -26,7 +26,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "er"
     ],
     ["try", "self", "er"],
-    ["try", "self", "request", "er"],
+    ["try", "self", "req", "er"],
     [
         "self", "payload", "try", "from", "self", "payload", "with", "serde", "er"
     ],
