@@ -2153,7 +2153,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
     };
     let struct_ident_dq_ts = gen_struct_ident_dq_ts(&ident);
     let visit_seq_fields_init_ts = {
-        let content_ts = vec_ident_type.iter().enumerate().map(|(index, (el_ident, el_type))| {
+        let ts = vec_ident_type.iter().enumerate().map(|(index, (el_ident, el_type))| {
             let field_index_handle_ts = gen_underscore_underscore_field_index_handle_ts(index);
             let type_ts = gen_type_ts(el_ident, el_type);
             let struct_ident_options_with_dq_ts = dq_ts(&format!("struct {ident} with {len} elements"));
@@ -2163,14 +2163,14 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                 };
             }
         });
-        quote! {#(#content_ts)*}
+        quote! {#(#ts)*}
     };
     let match_try_new_in_deserialize_ts = gen_match_try_new_in_deserialize_ts(&ident, &{
         let fields_ts = (0..len).map(gen_underscore_underscore_field_index_handle_ts);
         quote! {#(#fields_ts),*}
     });
     let visit_map_fields_init_ts = {
-        let content_ts = vec_ident_type
+        let ts = vec_ident_type
             .iter()
             .enumerate()
             .map(|(index, (el_ident, el_type))| {
@@ -2180,7 +2180,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                     let mut #field_index_ts: Option<#type_ts> = None;
                 }
             });
-        quote! {#(#content_ts)*}
+        quote! {#(#ts)*}
     };
     let visit_map_match_variants_ts = {
         let visit_map_match_variants_ts = vec_ident_type.iter().enumerate().map(|(index, (el_ident, el_type))| {
@@ -2203,7 +2203,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         quote! {#(#visit_map_match_variants_ts)*}
     };
     let visit_map_missing_fields_check_ts = {
-        let content_ts = vec_ident.iter().enumerate().map(|(index, el_a1d37c97)| {
+        let ts = vec_ident.iter().enumerate().map(|(index, el_a1d37c97)| {
             let field_index_ts = gen_underscore_underscore_field_index_ts(index);
             let field_index_handle_ts = gen_underscore_underscore_field_index_handle_ts(index);
             let field_ident_dq_ts = dq_ts(&el_a1d37c97);
@@ -2216,7 +2216,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                 };
             }
         });
-        quote! {#(#content_ts)*}
+        quote! {#(#ts)*}
     };
     let fields_array_elements_ts = {
         let fields_array_elements_ts = vec_ident.iter().map(|el_43a33e0b| dq_ts(&el_43a33e0b));
@@ -2379,28 +2379,28 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         };
     }
 }
-pub fn wrap_content_into_scopes_ts(content_ts: &dyn ToTokens) -> Ts2 {
-    quote! {(#content_ts)}
+pub fn wrap_content_into_scopes_ts(ts: &dyn ToTokens) -> Ts2 {
+    quote! {(#ts)}
 }
-pub fn maybe_wrap_into_braces_ts(content_ts: &dyn ToTokens, bool: bool) -> Ts2 {
+pub fn maybe_wrap_into_braces_ts(ts: &dyn ToTokens, bool: bool) -> Ts2 {
     if bool {
-        wrap_content_into_scopes_ts(&content_ts)
+        wrap_content_into_scopes_ts(&ts)
     } else {
-        quote! {#content_ts}
+        quote! {#ts}
     }
 }
-pub fn gen_value_init_ts(import_path: &ImportPath, content_ts: &dyn ToTokens) -> Ts2 {
-    quote! {#import_path::Value { #ValueSc: #content_ts }}
+pub fn gen_value_init_ts(import_path: &ImportPath, ts: &dyn ToTokens) -> Ts2 {
+    quote! {#import_path::Value { #ValueSc: #ts }}
 }
 pub fn impl_pg_type_equal_operator_for_ident_ts(
     import_path: &ImportPath,
     ident: &dyn ToTokens,
-    content_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         impl #import_path::#PgTypeEqualOperatorUcc for #ident {
             fn operator(&self) -> #import_path::#EqualOperatorUcc {
-                #content_ts
+                #ts
             }
         }
     }
@@ -2415,6 +2415,6 @@ pub fn gen_query_part_er_write_into_buffer_ts(import_path: ImportPath) -> Ts2 {
 }
 #[must_use]
 pub fn gen_return_err_query_part_er_write_into_buffer_ts(import_path: ImportPath) -> Ts2 {
-    let content_ts = gen_query_part_er_write_into_buffer_ts(import_path);
-    quote! {return Err(#content_ts);}
+    let ts = gen_query_part_er_write_into_buffer_ts(import_path);
+    quote! {return Err(#ts);}
 }
