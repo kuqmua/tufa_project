@@ -91,7 +91,7 @@ server_config = {path = "../../../server_config"}"#,
                         pub struct TableExample {
                             #maybe_gen_pg_table_primary_key_ts
                             pub primary_key_column:
-                                pg_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPg,
+                                pg_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitByPg,
                             pub column_0: pg_crud::I16AsNotNullInt2,
                             pub column_1: pg_crud::OptionI16AsNullableInt2,
                             pub column_2: pg_crud::VecOfI16AsNotNullArrayOfNotNullInt2,

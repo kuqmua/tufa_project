@@ -150,7 +150,7 @@ cargo sqlx prepare -- --lib
 
 ### Database Scripts
 ```bash
-# Initialize database
+# Init database
 sudo ./scripts/init_db.sh
 
 # Run migrations from project root

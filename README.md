@@ -56,7 +56,7 @@ This is a Rust workspace project with the following main components:
    cd tufa_project
    ```
 
-2. Initialize submodules:
+2. Init submodules:
    ```bash
    git submodule update --init --recursive --checkout
    ```
