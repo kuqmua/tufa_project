@@ -2,7 +2,7 @@ use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 #[proc_macro]
-pub fn compile_time_project_git_info(_input_ts: Ts) -> Ts {
+pub fn compile_time_project_git_info(_v: Ts) -> Ts {
     use std::process::Command;
     panic_location::panic_location();
     let output = Command::new("git")
@@ -23,10 +23,6 @@ pub fn compile_time_project_git_info(_input_ts: Ts) -> Ts {
         "093516ae"
     );
     let commit_id_ts = format!("\"{hash}\"").parse::<Ts2>().expect("842e75e8");
-    let generated = quote! {
-        ProjectGitInfo {
-            commit: #commit_id_ts,
-        }
-    };
+    let generated = quote! {ProjectGitInfo { commit: #commit_id_ts }};
     generated.into()
 }

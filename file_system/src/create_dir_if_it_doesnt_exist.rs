@@ -9,11 +9,11 @@ pub enum CreateDirIfItDoesntExistEr {
         loc: Loc,
     },
 }
-pub fn create_dir_if_it_doesnt_exist(path: &str) -> Result<(), CreateDirIfItDoesntExistEr> {
-    if Path::new(path).exists() {
+pub fn create_dir_if_it_doesnt_exist(v: &str) -> Result<(), CreateDirIfItDoesntExistEr> {
+    if Path::new(v).exists() {
         return Ok(());
     }
-    if let Err(er) = fs::create_dir_all(path) {
+    if let Err(er) = fs::create_dir_all(v) {
         return Err(CreateDirIfItDoesntExistEr::CreateDirAll { er, loc: loc!() });
     }
     Ok(())

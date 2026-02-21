@@ -9,20 +9,18 @@ use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use syn::{Data, DeriveInput, Fields, LitStr, parse};
 #[proc_macro_derive(TryFromEnv)]
-pub fn try_from_env(input: Ts) -> Ts {
+pub fn try_from_env(v: Ts) -> Ts {
     panic_location::panic_location();
-    let di: DeriveInput = parse(input).expect("e45f75c2");
+    let di: DeriveInput = parse(v).expect("e45f75c2");
     let ident = &di.ident;
     let ident_try_from_env_er_ucc = SelfTryFromEnvErUcc::from_tokens(&ident);
     let data_struct = match di.data {
-        Data::Struct(v) => v,
+        Data::Struct(v0) => v0,
         Data::Enum(_) | Data::Union(_) => panic!("54289ad5"),
     };
     let fields_named = match data_struct.fields {
-        Fields::Named(v) => v.named,
-        Fields::Unnamed(_) | Fields::Unit => {
-            panic!("330b2512")
-        }
+        Fields::Named(v0) => v0.named,
+        Fields::Unnamed(_) | Fields::Unit => panic!("330b2512"),
     };
     let er_ts = {
         let vrts_ts = fields_named.iter().map(|el_f931deb2| {

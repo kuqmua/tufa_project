@@ -2,16 +2,14 @@ use proc_macro::TokenStream as Ts;
 use quote::quote;
 use syn::{Data, DeriveInput, Fields, parse};
 #[proc_macro_derive(EnumExtension)]
-pub fn enum_extension(input: Ts) -> Ts {
+pub fn enum_extension(v: Ts) -> Ts {
     panic_location::panic_location();
     //it only supported for enums without values
-    let di: DeriveInput = parse(input).expect("c6b8e80e");
+    let di: DeriveInput = parse(v).expect("c6b8e80e");
     //todo to implement into_arr() and into_vec - must implement Default for all inner vrt types
     let len = match di.data.clone() {
         Data::Enum(enum_item) => enum_item.variants.len(),
-        Data::Struct(_) | Data::Union(_) => {
-            panic!("bcbaca28")
-        }
+        Data::Struct(_) | Data::Union(_) => panic!("bcbaca28"),
     };
     let vrts = match di.data {
         Data::Enum(enum_item) => enum_item.variants.into_iter().map(|el_f0467eb6| {
@@ -20,21 +18,15 @@ pub fn enum_extension(input: Ts) -> Ts {
                 Fields::Named(fields_named) => {
                     let generated = fields_named.named.into_iter().map(|field| {
                         let field_ident = field.ident; //todo maybe unwrap_or_else panic?
-                        quote! { #field_ident: Default::default() }
+                        quote! {#field_ident: Default::default()}
                     });
-                    quote! {
-                       #vrt_ident {
-                           #(#generated),*
-                       }
-                    }
+                    quote! {#vrt_ident { #(#generated),* }}
                 }
-                Fields::Unnamed(_) => quote! { #vrt_ident(Default::default()) },
-                Fields::Unit => quote! { #vrt_ident },
+                Fields::Unnamed(_) => quote! {#vrt_ident(Default::default())},
+                Fields::Unit => quote! {#vrt_ident},
             }
         }),
-        Data::Struct(_) | Data::Union(_) => {
-            panic!("4ba8c781")
-        }
+        Data::Struct(_) | Data::Union(_) => panic!("4ba8c781"),
     };
     let ident = &di.ident;
     let generated = quote! {

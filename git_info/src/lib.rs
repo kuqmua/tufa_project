@@ -11,18 +11,16 @@ pub trait GetGitCommitLink {
 }
 impl<T> GetGitCommitLink for T
 where
-    T: GetGitCommitId, //todo wtf
+    T: GetGitCommitId,
 {
     fn get_git_commit_link(&self) -> String {
         format!("{}/tree/{}", GITHUB_URL, self.get_git_commit_id())
     }
 }
 pub trait GetGitCommitId {
-    //todo remove
     fn get_git_commit_id(&self) -> String;
 }
 impl GetGitCommitId for ProjectGitInfo<'_> {
-    //todo
     fn get_git_commit_id(&self) -> String {
         self.commit.to_owned()
     }

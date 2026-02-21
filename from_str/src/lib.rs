@@ -4,9 +4,9 @@ use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use syn::{Data, DeriveInput, Fields, Ident, parse};
 #[proc_macro_derive(FromStr)]
-pub fn from_str(input: Ts) -> Ts {
+pub fn from_str(v: Ts) -> Ts {
     panic_location::panic_location();
-    let di: DeriveInput = parse(input).expect("f83fcd2d");
+    let di: DeriveInput = parse(v).expect("f83fcd2d");
     let ident = &di.ident;
     let Data::Enum(data_enum) = di.data else {
         panic!("d35db256");
@@ -16,9 +16,7 @@ pub fn from_str(input: Ts) -> Ts {
         .into_iter()
         .map(|vrt| match vrt.fields {
             Fields::Unit => vrt.ident,
-            Fields::Named(_) | Fields::Unnamed(_) => {
-                panic!("23575b02")
-            }
+            Fields::Named(_) | Fields::Unnamed(_) => panic!("23575b02"),
         })
         .collect::<Vec<Ident>>();
     let vrts_ts = vrt_idents.iter().map(|vrt_ident| {
@@ -26,9 +24,7 @@ pub fn from_str(input: Ts) -> Ts {
             let vrt_ident_sc_str = Casing::to_case(&format!("\"{vrt_ident}\""), Case::Snake);
             vrt_ident_sc_str.parse::<Ts2>().expect("791603c1")
         };
-        quote! {
-            #vrt_ident_sc_ts => Ok(Self::#vrt_ident),
-        }
+        quote! {#vrt_ident_sc_ts => Ok(Self::#vrt_ident),}
     });
     let er_vrts_str = vrt_idents
         .iter()
