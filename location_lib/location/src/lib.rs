@@ -134,17 +134,17 @@ pub fn location(input: Ts) -> Ts {
                         .filter(|el_6ba47e94| *el_6ba47e94.ident.as_ref().expect("3d70a4f4") != *loc_sc_str)
                         .fold(
                             String::new(),
-                            |mut acc_924ab1b3, el_e405984a| {
+                            |mut acc, el_e405984a| {
                                 use std::fmt::Write as _;
                                 let el_e405984a_ident = &el_e405984a.ident.as_ref().expect("2e7cd5fe");
                                 assert!(
                                     writeln!(
-                                        acc_924ab1b3,
+                                        acc,
                                         "{el_e405984a_ident}: {{}}"
                                     ).is_ok(),
                                     "ab44c70f"
                                 );
-                                acc_924ab1b3
+                                acc
                             }
                         )
                     );

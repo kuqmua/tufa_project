@@ -823,32 +823,32 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     let gen_pg_json_types_config =
         from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("80485f71");
     let (columns_ts, pg_type_arr) = {
-        let acc_5464fefe = match gen_pg_json_types_config.vrt {
-            GenPgTypesConfigVrt::All => PgType::into_arr().into_iter().fold(Vec::new(), |mut acc_4351207e, el_a897c529| {
-                for el_a7126978 in PgTypePattern::into_arr().into_iter().fold(Vec::new(), |mut acc_f806f6d2, el_8ae86bf2| {
+        let acc = match gen_pg_json_types_config.vrt {
+            GenPgTypesConfigVrt::All => PgType::into_arr().into_iter().fold(Vec::new(), |mut acc0, el_a897c529| {
+                for el_a7126978 in PgTypePattern::into_arr().into_iter().fold(Vec::new(), |mut acc1, el_8ae86bf2| {
                     match &el_8ae86bf2 {
                         PgTypePattern::Standart => {
-                            acc_f806f6d2.push(el_8ae86bf2);
+                            acc1.push(el_8ae86bf2);
                         }
                         PgTypePattern::ArrDim1 { .. } => {
                             for el_6577bebd in IsNullable::into_arr() {
-                                acc_f806f6d2.push(PgTypePattern::ArrDim1 { dim1_is_nullable: el_6577bebd });
+                                acc1.push(PgTypePattern::ArrDim1 { dim1_is_nullable: el_6577bebd });
                             }
                         }
                     }
-                    acc_f806f6d2
+                    acc1
                 }) {
                     match &el_a7126978 {
                         PgTypePattern::Standart => match &el_a897c529.can_be_nullable() {
                             CanBeNullable::False => {
-                                acc_4351207e.push(PgTypeRecord {
+                                acc0.push(PgTypeRecord {
                                     pg_type: el_a897c529.clone(),
                                     is_nullable: IsNullable::False,
                                     pg_type_pattern: el_a7126978,
                                 });
                             },
                             CanBeNullable::True => IsNullable::into_arr().into_iter().for_each(|el_a8753f2d| {
-                                acc_4351207e.push(PgTypeRecord {
+                                acc0.push(PgTypeRecord {
                                     pg_type: el_a897c529.clone(),
                                     is_nullable: el_a8753f2d,
                                     pg_type_pattern: el_a7126978.clone(),
@@ -861,7 +861,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 CanBeNullable::False => {
                                     if matches!(&dim1_is_nullable, IsNullable::False) {
                                         for el_8b51bcb4 in IsNullable::into_arr() {
-                                            acc_4351207e.push(PgTypeRecord {
+                                            acc0.push(PgTypeRecord {
                                                 pg_type: el_a897c529.clone(),
                                                 is_nullable: el_8b51bcb4,
                                                 pg_type_pattern: PgTypePattern::ArrDim1 { dim1_is_nullable: *dim1_is_nullable },
@@ -870,7 +870,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     }
                                 },
                                 CanBeNullable::True => IsNullable::into_arr().into_iter().for_each(|is_nullable| {
-                                    acc_4351207e.push(PgTypeRecord {
+                                    acc0.push(PgTypeRecord {
                                         pg_type: el_a897c529.clone(),
                                         is_nullable,
                                         pg_type_pattern: el_a7126978.clone(),
@@ -880,13 +880,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         },
                     }
                 }
-                acc_4351207e
+                acc0
             }),
             GenPgTypesConfigVrt::Concrete(v) => v,
         };
         {
             let mut check_acc = Vec::new();
-            for el_03c535a8 in &acc_5464fefe {
+            for el_03c535a8 in &acc {
                 if check_acc.contains(&el_03c535a8) {
                     panic!("536036f9");
                 } else {
@@ -894,11 +894,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 }
             }
         }
-        acc_5464fefe
+        acc
     }.into_iter()
     .fold(
         Vec::new(),
-        |mut acc_0562629e, el_758fe97f| {
+        |mut acc, el_758fe97f| {
             #[derive(Clone)]
             struct PgTypeRecordHandle {
                 is_nullable: IsNullable,
@@ -958,11 +958,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     pg_type_pattern: el_39ea25de
                         .pg_type_pattern,
                 };
-                if !acc_0562629e.contains(&v_88571cb8) {
-                    acc_0562629e.push(v_88571cb8);
+                if !acc.contains(&v_88571cb8) {
+                    acc.push(v_88571cb8);
                 }
             }
-            acc_0562629e
+            acc
         },
     )
     .into_iter()

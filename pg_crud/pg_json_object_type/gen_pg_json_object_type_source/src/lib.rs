@@ -188,14 +188,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
     //     "GenPgJsonObjectTypeJsonVrts",
     //     &serde_json::to_string(&pg_json_object_type_record_vec).expect("efc7a263"),
     // );
-    // el.iter().enumerate().fold(String::new(), |mut acc_1e1c6a6e, (index, el)| {
+    // el.iter().enumerate().fold(String::new(), |mut acc, (index, el)| {
     //     let el_sc_str = naming_common::AsRefStrToScStr::case(el);
     //     if index == 0 {
-    //         acc_1e1c6a6e.push_str(&el_sc_str);
+    //         acc.push_str(&el_sc_str);
     //     } else {
-    //         acc_1e1c6a6e.push_str(&format!("_{el_sc_str}"));
+    //         acc.push_str(&format!("_{el_sc_str}"));
     //     }
-    //     acc_1e1c6a6e
+    //     acc
     // });
     // let pg_json_object_type_arr
     let (fields_ts, pg_json_object_type_arr) = pg_json_object_type_record_vec
@@ -415,9 +415,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     field_type: value.ty,
                 }
             };
-            let vec_syn_field_with_id: Vec<SynFieldWrapper> = vec_syn_field.clone().into_iter().fold(vec![id_syn_field], |mut acc_9db5e042, el_f01f3f33| {
-                acc_9db5e042.push(el_f01f3f33);
-                acc_9db5e042
+            let vec_syn_field_with_id: Vec<SynFieldWrapper> = vec_syn_field.clone().into_iter().fold(vec![id_syn_field], |mut acc, el_f01f3f33| {
+                acc.push(el_f01f3f33);
+                acc
             });
             let get_vec_syn_field = |is_standart_with_id: &IsStandartWithId| -> &Vec<SynFieldWrapper> {
                 match &is_standart_with_id {

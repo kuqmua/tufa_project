@@ -53,15 +53,15 @@ impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
             return Err(NotEmptyUniqueVecTryNewEr::IsEmpty { loc: loc!() });
         }
         {
-            let mut acc_72940a4c = Vec::new();
+            let mut acc = Vec::new();
             for el_7721a8da in &v {
-                if acc_72940a4c.contains(&el_7721a8da) {
+                if acc.contains(&el_7721a8da) {
                     return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
                         value: el_7721a8da.clone(),
                         loc: loc!(),
                     });
                 }
-                acc_72940a4c.push(el_7721a8da);
+                acc.push(el_7721a8da);
             }
         }
         Ok(Self(v))
@@ -637,15 +637,15 @@ impl<T: PartialEq + Clone> PgTypeNotEmptyUniqueVec<T> {
             return Err(NotEmptyUniqueVecTryNewEr::IsEmpty { loc: loc!() });
         }
         {
-            let mut acc_6be6ccee = Vec::new();
+            let mut acc = Vec::new();
             for el_b3d83e60 in &v {
-                if acc_6be6ccee.contains(&el_b3d83e60) {
+                if acc.contains(&el_b3d83e60) {
                     return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
                         value: el_b3d83e60.clone(),
                         loc: loc!(),
                     });
                 }
-                acc_6be6ccee.push(el_b3d83e60);
+                acc.push(el_b3d83e60);
             }
         }
         Ok(Self(v))

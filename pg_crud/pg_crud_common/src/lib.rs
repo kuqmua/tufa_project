@@ -724,7 +724,7 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartEr> {
-        let mut acc_cc6d18f7 = String::default();
+        let mut acc = String::default();
         let mut is_need_to_add_logical_operator_inner_handle = false;
         for el_a38b9c67 in &self.value.0 {
             match PgTypeWhereFilter::query_part(
@@ -735,7 +735,7 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
             ) {
                 Ok(v) => {
                     use std::fmt::Write as _;
-                    if write!(acc_cc6d18f7, "{v} ").is_err() {
+                    if write!(acc, "{v} ").is_err() {
                         return Err(QueryPartEr::WriteIntoBuffer { loc: loc!() });
                     }
                     is_need_to_add_logical_operator_inner_handle = true;
@@ -745,9 +745,9 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
                 }
             }
         }
-        let _: Option<char> = acc_cc6d18f7.pop();
+        let _: Option<char> = acc.pop();
         Ok(format!(
-            "{}({acc_cc6d18f7})",
+            "{}({acc})",
             &self
                 .logical_operator
                 .to_query_part(is_need_to_add_logical_operator)
@@ -1134,15 +1134,15 @@ impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
             return Err(NotEmptyUniqueVecTryNewEr::IsEmpty { loc: loc!() });
         }
         {
-            let mut acc_11fac69e = Vec::new();
+            let mut acc = Vec::new();
             for el_db9bd5a0 in &v {
-                if acc_11fac69e.contains(&el_db9bd5a0) {
+                if acc.contains(&el_db9bd5a0) {
                     return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
                         value: el_db9bd5a0.clone(),
                         loc: loc!(),
                     });
                 }
-                acc_11fac69e.push(el_db9bd5a0);
+                acc.push(el_db9bd5a0);
             }
         }
         Ok(Self(v))
@@ -1272,7 +1272,7 @@ where
         column: &dyn Display,
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartEr> {
-        let mut acc_57b31116 = String::default();
+        let mut acc = String::default();
         for (index, v_953208ce) in self.0.iter().enumerate() {
             match v_953208ce.query_part(
                 incr,
@@ -1284,14 +1284,14 @@ where
                 },
             ) {
                 Ok(v) => {
-                    acc_57b31116.push_str(&v);
+                    acc.push_str(&v);
                 }
                 Err(er) => {
                     return Err(er);
                 }
             }
         }
-        Ok(acc_57b31116)
+        Ok(acc)
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]

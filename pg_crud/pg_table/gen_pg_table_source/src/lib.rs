@@ -860,54 +860,54 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 fields: Fields::Named(FieldsNamed {
                     brace_token: Brace::default(),
                     named: {
-                        let mut handle = fields_cd1fd715.into_iter().fold(
-                            Punctuated::new(),
-                            |mut acc_37be2059, el| {
-                                acc_37be2059.push_value(Field {
-                                    attrs: vec![Attribute {
-                                        pound_token: Pound {
+                        let mut handle =
+                            fields_cd1fd715
+                                .into_iter()
+                                .fold(Punctuated::new(), |mut acc, el| {
+                                    acc.push_value(Field {
+                                        attrs: vec![Attribute {
+                                            pound_token: Pound {
+                                                spans: [proc_macro2::Span::call_site()],
+                                            },
+                                            style: AttrStyle::Outer,
+                                            bracket_token: Bracket::default(),
+                                            meta: Meta::Path(Path {
+                                                leading_colon: None,
+                                                segments: {
+                                                    let mut handle = Punctuated::new();
+                                                    handle.push(PathSegment {
+                                                        ident: Ident::new(
+                                                            AttrIdentStr::attr_ident_str(&el.0),
+                                                            proc_macro2::Span::call_site(),
+                                                        ),
+                                                        arguments: PathArguments::None,
+                                                    });
+                                                    handle
+                                                },
+                                            }),
+                                        }],
+                                        vis: Visibility::Inherited,
+                                        mutability: FieldMutability::None,
+                                        ident: Some(Ident::new(
+                                            &el.1.to_string(),
+                                            proc_macro2::Span::call_site(),
+                                        )),
+                                        colon_token: Some(Colon {
                                             spans: [proc_macro2::Span::call_site()],
-                                        },
-                                        style: AttrStyle::Outer,
-                                        bracket_token: Bracket::default(),
-                                        meta: Meta::Path(Path {
-                                            leading_colon: None,
-                                            segments: {
-                                                let mut handle = Punctuated::new();
-                                                handle.push(PathSegment {
-                                                    ident: Ident::new(
-                                                        AttrIdentStr::attr_ident_str(&el.0),
-                                                        proc_macro2::Span::call_site(),
-                                                    ),
-                                                    arguments: PathArguments::None,
-                                                });
-                                                handle
+                                        }),
+                                        ty: Type::Path(TypePath {
+                                            qself: None,
+                                            path: Path {
+                                                leading_colon: None,
+                                                segments: el.2,
                                             },
                                         }),
-                                    }],
-                                    vis: Visibility::Inherited,
-                                    mutability: FieldMutability::None,
-                                    ident: Some(Ident::new(
-                                        &el.1.to_string(),
-                                        proc_macro2::Span::call_site(),
-                                    )),
-                                    colon_token: Some(Colon {
+                                    });
+                                    acc.push_punct(Comma {
                                         spans: [proc_macro2::Span::call_site()],
-                                    }),
-                                    ty: Type::Path(TypePath {
-                                        qself: None,
-                                        path: Path {
-                                            leading_colon: None,
-                                            segments: el.2,
-                                        },
-                                    }),
+                                    });
+                                    acc
                                 });
-                                acc_37be2059.push_punct(Comma {
-                                    spans: [proc_macro2::Span::call_site()],
-                                });
-                                acc_37be2059
-                            },
-                        );
                         handle.push_value(loc_syn_field());
                         handle
                     },
@@ -2218,16 +2218,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let common_additional_er_vrts =
         gen_additional_er_vrts(&di, GenPgTableAttr::CommonAdditionalErVrts);
     let common_route_syn_vrts = {
-        let mut acc_94f701ab = vec![
+        let mut acc = vec![
             check_body_size_syn_vrt_wrapper.get_syn_vrt(),
             pg_syn_vrt_wrapper.get_syn_vrt(),
             serde_json_syn_vrt_wrapper.get_syn_vrt(),
             header_content_type_application_json_not_found_syn_vrt_wrapper.get_syn_vrt(),
         ];
         for el_af152d67 in &common_additional_er_vrts {
-            acc_94f701ab.push(el_af152d67);
+            acc.push(el_af152d67);
         }
-        acc_94f701ab
+        acc
     };
     let common_additional_logic_ts = get_macro_attr_meta_list_ts(
         &di.attrs,
@@ -3079,16 +3079,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let incr_init_ts = quote! {let mut #IncrSc: u64 = 0;};
     let column_names = {
-        let mut value = fields
-            .iter()
-            .fold(String::default(), |mut acc_b2600a1f, el| {
-                assert!(
-                    write!(acc_b2600a1f, "{}", &el.field_ident).is_ok(),
-                    "b9fe50dc"
-                );
-                acc_b2600a1f.push(',');
-                acc_b2600a1f
-            });
+        let mut value = fields.iter().fold(String::default(), |mut acc, el| {
+            assert!(write!(acc, "{}", &el.field_ident).is_ok(), "b9fe50dc");
+            acc.push(',');
+            acc
+        });
         let _: Option<char> = value.pop();
         value
     };
@@ -3608,6 +3603,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &type_vrts_from_req_res_syn_vrts,
                 &vec_struct_opts_ident_ts,
                 &quote! {
+                    //todo maybe just #ValueSc ?
                     #ValueSc
                     .into_iter()
                     .fold(Vec::new(), |mut acc_4adf5a80, el_6a197212| {

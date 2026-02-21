@@ -28,14 +28,11 @@ pub fn from_str(v: Ts) -> Ts {
     });
     let er_vrts_str = vrt_idents
         .iter()
-        .fold(String::default(), |mut acc_d6966473, vrt_ident| {
+        .fold(String::default(), |mut acc, vrt_ident| {
             use std::fmt::Write as _;
             let vrt_ident_sc_str = Casing::to_case(&format!("{vrt_ident}"), Case::Snake);
-            assert!(
-                write!(acc_d6966473, "\'{vrt_ident_sc_str}\',").is_ok(),
-                "09c49558"
-            );
-            acc_d6966473
+            assert!(write!(acc, "\'{vrt_ident_sc_str}\',").is_ok(), "09c49558");
+            acc
         });
     let er_ts = {
         let er_str = format!("\"Invalid {ident}, expected one of {er_vrts_str} found {{v}}\"");

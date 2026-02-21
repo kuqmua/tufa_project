@@ -334,7 +334,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     panic_location();
     let config = from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("1123f78f");
     let (fields_ts, pg_json_type_arr) = {
-        let acc_d97120ed = {
+        let acc = {
             let gen_vrts = |max_dim: Option<i32>|{
                 PgJsonType::into_arr().into_iter().fold(Vec::new(), |mut acc, pg_json_type| {
                     for pattern in Pattern::into_arr() {
@@ -451,13 +451,13 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         };
         let mut seen = HashSet::new();
         assert!(
-            acc_d97120ed
+            acc
                 .iter()
                 .all(|el_8ef63a77| seen.insert(el_8ef63a77)),
             "c2d37017"
         );
-        acc_d97120ed
-    }.into_iter().fold(Vec::new(), |mut acc_5e43269c, el_c4f9bf8f| {
+        acc
+    }.into_iter().fold(Vec::new(), |mut acc, el_c4f9bf8f| {
         for el_7ae8d2ae in {
             #[derive(Clone)]
             struct RecordHandle {
@@ -528,11 +528,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 is_nullable: el_7ae8d2ae.is_nullable,
                 pattern: el_7ae8d2ae.pattern,
             };
-            if !acc_5e43269c.contains(&record) {
-                acc_5e43269c.push(record);
+            if !acc.contains(&record) {
+                acc.push(record);
             }
         }
-        acc_5e43269c
+        acc
     })
     .into_iter()
     .enumerate()
@@ -1956,23 +1956,23 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                                     ],
                                                 }
                                                 .into_iter()
-                                                .fold(gen_dot_value(&gen_d_nbr_elem(usize_v_0ff8cf42)), |mut acc_64e08e3a, is_nullable_0ff8cf42| {
+                                                .fold(gen_dot_value(&gen_d_nbr_elem(usize_v_0ff8cf42)), |mut acc, is_nullable_0ff8cf42| {
                                                     let usize_value_minus_one_0ff8cf42 = usize_v_0ff8cf42.checked_sub(one).expect("a35e873e");
                                                     let d_usize_minus_one_elem_value = gen_dot_value(&gen_d_nbr_elem(usize_value_minus_one_0ff8cf42));
                                                     let value = gen_jsonb_agg(
-                                                        &acc_64e08e3a,
+                                                        &acc,
                                                         &d_usize_minus_one_elem_value,
                                                         &gen_as_value_where(&gen_d_nbr_elem(usize_v_0ff8cf42), &gen_d_nbr_ord(usize_v_0ff8cf42)),
                                                         usize_v_0ff8cf42,
                                                     );
-                                                    acc_64e08e3a = match &is_nullable_0ff8cf42 {
+                                                    acc = match &is_nullable_0ff8cf42 {
                                                         IsNullable::False => value,
                                                         IsNullable::True => {
                                                             format!("case when jsonb_typeof({d_usize_minus_one_elem_value})='arr' then ({value}) else null end")
                                                         }
                                                     };
                                                     usize_v_0ff8cf42 = usize_value_minus_one_0ff8cf42;
-                                                    acc_64e08e3a
+                                                    acc
                                                 })
                                             },
                                             &column_field_field_ident,
