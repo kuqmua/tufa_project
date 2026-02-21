@@ -432,13 +432,8 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["wrap", "into", "jsonb", "build", "object"],
     ["gen", "jsonb", "set", "target"],
     ["gen", "jsonb", "set", "path"],
-    [
-        "column", "name", "and", "maybe", "field", "getter", "field", "ident"
-    ],
-    [
-        "column", "name", "and", "maybe", "field", "getter", "for", "er", "message", "field",
-        "ident"
-    ],
+    ["column", "field", "ident"],
+    ["column", "field", "for", "er", "message", "ident"],
     ["gen", "not", "unique", "field"],
     ["all", "fields", "are", "none"],
     ["self"],
@@ -451,10 +446,8 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["jsonb", "set", "accumulator"],
     ["jsonb", "set", "target"],
     ["jsonb", "set", "path"],
-    ["column", "name", "and", "maybe", "field", "getter"],
-    [
-        "column", "name", "and", "maybe", "field", "getter", "for", "er", "message"
-    ],
+    ["column", "field"],
+    ["column", "field", "for", "er", "message"],
     ["field", "ident"],
     ["pg", "json", "type"],
     ["create", "query", "part", "er"],
@@ -498,9 +491,6 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ],
     ["true"],
     ["false"],
-    [
-        "column", "name", "and", "maybe", "field", "getter", "handle"
-    ],
     ["null"],
     ["update", "query", "part"],
     ["update", "query", "bind"],

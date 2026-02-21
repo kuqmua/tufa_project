@@ -5,8 +5,8 @@ use gen_quotes::{dq_str, dq_ts};
 use macros_helpers::gen_impl_to_err_string_ts;
 use naming::{
     AllVrtsDefaultOptSomeVecOneElMaxPageSizeSc, AllVrtsDefaultOptSomeVecOneElSc,
-    ColumnNameAndMaybeFieldGetterForErMessageSc, ColumnNameAndMaybeFieldGetterSc, ColumnSc,
-    CreateForQueryUcc, CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
+    ColumnFieldForErMessageSc, ColumnFieldSc, ColumnSc, CreateForQueryUcc,
+    CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateIntoPgTypeOptVecWhereDimOneEqualSc,
     CreateQueryBindSc, CreateQueryPartSc, CreateSc, CreateTableColumnQueryPartSc, CreateUcc,
     DefaultOptSomeVecOneElMaxPageSizeSc, DefaultOptSomeVecOneElSc, DisplayPlusToTokens,
@@ -238,16 +238,16 @@ impl ToTokens for IsSelectQueryPartSelfSelectUsed {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub enum IsSelectQueryPartColumnNameAndMaybeFieldGetterForErMessageUsed {
+pub enum IsSelectQueryPartColumnFieldForErMessageUsed {
     False,
     True,
 }
-impl ToTokens for IsSelectQueryPartColumnNameAndMaybeFieldGetterForErMessageUsed {
+impl ToTokens for IsSelectQueryPartColumnFieldForErMessageUsed {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
             Self::True => {
-                ColumnNameAndMaybeFieldGetterForErMessageSc.to_tokens(tokens);
+                ColumnFieldForErMessageSc.to_tokens(tokens);
             }
         }
     }
@@ -729,7 +729,7 @@ pub fn gen_impl_pg_json_type_ts(
     create_for_query_type_ts: &dyn ToTokens,
     select_type_ts: &dyn ToTokens,
     is_select_query_part_self_select_used: &IsSelectQueryPartSelfSelectUsed,
-    is_select_query_part_column_name_and_maybe_field_getter_for_er_message_used: &IsSelectQueryPartColumnNameAndMaybeFieldGetterForErMessageUsed,
+    is_select_query_part_column_field_for_er_message_used: &IsSelectQueryPartColumnFieldForErMessageUsed,
     is_select_query_part_is_pg_type_used: &IsSelectQueryPartIsPgTypeUsed,
     select_query_part_ts: &dyn ToTokens,
     where_type_ts: &dyn ToTokens,
@@ -769,8 +769,8 @@ pub fn gen_impl_pg_json_type_ts(
             fn #SelectQueryPartSc(
                 #is_select_query_part_self_select_used: &Self::#SelectUcc,
                 #FieldIdentSc: #RefStr,
-                #ColumnNameAndMaybeFieldGetterSc: #RefStr,
-                #is_select_query_part_column_name_and_maybe_field_getter_for_er_message_used: #RefStr,
+                #ColumnFieldSc: #RefStr,
+                #is_select_query_part_column_field_for_er_message_used: #RefStr,
                 #is_select_query_part_is_pg_type_used: #Bool,
             ) -> Result<#StringTs, #path_ts #QueryPartErUcc> {
                 #select_query_part_ts
@@ -779,7 +779,7 @@ pub fn gen_impl_pg_json_type_ts(
             type #ReadUcc = #read_type_ts;
             type #ReadOnlyIdsUcc = #read_only_ids_type_ts;
             fn #SelectOnlyIdsQueryPartSc(
-                #ColumnNameAndMaybeFieldGetterSc: #RefStr,
+                #ColumnFieldSc: #RefStr,
             ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                 #select_only_ids_query_part_ts
             }
@@ -807,7 +807,7 @@ pub fn gen_impl_pg_json_type_ts(
             fn #SelectOnlyUpdatedIdsQueryPartSc(
                 #ValueSc: &Self::#UpdateForQueryUcc,
                 #FieldIdentSc: #RefStr,
-                #ColumnNameAndMaybeFieldGetterSc: #RefStr,
+                #ColumnFieldSc: #RefStr,
                 #IncrSc: &mut #U64
             ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                 #select_only_updated_ids_query_part_ts
@@ -821,7 +821,7 @@ pub fn gen_impl_pg_json_type_ts(
             fn #SelectOnlyCreatedIdsQueryPartSc(
                 #ValueSc: &Self::#CreateForQueryUcc,
                 #FieldIdentSc: #RefStr,
-                #ColumnNameAndMaybeFieldGetterSc: #RefStr,
+                #ColumnFieldSc: #RefStr,
                 #IncrSc: &mut #U64
             ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                 #select_only_created_ids_query_part_ts

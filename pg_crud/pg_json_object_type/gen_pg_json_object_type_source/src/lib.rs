@@ -9,8 +9,8 @@ use macros_helpers::{
     gen_simple_syn_punct, get_macro_attr_meta_list_ts, maybe_write_ts_into_file,
 };
 use naming::{
-    AllFieldsAreNoneUcc, ArrOfUcc, AsRefStrToUccTs, AsUcc, ColumnNameAndMaybeFieldGetterSc,
-    ColumnSc, ContainsAllElementsOfArrUcc, CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
+    AllFieldsAreNoneUcc, ArrOfUcc, AsRefStrToUccTs, AsUcc, ColumnFieldSc, ColumnSc,
+    ContainsAllElementsOfArrUcc, CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateSc, CreateUpdateDeleteAreEmptyUcc,
     DefaultOptSomeVecOneElSc, DefaultOptSomeVecOneElUcc, DeleteSc, DimOneEqualUcc, DimOneInUcc,
     DisplayPlusToTokens, EqualUcc, ErSc, FieldsSc, GenJsonbSetTargetSc, IdSc, IdsAreNotUniqueUcc,
@@ -51,12 +51,12 @@ use pg_crud_macros_common::{
     CreateQueryPartValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, ImportPath,
     IncrParameterUnderscore, IsCreateQueryBindMutable, IsNeedToAddLogicalOperatorUnderscore,
     IsNullable, IsPrimaryKeyUnderscore, IsQueryBindMutable, IsSelectOnlyCreatedIdsQueryBindMutable,
-    IsSelectOnlyUpdatedIdsQueryBindMutable,
-    IsSelectQueryPartColumnNameAndMaybeFieldGetterForErMessageUsed, IsSelectQueryPartIsPgTypeUsed,
-    IsSelectQueryPartSelfSelectUsed, IsUpdateQueryBindMutable, IsUpdateQueryPartJsonbSetTargetUsed,
-    IsUpdateQueryPartSelfUpdateUsed, PgTypeOrPgJsonType, SelectQueryPartValueUnderscore,
-    UpdateQueryPartJsonbSetAccumulatorUnderscore, UpdateQueryPartJsonbSetPathUnderscore,
-    UpdateQueryPartJsonbSetTargetUnderscore, UpdateQueryPartValueUnderscore,
+    IsSelectOnlyUpdatedIdsQueryBindMutable, IsSelectQueryPartColumnFieldForErMessageUsed,
+    IsSelectQueryPartIsPgTypeUsed, IsSelectQueryPartSelfSelectUsed, IsUpdateQueryBindMutable,
+    IsUpdateQueryPartJsonbSetTargetUsed, IsUpdateQueryPartSelfUpdateUsed, PgTypeOrPgJsonType,
+    SelectQueryPartValueUnderscore, UpdateQueryPartJsonbSetAccumulatorUnderscore,
+    UpdateQueryPartJsonbSetPathUnderscore, UpdateQueryPartJsonbSetTargetUnderscore,
+    UpdateQueryPartValueUnderscore,
     gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_ts,
     gen_impl_pg_crud_default_opt_some_vec_one_el_max_page_size_ts,
@@ -1103,8 +1103,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 acc_ts: &dyn ToTokens,
                 is_standart_with_id: &IsStandartWithId,
                 in_ts: &dyn ToTokens,
-                column_name_and_maybe_field_getter_field_ident_ts: &dyn ToTokens,
-                column_name_and_maybe_field_getter_for_er_message_field_ident_ts: &dyn ToTokens,
+                column_field_field_ident_ts: &dyn ToTokens,
+                column_field_for_er_message_field_ident_ts: &dyn ToTokens,
             |{
                 let ts = get_vec_syn_field(is_standart_with_id).iter().map(|el_f3a1af0f| {
                     let field_ident_str = el_f3a1af0f.field_ident.to_string();
@@ -1119,8 +1119,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         #ident_or_ident_with_id_standart_not_null_select_el_ucc::#vrt_name_ts(v_3c8acf6a) => match #field_type_as_crud_pg_json_type_from_field_ts::#SelectQueryPartSc(
                             v_3c8acf6a,
                             #field_ident_dq_ts,
-                            #column_name_and_maybe_field_getter_field_ident_ts,
-                            #column_name_and_maybe_field_getter_for_er_message_field_ident_ts,
+                            #column_field_field_ident_ts,
+                            #column_field_for_er_message_field_ident_ts,
                             false,
                         ) {
                             Ok(v_d54cf786) => v_d54cf786,
@@ -1264,14 +1264,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             &acc_ac57d097_ts,
                             &is_standart_with_id_false,
                             &SelfSc,
-                            &quote!{column_name_and_maybe_field_getter},
-                            &quote!{column_name_and_maybe_field_getter_for_er_message},
+                            &quote!{column_field},
+                            &quote!{column_field_for_er_message},
                         );
                         quote! {
                             fn #SelectQueryPartSc(
                                 &self,
-                                column_name_and_maybe_field_getter: &str,
-                                column_name_and_maybe_field_getter_for_er_message: &str,
+                                column_field: &str,
+                                column_field_for_er_message: &str,
                             ) -> Result<#StringTs, #import_path_query_part_er_ts> {
                                 let mut #acc_ac57d097_ts = #StringTs::default();
                                 #select_query_part_for_loop_ts
@@ -3233,7 +3233,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 match #field_type_as_pg_json_type_ts::#SelectOnlyUpdatedIdsQueryPartSc(
                                                     &#ValueSc.#ValueSc,
                                                     #field_ident_dq_ts,
-                                                    column_name_and_maybe_field_getter,
+                                                    column_field,
                                                     #IncrSc
                                                 ) {
                                                     Ok(mut v_c3ae3be4) => {
@@ -3275,7 +3275,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             ) => match #field_type_as_pg_json_type_ts::#SelectOnlyUpdatedIdsQueryPartSc(
                                                 &v_92d002a5.#ValueSc,
                                                 #field_ident_dq_ts,
-                                                column_name_and_maybe_field_getter,
+                                                column_field,
                                                 #IncrSc
                                             ) {
                                                 Ok(mut #ValueSc) => {
@@ -3413,7 +3413,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 let _: Option<char> = acc_57cd0744.pop();
                                                 format!("jsonb_build_object('value',{acc_57cd0744})")
                                             },
-                                            column_name_and_maybe_field_getter,
+                                            column_field,
                                             {
                                                 let mut acc_d497e8a5 = #StringTs::new();
                                                 for _ in self.#UpdateSc.to_vec() {
@@ -3448,7 +3448,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             "jsonb_build_object('value',{})",
                                             match #ident_arr_not_null_update_for_query_ucc::#SelectOnlyUpdatedIdsQueryPartSc(
                                                 v_bc509c9a,
-                                                column_name_and_maybe_field_getter,
+                                                column_field,
                                                 #IncrSc
                                             ) {
                                                 Ok(v_1e016751) => v_1e016751,
@@ -3466,7 +3466,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             #[allow(clippy::single_call_fn)]//for some reason lint ignoring this function call in other struct trait methonds(arr not null)
                             fn #SelectOnlyUpdatedIdsQueryPartSc(
                                 &self,
-                                column_name_and_maybe_field_getter: &str,
+                                column_field: &str,
                                 #IncrSc: &mut u64
                             ) -> Result<#StringTs, #import_path_query_part_er_ts> {
                                 #ts
@@ -3742,18 +3742,18 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &ident_create_for_query_ucc,
                     &ident_select_ucc,
                     &IsSelectQueryPartSelfSelectUsed::True,
-                    &IsSelectQueryPartColumnNameAndMaybeFieldGetterForErMessageUsed::True,
+                    &IsSelectQueryPartColumnFieldForErMessageUsed::True,
                     &IsSelectQueryPartIsPgTypeUsed::True,
                     &match &pattern {
                         Pattern::Standart => match &is_nullable {
                             IsNullable::False => quote! {
                                 match #ValueSc.#SelectQueryPartSc(
                                     &if is_pg_type {
-                                        column_name_and_maybe_field_getter.to_owned()
+                                        column_field.to_owned()
                                     } else {
-                                        format!("{column_name_and_maybe_field_getter}->'{field_ident}'")
+                                        format!("{column_field}->'{field_ident}'")
                                     },
-                                    &format!("{column_name_and_maybe_field_getter_for_er_message}.{field_ident}"),
+                                    &format!("{column_field_for_er_message}.{field_ident}"),
                                 ) {
                                     Ok(v_156121ad) => Ok(
                                         if is_pg_type {
@@ -3770,7 +3770,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     &ident_standart_not_null_as_pg_json_type_select_ts
                                 );
                                 quote! {
-                                    let column_name_and_maybe_field_getter_field_ident = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
+                                    let column_field_field_ident = format!("{column_field}->'{field_ident}'");
                                     let v_46039f0e = value.0.as_ref().map_or_else(
                                         #ident_standart_not_null_as_pg_json_type_select_as_default_but_opt_is_some_ts,
                                         Clone::clone
@@ -3778,12 +3778,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     match #ident_standart_not_null_as_pg_json_type_ts::#SelectQueryPartSc(
                                         &v_46039f0e,
                                         field_ident,
-                                        &column_name_and_maybe_field_getter_field_ident,
-                                        column_name_and_maybe_field_getter_for_er_message,
+                                        &column_field_field_ident,
+                                        column_field_for_er_message,
                                         true
                                     ) {
                                         Ok(v_1f8de96a) => Ok(
-                                            format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then 'null'::jsonb else ({v_1f8de96a}) end))")
+                                            format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_field_field_ident}) = 'null' then 'null'::jsonb else ({v_1f8de96a}) end))")
                                         ),
                                         Err(#ErSc) => Err(#ErSc)
                                     }
@@ -3804,7 +3804,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     )
                                 };
                                 let format_ts = dq_ts(&format!(
-                                    "jsonb_build_object('{{field_ident}}',jsonb_build_object('value',case when (jsonb_arr_length({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 0) then '[]'::jsonb else (select jsonb_agg(({{{ident_with_id_standart_not_null_select_sc}}})) from jsonb_arr_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{dim1_start}} and {{dim1_end}}) end ))"
+                                    "jsonb_build_object('{{field_ident}}',jsonb_build_object('value',case when (jsonb_arr_length({{column_field}}->'{{field_ident}}') = 0) then '[]'::jsonb else (select jsonb_agg(({{{ident_with_id_standart_not_null_select_sc}}})) from jsonb_arr_elements((select {{column_field}}->'{{field_ident}}')) with ordinality where ordinality between {{dim1_start}} and {{dim1_end}}) end ))"
                                 ));
                                 quote! {
                                     let #ident_with_id_standart_not_null_select_sc = {
@@ -3821,7 +3821,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             }
                             IsNullable::True => {
                                 let format_ts = dq_ts(
-                                    &"case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value','null'::jsonb)) else ({v_d7bbd03c}) end"
+                                    &"case when jsonb_typeof({column_field}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value','null'::jsonb)) else ({v_d7bbd03c}) end"
                                 );
                                 let ident_with_id_arr_not_null_as_pg_json_type_select_as_default_but_opt_is_some_ts = gen_ident_as_default_but_opt_is_some_ts(
                                     &ident_with_id_arr_not_null_as_pg_json_type_select_ts
@@ -3834,8 +3834,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     match #ident_with_id_arr_not_null_as_pg_json_type_ts::#SelectQueryPartSc(
                                         &v_174d33cd,
                                         field_ident,
-                                        column_name_and_maybe_field_getter,
-                                        column_name_and_maybe_field_getter_for_er_message,
+                                        column_field,
+                                        column_field_for_er_message,
                                         true
                                     ) {
                                         Ok(v_d7bbd03c) => Ok(format!(#format_ts)),
@@ -3861,7 +3861,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         let field_type_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el_a6a15738.field_type);
                                         let ts = match &pattern {
                                             Pattern::Standart => {
-                                                let format_ts_14808143 = dq_ts(&format!("{{column_name_and_maybe_field_getter}}->'{field_ident}'"));
+                                                let format_ts_14808143 = dq_ts(&format!("{{column_field}}->'{field_ident}'"));
                                                 quote! {&format!(#format_ts_14808143)}
                                             },
                                             Pattern::Arr => dq_ts(&format!("elem->'{field_ident}'"))
@@ -3892,7 +3892,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     Pattern::Standart => ts,
                                     Pattern::Arr => {
                                         let format_ts = dq_ts(
-                                            &format!("jsonb_build_object('value',(select jsonb_agg({{}}) from jsonb_arr_elements({{{ColumnNameAndMaybeFieldGetterSc}}}) as elem))")
+                                            &format!("jsonb_build_object('value',(select jsonb_agg({{}}) from jsonb_arr_elements({{{ColumnFieldSc}}}) as elem))")
                                         );
                                         quote! {format!(#format_ts, #ts)}
                                     },
@@ -3906,10 +3906,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 Pattern::Arr => &ident_with_id_arr_not_null_as_pg_json_type_ts,
                             };
                             let case_null_format_ts = dq_ts(
-                                &format!("jsonb_build_object('value',case when jsonb_typeof({{{ColumnNameAndMaybeFieldGetterSc}}})='null' then 'null'::jsonb else {{v_21000130}} end)")
+                                &format!("jsonb_build_object('value',case when jsonb_typeof({{{ColumnFieldSc}}})='null' then 'null'::jsonb else {{v_21000130}} end)")
                             );
                             quote! {
-                                match #ts::#SelectOnlyIdsQueryPartSc(#ColumnNameAndMaybeFieldGetterSc) {
+                                match #ts::#SelectOnlyIdsQueryPartSc(#ColumnFieldSc) {
                                     Ok(v_21000130) => Ok(format!(#case_null_format_ts)),
                                     Err(#ErSc) => Err(#ErSc)
                                 }
@@ -4147,7 +4147,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     },
                     &quote!{
                         match #ValueSc.#SelectOnlyUpdatedIdsQueryPartSc(
-                            &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
+                            &format!("{column_field}->'{field_ident}'"),
                             #IncrSc
                         ) {
                             Ok(v_e137951b) => Ok(format!("'{field_ident}',jsonb_build_object('value',{v_e137951b}),")),
@@ -4299,8 +4299,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     let field_ident = &el_6bcf3221.field_ident;
                                     let field_type_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el_6bcf3221.field_type);
                                     let field_ident_dq_ts = &dq_ts(&field_ident);
-                                    let column_name_and_maybe_field_getter_field_ident_dq_ts = &dq_ts(
-                                        &format!("{{{ColumnNameAndMaybeFieldGetterSc}}}->'{field_ident}'")
+                                    let column_field_field_ident_dq_ts = &dq_ts(
+                                        &format!("{{{ColumnFieldSc}}}->'{field_ident}'")
                                     );
                                     let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
                                         &quote!{acc_0fe559fa, "jsonb_build_object({v_cddc8a0a})||"},
@@ -4310,7 +4310,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         match #field_type_as_pg_json_type_ts::#SelectOnlyCreatedIdsQueryPartSc(
                                             &#ValueSc.#field_ident,
                                             #field_ident_dq_ts,
-                                            &format!(#column_name_and_maybe_field_getter_field_ident_dq_ts),
+                                            &format!(#column_field_field_ident_dq_ts),
                                             #IncrSc
                                         ) {
                                             Ok(mut v_cddc8a0a) => {
@@ -4341,8 +4341,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     let field_ident = &el_88c65ca5.field_ident;
                                     let field_type_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el_88c65ca5.field_type);
                                     let field_ident_dq_ts = &dq_ts(&field_ident);
-                                    let column_name_and_maybe_field_getter_field_ident_dq_ts = &dq_ts(
-                                        &format!("{{{ColumnNameAndMaybeFieldGetterSc}}}->'{field_ident}'")
+                                    let column_field_field_ident_dq_ts = &dq_ts(
+                                        &format!("{{{ColumnFieldSc}}}->'{field_ident}'")
                                     );
                                     let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
                                         &quote!{acc_0e9170a3, "jsonb_build_object({v_93015133})||"},
@@ -4352,7 +4352,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         match #field_type_as_pg_json_type_ts::#SelectOnlyCreatedIdsQueryPartSc(
                                             &v_90219286.#field_ident,
                                             #field_ident_dq_ts,
-                                            &format!(#column_name_and_maybe_field_getter_field_ident_dq_ts),
+                                            &format!(#column_field_field_ident_dq_ts),
                                             #IncrSc
                                         ) {
                                             Ok(mut v_93015133) => {
@@ -4428,7 +4428,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             let _: Option<char> = acc_0f2b92d0.pop();
                                             format!("jsonb_build_object('value',{acc_0f2b92d0})")
                                         },
-                                        &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
+                                        &format!("{column_field}->'{field_ident}'"),
                                         {
                                             let mut acc_44b1f772 = #StringTs::new();
                                             for _ in &#ValueSc.0 {
@@ -4492,7 +4492,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                     let _: Option<char> = acc_1a91bdc7.pop();
                                                     format!("jsonb_build_object('value',{acc_1a91bdc7})")
                                                 },
-                                                &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
+                                                &format!("{column_field}->'{field_ident}'"),
                                                 {
                                                     let mut acc_857ce631 = #StringTs::new();
                                                     for _ in &v_3c415c92.0 {

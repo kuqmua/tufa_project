@@ -98,9 +98,9 @@ pub trait PgJsonType {
     fn select_query_part(
         value: &Self::Select,
         field_ident: &str,
-        column_name_and_maybe_field_getter: &str,
+        column_field: &str,
         //todo remove this coz its used properly now
-        column_name_and_maybe_field_getter_for_er_message: &str,
+        column_field_for_er_message: &str,
         is_pg_type: bool,
     ) -> Result<String, QueryPartEr>;
     type Where: WhereAl
@@ -111,9 +111,7 @@ pub trait PgJsonType {
     //todo maybe add Decode trait here and Type
     type Read: ReadAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DefaultOptSomeVecOneEl;
     type ReadOnlyIds: ReadOnlyIdsAl;
-    fn select_only_ids_query_part(
-        column_name_and_maybe_field_getter: &str,
-    ) -> Result<String, QueryPartEr>;
+    fn select_only_ids_query_part(column_field: &str) -> Result<String, QueryPartEr>;
     type ReadInner: ReadInnerAl;
     fn into_inner(value: Self::Read) -> Self::ReadInner;
     type Update: UpdateAl + UtoipaToSchemaAndSchemarsJsonSchemaAl;
@@ -132,7 +130,7 @@ pub trait PgJsonType {
     fn select_only_updated_ids_query_part(
         value: &Self::UpdateForQuery,
         field_ident: &str,
-        column_name_and_maybe_field_getter: &str,
+        column_field: &str,
         incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
     fn select_only_updated_ids_query_bind<'lifetime>(
@@ -142,7 +140,7 @@ pub trait PgJsonType {
     fn select_only_created_ids_query_part(
         value: &Self::CreateForQuery,
         field_ident: &str,
-        column_name_and_maybe_field_getter: &str,
+        column_field: &str,
         incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
     fn select_only_created_ids_query_bind<'lifetime>(

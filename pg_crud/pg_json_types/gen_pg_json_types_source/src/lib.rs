@@ -6,9 +6,9 @@ use macros_helpers::{
     gen_impl_to_err_string_ts, gen_pub_const_new_ts, gen_pub_new_ts, maybe_write_ts_into_file,
 };
 use naming::{
-    ArrOfUcc, AsUcc, BooleanUcc, ColumnNameAndMaybeFieldGetterSc, CreateForQueryUcc, CreateSc,
-    EqualUcc, ErSc, GenPgJsonTypesModSc, IncrSc, JsonbSetAccumulatorSc, NbrUcc, NewSc, OptUpdateSc,
-    OptVecCreateSc, PgJsonTypeUcc, QuerySc, ReadInnerUcc, ReadOnlyIdsMergedWithCreateIntoReadSc,
+    ArrOfUcc, AsUcc, BooleanUcc, ColumnFieldSc, CreateForQueryUcc, CreateSc, EqualUcc, ErSc,
+    GenPgJsonTypesModSc, IncrSc, JsonbSetAccumulatorSc, NbrUcc, NewSc, OptUpdateSc, OptVecCreateSc,
+    PgJsonTypeUcc, QuerySc, ReadInnerUcc, ReadOnlyIdsMergedWithCreateIntoReadSc,
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
     ReadOnlyIdsMergedWithCreateIntoWhereEqualSc, ReadOnlyIdsSc,
     ReadOnlyIdsToTwoDimalVecReadInnerSc, ReadSc, SelfSc, SelfUcc, StringUcc, UpdateForQueryUcc,
@@ -23,12 +23,11 @@ use panic_location::panic_location;
 use pg_crud_macros_common::{
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, DimIndexNbr, ImportPath, IsNullable,
     IsQueryBindMutable, IsSelectOnlyCreatedIdsQueryBindMutable,
-    IsSelectOnlyUpdatedIdsQueryBindMutable,
-    IsSelectQueryPartColumnNameAndMaybeFieldGetterForErMessageUsed, IsSelectQueryPartIsPgTypeUsed,
-    IsSelectQueryPartSelfSelectUsed, IsStandartNotNull, IsUpdateQueryBindMutable,
-    IsUpdateQueryPartJsonbSetTargetUsed, IsUpdateQueryPartSelfUpdateUsed, PgFilter,
-    PgJsonTypeFilter, ReadOrUpdate, ShouldDeriveSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
-    gen_impl_crate_is_string_empty_for_ident_ts,
+    IsSelectOnlyUpdatedIdsQueryBindMutable, IsSelectQueryPartColumnFieldForErMessageUsed,
+    IsSelectQueryPartIsPgTypeUsed, IsSelectQueryPartSelfSelectUsed, IsStandartNotNull,
+    IsUpdateQueryBindMutable, IsUpdateQueryPartJsonbSetTargetUsed, IsUpdateQueryPartSelfUpdateUsed,
+    PgFilter, PgJsonTypeFilter, ReadOrUpdate, ShouldDeriveSchemarsJsonSchema,
+    ShouldDeriveUtoipaToSchema, gen_impl_crate_is_string_empty_for_ident_ts,
     gen_impl_pg_crud_common_default_opt_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_common_default_opt_some_vec_one_el_ts,
     gen_impl_pg_json_type_test_cases_for_ident_ts, gen_impl_pg_json_type_ts,
@@ -1852,14 +1851,14 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     Pattern::Standart => IsSelectQueryPartSelfSelectUsed::False,
                     Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. } => IsSelectQueryPartSelfSelectUsed::True,
                 },
-                &IsSelectQueryPartColumnNameAndMaybeFieldGetterForErMessageUsed::False,
+                &IsSelectQueryPartColumnFieldForErMessageUsed::False,
                 &IsSelectQueryPartIsPgTypeUsed::False,
                 &{
                     let format_handle = {
                         //last child dim value does not matter - null or type - works both good
-                        let column_name_and_maybe_field_getter_field_ident = format!("{{{ColumnNameAndMaybeFieldGetterSc}}}->'{{field_ident}}'");
+                        let column_field_field_ident = format!("{{{ColumnFieldSc}}}->'{{field_ident}}'");
                         let format_handle = ArrDim::try_from(pattern).map_or_else(
-                            |()| column_name_and_maybe_field_getter_field_ident.clone(),
+                            |()| column_field_field_ident.clone(),
                             |arr_dim| {
                                 enum ArrDimSelectPattern {
                                     ArrDim2 {
@@ -1914,7 +1913,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 ArrDimSelectPattern::try_from(&arr_dim).map_or_else(
                                     |()| gen_jsonb_agg(
                                         "value",
-                                        &format!("select {column_name_and_maybe_field_getter_field_ident}"),
+                                        &format!("select {column_field_field_ident}"),
                                         "where ordinality",
                                         1,
                                     ),
@@ -1976,7 +1975,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                                     acc_64e08e3a
                                                 })
                                             },
-                                            &column_name_and_maybe_field_getter_field_ident,
+                                            &column_field_field_ident,
                                             &gen_as_value_where(&gen_d_nbr_elem(one), &gen_d_nbr_ord(one)),
                                             one,
                                         )
@@ -1986,7 +1985,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         );
                         match &is_nullable {
                             IsNullable::False => format_handle,
-                            IsNullable::True => format!("case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident})='null' then 'null'::jsonb else ({format_handle}) end"),
+                            IsNullable::True => format!("case when jsonb_typeof({column_field_field_ident})='null' then 'null'::jsonb else ({format_handle}) end"),
                         }
                     };
                     let maybe_dims_start_end_init = ArrDim::try_from(pattern).ok().into_iter().flat_map(|arr_dim| {
@@ -2023,7 +2022,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &ident_read_only_ids_ucc,
                 &{
                     let content_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
-                        quote! {format!("jsonb_build_object('value',{column_name_and_maybe_field_getter})")}
+                        quote! {format!("jsonb_build_object('value',{column_field})")}
                     } else {
                         quote! {"jsonb_build_object('value','null'::jsonb)".to_owned()}
                     };
