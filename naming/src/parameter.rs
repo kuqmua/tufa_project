@@ -16,14 +16,13 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ],
     ["try", "self"],
     ["try", "self", "res", "vrts"],
-    ["self", "payload", "element", "with", "serde"],
-    ["self", "payload", "element"],
+    ["self", "payload", "el", "with", "serde"],
+    ["self", "payload", "el"],
     [
-        "self", "payload", "element", "try", "from", "self", "payload", "with", "serde"
+        "self", "payload", "el", "try", "from", "self", "payload", "with", "serde"
     ],
     [
-        "self", "payload", "element", "try", "from", "self", "payload", "element", "with", "serde",
-        "er"
+        "self", "payload", "el", "try", "from", "self", "payload", "el", "with", "serde", "er"
     ],
     ["try", "self", "er"],
     ["try", "self", "req", "er"],
@@ -154,7 +153,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "field", "to", "update"],
     ["self", "gen", "pg", "json", "type", "to", "read", "er"],
     [
-        "self", "try", "gen", "json", "arr", "element", "update", "bind", "incrs", "er"
+        "self", "try", "gen", "json", "arr", "el", "update", "bind", "incrs", "er"
     ],
     [
         "std", "vec", "vec", "object", "with", "id", "self", "json", "arr", "change", "try", "new",
@@ -296,7 +295,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["pg", "json", "type", "self", "read"],
     ["pg", "json", "type", "self", "read", "without", "id"],
     ["pg", "json", "type", "self", "read", "with", "id"],
-    ["self", "update", "element"],
+    ["self", "update", "el"],
     ["pg", "json", "type", "self", "opt", "to", "update"],
     ["self", "update", "er"],
     ["self", "update", "try", "new", "er"],
@@ -808,18 +807,17 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "er"
     ],
     [
-        "pg", "type", "self", "where", "contains", "all", "elements", "of", "arr", "try", "new",
+        "pg", "type", "self", "where", "contains", "all", "els", "of", "arr", "try", "new", "er"
+    ],
+    [
+        "pg", "json", "type", "self", "where", "contains", "all", "els", "of", "arr", "try", "new",
         "er"
     ],
     [
-        "pg", "json", "type", "self", "where", "contains", "all", "elements", "of", "arr", "try",
-        "new", "er"
+        "pg", "type", "self", "where", "contains", "all", "els", "of", "arr"
     ],
     [
-        "pg", "type", "self", "where", "contains", "all", "elements", "of", "arr"
-    ],
-    [
-        "pg", "json", "type", "self", "where", "contains", "all", "elements", "of", "arr"
+        "pg", "json", "type", "self", "where", "contains", "all", "els", "of", "arr"
     ],
     [
         "self", "where", "bit", "vec", "position", "equals", "try", "new", "er"
@@ -861,12 +859,12 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "vec"],
     ["self", "pg", "type"],
     ["self", "with", "id"],
-    ["self", "select", "element"],
-    ["self", "with", "id", "select", "element"],
-    ["self", "with", "id", "update", "element"],
+    ["self", "select", "el"],
+    ["self", "with", "id", "select", "el"],
+    ["self", "with", "id", "update", "el"],
     ["self", "with", "id", "where"],
     ["self", "read", "try", "from", "er"],
-    ["element", "self"],
+    ["el", "self"],
     ["self", "prepare", "pg", "er"],
     ["self", "where", "many"],
     ["self", "where", "many", "try", "new", "er"],
@@ -889,7 +887,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "current"],
     ["jsonb", "self"],
     ["self", "create", "for", "query"],
-    ["self", "update", "for", "query", "element"],
+    ["self", "update", "for", "query", "el"],
     ["self", "delete", "many", "params"],
     ["self", "delete", "many", "payload"],
     ["self", "delete", "one", "params"],

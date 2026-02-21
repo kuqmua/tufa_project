@@ -155,13 +155,13 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
                 let Some(f0) = SeqAccess::next_element::<i64>(&mut __seq)? else {
                     return Err(SerdeEr::invalid_length(
                         0usize,
-                        &"struct PaginationStartsWithOne with 2 elements",
+                        &"struct PaginationStartsWithOne with 2 els",
                     ));
                 };
                 let Some(f1) = SeqAccess::next_element::<i64>(&mut __seq)? else {
                     return Err(SerdeEr::invalid_length(
                         1usize,
-                        &"struct PaginationStartsWithOne with 2 elements",
+                        &"struct PaginationStartsWithOne with 2 els",
                     ));
                 };
                 match PaginationStartsWithOne::try_new(f0, f1) {

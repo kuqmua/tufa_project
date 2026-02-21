@@ -96,7 +96,7 @@ const _: () = {
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
-                            &"tuple struct UniqueVec with 1 element",
+                            &"tuple struct UniqueVec with 1 el",
                         ));
                     };
                     match UniqueVec::try_new(f0) {

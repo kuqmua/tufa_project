@@ -171,7 +171,7 @@ pub trait PgTypeNotPrimaryKey {
     type Create: CreateAl + SqlxEncodePgSqlxTypePgAl;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-pub trait PgJsonTypeObjectVecElementId {
+pub trait PgJsonTypeObjectVecElId {
     type PgJsonType: PgJsonType;
     type CreateForQuery: CreateForQueryAl
         + From<<Self::PgJsonType as PgJsonType>::Create>
@@ -430,7 +430,7 @@ pub trait PgTypeWhereFilter<'query_lifetime> {
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartEr>;
 }
-//todo custom deserialization - must not contain more than one element
+//todo custom deserialization - must not contain more than one el
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema)]
 pub struct NullableJsonObjectPgTypeWhereFilter<
     T: Debug
@@ -618,14 +618,14 @@ const _: () = {
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
-                            &"struct PgTypeWhere with 2 elements",
+                            &"struct PgTypeWhere with 2 els",
                         ));
                     };
                     let Some(f1) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             1usize,
-                            &"struct PgTypeWhere with 2 elements",
+                            &"struct PgTypeWhere with 2 els",
                         ));
                     };
                     match PgTypeWhere::try_new(f0, f1) {
@@ -995,13 +995,13 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
                 let Some(f0) = serde::de::SeqAccess::next_element::<i64>(&mut __seq)? else {
                     return Err(serde::de::Error::invalid_length(
                         0usize,
-                        &"struct PaginationStartsWithZero with 2 elements",
+                        &"struct PaginationStartsWithZero with 2 els",
                     ));
                 };
                 let Some(f1) = serde::de::SeqAccess::next_element::<i64>(&mut __seq)? else {
                     return Err(serde::de::Error::invalid_length(
                         1usize,
-                        &"struct PaginationStartsWithZero with 2 elements",
+                        &"struct PaginationStartsWithZero with 2 els",
                     ));
                 };
                 match PaginationStartsWithZero::try_new(f0, f1) {
@@ -1195,7 +1195,7 @@ const _: () = {
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
-                            &"tuple struct NotEmptyUniqueVec with 1 element",
+                            &"tuple struct NotEmptyUniqueVec with 1 el",
                         ));
                     };
                     match NotEmptyUniqueVec::try_new(f0) {
@@ -1407,7 +1407,7 @@ const _: () = {
                     let Some(f0) = _serde::de::SeqAccess::next_element::<i32>(&mut __seq)? else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
-                            &"tuple struct UnsignedPartOfI32 with 1 element",
+                            &"tuple struct UnsignedPartOfI32 with 1 el",
                         ));
                     };
                     match UnsignedPartOfI32::try_from(f0) {
@@ -1534,7 +1534,7 @@ const _: () = {
                     let Some(f0) = _serde::de::SeqAccess::next_element::<i32>(&mut __seq)? else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
-                            &"tuple struct NotZeroUnsignedPartOfI32 with 1 element",
+                            &"tuple struct NotZeroUnsignedPartOfI32 with 1 el",
                         ));
                     };
                     match NotZeroUnsignedPartOfI32::try_from(f0) {

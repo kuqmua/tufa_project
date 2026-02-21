@@ -3,7 +3,7 @@ use serde_derive::{Deserialize, Serialize};
 pub struct Data {
     pub image: Image,
     #[serde(rename = "item", default)]
-    pub items: Vec<ItemElement>,
+    pub items: Vec<ItemEl>,
 }
 #[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Image {
@@ -14,7 +14,7 @@ pub struct Image {
     pub url: Option<String>,
 }
 #[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub struct ItemElement {
+pub struct ItemEl {
     pub creator: Option<String>,
     pub description: Option<String>,
     pub guid: Option<String>,

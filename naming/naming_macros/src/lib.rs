@@ -132,14 +132,14 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
             }
             assert!(is_self_exists_and_only_one, "5680dd63");
         };
-        let (elements_concat_v_ucc_dq_ts, elements_concat_v_sc_dq_ts, struct_ucc_ucc_ts, struct_sc_token_ucc_ts, trait_ucc_ucc_ts, trait_sc_token_ucc_ts) = {
+        let (els_concat_v_ucc_dq_ts, els_concat_v_sc_dq_ts, struct_ucc_ucc_ts, struct_sc_token_ucc_ts, trait_ucc_ucc_ts, trait_sc_token_ucc_ts) = {
             let ucc_ucc_str = "Ucc";
             let sc_ucc_str = "Sc";
-            let elements_concat_ucc_str = el_a5ccbaa7.iter().fold(String::new(), |mut acc_34997d76, el_98881b7d| {
+            let els_concat_ucc_str = el_a5ccbaa7.iter().fold(String::new(), |mut acc_34997d76, el_98881b7d| {
                 acc_34997d76.push_str(&naming_common::AsRefStrToUccStr::case(el_98881b7d));
                 acc_34997d76
             });
-            let elements_concat_v_ucc_dq_ts = dq_ts(&el_a5ccbaa7.iter().fold(String::new(), |mut acc_ae77cbd3, el_626f2b61| {
+            let els_concat_v_ucc_dq_ts = dq_ts(&el_a5ccbaa7.iter().fold(String::new(), |mut acc_ae77cbd3, el_626f2b61| {
                 if el_626f2b61 == "self" {
                     acc_ae77cbd3.push_str("{v}");
                 } else {
@@ -147,7 +147,7 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 }
                 acc_ae77cbd3
             }));
-            let elements_concat_v_sc_dq_ts = dq_ts(&{
+            let els_concat_v_sc_dq_ts = dq_ts(&{
                 let mut acc = el_a5ccbaa7.iter().fold(String::new(), |mut acc_cbcae5e1, el_73b0c851| {
                     let symbol = '_';
                     if el_73b0c851 == "self" {
@@ -160,24 +160,24 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 let _: Option<char> = acc.pop();
                 acc
             });
-            let struct_ucc_ucc_ts = format!("{elements_concat_ucc_str}{ucc_ucc_str}").parse::<Ts2>().expect("82f4ac08");
-            let struct_sc_token_ucc_ts = format!("{elements_concat_ucc_str}{sc_ucc_str}").parse::<Ts2>().expect("21044eba");
+            let struct_ucc_ucc_ts = format!("{els_concat_ucc_str}{ucc_ucc_str}").parse::<Ts2>().expect("82f4ac08");
+            let struct_sc_token_ucc_ts = format!("{els_concat_ucc_str}{sc_ucc_str}").parse::<Ts2>().expect("21044eba");
             let (trait_ucc_ucc_ts, trait_sc_token_ucc_ts) = {
                 let trait_ucc_str = "Trait";
-                let trait_ucc_ucc_ts = format!("{elements_concat_ucc_str}{ucc_ucc_str}{trait_ucc_str}").parse::<Ts2>().expect("1066857a");
-                let trait_sc_token_ucc_ts = format!("{elements_concat_ucc_str}{sc_ucc_str}{trait_ucc_str}").parse::<Ts2>().expect("8db74cfd");
+                let trait_ucc_ucc_ts = format!("{els_concat_ucc_str}{ucc_ucc_str}{trait_ucc_str}").parse::<Ts2>().expect("1066857a");
+                let trait_sc_token_ucc_ts = format!("{els_concat_ucc_str}{sc_ucc_str}{trait_ucc_str}").parse::<Ts2>().expect("8db74cfd");
                 (trait_ucc_ucc_ts, trait_sc_token_ucc_ts)
             };
             (
-                elements_concat_v_ucc_dq_ts,
-                elements_concat_v_sc_dq_ts,
+                els_concat_v_ucc_dq_ts,
+                els_concat_v_sc_dq_ts,
                 struct_ucc_ucc_ts,
                 struct_sc_token_ucc_ts,
                 trait_ucc_ucc_ts,
                 trait_sc_token_ucc_ts,
             )
         };
-        let gen_struct_ts = |elements_concat_v_case_dq_ts: &dyn ToTokens, is_ucc: bool, trait_ident_ts: &dyn ToTokens| {
+        let gen_struct_ts = |els_concat_v_case_dq_ts: &dyn ToTokens, is_ucc: bool, trait_ident_ts: &dyn ToTokens| {
             let struct_ident_ts = if is_ucc {
                 quote! {#struct_ucc_ucc_ts}
             } else {
@@ -196,7 +196,7 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                         Self(Self::format(v))
                     }
                     fn format(v: &dyn std::fmt::Display) -> String {
-                        format!(#elements_concat_v_case_dq_ts)
+                        format!(#els_concat_v_case_dq_ts)
                     }
                     pub fn from_display(v: &dyn std::fmt::Display) -> Self {
                         Self::wrap(&#casing_ts(&v.to_string()))
@@ -241,8 +241,8 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 impl #trait_ident_ts for #struct_ident_ts {}
             }
         };
-        let pub_struct_ucc_ts = gen_struct_ts(&elements_concat_v_ucc_dq_ts, true, &trait_ucc_ucc_ts);
-        let pub_struct_sc_ts = gen_struct_ts(&elements_concat_v_sc_dq_ts, false, &trait_sc_token_ucc_ts);
+        let pub_struct_ucc_ts = gen_struct_ts(&els_concat_v_ucc_dq_ts, true, &trait_ucc_ucc_ts);
+        let pub_struct_sc_ts = gen_struct_ts(&els_concat_v_sc_dq_ts, false, &trait_sc_token_ucc_ts);
         quote! {
             #pub_struct_ucc_ts
             #pub_struct_sc_ts

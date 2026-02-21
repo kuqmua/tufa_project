@@ -158,7 +158,7 @@ const _: () = {
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
-                            &"tuple struct PgJsonTypeNotEmptyUniqueVec with 1 element",
+                            &"tuple struct PgJsonTypeNotEmptyUniqueVec with 1 el",
                         ));
                     };
                     match PgJsonTypeNotEmptyUniqueVec::try_new(f0) {
@@ -300,7 +300,7 @@ const _: () = {
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
-                            &"tuple struct RegexRegex with 1 element",
+                            &"tuple struct RegexRegex with 1 el",
                         ));
                     };
                     Ok(RegexRegex(match Regex::new(&f0) {
@@ -511,13 +511,13 @@ const _: () = {
                     let Some(f0) = _serde::de::SeqAccess::next_element::<T>(&mut __seq)? else {
                         return Err(_serde::de::Error::invalid_length(
                             1usize,
-                            &"struct Between with 2 elements",
+                            &"struct Between with 2 els",
                         ));
                     };
                     let Some(f1) = _serde::de::SeqAccess::next_element::<T>(&mut __seq)? else {
                         return Err(_serde::de::Error::invalid_length(
                             2usize,
-                            &"struct Between with 2 elements",
+                            &"struct Between with 2 els",
                         ));
                     };
                     match Between::try_new(f0, f1) {
@@ -712,7 +712,7 @@ const _: () = {
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
-                            &"tuple struct PgTypeNotEmptyUniqueVec with 1 element",
+                            &"tuple struct PgTypeNotEmptyUniqueVec with 1 el",
                         ));
                     };
                     match PgTypeNotEmptyUniqueVec::try_new(f0) {
@@ -956,7 +956,7 @@ const _: () = {
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
-                            &"tuple struct BoundedStdVecVec with 1 element",
+                            &"tuple struct BoundedStdVecVec with 1 el",
                         ));
                     };
                     match BoundedStdVecVec::try_from(f0) {

@@ -62,13 +62,13 @@ pub fn gen_column_equals_case_acc_else_column_end_comma_update_many_query_part(
 #[must_use]
 pub fn gen_update_many_query_string(
     table: &str,
-    elements: &str,
+    els: &str,
     primary_key_field_name: &str,
     primary_keys: &str,
     columns_to_return: &str,
 ) -> String {
     format!(
-        "update {table} set {elements} where {primary_key_field_name} in ({primary_keys}) returning {columns_to_return}"
+        "update {table} set {els} where {primary_key_field_name} in ({primary_keys}) returning {columns_to_return}"
     )
 }
 //todo additional parameter for columns_to_return instead of primary_key_field_name in "returning {primary_key_field_name}""

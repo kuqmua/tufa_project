@@ -159,11 +159,11 @@ pub fn location(input: Ts) -> Ts {
                                 }
                             }
                             LocationFieldAttr::EoLocation => {
-                                let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_52e70d22, "\n {element}"}, &quote! {panic!("c751d54a");});
+                                let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_52e70d22, "\n {el}"}, &quote! {panic!("c751d54a");});
                                 quote! {
                                     #el_f00312fe_ident.to_string().lines().fold(
                                         #StringTs::new(),
-                                        |mut acc_52e70d22, element| {
+                                        |mut acc_52e70d22, el| {
                                             #if_write_is_err_ts
                                             acc_52e70d22
                                         }
@@ -264,28 +264,24 @@ pub fn location(input: Ts) -> Ts {
                         }
                     }
                 });
-                let loc_vrts_ts = data_enum
-                    .variants
-                    .iter()
-                    .enumerate()
-                    .map(|(index, element)| {
-                        let el_ident = &element.ident;
-                        if index == 0 {
-                            quote! {
-                                Self::#el_ident {
-                                    #LocSc,
-                                    ..
-                                }
-                            }
-                        } else {
-                            quote! {
-                                | Self::#el_ident {
-                                    #LocSc,
-                                    ..
-                                }
+                let loc_vrts_ts = data_enum.variants.iter().enumerate().map(|(index, el)| {
+                    let el_ident = &el.ident;
+                    if index == 0 {
+                        quote! {
+                            Self::#el_ident {
+                                #LocSc,
+                                ..
                             }
                         }
-                    });
+                    } else {
+                        quote! {
+                            | Self::#el_ident {
+                                #LocSc,
+                                ..
+                            }
+                        }
+                    }
+                });
                 quote! {
                     write!(
                         f,

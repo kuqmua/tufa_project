@@ -2,11 +2,11 @@ use serde_derive::{Deserialize, Serialize};
 #[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Data {
     #[serde(rename = "entry", default)]
-    pub entries: Vec<DataElement>,
+    pub entries: Vec<DataEl>,
 }
 #[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub struct DataElement {
-    pub author: DataElementAuthor,
+pub struct DataEl {
+    pub author: DataElAuthor,
     pub content: Option<String>,
     pub id: Option<String>,
     pub link: Option<String>,
@@ -16,7 +16,7 @@ pub struct DataElement {
     pub updated: Option<String>,
 }
 #[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub struct DataElementAuthor {
+pub struct DataElAuthor {
     pub name: Option<String>,
     pub uri: Option<String>,
 }

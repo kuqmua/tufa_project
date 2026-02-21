@@ -47,7 +47,7 @@ use pg_crud_macros_common::{
     gen_impl_pg_type_ts, gen_impl_sqlx_decode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_for_ident_ts,
     gen_opt_type_decl_ts, gen_pg_type_where_ts, gen_return_err_query_part_er_write_into_buffer_ts,
-    gen_struct_ident_dq_ts, gen_struct_ident_with_nbr_elements_dq_ts, gen_tuple_struct_ident_dq_ts,
+    gen_struct_ident_dq_ts, gen_struct_ident_with_nbr_els_dq_ts, gen_tuple_struct_ident_dq_ts,
     gen_value_init_ts, gen_vec_tokens_decl_ts, impl_pg_type_equal_operator_for_ident_ts,
     impl_pg_type_where_filter_for_ident_ts,
 };
@@ -227,12 +227,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         False,
         True,
     }
-    enum CanBeAnArrElement {
+    enum CanBeAnArrEl {
         False,
         True,
     }
     impl PgType {
-        const fn can_be_an_arr_element(&self) -> CanBeAnArrElement {
+        const fn can_be_an_arr_el(&self) -> CanBeAnArrEl {
             match &self {
                 Self::I16AsInt2
                 | Self::I32AsInt4
@@ -256,8 +256,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 | Self::SqlxPgTypesPgRangeI64AsInt8Range
                 | Self::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                 | Self::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
-                | Self::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBeAnArrElement::True,
-                Self::I16AsSmallSerialInitByPg | Self::I32AsSerialInitByPg | Self::I64AsBigSerialInitByPg | Self::SqlxTypesUuidUuidAsUuidV4InitByPg => CanBeAnArrElement::False,
+                | Self::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBeAnArrEl::True,
+                Self::I16AsSmallSerialInitByPg | Self::I32AsSerialInitByPg | Self::I64AsBigSerialInitByPg | Self::SqlxTypesUuidUuidAsUuidV4InitByPg => CanBeAnArrEl::False,
             }
         }
         const fn can_be_nullable(&self) -> CanBeNullable {
@@ -509,7 +509,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         else {
                             return Err(_serde::de::Error::invalid_length(
                                 0usize,
-                                &"struct PgTypeRecord with 3 elements",
+                                &"struct PgTypeRecord with 3 els",
                             ));
                         };
                         let Some(f1) =
@@ -517,7 +517,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         else {
                             return Err(_serde::de::Error::invalid_length(
                                 1usize,
-                                &"struct PgTypeRecord with 3 elements",
+                                &"struct PgTypeRecord with 3 els",
                             ));
                         };
                         let Some(f2) =
@@ -525,7 +525,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         else {
                             return Err(_serde::de::Error::invalid_length(
                                 2usize,
-                                &"struct PgTypeRecord with 3 elements",
+                                &"struct PgTypeRecord with 3 els",
                             ));
                         };
                         match PgTypeRecord::try_from((f0, f1, f2)) {
@@ -638,11 +638,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             pg_type_pattern: v.2,
                         }),
                         PgTypePattern::ArrDim1 { dim1_is_nullable } => {
-                            match &v.0.can_be_an_arr_element() {
-                                CanBeAnArrElement::False => {
+                            match &v.0.can_be_an_arr_el() {
+                                CanBeAnArrEl::False => {
                                     Err(format!("{cant_support_arr_version_message}{v:#?}"))
                                 }
-                                CanBeAnArrElement::True => match &dim1_is_nullable {
+                                CanBeAnArrEl::True => match &dim1_is_nullable {
                                     IsNullable::False => Ok(Self {
                                         pg_type: v.0,
                                         is_nullable: v.1,
@@ -662,11 +662,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         is_nullable: v.1,
                         pg_type_pattern: v.2,
                     }),
-                    PgTypePattern::ArrDim1 { .. } => match &v.0.can_be_an_arr_element() {
-                        CanBeAnArrElement::False => {
+                    PgTypePattern::ArrDim1 { .. } => match &v.0.can_be_an_arr_el() {
+                        CanBeAnArrEl::False => {
                             Err(format!("{cant_support_arr_version_message}{v:#?}"))
                         }
-                        CanBeAnArrElement::True => Ok(Self {
+                        CanBeAnArrEl::True => Ok(Self {
                             pg_type: v.0,
                             is_nullable: v.1,
                             pg_type_pattern: v.2,
@@ -855,9 +855,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 });
                             }),
                         },
-                        PgTypePattern::ArrDim1 { dim1_is_nullable } => match &el_a897c529.can_be_an_arr_element() {
-                            CanBeAnArrElement::False => (),
-                            CanBeAnArrElement::True => match &el_a897c529.can_be_nullable() {
+                        PgTypePattern::ArrDim1 { dim1_is_nullable } => match &el_a897c529.can_be_an_arr_el() {
+                            CanBeAnArrEl::False => (),
+                            CanBeAnArrEl::True => match &el_a897c529.can_be_nullable() {
                                 CanBeNullable::False => {
                                     if matches!(&dim1_is_nullable, IsNullable::False) {
                                         for el_8b51bcb4 in IsNullable::into_arr() {
@@ -970,7 +970,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     .collect::<Vec<(usize, PgTypeRecord)>>()
     .par_iter()
     //.into_iter() //just for console prints ordering
-    .map(|(index, element)| {
+    .map(|(index, el)| {
         enum PgTypeOrPgTypeTestCases {
             PgType,
             PgTypeTestCases,
@@ -1008,9 +1008,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 }
             }
         }
-        let pg_type = &element.pg_type;
-        let is_nullable = &element.is_nullable;
-        let pg_type_pattern = &element.pg_type_pattern;
+        let pg_type = &el.pg_type;
+        let is_nullable = &el.is_nullable;
+        let pg_type_pattern = &el.pg_type_pattern;
         let pg_type_init_try_new_try_from_pg_type = PgTypeInitTryNew::try_from(pg_type);
         let pg_type_deserialize = PgTypeDeserialize::from(pg_type);
         let arr_dims_nbr = pg_type_pattern.arr_dims_nbr();
@@ -1194,7 +1194,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             },
         };
         let typical_query_bind_ts = gen_typical_query_bind_ts(&ValueSc);
-        let ident_inner_type_ts = match &element.pg_type_pattern {
+        let ident_inner_type_ts = match &el.pg_type_pattern {
             PgTypePattern::Standart => match &is_nullable {
                 IsNullable::False => &inner_type_standart_not_null_ts,
                 IsNullable::True => &gen_opt_type_decl_ts(&inner_type_standart_not_null_ts),
@@ -1665,7 +1665,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     )
                 };
                 let gen_fields_serde_de_seq_access_next_el_init_ts = |vec_ts: &[&dyn ToTokens]| {
-                    let er_message_ts = gen_struct_ident_with_nbr_elements_dq_ts(&ident_standart_not_null_origin_ucc, vec_ts.len());
+                    let er_message_ts = gen_struct_ident_with_nbr_els_dq_ts(&ident_standart_not_null_origin_ucc, vec_ts.len());
                     let fields_init_ts = vec_ts.iter().enumerate().map(|(index_70b4dabd, el_9dc7f312)| {
                         let field_index_value_ts = gen_field_index_value_ts(index_70b4dabd);
                         let index_usize_ts = format!("{index_70b4dabd}usize").parse::<Ts2>().expect("ce15e6bf");
@@ -5012,7 +5012,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 },
                 &bind_value_to_query_create_ts,
                 &ident_select_ucc,
-                &match &element.pg_type_pattern {
+                &match &el.pg_type_pattern {
                     PgTypePattern::Standart => SelectQueryPartValueUnderscore::True,
                     PgTypePattern::ArrDim1 { .. } => SelectQueryPartValueUnderscore::False,
                 },

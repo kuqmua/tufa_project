@@ -1286,10 +1286,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_equal_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 gen_7cc8e29b_ts(pg_type_pattern_handle, &"=")
             };
-            let gen_all_elements_equal_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
+            let gen_all_els_equal_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 gen_1763ccf3_ts(pg_type_pattern_handle, &|pg_type_kind: &PgTypeKind| {
                     format!(
-                        "{{}}(not exists(select 1 from jsonb_arr_elements({{}}{}) as el where (el) <> ${{}}))",
+                        "{{}}(not exists(select 1 from jsonb_arr_els({{}}{}) as el where (el) <> ${{}}))",
                         pg_type_kind.format_argument()
                     )
                 })
@@ -1350,20 +1350,19 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_contains_el_greater_than_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 gen_1763ccf3_ts(pg_type_pattern_handle, &|pg_type_kind: &PgTypeKind| {
                     format!(
-                        "{{}}(exists(select 1 from jsonb_arr_elements({{}}{}) as el where (el) > ${{}}))",
+                        "{{}}(exists(select 1 from jsonb_arr_els({{}}{}) as el where (el) > ${{}}))",
                         pg_type_kind.format_argument()
                     )
                 })
             };
-            let gen_all_elements_greater_than_ts =
-                |pg_type_pattern_handle: &PgTypePatternHandle| {
-                    gen_1763ccf3_ts(pg_type_pattern_handle, &|pg_type_kind: &PgTypeKind| {
-                        format!(
-                            "{{}}(not exists(select 1 from jsonb_arr_elements({{}}{}) as el where (el) <= ${{}}))",
-                            pg_type_kind.format_argument()
-                        )
-                    })
-                };
+            let gen_all_els_greater_than_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
+                gen_1763ccf3_ts(pg_type_pattern_handle, &|pg_type_kind: &PgTypeKind| {
+                    format!(
+                        "{{}}(not exists(select 1 from jsonb_arr_els({{}}{}) as el where (el) <= ${{}}))",
+                        pg_type_kind.format_argument()
+                    )
+                })
+            };
             let gen_between_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 let (
                     maybe_dims_decl_ts,
@@ -1575,8 +1574,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     {
                         let format_ts = dq_ts(&format!(
                             //todo test it properly using all strange string vrts
-                            "{{}}(exists(select 1 from jsonb_arr_elements({{}}{}) as el where (el #>> '{{{{}}}}') {{}} ${{}}))",
-                            // "{{}}(exists(select 1 from jsonb_arr_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) {{}} ${{}}))",
+                            "{{}}(exists(select 1 from jsonb_arr_els({{}}{}) as el where (el #>> '{{{{}}}}') {{}} ${{}}))",
+                            // "{{}}(exists(select 1 from jsonb_arr_els({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) {{}} ${{}}))",
                             pg_type_kind.format_argument()
                         ));
                         quote! {
@@ -1599,7 +1598,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                 )
             };
-            let gen_all_elements_regex_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
+            let gen_all_els_regex_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 let (
                     maybe_dims_decl_ts,
                     maybe_dims_default_init_ts,
@@ -1621,8 +1620,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     {
                         let format_ts = dq_ts(&format!(
                             //todo test it properly using all strange string vrts
-                            "{{}}(not exists(select 1 from jsonb_arr_elements({{}}{}) as el where (el #>> '{{{{}}}}') !{{}} ${{}}))",
-                            // "{{}}(not exists(select 1 from jsonb_arr_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) !{{}} ${{}}))",
+                            "{{}}(not exists(select 1 from jsonb_arr_els({{}}{}) as el where (el #>> '{{{{}}}}') !{{}} ${{}}))",
+                            // "{{}}(not exists(select 1 from jsonb_arr_els({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) !{{}} ${{}}))",
                             pg_type_kind.format_argument()
                         ));
                         quote! {
@@ -1645,50 +1644,49 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                 )
             };
-            let gen_contains_all_elements_of_arr_ts =
-                |pg_type_pattern_handle: &PgTypePatternHandle| {
-                    let (
-                        maybe_dims_decl_ts,
-                        maybe_dims_default_init_ts,
-                        maybe_dims_indexes_init_ts,
-                        pg_type_kind,
-                        maybe_additional_params_ts,
-                        maybe_dims_query_bind_ts,
-                    ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
-                    (
-                        should_add_decl_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
+            let gen_contains_all_els_of_arr_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
+                let (
+                    maybe_dims_decl_ts,
+                    maybe_dims_default_init_ts,
+                    maybe_dims_indexes_init_ts,
+                    pg_type_kind,
+                    maybe_additional_params_ts,
+                    maybe_dims_query_bind_ts,
+                ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
+                (
+                    should_add_decl_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
+                    quote! {
+                        #maybe_dims_decl_ts
+                        #pub_value_pg_json_type_not_empty_unique_vec_t_ts
+                    },
+                    quote! {
+                        #maybe_dims_default_init_ts
+                        #value_default_opt_some_vec_one_el_ts
+                    },
+                    {
+                        let format_ts = dq_ts(&format!(
+                            "{{}}({{}}{} @> {{}})",
+                            pg_type_kind.format_argument()
+                        ));
                         quote! {
-                            #maybe_dims_decl_ts
-                            #pub_value_pg_json_type_not_empty_unique_vec_t_ts
-                        },
-                        quote! {
-                            #maybe_dims_default_init_ts
-                            #value_default_opt_some_vec_one_el_ts
-                        },
-                        {
-                            let format_ts = dq_ts(&format!(
-                                "{{}}({{}}{} @> {{}})",
-                                pg_type_kind.format_argument()
-                            ));
-                            quote! {
-                                #maybe_dims_indexes_init_ts
-                                #value_match_self_value_query_part_init_ts
-                                Ok(format!(
-                                    #format_ts,
-                                    &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    #ColumnSc,
-                                    #maybe_additional_params_ts
-                                    #ValueSc
-                                ))
-                            }
-                        },
-                        is_query_bind_mutable_true,
-                        quote! {
-                            #maybe_dims_query_bind_ts
-                            #query_bind_sqlx_types_json_self_value_ts
-                        },
-                    )
-                };
+                            #maybe_dims_indexes_init_ts
+                            #value_match_self_value_query_part_init_ts
+                            Ok(format!(
+                                #format_ts,
+                                &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #ColumnSc,
+                                #maybe_additional_params_ts
+                                #ValueSc
+                            ))
+                        }
+                    },
+                    is_query_bind_mutable_true,
+                    quote! {
+                        #maybe_dims_query_bind_ts
+                        #query_bind_sqlx_types_json_self_value_ts
+                    },
+                )
+            };
             let gen_overlaps_with_arr_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 let (
                     maybe_dims_decl_ts,
@@ -1710,7 +1708,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                     {
                         let format_ts = dq_ts(&format!(
-                            "{{}}(exists (select 1 from jsonb_arr_elements_text({{}}{}) as e1 join jsonb_arr_elements_text({{}}) as e2 on e1.value = e2.value))",
+                            "{{}}(exists (select 1 from jsonb_arr_els_text({{}}{}) as e1 join jsonb_arr_els_text({{}}) as e2 on e1.value = e2.value))",
                             pg_type_kind.format_argument()
                         ));
                         quote! {
@@ -1753,20 +1751,20 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 PgJsonTypeFilter::DimFourEqual { .. } => {
                     gen_equal_ts(&pg_type_pattern_handle_arr_dim4)
                 }
-                PgJsonTypeFilter::AllElementsEqual { .. } => {
-                    gen_all_elements_equal_ts(&pg_type_pattern_handle_standart)
+                PgJsonTypeFilter::AllElsEqual { .. } => {
+                    gen_all_els_equal_ts(&pg_type_pattern_handle_standart)
                 }
-                PgJsonTypeFilter::DimOneAllElementsEqual { .. } => {
-                    gen_all_elements_equal_ts(&pg_type_pattern_handle_arr_dim1)
+                PgJsonTypeFilter::DimOneAllElsEqual { .. } => {
+                    gen_all_els_equal_ts(&pg_type_pattern_handle_arr_dim1)
                 }
-                PgJsonTypeFilter::DimTwoAllElementsEqual { .. } => {
-                    gen_all_elements_equal_ts(&pg_type_pattern_handle_arr_dim2)
+                PgJsonTypeFilter::DimTwoAllElsEqual { .. } => {
+                    gen_all_els_equal_ts(&pg_type_pattern_handle_arr_dim2)
                 }
-                PgJsonTypeFilter::DimThreeAllElementsEqual { .. } => {
-                    gen_all_elements_equal_ts(&pg_type_pattern_handle_arr_dim3)
+                PgJsonTypeFilter::DimThreeAllElsEqual { .. } => {
+                    gen_all_els_equal_ts(&pg_type_pattern_handle_arr_dim3)
                 }
-                PgJsonTypeFilter::DimFourAllElementsEqual { .. } => {
-                    gen_all_elements_equal_ts(&pg_type_pattern_handle_arr_dim4)
+                PgJsonTypeFilter::DimFourAllElsEqual { .. } => {
+                    gen_all_els_equal_ts(&pg_type_pattern_handle_arr_dim4)
                 }
                 PgJsonTypeFilter::LengthEqual => {
                     gen_length_equal_ts(&pg_type_pattern_handle_standart)
@@ -1828,20 +1826,20 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 PgJsonTypeFilter::DimFourContainsElGreaterThan { .. } => {
                     gen_contains_el_greater_than_ts(&pg_type_pattern_handle_arr_dim4)
                 }
-                PgJsonTypeFilter::AllElementsGreaterThan { .. } => {
-                    gen_all_elements_greater_than_ts(&pg_type_pattern_handle_standart)
+                PgJsonTypeFilter::AllElsGreaterThan { .. } => {
+                    gen_all_els_greater_than_ts(&pg_type_pattern_handle_standart)
                 }
-                PgJsonTypeFilter::DimOneAllElementsGreaterThan { .. } => {
-                    gen_all_elements_greater_than_ts(&pg_type_pattern_handle_arr_dim1)
+                PgJsonTypeFilter::DimOneAllElsGreaterThan { .. } => {
+                    gen_all_els_greater_than_ts(&pg_type_pattern_handle_arr_dim1)
                 }
-                PgJsonTypeFilter::DimTwoAllElementsGreaterThan { .. } => {
-                    gen_all_elements_greater_than_ts(&pg_type_pattern_handle_arr_dim2)
+                PgJsonTypeFilter::DimTwoAllElsGreaterThan { .. } => {
+                    gen_all_els_greater_than_ts(&pg_type_pattern_handle_arr_dim2)
                 }
-                PgJsonTypeFilter::DimThreeAllElementsGreaterThan { .. } => {
-                    gen_all_elements_greater_than_ts(&pg_type_pattern_handle_arr_dim3)
+                PgJsonTypeFilter::DimThreeAllElsGreaterThan { .. } => {
+                    gen_all_els_greater_than_ts(&pg_type_pattern_handle_arr_dim3)
                 }
-                PgJsonTypeFilter::DimFourAllElementsGreaterThan { .. } => {
-                    gen_all_elements_greater_than_ts(&pg_type_pattern_handle_arr_dim4)
+                PgJsonTypeFilter::DimFourAllElsGreaterThan { .. } => {
+                    gen_all_els_greater_than_ts(&pg_type_pattern_handle_arr_dim4)
                 }
                 PgJsonTypeFilter::Between { .. } => {
                     gen_between_ts(&pg_type_pattern_handle_standart)
@@ -1883,35 +1881,35 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 PgJsonTypeFilter::DimFourContainsElRegex => {
                     gen_contains_el_regex_ts(&pg_type_pattern_handle_arr_dim4)
                 }
-                PgJsonTypeFilter::AllElementsRegex => {
-                    gen_all_elements_regex_ts(&pg_type_pattern_handle_standart)
+                PgJsonTypeFilter::AllElsRegex => {
+                    gen_all_els_regex_ts(&pg_type_pattern_handle_standart)
                 }
-                PgJsonTypeFilter::DimOneAllElementsRegex => {
-                    gen_all_elements_regex_ts(&pg_type_pattern_handle_arr_dim1)
+                PgJsonTypeFilter::DimOneAllElsRegex => {
+                    gen_all_els_regex_ts(&pg_type_pattern_handle_arr_dim1)
                 }
-                PgJsonTypeFilter::DimTwoAllElementsRegex => {
-                    gen_all_elements_regex_ts(&pg_type_pattern_handle_arr_dim2)
+                PgJsonTypeFilter::DimTwoAllElsRegex => {
+                    gen_all_els_regex_ts(&pg_type_pattern_handle_arr_dim2)
                 }
-                PgJsonTypeFilter::DimThreeAllElementsRegex => {
-                    gen_all_elements_regex_ts(&pg_type_pattern_handle_arr_dim3)
+                PgJsonTypeFilter::DimThreeAllElsRegex => {
+                    gen_all_els_regex_ts(&pg_type_pattern_handle_arr_dim3)
                 }
-                PgJsonTypeFilter::DimFourAllElementsRegex => {
-                    gen_all_elements_regex_ts(&pg_type_pattern_handle_arr_dim4)
+                PgJsonTypeFilter::DimFourAllElsRegex => {
+                    gen_all_els_regex_ts(&pg_type_pattern_handle_arr_dim4)
                 }
-                PgJsonTypeFilter::ContainsAllElementsOfArr { .. } => {
-                    gen_contains_all_elements_of_arr_ts(&pg_type_pattern_handle_standart)
+                PgJsonTypeFilter::ContainsAllElsOfArr { .. } => {
+                    gen_contains_all_els_of_arr_ts(&pg_type_pattern_handle_standart)
                 }
-                PgJsonTypeFilter::DimOneContainsAllElementsOfArr { .. } => {
-                    gen_contains_all_elements_of_arr_ts(&pg_type_pattern_handle_arr_dim1)
+                PgJsonTypeFilter::DimOneContainsAllElsOfArr { .. } => {
+                    gen_contains_all_els_of_arr_ts(&pg_type_pattern_handle_arr_dim1)
                 }
-                PgJsonTypeFilter::DimTwoContainsAllElementsOfArr { .. } => {
-                    gen_contains_all_elements_of_arr_ts(&pg_type_pattern_handle_arr_dim2)
+                PgJsonTypeFilter::DimTwoContainsAllElsOfArr { .. } => {
+                    gen_contains_all_els_of_arr_ts(&pg_type_pattern_handle_arr_dim2)
                 }
-                PgJsonTypeFilter::DimThreeContainsAllElementsOfArr { .. } => {
-                    gen_contains_all_elements_of_arr_ts(&pg_type_pattern_handle_arr_dim3)
+                PgJsonTypeFilter::DimThreeContainsAllElsOfArr { .. } => {
+                    gen_contains_all_els_of_arr_ts(&pg_type_pattern_handle_arr_dim3)
                 }
-                PgJsonTypeFilter::DimFourContainsAllElementsOfArr { .. } => {
-                    gen_contains_all_elements_of_arr_ts(&pg_type_pattern_handle_arr_dim4)
+                PgJsonTypeFilter::DimFourContainsAllElsOfArr { .. } => {
+                    gen_contains_all_els_of_arr_ts(&pg_type_pattern_handle_arr_dim4)
                 }
                 // PgJsonTypeFilter::ContainedInArr => todo!(),
                 PgJsonTypeFilter::OverlapsWithArr { .. } => {

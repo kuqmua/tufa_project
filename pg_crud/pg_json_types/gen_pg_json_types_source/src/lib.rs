@@ -1210,13 +1210,13 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 vec.push(PgJsonTypeFilter::DimOneLengthEqual);
                                 vec.push(PgJsonTypeFilter::LengthGreaterThan);
                                 vec.push(PgJsonTypeFilter::DimOneLengthGreaterThan);
-                                vec.push(PgJsonTypeFilter::DimOneContainsAllElementsOfArr {
+                                vec.push(PgJsonTypeFilter::DimOneContainsAllElsOfArr {
                                     ident: arr_dim1_inner_el_ident_table_type_ucc.clone(),
                                 });
                                 vec.push(PgJsonTypeFilter::DimOneOverlapsWithArr {
                                     ident: arr_dim1_inner_el_ident_table_type_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::AllElementsEqual {
+                                vec.push(PgJsonTypeFilter::AllElsEqual {
                                     ident: arr_dim1_inner_el_ident_table_type_ucc.clone(),
                                 });
                                 vec.push(PgJsonTypeFilter::DimOneIn {
@@ -1236,7 +1236,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     filters.push(PgJsonTypeFilter::ContainsElGreaterThan {
                                         ident: arr_dim1_inner_el_ident_table_type_ucc.clone(),
                                     });
-                                    filters.push(PgJsonTypeFilter::AllElementsGreaterThan {
+                                    filters.push(PgJsonTypeFilter::AllElsGreaterThan {
                                         ident: arr_dim1_inner_el_ident_table_type_ucc,
                                     });
                                     filters
@@ -1246,7 +1246,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     let mut filters = common_arr_dim1_pg_json_type_filters;
                                     filters.push(PgJsonTypeFilter::DimOneRegex);
                                     filters.push(PgJsonTypeFilter::ContainsElRegex);
-                                    filters.push(PgJsonTypeFilter::AllElementsRegex);
+                                    filters.push(PgJsonTypeFilter::AllElsRegex);
                                     filters
                                 }
                             }
@@ -1274,16 +1274,16 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 vec.push(PgJsonTypeFilter::LengthGreaterThan);
                                 vec.push(PgJsonTypeFilter::DimOneLengthGreaterThan);
                                 vec.push(PgJsonTypeFilter::DimTwoLengthGreaterThan);
-                                vec.push(PgJsonTypeFilter::DimTwoContainsAllElementsOfArr {
+                                vec.push(PgJsonTypeFilter::DimTwoContainsAllElsOfArr {
                                     ident: arr_dim2_inner_el_ident_table_type_ucc.clone(),
                                 });
                                 vec.push(PgJsonTypeFilter::DimTwoOverlapsWithArr {
                                     ident: arr_dim2_inner_el_ident_table_type_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::AllElementsEqual {
+                                vec.push(PgJsonTypeFilter::AllElsEqual {
                                     ident: arr_dim1_inner_el_ident_table_type_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimOneAllElementsEqual {
+                                vec.push(PgJsonTypeFilter::DimOneAllElsEqual {
                                     ident: arr_dim2_inner_el_ident_table_type_ucc.clone(),
                                 });
                                 vec.push(PgJsonTypeFilter::DimOneIn {
@@ -1306,7 +1306,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     filters.push(PgJsonTypeFilter::DimOneContainsElGreaterThan {
                                         ident: arr_dim2_inner_el_ident_table_type_ucc.clone(),
                                     });
-                                    filters.push(PgJsonTypeFilter::DimOneAllElementsGreaterThan {
+                                    filters.push(PgJsonTypeFilter::DimOneAllElsGreaterThan {
                                         ident: arr_dim2_inner_el_ident_table_type_ucc,
                                     });
                                     filters
@@ -1316,7 +1316,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     let mut filters = common_arr_dim2_pg_json_type_filters;
                                     filters.push(PgJsonTypeFilter::DimTwoRegex);
                                     filters.push(PgJsonTypeFilter::DimOneContainsElRegex);
-                                    filters.push(PgJsonTypeFilter::DimOneAllElementsRegex);
+                                    filters.push(PgJsonTypeFilter::DimOneAllElsRegex);
                                     filters
                                 }
                             }
@@ -1357,19 +1357,19 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 vec.push(PgJsonTypeFilter::DimOneLengthGreaterThan);
                                 vec.push(PgJsonTypeFilter::DimTwoLengthGreaterThan);
                                 vec.push(PgJsonTypeFilter::DimThreeLengthGreaterThan);
-                                vec.push(PgJsonTypeFilter::DimThreeContainsAllElementsOfArr {
+                                vec.push(PgJsonTypeFilter::DimThreeContainsAllElsOfArr {
                                     ident: arr_dim3_inner_el_ident_table_type_ucc.clone(),
                                 });
                                 vec.push(PgJsonTypeFilter::DimThreeOverlapsWithArr {
                                     ident: arr_dim3_inner_el_ident_table_type_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::AllElementsEqual {
+                                vec.push(PgJsonTypeFilter::AllElsEqual {
                                     ident: arr_dim1_inner_el_ident_table_type_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimOneAllElementsEqual {
+                                vec.push(PgJsonTypeFilter::DimOneAllElsEqual {
                                     ident: arr_dim2_inner_el_ident_table_type_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimTwoAllElementsEqual {
+                                vec.push(PgJsonTypeFilter::DimTwoAllElsEqual {
                                     ident: arr_dim3_inner_el_ident_table_type_ucc.clone(),
                                 });
                                 vec.push(PgJsonTypeFilter::DimOneIn {
@@ -1395,7 +1395,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     filters.push(PgJsonTypeFilter::DimTwoContainsElGreaterThan {
                                         ident: arr_dim3_inner_el_ident_table_type_ucc.clone(),
                                     });
-                                    filters.push(PgJsonTypeFilter::DimTwoAllElementsGreaterThan {
+                                    filters.push(PgJsonTypeFilter::DimTwoAllElsGreaterThan {
                                         ident: arr_dim3_inner_el_ident_table_type_ucc,
                                     });
                                     filters
@@ -1405,7 +1405,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     let mut filters = common_arr_dim3_pg_json_type_filters;
                                     filters.push(PgJsonTypeFilter::DimThreeRegex);
                                     filters.push(PgJsonTypeFilter::DimTwoContainsElRegex);
-                                    filters.push(PgJsonTypeFilter::DimTwoAllElementsRegex);
+                                    filters.push(PgJsonTypeFilter::DimTwoAllElsRegex);
                                     filters
                                 }
                             }
@@ -1456,22 +1456,22 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 vec.push(PgJsonTypeFilter::DimTwoLengthGreaterThan);
                                 vec.push(PgJsonTypeFilter::DimThreeLengthGreaterThan);
                                 vec.push(PgJsonTypeFilter::DimFourLengthGreaterThan);
-                                vec.push(PgJsonTypeFilter::DimFourContainsAllElementsOfArr {
+                                vec.push(PgJsonTypeFilter::DimFourContainsAllElsOfArr {
                                     ident: arr_dim4_inner_el_ident_table_type_ucc.clone(),
                                 });
                                 vec.push(PgJsonTypeFilter::DimFourOverlapsWithArr {
                                     ident: arr_dim4_inner_el_ident_table_type_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::AllElementsEqual {
+                                vec.push(PgJsonTypeFilter::AllElsEqual {
                                     ident: arr_dim1_inner_el_ident_table_type_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimOneAllElementsEqual {
+                                vec.push(PgJsonTypeFilter::DimOneAllElsEqual {
                                     ident: arr_dim2_inner_el_ident_table_type_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimTwoAllElementsEqual {
+                                vec.push(PgJsonTypeFilter::DimTwoAllElsEqual {
                                     ident: arr_dim3_inner_el_ident_table_type_ucc.clone(),
                                 });
-                                vec.push(PgJsonTypeFilter::DimThreeAllElementsEqual {
+                                vec.push(PgJsonTypeFilter::DimThreeAllElsEqual {
                                     ident: arr_dim4_inner_el_ident_table_type_ucc.clone(),
                                 });
                                 vec.push(PgJsonTypeFilter::DimOneIn {
@@ -1500,7 +1500,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     filters.push(PgJsonTypeFilter::DimThreeContainsElGreaterThan {
                                         ident: arr_dim4_inner_el_ident_table_type_ucc.clone(),
                                     });
-                                    filters.push(PgJsonTypeFilter::DimThreeAllElementsGreaterThan {
+                                    filters.push(PgJsonTypeFilter::DimThreeAllElsGreaterThan {
                                         ident: arr_dim4_inner_el_ident_table_type_ucc,
                                     });
                                     filters
@@ -1510,7 +1510,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     let mut filters = common_arr_dim4_pg_json_type_filters;
                                     filters.push(PgJsonTypeFilter::DimFourRegex);
                                     filters.push(PgJsonTypeFilter::DimThreeContainsElRegex);
-                                    filters.push(PgJsonTypeFilter::DimThreeAllElementsRegex);
+                                    filters.push(PgJsonTypeFilter::DimThreeAllElsRegex);
                                     filters
                                 }
                             }
@@ -1903,11 +1903,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                         }
                                     }
                                 }
-                                let gen_jsonb_agg = |jsonb_agg_content: &str, jsonb_arr_elements_content: &str, ordinality_content: &str, dims_nbr: usize| {
+                                let gen_jsonb_agg = |jsonb_agg_content: &str, jsonb_arr_els_content: &str, ordinality_content: &str, dims_nbr: usize| {
                                     let dim_nbr_start = gen_dim_nbr_start_str(dims_nbr);
                                     let dim_nbr_end = gen_dim_nbr_end_str(dims_nbr);
                                     format!(
-                                        "select jsonb_agg(({jsonb_agg_content})) from jsonb_arr_elements(({jsonb_arr_elements_content})) with ordinality {ordinality_content} between {{{dim_nbr_start}}} and {{{dim_nbr_end}}}"
+                                        "select jsonb_agg(({jsonb_agg_content})) from jsonb_arr_els(({jsonb_arr_els_content})) with ordinality {ordinality_content} between {{{dim_nbr_start}}} and {{{dim_nbr_end}}}"
                                     )
                                 };
                                 ArrDimSelectPattern::try_from(&arr_dim).map_or_else(
@@ -2235,7 +2235,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             };
             quote! {
                 #AllowClippyArbitrarySourceItemOrdering
-                impl #import_path::PgJsonTypeObjectVecElementId for #ident {
+                impl #import_path::PgJsonTypeObjectVecElId for #ident {
                     type PgJsonType = Self;
                     type #CreateForQueryUcc = #ident_create_for_query_ucc;
                     type #UpdateUcc = #ident_update_ucc;
@@ -3147,7 +3147,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }}
             };
-            //todo additonal logic for Option<value> and element of arr? optal element of arr?
+            //todo additonal logic for Option<value> and el of arr? optal el of arr?
             let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts = if matches!(&pattern, Pattern::Standart) &&
                 matches!(&is_nullable, IsNullable::False)
             {

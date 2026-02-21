@@ -6,7 +6,7 @@ use serde_json::from_str;
 pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
     use naming::parameter::{DeriveSelfIfSc, DeriveSelfSc, DeriveSelfUcc};
     #[derive(Clone)]
-    struct Element {
+    struct El {
         derive_trait_name_if_sc: Ts2,
         derive_trait_name_sc: Ts2,
         derive_trait_name_ucc: Ts2,
@@ -48,7 +48,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
                 }
                 result.trim_matches('_').to_owned()
             };
-            Element {
+            El {
                 derive_trait_name_ucc: {
                     let v = DeriveSelfUcc::from_display(&sc);
                     quote! {#v}
@@ -64,7 +64,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
                 trait_type: el_4f4a2c74.parse::<Ts2>().expect("8672240f"),
             }
         })
-        .collect::<Vec<Element>>();
+        .collect::<Vec<El>>();
     let (make_pub_pub_enum_ts, pub_enum_derive_vec_ts) = {
         fn gen_pun_enum_ts(ident: &dyn ToTokens) -> Ts2 {
             quote! {

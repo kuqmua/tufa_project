@@ -689,11 +689,8 @@ pub fn pg_crud_common_query_part_er_ts() -> Ts2 {
 pub fn gen_struct_ident_dq_ts(v: &dyn Display) -> Ts2 {
     dq_ts(&format!("struct {v}"))
 }
-pub fn gen_struct_ident_with_nbr_elements_dq_ts(
-    ident: &dyn DisplayPlusToTokens,
-    length: usize,
-) -> Ts2 {
-    dq_ts(&format!("struct {ident} with {length} elements"))
+pub fn gen_struct_ident_with_nbr_els_dq_ts(ident: &dyn DisplayPlusToTokens, length: usize) -> Ts2 {
+    dq_ts(&format!("struct {ident} with {length} els"))
 }
 pub fn gen_tuple_struct_ident_dq_ts(v: &dyn Display) -> Ts2 {
     dq_ts(&format!("tuple struct {v}"))
@@ -712,12 +709,12 @@ pub fn gen_serde_deserialize_dq_ts(
     length: usize,
 ) -> (Ts2, Ts2, Ts2) {
     let struct_pg_type_ident_where_tokens_dq_ts = gen_struct_ident_dq_ts(ident);
-    let struct_pg_type_ident_where_tokens_with_nbr_elements_dq_ts =
-        gen_struct_ident_with_nbr_elements_dq_ts(ident, length);
+    let struct_pg_type_ident_where_tokens_with_nbr_els_dq_ts =
+        gen_struct_ident_with_nbr_els_dq_ts(ident, length);
     let pg_type_ident_where_tokens_dq_ts = dq_ts(&ident);
     (
         struct_pg_type_ident_where_tokens_dq_ts,
-        struct_pg_type_ident_where_tokens_with_nbr_elements_dq_ts,
+        struct_pg_type_ident_where_tokens_with_nbr_els_dq_ts,
         pg_type_ident_where_tokens_dq_ts,
     )
 }
@@ -2115,22 +2112,21 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         quote! {#(#visit_u64_value_enum_vrts_ts),*}
     };
     let visit_str_value_enum_vrts_ts = {
-        let visit_str_value_enum_vrts_ts = vec_ident.iter().enumerate().map(|(index, element)| {
-            let field_name_dq_ts = dq_ts(&element);
+        let visit_str_value_enum_vrts_ts = vec_ident.iter().enumerate().map(|(index, el)| {
+            let field_name_dq_ts = dq_ts(&el);
             gen_field_ident_dq_serde_private_ok_field_ts(&field_name_dq_ts, index)
         });
         quote! {#(#visit_str_value_enum_vrts_ts),*,}
     };
     let visit_bytes_value_enum_vrts_ts = {
-        let visit_bytes_value_enum_vrts_ts =
-            vec_ident.iter().enumerate().map(|(index, element)| {
-                let b_field_name_dq_ts = {
-                    let el_ident_dq_str = dq_str(&element.to_string());
-                    let value = format!("b{el_ident_dq_str}");
-                    value.parse::<Ts2>().expect("9e33625e")
-                };
-                gen_field_ident_dq_serde_private_ok_field_ts(&b_field_name_dq_ts, index)
-            });
+        let visit_bytes_value_enum_vrts_ts = vec_ident.iter().enumerate().map(|(index, el)| {
+            let b_field_name_dq_ts = {
+                let el_ident_dq_str = dq_str(&el.to_string());
+                let value = format!("b{el_ident_dq_str}");
+                value.parse::<Ts2>().expect("9e33625e")
+            };
+            gen_field_ident_dq_serde_private_ok_field_ts(&b_field_name_dq_ts, index)
+        });
         quote! {#(#visit_bytes_value_enum_vrts_ts),*,}
     };
     let struct_ident_dq_ts = gen_struct_ident_dq_ts(&ident);
@@ -2138,7 +2134,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         let ts = vec_ident_type.iter().enumerate().map(|(index, (el_ident, el_type))| {
             let field_index_handle_ts = gen_underscore_underscore_field_index_handle_ts(index);
             let type_ts = gen_type_ts(el_ident, el_type);
-            let struct_ident_opts_with_dq_ts = dq_ts(&format!("struct {ident} with {len} elements"));
+            let struct_ident_opts_with_dq_ts = dq_ts(&format!("struct {ident} with {len} els"));
             quote! {
                 let Some(#field_index_handle_ts) = serde::de::SeqAccess::next_element::<#type_ts>(&mut __seq)? else {
                     return Err(serde::de::Error::invalid_length(0usize, &#struct_ident_opts_with_dq_ts));
@@ -2200,9 +2196,9 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         });
         quote! {#(#ts)*}
     };
-    let fields_arr_elements_ts = {
-        let fields_arr_elements_ts = vec_ident.iter().map(|el_43a33e0b| dq_ts(&el_43a33e0b));
-        quote! {#(#fields_arr_elements_ts),*}
+    let fields_arr_els_ts = {
+        let fields_arr_els_ts = vec_ident.iter().map(|el_43a33e0b| dq_ts(&el_43a33e0b));
+        quote! {#(#fields_arr_els_ts),*}
     };
     let ident_dq_ts = dq_ts(&ident);
     quote! {
@@ -2346,7 +2342,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                         }
                     }
                     #[doc(hidden)]
-                    const FIELDS: &[&str] = &[#fields_arr_elements_ts];
+                    const FIELDS: &[&str] = &[#fields_arr_els_ts];
                     _serde::Deserializer::deserialize_struct(
                         __deserializer,
                         #ident_dq_ts,

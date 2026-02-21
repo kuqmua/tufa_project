@@ -5,14 +5,14 @@ pub struct Data {
 }
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct DataChildren {
-    pub children: Vec<DataChildrenElement>,
+    pub children: Vec<DataChildrenEl>,
 }
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct DataChildrenElement {
-    pub data: DataChildrenElementData,
+pub struct DataChildrenEl {
+    pub data: DataChildrenElData,
 }
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct DataChildrenElementData {
+pub struct DataChildrenElData {
     // media_embed ???
     // user_reports ???
     // category ???
