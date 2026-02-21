@@ -69,8 +69,8 @@ use pg_crud_macros_common::{
     gen_read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts,
     gen_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts,
     gen_read_only_ids_merged_with_create_into_where_equal_ts,
-    gen_return_err_query_part_er_write_into_buffer_ts, gen_sqlx_types_json_type_declaration_ts,
-    gen_value_init_ts, gen_vec_tokens_declaration_ts, impl_pg_type_where_filter_for_ident_ts,
+    gen_return_err_query_part_er_write_into_buffer_ts, gen_sqlx_types_json_type_decl_ts,
+    gen_value_init_ts, gen_vec_tokens_decl_ts, impl_pg_type_where_filter_for_ident_ts,
     maybe_wrap_into_braces_ts, wrap_into_scopes_ts,
 };
 use proc_macro2::TokenStream as Ts2;
@@ -272,9 +272,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 False,
                 True,
             }
-            enum NewTypeOrStructDeclaration {
+            enum NewTypeOrStructDecl {
                 NewType,
-                StructDeclaration,
+                StructDecl,
             }
             let is_nullable = &element.is_nullable;
             let pattern = &element.pattern;
@@ -308,7 +308,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 >::#DefaultOptSomeVecOneElSc
             };
             let import_path_value_ts = quote!{#import_path::#ValueUcc};
-            let wrap_into_value_declaration_ts = |ident_ts: &dyn ToTokens|{
+            let wrap_into_value_decl_ts = |ident_ts: &dyn ToTokens|{
                 quote!{#import_path_value_ts<#ident_ts>}
             };
             let wrap_into_value_init_ts = |ts: &dyn ToTokens|{
@@ -689,12 +689,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         #ts_44f35e48
                     }
                 };
-                let new_type_or_struct_declaration_struct_declaration = NewTypeOrStructDeclaration::StructDeclaration;
-                let new_type_or_struct_declaration_new_type = NewTypeOrStructDeclaration::NewType;
+                let new_type_or_struct_decl_struct_decl = NewTypeOrStructDecl::StructDecl;
+                let new_type_or_struct_decl_new_type = NewTypeOrStructDecl::NewType;
                 let gen_ident_table_type_or_create_or_ident_with_id_table_type_or_create_standart_not_null_ts = |
                     is_standart_with_id: &IsStandartWithId,
                     pg_json_type_subtype_table_type_or_create_925a7214: &PgJsonTypeSubtypeTableTypeOrCreate,
-                    new_type_or_struct_declaration: &NewTypeOrStructDeclaration
+                    new_type_or_struct_decl: &NewTypeOrStructDecl
                 | {
                     let ts = get_vec_syn_field(is_standart_with_id).iter().map(|el_42f25108| {
                         let field_ident = &el_42f25108.field_ident;
@@ -705,9 +705,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         quote! {#field_ident: #type_as_pg_json_type_subtype_table_type_ts}
                     });
                     let fields_ts = quote! {#(#ts),*};
-                    match &new_type_or_struct_declaration {
-                        NewTypeOrStructDeclaration::StructDeclaration => quote! {{#fields_ts}},
-                        NewTypeOrStructDeclaration::NewType => fields_ts,
+                    match &new_type_or_struct_decl {
+                        NewTypeOrStructDecl::StructDecl => quote! {{#fields_ts}},
+                        NewTypeOrStructDecl::NewType => fields_ts,
                     }
                 };
                 let gen_tokens_table_type_or_create_ts = |tokens: &dyn ToTokens| {
@@ -725,11 +725,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &ident_table_type_or_ident_create_ucc,
                     &match &pattern {
                         Pattern::Standart => match &is_nullable {
-                            IsNullable::False => gen_ident_table_type_or_create_or_ident_with_id_table_type_or_create_standart_not_null_ts(&is_standart_with_id_false, pg_json_type_subtype_table_type_or_create, &new_type_or_struct_declaration_struct_declaration),
+                            IsNullable::False => gen_ident_table_type_or_create_or_ident_with_id_table_type_or_create_standart_not_null_ts(&is_standart_with_id_false, pg_json_type_subtype_table_type_or_create, &new_type_or_struct_decl_struct_decl),
                             IsNullable::True => wrap_into_scopes_dot_comma_ts(&gen_opt_type_decl_ts(&gen_tokens_table_type_or_create_ts(ident_standart_not_null_ucc))),
                         },
                         Pattern::Arr => match &is_nullable {
-                            IsNullable::False => wrap_into_scopes_dot_comma_ts(&gen_vec_tokens_declaration_ts(
+                            IsNullable::False => wrap_into_scopes_dot_comma_ts(&gen_vec_tokens_decl_ts(
                                 &gen_tokens_table_type_or_create_ts(&ident_with_id_standart_not_null_ucc)
                             )),
                             IsNullable::True => wrap_into_scopes_dot_comma_ts(&gen_opt_type_decl_ts(&gen_tokens_table_type_or_create_ts(&ident_with_id_arr_not_null_ucc))),
@@ -747,12 +747,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         };
                         match &pattern {
                             Pattern::Standart => match &is_nullable {
-                                IsNullable::False => gen_ident_table_type_or_create_or_ident_with_id_table_type_or_create_standart_not_null_ts(&is_standart_with_id_false, pg_json_type_subtype_table_type_or_create, &new_type_or_struct_declaration_new_type),
+                                IsNullable::False => gen_ident_table_type_or_create_or_ident_with_id_table_type_or_create_standart_not_null_ts(&is_standart_with_id_false, pg_json_type_subtype_table_type_or_create, &new_type_or_struct_decl_new_type),
                                 IsNullable::True => gen_wrap_into_value_parameter_ts(&gen_opt_type_decl_ts(&gen_tokens_table_type_or_create_ts(ident_standart_not_null_ucc))),
                             },
                             Pattern::Arr => match &is_nullable {
-                                IsNullable::False => gen_wrap_into_value_parameter_ts(&gen_vec_tokens_declaration_ts(&gen_tokens_table_type_or_create_ts(&ident_with_id_standart_not_null_ucc))),
-                                IsNullable::True => gen_wrap_into_value_parameter_ts(&gen_opt_type_decl_ts(&gen_vec_tokens_declaration_ts(&gen_tokens_table_type_or_create_ts(
+                                IsNullable::False => gen_wrap_into_value_parameter_ts(&gen_vec_tokens_decl_ts(&gen_tokens_table_type_or_create_ts(&ident_with_id_standart_not_null_ucc))),
+                                IsNullable::True => gen_wrap_into_value_parameter_ts(&gen_opt_type_decl_ts(&gen_vec_tokens_decl_ts(&gen_tokens_table_type_or_create_ts(
                                     &ident_with_id_standart_not_null_ucc,
                                 )))),
                             },
@@ -840,12 +840,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     let ident_with_id_table_type_or_ident_with_id_create_standart_not_null_ts = gen_ident_table_type_or_create_ts(
                         &AllowClippyArbitrarySourceItemOrdering,
                         &ident_with_id_table_type_or_ident_with_id_standart_not_null_create_ucc,
-                        &gen_ident_table_type_or_create_or_ident_with_id_table_type_or_create_standart_not_null_ts(is_standart_with_id_240dfa72, pg_json_type_subtype_table_type_or_create, &new_type_or_struct_declaration_struct_declaration),
+                        &gen_ident_table_type_or_create_or_ident_with_id_table_type_or_create_standart_not_null_ts(is_standart_with_id_240dfa72, pg_json_type_subtype_table_type_or_create, &new_type_or_struct_decl_struct_decl),
                     );
                     let impl_pub_const_new_for_ident_with_id_table_type_or_ident_with_id_create_standart_not_null_ts = gen_impl_pub_const_new_for_ident_ts(
                         &ident_with_id_table_type_or_ident_with_id_standart_not_null_create_ucc,
                         &MustUse,
-                        &gen_ident_table_type_or_create_or_ident_with_id_table_type_or_create_standart_not_null_ts(is_standart_with_id_240dfa72, pg_json_type_subtype_table_type_or_create, &new_type_or_struct_declaration_new_type),
+                        &gen_ident_table_type_or_create_or_ident_with_id_table_type_or_create_standart_not_null_ts(is_standart_with_id_240dfa72, pg_json_type_subtype_table_type_or_create, &new_type_or_struct_decl_new_type),
                         &gen_self_content_for_ident_or_ident_with_id_table_type_or_create_ts(is_standart_with_id_240dfa72),
                     );
                     let impl_pg_crud_default_opt_some_vec_one_el_for_ident_with_id_table_type_or_ident_with_id_create_standart_not_null_ts = gen_impl_pg_crud_default_opt_some_vec_one_el_for_ident_table_type_or_create_ts(
@@ -977,7 +977,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             },
                             Pattern::Arr => match &is_nullable {
                                 IsNullable::False => wrap_into_scopes_dot_comma_ts(
-                                    &gen_vec_tokens_declaration_ts(
+                                    &gen_vec_tokens_decl_ts(
                                         &ident_with_id_standart_not_null_create_for_query_ucc
                                     )
                                 ),
@@ -1057,13 +1057,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     #maybe_ident_with_id_standart_not_null_create_for_query_ts
                 }
             };
-            let gen_sqlx_types_json_type_declaration_wrapper_ts = |ident_ts_dff2e4a1: &dyn ToTokens| gen_impl_sqlx_type_for_ident_ts(
+            let gen_sqlx_types_json_type_decl_wrapper_ts = |ident_ts_dff2e4a1: &dyn ToTokens| gen_impl_sqlx_type_for_ident_ts(
                 &ident_ts_dff2e4a1,
-                &gen_sqlx_types_json_type_declaration_ts(&SelfUcc)
+                &gen_sqlx_types_json_type_decl_ts(&SelfUcc)
             );
             let gen_impl_sqlx_decode_sqlx_pg_for_ident_wrapper_ts = |ident_ts_65e11453: &dyn ToTokens| gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
                 &ident_ts_65e11453,
-                &gen_sqlx_types_json_type_declaration_ts(&SelfUcc),
+                &gen_sqlx_types_json_type_decl_ts(&SelfUcc),
                 &quote! {Ok(v.0)}
             );
             let gen_value_type_ts = |type_ts: &dyn ToTokens| {
@@ -1371,7 +1371,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         }
                     }
                 };
-                let impl_sqlx_type_for_ident_select_ts = gen_sqlx_types_json_type_declaration_wrapper_ts(&ident_select_ucc);
+                let impl_sqlx_type_for_ident_select_ts = gen_sqlx_types_json_type_decl_wrapper_ts(&ident_select_ucc);
                 let impl_sqlx_decode_sqlx_pg_for_ident_select_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_wrapper_ts(&ident_select_ucc);
                 let impl_pg_crud_default_opt_some_vec_one_el_standart_not_null_ts = quote! {
                     Self(#PgCrudDefaultOptSomeVecOneElCall)
@@ -1532,7 +1532,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             }
                         }
                     };
-                    let impl_sqlx_type_for_ident_with_id_standart_not_null_select_ts = gen_sqlx_types_json_type_declaration_wrapper_ts(&ident_with_id_standart_not_null_select_ucc);
+                    let impl_sqlx_type_for_ident_with_id_standart_not_null_select_ts = gen_sqlx_types_json_type_decl_wrapper_ts(&ident_with_id_standart_not_null_select_ucc);
                     let impl_sqlx_decode_sqlx_pg_for_ident_with_id_standart_not_null_select_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_wrapper_ts(&ident_with_id_standart_not_null_select_ucc);
                     let impl_pg_crud_default_opt_some_vec_one_el_for_ident_with_id_standart_not_null_select_ts = gen_impl_pg_crud_default_opt_some_vec_one_el_ts(
                         &ident_with_id_standart_not_null_select_ucc,
@@ -1966,7 +1966,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             };
             let gen_type_as_pg_json_type_read_ts = |type_ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&type_ts, &pg_json_type_subtype_read);
             let gen_type_as_pg_json_type_read_inner_ts = |type_ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&type_ts, &pg_json_type_subtype_read_inner);
-            let gen_ident_or_ident_with_id_read_or_read_inner_fields_declaration_ts = |
+            let gen_ident_or_ident_with_id_read_or_read_inner_fields_decl_ts = |
                 is_standart_with_id: &IsStandartWithId,
                 read_with_or_without_annotation_or_inner: &ReadWithOrWithoutAnnotationOrInner
             | {
@@ -1987,7 +1987,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         ),
                     };
                     let opt_value_field_type_as_json_type_read_ts = gen_opt_type_decl_ts(
-                        &wrap_into_value_declaration_ts(&field_type_as_json_type_read_ts)
+                        &wrap_into_value_decl_ts(&field_type_as_json_type_read_ts)
                     );
                     quote! {
                         #maybe_serde_skip_serializing_if_opt_is_none_ts
@@ -2034,7 +2034,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         Pattern::Standart => match &is_nullable {
                             IsNullable::False => (
                                 {
-                                    let ts = gen_ident_or_ident_with_id_read_or_read_inner_fields_declaration_ts(
+                                    let ts = gen_ident_or_ident_with_id_read_or_read_inner_fields_decl_ts(
                                         &is_standart_with_id_false,
                                         &ReadWithOrWithoutAnnotationOrInner::WithSerdeOptIsNoneAnnotation
                                     );
@@ -2045,7 +2045,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             IsNullable::True => (wrap_into_scopes_dot_comma_ts(&gen_opt_type_decl_ts(&ident_standart_not_null_as_pg_json_type_read_ts)), DeriveSerdeDeserialize::True),
                         },
                         Pattern::Arr => match &is_nullable {
-                            IsNullable::False => (wrap_into_scopes_dot_comma_ts(&gen_vec_tokens_declaration_ts(&ident_with_id_standart_not_null_read_ucc)), DeriveSerdeDeserialize::True),
+                            IsNullable::False => (wrap_into_scopes_dot_comma_ts(&gen_vec_tokens_decl_ts(&ident_with_id_standart_not_null_read_ucc)), DeriveSerdeDeserialize::True),
                             IsNullable::True => (wrap_into_scopes_dot_comma_ts(&gen_opt_type_decl_ts(&ident_with_id_arr_not_null_as_pg_json_type_read_ts)), DeriveSerdeDeserialize::True),
                         },
                     };
@@ -2084,7 +2084,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         IsStandartWithId::True => &ident_with_id_standart_not_null_read_try_from_er_ucc,
                     };
                     gen_pub_try_new_ts(
-                        &gen_ident_or_ident_with_id_read_or_read_inner_fields_declaration_ts(
+                        &gen_ident_or_ident_with_id_read_or_read_inner_fields_decl_ts(
                             is_standart_with_id,
                             &ReadWithOrWithoutAnnotationOrInner::WithoutSerdeOptIsNoneAnnotation
                         ),
@@ -2146,7 +2146,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 };
                 let impl_ident_read_ts = {
                     let pub_new_or_try_new_ts = {
-                        let vec_ident_with_id_standart_not_null_read_ts = gen_vec_tokens_declaration_ts(&ident_with_id_standart_not_null_read_ucc);
+                        let vec_ident_with_id_standart_not_null_read_ts = gen_vec_tokens_decl_ts(&ident_with_id_standart_not_null_read_ucc);
                         match &pattern {
                             Pattern::Standart => match &is_nullable {
                                 IsNullable::False => gen_pub_try_new_for_ident_read_or_ident_with_id_standart_not_null_read_ts(&is_standart_with_id_false),
@@ -2197,7 +2197,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &|_: &Ident, syn_type: &Type| {
                             let type_read_ts = gen_type_as_pg_json_type_read_ts(&syn_type);
                             gen_opt_type_decl_ts(
-                                &wrap_into_value_declaration_ts(&type_read_ts)
+                                &wrap_into_value_decl_ts(&type_read_ts)
                             )
                         }
                     )
@@ -2237,7 +2237,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         IsNullable::True => gen_impl_pg_crud_default_opt_some_vec_one_el_ts(&ident_read_ucc, &Ts2::new(), &self_some_pg_crud_default_opt_some_vec_one_el_call_ts),
                     },
                 };
-                let impl_sqlx_type_for_ident_read_ts = gen_sqlx_types_json_type_declaration_wrapper_ts(&ident_read_ucc);
+                let impl_sqlx_type_for_ident_read_ts = gen_sqlx_types_json_type_decl_wrapper_ts(&ident_read_ucc);
                 let impl_sqlx_encode_sqlx_pg_for_ident_read_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(
                     &ident_read_ucc,
                     &quote!{sqlx::types::Json(#SelfSc)}
@@ -2247,7 +2247,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     let ident_with_id_standart_not_null_read_ts = gen_ident_read_ts(
                         &ident_with_id_standart_not_null_read_ucc,
                         &{
-                            let ts = gen_ident_or_ident_with_id_read_or_read_inner_fields_declaration_ts(
+                            let ts = gen_ident_or_ident_with_id_read_or_read_inner_fields_decl_ts(
                                 &is_standart_with_id_true,
                                 &ReadWithOrWithoutAnnotationOrInner::WithSerdeOptIsNoneAnnotation
                             );
@@ -2266,7 +2266,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     };
                     let impl_serde_deserialize_for_ident_with_id_standart_not_null_read_ts = gen_impl_serde_deserialize_for_ident_read_or_ident_with_id_standart_not_null_read_ts(&is_standart_with_id_true);
                     let impl_pg_crud_default_opt_some_vec_one_el_for_ident_with_id_standart_not_null_read_ts = gen_impl_pg_crud_default_opt_some_vec_one_el_for_ident_read_or_ident_with_id_standart_not_null_read_ts(&is_standart_with_id_true);
-                    let impl_sqlx_type_for_ident_with_id_standart_not_null_read_ts = gen_sqlx_types_json_type_declaration_wrapper_ts(&ident_with_id_standart_not_null_read_ucc);
+                    let impl_sqlx_type_for_ident_with_id_standart_not_null_read_ts = gen_sqlx_types_json_type_decl_wrapper_ts(&ident_with_id_standart_not_null_read_ucc);
                     let impl_sqlx_decode_sqlx_pg_for_ident_with_id_standart_not_null_read_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_wrapper_ts(&ident_with_id_standart_not_null_read_ucc);
                     quote! {
                         #ident_with_id_standart_not_null_read_ts
@@ -2388,11 +2388,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &match &pattern {
                             Pattern::Standart => match &is_nullable {
                                 IsNullable::False => {
-                                    let value_ident_read_only_ids_handle_ucc_ts = wrap_into_value_declaration_ts(&ident_read_only_ids_handle_ucc);
+                                    let value_ident_read_only_ids_handle_ucc_ts = wrap_into_value_decl_ts(&ident_read_only_ids_handle_ucc);
                                     quote! {(#value_ident_read_only_ids_handle_ucc_ts);}
                                 },
                                 IsNullable::True => {
-                                    let value_opt_ident_read_only_ids_standart_not_null_ts = wrap_into_value_declaration_ts(&gen_opt_type_decl_ts(
+                                    let value_opt_ident_read_only_ids_standart_not_null_ts = wrap_into_value_decl_ts(&gen_opt_type_decl_ts(
                                         &ident_standart_not_null_read_only_ids_ucc
                                     ));
                                     quote! {
@@ -2402,7 +2402,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             },
                             Pattern::Arr => match &is_nullable {
                                 IsNullable::False => {
-                                    let value_vec_ident_with_id_standart_not_null_read_only_ids_ts = wrap_into_value_declaration_ts(&gen_vec_tokens_declaration_ts(
+                                    let value_vec_ident_with_id_standart_not_null_read_only_ids_ts = wrap_into_value_decl_ts(&gen_vec_tokens_decl_ts(
                                         &ident_with_id_standart_not_null_read_only_ids_ucc
                                     ));
                                     quote! {
@@ -2410,7 +2410,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 },
                                 IsNullable::True => {
-                                    let value_opt_ident_with_id_read_only_ids_arr_not_null_ts = wrap_into_value_declaration_ts(&gen_opt_type_decl_ts(
+                                    let value_opt_ident_with_id_read_only_ids_arr_not_null_ts = wrap_into_value_decl_ts(&gen_opt_type_decl_ts(
                                         &SelfReadOnlyIdsUcc::from_tokens(&gen_ident_ucc(&IdentPattern::ArrNotNullWithId))
                                     ));
                                     quote! {(#value_opt_ident_with_id_read_only_ids_arr_not_null_ts);}
@@ -2451,7 +2451,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 &ident_with_id_standart_not_null_read_only_ids_ucc,
                                 &Ts2::new(),
                                 &{
-                                    let value_ident_with_id_standart_not_null_read_only_ids_handle_ts = wrap_into_value_declaration_ts(
+                                    let value_ident_with_id_standart_not_null_read_only_ids_handle_ts = wrap_into_value_decl_ts(
                                         &ident_with_id_standart_not_null_read_only_ids_handle_ucc
                                     );
                                     quote!{(pub #value_ident_with_id_standart_not_null_read_only_ids_handle_ts);}
@@ -2494,7 +2494,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         },
                         &Ts2::new(),
                         &{
-                            let ts = gen_ident_or_ident_with_id_read_or_read_inner_fields_declaration_ts(
+                            let ts = gen_ident_or_ident_with_id_read_or_read_inner_fields_decl_ts(
                                 is_standart_with_id,
                                 &ReadWithOrWithoutAnnotationOrInner::Inner
                             );
@@ -2514,7 +2514,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             IsNullable::True => gen_pub_type_ident_read_inner_al_ts(&gen_opt_type_decl_ts(&gen_type_as_pg_json_type_read_inner_ts(&ident_standart_not_null_ucc))),
                         },
                         Pattern::Arr => gen_pub_type_ident_read_inner_al_ts(&match &is_nullable {
-                            IsNullable::False => gen_vec_tokens_declaration_ts(
+                            IsNullable::False => gen_vec_tokens_decl_ts(
                                 &ident_with_id_standart_not_null_read_inner_ucc
                             ),
                             IsNullable::True => gen_opt_type_decl_ts(&gen_type_as_pg_json_type_read_inner_ts(&ident_with_id_arr_not_null_ucc)),
@@ -2587,10 +2587,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         IsStandartWithId::True => &ident_with_id_standart_not_null_update_el_ucc,
                     })
                 };
-                let vec_ident_with_id_standart_not_null_create_ts = gen_vec_tokens_declaration_ts(
+                let vec_ident_with_id_standart_not_null_create_ts = gen_vec_tokens_decl_ts(
                     &ident_with_id_standart_not_null_create_ucc
                 );
-                let vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts = gen_vec_tokens_declaration_ts(
+                let vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts = gen_vec_tokens_decl_ts(
                     &pg_crud_path_pg_json_type_uuid_uuid_update_ts
                 );
                 let gen_create_update_delete_fields_ts_ffcbdaf0 = |should_add_serde_skip_serializing_if_vec_is_empty_annotation: &ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation| {
@@ -3046,7 +3046,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     let field_ident = &el_092057f6.field_ident;
                                     let vrt_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&field_ident);
                                     let field_ident_dq_ts = gen_field_ident_dq_ts(el_092057f6);
-                                    let value_field_type_as_json_type_update_ts = wrap_into_value_declaration_ts(
+                                    let value_field_type_as_json_type_update_ts = wrap_into_value_decl_ts(
                                         &gen_type_as_pg_json_type_update_ts(&el_092057f6.field_type)
                                     );
                                     quote! {
@@ -3097,7 +3097,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     // #[derive(PartialEq)]
                     // pub struct WrapperOfWrapperOfMyTraitAl(WrapperOfMyTraitAl);
                     // // er[E0369]: binary operation `==` cannot be applied to type `WrapperOfMyTrait<MyStruct>`
-                    let ident_with_id_standart_not_null_update_el_fields_declaration_ts = quote! {
+                    let ident_with_id_standart_not_null_update_el_fields_decl_ts = quote! {
                         #IdSc: #pg_crud_path_pg_json_type_uuid_uuid_update_ts,
                         #FieldsSc: #ident_standart_not_null_as_pg_json_type_update_ts
                     };
@@ -3114,7 +3114,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         .build_struct(
                             &ident_with_id_standart_not_null_update_el_ucc,
                             &Ts2::new(),
-                            &quote!{{#ident_with_id_standart_not_null_update_el_fields_declaration_ts}}
+                            &quote!{{#ident_with_id_standart_not_null_update_el_fields_decl_ts}}
                         );
                         quote!{
                             #AllowClippyArbitrarySourceItemOrdering
@@ -3124,7 +3124,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     let impl_pub_new_for_ident_with_id_standart_not_null_update_el_ts = gen_impl_pub_const_new_for_ident_ts(
                         &ident_with_id_standart_not_null_update_el_ucc,
                         &MustUse,
-                        &ident_with_id_standart_not_null_update_el_fields_declaration_ts,
+                        &ident_with_id_standart_not_null_update_el_fields_decl_ts,
                         &quote! {Self {
                             #IdSc,
                             #FieldsSc
@@ -3175,10 +3175,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             IsStandartWithId::True => &ident_with_id_standart_not_null_update_for_query_el_ucc,
                         })
                     };
-                    let vec_ident_with_id_standart_not_null_create_for_query_ts = gen_vec_tokens_declaration_ts(
+                    let vec_ident_with_id_standart_not_null_create_for_query_ts = gen_vec_tokens_decl_ts(
                         &ident_with_id_standart_not_null_create_for_query_ucc
                     );
-                    let vec_pg_crud_path_pg_json_type_uuid_uuid_update_for_query_ts = gen_vec_tokens_declaration_ts(
+                    let vec_pg_crud_path_pg_json_type_uuid_uuid_update_for_query_ts = gen_vec_tokens_decl_ts(
                         &pg_crud_path_pg_json_type_uuid_uuid_update_for_query_ts
                     );
                     match &pattern {
@@ -3519,7 +3519,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     let field_ident = &el_9d8af887.field_ident;
                                     let vrt_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&field_ident);
                                     let field_ident_dq_ts = gen_field_ident_dq_ts(el_9d8af887);
-                                    let value_field_type_as_json_type_update_for_query_ts = wrap_into_value_declaration_ts(&gen_type_as_pg_json_type_update_for_query_ts(&el_9d8af887.field_type));
+                                    let value_field_type_as_json_type_update_for_query_ts = wrap_into_value_decl_ts(&gen_type_as_pg_json_type_update_for_query_ts(&el_9d8af887.field_type));
                                     quote! {
                                         #[serde(rename(serialize = #field_ident_dq_ts, deserialize = #field_ident_dq_ts))]
                                         #vrt_ident_ucc_ts(#value_field_type_as_json_type_update_for_query_ts)
@@ -3562,19 +3562,19 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     Ts2::new()
                 };
                 let maybe_ident_with_id_standart_not_null_update_for_query_el_ts = if is_standart_not_null {
-                    let ident_with_id_standart_not_null_update_for_query_el_fields_declaration_ts = quote! {
+                    let ident_with_id_standart_not_null_update_for_query_el_fields_decl_ts = quote! {
                         #IdSc: #pg_crud_path_pg_json_type_uuid_uuid_update_for_query_ts,
                         #FieldsSc: #ident_standart_not_null_as_pg_json_type_update_for_query_ts
                     };
                     let ident_with_id_standart_not_null_update_for_query_el_ts = gen_debug_clone_partialeq_serialize_pub_struct_ts(
                         &AllowClippyArbitrarySourceItemOrdering,
                         &ident_with_id_standart_not_null_update_for_query_el_ucc,
-                        &quote!{{#ident_with_id_standart_not_null_update_for_query_el_fields_declaration_ts}}
+                        &quote!{{#ident_with_id_standart_not_null_update_for_query_el_fields_decl_ts}}
                     );
                     let impl_pub_const_new_for_ident_with_id_standart_not_null_update_for_query_el_ts = gen_impl_pub_const_new_for_ident_ts(
                         &ident_with_id_standart_not_null_update_for_query_el_ucc,
                         &MustUse,
-                        &ident_with_id_standart_not_null_update_for_query_el_fields_declaration_ts,
+                        &ident_with_id_standart_not_null_update_for_query_el_fields_decl_ts,
                         &quote! {Self {
                             #IdSc,
                             #FieldsSc

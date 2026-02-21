@@ -698,13 +698,13 @@ pub fn gen_struct_ident_with_nbr_elements_dq_ts(
 pub fn gen_tuple_struct_ident_dq_ts(v: &dyn Display) -> Ts2 {
     dq_ts(&format!("tuple struct {v}"))
 }
-pub fn gen_sqlx_types_json_type_declaration_ts(type_ts: &dyn ToTokens) -> Ts2 {
+pub fn gen_sqlx_types_json_type_decl_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {sqlx::types::Json<#type_ts>}
 }
 pub fn gen_opt_type_decl_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {Option<#type_ts>}
 }
-pub fn gen_vec_tokens_declaration_ts(type_ts: &dyn ToTokens) -> Ts2 {
+pub fn gen_vec_tokens_decl_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {Vec<#type_ts>}
 }
 pub fn gen_serde_deserialize_dq_ts(

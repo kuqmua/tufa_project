@@ -48,16 +48,16 @@ pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
             let phrase_part_sc_ucc_ts = format!("{phrase_part_ucc_str}Sc")
                 .parse::<Ts2>()
                 .expect("0cc47b2e");
-            let (ucc_struct_declaration_ts, sc_struct_declaration_ts) = {
-                let gen_struct_declaration = |struct_name_ts: &dyn ToTokens| {
+            let (ucc_struct_decl_ts, sc_struct_decl_ts) = {
+                let gen_struct_decl = |struct_name_ts: &dyn ToTokens| {
                     quote! {
                         #[derive(Debug)]
                         pub struct #struct_name_ts;
                     }
                 };
                 (
-                    gen_struct_declaration(&phrase_part_ucc_ucc_ts),
-                    gen_struct_declaration(&phrase_part_sc_ucc_ts),
+                    gen_struct_decl(&phrase_part_ucc_ucc_ts),
+                    gen_struct_decl(&phrase_part_sc_ucc_ts),
                 )
             };
             let (impl_display_ucc_ts, impl_display_sc_ts) = {
@@ -99,10 +99,10 @@ pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 )
             };
             quote! {
-                #ucc_struct_declaration_ts
+                #ucc_struct_decl_ts
                 #impl_display_ucc_ts
                 #impl_to_tokens_ucc_ts
-                #sc_struct_declaration_ts
+                #sc_struct_decl_ts
                 #impl_display_sc_ts
                 #impl_to_tokens_snake_ts
             }

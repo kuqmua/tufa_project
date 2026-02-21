@@ -75,7 +75,7 @@ use pg_crud_macros_common::{
     gen_impl_pg_crud_default_opt_some_vec_one_el_ts, gen_impl_serde_deserialize_for_struct_ts,
     gen_match_try_new_in_deserialize_ts, gen_opt_type_decl_ts,
     gen_query_part_er_write_into_buffer_ts, gen_return_err_query_part_er_write_into_buffer_ts,
-    gen_value_init_ts, gen_vec_tokens_declaration_ts, impl_pg_type_where_filter_for_ident_ts,
+    gen_value_init_ts, gen_vec_tokens_decl_ts, impl_pg_type_where_filter_for_ident_ts,
     maybe_wrap_into_braces_ts,
 };
 use proc_macro2::TokenStream as Ts2;
@@ -525,8 +525,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let ident_try_delete_one_er_ucc = SelfTryDeleteOneErUcc::from_tokens(&ident);
     let ident_delete_one_er_with_serde_ucc = SelfDeleteOneErWithSerdeUcc::from_tokens(&ident);
     let vec_primary_key_field_type_read_ts =
-        gen_vec_tokens_declaration_ts(&primary_key_field_type_as_pg_type_read_ucc);
-    let vec_ident_read_only_ids_ts = gen_vec_tokens_declaration_ts(&ident_read_only_ids_ucc);
+        gen_vec_tokens_decl_ts(&primary_key_field_type_as_pg_type_read_ucc);
+    let vec_ident_read_only_ids_ts = gen_vec_tokens_decl_ts(&ident_read_only_ids_ucc);
     let primary_key_field_ident = &primary_key_field.field_ident;
     let primary_key_field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&primary_key_field_ident);
     let primary_key_field_type_update_ts =
@@ -944,7 +944,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     };
     let ident_read_ucc = SelfReadUcc::from_tokens(&ident);
-    let gen_value_declaration_ts = |ts: &dyn ToTokens| {
+    let gen_value_decl_ts = |ts: &dyn ToTokens| {
         quote! {#PgCrudSc::#ValueUcc<#ts>}
     };
     let gen_import_path_value_init_ts = |ts: &dyn ToTokens| gen_value_init_ts(&import_path, &ts);
@@ -1109,18 +1109,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let ident_where_many_ucc = SelfWhereManyUcc::from_tokens(&ident);
     let ident_where_many_try_new_er_ucc = SelfWhereManyTryNewErUcc::from_tokens(&ident);
     let ident_where_many_ts = {
-        let fields_declaration_ts =
-            gen_fields_named_with_comma_ts(&|element: &SynFieldWrapper| -> Ts2 {
-                let field_ident = &element.field_ident;
-                let el_syn_field_ty_as_pg_type_where_ts =
-                    gen_as_pg_type_where_ts(&element.field_type);
-                let opt_pg_type_where_syn_field_ty_as_pg_type_where_ts = gen_opt_type_decl_ts(
-                    &quote! {pg_crud::PgTypeWhere<#el_syn_field_ty_as_pg_type_where_ts>},
-                );
-                quote! {
-                    #field_ident: #opt_pg_type_where_syn_field_ty_as_pg_type_where_ts
-                }
-            });
+        let fields_decl_ts = gen_fields_named_with_comma_ts(&|element: &SynFieldWrapper| -> Ts2 {
+            let field_ident = &element.field_ident;
+            let el_syn_field_ty_as_pg_type_where_ts = gen_as_pg_type_where_ts(&element.field_type);
+            let opt_pg_type_where_syn_field_ty_as_pg_type_where_ts = gen_opt_type_decl_ts(
+                &quote! {pg_crud::PgTypeWhere<#el_syn_field_ty_as_pg_type_where_ts>},
+            );
+            quote! {
+                #field_ident: #opt_pg_type_where_syn_field_ty_as_pg_type_where_ts
+            }
+        });
         let ident_where_many_ts = {
             let ts_2ecd6da8 = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
@@ -1131,7 +1129,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .build_struct(
                     &ident_where_many_ucc,
                     &Ts2::new(),
-                    &quote! {{#fields_declaration_ts}},
+                    &quote! {{#fields_decl_ts}},
                 );
             quote! {
                 #AllowClippyArbitrarySourceItemOrdering
@@ -1155,7 +1153,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             );
         let impl_pub_try_new_for_ident_where_many_ts = gen_impl_pub_try_new_for_ident_ts(
             &ident_where_many_ucc,
-            &fields_declaration_ts,
+            &fields_decl_ts,
             &ident_where_many_try_new_er_ucc,
             &{
                 let gen_fields_ts = |should_add_borrow: ShouldAddBorrow| {
@@ -1488,7 +1486,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &Ts2::new(),
                 &{
                     let field_opt_primary_key_ts = {
-                        let opt_value_primary_key_field_type_as_pg_type_read_ts = gen_opt_type_decl_ts(&gen_value_declaration_ts(&gen_as_pg_type_read_ts(&primary_key_field_type)));
+                        let opt_value_primary_key_field_type_as_pg_type_read_ts = gen_opt_type_decl_ts(&gen_value_decl_ts(&gen_as_pg_type_read_ts(&primary_key_field_type)));
                         quote! {
                             #FieldAttrSerdeSkipSerializingIfOptIsNone
                             pub #primary_key_field_ident: #opt_value_primary_key_field_type_as_pg_type_read_ts
@@ -1497,7 +1495,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let fields_opts_without_primary_key_ts = gen_fields_named_without_primary_key_with_comma_ts(&|element: &SynFieldWrapper| -> Ts2 {
                         let field_vis = &element.field_vis;
                         let field_ident = &element.field_ident;
-                        let opt_value_field_type_as_pg_type_read_ts = gen_opt_type_decl_ts(&gen_value_declaration_ts(&gen_as_pg_type_read_ts(&element.field_type)));
+                        let opt_value_field_type_as_pg_type_read_ts = gen_opt_type_decl_ts(&gen_value_decl_ts(&gen_as_pg_type_read_ts(&element.field_type)));
                         quote! {
                             #FieldAttrSerdeSkipSerializingIfOptIsNone
                             #field_vis #field_ident: #opt_value_field_type_as_pg_type_read_ts
@@ -1516,22 +1514,21 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let impl_ident_read_ts = {
             let fn_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts = {
-                let declaration_primary_key_ts = {
+                let decl_primary_key_ts = {
                     let opt_value_primary_key_field_type_as_primary_key_ts = gen_opt_type_decl_ts(
-                        &gen_value_declaration_ts(&primary_key_field_type_as_pg_type_read_ucc),
+                        &gen_value_decl_ts(&primary_key_field_type_as_pg_type_read_ucc),
                     );
                     quote! {
                         let mut #primary_key_field_ident: #opt_value_primary_key_field_type_as_primary_key_ts = None;
                     }
                 };
-                let declaration_without_primary_key_ts =
+                let decl_without_primary_key_ts =
                     gen_fields_named_without_primary_key_without_comma_ts(
                         &|element: &SynFieldWrapper| {
                             let field_ident = &element.field_ident;
-                            let opt_value_field_type_as_pg_type_read_ts =
-                                gen_opt_type_decl_ts(&gen_value_declaration_ts(
-                                    &gen_as_pg_type_read_ts(&element.field_type),
-                                ));
+                            let opt_value_field_type_as_pg_type_read_ts = gen_opt_type_decl_ts(
+                                &gen_value_decl_ts(&gen_as_pg_type_read_ts(&element.field_type)),
+                            );
                             quote! {
                                 let mut #field_ident: #opt_value_field_type_as_pg_type_read_ts = None;
                             }
@@ -1591,8 +1588,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #ValueSc: &sqlx::postgres::PgRow,
                         #select_borrow_pg_crud_not_empty_unique_vec_ident_select_ts
                     ) -> Result<Self, sqlx::Error> {
-                        #declaration_primary_key_ts
-                        #declaration_without_primary_key_ts
+                        #decl_primary_key_ts
+                        #decl_without_primary_key_ts
                         for el_dca9f0b7 in #SelectSc.to_vec() {
                             match el_dca9f0b7 {
                                 #assignment_vrt_primary_key_ts,
@@ -1759,7 +1756,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let syn_type_as_pg_type_update_ts = gen_as_pg_type_update_ts(&syn_type);
             gen_opt_type_decl_ts(&quote! {#path_value_ts<#syn_type_as_pg_type_update_ts>})
         };
-        let fields_declaration_ts = {
+        let fields_decl_ts = {
             let fields_named_without_primary_key_ts =
                 gen_fields_named_without_primary_key_with_comma_ts(
                     &|element: &SynFieldWrapper| -> Ts2 {
@@ -1782,11 +1779,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .derive_debug()
                 .derive_serde_serialize()
                 .derive_utoipa_to_schema()
-                .build_struct(
-                    &ident_update_ucc,
-                    &Ts2::new(),
-                    &quote! {{#fields_declaration_ts}},
-                );
+                .build_struct(&ident_update_ucc, &Ts2::new(), &quote! {{#fields_decl_ts}});
             quote! {
                 #AllowClippyArbitrarySourceItemOrdering
                 #ts_a09c0471
@@ -1809,7 +1802,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             );
         let impl_pub_try_new_for_ident_update_ts = gen_impl_pub_try_new_for_ident_ts(
             &ident_update_ucc,
-            &fields_declaration_ts,
+            &fields_decl_ts,
             &ident_update_try_new_er_ucc,
             &{
                 let (left_ts, right_ts) = {
@@ -2099,7 +2092,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             quote! {#pg_crud_pg_type_where_filter_ts #QueryBindSc},
         )
     };
-    let vec_struct_opts_ident_ts = gen_vec_tokens_declaration_ts(&ident_read_ucc);
+    let vec_struct_opts_ident_ts = gen_vec_tokens_decl_ts(&ident_read_ucc);
     let not_unique_field_syn_vrt_wrapper = new_syn_vrt_wrapper(
         &NotUniqueFieldUcc,
         Some(StatusCode::BadReq400),
@@ -2579,7 +2572,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     };
     let gen_params_payload_and_default_ts =
-        |operation: &Operation, declaration_ts: &dyn ToTokens, default_init_ts: &dyn ToTokens| {
+        |operation: &Operation, decl_ts: &dyn ToTokens, default_init_ts: &dyn ToTokens| {
             let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
             let ident_operation_payload_ts = {
                 let (derive_clone, derive_copy) = operation.derive_clone_and_copy();
@@ -2591,7 +2584,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     .derive_serde_serialize()
                     .derive_serde_deserialize()
                     .derive_utoipa_to_schema()
-                    .build_struct(&ident_operation_payload_ucc, &Ts2::new(), &declaration_ts);
+                    .build_struct(&ident_operation_payload_ucc, &Ts2::new(), &decl_ts);
                 quote! {
                     #AllowClippyArbitrarySourceItemOrdering
                     #ts_ec5b096c
@@ -3168,7 +3161,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             gen_params_payload_and_default_ts(
                 &operation,
                 &{
-                    let vec_ident_create_ts = gen_vec_tokens_declaration_ts(&ident_create_ucc);
+                    let vec_ident_create_ts = gen_vec_tokens_decl_ts(&ident_create_ucc);
                     quote! {(pub #vec_ident_create_ts);}
                 },
                 &quote! {(vec![#PgCrudDefaultOptSomeVecOneElCall])},
@@ -3807,7 +3800,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         );
         let params_ts = gen_params_pattern_ts(&operation, {
             let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(&operation);
-            let vec_ident_update_ts = gen_vec_tokens_declaration_ts(&ident_update_ucc);
+            let vec_ident_update_ts = gen_vec_tokens_decl_ts(&ident_update_ucc);
             let ident_operation_payload_vec_ts = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
