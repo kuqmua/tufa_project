@@ -444,16 +444,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ],
     ["pg", "type", "std", "opt", "opt", "self", "where", "in"],
     ["std", "opt", "opt", "self", "where"],
-    [
-        "pg",
-        "type",
-        "self",
-        "where",
-        "case",
-        "sensitive",
-        "regular",
-        "expression"
-    ],
+    ["pg", "type", "self", "where", "case", "sensitive", "regex"],
     [
         "pg",
         "type",
@@ -464,8 +455,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "where",
         "case",
         "sensitive",
-        "regular",
-        "expression"
+        "regex"
     ],
     [
         "pg",
@@ -477,8 +467,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "where",
         "case",
         "insensitive",
-        "regular",
-        "expression"
+        "regex"
     ],
     [
         "pg",
@@ -487,8 +476,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "where",
         "case",
         "insensitive",
-        "regular",
-        "expression"
+        "regex"
     ],
     [
         "pg",
@@ -616,8 +604,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "where",
         "case",
         "sensitive",
-        "regular",
-        "expression",
+        "regex",
         "try",
         "new",
         "er"
@@ -630,8 +617,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "where",
         "case",
         "sensitive",
-        "regular",
-        "expression"
+        "regex"
     ],
     [
         "pg",
@@ -641,8 +627,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "where",
         "case",
         "sensitive",
-        "regular",
-        "expression",
+        "regex",
         "try",
         "new",
         "er"
@@ -654,22 +639,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "where",
         "case",
         "insensitive",
-        "regular",
-        "expression",
-        "try",
-        "new",
-        "er"
-    ],
-    [
-        "pg",
-        "json",
-        "type",
-        "self",
-        "where",
-        "case",
-        "insensitive",
-        "regular",
-        "expression",
+        "regex",
         "try",
         "new",
         "er"
@@ -682,8 +652,20 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "where",
         "case",
         "insensitive",
-        "regular",
-        "expression"
+        "regex",
+        "try",
+        "new",
+        "er"
+    ],
+    [
+        "pg",
+        "json",
+        "type",
+        "self",
+        "where",
+        "case",
+        "insensitive",
+        "regex"
     ],
     [
         "pg", "json", "type", "std", "opt", "opt", "self", "where", "is", "null"
@@ -737,8 +719,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "position",
         "case",
         "sensitive",
-        "regular",
-        "expression"
+        "regex"
     ],
     [
         "pg",
@@ -749,8 +730,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "position",
         "case",
         "sensitive",
-        "regular",
-        "expression"
+        "regex"
     ],
     [
         "pg",
@@ -760,8 +740,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "position",
         "case",
         "sensitive",
-        "regular",
-        "expression",
+        "regex",
         "try",
         "new",
         "er"
@@ -775,8 +754,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "position",
         "case",
         "sensitive",
-        "regular",
-        "expression",
+        "regex",
         "try",
         "new",
         "er"
@@ -789,8 +767,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "position",
         "case",
         "insensitive",
-        "regular",
-        "expression"
+        "regex"
     ],
     [
         "pg",
@@ -801,8 +778,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "position",
         "case",
         "insensitive",
-        "regular",
-        "expression"
+        "regex"
     ],
     [
         "pg",
@@ -812,8 +788,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "position",
         "case",
         "insensitive",
-        "regular",
-        "expression",
+        "regex",
         "try",
         "new",
         "er"
@@ -827,8 +802,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "position",
         "case",
         "insensitive",
-        "regular",
-        "expression",
+        "regex",
         "try",
         "new",
         "er"

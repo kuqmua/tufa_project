@@ -60,9 +60,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     #       }
     #     },
     #     {
-    #       "RegularExpression": {
+    #       "Regex": {
     #         "logical_operator": "Or",
-    #         "regular_expression_case": "Sensitive",
+    #         "regex_case": "Sensitive",
     #         "value": ""
     #       }
     #     }
@@ -181,9 +181,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         #         }
         #       },
         #       {
-        #         "RegularExpression": {
+        #         "Regex": {
         #           "logical_operator": "Or",
-        #           "regular_expression_case": "Sensitive",
+        #           "regex_case": "Sensitive",
         #           "value": ""
         #         }
         #       }
@@ -837,9 +837,9 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #                   }
     #                 },
     #                 {
-    #                   "RegularExpression": {
+    #                   "Regex": {
     #                     "logical_operator": "Or",
-    #                     "regular_expression_case": "Sensitive",
+    #                     "regex_case": "Sensitive",
     #                     "value": ""
     #                   }
     #                 }
@@ -1038,9 +1038,9 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #                     }
     #                   },
     #                   {
-    #                     "RegularExpression": {
+    #                     "Regex": {
     #                       "logical_operator": "Or",
-    #                       "regular_expression_case": "Sensitive",
+    #                       "regex_case": "Sensitive",
     #                       "value": ""
     #                     }
     #                   }

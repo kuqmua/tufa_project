@@ -1,42 +1,39 @@
 use enum_extension_lib::EnumExtension;
 use naming::{
-    AdjacentWithRangeUcc, AllElementsEqualUcc, AllElementsGreaterThanUcc,
-    AllElementsRegularExpressionUcc, BeforeUcc, BetweenUcc, ContainsAllElementsOfArrUcc,
-    ContainsElGreaterThanUcc, ContainsElRegularExpressionUcc, CurrentDateUcc, CurrentTimeUcc,
-    CurrentTimestampUcc, DimFourAllElementsEqualUcc, DimFourAllElementsGreaterThanUcc,
-    DimFourAllElementsRegularExpressionUcc, DimFourBetweenUcc, DimFourContainsAllElementsOfArrUcc,
-    DimFourContainsElGreaterThanUcc, DimFourContainsElRegularExpressionUcc, DimFourEqualUcc,
-    DimFourGreaterThanUcc, DimFourInUcc, DimFourLengthEqualUcc, DimFourLengthGreaterThanUcc,
-    DimFourOverlapsWithArrUcc, DimFourRegularExpressionUcc, DimOneAdjacentWithRangeUcc,
-    DimOneAllElementsEqualUcc, DimOneAllElementsGreaterThanUcc,
-    DimOneAllElementsRegularExpressionUcc, DimOneBeforeUcc, DimOneBetweenUcc,
-    DimOneContainsAllElementsOfArrUcc, DimOneContainsElGreaterThanUcc,
-    DimOneContainsElRegularExpressionUcc, DimOneCurrentDateUcc, DimOneCurrentTimeUcc,
-    DimOneCurrentTimestampUcc, DimOneEqualToEncodedStringRepresentationUcc, DimOneEqualUcc,
-    DimOneExcludedUpperBoundUcc, DimOneFindRangesThatFullyContainTheGivenRangeUcc,
-    DimOneFindRangesWithinGivenRangeUcc, DimOneGreaterThanCurrentDateUcc,
-    DimOneGreaterThanCurrentTimeUcc, DimOneGreaterThanCurrentTimestampUcc,
-    DimOneGreaterThanExcludedUpperBoundUcc, DimOneGreaterThanIncludedLowerBoundUcc,
-    DimOneGreaterThanUcc, DimOneInUcc, DimOneIncludedLowerBoundUcc, DimOneLengthEqualUcc,
-    DimOneLengthGreaterThanUcc, DimOneOverlapWithRangeUcc, DimOneOverlapsWithArrUcc,
-    DimOneRangeLengthUcc, DimOneRegularExpressionUcc, DimOneStrictlyToLeftOfRangeUcc,
-    DimOneStrictlyToRightOfRangeUcc, DimThreeAllElementsEqualUcc,
-    DimThreeAllElementsGreaterThanUcc, DimThreeAllElementsRegularExpressionUcc, DimThreeBetweenUcc,
+    AdjacentWithRangeUcc, AllElementsEqualUcc, AllElementsGreaterThanUcc, AllElementsRegexUcc,
+    BeforeUcc, BetweenUcc, ContainsAllElementsOfArrUcc, ContainsElGreaterThanUcc,
+    ContainsElRegexUcc, CurrentDateUcc, CurrentTimeUcc, CurrentTimestampUcc,
+    DimFourAllElementsEqualUcc, DimFourAllElementsGreaterThanUcc, DimFourAllElementsRegexUcc,
+    DimFourBetweenUcc, DimFourContainsAllElementsOfArrUcc, DimFourContainsElGreaterThanUcc,
+    DimFourContainsElRegexUcc, DimFourEqualUcc, DimFourGreaterThanUcc, DimFourInUcc,
+    DimFourLengthEqualUcc, DimFourLengthGreaterThanUcc, DimFourOverlapsWithArrUcc, DimFourRegexUcc,
+    DimOneAdjacentWithRangeUcc, DimOneAllElementsEqualUcc, DimOneAllElementsGreaterThanUcc,
+    DimOneAllElementsRegexUcc, DimOneBeforeUcc, DimOneBetweenUcc,
+    DimOneContainsAllElementsOfArrUcc, DimOneContainsElGreaterThanUcc, DimOneContainsElRegexUcc,
+    DimOneCurrentDateUcc, DimOneCurrentTimeUcc, DimOneCurrentTimestampUcc,
+    DimOneEqualToEncodedStringRepresentationUcc, DimOneEqualUcc, DimOneExcludedUpperBoundUcc,
+    DimOneFindRangesThatFullyContainTheGivenRangeUcc, DimOneFindRangesWithinGivenRangeUcc,
+    DimOneGreaterThanCurrentDateUcc, DimOneGreaterThanCurrentTimeUcc,
+    DimOneGreaterThanCurrentTimestampUcc, DimOneGreaterThanExcludedUpperBoundUcc,
+    DimOneGreaterThanIncludedLowerBoundUcc, DimOneGreaterThanUcc, DimOneInUcc,
+    DimOneIncludedLowerBoundUcc, DimOneLengthEqualUcc, DimOneLengthGreaterThanUcc,
+    DimOneOverlapWithRangeUcc, DimOneOverlapsWithArrUcc, DimOneRangeLengthUcc, DimOneRegexUcc,
+    DimOneStrictlyToLeftOfRangeUcc, DimOneStrictlyToRightOfRangeUcc, DimThreeAllElementsEqualUcc,
+    DimThreeAllElementsGreaterThanUcc, DimThreeAllElementsRegexUcc, DimThreeBetweenUcc,
     DimThreeContainsAllElementsOfArrUcc, DimThreeContainsElGreaterThanUcc,
-    DimThreeContainsElRegularExpressionUcc, DimThreeEqualUcc, DimThreeGreaterThanUcc,
-    DimThreeInUcc, DimThreeLengthEqualUcc, DimThreeLengthGreaterThanUcc,
-    DimThreeOverlapsWithArrUcc, DimThreeRegularExpressionUcc, DimTwoAllElementsEqualUcc,
-    DimTwoAllElementsGreaterThanUcc, DimTwoAllElementsRegularExpressionUcc, DimTwoBetweenUcc,
-    DimTwoContainsAllElementsOfArrUcc, DimTwoContainsElGreaterThanUcc,
-    DimTwoContainsElRegularExpressionUcc, DimTwoEqualUcc, DimTwoGreaterThanUcc, DimTwoInUcc,
-    DimTwoLengthEqualUcc, DimTwoLengthGreaterThanUcc, DimTwoOverlapsWithArrUcc,
-    DimTwoRegularExpressionUcc, DisplayPlusToTokens, EqualToEncodedStringRepresentationUcc,
-    EqualUcc, ExcludedUpperBoundUcc, FindRangesThatFullyContainTheGivenRangeUcc,
+    DimThreeContainsElRegexUcc, DimThreeEqualUcc, DimThreeGreaterThanUcc, DimThreeInUcc,
+    DimThreeLengthEqualUcc, DimThreeLengthGreaterThanUcc, DimThreeOverlapsWithArrUcc,
+    DimThreeRegexUcc, DimTwoAllElementsEqualUcc, DimTwoAllElementsGreaterThanUcc,
+    DimTwoAllElementsRegexUcc, DimTwoBetweenUcc, DimTwoContainsAllElementsOfArrUcc,
+    DimTwoContainsElGreaterThanUcc, DimTwoContainsElRegexUcc, DimTwoEqualUcc, DimTwoGreaterThanUcc,
+    DimTwoInUcc, DimTwoLengthEqualUcc, DimTwoLengthGreaterThanUcc, DimTwoOverlapsWithArrUcc,
+    DimTwoRegexUcc, DisplayPlusToTokens, EqualToEncodedStringRepresentationUcc, EqualUcc,
+    ExcludedUpperBoundUcc, FindRangesThatFullyContainTheGivenRangeUcc,
     FindRangesWithinGivenRangeUcc, GreaterThanCurrentDateUcc, GreaterThanCurrentTimeUcc,
     GreaterThanCurrentTimestampUcc, GreaterThanExcludedUpperBoundUcc,
     GreaterThanIncludedLowerBoundUcc, GreaterThanUcc, InUcc, IncludedLowerBoundUcc, LengthEqualUcc,
-    LengthGreaterThanUcc, OverlapWithRangeUcc, OverlapsWithArrUcc, RangeLengthUcc,
-    RegularExpressionUcc, StrictlyToLeftOfRangeUcc, StrictlyToRightOfRangeUcc,
+    LengthGreaterThanUcc, OverlapWithRangeUcc, OverlapsWithArrUcc, RangeLengthUcc, RegexUcc,
+    StrictlyToLeftOfRangeUcc, StrictlyToRightOfRangeUcc,
     parameter::{PgJsonTypeWhereSelfUcc, PgTypeWhereSelfUcc},
 };
 use proc_macro2::TokenStream as Ts2;
@@ -53,8 +50,8 @@ pub enum PgTypeFilter {
     DimOneBetween { ident: Ts2 },
     In { ident: Ts2 },
     DimOneIn { ident: Ts2 },
-    RegularExpression,
-    DimOneRegularExpression,
+    Regex,
+    DimOneRegex,
     Before { ident: Ts2 },
     DimOneBefore { ident: Ts2 },
     CurrentDate,
@@ -130,8 +127,8 @@ impl PgFilter for PgTypeFilter {
             | Self::DimOneOverlapWithRange { ident }
             | Self::AdjacentWithRange { ident }
             | Self::DimOneAdjacentWithRange { ident } => Some(ident.clone()),
-            Self::RegularExpression
-            | Self::DimOneRegularExpression
+            Self::Regex
+            | Self::DimOneRegex
             | Self::CurrentDate
             | Self::DimOneCurrentDate
             | Self::GreaterThanCurrentDate
@@ -166,8 +163,8 @@ impl PgFilter for PgTypeFilter {
             Self::DimOneBetween { .. } => &DimOneBetweenUcc,
             Self::In { .. } => &InUcc,
             Self::DimOneIn { .. } => &DimOneInUcc,
-            Self::RegularExpression => &RegularExpressionUcc,
-            Self::DimOneRegularExpression => &DimOneRegularExpressionUcc,
+            Self::Regex => &RegexUcc,
+            Self::DimOneRegex => &DimOneRegexUcc,
             Self::Before { .. } => &BeforeUcc,
             Self::DimOneBefore { .. } => &DimOneBeforeUcc,
             Self::CurrentDate => &CurrentDateUcc,
@@ -269,21 +266,21 @@ pub enum PgJsonTypeFilter {
     DimTwoIn { ident: Ts2 },
     DimThreeIn { ident: Ts2 },
     DimFourIn { ident: Ts2 },
-    RegularExpression,
-    DimOneRegularExpression,
-    DimTwoRegularExpression,
-    DimThreeRegularExpression,
-    DimFourRegularExpression,
-    ContainsElRegularExpression,
-    DimOneContainsElRegularExpression,
-    DimTwoContainsElRegularExpression,
-    DimThreeContainsElRegularExpression,
-    DimFourContainsElRegularExpression,
-    AllElementsRegularExpression,
-    DimOneAllElementsRegularExpression,
-    DimTwoAllElementsRegularExpression,
-    DimThreeAllElementsRegularExpression,
-    DimFourAllElementsRegularExpression,
+    Regex,
+    DimOneRegex,
+    DimTwoRegex,
+    DimThreeRegex,
+    DimFourRegex,
+    ContainsElRegex,
+    DimOneContainsElRegex,
+    DimTwoContainsElRegex,
+    DimThreeContainsElRegex,
+    DimFourContainsElRegex,
+    AllElementsRegex,
+    DimOneAllElementsRegex,
+    DimTwoAllElementsRegex,
+    DimThreeAllElementsRegex,
+    DimFourAllElementsRegex,
     ContainsAllElementsOfArr { ident: Ts2 },
     DimOneContainsAllElementsOfArr { ident: Ts2 },
     DimTwoContainsAllElementsOfArr { ident: Ts2 },
@@ -349,21 +346,21 @@ impl PgFilter for PgJsonTypeFilter {
             | Self::DimTwoLengthEqual
             | Self::DimThreeLengthEqual
             | Self::DimFourLengthEqual
-            | Self::RegularExpression
-            | Self::DimOneRegularExpression
-            | Self::DimTwoRegularExpression
-            | Self::DimThreeRegularExpression
-            | Self::DimFourRegularExpression
-            | Self::ContainsElRegularExpression
-            | Self::DimOneContainsElRegularExpression
-            | Self::DimTwoContainsElRegularExpression
-            | Self::DimThreeContainsElRegularExpression
-            | Self::DimFourContainsElRegularExpression
-            | Self::AllElementsRegularExpression
-            | Self::DimOneAllElementsRegularExpression
-            | Self::DimTwoAllElementsRegularExpression
-            | Self::DimThreeAllElementsRegularExpression
-            | Self::DimFourAllElementsRegularExpression
+            | Self::Regex
+            | Self::DimOneRegex
+            | Self::DimTwoRegex
+            | Self::DimThreeRegex
+            | Self::DimFourRegex
+            | Self::ContainsElRegex
+            | Self::DimOneContainsElRegex
+            | Self::DimTwoContainsElRegex
+            | Self::DimThreeContainsElRegex
+            | Self::DimFourContainsElRegex
+            | Self::AllElementsRegex
+            | Self::DimOneAllElementsRegex
+            | Self::DimTwoAllElementsRegex
+            | Self::DimThreeAllElementsRegex
+            | Self::DimFourAllElementsRegex
             | Self::LengthGreaterThan
             | Self::DimOneLengthGreaterThan
             | Self::DimTwoLengthGreaterThan
@@ -417,21 +414,21 @@ impl PgFilter for PgJsonTypeFilter {
             Self::DimTwoIn { .. } => &DimTwoInUcc,
             Self::DimThreeIn { .. } => &DimThreeInUcc,
             Self::DimFourIn { .. } => &DimFourInUcc,
-            Self::RegularExpression => &RegularExpressionUcc,
-            Self::DimOneRegularExpression => &DimOneRegularExpressionUcc,
-            Self::DimTwoRegularExpression => &DimTwoRegularExpressionUcc,
-            Self::DimThreeRegularExpression => &DimThreeRegularExpressionUcc,
-            Self::DimFourRegularExpression => &DimFourRegularExpressionUcc,
-            Self::ContainsElRegularExpression => &ContainsElRegularExpressionUcc,
-            Self::DimOneContainsElRegularExpression => &DimOneContainsElRegularExpressionUcc,
-            Self::DimTwoContainsElRegularExpression => &DimTwoContainsElRegularExpressionUcc,
-            Self::DimThreeContainsElRegularExpression => &DimThreeContainsElRegularExpressionUcc,
-            Self::DimFourContainsElRegularExpression => &DimFourContainsElRegularExpressionUcc,
-            Self::AllElementsRegularExpression => &AllElementsRegularExpressionUcc,
-            Self::DimOneAllElementsRegularExpression => &DimOneAllElementsRegularExpressionUcc,
-            Self::DimTwoAllElementsRegularExpression => &DimTwoAllElementsRegularExpressionUcc,
-            Self::DimThreeAllElementsRegularExpression => &DimThreeAllElementsRegularExpressionUcc,
-            Self::DimFourAllElementsRegularExpression => &DimFourAllElementsRegularExpressionUcc,
+            Self::Regex => &RegexUcc,
+            Self::DimOneRegex => &DimOneRegexUcc,
+            Self::DimTwoRegex => &DimTwoRegexUcc,
+            Self::DimThreeRegex => &DimThreeRegexUcc,
+            Self::DimFourRegex => &DimFourRegexUcc,
+            Self::ContainsElRegex => &ContainsElRegexUcc,
+            Self::DimOneContainsElRegex => &DimOneContainsElRegexUcc,
+            Self::DimTwoContainsElRegex => &DimTwoContainsElRegexUcc,
+            Self::DimThreeContainsElRegex => &DimThreeContainsElRegexUcc,
+            Self::DimFourContainsElRegex => &DimFourContainsElRegexUcc,
+            Self::AllElementsRegex => &AllElementsRegexUcc,
+            Self::DimOneAllElementsRegex => &DimOneAllElementsRegexUcc,
+            Self::DimTwoAllElementsRegex => &DimTwoAllElementsRegexUcc,
+            Self::DimThreeAllElementsRegex => &DimThreeAllElementsRegexUcc,
+            Self::DimFourAllElementsRegex => &DimFourAllElementsRegexUcc,
             Self::LengthGreaterThan => &LengthGreaterThanUcc,
             Self::DimOneLengthGreaterThan => &DimOneLengthGreaterThanUcc,
             Self::DimTwoLengthGreaterThan => &DimTwoLengthGreaterThanUcc,

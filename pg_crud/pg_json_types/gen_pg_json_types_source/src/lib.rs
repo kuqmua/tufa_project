@@ -1191,7 +1191,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 PgJsonTypeSpecific::Bool => common_standart_pg_json_type_filters,
                                 PgJsonTypeSpecific::String => {
                                     let mut vec = common_standart_pg_json_type_filters;
-                                    vec.push(PgJsonTypeFilter::RegularExpression);
+                                    vec.push(PgJsonTypeFilter::Regex);
                                     vec
                                 }
                             }
@@ -1244,9 +1244,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 PgJsonTypeSpecific::Bool => common_arr_dim1_pg_json_type_filters,
                                 PgJsonTypeSpecific::String => {
                                     let mut filters = common_arr_dim1_pg_json_type_filters;
-                                    filters.push(PgJsonTypeFilter::DimOneRegularExpression);
-                                    filters.push(PgJsonTypeFilter::ContainsElRegularExpression);
-                                    filters.push(PgJsonTypeFilter::AllElementsRegularExpression);
+                                    filters.push(PgJsonTypeFilter::DimOneRegex);
+                                    filters.push(PgJsonTypeFilter::ContainsElRegex);
+                                    filters.push(PgJsonTypeFilter::AllElementsRegex);
                                     filters
                                 }
                             }
@@ -1314,9 +1314,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 PgJsonTypeSpecific::Bool => common_arr_dim2_pg_json_type_filters,
                                 PgJsonTypeSpecific::String => {
                                     let mut filters = common_arr_dim2_pg_json_type_filters;
-                                    filters.push(PgJsonTypeFilter::DimTwoRegularExpression);
-                                    filters.push(PgJsonTypeFilter::DimOneContainsElRegularExpression);
-                                    filters.push(PgJsonTypeFilter::DimOneAllElementsRegularExpression);
+                                    filters.push(PgJsonTypeFilter::DimTwoRegex);
+                                    filters.push(PgJsonTypeFilter::DimOneContainsElRegex);
+                                    filters.push(PgJsonTypeFilter::DimOneAllElementsRegex);
                                     filters
                                 }
                             }
@@ -1403,9 +1403,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 PgJsonTypeSpecific::Bool => common_arr_dim3_pg_json_type_filters,
                                 PgJsonTypeSpecific::String => {
                                     let mut filters = common_arr_dim3_pg_json_type_filters;
-                                    filters.push(PgJsonTypeFilter::DimThreeRegularExpression);
-                                    filters.push(PgJsonTypeFilter::DimTwoContainsElRegularExpression);
-                                    filters.push(PgJsonTypeFilter::DimTwoAllElementsRegularExpression);
+                                    filters.push(PgJsonTypeFilter::DimThreeRegex);
+                                    filters.push(PgJsonTypeFilter::DimTwoContainsElRegex);
+                                    filters.push(PgJsonTypeFilter::DimTwoAllElementsRegex);
                                     filters
                                 }
                             }
@@ -1508,9 +1508,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 PgJsonTypeSpecific::Bool => common_arr_dim4_pg_json_type_filters,
                                 PgJsonTypeSpecific::String => {
                                     let mut filters = common_arr_dim4_pg_json_type_filters;
-                                    filters.push(PgJsonTypeFilter::DimFourRegularExpression);
-                                    filters.push(PgJsonTypeFilter::DimThreeContainsElRegularExpression);
-                                    filters.push(PgJsonTypeFilter::DimThreeAllElementsRegularExpression);
+                                    filters.push(PgJsonTypeFilter::DimFourRegex);
+                                    filters.push(PgJsonTypeFilter::DimThreeContainsElRegex);
+                                    filters.push(PgJsonTypeFilter::DimThreeAllElementsRegex);
                                     filters
                                 }
                             }
@@ -3333,7 +3333,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             else {
                 none_ts.clone()
             };
-            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts = if matches!(&pattern, Pattern::Standart) &&
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts = if matches!(&pattern, Pattern::Standart) &&
                 matches!(&is_nullable, IsNullable::False)
             {
                 match &pg_json_type {
@@ -3352,10 +3352,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     PgJsonType::StringAsJsonbString => quote!{
                         match #import_path::NotEmptyUniqueVec::try_new(vec![
                             #import_path::SingleOrMultiple::Single(
-                                #ident_where_ucc::RegularExpression(
-                                    where_filters::PgJsonTypeWhereRegularExpression {
+                                #ident_where_ucc::Regex(
+                                    where_filters::PgJsonTypeWhereRegex {
                                         logical_operator: #import_path::LogicalOperator::Or,
-                                        regular_expression_case: where_filters::RegularExpressionCase::Sensitive,
+                                        regex_case: where_filters::RegexCase::Sensitive,
                                         value: where_filters::RegexRegex(regex::Regex::new(&format!("^{}$", regex::escape(&#CreateSc.0.0))).expect("3814ff38")),
                                     }
                                 ),
@@ -3459,8 +3459,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 Pattern::ArrDim3 {..} |
                 Pattern::ArrDim4 {..} => none_ts.clone()
             };
-            //todo add contains_el_regular_expression for dim 2,3,4
-            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts = match &pattern {
+            //todo add contains_el_regex for dim 2,3,4
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts = match &pattern {
                 Pattern::ArrDim1 { dim1_is_nullable } => {
                     if matches!((&is_nullable, &dim1_is_nullable), (
                         IsNullable::False,
@@ -3482,11 +3482,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             PgJsonType::StringAsJsonbString => quote!{
                                 match #import_path::NotEmptyUniqueVec::try_new(create.0.0.into_iter().map(|el_590fca71| {
                                     #import_path::SingleOrMultiple::Single(
-                                        #ident_where_ucc::ContainsElRegularExpression(
-                                            where_filters::PgJsonTypeWhereContainsElRegularExpression {
+                                        #ident_where_ucc::ContainsElRegex(
+                                            where_filters::PgJsonTypeWhereContainsElRegex {
                                                 logical_operator: #import_path::LogicalOperator::Or,
-                                                regular_expression_case:
-                                                    where_filters::RegularExpressionCase::Sensitive,
+                                                regex_case:
+                                                    where_filters::RegexCase::Sensitive,
                                                 value: where_filters::RegexRegex(
                                                     regex::Regex::new(&format!(
                                                         "^{}$",
@@ -3545,9 +3545,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts,
                 &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts,
                 &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts,
                 &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts,
             )
         };
         let generated = quote! {

@@ -355,16 +355,16 @@ impl DefaultOptSomeVecOneEl for RegexRegex {
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
-pub enum RegularExpressionCase {
+pub enum RegexCase {
     Insensitive,
     Sensitive,
 }
-impl DefaultOptSomeVecOneEl for RegularExpressionCase {
+impl DefaultOptSomeVecOneEl for RegexCase {
     fn default_opt_some_vec_one_el() -> Self {
         Self::Sensitive
     }
 }
-impl RegularExpressionCase {
+impl RegexCase {
     #[must_use]
     pub const fn postgreql_syntax(&self) -> &'static str {
         match &self {

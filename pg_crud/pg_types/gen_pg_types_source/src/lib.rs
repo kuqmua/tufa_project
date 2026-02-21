@@ -4372,7 +4372,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             ident: quote! {#ident_standart_not_null_table_type_ucc},
                         };
                         let in_handle = PgTypeFilter::In { ident: quote! {#ident_table_type_ucc} };
-                        let regular_expression = PgTypeFilter::RegularExpression;
+                        let regex = PgTypeFilter::Regex;
                         let equal_to_encoded_string_representation = PgTypeFilter::EqualToEncodedStringRepresentation;
                         let date_9c6d41ca = PgTypeFilter::CurrentDate;
                         let greater_than_current_date = PgTypeFilter::GreaterThanCurrentDate;
@@ -4487,14 +4487,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                             PgType::StringAsText | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg | PgType::SqlxTypesUuidUuidAsUuidInitByClient => {
                                 let mut vec = common_standart_pg_type_filters;
-                                vec.push(regular_expression);
+                                vec.push(regex);
                                 vec
                             }
                             PgType::BoolAsBool | PgType::SqlxPgTypesPgIntervalAsInterval | PgType::SqlxTypesIpnetworkIpNetworkAsInet => common_standart_pg_type_filters,
                             PgType::SqlxTypesMacAddressMacAddressAsMacAddr => {
                                 let mut vec = common_standart_pg_type_filters;
                                 vec.push(greater_than);
-                                vec.push(regular_expression);
+                                vec.push(regex);
                                 vec
                             }
                             PgType::SqlxPgTypesPgRangeI32AsInt4Range => where_sqlx_pg_types_pg_range_i32_ts,
@@ -4524,7 +4524,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         let dim_one_in_handle = PgTypeFilter::DimOneIn {
                             ident: ident_standart_is_nullable_if_can_be_nullable_table_type_ucc,
                         };
-                        let dim_one_regular_expression = PgTypeFilter::DimOneRegularExpression;
+                        let dim_one_regex = PgTypeFilter::DimOneRegex;
                         let dim_one_current_date = PgTypeFilter::DimOneCurrentDate;
                         let dim_one_greater_than_current_date = PgTypeFilter::DimOneGreaterThanCurrentDate;
                         let dim_one_current_time = PgTypeFilter::DimOneCurrentTime;
@@ -4663,14 +4663,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                             PgType::StringAsText | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg | PgType::SqlxTypesUuidUuidAsUuidInitByClient => {
                                 let mut vec = common_arr_dim1_pg_type_filters;
-                                vec.push(dim_one_regular_expression);
+                                vec.push(dim_one_regex);
                                 vec
                             }
                             PgType::BoolAsBool | PgType::SqlxPgTypesPgIntervalAsInterval | PgType::SqlxTypesIpnetworkIpNetworkAsInet => common_arr_dim1_pg_type_filters,
                             PgType::SqlxTypesMacAddressMacAddressAsMacAddr => {
                                 let mut vec = common_arr_dim1_pg_type_filters;
                                 vec.push(dim_one_greater_than);
-                                vec.push(dim_one_regular_expression);
+                                vec.push(dim_one_regex);
                                 vec
                             }
                             PgType::SqlxPgTypesPgRangeI32AsInt4Range => where_sqlx_pg_types_pg_range_i32_ts,
@@ -6566,9 +6566,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts = none_ts.clone();
             let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts = none_ts.clone();
             let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts = none_ts.clone();
-            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts = none_ts.clone();
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts = none_ts.clone();
             let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts = none_ts.clone();
-            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts = none_ts;
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts = none_ts;
             gen_impl_pg_type_test_cases_for_ident_ts(
                 &quote! {#[cfg(feature = "test-utils")]},
                 &import_path,
@@ -6599,9 +6599,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts,
                 &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts,
                 &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts,
                 &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts,
             )
         };
         let maybe_impl_pg_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_ts = if matches!(&is_not_null_standart_can_be_primary_key, IsNotNullStandartCanBePrimaryKey::True) {

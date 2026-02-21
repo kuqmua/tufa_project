@@ -227,12 +227,12 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             &ImportPath::PgCrudCommon,
         )
     };
-    let regular_expression_case_and_value_declaration_ts = quote! {
-        pub regular_expression_case: RegularExpressionCase,
+    let regex_case_and_value_declaration_ts = quote! {
+        pub regex_case: RegexCase,
         pub value: RegexRegex
     };
-    let regular_expression_case_and_value_default_init_ts = quote! {
-        regular_expression_case: #PgCrudCommonDefaultOptSomeVecOneElCall,
+    let regex_case_and_value_default_init_ts = quote! {
+        regex_case: #PgCrudCommonDefaultOptSomeVecOneElCall,
         #value_default_opt_some_vec_one_el_ts
     };
     let if_let_err_query_try_bind_self_value_to_string_ts = quote! {
@@ -569,7 +569,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                     )
                 };
-                let gen_regular_expression_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
+                let gen_regex_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
                         maybe_dims_declaration_ts,
                         maybe_dims_default_init_ts,
@@ -582,11 +582,11 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         should_add_declaration_of_struct_ident_generic_false.clone(),
                         quote! {
                             #maybe_dims_declaration_ts
-                            #regular_expression_case_and_value_declaration_ts
+                            #regex_case_and_value_declaration_ts
                         },
                         quote! {
                             #maybe_dims_default_init_ts
-                            #regular_expression_case_and_value_default_init_ts
+                            #regex_case_and_value_default_init_ts
                         },
                         IncrParameterUnderscore::False,
                         {
@@ -602,7 +602,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     #ColumnSc,
                                     #maybe_additional_params_ts
-                                    #SelfSc.regular_expression_case.postgreql_syntax(),
+                                    #SelfSc.regex_case.postgreql_syntax(),
                                     #ValueSc
                                 ))
                             }
@@ -1032,12 +1032,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     }
                     PgTypeFilter::In { .. } => gen_in_ts(&pg_type_pattern_handle_standart),
                     PgTypeFilter::DimOneIn { .. } => gen_in_ts(&pg_type_pattern_handle_arr_dim1),
-                    PgTypeFilter::RegularExpression => {
-                        gen_regular_expression_ts(&pg_type_pattern_handle_standart)
-                    }
-                    PgTypeFilter::DimOneRegularExpression => {
-                        gen_regular_expression_ts(&pg_type_pattern_handle_arr_dim1)
-                    }
+                    PgTypeFilter::Regex => gen_regex_ts(&pg_type_pattern_handle_standart),
+                    PgTypeFilter::DimOneRegex => gen_regex_ts(&pg_type_pattern_handle_arr_dim1),
                     PgTypeFilter::Before { .. } => gen_before_ts(&pg_type_pattern_handle_standart),
                     PgTypeFilter::DimOneBefore { .. } => {
                         gen_before_ts(&pg_type_pattern_handle_arr_dim1)
@@ -1472,7 +1468,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                 )
             };
-            let gen_regular_expression_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
+            let gen_regex_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 let (
                     maybe_dims_declaration_ts,
                     maybe_dims_default_init_ts,
@@ -1504,11 +1500,11 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     quote! {
                         #maybe_dims_declaration_ts
-                        #regular_expression_case_and_value_declaration_ts
+                        #regex_case_and_value_declaration_ts
                     },
                     quote! {
                         #maybe_dims_default_init_ts
-                        #regular_expression_case_and_value_default_init_ts
+                        #regex_case_and_value_default_init_ts
                     },
                     {
                         let format_ts = dq_ts(&format!(
@@ -1526,7 +1522,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 #ColumnSc,
                                 #maybe_additional_params_ts
-                                #SelfSc.regular_expression_case.postgreql_syntax(),
+                                #SelfSc.regex_case.postgreql_syntax(),
                                 #ValueSc
                             ))
                         }
@@ -1538,100 +1534,98 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                 )
             };
-            let gen_contains_el_regular_expression_ts =
-                |pg_type_pattern_handle: &PgTypePatternHandle| {
-                    let (
-                        maybe_dims_declaration_ts,
-                        maybe_dims_default_init_ts,
-                        maybe_dims_indexes_init_ts,
-                        pg_type_kind,
-                        maybe_additional_params_ts,
-                        maybe_dims_query_bind_ts,
-                    ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
-                    (
-                        should_add_declaration_of_struct_ident_generic_false.clone(),
+            let gen_contains_el_regex_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
+                let (
+                    maybe_dims_declaration_ts,
+                    maybe_dims_default_init_ts,
+                    maybe_dims_indexes_init_ts,
+                    pg_type_kind,
+                    maybe_additional_params_ts,
+                    maybe_dims_query_bind_ts,
+                ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
+                (
+                    should_add_declaration_of_struct_ident_generic_false.clone(),
+                    quote! {
+                        #maybe_dims_declaration_ts
+                        #regex_case_and_value_declaration_ts
+                    },
+                    quote! {
+                        #maybe_dims_default_init_ts
+                        #regex_case_and_value_default_init_ts
+                    },
+                    {
+                        let format_ts = dq_ts(&format!(
+                            //todo test it properly using all strange string vrts
+                            "{{}}(exists(select 1 from jsonb_arr_elements({{}}{}) as el where (el #>> '{{{{}}}}') {{}} ${{}}))",
+                            // "{{}}(exists(select 1 from jsonb_arr_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) {{}} ${{}}))",
+                            pg_type_kind.format_argument()
+                        ));
                         quote! {
-                            #maybe_dims_declaration_ts
-                            #regular_expression_case_and_value_declaration_ts
-                        },
+                            #maybe_dims_indexes_init_ts
+                            #value_match_incr_checked_add_one_init_ts
+                            Ok(format!(
+                                #format_ts,
+                                &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #ColumnSc,
+                                #maybe_additional_params_ts
+                                #SelfSc.regex_case.postgreql_syntax(),
+                                #ValueSc
+                            ))
+                        }
+                    },
+                    is_query_bind_mutable_true,
+                    quote! {
+                        #maybe_dims_query_bind_ts
+                        #if_let_err_query_try_bind_self_value_to_string_ts
+                    },
+                )
+            };
+            let gen_all_elements_regex_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
+                let (
+                    maybe_dims_declaration_ts,
+                    maybe_dims_default_init_ts,
+                    maybe_dims_indexes_init_ts,
+                    pg_type_kind,
+                    maybe_additional_params_ts,
+                    maybe_dims_query_bind_ts,
+                ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
+                (
+                    should_add_declaration_of_struct_ident_generic_false.clone(),
+                    quote! {
+                        #maybe_dims_declaration_ts
+                        #regex_case_and_value_declaration_ts
+                    },
+                    quote! {
+                        #maybe_dims_default_init_ts
+                        #regex_case_and_value_default_init_ts
+                    },
+                    {
+                        let format_ts = dq_ts(&format!(
+                            //todo test it properly using all strange string vrts
+                            "{{}}(not exists(select 1 from jsonb_arr_elements({{}}{}) as el where (el #>> '{{{{}}}}') !{{}} ${{}}))",
+                            // "{{}}(not exists(select 1 from jsonb_arr_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) !{{}} ${{}}))",
+                            pg_type_kind.format_argument()
+                        ));
                         quote! {
-                            #maybe_dims_default_init_ts
-                            #regular_expression_case_and_value_default_init_ts
-                        },
-                        {
-                            let format_ts = dq_ts(&format!(
-                                //todo test it properly using all strange string vrts
-                                "{{}}(exists(select 1 from jsonb_arr_elements({{}}{}) as el where (el #>> '{{{{}}}}') {{}} ${{}}))",
-                                // "{{}}(exists(select 1 from jsonb_arr_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) {{}} ${{}}))",
-                                pg_type_kind.format_argument()
-                            ));
-                            quote! {
-                                #maybe_dims_indexes_init_ts
-                                #value_match_incr_checked_add_one_init_ts
-                                Ok(format!(
-                                    #format_ts,
-                                    &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    #ColumnSc,
-                                    #maybe_additional_params_ts
-                                    #SelfSc.regular_expression_case.postgreql_syntax(),
-                                    #ValueSc
-                                ))
-                            }
-                        },
-                        is_query_bind_mutable_true,
-                        quote! {
-                            #maybe_dims_query_bind_ts
-                            #if_let_err_query_try_bind_self_value_to_string_ts
-                        },
-                    )
-                };
-            let gen_all_elements_regular_expression_ts =
-                |pg_type_pattern_handle: &PgTypePatternHandle| {
-                    let (
-                        maybe_dims_declaration_ts,
-                        maybe_dims_default_init_ts,
-                        maybe_dims_indexes_init_ts,
-                        pg_type_kind,
-                        maybe_additional_params_ts,
-                        maybe_dims_query_bind_ts,
-                    ) = gen_pg_json_type_dims_helpers(pg_type_pattern_handle);
-                    (
-                        should_add_declaration_of_struct_ident_generic_false.clone(),
-                        quote! {
-                            #maybe_dims_declaration_ts
-                            #regular_expression_case_and_value_declaration_ts
-                        },
-                        quote! {
-                            #maybe_dims_default_init_ts
-                            #regular_expression_case_and_value_default_init_ts
-                        },
-                        {
-                            let format_ts = dq_ts(&format!(
-                                //todo test it properly using all strange string vrts
-                                "{{}}(not exists(select 1 from jsonb_arr_elements({{}}{}) as el where (el #>> '{{{{}}}}') !{{}} ${{}}))",
-                                // "{{}}(not exists(select 1 from jsonb_arr_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) !{{}} ${{}}))",
-                                pg_type_kind.format_argument()
-                            ));
-                            quote! {
-                                #maybe_dims_indexes_init_ts
-                                #value_match_incr_checked_add_one_init_ts
-                                Ok(format!(
-                                    #format_ts,
-                                    &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    #ColumnSc,
-                                    #maybe_additional_params_ts
-                                    #SelfSc.regular_expression_case.postgreql_syntax(),
-                                    #ValueSc
-                                ))
-                            }
-                        },
-                        is_query_bind_mutable_true,
-                        quote! {
-                            #maybe_dims_query_bind_ts
-                            #if_let_err_query_try_bind_self_value_to_string_ts
-                        },
-                    )
-                };
+                            #maybe_dims_indexes_init_ts
+                            #value_match_incr_checked_add_one_init_ts
+                            Ok(format!(
+                                #format_ts,
+                                &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #ColumnSc,
+                                #maybe_additional_params_ts
+                                #SelfSc.regex_case.postgreql_syntax(),
+                                #ValueSc
+                            ))
+                        }
+                    },
+                    is_query_bind_mutable_true,
+                    quote! {
+                        #maybe_dims_query_bind_ts
+                        #if_let_err_query_try_bind_self_value_to_string_ts
+                    },
+                )
+            };
             let gen_contains_all_elements_of_arr_ts =
                 |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
@@ -1852,50 +1846,40 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 PgJsonTypeFilter::DimTwoIn { .. } => gen_in_ts(&pg_type_pattern_handle_arr_dim2),
                 PgJsonTypeFilter::DimThreeIn { .. } => gen_in_ts(&pg_type_pattern_handle_arr_dim3),
                 PgJsonTypeFilter::DimFourIn { .. } => gen_in_ts(&pg_type_pattern_handle_arr_dim4),
-                PgJsonTypeFilter::RegularExpression => {
-                    gen_regular_expression_ts(&pg_type_pattern_handle_standart)
+                PgJsonTypeFilter::Regex => gen_regex_ts(&pg_type_pattern_handle_standart),
+                PgJsonTypeFilter::DimOneRegex => gen_regex_ts(&pg_type_pattern_handle_arr_dim1),
+                PgJsonTypeFilter::DimTwoRegex => gen_regex_ts(&pg_type_pattern_handle_arr_dim2),
+                PgJsonTypeFilter::DimThreeRegex => gen_regex_ts(&pg_type_pattern_handle_arr_dim3),
+                PgJsonTypeFilter::DimFourRegex => gen_regex_ts(&pg_type_pattern_handle_arr_dim4),
+                PgJsonTypeFilter::ContainsElRegex => {
+                    gen_contains_el_regex_ts(&pg_type_pattern_handle_standart)
                 }
-                PgJsonTypeFilter::DimOneRegularExpression => {
-                    gen_regular_expression_ts(&pg_type_pattern_handle_arr_dim1)
+                PgJsonTypeFilter::DimOneContainsElRegex => {
+                    gen_contains_el_regex_ts(&pg_type_pattern_handle_arr_dim1)
                 }
-                PgJsonTypeFilter::DimTwoRegularExpression => {
-                    gen_regular_expression_ts(&pg_type_pattern_handle_arr_dim2)
+                PgJsonTypeFilter::DimTwoContainsElRegex => {
+                    gen_contains_el_regex_ts(&pg_type_pattern_handle_arr_dim2)
                 }
-                PgJsonTypeFilter::DimThreeRegularExpression => {
-                    gen_regular_expression_ts(&pg_type_pattern_handle_arr_dim3)
+                PgJsonTypeFilter::DimThreeContainsElRegex => {
+                    gen_contains_el_regex_ts(&pg_type_pattern_handle_arr_dim3)
                 }
-                PgJsonTypeFilter::DimFourRegularExpression => {
-                    gen_regular_expression_ts(&pg_type_pattern_handle_arr_dim4)
+                PgJsonTypeFilter::DimFourContainsElRegex => {
+                    gen_contains_el_regex_ts(&pg_type_pattern_handle_arr_dim4)
                 }
-                PgJsonTypeFilter::ContainsElRegularExpression => {
-                    gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_standart)
+                PgJsonTypeFilter::AllElementsRegex => {
+                    gen_all_elements_regex_ts(&pg_type_pattern_handle_standart)
                 }
-                PgJsonTypeFilter::DimOneContainsElRegularExpression => {
-                    gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_arr_dim1)
+                PgJsonTypeFilter::DimOneAllElementsRegex => {
+                    gen_all_elements_regex_ts(&pg_type_pattern_handle_arr_dim1)
                 }
-                PgJsonTypeFilter::DimTwoContainsElRegularExpression => {
-                    gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_arr_dim2)
+                PgJsonTypeFilter::DimTwoAllElementsRegex => {
+                    gen_all_elements_regex_ts(&pg_type_pattern_handle_arr_dim2)
                 }
-                PgJsonTypeFilter::DimThreeContainsElRegularExpression => {
-                    gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_arr_dim3)
+                PgJsonTypeFilter::DimThreeAllElementsRegex => {
+                    gen_all_elements_regex_ts(&pg_type_pattern_handle_arr_dim3)
                 }
-                PgJsonTypeFilter::DimFourContainsElRegularExpression => {
-                    gen_contains_el_regular_expression_ts(&pg_type_pattern_handle_arr_dim4)
-                }
-                PgJsonTypeFilter::AllElementsRegularExpression => {
-                    gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_standart)
-                }
-                PgJsonTypeFilter::DimOneAllElementsRegularExpression => {
-                    gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_arr_dim1)
-                }
-                PgJsonTypeFilter::DimTwoAllElementsRegularExpression => {
-                    gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_arr_dim2)
-                }
-                PgJsonTypeFilter::DimThreeAllElementsRegularExpression => {
-                    gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_arr_dim3)
-                }
-                PgJsonTypeFilter::DimFourAllElementsRegularExpression => {
-                    gen_all_elements_regular_expression_ts(&pg_type_pattern_handle_arr_dim4)
+                PgJsonTypeFilter::DimFourAllElementsRegex => {
+                    gen_all_elements_regex_ts(&pg_type_pattern_handle_arr_dim4)
                 }
                 PgJsonTypeFilter::ContainsAllElementsOfArr { .. } => {
                     gen_contains_all_elements_of_arr_ts(&pg_type_pattern_handle_standart)

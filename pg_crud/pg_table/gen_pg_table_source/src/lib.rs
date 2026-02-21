@@ -37,10 +37,10 @@ use naming::{
     ReadOnlyIdsIntoUpdateSc, ReadOnlyIdsMergedWithCreateIntoOptVecWhereEqualToJsonFieldSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereBetweenSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc,
-    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegularExpressionSc,
+    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegexSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereGreaterThanSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereInSc,
-    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereRegularExpressionSc,
+    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereRegexSc,
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
     ReadOnlyIdsMergedWithCreateIntoWhereEqualSc,
     ReadOnlyIdsMergedWithTableTypeIntoPgTypeOptWhereGreaterThanSc, ReadOnlyIdsSc, ReadOnlyIdsUcc,
@@ -5067,11 +5067,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             "33a3706a";
         let table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_name =
             "a3e2165c";
-        let table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_name =
+        let table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_name =
             "427ac837";
         let table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_name =
             "fe3267a0";
-        let table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_name =
+        let table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_name =
             "b4504737";
         fill_table_field_idents_vec_ts(vec![
             &table_read_only_ids_merged_with_create_into_where_equal_name,
@@ -5088,9 +5088,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_name,
             &table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_name,
             &table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_name,
-            &table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_name,
+            &table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_name,
             &table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_name,
-            &table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_name,
+            &table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_name,
         ]);
         let select_default_all_with_max_page_size_cloned_clone_ts =
             quote! {select_default_all_with_max_page_size_cloned.clone()};
@@ -6021,9 +6021,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts,
                 read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts,
                 read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts,
-                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts,
                 read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
-                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts,
             ) = {
                 let gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts =
                     |table_name: &str, method_ts: &dyn ToTokens| {
@@ -6077,16 +6077,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereInSc
                     ),
                     gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
-                        table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_name,
-                        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereRegularExpressionSc
+                        table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_name,
+                        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereRegexSc
                     ),
                     gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
                         table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_name,
                         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc
                     ),
                     gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
-                        table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_name,
-                        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegularExpressionSc
+                        table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_name,
+                        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegexSc
                     )
                 )
             };
@@ -6107,9 +6107,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts
                 #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts
                 #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts
-                #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts
+                #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts
                 #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts
-                #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts
+                #read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts
             }
         };
         let read_one_tests_ts = quote! {

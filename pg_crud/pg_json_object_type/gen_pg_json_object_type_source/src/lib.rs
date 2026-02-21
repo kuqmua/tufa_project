@@ -23,10 +23,10 @@ use naming::{
     ReadOnlyIdsIntoOptValueReadInnerSc, ReadOnlyIdsMergedWithCreateIntoOptValueReadSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereBetweenSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc,
-    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegularExpressionSc,
+    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegexSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereGreaterThanSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereInSc,
-    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereRegularExpressionSc,
+    ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereRegexSc,
     ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsMergedWithCreateIntoTableTypeSc,
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSc,
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
@@ -6575,9 +6575,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts,
                             read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts,
                             read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts,
-                            read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts,
+                            read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts,
                             read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
-                            read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts
+                            read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts
                         ) = {
                             let gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts = |method_name_ts: &dyn ToTokens|match &is_nullable {
                                 IsNullable::False => match &pattern {
@@ -6846,13 +6846,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereInSc
                                 ),
                                 gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
-                                    &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereRegularExpressionSc
+                                    &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereRegexSc
                                 ),
                                 gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
                                     &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc
                                 ),
                                 gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
-                                    &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegularExpressionSc
+                                    &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegexSc
                                 )
                             )
                         };
@@ -6884,9 +6884,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts,
                             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts,
                             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts,
-                            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts,
+                            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts,
                             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
-                            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts,
+                            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts,
                         )
                     },
                     {
@@ -6962,7 +6962,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             #ReadOnlyIdsSc,
                             #CreateSc
                         )};
-                        let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts = quote!{#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereRegularExpressionSc(
+                        let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts = quote!{#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereRegexSc(
                             #ReadOnlyIdsSc,
                             #CreateSc
                         )};
@@ -6970,7 +6970,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             #ReadOnlyIdsSc,
                             #CreateSc
                         )};
-                        let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts = quote!{#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegularExpressionSc(
+                        let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts = quote!{#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegexSc(
                             #ReadOnlyIdsSc,
                             #CreateSc
                         )};
@@ -7004,9 +7004,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts,
                             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts,
                             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts,
-                            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regular_expression_ts,
+                            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts,
                             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
-                            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regular_expression_ts,
+                            &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts,
                         )
                     },
                 )
