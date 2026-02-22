@@ -16,32 +16,29 @@ pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
     let ts = from_str::<Vec<Vec<String>>>(&input_ts.to_string())
         .expect("90e5793b")
         .into_iter()
-        .map(|el_020a8657| {
+        .map(|el| {
             {
                 let regex = Regex::new(REGEX_VALUE).expect("20948d87");
-                for el_d68254e8 in &el_020a8657 {
-                    assert!(regex.is_match(el_d68254e8), "faadba8a");
+                for el0 in &el {
+                    assert!(regex.is_match(el0), "faadba8a");
                 }
             }
-            let phrase_part_ucc_str =
-                el_020a8657
-                    .iter()
-                    .fold(String::new(), |mut acc, el_132cd6b1| {
-                        acc.push_str(&naming_common::AsRefStrToUccStr::case(el_132cd6b1));
+            let phrase_part_ucc_str = el.iter().fold(String::new(), |mut acc, el0| {
+                acc.push_str(&naming_common::AsRefStrToUccStr::case(el0));
+                acc
+            });
+            let phrase_part_sc_str =
+                el.iter()
+                    .enumerate()
+                    .fold(String::new(), |mut acc, (index, el0)| {
+                        let el_sc_str = naming_common::AsRefStrToScStr::case(el0);
+                        if index == 0 {
+                            acc.push_str(&el_sc_str);
+                        } else {
+                            assert!(write!(acc, "_{el_sc_str}").is_ok(), "ef718915");
+                        }
                         acc
                     });
-            let phrase_part_sc_str = el_020a8657.iter().enumerate().fold(
-                String::new(),
-                |mut acc, (index, el_b9981760)| {
-                    let el_sc_str = naming_common::AsRefStrToScStr::case(el_b9981760);
-                    if index == 0 {
-                        acc.push_str(&el_sc_str);
-                    } else {
-                        assert!(write!(acc, "_{el_sc_str}").is_ok(), "ef718915");
-                    }
-                    acc
-                },
-            );
             let phrase_part_ucc_ucc_ts = format!("{phrase_part_ucc_str}Ucc")
                 .parse::<Ts2>()
                 .expect("4ab6a54c");
@@ -114,18 +111,18 @@ pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
 #[proc_macro]
 pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
     panic_location();
-    let ts = from_str::<Vec<Vec<String>>>(&input_ts.to_string()).expect("9d6a20af").into_iter().map(|el_a5ccbaa7| {
+    let ts = from_str::<Vec<Vec<String>>>(&input_ts.to_string()).expect("9d6a20af").into_iter().map(|el| {
         {
             let regex = Regex::new(REGEX_VALUE).expect("cba1b5fb");
-            for el_6d4f29dd in &el_a5ccbaa7 {
-                assert!(regex.is_match(el_6d4f29dd), "4a12d90f");
+            for el0 in &el {
+                assert!(regex.is_match(el0), "4a12d90f");
             }
         }
         let self_match_name = "self";
         {
             let mut is_self_exists_and_only_one = false;
-            for el_3eac2cfb in &el_a5ccbaa7 {
-                if el_3eac2cfb == self_match_name {
+            for el0 in &el {
+                if el0 == self_match_name {
                     is_self_exists_and_only_one = true;
                     break;
                 }
@@ -135,25 +132,25 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
         let (els_concat_v_ucc_dq_ts, els_concat_v_sc_dq_ts, struct_ucc_ucc_ts, struct_sc_token_ucc_ts, trait_ucc_ucc_ts, trait_sc_token_ucc_ts) = {
             let ucc_ucc_str = "Ucc";
             let sc_ucc_str = "Sc";
-            let els_concat_ucc_str = el_a5ccbaa7.iter().fold(String::new(), |mut acc, el_98881b7d| {
-                acc.push_str(&naming_common::AsRefStrToUccStr::case(el_98881b7d));
+            let els_concat_ucc_str = el.iter().fold(String::new(), |mut acc, el0| {
+                acc.push_str(&naming_common::AsRefStrToUccStr::case(el0));
                 acc
             });
-            let els_concat_v_ucc_dq_ts = dq_ts(&el_a5ccbaa7.iter().fold(String::new(), |mut acc, el_626f2b61| {
-                if el_626f2b61 == "self" {
+            let els_concat_v_ucc_dq_ts = dq_ts(&el.iter().fold(String::new(), |mut acc, el0| {
+                if el0 == "self" {
                     acc.push_str("{v}");
                 } else {
-                    acc.push_str(&naming_common::AsRefStrToUccStr::case(el_626f2b61));
+                    acc.push_str(&naming_common::AsRefStrToUccStr::case(el0));
                 }
                 acc
             }));
             let els_concat_v_sc_dq_ts = dq_ts(&{
-                let mut acc = el_a5ccbaa7.iter().fold(String::new(), |mut acc, el_73b0c851| {
+                let mut acc = el.iter().fold(String::new(), |mut acc, el0| {
                     let symbol = '_';
-                    if el_73b0c851 == "self" {
+                    if el0 == "self" {
                         assert!(write!(acc, "{{v}}{symbol}").is_ok(), "6a02a2ff");
                     } else {
-                        assert!(write!(acc, "{}{symbol}", naming_common::AsRefStrToScStr::case(el_73b0c851)).is_ok(), "d915980a");
+                        assert!(write!(acc, "{}{symbol}", naming_common::AsRefStrToScStr::case(el0)).is_ok(), "d915980a");
                     }
                     acc
                 });
@@ -213,9 +210,9 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                             let path_before_str = type_path.path.segments.iter().take(
                                 type_path.path.segments.len().checked_sub(1).expect("e1f5a332")
                             )
-                            .fold(String::new(), |mut acc, el_2b05e58f| {
+                            .fold(String::new(), |mut acc, el| {
                                 use std::fmt::Write as _;
-                                assert!(write!(acc, "{}::", el_2b05e58f.ident).is_ok(), "67c90ce9");
+                                assert!(write!(acc, "{}::", el.ident).is_ok(), "67c90ce9");
                                 acc
                             });
                             let last = type_path.path.segments.iter().last().expect("19f6e1a6");
