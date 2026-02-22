@@ -54,14 +54,14 @@ impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
         }
         {
             let mut acc = Vec::new();
-            for el_7721a8da in &v {
-                if acc.contains(&el_7721a8da) {
+            for el in &v {
+                if acc.contains(&el) {
                     return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
-                        value: el_7721a8da.clone(),
+                        value: el.clone(),
                         loc: loc!(),
                     });
                 }
-                acc.push(el_7721a8da);
+                acc.push(el);
             }
         }
         Ok(Self(v))
@@ -75,8 +75,8 @@ impl<T: PartialEq + Clone + Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
     where
         T: 'query_lifetime,
     {
-        for el_cc499cbc in self.0 {
-            if let Err(er) = query.try_bind(Json(el_cc499cbc)) {
+        for el in self.0 {
+            if let Err(er) = query.try_bind(Json(el)) {
                 return Err(er.to_string());
             }
         }
@@ -638,14 +638,14 @@ impl<T: PartialEq + Clone> PgTypeNotEmptyUniqueVec<T> {
         }
         {
             let mut acc = Vec::new();
-            for el_b3d83e60 in &v {
-                if acc.contains(&el_b3d83e60) {
+            for el in &v {
+                if acc.contains(&el) {
                     return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
-                        value: el_b3d83e60.clone(),
+                        value: el.clone(),
                         loc: loc!(),
                     });
                 }
-                acc.push(el_b3d83e60);
+                acc.push(el);
             }
         }
         Ok(Self(v))
@@ -834,8 +834,8 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
         self,
         mut query: Query<'lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'lifetime, Postgres, PgArguments>, String> {
-        for el_a05046df in self.0 {
-            if let Err(er) = query.try_bind(el_a05046df) {
+        for el in self.0 {
+            if let Err(er) = query.try_bind(el) {
                 return Err(er.to_string());
             }
         }
