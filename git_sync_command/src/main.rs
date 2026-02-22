@@ -20,16 +20,15 @@ fn main() {
         fs::read_to_string(format!("{parent_dir_pathbuf_as_string}.gitmodules"))
             .expect("c6dd3528")
             .lines()
-            .filter_map(|el_0731ade5| {
-                el_0731ade5.find(path_space_equal_space).map(|index| {
-                    el_0731ade5
-                        .get(
-                            index
-                                .checked_add(path_space_equal_space.len())
-                                .expect("62d029a8")..,
-                        )
-                        .expect("dde185ef")
-                        .to_owned()
+            .filter_map(|el| {
+                el.find(path_space_equal_space).map(|index| {
+                    el.get(
+                        index
+                            .checked_add(path_space_equal_space.len())
+                            .expect("62d029a8")..,
+                    )
+                    .expect("dde185ef")
+                    .to_owned()
                 })
             })
             .collect();
@@ -39,8 +38,8 @@ fn main() {
         .args(["reset", "--hard"])
         .output()
         .expect("4fde85e0");
-    for el_f232fe33 in paths_vec {
-        let path = format!("{canonicalize_pathbuf_as_string}/{el_f232fe33}");
+    for el in paths_vec {
+        let path = format!("{canonicalize_pathbuf_as_string}/{el}");
         println!("start {path}");
         let _unused0 = Command::new("git")
             .args(["checkout", "."])
