@@ -1907,7 +1907,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     let dim_nbr_start = gen_dim_nbr_start_str(dims_nbr);
                                     let dim_nbr_end = gen_dim_nbr_end_str(dims_nbr);
                                     format!(
-                                        "select jsonb_agg(({jsonb_agg_content})) from jsonb_arr_els(({jsonb_arr_els_content})) with ordinality {ordinality_content} between {{{dim_nbr_start}}} and {{{dim_nbr_end}}}"
+                                        "select jsonb_agg(({jsonb_agg_content})) from jsonb_array_elements(({jsonb_arr_els_content})) with ordinality {ordinality_content} between {{{dim_nbr_start}}} and {{{dim_nbr_end}}}"
                                     )
                                 };
                                 ArrDimSelectPattern::try_from(&arr_dim).map_or_else(

@@ -1289,7 +1289,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_all_els_equal_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 gen_1763ccf3_ts(pg_type_pattern_handle, &|pg_type_kind: &PgTypeKind| {
                     format!(
-                        "{{}}(not exists(select 1 from jsonb_arr_els({{}}{}) as el where (el) <> ${{}}))",
+                        "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) <> ${{}}))",
                         pg_type_kind.format_argument()
                     )
                 })
@@ -1316,7 +1316,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                     {
                         let format_ts = dq_ts(&format!(
-                            "{{}}(jsonb_arr_length({{}}{}) {operation} ${{}})",
+                            "{{}}(jsonb_array_length({{}}{}) {operation} ${{}})",
                             pg_type_kind.format_argument()
                         ));
                         quote! {
@@ -1350,7 +1350,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_contains_el_greater_than_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 gen_1763ccf3_ts(pg_type_pattern_handle, &|pg_type_kind: &PgTypeKind| {
                     format!(
-                        "{{}}(exists(select 1 from jsonb_arr_els({{}}{}) as el where (el) > ${{}}))",
+                        "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) > ${{}}))",
                         pg_type_kind.format_argument()
                     )
                 })
@@ -1358,7 +1358,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_all_els_greater_than_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 gen_1763ccf3_ts(pg_type_pattern_handle, &|pg_type_kind: &PgTypeKind| {
                     format!(
-                        "{{}}(not exists(select 1 from jsonb_arr_els({{}}{}) as el where (el) <= ${{}}))",
+                        "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) <= ${{}}))",
                         pg_type_kind.format_argument()
                     )
                 })
@@ -1574,8 +1574,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     {
                         let format_ts = dq_ts(&format!(
                             //todo test it properly using all strange string vrts
-                            "{{}}(exists(select 1 from jsonb_arr_els({{}}{}) as el where (el #>> '{{{{}}}}') {{}} ${{}}))",
-                            // "{{}}(exists(select 1 from jsonb_arr_els({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) {{}} ${{}}))",
+                            "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where (el #>> '{{{{}}}}') {{}} ${{}}))",
+                            // "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) {{}} ${{}}))",
                             pg_type_kind.format_argument()
                         ));
                         quote! {
@@ -1620,8 +1620,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     {
                         let format_ts = dq_ts(&format!(
                             //todo test it properly using all strange string vrts
-                            "{{}}(not exists(select 1 from jsonb_arr_els({{}}{}) as el where (el #>> '{{{{}}}}') !{{}} ${{}}))",
-                            // "{{}}(not exists(select 1 from jsonb_arr_els({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) !{{}} ${{}}))",
+                            "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el #>> '{{{{}}}}') !{{}} ${{}}))",
+                            // "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) !{{}} ${{}}))",
                             pg_type_kind.format_argument()
                         ));
                         quote! {
