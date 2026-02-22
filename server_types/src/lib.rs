@@ -8,13 +8,13 @@
         "vrt": 
         // {
         //     "is_nullable": "False",
-        //     "pattern": "Standart",
+        //     "pattern": "Stdrt",
         //     "trait_gen": "PgTypeAndPgJsonType"
         // }
         // ,
         // {
         //     "is_nullable": "True",
-        //     "pattern": "Standart",
+        //     "pattern": "Stdrt",
         //     "trait_gen": "PgTypeAndPgJsonType"
         // }
         // ,
@@ -853,13 +853,13 @@ pub struct Animal {
         "vrt":
         // {
         //     "is_nullable": "False",
-        //     "pattern": "Standart",
+        //     "pattern": "Stdrt",
         //     "trait_gen": "PgTypeAndPgJsonType"
         // }
         // ,
         // {
         //     "is_nullable": "True",
-        //     "pattern": "Standart",
+        //     "pattern": "Stdrt",
         //     "trait_gen": "PgTypeAndPgJsonType"
         // }
         // ,
@@ -1016,13 +1016,13 @@ pub struct Doggie {
         "vrt":
         // {
         //     "is_nullable": "False",
-        //     "pattern": "Standart",
+        //     "pattern": "Stdrt",
         //     "trait_gen": "PgTypeAndPgJsonType"
         // }
         // ,
         // {
         //     "is_nullable": "True",
-        //     "pattern": "Standart",
+        //     "pattern": "Stdrt",
         //     "trait_gen": "PgTypeAndPgJsonType"
         // }
         // ,

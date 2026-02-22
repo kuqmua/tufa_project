@@ -1203,9 +1203,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .derive_serde_deserialize()
             .derive_utoipa_to_schema()
             .build_struct(&opt_ident_where_many_ucc, &Ts2::new(), &{
-                let opt_ident_read_only_ids_standart_not_null_ts =
+                let opt_ident_read_only_ids_stdrt_not_null_ts =
                     gen_opt_type_decl_ts(&ident_where_many_ucc);
-                quote! {(pub #opt_ident_read_only_ids_standart_not_null_ts);}
+                quote! {(pub #opt_ident_read_only_ids_stdrt_not_null_ts);}
             });
         let impl_pg_type_where_filter_for_opt_ident_where_many_ts =
             impl_pg_type_where_filter_for_ident_ts(

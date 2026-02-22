@@ -65,7 +65,7 @@ pub enum DeriveOrImpl {
     Impl(Ts2),
 }
 #[derive(Debug)]
-pub enum IsStandartNotNull {
+pub enum IsStdrtNotNull {
     False,
     True,
 }

@@ -39,7 +39,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Clone)]
     enum PgTypePatternHandle {
-        Standart,
+        Stdrt,
         ArrDim1,
         ArrDim2,
         ArrDim3,
@@ -49,7 +49,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         type Error = ();
         fn try_from(v: &PgTypePatternHandle) -> Result<Self, Self::Error> {
             match &v {
-                PgTypePatternHandle::Standart => Err(()),
+                PgTypePatternHandle::Stdrt => Err(()),
                 PgTypePatternHandle::ArrDim1 => Ok(Self::One),
                 PgTypePatternHandle::ArrDim2 => Ok(Self::Two),
                 PgTypePatternHandle::ArrDim3 => Ok(Self::Three),
@@ -94,13 +94,13 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     enum PgTypeKind {
-        Standart,
+        Stdrt,
         ArrDim,
     }
     impl PgTypeKind {
         const fn format_argument(&self) -> &'static str {
             match &self {
-                Self::Standart => "",
+                Self::Stdrt => "",
                 Self::ArrDim => "{}",
             }
         }
@@ -314,7 +314,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         }
         Ok(#QuerySc)
     };
-    let pg_type_pattern_handle_standart = PgTypePatternHandle::Standart;
+    let pg_type_pattern_handle_stdrt = PgTypePatternHandle::Stdrt;
     let pg_type_pattern_handle_arr_dim1 = PgTypePatternHandle::ArrDim1;
     let pg_type_pattern_handle_arr_dim2 = PgTypePatternHandle::ArrDim2;
     let pg_type_pattern_handle_arr_dim3 = PgTypePatternHandle::ArrDim3;
@@ -385,7 +385,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         |pg_type_pattern_handle: &PgTypePatternHandle,
          pg_type_or_pg_json_type: &PgTypeOrPgJsonType| {
             DimNbr::try_from(pg_type_pattern_handle).map_or_else(
-            |()| (Ts2::new(),Ts2::new(), Ts2::new(), PgTypeKind::Standart, Ts2::new(), Ts2::new()),
+            |()| (Ts2::new(),Ts2::new(), Ts2::new(), PgTypeKind::Stdrt, Ts2::new(), Ts2::new()),
             |dim_nbr| (
                 match &pg_type_or_pg_json_type {
                     PgTypeOrPgJsonType::PgType => gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(&dim_nbr),
@@ -687,7 +687,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             maybe_dims_decl_ts,
                             maybe_dims_default_init_ts,
                             match &pg_type_pattern_handle {
-                                PgTypePatternHandle::Standart => IncrParameterUnderscore::True,
+                                PgTypePatternHandle::Stdrt => IncrParameterUnderscore::True,
                                 PgTypePatternHandle::ArrDim1
                                 | PgTypePatternHandle::ArrDim2
                                 | PgTypePatternHandle::ArrDim3
@@ -709,7 +709,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 }
                             },
                             match &pg_type_pattern_handle {
-                                PgTypePatternHandle::Standart => is_query_bind_mutable_false,
+                                PgTypePatternHandle::Stdrt => is_query_bind_mutable_false,
                                 PgTypePatternHandle::ArrDim1
                                 | PgTypePatternHandle::ArrDim2
                                 | PgTypePatternHandle::ArrDim3
@@ -877,7 +877,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         maybe_additional_params_ts,
                         maybe_dims_query_bind_ts
                     ) = DimNbr::try_from(pg_type_pattern_handle).map_or_else(
-                        |()| (Ts2::new(), Ts2::new(), Ts2::new(), PgTypeKind::Standart, quote! {#ColumnSc,}, Ts2::new()),
+                        |()| (Ts2::new(), Ts2::new(), Ts2::new(), PgTypeKind::Stdrt, quote! {#ColumnSc,}, Ts2::new()),
                         |dim_nbr| (
                             gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(&dim_nbr),
                             dims_default_init_comma_ts.clone(),
@@ -950,7 +950,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             _,
                             _,
                             maybe_dims_query_bind_ts,
-                        ) = gen_pg_type_dims_helpers_pg_type(&pg_type_pattern_handle_standart);
+                        ) = gen_pg_type_dims_helpers_pg_type(&pg_type_pattern_handle_stdrt);
                         (
                             ShouldAddDeclOfStructIdentGeneric::True {
                                 maybe_additional_traits_ts: Some(
@@ -1039,57 +1039,51 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         )
                     }
                     PgTypeFilter::GreaterThan { .. } => {
-                        gen_greater_than_ts(&pg_type_pattern_handle_standart)
+                        gen_greater_than_ts(&pg_type_pattern_handle_stdrt)
                     }
                     PgTypeFilter::DimOneGreaterThan { .. } => {
                         gen_greater_than_ts(&pg_type_pattern_handle_arr_dim1)
                     }
-                    PgTypeFilter::Between { .. } => {
-                        gen_between_ts(&pg_type_pattern_handle_standart)
-                    }
+                    PgTypeFilter::Between { .. } => gen_between_ts(&pg_type_pattern_handle_stdrt),
                     PgTypeFilter::DimOneBetween { .. } => {
                         gen_between_ts(&pg_type_pattern_handle_arr_dim1)
                     }
-                    PgTypeFilter::In { .. } => gen_in_ts(&pg_type_pattern_handle_standart),
+                    PgTypeFilter::In { .. } => gen_in_ts(&pg_type_pattern_handle_stdrt),
                     PgTypeFilter::DimOneIn { .. } => gen_in_ts(&pg_type_pattern_handle_arr_dim1),
-                    PgTypeFilter::Regex => gen_regex_ts(&pg_type_pattern_handle_standart),
+                    PgTypeFilter::Regex => gen_regex_ts(&pg_type_pattern_handle_stdrt),
                     PgTypeFilter::DimOneRegex => gen_regex_ts(&pg_type_pattern_handle_arr_dim1),
-                    PgTypeFilter::Before { .. } => gen_before_ts(&pg_type_pattern_handle_standart),
+                    PgTypeFilter::Before { .. } => gen_before_ts(&pg_type_pattern_handle_stdrt),
                     PgTypeFilter::DimOneBefore { .. } => {
                         gen_before_ts(&pg_type_pattern_handle_arr_dim1)
                     }
-                    PgTypeFilter::CurrentDate => {
-                        gen_current_date_ts(&pg_type_pattern_handle_standart)
-                    }
+                    PgTypeFilter::CurrentDate => gen_current_date_ts(&pg_type_pattern_handle_stdrt),
                     PgTypeFilter::DimOneCurrentDate => {
                         gen_current_date_ts(&pg_type_pattern_handle_arr_dim1)
                     }
                     PgTypeFilter::GreaterThanCurrentDate => {
-                        gen_greater_than_current_date_ts(&pg_type_pattern_handle_standart)
+                        gen_greater_than_current_date_ts(&pg_type_pattern_handle_stdrt)
                     }
                     PgTypeFilter::DimOneGreaterThanCurrentDate => {
                         gen_greater_than_current_date_ts(&pg_type_pattern_handle_arr_dim1)
                     }
                     PgTypeFilter::CurrentTimestamp => {
-                        gen_current_timestamp_ts(&pg_type_pattern_handle_standart)
+                        gen_current_timestamp_ts(&pg_type_pattern_handle_stdrt)
                     }
                     PgTypeFilter::DimOneCurrentTimestamp => {
                         gen_current_timestamp_ts(&pg_type_pattern_handle_arr_dim1)
                     }
                     PgTypeFilter::GreaterThanCurrentTimestamp => {
-                        gen_greater_than_current_timestamp_ts(&pg_type_pattern_handle_standart)
+                        gen_greater_than_current_timestamp_ts(&pg_type_pattern_handle_stdrt)
                     }
                     PgTypeFilter::DimOneGreaterThanCurrentTimestamp => {
                         gen_greater_than_current_timestamp_ts(&pg_type_pattern_handle_arr_dim1)
                     }
-                    PgTypeFilter::CurrentTime => {
-                        gen_current_time_ts(&pg_type_pattern_handle_standart)
-                    }
+                    PgTypeFilter::CurrentTime => gen_current_time_ts(&pg_type_pattern_handle_stdrt),
                     PgTypeFilter::DimOneCurrentTime => {
                         gen_current_time_ts(&pg_type_pattern_handle_arr_dim1)
                     }
                     PgTypeFilter::GreaterThanCurrentTime => {
-                        gen_greater_than_current_time_ts(&pg_type_pattern_handle_standart)
+                        gen_greater_than_current_time_ts(&pg_type_pattern_handle_stdrt)
                     }
                     PgTypeFilter::DimOneGreaterThanCurrentTime => {
                         gen_greater_than_current_time_ts(&pg_type_pattern_handle_arr_dim1)
@@ -1097,9 +1091,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     PgTypeFilter::DimOneLengthEqual => gen_length_filter_pattern_ts(&"="),
                     PgTypeFilter::DimOneLengthGreaterThan => gen_length_filter_pattern_ts(&">"),
                     PgTypeFilter::EqualToEncodedStringRepresentation => {
-                        gen_equal_to_encoded_string_representation_ts(
-                            &pg_type_pattern_handle_standart,
-                        )
+                        gen_equal_to_encoded_string_representation_ts(&pg_type_pattern_handle_stdrt)
                     }
                     PgTypeFilter::DimOneEqualToEncodedStringRepresentation => {
                         gen_equal_to_encoded_string_representation_ts(
@@ -1107,14 +1099,14 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         )
                     }
                     PgTypeFilter::FindRangesWithinGivenRange { .. } => {
-                        gen_find_ranges_within_given_range_ts(&pg_type_pattern_handle_standart)
+                        gen_find_ranges_within_given_range_ts(&pg_type_pattern_handle_stdrt)
                     }
                     PgTypeFilter::DimOneFindRangesWithinGivenRange { .. } => {
                         gen_find_ranges_within_given_range_ts(&pg_type_pattern_handle_arr_dim1)
                     }
                     PgTypeFilter::FindRangesThatFullyContainTheGivenRange { .. } => {
                         gen_find_ranges_that_fully_contain_the_given_range_ts(
-                            &pg_type_pattern_handle_standart,
+                            &pg_type_pattern_handle_stdrt,
                         )
                     }
                     PgTypeFilter::DimOneFindRangesThatFullyContainTheGivenRange { .. } => {
@@ -1123,56 +1115,54 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         )
                     }
                     PgTypeFilter::StrictlyToLeftOfRange { .. } => {
-                        gen_strictly_to_left_of_range_ts(&pg_type_pattern_handle_standart)
+                        gen_strictly_to_left_of_range_ts(&pg_type_pattern_handle_stdrt)
                     }
                     PgTypeFilter::DimOneStrictlyToLeftOfRange { .. } => {
                         gen_strictly_to_left_of_range_ts(&pg_type_pattern_handle_arr_dim1)
                     }
                     PgTypeFilter::StrictlyToRightOfRange { .. } => {
-                        gen_strictly_to_right_of_range_ts(&pg_type_pattern_handle_standart)
+                        gen_strictly_to_right_of_range_ts(&pg_type_pattern_handle_stdrt)
                     }
                     PgTypeFilter::DimOneStrictlyToRightOfRange { .. } => {
                         gen_strictly_to_right_of_range_ts(&pg_type_pattern_handle_arr_dim1)
                     }
                     PgTypeFilter::IncludedLowerBound { .. } => {
-                        gen_included_lower_bound_ts(&pg_type_pattern_handle_standart)
+                        gen_included_lower_bound_ts(&pg_type_pattern_handle_stdrt)
                     }
                     PgTypeFilter::DimOneIncludedLowerBound { .. } => {
                         gen_included_lower_bound_ts(&pg_type_pattern_handle_arr_dim1)
                     }
                     PgTypeFilter::ExcludedUpperBound { .. } => {
-                        gen_excluded_upper_bound_ts(&pg_type_pattern_handle_standart)
+                        gen_excluded_upper_bound_ts(&pg_type_pattern_handle_stdrt)
                     }
                     PgTypeFilter::DimOneExcludedUpperBound { .. } => {
                         gen_excluded_upper_bound_ts(&pg_type_pattern_handle_arr_dim1)
                     }
                     PgTypeFilter::GreaterThanIncludedLowerBound { .. } => {
-                        gen_greater_than_included_lower_bound_ts(&pg_type_pattern_handle_standart)
+                        gen_greater_than_included_lower_bound_ts(&pg_type_pattern_handle_stdrt)
                     }
                     PgTypeFilter::DimOneGreaterThanIncludedLowerBound { .. } => {
                         gen_greater_than_included_lower_bound_ts(&pg_type_pattern_handle_arr_dim1)
                     }
                     PgTypeFilter::GreaterThanExcludedUpperBound { .. } => {
-                        gen_greater_than_excluded_upper_bound_ts(&pg_type_pattern_handle_standart)
+                        gen_greater_than_excluded_upper_bound_ts(&pg_type_pattern_handle_stdrt)
                     }
                     PgTypeFilter::DimOneGreaterThanExcludedUpperBound { .. } => {
                         gen_greater_than_excluded_upper_bound_ts(&pg_type_pattern_handle_arr_dim1)
                     }
                     PgTypeFilter::OverlapWithRange { .. } => {
-                        gen_overlap_with_range_ts(&pg_type_pattern_handle_standart)
+                        gen_overlap_with_range_ts(&pg_type_pattern_handle_stdrt)
                     }
                     PgTypeFilter::DimOneOverlapWithRange { .. } => {
                         gen_overlap_with_range_ts(&pg_type_pattern_handle_arr_dim1)
                     }
                     PgTypeFilter::AdjacentWithRange { .. } => {
-                        gen_adjacent_with_range_ts(&pg_type_pattern_handle_standart)
+                        gen_adjacent_with_range_ts(&pg_type_pattern_handle_stdrt)
                     }
                     PgTypeFilter::DimOneAdjacentWithRange { .. } => {
                         gen_adjacent_with_range_ts(&pg_type_pattern_handle_arr_dim1)
                     }
-                    PgTypeFilter::RangeLength => {
-                        gen_range_length_ts(&pg_type_pattern_handle_standart)
-                    }
+                    PgTypeFilter::RangeLength => gen_range_length_ts(&pg_type_pattern_handle_stdrt),
                     PgTypeFilter::DimOneRangeLength => {
                         gen_range_length_ts(&pg_type_pattern_handle_arr_dim1)
                     }
@@ -1380,7 +1370,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     gen_maybe_dims_default_init_value_default_ts(&maybe_dims_default_init_ts),
                     {
                         let ts: &dyn ToTokens = match pg_type_pattern_handle {
-                            PgTypePatternHandle::Standart => &quote!{
+                            PgTypePatternHandle::Stdrt => &quote!{
                                 let value = match self.value.query_part(
                                     incr,
                                     column,
@@ -1413,7 +1403,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     is_query_bind_mutable_true,
                     {
                         let ts: &dyn ToTokens = match pg_type_pattern_handle {
-                            PgTypePatternHandle::Standart => &quote!{
+                            PgTypePatternHandle::Stdrt => &quote!{
                                 match self.value.query_bind(query) {
                                     Ok(v) => {
                                         query = v;
@@ -1493,7 +1483,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     pg_type_kind, maybe_additional_params_ts,
                     maybe_dims_query_bind_ts
                 ) = DimNbr::try_from(pg_type_pattern_handle).map_or_else(
-                    |()| (Ts2::new(), Ts2::new(), Ts2::new(), PgTypeKind::Standart, Ts2::new(), Ts2::new()),
+                    |()| (Ts2::new(), Ts2::new(), Ts2::new(), PgTypeKind::Stdrt, Ts2::new(), Ts2::new()),
                     |dim_nbr| (
                         gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts(&dim_nbr),
                         dims_default_init_comma_ts.clone(),
@@ -1527,7 +1517,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         let format_ts = dq_ts(&format!(
                             "{{}}(trim(both '\\\"' from ({{}}{})::text) {{}} ${{}})",
                             match &pg_type_kind {
-                                PgTypeKind::Standart => "",
+                                PgTypeKind::Stdrt => "",
                                 PgTypeKind::ArrDim => "{}->>${}",
                             }
                         ));
@@ -1737,7 +1727,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 is_query_bind_mutable,
                 query_bind_ts,
             ) = match &filter {
-                PgJsonTypeFilter::Equal { .. } => gen_equal_ts(&pg_type_pattern_handle_standart),
+                PgJsonTypeFilter::Equal { .. } => gen_equal_ts(&pg_type_pattern_handle_stdrt),
                 PgJsonTypeFilter::DimOneEqual { .. } => {
                     gen_equal_ts(&pg_type_pattern_handle_arr_dim1)
                 }
@@ -1751,7 +1741,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     gen_equal_ts(&pg_type_pattern_handle_arr_dim4)
                 }
                 PgJsonTypeFilter::AllElsEqual { .. } => {
-                    gen_all_els_equal_ts(&pg_type_pattern_handle_standart)
+                    gen_all_els_equal_ts(&pg_type_pattern_handle_stdrt)
                 }
                 PgJsonTypeFilter::DimOneAllElsEqual { .. } => {
                     gen_all_els_equal_ts(&pg_type_pattern_handle_arr_dim1)
@@ -1765,9 +1755,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 PgJsonTypeFilter::DimFourAllElsEqual { .. } => {
                     gen_all_els_equal_ts(&pg_type_pattern_handle_arr_dim4)
                 }
-                PgJsonTypeFilter::LengthEqual => {
-                    gen_length_equal_ts(&pg_type_pattern_handle_standart)
-                }
+                PgJsonTypeFilter::LengthEqual => gen_length_equal_ts(&pg_type_pattern_handle_stdrt),
                 PgJsonTypeFilter::DimOneLengthEqual => {
                     gen_length_equal_ts(&pg_type_pattern_handle_arr_dim1)
                 }
@@ -1781,7 +1769,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     gen_length_equal_ts(&pg_type_pattern_handle_arr_dim4)
                 }
                 PgJsonTypeFilter::LengthGreaterThan => {
-                    gen_length_greater_than_ts(&pg_type_pattern_handle_standart)
+                    gen_length_greater_than_ts(&pg_type_pattern_handle_stdrt)
                 }
                 PgJsonTypeFilter::DimOneLengthGreaterThan => {
                     gen_length_greater_than_ts(&pg_type_pattern_handle_arr_dim1)
@@ -1796,7 +1784,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     gen_length_greater_than_ts(&pg_type_pattern_handle_arr_dim4)
                 }
                 PgJsonTypeFilter::GreaterThan { .. } => {
-                    gen_greater_than_ts(&pg_type_pattern_handle_standart)
+                    gen_greater_than_ts(&pg_type_pattern_handle_stdrt)
                 }
                 PgJsonTypeFilter::DimOneGreaterThan { .. } => {
                     gen_greater_than_ts(&pg_type_pattern_handle_arr_dim1)
@@ -1811,7 +1799,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     gen_greater_than_ts(&pg_type_pattern_handle_arr_dim4)
                 }
                 PgJsonTypeFilter::ContainsElGreaterThan { .. } => {
-                    gen_contains_el_greater_than_ts(&pg_type_pattern_handle_standart)
+                    gen_contains_el_greater_than_ts(&pg_type_pattern_handle_stdrt)
                 }
                 PgJsonTypeFilter::DimOneContainsElGreaterThan { .. } => {
                     gen_contains_el_greater_than_ts(&pg_type_pattern_handle_arr_dim1)
@@ -1826,7 +1814,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     gen_contains_el_greater_than_ts(&pg_type_pattern_handle_arr_dim4)
                 }
                 PgJsonTypeFilter::AllElsGreaterThan { .. } => {
-                    gen_all_els_greater_than_ts(&pg_type_pattern_handle_standart)
+                    gen_all_els_greater_than_ts(&pg_type_pattern_handle_stdrt)
                 }
                 PgJsonTypeFilter::DimOneAllElsGreaterThan { .. } => {
                     gen_all_els_greater_than_ts(&pg_type_pattern_handle_arr_dim1)
@@ -1840,9 +1828,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 PgJsonTypeFilter::DimFourAllElsGreaterThan { .. } => {
                     gen_all_els_greater_than_ts(&pg_type_pattern_handle_arr_dim4)
                 }
-                PgJsonTypeFilter::Between { .. } => {
-                    gen_between_ts(&pg_type_pattern_handle_standart)
-                }
+                PgJsonTypeFilter::Between { .. } => gen_between_ts(&pg_type_pattern_handle_stdrt),
                 PgJsonTypeFilter::DimOneBetween { .. } => {
                     gen_between_ts(&pg_type_pattern_handle_arr_dim1)
                 }
@@ -1855,18 +1841,18 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 PgJsonTypeFilter::DimFourBetween { .. } => {
                     gen_between_ts(&pg_type_pattern_handle_arr_dim4)
                 }
-                PgJsonTypeFilter::In { .. } => gen_in_ts(&pg_type_pattern_handle_standart),
+                PgJsonTypeFilter::In { .. } => gen_in_ts(&pg_type_pattern_handle_stdrt),
                 PgJsonTypeFilter::DimOneIn { .. } => gen_in_ts(&pg_type_pattern_handle_arr_dim1),
                 PgJsonTypeFilter::DimTwoIn { .. } => gen_in_ts(&pg_type_pattern_handle_arr_dim2),
                 PgJsonTypeFilter::DimThreeIn { .. } => gen_in_ts(&pg_type_pattern_handle_arr_dim3),
                 PgJsonTypeFilter::DimFourIn { .. } => gen_in_ts(&pg_type_pattern_handle_arr_dim4),
-                PgJsonTypeFilter::Regex => gen_regex_ts(&pg_type_pattern_handle_standart),
+                PgJsonTypeFilter::Regex => gen_regex_ts(&pg_type_pattern_handle_stdrt),
                 PgJsonTypeFilter::DimOneRegex => gen_regex_ts(&pg_type_pattern_handle_arr_dim1),
                 PgJsonTypeFilter::DimTwoRegex => gen_regex_ts(&pg_type_pattern_handle_arr_dim2),
                 PgJsonTypeFilter::DimThreeRegex => gen_regex_ts(&pg_type_pattern_handle_arr_dim3),
                 PgJsonTypeFilter::DimFourRegex => gen_regex_ts(&pg_type_pattern_handle_arr_dim4),
                 PgJsonTypeFilter::ContainsElRegex => {
-                    gen_contains_el_regex_ts(&pg_type_pattern_handle_standart)
+                    gen_contains_el_regex_ts(&pg_type_pattern_handle_stdrt)
                 }
                 PgJsonTypeFilter::DimOneContainsElRegex => {
                     gen_contains_el_regex_ts(&pg_type_pattern_handle_arr_dim1)
@@ -1881,7 +1867,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     gen_contains_el_regex_ts(&pg_type_pattern_handle_arr_dim4)
                 }
                 PgJsonTypeFilter::AllElsRegex => {
-                    gen_all_els_regex_ts(&pg_type_pattern_handle_standart)
+                    gen_all_els_regex_ts(&pg_type_pattern_handle_stdrt)
                 }
                 PgJsonTypeFilter::DimOneAllElsRegex => {
                     gen_all_els_regex_ts(&pg_type_pattern_handle_arr_dim1)
@@ -1896,7 +1882,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     gen_all_els_regex_ts(&pg_type_pattern_handle_arr_dim4)
                 }
                 PgJsonTypeFilter::ContainsAllElsOfArr { .. } => {
-                    gen_contains_all_els_of_arr_ts(&pg_type_pattern_handle_standart)
+                    gen_contains_all_els_of_arr_ts(&pg_type_pattern_handle_stdrt)
                 }
                 PgJsonTypeFilter::DimOneContainsAllElsOfArr { .. } => {
                     gen_contains_all_els_of_arr_ts(&pg_type_pattern_handle_arr_dim1)
@@ -1912,7 +1898,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 }
                 // PgJsonTypeFilter::ContainedInArr => todo!(),
                 PgJsonTypeFilter::OverlapsWithArr { .. } => {
-                    gen_overlaps_with_arr_ts(&pg_type_pattern_handle_standart)
+                    gen_overlaps_with_arr_ts(&pg_type_pattern_handle_stdrt)
                 }
                 PgJsonTypeFilter::DimOneOverlapsWithArr { .. } => {
                     gen_overlaps_with_arr_ts(&pg_type_pattern_handle_arr_dim1)

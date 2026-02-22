@@ -14,12 +14,12 @@ gen_pg_json_types::gen_pg_json_types!({
     //         {
     //             "pg_json_type": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": "Standart"
+    //             "pg_json_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": "Standart"
+    //             "pg_json_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNbr",
@@ -700,7 +700,7 @@ gen_pg_json_types::gen_pg_json_types!({
     //         {
     //             "pg_json_type": "UuidUuidAsJsonbString",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": "Standart"
+    //             "pg_json_type_pattern": "Stdrt"
     //         }
     //   ]
     // }
@@ -710,12 +710,12 @@ gen_pg_json_types::gen_pg_json_types!({
     //         {
     //             "pg_json_type": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": "Standart"
+    //             "pg_json_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": "Standart"
+    //             "pg_json_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_json_type": "I8AsJsonbNbr",
@@ -1396,12 +1396,12 @@ gen_pg_json_types::gen_pg_json_types!({
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "I16AsJsonbNbr",
@@ -2082,12 +2082,12 @@ gen_pg_json_types::gen_pg_json_types!({
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "I32AsJsonbNbr",
@@ -2768,12 +2768,12 @@ gen_pg_json_types::gen_pg_json_types!({
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "I64AsJsonbNbr",
@@ -3454,12 +3454,12 @@ gen_pg_json_types::gen_pg_json_types!({
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "U8AsJsonbNbr",
@@ -4140,12 +4140,12 @@ gen_pg_json_types::gen_pg_json_types!({
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "U16AsJsonbNbr",
@@ -4826,12 +4826,12 @@ gen_pg_json_types::gen_pg_json_types!({
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "U32AsJsonbNbr",
@@ -5512,12 +5512,12 @@ gen_pg_json_types::gen_pg_json_types!({
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "U64AsJsonbNbr",
@@ -6198,12 +6198,12 @@ gen_pg_json_types::gen_pg_json_types!({
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "F32AsJsonbNbr",
@@ -6884,12 +6884,12 @@ gen_pg_json_types::gen_pg_json_types!({
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "F64AsJsonbNbr",
@@ -7570,12 +7570,12 @@ gen_pg_json_types::gen_pg_json_types!({
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "BoolAsJsonbBoolean",
@@ -8256,12 +8256,12 @@ gen_pg_json_types::gen_pg_json_types!({
     //         // {
     //         //     "pg_json_type": "StringAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "StringAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "StringAsJsonbString",
@@ -8942,13 +8942,13 @@ gen_pg_json_types::gen_pg_json_types!({
     //         {
     //             "pg_json_type": "UuidUuidAsJsonbString",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": "Standart"
+    //             "pg_json_type_pattern": "Stdrt"
     //         }
     //         // ,
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Standart"
+    //         //     "pg_json_type_pattern": "Stdrt"
     //         // },
     //         // {
     //         //     "pg_json_type": "UuidUuidAsJsonbString",

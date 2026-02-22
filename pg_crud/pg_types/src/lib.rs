@@ -10,12 +10,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "I16AsInt2",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "I16AsInt2",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "I16AsInt2",
@@ -56,12 +56,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "I32AsInt4",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "I32AsInt4",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "I32AsInt4",
@@ -102,12 +102,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "I64AsInt8",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "I64AsInt8",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "I64AsInt8",
@@ -148,12 +148,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "F32AsFloat4",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "F32AsFloat4",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "F32AsFloat4",
@@ -194,12 +194,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "F64AsFloat8",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "F64AsFloat8",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "F64AsFloat8",
@@ -240,27 +240,27 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "I16AsSmallSerialInitByPg",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "I32AsSerialInitByPg",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "I64AsBigSerialInitByPg",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxPgTypesPgMoneyAsMoney",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxPgTypesPgMoneyAsMoney",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxPgTypesPgMoneyAsMoney",
@@ -301,12 +301,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "BoolAsBool",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "BoolAsBool",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "BoolAsBool",
@@ -347,12 +347,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "StringAsText",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "StringAsText",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "StringAsText",
@@ -393,12 +393,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "StdVecVecU8AsBytea",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "StdVecVecU8AsBytea",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "StdVecVecU8AsBytea",
@@ -439,12 +439,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "SqlxTypesChronoNaiveTimeAsTime",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxTypesChronoNaiveTimeAsTime",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxTypesChronoNaiveTimeAsTime",
@@ -485,12 +485,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "SqlxTypesTimeTimeAsTime",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxTypesTimeTimeAsTime",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxTypesTimeTimeAsTime",
@@ -531,12 +531,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "SqlxPgTypesPgIntervalAsInterval",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxPgTypesPgIntervalAsInterval",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxPgTypesPgIntervalAsInterval",
@@ -577,12 +577,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "SqlxTypesChronoNaiveDateAsDate",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxTypesChronoNaiveDateAsDate",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxTypesChronoNaiveDateAsDate",
@@ -623,12 +623,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "SqlxTypesChronoNaiveDateTimeAsTimestamp",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxTypesChronoNaiveDateTimeAsTimestamp",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxTypesChronoNaiveDateTimeAsTimestamp",
@@ -669,12 +669,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz",
@@ -715,17 +715,17 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "SqlxTypesUuidUuidAsUuidV4InitByPg",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxTypesUuidUuidAsUuidInitByClient",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxTypesUuidUuidAsUuidInitByClient",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxTypesUuidUuidAsUuidInitByClient",
@@ -766,12 +766,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "SqlxTypesIpnetworkIpNetworkAsInet",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxTypesIpnetworkIpNetworkAsInet",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxTypesIpnetworkIpNetworkAsInet",
@@ -812,12 +812,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "SqlxTypesMacAddressMacAddressAsMacAddr",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxTypesMacAddressMacAddressAsMacAddr",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxTypesMacAddressMacAddressAsMacAddr",
@@ -858,12 +858,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "SqlxPgTypesPgRangeI32AsInt4Range",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxPgTypesPgRangeI32AsInt4Range",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxPgTypesPgRangeI32AsInt4Range",
@@ -904,12 +904,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "SqlxPgTypesPgRangeI64AsInt8Range",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxPgTypesPgRangeI64AsInt8Range",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxPgTypesPgRangeI64AsInt8Range",
@@ -950,12 +950,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange",
@@ -996,12 +996,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange",
@@ -1042,12 +1042,12 @@ gen_pg_types::gen_pg_types!({
     //         {
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange",
     //             "is_nullable": "False",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange",
     //             "is_nullable": "True",
-    //             "pg_type_pattern": "Standart"
+    //             "pg_type_pattern": "Stdrt"
     //         },
     //         {
     //             "pg_type": "SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange",
