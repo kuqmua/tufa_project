@@ -421,23 +421,23 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let mut opt_primary_key_field: Option<SynFieldWrapper> = None;
                 let mut fields = Vec::new();
                 let mut fields_without_primary_key = Vec::new();
-                for el_2e7b44a3 in &fields_named.named {
-                    let field_ident = el_2e7b44a3.ident.clone().expect("915ef2ce");
+                for el in &fields_named.named {
+                    let field_ident = el.ident.clone().expect("915ef2ce");
                     let field_ident_len = field_ident.to_string().len();
                     let max_pg_column_length = 63;
                     //todo write runtime check
                     assert!(field_ident_len <= max_pg_column_length, "1266ae5a");
                     fields.push(SynFieldWrapper {
-                        field_vis: el_2e7b44a3.vis.clone(),
+                        field_vis: el.vis.clone(),
                         field_ident: field_ident.clone(),
-                        field_type: el_2e7b44a3.ty.clone(),
+                        field_type: el.ty.clone(),
                     });
                     let mut is_primary_key = false;
                     {
-                        for el_f4d3785c in &el_2e7b44a3.attrs {
-                            if el_f4d3785c.path().segments.len() == 1 {
+                        for el0 in &el.attrs {
+                            if el0.path().segments.len() == 1 {
                                 let first_segment_ident =
-                                    &el_f4d3785c.path().segments.first().expect("a9c3b38b").ident;
+                                    &el0.path().segments.first().expect("a9c3b38b").ident;
                                 let gen_pg_table_primary_key_sc_str =
                                     GenPgTablePrimaryKeySc.to_string();
                                 if first_segment_ident == &gen_pg_table_primary_key_sc_str {
@@ -445,9 +445,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         panic!("1a75cea1");
                                     } else {
                                         opt_primary_key_field = Some(SynFieldWrapper {
-                                            field_vis: el_2e7b44a3.vis.clone(),
+                                            field_vis: el.vis.clone(),
                                             field_ident: field_ident.clone(),
-                                            field_type: el_2e7b44a3.ty.clone(),
+                                            field_type: el.ty.clone(),
                                         });
                                         is_primary_key = true;
                                     }
@@ -457,9 +457,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                     if !is_primary_key {
                         fields_without_primary_key.push(SynFieldWrapper {
-                            field_vis: el_2e7b44a3.vis.clone(),
+                            field_vis: el.vis.clone(),
                             field_ident: field_ident.clone(),
-                            field_type: el_2e7b44a3.ty.clone(),
+                            field_type: el.ty.clone(),
                         });
                     }
                 }
@@ -659,10 +659,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         true,
                     ),
                 )
-                .chain(fields_without_primary_key.iter().map(|el_e48e222c| {
+                .chain(fields_without_primary_key.iter().map(|el| {
                     gen_field_type_as_pg_crud_create_table_column_query_part_create_table_query_part_ts(
-                        &el_e48e222c.field_type,
-                        &el_e48e222c.field_ident,
+                        &el.field_type,
+                        &el.field_ident,
                         false,
                     )
                 })).collect::<Vec<Ts2>>()
@@ -725,8 +725,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             quote! {
                 fn #GenSelectQueryPartSc(#select_borrow_pg_crud_not_empty_unique_vec_ident_select_ts) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                     let mut acc_37c883c3 = #StringTs::default();
-                    for el_78d2ec39 in #SelectSc.to_vec() {
-                        acc_37c883c3.push_str(&match el_78d2ec39 {
+                    for el in #SelectSc.to_vec() {
+                        acc_37c883c3.push_str(&match el {
                             #vrts_ts
                         });
                         acc_37c883c3.push(',');
@@ -1178,7 +1178,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &ident_where_many_ucc,
                 &fields
                     .iter()
-                    .map(|el_3e09c5fb| (&el_3e09c5fb.field_ident, &el_3e09c5fb.field_type))
+                    .map(|el| (&el.field_ident, &el.field_type))
                     .collect::<Vec<(&Ident, &Type)>>(),
                 fields_len,
                 &|_: &Ident, syn_type: &Type| {
@@ -1192,15 +1192,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             gen_impl_pg_crud_default_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
                 &ident_where_many_ucc,
                 &{
-                    let fields_ts =
-                        gen_fields_named_without_comma_ts(&|el_0fd667f6: &SynFieldWrapper| {
-                            let field_ident = &el_0fd667f6.field_ident;
-                            quote! {
-                                #field_ident: Some(
-                                    #PgCrudDefaultOptSomeVecOneElCall
-                                ),
-                            }
-                        });
+                    let fields_ts = gen_fields_named_without_comma_ts(&|el: &SynFieldWrapper| {
+                        let field_ident = &el.field_ident;
+                        quote! {
+                            #field_ident: Some(
+                                #PgCrudDefaultOptSomeVecOneElCall
+                            ),
+                        }
+                    });
                     quote! {Self{#fields_ts}}
                 },
             );
@@ -1452,9 +1451,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         );
         let impl_pg_crud_all_vrts_default_opt_some_vec_one_el_for_ident_select_ts =
             gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_ts(&ident_select_ucc, &{
-                let els_ts = gen_fields_named_with_comma_ts(&|el_5282570d: &SynFieldWrapper| {
-                    let field_ident_ucc_ts =
-                        ToTokensToUccTs::case_or_panic(&el_5282570d.field_ident);
+                let els_ts = gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| {
+                    let field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el.field_ident);
                     quote! {
                         Self::#field_ident_ucc_ts(#PgCrudDefaultOptSomeVecOneElCall)
                     }
@@ -1554,11 +1552,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 let assignment_vrts_without_primary_key_ts = fields_without_primary_key
                     .iter()
-                    .map(|el_3ce946f9| {
-                        let field_ident = &el_3ce946f9.field_ident;
-                        let field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_3ce946f9.field_ident);
-                        let field_ident_string_dq_ts = dq_ts(&el_3ce946f9.field_ident);
-                        let el_syn_field_ty_as_pg_type_read_ts = gen_as_pg_type_read_ts(&el_3ce946f9.field_type);
+                    .map(|el| {
+                        let field_ident = &el.field_ident;
+                        let field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el.field_ident);
+                        let field_ident_string_dq_ts = dq_ts(&el.field_ident);
+                        let el_syn_field_ty_as_pg_type_read_ts = gen_as_pg_type_read_ts(&el.field_type);
                         quote! {
                             #ident_select_ucc::#field_ident_ucc_ts(_) => match sqlx::Row::try_get::<
                                 #el_syn_field_ty_as_pg_type_read_ts,
@@ -1579,7 +1577,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     .collect::<Vec<Ts2>>();
                 let fields_init_ts = &fields
                     .iter()
-                    .map(|el_2bfe6afc| &el_2bfe6afc.field_ident)
+                    .map(|el| &el.field_ident)
                     .collect::<Vec<&Ident>>();
                 quote! {
                     fn #try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_sc(
@@ -1833,7 +1831,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &ident_update_ucc,
             &fields
                 .iter()
-                .map(|el_2bfe6afc| (&el_2bfe6afc.field_ident, &el_2bfe6afc.field_type))
+                .map(|el| (&el.field_ident, &el.field_type))
                 .collect::<Vec<(&Ident, &Type)>>(),
             fields_len,
             &|syn_ident: &Ident, syn_type: &Type| {
@@ -2224,8 +2222,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             serde_json_syn_vrt_wrapper.get_syn_vrt(),
             header_content_type_application_json_not_found_syn_vrt_wrapper.get_syn_vrt(),
         ];
-        for el_af152d67 in &common_additional_er_vrts {
-            acc.push(el_af152d67);
+        for el in &common_additional_er_vrts {
+            acc.push(el);
         }
         acc
     };
@@ -2410,9 +2408,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 Ts2::new()
             } else {
                 let mut location_attr: Option<LocationFieldAttr> = None;
-                for el_1c83e302 in &field.attrs {
-                    if el_1c83e302.path().segments.len() == 1 {
-                        let segment = el_1c83e302.path().segments.first().expect("5bd7ed8d");
+                for el in &field.attrs {
+                    if el.path().segments.len() == 1 {
+                        let segment = el.path().segments.first().expect("5bd7ed8d");
                         if let Ok(v) =
                             { <LocationFieldAttr as FromStr>::from_str(&segment.ident.to_string()) }
                         {
@@ -2467,9 +2465,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let ident_operation_er_ucc = gen_ident_operation_er_ucc(operation);
             let impl_ident_operation_res_vrts_ts = {
                 let from_handle_ts = gen_from_handle_ts(&ident_operation_er_ucc, &{
-                    let vrts_ts = type_vrts_from_req_res_syn_vrts.iter().map(|el_d80f0707| {
-                        let vrt_ident = &el_d80f0707.ident;
-                        let Fields::Named(fields_named) = &el_d80f0707.fields else {
+                    let vrts_ts = type_vrts_from_req_res_syn_vrts.iter().map(|el| {
+                        let vrt_ident = &el.ident;
+                        let Fields::Named(fields_named) = &el.fields else {
                             panic!("10764d2b");
                         };
                         let fields_mapped_into_ts = {
@@ -2591,19 +2589,18 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #impl_pg_crud_default_opt_some_vec_one_el_for_operation_payload_ts
             }
         };
-    let gen_type_vrts_from_req_res_syn_vrts =
-        |syn_vrts: &Vec<&Variant>, operation: &Operation| -> Vec<Variant> {
-            let mut type_vrts_from_req_res_syn_vrts = Vec::new();
-            for el_21f2d46c in syn_vrts {
-                type_vrts_from_req_res_syn_vrts.push((*el_21f2d46c).clone());
-            }
-            for el_60533068 in
-                gen_additional_er_vrts(&di, operation.gen_pg_table_attr_additional_er_vrts())
-            {
-                type_vrts_from_req_res_syn_vrts.push(el_60533068.clone());
-            }
-            type_vrts_from_req_res_syn_vrts
-        };
+    let gen_type_vrts_from_req_res_syn_vrts = |syn_vrts: &Vec<&Variant>,
+                                               operation: &Operation|
+     -> Vec<Variant> {
+        let mut type_vrts_from_req_res_syn_vrts = Vec::new();
+        for el in syn_vrts {
+            type_vrts_from_req_res_syn_vrts.push((*el).clone());
+        }
+        for el in gen_additional_er_vrts(&di, operation.gen_pg_table_attr_additional_er_vrts()) {
+            type_vrts_from_req_res_syn_vrts.push(el.clone());
+        }
+        type_vrts_from_req_res_syn_vrts
+    };
     let gen_ident_try_operation_er_ts = |operation: &Operation, syn_vrts: &Vec<Variant>| -> Ts2 {
         let ts_930e1a93 = StructOrEnumDeriveTsStreamBuilder::new()
             .make_pub()
@@ -2914,9 +2911,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 gen_ident_operation_er_with_serde_ucc(operation);
             let operation_er_with_serde_sc = &operation.operation_er_with_serde_sc();
             let try_operation_logic_er_with_serde_ts = {
-                let try_operation_logic_res_vrts_to_try_operation_logic_er_with_serde = type_vrts_from_req_res_syn_vrts.iter().map(|el_f83d5272| {
-                let vrt_ident = &el_f83d5272.ident;
-                let fields_idents_ts = if let Fields::Named(fields_named) = &el_f83d5272.fields {
+                let try_operation_logic_res_vrts_to_try_operation_logic_er_with_serde = type_vrts_from_req_res_syn_vrts.iter().map(|el| {
+                let vrt_ident = &el.ident;
+                let fields_idents_ts = if let Fields::Named(fields_named) = &el.fields {
                     let fields_idents = fields_named.named.iter().map(|field| &field.ident);
                     quote! {#(#fields_idents),*}
                 } else {
@@ -4991,18 +4988,18 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let mut table_field_idents_init_vec_ts = Vec::new();
         let mut table_test_name_field_idents_vec_ts = Vec::new();
         let mut fill_table_field_idents_vec_ts = |test_names: Vec<&str>| {
-            for el_8f39799f in test_names {
+            for el0 in test_names {
                 let gen_init_variable_name_ts = |field_ident: &Ident| {
-                    format!("table_{el_8f39799f}_{field_ident}")
+                    format!("table_{el0}_{field_ident}")
                         .parse::<Ts2>()
                         .expect("2003ad9f")
                 };
                 table_field_idents_init_vec_ts.push(
                     gen_fields_named_without_primary_key_without_comma_ts(
-                        &|el_51b56762: &SynFieldWrapper| {
-                            let field_ident = &el_51b56762.field_ident;
+                        &|el: &SynFieldWrapper| {
+                            let field_ident = &el.field_ident;
                             let init_variable_name_ts = gen_init_variable_name_ts(field_ident);
-                            let format_ts = dq_ts(&format!("{el_8f39799f}_{field_ident}"));
+                            let format_ts = dq_ts(&format!("{el0}_{field_ident}"));
                             quote! {
                                 let #init_variable_name_ts = add_table_postfix(#format_ts);
                             }
@@ -5011,8 +5008,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 );
                 table_test_name_field_idents_vec_ts.push(
                     gen_fields_named_without_primary_key_without_comma_ts(
-                        &|el_785024b5: &SynFieldWrapper| {
-                            let field_ident = &el_785024b5.field_ident;
+                        &|el1: &SynFieldWrapper| {
+                            let field_ident = &el1.field_ident;
                             let init_variable_name_ts = gen_init_variable_name_ts(field_ident);
                             quote! {&#init_variable_name_ts,}
                         },
@@ -5078,9 +5075,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     SelfReadOnlyIdsToTwoDimalVecReadInnerAccSc::from_tokens(&field_ident);
                 let ident_create_defaults_for_column_read_only_ids_to_two_dimal_vec_read_inner_ts =
                     gen_fields_named_without_primary_key_without_comma_ts(
-                        &|el_0dfa76d6: &SynFieldWrapper| {
-                            let field_ident_10070b70 = &el_0dfa76d6.field_ident;
-                            let field_type_b33f54a9 = &el_0dfa76d6.field_type;
+                        &|el0: &SynFieldWrapper| {
+                            let field_ident_10070b70 = &el0.field_ident;
+                            let field_type_b33f54a9 = &el0.field_type;
                             if field_ident == field_ident_10070b70 {
                                 quote! {
                                     if let Some(v_a5f7e6cd) = &common_read_only_ids_returned_from_create_one.#field_ident_10070b70 {
@@ -5755,47 +5752,43 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &|el: &SynFieldWrapper| {
                                 let field_ident = &el.field_ident;
                                 gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
-                                    &gen_fields_named_with_comma_ts(
-                                        &|el_ac437d52: &SynFieldWrapper| {
-                                            let field_ident_4fdece29 = &el_ac437d52.field_ident;
-                                            let field_type_5f626ae9 = &el_ac437d52.field_type;
-                                            if field_ident_4fdece29 == primary_key_field_ident {
-                                                some_primary_key_where_init_ts.clone()
-                                            } else if field_ident_4fdece29 == field_ident {
-                                                let method_ts = {
-                                                    let method_ts: &dyn ToTokens = match &equal_or_equal_using_fields {
+                                    &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
+                                        let field_ident_4fdece29 = &el0.field_ident;
+                                        let field_type_5f626ae9 = &el0.field_type;
+                                        if field_ident_4fdece29 == primary_key_field_ident {
+                                            some_primary_key_where_init_ts.clone()
+                                        } else if field_ident_4fdece29 == field_ident {
+                                            let method_ts = {
+                                                let method_ts: &dyn ToTokens = match &equal_or_equal_using_fields {
                                             EqualOrEqualUsingFields::Equal => &ReadOnlyIdsMergedWithCreateIntoWhereEqualSc,
                                             EqualOrEqualUsingFields::EqualUsingFields => &ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc
                                         };
+                                                quote! {
+                                                    <#field_type_5f626ae9 as pg_crud::PgTypeTestCases>::#method_ts(
+                                                        read_only_ids_returned_from_create_one.#field_ident_4fdece29.clone().expect("11c3740b"),
+                                                        ident_create.#field_ident_4fdece29.clone()
+                                                    )
+                                                }
+                                            };
+                                            match &equal_or_equal_using_fields {
+                                                EqualOrEqualUsingFields::Equal => {
+                                                    gen_some_pg_type_where_try_new_and_ts(&quote! {
+                                                        vec![#method_ts]
+                                                    })
+                                                }
+                                                EqualOrEqualUsingFields::EqualUsingFields => {
                                                     quote! {
-                                                        <#field_type_5f626ae9 as pg_crud::PgTypeTestCases>::#method_ts(
-                                                            read_only_ids_returned_from_create_one.#field_ident_4fdece29.clone().expect("11c3740b"),
-                                                            ident_create.#field_ident_4fdece29.clone()
-                                                        )
-                                                    }
-                                                };
-                                                match &equal_or_equal_using_fields {
-                                                    EqualOrEqualUsingFields::Equal => {
-                                                        gen_some_pg_type_where_try_new_and_ts(
-                                                            &quote! {
-                                                                vec![#method_ts]
-                                                            },
-                                                        )
-                                                    }
-                                                    EqualOrEqualUsingFields::EqualUsingFields => {
-                                                        quote! {
-                                                            Some(#import_path::PgTypeWhere::new(
-                                                                #import_path::LogicalOperator::And,
-                                                                #method_ts
-                                                            ))
-                                                        }
+                                                        Some(#import_path::PgTypeWhere::new(
+                                                            #import_path::LogicalOperator::And,
+                                                            #method_ts
+                                                        ))
                                                     }
                                                 }
-                                            } else {
-                                                none_ts.clone()
                                             }
-                                        },
-                                    ),
+                                        } else {
+                                            none_ts.clone()
+                                        }
+                                    }),
                                 )
                             },
                         )
@@ -5808,8 +5801,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts = gen_read_test_ts(table_read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_name, &gen_opt_vec_create_call_unwrap_or_vec_ts, &gen_ident_create_content_el_ts, &|el: &SynFieldWrapper| {
                 let field_ident = &el.field_ident;
                 let field_type = &el.field_type;
-                let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(&gen_fields_named_with_comma_ts(&|el_97d8a089: &SynFieldWrapper| {
-                    let field_ident_4557eb3f = &el_97d8a089.field_ident;
+                let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(&gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
+                    let field_ident_4557eb3f = &el0.field_ident;
                     if field_ident_4557eb3f == primary_key_field_ident {
                         some_primary_key_where_init_ts.clone()
                     } else if field_ident_4557eb3f == field_ident {
@@ -5837,8 +5830,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let field_ident = &el.field_ident;
                     let field_type = &el.field_type;
                     let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
-                        &gen_fields_named_with_comma_ts(&|el_483e5312: &SynFieldWrapper| {
-                            let field_ident_65c48d59 = &el_483e5312.field_ident;
+                        &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
+                            let field_ident_65c48d59 = &el0.field_ident;
                             if primary_key_field_ident == field_ident_65c48d59 {
                                 some_primary_key_where_init_ts.clone()
                             } else if field_ident_65c48d59 == field_ident {
@@ -5871,8 +5864,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &|el: &SynFieldWrapper| {
                     let field_ident = &el.field_ident;
                     let field_type = &el.field_type;
-                    let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(&gen_fields_named_with_comma_ts(&|el_a8bfc0c0: &SynFieldWrapper| {
-                        let field_ident_79ff8c6e = &el_a8bfc0c0.field_ident;
+                    let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(&gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
+                        let field_ident_79ff8c6e = &el0.field_ident;
                         if field_ident_79ff8c6e == primary_key_field_ident {
                             some_primary_key_where_init_ts.clone()
                         } else if field_ident_79ff8c6e == field_ident {
@@ -5905,8 +5898,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         gen_read_test_ts(test_name, &gen_opt_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_ts, &gen_ident_create_content_el_ts, &|el: &SynFieldWrapper| {
                         let field_ident = &el.field_ident;
                         let field_type = &el.field_type;
-                        let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(&gen_fields_named_with_comma_ts(&|el_a9b23eca: &SynFieldWrapper| {
-                            let field_ident_fa2292e0 = &el_a9b23eca.field_ident;
+                        let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(&gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
+                            let field_ident_fa2292e0 = &el0.field_ident;
                             if field_ident_fa2292e0 == primary_key_field_ident {
                                 some_primary_key_where_init_ts.clone()
                             } else if field_ident_fa2292e0 == field_ident {
@@ -5942,8 +5935,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let field_ident = &el.field_ident;
                     let field_type = &el.field_type;
                     let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
-                        &gen_fields_named_with_comma_ts(&|el_94f00070: &SynFieldWrapper| {
-                            let field_ident_bffc985c = &el_94f00070.field_ident;
+                        &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
+                            let field_ident_bffc985c = &el0.field_ident;
                             if field_ident_bffc985c == primary_key_field_ident {
                                 some_primary_key_where_init_ts.clone()
                             } else if field_ident_bffc985c == field_ident {
@@ -5972,8 +5965,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let field_ident = &el.field_ident;
                     let field_type = &el.field_type;
                     let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
-                        &gen_fields_named_with_comma_ts(&|el_c927ab80: &SynFieldWrapper| {
-                            let field_ident_9464d51b = &el_c927ab80.field_ident;
+                        &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
+                            let field_ident_9464d51b = &el0.field_ident;
                             if field_ident_9464d51b == primary_key_field_ident {
                                 some_primary_key_where_init_ts.clone()
                             } else if field_ident_9464d51b == field_ident {
@@ -6012,8 +6005,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let field_ident = &el.field_ident;
                         let field_type = &el.field_type;
                         let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
-                            &gen_fields_named_with_comma_ts(&|el_16b8a9cc: &SynFieldWrapper|{
-                                let field_ident_6b16d591 = &el_16b8a9cc.field_ident;
+                            &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper|{
+                                let field_ident_6b16d591 = &el0.field_ident;
                                 if field_ident_6b16d591 == primary_key_field_ident {
                                     some_primary_key_where_init_ts.clone()
                                 }
@@ -6107,16 +6100,190 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let update_many_tests_ts = {
             //todo add Test for trying to update empty vec
             let update_many_only_one_column_tests_ts =
-                gen_fields_named_without_primary_key_without_comma_ts(
-                    &|el_94a9ca95: &SynFieldWrapper| {
-                        let field_ident = &el_94a9ca95.field_ident;
-                        let field_type = &el_94a9ca95.field_type;
-                        let is_fields_without_primary_key_len_greater_than_one =
-                            fields_without_primary_key.len() > 1;
-                        let maybe_previous_read_ts =
-                            if is_fields_without_primary_key_len_greater_than_one {
-                                quote! {
-                                    let previous_read = itertools::Itertools::sorted_by(
+                gen_fields_named_without_primary_key_without_comma_ts(&|el: &SynFieldWrapper| {
+                    let field_ident = &el.field_ident;
+                    let field_type = &el.field_type;
+                    let is_fields_without_primary_key_len_greater_than_one =
+                        fields_without_primary_key.len() > 1;
+                    let maybe_previous_read_ts =
+                        if is_fields_without_primary_key_len_greater_than_one {
+                            quote! {
+                                let previous_read = itertools::Itertools::sorted_by(
+                                    gen_try_read_many_order_by_primary_key_with_big_pagination(
+                                        &url_cloned,
+                                        gen_ident_where_many_pripery_key_others_none(
+                                            Some(
+                                                gen_pg_type_where_try_new_primary_key(
+                                                    pg_crud::LogicalOperator::Or,
+                                                    vec![
+                                                        #primary_key_field_type_as_pg_type_where_ts::Equal(
+                                                            pg_crud::PgTypeWhereEqual {
+                                                                logical_operator: pg_crud::LogicalOperator::Or,
+                                                                value: #primary_key_field_type_table_type_ts::new(
+                                                                    #primary_key_field_type_as_pg_type_ts into_inner(
+                                                                        #primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3
+                                                                    )
+                                                                ),
+                                                            }
+                                                        )
+                                                    ]
+                                                )
+                                            )
+                                        ),
+                                        #select_default_all_with_max_page_size_cloned_clone_ts,
+                                        &table_update_many_cloned
+                                    )
+                                    .await
+                                    .expect("540ec737")
+                                    .into_iter(),
+                                    |first, second| {
+                                        match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
+                                            (Some(first_handle), Some(second_handle)) => first_handle.#ValueSc.cmp(&second_handle.#ValueSc),
+                                            _ => panic!("99ba9dc3"),
+                                        }
+                                    }
+                                );
+                            }
+                        } else {
+                            Ts2::new()
+                        };
+                    let field_ident_read_only_ids_to_two_dimal_vec_read_inner_acc_sc =
+                        SelfReadOnlyIdsToTwoDimalVecReadInnerAccSc::from_tokens(&field_ident);
+                    let ident_read_only_ids_upper_fields_init_without_primary_key_ts =
+                        gen_fields_named_without_primary_key_with_comma_ts(
+                            &|syn_field_wrapper: &SynFieldWrapper| {
+                                let field_ident_867b4800 = &syn_field_wrapper.field_ident;
+                                let field_type_42b4a146 = &syn_field_wrapper.field_type;
+                                if field_ident == field_ident_867b4800 {
+                                    quote! {#field_ident_867b4800: Some(<#field_type_42b4a146 as pg_crud::PgTypeTestCases>::update_to_read_only_ids(&update))}
+                                } else {
+                                    quote! {#field_ident_867b4800: None}
+                                }
+                            },
+                        );
+                    let ident_update_params_init_without_primary_key_ts =
+                        gen_fields_named_without_primary_key_with_comma_ts(
+                            &|syn_field_wrapper: &SynFieldWrapper| {
+                                let field_ident_f56e8e3f = &syn_field_wrapper.field_ident;
+                                if field_ident == field_ident_f56e8e3f {
+                                    let value_init_ts = gen_import_path_value_init_ts(&quote! {
+                                        #UpdateSc.clone()
+                                    });
+                                    quote! {Some(#value_init_ts)}
+                                } else {
+                                    none_ts.clone()
+                                }
+                            },
+                        );
+                    let ident_read_fields_init_without_primary_key_after_update_one_ts =
+                        gen_fields_named_without_primary_key_with_comma_ts(
+                            &|syn_field_wrapper: &SynFieldWrapper| {
+                                let field_ident_b9ec9008 = &syn_field_wrapper.field_ident;
+                                if field_ident == field_ident_b9ec9008 {
+                                    let value_init_ts = gen_import_path_value_init_ts(&{
+                                        let field_type_0490079a = &syn_field_wrapper.field_type;
+                                        quote! {
+                                            <#field_type_0490079a as pg_crud::PgTypeTestCases>::previous_read_merged_with_opt_update_into_read(
+                                                <#field_type_0490079a as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
+                                                    &read_only_ids_el_937c5af3.#field_ident_b9ec9008.clone().expect("96213542")
+                                                ).expect("bf0d6f55").#ValueSc,
+                                                Some(#UpdateSc.clone())
+                                            )
+                                        }
+                                    });
+                                    quote! {
+                                        #field_ident_b9ec9008: Some(#value_init_ts)
+                                    }
+                                } else {
+                                    quote! {
+                                        #field_ident_b9ec9008: el_a6bc6b2f.#field_ident_b9ec9008
+                                    }
+                                }
+                            },
+                        );
+                    let expected_read_many_ts =
+                        if is_fields_without_primary_key_len_greater_than_one {
+                            let value_init_ts = gen_import_path_value_init_ts(&primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3);
+                            quote! {
+                                previous_read.into_iter().map(|el_a6bc6b2f| #ident_read_ucc {
+                                    #primary_key_field_ident: Some(#value_init_ts),
+                                    #ident_read_fields_init_without_primary_key_after_update_one_ts
+                                }).collect::<Vec<#ident_read_ucc>>()
+                            }
+                        } else {
+                            let value_init_ts = gen_import_path_value_init_ts(&primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3);
+                            quote! {
+                                vec![
+                                    #ident_read_ucc {
+                                        #primary_key_field_ident: Some(#value_init_ts),
+                                        #ident_read_fields_init_without_primary_key_after_update_one_ts
+                                    }
+                                ]
+                            }
+                        };
+                    quote! {
+                        for (index_7f181188, read_only_ids_el_937c5af3) in gen_read_only_ids_els_8a1ef027(
+                            &url,
+                            &table_update_many,
+                            #select_default_all_with_max_page_size_clone_ts,
+                            #field_ident_read_only_ids_to_two_dimal_vec_read_inner_acc_sc.clone()
+                        ).await.into_iter().enumerate() {
+                            let table_update_many_cloned = table_update_many.clone();
+                            let url_cloned = url.clone();
+                            let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
+                            acc_9189f86e.push(futures::FutureExt::boxed(async move {
+                                #maybe_previous_read_ts
+                                let update = <
+                                    #field_type
+                                    as
+                                    pg_crud::PgTypeTestCases
+                                >::read_inner_into_update_with_new_or_try_new_unwraped({
+                                    let mut index_e0c50b3e: usize = 0;
+                                    let mut opt_test_case = None;
+                                    for el_76abae3a in <#field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimal_vec_read_inner(
+                                        &read_only_ids_el_937c5af3.#field_ident.clone().expect("af7d979d")
+                                    ) {
+                                        let mut should_break = false;
+                                        for el_72f5ad12 in el_76abae3a {
+                                            if index_e0c50b3e == index_7f181188 {
+                                                opt_test_case = Some(el_72f5ad12);
+                                                should_break = true;
+                                                break;
+                                            }
+                                            index_e0c50b3e = index_e0c50b3e.checked_add(1).expect("0968dda6");
+                                        }
+                                        if should_break {
+                                            break;
+                                        }
+                                    }
+                                    opt_test_case.expect("769983ba")
+                                });
+                                assert_eq!(
+                                    vec![
+                                        #ident_read_only_ids_ucc {
+                                            #primary_key_field_ident: read_only_ids_el_937c5af3.#primary_key_field_ident,
+                                            #ident_read_only_ids_upper_fields_init_without_primary_key_ts
+                                        }
+                                    ],
+                                    #ident::try_update_many_handle(
+                                        &url_cloned,
+                                        #ident_update_many_params_ucc {
+                                            payload: #ident_update_many_payload_ucc::try_new(vec![
+                                                #ident_update_ucc::try_new(
+                                                    #primary_key_field_type_as_pg_type_update_as_pg_type_primary_key_read_only_ids_into_update_ts,
+                                                    #ident_update_params_init_without_primary_key_ts
+                                                ).expect("42dc87b3")
+                                            ]).expect("69e1bd8a")
+                                        },
+                                        &table_update_many_cloned
+                                    ).await.expect("d2de0bd6"),
+                                    "34bfb3c7"
+                                );
+                                assert_eq!(
+                                    {
+                                        #expected_read_many_ts
+                                    },
+                                    itertools::Itertools::sorted_by(
                                         gen_try_read_many_order_by_primary_key_with_big_pagination(
                                             &url_cloned,
                                             gen_ident_where_many_pripery_key_others_none(
@@ -6124,11 +6291,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                     gen_pg_type_where_try_new_primary_key(
                                                         pg_crud::LogicalOperator::Or,
                                                         vec![
-                                                            #primary_key_field_type_as_pg_type_where_ts::Equal(
+                                                            #primary_key_field_type_where_ts::Equal(
                                                                 pg_crud::PgTypeWhereEqual {
                                                                     logical_operator: pg_crud::LogicalOperator::Or,
-                                                                    value: #primary_key_field_type_table_type_ts::new(
-                                                                        #primary_key_field_type_as_pg_type_ts into_inner(
+                                                                    #ValueSc: #primary_key_field_type_table_type_ts::new(
+                                                                        <#primary_key_field_type as pg_crud::PgType>::into_inner(
                                                                             #primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3
                                                                         )
                                                                     ),
@@ -6138,357 +6305,175 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                     )
                                                 )
                                             ),
-                                            #select_default_all_with_max_page_size_cloned_clone_ts,
+                                            select_default_all_with_max_page_size_cloned,
                                             &table_update_many_cloned
                                         )
                                         .await
-                                        .expect("540ec737")
+                                        .expect("25c561e2")
                                         .into_iter(),
-                                        |first, second| {
-                                            match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
-                                                (Some(first_handle), Some(second_handle)) => first_handle.#ValueSc.cmp(&second_handle.#ValueSc),
-                                                _ => panic!("99ba9dc3"),
-                                            }
+                                        |first, second| match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
+                                            (Some(first_handle), Some(second_handle)) => first_handle.#ValueSc.cmp(&second_handle.#ValueSc),
+                                            _ => panic!("3c827ad6"),
                                         }
-                                    );
-                                }
-                            } else {
-                                Ts2::new()
-                            };
-                        let field_ident_read_only_ids_to_two_dimal_vec_read_inner_acc_sc =
-                            SelfReadOnlyIdsToTwoDimalVecReadInnerAccSc::from_tokens(&field_ident);
-                        let ident_read_only_ids_upper_fields_init_without_primary_key_ts =
-                            gen_fields_named_without_primary_key_with_comma_ts(
-                                &|syn_field_wrapper: &SynFieldWrapper| {
-                                    let field_ident_867b4800 = &syn_field_wrapper.field_ident;
-                                    let field_type_42b4a146 = &syn_field_wrapper.field_type;
-                                    if field_ident == field_ident_867b4800 {
-                                        quote! {#field_ident_867b4800: Some(<#field_type_42b4a146 as pg_crud::PgTypeTestCases>::update_to_read_only_ids(&update))}
-                                    } else {
-                                        quote! {#field_ident_867b4800: None}
-                                    }
-                                },
-                            );
-                        let ident_update_params_init_without_primary_key_ts =
-                            gen_fields_named_without_primary_key_with_comma_ts(
-                                &|syn_field_wrapper: &SynFieldWrapper| {
-                                    let field_ident_f56e8e3f = &syn_field_wrapper.field_ident;
-                                    if field_ident == field_ident_f56e8e3f {
-                                        let value_init_ts =
-                                            gen_import_path_value_init_ts(&quote! {
-                                                #UpdateSc.clone()
-                                            });
-                                        quote! {Some(#value_init_ts)}
-                                    } else {
-                                        none_ts.clone()
-                                    }
-                                },
-                            );
-                        let ident_read_fields_init_without_primary_key_after_update_one_ts =
-                            gen_fields_named_without_primary_key_with_comma_ts(
-                                &|syn_field_wrapper: &SynFieldWrapper| {
-                                    let field_ident_b9ec9008 = &syn_field_wrapper.field_ident;
-                                    if field_ident == field_ident_b9ec9008 {
-                                        let value_init_ts = gen_import_path_value_init_ts(&{
-                                            let field_type_0490079a = &syn_field_wrapper.field_type;
-                                            quote! {
-                                                <#field_type_0490079a as pg_crud::PgTypeTestCases>::previous_read_merged_with_opt_update_into_read(
-                                                    <#field_type_0490079a as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
-                                                        &read_only_ids_el_937c5af3.#field_ident_b9ec9008.clone().expect("96213542")
-                                                    ).expect("bf0d6f55").#ValueSc,
-                                                    Some(#UpdateSc.clone())
-                                                )
-                                            }
-                                        });
-                                        quote! {
-                                            #field_ident_b9ec9008: Some(#value_init_ts)
-                                        }
-                                    } else {
-                                        quote! {
-                                            #field_ident_b9ec9008: el_a6bc6b2f.#field_ident_b9ec9008
-                                        }
-                                    }
-                                },
-                            );
-                        let expected_read_many_ts =
-                            if is_fields_without_primary_key_len_greater_than_one {
-                                let value_init_ts = gen_import_path_value_init_ts(&primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3);
-                                quote! {
-                                    previous_read.into_iter().map(|el_a6bc6b2f| #ident_read_ucc {
-                                        #primary_key_field_ident: Some(#value_init_ts),
-                                        #ident_read_fields_init_without_primary_key_after_update_one_ts
-                                    }).collect::<Vec<#ident_read_ucc>>()
-                                }
-                            } else {
-                                let value_init_ts = gen_import_path_value_init_ts(&primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3);
-                                quote! {
-                                    vec![
-                                        #ident_read_ucc {
-                                            #primary_key_field_ident: Some(#value_init_ts),
-                                            #ident_read_fields_init_without_primary_key_after_update_one_ts
-                                        }
-                                    ]
-                                }
-                            };
-                        quote! {
-                            for (index_7f181188, read_only_ids_el_937c5af3) in gen_read_only_ids_els_8a1ef027(
-                                &url,
-                                &table_update_many,
-                                #select_default_all_with_max_page_size_clone_ts,
-                                #field_ident_read_only_ids_to_two_dimal_vec_read_inner_acc_sc.clone()
-                            ).await.into_iter().enumerate() {
-                                let table_update_many_cloned = table_update_many.clone();
-                                let url_cloned = url.clone();
-                                let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
-                                acc_9189f86e.push(futures::FutureExt::boxed(async move {
-                                    #maybe_previous_read_ts
-                                    let update = <
-                                        #field_type
-                                        as
-                                        pg_crud::PgTypeTestCases
-                                    >::read_inner_into_update_with_new_or_try_new_unwraped({
-                                        let mut index_e0c50b3e: usize = 0;
-                                        let mut opt_test_case = None;
-                                        for el_76abae3a in <#field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimal_vec_read_inner(
-                                            &read_only_ids_el_937c5af3.#field_ident.clone().expect("af7d979d")
-                                        ) {
-                                            let mut should_break = false;
-                                            for el_72f5ad12 in el_76abae3a {
-                                                if index_e0c50b3e == index_7f181188 {
-                                                    opt_test_case = Some(el_72f5ad12);
-                                                    should_break = true;
-                                                    break;
-                                                }
-                                                index_e0c50b3e = index_e0c50b3e.checked_add(1).expect("0968dda6");
-                                            }
-                                            if should_break {
-                                                break;
-                                            }
-                                        }
-                                        opt_test_case.expect("769983ba")
-                                    });
-                                    assert_eq!(
-                                        vec![
-                                            #ident_read_only_ids_ucc {
-                                                #primary_key_field_ident: read_only_ids_el_937c5af3.#primary_key_field_ident,
-                                                #ident_read_only_ids_upper_fields_init_without_primary_key_ts
-                                            }
-                                        ],
-                                        #ident::try_update_many_handle(
-                                            &url_cloned,
-                                            #ident_update_many_params_ucc {
-                                                payload: #ident_update_many_payload_ucc::try_new(vec![
-                                                    #ident_update_ucc::try_new(
-                                                        #primary_key_field_type_as_pg_type_update_as_pg_type_primary_key_read_only_ids_into_update_ts,
-                                                        #ident_update_params_init_without_primary_key_ts
-                                                    ).expect("42dc87b3")
-                                                ]).expect("69e1bd8a")
-                                            },
-                                            &table_update_many_cloned
-                                        ).await.expect("d2de0bd6"),
-                                        "34bfb3c7"
-                                    );
-                                    assert_eq!(
-                                        {
-                                            #expected_read_many_ts
-                                        },
-                                        itertools::Itertools::sorted_by(
-                                            gen_try_read_many_order_by_primary_key_with_big_pagination(
-                                                &url_cloned,
-                                                gen_ident_where_many_pripery_key_others_none(
-                                                    Some(
-                                                        gen_pg_type_where_try_new_primary_key(
-                                                            pg_crud::LogicalOperator::Or,
-                                                            vec![
-                                                                #primary_key_field_type_where_ts::Equal(
-                                                                    pg_crud::PgTypeWhereEqual {
-                                                                        logical_operator: pg_crud::LogicalOperator::Or,
-                                                                        #ValueSc: #primary_key_field_type_table_type_ts::new(
-                                                                            <#primary_key_field_type as pg_crud::PgType>::into_inner(
-                                                                                #primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3
-                                                                            )
-                                                                        ),
-                                                                    }
-                                                                )
-                                                            ]
-                                                        )
-                                                    )
-                                                ),
-                                                select_default_all_with_max_page_size_cloned,
-                                                &table_update_many_cloned
-                                            )
-                                            .await
-                                            .expect("25c561e2")
-                                            .into_iter(),
-                                            |first, second| match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
-                                                (Some(first_handle), Some(second_handle)) => first_handle.#ValueSc.cmp(&second_handle.#ValueSc),
-                                                _ => panic!("3c827ad6"),
-                                            }
-                                        ).collect::<Vec<#ident_read_ucc>>(),
-                                        "ae2a2da5"
-                                    );
-                                }));
-                            }
+                                    ).collect::<Vec<#ident_read_ucc>>(),
+                                    "ae2a2da5"
+                                );
+                            }));
                         }
-                    },
-                );
+                    }
+                });
             quote! {#update_many_only_one_column_tests_ts}
         };
         let update_one_tests_ts = {
             let update_one_only_one_column_tests_ts =
-                gen_fields_named_without_primary_key_without_comma_ts(
-                    &|el_d82ff77f: &SynFieldWrapper| {
-                        let field_ident = &el_d82ff77f.field_ident;
-                        let field_type = &el_d82ff77f.field_type;
-                        let maybe_previous_read_ts = if fields_without_primary_key.len() > 1 {
-                            quote! {
-                                let previous_read = gen_ident_try_read_one_handle_primary_key(
-                                    &url_cloned,
-                                    #primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3,
-                                    #select_default_all_with_max_page_size_cloned_clone_ts,
-                                    &table_update_one_cloned
-                                )
-                                .await.expect("e6998b47");
-                            }
-                        } else {
-                            Ts2::new()
-                        };
-                        let field_ident_read_only_ids_to_two_dimal_vec_read_inner_acc_sc =
-                            SelfReadOnlyIdsToTwoDimalVecReadInnerAccSc::from_tokens(&field_ident);
-                        let ident_read_only_ids_upper_fields_init_without_primary_key_ts =
-                            gen_fields_named_without_primary_key_with_comma_ts(
-                                &|el: &SynFieldWrapper| {
-                                    let field_ident_6b82a8d0 = &el.field_ident;
-                                    let field_type_ad043276 = &el.field_type;
-                                    if field_ident == field_ident_6b82a8d0 {
-                                        quote! {#field_ident_6b82a8d0: Some(<#field_type_ad043276 as pg_crud::PgTypeTestCases>::update_to_read_only_ids(&update))}
-                                    } else {
-                                        quote! {#field_ident_6b82a8d0: None}
-                                    }
-                                },
-                            );
-                        let ident_update_params_init_without_primary_key_ts =
-                            gen_fields_named_without_primary_key_with_comma_ts(
-                                &|el: &SynFieldWrapper| {
-                                    let field_ident_6ea8afd1 = &el.field_ident;
-                                    if field_ident == field_ident_6ea8afd1 {
-                                        let value_init_ts = gen_import_path_value_init_ts(
-                                            &quote! {#UpdateSc.clone()},
-                                        );
-                                        quote! {Some(#value_init_ts)}
-                                    } else {
-                                        none_ts.clone()
-                                    }
-                                },
-                            );
-                        let ident_read_fields_init_without_primary_key_after_update_one_ts =
-                            gen_fields_named_without_primary_key_with_comma_ts(
-                                &|el: &SynFieldWrapper| {
-                                    let field_ident_8c7d4975 = &el.field_ident;
-                                    let field_type_09e184c3 = &el.field_type;
-                                    if field_ident == field_ident_8c7d4975 {
-                                        let value_init_ts = gen_import_path_value_init_ts(
-                                            &quote! {
-                                                <
-                                                    #field_type_09e184c3
-                                                    as
-                                                    pg_crud::PgTypeTestCases
-                                                >::previous_read_merged_with_opt_update_into_read(
-                                                    <
-                                                        #field_type_09e184c3
-                                                        as
-                                                        pg_crud::PgTypeTestCases
-                                                    >::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
-                                                        &read_only_ids_el_937c5af3.#field_ident_8c7d4975.clone().expect("4f19d0d2")
-                                                    ).expect("c7685b19").#ValueSc,
-                                                    Some(#UpdateSc.clone())
-                                                )
-                                            },
-                                        );
-                                        quote! {
-                                            #field_ident_8c7d4975: Some(#value_init_ts)
-                                        }
-                                    } else {
-                                        quote! {
-                                            #field_ident_8c7d4975: previous_read.#field_ident_8c7d4975
-                                        }
-                                    }
-                                },
-                            );
-                        let value_init_ts = gen_import_path_value_init_ts(&primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3);
+                gen_fields_named_without_primary_key_without_comma_ts(&|el: &SynFieldWrapper| {
+                    let field_ident = &el.field_ident;
+                    let field_type = &el.field_type;
+                    let maybe_previous_read_ts = if fields_without_primary_key.len() > 1 {
                         quote! {
-                            for (index_26824592, read_only_ids_el_937c5af3) in gen_read_only_ids_els_8a1ef027(
-                                &url,
-                                &table_update_one,
-                                #select_default_all_with_max_page_size_clone_ts,
-                                #field_ident_read_only_ids_to_two_dimal_vec_read_inner_acc_sc
-                            ).await.into_iter().enumerate() {
-                                let table_update_one_cloned = table_update_one.clone();
-                                let url_cloned = url.clone();
-                                let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
-                                acc_9189f86e.push(futures::FutureExt::boxed(async move {
-                                    #maybe_previous_read_ts
-                                    let update = <
-                                        #field_type
-                                        as
-                                        pg_crud::PgTypeTestCases
-                                    >::read_inner_into_update_with_new_or_try_new_unwraped({
-                                        let mut index_e0d2f9db: usize = 0;
-                                        let mut opt_test_case = None;
-                                        for el_3a9a65ee in <#field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimal_vec_read_inner(
-                                            &read_only_ids_el_937c5af3.#field_ident.clone().expect("c4d98a71")
-                                        ) {
-                                            let mut should_break = false;
-                                            for el_bb734c11 in el_3a9a65ee {
-                                                if index_e0d2f9db == index_26824592 {
-                                                    opt_test_case = Some(el_bb734c11);
-                                                    should_break = true;
-                                                    break;
-                                                }
-                                                index_e0d2f9db = index_e0d2f9db.checked_add(1).expect("326274d1");
-                                            }
-                                            if should_break {
+                            let previous_read = gen_ident_try_read_one_handle_primary_key(
+                                &url_cloned,
+                                #primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3,
+                                #select_default_all_with_max_page_size_cloned_clone_ts,
+                                &table_update_one_cloned
+                            )
+                            .await.expect("e6998b47");
+                        }
+                    } else {
+                        Ts2::new()
+                    };
+                    let field_ident_read_only_ids_to_two_dimal_vec_read_inner_acc_sc =
+                        SelfReadOnlyIdsToTwoDimalVecReadInnerAccSc::from_tokens(&field_ident);
+                    let ident_read_only_ids_upper_fields_init_without_primary_key_ts =
+                        gen_fields_named_without_primary_key_with_comma_ts(
+                            &|el0: &SynFieldWrapper| {
+                                let field_ident_6b82a8d0 = &el0.field_ident;
+                                let field_type_ad043276 = &el0.field_type;
+                                if field_ident == field_ident_6b82a8d0 {
+                                    quote! {#field_ident_6b82a8d0: Some(<#field_type_ad043276 as pg_crud::PgTypeTestCases>::update_to_read_only_ids(&update))}
+                                } else {
+                                    quote! {#field_ident_6b82a8d0: None}
+                                }
+                            },
+                        );
+                    let ident_update_params_init_without_primary_key_ts =
+                        gen_fields_named_without_primary_key_with_comma_ts(
+                            &|el0: &SynFieldWrapper| {
+                                let field_ident_6ea8afd1 = &el0.field_ident;
+                                if field_ident == field_ident_6ea8afd1 {
+                                    let value_init_ts =
+                                        gen_import_path_value_init_ts(&quote! {#UpdateSc.clone()});
+                                    quote! {Some(#value_init_ts)}
+                                } else {
+                                    none_ts.clone()
+                                }
+                            },
+                        );
+                    let ident_read_fields_init_without_primary_key_after_update_one_ts =
+                        gen_fields_named_without_primary_key_with_comma_ts(
+                            &|el0: &SynFieldWrapper| {
+                                let field_ident_8c7d4975 = &el0.field_ident;
+                                let field_type_09e184c3 = &el0.field_type;
+                                if field_ident == field_ident_8c7d4975 {
+                                    let value_init_ts = gen_import_path_value_init_ts(&quote! {
+                                        <
+                                            #field_type_09e184c3
+                                            as
+                                            pg_crud::PgTypeTestCases
+                                        >::previous_read_merged_with_opt_update_into_read(
+                                            <
+                                                #field_type_09e184c3
+                                                as
+                                                pg_crud::PgTypeTestCases
+                                            >::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
+                                                &read_only_ids_el_937c5af3.#field_ident_8c7d4975.clone().expect("4f19d0d2")
+                                            ).expect("c7685b19").#ValueSc,
+                                            Some(#UpdateSc.clone())
+                                        )
+                                    });
+                                    quote! {
+                                        #field_ident_8c7d4975: Some(#value_init_ts)
+                                    }
+                                } else {
+                                    quote! {
+                                        #field_ident_8c7d4975: previous_read.#field_ident_8c7d4975
+                                    }
+                                }
+                            },
+                        );
+                    let value_init_ts = gen_import_path_value_init_ts(&primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3);
+                    quote! {
+                        for (index_26824592, read_only_ids_el_937c5af3) in gen_read_only_ids_els_8a1ef027(
+                            &url,
+                            &table_update_one,
+                            #select_default_all_with_max_page_size_clone_ts,
+                            #field_ident_read_only_ids_to_two_dimal_vec_read_inner_acc_sc
+                        ).await.into_iter().enumerate() {
+                            let table_update_one_cloned = table_update_one.clone();
+                            let url_cloned = url.clone();
+                            let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
+                            acc_9189f86e.push(futures::FutureExt::boxed(async move {
+                                #maybe_previous_read_ts
+                                let update = <
+                                    #field_type
+                                    as
+                                    pg_crud::PgTypeTestCases
+                                >::read_inner_into_update_with_new_or_try_new_unwraped({
+                                    let mut index_e0d2f9db: usize = 0;
+                                    let mut opt_test_case = None;
+                                    for el_3a9a65ee in <#field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimal_vec_read_inner(
+                                        &read_only_ids_el_937c5af3.#field_ident.clone().expect("c4d98a71")
+                                    ) {
+                                        let mut should_break = false;
+                                        for el_bb734c11 in el_3a9a65ee {
+                                            if index_e0d2f9db == index_26824592 {
+                                                opt_test_case = Some(el_bb734c11);
+                                                should_break = true;
                                                 break;
                                             }
+                                            index_e0d2f9db = index_e0d2f9db.checked_add(1).expect("326274d1");
                                         }
-                                        opt_test_case.expect("bd79056e")
-                                    });
-                                    assert_eq!(
-                                        #ident_read_only_ids_ucc {
-                                            #primary_key_field_ident: read_only_ids_el_937c5af3.#primary_key_field_ident,
-                                            #ident_read_only_ids_upper_fields_init_without_primary_key_ts
+                                        if should_break {
+                                            break;
+                                        }
+                                    }
+                                    opt_test_case.expect("bd79056e")
+                                });
+                                assert_eq!(
+                                    #ident_read_only_ids_ucc {
+                                        #primary_key_field_ident: read_only_ids_el_937c5af3.#primary_key_field_ident,
+                                        #ident_read_only_ids_upper_fields_init_without_primary_key_ts
+                                    },
+                                    #ident::try_update_one_handle(
+                                        &url_cloned,
+                                        #ident_update_one_params_ucc {
+                                            payload: #ident_update_ucc::try_new(
+                                                #primary_key_field_type_as_pg_type_update_as_pg_type_primary_key_read_only_ids_into_update_ts,
+                                                #ident_update_params_init_without_primary_key_ts
+                                            ).expect("0e5d65a5")//todo add column ident
                                         },
-                                        #ident::try_update_one_handle(
-                                            &url_cloned,
-                                            #ident_update_one_params_ucc {
-                                                payload: #ident_update_ucc::try_new(
-                                                    #primary_key_field_type_as_pg_type_update_as_pg_type_primary_key_read_only_ids_into_update_ts,
-                                                    #ident_update_params_init_without_primary_key_ts
-                                                ).expect("0e5d65a5")//todo add column ident
-                                            },
-                                            &table_update_one_cloned
-                                        ).await.expect("4d755542"),
-                                        "564de31c"
-                                    );
-                                    assert_eq!(
-                                        #ident_read_ucc {
-                                            #primary_key_field_ident: Some(#value_init_ts),
-                                            #ident_read_fields_init_without_primary_key_after_update_one_ts
-                                        },
-                                        gen_ident_try_read_one_handle_primary_key(
-                                            &url_cloned,
-                                            #primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3,
-                                            select_default_all_with_max_page_size_cloned,
-                                            &table_update_one_cloned
-                                        )
-                                        .await.expect("75894c76"),
-                                        "d5dec823"
-                                    );
-                                }));
-                            }
+                                        &table_update_one_cloned
+                                    ).await.expect("4d755542"),
+                                    "564de31c"
+                                );
+                                assert_eq!(
+                                    #ident_read_ucc {
+                                        #primary_key_field_ident: Some(#value_init_ts),
+                                        #ident_read_fields_init_without_primary_key_after_update_one_ts
+                                    },
+                                    gen_ident_try_read_one_handle_primary_key(
+                                        &url_cloned,
+                                        #primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_field_ident_ts_937c5af3,
+                                        select_default_all_with_max_page_size_cloned,
+                                        &table_update_one_cloned
+                                    )
+                                    .await.expect("75894c76"),
+                                    "d5dec823"
+                                );
+                            }));
                         }
-                    },
-                );
+                    }
+                });
             quote! {#update_one_only_one_column_tests_ts}
         };
         let delete_many_tests_ts = {
