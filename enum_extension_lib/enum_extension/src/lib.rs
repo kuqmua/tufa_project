@@ -12,9 +12,9 @@ pub fn enum_extension(v: Ts) -> Ts {
         Data::Struct(_) | Data::Union(_) => panic!("bcbaca28"),
     };
     let vrts = match di.data {
-        Data::Enum(enum_item) => enum_item.variants.into_iter().map(|el_f0467eb6| {
-            let vrt_ident = el_f0467eb6.ident;
-            match el_f0467eb6.fields {
+        Data::Enum(enum_item) => enum_item.variants.into_iter().map(|el| {
+            let vrt_ident = el.ident;
+            match el.fields {
                 Fields::Named(fields_named) => {
                     let generated = fields_named.named.into_iter().map(|field| {
                         let field_ident = field.ident; //todo maybe unwrap_or_else panic?
@@ -39,32 +39,32 @@ pub fn enum_extension(v: Ts) -> Ts {
             }
             pub fn into_vec() -> Vec<Self> {
                 let mut self_vec = Vec::with_capacity(Self::get_length());
-                for el_976865e3 in {
+                for el in {
                     use enum_extension_lib::IntoEnumIterator;
                     Self::iter()
                 } {
-                    self_vec.push(el_976865e3);
+                    self_vec.push(el);
                 }
                 self_vec
             }
             pub fn into_string_name_and_vrt_hashmap() -> std::collections::HashMap<String, Self> {
                 let mut vrts_hashmap: std::collections::HashMap<String, Self> =
                     std::collections::HashMap::with_capacity(Self::get_length());
-                for el_dfeecd17 in {
+                for el in {
                     use enum_extension_lib::IntoEnumIterator;
                     Self::iter()
                 } {
-                    vrts_hashmap.insert(format!("{}", el_dfeecd17), el_dfeecd17);
+                    vrts_hashmap.insert(format!("{}", el), el);
                 }
                 vrts_hashmap
             }
             pub fn into_string_name_and_vrt_tuple_vec() -> Vec<(String, Self)> {
                 let mut vrts_vec = Vec::with_capacity(Self::get_length());
-                for el_538a15df in {
+                for el in {
                     use enum_extension_lib::IntoEnumIterator;
                     Self::iter()
                 } {
-                    vrts_vec.push((format!("{}", el_538a15df), el_538a15df));
+                    vrts_vec.push((format!("{}", el), el));
                 }
                 vrts_vec
             }
