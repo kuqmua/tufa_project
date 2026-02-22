@@ -18,23 +18,23 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
     let el_vec = from_str::<Vec<String>>(&input_ts.to_string())
         .expect("c5d09740")
         .into_iter()
-        .map(|el_4f4a2c74| {
+        .map(|el| {
             let sc = {
-                let mut result = String::with_capacity(el_4f4a2c74.len());
+                let mut result = String::with_capacity(el.len());
                 let mut prev_is_underscore = false;
                 let mut prev_is_lowercase = false;
-                for el_e5df7ee3 in el_4f4a2c74.chars() {
-                    if el_e5df7ee3.is_alphabetic() {
-                        if el_e5df7ee3.is_uppercase() {
+                for el0 in el.chars() {
+                    if el0.is_alphabetic() {
+                        if el0.is_uppercase() {
                             if prev_is_lowercase && !prev_is_underscore {
                                 result.push('_');
                             }
-                            for el_8aa0e3a1 in el_e5df7ee3.to_lowercase() {
-                                result.push(el_8aa0e3a1);
+                            for el1 in el0.to_lowercase() {
+                                result.push(el1);
                             }
                             prev_is_lowercase = false;
                         } else {
-                            result.push(el_e5df7ee3);
+                            result.push(el0);
                             prev_is_lowercase = true;
                         }
                         prev_is_underscore = false;
@@ -61,7 +61,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
                     let v = DeriveSelfIfSc::from_display(&sc);
                     quote! {#v}
                 },
-                trait_type: el_4f4a2c74.parse::<Ts2>().expect("8672240f"),
+                trait_type: el.parse::<Ts2>().expect("8672240f"),
             }
         })
         .collect::<Vec<El>>();
@@ -79,7 +79,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
             gen_pun_enum_ts(&make_pub_ucc_ts),
             el_vec
                 .iter()
-                .map(|el_4f4a2c74| gen_pun_enum_ts(&el_4f4a2c74.derive_trait_name_ucc)),
+                .map(|el| gen_pun_enum_ts(&el.derive_trait_name_ucc)),
         )
     };
     let (make_pub_derive_trait_name_bool_ts, field_vec_ts) = {
@@ -88,9 +88,9 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
         }
         (
             gen_derive_trait_name_bool_ts(&make_pub_sc_ts),
-            el_vec.iter().map(|el_03225620| {
-                gen_derive_trait_name_bool_ts(&el_03225620.derive_trait_name_sc)
-            }),
+            el_vec
+                .iter()
+                .map(|el| gen_derive_trait_name_bool_ts(&el.derive_trait_name_sc)),
         )
     };
     let (make_pub_derive_and_derive_if_ts, derive_and_derive_if_vec_ts) = {
@@ -107,10 +107,10 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
                     self
                 }
             },
-            el_vec.iter().map(|el_09fab389|{
-                let derive_trait_name_ucc = &el_09fab389.derive_trait_name_ucc;
-                let derive_trait_name_sc = &el_09fab389.derive_trait_name_sc;
-                let derive_trait_name_if_sc = &el_09fab389.derive_trait_name_if_sc;
+            el_vec.iter().map(|el|{
+                let derive_trait_name_ucc = &el.derive_trait_name_ucc;
+                let derive_trait_name_sc = &el.derive_trait_name_sc;
+                let derive_trait_name_if_sc = &el.derive_trait_name_if_sc;
                 quote!{
                     pub const fn #derive_trait_name_sc(mut self) -> Self {
                         self.#derive_trait_name_sc = true;
@@ -126,9 +126,9 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
             })
         )
     };
-    let if_self_derive_acc_push_vec_ts = el_vec.iter().map(|el_09bcde51| {
-        let derive_trait_name_sc = &el_09bcde51.derive_trait_name_sc;
-        let trait_type = &el_09bcde51.trait_type;
+    let if_self_derive_acc_push_vec_ts = el_vec.iter().map(|el| {
+        let derive_trait_name_sc = &el.derive_trait_name_sc;
+        let trait_type = &el.trait_type;
         quote! {
             if self.#derive_trait_name_sc {
                 acc_2a71375c.push(quote::quote!{#trait_type});
