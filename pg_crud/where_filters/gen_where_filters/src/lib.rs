@@ -1315,7 +1315,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                     {
                         let format_ts = dq_ts(&format!(
-                            "{{}}(jsonb_arr_length({{}}{}) {operation} ${{}})",
+                            "{{}}(jsonb_array_length({{}}{}) {operation} ${{}})",
                             pg_type_kind.format_argument()
                         ));
                         quote! {
