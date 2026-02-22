@@ -16,10 +16,7 @@ pub fn compile_time_project_git_info(_v: Ts) -> Ts {
         .to_owned();
     // Validate SHA-1 (40 hex chars)
     assert!(
-        hash.len() == 40
-            && hash
-                .chars()
-                .all(|el_e7daeee7| el_e7daeee7.is_ascii_hexdigit()),
+        hash.len() == 40 && hash.chars().all(|el| el.is_ascii_hexdigit()),
         "093516ae"
     );
     let commit_id_ts = format!("\"{hash}\"").parse::<Ts2>().expect("842e75e8");
