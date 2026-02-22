@@ -97,7 +97,7 @@ pub trait PgJsonType {
     type Select: SelectAl + UtoipaToSchemaAndSchemarsJsonSchemaAl;
     fn select_query_part(
         value: &Self::Select,
-        field_ident: &str,
+        fi: &str,
         column_field: &str,
         //todo remove this coz its used properly now
         column_field_for_er_message: &str,
@@ -129,7 +129,7 @@ pub trait PgJsonType {
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
     fn select_only_updated_ids_query_part(
         value: &Self::UpdateForQuery,
-        field_ident: &str,
+        fi: &str,
         column_field: &str,
         incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
@@ -139,7 +139,7 @@ pub trait PgJsonType {
     ) -> Result<Query<'lifetime, Postgres, PgArguments>, String>;
     fn select_only_created_ids_query_part(
         value: &Self::CreateForQuery,
-        field_ident: &str,
+        fi: &str,
         column_field: &str,
         incr: &mut u64,
     ) -> Result<String, QueryPartEr>;

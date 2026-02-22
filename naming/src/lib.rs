@@ -432,7 +432,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["wrap", "into", "jsonb", "build", "object"],
     ["gen", "jsonb", "set", "target"],
     ["gen", "jsonb", "set", "path"],
-    ["column", "field", "ident"],
+    ["column", "fi"],
     ["column", "field", "for", "er", "message", "ident"],
     ["gen", "not", "unique", "field"],
     ["all", "fields", "are", "none"],
@@ -448,7 +448,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["jsonb", "set", "path"],
     ["column", "field"],
     ["column", "field", "for", "er", "message"],
-    ["field", "ident"],
+    ["fi"],
     ["pg", "json", "type"],
     ["create", "query", "part", "er"],
     ["create"],
@@ -782,7 +782,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     [
         "primary", "key", "read", "returned", "from", "create", "one"
     ],
-    ["select", "primary", "key", "field", "ident"],
+    ["select", "primary", "key", "fi"],
     ["select", "query", "part", "pg", "type"],
     ["select", "query", "part", "pg", "json", "type"],
     ["update", "query", "part", "pg", "type"],

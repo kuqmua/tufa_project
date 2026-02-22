@@ -1,4 +1,4 @@
 #[must_use]
-pub fn field_ident_jsonb_build_object_value(field_ident: &str) -> String {
-    format!("'{field_ident}',jsonb_build_object('value','null'::jsonb),")
+pub fn fi_jsonb_build_object_value(fi: &str) -> String {
+    format!("'{fi}',jsonb_build_object('value','null'::jsonb),")
 }

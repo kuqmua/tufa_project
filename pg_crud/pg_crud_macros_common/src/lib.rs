@@ -10,7 +10,7 @@ use naming::{
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateIntoPgTypeOptVecWhereDimOneEqualSc,
     CreateQueryBindSc, CreateQueryPartSc, CreateSc, CreateTableColumnQueryPartSc, CreateUcc,
     DefaultOptSomeVecOneElMaxPageSizeSc, DefaultOptSomeVecOneElSc, DisplayPlusToTokens,
-    EqualOperatorUcc, FieldIdentSc, IncrSc, IsNeedToAddLogicalOperatorSc, IsPrimaryKeySc,
+    EqualOperatorUcc, FiSc, IncrSc, IsNeedToAddLogicalOperatorSc, IsPrimaryKeySc,
     JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc, MutSc, NormalizeSc, OptUcc,
     OptUpdateSc, OptVecCreateSc, PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeEqualOperatorUcc,
     PgTypeNotPrimaryKeyUcc, PgTypeOptVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc,
@@ -765,7 +765,7 @@ pub fn gen_impl_pg_json_type_ts(
             type #SelectUcc = #select_type_ts;
             fn #SelectQueryPartSc(
                 #is_select_query_part_self_select_used: &Self::#SelectUcc,
-                #FieldIdentSc: #RefStr,
+                #FiSc: #RefStr,
                 #ColumnFieldSc: #RefStr,
                 #is_select_query_part_column_field_for_er_message_used: #RefStr,
                 #is_select_query_part_is_pg_type_used: #Bool,
@@ -803,7 +803,7 @@ pub fn gen_impl_pg_json_type_ts(
             }
             fn #SelectOnlyUpdatedIdsQueryPartSc(
                 #ValueSc: &Self::#UpdateForQueryUcc,
-                #FieldIdentSc: #RefStr,
+                #FiSc: #RefStr,
                 #ColumnFieldSc: #RefStr,
                 #IncrSc: &mut #U64
             ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
@@ -817,7 +817,7 @@ pub fn gen_impl_pg_json_type_ts(
             }
             fn #SelectOnlyCreatedIdsQueryPartSc(
                 #ValueSc: &Self::#CreateForQueryUcc,
-                #FieldIdentSc: #RefStr,
+                #FiSc: #RefStr,
                 #ColumnFieldSc: #RefStr,
                 #IncrSc: &mut #U64
             ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
@@ -2083,10 +2083,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         .parse::<Ts2>()
         .expect("09a0c518")
     }
-    fn gen_field_ident_dq_serde_private_ok_field_ts(
-        field_name_dq_ts: &dyn ToTokens,
-        index: usize,
-    ) -> Ts2 {
+    fn gen_fi_dq_serde_private_ok_field_ts(field_name_dq_ts: &dyn ToTokens, index: usize) -> Ts2 {
         let field_index_ts = gen_underscore_underscore_field_index_ts(index);
         quote! {#field_name_dq_ts => Ok(__Field::#field_index_ts)}
     }
@@ -2114,7 +2111,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
     let visit_str_value_enum_vrts_ts = {
         let visit_str_value_enum_vrts_ts = vec_ident.iter().enumerate().map(|(index, el)| {
             let field_name_dq_ts = dq_ts(&el);
-            gen_field_ident_dq_serde_private_ok_field_ts(&field_name_dq_ts, index)
+            gen_fi_dq_serde_private_ok_field_ts(&field_name_dq_ts, index)
         });
         quote! {#(#visit_str_value_enum_vrts_ts),*,}
     };
@@ -2125,7 +2122,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                 let value = format!("b{el_ident_dq_str}");
                 value.parse::<Ts2>().expect("9e33625e")
             };
-            gen_field_ident_dq_serde_private_ok_field_ts(&b_field_name_dq_ts, index)
+            gen_fi_dq_serde_private_ok_field_ts(&b_field_name_dq_ts, index)
         });
         quote! {#(#visit_bytes_value_enum_vrts_ts),*,}
     };
@@ -2160,36 +2157,39 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
             });
         quote! {#(#ts)*}
     };
-    let visit_map_match_vrts_ts = {
-        let visit_map_match_vrts_ts = vec_ident_type.iter().enumerate().map(|(index, (el_ident, el_type))| {
-            let field_index_ts = gen_underscore_underscore_field_index_ts(index);
-            let field_ident_dq_ts = dq_ts(&el_ident);
-            let type_ts = gen_type_ts(el_ident, el_type);
-            quote! {
-                __Field::#field_index_ts => {
-                    if Option::is_some(&#field_index_ts) {
-                        return Err(
-                            <__A::Error as serde::de::Error>::duplicate_field(#field_ident_dq_ts),
-                        );
+    let visit_map_match_vrts_ts =
+        {
+            let visit_map_match_vrts_ts = vec_ident_type.iter().enumerate().map(
+                |(index, (el_ident, el_type))| {
+                    let field_index_ts = gen_underscore_underscore_field_index_ts(index);
+                    let fi_dq_ts = dq_ts(&el_ident);
+                    let type_ts = gen_type_ts(el_ident, el_type);
+                    quote! {
+                        __Field::#field_index_ts => {
+                            if Option::is_some(&#field_index_ts) {
+                                return Err(
+                                    <__A::Error as serde::de::Error>::duplicate_field(#fi_dq_ts),
+                                );
+                            }
+                            #field_index_ts = Some(
+                                serde::de::MapAccess::next_value::<#type_ts>(&mut __map)?,
+                            );
+                        }
                     }
-                    #field_index_ts = Some(
-                        serde::de::MapAccess::next_value::<#type_ts>(&mut __map)?,
-                    );
-                }
-            }
-        });
-        quote! {#(#visit_map_match_vrts_ts)*}
-    };
+                },
+            );
+            quote! {#(#visit_map_match_vrts_ts)*}
+        };
     let visit_map_missing_fields_check_ts = {
         let ts = vec_ident.iter().enumerate().map(|(index, el)| {
             let field_index_ts = gen_underscore_underscore_field_index_ts(index);
             let field_index_handle_ts = gen_underscore_underscore_field_index_handle_ts(index);
-            let field_ident_dq_ts = dq_ts(&el);
+            let fi_dq_ts = dq_ts(&el);
             quote! {
                 let #field_index_handle_ts = match #field_index_ts {
                     Some(v) => v,
                     None => {
-                        serde::__private228::de::missing_field(#field_ident_dq_ts)?
+                        serde::__private228::de::missing_field(#fi_dq_ts)?
                     }
                 };
             }

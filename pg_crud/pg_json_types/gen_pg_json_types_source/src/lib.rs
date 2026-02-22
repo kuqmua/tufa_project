@@ -1823,12 +1823,12 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             let select_only_created_or_updated_ids_query_part_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                 quote! {
                     match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
-                        Ok(v_f06128be) => Ok(format!("'{field_ident}',jsonb_build_object('value',${v_f06128be}),")),
+                        Ok(v_f06128be) => Ok(format!("'{fi}',jsonb_build_object('value',${v_f06128be}),")),
                         Err(#ErSc) => Err(#ErSc),
                     }
                 }
             } else {
-                quote! {Ok(gen_pg_json_types_common::field_ident_jsonb_build_object_value(field_ident))}
+                quote! {Ok(gen_pg_json_types_common::fi_jsonb_build_object_value(fi))}
             };
             let select_only_created_or_updated_ids_query_bind_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                 quote! {
@@ -1856,9 +1856,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &{
                     let format_handle = {
                         //last child dim value does not matter - null or type - works both good
-                        let column_field_field_ident = format!("{{{ColumnFieldSc}}}->'{{field_ident}}'");
+                        let column_field_fi = format!("{{{ColumnFieldSc}}}->'{{fi}}'");
                         let format_handle = ArrDim::try_from(pattern).map_or_else(
-                            |()| column_field_field_ident.clone(),
+                            |()| column_field_fi.clone(),
                             |arr_dim| {
                                 enum ArrDimSelectPattern {
                                     ArrDim2 {
@@ -1913,7 +1913,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 ArrDimSelectPattern::try_from(&arr_dim).map_or_else(
                                     |()| gen_jsonb_agg(
                                         "value",
-                                        &format!("select {column_field_field_ident}"),
+                                        &format!("select {column_field_fi}"),
                                         "where ordinality",
                                         1,
                                     ),
@@ -1975,7 +1975,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                                     acc
                                                 })
                                             },
-                                            &column_field_field_ident,
+                                            &column_field_fi,
                                             &gen_as_value_where(&gen_d_nbr_elem(one), &gen_d_nbr_ord(one)),
                                             one,
                                         )
@@ -1985,7 +1985,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         );
                         match &is_nullable {
                             IsNullable::False => format_handle,
-                            IsNullable::True => format!("case when jsonb_typeof({column_field_field_ident})='null' then 'null'::jsonb else ({format_handle}) end"),
+                            IsNullable::True => format!("case when jsonb_typeof({column_field_fi})='null' then 'null'::jsonb else ({format_handle}) end"),
                         }
                     };
                     let maybe_dims_start_end_init = ArrDim::try_from(pattern).ok().into_iter().flat_map(|arr_dim| {
@@ -2011,7 +2011,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             }
                         })
                     });
-                    let format_ts = dq_ts(&format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value',({format_handle})))"));
+                    let format_ts = dq_ts(&format!("jsonb_build_object('{{fi}}',jsonb_build_object('value',({format_handle})))"));
                     quote! {
                         #(#maybe_dims_start_end_init)*
                         Ok(format!(#format_ts))
@@ -3569,8 +3569,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         };
         (
             {
-                let field_ident = format!("field_{index}").parse::<Ts2>().expect("f992f797");
-                quote! {pub #field_ident: #ident,}.to_string()
+                let fi = format!("field_{index}").parse::<Ts2>().expect("f992f797");
+                quote! {pub #fi: #ident,}.to_string()
             },
             generated.to_string(),
         )

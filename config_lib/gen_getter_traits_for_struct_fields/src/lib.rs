@@ -14,26 +14,24 @@ pub fn gen_getter_traits_for_struct_fields(input: Ts) -> Ts {
         Data::Enum(_) | Data::Union(_) => panic!("15cd72a2"),
     };
     let generated_traits_impls_ts = datastruct.fields.into_iter().map(|field| {
-        let (field_ident, ucc_field_ident) = {
-            let field_ident = field.ident.as_ref().expect("e5c23c45");
-            (field_ident, ToTokensToUccStr::case(&field_ident))
+        let (fi, ucc_fi) = {
+            let fi = field.ident.as_ref().expect("e5c23c45");
+            (fi, ToTokensToUccStr::case(&fi))
         };
         let field_type = field.ty;
-        let path_trait_ident = format!("app_state::Get{ucc_field_ident}")
+        let path_trait_ident = format!("app_state::Get{ucc_fi}")
             .parse::<Ts2>()
             .expect("8fb2cb27");
-        let function_name_ident = format!("get_{field_ident}")
-            .parse::<Ts2>()
-            .expect("a349efd0");
+        let function_name_ident = format!("get_{fi}").parse::<Ts2>().expect("a349efd0");
         quote! {
             impl #path_trait_ident for #ident {
                 fn #function_name_ident (&self) -> &#field_type {
-                    &self.#field_ident
+                    &self.#fi
                 }
             }
             impl #path_trait_ident for &#ident {
                 fn #function_name_ident (&self) -> &#field_type {
-                    &self.#field_ident
+                    &self.#fi
                 }
             }
         }

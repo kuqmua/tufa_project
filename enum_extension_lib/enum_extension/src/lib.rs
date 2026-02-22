@@ -17,8 +17,8 @@ pub fn enum_extension(v: Ts) -> Ts {
             match el.fields {
                 Fields::Named(fields_named) => {
                     let generated = fields_named.named.into_iter().map(|field| {
-                        let field_ident = field.ident; //todo maybe unwrap_or_else panic?
-                        quote! {#field_ident: Default::default()}
+                        let fi = field.ident; //todo maybe unwrap_or_else panic?
+                        quote! {#fi: Default::default()}
                     });
                     quote! {#vrt_ident { #(#generated),* }}
                 }
