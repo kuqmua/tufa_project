@@ -23,8 +23,8 @@ pub fn try_from_env(v: Ts) -> Ts {
         Fields::Unnamed(_) | Fields::Unit => panic!("330b2512"),
     };
     let er_ts = {
-        let vrts_ts = fields_named.iter().map(|el_f931deb2| {
-            let el_ident = &el_f931deb2.ident.as_ref().expect("2ecb63c1");
+        let vrts_ts = fields_named.iter().map(|el| {
+            let el_ident = &el.ident.as_ref().expect("2ecb63c1");
             let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
             let try_from_std_env_var_ok_self_er_ucc =
                 TryFromStdEnvVarOkSelfErUcc::from_tokens(&el_ident);
@@ -49,8 +49,8 @@ pub fn try_from_env(v: Ts) -> Ts {
         }
     };
     let display_er_ts = {
-        let vrts_ts = fields_named.iter().map(|el_f931deb2| {
-            let el_ident = &el_f931deb2.ident.as_ref().expect("8b79a379");
+        let vrts_ts = fields_named.iter().map(|el| {
+            let el_ident = &el.ident.as_ref().expect("8b79a379");
             let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
             quote! {
                 Self::#el_ident_ucc_ts { #el_ident } => write!(f, "{}", #el_ident)
@@ -75,8 +75,8 @@ pub fn try_from_env(v: Ts) -> Ts {
         )
     };
     let try_from_env_ts = {
-        let fields_init_ts = fields_named.iter().map(|el_0b2240f0| {
-            let el_ident = &el_0b2240f0.ident.as_ref().expect("ebf4e1b2");
+        let fields_init_ts = fields_named.iter().map(|el| {
+            let el_ident = &el.ident.as_ref().expect("ebf4e1b2");
             let el_ident_quotes_upper_sc_string =
                 LitStr::new(&ToTokensToUpperScStr::case(&el_ident), ident.span());
             let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
@@ -106,7 +106,7 @@ pub fn try_from_env(v: Ts) -> Ts {
                 };
             }
         });
-        let fields_ts = fields_named.iter().map(|el_dd7dea0c| &el_dd7dea0c.ident);
+        let fields_ts = fields_named.iter().map(|el| &el.ident);
         quote! {
             impl #ident {
                 pub fn try_from_env() -> Result<Self, #ident_try_from_env_er_ucc> {
