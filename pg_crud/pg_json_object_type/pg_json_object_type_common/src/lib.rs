@@ -29,14 +29,14 @@ impl<T: PartialEq + Clone> UniqueVec<T> {
     }
     pub fn try_new(v: Vec<T>) -> Result<Self, UniqueVecTryNewEr<T>> {
         let mut acc = Vec::new();
-        for el_4dddc7c0 in &v {
-            if acc.contains(&el_4dddc7c0) {
+        for el in &v {
+            if acc.contains(&el) {
                 return Err(UniqueVecTryNewEr::NotUnique {
-                    value: el_4dddc7c0.clone(),
+                    value: el.clone(),
                     loc: loc!(),
                 });
             }
-            acc.push(el_4dddc7c0);
+            acc.push(el);
         }
         Ok(Self(v))
     }
