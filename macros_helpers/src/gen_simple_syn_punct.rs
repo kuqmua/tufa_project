@@ -4,9 +4,9 @@ pub fn gen_simple_syn_punct(v: &[&str]) -> Punctuated<PathSegment, PathSep> {
     let v_len = v.len();
     if v_len >= 1 {
         let mut acc = Punctuated::<PathSegment, PathSep>::new();
-        for el_bef7ca16 in v.iter().rev().skip(1).rev() {
+        for el in v.iter().rev().skip(1).rev() {
             acc.push_value(PathSegment {
-                ident: proc_macro2::Ident::new(el_bef7ca16, proc_macro2::Span::call_site()),
+                ident: proc_macro2::Ident::new(el, proc_macro2::Span::call_site()),
                 arguments: PathArguments::None,
             });
             acc.push_punct(PathSep {
