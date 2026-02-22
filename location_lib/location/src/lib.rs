@@ -210,7 +210,7 @@ pub fn location(input: Ts) -> Ts {
                                     )
                                 }
                             }
-                            LocationFieldAttr::EoHashMapKStringValueToErrString | LocationFieldAttr::EoHashMapKStringValueToErrStringSerde => {
+                            LocationFieldAttr::EoHashMapKStringVToErrString | LocationFieldAttr::EoHashMapKStringVToErrStringSerde => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {k}: {}", &location_lib::ToErrString::to_err_string(#ValueSc)}, &quote! {panic!("d030580a");});
                                 quote! {
                                     #el0_ident.iter().fold(
@@ -222,7 +222,7 @@ pub fn location(input: Ts) -> Ts {
                                     )
                                 }
                             }
-                            LocationFieldAttr::EoHashMapKStringValueLocation => {
+                            LocationFieldAttr::EoHashMapKStringVLocation => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(
                                     &{
                                         let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_addfc699, "\n  {el_8b8f577e}"}, &quote! {panic!("d0492fbf");});
@@ -320,7 +320,7 @@ pub fn location(input: Ts) -> Ts {
                             LocationFieldAttr::EoToErrString => gen_field_ts(&quote!{
                                 location_lib::ToErrString::to_err_string(&#el0_ident)
                             }),
-                            LocationFieldAttr::EoToErrStringSerde | LocationFieldAttr::EoVecToErrStringSerde | LocationFieldAttr::EoHashMapKStringValueToErrStringSerde => {
+                            LocationFieldAttr::EoToErrStringSerde | LocationFieldAttr::EoVecToErrStringSerde | LocationFieldAttr::EoHashMapKStringVToErrStringSerde => {
                                 quote! {#el0_ident}
                             }
                             LocationFieldAttr::EoLocation => gen_field_ts(&quote!{
@@ -332,12 +332,12 @@ pub fn location(input: Ts) -> Ts {
                             LocationFieldAttr::EoVecLocation => gen_field_ts(&quote!{
                                 #el0_ident.into_iter().map(|el|el.into_serde_version()).collect()
                             }),
-                            LocationFieldAttr::EoHashMapKStringValueToErrString => gen_field_ts(&quote!{
+                            LocationFieldAttr::EoHashMapKStringVToErrString => gen_field_ts(&quote!{
                                 #el0_ident.into_iter().map(
                                     |(k, v)|(k, location_lib::ToErrString::to_err_string(&v))
                                 ).collect()
                             }),
-                            LocationFieldAttr::EoHashMapKStringValueLocation => gen_field_ts(&quote!{
+                            LocationFieldAttr::EoHashMapKStringVLocation => gen_field_ts(&quote!{
                                 #el0_ident.into_iter().map(
                                     |(k, v)|(k, v.into_serde_version())
                                 ).collect()
