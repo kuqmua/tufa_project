@@ -4,7 +4,7 @@ use quote::{ToTokens, quote};
 use serde_json::from_str;
 #[proc_macro]
 pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
-    use naming::parameter::{DeriveSelfIfSc, DeriveSelfSc, DeriveSelfUcc};
+    use naming::param::{DeriveSelfIfSc, DeriveSelfSc, DeriveSelfUcc};
     #[derive(Clone)]
     struct El {
         derive_trait_name_if_sc: Ts2,

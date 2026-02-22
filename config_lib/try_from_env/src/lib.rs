@@ -1,5 +1,5 @@
 use macros_helpers::gen_impl_display_ts;
-use naming::parameter::{SelfTryFromEnvErUcc, TryFromStdEnvVarOkSelfErUcc};
+use naming::param::{SelfTryFromEnvErUcc, TryFromStdEnvVarOkSelfErUcc};
 use naming::{
     DotenvSc, DotenvUcc, EnvVarNameSc, StdEnvVarErSc, StdEnvVarErUcc, ToTokensToUccTs,
     ToTokensToUpperScStr, TryFromStdEnvVarOkUcc,

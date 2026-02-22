@@ -37,7 +37,7 @@ use naming::{
     SelectQueryPartSc, SelfSc, SelfUcc, StdOptOptObjectAccSc, ToTokensToUccTs, UpdateQueryBindSc,
     UpdateQueryPartSc, UpdateSc, UpdateToReadOnlyIdsSc, UuidUuidAsNotNullJsonbStringUcc, ValueSc,
     ValueUcc, VecOfUcc, WithIdUcc,
-    parameter::{
+    param::{
         ElSelfUcc, SelfCreateForQueryUcc, SelfCreateUcc, SelfCurrentSc,
         SelfGenPgJsonObjectTypeModSc, SelfLastSc, SelfReadInnerUcc, SelfReadOnlyIdsHandleUcc,
         SelfReadOnlyIdsUcc, SelfReadTryFromErUcc, SelfReadUcc, SelfSelectElUcc, SelfSelectSc,
@@ -47,9 +47,9 @@ use naming::{
 };
 use panic_location::panic_location;
 use pg_crud_macros_common::{
-    ColumnParameterUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrUnderscore,
+    ColumnParamUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrUnderscore,
     CreateQueryPartValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, ImportPath,
-    IncrParameterUnderscore, IsCreateQueryBindMutable, IsNeedToAddLogicalOperatorUnderscore,
+    IncrParamUnderscore, IsCreateQueryBindMutable, IsNeedToAddLogicalOperatorUnderscore,
     IsNullable, IsPrimaryKeyUnderscore, IsQueryBindMutable, IsSelectOnlyCreatedIdsQueryBindMutable,
     IsSelectOnlyUpdatedIdsQueryBindMutable, IsSelectQueryPartColumnFieldForErMessageUsed,
     IsSelectQueryPartIsPgTypeUsed, IsSelectQueryPartSelfSelectUsed, IsUpdateQueryBindMutable,
@@ -742,17 +742,17 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 };
                 let impl_pub_new_for_ident_table_type_or_ident_create_ts = {
                     let params_ts = {
-                        let gen_wrap_into_value_parameter_ts = |type_ts: &dyn ToTokens| {
+                        let gen_wrap_into_value_param_ts = |type_ts: &dyn ToTokens| {
                             quote! {value: #type_ts}
                         };
                         match &pattern {
                             Pattern::Stdrt => match &is_nullable {
                                 IsNullable::False => gen_ident_table_type_or_create_or_ident_with_id_table_type_or_create_stdrt_not_null_ts(&is_stdrt_with_id_false, pg_json_type_subtype_table_type_or_create, &new_type_or_struct_decl_new_type),
-                                IsNullable::True => gen_wrap_into_value_parameter_ts(&gen_opt_type_decl_ts(&gen_tokens_table_type_or_create_ts(ident_stdrt_not_null_ucc))),
+                                IsNullable::True => gen_wrap_into_value_param_ts(&gen_opt_type_decl_ts(&gen_tokens_table_type_or_create_ts(ident_stdrt_not_null_ucc))),
                             },
                             Pattern::Arr => match &is_nullable {
-                                IsNullable::False => gen_wrap_into_value_parameter_ts(&gen_vec_tokens_decl_ts(&gen_tokens_table_type_or_create_ts(&ident_with_id_stdrt_not_null_ucc))),
-                                IsNullable::True => gen_wrap_into_value_parameter_ts(&gen_opt_type_decl_ts(&gen_vec_tokens_decl_ts(&gen_tokens_table_type_or_create_ts(
+                                IsNullable::False => gen_wrap_into_value_param_ts(&gen_vec_tokens_decl_ts(&gen_tokens_table_type_or_create_ts(&ident_with_id_stdrt_not_null_ucc))),
+                                IsNullable::True => gen_wrap_into_value_param_ts(&gen_opt_type_decl_ts(&gen_vec_tokens_decl_ts(&gen_tokens_table_type_or_create_ts(
                                     &ident_with_id_stdrt_not_null_ucc,
                                 )))),
                             },
@@ -1717,8 +1717,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             &quote! {<'lifetime>},
                             &ident_ts_e0f20014,
                             &Ts2::new(),
-                            &IncrParameterUnderscore::False,
-                            &ColumnParameterUnderscore::False,
+                            &IncrParamUnderscore::False,
+                            &ColumnParamUnderscore::False,
                             &IsNeedToAddLogicalOperatorUnderscore::False,
                             &query_part_ts,
                             &is_query_bind_mutable,
@@ -3066,7 +3066,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     Ts2::new()
                 };
                 let maybe_ident_with_id_stdrt_not_null_update_el_ts = if is_stdrt_not_null {
-                    //thought it can be reused as struct with generic parameter, but turns out its too painfull
+                    //thought it can be reused as struct with generic param, but turns out its too painfull
                     // pub trait MyTrait {
                     //     type AdditionalType: PartialEq;
                     // }
@@ -3917,11 +3917,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     &gen_type_as_pg_json_type_ts(&el0.type0),
                                     &quote!{v_6e5af985.#ValueSc},
                                 ));
-                                let parameter_ts: &dyn ToTokens = match &is_stdrt_with_id {
+                                let param_ts: &dyn ToTokens = match &is_stdrt_with_id {
                                     IsStdrtWithId::False => &ValueSc,
                                     IsStdrtWithId::True => &quote!{el_34d57236},
                                 };
-                                quote! {#fi: #parameter_ts.#fi.map(|v_6e5af985| #ts)}
+                                quote! {#fi: #param_ts.#fi.map(|v_6e5af985| #ts)}
                             });
                             quote! {
                                 #ident_ts_df0c096c {
@@ -5828,7 +5828,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 },
                                 Pattern::Arr => match &is_nullable {
                                     IsNullable::False => {
-                                        let gen_parameter_ts = |ft: &dyn ToTokens, fi: &dyn ToTokens, ts: &dyn ToTokens|{
+                                        let gen_param_ts = |ft: &dyn ToTokens, fi: &dyn ToTokens, ts: &dyn ToTokens|{
                                             let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
                                             quote! {
                                                 #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoOptValueReadSc(
@@ -5837,14 +5837,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 )
                                             }
                                         };
-                                        let id_parameter_ts = gen_parameter_ts(
+                                        let id_param_ts = gen_param_ts(
                                             &uuid_uuid_as_not_null_jsonb_string_ts,
                                             &IdSc,
                                             &default_but_opt_is_some_call_ts
                                         );
                                         let params_ts = vec_syn_field.iter().map(|el0|{
                                             let fi = &el0.ident;
-                                            gen_parameter_ts(
+                                            gen_param_ts(
                                                 &el0.type0,
                                                 &fi,
                                                 &quote! {create_3c660445.#fi}
@@ -5856,7 +5856,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 let mut acc_37909420 = Vec::new();
                                                 for (read_only_ids_225e2b76, create_3c660445) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
                                                     acc_37909420.push(#ident_with_id_stdrt_not_null_read_ucc::try_new(
-                                                        #id_parameter_ts,
+                                                        #id_param_ts,
                                                         #(#params_ts),*
                                                     ).expect("1330ac8d"));
                                                 }
@@ -5927,7 +5927,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 },
                                 Pattern::Arr => match &is_nullable {
                                     IsNullable::False => {
-                                        let gen_parameter_ts = |ft: &dyn ToTokens, fi: &dyn ToTokens, ts: &dyn ToTokens|{
+                                        let gen_param_ts = |ft: &dyn ToTokens, fi: &dyn ToTokens, ts: &dyn ToTokens|{
                                             let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
                                             quote! {
                                                 #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
@@ -5936,14 +5936,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 )
                                             }
                                         };
-                                        let id_parameter_ts = gen_parameter_ts(
+                                        let id_param_ts = gen_param_ts(
                                             &uuid_uuid_as_not_null_jsonb_string_ts,
                                             &IdSc,
                                             &default_but_opt_is_some_call_ts
                                         );
                                         let params_ts = vec_syn_field.iter().map(|el0|{
                                             let fi = &el0.ident;
-                                            gen_parameter_ts(
+                                            gen_param_ts(
                                                 &el0.type0,
                                                 &fi,
                                                 &quote! {create_24629087.#fi}
@@ -5955,7 +5955,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 let mut acc_319e1fb1 = Vec::new();
                                                 for (read_only_ids_94b49496, create_24629087) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
                                                     acc_319e1fb1.push(#ident_with_id_stdrt_not_null_table_type_ucc::new(
-                                                        #id_parameter_ts,
+                                                        #id_param_ts,
                                                         #(#params_ts),*
                                                     ));
                                                 }

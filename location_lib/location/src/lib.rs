@@ -3,7 +3,7 @@ use macros_helpers::{
     LocationFieldAttr, gen_if_write_is_err_ts, gen_impl_display_ts, gen_impl_to_err_string_ts,
     gen_serde_version_of_named_syn_vrt,
 };
-use naming::{IntoSerdeVersionSc, LocSc, ValueSc, WithSerdeUcc, parameter::SelfWithSerdeUcc};
+use naming::{IntoSerdeVersionSc, LocSc, ValueSc, WithSerdeUcc, param::SelfWithSerdeUcc};
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};

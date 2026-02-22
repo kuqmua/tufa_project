@@ -23,7 +23,7 @@ use naming::{
     ReadOnlyIdsToTwoDimalVecReadInnerSc, ReadOnlyIdsUcc, ReadSc, ReadUcc, SecSc, SecondSc, SelfSc,
     SelfUcc, StartSc, StartUcc, TableTypeSc, TableTypeUcc, TimeSc, TimeUcc, ToErrStringSc,
     TryNewForDeserializeSc, TryNewSc, UnboundedUcc, UpdateUcc, ValueSc, VecOfUcc,
-    parameter::{
+    param::{
         SelfCreateUcc, SelfNotNullUcc, SelfOriginTryNewErUcc, SelfOriginTryNewForDeserializeErUcc,
         SelfOriginUcc, SelfReadInnerUcc, SelfReadOnlyIdsUcc, SelfReadUcc, SelfSelectUcc,
         SelfTableTypeUcc, SelfUpdateForQueryUcc, SelfUpdateUcc, SelfWhereUcc,
@@ -32,9 +32,9 @@ use naming::{
 use panic_location::panic_location;
 use pg_crud_common_and_macros_common::PgTypeGreaterThanVrt;
 use pg_crud_macros_common::{
-    ColumnParameterUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrUnderscore,
+    ColumnParamUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrUnderscore,
     CreateQueryPartValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl,
-    EqualOperatorHandle, ImportPath, IncrParameterUnderscore, IsCreateQueryBindMutable,
+    EqualOperatorHandle, ImportPath, IncrParamUnderscore, IsCreateQueryBindMutable,
     IsNeedToAddLogicalOperatorUnderscore, IsNullable, IsPrimaryKeyUnderscore, IsQueryBindMutable,
     IsSelectOnlyUpdatedIdsQueryBindMutable, IsStdrtNotNull, IsUpdateQueryBindMutable, PgFilter,
     PgTypeFilter, ReadOrUpdate, SelectQueryPartValueUnderscore, ShouldDeriveSchemarsJsonSchema,
@@ -1254,13 +1254,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         };
         let (serde_serialize_derive_or_impl, serde_deserialize_derive_or_impl) = if matches!(&is_stdrt_not_null, IsStdrtNotNull::True) {
             #[allow(clippy::arbitrary_source_item_ordering)]
-            enum ParameterNbr {
+            enum ParamNbr {
                 One,
                 Two,
                 Three,
                 Four,
             }
-            impl ParameterNbr {
+            impl ParamNbr {
                 const fn get_index(&self) -> usize {
                     match &self {
                         Self::One => 0,
@@ -1274,10 +1274,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 }
             }
             let self_dot_zero_ts = quote! {#SelfSc.0};
-            let parameter_nbr_one = ParameterNbr::One;
-            let parameter_nbr_two = ParameterNbr::Two;
-            let parameter_nbr_three = ParameterNbr::Three;
-            let parameter_nbr_four = ParameterNbr::Four;
+            let param_nbr_one = ParamNbr::One;
+            let param_nbr_two = ParamNbr::Two;
+            let param_nbr_three = ParamNbr::Three;
+            let param_nbr_four = ParamNbr::Four;
             let ident_stdrt_not_null_dq_ts = dq_ts(&ident_stdrt_not_null_ucc);
             let ident_stdrt_not_null_origin_dq_ts = dq_ts(&ident_stdrt_not_null_origin_ucc);
             let gen_std_ops_bound_ts = |type_ts: &dyn ToTokens| {
@@ -1312,21 +1312,21 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 let gen_serde_serialize_content_b5af560e = |value_ts: &dyn ToTokens| {
                     quote! {_serde::Serializer::serialize_newtype_struct(__serializer, #ident_stdrt_not_null_origin_dq_ts, &#self_dot_zero_ts #value_ts)}
                 };
-                let gen_serde_state_init_ts = |parameter_nbr: &ParameterNbr| {
-                    let parameter_nbr_ts = {
-                        let value = parameter_nbr.get_vec_from_index_starting_with_zero().into_iter().map(|_| quote! {+ 1});
+                let gen_serde_state_init_ts = |param_nbr: &ParamNbr| {
+                    let param_nbr_ts = {
+                        let value = param_nbr.get_vec_from_index_starting_with_zero().into_iter().map(|_| quote! {+ 1});
                         quote! {#(#value)*}
                     };
                     quote! {
-                        let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_stdrt_not_null_origin_dq_ts, usize::from(false) #parameter_nbr_ts)?;
+                        let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_stdrt_not_null_origin_dq_ts, usize::from(false) #param_nbr_ts)?;
                     }
                 };
-                let serde_state_init_two_fields_ts = gen_serde_state_init_ts(&parameter_nbr_two);
-                let serde_state_init_three_fields_ts = gen_serde_state_init_ts(&parameter_nbr_three);
-                let serde_state_init_four_fields_ts = gen_serde_state_init_ts(&parameter_nbr_four);
-                let gen_serialize_field_ts = |field_name: &dyn Display, third_parameter_ts: &dyn ToTokens| {
+                let serde_state_init_two_fields_ts = gen_serde_state_init_ts(&param_nbr_two);
+                let serde_state_init_three_fields_ts = gen_serde_state_init_ts(&param_nbr_three);
+                let serde_state_init_four_fields_ts = gen_serde_state_init_ts(&param_nbr_four);
+                let gen_serialize_field_ts = |field_name: &dyn Display, third_param_ts: &dyn ToTokens| {
                     let field_name_dq_ts = dq_ts(&field_name);
-                    quote! {_serde::ser::SerializeStruct::serialize_field(&mut __serde_state, #field_name_dq_ts, #third_parameter_ts)?;}
+                    quote! {_serde::ser::SerializeStruct::serialize_field(&mut __serde_state, #field_name_dq_ts, #third_param_ts)?;}
                 };
                 let serde_ser_serialize_struct_end_ts = quote! {_serde::ser::SerializeStruct::end(__serde_state)};
                 let serde_serialize_content_e5bb5640_ts = {
@@ -1574,9 +1574,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 let gen_field_index_ts = |index_52391f7d: usize| format!("f{index_52391f7d}").parse::<Ts2>().expect("a4e1a63f");
                 let gen_field_index_value_ts = |index_7ef2fc7d: usize| format!("f{index_7ef2fc7d}_value").parse::<Ts2>().expect("fa97be6c");
                 let (enum_field_two_ts, enum_field_three_ts, enum_field_four_ts) = {
-                    let gen_enum_field_ts = |parameter_nbr: &ParameterNbr| {
+                    let gen_enum_field_ts = |param_nbr: &ParamNbr| {
                         let fields_ts = {
-                            let fields_ts = parameter_nbr.get_vec_from_index_starting_with_zero().into_iter().map(&gen_field_index_ts);
+                            let fields_ts = param_nbr.get_vec_from_index_starting_with_zero().into_iter().map(&gen_field_index_ts);
                             quote! {#(#fields_ts),*}
                         };
                         quote! {
@@ -1588,7 +1588,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                     };
-                    (gen_enum_field_ts(&parameter_nbr_two), gen_enum_field_ts(&parameter_nbr_three), gen_enum_field_ts(&parameter_nbr_four))
+                    (gen_enum_field_ts(&param_nbr_two), gen_enum_field_ts(&param_nbr_three), gen_enum_field_ts(&param_nbr_four))
                 };
                 let (fn_expecting_struct_ident_dq_ts, fn_expecting_tuple_struct_ident_dq_ts, fn_expecting_fi_ts) = {
                     let gen_fn_expecting_ts = |ts: &dyn ToTokens| {
@@ -1600,7 +1600,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     };
                     (gen_fn_expecting_ts(&struct_ident_dq_ts), gen_fn_expecting_ts(&tuple_struct_ident_dq_ts), gen_fn_expecting_ts(&quote! {"field identifier"}))
                 };
-                let field_0_value_ts = gen_field_index_value_ts(parameter_nbr_one.get_index());
+                let field_0_value_ts = gen_field_index_value_ts(param_nbr_one.get_index());
                 let gen_serde_private_ok_ts = |ts: &dyn ToTokens| {
                     quote! {Ok(#ts)}
                 };
@@ -1817,9 +1817,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     )
                 };
                 let (fn_visit_u64_two_ts, fn_visit_u64_three_ts, fn_visit_u64_four_ts) = {
-                    let gen_fn_visit_u64_ts = |parameter_nbr: &ParameterNbr| {
+                    let gen_fn_visit_u64_ts = |param_nbr: &ParamNbr| {
                         let fields_ts = {
-                            parameter_nbr.get_vec_from_index_starting_with_zero().into_iter().map(|el0| {
+                            param_nbr.get_vec_from_index_starting_with_zero().into_iter().map(|el0| {
                                 let index_vrt_ts = format!("{el0}u64").parse::<Ts2>().expect("5aee0393");
                                 let field_index_ts = gen_field_index_ts(el0);
                                 quote! {#index_vrt_ts => Ok(__Field::#field_index_ts)}
@@ -1837,7 +1837,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                     };
-                    (gen_fn_visit_u64_ts(&parameter_nbr_two), gen_fn_visit_u64_ts(&parameter_nbr_three), gen_fn_visit_u64_ts(&parameter_nbr_four))
+                    (gen_fn_visit_u64_ts(&param_nbr_two), gen_fn_visit_u64_ts(&param_nbr_three), gen_fn_visit_u64_ts(&param_nbr_four))
                 };
                 let (fn_visit_str_value_start_end_ts, fn_visit_str_value_hour_min_sec_micro_ts, fn_visit_str_value_hour_minute_second_microsecond_ts, fn_visit_str_value_date_time_ts, fn_visit_str_value_date_naive_time_ts, fn_visit_str_value_months_days_microseconds_ts) = {
                     let gen_fn_visit_str_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
@@ -4744,8 +4744,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     &quote! {<'lifetime>},
                     &ident_stdrt_not_null_read_ucc,
                     &Ts2::new(),
-                    &IncrParameterUnderscore::False,
-                    &ColumnParameterUnderscore::False,
+                    &IncrParamUnderscore::False,
+                    &ColumnParamUnderscore::False,
                     &IsNeedToAddLogicalOperatorUnderscore::True,
                     &quote! {
                         match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
@@ -4967,7 +4967,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let maybe_primary_key_is_primary_key_ts = quote! {pg_types_common::maybe_primary_key(is_primary_key)};
                     let column_pg_query_type = format!("{{column}} {pg_query_type}{maybe_arr_part}{maybe_constraint_part}");
                     let column_pg_query_type_not_null = format!("{{column}} {pg_query_type}{maybe_arr_part} not null{maybe_constraint_part}");
-                    let space_additional_parameter = " {}";
+                    let space_additional_param = " {}";
                     match (&is_nullable, &can_be_primary_key) {
                         (IsNullable::False, CanBePrimaryKey::False) => {
                             let format_ts = dq_ts(&column_pg_query_type_not_null);
@@ -4976,7 +4976,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                         (IsNullable::False, CanBePrimaryKey::True) => {
-                            let format_ts = dq_ts(&format!("{column_pg_query_type_not_null}{space_additional_parameter}"));
+                            let format_ts = dq_ts(&format!("{column_pg_query_type_not_null}{space_additional_param}"));
                             quote! {
                                 format!(#format_ts, #maybe_primary_key_is_primary_key_ts)
                             }
@@ -4988,7 +4988,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                         (IsNullable::True, CanBePrimaryKey::True) => {
-                            let format_ts = dq_ts(&format!("{column_pg_query_type}{space_additional_parameter}"));
+                            let format_ts = dq_ts(&format!("{column_pg_query_type}{space_additional_param}"));
                             quote! {
                                 format!(#format_ts, #maybe_primary_key_is_primary_key_ts)
                             }

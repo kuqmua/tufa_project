@@ -53,7 +53,7 @@ use naming::{
     UpdateManyAdditionalLogicSc, UpdateOneAdditionalErVrtsSc, UpdateOneAdditionalLogicSc,
     UpdateQueryBindSc, UpdateQueryPartPrimaryKeySc, UpdateQueryPartSc, UpdateSc, UpdateUcc, UrlSc,
     ValueSc, ValueUcc, WhereManySc, WhereUcc,
-    parameter::{
+    param::{
         ErSelfSc, IsSelfUpdateExistSc, SelfCreateUcc, SelfDeleteManyParamsUcc,
         SelfDeleteManyPayloadUcc, SelfDeleteOneErWithSerdeUcc, SelfDeleteOneParamsUcc,
         SelfDeleteOnePayloadUcc, SelfErWithSerdeSc, SelfGenPgTableModSc, SelfHandleSc,
@@ -69,7 +69,7 @@ use naming::{
 };
 use panic_location::panic_location;
 use pg_crud_macros_common::{
-    ColumnParameterUnderscore, Dim, EqualOrEqualUsingFields, ImportPath, IncrParameterUnderscore,
+    ColumnParamUnderscore, Dim, EqualOrEqualUsingFields, ImportPath, IncrParamUnderscore,
     IsNeedToAddLogicalOperatorUnderscore, IsQueryBindMutable,
     gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_ts,
     gen_impl_pg_crud_default_opt_some_vec_one_el_ts, gen_impl_serde_deserialize_for_struct_ts,
@@ -1212,8 +1212,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &quote! {<'lifetime>},
                 &opt_ident_where_many_ucc,
                 &Ts2::new(),
-                &IncrParameterUnderscore::False,
-                &ColumnParameterUnderscore::True,
+                &IncrParamUnderscore::False,
+                &ColumnParamUnderscore::True,
                 &IsNeedToAddLogicalOperatorUnderscore::True,
                 &{
                     let additional_params_modification_ts = fields.iter().enumerate().map(|(index, el)| {

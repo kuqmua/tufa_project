@@ -33,7 +33,7 @@ use naming::{
     GreaterThanIncludedLowerBoundUcc, GreaterThanUcc, InUcc, IncludedLowerBoundUcc, LengthEqualUcc,
     LengthGreaterThanUcc, OverlapWithRangeUcc, OverlapsWithArrUcc, RangeLengthUcc, RegexUcc,
     StrictlyToLeftOfRangeUcc, StrictlyToRightOfRangeUcc,
-    parameter::{PgJsonTypeWhereSelfUcc, PgTypeWhereSelfUcc},
+    param::{PgJsonTypeWhereSelfUcc, PgTypeWhereSelfUcc},
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;

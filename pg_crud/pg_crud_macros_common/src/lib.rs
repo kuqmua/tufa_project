@@ -40,7 +40,7 @@ use naming::{
     SelectOnlyUpdatedIdsQueryPartSc, SelectQueryPartSc, SelectUcc, SelfUcc, TableTypeSc,
     TableTypeUcc, UpdateForQueryUcc, UpdateQueryBindSc, UpdateQueryPartSc, UpdateToReadOnlyIdsSc,
     UpdateUcc, ValueSc, ValueUcc, WhereUcc,
-    parameter::{SelfCreateUcc, SelfSelectUcc, SelfWhereUcc},
+    param::{SelfCreateUcc, SelfSelectUcc, SelfWhereUcc},
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -344,11 +344,11 @@ impl ToTokens for IsQueryBindMutable {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub enum IncrParameterUnderscore {
+pub enum IncrParamUnderscore {
     False,
     True,
 }
-impl ToTokens for IncrParameterUnderscore {
+impl ToTokens for IncrParamUnderscore {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => IncrSc.to_tokens(tokens),
@@ -357,11 +357,11 @@ impl ToTokens for IncrParameterUnderscore {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub enum ColumnParameterUnderscore {
+pub enum ColumnParamUnderscore {
     False,
     True,
 }
-impl ToTokens for ColumnParameterUnderscore {
+impl ToTokens for ColumnParamUnderscore {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => ColumnSc.to_tokens(tokens),
@@ -621,8 +621,8 @@ pub fn gen_pg_type_where_ts(
             &quote! {<'lifetime>},
             &ident,
             &Ts2::new(),
-            &IncrParameterUnderscore::False,
-            &ColumnParameterUnderscore::False,
+            &IncrParamUnderscore::False,
+            &ColumnParamUnderscore::False,
             &IsNeedToAddLogicalOperatorUnderscore::False,
             &{
                 let vrts_ts = vrts.iter().map(|el| {
@@ -966,8 +966,8 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
     impl_generic_ts: &dyn ToTokens,
     ident_ts: &dyn ToTokens,
     ident_generic_ts: &dyn ToTokens,
-    incr_parameter_underscore: &IncrParameterUnderscore,
-    column_parameter_underscore: &ColumnParameterUnderscore,
+    incr_param_underscore: &IncrParamUnderscore,
+    column_param_underscore: &ColumnParamUnderscore,
     is_need_to_add_logical_operator_underscore: &IsNeedToAddLogicalOperatorUnderscore,
     query_part_ts: &dyn ToTokens,
     is_query_bind_mutable: &IsQueryBindMutable,
@@ -979,8 +979,8 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
         impl #impl_generic_ts #import_path ::#PgTypeWhereFilterUcc<'lifetime> for #ident_ts #ident_generic_ts {
             fn #QueryPartSc(
                 &self,
-                #incr_parameter_underscore: &mut #U64,
-                #column_parameter_underscore: &dyn #StdFmtDisplay,
+                #incr_param_underscore: &mut #U64,
+                #column_param_underscore: &dyn #StdFmtDisplay,
                 #is_need_to_add_logical_operator_underscore: #Bool
             ) -> Result<#StringTs, #import_path::#QueryPartErUcc> {
                 #query_part_ts

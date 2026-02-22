@@ -1,4 +1,4 @@
-pub mod parameter;
+pub mod param;
 use gen_quotes::dq_str;
 pub use naming_common::{
     AsRefStrToScStr, AsRefStrToScTs, AsRefStrToUccStr, AsRefStrToUccTs, AsRefStrToUpperScStr,
@@ -14,14 +14,6 @@ use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use std::fmt::{Display, Formatter, Result as FmtResult};
 pub const GITHUB_URL: &str = "https://github.com/kuqmua/tufa_project";
-pub const SUPPORTS_ONLY_STRINGIFIED: &str = "supports only";
-pub const SYN_FIELDS: &str = "syn::Fields";
-pub const SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED: &str = "syn::GenericArgument::Type";
-pub const IS_NONE_STRINGIFIED: &str = "is None";
-pub const STD_STRINGIFIED: &str = "std";
-pub const SQLX_TYPES_UUID_STRINGIFIED: &str = "sqlx::types::Uuid";
-pub const FIELD_IDENT_IS_NONE: &str = "field.ident is None";
-pub const SYN_TYPE_PATH: &str = "syn::Type::Path";
 naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["primary", "key"],
     ["serde"],

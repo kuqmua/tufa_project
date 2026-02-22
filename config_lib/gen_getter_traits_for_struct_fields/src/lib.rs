@@ -1,5 +1,5 @@
 use naming::ToTokensToUccStr;
-use naming::parameter::{GetSelfSc, GetSelfUcc};
+use naming::param::{GetSelfSc, GetSelfUcc};
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
