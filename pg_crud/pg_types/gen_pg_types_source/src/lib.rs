@@ -1590,7 +1590,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     };
                     (gen_enum_field_ts(&parameter_nbr_two), gen_enum_field_ts(&parameter_nbr_three), gen_enum_field_ts(&parameter_nbr_four))
                 };
-                let (fn_expecting_struct_ident_dq_ts, fn_expecting_tuple_struct_ident_dq_ts, fn_expecting_field_identifier_ts) = {
+                let (fn_expecting_struct_ident_dq_ts, fn_expecting_tuple_struct_ident_dq_ts, fn_expecting_field_ident_ts) = {
                     let gen_fn_expecting_ts = |ts: &dyn ToTokens| {
                         quote! {
                             fn expecting(&self, __f: &mut serde::__private228::Formatter<'_>) -> serde::__private228::fmt::Result {
@@ -2229,42 +2229,42 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     (
                         gen_impl_serde_de_visitor_for_field_visitor_ts(&quote! {
                             #type_value_equal_underscore_field_semicolon_ts
-                            #fn_expecting_field_identifier_ts
+                            #fn_expecting_field_ident_ts
                             #fn_visit_u64_four_ts
                             #fn_visit_str_value_hour_min_sec_micro_ts
                             #fn_visit_bytes_hour_min_sec_micro_ts
                         }),
                         gen_impl_serde_de_visitor_for_field_visitor_ts(&quote! {
                             #type_value_equal_underscore_field_semicolon_ts
-                            #fn_expecting_field_identifier_ts
+                            #fn_expecting_field_ident_ts
                             #fn_visit_u64_two_ts
                             #fn_visit_str_value_start_end_ts
                             #fn_visit_bytes_start_end_ts
                         }),
                         gen_impl_serde_de_visitor_for_field_visitor_ts(&quote! {
                             #type_value_equal_underscore_field_semicolon_ts
-                            #fn_expecting_field_identifier_ts
+                            #fn_expecting_field_ident_ts
                             #fn_visit_u64_four_ts
                             #fn_visit_str_value_hour_minute_second_microsecond_ts
                             #fn_visit_bytes_hour_minute_second_microsecond_ts
                         }),
                         gen_impl_serde_de_visitor_for_field_visitor_ts(&quote! {
                             #type_value_equal_underscore_field_semicolon_ts
-                            #fn_expecting_field_identifier_ts
+                            #fn_expecting_field_ident_ts
                             #fn_visit_u64_two_ts
                             #fn_visit_str_value_date_time_ts
                             #fn_visit_bytes_date_time_ts
                         }),
                         gen_impl_serde_de_visitor_for_field_visitor_ts(&quote! {
                             #type_value_equal_underscore_field_semicolon_ts
-                            #fn_expecting_field_identifier_ts
+                            #fn_expecting_field_ident_ts
                             #fn_visit_u64_two_ts
                             #fn_visit_str_value_date_naive_time_ts
                             #fn_visit_bytes_date_naive_time_ts
                         }),
                         gen_impl_serde_de_visitor_for_field_visitor_ts(&quote! {
                             #type_value_equal_underscore_field_semicolon_ts
-                            #fn_expecting_field_identifier_ts
+                            #fn_expecting_field_ident_ts
                             #fn_visit_u64_three_ts
                             #fn_visit_str_value_months_days_microseconds_ts
                             #fn_visit_bytes_months_days_microseconds_ts
