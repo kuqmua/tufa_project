@@ -698,6 +698,21 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             &self_ident_origin_new_value_ts,
             &self_ident_origin_new_value_ts
         );
+        let gen_not_empty_unique_vec_try_new_match_ts = |
+            param_ts: &dyn ToTokens,
+            ok_v_ts: &dyn ToTokens,
+            ok_ts: &dyn ToTokens,
+            is_empty_ts: &dyn ToTokens,
+            not_unique_ts: &dyn ToTokens,
+        |quote! {
+            match #import_path::NotEmptyUniqueVec::try_new(#param_ts) {
+                Ok(#ok_v_ts) => #ok_ts,
+                Err(er) => match er {
+                    #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => #is_empty_ts,
+                    #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => #not_unique_ts
+                }
+            }
+        };
         let ident_create_for_query_ucc = SelfCreateForQueryUcc::from_tokens(&ident);
         let ident_update_ucc = SelfUpdateUcc::from_tokens(&ident);
         let ident_update_for_query_ucc = SelfUpdateForQueryUcc::from_tokens(&ident);
@@ -2834,17 +2849,15 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 };
                                 match is_nullable {
                                     IsNullable::False => quote! {acc_049ff0b3.push(#content_ts_f1ffd3b2);},
-                                    IsNullable::True => quote! {
-                                        match #import_path::NotEmptyUniqueVec::try_new(vec![#content_ts_f1ffd3b2]) {
-                                            Ok(v_9328b66f) => {
-                                                acc_049ff0b3.push(#import_path::NullableJsonObjectPgTypeWhereFilter(Some(v_9328b66f)));
-                                            },
-                                            Err(er) => match er {
-                                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => (),
-                                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("2f5f648a")
-                                            }
-                                        }
-                                    },
+                                    IsNullable::True => gen_not_empty_unique_vec_try_new_match_ts(
+                                        &quote!{vec![#content_ts_f1ffd3b2]},
+                                        &quote!{v_9328b66f},
+                                        &quote!{{
+                                            acc_049ff0b3.push(#import_path::NullableJsonObjectPgTypeWhereFilter(Some(v_9328b66f)));
+                                        }},
+                                        &quote!{()},
+                                        &quote!{panic!("2f5f648a")},
+                                    )
                                 }
                             };
                             for (index_ef936914, _) in is_nullable_vec.iter().take(is_nullable_vec.len().saturating_sub(1)).enumerate() {
@@ -2993,143 +3006,131 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 )
             };
             //todo maybe reuse LengthEqual and LengthGreaterThan
-            let create_into_pg_json_type_opt_vec_where_length_equal_ts = {
-                let gen_ts = || {
-                    let content_ts = {
-                        let create_dot_zero_dot_zero = quote! {#CreateSc.0.0};
+            let create_into_pg_json_type_opt_vec_where_length_equal_ts = match &pattern {
+                Pattern::Stdrt => quote!{#NoneTs},
+                Pattern::ArrDim1 { .. } |
+                Pattern::ArrDim2 { .. } |
+                Pattern::ArrDim3 { .. } |
+                Pattern::ArrDim4 { .. } => gen_not_empty_unique_vec_try_new_match_ts(
+                    &{
                         let content_ts = {
-                            let content_ts: &dyn ToTokens = match &is_nullable {
-                                IsNullable::False => &create_dot_zero_dot_zero,
-                                IsNullable::True => &quote! {v_1bbf74bc.0},
-                            };
-                            quote! {
-                                ::LengthEqual(
-                                    where_filters::PgJsonTypeWhereLengthEqual {
-                                        logical_operator: #import_path::LogicalOperator::Or,
-                                        #ValueSc: pg_crud_common::UnsignedPartOfI32::try_from(
-                                            i32::try_from(#content_ts.len()).expect("64d3424f")
-                                        ).expect("081f4463"),
-                                    }
-                                )
-                            }
-                        };
-                        match &is_nullable {
-                            IsNullable::False => quote! {#ident_where_ucc #content_ts},
-                            IsNullable::True => {
-                                let ident_where_ucc_db49334a = SelfWhereUcc::from_tokens(&ident_not_null_ts);
+                            let create_dot_zero_dot_zero = quote! {#CreateSc.0.0};
+                            let content_ts = {
+                                let content_ts: &dyn ToTokens = match &is_nullable {
+                                    IsNullable::False => &create_dot_zero_dot_zero,
+                                    IsNullable::True => &quote! {v_1bbf74bc.0},
+                                };
                                 quote! {
-                                    #import_path::NullableJsonObjectPgTypeWhereFilter(
-                                        match #create_dot_zero_dot_zero {
-                                            Some(v_1bbf74bc) => match #import_path::NotEmptyUniqueVec::try_new(
-                                                vec![#ident_where_ucc_db49334a #content_ts]
-                                            ) {
-                                                Ok(v_d82bbdbe) => Some(v_d82bbdbe),
-                                                Err(er) => match er {
-                                                    #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => {
-                                                        return None;
-                                                    },
-                                                    #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("3d7ce854")
-                                                }
-                                            },
-                                            None => None,
+                                    ::LengthEqual(
+                                        where_filters::PgJsonTypeWhereLengthEqual {
+                                            logical_operator: #import_path::LogicalOperator::Or,
+                                            #ValueSc: pg_crud_common::UnsignedPartOfI32::try_from(
+                                                i32::try_from(#content_ts.len()).expect("64d3424f")
+                                            ).expect("081f4463"),
                                         }
                                     )
                                 }
-                            }
-                        }
-                    };
-                    quote! {
-                        match #import_path::NotEmptyUniqueVec::try_new(vec![
-                            #content_ts
-                        ]) {
-                            Ok(v_e196e86d) => Some(v_e196e86d),
-                            Err(er) => match er {
-                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
-                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("e9f9b021")
-                            }
-                        }
-                    }
-                };
-                match &pattern {
-                    Pattern::Stdrt => quote!{#NoneTs},
-                    Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. } => gen_ts(),
-                }
-            };
-            let create_into_pg_json_type_opt_vec_where_length_greater_than_ts = {
-                let gen_ts = || {
-                    let content_ts = {
-                        let create_dot_zero_dot_zero = quote! {#CreateSc.0.0};
-                        let content_ts = {
-                            let content_ts: &dyn ToTokens = match &is_nullable {
-                                IsNullable::False => &create_dot_zero_dot_zero,
-                                IsNullable::True => &quote! {v_68880991.0},
                             };
-                            quote! {
-                                ::LengthGreaterThan(
-                                    where_filters::PgJsonTypeWhereLengthGreaterThan {
-                                        logical_operator: #import_path::LogicalOperator::Or,
-                                        #ValueSc: if let Ok(v_762dae1f) = pg_crud_common::UnsignedPartOfI32::try_from(
-                                            if let Ok(v_9dca0200) = i32::try_from(
-                                                //todo temp code. make it better checking all cases
-                                                match #content_ts.len().checked_sub(1) {
-                                                    Some(v_92860143) => v_92860143,
-                                                    None => {
-                                                        return None;
+                            match &is_nullable {
+                                IsNullable::False => quote! {#ident_where_ucc #content_ts},
+                                IsNullable::True => {
+                                    let ident_where_ucc_db49334a = SelfWhereUcc::from_tokens(&ident_not_null_ts);
+                                    let not_empty_unique_vec_try_new_match_ts = gen_not_empty_unique_vec_try_new_match_ts(
+                                        &quote!{vec![#ident_where_ucc_db49334a #content_ts]},
+                                        &quote!{v_d82bbdbe},
+                                        &quote!{Some(v_d82bbdbe)},
+                                        &quote!{{return None;}},
+                                        &quote!{panic!("3d7ce854")},
+                                    );
+                                    quote! {
+                                        #import_path::NullableJsonObjectPgTypeWhereFilter(
+                                            match #create_dot_zero_dot_zero {
+                                                Some(v_1bbf74bc) => #not_empty_unique_vec_try_new_match_ts,
+                                                None => None,
+                                            }
+                                        )
+                                    }
+                                }
+                            }
+                        };
+                        quote!{vec![#content_ts]}
+                    },
+                    &quote!{v_e196e86d},
+                    &quote!{Some(v_e196e86d)},
+                    &quote!{None},
+                    &quote!{panic!("e9f9b021")},
+                ),
+            };
+            let create_into_pg_json_type_opt_vec_where_length_greater_than_ts = match &pattern {
+                Pattern::Stdrt => quote!{#NoneTs},
+                Pattern::ArrDim1 { .. } |
+                Pattern::ArrDim2 { .. } |
+                Pattern::ArrDim3 { .. } |
+                Pattern::ArrDim4 { .. } => gen_not_empty_unique_vec_try_new_match_ts(
+                    &{
+                        let content_ts = {
+                            let create_dot_zero_dot_zero = quote! {#CreateSc.0.0};
+                            let content_ts = {
+                                let content_ts: &dyn ToTokens = match &is_nullable {
+                                    IsNullable::False => &create_dot_zero_dot_zero,
+                                    IsNullable::True => &quote! {v_68880991.0},
+                                };
+                                quote! {
+                                    ::LengthGreaterThan(
+                                        where_filters::PgJsonTypeWhereLengthGreaterThan {
+                                            logical_operator: #import_path::LogicalOperator::Or,
+                                            #ValueSc: if let Ok(v_762dae1f) = pg_crud_common::UnsignedPartOfI32::try_from(
+                                                if let Ok(v_9dca0200) = i32::try_from(
+                                                    //todo temp code. make it better checking all cases
+                                                    match #content_ts.len().checked_sub(1) {
+                                                        Some(v_92860143) => v_92860143,
+                                                        None => {
+                                                            return None;
+                                                        }
                                                     }
+                                                ) {
+                                                    v_9dca0200
+                                                }
+                                                else {
+                                                    return None;
                                                 }
                                             ) {
-                                                v_9dca0200
+                                                v_762dae1f
                                             }
                                             else {
                                                 return None;
                                             }
-                                        ) {
-                                            v_762dae1f
                                         }
-                                        else {
-                                            return None;
-                                        }
+                                    )
+                                }
+                            };
+                            match &is_nullable {
+                                IsNullable::False => quote! {#ident_where_ucc #content_ts},
+                                IsNullable::True => {
+                                    let ident_where_ucc_8a412c1a = SelfWhereUcc::from_tokens(&ident_not_null_ts);
+                                    let not_empty_unique_vec_try_new_match_ts = gen_not_empty_unique_vec_try_new_match_ts(
+                                        &quote!{vec![#ident_where_ucc_8a412c1a #content_ts]},
+                                        &quote!{v_cdc120a8},
+                                        &quote!{Some(v_cdc120a8)},
+                                        &quote!{{return None;}},
+                                        &quote!{panic!("584f801e")},
+                                     );
+                                    quote! {
+                                        #import_path::NullableJsonObjectPgTypeWhereFilter(match #create_dot_zero_dot_zero {
+                                            Some(v_68880991) => #not_empty_unique_vec_try_new_match_ts,
+                                            None => None,
+                                        })
                                     }
-                                )
-                            }
-                        };
-                        match &is_nullable {
-                            IsNullable::False => quote! {#ident_where_ucc #content_ts},
-                            IsNullable::True => {
-                                let ident_where_ucc_8a412c1a = SelfWhereUcc::from_tokens(&ident_not_null_ts);
-                                quote! {
-                                    #import_path::NullableJsonObjectPgTypeWhereFilter(match #create_dot_zero_dot_zero {
-                                        Some(v_68880991) => match #import_path::NotEmptyUniqueVec::try_new(
-                                            vec![#ident_where_ucc_8a412c1a #content_ts]
-                                        ) {
-                                            Ok(v_cdc120a8) => Some(v_cdc120a8),
-                                            Err(er) => match er {
-                                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => {
-                                                    return None;
-                                                },
-                                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("584f801e")
-                                            }
-                                        },
-                                        None => None,
-                                    })
                                 }
                             }
-                        }
-                    };
-                    quote! {
-                        match #import_path::NotEmptyUniqueVec::try_new(vec![#content_ts]) {
-                            Ok(v_cee8d0ab) => Some(v_cee8d0ab),
-                            Err(er) => match er {
-                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
-                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("497359a5")
-                            },
-                        }
-                    }
-                };
-                match &pattern {
-                    Pattern::Stdrt => quote!{#NoneTs},
-                    Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. } => gen_ts(),
-                }
+                        };
+                        quote!{vec![#content_ts]}
+                    },
+                    &quote!{v_cee8d0ab},
+                    &quote!{Some(v_cee8d0ab)},
+                    &quote!{None},
+                    &quote!{panic!("497359a5")},
+                ),
             };
             let gen_dot_checked_sub_one_ts = |content_ts: &dyn ToTokens|quote!{#content_ts.checked_sub(1)};
             let gen_minus_one_is_finite_then_some_ts = |
@@ -3164,10 +3165,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     float_32_greater_than_one_less_ts,
                     float_64_greater_than_one_less_ts,
                 ) = {
-                    let gen_greater_than_one_less_ts = |content_ts: &dyn ToTokens|quote!{
-                        let v_7aa498e8 = #content_ts?;
-                        match #import_path::NotEmptyUniqueVec::try_new(
-                            vec![
+                    let gen_greater_than_one_less_ts = |content_ts: &dyn ToTokens|{
+                        let not_empty_unique_vec_try_new_match_ts = gen_not_empty_unique_vec_try_new_match_ts(
+                            &quote!{vec![
                                 #import_path::SingleOrMultiple::Single(#ident_where_ucc::GreaterThan(
                                     where_filters::PgJsonTypeWhereGreaterThan {
                                         logical_operator: #import_path::LogicalOperator::Or,
@@ -3176,13 +3176,15 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                         ),
                                     }
                                 ))
-                            ]
-                        ) {
-                            Ok(v_6f3e23b5) => Some(v_6f3e23b5),
-                            Err(er) => match er {
-                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty { .. } => None,
-                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique { .. } => panic!("11287f54"),
-                            },
+                            ]},
+                            &quote!{v_6f3e23b5},
+                            &quote!{Some(v_6f3e23b5)},
+                            &quote!{None},
+                            &quote!{panic!("11287f54")},
+                        );
+                        quote!{
+                            let v_7aa498e8 = #content_ts?;
+                            #not_empty_unique_vec_try_new_match_ts
                         }
                     };
                     let create_dot_zero_dot_zero_ts = quote!{create.0.0};
@@ -3310,29 +3312,24 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     PgJsonType::U32AsJsonbNbr |
                     PgJsonType::U64AsJsonbNbr |
                     PgJsonType::F32AsJsonbNbr |
-                    PgJsonType::F64AsJsonbNbr => {
-                        //todo extra vrts to test
-                        quote!{
-                            match #import_path::NotEmptyUniqueVec::try_new(vec![
-                                #import_path::SingleOrMultiple::Single(
-                                    #ident_where_ucc::In(
-                                        where_filters::PgJsonTypeWhereIn {
-                                            logical_operator: #import_path::LogicalOperator::Or,
-                                            value: where_filters::PgJsonTypeNotEmptyUniqueVec::try_new(
-                                                vec![#ident_table_type_ucc::new(#CreateSc.0.0)]
-                                            ).expect("2737c0ed")
-                                        }
-                                    ),
-                                )
-                            ]) {
-                                Ok(v_1c4f89a4) => Some(v_1c4f89a4),
-                                Err(er) => match er {
-                                    #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
-                                    #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("16ae359d")
-                                }
-                            }
-                        }
-                    },
+                    PgJsonType::F64AsJsonbNbr => gen_not_empty_unique_vec_try_new_match_ts(
+                        &quote!{vec![
+                            #import_path::SingleOrMultiple::Single(
+                                #ident_where_ucc::In(
+                                    where_filters::PgJsonTypeWhereIn {
+                                        logical_operator: #import_path::LogicalOperator::Or,
+                                        value: where_filters::PgJsonTypeNotEmptyUniqueVec::try_new(
+                                            vec![#ident_table_type_ucc::new(#CreateSc.0.0)]
+                                        ).expect("2737c0ed")
+                                    }
+                                ),
+                            )
+                        ]},
+                        &quote!{v_1c4f89a4},
+                        &quote!{Some(v_1c4f89a4)},
+                        &quote!{None},
+                        &quote!{panic!("16ae359d")},
+                    ),
                     PgJsonType::BoolAsJsonbBoolean |
                     PgJsonType::StringAsJsonbString |
                     PgJsonType::UuidUuidAsJsonbString => quote!{#NoneTs}
@@ -3357,8 +3354,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     PgJsonType::F64AsJsonbNbr |
                     PgJsonType::BoolAsJsonbBoolean |
                     PgJsonType::UuidUuidAsJsonbString => quote!{#NoneTs},
-                    PgJsonType::StringAsJsonbString => quote!{
-                        match #import_path::NotEmptyUniqueVec::try_new(vec![
+                    PgJsonType::StringAsJsonbString => gen_not_empty_unique_vec_try_new_match_ts(
+                        &quote!{vec![
                             #import_path::SingleOrMultiple::Single(
                                 #ident_where_ucc::Regex(
                                     where_filters::PgJsonTypeWhereRegex {
@@ -3368,14 +3365,12 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     }
                                 ),
                             )
-                        ]) {
-                            Ok(v_75ae8964) => Some(v_75ae8964),
-                            Err(er) => match er {
-                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
-                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("b9713787")
-                            }
-                        }
-                    },
+                        ]},
+                        &quote!{v_75ae8964},
+                        &quote!{Some(v_75ae8964)},
+                        &quote!{None},
+                        &quote!{panic!("b9713787")},
+                    )
                 }
             }
             else {
@@ -3393,8 +3388,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             float_32_greater_than_one_less_ts,
                             float_64_greater_than_one_less_ts,
                         ) = {
-                            let gen_greater_than_one_less_ts = |content_ts: &dyn ToTokens|quote!{
-                                match #import_path::NotEmptyUniqueVec::try_new({
+                            let gen_greater_than_one_less_ts = |content_ts: &dyn ToTokens|gen_not_empty_unique_vec_try_new_match_ts(
+                                &quote!{{
                                     let mut acc_f95ec4f2 = vec![];
                                     for el_ba78af60 in create.0.0 {
                                         let v_027d0d3a = #content_ts;
@@ -3419,14 +3414,12 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                         }
                                     }
                                     acc_f95ec4f2
-                                }) {
-                                    Ok(v_69c93ec5) => Some(v_69c93ec5),
-                                    Err(er) => match er {
-                                        #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
-                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("47e44ecd")
-                                    }
-                                }
-                            };
+                                }},
+                                &quote!{v_69c93ec5},
+                                &quote!{Some(v_69c93ec5)},
+                                &quote!{None},
+                                &quote!{panic!("47e44ecd")},
+                            );
                             let el_dot_zero_ts = quote!{el_ba78af60.0};
                             (
                                 gen_greater_than_one_less_ts(&gen_dot_checked_sub_one_ts(
@@ -3487,8 +3480,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             PgJsonType::F64AsJsonbNbr |
                             PgJsonType::BoolAsJsonbBoolean |
                             PgJsonType::UuidUuidAsJsonbString => quote!{#NoneTs},
-                            PgJsonType::StringAsJsonbString => quote!{
-                                match #import_path::NotEmptyUniqueVec::try_new(create.0.0.into_iter().map(|el_590fca71| {
+                            PgJsonType::StringAsJsonbString => gen_not_empty_unique_vec_try_new_match_ts(
+                                &quote!{create.0.0.into_iter().map(|el_590fca71| {
                                     #import_path::SingleOrMultiple::Single(
                                         #ident_where_ucc::ContainsElRegex(
                                             where_filters::PgJsonTypeWhereContainsElRegex {
@@ -3506,14 +3499,12 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                         ),
                                     )
                                 })
-                                .collect()) {
-                                    Ok(v_0363f494) => Some(v_0363f494),
-                                    Err(er) => match er {
-                                        #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
-                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("415a73d9")
-                                    }
-                                }
-                            }
+                                .collect()},
+                                &quote!{v_0363f494},
+                                &quote!{Some(v_0363f494)},
+                                &quote!{None},
+                                &quote!{panic!("415a73d9")},
+                            )
                         }
                     }
                     else {
