@@ -104,7 +104,7 @@ pub fn gen_serde_version_of_named_syn_vrt(v: &Variant) -> Ts2 {
         .iter()
         .filter(|el| *el.ident.as_ref().expect("3078fd99") != *LocSc.to_string())
         .map(|el| {
-            let get_type_path_third_segment_second_argument_check_if_hashmap = || {
+            let get_1_hashmap_arg = || {
                 let segments = if let Type::Path(syn_type_path) = &el.ty {
                     &syn_type_path.path.segments
                 } else {
@@ -181,20 +181,17 @@ pub fn gen_serde_version_of_named_syn_vrt(v: &Variant) -> Ts2 {
                     }
                 }
                 LocationFieldAttr::EoHashMapKStringVToErrString => {
-                    let _: &GenericArgument =
-                        get_type_path_third_segment_second_argument_check_if_hashmap();
+                    let _: &GenericArgument = get_1_hashmap_arg();
                     quote! {
                         std::collections::HashMap<#StringTs, #StringTs>
                     }
                 }
                 LocationFieldAttr::EoHashMapKStringVToErrStringSerde => {
-                    let _: &GenericArgument =
-                        get_type_path_third_segment_second_argument_check_if_hashmap();
+                    let _: &GenericArgument = get_1_hashmap_arg();
                     el_type_ts
                 }
                 LocationFieldAttr::EoHashMapKStringVLocation => {
-                    let second_argument =
-                        get_type_path_third_segment_second_argument_check_if_hashmap();
+                    let second_argument = get_1_hashmap_arg();
                     let el_hashmap_v_type_with_serde_ts =
                         format!("{}{}", quote! {#second_argument}, WithSerdeUcc)
                             .parse::<Ts2>()
