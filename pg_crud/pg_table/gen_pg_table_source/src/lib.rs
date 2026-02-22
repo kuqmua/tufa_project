@@ -428,9 +428,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     //todo write runtime check
                     assert!(field_ident_len <= max_pg_column_length, "1266ae5a");
                     fields.push(SynFieldWrapper {
-                        field_vis: el.vis.clone(),
-                        field_ident: field_ident.clone(),
-                        field_type: el.ty.clone(),
+                        vis: el.vis.clone(),
+                        type0: el.ty.clone(),
+                        ident: field_ident.clone(),
                     });
                     let mut is_primary_key = false;
                     {
@@ -445,9 +445,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         panic!("1a75cea1");
                                     } else {
                                         opt_primary_key_field = Some(SynFieldWrapper {
-                                            field_vis: el.vis.clone(),
-                                            field_ident: field_ident.clone(),
-                                            field_type: el.ty.clone(),
+                                            vis: el.vis.clone(),
+                                            type0: el.ty.clone(),
+                                            ident: field_ident.clone(),
                                         });
                                         is_primary_key = true;
                                     }
@@ -457,9 +457,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                     if !is_primary_key {
                         fields_without_primary_key.push(SynFieldWrapper {
-                            field_vis: el.vis.clone(),
-                            field_ident: field_ident.clone(),
-                            field_type: el.ty.clone(),
+                            vis: el.vis.clone(),
+                            type0: el.ty.clone(),
+                            ident: field_ident.clone(),
                         });
                     }
                 }
@@ -478,12 +478,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
     let fields_len = fields.len();
     let fields_len_without_primary_key = fields_without_primary_key.len();
-    let primary_key_field_type = &primary_key_field.field_type;
+    let primary_key_field_type = &primary_key_field.type0;
     let primary_key_field_type_where_ts =
-        SelfWhereUcc::from_type_last_segment(&primary_key_field.field_type);
+        SelfWhereUcc::from_type_last_segment(&primary_key_field.type0);
     //todo must remove this and use trait type instead
     let primary_key_field_type_table_type_ts =
-        SelfTableTypeUcc::from_type_last_segment(&primary_key_field.field_type);
+        SelfTableTypeUcc::from_type_last_segment(&primary_key_field.type0);
     let gen_as_pg_type_ts = |field_type: &dyn ToTokens| {
         quote! {<#field_type as pg_crud::PgType>::}
     };
@@ -527,7 +527,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let vec_primary_key_field_type_read_ts =
         gen_vec_tokens_decl_ts(&primary_key_field_type_as_pg_type_read_ucc);
     let vec_ident_read_only_ids_ts = gen_vec_tokens_decl_ts(&ident_read_only_ids_ucc);
-    let primary_key_field_ident = &primary_key_field.field_ident;
+    let primary_key_field_ident = &primary_key_field.ident;
     let primary_key_field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&primary_key_field_ident);
     let primary_key_field_type_update_ts =
         &SelfUpdateUcc::from_type_last_segment(primary_key_field_type);
@@ -655,14 +655,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 once(
                     gen_field_type_as_pg_crud_create_table_column_query_part_create_table_query_part_ts(
                         primary_key_field_type,
-                        &primary_key_field.field_ident,
+                        &primary_key_field.ident,
                         true,
                     ),
                 )
                 .chain(fields_without_primary_key.iter().map(|el| {
                     gen_field_type_as_pg_crud_create_table_column_query_part_create_table_query_part_ts(
-                        &el.field_type,
-                        &el.field_ident,
+                        &el.type0,
+                        &el.ident,
                         false,
                     )
                 })).collect::<Vec<Ts2>>()
@@ -703,10 +703,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let fn_gen_select_query_part_ts = {
             let vrts_ts = gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| {
-                let field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el.field_ident);
+                let field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el.ident);
                 let init_ts = {
-                    let field_ident_string_dq_ts = dq_ts(&el.field_ident);
-                    let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.field_type);
+                    let field_ident_string_dq_ts = dq_ts(&el.ident);
+                    let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
                     quote! {
                         => match #as_pg_crud_pg_type_pg_type_ts #SelectQueryPartSc(
                             #ColumnSc,
@@ -964,9 +964,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .build_struct(&ident_create_ucc, &Ts2::new(), &{
                 let ts =
                     gen_fields_named_without_primary_key_with_comma_ts(&|el: &SynFieldWrapper| {
-                        let field_ident = &el.field_ident;
+                        let field_ident = &el.ident;
                         let el_syn_field_ty_as_pg_type_create_ts =
-                            gen_as_pg_type_create_ts(&el.field_type);
+                            gen_as_pg_type_create_ts(&el.type0);
                         quote! {
                             pub #field_ident: #el_syn_field_ty_as_pg_type_create_ts
                         }
@@ -1011,13 +1011,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 );
                 let column_incrs_ts = gen_fields_named_without_primary_key_without_comma_ts(
                     &|el: &SynFieldWrapper| {
-                        gen_match_as_pg_crud_pg_type_pg_type_create_query_part_ts(
-                            &el.field_type,
-                            &{
-                                let el_field_ident = &el.field_ident;
-                                quote! {self.#el_field_ident}
-                            },
-                        )
+                        gen_match_as_pg_crud_pg_type_pg_type_create_query_part_ts(&el.type0, &{
+                            let el_field_ident = &el.ident;
+                            quote! {self.#el_field_ident}
+                        })
                     },
                 );
                 quote! {
@@ -1055,13 +1052,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let binded_query_modifications_ts =
                     gen_fields_named_without_primary_key_without_comma_ts(
                         &|el: &SynFieldWrapper| {
-                            gen_query_as_pg_crud_pg_type_pg_type_create_query_bind_ts(
-                                &el.field_type,
-                                &{
-                                    let field_ident = &el.field_ident;
-                                    quote! {self.#field_ident}
-                                },
-                            )
+                            gen_query_as_pg_crud_pg_type_pg_type_create_query_bind_ts(&el.type0, &{
+                                let field_ident = &el.ident;
+                                quote! {self.#field_ident}
+                            })
                         },
                     );
                 quote! {
@@ -1090,7 +1084,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let fields_init_without_primary_key_with_default_opt_some_vec_one_el_ts =
                         gen_fields_named_without_primary_key_with_comma_ts(
                             &|el: &SynFieldWrapper| {
-                                let field_ident = &el.field_ident;
+                                let field_ident = &el.ident;
                                 quote! {#field_ident: #PgCrudDefaultOptSomeVecOneElCall}
                             },
                         );
@@ -1109,8 +1103,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let ident_where_many_try_new_er_ucc = SelfWhereManyTryNewErUcc::from_tokens(&ident);
     let ident_where_many_ts = {
         let fields_decl_ts = gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| -> Ts2 {
-            let field_ident = &el.field_ident;
-            let el_syn_field_ty_as_pg_type_where_ts = gen_as_pg_type_where_ts(&el.field_type);
+            let field_ident = &el.ident;
+            let el_syn_field_ty_as_pg_type_where_ts = gen_as_pg_type_where_ts(&el.type0);
             let opt_pg_type_where_syn_field_ty_as_pg_type_where_ts = gen_opt_type_decl_ts(
                 &quote! {pg_crud::PgTypeWhere<#el_syn_field_ty_as_pg_type_where_ts>},
             );
@@ -1157,7 +1151,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &{
                 let gen_fields_ts = |should_add_borrow: ShouldAddBorrow| {
                     gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| -> Ts2 {
-                        let field_ident = &el.field_ident;
+                        let field_ident = &el.ident;
                         quote! {#should_add_borrow #field_ident}
                     })
                 };
@@ -1178,7 +1172,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &ident_where_many_ucc,
                 &fields
                     .iter()
-                    .map(|el| (&el.field_ident, &el.field_type))
+                    .map(|el| (&el.ident, &el.type0))
                     .collect::<Vec<(&Ident, &Type)>>(),
                 fields_len,
                 &|_: &Ident, syn_type: &Type| {
@@ -1193,7 +1187,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &ident_where_many_ucc,
                 &{
                     let fields_ts = gen_fields_named_without_comma_ts(&|el: &SynFieldWrapper| {
-                        let field_ident = &el.field_ident;
+                        let field_ident = &el.ident;
                         quote! {
                             #field_ident: Some(
                                 #PgCrudDefaultOptSomeVecOneElCall
@@ -1235,7 +1229,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &IsNeedToAddLogicalOperatorUnderscore::True,
                 &{
                     let additional_params_modification_ts = fields.iter().enumerate().map(|(index, el)| {
-                    let field_ident = &el.field_ident;
+                    let field_ident = &el.ident;
                     let field_ident_dq_ts = dq_ts(&field_ident);
                     let maybe_is_first_push_to_additional_params_already_happend_true_ts = if index == fields_len_without_primary_key {
                         Ts2::new()
@@ -1277,7 +1271,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &{
                     let binded_query_modifications_ts = gen_fields_named_without_comma_ts(
                         &|el: &SynFieldWrapper| {
-                            let field_ident = &el.field_ident;
+                            let field_ident = &el.ident;
                             quote! {
                                 if let Some(v_b12d6fe0) = v_27176ffb.#field_ident {
                                     match pg_crud::PgTypeWhereFilter::query_bind(v_b12d6fe0, #QuerySc) {
@@ -1421,9 +1415,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &Ts2::new(),
                 &{
                     let vrts = gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| {
-                        let serde_ident_ts = dq_ts(&el.field_ident);
-                        let field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el.field_ident);
-                        let el_syn_field_ty_as_pg_type_select_ts = gen_as_pg_type_select_ts(&el.field_type);
+                        let serde_ident_ts = dq_ts(&el.ident);
+                        let field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el.ident);
+                        let el_syn_field_ty_as_pg_type_select_ts = gen_as_pg_type_select_ts(&el.type0);
                         quote! {
                             #[serde(rename(serialize = #serde_ident_ts, deserialize = #serde_ident_ts))]
                             #field_ident_ucc_ts(#el_syn_field_ty_as_pg_type_select_ts)
@@ -1452,7 +1446,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let impl_pg_crud_all_vrts_default_opt_some_vec_one_el_for_ident_select_ts =
             gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_ts(&ident_select_ucc, &{
                 let els_ts = gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| {
-                    let field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el.field_ident);
+                    let field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el.ident);
                     quote! {
                         Self::#field_ident_ucc_ts(#PgCrudDefaultOptSomeVecOneElCall)
                     }
@@ -1489,9 +1483,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     };
                     let fields_opts_without_primary_key_ts = gen_fields_named_without_primary_key_with_comma_ts(&|el: &SynFieldWrapper| -> Ts2 {
-                        let field_vis = &el.field_vis;
-                        let field_ident = &el.field_ident;
-                        let opt_value_field_type_as_pg_type_read_ts = gen_opt_type_decl_ts(&gen_value_decl_ts(&gen_as_pg_type_read_ts(&el.field_type)));
+                        let field_vis = &el.vis;
+                        let field_ident = &el.ident;
+                        let opt_value_field_type_as_pg_type_read_ts = gen_opt_type_decl_ts(&gen_value_decl_ts(&gen_as_pg_type_read_ts(&el.type0)));
                         quote! {
                             #FieldAttrSerdeSkipSerializingIfOptIsNone
                             #field_vis #field_ident: #opt_value_field_type_as_pg_type_read_ts
@@ -1521,9 +1515,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let decl_without_primary_key_ts =
                     gen_fields_named_without_primary_key_without_comma_ts(
                         &|el: &SynFieldWrapper| {
-                            let field_ident = &el.field_ident;
+                            let field_ident = &el.ident;
                             let opt_value_field_type_as_pg_type_read_ts = gen_opt_type_decl_ts(
-                                &gen_value_decl_ts(&gen_as_pg_type_read_ts(&el.field_type)),
+                                &gen_value_decl_ts(&gen_as_pg_type_read_ts(&el.type0)),
                             );
                             quote! {
                                 let mut #field_ident: #opt_value_field_type_as_pg_type_read_ts = None;
@@ -1553,10 +1547,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let assignment_vrts_without_primary_key_ts = fields_without_primary_key
                     .iter()
                     .map(|el| {
-                        let field_ident = &el.field_ident;
-                        let field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el.field_ident);
-                        let field_ident_string_dq_ts = dq_ts(&el.field_ident);
-                        let el_syn_field_ty_as_pg_type_read_ts = gen_as_pg_type_read_ts(&el.field_type);
+                        let field_ident = &el.ident;
+                        let field_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el.ident);
+                        let field_ident_string_dq_ts = dq_ts(&el.ident);
+                        let el_syn_field_ty_as_pg_type_read_ts = gen_as_pg_type_read_ts(&el.type0);
                         quote! {
                             #ident_select_ucc::#field_ident_ucc_ts(_) => match sqlx::Row::try_get::<
                                 #el_syn_field_ty_as_pg_type_read_ts,
@@ -1575,10 +1569,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     })
                     .collect::<Vec<Ts2>>();
-                let fields_init_ts = &fields
-                    .iter()
-                    .map(|el| &el.field_ident)
-                    .collect::<Vec<&Ident>>();
+                let fields_init_ts = &fields.iter().map(|el| &el.ident).collect::<Vec<&Ident>>();
                 quote! {
                     fn #try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_sc(
                         #ValueSc: &sqlx::postgres::PgRow,
@@ -1642,7 +1633,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     );
                     let ts = gen_fields_named_without_primary_key_with_comma_ts(
                         &|el: &SynFieldWrapper| {
-                            gen_field_ts(&el.field_ident, &el.field_type, &WrapIntoOpt::True)
+                            gen_field_ts(&el.ident, &el.type0, &WrapIntoOpt::True)
                         },
                     );
                     quote! {{
@@ -1658,7 +1649,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let impl_sqlx_row_for_ident_read_only_ids_ts = {
             let undescore_underscore_row = quote! {__row};
             let where_field_types_ts = gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| {
-                let field_type = &el.field_type;
+                let field_type = &el.type0;
                 let el_syn_field_ty_as_pg_type_read_only_ids_ts =
                     gen_as_pg_type_read_only_ids_ts(&field_type);
                 quote! {
@@ -1683,8 +1674,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             };
             let fields_init_ts =
                 gen_fields_named_without_primary_key_without_comma_ts(&|el: &SynFieldWrapper| {
-                    let field_ident = &el.field_ident;
-                    let field_type = &el.field_type;
+                    let field_ident = &el.ident;
+                    let field_type = &el.type0;
                     let field_ident_dq_ts = dq_ts(&quote! {#field_ident});
                     let el_syn_field_ty_as_pg_type_read_only_ids_ts =
                         gen_as_pg_type_read_only_ids_ts(&field_type);
@@ -1696,7 +1687,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 });
             let self_fields_ts = gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| {
-                let field_ident = &el.field_ident;
+                let field_ident = &el.ident;
                 quote! {#field_ident}
             });
             quote! {
@@ -1749,9 +1740,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let fields_named_without_primary_key_ts =
                 gen_fields_named_without_primary_key_with_comma_ts(
                     &|el: &SynFieldWrapper| -> Ts2 {
-                        let field_ident = &el.field_ident;
+                        let field_ident = &el.ident;
                         let opt_value_field_type_as_pg_type_update_ts =
-                            gen_opt_value_field_type_as_pg_type_update_ts(&el.field_type);
+                            gen_opt_value_field_type_as_pg_type_update_ts(&el.type0);
                         quote! {
                             #field_ident: #opt_value_field_type_as_pg_type_update_ts
                         }
@@ -1802,7 +1793,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         maybe_wrap_into_braces_handle_ts(
                             &gen_fields_named_without_primary_key_with_comma_ts(
                                 &|el: &SynFieldWrapper| -> Ts2 {
-                                    let field_ident = &el.field_ident;
+                                    let field_ident = &el.ident;
                                     quote! {&#field_ident}
                                 },
                             ),
@@ -1814,7 +1805,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 let fields_inialization_ts =
                     gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| -> Ts2 {
-                        let field_ident = &el.field_ident;
+                        let field_ident = &el.ident;
                         quote! {#field_ident}
                     });
                 quote! {
@@ -1831,7 +1822,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &ident_update_ucc,
             &fields
                 .iter()
-                .map(|el| (&el.field_ident, &el.field_type))
+                .map(|el| (&el.ident, &el.type0))
                 .collect::<Vec<(&Ident, &Type)>>(),
             fields_len,
             &|syn_ident: &Ident, syn_type: &Type| {
@@ -1854,7 +1845,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let fields_without_primary_key_with_default_opt_some_vec_one_el_ts =
                         gen_fields_named_without_primary_key_with_comma_ts(
                             &|el: &SynFieldWrapper| {
-                                let field_ident = &el.field_ident;
+                                let field_ident = &el.ident;
                                 quote! {
                                     #field_ident: Some(pg_crud::Value{
                                         #ValueSc: #PgCrudDefaultOptSomeVecOneElCall
@@ -1888,13 +1879,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &Ts2::new(),
                 &{
                     let fields_named_without_primary_key_ts = gen_fields_named_without_primary_key_with_comma_ts(&|el: &SynFieldWrapper| -> Ts2 {
-                        let field_ident = &el.field_ident;
+                        let field_ident = &el.ident;
                         let opt_value_field_type_as_pg_type_update_for_query_ts = {
                             let path_value_ts = {
                                 let value = format!("{PgCrudSc}::{ValueUcc}");
                                 value.parse::<Ts2>().expect("2b09d4ae")
                             };
-                            let syn_type_as_pg_type_update_for_query_ts = gen_as_pg_type_update_for_query_ts(&el.field_type);
+                            let syn_type_as_pg_type_update_for_query_ts = gen_as_pg_type_update_for_query_ts(&el.type0);
                             gen_opt_type_decl_ts(&quote! {#path_value_ts<#syn_type_as_pg_type_update_for_query_ts>})
                         };
                         quote! {#field_ident: #opt_value_field_type_as_pg_type_update_for_query_ts}
@@ -1929,12 +1920,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             };
             let update_query_part_fields_ts = gen_fields_named_without_primary_key_without_comma_ts(
                 &|el: &SynFieldWrapper| {
-                    let field_ident = &el.field_ident;
+                    let field_ident = &el.ident;
                     let field_ident_dq_ts = dq_ts(&field_ident);
                     let update_query_part_field_ident_sc =
                         UpdateQueryPartSelfSc::from_tokens(&field_ident);
-                    let field_type_as_pg_crud_pg_type_pg_type_ts =
-                        gen_as_pg_type_ts(&el.field_type);
+                    let field_type_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
                     quote! {
                         fn #update_query_part_field_ident_sc(
                             #ValueSc: &pg_crud::Value<#field_type_as_pg_crud_pg_type_pg_type_ts #UpdateForQueryUcc>,
@@ -1971,9 +1961,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 };
                 let ts = fields_without_primary_key.iter().map(|el: &SynFieldWrapper| {
-                    let field_ident = &el.field_ident;
+                    let field_ident = &el.ident;
                     let field_ident_dq_ts = dq_ts(&field_ident);
-                    let field_type_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.field_type);
+                    let field_type_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
                     quote! {
                         if let Some(v_90f79b11) = &self.#field_ident {
                             acc_88c91f52.push_str(&match #field_type_as_pg_crud_pg_type_pg_type_ts #SelectOnlyUpdatedIdsQueryPartSc(
@@ -2005,10 +1995,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let fields_named_without_primary_key_ts =
                     gen_fields_named_without_primary_key_with_comma_ts(
                         &|el: &SynFieldWrapper| -> Ts2 {
-                            let field_ident = &el.field_ident;
+                            let field_ident = &el.ident;
                             let value_init_ts = gen_import_path_value_init_ts(&{
                                 let field_type_as_pg_type_update_for_query_ts =
-                                    gen_as_pg_type_update_for_query_ts(&el.field_type);
+                                    gen_as_pg_type_update_for_query_ts(&el.type0);
                                 quote! {
                                      #field_type_as_pg_type_update_for_query_ts::from(v_0e64c53a.#ValueSc)
                                 }
@@ -3077,7 +3067,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let incr_init_ts = quote! {let mut #IncrSc: u64 = 0;};
     let column_names = {
         let mut value = fields.iter().fold(String::default(), |mut acc, el| {
-            assert!(write!(acc, "{}", &el.field_ident).is_ok(), "b9fe50dc");
+            assert!(write!(acc, "{}", &el.ident).is_ok(), "b9fe50dc");
             acc.push(',');
             acc
         });
@@ -3087,9 +3077,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let column_names_dq_ts = dq_ts(&column_names);
     let gen_select_only_ids_query_part_ts = |operation: &Operation| {
         let select_only_ids_query_part_init_ts = fields.iter().map(|el: &SynFieldWrapper| {
-            let field_ident = &el.field_ident;
+            let field_ident = &el.ident;
             let field_ident_dq_ts = dq_ts(&field_ident);
-            let field_type_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.field_type);
+            let field_type_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
             let ts_00878df8 = gen_operation_er_init_eprintln_res_creation_ts(operation, &query_part_syn_vrt_wrapper, file!(), line!(), column!());
             quote! {
                 match #field_type_as_pg_crud_pg_type_pg_type_ts #SelectOnlyIdsQueryPartSc(#field_ident_dq_ts) {
@@ -3472,8 +3462,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     );
                     let order_by_column_match_ts =
                         gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| {
-                            let field_ident_ucc = ToTokensToUccTs::case_or_panic(&el.field_ident);
-                            let field_ident_dq_ts = dq_ts(&el.field_ident);
+                            let field_ident_ucc = ToTokensToUccTs::case_or_panic(&el.ident);
+                            let field_ident_dq_ts = dq_ts(&el.ident);
                             quote! {
                                 #ident_select_ucc::#field_ident_ucc(_) => #field_ident_dq_ts
                             }
@@ -3959,7 +3949,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let fields_named_without_primary_key_update_assignment_ts =
                         gen_fields_named_without_primary_key_without_comma_ts(
                             &|el: &SynFieldWrapper| {
-                                let field_ident = &el.field_ident;
+                                let field_ident = &el.ident;
                                 let field_ident_dq_ts = dq_ts(&field_ident);
                                 let is_field_ident_update_exists_sc =
                                     IsSelfUpdateExistSc::from_tokens(&field_ident);
@@ -4079,9 +4069,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let fields_named_without_primary_key_update_assignment_ts =
                         gen_fields_named_without_primary_key_without_comma_ts(
                             &|el: &SynFieldWrapper| {
-                                let field_ident = &el.field_ident;
-                                let as_pg_crud_pg_type_pg_type_ts =
-                                    gen_as_pg_type_ts(&el.field_type);
+                                let field_ident = &el.ident;
+                                let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
                                 quote! {
                                     for el_4b24f8f0 in &#UpdateForQueryVecSc {
                                         if let Some(v_2edaa480) = &el_4b24f8f0.#field_ident {
@@ -4123,9 +4112,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let binded_query_select_only_updated_ids_query_bind_ts =
                         gen_fields_named_without_primary_key_without_comma_ts(
                             &|el: &SynFieldWrapper| {
-                                let field_ident = &el.field_ident;
-                                let as_pg_crud_pg_type_pg_type_ts =
-                                    gen_as_pg_type_ts(&el.field_type);
+                                let field_ident = &el.ident;
+                                let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
                                 quote! {
                                     for el_a1660ed1 in &#UpdateForQueryVecSc {
                                         if let Some(v_47030ac2) = &el_a1660ed1.#field_ident {
@@ -4229,7 +4217,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let additional_params_modification_ts =
                         gen_fields_named_without_primary_key_without_comma_ts(
                             &|el: &SynFieldWrapper| {
-                                let field_ident = &el.field_ident;
+                                let field_ident = &el.ident;
                                 let field_ident_dq_ts = dq_ts(&field_ident);
                                 let ts_9ec6b359 = gen_operation_er_init_eprintln_res_creation_ts(
                                     &operation,
@@ -4306,9 +4294,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let binded_query_modifications_ts =
                         gen_fields_named_without_primary_key_without_comma_ts(
                             &|el: &SynFieldWrapper| {
-                                let field_ident = &el.field_ident;
-                                let as_pg_crud_pg_type_pg_type_ts =
-                                    gen_as_pg_type_ts(&el.field_type);
+                                let field_ident = &el.ident;
+                                let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
                                 quote! {
                                     if let Some(v_ed87c152) = &#UpdateForQuerySc.#field_ident {
                                         match #as_pg_crud_pg_type_pg_type_ts #UpdateQueryBindSc(
@@ -4342,9 +4329,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let binded_query_select_only_updated_ids_query_bind_ts =
                         gen_fields_named_without_primary_key_without_comma_ts(
                             &|el: &SynFieldWrapper| {
-                                let field_ident = &el.field_ident;
-                                let as_pg_crud_pg_type_pg_type_ts =
-                                    gen_as_pg_type_ts(&el.field_type);
+                                let field_ident = &el.ident;
+                                let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
                                 quote! {
                                     if let Some(v_b2902425) = &#UpdateForQuerySc.#field_ident {
                                         match #as_pg_crud_pg_type_pg_type_ts select_only_updated_ids_query_bind(
@@ -4756,22 +4742,22 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let ident_create_default_fields_init_without_primary_key_ts =
             gen_fields_named_without_primary_key_with_comma_ts(&|el: &SynFieldWrapper| {
-                let field_ident = &el.field_ident;
-                let field_type_as_pg_type_create_ts = gen_as_pg_type_create_ts(&el.field_type);
+                let field_ident = &el.ident;
+                let field_type_as_pg_type_create_ts = gen_as_pg_type_create_ts(&el.type0);
                 quote! {
                     #field_ident: <#field_type_as_pg_type_create_ts as pg_crud::DefaultOptSomeVecOneEl>::default_opt_some_vec_one_el()
                 }
             });
         let fields_none_init_ts =
             gen_fields_named_without_primary_key_with_comma_ts(&|el: &SynFieldWrapper| {
-                let field_ident = &el.field_ident;
+                let field_ident = &el.ident;
                 quote! {#field_ident: None}
             });
         //todo instead of first dropping table - check if its not exists. if exists Test must fail
         let select_default_all_with_max_page_size_not_empty_unique_vec_ts = {
             let ts = gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| {
-                let field_ident = &el.field_ident;
-                let field_type = &el.field_type;
+                let field_ident = &el.ident;
+                let field_type = &el.type0;
                 let field_ident_ucc = ToTokensToUccTs::case_or_panic(&field_ident);
                 quote! {
                     #ident_select_ucc::#field_ident_ucc(
@@ -4871,8 +4857,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                  create_ts: &dyn ToTokens,
                  should_add_dot_clone: &ShouldAddDotClone| {
                     gen_fields_named_without_primary_key_with_comma_ts(&|el: &SynFieldWrapper| {
-                        let field_ident_931fabfc = &el.field_ident;
-                        let field_type_714e077b = &el.field_type;
+                        let field_ident_931fabfc = &el.ident;
+                        let field_type_714e077b = &el.type0;
                         let maybe_dot_clone_ts = match &should_add_dot_clone {
                             ShouldAddDotClone::False => Ts2::new(),
                             ShouldAddDotClone::True => quote! {.clone()},
@@ -4910,7 +4896,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let opt_ident_where_many_ts_dc1232c7 =
             gen_fields_named_without_primary_key_with_comma_ts(&|el: &SynFieldWrapper| {
-                let field_ident_edb35ef4 = &el.field_ident;
+                let field_ident_edb35ef4 = &el.ident;
                 quote! {
                     #field_ident_edb35ef4: None
                 }
@@ -4961,8 +4947,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let gen_ident_create_ts = |field_ident: &Ident, ts: &dyn ToTokens| {
             gen_fields_named_without_primary_key_with_comma_ts(&|el: &SynFieldWrapper| {
-                let field_ident_42fe57c8 = &el.field_ident;
-                let field_type_f3d6c5c7 = &el.field_type;
+                let field_ident_42fe57c8 = &el.ident;
+                let field_type_f3d6c5c7 = &el.type0;
                 if field_ident == field_ident_42fe57c8 {
                     quote! {
                         #field_ident_42fe57c8: #ts
@@ -4997,7 +4983,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 table_field_idents_init_vec_ts.push(
                     gen_fields_named_without_primary_key_without_comma_ts(
                         &|el: &SynFieldWrapper| {
-                            let field_ident = &el.field_ident;
+                            let field_ident = &el.ident;
                             let init_variable_name_ts = gen_init_variable_name_ts(field_ident);
                             let format_ts = dq_ts(&format!("{el0}_{field_ident}"));
                             quote! {
@@ -5009,7 +4995,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 table_test_name_field_idents_vec_ts.push(
                     gen_fields_named_without_primary_key_without_comma_ts(
                         &|el1: &SynFieldWrapper| {
-                            let field_ident = &el1.field_ident;
+                            let field_ident = &el1.ident;
                             let init_variable_name_ts = gen_init_variable_name_ts(field_ident);
                             quote! {&#init_variable_name_ts,}
                         },
@@ -5070,14 +5056,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             quote! {select_default_all_with_max_page_size_cloned.clone()};
         let read_only_ids_to_two_dimal_vec_read_inner_acc_fields_ts =
             gen_fields_named_without_primary_key_without_comma_ts(&|el: &SynFieldWrapper| {
-                let field_ident = &el.field_ident;
+                let field_ident = &el.ident;
                 let field_ident_read_only_ids_to_two_dimal_vec_read_inner_acc_sc =
                     SelfReadOnlyIdsToTwoDimalVecReadInnerAccSc::from_tokens(&field_ident);
                 let ident_create_defaults_for_column_read_only_ids_to_two_dimal_vec_read_inner_ts =
                     gen_fields_named_without_primary_key_without_comma_ts(
                         &|el0: &SynFieldWrapper| {
-                            let field_ident_10070b70 = &el0.field_ident;
-                            let field_type_b33f54a9 = &el0.field_type;
+                            let field_ident_10070b70 = &el0.ident;
+                            let field_type_b33f54a9 = &el0.type0;
                             if field_ident == field_ident_10070b70 {
                                 quote! {
                                     if let Some(v_a5f7e6cd) = &common_read_only_ids_returned_from_create_one.#field_ident_10070b70 {
@@ -5105,8 +5091,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let ident_read_fields_init_without_primary_key_ts =
                 gen_fields_named_without_primary_key_with_comma_ts(
                     &|syn_field_wrapper: &SynFieldWrapper| {
-                        let field_ident_5bea122e = &syn_field_wrapper.field_ident;
-                        let field_type_f7f832df = &syn_field_wrapper.field_type;
+                        let field_ident_5bea122e = &syn_field_wrapper.ident;
+                        let field_type_f7f832df = &syn_field_wrapper.type0;
                         let value_init_ts =
                             gen_import_path_value_init_ts(&PgCrudDefaultOptSomeVecOneElCall);
                         quote! {
@@ -5203,8 +5189,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let create_many_tests_ts = {
             let create_many_tests_ts = gen_fields_named_without_primary_key_without_comma_ts(
                 &|el: &SynFieldWrapper| {
-                    let field_ident = &el.field_ident;
-                    let field_type = &el.field_type;
+                    let field_ident = &el.ident;
+                    let field_type = &el.type0;
                     let ident_create_ts_910fa600 =
                         gen_ident_create_content_el_id_ts(field_ident, &quote! {el_03a4f4ee});
                     quote! {
@@ -5336,8 +5322,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let create_one_tests_ts = {
             let create_one_tests_ts = gen_fields_named_without_primary_key_without_comma_ts(
                 &|el: &SynFieldWrapper| {
-                    let field_ident = &el.field_ident;
-                    let field_type = &el.field_type;
+                    let field_ident = &el.ident;
+                    let field_type = &el.type0;
                     let ident_create_ts_f75e4ef0 =
                         gen_ident_create_content_el_id_ts(field_ident, &quote! {el_7632d698});
                     let value_init_ts = gen_import_path_value_init_ts(&primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_ts);
@@ -5631,8 +5617,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                  gen_ts: &dyn Fn(&SynFieldWrapper) -> Ts2| {
                     gen_fields_named_without_primary_key_without_comma_ts(
                         &|el: &SynFieldWrapper| {
-                            let field_ident = &el.field_ident;
-                            let field_type = &el.field_type;
+                            let field_ident = &el.ident;
+                            let field_type = &el.type0;
                             let method_call_ts = gen_method_call_ts(field_ident, field_type);
                             let table_test_name_field_ident_ts =
                                 gen_table_test_name_field_ident_ts(test_name, field_ident);
@@ -5750,11 +5736,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &gen_opt_vec_create_call_unwrap_or_vec_ts,
                             &gen_ident_create_content_el_ts,
                             &|el: &SynFieldWrapper| {
-                                let field_ident = &el.field_ident;
+                                let field_ident = &el.ident;
                                 gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
                                     &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
-                                        let field_ident_4fdece29 = &el0.field_ident;
-                                        let field_type_5f626ae9 = &el0.field_type;
+                                        let field_ident_4fdece29 = &el0.ident;
+                                        let field_type_5f626ae9 = &el0.type0;
                                         if field_ident_4fdece29 == primary_key_field_ident {
                                             some_primary_key_where_init_ts.clone()
                                         } else if field_ident_4fdece29 == field_ident {
@@ -5799,10 +5785,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 )
             };
             let read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts = gen_read_test_ts(table_read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_name, &gen_opt_vec_create_call_unwrap_or_vec_ts, &gen_ident_create_content_el_ts, &|el: &SynFieldWrapper| {
-                let field_ident = &el.field_ident;
-                let field_type = &el.field_type;
+                let field_ident = &el.ident;
+                let field_type = &el.type0;
                 let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(&gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
-                    let field_ident_4557eb3f = &el0.field_ident;
+                    let field_ident_4557eb3f = &el0.ident;
                     if field_ident_4557eb3f == primary_key_field_ident {
                         some_primary_key_where_init_ts.clone()
                     } else if field_ident_4557eb3f == field_ident {
@@ -5827,11 +5813,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &gen_opt_vec_create_call_unwrap_or_vec_ts,
                 &gen_ident_create_content_el_ts,
                 &|el: &SynFieldWrapper| {
-                    let field_ident = &el.field_ident;
-                    let field_type = &el.field_type;
+                    let field_ident = &el.ident;
+                    let field_type = &el.type0;
                     let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
                         &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
-                            let field_ident_65c48d59 = &el0.field_ident;
+                            let field_ident_65c48d59 = &el0.ident;
                             if primary_key_field_ident == field_ident_65c48d59 {
                                 some_primary_key_where_init_ts.clone()
                             } else if field_ident_65c48d59 == field_ident {
@@ -5862,10 +5848,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     )
                 },
                 &|el: &SynFieldWrapper| {
-                    let field_ident = &el.field_ident;
-                    let field_type = &el.field_type;
+                    let field_ident = &el.ident;
+                    let field_type = &el.type0;
                     let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(&gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
-                        let field_ident_79ff8c6e = &el0.field_ident;
+                        let field_ident_79ff8c6e = &el0.ident;
                         if field_ident_79ff8c6e == primary_key_field_ident {
                             some_primary_key_where_init_ts.clone()
                         } else if field_ident_79ff8c6e == field_ident {
@@ -5896,10 +5882,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     |test_name: &str, dim: &Dim| {
                         let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc = dim.read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc();
                         gen_read_test_ts(test_name, &gen_opt_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_ts, &gen_ident_create_content_el_ts, &|el: &SynFieldWrapper| {
-                        let field_ident = &el.field_ident;
-                        let field_type = &el.field_type;
+                        let field_ident = &el.ident;
+                        let field_type = &el.type0;
                         let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(&gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
-                            let field_ident_fa2292e0 = &el0.field_ident;
+                            let field_ident_fa2292e0 = &el0.ident;
                             if field_ident_fa2292e0 == primary_key_field_ident {
                                 some_primary_key_where_init_ts.clone()
                             } else if field_ident_fa2292e0 == field_ident {
@@ -5932,11 +5918,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &gen_opt_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_ts,
                 &gen_ident_create_content_el_ts,
                 &|el: &SynFieldWrapper| {
-                    let field_ident = &el.field_ident;
-                    let field_type = &el.field_type;
+                    let field_ident = &el.ident;
+                    let field_type = &el.type0;
                     let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
                         &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
-                            let field_ident_bffc985c = &el0.field_ident;
+                            let field_ident_bffc985c = &el0.ident;
                             if field_ident_bffc985c == primary_key_field_ident {
                                 some_primary_key_where_init_ts.clone()
                             } else if field_ident_bffc985c == field_ident {
@@ -5962,11 +5948,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &gen_opt_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_ts,
                 &gen_ident_create_content_el_ts,
                 &|el: &SynFieldWrapper| {
-                    let field_ident = &el.field_ident;
-                    let field_type = &el.field_type;
+                    let field_ident = &el.ident;
+                    let field_type = &el.type0;
                     let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
                         &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
-                            let field_ident_9464d51b = &el0.field_ident;
+                            let field_ident_9464d51b = &el0.ident;
                             if field_ident_9464d51b == primary_key_field_ident {
                                 some_primary_key_where_init_ts.clone()
                             } else if field_ident_9464d51b == field_ident {
@@ -6002,11 +5988,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &gen_opt_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_ts,
                     &gen_ident_create_content_el_ts,
                     &|el: &SynFieldWrapper|{
-                        let field_ident = &el.field_ident;
-                        let field_type = &el.field_type;
+                        let field_ident = &el.ident;
+                        let field_type = &el.type0;
                         let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
                             &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper|{
-                                let field_ident_6b16d591 = &el0.field_ident;
+                                let field_ident_6b16d591 = &el0.ident;
                                 if field_ident_6b16d591 == primary_key_field_ident {
                                     some_primary_key_where_init_ts.clone()
                                 }
@@ -6101,8 +6087,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             //todo add Test for trying to update empty vec
             let update_many_only_one_column_tests_ts =
                 gen_fields_named_without_primary_key_without_comma_ts(&|el: &SynFieldWrapper| {
-                    let field_ident = &el.field_ident;
-                    let field_type = &el.field_type;
+                    let field_ident = &el.ident;
+                    let field_type = &el.type0;
                     let is_fields_without_primary_key_len_greater_than_one =
                         fields_without_primary_key.len() > 1;
                     let maybe_previous_read_ts =
@@ -6152,8 +6138,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ident_read_only_ids_upper_fields_init_without_primary_key_ts =
                         gen_fields_named_without_primary_key_with_comma_ts(
                             &|syn_field_wrapper: &SynFieldWrapper| {
-                                let field_ident_867b4800 = &syn_field_wrapper.field_ident;
-                                let field_type_42b4a146 = &syn_field_wrapper.field_type;
+                                let field_ident_867b4800 = &syn_field_wrapper.ident;
+                                let field_type_42b4a146 = &syn_field_wrapper.type0;
                                 if field_ident == field_ident_867b4800 {
                                     quote! {#field_ident_867b4800: Some(<#field_type_42b4a146 as pg_crud::PgTypeTestCases>::update_to_read_only_ids(&update))}
                                 } else {
@@ -6164,7 +6150,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ident_update_params_init_without_primary_key_ts =
                         gen_fields_named_without_primary_key_with_comma_ts(
                             &|syn_field_wrapper: &SynFieldWrapper| {
-                                let field_ident_f56e8e3f = &syn_field_wrapper.field_ident;
+                                let field_ident_f56e8e3f = &syn_field_wrapper.ident;
                                 if field_ident == field_ident_f56e8e3f {
                                     let value_init_ts = gen_import_path_value_init_ts(&quote! {
                                         #UpdateSc.clone()
@@ -6178,10 +6164,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ident_read_fields_init_without_primary_key_after_update_one_ts =
                         gen_fields_named_without_primary_key_with_comma_ts(
                             &|syn_field_wrapper: &SynFieldWrapper| {
-                                let field_ident_b9ec9008 = &syn_field_wrapper.field_ident;
+                                let field_ident_b9ec9008 = &syn_field_wrapper.ident;
                                 if field_ident == field_ident_b9ec9008 {
                                     let value_init_ts = gen_import_path_value_init_ts(&{
-                                        let field_type_0490079a = &syn_field_wrapper.field_type;
+                                        let field_type_0490079a = &syn_field_wrapper.type0;
                                         quote! {
                                             <#field_type_0490079a as pg_crud::PgTypeTestCases>::previous_read_merged_with_opt_update_into_read(
                                                 <#field_type_0490079a as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
@@ -6327,8 +6313,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let update_one_tests_ts = {
             let update_one_only_one_column_tests_ts =
                 gen_fields_named_without_primary_key_without_comma_ts(&|el: &SynFieldWrapper| {
-                    let field_ident = &el.field_ident;
-                    let field_type = &el.field_type;
+                    let field_ident = &el.ident;
+                    let field_type = &el.type0;
                     let maybe_previous_read_ts = if fields_without_primary_key.len() > 1 {
                         quote! {
                             let previous_read = gen_ident_try_read_one_handle_primary_key(
@@ -6347,8 +6333,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ident_read_only_ids_upper_fields_init_without_primary_key_ts =
                         gen_fields_named_without_primary_key_with_comma_ts(
                             &|el0: &SynFieldWrapper| {
-                                let field_ident_6b82a8d0 = &el0.field_ident;
-                                let field_type_ad043276 = &el0.field_type;
+                                let field_ident_6b82a8d0 = &el0.ident;
+                                let field_type_ad043276 = &el0.type0;
                                 if field_ident == field_ident_6b82a8d0 {
                                     quote! {#field_ident_6b82a8d0: Some(<#field_type_ad043276 as pg_crud::PgTypeTestCases>::update_to_read_only_ids(&update))}
                                 } else {
@@ -6359,7 +6345,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ident_update_params_init_without_primary_key_ts =
                         gen_fields_named_without_primary_key_with_comma_ts(
                             &|el0: &SynFieldWrapper| {
-                                let field_ident_6ea8afd1 = &el0.field_ident;
+                                let field_ident_6ea8afd1 = &el0.ident;
                                 if field_ident == field_ident_6ea8afd1 {
                                     let value_init_ts =
                                         gen_import_path_value_init_ts(&quote! {#UpdateSc.clone()});
@@ -6372,8 +6358,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ident_read_fields_init_without_primary_key_after_update_one_ts =
                         gen_fields_named_without_primary_key_with_comma_ts(
                             &|el0: &SynFieldWrapper| {
-                                let field_ident_8c7d4975 = &el0.field_ident;
-                                let field_type_09e184c3 = &el0.field_type;
+                                let field_ident_8c7d4975 = &el0.ident;
+                                let field_type_09e184c3 = &el0.type0;
                                 if field_ident == field_ident_8c7d4975 {
                                     let value_init_ts = gen_import_path_value_init_ts(&quote! {
                                         <
