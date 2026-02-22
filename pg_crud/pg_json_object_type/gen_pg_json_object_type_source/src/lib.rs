@@ -50,7 +50,7 @@ use pg_crud_macros_common::{
     ColumnParamUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrUnderscore,
     CreateQueryPartValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, ImportPath,
     IncrParamUnderscore, IsCreateQueryBindMutable, IsNeedToAddLogicalOperatorUnderscore,
-    IsNullable, IsPrimaryKeyUnderscore, IsQueryBindMutable, IsSelectOnlyCreatedIdsQueryBindMutable,
+    IsNullable, IsPrimaryKUnderscore, IsQueryBindMutable, IsSelectOnlyCreatedIdsQueryBindMutable,
     IsSelectOnlyUpdatedIdsQueryBindMutable, IsSelectQueryPartColumnFieldForErMessageUsed,
     IsSelectQueryPartIsPgTypeUsed, IsSelectQueryPartSelfSelectUsed, IsUpdateQueryBindMutable,
     IsUpdateQueryPartJsonbSetTargetUsed, IsUpdateQueryPartSelfUpdateUsed, PgTypeOrPgJsonType,
@@ -61,7 +61,7 @@ use pg_crud_macros_common::{
     gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_ts,
     gen_impl_pg_crud_default_opt_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_default_opt_some_vec_one_el_ts, gen_impl_pg_json_type_test_cases_for_ident_ts,
-    gen_impl_pg_json_type_ts, gen_impl_pg_type_not_primary_key_for_ident_ts,
+    gen_impl_pg_json_type_ts, gen_impl_pg_type_not_primary_k_for_ident_ts,
     gen_impl_pg_type_test_cases_for_ident_ts, gen_impl_pg_type_ts,
     gen_impl_serde_deserialize_for_struct_ts, gen_impl_sqlx_decode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_for_ident_ts,
@@ -2905,8 +2905,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             let mut f0: Option<#vec_ident_with_id_stdrt_not_null_create_ts> = None;
                                             let mut f1: Option<#import_path_unique_vec_ident_with_id_stdrt_not_null_update_el_ts> = None;
                                             let mut f2: Option<#vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts> = None;
-                                            while let Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
-                                                match __key {
+                                            while let Some(__k) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                                                match __k {
                                                     __Field::f0 => {
                                                         if Option::is_some(&f0) {
                                                             return Err(<__A::Error as serde::de::Error>::duplicate_field("create"));
@@ -4565,7 +4565,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 &ImportPath::PgCrud,
                 &ident,
                 &ident_table_type_ucc,
-                &IsPrimaryKeyUnderscore::True,
+                &IsPrimaryKUnderscore::True,
                 &{
                     let format_ts = dq_ts(&"{column} jsonb not null check (jsonb_matches_schema('{}', {column}))".to_owned());
                     quote! {
@@ -6957,7 +6957,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 },
             )
         };
-        let impl_pg_type_not_primary_key_for_ident_ts = gen_impl_pg_type_not_primary_key_for_ident_ts(&import_path, &ident);
+        let impl_pg_type_not_primary_k_for_ident_ts = gen_impl_pg_type_not_primary_k_for_ident_ts(&import_path, &ident);
         let generated = quote! {
             #ident_ts
             #ident_table_type_ts
@@ -6974,7 +6974,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             #maybe_impl_pg_crud_pg_types_pg_type_pg_type_ts
             #impl_pg_json_type_test_cases_for_ident_ts
             #impl_pg_type_test_cases_for_ident_ts
-            #impl_pg_type_not_primary_key_for_ident_ts
+            #impl_pg_type_not_primary_k_for_ident_ts
         };
         (
             {

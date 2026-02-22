@@ -176,8 +176,8 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
             {
                 let mut f0: Option<i64> = None;
                 let mut f1: Option<i64> = None;
-                while let Some(__key) = MapAccess::next_key::<__Field>(&mut __map)? {
-                    match __key {
+                while let Some(__k) = MapAccess::next_key::<__Field>(&mut __map)? {
+                    match __k {
                         __Field::f0 => {
                             if Option::is_some(&f0) {
                                 return Err(<__A::Error as SerdeEr>::duplicate_field("limit"));
@@ -256,6 +256,6 @@ impl DefaultOptSomeVecOneElMaxPageSize for PaginationStartsWithOne {
     }
 }
 #[must_use]
-pub fn maybe_primary_key(is_primary_key: bool) -> impl Display {
-    if is_primary_key { "primary key" } else { "" }
+pub fn maybe_primary_k(v: bool) -> impl Display {
+    if v { "primary k" } else { "" }
 }

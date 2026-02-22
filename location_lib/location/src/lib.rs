@@ -210,25 +210,25 @@ pub fn location(input: Ts) -> Ts {
                                     )
                                 }
                             }
-                            LocationFieldAttr::EoHashMapKeyStringValueToErrString | LocationFieldAttr::EoHashMapKeyStringValueToErrStringSerde => {
-                                let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {key}: {}", &location_lib::ToErrString::to_err_string(#ValueSc)}, &quote! {panic!("d030580a");});
+                            LocationFieldAttr::EoHashMapKStringValueToErrString | LocationFieldAttr::EoHashMapKStringValueToErrStringSerde => {
+                                let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {k}: {}", &location_lib::ToErrString::to_err_string(#ValueSc)}, &quote! {panic!("d030580a");});
                                 quote! {
                                     #el0_ident.iter().fold(
                                         #StringTs::new(),
-                                        |mut acc_06473093, (key, #ValueSc)| {
+                                        |mut acc_06473093, (k, #ValueSc)| {
                                             #if_write_is_err_ts
                                             acc_06473093
                                         }
                                     )
                                 }
                             }
-                            LocationFieldAttr::EoHashMapKeyStringValueLocation => {
+                            LocationFieldAttr::EoHashMapKStringValueLocation => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(
                                     &{
                                         let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_addfc699, "\n  {el_8b8f577e}"}, &quote! {panic!("d0492fbf");});
                                         quote! {
                                             acc_a47e1ba7,
-                                            "\n {key}: {}",
+                                            "\n {k}: {}",
                                             #ValueSc.to_string().lines().fold(
                                                 #StringTs::new(),
                                                 |mut acc_addfc699, el_8b8f577e| {
@@ -243,7 +243,7 @@ pub fn location(input: Ts) -> Ts {
                                 quote! {
                                     #el0_ident.iter().fold(
                                         #StringTs::new(),
-                                        |mut acc_a47e1ba7, (key, #ValueSc)| {
+                                        |mut acc_a47e1ba7, (k, #ValueSc)| {
                                             #if_write_is_err_ts
                                             acc_a47e1ba7
                                         }
@@ -320,7 +320,7 @@ pub fn location(input: Ts) -> Ts {
                             LocationFieldAttr::EoToErrString => gen_field_ts(&quote!{
                                 location_lib::ToErrString::to_err_string(&#el0_ident)
                             }),
-                            LocationFieldAttr::EoToErrStringSerde | LocationFieldAttr::EoVecToErrStringSerde | LocationFieldAttr::EoHashMapKeyStringValueToErrStringSerde => {
+                            LocationFieldAttr::EoToErrStringSerde | LocationFieldAttr::EoVecToErrStringSerde | LocationFieldAttr::EoHashMapKStringValueToErrStringSerde => {
                                 quote! {#el0_ident}
                             }
                             LocationFieldAttr::EoLocation => gen_field_ts(&quote!{
@@ -332,12 +332,12 @@ pub fn location(input: Ts) -> Ts {
                             LocationFieldAttr::EoVecLocation => gen_field_ts(&quote!{
                                 #el0_ident.into_iter().map(|el|el.into_serde_version()).collect()
                             }),
-                            LocationFieldAttr::EoHashMapKeyStringValueToErrString => gen_field_ts(&quote!{
+                            LocationFieldAttr::EoHashMapKStringValueToErrString => gen_field_ts(&quote!{
                                 #el0_ident.into_iter().map(
                                     |(k, v)|(k, location_lib::ToErrString::to_err_string(&v))
                                 ).collect()
                             }),
-                            LocationFieldAttr::EoHashMapKeyStringValueLocation => gen_field_ts(&quote!{
+                            LocationFieldAttr::EoHashMapKStringValueLocation => gen_field_ts(&quote!{
                                 #el0_ident.into_iter().map(
                                     |(k, v)|(k, v.into_serde_version())
                                 ).collect()

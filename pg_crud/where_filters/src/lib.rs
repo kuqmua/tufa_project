@@ -532,9 +532,8 @@ const _: () = {
                 {
                     let mut f0: Option<T> = None;
                     let mut f1: Option<T> = None;
-                    while let Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)?
-                    {
-                        match __key {
+                    while let Some(__k) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                        match __k {
                             __Field::f0 => {
                                 if Option::is_some(&f0) {
                                     return Err(

@@ -34,17 +34,17 @@ config_lib = {path = "../../../config_lib"}
 server_app_state = {path = "../../../server_app_state"}
 server_config = {path = "../../../server_config"}"#,
             &{
-                enum ShouldAddGenPgTablePrimaryKey {
+                enum ShouldAddGenPgTablePrimaryK {
                     False,
                     True,
                 }
                 let gen_table_example_ts =
-                    |should_add_gen_pg_table_primary_key: ShouldAddGenPgTablePrimaryKey| {
-                        let maybe_gen_pg_table_primary_key_ts =
-                            match should_add_gen_pg_table_primary_key {
-                                ShouldAddGenPgTablePrimaryKey::False => Ts2::new(),
-                                ShouldAddGenPgTablePrimaryKey::True => {
-                                    quote! {#[gen_pg_table_primary_key]}
+                    |should_add_gen_pg_table_primary_k: ShouldAddGenPgTablePrimaryK| {
+                        let maybe_gen_pg_table_primary_k_ts =
+                            match should_add_gen_pg_table_primary_k {
+                                ShouldAddGenPgTablePrimaryK::False => Ts2::new(),
+                                ShouldAddGenPgTablePrimaryK::True => {
+                                    quote! {#[gen_pg_table_primary_k]}
                                 }
                             };
                         quote! {
@@ -90,8 +90,8 @@ server_config = {path = "../../../server_config"}"#,
                             #[pg_crud::delete_one_extra_logic{}]
                             #[pg_crud::common_extra_logic{}]
                             pub struct TableExample {
-                                #maybe_gen_pg_table_primary_key_ts
-                                pub primary_key_column:
+                                #maybe_gen_pg_table_primary_k_ts
+                                pub primary_k_column:
                                     pg_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitByPg,
                                 pub column_0: pg_crud::I16AsNotNullInt2,
                                 pub column_1: pg_crud::OptI16AsNullableInt2,
@@ -100,9 +100,9 @@ server_config = {path = "../../../server_config"}"#,
                         }
                     };
                 let ts = gen_pg_table_source::gen_pg_table(gen_table_example_ts(
-                    ShouldAddGenPgTablePrimaryKey::True,
+                    ShouldAddGenPgTablePrimaryK::True,
                 ));
-                let table_struct_ts = gen_table_example_ts(ShouldAddGenPgTablePrimaryKey::False);
+                let table_struct_ts = gen_table_example_ts(ShouldAddGenPgTablePrimaryK::False);
                 quote! {
                     #ts
                     #table_struct_ts

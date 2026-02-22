@@ -424,13 +424,13 @@ mod tests {
             let Ok(v) = read_to_string(path) else {
                 continue; //skip binary non-utf8 files
             };
-            for (key_0fa16fc1, v_3d676d2e) in v.lines().enumerate() {
+            for (k_0fa16fc1, v_3d676d2e) in v.lines().enumerate() {
                 for el_c0fa9fc2 in v_3d676d2e.chars() {
                     if !(matches!(el_c0fa9fc2, '\n' | '\r' | '\t') || el_c0fa9fc2.is_ascii()) {
                         ers.push(format!(
                             "{}:{} non-english symbol `{}` (U+{:04X})",
                             path.display(),
-                            key_0fa16fc1 + 1,
+                            k_0fa16fc1 + 1,
                             el_c0fa9fc2,
                             u32::from(el_c0fa9fc2)
                         ));
@@ -464,13 +464,13 @@ mod tests {
                     .clone()
                     .and_then(|v_5e0a4d6a| v_5e0a4d6a.as_table())
                 {
-                    for (key_794900d4, v_07583f81) in deps {
+                    for (k_794900d4, v_07583f81) in deps {
                         let panic_with_message = || {
                             panic!(
                                 "{}: dependency `{}` in [{}] must use `.workspace = true` \
                                  (only `path = ...` is allowed as exception)",
                                 path.display(),
-                                key_794900d4,
+                                k_794900d4,
                                 el_3c618c8f
                             )
                         };

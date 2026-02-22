@@ -16,9 +16,9 @@ pub enum LocationFieldAttr {
     EoVecToErrString,
     EoVecToErrStringSerde,
     EoVecLocation,
-    EoHashMapKeyStringValueToErrString,
-    EoHashMapKeyStringValueToErrStringSerde,
-    EoHashMapKeyStringValueLocation,
+    EoHashMapKStringValueToErrString,
+    EoHashMapKStringValueToErrStringSerde,
+    EoHashMapKStringValueLocation,
 }
 impl FromStr for LocationFieldAttr {
     type Err = ();
@@ -36,11 +36,11 @@ impl FromStr for LocationFieldAttr {
         } else if v == "eo_vec_location" {
             Ok(Self::EoVecLocation)
         } else if v == "eo_hashmap_k_string_v_to_err_string" {
-            Ok(Self::EoHashMapKeyStringValueToErrString)
+            Ok(Self::EoHashMapKStringValueToErrString)
         } else if v == "eo_hashmap_k_string_v_to_err_string_serde" {
-            Ok(Self::EoHashMapKeyStringValueToErrStringSerde)
+            Ok(Self::EoHashMapKStringValueToErrStringSerde)
         } else if v == "eo_hashmap_k_string_v_location" {
-            Ok(Self::EoHashMapKeyStringValueLocation)
+            Ok(Self::EoHashMapKStringValueLocation)
         } else {
             Err(())
         }
@@ -78,11 +78,11 @@ impl AttrIdentStr for LocationFieldAttr {
             Self::EoVecToErrString => "eo_vec_to_err_string",
             Self::EoVecToErrStringSerde => "eo_vec_to_err_string_serde",
             Self::EoVecLocation => "eo_vec_location",
-            Self::EoHashMapKeyStringValueToErrString => "eo_hashmap_k_string_v_to_err_string",
-            Self::EoHashMapKeyStringValueToErrStringSerde => {
+            Self::EoHashMapKStringValueToErrString => "eo_hashmap_k_string_v_to_err_string",
+            Self::EoHashMapKStringValueToErrStringSerde => {
                 "eo_hashmap_k_string_v_to_err_string_serde"
             }
-            Self::EoHashMapKeyStringValueLocation => "eo_hashmap_k_string_v_location",
+            Self::EoHashMapKStringValueLocation => "eo_hashmap_k_string_v_location",
         }
     }
 }
@@ -182,19 +182,19 @@ pub fn gen_serde_version_of_named_syn_vrt(v: &Variant) -> Ts2 {
                         Vec<#el_vec_type_with_serde_ts>
                     }
                 }
-                LocationFieldAttr::EoHashMapKeyStringValueToErrString => {
+                LocationFieldAttr::EoHashMapKStringValueToErrString => {
                     let _: &GenericArgument =
                         get_type_path_third_segment_second_argument_check_if_hashmap();
                     quote! {
                         std::collections::HashMap<#StringTs, #StringTs>
                     }
                 }
-                LocationFieldAttr::EoHashMapKeyStringValueToErrStringSerde => {
+                LocationFieldAttr::EoHashMapKStringValueToErrStringSerde => {
                     let _: &GenericArgument =
                         get_type_path_third_segment_second_argument_check_if_hashmap();
                     el_type_ts
                 }
-                LocationFieldAttr::EoHashMapKeyStringValueLocation => {
+                LocationFieldAttr::EoHashMapKStringValueLocation => {
                     let second_argument =
                         get_type_path_third_segment_second_argument_check_if_hashmap();
                     let el_hashmap_v_type_with_serde_ts =

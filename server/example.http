@@ -50,7 +50,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
   "where_many": {
-    # "primary_key_column": {
+    # "primary_k_column": {
     #   "logical_operator": "Or",
     #   "value": [
     #     {
@@ -269,7 +269,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   },
   "select": [
     {
-      "primary_key_column": null
+      "primary_k_column": null
     },
     {
       "column_156": {
@@ -293,7 +293,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   ],
   "order_by": {
     "column": {
-      "primary_key_column": null
+      "primary_k_column": null
     },
     "order": "asc"
   },

@@ -17,7 +17,7 @@ description = "description"
 repository = "repository"
 readme = "readme"
 license = "license"
-keywords = ["keyword"]
+kwords = ["kword"]
 categories = ["category"]
 [lints]
 workspace = true"#

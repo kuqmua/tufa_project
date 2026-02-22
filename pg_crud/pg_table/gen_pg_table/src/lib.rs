@@ -75,7 +75,7 @@ pub fn delete_one_extra_logic(_attr: Ts, item: Ts) -> Ts {
 pub fn common_extra_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
-#[proc_macro_derive(GenPgTable, attributes(gen_pg_table_primary_key))]
+#[proc_macro_derive(GenPgTable, attributes(gen_pg_table_primary_k))]
 pub fn gen_pg_table(input: Ts) -> Ts {
     gen_pg_table_source::gen_pg_table(input.into()).into()
 }

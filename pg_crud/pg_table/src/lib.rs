@@ -58,43 +58,43 @@ pub fn gen_column_equals_case_acc_else_column_end_comma_update_many_query_part(
 ) -> String {
     format!("{column} = case {acc}else {column} end,")
 }
-//todo extra param for columns_to_return instead of primary_key_field_name in "returning {primary_key_field_name}""
+//todo extra param for columns_to_return instead of primary_k_field_name in "returning {primary_k_field_name}""
 #[must_use]
 pub fn gen_update_many_query_string(
     table: &str,
     els: &str,
-    primary_key_field_name: &str,
-    primary_keys: &str,
+    primary_k_field_name: &str,
+    primary_ks: &str,
     columns_to_return: &str,
 ) -> String {
     format!(
-        "update {table} set {els} where {primary_key_field_name} in ({primary_keys}) returning {columns_to_return}"
+        "update {table} set {els} where {primary_k_field_name} in ({primary_ks}) returning {columns_to_return}"
     )
 }
-//todo extra param for columns_to_return instead of primary_key_field_name in "returning {primary_key_field_name}""
+//todo extra param for columns_to_return instead of primary_k_field_name in "returning {primary_k_field_name}""
 #[must_use]
 pub fn gen_update_one_query_string(
     table: &str,
     columns: &str,
-    primary_key_field_name: &str,
-    primary_key_query_part: &str,
+    primary_k_field_name: &str,
+    primary_k_query_part: &str,
     columns_to_return: &str,
 ) -> String {
     format!(
-        "update {table} set {columns} where {primary_key_field_name} = {primary_key_query_part} returning {columns_to_return}"
+        "update {table} set {columns} where {primary_k_field_name} = {primary_k_query_part} returning {columns_to_return}"
     )
 }
 #[must_use]
 pub fn gen_delete_many_query_string(
     table: &str,
     where_string: &str,
-    primary_key_field_name: &str,
+    primary_k_field_name: &str,
 ) -> String {
-    format!("delete from {table} {where_string} returning {primary_key_field_name}")
+    format!("delete from {table} {where_string} returning {primary_k_field_name}")
 }
 #[must_use]
-pub fn gen_delete_one_query_string(table: &str, primary_key_field_name: &str) -> String {
+pub fn gen_delete_one_query_string(table: &str, primary_k_field_name: &str) -> String {
     format!(
-        "delete from {table} where {primary_key_field_name} = $1 returning {primary_key_field_name}"
+        "delete from {table} where {primary_k_field_name} = $1 returning {primary_k_field_name}"
     )
 }

@@ -17,7 +17,7 @@ use naming::{
     InvalidHourOrMinuteOrSecondOrMicrosecondUcc, MaxSc, MicroSc, MicrosecondSc, MicrosecondsSc,
     MinSc, MinuteSc, MonthsSc, NanosecondPrecisionIsNotSupportedUcc, NanosecondSc, NearZeroSc,
     NegativeLessTypicalSc, NegativeMoreTypicalSc, NewSc, OptUpdateSc, OptVecCreateSc,
-    PgTypePrimaryKeyUcc, PgTypeUcc, PositiveLessTypicalSc, PositiveMoreTypicalSc, QuerySc,
+    PgTypePrimaryKUcc, PgTypeUcc, PositiveLessTypicalSc, PositiveMoreTypicalSc, QuerySc,
     ReadIntoTableTypeSc, ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeSc,
     ReadOnlyIdsIntoUpdateSc, ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsSc,
     ReadOnlyIdsToTwoDimalVecReadInnerSc, ReadOnlyIdsUcc, ReadSc, ReadUcc, SecSc, SecondSc, SelfSc,
@@ -35,7 +35,7 @@ use pg_crud_macros_common::{
     ColumnParamUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrUnderscore,
     CreateQueryPartValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl,
     EqualOperatorHandle, ImportPath, IncrParamUnderscore, IsCreateQueryBindMutable,
-    IsNeedToAddLogicalOperatorUnderscore, IsNullable, IsPrimaryKeyUnderscore, IsQueryBindMutable,
+    IsNeedToAddLogicalOperatorUnderscore, IsNullable, IsPrimaryKUnderscore, IsQueryBindMutable,
     IsSelectOnlyUpdatedIdsQueryBindMutable, IsStdrtNotNull, IsUpdateQueryBindMutable, PgFilter,
     PgTypeFilter, ReadOrUpdate, SelectQueryPartValueUnderscore, ShouldDeriveSchemarsJsonSchema,
     ShouldDeriveUtoipaToSchema, UpdateQueryPartJsonbSetAccumulatorUnderscore,
@@ -43,7 +43,7 @@ use pg_crud_macros_common::{
     UpdateQueryPartValueUnderscore, gen_impl_crate_is_string_empty_for_ident_ts,
     gen_impl_pg_crud_common_default_opt_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_common_default_opt_some_vec_one_el_ts,
-    gen_impl_pg_type_not_primary_key_for_ident_ts, gen_impl_pg_type_test_cases_for_ident_ts,
+    gen_impl_pg_type_not_primary_k_for_ident_ts, gen_impl_pg_type_test_cases_for_ident_ts,
     gen_impl_pg_type_ts, gen_impl_sqlx_decode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_for_ident_ts,
     gen_opt_type_decl_ts, gen_pg_type_where_ts, gen_return_err_query_part_er_write_into_buffer_ts,
@@ -541,10 +541,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         let mut f0: Option<PgType> = None;
                         let mut f1: Option<IsNullable> = None;
                         let mut f2: Option<PgTypePattern> = None;
-                        while let Some(__key) =
+                        while let Some(__k) =
                             _serde::de::MapAccess::next_key::<__Field>(&mut __map)?
                         {
-                            match __key {
+                            match __k {
                                 __Field::f0 => {
                                     if Option::is_some(&f0) {
                                         return Err(
@@ -975,11 +975,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             PgType,
             PgTypeTestCases,
         }
-        enum CanBePrimaryKey {
+        enum CanBePrimaryK {
             False,
             True,
         }
-        enum IsNotNullStdrtCanBePrimaryKey {
+        enum IsNotNullStdrtCanBePrimaryK {
             False,
             True,
         }
@@ -1017,7 +1017,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let range_try_from_pg_type = Range::try_from(pg_type);
         let range_try_from_pg_type_is_ok = range_try_from_pg_type.is_ok();
         let import_path = ImportPath::PgCrudCommon;
-        let import_path_non_primary_key_pg_type_read_only_ids_ts = quote! {#import_path::NonPrimaryKeyPgTypeReadOnlyIds};
+        let import_path_non_primary_k_pg_type_read_only_ids_ts = quote! {#import_path::NonPrimaryKPgTypeReadOnlyIds};
         let none_ts = quote!{None};
         let dot_clone_ts = quote!{.clone()};
         let maybe_dot_clone_ts: &dyn ToTokens = if matches!(&pg_type_pattern, PgTypePattern::Stdrt) &&
@@ -1204,7 +1204,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 is_nullable.maybe_opt_wrap(gen_vec_tokens_decl_ts(&dim1_type))
             },
         };
-        let can_be_primary_key = match &pg_type {
+        let can_be_primary_k = match &pg_type {
             PgType::I16AsInt2
             | PgType::I32AsInt4
             | PgType::I64AsInt8
@@ -1227,18 +1227,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             | PgType::SqlxPgTypesPgRangeI64AsInt8Range
             | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
             | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
-            | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBePrimaryKey::False,
-            PgType::I16AsSmallSerialInitByPg | PgType::I32AsSerialInitByPg | PgType::I64AsBigSerialInitByPg | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => CanBePrimaryKey::True,
+            | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBePrimaryK::False,
+            PgType::I16AsSmallSerialInitByPg | PgType::I32AsSerialInitByPg | PgType::I64AsBigSerialInitByPg | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => CanBePrimaryK::True,
         };
         let is_stdrt_not_null = if matches!((&pg_type_pattern, &is_nullable), (PgTypePattern::Stdrt, IsNullable::False)) {
             IsStdrtNotNull::True
         } else {
             IsStdrtNotNull::False
         };
-        let is_not_null_stdrt_can_be_primary_key = if matches!((&is_nullable, &pg_type_pattern, &can_be_primary_key), (IsNullable::False, PgTypePattern::Stdrt, CanBePrimaryKey::True)) {
-            IsNotNullStdrtCanBePrimaryKey::True
+        let is_not_null_stdrt_can_be_primary_k = if matches!((&is_nullable, &pg_type_pattern, &can_be_primary_k), (IsNullable::False, PgTypePattern::Stdrt, CanBePrimaryK::True)) {
+            IsNotNullStdrtCanBePrimaryK::True
         } else {
-            IsNotNullStdrtCanBePrimaryKey::False
+            IsNotNullStdrtCanBePrimaryK::False
         };
         let gen_start_or_end_ucc = |start_or_end: &StartOrEnd| -> &dyn DisplayPlusToTokens {
             match &start_or_end {
@@ -1926,7 +1926,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     fn_visit_map_sqlx_pg_types_pg_range_sqlx_pg_types_pg_range_i64_ts,
                     fn_visit_map_sqlx_pg_types_pg_interval_ts,
                 ) = {
-                    let gen_fn_visit_map_ts = |field_opt_none_init_ts: &dyn ToTokens, while_some_next_key_field_ts: &dyn ToTokens, match_field_init_ts: &dyn ToTokens, serde_private_ok_ts: &dyn ToTokens| {
+                    let gen_fn_visit_map_ts = |field_opt_none_init_ts: &dyn ToTokens, while_some_next_k_field_ts: &dyn ToTokens, match_field_init_ts: &dyn ToTokens, serde_private_ok_ts: &dyn ToTokens| {
                         quote! {
                             #[inline]
                             fn visit_map<__A>(self, mut __map: __A) -> Result<Self::Value, __A::Error>
@@ -1934,7 +1934,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 __A: serde::de::MapAccess<'de>,
                             {
                                 #field_opt_none_init_ts
-                                #while_some_next_key_field_ts
+                                #while_some_next_k_field_ts
                                 #match_field_init_ts
                                 #serde_private_ok_ts
                             }
@@ -1973,18 +1973,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         )
                     };
                     let (
-                        while_some_next_key_field_sqlx_types_chrono_naive_time_ts,
-                        while_some_next_key_field_sqlx_types_time_time_ts,
-                        while_some_next_key_field_sqlx_types_chrono_naive_date_time_ts,
-                        while_some_next_key_field_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
-                        while_some_next_key_field_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
-                        while_some_next_key_field_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
-                        while_some_next_key_field_sqlx_pg_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
-                        while_some_next_key_field_sqlx_pg_types_pg_range_i32_ts,
-                        while_some_next_key_field_sqlx_pg_types_pg_range_i64_ts,
-                        while_some_next_key_field_sqlx_pg_types_pg_interval_ts,
+                        while_some_next_k_field_sqlx_types_chrono_naive_time_ts,
+                        while_some_next_k_field_sqlx_types_time_time_ts,
+                        while_some_next_k_field_sqlx_types_chrono_naive_date_time_ts,
+                        while_some_next_k_field_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
+                        while_some_next_k_field_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
+                        while_some_next_k_field_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
+                        while_some_next_k_field_sqlx_pg_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
+                        while_some_next_k_field_sqlx_pg_types_pg_range_i32_ts,
+                        while_some_next_k_field_sqlx_pg_types_pg_range_i64_ts,
+                        while_some_next_k_field_sqlx_pg_types_pg_interval_ts,
                     ) = {
-                        let gen_while_some_next_key_field_ts = |vec_ts: &[(&dyn Display, &dyn ToTokens)]| {
+                        let gen_while_some_next_k_field_ts = |vec_ts: &[(&dyn Display, &dyn ToTokens)]| {
                             let fields_init_ts = vec_ts.iter().enumerate().map(|(index_2b1736c7, el0)| {
                                 let field_name_dq_ts = dq_str(&el0.0);
                                 let ft_ts = &el0.1;
@@ -1999,8 +1999,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             });
                             quote! {
-                                while let Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
-                                    match __key {
+                                while let Some(__k) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                                    match __k {
                                         #(#fields_init_ts)*
                                         __Field::__ignore => {
                                             let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
@@ -2010,19 +2010,19 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         };
                         (
-                            gen_while_some_next_key_field_ts(&[(&HourSc, &U32), (&MinSc, &U32), (&SecSc, &U32), (&MicroSc, &U32)]),
-                            gen_while_some_next_key_field_ts(&[(&HourSc, &U8), (&MinuteSc, &U8), (&SecondSc, &U8), (&MicrosecondSc, &U32)]),
-                            gen_while_some_next_key_field_ts(&[(&DateSc, &sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc), (&TimeSc, &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc)]),
-                            gen_while_some_next_key_field_ts(&[(&DateNaiveSc, &sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc), (&TimeSc, &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc)]),
-                            gen_while_some_next_key_field_ts(&[(&StartSc, &std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts), (&EndSc, &std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts)]),
-                            gen_while_some_next_key_field_ts(&[(&StartSc, &std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ts), (&EndSc, &std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ts)]),
-                            gen_while_some_next_key_field_ts(&[
+                            gen_while_some_next_k_field_ts(&[(&HourSc, &U32), (&MinSc, &U32), (&SecSc, &U32), (&MicroSc, &U32)]),
+                            gen_while_some_next_k_field_ts(&[(&HourSc, &U8), (&MinuteSc, &U8), (&SecondSc, &U8), (&MicrosecondSc, &U32)]),
+                            gen_while_some_next_k_field_ts(&[(&DateSc, &sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc), (&TimeSc, &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc)]),
+                            gen_while_some_next_k_field_ts(&[(&DateNaiveSc, &sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc), (&TimeSc, &sqlx_types_chrono_naive_time_as_not_null_time_origin_ucc)]),
+                            gen_while_some_next_k_field_ts(&[(&StartSc, &std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts), (&EndSc, &std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts)]),
+                            gen_while_some_next_k_field_ts(&[(&StartSc, &std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ts), (&EndSc, &std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ts)]),
+                            gen_while_some_next_k_field_ts(&[
                                 (&StartSc, &std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ts),
                                 (&EndSc, &std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ts),
                             ]),
-                            gen_while_some_next_key_field_ts(&[(&StartSc, &std_ops_bound_i32_ts), (&EndSc, &std_ops_bound_i32_ts)]),
-                            gen_while_some_next_key_field_ts(&[(&StartSc, &std_ops_bound_i64_ts), (&EndSc, &std_ops_bound_i64_ts)]),
-                            gen_while_some_next_key_field_ts(&[(&MonthsSc, &I32), (&DaysSc, &I32), (&MicrosecondsSc, &I64)]),
+                            gen_while_some_next_k_field_ts(&[(&StartSc, &std_ops_bound_i32_ts), (&EndSc, &std_ops_bound_i32_ts)]),
+                            gen_while_some_next_k_field_ts(&[(&StartSc, &std_ops_bound_i64_ts), (&EndSc, &std_ops_bound_i64_ts)]),
+                            gen_while_some_next_k_field_ts(&[(&MonthsSc, &I32), (&DaysSc, &I32), (&MicrosecondsSc, &I64)]),
                         )
                     };
                     let (match_field_init_hour_min_sec_micro_ts, match_field_init_start_end_ts, match_field_init_hour_minute_second_microsecond_ts, match_field_init_date_time_ts, match_field_init_date_naive_time_ts, match_field_init_months_days_microseconds_ts) = {
@@ -2052,61 +2052,61 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     (
                         gen_fn_visit_map_ts(
                             &field_opt_none_init_sqlx_types_chrono_naive_time_ts,
-                            &while_some_next_key_field_sqlx_types_chrono_naive_time_ts,
+                            &while_some_next_k_field_sqlx_types_chrono_naive_time_ts,
                             &match_field_init_hour_min_sec_micro_ts,
                             &sqlx_types_chrono_naive_time_origin_try_new_for_deserialize,
                         ),
                         gen_fn_visit_map_ts(
                             &field_opt_none_init_sqlx_types_time_time_ts,
-                            &while_some_next_key_field_sqlx_types_time_time_ts,
+                            &while_some_next_k_field_sqlx_types_time_time_ts,
                             &match_field_init_hour_minute_second_microsecond_ts,
                             &match_origin_try_new_for_deserialize_four_ts,
                         ),
                         gen_fn_visit_map_ts(
                             &field_opt_none_init_sqlx_types_chrono_naive_date_time_ts,
-                            &while_some_next_key_field_sqlx_types_chrono_naive_date_time_ts,
+                            &while_some_next_k_field_sqlx_types_chrono_naive_date_time_ts,
                             &match_field_init_date_time_ts,
                             &origin_new_for_deserialize_two_ts,
                         ),
                         gen_fn_visit_map_ts(
                             &field_opt_none_init_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
-                            &while_some_next_key_field_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
+                            &while_some_next_k_field_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
                             &match_field_init_date_naive_time_ts,
                             &origin_new_for_deserialize_two_ts,
                         ),
                         gen_fn_visit_map_ts(
                             &field_opt_none_init_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
-                            &while_some_next_key_field_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
+                            &while_some_next_k_field_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
                             &match_field_init_start_end_ts,
                             &origin_new_for_deserialize_two_ts,
                         ),
                         gen_fn_visit_map_ts(
                             &field_opt_none_init_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
-                            &while_some_next_key_field_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
+                            &while_some_next_k_field_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
                             &match_field_init_start_end_ts,
                             &origin_new_for_deserialize_two_ts,
                         ),
                         gen_fn_visit_map_ts(
                             &field_opt_none_init_sqlx_pg_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
-                            &while_some_next_key_field_sqlx_pg_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
+                            &while_some_next_k_field_sqlx_pg_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
                             &match_field_init_start_end_ts,
                             &origin_new_for_deserialize_two_ts,
                         ),
                         gen_fn_visit_map_ts(
                             &field_opt_none_init_sqlx_pg_types_pg_range_i32_ts,
-                            &while_some_next_key_field_sqlx_pg_types_pg_range_i32_ts,
+                            &while_some_next_k_field_sqlx_pg_types_pg_range_i32_ts,
                             &match_field_init_start_end_ts,
                             &match_origin_try_new_for_deserialize_two_ts,
                         ),
                         gen_fn_visit_map_ts(
                             &field_opt_none_init_sqlx_pg_types_pg_range_i64_ts,
-                            &while_some_next_key_field_sqlx_pg_types_pg_range_i64_ts,
+                            &while_some_next_k_field_sqlx_pg_types_pg_range_i64_ts,
                             &match_field_init_start_end_ts,
                             &match_origin_try_new_for_deserialize_two_ts,
                         ),
                         gen_fn_visit_map_ts(
                             &field_opt_none_init_sqlx_pg_types_pg_interval_ts,
-                            &while_some_next_key_field_sqlx_pg_types_pg_interval_ts,
+                            &while_some_next_k_field_sqlx_pg_types_pg_interval_ts,
                             &match_field_init_months_days_microseconds_ts,
                             &origin_new_for_deserialize_three_ts,
                         ),
@@ -2998,9 +2998,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .derive_clone()
                 .derive_copy_if(derive_copy)
                 .derive_partial_eq()
-                .derive_eq_if(match &is_not_null_stdrt_can_be_primary_key {
-                    IsNotNullStdrtCanBePrimaryKey::False => DeriveEq::False,
-                    IsNotNullStdrtCanBePrimaryKey::True => DeriveEq::True,
+                .derive_eq_if(match &is_not_null_stdrt_can_be_primary_k {
+                    IsNotNullStdrtCanBePrimaryK::False => DeriveEq::False,
+                    IsNotNullStdrtCanBePrimaryK::True => DeriveEq::True,
                 })
                 .derive_partial_ord_if(match &is_stdrt_not_null {
                     IsStdrtNotNull::False => DerivePartialOrd::False,
@@ -3034,9 +3034,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DerivePartialOrd::False,
                     },
                 })
-                .derive_ord_if(match &is_not_null_stdrt_can_be_primary_key {
-                    IsNotNullStdrtCanBePrimaryKey::False => DeriveOrd::False,
-                    IsNotNullStdrtCanBePrimaryKey::True => DeriveOrd::True,
+                .derive_ord_if(match &is_not_null_stdrt_can_be_primary_k {
+                    IsNotNullStdrtCanBePrimaryK::False => DeriveOrd::False,
+                    IsNotNullStdrtCanBePrimaryK::True => DeriveOrd::True,
                 })
                 .derive_serde_serialize_if(match &serde_serialize_derive_or_impl {
                     DeriveOrImpl::Derive => DeriveSerdeSerialize::True,
@@ -4117,9 +4117,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let maybe_impl_from_ident_read_for_ident_origin_ts = match &is_not_null_stdrt_can_be_primary_key {
-                IsNotNullStdrtCanBePrimaryKey::False => Ts2::new(),
-                IsNotNullStdrtCanBePrimaryKey::True => gen_impl_from_ts(&ident_stdrt_not_null_read_ucc, &ident_origin_ucc, &{
+            let maybe_impl_from_ident_read_for_ident_origin_ts = match &is_not_null_stdrt_can_be_primary_k {
+                IsNotNullStdrtCanBePrimaryK::False => Ts2::new(),
+                IsNotNullStdrtCanBePrimaryK::True => gen_impl_from_ts(&ident_stdrt_not_null_read_ucc, &ident_origin_ucc, &{
                     let ident_stdrt_not_null_as_crate_pg_type_ts = gen_as_pg_type_ts(&ident_stdrt_not_null_ucc);
                     quote! {Self::#NewSc(#ident_stdrt_not_null_as_crate_pg_type_ts::into_inner(#ValueSc))}
                 }),
@@ -4266,8 +4266,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let ident_stdrt_not_null_table_type_ucc = SelfTableTypeUcc::from_tokens(&ident_stdrt_not_null_ucc);
         let ident_create_ucc = SelfCreateUcc::from_tokens(&ident);
         let ident_create_ts = {
-            let ident_create_ts = match &can_be_primary_key {
-                CanBePrimaryKey::False => StructOrEnumDeriveTsStreamBuilder::new()
+            let ident_create_ts = match &can_be_primary_k {
+                CanBePrimaryK::False => StructOrEnumDeriveTsStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
@@ -4280,26 +4280,26 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         &Ts2::new(),
                         &ident_origin_struct_ts
                     ),
-                CanBePrimaryKey::True => gen_pub_struct_tokens_ts(&ident_create_ucc, &quote! {(());}, DeriveDefault::False),
+                CanBePrimaryK::True => gen_pub_struct_tokens_ts(&ident_create_ucc, &quote! {(());}, DeriveDefault::False),
             };
-            let maybe_impl_ident_create_ts = match &can_be_primary_key {
-                CanBePrimaryKey::False => gen_pub_const_new_or_pub_try_new_ts(&ident_create_ucc),
-                CanBePrimaryKey::True => Ts2::new(),
+            let maybe_impl_ident_create_ts = match &can_be_primary_k {
+                CanBePrimaryK::False => gen_pub_const_new_or_pub_try_new_ts(&ident_create_ucc),
+                CanBePrimaryK::True => Ts2::new(),
             };
             let impl_default_opt_some_vec_one_el_for_ident_create_ts = gen_impl_pg_crud_common_default_opt_some_vec_one_el_ts(&ident_create_ucc, &{
-                let ts: &dyn ToTokens = match &can_be_primary_key {
-                    CanBePrimaryKey::False => &PgCrudCommonDefaultOptSomeVecOneElCall,
-                    CanBePrimaryKey::True => &quote! {()},
+                let ts: &dyn ToTokens = match &can_be_primary_k {
+                    CanBePrimaryK::False => &PgCrudCommonDefaultOptSomeVecOneElCall,
+                    CanBePrimaryK::True => &quote! {()},
                 };
                 quote! {Self(#ts)}
             });
-            let maybe_impl_sqlx_encode_sqlx_pg_for_ident_create_ts = match &can_be_primary_key {
-                CanBePrimaryKey::False => gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_create_ucc, &quote! {#SelfSc.0}),
-                CanBePrimaryKey::True => Ts2::new(),
+            let maybe_impl_sqlx_encode_sqlx_pg_for_ident_create_ts = match &can_be_primary_k {
+                CanBePrimaryK::False => gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_create_ucc, &quote! {#SelfSc.0}),
+                CanBePrimaryK::True => Ts2::new(),
             };
-            let maybe_impl_sqlx_type_for_ident_create_ts = match &can_be_primary_key {
-                CanBePrimaryKey::False => gen_impl_sqlx_type_for_ident_ts(&ident_create_ucc, &ident_origin_ucc),
-                CanBePrimaryKey::True => Ts2::new(),
+            let maybe_impl_sqlx_type_for_ident_create_ts = match &can_be_primary_k {
+                CanBePrimaryK::False => gen_impl_sqlx_type_for_ident_ts(&ident_create_ucc, &ident_origin_ucc),
+                CanBePrimaryK::True => Ts2::new(),
             };
             quote! {
                 #ident_create_ts
@@ -4699,13 +4699,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     derive_eq,
                     derive_partial_ord,
                     derive_ord
-                ) = match &is_not_null_stdrt_can_be_primary_key {
-                    IsNotNullStdrtCanBePrimaryKey::False => (
+                ) = match &is_not_null_stdrt_can_be_primary_k {
+                    IsNotNullStdrtCanBePrimaryK::False => (
                         DeriveEq::False,
                         DerivePartialOrd::False,
                         DeriveOrd::False
                     ),
-                    IsNotNullStdrtCanBePrimaryKey::True => (
+                    IsNotNullStdrtCanBePrimaryK::True => (
                         DeriveEq::True,
                         DerivePartialOrd::True,
                         DeriveOrd::True
@@ -4739,7 +4739,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &quote! {Ok(Self(v))}
             );
             let impl_sqlx_type_for_ident_read_ts = gen_impl_sqlx_type_for_ident_ts(&ident_read_ucc, &ident_origin_ucc);
-            let maybe_impl_pg_type_where_filter_for_ident_read_if_can_be_primary_key_ts = if matches!(&is_not_null_stdrt_can_be_primary_key, IsNotNullStdrtCanBePrimaryKey::True) {
+            let maybe_impl_pg_type_where_filter_for_ident_read_if_can_be_primary_k_ts = if matches!(&is_not_null_stdrt_can_be_primary_k, IsNotNullStdrtCanBePrimaryK::True) {
                 impl_pg_type_where_filter_for_ident_ts(
                     &quote! {<'lifetime>},
                     &ident_stdrt_not_null_read_ucc,
@@ -4768,11 +4768,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #impl_sqlx_encode_sqlx_pg_for_ident_origin_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_read_ts
                 #impl_sqlx_type_for_ident_read_ts
-                #maybe_impl_pg_type_where_filter_for_ident_read_if_can_be_primary_key_ts
+                #maybe_impl_pg_type_where_filter_for_ident_read_if_can_be_primary_k_ts
             }
         };
         let ident_read_only_ids_ucc = SelfReadOnlyIdsUcc::from_tokens(&ident);
-        let ident_read_only_ids_ts = if matches!(&is_not_null_stdrt_can_be_primary_key, IsNotNullStdrtCanBePrimaryKey::True) {
+        let ident_read_only_ids_ts = if matches!(&is_not_null_stdrt_can_be_primary_k, IsNotNullStdrtCanBePrimaryK::True) {
             let ident_read_only_ids_ts = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
@@ -4913,7 +4913,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let select_only_ids_and_select_only_updated_ids_query_common_ts = {
                 let format_ts = dq_ts(&{
                     let column_comma = "{column},";
-                    if matches!(&is_not_null_stdrt_can_be_primary_key, IsNotNullStdrtCanBePrimaryKey::True) { column_comma.to_owned() } else { format!("'{{{{\\\"value\\\": null}}}}'::jsonb as {column_comma}") }
+                    if matches!(&is_not_null_stdrt_can_be_primary_k, IsNotNullStdrtCanBePrimaryK::True) { column_comma.to_owned() } else { format!("'{{{{\\\"value\\\": null}}}}'::jsonb as {column_comma}") }
                 });
                 quote! {Ok(format!(#format_ts))}
             };
@@ -4921,9 +4921,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &import_path,
                 &ident,
                 &ident_table_type_ucc,
-                &match &can_be_primary_key {
-                    CanBePrimaryKey::False => IsPrimaryKeyUnderscore::True,
-                    CanBePrimaryKey::True => IsPrimaryKeyUnderscore::False,
+                &match &can_be_primary_k {
+                    CanBePrimaryK::False => IsPrimaryKUnderscore::True,
+                    CanBePrimaryK::True => IsPrimaryKUnderscore::False,
                 },
                 &{
                     let pg_query_type = match &pg_type {
@@ -4964,51 +4964,51 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             IsNullable::True => String::new(),
                         },
                     };
-                    let maybe_primary_key_is_primary_key_ts = quote! {pg_types_common::maybe_primary_key(is_primary_key)};
+                    let maybe_primary_k_is_primary_k_ts = quote! {pg_types_common::maybe_primary_k(is_primary_k)};
                     let column_pg_query_type = format!("{{column}} {pg_query_type}{maybe_arr_part}{maybe_constraint_part}");
                     let column_pg_query_type_not_null = format!("{{column}} {pg_query_type}{maybe_arr_part} not null{maybe_constraint_part}");
                     let space_extra_param = " {}";
-                    match (&is_nullable, &can_be_primary_key) {
-                        (IsNullable::False, CanBePrimaryKey::False) => {
+                    match (&is_nullable, &can_be_primary_k) {
+                        (IsNullable::False, CanBePrimaryK::False) => {
                             let format_ts = dq_ts(&column_pg_query_type_not_null);
                             quote! {
                                 format!(#format_ts)
                             }
                         }
-                        (IsNullable::False, CanBePrimaryKey::True) => {
+                        (IsNullable::False, CanBePrimaryK::True) => {
                             let format_ts = dq_ts(&format!("{column_pg_query_type_not_null}{space_extra_param}"));
                             quote! {
-                                format!(#format_ts, #maybe_primary_key_is_primary_key_ts)
+                                format!(#format_ts, #maybe_primary_k_is_primary_k_ts)
                             }
                         }
-                        (IsNullable::True, CanBePrimaryKey::False) => {
+                        (IsNullable::True, CanBePrimaryK::False) => {
                             let format_ts = dq_ts(&column_pg_query_type);
                             quote! {
                                 format!(#format_ts)
                             }
                         }
-                        (IsNullable::True, CanBePrimaryKey::True) => {
+                        (IsNullable::True, CanBePrimaryK::True) => {
                             let format_ts = dq_ts(&format!("{column_pg_query_type}{space_extra_param}"));
                             quote! {
-                                format!(#format_ts, #maybe_primary_key_is_primary_key_ts)
+                                format!(#format_ts, #maybe_primary_k_is_primary_k_ts)
                             }
                         }
                     }
                 },
                 &ident_create_ucc,
                 &CreateQueryPartValueUnderscore::True,
-                &match &can_be_primary_key {
-                    CanBePrimaryKey::False => CreateQueryPartIncrUnderscore::False,
-                    CanBePrimaryKey::True => CreateQueryPartIncrUnderscore::True,
+                &match &can_be_primary_k {
+                    CanBePrimaryK::False => CreateQueryPartIncrUnderscore::False,
+                    CanBePrimaryK::True => CreateQueryPartIncrUnderscore::True,
                 },
                 &query_part_create_ts,
-                &match &can_be_primary_key {
-                    CanBePrimaryKey::False => CreateQueryBindValueUnderscore::False,
-                    CanBePrimaryKey::True => CreateQueryBindValueUnderscore::True,
+                &match &can_be_primary_k {
+                    CanBePrimaryK::False => CreateQueryBindValueUnderscore::False,
+                    CanBePrimaryK::True => CreateQueryBindValueUnderscore::True,
                 },
-                &match &can_be_primary_key {
-                    CanBePrimaryKey::False => IsCreateQueryBindMutable::True,
-                    CanBePrimaryKey::True => IsCreateQueryBindMutable::False,
+                &match &can_be_primary_k {
+                    CanBePrimaryK::False => IsCreateQueryBindMutable::True,
+                    CanBePrimaryK::True => IsCreateQueryBindMutable::False,
                 },
                 &bind_value_to_query_create_ts,
                 &ident_select_ucc,
@@ -5278,10 +5278,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         },
                     }
                 },
-                &if matches!(&is_not_null_stdrt_can_be_primary_key, IsNotNullStdrtCanBePrimaryKey::True) {
+                &if matches!(&is_not_null_stdrt_can_be_primary_k, IsNotNullStdrtCanBePrimaryK::True) {
                     quote! {#ident_read_only_ids_ucc}
                 } else {
-                    quote! {#import_path_non_primary_key_pg_type_read_only_ids_ts}
+                    quote! {#import_path_non_primary_k_pg_type_read_only_ids_ts}
                 },
                 &select_only_ids_and_select_only_updated_ids_query_common_ts,
                 &ident_read_inner_ucc,
@@ -5814,8 +5814,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 };
                 match &pg_type_pattern {
                     PgTypePattern::Stdrt => match &is_nullable {
-                        IsNullable::False => match &can_be_primary_key {
-                            CanBePrimaryKey::False => {
+                        IsNullable::False => match &can_be_primary_k {
+                            CanBePrimaryK::False => {
                                 let ts = gen_stdrt_not_null_test_case_handle_ts(&IsNeedToUseInto::False);
                                 let new_or_try_new_ts = {
                                     let self_as_pg_type_create_ts = quote!{#self_as_pg_type_ts::Create};
@@ -5835,7 +5835,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     ).collect()
                                 )}
                             }
-                            CanBePrimaryKey::True => none_ts.clone(),
+                            CanBePrimaryK::True => none_ts.clone(),
                         },
                         IsNullable::True => gen_some_acc_ts(is_nullable, &gen_ident_ts(pg_type, &IsNullable::False, &PgTypePattern::Stdrt), &Ts2::new()),
                     },
@@ -6130,20 +6130,20 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             };
             let read_inner_into_read_with_new_or_try_new_unwraped_ts = gen_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts(&ReadOrUpdate::Read);
             let read_inner_into_update_with_new_or_try_new_unwraped_ts = gen_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts(&ReadOrUpdate::Update);
-            let update_to_read_only_ids_ts = if matches!(&is_not_null_stdrt_can_be_primary_key, IsNotNullStdrtCanBePrimaryKey::True) {
+            let update_to_read_only_ids_ts = if matches!(&is_not_null_stdrt_can_be_primary_k, IsNotNullStdrtCanBePrimaryK::True) {
                 quote! {
-                    #ident_read_only_ids_ucc(#ident_read_ucc(#ValueSc.0 #maybe_dot_clone_ts))//todo its not correct. must be only for primary key but it for all types what van be primary key
+                    #ident_read_only_ids_ucc(#ident_read_ucc(#ValueSc.0 #maybe_dot_clone_ts))//todo its not correct. must be only for primary k but it for all types what van be primary k
                 }
             } else {
                 let value_init_ts = gen_import_path_value_init_ts(&none_ts);
                 quote! {
-                    #import_path_non_primary_key_pg_type_read_only_ids_ts(#value_init_ts)
+                    #import_path_non_primary_k_pg_type_read_only_ids_ts(#value_init_ts)
                 }
             };
             let read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts = {
-                //todo that is not correct for arr of generated by pg primary keys but maybe just need to remove this vrts and thats it?
+                //todo that is not correct for arr of generated by pg primary ks but maybe just need to remove this vrts and thats it?
                 let value_init_ts = gen_import_path_value_init_ts(&{
-                    let ts: &dyn ToTokens = if matches!(&is_not_null_stdrt_can_be_primary_key, IsNotNullStdrtCanBePrimaryKey::True) {
+                    let ts: &dyn ToTokens = if matches!(&is_not_null_stdrt_can_be_primary_k, IsNotNullStdrtCanBePrimaryK::True) {
                         &quote! {#ValueSc.0 #maybe_dot_clone_ts}
                     } else {
                         &PgCrudCommonDefaultOptSomeVecOneElCall
@@ -6156,7 +6156,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #OptUpdateSc.map_or(#ReadSc, |#ValueSc| #ident_read_ucc(#ValueSc.0))
             };
             let read_only_ids_merged_with_create_into_read_ts = {
-                let ts = if matches!(&is_not_null_stdrt_can_be_primary_key, IsNotNullStdrtCanBePrimaryKey::True) {
+                let ts = if matches!(&is_not_null_stdrt_can_be_primary_k, IsNotNullStdrtCanBePrimaryK::True) {
                     quote! {#ReadOnlyIdsSc.0}
                 } else {
                     quote! {#ident_read_ucc(#CreateSc.0)}
@@ -6175,7 +6175,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 quote! {Some(#value_init_ts)}
             };
             let read_only_ids_merged_with_create_into_table_type_ts = {
-                let ts = if matches!(&is_not_null_stdrt_can_be_primary_key, IsNotNullStdrtCanBePrimaryKey::True) {
+                let ts = if matches!(&is_not_null_stdrt_can_be_primary_k, IsNotNullStdrtCanBePrimaryK::True) {
                     quote! {#ReadOnlyIdsSc.0.0}
                 } else {
                     quote! {#CreateSc.0}
@@ -6186,7 +6186,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let read_only_ids_merged_with_create_into_where_equal_ts = {
                 let ts = if matches!(&pg_type_pattern, PgTypePattern::Stdrt)
                     && matches!(&is_nullable, IsNullable::False)
-                    && matches!(&is_not_null_stdrt_can_be_primary_key, IsNotNullStdrtCanBePrimaryKey::True)
+                    && matches!(&is_not_null_stdrt_can_be_primary_k, IsNotNullStdrtCanBePrimaryK::True)
                 {
                     quote! {#ReadOnlyIdsSc.0.0}
                 } else {
@@ -6604,11 +6604,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts,
             )
         };
-        let maybe_impl_pg_type_primary_key_for_ident_stdrt_not_null_if_can_be_primary_key_ts = if matches!(&is_not_null_stdrt_can_be_primary_key, IsNotNullStdrtCanBePrimaryKey::True) {
+        let maybe_impl_pg_type_primary_k_for_ident_stdrt_not_null_if_can_be_primary_k_ts = if matches!(&is_not_null_stdrt_can_be_primary_k, IsNotNullStdrtCanBePrimaryK::True) {
             let value_as_read_only_ids_ts = quote! {#ValueSc: #self_as_pg_type_ts::#ReadOnlyIdsUcc};
             quote! {
                 #AllowClippyArbitrarySourceItemOrdering
-                impl #import_path::#PgTypePrimaryKeyUcc for #ident_stdrt_not_null_ucc {
+                impl #import_path::#PgTypePrimaryKUcc for #ident_stdrt_not_null_ucc {
                     type #PgTypeUcc = Self;
                     type #TableTypeUcc = #ident_stdrt_not_null_table_type_ucc;
                     fn #ReadOnlyIdsIntoTableTypeSc(#value_as_read_only_ids_ts) -> #self_as_pg_type_ts::#TableTypeUcc {
@@ -6630,10 +6630,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         } else {
             Ts2::new()
         };
-        let maybe_impl_pg_type_not_primary_key_for_ident_ts = if matches!(&is_not_null_stdrt_can_be_primary_key, IsNotNullStdrtCanBePrimaryKey::True) {
+        let maybe_impl_pg_type_not_primary_k_for_ident_ts = if matches!(&is_not_null_stdrt_can_be_primary_k, IsNotNullStdrtCanBePrimaryK::True) {
             Ts2::new()
         } else {
-            gen_impl_pg_type_not_primary_key_for_ident_ts(&import_path, &ident)
+            gen_impl_pg_type_not_primary_k_for_ident_ts(&import_path, &ident)
         };
         let generated = quote! {
             #ident_ts
@@ -6649,8 +6649,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             #ident_update_for_query_ts
             #impl_pg_type_for_ident_ts
             #impl_pg_type_test_cases_for_ident_ts
-            #maybe_impl_pg_type_primary_key_for_ident_stdrt_not_null_if_can_be_primary_key_ts
-            #maybe_impl_pg_type_not_primary_key_for_ident_ts
+            #maybe_impl_pg_type_primary_k_for_ident_stdrt_not_null_if_can_be_primary_k_ts
+            #maybe_impl_pg_type_not_primary_k_for_ident_ts
         };
         (
             {

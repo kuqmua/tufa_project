@@ -12,7 +12,7 @@ use std::collections::HashMap;
 use thiserror::Error;
 #[derive(Debug, Error, Location)]
 pub enum ErOne {
-    //use ToErrString for hashmap keys instead of Display
+    //use ToErrString for hashmap ks instead of Display
     //todo even for String in serialize deserialize version of er must be using ToErrString impl instead of std::fmt::Display
     //todo test on using only loc as pnly field in named vrt
     Vrt {

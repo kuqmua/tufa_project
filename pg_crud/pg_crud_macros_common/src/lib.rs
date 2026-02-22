@@ -10,10 +10,10 @@ use naming::{
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateIntoPgTypeOptVecWhereDimOneEqualSc,
     CreateQueryBindSc, CreateQueryPartSc, CreateSc, CreateTableColumnQueryPartSc, CreateUcc,
     DefaultOptSomeVecOneElMaxPageSizeSc, DefaultOptSomeVecOneElSc, DisplayPlusToTokens,
-    EqualOperatorUcc, FiSc, IncrSc, IsNeedToAddLogicalOperatorSc, IsPrimaryKeySc,
+    EqualOperatorUcc, FiSc, IncrSc, IsNeedToAddLogicalOperatorSc, IsPrimaryKSc,
     JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc, MutSc, NormalizeSc, OptUcc,
     OptUpdateSc, OptVecCreateSc, PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeEqualOperatorUcc,
-    PgTypeNotPrimaryKeyUcc, PgTypeOptVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc,
+    PgTypeNotPrimaryKUcc, PgTypeOptVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc,
     PgTypeWhereFilterUcc, PreviousReadMergedWithOptUpdateIntoReadSc, QueryBindSc, QueryPartErUcc,
     QueryPartSc, QuerySc, ReadInnerIntoReadWithNewOrTryNewUnwrapedSc,
     ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc, ReadInnerUcc, ReadOnlyIdsIntoOptValueReadInnerSc,
@@ -397,14 +397,14 @@ impl ReadOrUpdate {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub enum IsPrimaryKeyUnderscore {
+pub enum IsPrimaryKUnderscore {
     False,
     True,
 }
-impl ToTokens for IsPrimaryKeyUnderscore {
+impl ToTokens for IsPrimaryKUnderscore {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
-            Self::False => IsPrimaryKeySc.to_tokens(tokens),
+            Self::False => IsPrimaryKSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
         }
     }
@@ -1038,7 +1038,7 @@ pub fn gen_impl_pg_type_ts(
     import_path: &ImportPath,
     ident: &dyn ToTokens,
     ident_table_type_ucc: &dyn ToTokens,
-    is_primary_key_underscore: &IsPrimaryKeyUnderscore,
+    is_primary_k_underscore: &IsPrimaryKUnderscore,
     create_table_column_query_part_ts: &dyn ToTokens,
     ident_create_ucc: &dyn ToTokens,
     create_query_part_value_underscore: &CreateQueryPartValueUnderscore,
@@ -1076,7 +1076,7 @@ pub fn gen_impl_pg_type_ts(
         #AllowClippyArbitrarySourceItemOrdering
         impl #import_path :: #PgTypeUcc for #ident {
             type #TableTypeUcc = #ident_table_type_ucc;
-            fn #CreateTableColumnQueryPartSc(#ColumnSc: &dyn #StdFmtDisplay, #is_primary_key_underscore: #Bool) -> impl #StdFmtDisplay {
+            fn #CreateTableColumnQueryPartSc(#ColumnSc: &dyn #StdFmtDisplay, #is_primary_k_underscore: #Bool) -> impl #StdFmtDisplay {
                 #create_table_column_query_part_ts
             }
             type #CreateUcc = #ident_create_ucc;
@@ -1153,14 +1153,14 @@ pub fn gen_impl_pg_type_ts(
         }
     }
 }
-pub fn gen_impl_pg_type_not_primary_key_for_ident_ts(
+pub fn gen_impl_pg_type_not_primary_k_for_ident_ts(
     import_path: &ImportPath,
     ident: &dyn ToTokens,
 ) -> Ts2 {
     let ident_create_ucc = SelfCreateUcc::from_tokens(&ident);
     quote! {
         #AllowClippyArbitrarySourceItemOrdering
-        impl #import_path::#PgTypeNotPrimaryKeyUcc for #ident {
+        impl #import_path::#PgTypeNotPrimaryKUcc for #ident {
             type #PgTypeUcc = Self;
             type #CreateUcc = #ident_create_ucc;
         }
@@ -2325,10 +2325,10 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                             __A: _serde::de::MapAccess<'de>,
                         {
                             #visit_map_fields_init_ts
-                            while let Some(__key) = _serde::de::MapAccess::next_key::<
+                            while let Some(__k) = _serde::de::MapAccess::next_key::<
                                 __Field,
                             >(&mut __map)? {
-                                match __key {
+                                match __k {
                                     #visit_map_match_vrts_ts
                                     __Field::__ignore => {
                                         let _: serde::de::IgnoredAny = _serde::de::MapAccess::next_value::<

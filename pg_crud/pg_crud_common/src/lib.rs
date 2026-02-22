@@ -149,7 +149,7 @@ pub trait PgJsonType {
     ) -> Result<Query<'lifetime, Postgres, PgArguments>, String>;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-pub trait PgTypePrimaryKey {
+pub trait PgTypePrimaryK {
     type PgType: PgType;
     type TableType: TableTypeAl + PartialOrd;
     fn read_only_ids_into_table_type(
@@ -166,7 +166,7 @@ pub trait PgTypePrimaryKey {
     ) -> <Self::PgType as PgType>::TableType;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-pub trait PgTypeNotPrimaryKey {
+pub trait PgTypeNotPrimaryK {
     type PgType: PgType;
     type Create: CreateAl + SqlxEncodePgSqlxTypePgAl;
 }
@@ -640,9 +640,8 @@ const _: () = {
                 {
                     let mut f0: Option<LogicalOperator> = None;
                     let mut f1: Option<Vec<T>> = None;
-                    while let Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)?
-                    {
-                        match __key {
+                    while let Some(__k) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                        match __k {
                             __Field::f0 => {
                                 if Option::is_some(&f0) {
                                     return Err(
@@ -1016,8 +1015,8 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
             {
                 let mut f0: Option<i64> = None;
                 let mut f1: Option<i64> = None;
-                while let Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
-                    match __key {
+                while let Some(__k) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                    match __k {
                         __Field::f0 => {
                             if Option::is_some(&f0) {
                                 return Err(<__A::Error as serde::de::Error>::duplicate_field(
@@ -1301,8 +1300,8 @@ pub struct JsonFieldRights {
     can_update: bool,
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub struct NonPrimaryKeyPgTypeReadOnlyIds(pub Value<Option<()>>);
-impl Decode<'_, Postgres> for NonPrimaryKeyPgTypeReadOnlyIds {
+pub struct NonPrimaryKPgTypeReadOnlyIds(pub Value<Option<()>>);
+impl Decode<'_, Postgres> for NonPrimaryKPgTypeReadOnlyIds {
     fn decode(value: PgValueRef<'_>) -> Result<Self, BoxDynError> {
         match <Json<Self> as Decode<Postgres>>::decode(value) {
             Ok(v0) => Ok(v0.0),
@@ -1310,7 +1309,7 @@ impl Decode<'_, Postgres> for NonPrimaryKeyPgTypeReadOnlyIds {
         }
     }
 }
-impl Type<Postgres> for NonPrimaryKeyPgTypeReadOnlyIds {
+impl Type<Postgres> for NonPrimaryKPgTypeReadOnlyIds {
     fn compatible(ty: &<Postgres as Database>::TypeInfo) -> bool {
         <Json<Self> as Type<Postgres>>::compatible(ty)
     }
@@ -1318,7 +1317,7 @@ impl Type<Postgres> for NonPrimaryKeyPgTypeReadOnlyIds {
         <Json<Self> as Type<Postgres>>::type_info()
     }
 }
-impl Default for NonPrimaryKeyPgTypeReadOnlyIds {
+impl Default for NonPrimaryKPgTypeReadOnlyIds {
     fn default() -> Self {
         Self(Value { value: None })
     }
