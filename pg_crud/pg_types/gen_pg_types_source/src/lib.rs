@@ -4967,7 +4967,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let maybe_primary_key_is_primary_key_ts = quote! {pg_types_common::maybe_primary_key(is_primary_key)};
                     let column_pg_query_type = format!("{{column}} {pg_query_type}{maybe_arr_part}{maybe_constraint_part}");
                     let column_pg_query_type_not_null = format!("{{column}} {pg_query_type}{maybe_arr_part} not null{maybe_constraint_part}");
-                    let space_additional_param = " {}";
+                    let space_extra_param = " {}";
                     match (&is_nullable, &can_be_primary_key) {
                         (IsNullable::False, CanBePrimaryKey::False) => {
                             let format_ts = dq_ts(&column_pg_query_type_not_null);
@@ -4976,7 +4976,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                         (IsNullable::False, CanBePrimaryKey::True) => {
-                            let format_ts = dq_ts(&format!("{column_pg_query_type_not_null}{space_additional_param}"));
+                            let format_ts = dq_ts(&format!("{column_pg_query_type_not_null}{space_extra_param}"));
                             quote! {
                                 format!(#format_ts, #maybe_primary_key_is_primary_key_ts)
                             }
@@ -4988,7 +4988,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                         (IsNullable::True, CanBePrimaryKey::True) => {
-                            let format_ts = dq_ts(&format!("{column_pg_query_type}{space_additional_param}"));
+                            let format_ts = dq_ts(&format!("{column_pg_query_type}{space_extra_param}"));
                             quote! {
                                 format!(#format_ts, #maybe_primary_key_is_primary_key_ts)
                             }
@@ -5972,15 +5972,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 quote! {
                                     let mut acc_abf96c9f = Vec::new();
                                     let read_only_ids_to_two_dimal_vec_read_inner = #ident_stdrt_not_null_as_pg_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(#ReadOnlyIdsSc);
-                                    let opt_additional = {
-                                        let mut opt_additional = None;
+                                    let opt_extra = {
+                                        let mut opt_extra = None;
                                         for el_cb3f4b45 in &read_only_ids_to_two_dimal_vec_read_inner {
-                                            if opt_additional.is_some() {
+                                            if opt_extra.is_some() {
                                                 break;
                                             }
                                             for el_d27d1981 in el_cb3f4b45 {
-                                                if opt_additional.is_none() {
-                                                    opt_additional = Some((vec![
+                                                if opt_extra.is_none() {
+                                                    opt_extra = Some((vec![
                                                         vec![#el_d27d1981_ts]],
                                                         vec![vec![#el_d27d1981_ts, #el_d27d1981_ts]
                                                     ]));
@@ -5990,7 +5990,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 }
                                             }
                                         }
-                                        opt_additional
+                                        opt_extra
                                     };
                                     let has_len_greater_than_one = {
                                         let mut has_len_greater_than_one = false;
@@ -6005,7 +6005,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     for el_cb836246 in read_only_ids_to_two_dimal_vec_read_inner {
                                         acc_abf96c9f.push(vec![el_cb836246]);
                                     }
-                                    if let Some(v_e22f9ad2) = opt_additional {
+                                    if let Some(v_e22f9ad2) = opt_extra {
                                         if has_len_greater_than_one {
                                             acc_abf96c9f.push(v_e22f9ad2.0);
                                         }
@@ -6021,15 +6021,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 quote! {
                                     let mut acc_68eba82f = Vec::new();
                                     let read_only_ids_to_two_dimal_vec_read_inner = #ident_stdrt_nullable_as_pg_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(#ReadOnlyIdsSc);
-                                    let opt_additional = {
-                                        let mut opt_additional = None;
+                                    let opt_extra = {
+                                        let mut opt_extra = None;
                                         for el_b04183c6 in &read_only_ids_to_two_dimal_vec_read_inner {
-                                            if opt_additional.is_some() {
+                                            if opt_extra.is_some() {
                                                 break;
                                             }
                                             for el_6b831e7c in el_b04183c6 {
-                                                if opt_additional.is_none() {
-                                                    opt_additional = Some((
+                                                if opt_extra.is_none() {
+                                                    opt_extra = Some((
                                                         vec![vec![#el_6b831e7c_ts]],
                                                         vec![vec![#el_6b831e7c_ts, #el_6b831e7c_ts]]
                                                     ));
@@ -6039,7 +6039,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 }
                                             }
                                         }
-                                        opt_additional
+                                        opt_extra
                                     };
                                     let has_len_greater_than_one = read_only_ids_to_two_dimal_vec_read_inner.len() > 1;
                                     acc_68eba82f.push(vec![
@@ -6048,7 +6048,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         .flat_map(IntoIterator::into_iter)
                                         .collect()
                                     ]);
-                                    if let Some(v_a0f0f172) = opt_additional {
+                                    if let Some(v_a0f0f172) = opt_extra {
                                         if has_len_greater_than_one {
                                             acc_68eba82f.push(v_a0f0f172.0);
                                         }
@@ -6069,19 +6069,19 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             quote! {
                                 let mut acc_5f7f59ac = Vec::new();
                                 let read_only_ids_to_two_dimal_vec_read_inner = #ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(#ReadOnlyIdsSc);
-                                let opt_additional = {
-                                    let mut opt_additional = None;
+                                let opt_extra = {
+                                    let mut opt_extra = None;
                                     for el_12a259ab in &read_only_ids_to_two_dimal_vec_read_inner {
-                                        if opt_additional.is_some() {
+                                        if opt_extra.is_some() {
                                             break;
                                         }
                                         for el_16a61773 in el_12a259ab {
-                                            if opt_additional.is_some() {
+                                            if opt_extra.is_some() {
                                                 break;
                                             }
                                             for el_31abc64a in el_16a61773 {
-                                                if opt_additional.is_none() {
-                                                    opt_additional = Some((
+                                                if opt_extra.is_none() {
+                                                    opt_extra = Some((
                                                         vec![Some(vec![#el_31abc64a_ts])],
                                                         vec![Some(vec![#el_31abc64a_ts, #el_31abc64a_ts])]
                                                     ));
@@ -6092,7 +6092,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             }
                                         }
                                     }
-                                    opt_additional
+                                    opt_extra
                                 };
                                 let has_len_greater_than_one = {
                                     let mut has_len_greater_than_one = false;
@@ -6114,7 +6114,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     .collect()
                                 )]);
                                 acc_5f7f59ac.push(vec![None]);
-                                if let Some(v_3530786a) = opt_additional {
+                                if let Some(v_3530786a) = opt_extra {
                                     if has_len_greater_than_one {
                                         acc_5f7f59ac.push(v_3530786a.0);
                                     }

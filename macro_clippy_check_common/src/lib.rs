@@ -2,7 +2,7 @@
 pub fn clippy_check(
     crate_name: &str,
     command_path: &str,
-    additional_content: &str,
+    extra_content: &str,
     content_to_gen: &str,
 ) {
     use std::path::PathBuf;
@@ -28,7 +28,7 @@ workspace = true"#
     write(&path_lib_rs, lib_rs_content).expect("404ab180");
     write(
         &path_cargo_toml,
-        format!("{cargo_toml_content}\n{additional_content}"),
+        format!("{cargo_toml_content}\n{extra_content}"),
     )
     .expect("3757da9b");
     write(&path_lib_rs, content_to_gen).expect("55124f90");

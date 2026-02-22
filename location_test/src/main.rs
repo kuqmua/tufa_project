@@ -1,4 +1,4 @@
-// todo is there is no point to add additional info to enum like this
+// todo is there is no point to add extra info to enum like this
 // eo_location_field: {
 //     eo_display_with_serde_field: value
 // }

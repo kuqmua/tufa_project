@@ -8,19 +8,19 @@ use macros_helpers::{
     loc_syn_field, maybe_write_ts_into_file,
 };
 use naming::{
-    AdditionalParamsSc, AppStateSc, AsRefStrEnumWithUnitFieldsToScStr,
+    ExtraParamsSc, AppStateSc, AsRefStrEnumWithUnitFieldsToScStr,
     AsRefStrEnumWithUnitFieldsToUccStr, AsRefStrToScStr, AsRefStrToScTs, BeginSc, BindedQuerySc,
     BodyBytesSc, BodySc, BodySizeErUcc, BySc, CheckBodySizeSc, CheckBodySizeUcc, ColumnSc,
-    ColumnsSc, CommitSc, CommonAdditionalErVrtsSc, CommonAdditionalLogicSc,
+    ColumnsSc, CommitSc, CommonExtraErVrtsSc, CommonExtraLogicSc,
     CommonReadOnlyIdsReturnedFromCreateOneSc, ConfigSc, CreateExtensionIfNotExistsPgJsonschemaUcc,
     CreateExtensionIfNotExistsUuidOsspUcc, CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateIntoPgTypeOptVecWhereDimOneEqualSc,
-    CreateManyAdditionalErVrtsSc, CreateManyAdditionalLogicSc, CreateOneAdditionalErVrtsSc,
-    CreateOneAdditionalLogicSc, CreateQueryBindSc, CreateQueryPartSc, CreateSc,
+    CreateManyExtraErVrtsSc, CreateManyExtraLogicSc, CreateOneExtraErVrtsSc,
+    CreateOneExtraLogicSc, CreateQueryBindSc, CreateQueryPartSc, CreateSc,
     CreateTableColumnQueryPartSc, CreateUcc, DefaultOptSomeVecOneElMaxPageSizeSc,
     DefaultOptSomeVecOneElMaxPageSizeUcc, DefaultOptSomeVecOneElSc, DefaultOptSomeVecOneElUcc,
-    DeleteManyAdditionalErVrtsSc, DeleteManyAdditionalLogicSc, DeleteOneAdditionalErVrtsSc,
-    DeleteOneAdditionalLogicSc, DeserializeResUcc, DesirableUcc, DisplayPlusToTokens,
+    DeleteManyExtraErVrtsSc, DeleteManyExtraLogicSc, DeleteOneExtraErVrtsSc,
+    DeleteOneExtraLogicSc, DeserializeResUcc, DesirableUcc, DisplayPlusToTokens,
     DisplayToScStr, ElSc, EndpointLocationSc, ErSc, ExecutorAcquireSc, ExecutorSc, ExpectedResSc,
     FailedToGetResTextUcc, FalseSc, FromHandleSc, FutureSc,
     GenColumnQuealsValueCommaUpdateOneQueryPartSc, GenPgTablePrimaryKeySc, GenSelectQueryPartSc,
@@ -32,8 +32,8 @@ use naming::{
     PgTypeUcc, PgUcc, PoolConnectionSc, PoolSc, PrefixSc, PrepareExtensionsSc, PreparePgSc,
     PreparePgTableSc, PreparePgUcc, PrimaryKeyQueryPartSc, PrimaryKeySc, QueryBindSc,
     QueryPartErUcc, QueryPartSc, QueryPartUcc, QuerySc, QueryStringSc, ReadIntoTableTypeSc,
-    ReadManyAdditionalErVrtsSc, ReadManyAdditionalLogicSc, ReadOneAdditionalErVrtsSc,
-    ReadOneAdditionalLogicSc, ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeSc,
+    ReadManyExtraErVrtsSc, ReadManyExtraLogicSc, ReadOneExtraErVrtsSc,
+    ReadOneExtraLogicSc, ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeSc,
     ReadOnlyIdsIntoUpdateSc, ReadOnlyIdsMergedWithCreateIntoOptVecWhereEqualToJsonFieldSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereBetweenSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc,
@@ -49,8 +49,8 @@ use naming::{
     SelectPrimaryKeySc, SelectQueryPartSc, SelectSc, SelectUcc, SerdeJsonSc, SerdeJsonToStringSc,
     SerdeJsonToStringUcc, SerdeJsonUcc, SerdeSc, StatusCodeSc, TableNameSc, TableSc,
     ToTokensToScStr, ToTokensToUccTs, TrueSc, TryBindSc, TryBindUcc, UpdateForQuerySc,
-    UpdateForQueryUcc, UpdateForQueryVecSc, UpdateManyAdditionalErVrtsSc,
-    UpdateManyAdditionalLogicSc, UpdateOneAdditionalErVrtsSc, UpdateOneAdditionalLogicSc,
+    UpdateForQueryUcc, UpdateForQueryVecSc, UpdateManyExtraErVrtsSc,
+    UpdateManyExtraLogicSc, UpdateOneExtraErVrtsSc, UpdateOneExtraLogicSc,
     UpdateQueryBindSc, UpdateQueryPartPrimaryKeySc, UpdateQueryPartSc, UpdateSc, UpdateUcc, UrlSc,
     ValueSc, ValueUcc, WhereManySc, WhereUcc,
     param::{
@@ -198,28 +198,28 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 | Self::DeleteOne => StatusCode::Ok200,
             }
         }
-        const fn gen_pg_table_attr_additional_er_vrts(self) -> GenPgTableAttr {
+        const fn gen_pg_table_attr_extra_er_vrts(self) -> GenPgTableAttr {
             match self {
-                Self::CreateMany => GenPgTableAttr::CreateManyAdditionalErVrts,
-                Self::CreateOne => GenPgTableAttr::CreateOneAdditionalErVrts,
-                Self::ReadMany => GenPgTableAttr::ReadManyAdditionalErVrts,
-                Self::ReadOne => GenPgTableAttr::ReadOneAdditionalErVrts,
-                Self::UpdateMany => GenPgTableAttr::UpdateManyAdditionalErVrts,
-                Self::UpdateOne => GenPgTableAttr::UpdateOneAdditionalErVrts,
-                Self::DeleteMany => GenPgTableAttr::DeleteManyAdditionalErVrts,
-                Self::DeleteOne => GenPgTableAttr::DeleteOneAdditionalErVrts,
+                Self::CreateMany => GenPgTableAttr::CreateManyExtraErVrts,
+                Self::CreateOne => GenPgTableAttr::CreateOneExtraErVrts,
+                Self::ReadMany => GenPgTableAttr::ReadManyExtraErVrts,
+                Self::ReadOne => GenPgTableAttr::ReadOneExtraErVrts,
+                Self::UpdateMany => GenPgTableAttr::UpdateManyExtraErVrts,
+                Self::UpdateOne => GenPgTableAttr::UpdateOneExtraErVrts,
+                Self::DeleteMany => GenPgTableAttr::DeleteManyExtraErVrts,
+                Self::DeleteOne => GenPgTableAttr::DeleteOneExtraErVrts,
             }
         }
-        const fn gen_pg_table_attr_additional_logic(self) -> GenPgTableAttr {
+        const fn gen_pg_table_attr_extra_logic(self) -> GenPgTableAttr {
             match self {
-                Self::CreateMany => GenPgTableAttr::CreateManyAdditionalLogic,
-                Self::CreateOne => GenPgTableAttr::CreateOneAdditionalLogic,
-                Self::ReadMany => GenPgTableAttr::ReadManyAdditionalLogic,
-                Self::ReadOne => GenPgTableAttr::ReadOneAdditionalLogic,
-                Self::UpdateMany => GenPgTableAttr::UpdateManyAdditionalLogic,
-                Self::UpdateOne => GenPgTableAttr::UpdateOneAdditionalLogic,
-                Self::DeleteMany => GenPgTableAttr::DeleteManyAdditionalLogic,
-                Self::DeleteOne => GenPgTableAttr::DeleteOneAdditionalLogic,
+                Self::CreateMany => GenPgTableAttr::CreateManyExtraLogic,
+                Self::CreateOne => GenPgTableAttr::CreateOneExtraLogic,
+                Self::ReadMany => GenPgTableAttr::ReadManyExtraLogic,
+                Self::ReadOne => GenPgTableAttr::ReadOneExtraLogic,
+                Self::UpdateMany => GenPgTableAttr::UpdateManyExtraLogic,
+                Self::UpdateOne => GenPgTableAttr::UpdateOneExtraLogic,
+                Self::DeleteMany => GenPgTableAttr::DeleteManyExtraLogic,
+                Self::DeleteOne => GenPgTableAttr::DeleteOneExtraLogic,
             }
         }
         const fn http_method(self) -> OperationHttpMethod {
@@ -323,46 +323,46 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, Display)]
     enum GenPgTableAttr {
-        CreateManyAdditionalErVrts,
-        CreateOneAdditionalErVrts,
-        ReadManyAdditionalErVrts,
-        ReadOneAdditionalErVrts,
-        UpdateManyAdditionalErVrts,
-        UpdateOneAdditionalErVrts,
-        DeleteManyAdditionalErVrts,
-        DeleteOneAdditionalErVrts,
-        CommonAdditionalErVrts,
-        CreateManyAdditionalLogic,
-        CreateOneAdditionalLogic,
-        ReadManyAdditionalLogic,
-        ReadOneAdditionalLogic,
-        UpdateManyAdditionalLogic,
-        UpdateOneAdditionalLogic,
-        DeleteManyAdditionalLogic,
-        DeleteOneAdditionalLogic,
-        CommonAdditionalLogic,
+        CreateManyExtraErVrts,
+        CreateOneExtraErVrts,
+        ReadManyExtraErVrts,
+        ReadOneExtraErVrts,
+        UpdateManyExtraErVrts,
+        UpdateOneExtraErVrts,
+        DeleteManyExtraErVrts,
+        DeleteOneExtraErVrts,
+        CommonExtraErVrts,
+        CreateManyExtraLogic,
+        CreateOneExtraLogic,
+        ReadManyExtraLogic,
+        ReadOneExtraLogic,
+        UpdateManyExtraLogic,
+        UpdateOneExtraLogic,
+        DeleteManyExtraLogic,
+        DeleteOneExtraLogic,
+        CommonExtraLogic,
     }
     impl GenPgTableAttr {
         fn gen_path_to_attr(self) -> String {
             let value = match self {
-                Self::CreateManyAdditionalErVrts => CreateManyAdditionalErVrtsSc.to_string(),
-                Self::CreateOneAdditionalErVrts => CreateOneAdditionalErVrtsSc.to_string(),
-                Self::ReadManyAdditionalErVrts => ReadManyAdditionalErVrtsSc.to_string(),
-                Self::ReadOneAdditionalErVrts => ReadOneAdditionalErVrtsSc.to_string(),
-                Self::UpdateManyAdditionalErVrts => UpdateManyAdditionalErVrtsSc.to_string(),
-                Self::UpdateOneAdditionalErVrts => UpdateOneAdditionalErVrtsSc.to_string(),
-                Self::DeleteManyAdditionalErVrts => DeleteManyAdditionalErVrtsSc.to_string(),
-                Self::DeleteOneAdditionalErVrts => DeleteOneAdditionalErVrtsSc.to_string(),
-                Self::CommonAdditionalErVrts => CommonAdditionalErVrtsSc.to_string(),
-                Self::CreateManyAdditionalLogic => CreateManyAdditionalLogicSc.to_string(),
-                Self::CreateOneAdditionalLogic => CreateOneAdditionalLogicSc.to_string(),
-                Self::ReadManyAdditionalLogic => ReadManyAdditionalLogicSc.to_string(),
-                Self::ReadOneAdditionalLogic => ReadOneAdditionalLogicSc.to_string(),
-                Self::UpdateManyAdditionalLogic => UpdateManyAdditionalLogicSc.to_string(),
-                Self::UpdateOneAdditionalLogic => UpdateOneAdditionalLogicSc.to_string(),
-                Self::DeleteManyAdditionalLogic => DeleteManyAdditionalLogicSc.to_string(),
-                Self::DeleteOneAdditionalLogic => DeleteOneAdditionalLogicSc.to_string(),
-                Self::CommonAdditionalLogic => CommonAdditionalLogicSc.to_string(),
+                Self::CreateManyExtraErVrts => CreateManyExtraErVrtsSc.to_string(),
+                Self::CreateOneExtraErVrts => CreateOneExtraErVrtsSc.to_string(),
+                Self::ReadManyExtraErVrts => ReadManyExtraErVrtsSc.to_string(),
+                Self::ReadOneExtraErVrts => ReadOneExtraErVrtsSc.to_string(),
+                Self::UpdateManyExtraErVrts => UpdateManyExtraErVrtsSc.to_string(),
+                Self::UpdateOneExtraErVrts => UpdateOneExtraErVrtsSc.to_string(),
+                Self::DeleteManyExtraErVrts => DeleteManyExtraErVrtsSc.to_string(),
+                Self::DeleteOneExtraErVrts => DeleteOneExtraErVrtsSc.to_string(),
+                Self::CommonExtraErVrts => CommonExtraErVrtsSc.to_string(),
+                Self::CreateManyExtraLogic => CreateManyExtraLogicSc.to_string(),
+                Self::CreateOneExtraLogic => CreateOneExtraLogicSc.to_string(),
+                Self::ReadManyExtraLogic => ReadManyExtraLogicSc.to_string(),
+                Self::ReadOneExtraLogic => ReadOneExtraLogicSc.to_string(),
+                Self::UpdateManyExtraLogic => UpdateManyExtraLogicSc.to_string(),
+                Self::UpdateOneExtraLogic => UpdateOneExtraLogicSc.to_string(),
+                Self::DeleteManyExtraLogic => DeleteManyExtraLogicSc.to_string(),
+                Self::DeleteOneExtraLogic => DeleteOneExtraLogicSc.to_string(),
+                Self::CommonExtraLogic => CommonExtraLogicSc.to_string(),
             };
             format!("{PgCrudSc}::{value}")
         }
@@ -1216,13 +1216,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &ColumnParamUnderscore::True,
                 &IsNeedToAddLogicalOperatorUnderscore::True,
                 &{
-                    let additional_params_modification_ts = fields.iter().enumerate().map(|(index, el)| {
+                    let extra_params_modification_ts = fields.iter().enumerate().map(|(index, el)| {
                     let fi = &el.ident;
                     let fi_dq_ts = dq_ts(&fi);
-                    let maybe_is_first_push_to_additional_params_already_happend_true_ts = if index == fields_len_without_primary_key {
+                    let maybe_is_first_push_to_extra_params_already_happend_true_ts = if index == fields_len_without_primary_key {
                         Ts2::new()
                     } else {
-                        quote! {is_first_push_to_additional_params_already_happend = true;}
+                        quote! {is_first_push_to_extra_params_already_happend = true;}
                     };
                     quote! {
                         if let Some(v_da0f0616) = &#ValueSc.#fi {
@@ -1230,11 +1230,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 v_da0f0616,
                                 incr,
                                 &#fi_dq_ts,
-                                is_first_push_to_additional_params_already_happend,
+                                is_first_push_to_extra_params_already_happend,
                             ) {
                                 Ok(v_9e3f8fdd) => {
-                                    #AdditionalParamsSc.push_str(&v_9e3f8fdd);
-                                    #maybe_is_first_push_to_additional_params_already_happend_true_ts
+                                    #ExtraParamsSc.push_str(&v_9e3f8fdd);
+                                    #maybe_is_first_push_to_extra_params_already_happend_true_ts
                                 }
                                 Err(#Er0) => {
                                     return Err(#Er0);
@@ -1246,10 +1246,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     quote! {
                         Ok(match &self.0 {
                             Some(value) => {
-                                let mut #AdditionalParamsSc = #StringTs::from("where");
-                                let mut is_first_push_to_additional_params_already_happend = false;
-                                #(#additional_params_modification_ts)*
-                                #AdditionalParamsSc
+                                let mut #ExtraParamsSc = #StringTs::from("where");
+                                let mut is_first_push_to_extra_params_already_happend = false;
+                                #(#extra_params_modification_ts)*
+                                #ExtraParamsSc
                             },
                             None => #StringTs::default()
                         })
@@ -1299,7 +1299,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let where_many_pg_crud_default_opt_some_vec_one_el_call_ts = quote! {
         #WhereManySc: #PgCrudDefaultOptSomeVecOneElCall
     };
-    let gen_read_or_delete_many_additional_paramaters_init_ts =
+    let gen_read_or_delete_many_extra_params_init_ts =
         |read_many_or_delete_many: &ReadManyOrDeleteMany| {
             let ts_b34ec240 = gen_operation_er_init_eprintln_res_creation_ts(
                 &Operation::from(read_many_or_delete_many),
@@ -2172,14 +2172,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             reqwest_syn_vrt_wrapper.get_syn_vrt().clone(),
         ]
     };
-    let gen_additional_er_vrts = |di_bde7efb1: &DeriveInput,
+    let gen_extra_er_vrts = |di_bde7efb1: &DeriveInput,
                                   gen_pg_table_attr: GenPgTableAttr|
      -> Vec<Variant> {
         let gen_pg_table_attr_str = gen_pg_table_attr.to_string();
-        let common_additional_er_vrts_attr_ts =
+        let common_extra_er_vrts_attr_ts =
             get_macro_attr_meta_list_ts(&di_bde7efb1.attrs, &gen_pg_table_attr.gen_path_to_attr());
         let di_894e3269: DeriveInput =
-            parse2((*common_additional_er_vrts_attr_ts).clone()).expect("1b80783d");
+            parse2((*common_extra_er_vrts_attr_ts).clone()).expect("1b80783d");
         assert!(di_894e3269.ident == gen_pg_table_attr_str, "8a66c852");
         let vrts = if let Data::Enum(data_enum) = di_894e3269.data {
             data_enum.variants
@@ -2188,8 +2188,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         vrts.into_iter().collect()
     };
-    let common_additional_er_vrts =
-        gen_additional_er_vrts(&di, GenPgTableAttr::CommonAdditionalErVrts);
+    let common_extra_er_vrts =
+        gen_extra_er_vrts(&di, GenPgTableAttr::CommonExtraErVrts);
     let common_route_syn_vrts = {
         let mut acc = vec![
             check_body_size_syn_vrt_wrapper.get_syn_vrt(),
@@ -2197,14 +2197,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             serde_json_syn_vrt_wrapper.get_syn_vrt(),
             header_content_type_application_json_not_found_syn_vrt_wrapper.get_syn_vrt(),
         ];
-        for el in &common_additional_er_vrts {
+        for el in &common_extra_er_vrts {
             acc.push(el);
         }
         acc
     };
-    let common_additional_logic_ts = get_macro_attr_meta_list_ts(
+    let common_extra_logic_ts = get_macro_attr_meta_list_ts(
         &di.attrs,
-        &GenPgTableAttr::CommonAdditionalLogic.gen_path_to_attr(),
+        &GenPgTableAttr::CommonExtraLogic.gen_path_to_attr(),
     );
     let gen_pub_handle_ts = |is_pub: bool| {
         if is_pub {
@@ -2571,7 +2571,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         for el in syn_vrts {
             type_vrts_from_req_res_syn_vrts.push((*el).clone());
         }
-        for el in gen_additional_er_vrts(&di, operation.gen_pg_table_attr_additional_er_vrts()) {
+        for el in gen_extra_er_vrts(&di, operation.gen_pg_table_attr_extra_er_vrts()) {
             type_vrts_from_req_res_syn_vrts.push(el.clone());
         }
         type_vrts_from_req_res_syn_vrts
@@ -2615,7 +2615,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let std_sync_arc_combination_of_app_state_logic_traits_ts =
         quote! {std::sync::Arc<dyn #PgCrudSc::CombinationOfAppStateLogicTraits>};
     let gen_operation_ts = |operation: &Operation,
-                            additional_logic_ts_20466f5c: &dyn ToTokens,
+                            extra_logic_ts_20466f5c: &dyn ToTokens,
                             params_logic_ts: &dyn ToTokens,
                             expected_updated_primary_keys_ts: &dyn ToTokens,
                             query_string_ts: &dyn ToTokens,
@@ -2675,16 +2675,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
             }
         };
-        let additional_validators_ts = {
-            let operation_additional_logic_ts = get_macro_attr_meta_list_ts(
+        let extra_validators_ts = {
+            let operation_extra_logic_ts = get_macro_attr_meta_list_ts(
                 &di.attrs,
                 &operation
-                    .gen_pg_table_attr_additional_logic()
+                    .gen_pg_table_attr_extra_logic()
                     .gen_path_to_attr(),
             );
             quote! {
-                #additional_logic_ts_20466f5c
-                #operation_additional_logic_ts
+                #extra_logic_ts_20466f5c
+                #operation_extra_logic_ts
             }
         };
         let acquire_pool_and_connection_ts = {
@@ -2727,7 +2727,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #TableSc: &str,
             ) -> axum::response::Response {
                 #req_parts_preparation_ts
-                #additional_validators_ts
+                #extra_validators_ts
                 #params_logic_ts
                 #expected_updated_primary_keys_ts
                 let #QueryStringSc = #query_string_ts;
@@ -3211,7 +3211,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 );
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
-                    &common_additional_logic_ts,
+                    &common_extra_logic_ts,
                     &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
@@ -3351,7 +3351,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 );
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
-                    &common_additional_logic_ts,
+                    &common_extra_logic_ts,
                     &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
@@ -3438,11 +3438,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let query_string_ts = {
                     let select_query_part_params_payload_select_ts =
                         gen_select_query_part_params_payload_select_ts(&operation);
-                    let additional_paramaters_init_ts =
-                        gen_read_or_delete_many_additional_paramaters_init_ts(
+                    let extra_params_init_ts =
+                        gen_read_or_delete_many_extra_params_init_ts(
                             &ReadManyOrDeleteMany::ReadMany,
                         );
-                    let additional_params_order_by_handle_ts =
+                    let extra_params_order_by_handle_ts =
                         dq_ts(&format!("{{}}{OrderSc} {BySc} {{}} {{}}"));
                     let ts_0ec756e2 = gen_operation_er_init_eprintln_res_creation_ts(
                         &operation,
@@ -3461,8 +3461,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         });
                     let if_write_is_err_curly_braces_0_ts = gen_if_write_is_err_curly_braces_ts(
                         &quote! {
-                            #AdditionalParamsSc,
-                            #additional_params_order_by_handle_ts,
+                            #ExtraParamsSc,
+                            #extra_params_order_by_handle_ts,
                             #PrefixSc,
                             &match &#ParamsSc.#PayloadSc.#OrderBySc.#ColumnSc {
                                 #order_by_column_match_ts
@@ -3478,7 +3478,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     );
                     let if_write_is_err_curly_braces_1_ts = gen_if_write_is_err_curly_braces_ts(
                         &quote! {
-                            #AdditionalParamsSc,
+                            #ExtraParamsSc,
                             "{prefix}{}",
                             match #pg_crud_pg_type_where_filter_query_part_ts(
                                 &#ParamsSc.#PayloadSc.pagination,
@@ -3501,11 +3501,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &#select_query_part_params_payload_select_ts,
                         &{
                             #incr_init_ts
-                            let mut #AdditionalParamsSc = #additional_paramaters_init_ts;
-                            let #PrefixSc = if additional_params.is_empty() {""} else {" "};
+                            let mut #ExtraParamsSc = #extra_params_init_ts;
+                            let #PrefixSc = if extra_params.is_empty() {""} else {" "};
                             #if_write_is_err_curly_braces_0_ts
                             #if_write_is_err_curly_braces_1_ts
-                            #AdditionalParamsSc
+                            #ExtraParamsSc
                         }
                     )}
                 };
@@ -3558,7 +3558,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
-                    &common_additional_logic_ts,
+                    &common_extra_logic_ts,
                     &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
@@ -3708,7 +3708,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 );
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
-                    &common_additional_logic_ts,
+                    &common_extra_logic_ts,
                     &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
@@ -4137,7 +4137,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 );
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
-                    &common_additional_logic_ts,
+                    &common_extra_logic_ts,
                     &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
@@ -4204,7 +4204,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 };
                 let query_string_ts = {
-                    let additional_params_modification_ts =
+                    let extra_params_modification_ts =
                         gen_fields_named_without_primary_key_without_comma_ts(
                             &|el: &SynFieldWrapper| {
                                 let fi = &el.ident;
@@ -4235,7 +4235,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 }
                             },
                         );
-                    let additional_params_primary_key_modification_ts =
+                    let extra_params_primary_key_modification_ts =
                         gen_match_update_query_part_primary_key_ts(
                             &operation,
                             &quote! {#UpdateForQuerySc},
@@ -4252,11 +4252,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #incr_init_ts
                             let #ColumnsSc = {
                                 let mut acc_683e37b8 = #StringTs::default();
-                                #additional_params_modification_ts
+                                #extra_params_modification_ts
                                 let _: Option<char> = acc_683e37b8.pop();
                                 acc_683e37b8
                             };
-                            let #PrimaryKeyQueryPartSc = #additional_params_primary_key_modification_ts;
+                            let #PrimaryKeyQueryPartSc = #extra_params_primary_key_modification_ts;
                             let return_columns = match #UpdateForQuerySc.select_only_updated_ids_query_part(&mut #IncrSc) {
                                 Ok(v_7f0d86a1) => v_7f0d86a1,
                                 Err(#Er0) => {
@@ -4379,7 +4379,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 );
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
-                    &common_additional_logic_ts,
+                    &common_extra_logic_ts,
                     &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
@@ -4448,15 +4448,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             {
                 let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = {
-                    let additional_paramaters_init_ts =
-                        gen_read_or_delete_many_additional_paramaters_init_ts(
+                    let extra_params_init_ts =
+                        gen_read_or_delete_many_extra_params_init_ts(
                             &ReadManyOrDeleteMany::DeleteMany,
                         );
                     quote! {#PgCrudSc::gen_delete_many_query_string(
                         #TableSc,
                         &{
                             #incr_init_ts
-                            #additional_paramaters_init_ts
+                            #extra_params_init_ts
                         },
                         Self::#PrimaryKeySc(),
                     )}
@@ -4475,7 +4475,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 );
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
-                    &common_additional_logic_ts,
+                    &common_extra_logic_ts,
                     &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
@@ -4587,7 +4587,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 );
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
-                    &common_additional_logic_ts,
+                    &common_extra_logic_ts,
                     &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
@@ -5384,7 +5384,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             };
         let read_many_tests_ts = {
-            //todo additional read_many checks
+            //todo extra read_many checks
             let test_read_many_by_non_existent_primary_keys_ts = {
                 let ts = add_create_one_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
                     quote! {

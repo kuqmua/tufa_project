@@ -3068,16 +3068,16 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 let maybe_ident_with_id_stdrt_not_null_update_el_ts = if is_stdrt_not_null {
                     //thought it can be reused as struct with generic param, but turns out its too painfull
                     // pub trait MyTrait {
-                    //     type AdditionalType: PartialEq;
+                    //     type ExtraType: PartialEq;
                     // }
                     // pub struct MyStruct;
                     // #[derive(PartialEq)]
-                    // pub struct MyStructAdditionalType(String);
+                    // pub struct MyStructExtraType(String);
                     // impl MyTrait for MyStruct {
-                    //     type AdditionalType = MyStructAdditionalType;
+                    //     type ExtraType = MyStructExtraType;
                     // }
                     // #[derive(PartialEq)]
-                    // pub struct WrapperOfMyTrait<T: MyTrait>(<T as MyTrait>::AdditionalType);
+                    // pub struct WrapperOfMyTrait<T: MyTrait>(<T as MyTrait>::ExtraType);
                     // pub type WrapperOfMyTraitAl = WrapperOfMyTrait<MyStruct>;
                     // #[derive(PartialEq)]
                     // pub struct WrapperOfWrapperOfMyTraitAl(WrapperOfMyTraitAl);
@@ -4967,7 +4967,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             let fi = &el0.ident;
                                             let ft_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
                                             let (
-                                                opt_additional_params_ts,
+                                                opt_extra_params_ts,
                                                 params_ts
                                             ) = {
                                                 #[derive(Clone)]
@@ -5006,14 +5006,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             quote! {
                                                 if let Some(vec_create) = #ft_type_as_pg_json_type_test_cases_ts::#OptVecCreateSc() {
                                                     let mut acc_6a886d56 = Vec::new();
-                                                    let opt_additional = {
-                                                        let mut opt_additional = None;
+                                                    let opt_extra = {
+                                                        let mut opt_extra = None;
                                                         for el_37154498 in &vec_create {
-                                                            if opt_additional.is_none() {
+                                                            if opt_extra.is_none() {
                                                                 let #ValueSc = #ident_with_id_stdrt_not_null_create_ucc::new(
-                                                                    #(#opt_additional_params_ts),*
+                                                                    #(#opt_extra_params_ts),*
                                                                 );
-                                                                opt_additional = Some((
+                                                                opt_extra = Some((
                                                                     #ident_create_ucc::new(vec![#ValueSc.clone()]),
                                                                     #ident_create_ucc::new(vec![#ValueSc.clone(), #ValueSc])
                                                                 ));
@@ -5022,7 +5022,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                                 break;
                                                             }
                                                         }
-                                                        opt_additional
+                                                        opt_extra
                                                     };
                                                     let has_len_greater_than_one = vec_create.len() > 1;
                                                     for el_37154498 in vec_create {
@@ -5036,7 +5036,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                             acc_ccd79a32.push(v_07c0c08c);
                                                         }
                                                     }
-                                                    if let Some(v_f6686d5d) = opt_additional {
+                                                    if let Some(v_f6686d5d) = opt_extra {
                                                         if has_len_greater_than_one {
                                                             let v_60116463 = v_f6686d5d.0;
                                                             if !acc_ccd79a32.contains(&v_60116463) {

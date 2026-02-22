@@ -43,7 +43,7 @@
 ## Documentation
 * In docs function/struct/macro description must be maximum words, phrases and symbols what describe function
 * Otherwise user may not find it or know about what function doing
-* And need to give users possibility to add additional words/phrases to describe it
+* And need to give users possibility to add extra words/phrases to describe it
 
 # Testing
 

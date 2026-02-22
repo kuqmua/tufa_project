@@ -58,7 +58,7 @@ pub fn gen_column_equals_case_acc_else_column_end_comma_update_many_query_part(
 ) -> String {
     format!("{column} = case {acc}else {column} end,")
 }
-//todo additional param for columns_to_return instead of primary_key_field_name in "returning {primary_key_field_name}""
+//todo extra param for columns_to_return instead of primary_key_field_name in "returning {primary_key_field_name}""
 #[must_use]
 pub fn gen_update_many_query_string(
     table: &str,
@@ -71,7 +71,7 @@ pub fn gen_update_many_query_string(
         "update {table} set {els} where {primary_key_field_name} in ({primary_keys}) returning {columns_to_return}"
     )
 }
-//todo additional param for columns_to_return instead of primary_key_field_name in "returning {primary_key_field_name}""
+//todo extra param for columns_to_return instead of primary_key_field_name in "returning {primary_key_field_name}""
 #[must_use]
 pub fn gen_update_one_query_string(
     table: &str,

@@ -61,16 +61,16 @@ server_config = {path = "../../../server_config"}"#,
                             "common_write_into_file": "False",
                             "whole_write_into_file": "False"
                         }}]
-                        #[pg_crud::create_many_additional_er_vrts{enum CreateManyAdditionalErVrts{}}]
-                        #[pg_crud::create_one_additional_er_vrts{enum CreateOneAdditionalErVrts{}}]
-                        #[pg_crud::read_many_additional_er_vrts{enum ReadManyAdditionalErVrts{}}]
-                        #[pg_crud::read_one_additional_er_vrts{enum ReadOneAdditionalErVrts{}}]
-                        #[pg_crud::update_many_additional_er_vrts{enum UpdateManyAdditionalErVrts{}}]
-                        #[pg_crud::update_one_additional_er_vrts{enum UpdateOneAdditionalErVrts{}}]
-                        #[pg_crud::delete_many_additional_er_vrts{enum DeleteManyAdditionalErVrts{}}]
-                        #[pg_crud::delete_one_additional_er_vrts{enum DeleteOneAdditionalErVrts{}}]
-                        #[pg_crud::common_additional_er_vrts{
-                            enum CommonAdditionalErVrts {
+                        #[pg_crud::create_many_extra_er_vrts{enum CreateManyExtraErVrts{}}]
+                        #[pg_crud::create_one_extra_er_vrts{enum CreateOneExtraErVrts{}}]
+                        #[pg_crud::read_many_extra_er_vrts{enum ReadManyExtraErVrts{}}]
+                        #[pg_crud::read_one_extra_er_vrts{enum ReadOneExtraErVrts{}}]
+                        #[pg_crud::update_many_extra_er_vrts{enum UpdateManyExtraErVrts{}}]
+                        #[pg_crud::update_one_extra_er_vrts{enum UpdateOneExtraErVrts{}}]
+                        #[pg_crud::delete_many_extra_er_vrts{enum DeleteManyExtraErVrts{}}]
+                        #[pg_crud::delete_one_extra_er_vrts{enum DeleteOneExtraErVrts{}}]
+                        #[pg_crud::common_extra_er_vrts{
+                            enum CommonExtraErVrts {
                                 CheckCommit {
                                     #[eo_location]
                                     check_commit: pg_crud::check_commit::CommitEr,
@@ -78,15 +78,15 @@ server_config = {path = "../../../server_config"}"#,
                                 },
                             }
                         }]
-                        #[pg_crud::create_many_additional_logic{}]
-                        #[pg_crud::create_one_additional_logic{}]
-                        #[pg_crud::read_many_additional_logic{}]
-                        #[pg_crud::read_one_additional_logic{}]
-                        #[pg_crud::update_many_additional_logic{}]
-                        #[pg_crud::update_one_additional_logic{}]
-                        #[pg_crud::delete_many_additional_logic{}]
-                        #[pg_crud::delete_one_additional_logic{}]
-                        #[pg_crud::common_additional_logic{}]
+                        #[pg_crud::create_many_extra_logic{}]
+                        #[pg_crud::create_one_extra_logic{}]
+                        #[pg_crud::read_many_extra_logic{}]
+                        #[pg_crud::read_one_extra_logic{}]
+                        #[pg_crud::update_many_extra_logic{}]
+                        #[pg_crud::update_one_extra_logic{}]
+                        #[pg_crud::delete_many_extra_logic{}]
+                        #[pg_crud::delete_one_extra_logic{}]
+                        #[pg_crud::common_extra_logic{}]
                         pub struct TableExample {
                             #maybe_gen_pg_table_primary_key_ts
                             pub primary_key_column:

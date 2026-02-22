@@ -2663,7 +2663,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 };
                 let gen_acc_content_handle_ts = |ident_ts_416231d8: &dyn ToTokens, has_len_greater_than_one_content_ts: &dyn ToTokens| {
                     let ident_read_only_ids_ucc_1d31038d = SelfReadOnlyIdsUcc::from_tokens(&ident_ts_416231d8);
-                    let opt_additional_content_ts = {
+                    let opt_extra_content_ts = {
                         let el_82c7dc0a_clone_ts = quote! {el_82c7dc0a.clone()};
                         let first = quote! {vec![#el_82c7dc0a_clone_ts]};
                         let second = quote! {vec![#el_82c7dc0a_clone_ts, #el_82c7dc0a_clone_ts]};
@@ -2675,22 +2675,22 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             }
                         };
                         quote! {
-                            let opt_additional = {
-                                let mut opt_additional = None;
+                            let opt_extra = {
+                                let mut opt_extra = None;
                                 for el_c4f9bf8f in &read_only_ids_to_two_dimal_vec_read_inner {
-                                    if opt_additional.is_some() {
+                                    if opt_extra.is_some() {
                                         break;
                                     }
                                     for el_82c7dc0a in el_c4f9bf8f {
-                                        if opt_additional.is_none() {
-                                            opt_additional = Some((vec![#first_content_ts], vec![#second_content_ts]));
+                                        if opt_extra.is_none() {
+                                            opt_extra = Some((vec![#first_content_ts], vec![#second_content_ts]));
                                         }
                                         else {
                                             break;
                                         }
                                     }
                                 }
-                                opt_additional
+                                opt_extra
                             };
                         }
                     };
@@ -2725,11 +2725,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         >::#ReadOnlyIdsToTwoDimalVecReadInnerSc(
                             &#ident_read_only_ids_ucc_1d31038d(read_only_ids.0.clone())
                         );
-                        #opt_additional_content_ts
+                        #opt_extra_content_ts
                         #has_len_greater_than_one_content_ts
                         #acc_push_vec_content_ts
                         #maybe_acc_push_vec_none_ts
-                        if let Some(v_3de7fba4) = opt_additional {
+                        if let Some(v_3de7fba4) = opt_extra {
                             if has_len_greater_than_one {
                                 acc_0a07db18.push(v_3de7fba4.0);
                             }
@@ -3303,7 +3303,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     PgJsonType::U64AsJsonbNbr |
                     PgJsonType::F32AsJsonbNbr |
                     PgJsonType::F64AsJsonbNbr => {
-                        //todo additional vrts to test
+                        //todo extra vrts to test
                         quote!{
                             match #import_path::NotEmptyUniqueVec::try_new(vec![
                                 #import_path::SingleOrMultiple::Single(
