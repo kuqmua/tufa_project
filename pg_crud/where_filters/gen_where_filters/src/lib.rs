@@ -27,9 +27,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     #[derive(Clone)]
     enum ShouldAddDeclOfStructIdentGeneric {
         False,
-        True {
-            maybe_extra_traits_ts: Option<Ts2>,
-        },
+        True { maybe_extra_traits_ts: Option<Ts2> },
     }
     enum FilterType {
         PgJsonType,

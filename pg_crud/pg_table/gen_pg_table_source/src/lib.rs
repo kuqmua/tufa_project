@@ -8,32 +8,31 @@ use macros_helpers::{
     loc_syn_field, maybe_write_ts_into_file,
 };
 use naming::{
-    ExtraParamsSc, AppStateSc, AsRefStrEnumWithUnitFieldsToScStr,
-    AsRefStrEnumWithUnitFieldsToUccStr, AsRefStrToScStr, AsRefStrToScTs, BeginSc, BindedQuerySc,
-    BodyBytesSc, BodySc, BodySizeErUcc, BySc, CheckBodySizeSc, CheckBodySizeUcc, ColumnSc,
-    ColumnsSc, CommitSc, CommonExtraErVrtsSc, CommonExtraLogicSc,
-    CommonReadOnlyIdsReturnedFromCreateOneSc, ConfigSc, CreateExtensionIfNotExistsPgJsonschemaUcc,
-    CreateExtensionIfNotExistsUuidOsspUcc, CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
+    AppStateSc, AsRefStrEnumWithUnitFieldsToScStr, AsRefStrEnumWithUnitFieldsToUccStr,
+    AsRefStrToScStr, AsRefStrToScTs, BeginSc, BindedQuerySc, BodyBytesSc, BodySc, BodySizeErUcc,
+    BySc, CheckBodySizeSc, CheckBodySizeUcc, ColumnSc, ColumnsSc, CommitSc, CommonExtraErVrtsSc,
+    CommonExtraLogicSc, CommonReadOnlyIdsReturnedFromCreateOneSc, ConfigSc,
+    CreateExtensionIfNotExistsPgJsonschemaUcc, CreateExtensionIfNotExistsUuidOsspUcc,
+    CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateIntoPgTypeOptVecWhereDimOneEqualSc,
-    CreateManyExtraErVrtsSc, CreateManyExtraLogicSc, CreateOneExtraErVrtsSc,
-    CreateOneExtraLogicSc, CreateQueryBindSc, CreateQueryPartSc, CreateSc,
-    CreateTableColumnQueryPartSc, CreateUcc, DefaultOptSomeVecOneElMaxPageSizeSc,
-    DefaultOptSomeVecOneElMaxPageSizeUcc, DefaultOptSomeVecOneElSc, DefaultOptSomeVecOneElUcc,
-    DeleteManyExtraErVrtsSc, DeleteManyExtraLogicSc, DeleteOneExtraErVrtsSc,
-    DeleteOneExtraLogicSc, DeserializeResUcc, DesirableUcc, DisplayPlusToTokens,
-    DisplayToScStr, ElSc, EndpointLocationSc, ErSc, ExecutorAcquireSc, ExecutorSc, ExpectedResSc,
-    FailedToGetResTextUcc, FalseSc, FromHandleSc, FutureSc,
-    GenColumnQuealsValueCommaUpdateOneQueryPartSc, GenPgTablePrimaryKeySc, GenSelectQueryPartSc,
-    GenWhenColumnIdThenValueUpdateManyQueryPartSc, HeaderContentTypeApplicationJsonNotFoundUcc,
-    HeadersSc, IdentCreateDefaultSc, IncrSc, IntoSerdeVersionSc, LocSc, NoFieldsProvidedUcc,
-    NotUniqueFieldSc, NotUniqueFieldUcc, NotUniquePrimaryKeySc, NotUniquePrimaryKeyUcc,
-    OptVecCreateSc, OrderBySc, OrderByUcc, OrderSc, PaginationSc, ParamsSc, PayloadSc, PayloadUcc,
-    PgCrudSc, PgPoolForTokioSpawnSyncMoveSc, PgPoolSc, PgSc, PgTypeOptVecWhereGreaterThanTestSc,
-    PgTypeUcc, PgUcc, PoolConnectionSc, PoolSc, PrefixSc, PrepareExtensionsSc, PreparePgSc,
-    PreparePgTableSc, PreparePgUcc, PrimaryKeyQueryPartSc, PrimaryKeySc, QueryBindSc,
-    QueryPartErUcc, QueryPartSc, QueryPartUcc, QuerySc, QueryStringSc, ReadIntoTableTypeSc,
-    ReadManyExtraErVrtsSc, ReadManyExtraLogicSc, ReadOneExtraErVrtsSc,
-    ReadOneExtraLogicSc, ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeSc,
+    CreateManyExtraErVrtsSc, CreateManyExtraLogicSc, CreateOneExtraErVrtsSc, CreateOneExtraLogicSc,
+    CreateQueryBindSc, CreateQueryPartSc, CreateSc, CreateTableColumnQueryPartSc, CreateUcc,
+    DefaultOptSomeVecOneElMaxPageSizeSc, DefaultOptSomeVecOneElMaxPageSizeUcc,
+    DefaultOptSomeVecOneElSc, DefaultOptSomeVecOneElUcc, DeleteManyExtraErVrtsSc,
+    DeleteManyExtraLogicSc, DeleteOneExtraErVrtsSc, DeleteOneExtraLogicSc, DeserializeResUcc,
+    DesirableUcc, DisplayPlusToTokens, DisplayToScStr, ElSc, EndpointLocationSc, ErSc,
+    ExecutorAcquireSc, ExecutorSc, ExpectedResSc, ExtraParamsSc, FailedToGetResTextUcc, FalseSc,
+    FromHandleSc, FutureSc, GenColumnQuealsValueCommaUpdateOneQueryPartSc, GenPgTablePrimaryKeySc,
+    GenSelectQueryPartSc, GenWhenColumnIdThenValueUpdateManyQueryPartSc,
+    HeaderContentTypeApplicationJsonNotFoundUcc, HeadersSc, IdentCreateDefaultSc, IncrSc,
+    IntoSerdeVersionSc, LocSc, NoFieldsProvidedUcc, NotUniqueFieldSc, NotUniqueFieldUcc,
+    NotUniquePrimaryKeySc, NotUniquePrimaryKeyUcc, OptVecCreateSc, OrderBySc, OrderByUcc, OrderSc,
+    PaginationSc, ParamsSc, PayloadSc, PayloadUcc, PgCrudSc, PgPoolForTokioSpawnSyncMoveSc,
+    PgPoolSc, PgSc, PgTypeOptVecWhereGreaterThanTestSc, PgTypeUcc, PgUcc, PoolConnectionSc, PoolSc,
+    PrefixSc, PrepareExtensionsSc, PreparePgSc, PreparePgTableSc, PreparePgUcc,
+    PrimaryKeyQueryPartSc, PrimaryKeySc, QueryBindSc, QueryPartErUcc, QueryPartSc, QueryPartUcc,
+    QuerySc, QueryStringSc, ReadIntoTableTypeSc, ReadManyExtraErVrtsSc, ReadManyExtraLogicSc,
+    ReadOneExtraErVrtsSc, ReadOneExtraLogicSc, ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeSc,
     ReadOnlyIdsIntoUpdateSc, ReadOnlyIdsMergedWithCreateIntoOptVecWhereEqualToJsonFieldSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereBetweenSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc,
@@ -49,10 +48,9 @@ use naming::{
     SelectPrimaryKeySc, SelectQueryPartSc, SelectSc, SelectUcc, SerdeJsonSc, SerdeJsonToStringSc,
     SerdeJsonToStringUcc, SerdeJsonUcc, SerdeSc, StatusCodeSc, TableNameSc, TableSc,
     ToTokensToScStr, ToTokensToUccTs, TrueSc, TryBindSc, TryBindUcc, UpdateForQuerySc,
-    UpdateForQueryUcc, UpdateForQueryVecSc, UpdateManyExtraErVrtsSc,
-    UpdateManyExtraLogicSc, UpdateOneExtraErVrtsSc, UpdateOneExtraLogicSc,
-    UpdateQueryBindSc, UpdateQueryPartPrimaryKeySc, UpdateQueryPartSc, UpdateSc, UpdateUcc, UrlSc,
-    ValueSc, ValueUcc, WhereManySc, WhereUcc,
+    UpdateForQueryUcc, UpdateForQueryVecSc, UpdateManyExtraErVrtsSc, UpdateManyExtraLogicSc,
+    UpdateOneExtraErVrtsSc, UpdateOneExtraLogicSc, UpdateQueryBindSc, UpdateQueryPartPrimaryKeySc,
+    UpdateQueryPartSc, UpdateSc, UpdateUcc, UrlSc, ValueSc, ValueUcc, WhereManySc, WhereUcc,
     param::{
         ErSelfSc, IsSelfUpdateExistSc, SelfCreateUcc, SelfDeleteManyParamsUcc,
         SelfDeleteManyPayloadUcc, SelfDeleteOneErWithSerdeUcc, SelfDeleteOneParamsUcc,
@@ -2173,7 +2171,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         ]
     };
     let gen_extra_er_vrts = |di_bde7efb1: &DeriveInput,
-                                  gen_pg_table_attr: GenPgTableAttr|
+                             gen_pg_table_attr: GenPgTableAttr|
      -> Vec<Variant> {
         let gen_pg_table_attr_str = gen_pg_table_attr.to_string();
         let common_extra_er_vrts_attr_ts =
@@ -2188,8 +2186,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         vrts.into_iter().collect()
     };
-    let common_extra_er_vrts =
-        gen_extra_er_vrts(&di, GenPgTableAttr::CommonExtraErVrts);
+    let common_extra_er_vrts = gen_extra_er_vrts(&di, GenPgTableAttr::CommonExtraErVrts);
     let common_route_syn_vrts = {
         let mut acc = vec![
             check_body_size_syn_vrt_wrapper.get_syn_vrt(),
@@ -2564,18 +2561,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #impl_pg_crud_default_opt_some_vec_one_el_for_operation_payload_ts
             }
         };
-    let gen_type_vrts_from_req_res_syn_vrts = |syn_vrts: &Vec<&Variant>,
-                                               operation: &Operation|
-     -> Vec<Variant> {
-        let mut type_vrts_from_req_res_syn_vrts = Vec::new();
-        for el in syn_vrts {
-            type_vrts_from_req_res_syn_vrts.push((*el).clone());
-        }
-        for el in gen_extra_er_vrts(&di, operation.gen_pg_table_attr_extra_er_vrts()) {
-            type_vrts_from_req_res_syn_vrts.push(el.clone());
-        }
-        type_vrts_from_req_res_syn_vrts
-    };
+    let gen_type_vrts_from_req_res_syn_vrts =
+        |syn_vrts: &Vec<&Variant>, operation: &Operation| -> Vec<Variant> {
+            let mut type_vrts_from_req_res_syn_vrts = Vec::new();
+            for el in syn_vrts {
+                type_vrts_from_req_res_syn_vrts.push((*el).clone());
+            }
+            for el in gen_extra_er_vrts(&di, operation.gen_pg_table_attr_extra_er_vrts()) {
+                type_vrts_from_req_res_syn_vrts.push(el.clone());
+            }
+            type_vrts_from_req_res_syn_vrts
+        };
     let gen_ident_try_operation_er_ts = |operation: &Operation, syn_vrts: &Vec<Variant>| -> Ts2 {
         let ts_930e1a93 = StructOrEnumDeriveTsStreamBuilder::new()
             .make_pub()
@@ -2678,9 +2674,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let extra_validators_ts = {
             let operation_extra_logic_ts = get_macro_attr_meta_list_ts(
                 &di.attrs,
-                &operation
-                    .gen_pg_table_attr_extra_logic()
-                    .gen_path_to_attr(),
+                &operation.gen_pg_table_attr_extra_logic().gen_path_to_attr(),
             );
             quote! {
                 #extra_logic_ts_20466f5c
@@ -3438,10 +3432,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let query_string_ts = {
                     let select_query_part_params_payload_select_ts =
                         gen_select_query_part_params_payload_select_ts(&operation);
-                    let extra_params_init_ts =
-                        gen_read_or_delete_many_extra_params_init_ts(
-                            &ReadManyOrDeleteMany::ReadMany,
-                        );
+                    let extra_params_init_ts = gen_read_or_delete_many_extra_params_init_ts(
+                        &ReadManyOrDeleteMany::ReadMany,
+                    );
                     let extra_params_order_by_handle_ts =
                         dq_ts(&format!("{{}}{OrderSc} {BySc} {{}} {{}}"));
                     let ts_0ec756e2 = gen_operation_er_init_eprintln_res_creation_ts(
@@ -4448,10 +4441,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             {
                 let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = {
-                    let extra_params_init_ts =
-                        gen_read_or_delete_many_extra_params_init_ts(
-                            &ReadManyOrDeleteMany::DeleteMany,
-                        );
+                    let extra_params_init_ts = gen_read_or_delete_many_extra_params_init_ts(
+                        &ReadManyOrDeleteMany::DeleteMany,
+                    );
                     quote! {#PgCrudSc::gen_delete_many_query_string(
                         #TableSc,
                         &{
