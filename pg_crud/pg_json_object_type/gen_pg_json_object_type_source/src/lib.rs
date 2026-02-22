@@ -2539,9 +2539,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts = gen_vec_tokens_decl_ts(
                 &pg_crud_path_pg_json_type_uuid_uuid_update_ts
             );
-            let gen_create_update_delete_fields_ts_ffcbdaf0 = |should_add_serde_skip_serializing_if_vec_is_empty_annotation: &ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation| {
+            let gen_create_update_delete_fields_ts_ffcbdaf0 = |v: &ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation| {
                 gen_create_update_delete_fields_ts_043c4057(
-                    should_add_serde_skip_serializing_if_vec_is_empty_annotation,
+                    v,
                     &vec_ident_with_id_stdrt_not_null_create_ts,
                     &import_path_unique_vec_ident_with_id_stdrt_not_null_update_el_ts,
                     &vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts

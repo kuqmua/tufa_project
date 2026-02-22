@@ -85,21 +85,21 @@ pub fn location(input: Ts) -> Ts {
                 .map(|el| quote! {#el: location_lib::ToErrString});
             quote! {<#(#v),*>}
         };
-    let gen_enum_ident_with_serde_ts = |vrts_ts: &dyn ToTokens| {
+    let gen_enum_ident_with_serde_ts = |ts: &dyn ToTokens| {
         quote! {
             #[derive(Debug, thiserror::Error, serde::Serialize, serde::Deserialize)]
             pub enum #ident_with_serde_ucc #maybe_generic_params_ts {
-                #vrts_ts
+                #ts
             }
         }
     };
-    let gen_impl_ident_into_serde_version_ts = |vrts: &dyn ToTokens| {
+    let gen_impl_ident_into_serde_version_ts = |ts: &dyn ToTokens| {
         quote! {
             impl #maybe_generic_params_ts #ident #maybe_generic_params_ts {
                 pub fn #IntoSerdeVersionSc(self) -> #ident_with_serde_ucc #maybe_generic_params_ts {
                     #[allow(clippy::redundant_closure_for_method_calls)]
                     match self {
-                        #vrts
+                        #ts
                     }
                 }
             }
@@ -315,58 +315,33 @@ pub fn location(input: Ts) -> Ts {
                     .filter(|el0| *el0.ident.as_ref().expect("0488fc4c") != *loc_sc_str)
                     .map(|el0| {
                         let el0_ident = &el0.ident.as_ref().expect("9a672ac2");
+                        let gen_field_ts = |ts: &dyn ToTokens|quote!{#el0_ident: {#ts}};
                         let conversion_ts = match LocationFieldAttr::try_from(el0).expect("449c3781") {
-                            LocationFieldAttr::EoToErrString => {
-                                quote! {
-                                    #el0_ident: {
-                                        location_lib::ToErrString::to_err_string(&#el0_ident)
-                                    }
-                                }
-                            }
+                            LocationFieldAttr::EoToErrString => gen_field_ts(&quote!{
+                                location_lib::ToErrString::to_err_string(&#el0_ident)
+                            }),
                             LocationFieldAttr::EoToErrStringSerde | LocationFieldAttr::EoVecToErrStringSerde | LocationFieldAttr::EoHashMapKeyStringValueToErrStringSerde => {
-                                quote! {
-                                    #el0_ident
-                                }
+                                quote! {#el0_ident}
                             }
-                            LocationFieldAttr::EoLocation => {
-                                quote! {
-                                    #el0_ident: {
-                                        #el0_ident.into_serde_version()
-                                    }
-                                }
-                            }
-                            LocationFieldAttr::EoVecToErrString => {
-                                quote! {
-                                    #el0_ident: {
-                                        #el0_ident.into_iter().map(|el|location_lib::ToErrString::to_err_string(&el)).collect()
-                                    }
-                                }
-                            }
-                            LocationFieldAttr::EoVecLocation => {
-                                quote! {
-                                    #el0_ident: {
-                                        #el0_ident.into_iter().map(|el|el.into_serde_version()).collect()
-                                    }
-                                }
-                            }
-                            LocationFieldAttr::EoHashMapKeyStringValueToErrString => {
-                                quote! {
-                                    #el0_ident: {
-                                        #el0_ident.into_iter().map(|(k, v)|
-                                            (k, location_lib::ToErrString::to_err_string(&v))
-                                        ).collect()
-                                    }
-                                }
-                            }
-                            LocationFieldAttr::EoHashMapKeyStringValueLocation => {
-                                quote! {
-                                    #el0_ident: {
-                                        #el0_ident.into_iter().map(
-                                            |(k, v)|(k, v.into_serde_version())
-                                        ).collect()
-                                    }
-                                }
-                            }
+                            LocationFieldAttr::EoLocation => gen_field_ts(&quote!{
+                                #el0_ident.into_serde_version()
+                            }),
+                            LocationFieldAttr::EoVecToErrString => gen_field_ts(&quote!{
+                                #el0_ident.into_iter().map(|el|location_lib::ToErrString::to_err_string(&el)).collect()
+                            }),
+                            LocationFieldAttr::EoVecLocation => gen_field_ts(&quote!{
+                                #el0_ident.into_iter().map(|el|el.into_serde_version()).collect()
+                            }),
+                            LocationFieldAttr::EoHashMapKeyStringValueToErrString => gen_field_ts(&quote!{
+                                #el0_ident.into_iter().map(
+                                    |(k, v)|(k, location_lib::ToErrString::to_err_string(&v))
+                                ).collect()
+                            }),
+                            LocationFieldAttr::EoHashMapKeyStringValueLocation => gen_field_ts(&quote!{
+                                #el0_ident.into_iter().map(
+                                    |(k, v)|(k, v.into_serde_version())
+                                ).collect()
+                            }),
                         };
                         quote! {#conversion_ts,}
                     });
@@ -410,7 +385,7 @@ pub fn location(input: Ts) -> Ts {
             }
         }
         SuportedEnumVrt::Unnamed => {
-            let gen_display_formatter_unnamed_ts = || {
+            let display_formatter_unnamed_ts = {
                 let vrts_ts = data_enum.variants.iter().map(|el| {
                     let el_ident = &el.ident;
                     quote! {Self::#el_ident(v) => v}
@@ -421,15 +396,12 @@ pub fn location(input: Ts) -> Ts {
                 &maybe_generic_params_location_lib_to_err_string_annotations_ts,
                 &ident,
                 &maybe_generic_params_ts,
-                &{
-                    let display_formatter_unnamed_ts = gen_display_formatter_unnamed_ts();
-                    quote! {
-                        write!(
-                            f,
-                            "{}",
-                            #display_formatter_unnamed_ts
-                        )
-                    }
+                &quote! {
+                    write!(
+                        f,
+                        "{}",
+                        #display_formatter_unnamed_ts
+                    )
                 },
             );
             let impl_ident_into_serde_version_ts = {
@@ -472,15 +444,12 @@ pub fn location(input: Ts) -> Ts {
                 &maybe_generic_params_location_lib_to_err_string_annotations_ts,
                 &ident_with_serde_ucc,
                 &maybe_generic_params_ts,
-                &{
-                    let display_formatter_unnamed_ts = gen_display_formatter_unnamed_ts();
-                    quote! {
-                        write!(
-                            f,
-                            "{}",
-                            #display_formatter_unnamed_ts
-                        )
-                    }
+                &quote! {
+                    write!(
+                        f,
+                        "{}",
+                        #display_formatter_unnamed_ts
+                    )
                 },
             );
             //todo maybe make a trait?
