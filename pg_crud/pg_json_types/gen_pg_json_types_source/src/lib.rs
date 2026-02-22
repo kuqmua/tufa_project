@@ -453,12 +453,12 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         assert!(
             acc
                 .iter()
-                .all(|el_8ef63a77| seen.insert(el_8ef63a77)),
+                .all(|el| seen.insert(el)),
             "c2d37017"
         );
         acc
-    }.into_iter().fold(Vec::new(), |mut acc, el_c4f9bf8f| {
-        for el_7ae8d2ae in {
+    }.into_iter().fold(Vec::new(), |mut acc, el| {
+        for el0 in {
             #[derive(Clone)]
             struct RecordHandle {
                 is_nullable: IsNullable,
@@ -519,14 +519,14 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 }
             }
             gen_record_handle_vec(RecordHandle {
-                is_nullable: el_c4f9bf8f.is_nullable,
-                pattern: el_c4f9bf8f.pattern,
+                is_nullable: el.is_nullable,
+                pattern: el.pattern,
             })
         } {
             let record = Record {
-                pg_json_type: el_c4f9bf8f.pg_json_type.clone(),
-                is_nullable: el_7ae8d2ae.is_nullable,
-                pattern: el_7ae8d2ae.pattern,
+                pg_json_type: el.pg_json_type.clone(),
+                is_nullable: el0.is_nullable,
+                pattern: el0.pattern,
             };
             if !acc.contains(&record) {
                 acc.push(record);
@@ -539,7 +539,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     .collect::<Vec<(usize, Record)>>()
     .par_iter()
     // .into_iter() //just for console prints ordering
-    .map(|(index, el_1d376874)| {
+    .map(|(index, el)| {
         enum IsStandartNotNullUuid {
             False,
             True,
@@ -548,9 +548,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             False,
             True,
         }
-        let pg_json_type = &el_1d376874.pg_json_type;
-        let is_nullable = &el_1d376874.is_nullable;
-        let pattern = &el_1d376874.pattern;
+        let pg_json_type = &el.pg_json_type;
+        let is_nullable = &el.is_nullable;
+        let pattern = &el.pattern;
         let rust_type_name = RustTypeName::from(pg_json_type);
         let pg_json_type_name = PgJsonTypeName::from(pg_json_type);
         let is_standart_not_null = if matches!((&pattern, &is_nullable), (Pattern::Standart, IsNullable::False)) {
@@ -1097,8 +1097,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         |()| quote! {;},
                         |arr_dim| {
                             let mut arguments_ts = Vec::new();
-                            for el_419a74e5 in 1..=arr_dim.to_usize() {
-                                let dim_nbr_pagination_ts = format!("dim{el_419a74e5}_pagination").parse::<Ts2>()
+                            for el0 in 1..=arr_dim.to_usize() {
+                                let dim_nbr_pagination_ts = format!("dim{el0}_pagination").parse::<Ts2>()
                                 .expect("2ad1faf7");
                                 arguments_ts.push(quote! {
                                     #dim_nbr_pagination_ts: #import_path::PaginationStartsWithZero
@@ -1117,8 +1117,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudCommonDefaultOptSomeVecOneElMaxPageSizeCall,
                         };
                         let mut arguments_ts = Vec::new();
-                        for el_d56aec99 in 1..=arr_dim.to_usize() {
-                            let dim_nbr_pagination_ts = format!("dim{el_d56aec99}_pagination").parse::<Ts2>().expect("26ca29fb");
+                        for el0 in 1..=arr_dim.to_usize() {
+                            let dim_nbr_pagination_ts = format!("dim{el0}_pagination").parse::<Ts2>().expect("26ca29fb");
                             arguments_ts.push(quote! {
                                 #dim_nbr_pagination_ts: #content_ts
                             });
@@ -1518,8 +1518,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
                 .iter()
-                .map(|el_f992f593| {
-                    let handle: &dyn PgFilter = el_f992f593;
+                .map(|el0| {
+                    let handle: &dyn PgFilter = el0;
                     handle
                 })
                 .collect(),
@@ -1989,19 +1989,19 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         }
                     };
                     let maybe_dims_start_end_init = ArrDim::try_from(pattern).ok().into_iter().flat_map(|arr_dim| {
-                        (1..=arr_dim.to_usize()).map(|el_8d56d66d| {
+                        (1..=arr_dim.to_usize()).map(|el0| {
                             let dim_nbr_start_ts =
-                                gen_dim_nbr_start_str(el_8d56d66d)
+                                gen_dim_nbr_start_str(el0)
                                     .parse::<Ts2>()
                                     .expect("77ec13b9");
                             let dim_nbr_end_ts =
-                                gen_dim_nbr_end_str(el_8d56d66d)
+                                gen_dim_nbr_end_str(el0)
                                     .parse::<Ts2>()
                                     .expect("24acbb5e");
                             let dim_nbr_pagination_ts =
                                 format!(
                                     "{}_pagination",
-                                    gen_dim_nbr_str(el_8d56d66d)
+                                    gen_dim_nbr_str(el0)
                                 )
                                 .parse::<Ts2>()
                                 .expect("745c99b3");
@@ -2330,7 +2330,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             start_index.checked_add(
                                 is_nullable_vec_41b82a0c
                                 .iter()
-                                .filter(|el_bf28b242| matches!(el_bf28b242, IsNullable::True))
+                                .filter(|el0| matches!(el0, IsNullable::True))
                                 .count()
                             ).expect("de4c4116")
                         };
@@ -2375,8 +2375,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                             DimIndexNbr::Three => 3i32,
                                         }
                                     )
-                                    .map(|el_db559599| {
-                                        let index_nbr_ts = format!("index_{el_db559599}")
+                                    .map(|el0| {
+                                        let index_nbr_ts = format!("index_{el0}")
                                             .parse::<Ts2>()
                                             .expect("f0ce7e73");
                                         quote! {
@@ -3582,7 +3582,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         &{
             let fields_content_ts = fields_ts
                 .into_iter()
-                .map(|el_7ec253fa| el_7ec253fa.parse::<Ts2>().expect("1d8cd8e4"))
+                .map(|el| el.parse::<Ts2>().expect("1d8cd8e4"))
                 .collect::<Vec<Ts2>>();
             quote! {
                 pub struct PgTableColumnsUsingPgJsonTypes {
@@ -3595,7 +3595,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     let generated = {
         let content_ts = pg_json_type_arr
             .into_iter()
-            .map(|el_af9caefa| el_af9caefa.parse::<Ts2>().expect("84e21b40"))
+            .map(|el| el.parse::<Ts2>().expect("84e21b40"))
             .collect::<Vec<Ts2>>();
         quote! {
             #[allow(unused_qualifications)]
