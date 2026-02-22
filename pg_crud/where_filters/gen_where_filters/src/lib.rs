@@ -580,8 +580,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         is_query_bind_mutable_true,
                         quote! {
                             #maybe_dims_query_bind_ts
-                            for el_ea865d8c in #SelfSc.#ValueSc.into_vec() {
-                                if let Err(#ErSc) = #QuerySc.try_bind(el_ea865d8c) {
+                            for el in #SelfSc.#ValueSc.into_vec() {
+                                if let Err(#ErSc) = #QuerySc.try_bind(el) {
                                     return Err(#ErSc.to_string());
                                 }
                             }
@@ -1206,8 +1206,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             };
             gend
         };
-        let filter_arr_ts =
-            PgTypeFilter::into_arr().map(|el_7cfb1929| gen_filters_ts(&el_7cfb1929));
+        let filter_arr_ts = PgTypeFilter::into_arr().map(|el| gen_filters_ts(&el));
         let gend = quote! {#(#filter_arr_ts)*};
         maybe_write_ts_into_file(
             gen_where_filters_config.pg_types_write_into_file,
@@ -1316,7 +1315,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                     {
                         let format_ts = dq_ts(&format!(
-                            "{{}}(jsonb_array_length({{}}{}) {operation} ${{}})",
+                            "{{}}(jsonb_arr_length({{}}{}) {operation} ${{}})",
                             pg_type_kind.format_argument()
                         ));
                         quote! {
@@ -1956,8 +1955,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             };
             gend
         };
-        let filter_arr_ts =
-            PgJsonTypeFilter::into_arr().map(|el_6a4ac539| gen_filters_ts(&el_6a4ac539));
+        let filter_arr_ts = PgJsonTypeFilter::into_arr().map(|el| gen_filters_ts(&el));
         let gend = quote! {#(#filter_arr_ts)*};
         maybe_write_ts_into_file(
             gen_where_filters_config.pg_json_types_write_into_file,
