@@ -706,8 +706,8 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
         self,
         mut query: Query<'query_lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
-        for el_4e314a75 in self.value.0 {
-            match PgTypeWhereFilter::query_bind(el_4e314a75, query) {
+        for el in self.value.0 {
+            match PgTypeWhereFilter::query_bind(el, query) {
                 Ok(v) => {
                     query = v;
                 }
@@ -726,9 +726,9 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
     ) -> Result<String, QueryPartEr> {
         let mut acc = String::default();
         let mut is_need_to_add_logical_operator_inner_handle = false;
-        for el_a38b9c67 in &self.value.0 {
+        for el in &self.value.0 {
             match PgTypeWhereFilter::query_part(
-                el_a38b9c67,
+                el,
                 incr,
                 column,
                 is_need_to_add_logical_operator_inner_handle,
@@ -1135,14 +1135,14 @@ impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
         }
         {
             let mut acc = Vec::new();
-            for el_db9bd5a0 in &v {
-                if acc.contains(&el_db9bd5a0) {
+            for el in &v {
+                if acc.contains(&el) {
                     return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
-                        value: el_db9bd5a0.clone(),
+                        value: el.clone(),
                         loc: loc!(),
                     });
                 }
-                acc.push(el_db9bd5a0);
+                acc.push(el);
             }
         }
         Ok(Self(v))
@@ -1254,8 +1254,8 @@ where
         self,
         mut query: Query<'query_lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
-        for el_7f5ffb83 in self.0 {
-            match el_7f5ffb83.query_bind(query) {
+        for el in self.0 {
+            match el.query_bind(query) {
                 Ok(v) => {
                     query = v;
                 }
