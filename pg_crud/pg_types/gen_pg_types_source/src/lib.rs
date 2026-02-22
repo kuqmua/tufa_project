@@ -824,46 +824,46 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("80485f71");
     let (columns_ts, pg_type_arr) = {
         let acc = match gen_pg_json_types_config.vrt {
-            GenPgTypesConfigVrt::All => PgType::into_arr().into_iter().fold(Vec::new(), |mut acc0, el_a897c529| {
-                for el_a7126978 in PgTypePattern::into_arr().into_iter().fold(Vec::new(), |mut acc1, el_8ae86bf2| {
-                    match &el_8ae86bf2 {
+            GenPgTypesConfigVrt::All => PgType::into_arr().into_iter().fold(Vec::new(), |mut acc0, el| {
+                for el0 in PgTypePattern::into_arr().into_iter().fold(Vec::new(), |mut acc1, el1| {
+                    match &el1 {
                         PgTypePattern::Standart => {
-                            acc1.push(el_8ae86bf2);
+                            acc1.push(el1);
                         }
                         PgTypePattern::ArrDim1 { .. } => {
-                            for el_6577bebd in IsNullable::into_arr() {
-                                acc1.push(PgTypePattern::ArrDim1 { dim1_is_nullable: el_6577bebd });
+                            for el2 in IsNullable::into_arr() {
+                                acc1.push(PgTypePattern::ArrDim1 { dim1_is_nullable: el2 });
                             }
                         }
                     }
                     acc1
                 }) {
-                    match &el_a7126978 {
-                        PgTypePattern::Standart => match &el_a897c529.can_be_nullable() {
+                    match &el0 {
+                        PgTypePattern::Standart => match &el.can_be_nullable() {
                             CanBeNullable::False => {
                                 acc0.push(PgTypeRecord {
-                                    pg_type: el_a897c529.clone(),
+                                    pg_type: el.clone(),
                                     is_nullable: IsNullable::False,
-                                    pg_type_pattern: el_a7126978,
+                                    pg_type_pattern: el0,
                                 });
                             },
-                            CanBeNullable::True => IsNullable::into_arr().into_iter().for_each(|el_a8753f2d| {
+                            CanBeNullable::True => IsNullable::into_arr().into_iter().for_each(|el1| {
                                 acc0.push(PgTypeRecord {
-                                    pg_type: el_a897c529.clone(),
-                                    is_nullable: el_a8753f2d,
-                                    pg_type_pattern: el_a7126978.clone(),
+                                    pg_type: el.clone(),
+                                    is_nullable: el1,
+                                    pg_type_pattern: el0.clone(),
                                 });
                             }),
                         },
-                        PgTypePattern::ArrDim1 { dim1_is_nullable } => match &el_a897c529.can_be_an_arr_el() {
+                        PgTypePattern::ArrDim1 { dim1_is_nullable } => match &el.can_be_an_arr_el() {
                             CanBeAnArrEl::False => (),
-                            CanBeAnArrEl::True => match &el_a897c529.can_be_nullable() {
+                            CanBeAnArrEl::True => match &el.can_be_nullable() {
                                 CanBeNullable::False => {
                                     if matches!(&dim1_is_nullable, IsNullable::False) {
-                                        for el_8b51bcb4 in IsNullable::into_arr() {
+                                        for el1 in IsNullable::into_arr() {
                                             acc0.push(PgTypeRecord {
-                                                pg_type: el_a897c529.clone(),
-                                                is_nullable: el_8b51bcb4,
+                                                pg_type: el.clone(),
+                                                is_nullable: el1,
                                                 pg_type_pattern: PgTypePattern::ArrDim1 { dim1_is_nullable: *dim1_is_nullable },
                                             });
                                         }
@@ -871,9 +871,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 },
                                 CanBeNullable::True => IsNullable::into_arr().into_iter().for_each(|is_nullable| {
                                     acc0.push(PgTypeRecord {
-                                        pg_type: el_a897c529.clone(),
+                                        pg_type: el.clone(),
                                         is_nullable,
-                                        pg_type_pattern: el_a7126978.clone(),
+                                        pg_type_pattern: el0.clone(),
                                     });
                                 }),
                             },
@@ -886,11 +886,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         };
         {
             let mut check_acc = Vec::new();
-            for el_03c535a8 in &acc {
-                if check_acc.contains(&el_03c535a8) {
+            for el in &acc {
+                if check_acc.contains(&el) {
                     panic!("536036f9");
                 } else {
-                    check_acc.push(el_03c535a8);
+                    check_acc.push(el);
                 }
             }
         }
@@ -898,7 +898,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     }.into_iter()
     .fold(
         Vec::new(),
-        |mut acc, el_758fe97f| {
+        |mut acc, el| {
             #[derive(Clone)]
             struct PgTypeRecordHandle {
                 is_nullable: IsNullable,
@@ -947,15 +947,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }),
                 }
             }
-            for el_39ea25de in gen_pg_type_record_handle_vec(PgTypeRecordHandle {
-                is_nullable: el_758fe97f.is_nullable,
-                pg_type_pattern: el_758fe97f.pg_type_pattern,
+            for el0 in gen_pg_type_record_handle_vec(PgTypeRecordHandle {
+                is_nullable: el.is_nullable,
+                pg_type_pattern: el.pg_type_pattern,
             }) {
                 let v_88571cb8 = PgTypeRecord {
-                    pg_type: el_758fe97f.pg_type.clone(),
-                    is_nullable: el_39ea25de
+                    pg_type: el.pg_type.clone(),
+                    is_nullable: el0
                         .is_nullable,
-                    pg_type_pattern: el_39ea25de
+                    pg_type_pattern: el0
                         .pg_type_pattern,
                 };
                 if !acc.contains(&v_88571cb8) {
@@ -1666,11 +1666,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 };
                 let gen_fields_serde_de_seq_access_next_el_init_ts = |vec_ts: &[&dyn ToTokens]| {
                     let er_message_ts = gen_struct_ident_with_nbr_els_dq_ts(&ident_standart_not_null_origin_ucc, vec_ts.len());
-                    let fields_init_ts = vec_ts.iter().enumerate().map(|(index_70b4dabd, el_9dc7f312)| {
+                    let fields_init_ts = vec_ts.iter().enumerate().map(|(index_70b4dabd, el0)| {
                         let field_index_value_ts = gen_field_index_value_ts(index_70b4dabd);
                         let index_usize_ts = format!("{index_70b4dabd}usize").parse::<Ts2>().expect("ce15e6bf");
                         quote! {
-                            let Some(#field_index_value_ts) = serde::de::SeqAccess::next_element::<#el_9dc7f312>(&mut __seq)? else {
+                            let Some(#field_index_value_ts) = serde::de::SeqAccess::next_element::<#el0>(&mut __seq)? else {
                                 return Err(serde::de::Error::invalid_length(#index_usize_ts, &#er_message_ts));
                             };
                         }
@@ -1819,9 +1819,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 let (fn_visit_u64_two_ts, fn_visit_u64_three_ts, fn_visit_u64_four_ts) = {
                     let gen_fn_visit_u64_ts = |parameter_nbr: &ParameterNbr| {
                         let fields_ts = {
-                            parameter_nbr.get_vec_from_index_starting_with_zero().into_iter().map(|el_7298ebde| {
-                                let index_vrt_ts = format!("{el_7298ebde}u64").parse::<Ts2>().expect("5aee0393");
-                                let field_index_ts = gen_field_index_ts(el_7298ebde);
+                            parameter_nbr.get_vec_from_index_starting_with_zero().into_iter().map(|el0| {
+                                let index_vrt_ts = format!("{el0}u64").parse::<Ts2>().expect("5aee0393");
+                                let field_index_ts = gen_field_index_ts(el0);
                                 quote! {#index_vrt_ts => Ok(__Field::#field_index_ts)}
                             })
                         };
@@ -1841,10 +1841,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 };
                 let (fn_visit_str_value_start_end_ts, fn_visit_str_value_hour_min_sec_micro_ts, fn_visit_str_value_hour_minute_second_microsecond_ts, fn_visit_str_value_date_time_ts, fn_visit_str_value_date_naive_time_ts, fn_visit_str_value_months_days_microseconds_ts) = {
                     let gen_fn_visit_str_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
-                        let fields_ts = vec_ts.iter().enumerate().map(|(index_e1c5acfd, el_29343926)| {
-                            let el_dq_ts = dq_ts(&el_29343926);
+                        let fields_ts = vec_ts.iter().enumerate().map(|(index_e1c5acfd, el0)| {
+                            let el0_dq_ts = dq_ts(&el0);
                             let field_index_name_ts = gen_field_index_ts(index_e1c5acfd);
-                            quote! {#el_dq_ts => Ok(__Field::#field_index_name_ts)}
+                            quote! {#el0_dq_ts => Ok(__Field::#field_index_name_ts)}
                         });
                         quote! {
                             fn visit_str<__E>(
@@ -1872,10 +1872,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 };
                 let (fn_visit_bytes_start_end_ts, fn_visit_bytes_hour_min_sec_micro_ts, fn_visit_bytes_hour_minute_second_microsecond_ts, fn_visit_bytes_date_time_ts, fn_visit_bytes_date_naive_time_ts, fn_visit_bytes_months_days_microseconds_ts) = {
                     let gen_fn_visit_bytes_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
-                        let fields_ts = vec_ts.iter().enumerate().map(|(index_545c3b1e, el_1dbc37ab)| {
-                            let b_el_dq_ts = format!("b{}", dq_str(&el_1dbc37ab)).parse::<Ts2>().expect("c76c976b");
+                        let fields_ts = vec_ts.iter().enumerate().map(|(index_545c3b1e, el0)| {
+                            let b_el0_dq_ts = format!("b{}", dq_str(&el0)).parse::<Ts2>().expect("c76c976b");
                             let field_index_name_ts = gen_field_index_ts(index_545c3b1e);
-                            quote! {#b_el_dq_ts => Ok(__Field::#field_index_name_ts)}
+                            quote! {#b_el0_dq_ts => Ok(__Field::#field_index_name_ts)}
                         });
                         quote! {
                             fn visit_bytes<__E>(self, v: &[u8]) -> Result<Self::Value, __E>
@@ -1953,9 +1953,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         field_opt_none_init_sqlx_pg_types_pg_interval_ts,
                     ) = {
                         let gen_field_opt_none_init_ts = |vec_ts: &[&dyn ToTokens]| {
-                            let fields_init_ts = vec_ts.iter().enumerate().map(|(index_d9ee264a, el_de75f565)| {
+                            let fields_init_ts = vec_ts.iter().enumerate().map(|(index_d9ee264a, el0)| {
                                 let field_index_name_ts = gen_field_index_ts(index_d9ee264a);
-                                quote! {let mut #field_index_name_ts: Option<#el_de75f565> = None;}
+                                quote! {let mut #field_index_name_ts: Option<#el0> = None;}
                             });
                             quote! {#(#fields_init_ts)*}
                         };
@@ -1985,9 +1985,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         while_some_next_key_field_sqlx_pg_types_pg_interval_ts,
                     ) = {
                         let gen_while_some_next_key_field_ts = |vec_ts: &[(&dyn Display, &dyn ToTokens)]| {
-                            let fields_init_ts = vec_ts.iter().enumerate().map(|(index_2b1736c7, el_692238ce)| {
-                                let field_name_dq_ts = dq_str(&el_692238ce.0);
-                                let field_type_ts = &el_692238ce.1;
+                            let fields_init_ts = vec_ts.iter().enumerate().map(|(index_2b1736c7, el0)| {
+                                let field_name_dq_ts = dq_str(&el0.0);
+                                let field_type_ts = &el0.1;
                                 let field_index_name_ts = gen_field_index_ts(index_2b1736c7);
                                 quote! {
                                     __Field::#field_index_name_ts => {
@@ -2027,8 +2027,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     };
                     let (match_field_init_hour_min_sec_micro_ts, match_field_init_start_end_ts, match_field_init_hour_minute_second_microsecond_ts, match_field_init_date_time_ts, match_field_init_date_naive_time_ts, match_field_init_months_days_microseconds_ts) = {
                         let gen_match_field_init_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
-                            let fields_init_ts = vec_ts.iter().enumerate().map(|(index_e1adef1a, el_f8a9e25b)| {
-                                let field_name_dq_ts = dq_str(&el_f8a9e25b);
+                            let fields_init_ts = vec_ts.iter().enumerate().map(|(index_e1adef1a, el0)| {
+                                let field_name_dq_ts = dq_str(&el0);
                                 let field_index_ts = gen_field_index_ts(index_e1adef1a);
                                 let field_index_value_ts = gen_field_index_value_ts(index_e1adef1a);
                                 quote! {
@@ -2114,7 +2114,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 };
                 let (const_fields_start_end_ts, const_fields_sqlx_types_chrono_naive_time_ts, const_fields_sqlx_types_time_time_ts, const_fields_sqlx_types_chrono_naive_date_time_ts, const_fields_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts, const_fields_sqlx_pg_types_pg_interval_ts) = {
                     let gen_const_fields_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
-                        let field_names_ts = vec_ts.iter().map(|el_391d76e4| dq_ts(&el_391d76e4));
+                        let field_names_ts = vec_ts.iter().map(|el0| dq_ts(&el0));
                         quote! {
                             #[doc(hidden)]
                             const FIELDS: &[&str] = &[#(#field_names_ts),*];
@@ -4317,8 +4317,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgTypePattern::Standart => quote! {;},
                     PgTypePattern::ArrDim1 { .. } => {
                         let mut arguments_ts = Vec::new();
-                        for el_9f432ae3 in 1..=arr_dims_nbr {
-                            let dim_nbr_pagination_ts = format!("dim{el_9f432ae3}_pagination").parse::<Ts2>().expect("af86f2d1");
+                        for el0 in 1..=arr_dims_nbr {
+                            let dim_nbr_pagination_ts = format!("dim{el0}_pagination").parse::<Ts2>().expect("af86f2d1");
                             arguments_ts.push(quote! {
                                 #dim_nbr_pagination_ts: pg_types_common::PaginationStartsWithOne
                             });
@@ -4337,8 +4337,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudCommonDefaultOptSomeVecOneElMaxPageSizeCall,
                         };
                         let mut arguments_ts = Vec::new();
-                        for el_a227c2ba in 1..=arr_dims_nbr {
-                            let dim_nbr_pagination_ts = format!("dim{el_a227c2ba}_pagination").parse::<Ts2>().expect("e5250a98");
+                        for el0 in 1..=arr_dims_nbr {
+                            let dim_nbr_pagination_ts = format!("dim{el0}_pagination").parse::<Ts2>().expect("e5250a98");
                             arguments_ts.push(quote! {
                                 #dim_nbr_pagination_ts: #ts
                             });
@@ -4683,9 +4683,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 }
             }
             .iter()
-            .map(|el_dde282a0| {
-                let el_dde282a0_handle: &dyn PgFilter = el_dde282a0;
-                el_dde282a0_handle
+            .map(|el0| {
+                let el1: &dyn PgFilter = el0;
+                el1
             })
             .collect(),
             &ident,
@@ -5025,8 +5025,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 format!("{{column}}{acc}")
                             });
                             let arguments_ts = (1..=arr_dims_nbr)
-                            .map(|el_268f0f14| {
-                                let dim_nbr_pagination_ts = format!("dim{el_268f0f14}_pagination")
+                            .map(|el0| {
+                                let dim_nbr_pagination_ts = format!("dim{el0}_pagination")
                                 .parse::<Ts2>()
                                 .expect("6f2305ee");
                                 quote! {
@@ -5215,9 +5215,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         },
                         PgTypePattern::ArrDim1 { dim1_is_nullable } => match (&is_nullable, &dim1_is_nullable) {
                             (IsNullable::False, IsNullable::False) => gen_ident_read_ident_origin_ts(&quote! {
-                                #ValueSc.0.0.into_iter().map(|el_7302af7b|{
+                                #ValueSc.0.0.into_iter().map(|el|{
                                     #ident_standart_not_null_as_pg_type_ts::normalize(
-                                        #ident_standart_not_null_read_ucc(el_7302af7b)
+                                        #ident_standart_not_null_read_ucc(el)
                                     ).0
                                 }).collect()
                             }),
@@ -5225,9 +5225,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 let ident_ts_e4c5a2a3 = gen_ident_ts(pg_type, &IsNullable::True, &PgTypePattern::Standart);
                                 let ident_arr_standart_nullable_read_ucc = SelfReadUcc::from_tokens(&ident_ts_e4c5a2a3);
                                 quote! {
-                                    #ValueSc.0.0.into_iter().map(|el_fc25e056|{
+                                    #ValueSc.0.0.into_iter().map(|el|{
                                         #ident_standart_nullable_as_pg_type_ts::normalize(
-                                            #ident_arr_standart_nullable_read_ucc(el_fc25e056)
+                                            #ident_arr_standart_nullable_read_ucc(el)
                                         ).0
                                     }).collect()
                                 }
