@@ -121,12 +121,11 @@ pub fn gen_serde_version_of_named_syn_vrt(v: &Variant) -> Ts2 {
                     panic!("f464b7a1");
                 };
                 assert!(args.len() == 2, "47cde1b8");
-                let first_argument_str = {
-                    let first_argument = args.iter().next().expect("f9d97146");
-                    quote! {#first_argument}.to_string()
-                };
                 assert!(
-                    quote! {#StringTs}.to_string() == first_argument_str,
+                    quote! {#StringTs}.to_string() == {
+                        let first_argument = args.iter().next().expect("f9d97146");
+                        quote! {#first_argument}.to_string()
+                    },
                     "bbdda4ab"
                 );
                 args.iter().nth(1).expect("f4e88416")
