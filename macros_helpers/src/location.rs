@@ -50,9 +50,9 @@ impl TryFrom<&Field> for LocationFieldAttr {
     type Error = String;
     fn try_from(syn_field: &Field) -> Result<Self, Self::Error> {
         let mut opt_attr = None;
-        for el_adfb232c in &syn_field.attrs {
-            if el_adfb232c.path().segments.len() == 1 {
-                let first_segment_ident = match el_adfb232c.path().segments.first() {
+        for el in &syn_field.attrs {
+            if el.path().segments.len() == 1 {
+                let first_segment_ident = match el.path().segments.first() {
                     Some(v) => &v.ident,
                     None => {
                         return Err("no first in punct".to_owned());
@@ -104,10 +104,10 @@ pub fn gen_serde_version_of_named_syn_vrt(v: &Variant) -> Ts2 {
     };
     let fields_idents_idents_with_serde_excluding_loc_ts = fields
         .iter()
-        .filter(|el_5782b638| *el_5782b638.ident.as_ref().expect("3078fd99") != *LocSc.to_string())
-        .map(|el_c25b655e| {
+        .filter(|el| *el.ident.as_ref().expect("3078fd99") != *LocSc.to_string())
+        .map(|el| {
             let get_type_path_third_segment_second_argument_check_if_hashmap = || {
-                let segments = if let Type::Path(syn_type_path) = &el_c25b655e.ty {
+                let segments = if let Type::Path(syn_type_path) = &el.ty {
                     &syn_type_path.path.segments
                 } else {
                     panic!("55136128");
@@ -133,80 +133,79 @@ pub fn gen_serde_version_of_named_syn_vrt(v: &Variant) -> Ts2 {
                 );
                 args.iter().nth(1).expect("f4e88416")
             };
-            let el_c25b655e_ident = el_c25b655e.ident.as_ref().expect("438aa90e");
+            let el_c25b655e_ident = el.ident.as_ref().expect("438aa90e");
             let el_type_ts = {
-                let el_type = &el_c25b655e.ty;
+                let el_type = &el.ty;
                 quote! {#el_type}
             };
-            let el_type_with_serde_ts =
-                match LocationFieldAttr::try_from(el_c25b655e).expect("2db209a8") {
-                    LocationFieldAttr::EoToErrString => quote! {#StringTs},
-                    LocationFieldAttr::EoToErrStringSerde
-                    | LocationFieldAttr::EoVecToErrStringSerde => el_type_ts,
-                    LocationFieldAttr::EoLocation => format!("{el_type_ts}{WithSerdeUcc}")
-                        .parse::<Ts2>()
-                        .expect("201dc0a4"),
-                    LocationFieldAttr::EoVecToErrString => {
-                        quote! {
-                            Vec<#StringTs>
-                        }
+            let el_type_with_serde_ts = match LocationFieldAttr::try_from(el).expect("2db209a8") {
+                LocationFieldAttr::EoToErrString => quote! {#StringTs},
+                LocationFieldAttr::EoToErrStringSerde
+                | LocationFieldAttr::EoVecToErrStringSerde => el_type_ts,
+                LocationFieldAttr::EoLocation => format!("{el_type_ts}{WithSerdeUcc}")
+                    .parse::<Ts2>()
+                    .expect("201dc0a4"),
+                LocationFieldAttr::EoVecToErrString => {
+                    quote! {
+                        Vec<#StringTs>
                     }
-                    LocationFieldAttr::EoVecLocation => {
-                        let segments = if let Type::Path(v0) = &el_c25b655e.ty {
-                            &v0.path.segments
+                }
+                LocationFieldAttr::EoVecLocation => {
+                    let segments = if let Type::Path(v0) = &el.ty {
+                        &v0.path.segments
+                    } else {
+                        panic!("8d93bf20");
+                    };
+                    assert!(segments.len() == 1, "0c65bbaa");
+                    let first_segment = segments.iter().next().expect("595050cf");
+                    let el_vec_type_with_serde_ts =
+                        if let PathArguments::AngleBracketed(AngleBracketedGenericArguments {
+                            args,
+                            ..
+                        }) = &first_segment.arguments
+                        {
+                            assert!(args.len() == 1, "572a9da8");
+                            format!(
+                                "{}{}",
+                                {
+                                    let first_arg = args.iter().next().expect("e9b33787");
+                                    quote! {#first_arg}
+                                },
+                                WithSerdeUcc,
+                            )
+                            .parse::<Ts2>()
+                            .expect("22c364b9")
                         } else {
-                            panic!("8d93bf20");
+                            panic!("07c6ab44");
                         };
-                        assert!(segments.len() == 1, "0c65bbaa");
-                        let first_segment = segments.iter().next().expect("595050cf");
-                        let el_vec_type_with_serde_ts =
-                            if let PathArguments::AngleBracketed(AngleBracketedGenericArguments {
-                                args,
-                                ..
-                            }) = &first_segment.arguments
-                            {
-                                assert!(args.len() == 1, "572a9da8");
-                                format!(
-                                    "{}{}",
-                                    {
-                                        let first_arg = args.iter().next().expect("e9b33787");
-                                        quote! {#first_arg}
-                                    },
-                                    WithSerdeUcc,
-                                )
-                                .parse::<Ts2>()
-                                .expect("22c364b9")
-                            } else {
-                                panic!("07c6ab44");
-                            };
-                        quote! {
-                            Vec<#el_vec_type_with_serde_ts>
-                        }
+                    quote! {
+                        Vec<#el_vec_type_with_serde_ts>
                     }
-                    LocationFieldAttr::EoHashMapKeyStringValueToErrString => {
-                        let _: &GenericArgument =
-                            get_type_path_third_segment_second_argument_check_if_hashmap();
-                        quote! {
-                            std::collections::HashMap<#StringTs, #StringTs>
-                        }
+                }
+                LocationFieldAttr::EoHashMapKeyStringValueToErrString => {
+                    let _: &GenericArgument =
+                        get_type_path_third_segment_second_argument_check_if_hashmap();
+                    quote! {
+                        std::collections::HashMap<#StringTs, #StringTs>
                     }
-                    LocationFieldAttr::EoHashMapKeyStringValueToErrStringSerde => {
-                        let _: &GenericArgument =
-                            get_type_path_third_segment_second_argument_check_if_hashmap();
-                        el_type_ts
+                }
+                LocationFieldAttr::EoHashMapKeyStringValueToErrStringSerde => {
+                    let _: &GenericArgument =
+                        get_type_path_third_segment_second_argument_check_if_hashmap();
+                    el_type_ts
+                }
+                LocationFieldAttr::EoHashMapKeyStringValueLocation => {
+                    let second_argument =
+                        get_type_path_third_segment_second_argument_check_if_hashmap();
+                    let el_hashmap_v_type_with_serde_ts =
+                        format!("{}{}", quote! {#second_argument}, WithSerdeUcc)
+                            .parse::<Ts2>()
+                            .expect("86307dbc");
+                    quote! {
+                        std::collections::HashMap<#StringTs, #el_hashmap_v_type_with_serde_ts>
                     }
-                    LocationFieldAttr::EoHashMapKeyStringValueLocation => {
-                        let second_argument =
-                            get_type_path_third_segment_second_argument_check_if_hashmap();
-                        let el_hashmap_v_type_with_serde_ts =
-                            format!("{}{}", quote! {#second_argument}, WithSerdeUcc)
-                                .parse::<Ts2>()
-                                .expect("86307dbc");
-                        quote! {
-                            std::collections::HashMap<#StringTs, #el_hashmap_v_type_with_serde_ts>
-                        }
-                    }
-                };
+                }
+            };
             quote! {#el_c25b655e_ident: #el_type_with_serde_ts,}
         });
     quote! {
