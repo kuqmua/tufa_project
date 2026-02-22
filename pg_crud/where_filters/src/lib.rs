@@ -1,513 +1,988 @@
-#[cfg(test)]
-mod tests {
-    use regex::Regex;
-    use reqwest::blocking;
-    use scraper::{Html, Selector};
-    use std::{
-        collections::HashSet,
-        fs::{File, read_to_string},
-        io::Read,
-        process::{Command, Stdio},
-    };
-    use syn::{
-        Expr, ExprLit, ExprMethodCall, Lit, parse_file,
-        visit::{Visit, visit_expr_method_call},
-    };
-    use toml::{Table as TomlTable, Value, value::Table};
-    use uuid::Uuid;
-    use walkdir::WalkDir;
-    #[derive(Debug, Clone, Copy)]
-    enum RustOrClippy {
-        Clippy,
-        Rust,
-    }
-    impl RustOrClippy {
-        fn name(&self) -> &str {
-            match *self {
-                Self::Rust => "rust",
-                Self::Clippy => "clippy",
-            }
+use location_lib::{Location, loc, loc::Loc};
+use pg_crud_common::{
+    DefaultOptSomeVecOneEl, NotEmptyUniqueVecTryNewEr, PgTypeWhereFilter, QueryPartEr,
+    incr_checked_add_one_returning_incr,
+};
+use regex::Regex;
+use schemars::{_private::alloc::borrow, JsonSchema, Schema, SchemaGenerator};
+use serde::{Deserialize, Serialize};
+use sqlx::{Encode, Postgres, Type, postgres::PgArguments, query::Query, types::Json};
+use std::fmt::{Display, Formatter, Result as StdFmtResult, Write as _};
+use thiserror::Error;
+use utoipa::ToSchema;
+gen_where_filters::gen_where_filters!({
+    "pg_types_write_into_file": "False",
+    "pg_json_types_write_into_file": "False",
+    "whole_write_into_file": "False"
+});
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub enum EncodeFormat {
+    #[default]
+    Base64,
+    Escape,
+    Hex,
+}
+impl Display for EncodeFormat {
+    fn fmt(&self, f: &mut Formatter<'_>) -> StdFmtResult {
+        match &self {
+            Self::Base64 => write!(f, "base64"),
+            Self::Escape => write!(f, "escape"),
+            Self::Hex => write!(f, "hex"),
         }
     }
-    #[derive(Debug, Clone, Copy)]
-    enum ExpectOrPanic {
-        Expect,
-        Panic,
+}
+impl DefaultOptSomeVecOneEl for EncodeFormat {
+    fn default_opt_some_vec_one_el() -> Self {
+        Self::default()
     }
-    fn toml_value_from_from_cargo_toml_workspace() -> Value {
-        let mut file = File::open("../Cargo.toml").expect("39a0d238");
-        let mut acc = String::new();
-        let _: usize = Read::read_to_string(&mut file, &mut acc).expect("2f5914f2");
-        let table = acc.parse::<TomlTable>().expect("beb11586");
-        table.get("workspace").expect("f728192d").clone()
+}
+//difference between NotEmptyUniqueVec and PgJsonTypeNotEmptyUniqueVec only in pg_crud_common::DefaultOptSomeVecOneEl impl with different generic requirement and PgTypeWhereFilter
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
+pub struct PgJsonTypeNotEmptyUniqueVec<T>(Vec<T>);
+impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
+    #[must_use]
+    pub fn into_vec(self) -> Vec<T> {
+        self.0
     }
-    fn lints_vec_from_cargo_toml_workspace(rust_or_clippy: RustOrClippy) -> Vec<String> {
-        let workspace = toml_value_from_from_cargo_toml_workspace();
-        let lints = workspace.get("lints").expect("82eaea37");
-        let toml_value_table = match lints.get(rust_or_clippy.name()).expect("dbd02f72").clone() {
-            Value::Table(v) => v,
-            Value::String(_)
-            | Value::Integer(_)
-            | Value::Float(_)
-            | Value::Boolean(_)
-            | Value::Datetime(_)
-            | Value::Array(_) => panic!("cae226cd"),
-        };
-        toml_value_table.keys().cloned().collect::<Vec<String>>()
+    #[must_use]
+    pub const fn to_vec(&self) -> &Vec<T> {
+        &self.0
     }
-    fn compare_lints_vecs(
-        rust_or_clippy: RustOrClippy,
-        lints_vec_from_cargo_toml: &[String],
-        lints_to_check: &[String],
-        lints_not_in_cargo_toml_vec_exceptions: &[String],
-    ) {
-        let rust_or_clippy_name = rust_or_clippy.name();
-        let mut lints_not_in_cargo_toml = Vec::new();
-        for el in lints_to_check {
-            if !lints_vec_from_cargo_toml.contains(el) {
-                if lints_not_in_cargo_toml_vec_exceptions.contains(el) {
-                    println!(
-                        "todo!() {rust_or_clippy_name} {el} 158b5c43-05fa-4b8f-b6fe-9cda49d26997"
-                    );
-                } else {
-                    lints_not_in_cargo_toml.push(el);
+    pub fn try_new(v: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
+        if v.is_empty() {
+            return Err(NotEmptyUniqueVecTryNewEr::IsEmpty { loc: loc!() });
+        }
+        {
+            let mut acc = Vec::new();
+            for el in &v {
+                if acc.contains(&el) {
+                    return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
+                        value: el.clone(),
+                        loc: loc!(),
+                    });
                 }
+                acc.push(el);
             }
         }
-        assert!(lints_not_in_cargo_toml.is_empty(), "d2b7ba9f");
-        let mut outdated_lints_in_file = Vec::new();
-        for el in lints_vec_from_cargo_toml {
-            if !lints_to_check.contains(el) {
-                outdated_lints_in_file.push(el);
-            }
-        }
-        assert!(outdated_lints_in_file.is_empty(), "93787d2d");
+        Ok(Self(v))
     }
-    fn check_expect_or_panic_contains_only_unique_uuid_v4(expect_or_panic: ExpectOrPanic) {
-        struct ExpectVisitor {
-            ers: Vec<String>,
-            expect_or_panic: ExpectOrPanic,
-            uuids: Vec<String>,
+}
+impl<T: PartialEq + Clone + Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
+    pub fn query_bind_one_by_one<'query_lifetime>(
+        self,
+        mut query: Query<'query_lifetime, Postgres, PgArguments>,
+    ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String>
+    where
+        T: 'query_lifetime,
+    {
+        for el in self.0 {
+            if let Err(er) = query.try_bind(Json(el)) {
+                return Err(er.to_string());
+            }
         }
-        impl<'ast> Visit<'ast> for ExpectVisitor {
-            fn visit_expr_method_call(&mut self, i: &'ast ExprMethodCall) {
-                let expect_or_panic_str = match self.expect_or_panic {
-                    ExpectOrPanic::Expect => "expect",
-                    ExpectOrPanic::Panic => "panic",
-                };
-                if i.method == expect_or_panic_str {
-                    if i.args.len() == 1 {
-                        if let Expr::Lit(ExprLit {
-                            lit: Lit::Str(lit_str),
-                            ..
-                        }) = i.args.get(0).expect("d5ad7bff").clone()
-                        {
-                            let v = lit_str.value();
-                            if v.len() == 8 {
-                                self.uuids.push(v);
-                            } else {
-                                self.ers.push(format!("arg len is not 8: {v}"));
-                            }
-                        } else {
-                            self.ers.push("arg is not string literal".to_owned());
-                        }
-                    } else {
-                        self.ers.push("with != 1 arg".to_owned());
+        Ok(query)
+    }
+    pub fn query_part_one_by_one(
+        &self,
+        incr: &mut u64,
+        _: &dyn Display,
+        _is_need_to_add_logical_operator: bool,
+    ) -> Result<String, QueryPartEr> {
+        let mut acc = String::default();
+        for _ in self.to_vec() {
+            match incr_checked_add_one_returning_incr(incr) {
+                Ok(v) => {
+                    if write!(acc, "${v},").is_err() {
+                        return Err(QueryPartEr::WriteIntoBuffer { loc: loc!() });
                     }
                 }
-                visit_expr_method_call(self, i);
+                Err(er) => {
+                    return Err(er);
+                }
             }
         }
-        let mut all_uuids = Vec::new();
-        let mut all_ers = Vec::new();
-        for el in project_directory()
-            .into_iter()
-            .filter_entry(|el| el.file_name() != "target")
-            .filter_map(Result::ok)
-            .filter(|el| el.path().extension().and_then(|el0| el0.to_str()) == Some("rs"))
+        let _: Option<char> = acc.pop();
+        Ok(acc)
+    }
+}
+#[allow(unused_qualifications)]
+#[allow(clippy::absolute_paths)]
+#[allow(clippy::arbitrary_source_item_ordering)]
+const _: () = {
+    #[expect(clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
+        _serde::Deserialize<'de> for PgJsonTypeNotEmptyUniqueVec<T>
+    {
+        fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
         {
-            let Ok(ts) = read_to_string(el.path()) else {
-                continue;
-            };
-            let ast = parse_file(&ts).expect("5e7a83eb");
-            let mut visitor = ExpectVisitor {
-                expect_or_panic,
-                uuids: Vec::new(),
-                ers: Vec::new(),
-            };
-            Visit::visit_file(&mut visitor, &ast);
-            all_uuids.extend(visitor.uuids);
-            all_ers.extend(
-                visitor
-                    .ers
-                    .into_iter()
-                    .map(|el0| format!("{:?}: {}", el.path(), el0)),
-            );
-        }
-        let mut seen = HashSet::new();
-        let mut duplicates = Vec::new();
-        for el in all_uuids {
-            if !seen.insert(el.clone()) {
-                duplicates.push(el);
-            }
-        }
-        if !duplicates.is_empty() {
-            all_ers.push(format!("duplicate UUIDs found: {duplicates:?}"));
-        }
-        assert!(all_ers.is_empty(), "6062a9e9 {all_ers:#?}",);
-    }
-    fn project_directory() -> WalkDir {
-        WalkDir::new("../")
-    }
-    #[test]
-    fn check_if_workspace_cargo_toml_workspace_lints_rust_contains_all_rust_lints() {
-        let rust_or_clippy = RustOrClippy::Rust;
-        let lints_vec_from_cargo_toml = lints_vec_from_cargo_toml_workspace(rust_or_clippy);
-        let lints_from_command = {
-            let output = Command::new("rustc")
-                .args(["-W", "help"])
-                .stdout(Stdio::piped())
-                .output()
-                .expect("7c939ff3");
-            assert!(output.status.success(), "0c000f24");
+            #[doc(hidden)]
+            struct __Visitor<'de, T>
+            where
+                T: _serde::Deserialize<'de>,
             {
-                let stderr = String::from_utf8_lossy(&output.stderr);
-                assert!(stderr.trim().is_empty(), "0a4b2082");
-            };
-            let stdout = String::from_utf8_lossy(&output.stdout);
-            Regex::new(r"(?m)^\s*([a-z0-9][a-z0-9_-]+)\s+(allow|warn|deny|forbid)\b")
-                .expect("60d99c87")
-                .captures_iter(&stdout)
-                .map(|el| el[1].to_string().replace('-', "_").to_lowercase())
-                .collect::<Vec<String>>()
-        };
-        compare_lints_vecs(
-            rust_or_clippy,
-            &lints_vec_from_cargo_toml,
-            &lints_from_command,
-            //todo on commit momment seems like this lints still not added to rustc, but in the list of rustc -W help
-            &vec![
-                String::from("fuzzy_provenance_casts"),
-                String::from("lossy_provenance_casts"),
-                String::from("multiple_supertrait_upcastable"),
-                String::from("must_not_suspend"),
-                String::from("non_exhaustive_omitted_patterns"),
-                String::from("supertrait_item_shadowing_definition"),
-                String::from("supertrait_item_shadowing_usage"),
-                String::from("aarch_64_softfloat_neon"),
-                String::from("default_overrides_default_fields"),
-                String::from("test_unstable_lint"),
-                String::from("resolving_to_items_shadowing_supertrait_items"),
-                String::from("shadowing_supertrait_items"),
-                String::from("unqualified_local_imports"), //need to use some kind of different test flag or something for this
-                String::from("unreachable_cfg_select_predicates"),
-            ],
-        );
-    }
-    #[test]
-    fn check_if_workspace_cargo_toml_workspace_lints_clippy_contains_all_clippy_lints() {
-        let rust_or_clippy = RustOrClippy::Clippy;
-        let lints_vec_from_cargo_toml = lints_vec_from_cargo_toml_workspace(rust_or_clippy);
-        let clippy_lints_from_docs = {
-            let document = Html::parse_document(
-                &blocking::get("https://rust-lang.github.io/rust-clippy/master/index.html")
-                    .expect("d1a0544a")
-                    .text()
-                    .expect("012e3328"),
-            );
-            let mut ids = Vec::new();
-            for el in document.select(&Selector::parse("html").expect("80427609")) {
-                for el0 in el.select(&Selector::parse("body").expect("620c597c")) {
-                    for el1 in
-                        el0.select(&Selector::parse(r#"div[class="container"]"#).expect("eb483b13"))
-                    {
-                        for el2 in el1.select(&Selector::parse("article").expect("d21dbe55")) {
-                            let mut is_deprecated = false;
-                            for el3 in el2.select(&Selector::parse("label").expect("fe3d9f11")) {
-                                if is_deprecated {
-                                    break;
-                                }
-                                for el4 in el3.select(
-                                    &Selector::parse(r#"h2[class="lint-title"]"#)
-                                        .expect("f1473d4e"),
-                                ) {
-                                    if is_deprecated {
-                                        break;
-                                    }
-                                    if el4.select(
-                                        &Selector::parse(
-                                            r#"span[class="label label-default lint-group group-deprecated"]"#,
-                                        ).expect("e86d5496")
-                                    ).next().is_some() {
-                                        is_deprecated = true;
-                                        break;
-                                    }
-                                }
-                            }
-                            if let Some(id) = el2.value().attr("id")
-                                && !is_deprecated
-                            {
-                                ids.push(id.to_owned());
-                            }
-                        }
-                    }
-                }
+                marker: _serde::__private228::PhantomData<PgJsonTypeNotEmptyUniqueVec<T>>,
+                lifetime: _serde::__private228::PhantomData<&'de ()>,
             }
-            ids
-        };
-        compare_lints_vecs(
-            rust_or_clippy,
-            &lints_vec_from_cargo_toml,
-            &clippy_lints_from_docs,
-            &["disallowed_fields".to_owned()],
-        );
-    }
-    #[test]
-    fn check_workspace_dependencies_having_exact_version() {
-        for (_, v_5c36cb98) in match toml_value_from_from_cargo_toml_workspace()
-            .get("dependencies")
-            .expect("2376f58e")
-            .clone()
-        {
-            Value::Table(v_270f9bd5) => v_270f9bd5,
-            Value::String(_)
-            | Value::Integer(_)
-            | Value::Float(_)
-            | Value::Boolean(_)
-            | Value::Datetime(_)
-            | Value::Array(_) => panic!("e117fa5a"),
-        } {
-            let value_table = match v_5c36cb98 {
-                Value::Table(v_31495eb6) => v_31495eb6,
-                Value::String(_)
-                | Value::Integer(_)
-                | Value::Float(_)
-                | Value::Boolean(_)
-                | Value::Datetime(_)
-                | Value::Array(_) => panic!("cb693a3f"),
-            };
-            let value_table_len = value_table.len();
-            let check_version =
-                |v_df993c3d: &Table| match v_df993c3d.get("version").expect("d5b2b269").clone() {
-                    Value::String(version_string) => {
-                        fn check_version_string(v: &str) -> Option<()> {
-                            let rest = v.strip_prefix('=')?;
-                            let mut iter = rest.split('.');
-                            let _: u64 = iter.next()?.parse::<u64>().ok()?;
-                            let _: u64 = iter.next()?.parse::<u64>().ok()?;
-                            let _: u64 = iter.next()?.parse::<u64>().ok()?;
-                            if iter.next().is_some() {
-                                return None;
-                            }
-                            Some(())
-                        }
-                        check_version_string(&version_string).expect("6640b9bf");
-                    }
-                    Value::Table(_)
-                    | Value::Integer(_)
-                    | Value::Float(_)
-                    | Value::Boolean(_)
-                    | Value::Datetime(_)
-                    | Value::Array(_) => panic!("a3410a37"),
-                };
-            let check_features =
-                |v_121eb307: &Table| match v_121eb307.get("features").expect("473577d5") {
-                    &Value::Array(_) => (),
-                    &Value::String(_)
-                    | &Value::Table(_)
-                    | &Value::Integer(_)
-                    | &Value::Float(_)
-                    | &Value::Boolean(_)
-                    | &Value::Datetime(_) => {
-                        panic!("38ba32e9")
-                    }
-                };
-            if value_table_len == 1 {
-                check_version(&value_table);
-            } else if value_table_len == 2 {
-                check_version(&value_table);
-                check_features(&value_table);
-            } else if value_table_len == 3 {
-                check_version(&value_table);
-                check_features(&value_table);
-                match value_table.get("default-features").expect("847a138f") {
-                    &Value::Boolean(_) => (),
-                    &Value::String(_)
-                    | &Value::Table(_)
-                    | &Value::Integer(_)
-                    | &Value::Float(_)
-                    | &Value::Datetime(_)
-                    | &Value::Array(_) => panic!("b320164b"),
-                }
-            } else {
-                panic!("f1139378 {value_table:#?}")
-            }
-        }
-    }
-    #[test]
-    fn check_expect_contains_only_unique_uuid_v4() {
-        check_expect_or_panic_contains_only_unique_uuid_v4(ExpectOrPanic::Expect);
-    }
-    #[test]
-    fn check_panic_contains_only_unique_uuid_v4() {
-        check_expect_or_panic_contains_only_unique_uuid_v4(ExpectOrPanic::Panic);
-    }
-    #[test]
-    fn check_rs_files_contains_only_unique_uuid_v4() {
-        let regex = Regex::new(
-            r"\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\b"
-        ).expect("e098a1ff");
-        let mut seen = HashSet::new();
-        for el in project_directory()
-            .into_iter()
-            .filter_entry(|el| el.file_name() != "target")
-            .filter_map(Result::ok)
-            .filter(|el| el.path().extension().and_then(|el0| el0.to_str()) == Some("rs"))
-        {
-            let Ok(v) = read_to_string(el.path()) else {
-                continue;
-            };
-            for el0 in regex.find_iter(&v) {
-                let uuid = Uuid::parse_str(el0.as_str()).expect("c9711efd");
-                assert!(uuid.get_version_num() == 4, "49b49b21");
-                assert!(seen.insert(uuid), "4cf9d239");
-            }
-        }
-    }
-    #[test]
-    fn all_files_are_english_only() {
-        let mut ers = Vec::new();
-        let exceptions = [
-            "../pg_crud/pg_crud_common/src/lib.rs", //contain utf-8 String test
-        ];
-        for el in project_directory()
-            .into_iter()
-            .filter_entry(|el| {
-                let name = el.file_name().to_string_lossy();
-                name != "target" && name != ".git"
-            })
-            .filter_map(Result::ok)
-        {
-            let path = el.path();
-            if !path.is_file()
-                || !path
-                    .extension()
-                    .and_then(|v_56829539| v_56829539.to_str())
-                    .is_some_and(|v_c980b45f| {
-                        matches!(
-                            v_c980b45f,
-                            "rs" | "toml" | "md" | "txt" | "yml" | "yaml" | "json"
-                        )
-                    })
+            #[automatically_derived]
+            impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
+                _serde::de::Visitor<'de> for __Visitor<'de, T>
             {
-                continue;
-            }
-            if exceptions.contains(&path.display().to_string().as_str()) {
-                continue;
-            }
-            let Ok(v) = read_to_string(path) else {
-                continue; //skip binary non-utf8 files
-            };
-            for (key_0fa16fc1, v_3d676d2e) in v.lines().enumerate() {
-                for el0 in v_3d676d2e.chars() {
-                    if !(matches!(el0, '\n' | '\r' | '\t') || el0.is_ascii()) {
-                        ers.push(format!(
-                            "{}:{} non-english symbol `{}` (U+{:04X})",
-                            path.display(),
-                            key_0fa16fc1 + 1,
-                            el0,
-                            u32::from(el0)
-                        ));
-                    }
+                type Value = PgJsonTypeNotEmptyUniqueVec<T>;
+                fn expecting(
+                    &self,
+                    __f: &mut _serde::__private228::Formatter<'_>,
+                ) -> _serde::__private228::fmt::Result {
+                    _serde::__private228::Formatter::write_str(
+                        __f,
+                        "tuple struct PgJsonTypeNotEmptyUniqueVec",
+                    )
                 }
-            }
-        }
-        assert!(ers.is_empty(), "non-english symbols:\n{}", ers.join("\n"));
-    }
-    #[test]
-    fn workspace_crates_must_use_workspace_dependencies() {
-        let exceptions = [
-            "../Cargo.toml", //workspace
-        ];
-        for el in project_directory()
-            .into_iter()
-            .filter_map(Result::ok)
-            .filter(|el| el.file_name() == "Cargo.toml")
-        {
-            let path = el.path();
-            if exceptions.contains(&path.display().to_string().as_str()) {
-                continue;
-            }
-            let mut file = File::open(path).expect("bbb0d1fe");
-            let mut acc = String::new();
-            let _: usize = Read::read_to_string(&mut file, &mut acc).expect("8952ff62");
-            let parsed: Table = acc.parse().expect("49012f1f");
-            for el0 in ["dependencies", "dev-dependencies", "build-dependencies"] {
-                if let Some(deps) = parsed
-                    .get(el0)
-                    .clone()
-                    .and_then(|v_5e0a4d6a| v_5e0a4d6a.as_table())
+                #[inline]
+                fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
+                where
+                    __E: _serde::Deserializer<'de>,
                 {
-                    for (key_794900d4, v_07583f81) in deps {
-                        let panic_with_message = || {
-                            panic!(
-                                "{}: dependency `{}` in [{}] must use `.workspace = true` \
-                                 (only `path = ...` is allowed as exception)",
-                                path.display(),
-                                key_794900d4,
-                                el0
-                            )
-                        };
-                        match v_07583f81.clone() {
-                            Value::Table(v_bba39a72) => {
-                                if !(v_bba39a72.contains_key("path")
-                                    || (v_bba39a72.get("workspace") == Some(&Value::Boolean(true))))
-                                {
-                                    panic_with_message();
-                                }
-                            }
-                            Value::String(_)
-                            | Value::Integer(_)
-                            | Value::Float(_)
-                            | Value::Boolean(_)
-                            | Value::Datetime(_)
-                            | Value::Array(_) => panic_with_message(),
-                        }
+                    let f0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
+                    Ok(PgJsonTypeNotEmptyUniqueVec(f0))
+                }
+                #[inline]
+                fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let Some(f0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
+                    else {
+                        return Err(_serde::de::Error::invalid_length(
+                            0usize,
+                            &"tuple struct PgJsonTypeNotEmptyUniqueVec with 1 el",
+                        ));
+                    };
+                    match PgJsonTypeNotEmptyUniqueVec::try_new(f0) {
+                        Ok(v) => Ok(v),
+                        Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }
                 }
             }
+            _serde::Deserializer::deserialize_newtype_struct(
+                __deserializer,
+                "PgJsonTypeNotEmptyUniqueVec",
+                __Visitor {
+                    marker: _serde::__private228::PhantomData::<Self>,
+                    lifetime: _serde::__private228::PhantomData,
+                },
+            )
         }
     }
-    #[test]
-    fn check_no_empty_lines_in_rust_files() {
-        let mut ers = Vec::new();
-        for entry in project_directory()
-            .into_iter()
-            .filter_entry(|el| el.file_name() != "target")
-            .filter_map(Result::ok)
-            .filter(|el0| el0.path().extension().and_then(|el1| el1.to_str()) == Some("rs"))
+};
+impl<T: DefaultOptSomeVecOneEl> DefaultOptSomeVecOneEl for PgJsonTypeNotEmptyUniqueVec<T> {
+    fn default_opt_some_vec_one_el() -> Self {
+        Self(vec![DefaultOptSomeVecOneEl::default_opt_some_vec_one_el()])
+    }
+}
+impl<T> Default for PgJsonTypeNotEmptyUniqueVec<T> {
+    fn default() -> Self {
+        Self(Vec::default())
+    }
+}
+impl<T> From<PgJsonTypeNotEmptyUniqueVec<T>> for Vec<T> {
+    fn from(v: PgJsonTypeNotEmptyUniqueVec<T>) -> Self {
+        v.0
+    }
+}
+impl<'lifetime, T> PgTypeWhereFilter<'lifetime> for PgJsonTypeNotEmptyUniqueVec<T>
+where
+    T: Serialize + 'lifetime,
+{
+    fn query_bind(
+        self,
+        mut query: Query<'lifetime, Postgres, PgArguments>,
+    ) -> Result<Query<'lifetime, Postgres, PgArguments>, String> {
+        if let Err(er) = query.try_bind(Json(self.0)) {
+            return Err(er.to_string());
+        }
+        Ok(query)
+    }
+    fn query_part(
+        &self,
+        incr: &mut u64,
+        _: &dyn Display,
+        _is_need_to_add_logical_operator: bool,
+    ) -> Result<String, QueryPartEr> {
+        match incr_checked_add_one_returning_incr(incr) {
+            Ok(v) => Ok(format!("${v}")),
+            Err(er) => Err(er),
+        }
+    }
+}
+#[derive(Debug, Clone)]
+pub struct RegexRegex(pub Regex);
+// #[automatically_derived]
+// impl ::core::marker::StructuralPartialEq for RegexRegex {}
+// #[automatically_derived]
+impl PartialEq for RegexRegex {
+    #[inline]
+    fn eq(&self, other: &Self) -> bool {
+        self.0.to_string() == other.0.to_string()
+    }
+}
+#[allow(unused_qualifications)]
+#[allow(clippy::absolute_paths)]
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[doc(hidden)]
+const _: () = {
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl _serde::Serialize for RegexRegex {
+        fn serialize<__S>(&self, __serializer: __S) -> Result<__S::Ok, __S::Error>
+        where
+            __S: _serde::Serializer,
         {
-            let path = entry.path();
-            let Ok(v) = read_to_string(path) else {
-                continue;
-            };
-            let mut lines_iter = v.lines();
-            if let Some(first_line) = lines_iter.next()
-                && first_line.trim().is_empty()
-                && lines_iter.next().is_none()
-            {
-                continue;
+            _serde::Serializer::serialize_newtype_struct(
+                __serializer,
+                "RegexRegex",
+                &self.0.to_string(),
+            )
+        }
+    }
+};
+#[allow(unused_qualifications)]
+#[allow(clippy::absolute_paths)]
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[doc(hidden)]
+const _: () = {
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de> _serde::Deserialize<'de> for RegexRegex {
+        fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[doc(hidden)]
+            struct __Visitor<'de> {
+                marker: _serde::__private228::PhantomData<RegexRegex>,
+                lifetime: _serde::__private228::PhantomData<&'de ()>,
             }
-            for (line_nbr, line) in v.lines().enumerate() {
-                if line.trim().is_empty() {
-                    ers.push(format!("{}:{} empty line", path.display(), line_nbr + 1));
+            #[automatically_derived]
+            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                type Value = RegexRegex;
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private228::Formatter<'_>,
+                ) -> _serde::__private228::fmt::Result {
+                    _serde::__private228::Formatter::write_str(
+                        __formatter,
+                        "tuple struct RegexRegex",
+                    )
+                }
+                #[inline]
+                fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
+                where
+                    __E: _serde::Deserializer<'de>,
+                {
+                    let f0: String = <String as _serde::Deserialize>::deserialize(__e)?;
+                    Ok(RegexRegex(match Regex::new(&f0) {
+                        Ok(v) => v,
+                        Err(er) => {
+                            return Err(serde::de::Error::custom(format!("{er:?}")));
+                        }
+                    }))
+                }
+                #[inline]
+                fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let Some(f0) = _serde::de::SeqAccess::next_element::<String>(&mut __seq)?
+                    else {
+                        return Err(_serde::de::Error::invalid_length(
+                            0usize,
+                            &"tuple struct RegexRegex with 1 el",
+                        ));
+                    };
+                    Ok(RegexRegex(match Regex::new(&f0) {
+                        Ok(v) => v,
+                        Err(er) => {
+                            return Err(serde::de::Error::custom(format!("{er:?}")));
+                        }
+                    }))
+                }
+            }
+            _serde::Deserializer::deserialize_newtype_struct(
+                __deserializer,
+                "RegexRegex",
+                __Visitor {
+                    marker: _serde::__private228::PhantomData::<Self>,
+                    lifetime: _serde::__private228::PhantomData,
+                },
+            )
+        }
+    }
+};
+//todo add some logic? for regex validation?
+#[allow(unused_qualifications)]
+#[allow(clippy::absolute_paths)]
+#[allow(clippy::arbitrary_source_item_ordering)]
+const _: () = {
+    #[automatically_derived]
+    #[allow(unused_braces)]
+    impl JsonSchema for RegexRegex {
+        fn schema_name() -> borrow::Cow<'static, str> {
+            borrow::Cow::Borrowed("RegexRegex")
+        }
+        fn schema_id() -> borrow::Cow<'static, str> {
+            borrow::Cow::Borrowed("tests::RegexRegex")
+        }
+        fn json_schema(generator: &mut SchemaGenerator) -> Schema {
+            { generator.subschema_for::<String>() }
+        }
+        fn inline_schema() -> bool {
+            false
+        }
+    }
+};
+impl Display for RegexRegex {
+    fn fmt(&self, f: &mut Formatter<'_>) -> StdFmtResult {
+        write!(f, "{}", self.0)
+    }
+}
+impl DefaultOptSomeVecOneEl for RegexRegex {
+    fn default_opt_some_vec_one_el() -> Self {
+        Self(Regex::new("[a-z]+").expect("22a9eda5"))
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub enum RegexCase {
+    Insensitive,
+    Sensitive,
+}
+impl DefaultOptSomeVecOneEl for RegexCase {
+    fn default_opt_some_vec_one_el() -> Self {
+        Self::Sensitive
+    }
+}
+impl RegexCase {
+    #[must_use]
+    pub const fn postgreql_syntax(&self) -> &'static str {
+        match &self {
+            Self::Insensitive => "~*",
+            Self::Sensitive => "~",
+        }
+    }
+}
+#[allow(clippy::arbitrary_source_item_ordering)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, JsonSchema)]
+pub struct Between<T>
+where
+    T: Type<Postgres> + for<'__> Encode<'__, Postgres>,
+{
+    start: T,
+    end: T,
+}
+#[derive(Debug, Clone, Serialize, Deserialize, Error, Location)]
+pub enum BetweenTryNewEr<T> {
+    StartMoreOrEqualToEnd {
+        #[eo_to_err_string_serde]
+        start: T,
+        #[eo_to_err_string_serde]
+        end: T,
+        loc: Loc,
+    },
+}
+impl<T: Type<Postgres> + for<'__> Encode<'__, Postgres> + PartialOrd> Between<T> {
+    pub fn try_new(start: T, end: T) -> Result<Self, BetweenTryNewEr<T>> {
+        if start < end {
+            Ok(Self { start, end })
+        } else {
+            Err(BetweenTryNewEr::StartMoreOrEqualToEnd {
+                start,
+                end,
+                loc: loc!(),
+            })
+        }
+    }
+}
+#[allow(unused_qualifications)]
+#[allow(clippy::absolute_paths)]
+#[allow(clippy::arbitrary_source_item_ordering)]
+const _: () = {
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de, T> _serde::Deserialize<'de> for Between<T>
+    where
+        T: std::fmt::Debug
+            + _serde::Deserialize<'de>
+            + PartialOrd
+            + Type<Postgres>
+            + for<'__> Encode<'__, Postgres>,
+    {
+        fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[expect(non_camel_case_types)]
+            #[doc(hidden)]
+            enum __Field {
+                f0,
+                f1,
+                __ignore,
+            }
+            #[doc(hidden)]
+            struct __FieldVisitor;
+            impl _serde::de::Visitor<'_> for __FieldVisitor {
+                type Value = __Field;
+                fn expecting(
+                    &self,
+                    __f: &mut _serde::__private228::Formatter<'_>,
+                ) -> _serde::__private228::fmt::Result {
+                    _serde::__private228::Formatter::write_str(__f, "field identifier")
+                }
+                fn visit_u64<__E>(self, v: u64) -> Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match v {
+                        1u64 => Ok(__Field::f0),
+                        2u64 => Ok(__Field::f1),
+                        _ => Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_str<__E>(self, v: &str) -> Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match v {
+                        "start" => Ok(__Field::f0),
+                        "end" => Ok(__Field::f1),
+                        _ => Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_bytes<__E>(self, v: &[u8]) -> Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match v {
+                        b"start" => Ok(__Field::f0),
+                        b"end" => Ok(__Field::f1),
+                        _ => Ok(__Field::__ignore),
+                    }
+                }
+            }
+            impl<'de> _serde::Deserialize<'de> for __Field {
+                #[inline]
+                fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
+                where
+                    __D: _serde::Deserializer<'de>,
+                {
+                    _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
+                }
+            }
+            #[doc(hidden)]
+            struct __Visitor<'de, T>
+            where
+                T: _serde::Deserialize<'de> + Type<Postgres> + for<'__> Encode<'__, Postgres>,
+            {
+                marker: _serde::__private228::PhantomData<Between<T>>,
+                lifetime: _serde::__private228::PhantomData<&'de ()>,
+            }
+            impl<'de, T> _serde::de::Visitor<'de> for __Visitor<'de, T>
+            where
+                T: std::fmt::Debug
+                    + _serde::Deserialize<'de>
+                    + PartialOrd
+                    + Type<Postgres>
+                    + for<'__> Encode<'__, Postgres>,
+            {
+                type Value = Between<T>;
+                fn expecting(
+                    &self,
+                    __f: &mut _serde::__private228::Formatter<'_>,
+                ) -> _serde::__private228::fmt::Result {
+                    _serde::__private228::Formatter::write_str(__f, "struct Between")
+                }
+                #[inline]
+                fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let Some(f0) = _serde::de::SeqAccess::next_element::<T>(&mut __seq)? else {
+                        return Err(_serde::de::Error::invalid_length(
+                            1usize,
+                            &"struct Between with 2 els",
+                        ));
+                    };
+                    let Some(f1) = _serde::de::SeqAccess::next_element::<T>(&mut __seq)? else {
+                        return Err(_serde::de::Error::invalid_length(
+                            2usize,
+                            &"struct Between with 2 els",
+                        ));
+                    };
+                    match Between::try_new(f0, f1) {
+                        Ok(v) => Ok(v),
+                        Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
+                    }
+                }
+                #[inline]
+                fn visit_map<__A>(self, mut __map: __A) -> Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::MapAccess<'de>,
+                {
+                    let mut f0: Option<T> = None;
+                    let mut f1: Option<T> = None;
+                    while let Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)?
+                    {
+                        match __key {
+                            __Field::f0 => {
+                                if Option::is_some(&f0) {
+                                    return Err(
+                                        <__A::Error as _serde::de::Error>::duplicate_field("start"),
+                                    );
+                                }
+                                f0 = Some(_serde::de::MapAccess::next_value::<T>(&mut __map)?);
+                            }
+                            __Field::f1 => {
+                                if Option::is_some(&f1) {
+                                    return Err(
+                                        <__A::Error as _serde::de::Error>::duplicate_field("end"),
+                                    );
+                                }
+                                f1 = Some(_serde::de::MapAccess::next_value::<T>(&mut __map)?);
+                            }
+                            __Field::__ignore => {
+                                let _: serde::de::IgnoredAny =
+                                    _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(
+                                        &mut __map,
+                                    )?;
+                            }
+                        }
+                    }
+                    let f0_value = match f0 {
+                        Some(v) => v,
+                        None => _serde::__private228::de::missing_field("start")?,
+                    };
+                    let f1_value = match f1 {
+                        Some(v) => v,
+                        None => _serde::__private228::de::missing_field("end")?,
+                    };
+                    match Between::try_new(f0_value, f1_value) {
+                        Ok(v) => Ok(v),
+                        Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
+                    }
+                }
+            }
+            #[doc(hidden)]
+            const FIELDS: &[&str] = &["start", "end"];
+            _serde::Deserializer::deserialize_struct(
+                __deserializer,
+                "Between",
+                FIELDS,
+                __Visitor {
+                    marker: _serde::__private228::PhantomData::<Self>,
+                    lifetime: _serde::__private228::PhantomData,
+                },
+            )
+        }
+    }
+};
+impl<T: DefaultOptSomeVecOneEl + Type<Postgres> + for<'__> Encode<'__, Postgres>>
+    DefaultOptSomeVecOneEl for Between<T>
+{
+    fn default_opt_some_vec_one_el() -> Self {
+        Self {
+            start: DefaultOptSomeVecOneEl::default_opt_some_vec_one_el(),
+            end: DefaultOptSomeVecOneEl::default_opt_some_vec_one_el(),
+        }
+    }
+}
+impl<'lifetime, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime>
+    PgTypeWhereFilter<'lifetime> for Between<T>
+{
+    fn query_bind(
+        self,
+        mut query: Query<'lifetime, Postgres, PgArguments>,
+    ) -> Result<Query<'lifetime, Postgres, PgArguments>, String> {
+        if let Err(er) = query.try_bind(self.start) {
+            return Err(er.to_string());
+        }
+        if let Err(er) = query.try_bind(self.end) {
+            return Err(er.to_string());
+        }
+        Ok(query)
+    }
+    fn query_part(&self, incr: &mut u64, _: &dyn Display, _: bool) -> Result<String, QueryPartEr> {
+        let start_incr = match incr_checked_add_one_returning_incr(incr) {
+            Ok(v) => v,
+            Err(er) => {
+                return Err(er);
+            }
+        };
+        let end_incr = match incr_checked_add_one_returning_incr(incr) {
+            Ok(v) => v,
+            Err(er) => {
+                return Err(er);
+            }
+        };
+        Ok(format!("between ${start_incr} and ${end_incr}"))
+    }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
+pub struct PgTypeNotEmptyUniqueVec<T>(Vec<T>);
+#[allow(clippy::arbitrary_source_item_ordering)]
+impl<T: PartialEq + Clone> PgTypeNotEmptyUniqueVec<T> {
+    pub fn try_new(v: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
+        if v.is_empty() {
+            return Err(NotEmptyUniqueVecTryNewEr::IsEmpty { loc: loc!() });
+        }
+        {
+            let mut acc = Vec::new();
+            for el in &v {
+                if acc.contains(&el) {
+                    return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
+                        value: el.clone(),
+                        loc: loc!(),
+                    });
+                }
+                acc.push(el);
+            }
+        }
+        Ok(Self(v))
+    }
+    #[must_use]
+    pub const fn to_vec(&self) -> &Vec<T> {
+        &self.0
+    }
+    #[must_use]
+    pub fn into_vec(self) -> Vec<T> {
+        self.0
+    }
+}
+#[allow(unused_qualifications)]
+#[allow(clippy::absolute_paths)]
+#[allow(clippy::arbitrary_source_item_ordering)]
+const _: () = {
+    #[expect(clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
+        _serde::Deserialize<'de> for PgTypeNotEmptyUniqueVec<T>
+    {
+        fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[doc(hidden)]
+            struct __Visitor<'de, T>
+            where
+                T: _serde::Deserialize<'de>,
+            {
+                marker: _serde::__private228::PhantomData<PgTypeNotEmptyUniqueVec<T>>,
+                lifetime: _serde::__private228::PhantomData<&'de ()>,
+            }
+            #[automatically_derived]
+            impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
+                _serde::de::Visitor<'de> for __Visitor<'de, T>
+            {
+                type Value = PgTypeNotEmptyUniqueVec<T>;
+                fn expecting(
+                    &self,
+                    __f: &mut _serde::__private228::Formatter<'_>,
+                ) -> _serde::__private228::fmt::Result {
+                    _serde::__private228::Formatter::write_str(
+                        __f,
+                        "tuple struct PgTypeNotEmptyUniqueVec",
+                    )
+                }
+                #[inline]
+                fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
+                where
+                    __E: _serde::Deserializer<'de>,
+                {
+                    let f0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
+                    Ok(PgTypeNotEmptyUniqueVec(f0))
+                }
+                #[inline]
+                fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let Some(f0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
+                    else {
+                        return Err(_serde::de::Error::invalid_length(
+                            0usize,
+                            &"tuple struct PgTypeNotEmptyUniqueVec with 1 el",
+                        ));
+                    };
+                    match PgTypeNotEmptyUniqueVec::try_new(f0) {
+                        Ok(v) => Ok(v),
+                        Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
+                    }
+                }
+            }
+            _serde::Deserializer::deserialize_newtype_struct(
+                __deserializer,
+                "PgTypeNotEmptyUniqueVec",
+                __Visitor {
+                    marker: _serde::__private228::PhantomData::<Self>,
+                    lifetime: _serde::__private228::PhantomData,
+                },
+            )
+        }
+    }
+};
+impl<T: DefaultOptSomeVecOneEl> DefaultOptSomeVecOneEl for PgTypeNotEmptyUniqueVec<T> {
+    fn default_opt_some_vec_one_el() -> Self {
+        Self(vec![DefaultOptSomeVecOneEl::default_opt_some_vec_one_el()])
+    }
+}
+impl<T> Default for PgTypeNotEmptyUniqueVec<T> {
+    fn default() -> Self {
+        Self(Vec::default())
+    }
+}
+impl<T> From<PgTypeNotEmptyUniqueVec<T>> for Vec<T> {
+    fn from(v: PgTypeNotEmptyUniqueVec<T>) -> Self {
+        v.0
+    }
+}
+#[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, Serialize, JsonSchema)]
+pub struct BoundedStdVecVec<T, const LENGTH: usize>(Vec<T>);
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location, JsonSchema)]
+pub enum BoundedStdVecVecTryNewEr {
+    LengthIsNotCorrect {
+        #[eo_to_err_string_serde]
+        wrong_length: usize,
+        #[eo_to_err_string_serde]
+        expected: usize,
+        loc: Loc,
+    },
+}
+enum PgTypeOrPgJsonType {
+    PgJsonType,
+    PgType,
+}
+enum Vrt {
+    MinusOne,
+    Normal,
+}
+impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, const LENGTH: usize>
+    BoundedStdVecVec<T, LENGTH>
+{
+    #[must_use]
+    pub fn into_inner(self) -> Vec<T> {
+        self.0
+    }
+    pub fn pg_json_type_query_part(
+        &self,
+        incr: &mut u64,
+        column: &dyn Display,
+        is_need_to_add_logical_operator: bool,
+    ) -> Result<String, QueryPartEr> {
+        self.query_part(
+            incr,
+            column,
+            is_need_to_add_logical_operator,
+            &PgTypeOrPgJsonType::PgJsonType,
+            &Vrt::Normal,
+        )
+    }
+    pub fn pg_json_type_query_part_minus_one(
+        &self,
+        incr: &mut u64,
+        column: &dyn Display,
+        is_need_to_add_logical_operator: bool,
+    ) -> Result<String, QueryPartEr> {
+        self.query_part(
+            incr,
+            column,
+            is_need_to_add_logical_operator,
+            &PgTypeOrPgJsonType::PgJsonType,
+            &Vrt::MinusOne,
+        )
+    }
+    pub fn pg_type_query_part(
+        &self,
+        incr: &mut u64,
+        column: &dyn Display,
+        is_need_to_add_logical_operator: bool,
+    ) -> Result<String, QueryPartEr> {
+        self.query_part(
+            incr,
+            column,
+            is_need_to_add_logical_operator,
+            &PgTypeOrPgJsonType::PgType,
+            &Vrt::Normal,
+        )
+    }
+    pub fn pg_type_query_part_minus_one(
+        &self,
+        incr: &mut u64,
+        column: &dyn Display,
+        is_need_to_add_logical_operator: bool,
+    ) -> Result<String, QueryPartEr> {
+        self.query_part(
+            incr,
+            column,
+            is_need_to_add_logical_operator,
+            &PgTypeOrPgJsonType::PgType,
+            &Vrt::MinusOne,
+        )
+    }
+    pub fn query_bind(
+        self,
+        mut query: Query<'lifetime, Postgres, PgArguments>,
+    ) -> Result<Query<'lifetime, Postgres, PgArguments>, String> {
+        for el in self.0 {
+            if let Err(er) = query.try_bind(el) {
+                return Err(er.to_string());
+            }
+        }
+        Ok(query)
+    }
+    fn query_part(
+        &self,
+        incr: &mut u64,
+        _: &dyn Display,
+        _is_need_to_add_logical_operator: bool,
+        pg_type_or_pg_json_type: &PgTypeOrPgJsonType,
+        vrt: &Vrt,
+    ) -> Result<String, QueryPartEr> {
+        let mut acc = String::new();
+        let len_27270409 = match &vrt {
+            Vrt::MinusOne => self.0.len().saturating_sub(1),
+            Vrt::Normal => self.0.len(),
+        };
+        for _ in 0..len_27270409 {
+            match incr_checked_add_one_returning_incr(incr) {
+                Ok(v) => {
+                    if write!(
+                        acc,
+                        "{}",
+                        &match &pg_type_or_pg_json_type {
+                            PgTypeOrPgJsonType::PgType => format!("[${v}]"),
+                            PgTypeOrPgJsonType::PgJsonType => {
+                                format!("->${v}")
+                            }
+                        }
+                    )
+                    .is_err()
+                    {
+                        return Err(QueryPartEr::WriteIntoBuffer { loc: loc!() });
+                    }
+                }
+                Err(er) => {
+                    return Err(er);
                 }
             }
         }
-        assert!(
-            ers.is_empty(),
-            "Empty lines found in Rust files:\n{}",
-            ers.join("\n")
-        );
+        Ok(acc)
+    }
+    #[must_use]
+    pub const fn to_inner(&self) -> &Vec<T> {
+        &self.0
+    }
+}
+impl<T, const LENGTH: usize> TryFrom<Vec<T>> for BoundedStdVecVec<T, LENGTH> {
+    type Error = BoundedStdVecVecTryNewEr;
+    fn try_from(v: Vec<T>) -> Result<Self, Self::Error> {
+        let len = v.len();
+        if len == LENGTH {
+            Ok(Self(v))
+        } else {
+            Err(BoundedStdVecVecTryNewEr::LengthIsNotCorrect {
+                wrong_length: len,
+                expected: LENGTH,
+                loc: loc!(),
+            })
+        }
+    }
+}
+#[allow(unused_qualifications)]
+#[allow(clippy::absolute_paths)]
+#[allow(clippy::arbitrary_source_item_ordering)]
+const _: () = {
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de, T, const LENGTH: usize> _serde::Deserialize<'de> for BoundedStdVecVec<T, LENGTH>
+    where
+        T: _serde::Deserialize<'de>,
+    {
+        fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[doc(hidden)]
+            struct __Visitor<'de, T, const LENGTH: usize>
+            where
+                T: _serde::Deserialize<'de>,
+            {
+                marker: _serde::__private228::PhantomData<BoundedStdVecVec<T, LENGTH>>,
+                lifetime: _serde::__private228::PhantomData<&'de ()>,
+            }
+            #[automatically_derived]
+            impl<'de, T, const LENGTH: usize> _serde::de::Visitor<'de> for __Visitor<'de, T, LENGTH>
+            where
+                T: _serde::Deserialize<'de>,
+            {
+                type Value = BoundedStdVecVec<T, LENGTH>;
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private228::Formatter<'_>,
+                ) -> _serde::__private228::fmt::Result {
+                    _serde::__private228::Formatter::write_str(
+                        __formatter,
+                        "tuple struct BoundedStdVecVec",
+                    )
+                }
+                #[inline]
+                fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
+                where
+                    __E: _serde::Deserializer<'de>,
+                {
+                    let f0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
+                    match BoundedStdVecVec::try_from(f0) {
+                        Ok(v) => Ok(v),
+                        Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
+                    }
+                }
+                #[inline]
+                fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let Some(f0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
+                    else {
+                        return Err(_serde::de::Error::invalid_length(
+                            0usize,
+                            &"tuple struct BoundedStdVecVec with 1 el",
+                        ));
+                    };
+                    match BoundedStdVecVec::try_from(f0) {
+                        Ok(v) => Ok(v),
+                        Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
+                    }
+                }
+            }
+            _serde::Deserializer::deserialize_newtype_struct(
+                __deserializer,
+                "BoundedStdVecVec",
+                __Visitor {
+                    marker: _serde::__private228::PhantomData::<Self>,
+                    lifetime: _serde::__private228::PhantomData,
+                },
+            )
+        }
+    }
+};
+impl<T: Clone + DefaultOptSomeVecOneEl, const LENGTH: usize> DefaultOptSomeVecOneEl
+    for BoundedStdVecVec<T, LENGTH>
+{
+    fn default_opt_some_vec_one_el() -> Self {
+        Self(vec![
+                <T as DefaultOptSomeVecOneEl>::default_opt_some_vec_one_el();
+                LENGTH
+            ])
     }
 }
