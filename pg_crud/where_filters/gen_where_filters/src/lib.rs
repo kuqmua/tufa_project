@@ -320,7 +320,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     let pg_type_pattern_handle_arr_dim4 = PgTypePatternHandle::ArrDim4;
     let gen_pub_dims_bounded_vec_ts =
         |vec_length_ts: &dyn ToTokens, kind_of_unsigned_part_of_i32: &KindOfUnsignedPartOfI32| {
-            quote! {pub #DimsSc: BoundedStdVecVec<pg_crud_common::#kind_of_unsigned_part_of_i32, #vec_length_ts>}
+            quote! {pub #DimsSc: BoundedVec<pg_crud_common::#kind_of_unsigned_part_of_i32, #vec_length_ts>}
         };
     let value_match_incr_checked_add_one_init_ts = gen_match_incr_checked_add_one_init_ts(&ValueSc);
     let gen_ident_match_self_field_function_incr_column_is_need_to_add_logical_operator_init_ts =

@@ -748,9 +748,9 @@ impl<T> From<PgTypeNotEmptyUniqueVec<T>> for Vec<T> {
     }
 }
 #[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, Serialize, JsonSchema)]
-pub struct BoundedStdVecVec<T, const LENGTH: usize>(Vec<T>);
+pub struct BoundedVec<T, const LENGTH: usize>(Vec<T>);
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location, JsonSchema)]
-pub enum BoundedStdVecVecTryNewEr {
+pub enum BoundedVecTryNewEr {
     LengthIsNotCorrect {
         #[eo_to_err_string_serde]
         wrong_length: usize,
@@ -768,7 +768,7 @@ enum Vrt {
     Normal,
 }
 impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, const LENGTH: usize>
-    BoundedStdVecVec<T, LENGTH>
+    BoundedVec<T, LENGTH>
 {
     #[must_use]
     pub fn into_inner(self) -> Vec<T> {
@@ -884,14 +884,14 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
         &self.0
     }
 }
-impl<T, const LENGTH: usize> TryFrom<Vec<T>> for BoundedStdVecVec<T, LENGTH> {
-    type Error = BoundedStdVecVecTryNewEr;
+impl<T, const LENGTH: usize> TryFrom<Vec<T>> for BoundedVec<T, LENGTH> {
+    type Error = BoundedVecTryNewEr;
     fn try_from(v: Vec<T>) -> Result<Self, Self::Error> {
         let len = v.len();
         if len == LENGTH {
             Ok(Self(v))
         } else {
-            Err(BoundedStdVecVecTryNewEr::LengthIsNotCorrect {
+            Err(BoundedVecTryNewEr::LengthIsNotCorrect {
                 wrong_length: len,
                 expected: LENGTH,
                 loc: loc!(),
@@ -905,7 +905,7 @@ impl<T, const LENGTH: usize> TryFrom<Vec<T>> for BoundedStdVecVec<T, LENGTH> {
 const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T, const LENGTH: usize> _serde::Deserialize<'de> for BoundedStdVecVec<T, LENGTH>
+    impl<'de, T, const LENGTH: usize> _serde::Deserialize<'de> for BoundedVec<T, LENGTH>
     where
         T: _serde::Deserialize<'de>,
     {
@@ -918,7 +918,7 @@ const _: () = {
             where
                 T: _serde::Deserialize<'de>,
             {
-                marker: _serde::__private228::PhantomData<BoundedStdVecVec<T, LENGTH>>,
+                marker: _serde::__private228::PhantomData<BoundedVec<T, LENGTH>>,
                 lifetime: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
@@ -926,14 +926,14 @@ const _: () = {
             where
                 T: _serde::Deserialize<'de>,
             {
-                type Value = BoundedStdVecVec<T, LENGTH>;
+                type Value = BoundedVec<T, LENGTH>;
                 fn expecting(
                     &self,
                     __formatter: &mut _serde::__private228::Formatter<'_>,
                 ) -> _serde::__private228::fmt::Result {
                     _serde::__private228::Formatter::write_str(
                         __formatter,
-                        "tuple struct BoundedStdVecVec",
+                        "tuple struct BoundedVec",
                     )
                 }
                 #[inline]
@@ -942,7 +942,7 @@ const _: () = {
                     __E: _serde::Deserializer<'de>,
                 {
                     let f0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
-                    match BoundedStdVecVec::try_from(f0) {
+                    match BoundedVec::try_from(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -956,10 +956,10 @@ const _: () = {
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
-                            &"tuple struct BoundedStdVecVec with 1 el",
+                            &"tuple struct BoundedVec with 1 el",
                         ));
                     };
-                    match BoundedStdVecVec::try_from(f0) {
+                    match BoundedVec::try_from(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -967,7 +967,7 @@ const _: () = {
             }
             _serde::Deserializer::deserialize_newtype_struct(
                 __deserializer,
-                "BoundedStdVecVec",
+                "BoundedVec",
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<Self>,
                     lifetime: _serde::__private228::PhantomData,
@@ -977,7 +977,7 @@ const _: () = {
     }
 };
 impl<T: Clone + DefaultOptSomeVecOneEl, const LENGTH: usize> DefaultOptSomeVecOneEl
-    for BoundedStdVecVec<T, LENGTH>
+    for BoundedVec<T, LENGTH>
 {
     fn default_opt_some_vec_one_el() -> Self {
         Self(vec![

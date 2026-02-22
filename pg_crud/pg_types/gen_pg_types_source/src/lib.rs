@@ -6225,7 +6225,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         #ident_where_ucc::DimOneEqual(
                                             where_filters::PgTypeWhereDimOneEqual {
                                                 logical_operator: #import_path::LogicalOperator::Or,
-                                                dims: where_filters::BoundedStdVecVec::try_from(
+                                                dims: where_filters::BoundedVec::try_from(
                                                     vec![
                                                         pg_crud_common::NotZeroUnsignedPartOfI32::try_from(
                                                             i32::try_from(index_7702518c.checked_add(1)?).expect("5954966c")

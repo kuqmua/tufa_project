@@ -4873,7 +4873,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             quote!{
                                                 acc_dd377eb1.push(#ident_where_ucc::DimOneEqual(#import_path::PgJsonTypeWhereDimOneEqual {
                                                     logical_operator: #import_path::LogicalOperator::And,
-                                                    dims: #import_path::BoundedStdVecVec::try_from(
+                                                    dims: #import_path::BoundedVec::try_from(
                                                         vec![
                                                             #import_path::UnsignedPartOfI32::try_from(
                                                                 i32::try_from(index_47620dcf).expect("5341936f")

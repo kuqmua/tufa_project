@@ -2392,7 +2392,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     #where_ident_where_ucc_c994819b::#dim_nbr_starting_with_one_equal_ts(
                                         where_filters::#pg_json_type_where_dim_nbr_starting_with_one_equal_ts {
                                             logical_operator: #import_path::LogicalOperator::And,
-                                            dims: where_filters::BoundedStdVecVec::try_from(
+                                            dims: where_filters::BoundedVec::try_from(
                                                 vec![#vec_content_ts]
                                             ).expect("82cc0a3c"),
                                             #ValueSc: #value_ident_table_type_ucc_0d9dce86::new(#value_index_ts.into()),
