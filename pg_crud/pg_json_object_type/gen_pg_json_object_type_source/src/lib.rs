@@ -256,7 +256,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             #import_path::#DefaultOptSomeVecOneElUcc::#DefaultOptSomeVecOneElSc
         };
         let default_but_opt_is_some_call_ts = quote!{#default_but_opt_is_some_ts()};
-        let gen_ident_as_default_but_opt_is_some_call_ts = |ident_ts: &dyn ToTokens, |{
+        let gen_ident_as_default_but_opt_is_some_call_ts = |ident_ts: &dyn ToTokens|{
             quote!{
                 <#ident_ts as #import_path::#DefaultOptSomeVecOneElUcc>::#DefaultOptSomeVecOneElSc()
             }

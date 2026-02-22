@@ -46,10 +46,10 @@ pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 .parse::<Ts2>()
                 .expect("0cc47b2e");
             let (ucc_struct_decl_ts, sc_struct_decl_ts) = {
-                let gen_struct_decl = |struct_name_ts: &dyn ToTokens| {
+                let gen_struct_decl = |ts: &dyn ToTokens| {
                     quote! {
                         #[derive(Debug)]
-                        pub struct #struct_name_ts;
+                        pub struct #ts;
                     }
                 };
                 (
@@ -180,10 +180,13 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
             } else {
                 quote! {#struct_sc_token_ucc_ts}
             };
-            let casing_ts = if is_ucc {
-                quote! {naming_common::AsRefStrToUccStr::case}
-            } else {
-                quote! {naming_common::AsRefStrToScStr::case}
+            let casing_ts = {
+                let ts = if is_ucc {
+                    quote! {AsRefStrToUccStr::case}
+                } else {
+                    quote! {AsRefStrToScStr::case}
+                };
+                quote!{naming_common::#ts}
             };
             quote! {
                 #[derive(Debug)]
