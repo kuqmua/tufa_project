@@ -456,8 +456,8 @@ pub fn location(input: Ts) -> Ts {
                             "{}{}",
                             {
                                 assert!(fields.len() == 1, "d7a6b955");
-                                let field_type = &fields.iter().next().expect("8a80c36d").ty;
-                                quote! {#field_type}.to_string()
+                                let ft = &fields.iter().next().expect("8a80c36d").ty;
+                                quote! {#ft}.to_string()
                             },
                             WithSerdeUcc
                         )

@@ -18,19 +18,19 @@ pub fn gen_getter_traits_for_struct_fields(input: Ts) -> Ts {
             let fi = field.ident.as_ref().expect("e5c23c45");
             (fi, ToTokensToUccStr::case(&fi))
         };
-        let field_type = field.ty;
+        let ft = field.ty;
         let path_trait_ident = format!("app_state::Get{ucc_fi}")
             .parse::<Ts2>()
             .expect("8fb2cb27");
         let function_name_ident = format!("get_{fi}").parse::<Ts2>().expect("a349efd0");
         quote! {
             impl #path_trait_ident for #ident {
-                fn #function_name_ident (&self) -> &#field_type {
+                fn #function_name_ident (&self) -> &#ft {
                     &self.#fi
                 }
             }
             impl #path_trait_ident for &#ident {
-                fn #function_name_ident (&self) -> &#field_type {
+                fn #function_name_ident (&self) -> &#ft {
                     &self.#fi
                 }
             }

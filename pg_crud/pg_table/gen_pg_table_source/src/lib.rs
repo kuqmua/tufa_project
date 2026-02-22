@@ -478,43 +478,35 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
     let fields_len = fields.len();
     let fields_len_without_primary_key = fields_without_primary_key.len();
-    let primary_key_field_type = &primary_key_field.type0;
-    let primary_key_field_type_where_ts =
-        SelfWhereUcc::from_type_last_segment(&primary_key_field.type0);
+    let primary_key_ft = &primary_key_field.type0;
+    let primary_key_ft_where_ts = SelfWhereUcc::from_type_last_segment(&primary_key_field.type0);
     //todo must remove this and use trait type instead
-    let primary_key_field_type_table_type_ts =
+    let primary_key_ft_table_type_ts =
         SelfTableTypeUcc::from_type_last_segment(&primary_key_field.type0);
-    let gen_as_pg_type_ts = |field_type: &dyn ToTokens| {
-        quote! {<#field_type as pg_crud::PgType>::}
+    let gen_as_pg_type_ts = |ft: &dyn ToTokens| {
+        quote! {<#ft as pg_crud::PgType>::}
     };
-    let primary_key_field_type_as_pg_type_ts = gen_as_pg_type_ts(&primary_key_field_type);
-    let gen_as_pg_type_tokens_ts = |field_type: &dyn ToTokens, tokens: &dyn ToTokens| {
-        let as_pg_type_ts = gen_as_pg_type_ts(&field_type);
+    let primary_key_ft_as_pg_type_ts = gen_as_pg_type_ts(&primary_key_ft);
+    let gen_as_pg_type_tokens_ts = |ft: &dyn ToTokens, tokens: &dyn ToTokens| {
+        let as_pg_type_ts = gen_as_pg_type_ts(&ft);
         quote! {#as_pg_type_ts #tokens}
     };
-    // let gen_as_pg_type_table_type_ts = |field_type: &dyn ToTokens| gen_as_pg_type_tokens_ts(&field_type, &TableTypeUcc);
-    // let primary_key_field_type_as_pg_type_table_type_ts = gen_as_pg_type_table_type_ts(&primary_key_field_type);
-    let gen_as_pg_type_create_ts =
-        |field_type: &dyn ToTokens| gen_as_pg_type_tokens_ts(&field_type, &CreateUcc);
-    let gen_as_pg_type_select_ts =
-        |field_type: &dyn ToTokens| gen_as_pg_type_tokens_ts(&field_type, &SelectUcc);
-    let primary_key_field_type_as_pg_type_select_ts =
-        gen_as_pg_type_select_ts(&primary_key_field_type);
-    let gen_as_pg_type_where_ts =
-        |field_type: &dyn ToTokens| gen_as_pg_type_tokens_ts(&field_type, &WhereUcc);
-    let primary_key_field_type_as_pg_type_where_ts =
-        gen_as_pg_type_where_ts(&primary_key_field_type);
-    let gen_as_pg_type_read_ts =
-        |field_type: &dyn ToTokens| gen_as_pg_type_tokens_ts(&field_type, &ReadUcc);
+    // let gen_as_pg_type_table_type_ts = |ft: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ft, &TableTypeUcc);
+    // let primary_key_ft_as_pg_type_table_type_ts = gen_as_pg_type_table_type_ts(&primary_key_ft);
+    let gen_as_pg_type_create_ts = |ft: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ft, &CreateUcc);
+    let gen_as_pg_type_select_ts = |ft: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ft, &SelectUcc);
+    let primary_key_ft_as_pg_type_select_ts = gen_as_pg_type_select_ts(&primary_key_ft);
+    let gen_as_pg_type_where_ts = |ft: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ft, &WhereUcc);
+    let primary_key_ft_as_pg_type_where_ts = gen_as_pg_type_where_ts(&primary_key_ft);
+    let gen_as_pg_type_read_ts = |ft: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ft, &ReadUcc);
     let gen_as_pg_type_read_only_ids_ts =
-        |field_type: &dyn ToTokens| gen_as_pg_type_tokens_ts(&field_type, &ReadOnlyIdsUcc);
-    let primary_key_field_type_as_pg_type_read_ts = gen_as_pg_type_read_ts(&primary_key_field_type);
-    let gen_as_pg_type_update_ts =
-        |field_type: &dyn ToTokens| gen_as_pg_type_tokens_ts(&field_type, &UpdateUcc);
+        |ft: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ft, &ReadOnlyIdsUcc);
+    let primary_key_ft_as_pg_type_read_ts = gen_as_pg_type_read_ts(&primary_key_ft);
+    let gen_as_pg_type_update_ts = |ft: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ft, &UpdateUcc);
     let gen_as_pg_type_update_for_query_ts =
-        |field_type: &dyn ToTokens| gen_as_pg_type_tokens_ts(&field_type, &UpdateForQueryUcc);
-    let primary_key_field_type_as_pg_type_read_ucc =
-        quote! {<#primary_key_field_type as pg_crud::#PgTypeUcc>::#ReadUcc};
+        |ft: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ft, &UpdateForQueryUcc);
+    let primary_key_ft_as_pg_type_read_ucc =
+        quote! {<#primary_key_ft as pg_crud::#PgTypeUcc>::#ReadUcc};
     let ident_read_only_ids_ucc = SelfReadOnlyIdsUcc::from_tokens(&ident);
     let ident_delete_many_params_ucc = SelfDeleteManyParamsUcc::from_tokens(&ident);
     let ident_delete_many_payload_ucc = SelfDeleteManyPayloadUcc::from_tokens(&ident);
@@ -524,15 +516,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let ident_read_one_er_with_serde_ucc = SelfReadOneErWithSerdeUcc::from_tokens(&ident);
     let ident_try_delete_one_er_ucc = SelfTryDeleteOneErUcc::from_tokens(&ident);
     let ident_delete_one_er_with_serde_ucc = SelfDeleteOneErWithSerdeUcc::from_tokens(&ident);
-    let vec_primary_key_field_type_read_ts =
-        gen_vec_tokens_decl_ts(&primary_key_field_type_as_pg_type_read_ucc);
+    let vec_primary_key_ft_read_ts = gen_vec_tokens_decl_ts(&primary_key_ft_as_pg_type_read_ucc);
     let vec_ident_read_only_ids_ts = gen_vec_tokens_decl_ts(&ident_read_only_ids_ucc);
     let primary_key_fi = &primary_key_field.ident;
     let primary_key_fi_ucc_ts = ToTokensToUccTs::case_or_panic(&primary_key_fi);
-    let primary_key_field_type_update_ts =
-        &SelfUpdateUcc::from_type_last_segment(primary_key_field_type);
-    let primary_key_field_type_update_for_query_ts =
-        &SelfUpdateForQueryUcc::from_type_last_segment(primary_key_field_type);
+    let primary_key_ft_update_ts = &SelfUpdateUcc::from_type_last_segment(primary_key_ft);
+    let primary_key_ft_update_for_query_ts =
+        &SelfUpdateForQueryUcc::from_type_last_segment(primary_key_ft);
     let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
     let gen_from_handle_ts = |ident_ts: &dyn ToTokens, ts: &dyn ToTokens| {
         quote! {
@@ -642,30 +632,29 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 fields.iter().map(|_| "{}").collect::<Vec<&str>>().join(",")
             ));
             let serde_json_to_string_schemars_schema_for_generic_unwrap_ts = {
-                let gen_field_type_as_pg_crud_create_table_column_query_part_create_table_query_part_ts =
-                    |field_type: &Type, fi: &Ident, is_primary_key: bool| {
+                let gen_ft_as_pg_crud_create_table_column_query_part_create_table_query_part_ts =
+                    |ft: &Type, fi: &Ident, is_primary_key: bool| {
                         let is_primary_key_ts: &dyn ToTokens =
                             if is_primary_key { &TrueSc } else { &FalseSc };
                         let fi_dq_ts = dq_ts(&fi);
-                        let field_type_pg_type_ts = gen_as_pg_type_ts(&field_type);
+                        let ft_pg_type_ts = gen_as_pg_type_ts(&ft);
                         quote! {
-                            #field_type_pg_type_ts #CreateTableColumnQueryPartSc(&#fi_dq_ts, #is_primary_key_ts)
+                            #ft_pg_type_ts #CreateTableColumnQueryPartSc(&#fi_dq_ts, #is_primary_key_ts)
                         }
                     };
                 once(
-                    gen_field_type_as_pg_crud_create_table_column_query_part_create_table_query_part_ts(
-                        primary_key_field_type,
+                    gen_ft_as_pg_crud_create_table_column_query_part_create_table_query_part_ts(
+                        primary_key_ft,
                         &primary_key_field.ident,
                         true,
                     ),
                 )
                 .chain(fields_without_primary_key.iter().map(|el| {
-                    gen_field_type_as_pg_crud_create_table_column_query_part_create_table_query_part_ts(
-                        &el.type0,
-                        &el.ident,
-                        false,
+                    gen_ft_as_pg_crud_create_table_column_query_part_create_table_query_part_ts(
+                        &el.type0, &el.ident, false,
                     )
-                })).collect::<Vec<Ts2>>()
+                }))
+                .collect::<Vec<Ts2>>()
             };
             quote! {
                 pub async fn #PreparePgTableSc(#PoolSc: &sqlx::Pool<sqlx::Postgres>, table: &str) -> Result<(), #ident_prepare_pg_er_ucc> {
@@ -974,19 +963,18 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 quote! {{#ts}}
             });
         let impl_ident_create_ts = {
-            let primary_key_field_type_as_default_opt_some_vec_one_el_call_ts = {
-                let primary_key_field_type_as_pg_type_create_ts =
-                    gen_as_pg_type_create_ts(&primary_key_field_type);
+            let primary_key_ft_as_default_opt_some_vec_one_el_call_ts = {
+                let primary_key_ft_as_pg_type_create_ts = gen_as_pg_type_create_ts(&primary_key_ft);
                 quote! {
                     <
-                        #primary_key_field_type_as_pg_type_create_ts as #PgCrudSc::#DefaultOptSomeVecOneElUcc
+                        #primary_key_ft_as_pg_type_create_ts as #PgCrudSc::#DefaultOptSomeVecOneElUcc
                     >::#DefaultOptSomeVecOneElSc()
                 }
             };
             let fn_create_query_part_ts = {
                 let gen_match_as_pg_crud_pg_type_pg_type_create_query_part_ts =
-                    |field_type: &Type, ts: &dyn ToTokens| {
-                        let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&field_type);
+                    |ft: &Type, ts: &dyn ToTokens| {
+                        let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&ft);
                         let if_write_is_err_ts = gen_if_write_is_err_ts(
                             &quote! {acc_a097110b, "{v_c3f0b59a},"},
                             &return_err_query_part_er_write_into_buffer_ts,
@@ -1006,8 +994,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     };
                 let primary_key_ts = gen_match_as_pg_crud_pg_type_pg_type_create_query_part_ts(
-                    primary_key_field_type,
-                    &primary_key_field_type_as_default_opt_some_vec_one_el_call_ts,
+                    primary_key_ft,
+                    &primary_key_ft_as_default_opt_some_vec_one_el_call_ts,
                 );
                 let column_incrs_ts = gen_fields_named_without_primary_key_without_comma_ts(
                     &|el: &SynFieldWrapper| {
@@ -1029,8 +1017,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             };
             let fn_create_query_bind_ts = {
                 let gen_query_as_pg_crud_pg_type_pg_type_create_query_bind_ts =
-                    |field_type: &Type, ts: &dyn ToTokens| {
-                        let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&field_type);
+                    |ft: &Type, ts: &dyn ToTokens| {
+                        let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&ft);
                         quote! {
                             match #as_pg_crud_pg_type_pg_type_ts #CreateQueryBindSc(
                                 #ts,
@@ -1046,8 +1034,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     };
                 let primary_key_ts = gen_query_as_pg_crud_pg_type_pg_type_create_query_bind_ts(
-                    primary_key_field_type,
-                    &primary_key_field_type_as_default_opt_some_vec_one_el_call_ts,
+                    primary_key_ft,
+                    &primary_key_ft_as_default_opt_some_vec_one_el_call_ts,
                 );
                 let binded_query_modifications_ts =
                     gen_fields_named_without_primary_key_without_comma_ts(
@@ -1466,37 +1454,40 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let ident_read_ts = {
         let ident_read_ts = {
             let ts_f80f1f3e = StructOrEnumDeriveTsStreamBuilder::new()
-            .make_pub()
-            .derive_debug()
-            .derive_partial_eq()
-            .derive_serde_serialize()
-            .derive_serde_deserialize()
-            .build_struct(
-                &ident_read_ucc,
-                &Ts2::new(),
-                &{
+                .make_pub()
+                .derive_debug()
+                .derive_partial_eq()
+                .derive_serde_serialize()
+                .derive_serde_deserialize()
+                .build_struct(&ident_read_ucc, &Ts2::new(), &{
                     let field_opt_primary_key_ts = {
-                        let opt_value_primary_key_field_type_as_pg_type_read_ts = gen_opt_type_decl_ts(&gen_value_decl_ts(&gen_as_pg_type_read_ts(&primary_key_field_type)));
+                        let opt_value_primary_key_ft_as_pg_type_read_ts = gen_opt_type_decl_ts(
+                            &gen_value_decl_ts(&gen_as_pg_type_read_ts(&primary_key_ft)),
+                        );
                         quote! {
                             #FieldAttrSerdeSkipSerializingIfOptIsNone
-                            pub #primary_key_fi: #opt_value_primary_key_field_type_as_pg_type_read_ts
+                            pub #primary_key_fi: #opt_value_primary_key_ft_as_pg_type_read_ts
                         }
                     };
-                    let fields_opts_without_primary_key_ts = gen_fields_named_without_primary_key_with_comma_ts(&|el: &SynFieldWrapper| -> Ts2 {
-                        let field_vis = &el.vis;
-                        let fi = &el.ident;
-                        let opt_value_field_type_as_pg_type_read_ts = gen_opt_type_decl_ts(&gen_value_decl_ts(&gen_as_pg_type_read_ts(&el.type0)));
-                        quote! {
-                            #FieldAttrSerdeSkipSerializingIfOptIsNone
-                            #field_vis #fi: #opt_value_field_type_as_pg_type_read_ts
-                        }
-                    });
-                    quote!{{
+                    let fields_opts_without_primary_key_ts =
+                        gen_fields_named_without_primary_key_with_comma_ts(
+                            &|el: &SynFieldWrapper| -> Ts2 {
+                                let field_vis = &el.vis;
+                                let fi = &el.ident;
+                                let opt_value_ft_as_pg_type_read_ts = gen_opt_type_decl_ts(
+                                    &gen_value_decl_ts(&gen_as_pg_type_read_ts(&el.type0)),
+                                );
+                                quote! {
+                                    #FieldAttrSerdeSkipSerializingIfOptIsNone
+                                    #field_vis #fi: #opt_value_ft_as_pg_type_read_ts
+                                }
+                            },
+                        );
+                    quote! {{
                         #field_opt_primary_key_ts,
                         #fields_opts_without_primary_key_ts
                     }}
-                }
-            );
+                });
             quote! {
                 #AllowClippyArbitrarySourceItemOrdering
                 #ts_f80f1f3e
@@ -1505,22 +1496,22 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let impl_ident_read_ts = {
             let fn_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts = {
                 let decl_primary_key_ts = {
-                    let opt_value_primary_key_field_type_as_primary_key_ts = gen_opt_type_decl_ts(
-                        &gen_value_decl_ts(&primary_key_field_type_as_pg_type_read_ucc),
+                    let opt_value_primary_key_ft_as_primary_key_ts = gen_opt_type_decl_ts(
+                        &gen_value_decl_ts(&primary_key_ft_as_pg_type_read_ucc),
                     );
                     quote! {
-                        let mut #primary_key_fi: #opt_value_primary_key_field_type_as_primary_key_ts = None;
+                        let mut #primary_key_fi: #opt_value_primary_key_ft_as_primary_key_ts = None;
                     }
                 };
                 let decl_without_primary_key_ts =
                     gen_fields_named_without_primary_key_without_comma_ts(
                         &|el: &SynFieldWrapper| {
                             let fi = &el.ident;
-                            let opt_value_field_type_as_pg_type_read_ts = gen_opt_type_decl_ts(
+                            let opt_value_ft_as_pg_type_read_ts = gen_opt_type_decl_ts(
                                 &gen_value_decl_ts(&gen_as_pg_type_read_ts(&el.type0)),
                             );
                             quote! {
-                                let mut #fi: #opt_value_field_type_as_pg_type_read_ts = None;
+                                let mut #fi: #opt_value_ft_as_pg_type_read_ts = None;
                             }
                         },
                     );
@@ -1529,7 +1520,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let primary_key_fi_string_dq_ts = dq_ts(&primary_key_fi);
                     quote! {
                         #ident_select_ucc::#primary_key_fi_ucc_ts(_) => match sqlx::Row::try_get::<
-                            #primary_key_field_type_as_pg_type_read_ucc,
+                            #primary_key_ft_as_pg_type_read_ucc,
                             #RefStr
                         >(
                             value,
@@ -1613,24 +1604,19 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         True,
                     }
                     let gen_field_ts =
-                        |fi: &dyn ToTokens,
-                         field_type: &dyn ToTokens,
-                         wrap_into_opt: &WrapIntoOpt| {
-                            let field_type_ts = match &wrap_into_opt {
-                                WrapIntoOpt::False => gen_as_pg_type_read_only_ids_ts(&field_type),
-                                WrapIntoOpt::True => gen_opt_type_decl_ts(
-                                    &gen_as_pg_type_read_only_ids_ts(&field_type),
-                                ),
+                        |fi: &dyn ToTokens, ft: &dyn ToTokens, wrap_into_opt: &WrapIntoOpt| {
+                            let ft_ts = match &wrap_into_opt {
+                                WrapIntoOpt::False => gen_as_pg_type_read_only_ids_ts(&ft),
+                                WrapIntoOpt::True => {
+                                    gen_opt_type_decl_ts(&gen_as_pg_type_read_only_ids_ts(&ft))
+                                }
                             };
                             quote! {
-                                pub #fi: #field_type_ts
+                                pub #fi: #ft_ts
                             }
                         };
-                    let primary_key_ts = gen_field_ts(
-                        &primary_key_fi,
-                        &primary_key_field_type,
-                        &WrapIntoOpt::False,
-                    );
+                    let primary_key_ts =
+                        gen_field_ts(&primary_key_fi, &primary_key_ft, &WrapIntoOpt::False);
                     let ts = gen_fields_named_without_primary_key_with_comma_ts(
                         &|el: &SynFieldWrapper| {
                             gen_field_ts(&el.ident, &el.type0, &WrapIntoOpt::True)
@@ -1648,17 +1634,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let impl_sqlx_row_for_ident_read_only_ids_ts = {
             let undescore_underscore_row = quote! {__row};
-            let where_field_types_ts = gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| {
-                let field_type = &el.type0;
+            let where_fts_ts = gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| {
+                let ft = &el.type0;
                 let el_syn_field_ty_as_pg_type_read_only_ids_ts =
-                    gen_as_pg_type_read_only_ids_ts(&field_type);
+                    gen_as_pg_type_read_only_ids_ts(&ft);
                 quote! {
                     #el_syn_field_ty_as_pg_type_read_only_ids_ts: ::sqlx::decode::Decode<'lifetime, R::Database>
                 }
             });
             let primary_key_ts = {
                 let el_syn_field_ty_as_pg_type_read_only_ids_ts =
-                    gen_as_pg_type_read_only_ids_ts(&primary_key_field_type);
+                    gen_as_pg_type_read_only_ids_ts(&primary_key_ft);
                 let fi_dq_ts = dq_ts(&primary_key_fi);
                 quote! {
                     let #primary_key_fi = match sqlx::Row::try_get::<#el_syn_field_ty_as_pg_type_read_only_ids_ts, &str>(
@@ -1675,10 +1661,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let fields_init_ts =
                 gen_fields_named_without_primary_key_without_comma_ts(&|el: &SynFieldWrapper| {
                     let fi = &el.ident;
-                    let field_type = &el.type0;
+                    let ft = &el.type0;
                     let fi_dq_ts = dq_ts(&quote! {#fi});
                     let el_syn_field_ty_as_pg_type_read_only_ids_ts =
-                        gen_as_pg_type_read_only_ids_ts(&field_type);
+                        gen_as_pg_type_read_only_ids_ts(&ft);
                     quote! {
                         let #fi = sqlx::Row::try_get::<
                             #el_syn_field_ty_as_pg_type_read_only_ids_ts,
@@ -1694,7 +1680,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl<'lifetime, R: ::sqlx::Row<Database = sqlx::Postgres>> ::sqlx::FromRow<'lifetime, R> for #ident_read_only_ids_ucc
                 where
                     &'lifetime ::std::primitive::str: ::sqlx::ColumnIndex<R>,
-                    #where_field_types_ts
+                    #where_fts_ts
                 {
                     fn from_row(#undescore_underscore_row: &'lifetime R) -> ::sqlx::Result<Self> {
                         #primary_key_ts
@@ -1728,7 +1714,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let ident_update_try_new_er_ucc = SelfUpdateTryNewErUcc::from_tokens(&ident);
     let ident_update_for_query_ucc = SelfUpdateForQueryUcc::from_tokens(&ident);
     let ident_update_ts = {
-        let gen_opt_value_field_type_as_pg_type_update_ts = |syn_type: &Type| {
+        let gen_opt_value_ft_as_pg_type_update_ts = |syn_type: &Type| {
             let path_value_ts = {
                 let value = format!("{PgCrudSc}::{ValueUcc}");
                 value.parse::<Ts2>().expect("dbdbb7f2")
@@ -1741,15 +1727,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 gen_fields_named_without_primary_key_with_comma_ts(
                     &|el: &SynFieldWrapper| -> Ts2 {
                         let fi = &el.ident;
-                        let opt_value_field_type_as_pg_type_update_ts =
-                            gen_opt_value_field_type_as_pg_type_update_ts(&el.type0);
+                        let opt_value_ft_as_pg_type_update_ts =
+                            gen_opt_value_ft_as_pg_type_update_ts(&el.type0);
                         quote! {
-                            #fi: #opt_value_field_type_as_pg_type_update_ts
+                            #fi: #opt_value_ft_as_pg_type_update_ts
                         }
                     },
                 );
             quote! {
-                #primary_key_fi: #primary_key_field_type_update_ts,
+                #primary_key_fi: #primary_key_ft_update_ts,
                 #fields_named_without_primary_key_ts
             }
         };
@@ -1827,9 +1813,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             fields_len,
             &|syn_ident: &Ident, syn_type: &Type| {
                 if syn_ident == primary_key_fi {
-                    quote! {#primary_key_field_type_update_ts}
+                    quote! {#primary_key_ft_update_ts}
                 } else {
-                    gen_opt_value_field_type_as_pg_type_update_ts(syn_type)
+                    gen_opt_value_ft_as_pg_type_update_ts(syn_type)
                 }
             },
         );
@@ -1880,7 +1866,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &{
                     let fields_named_without_primary_key_ts = gen_fields_named_without_primary_key_with_comma_ts(&|el: &SynFieldWrapper| -> Ts2 {
                         let fi = &el.ident;
-                        let opt_value_field_type_as_pg_type_update_for_query_ts = {
+                        let opt_value_ft_as_pg_type_update_for_query_ts = {
                             let path_value_ts = {
                                 let value = format!("{PgCrudSc}::{ValueUcc}");
                                 value.parse::<Ts2>().expect("2b09d4ae")
@@ -1888,10 +1874,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let syn_type_as_pg_type_update_for_query_ts = gen_as_pg_type_update_for_query_ts(&el.type0);
                             gen_opt_type_decl_ts(&quote! {#path_value_ts<#syn_type_as_pg_type_update_for_query_ts>})
                         };
-                        quote! {#fi: #opt_value_field_type_as_pg_type_update_for_query_ts}
+                        quote! {#fi: #opt_value_ft_as_pg_type_update_for_query_ts}
                     });
                     quote!{{
-                        #primary_key_fi: #primary_key_field_type_update_for_query_ts,
+                        #primary_key_fi: #primary_key_ft_update_for_query_ts,
                         #fields_named_without_primary_key_ts
                     }}
                 }
@@ -1905,7 +1891,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let update_query_part_primary_key_ts = {
                 quote! {
                     fn #UpdateQueryPartPrimaryKeySc(&self, #IncrSc: &mut u64) -> Result<#StringTs, #PgCrudSc::#QueryPartErUcc> {
-                        match #primary_key_field_type_as_pg_type_ts #UpdateQueryPartSc(
+                        match #primary_key_ft_as_pg_type_ts #UpdateQueryPartSc(
                             &self.#primary_key_fi,
                             "",
                             #ident::#PrimaryKeySc(),
@@ -1923,13 +1909,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let fi = &el.ident;
                     let fi_dq_ts = dq_ts(&fi);
                     let update_query_part_fi_sc = UpdateQueryPartSelfSc::from_tokens(&fi);
-                    let field_type_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
+                    let ft_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
                     quote! {
                         fn #update_query_part_fi_sc(
-                            #ValueSc: &pg_crud::Value<#field_type_as_pg_crud_pg_type_pg_type_ts #UpdateForQueryUcc>,
+                            #ValueSc: &pg_crud::Value<#ft_as_pg_crud_pg_type_pg_type_ts #UpdateForQueryUcc>,
                             #IncrSc: &mut u64
                         ) -> Result<#StringTs, #PgCrudSc::#QueryPartErUcc> {
-                            match #field_type_as_pg_crud_pg_type_pg_type_ts #UpdateQueryPartSc(
+                            match #ft_as_pg_crud_pg_type_pg_type_ts #UpdateQueryPartSc(
                                 &#ValueSc.#ValueSc,
                                 #fi_dq_ts,
                                 #fi_dq_ts,
@@ -1947,7 +1933,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let primary_key_ts = {
                     let primary_key_fi_dq_ts = dq_ts(&primary_key_fi);
                     quote! {
-                        acc_88c91f52.push_str(&match <#primary_key_field_type as pg_crud::PgType>::#SelectOnlyUpdatedIdsQueryPartSc(
+                        acc_88c91f52.push_str(&match <#primary_key_ft as pg_crud::PgType>::#SelectOnlyUpdatedIdsQueryPartSc(
                             &self.#primary_key_fi,
                             #primary_key_fi_dq_ts,
                             incr,
@@ -1962,10 +1948,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let ts = fields_without_primary_key.iter().map(|el: &SynFieldWrapper| {
                     let fi = &el.ident;
                     let fi_dq_ts = dq_ts(&fi);
-                    let field_type_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
+                    let ft_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
                     quote! {
                         if let Some(v_90f79b11) = &self.#fi {
-                            acc_88c91f52.push_str(&match #field_type_as_pg_crud_pg_type_pg_type_ts #SelectOnlyUpdatedIdsQueryPartSc(
+                            acc_88c91f52.push_str(&match #ft_as_pg_crud_pg_type_pg_type_ts #SelectOnlyUpdatedIdsQueryPartSc(
                                 &v_90f79b11.#ValueSc,
                                 #fi_dq_ts,
                                 incr,
@@ -1989,17 +1975,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             };
             let update_handle_ts = gen_from_handle_ts(&ident_update_ucc, &{
-                let primary_key_field_type_as_pg_type_update_for_query_ts =
-                    gen_as_pg_type_update_for_query_ts(&primary_key_field_type);
+                let primary_key_ft_as_pg_type_update_for_query_ts =
+                    gen_as_pg_type_update_for_query_ts(&primary_key_ft);
                 let fields_named_without_primary_key_ts =
                     gen_fields_named_without_primary_key_with_comma_ts(
                         &|el: &SynFieldWrapper| -> Ts2 {
                             let fi = &el.ident;
                             let value_init_ts = gen_import_path_value_init_ts(&{
-                                let field_type_as_pg_type_update_for_query_ts =
+                                let ft_as_pg_type_update_for_query_ts =
                                     gen_as_pg_type_update_for_query_ts(&el.type0);
                                 quote! {
-                                     #field_type_as_pg_type_update_for_query_ts::from(v_0e64c53a.#ValueSc)
+                                     #ft_as_pg_type_update_for_query_ts::from(v_0e64c53a.#ValueSc)
                                 }
                             });
                             quote! {
@@ -2009,7 +1995,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     );
                 quote! {
                     Self {
-                        #primary_key_fi: #primary_key_field_type_as_pg_type_update_for_query_ts::from(#ValueSc.#primary_key_fi),
+                        #primary_key_fi: #primary_key_ft_as_pg_type_update_for_query_ts::from(#ValueSc.#primary_key_fi),
                         #fields_named_without_primary_key_ts
                     }
                 }
@@ -2413,10 +2399,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
                 location_attr.expect("d1003b2e").to_attr_view_ts()
             };
-            let field_type = &field.ty;
+            let ft = &field.ty;
             quote! {
                 #location_attr
-                #fi: #field_type
+                #fi: #ft
             }
         });
         quote! {
@@ -2992,7 +2978,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         quote! {Some(#ts)}
                     }
                     CreateOrUpdateOrDeleteMany::Delete => gen_sqlx_row_try_get_primary_key_ts(
-                        &primary_key_field_type_as_pg_type_read_ucc,
+                        &primary_key_ft_as_pg_type_read_ucc,
                         &quote! {Some(v_69ecb6a9)},
                         &gen_drop_rows_match_pg_transaction_rollback_await_handle_ts(
                             &operation_d1960edc,
@@ -3023,7 +3009,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             wrap_into_value_ts(&gen_fetch_one_ts(
                 &ExecutorSc,
                 &gen_sqlx_row_try_get_primary_key_ts(
-                    &quote! {#primary_key_field_type_as_pg_type_read_ucc},
+                    &quote! {#primary_key_ft_as_pg_type_read_ucc},
                     &quote! {v_69ecb6a9},
                     &gen_match_pg_transaction_rollback_await_ts(
                         &operation_c85ff6d4,
@@ -3078,10 +3064,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let select_only_ids_query_part_init_ts = fields.iter().map(|el: &SynFieldWrapper| {
             let fi = &el.ident;
             let fi_dq_ts = dq_ts(&fi);
-            let field_type_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
-            let ts_00878df8 = gen_operation_er_init_eprintln_res_creation_ts(operation, &query_part_syn_vrt_wrapper, file!(), line!(), column!());
+            let ft_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
+            let ts_00878df8 = gen_operation_er_init_eprintln_res_creation_ts(
+                operation,
+                &query_part_syn_vrt_wrapper,
+                file!(),
+                line!(),
+                column!(),
+            );
             quote! {
-                match #field_type_as_pg_crud_pg_type_pg_type_ts #SelectOnlyIdsQueryPartSc(#fi_dq_ts) {
+                match #ft_as_pg_crud_pg_type_pg_type_ts #SelectOnlyIdsQueryPartSc(#fi_dq_ts) {
                     Ok(v_aa341baf) => {
                         acc_a35168d8.push_str(&v_aa341baf);
                     },
@@ -3634,7 +3626,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &{
                     let pub_handle_primary_key_fi_primary_key_inner_type_handle_ts =
                         gen_pub_handle_primary_key_fi_primary_key_inner_type_handle_ts(
-                            &SelfReadUcc::from_type_last_segment(primary_key_field_type),
+                            &SelfReadUcc::from_type_last_segment(primary_key_ft),
                         );
                     quote! {{
                         #pub_handle_primary_key_fi_primary_key_inner_type_handle_ts,
@@ -3798,7 +3790,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &quote! {{
                         #NotUniquePrimaryKeyUcc {
                             #[eo_to_err_string]
-                            #NotUniquePrimaryKeySc: #primary_key_field_type_update_ts,
+                            #NotUniquePrimaryKeySc: #primary_key_ft_update_ts,
                             #[eo_to_err_string]
                             loc: location_lib::loc::Loc,
                         }
@@ -4094,7 +4086,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         );
                     let primary_key_update_assignment_ts = quote! {
                         for el_323f7dfc in &#UpdateForQueryVecSc {
-                            match #primary_key_field_type_as_pg_type_ts #UpdateQueryBindSc(
+                            match #primary_key_ft_as_pg_type_ts #UpdateQueryBindSc(
                                 el_323f7dfc.#primary_key_fi,
                                 #QuerySc,
                             ) {
@@ -4312,7 +4304,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             },
                         );
                     let binded_query_primary_key_modification_ts = quote! {
-                        match #primary_key_field_type_as_pg_type_ts #UpdateQueryBindSc(
+                        match #primary_key_ft_as_pg_type_ts #UpdateQueryBindSc(
                             #UpdateForQuerySc.#primary_key_fi,
                             #QuerySc,
                         ) {
@@ -4450,7 +4442,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts =
                 gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
                     &operation,
-                    &vec_primary_key_field_type_read_ts,
+                    &vec_primary_key_ft_read_ts,
                     &type_vrts_from_req_res_syn_vrts,
                 );
             {
@@ -4501,7 +4493,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             impl_ident_vec_ts.push(gen_try_operation_ts(
                 &operation,
                 &type_vrts_from_req_res_syn_vrts,
-                &vec_primary_key_field_type_read_ts,
+                &vec_primary_key_ft_read_ts,
                 &ValueSc,
             ));
             quote! {
@@ -4538,7 +4530,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &operation,
                 &{
                     let ts = gen_pub_handle_primary_key_fi_primary_key_inner_type_handle_ts(
-                        &SelfReadUcc::from_type_last_segment(primary_key_field_type),
+                        &SelfReadUcc::from_type_last_segment(primary_key_ft),
                     );
                     quote! {{#ts}}
                 },
@@ -4556,7 +4548,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts =
                 gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
                     &operation,
-                    &primary_key_field_type_as_pg_type_read_ucc,
+                    &primary_key_ft_as_pg_type_read_ucc,
                     &type_vrts_from_req_res_syn_vrts,
                 );
             {
@@ -4613,7 +4605,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             impl_ident_vec_ts.push(gen_try_operation_ts(
                 &operation,
                 &type_vrts_from_req_res_syn_vrts,
-                &primary_key_field_type_as_pg_type_read_ucc,
+                &primary_key_ft_as_pg_type_read_ucc,
                 &ValueSc,
             ));
             quote! {
@@ -4740,9 +4732,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let ident_create_default_fields_init_without_primary_key_ts =
             gen_fields_named_without_primary_key_with_comma_ts(&|el: &SynFieldWrapper| {
                 let fi = &el.ident;
-                let field_type_as_pg_type_create_ts = gen_as_pg_type_create_ts(&el.type0);
+                let ft_as_pg_type_create_ts = gen_as_pg_type_create_ts(&el.type0);
                 quote! {
-                    #fi: <#field_type_as_pg_type_create_ts as pg_crud::DefaultOptSomeVecOneEl>::default_opt_some_vec_one_el()
+                    #fi: <#ft_as_pg_type_create_ts as pg_crud::DefaultOptSomeVecOneEl>::default_opt_some_vec_one_el()
                 }
             });
         let fields_none_init_ts =
@@ -4754,13 +4746,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let select_default_all_with_max_page_size_not_empty_unique_vec_ts = {
             let ts = gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| {
                 let fi = &el.ident;
-                let field_type = &el.type0;
+                let ft = &el.type0;
                 let fi_ucc = ToTokensToUccTs::case_or_panic(&fi);
                 quote! {
                     #ident_select_ucc::#fi_ucc(
                         <
                             <
-                                #field_type
+                                #ft
                                 as
                                 pg_crud::PgType
                             >::Select
@@ -4776,11 +4768,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 ]).expect("5e82ac66");
             }
         };
-        let gen_primary_key_field_type_as_pg_type_primary_key_method_call_ts =
+        let gen_primary_key_ft_as_pg_type_primary_key_method_call_ts =
             |method_ts: &dyn ToTokens, params_ts: &dyn ToTokens| {
                 quote! {
                     <
-                        #primary_key_field_type
+                        #primary_key_ft
                         as
                         pg_crud::PgTypePrimaryKey
                     >::#method_ts(
@@ -4788,23 +4780,23 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     )
                 }
             };
-        let primary_key_field_type_read_into_table_type_el_primary_key_fi_clone_ts =
-            gen_primary_key_field_type_as_pg_type_primary_key_method_call_ts(
+        let primary_key_ft_read_into_table_type_el_primary_key_fi_clone_ts =
+            gen_primary_key_ft_as_pg_type_primary_key_method_call_ts(
                 &ReadIntoTableTypeSc,
                 &quote! {el_adcc8db3},
             );
         let (
-            primary_key_field_type_read_only_ids_into_read_el_fdc88812_primary_key_fi_ts,
-            primary_key_field_type_read_only_ids_into_read_el_43ab7fb5_primary_key_fi_ts,
-            primary_key_field_type_read_only_ids_into_read_el_bf356906_primary_key_fi_ts,
-            primary_key_field_type_read_only_ids_into_read_el_80a93892_primary_key_fi_ts,
-            primary_key_field_type_read_only_ids_into_read_el_adf2b4c4_primary_key_fi_ts,
-            primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_fi_ts,
-            primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_fi_ts_937c5af3,
-            primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_fi_ts,
+            primary_key_ft_read_only_ids_into_read_el_fdc88812_primary_key_fi_ts,
+            primary_key_ft_read_only_ids_into_read_el_43ab7fb5_primary_key_fi_ts,
+            primary_key_ft_read_only_ids_into_read_el_bf356906_primary_key_fi_ts,
+            primary_key_ft_read_only_ids_into_read_el_80a93892_primary_key_fi_ts,
+            primary_key_ft_read_only_ids_into_read_el_adf2b4c4_primary_key_fi_ts,
+            primary_key_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_fi_ts,
+            primary_key_ft_read_only_is_into_read_read_only_ids_el_primary_key_fi_ts_937c5af3,
+            primary_key_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_fi_ts,
         ) = {
             let gen_read_only_ids_into_read_ts = |ts: &dyn ToTokens| {
-                gen_primary_key_field_type_as_pg_type_primary_key_method_call_ts(
+                gen_primary_key_ft_as_pg_type_primary_key_method_call_ts(
                     &ReadOnlyIdsIntoReadSc,
                     &ts,
                 )
@@ -4824,14 +4816,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 ),
             )
         };
-        let primary_key_field_type_as_pg_type_update_as_pg_type_primary_key_read_only_ids_into_update_ts = {
-            let method_call_ts = gen_primary_key_field_type_as_pg_type_primary_key_method_call_ts(
+        let primary_key_ft_as_pg_type_update_as_pg_type_primary_key_read_only_ids_into_update_ts = {
+            let method_call_ts = gen_primary_key_ft_as_pg_type_primary_key_method_call_ts(
                 &ReadOnlyIdsIntoUpdateSc,
                 &quote! {read_only_ids_el_937c5af3.#primary_key_fi},
             );
             quote! {
                 <
-                    #primary_key_field_type
+                    #primary_key_ft
                     as
                     pg_crud::PgType
                 >::Update::from(#method_call_ts)
@@ -4853,13 +4845,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                  should_add_dot_clone: &ShouldAddDotClone| {
                     gen_fields_named_without_primary_key_with_comma_ts(&|el: &SynFieldWrapper| {
                         let fi_931fabfc = &el.ident;
-                        let field_type_714e077b = &el.type0;
+                        let ft_714e077b = &el.type0;
                         let maybe_dot_clone_ts = match &should_add_dot_clone {
                             ShouldAddDotClone::False => Ts2::new(),
                             ShouldAddDotClone::True => quote! {.clone()},
                         };
                         quote! {
-                            #fi_931fabfc: <#field_type_714e077b as pg_crud::PgTypeTestCases>::read_only_ids_merged_with_create_into_opt_value_read(
+                            #fi_931fabfc: <#ft_714e077b as pg_crud::PgTypeTestCases>::read_only_ids_merged_with_create_into_opt_value_read(
                                 #read_only_ids_ts.#fi_931fabfc #maybe_dot_clone_ts.expect("f967434c"),
                                 #create_ts.#fi_931fabfc #maybe_dot_clone_ts
                             )
@@ -4905,7 +4897,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             quote! {
                 let #CommonReadOnlyIdsReturnedFromCreateOneSc = {
                     let read_only_ids_from_try_create_one = gen_read_only_ids_from_try_create_one_default(&#UrlSc, &table_init).await;
-                    let primary_key_read = #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_fi_ts;
+                    let primary_key_read = #primary_key_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_fi_ts;
                     assert_eq!(
                         #ident_read_ucc {
                             #primary_key_fi: Some(#value_init_ts),
@@ -4943,7 +4935,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let gen_ident_create_ts = |fi: &Ident, ts: &dyn ToTokens| {
             gen_fields_named_without_primary_key_with_comma_ts(&|el: &SynFieldWrapper| {
                 let fi_42fe57c8 = &el.ident;
-                let field_type_f3d6c5c7 = &el.type0;
+                let ft_f3d6c5c7 = &el.type0;
                 if fi == fi_42fe57c8 {
                     quote! {
                         #fi_42fe57c8: #ts
@@ -4951,7 +4943,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 } else {
                     quote! {
                         #fi_42fe57c8: <
-                            <#field_type_f3d6c5c7 as pg_crud::PgType>::Create as pg_crud::DefaultOptSomeVecOneEl
+                            <#ft_f3d6c5c7 as pg_crud::PgType>::Create as pg_crud::DefaultOptSomeVecOneEl
                         >::default_opt_some_vec_one_el()
                     }
                 }
@@ -5055,11 +5047,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     gen_fields_named_without_primary_key_without_comma_ts(
                         &|el0: &SynFieldWrapper| {
                             let fi_10070b70 = &el0.ident;
-                            let field_type_b33f54a9 = &el0.type0;
+                            let ft_b33f54a9 = &el0.type0;
                             if fi == fi_10070b70 {
                                 quote! {
                                     if let Some(v_a5f7e6cd) = &common_read_only_ids_returned_from_create_one.#fi_10070b70 {
-                                        for el_b3522b7d in <#field_type_b33f54a9 as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimal_vec_read_inner(v_a5f7e6cd) {
+                                        for el_b3522b7d in <#ft_b33f54a9 as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimal_vec_read_inner(v_a5f7e6cd) {
                                             for _ in el_b3522b7d {
                                                 acc_458cda9e.push(ident_create_default.clone());
                                             }
@@ -5084,13 +5076,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 gen_fields_named_without_primary_key_with_comma_ts(
                     &|syn_field_wrapper: &SynFieldWrapper| {
                         let fi_5bea122e = &syn_field_wrapper.ident;
-                        let field_type_f7f832df = &syn_field_wrapper.type0;
+                        let ft_f7f832df = &syn_field_wrapper.type0;
                         let value_init_ts =
                             gen_import_path_value_init_ts(&PgCrudDefaultOptSomeVecOneElCall);
                         quote! {
                             #fi_5bea122e: el_f108da5a.#fi_5bea122e.as_ref().map_or_else(
                                 || Some(#value_init_ts),
-                                <#field_type_f7f832df as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el
+                                <#ft_f7f832df as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el
                             )
                         }
                     },
@@ -5128,7 +5120,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             read_only_ids_els_efeed554.iter().map(|el_f108da5a| {
                                 #ident_read_ucc {
                                     #primary_key_fi: <
-                                        #primary_key_field_type as pg_crud::PgTypeTestCases
+                                        #primary_key_ft as pg_crud::PgTypeTestCases
                                     >::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
                                         &el_f108da5a.#primary_key_fi
                                     ),
@@ -5147,12 +5139,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     Some(
                                         gen_pg_type_where_try_new_primary_key(
                                             pg_crud::LogicalOperator::Or,
-                                            read_only_ids_els_efeed554.iter().map(|el_43ab7fb5| #primary_key_field_type_where_ts::Equal(
+                                            read_only_ids_els_efeed554.iter().map(|el_43ab7fb5| #primary_key_ft_where_ts::Equal(
                                                 pg_crud::PgTypeWhereEqual {
                                                     logical_operator: pg_crud::LogicalOperator::Or,
-                                                    #ValueSc: #primary_key_field_type_table_type_ts::new(
-                                                        <#primary_key_field_type as pg_crud::PgType>::into_inner(
-                                                            #primary_key_field_type_read_only_ids_into_read_el_43ab7fb5_primary_key_fi_ts
+                                                    #ValueSc: #primary_key_ft_table_type_ts::new(
+                                                        <#primary_key_ft as pg_crud::PgType>::into_inner(
+                                                            #primary_key_ft_read_only_ids_into_read_el_43ab7fb5_primary_key_fi_ts
                                                         )
                                                     )
                                                 }
@@ -5182,11 +5174,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let create_many_tests_ts = gen_fields_named_without_primary_key_without_comma_ts(
                 &|el: &SynFieldWrapper| {
                     let fi = &el.ident;
-                    let field_type = &el.type0;
+                    let ft = &el.type0;
                     let ident_create_ts_910fa600 =
                         gen_ident_create_content_el_id_ts(fi, &quote! {el_03a4f4ee});
                     quote! {
-                        for el_fce0969c in <#field_type as pg_crud::PgTypeTestCases>::#OptVecCreateSc().unwrap_or(Vec::new())
+                        for el_fce0969c in <#ft as pg_crud::PgTypeTestCases>::#OptVecCreateSc().unwrap_or(Vec::new())
                             .chunks(10)
                             .map(Vec::from)
                         {
@@ -5224,11 +5216,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                     {
                                                         let mut acc_1381c719 = Vec::new();
                                                         for el_bf356906 in &read_only_ids_from_try_create_many {
-                                                            acc_1381c719.push(#primary_key_field_type_as_pg_type_where_ts::Equal(pg_crud::PgTypeWhereEqual {
+                                                            acc_1381c719.push(#primary_key_ft_as_pg_type_where_ts::Equal(pg_crud::PgTypeWhereEqual {
                                                                 logical_operator: pg_crud::LogicalOperator::Or,
                                                                 //todo must use trait type instead
-                                                                #ValueSc: #primary_key_field_type_table_type_ts::new(<#primary_key_field_type as pg_crud::PgType>::into_inner(
-                                                                    #primary_key_field_type_read_only_ids_into_read_el_bf356906_primary_key_fi_ts
+                                                                #ValueSc: #primary_key_ft_table_type_ts::new(<#primary_key_ft as pg_crud::PgType>::into_inner(
+                                                                    #primary_key_ft_read_only_ids_into_read_el_bf356906_primary_key_fi_ts
                                                                 )),
                                                             }));
                                                         }
@@ -5263,16 +5255,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     .await
                                     .expect("716e470e")
                                     .into_iter()
-                                ).collect::<Vec<<#primary_key_field_type as pg_crud::PgType>::Read>>();
+                                ).collect::<Vec<<#primary_key_ft as pg_crud::PgType>::Read>>();
                                 assert_eq!(
                                     read_only_ids_from_try_delete_many,
                                     itertools::Itertools::sorted(
                                         read_only_ids_from_try_create_many
                                         .into_iter()
                                         .map(|el_80a93892| {
-                                            #primary_key_field_type_read_only_ids_into_read_el_80a93892_primary_key_fi_ts
+                                            #primary_key_ft_read_only_ids_into_read_el_80a93892_primary_key_fi_ts
                                         })
-                                    ).collect::<Vec<#primary_key_field_type_as_pg_type_read_ts>>(),
+                                    ).collect::<Vec<#primary_key_ft_as_pg_type_read_ts>>(),
                                     "f58f5572"
                                 );
                                 assert!(
@@ -5285,10 +5277,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                     {
                                                         let mut acc_87ea12c9 = Vec::new();
                                                         for el_a37bca54 in &read_only_ids_from_try_delete_many {
-                                                            acc_87ea12c9.push(#primary_key_field_type_where_ts::Equal(pg_crud::PgTypeWhereEqual {
+                                                            acc_87ea12c9.push(#primary_key_ft_where_ts::Equal(pg_crud::PgTypeWhereEqual {
                                                                 logical_operator: pg_crud::LogicalOperator::Or,
-                                                                #ValueSc: #primary_key_field_type_table_type_ts::new(
-                                                                    <#primary_key_field_type as pg_crud::PgType>::into_inner(el_a37bca54.clone())
+                                                                #ValueSc: #primary_key_ft_table_type_ts::new(
+                                                                    <#primary_key_ft as pg_crud::PgType>::into_inner(el_a37bca54.clone())
                                                                 ),
                                                             }));
                                                         }
@@ -5315,12 +5307,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let create_one_tests_ts = gen_fields_named_without_primary_key_without_comma_ts(
                 &|el: &SynFieldWrapper| {
                     let fi = &el.ident;
-                    let field_type = &el.type0;
+                    let ft = &el.type0;
                     let ident_create_ts_f75e4ef0 =
                         gen_ident_create_content_el_id_ts(fi, &quote! {el_7632d698});
-                    let value_init_ts = gen_import_path_value_init_ts(&primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_fi_ts);
+                    let value_init_ts = gen_import_path_value_init_ts(&primary_key_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_fi_ts);
                     quote! {
-                        for el_7632d698 in <#field_type as pg_crud::PgTypeTestCases>::#OptVecCreateSc().unwrap_or(Vec::new()) {
+                        for el_7632d698 in <#ft as pg_crud::PgTypeTestCases>::#OptVecCreateSc().unwrap_or(Vec::new()) {
                             let table_create_one_cloned = table_create_one.clone();
                             let url_cloned = url.clone();
                             let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
@@ -5340,7 +5332,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     },
                                     gen_ident_try_read_one_handle_primary_key(
                                         &url_cloned,
-                                        #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_fi_ts,
+                                        #primary_key_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_fi_ts,
                                         #select_default_all_with_max_page_size_cloned_clone_ts,
                                         &table_create_one_cloned
                                     )
@@ -5351,15 +5343,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 assert_eq!(
                                     gen_try_delete_one_handle(
                                         &url_cloned,
-                                        #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_fi_ts,
+                                        #primary_key_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_fi_ts,
                                         &table_create_one_cloned
                                     ).await.expect("20d5a40a"),
-                                    #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_fi_ts,
+                                    #primary_key_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_fi_ts,
                                     "4f563faf"
                                 );
                                 gen_check_no_rows_returned_from_ident_try_read_one_handle_primary_key(
                                     &url_cloned,
-                                    #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_fi_ts,
+                                    #primary_key_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_fi_ts,
                                     select_default_all_with_max_page_size_cloned,
                                     &table_create_one_cloned,
                                 ).await;
@@ -5378,14 +5370,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &table_7e35b1ce
                     ).await;
                     #ts
-                    let _: #primary_key_field_type_as_pg_type_read_ts = gen_try_delete_one_handle(
+                    let _: #primary_key_ft_as_pg_type_read_ts = gen_try_delete_one_handle(
                         &url_cloned,
-                        #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_fi_ts,
+                        #primary_key_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_fi_ts,
                         &table_7e35b1ce
                     ).await.expect("93b4bf61");
                     gen_check_no_rows_returned_from_ident_try_read_one_handle_primary_key(
                         &url_cloned,
-                        #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_fi_ts,
+                        #primary_key_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_fi_ts,
                         select_default_all_with_max_page_size_cloned,
                         &table_7e35b1ce,
                     ).await;
@@ -5403,10 +5395,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     Some(
                                         gen_pg_type_where_try_new_primary_key(
                                             pg_crud::LogicalOperator::Or,
-                                            std::iter::repeat_with(|| #primary_key_field_type_as_pg_type_where_ts::Equal(
+                                            std::iter::repeat_with(|| #primary_key_ft_as_pg_type_where_ts::Equal(
                                                 pg_crud::PgTypeWhereEqual {
                                                     logical_operator: pg_crud::LogicalOperator::Or,
-                                                    #ValueSc: #primary_key_field_type_table_type_ts::new(
+                                                    #ValueSc: #primary_key_ft_table_type_ts::new(
                                                         uuid::Uuid::new_v4()
                                                     )
                                                 }
@@ -5462,12 +5454,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         gen_pg_type_where_try_new_primary_key(
                                             pg_crud::LogicalOperator::Or,
                                             read_only_ids_from_try_create_many.iter().map(|el_adf2b4c4| {
-                                                #primary_key_field_type_where_ts::Equal(
+                                                #primary_key_ft_where_ts::Equal(
                                                     pg_crud::PgTypeWhereEqual {
                                                         logical_operator: pg_crud::LogicalOperator::Or,
-                                                        #ValueSc: #primary_key_field_type_table_type_ts::new(
-                                                            <#primary_key_field_type as pg_crud::PgType>::into_inner(
-                                                                #primary_key_field_type_read_only_ids_into_read_el_adf2b4c4_primary_key_fi_ts
+                                                        #ValueSc: #primary_key_ft_table_type_ts::new(
+                                                            <#primary_key_ft as pg_crud::PgType>::into_inner(
+                                                                #primary_key_ft_read_only_ids_into_read_el_adf2b4c4_primary_key_fi_ts
                                                             )
                                                         ),
                                                     },
@@ -5499,17 +5491,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             .await
                             .expect("d5c23a9d")
                             .into_iter()
-                        ).collect::<Vec<<#primary_key_field_type as pg_crud::PgType>::Read>>();
+                        ).collect::<Vec<<#primary_key_ft as pg_crud::PgType>::Read>>();
                         assert_eq!(
                             read_only_ids_from_try_delete_many,
                             itertools::Itertools::sorted(
                                 read_only_ids_from_try_create_many
                                 .into_iter()
                                 .map(|el_fdc88812| {
-                                    #primary_key_field_type_read_only_ids_into_read_el_fdc88812_primary_key_fi_ts
-                                }).collect::<Vec<<#primary_key_field_type as pg_crud::PgType>::Read>>()
+                                    #primary_key_ft_read_only_ids_into_read_el_fdc88812_primary_key_fi_ts
+                                }).collect::<Vec<<#primary_key_ft as pg_crud::PgType>::Read>>()
                                 .into_iter()
-                            ).collect::<Vec<<#primary_key_field_type as pg_crud::PgType>::Read>>(),
+                            ).collect::<Vec<<#primary_key_ft as pg_crud::PgType>::Read>>(),
                             "ebbbea6e"
                         );
                         assert!(
@@ -5521,11 +5513,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             pg_crud::LogicalOperator::Or,
                                             read_only_ids_from_try_delete_many
                                             .iter()
-                                            .map(|el_1e9c87ce| #primary_key_field_type_where_ts::Equal(
+                                            .map(|el_1e9c87ce| #primary_key_ft_where_ts::Equal(
                                                 pg_crud::PgTypeWhereEqual {
                                                     logical_operator: pg_crud::LogicalOperator::Or,
-                                                    #ValueSc: #primary_key_field_type_table_type_ts::new(
-                                                        <#primary_key_field_type as pg_crud::PgType>::into_inner(
+                                                    #ValueSc: #primary_key_ft_table_type_ts::new(
+                                                        <#primary_key_ft as pg_crud::PgType>::into_inner(
                                                             el_1e9c87ce.clone()
                                                         )
                                                     ),
@@ -5563,7 +5555,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             vec![
                                 #ident_read_ucc {
                                     #primary_key_fi: <
-                                        #primary_key_field_type
+                                        #primary_key_ft
                                         as
                                         pg_crud::PgTypeTestCases
                                     >::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
@@ -5582,23 +5574,23 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         );
                     }
                 };
-            let gen_opt_vec_create_call_unwrap_or_vec_ts = |_: &Ident, field_type: &Type| {
+            let gen_opt_vec_create_call_unwrap_or_vec_ts = |_: &Ident, ft: &Type| {
                 quote! {
-                    <#field_type as pg_crud::PgTypeTestCases>::#OptVecCreateSc().unwrap_or(Vec::new())
+                    <#ft as pg_crud::PgTypeTestCases>::#OptVecCreateSc().unwrap_or(Vec::new())
                 }
             };
             let gen_opt_vec_create_call_unwrap_or_vec_ident_create_default_fi_clone_ts =
-                |fi: &Ident, field_type: &Type| {
+                |fi: &Ident, ft: &Type| {
                     quote! {
-                        <#field_type as pg_crud::PgTypeTestCases>::#OptVecCreateSc()
+                        <#ft as pg_crud::PgTypeTestCases>::#OptVecCreateSc()
                         .filter(|el_bba28182| !el_bba28182.is_empty())
                         .unwrap_or_else(|| vec![ident_create_default.#fi.clone()])
                     }
                 };
             let gen_pg_type_opt_vec_where_greater_than_test_unwrap_or_else_vec_call_ts =
-                |_: &Ident, field_type: &Type| {
+                |_: &Ident, ft: &Type| {
                     quote! {
-                        <#field_type as #import_path::PgTypeTestCases>::#PgTypeOptVecWhereGreaterThanTestSc()
+                        <#ft as #import_path::PgTypeTestCases>::#PgTypeOptVecWhereGreaterThanTestSc()
                         .map_or_else(Vec::new, Into::into)
                     }
                 };
@@ -5610,8 +5602,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     gen_fields_named_without_primary_key_without_comma_ts(
                         &|el: &SynFieldWrapper| {
                             let fi = &el.ident;
-                            let field_type = &el.type0;
-                            let method_call_ts = gen_method_call_ts(fi, field_type);
+                            let ft = &el.type0;
+                            let method_call_ts = gen_method_call_ts(fi, ft);
                             let table_test_name_fi_ts = gen_table_test_name_fi_ts(test_name, fi);
                             let ident_create_ts_013035e1 = gen_create_ts(fi);
                             let ts = gen_ts(el);
@@ -5641,12 +5633,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                                     gen_pg_type_where_try_new_primary_key(
                                                                         pg_crud::LogicalOperator::Or,
                                                                         vec![
-                                                                            #primary_key_field_type_where_ts::Equal(
+                                                                            #primary_key_ft_where_ts::Equal(
                                                                                 pg_crud::PgTypeWhereEqual {
                                                                                     logical_operator: pg_crud::LogicalOperator::Or,
-                                                                                    #ValueSc: #primary_key_field_type_table_type_ts::new(
-                                                                                        <#primary_key_field_type as pg_crud::PgType>::into_inner(
-                                                                                            #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_fi_ts
+                                                                                    #ValueSc: #primary_key_ft_table_type_ts::new(
+                                                                                        <#primary_key_ft as pg_crud::PgType>::into_inner(
+                                                                                            #primary_key_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_fi_ts
                                                                                         )
                                                                                     )
                                                                                 }
@@ -5664,10 +5656,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             .await
                                             .expect("338bcf89")
                                             .into_iter()
-                                        ).collect::<Vec<<#primary_key_field_type as pg_crud::PgType>::Read>>();
+                                        ).collect::<Vec<<#primary_key_ft as pg_crud::PgType>::Read>>();
                                         assert_eq!(
                                             read_only_ids_from_try_delete_many,
-                                            vec![#primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_fi_ts],
+                                            vec![#primary_key_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_fi_ts],
                                             "9fc29fa5"
                                         );
                                         assert!(
@@ -5678,11 +5670,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                         gen_pg_type_where_try_new_primary_key(
                                                             pg_crud::LogicalOperator::Or,
                                                             vec![
-                                                                #primary_key_field_type_where_ts::Equal(pg_crud::PgTypeWhereEqual {
+                                                                #primary_key_ft_where_ts::Equal(pg_crud::PgTypeWhereEqual {
                                                                     logical_operator: pg_crud::LogicalOperator::Or,
-                                                                    #ValueSc: #primary_key_field_type_table_type_ts::new(
-                                                                        <#primary_key_field_type as pg_crud::PgType>::into_inner(
-                                                                            #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_fi_ts
+                                                                    #ValueSc: #primary_key_ft_table_type_ts::new(
+                                                                        <#primary_key_ft as pg_crud::PgType>::into_inner(
+                                                                            #primary_key_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_fi_ts
                                                                         )
                                                                     )
                                                                 })
@@ -5708,7 +5700,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     gen_pg_type_where_try_new_primary_key(
                         pg_crud::LogicalOperator::And,
                         vec![
-                            <#primary_key_field_type as pg_crud::PgTypeTestCases>::read_only_ids_merged_with_create_into_where_equal(
+                            <#primary_key_ft as pg_crud::PgTypeTestCases>::read_only_ids_merged_with_create_into_where_equal(
                                 read_only_ids_returned_from_create_one.#primary_key_fi,
                                 #PgCrudDefaultOptSomeVecOneElCall
                             )
@@ -5731,7 +5723,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
                                     &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
                                         let fi_4fdece29 = &el0.ident;
-                                        let field_type_5f626ae9 = &el0.type0;
+                                        let ft_5f626ae9 = &el0.type0;
                                         if fi_4fdece29 == primary_key_fi {
                                             some_primary_key_where_init_ts.clone()
                                         } else if fi_4fdece29 == fi {
@@ -5741,7 +5733,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             EqualOrEqualUsingFields::EqualUsingFields => &ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc
                                         };
                                                 quote! {
-                                                    <#field_type_5f626ae9 as pg_crud::PgTypeTestCases>::#method_ts(
+                                                    <#ft_5f626ae9 as pg_crud::PgTypeTestCases>::#method_ts(
                                                         read_only_ids_returned_from_create_one.#fi_4fdece29.clone().expect("11c3740b"),
                                                         ident_create.#fi_4fdece29.clone()
                                                     )
@@ -5777,7 +5769,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             };
             let read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts = gen_read_test_ts(table_read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_name, &gen_opt_vec_create_call_unwrap_or_vec_ts, &gen_ident_create_content_el_ts, &|el: &SynFieldWrapper| {
                 let fi = &el.ident;
-                let field_type = &el.type0;
+                let ft = &el.type0;
                 let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(&gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
                     let fi_4557eb3f = &el0.ident;
                     if fi_4557eb3f == primary_key_fi {
@@ -5789,7 +5781,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 }));
                 quote! {
-                    if let Some(v_d5cd3c70) = <#field_type as pg_crud::PgTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoOptVecWhereEqualToJsonFieldSc(
+                    if let Some(v_d5cd3c70) = <#ft as pg_crud::PgTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoOptVecWhereEqualToJsonFieldSc(
                         read_only_ids_returned_from_create_one.#fi.clone().expect("65cef584"),
                         ident_create.#fi.clone()
                     ) {
@@ -5805,7 +5797,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &gen_ident_create_content_el_ts,
                 &|el: &SynFieldWrapper| {
                     let fi = &el.ident;
-                    let field_type = &el.type0;
+                    let ft = &el.type0;
                     let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
                         &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
                             let fi_65c48d59 = &el0.ident;
@@ -5819,7 +5811,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }),
                     );
                     quote! {
-                        if let Some(v_b02d763d) = <#field_type as pg_crud::PgTypeTestCases>::#CreateIntoPgTypeOptVecWhereDimOneEqualSc(
+                        if let Some(v_b02d763d) = <#ft as pg_crud::PgTypeTestCases>::#CreateIntoPgTypeOptVecWhereDimOneEqualSc(
                             ident_create.#fi.clone()
                         ) {
                             for el_39d1fb5d in v_b02d763d.into_vec() {
@@ -5840,7 +5832,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 },
                 &|el: &SynFieldWrapper| {
                     let fi = &el.ident;
-                    let field_type = &el.type0;
+                    let ft = &el.type0;
                     let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(&gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
                         let fi_79ff8c6e = &el0.ident;
                         if fi_79ff8c6e == primary_key_fi {
@@ -5852,7 +5844,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     }));
                     quote! {
-                        if let Some(v_60baba1f) = <#field_type as pg_crud::PgTypeTestCases>::#ReadOnlyIdsMergedWithTableTypeIntoPgTypeOptWhereGreaterThanSc(
+                        if let Some(v_60baba1f) = <#ft as pg_crud::PgTypeTestCases>::#ReadOnlyIdsMergedWithTableTypeIntoPgTypeOptWhereGreaterThanSc(
                             #ElSc.vrt,
                             read_only_ids_returned_from_create_one.#fi.clone().expect("c8d34556"),
                             #ElSc.greater_than,
@@ -5878,7 +5870,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &gen_ident_create_content_el_ts,
                             &|el: &SynFieldWrapper| {
                                 let fi = &el.ident;
-                                let field_type = &el.type0;
+                                let ft = &el.type0;
                                 let assert_eq_ts =
                                     gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
                                         &gen_fields_named_with_comma_ts(
@@ -5897,7 +5889,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         ),
                                     );
                                 quote! {
-                                    if let Some(v_bb67b871) = <#field_type as pg_crud::PgTypeTestCases>::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc(
+                                    if let Some(v_bb67b871) = <#ft as pg_crud::PgTypeTestCases>::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc(
                                         read_only_ids_returned_from_create_one.#fi.clone().expect("2ed000a5"),
                                         ident_create.#fi.clone()
                                     ) {
@@ -5922,7 +5914,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &gen_ident_create_content_el_ts,
                 &|el: &SynFieldWrapper| {
                     let fi = &el.ident;
-                    let field_type = &el.type0;
+                    let ft = &el.type0;
                     let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
                         &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
                             let fi_bffc985c = &el0.ident;
@@ -5936,7 +5928,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }),
                     );
                     quote! {
-                        if let Some(v_f825e068) = <#field_type as pg_crud::PgTypeTestCases>::#CreateIntoPgJsonTypeOptVecWhereLengthEqualSc(
+                        if let Some(v_f825e068) = <#ft as pg_crud::PgTypeTestCases>::#CreateIntoPgJsonTypeOptVecWhereLengthEqualSc(
                             ident_create.#fi.clone()
                         ) {
                             for el_c09ef321 in v_f825e068.into_vec() {
@@ -5952,7 +5944,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &gen_ident_create_content_el_ts,
                 &|el: &SynFieldWrapper| {
                     let fi = &el.ident;
-                    let field_type = &el.type0;
+                    let ft = &el.type0;
                     let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
                         &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
                             let fi_9464d51b = &el0.ident;
@@ -5966,7 +5958,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }),
                     );
                     quote! {
-                        if let Some(v_cd4aa374) = <#field_type as pg_crud::PgTypeTestCases>::#CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc(
+                        if let Some(v_cd4aa374) = <#ft as pg_crud::PgTypeTestCases>::#CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc(
                             ident_create.#fi.clone()
                         ) {
                             for el_527b546b in v_cd4aa374.into_vec() {
@@ -5992,7 +5984,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &gen_ident_create_content_el_ts,
                             &|el: &SynFieldWrapper| {
                                 let fi = &el.ident;
-                                let field_type = &el.type0;
+                                let ft = &el.type0;
                                 let assert_eq_ts =
                                     gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
                                         &gen_fields_named_with_comma_ts(
@@ -6014,7 +6006,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         ),
                                     );
                                 quote! {
-                                    if let Some(v_0b85c066) = <#field_type as pg_crud::PgTypeTestCases>::#method_ts(
+                                    if let Some(v_0b85c066) = <#ft as pg_crud::PgTypeTestCases>::#method_ts(
                                         read_only_ids_returned_from_create_one.#fi.clone().expect("df01c8ac"),
                                         ident_create.#fi.clone()
                                     ) {
@@ -6083,7 +6075,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 futures::FutureExt::boxed(async move {
                     gen_check_no_rows_returned_from_ident_try_read_one_handle_primary_key(
                         &url_cloned,
-                        #primary_key_field_type_as_pg_type_read_ts::new(uuid::Uuid::new_v4()),
+                        #primary_key_ft_as_pg_type_read_ts::new(uuid::Uuid::new_v4()),
                         #select_default_all_with_max_page_size_cloned_clone_ts,
                         &table_read_one_cloned,
                     ).await;
@@ -6095,7 +6087,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let update_many_only_one_column_tests_ts =
                 gen_fields_named_without_primary_key_without_comma_ts(&|el: &SynFieldWrapper| {
                     let fi = &el.ident;
-                    let field_type = &el.type0;
+                    let ft = &el.type0;
                     let is_fields_without_primary_key_len_greater_than_one =
                         fields_without_primary_key.len() > 1;
                     let maybe_previous_read_ts =
@@ -6109,12 +6101,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 gen_pg_type_where_try_new_primary_key(
                                                     pg_crud::LogicalOperator::Or,
                                                     vec![
-                                                        #primary_key_field_type_as_pg_type_where_ts::Equal(
+                                                        #primary_key_ft_as_pg_type_where_ts::Equal(
                                                             pg_crud::PgTypeWhereEqual {
                                                                 logical_operator: pg_crud::LogicalOperator::Or,
-                                                                value: #primary_key_field_type_table_type_ts::new(
-                                                                    #primary_key_field_type_as_pg_type_ts into_inner(
-                                                                        #primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_fi_ts_937c5af3
+                                                                value: #primary_key_ft_table_type_ts::new(
+                                                                    #primary_key_ft_as_pg_type_ts into_inner(
+                                                                        #primary_key_ft_read_only_is_into_read_read_only_ids_el_primary_key_fi_ts_937c5af3
                                                                     )
                                                                 ),
                                                             }
@@ -6146,9 +6138,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         gen_fields_named_without_primary_key_with_comma_ts(
                             &|syn_field_wrapper: &SynFieldWrapper| {
                                 let fi_867b4800 = &syn_field_wrapper.ident;
-                                let field_type_42b4a146 = &syn_field_wrapper.type0;
+                                let ft_42b4a146 = &syn_field_wrapper.type0;
                                 if fi == fi_867b4800 {
-                                    quote! {#fi_867b4800: Some(<#field_type_42b4a146 as pg_crud::PgTypeTestCases>::update_to_read_only_ids(&update))}
+                                    quote! {#fi_867b4800: Some(<#ft_42b4a146 as pg_crud::PgTypeTestCases>::update_to_read_only_ids(&update))}
                                 } else {
                                     quote! {#fi_867b4800: None}
                                 }
@@ -6174,10 +6166,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 let fi_b9ec9008 = &syn_field_wrapper.ident;
                                 if fi == fi_b9ec9008 {
                                     let value_init_ts = gen_import_path_value_init_ts(&{
-                                        let field_type_0490079a = &syn_field_wrapper.type0;
+                                        let ft_0490079a = &syn_field_wrapper.type0;
                                         quote! {
-                                            <#field_type_0490079a as pg_crud::PgTypeTestCases>::previous_read_merged_with_opt_update_into_read(
-                                                <#field_type_0490079a as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
+                                            <#ft_0490079a as pg_crud::PgTypeTestCases>::previous_read_merged_with_opt_update_into_read(
+                                                <#ft_0490079a as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
                                                     &read_only_ids_el_937c5af3.#fi_b9ec9008.clone().expect("96213542")
                                                 ).expect("bf0d6f55").#ValueSc,
                                                 Some(#UpdateSc.clone())
@@ -6196,7 +6188,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         );
                     let expected_read_many_ts =
                         if is_fields_without_primary_key_len_greater_than_one {
-                            let value_init_ts = gen_import_path_value_init_ts(&primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_fi_ts_937c5af3);
+                            let value_init_ts = gen_import_path_value_init_ts(&primary_key_ft_read_only_is_into_read_read_only_ids_el_primary_key_fi_ts_937c5af3);
                             quote! {
                                 previous_read.into_iter().map(|el_a6bc6b2f| #ident_read_ucc {
                                     #primary_key_fi: Some(#value_init_ts),
@@ -6204,7 +6196,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 }).collect::<Vec<#ident_read_ucc>>()
                             }
                         } else {
-                            let value_init_ts = gen_import_path_value_init_ts(&primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_fi_ts_937c5af3);
+                            let value_init_ts = gen_import_path_value_init_ts(&primary_key_ft_read_only_is_into_read_read_only_ids_el_primary_key_fi_ts_937c5af3);
                             quote! {
                                 vec![
                                     #ident_read_ucc {
@@ -6227,13 +6219,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             acc_9189f86e.push(futures::FutureExt::boxed(async move {
                                 #maybe_previous_read_ts
                                 let update = <
-                                    #field_type
+                                    #ft
                                     as
                                     pg_crud::PgTypeTestCases
                                 >::read_inner_into_update_with_new_or_try_new_unwraped({
                                     let mut index_e0c50b3e: usize = 0;
                                     let mut opt_test_case = None;
-                                    for el_76abae3a in <#field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimal_vec_read_inner(
+                                    for el_76abae3a in <#ft as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimal_vec_read_inner(
                                         &read_only_ids_el_937c5af3.#fi.clone().expect("af7d979d")
                                     ) {
                                         let mut should_break = false;
@@ -6263,7 +6255,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         #ident_update_many_params_ucc {
                                             payload: #ident_update_many_payload_ucc::try_new(vec![
                                                 #ident_update_ucc::try_new(
-                                                    #primary_key_field_type_as_pg_type_update_as_pg_type_primary_key_read_only_ids_into_update_ts,
+                                                    #primary_key_ft_as_pg_type_update_as_pg_type_primary_key_read_only_ids_into_update_ts,
                                                     #ident_update_params_init_without_primary_key_ts
                                                 ).expect("42dc87b3")
                                             ]).expect("69e1bd8a")
@@ -6284,12 +6276,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                     gen_pg_type_where_try_new_primary_key(
                                                         pg_crud::LogicalOperator::Or,
                                                         vec![
-                                                            #primary_key_field_type_where_ts::Equal(
+                                                            #primary_key_ft_where_ts::Equal(
                                                                 pg_crud::PgTypeWhereEqual {
                                                                     logical_operator: pg_crud::LogicalOperator::Or,
-                                                                    #ValueSc: #primary_key_field_type_table_type_ts::new(
-                                                                        <#primary_key_field_type as pg_crud::PgType>::into_inner(
-                                                                            #primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_fi_ts_937c5af3
+                                                                    #ValueSc: #primary_key_ft_table_type_ts::new(
+                                                                        <#primary_key_ft as pg_crud::PgType>::into_inner(
+                                                                            #primary_key_ft_read_only_is_into_read_read_only_ids_el_primary_key_fi_ts_937c5af3
                                                                         )
                                                                     ),
                                                                 }
@@ -6321,12 +6313,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let update_one_only_one_column_tests_ts =
                 gen_fields_named_without_primary_key_without_comma_ts(&|el: &SynFieldWrapper| {
                     let fi = &el.ident;
-                    let field_type = &el.type0;
+                    let ft = &el.type0;
                     let maybe_previous_read_ts = if fields_without_primary_key.len() > 1 {
                         quote! {
                             let previous_read = gen_ident_try_read_one_handle_primary_key(
                                 &url_cloned,
-                                #primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_fi_ts_937c5af3,
+                                #primary_key_ft_read_only_is_into_read_read_only_ids_el_primary_key_fi_ts_937c5af3,
                                 #select_default_all_with_max_page_size_cloned_clone_ts,
                                 &table_update_one_cloned
                             )
@@ -6341,9 +6333,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         gen_fields_named_without_primary_key_with_comma_ts(
                             &|el0: &SynFieldWrapper| {
                                 let fi_6b82a8d0 = &el0.ident;
-                                let field_type_ad043276 = &el0.type0;
+                                let ft_ad043276 = &el0.type0;
                                 if fi == fi_6b82a8d0 {
-                                    quote! {#fi_6b82a8d0: Some(<#field_type_ad043276 as pg_crud::PgTypeTestCases>::update_to_read_only_ids(&update))}
+                                    quote! {#fi_6b82a8d0: Some(<#ft_ad043276 as pg_crud::PgTypeTestCases>::update_to_read_only_ids(&update))}
                                 } else {
                                     quote! {#fi_6b82a8d0: None}
                                 }
@@ -6366,16 +6358,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         gen_fields_named_without_primary_key_with_comma_ts(
                             &|el0: &SynFieldWrapper| {
                                 let fi_8c7d4975 = &el0.ident;
-                                let field_type_09e184c3 = &el0.type0;
+                                let ft_09e184c3 = &el0.type0;
                                 if fi == fi_8c7d4975 {
                                     let value_init_ts = gen_import_path_value_init_ts(&quote! {
                                         <
-                                            #field_type_09e184c3
+                                            #ft_09e184c3
                                             as
                                             pg_crud::PgTypeTestCases
                                         >::previous_read_merged_with_opt_update_into_read(
                                             <
-                                                #field_type_09e184c3
+                                                #ft_09e184c3
                                                 as
                                                 pg_crud::PgTypeTestCases
                                             >::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
@@ -6394,7 +6386,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 }
                             },
                         );
-                    let value_init_ts = gen_import_path_value_init_ts(&primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_fi_ts_937c5af3);
+                    let value_init_ts = gen_import_path_value_init_ts(&primary_key_ft_read_only_is_into_read_read_only_ids_el_primary_key_fi_ts_937c5af3);
                     quote! {
                         for (index_26824592, read_only_ids_el_937c5af3) in gen_read_only_ids_els_8a1ef027(
                             &url,
@@ -6408,13 +6400,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             acc_9189f86e.push(futures::FutureExt::boxed(async move {
                                 #maybe_previous_read_ts
                                 let update = <
-                                    #field_type
+                                    #ft
                                     as
                                     pg_crud::PgTypeTestCases
                                 >::read_inner_into_update_with_new_or_try_new_unwraped({
                                     let mut index_e0d2f9db: usize = 0;
                                     let mut opt_test_case = None;
-                                    for el_3a9a65ee in <#field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimal_vec_read_inner(
+                                    for el_3a9a65ee in <#ft as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimal_vec_read_inner(
                                         &read_only_ids_el_937c5af3.#fi.clone().expect("c4d98a71")
                                     ) {
                                         let mut should_break = false;
@@ -6441,7 +6433,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         &url_cloned,
                                         #ident_update_one_params_ucc {
                                             payload: #ident_update_ucc::try_new(
-                                                #primary_key_field_type_as_pg_type_update_as_pg_type_primary_key_read_only_ids_into_update_ts,
+                                                #primary_key_ft_as_pg_type_update_as_pg_type_primary_key_read_only_ids_into_update_ts,
                                                 #ident_update_params_init_without_primary_key_ts
                                             ).expect("0e5d65a5")//todo add column ident
                                         },
@@ -6456,7 +6448,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     },
                                     gen_ident_try_read_one_handle_primary_key(
                                         &url_cloned,
-                                        #primary_key_field_type_read_only_is_into_read_read_only_ids_el_primary_key_fi_ts_937c5af3,
+                                        #primary_key_ft_read_only_is_into_read_read_only_ids_el_primary_key_fi_ts_937c5af3,
                                         select_default_all_with_max_page_size_cloned,
                                         &table_update_one_cloned
                                     )
@@ -6481,10 +6473,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         #primary_key_fi: Some(
                                             gen_pg_type_where_try_new_primary_key(
                                                 pg_crud::LogicalOperator::Or,
-                                                std::iter::repeat_with(|| #primary_key_field_type_as_pg_type_where_ts::Equal(
+                                                std::iter::repeat_with(|| #primary_key_ft_as_pg_type_where_ts::Equal(
                                                     pg_crud::PgTypeWhereEqual {
                                                         logical_operator: pg_crud::LogicalOperator::Or,
-                                                        value: #primary_key_field_type_table_type_ts::new(
+                                                        value: #primary_key_ft_table_type_ts::new(
                                                             uuid::Uuid::new_v4()
                                                         )
                                                     }
@@ -6518,8 +6510,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             };
             let test_delete_many_by_primary_keys_ts = {
                 let ts = add_create_one_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
-                    let primary_key_field_type_read_only_ids_into_table_type_el_primary_key_fi_clone_ts =
-                        gen_primary_key_field_type_as_pg_type_primary_key_method_call_ts(
+                    let primary_key_ft_read_only_ids_into_table_type_el_primary_key_fi_clone_ts =
+                        gen_primary_key_ft_as_pg_type_primary_key_method_call_ts(
                             &ReadOnlyIdsIntoTableTypeSc,
                             &quote! {el_3bb88958.#primary_key_fi},
                         );
@@ -6541,10 +6533,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         #primary_key_fi: Some(
                                             gen_pg_type_where_try_new_primary_key(
                                                 pg_crud::LogicalOperator::Or,//here
-                                                read_only_ids_from_try_create_many.iter().map(|el_3bb88958| #primary_key_field_type_as_pg_type_where_ts::Equal(
+                                                read_only_ids_from_try_create_many.iter().map(|el_3bb88958| #primary_key_ft_as_pg_type_where_ts::Equal(
                                                     pg_crud::PgTypeWhereEqual {
                                                         logical_operator: pg_crud::LogicalOperator::Or,
-                                                        #ValueSc: #primary_key_field_type_read_only_ids_into_table_type_el_primary_key_fi_clone_ts,
+                                                        #ValueSc: #primary_key_ft_read_only_ids_into_table_type_el_primary_key_fi_clone_ts,
                                                     }
                                                 )).collect()
                                             )
@@ -6559,10 +6551,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             read_only_ids_from_try_delete_many,
                             {
                                 read_only_ids_from_try_create_many.iter().map(|el_ba0f6b1c|
-                                    <#primary_key_field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
+                                    <#primary_key_ft as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
                                         &el_ba0f6b1c.#primary_key_fi
                                     ).expect("3ee5ee86").#ValueSc
-                                ).collect::<Vec<#primary_key_field_type_as_pg_type_read_ts>>()
+                                ).collect::<Vec<#primary_key_ft_as_pg_type_read_ts>>()
                             },
                             "db5e88a6"
                         );
@@ -6573,10 +6565,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     Some(
                                         gen_pg_type_where_try_new_primary_key(
                                             pg_crud::LogicalOperator::Or,
-                                            read_only_ids_from_try_delete_many.into_iter().map(|el_adcc8db3| #primary_key_field_type_as_pg_type_where_ts::Equal(
+                                            read_only_ids_from_try_delete_many.into_iter().map(|el_adcc8db3| #primary_key_ft_as_pg_type_where_ts::Equal(
                                                 pg_crud::PgTypeWhereEqual {
                                                     logical_operator: pg_crud::LogicalOperator::Or,
-                                                    #ValueSc: #primary_key_field_type_read_into_table_type_el_primary_key_fi_clone_ts,
+                                                    #ValueSc: #primary_key_ft_read_into_table_type_el_primary_key_fi_clone_ts,
                                                 }
                                             )).collect()
                                         )
@@ -6610,7 +6602,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let delete_one_tests_ts = {
-            let value_init_ts = gen_import_path_value_init_ts(&primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_fi_ts);
+            let value_init_ts = gen_import_path_value_init_ts(&primary_key_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_fi_ts);
             quote! {
                 acc_9189f86e.push({
                     let table_delete_one_cloned = table_delete_one.clone();
@@ -6618,7 +6610,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     futures::FutureExt::boxed(async move {
                         if let Err(#ErSc) = gen_try_delete_one_handle(
                             &url,
-                            #primary_key_field_type_as_pg_type_read_ts::new(uuid::Uuid::new_v4()),
+                            #primary_key_ft_as_pg_type_read_ts::new(uuid::Uuid::new_v4()),
                             &table_delete_one_cloned
                         ).await {
                             if let #ident_try_delete_one_er_ucc::#ident_delete_one_er_with_serde_ucc {
@@ -6647,7 +6639,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             },
                             gen_ident_try_read_one_handle_primary_key(
                                 &url,
-                                #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_fi_ts,
+                                #primary_key_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_fi_ts,
                                 #select_default_all_with_max_page_size_cloned_clone_ts,
                                 &table_delete_one_cloned
                             )
@@ -6657,15 +6649,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         assert_eq!(
                             gen_try_delete_one_handle(
                                 &url,
-                                #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_fi_ts,
+                                #primary_key_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_fi_ts,
                                 &table_delete_one_cloned
                             ).await.expect("7e1d1a70"),
-                            #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_fi_ts,
+                            #primary_key_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_fi_ts,
                             "99f81971"
                         );
                         gen_check_no_rows_returned_from_ident_try_read_one_handle_primary_key(
                             &url,
-                            #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_fi_ts,
+                            #primary_key_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_fi_ts,
                             #select_default_all_with_max_page_size_cloned_clone_ts,
                             &table_delete_one_cloned,
                         ).await;
@@ -6684,7 +6676,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #[test]
                 fn crud() {
                     fn gen_ident_where_many_pripery_key_others_none(
-                        opt_pg_type_where: Option<#import_path::PgTypeWhere<#primary_key_field_type_as_pg_type_where_ts>>,
+                        opt_pg_type_where: Option<#import_path::PgTypeWhere<#primary_key_ft_as_pg_type_where_ts>>,
                     ) -> #ident_where_many_ucc {
                         #ident_where_many_ucc::try_new(
                             opt_pg_type_where,
@@ -6694,20 +6686,20 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                     fn gen_pg_type_where_try_new_primary_key(
                         logical_operator: #import_path::LogicalOperator,
-                        vec: Vec<#primary_key_field_type_where_ts>
-                    ) -> #import_path::PgTypeWhere<#primary_key_field_type_as_pg_type_where_ts> {
+                        vec: Vec<#primary_key_ft_where_ts>
+                    ) -> #import_path::PgTypeWhere<#primary_key_ft_as_pg_type_where_ts> {
                         #gen_pg_type_where_try_new_primary_key_ts
                     }
                     fn gen_pg_type_where_try_new_or_primary_keys(
                         vec_read_only_ids: &[#ident_read_only_ids_ucc]
-                    ) -> #import_path::PgTypeWhere<#primary_key_field_type_as_pg_type_where_ts> {
+                    ) -> #import_path::PgTypeWhere<#primary_key_ft_as_pg_type_where_ts> {
                         gen_pg_type_where_try_new_primary_key(
                             #import_path::LogicalOperator::Or,
-                            vec_read_only_ids.iter().map(|el_9530b728| #primary_key_field_type_where_ts::Equal(#import_path::PgTypeWhereEqual {
+                            vec_read_only_ids.iter().map(|el_9530b728| #primary_key_ft_where_ts::Equal(#import_path::PgTypeWhereEqual {
                                 logical_operator: #import_path::LogicalOperator::Or,
-                                value: #primary_key_field_type_table_type_ts::new(
-                                    #primary_key_field_type_as_pg_type_ts into_inner(
-                                        <#primary_key_field_type as #import_path::PgTypePrimaryKey>::read_only_ids_into_read(
+                                value: #primary_key_ft_table_type_ts::new(
+                                    #primary_key_ft_as_pg_type_ts into_inner(
+                                        <#primary_key_ft as #import_path::PgTypePrimaryKey>::read_only_ids_into_read(
                                             el_9530b728.#primary_key_fi
                                         ),
                                     )
@@ -6731,7 +6723,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     select,
                                     order_by: #import_path::OrderBy {
                                         column: #ident_select_ucc::#primary_key_fi_ucc_ts(
-                                            #primary_key_field_type_as_pg_type_select_ts::default()
+                                            #primary_key_ft_as_pg_type_select_ts::default()
                                         ),
                                         order: Some(#import_path::Order::Asc)
                                     },
@@ -6744,7 +6736,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                     async fn gen_ident_try_read_one_handle_primary_key(
                         url: &str,
-                        primary_key_column: #primary_key_field_type_as_pg_type_read_ts,
+                        primary_key_column: #primary_key_ft_as_pg_type_read_ts,
                         select: #import_path::NotEmptyUniqueVec<#ident_select_ucc>,
                         table: &str,
                     ) -> Result<#ident_read_ucc, #ident_try_read_one_er_ucc> {
@@ -6762,7 +6754,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                     async fn gen_check_no_rows_returned_from_ident_try_read_one_handle_primary_key(
                         url: &str,
-                        primary_key_column: #primary_key_field_type_as_pg_type_read_ts,
+                        primary_key_column: #primary_key_ft_as_pg_type_read_ts,
                         select: #import_path::NotEmptyUniqueVec<#ident_select_ucc>,
                         table: &str,
                     ) {
@@ -6818,9 +6810,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                     async fn gen_try_delete_one_handle(
                         #UrlSc: &str,
-                        #primary_key_fi: #primary_key_field_type_as_pg_type_read_ts,
+                        #primary_key_fi: #primary_key_ft_as_pg_type_read_ts,
                         table: &str,
-                    ) -> Result<#primary_key_field_type_as_pg_type_read_ts, #ident_try_delete_one_er_ucc> {
+                    ) -> Result<#primary_key_ft_as_pg_type_read_ts, #ident_try_delete_one_er_ucc> {
                         #ident::try_delete_one_handle(
                             #UrlSc,
                             #ident_delete_one_params_ucc {
@@ -6842,7 +6834,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         assert_eq!(read_only_ids_from_try_create_many.len(), ident_vec_create.len(), "88fb286c");
                         for (read_only_ids, create) in read_only_ids_from_try_create_many.into_iter().zip(ident_vec_create.into_iter()) {
                             acc_1debe8fb.push(#ident_read_ucc {
-                                #primary_key_fi: <#primary_key_field_type as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
+                                #primary_key_fi: <#primary_key_ft as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
                                     &read_only_ids.#primary_key_fi
                                 ),
                                 #fi_read_only_ids_merged_with_create_into_opt_value_read_read_only_ids_and_create_ts
@@ -6970,7 +6962,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         started_rx.await.expect("87003141");
                         let #SelectPrimaryKeySc = pg_crud::NotEmptyUniqueVec::try_new(vec![
                             #ident_select_ucc::#primary_key_fi_ucc_ts(
-                                #primary_key_field_type_as_pg_type_select_ts::default(),
+                                #primary_key_ft_as_pg_type_select_ts::default(),
                             )
                         ])
                         .expect("0776170e");
