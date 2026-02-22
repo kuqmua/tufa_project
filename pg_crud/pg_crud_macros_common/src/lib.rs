@@ -601,10 +601,10 @@ pub fn gen_pg_type_where_ts(
 ) -> Ts2 {
     let ident = SelfWhereUcc::from_tokens(&prefix);
     let pg_type_tokens_where_ts = {
-        let vrts_ts = vrts.iter().map(|el_a9dc0e35| {
-            let el_ucc = el_a9dc0e35.ucc();
-            let prefix_where_self_ucc = el_a9dc0e35.prefix_where_self_ucc();
-            let opt_type_ts: Option<Ts2> = el_a9dc0e35.maybe_generic();
+        let vrts_ts = vrts.iter().map(|el| {
+            let el_ucc = el.ucc();
+            let prefix_where_self_ucc = el.prefix_where_self_ucc();
+            let opt_type_ts: Option<Ts2> = el.maybe_generic();
             let type_ts = opt_type_ts.map_or_else(Ts2::new, |v| quote! {<#v>});
             quote! {#el_ucc(where_filters::#prefix_where_self_ucc #type_ts)}
         });
@@ -625,8 +625,8 @@ pub fn gen_pg_type_where_ts(
             &ColumnParameterUnderscore::False,
             &IsNeedToAddLogicalOperatorUnderscore::False,
             &{
-                let vrts_ts = vrts.iter().map(|el_8bf490d9| {
-                    let el_ucc = el_8bf490d9.ucc();
+                let vrts_ts = vrts.iter().map(|el| {
+                    let el_ucc = el.ucc();
                     quote! {
                         Self::#el_ucc(#ValueSc) => pg_crud_common::PgTypeWhereFilter::query_part(
                             #ValueSc,
@@ -644,8 +644,8 @@ pub fn gen_pg_type_where_ts(
             },
             is_query_bind_mutable,
             &{
-                let vrts_ts = vrts.iter().map(|el_93e5c1bc| {
-                    let el_ucc = el_93e5c1bc.ucc();
+                let vrts_ts = vrts.iter().map(|el| {
+                    let el_ucc = el.ucc();
                     quote! {
                         Self::#el_ucc(#ValueSc) => pg_crud_common::PgTypeWhereFilter::query_bind(
                             #ValueSc,
@@ -669,8 +669,8 @@ pub fn gen_pg_type_where_ts(
     );
     let impl_all_vrts_default_opt_some_vec_one_el_for_pg_type_tokens_where_ts =
         gen_impl_pg_crud_common_all_vrts_default_opt_some_vec_one_el_ts(&ident, &{
-            let vrts_ts = vrts.iter().map(|el_b9724130| {
-                let el_ucc = el_b9724130.ucc();
+            let vrts_ts = vrts.iter().map(|el| {
+                let el_ucc = el.ucc();
                 quote! {Self::#el_ucc(#PgCrudCommonDefaultOptSomeVecOneElCall)}
             });
             quote! {vec![#(#vrts_ts),*]}
@@ -2092,7 +2092,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
     }
     let vec_ident = vec_ident_type
         .iter()
-        .map(|el_00a99fdb| el_00a99fdb.0)
+        .map(|el| el.0)
         .collect::<Vec<&Ident>>();
     let field_enum_vrts_ts = {
         let field_enum_vrts_ts = (0..len)
@@ -2181,10 +2181,10 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         quote! {#(#visit_map_match_vrts_ts)*}
     };
     let visit_map_missing_fields_check_ts = {
-        let ts = vec_ident.iter().enumerate().map(|(index, el_a1d37c97)| {
+        let ts = vec_ident.iter().enumerate().map(|(index, el)| {
             let field_index_ts = gen_underscore_underscore_field_index_ts(index);
             let field_index_handle_ts = gen_underscore_underscore_field_index_handle_ts(index);
-            let field_ident_dq_ts = dq_ts(&el_a1d37c97);
+            let field_ident_dq_ts = dq_ts(&el);
             quote! {
                 let #field_index_handle_ts = match #field_index_ts {
                     Some(v) => v,
@@ -2197,7 +2197,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         quote! {#(#ts)*}
     };
     let fields_arr_els_ts = {
-        let fields_arr_els_ts = vec_ident.iter().map(|el_43a33e0b| dq_ts(&el_43a33e0b));
+        let fields_arr_els_ts = vec_ident.iter().map(|el| dq_ts(&el));
         quote! {#(#fields_arr_els_ts),*}
     };
     let ident_dq_ts = dq_ts(&ident);
