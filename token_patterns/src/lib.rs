@@ -688,6 +688,13 @@ impl ToTokens for AllowClippyArbitrarySourceItemOrdering {
         quote! {#[allow(clippy::arbitrary_source_item_ordering)]}.to_tokens(tokens);
     }
 }
+#[derive(Debug, Clone, Copy)]
+pub struct NoneTs;
+impl ToTokens for NoneTs {
+    fn to_tokens(&self, tokens: &mut Ts2) {
+        quote! {None}.to_tokens(tokens);
+    }
+}
 //todo better reuse
 fn path_all_vrts_default_opt_some_vec_one_el_max_page_size_call() -> Ts2 {
     quote! {::all_vrts_default_opt_some_vec_one_el_max_page_size()}

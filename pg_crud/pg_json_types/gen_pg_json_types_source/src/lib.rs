@@ -47,7 +47,7 @@ use std::{
 };
 use strum_macros::{Display, EnumIter};
 use token_patterns::{
-    AllowClippyArbitrarySourceItemOrdering, Bool, F32, F64, I8, I16, I32, I64, MustUse,
+    AllowClippyArbitrarySourceItemOrdering, Bool, F32, F64, I8, I16, I32, I64, MustUse, NoneTs,
     PgCrudCommonDefaultOptSomeVecOneEl, PgCrudCommonDefaultOptSomeVecOneElCall,
     PgCrudCommonDefaultOptSomeVecOneElMaxPageSizeCall, StringTs, U8, U16, U32, U64, UuidUuid,
 };
@@ -564,7 +564,6 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             IsStdrtNotNullUuid::False
         };
         let import_path = ImportPath::PgCrudCommon;
-        let none_ts = quote! {None};
         let gen_import_path_value_init_ts = |content_ts: &dyn ToTokens| gen_value_init_ts(&import_path, &content_ts);
         let gen_ident_ts = |is_nullable_ddf79d44: &IsNullable, pattern_2c09ee59: &Pattern| {
             let is_nullable_rust = is_nullable_ddf79d44.rust();
@@ -2280,284 +2279,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 PgJsonType::StringAsJsonbString => quote! {string_test_cases_vec},
                 PgJsonType::UuidUuidAsJsonbString => quote! {uuid_uuid_test_cases_vec},
             };
-            let gen_arr_dim_equal_ts = |dim: &Dim| {
-                let dim_index_nbr_max = DimIndexNbr::from(dim);
-                let gen_dim_index_nbr_ts = |is_nullable_vec: &[&IsNullable]|{
-                    assert!(!is_nullable_vec.is_empty(), "c1a5939d");
-                    let content_ts_c85923bd = {
-                        let gen_index_nbr_ts = |index_c1128a3e: usize|format!("index_{index_c1128a3e}").parse::<Ts2>().expect("afbe7252");
-                        let gen_value_nbr_ts = |index_0abe6039: usize|format!("value{index_0abe6039}").parse::<Ts2>().expect("568d8eb6");
-                        let gen_for_in_ts = |
-                            index_ts: &dyn ToTokens,
-                            value_ts: &dyn ToTokens,
-                            enumerate_ts: &dyn ToTokens,
-                            content_ts_aaf03124: &dyn ToTokens,
-                        |quote!{
-                            for (#index_ts, #value_ts) in #enumerate_ts.0.into_iter().enumerate() {
-                                #content_ts_aaf03124
-                            }
-                        };
-                        let gen_for_value_index_dot_zero_into_iter_enumerate_ts = |
-                            index_0082bcdf: usize,
-                            index_e81c6d28: usize,
-                            index_b7b230b2: usize,
-                            content_ts_d575a40c: &dyn ToTokens,
-                        |gen_for_in_ts(
-                            &gen_index_nbr_ts(index_0082bcdf),
-                            &gen_value_nbr_ts(index_e81c6d28),
-                            &gen_value_nbr_ts(index_b7b230b2),
-                            &content_ts_d575a40c
-                        );
-                        let gen_if_let_some_ts = |
-                            some_ts: &dyn ToTokens,
-                            equal_ts: &dyn ToTokens,
-                            content_ts_9292e3cf: &dyn ToTokens,
-                        |quote!{
-                            if let Some(#some_ts) = #equal_ts.0 {
-                                #content_ts_9292e3cf
-                            }
-                        };
-                        let gen_if_let_some_equals_value_index_dot_zero_ts = |
-                            index_c4552aef: usize,
-                            index_9f1fbc9f: usize,
-                            content_ts_832b20d5: &dyn ToTokens,
-                        |gen_if_let_some_ts(
-                            &gen_value_nbr_ts(index_c4552aef),
-                            &gen_value_nbr_ts(index_9f1fbc9f),
-                            &content_ts_832b20d5
-                        );
-                        let gen_index = |start_index: usize, is_nullable_vec_41b82a0c: &[&IsNullable]| -> usize {
-                            start_index.checked_add(
-                                is_nullable_vec_41b82a0c
-                                .iter()
-                                .filter(|el0| matches!(el0, IsNullable::True))
-                                .count()
-                            ).expect("de4c4116")
-                        };
-                        let mut content_ts_4c106eea = {
-                            let content_ts_f1ffd3b2 = {
-                                let value_index_ts = gen_value_nbr_ts(
-                                    gen_index(
-                                        is_nullable_vec.len().saturating_sub(1),
-                                        &once(is_nullable)
-                                        .chain(
-                                            is_nullable_vec
-                                                .iter()
-                                                .take(is_nullable_vec.len().saturating_sub(1))
-                                                .copied(),
-                                        ).collect::<Vec<&IsNullable>>()
-                                    )
-                                );
-                                let to_nbr_starting_with_one_word_str = |dim_index_nbr: &DimIndexNbr| match dim_index_nbr {
-                                    DimIndexNbr::Zero => "One",
-                                    DimIndexNbr::One => "Two",
-                                    DimIndexNbr::Two => "Three",
-                                    DimIndexNbr::Three => "Four",
-                                };
-                                let dim_nbr_starting_with_one_equal_ts = format!("Dim{}Equal", to_nbr_starting_with_one_word_str(&dim_index_nbr_max)).parse::<Ts2>().expect("52fa34ac");
-                                let pg_json_type_where_dim_nbr_starting_with_one_equal_ts = format!("PgJsonTypeWhereDim{}Equal", to_nbr_starting_with_one_word_str(&dim_index_nbr_max)).parse::<Ts2>().expect("15d769b0");
-                                let where_ident_where_ucc_c994819b = SelfWhereUcc::from_tokens(&gen_ident_ts(&IsNullable::False, pattern));
-                                let value_ident_table_type_ucc_0d9dce86 = SelfTableTypeUcc::from_tokens(&gen_ident_ts(
-                                    is_nullable_vec.last().expect("1221f6ec"),
-                                    &match dim_index_nbr_max {
-                                        DimIndexNbr::Zero => pattern.down_by_1().expect("1a47af86"),
-                                        DimIndexNbr::One => pattern.down_by_2().expect("d8260225"),
-                                        DimIndexNbr::Two => pattern.down_by_3().expect("473ac422"),
-                                        DimIndexNbr::Three => pattern.down_by_4().expect("6a143218"),
-                                    }
-                                ));
-                                let vec_content_ts = {
-                                    let content_ts_0dc5a500 = (
-                                        0i32..=match dim_index_nbr_max {
-                                            DimIndexNbr::Zero => 0i32,
-                                            DimIndexNbr::One => 1i32,
-                                            DimIndexNbr::Two => 2i32,
-                                            DimIndexNbr::Three => 3i32,
-                                        }
-                                    )
-                                    .map(|el0| {
-                                        let index_nbr_ts = format!("index_{el0}")
-                                            .parse::<Ts2>()
-                                            .expect("f0ce7e73");
-                                        quote! {
-                                            pg_crud_common::UnsignedPartOfI32::try_from(
-                                                i32::try_from(#index_nbr_ts)
-                                                    .expect("5a1818e7")
-                                            ).expect("ad1ab73f")
-                                        }
-                                    }).collect::<Vec<Ts2>>();
-                                    quote! {#(#content_ts_0dc5a500),*}
-                                };
-                                quote! {
-                                    #where_ident_where_ucc_c994819b::#dim_nbr_starting_with_one_equal_ts(
-                                        where_filters::#pg_json_type_where_dim_nbr_starting_with_one_equal_ts {
-                                            logical_operator: #import_path::LogicalOperator::And,
-                                            dims: where_filters::BoundedVec::try_from(
-                                                vec![#vec_content_ts]
-                                            ).expect("82cc0a3c"),
-                                            #ValueSc: #value_ident_table_type_ucc_0d9dce86::new(#value_index_ts.into()),
-                                        }
-                                    )
-                                }
-                            };
-                            match is_nullable {
-                                IsNullable::False => quote! {acc_049ff0b3.push(#content_ts_f1ffd3b2);},
-                                IsNullable::True => quote! {
-                                    match #import_path::NotEmptyUniqueVec::try_new(vec![#content_ts_f1ffd3b2]) {
-                                        Ok(v_9328b66f) => {
-                                            acc_049ff0b3.push(#import_path::NullableJsonObjectPgTypeWhereFilter(Some(v_9328b66f)));
-                                        },
-                                        Err(er) => match er {
-                                            #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => (),
-                                            #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("2f5f648a")
-                                        }
-                                    }
-                                },
-                            }
-                        };
-                        for (index_ef936914, _) in is_nullable_vec.iter().take(is_nullable_vec.len().saturating_sub(1)).enumerate() {
-                            let is_nullable_vec_e7e7f6f8 = is_nullable_vec
-                            .iter()
-                            .take(
-                                is_nullable_vec
-                                    .len()
-                                    .saturating_sub(index_ef936914.checked_add(1).expect("75d5ed28")),
-                            )
-                            .copied()
-                            .collect::<Vec<&IsNullable>>();
-                            let is_nullable_vec_e7e7f6f8_len = is_nullable_vec_e7e7f6f8.len();
-                            let is_nullable_vec_e7e7f6f8_len_saturating_sub_one = is_nullable_vec_e7e7f6f8_len.saturating_sub(1);
-                            content_ts_4c106eea = {
-                                let index_74ae6d77 = gen_index(
-                                    is_nullable_vec_e7e7f6f8_len_saturating_sub_one,
-                                    &once(is_nullable)
-                                    .chain(
-                                        is_nullable_vec_e7e7f6f8
-                                            .iter()
-                                            .take(is_nullable_vec_e7e7f6f8_len_saturating_sub_one)
-                                            .copied(),
-                                    ).collect::<Vec<&IsNullable>>()
-                                );
-                                let index_74ae6d77_incr_by_1 = index_74ae6d77.checked_add(1).expect("96e90e72");
-                                match &is_nullable_vec_e7e7f6f8.last().expect("88548240") {
-                                    IsNullable::False => gen_for_value_index_dot_zero_into_iter_enumerate_ts(
-                                        is_nullable_vec_e7e7f6f8_len,
-                                        index_74ae6d77_incr_by_1,
-                                        index_74ae6d77,
-                                        &content_ts_4c106eea,
-                                    ),
-                                    IsNullable::True => gen_if_let_some_equals_value_index_dot_zero_ts(
-                                        index_74ae6d77_incr_by_1,
-                                        index_74ae6d77,
-                                        &gen_for_value_index_dot_zero_into_iter_enumerate_ts(
-                                            is_nullable_vec_e7e7f6f8_len,
-                                            index_74ae6d77.checked_add(2).expect("00da046c"),
-                                            index_74ae6d77_incr_by_1,
-                                            &content_ts_4c106eea,
-                                        )
-                                    )
-                                }
-                            };
-                        }
-                        let create_dot_zero_ts = quote!{create.0};
-                        match &is_nullable {
-                            IsNullable::False => gen_for_in_ts(
-                                &gen_index_nbr_ts(0),
-                                &gen_value_nbr_ts(0),
-                                &create_dot_zero_ts,
-                                &content_ts_4c106eea
-                            ),
-                            IsNullable::True => gen_if_let_some_ts(
-                                &gen_value_nbr_ts(0),
-                                &create_dot_zero_ts,
-                                &gen_for_value_index_dot_zero_into_iter_enumerate_ts(
-                                    0,
-                                    1,
-                                    0,
-                                    &content_ts_4c106eea
-                                )
-                            )
-                        }
-                    };
-                    quote! {
-                        Some(#import_path::NotEmptyUniqueVec::try_new({
-                            let mut acc_049ff0b3 = Vec::new();
-                            #content_ts_c85923bd
-                            acc_049ff0b3
-                        }).expect("e99ecd08"))
-                    }
-                };
-                match &pattern {
-                    Pattern::Stdrt => none_ts.clone(),
-                    Pattern::ArrDim1 { dim1_is_nullable } => match dim_index_nbr_max {
-                        DimIndexNbr::Zero => gen_dim_index_nbr_ts(&[
-                            dim1_is_nullable,
-                        ]),
-                        DimIndexNbr::One | DimIndexNbr::Two | DimIndexNbr::Three => none_ts.clone(),
-                    },
-                    Pattern::ArrDim2 { dim1_is_nullable, dim2_is_nullable } => match dim_index_nbr_max {
-                        DimIndexNbr::Zero => gen_dim_index_nbr_ts(&[
-                            dim1_is_nullable,
-                        ]),
-                        DimIndexNbr::One => gen_dim_index_nbr_ts(&[
-                            dim1_is_nullable,
-                            dim2_is_nullable
-                        ]),
-                        DimIndexNbr::Two | DimIndexNbr::Three => none_ts.clone(),
-                    },
-                    Pattern::ArrDim3 {
-                        dim1_is_nullable,
-                        dim2_is_nullable,
-                        dim3_is_nullable,
-                    } => match dim_index_nbr_max {
-                        DimIndexNbr::Zero => gen_dim_index_nbr_ts(&[
-                            dim1_is_nullable,
-                        ]),
-                        DimIndexNbr::One => gen_dim_index_nbr_ts(&[
-                            dim1_is_nullable,
-                            dim2_is_nullable,
-                        ]),
-                        DimIndexNbr::Two => gen_dim_index_nbr_ts(&[
-                            dim1_is_nullable,
-                            dim2_is_nullable,
-                            dim3_is_nullable
-                        ]),
-                        DimIndexNbr::Three => none_ts.clone(),
-                    },
-                    Pattern::ArrDim4 {
-                        dim1_is_nullable,
-                        dim2_is_nullable,
-                        dim3_is_nullable,
-                        dim4_is_nullable,
-                    } => {
-                        match dim_index_nbr_max {
-                            DimIndexNbr::Zero => gen_dim_index_nbr_ts(&[
-                                dim1_is_nullable
-                            ]),
-                            DimIndexNbr::One => gen_dim_index_nbr_ts(&[
-                                dim1_is_nullable,
-                                dim2_is_nullable,
-                            ]),
-                            DimIndexNbr::Two => gen_dim_index_nbr_ts(&[
-                                dim1_is_nullable,
-                                dim2_is_nullable,
-                                dim3_is_nullable,
-                            ]),
-                            DimIndexNbr::Three => gen_dim_index_nbr_ts(&[
-                                dim1_is_nullable,
-                                dim2_is_nullable,
-                                dim3_is_nullable,
-                                dim4_is_nullable
-                            ])
-                        }
-                    }
-                }
-            };
             let opt_vec_create_ts = {
                 let gen_some_acc_content_ts = |is_nullable_c964bb93: &IsNullable, ident_ts_dc0d5797: &dyn ToTokens| {
                     let (new_content_ts, maybe_acc_push_none_ts) = match &is_nullable_c964bb93 {
                         IsNullable::False => (quote! {vec![el_88131059.0.into()]}, Ts2::new()),
-                        IsNullable::True => (quote! {Some(el_88131059.0.into())}, quote! {acc_50e99088.push(<Self as #import_path::PgJsonType>::Create::new(None));}),
+                        IsNullable::True => (quote! {Some(el_88131059.0.into())}, quote! {acc_50e99088.push(<Self as #import_path::PgJsonType>::Create::new(#NoneTs));}),
                     };
                     //todo check - maybe need to add something here
                     let maybe_acc_push_long_vec_ts = match &is_nullable {
@@ -2714,7 +2440,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     };
                     let maybe_acc_push_vec_none_ts = match &is_nullable {
                         IsNullable::False => Ts2::new(),
-                        IsNullable::True => quote! {acc_0a07db18.push(vec![None]);},
+                        IsNullable::True => quote! {acc_0a07db18.push(vec![#NoneTs]);},
                     };
                     quote! {
                         let mut acc_0a07db18 = Vec::new();
@@ -2900,7 +2626,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         ),
                     }
                 } else {
-                    none_ts.clone()
+                    quote!{#NoneTs}
                 });
                 quote! {#ident_read_only_ids_ucc(#value_init_ts)}
             };
@@ -2980,10 +2706,292 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 #ReadOnlyIdsSc,
                 #CreateSc
             )};
-            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts = gen_arr_dim_equal_ts(&Dim::One);
-            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts = gen_arr_dim_equal_ts(&Dim::Two);
-            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts = gen_arr_dim_equal_ts(&Dim::Three);
-            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts = gen_arr_dim_equal_ts(&Dim::Four);
+            let (
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts
+            ) = {
+                let gen_arr_dim_equal_ts = |dim: &Dim| {
+                    let dim_index_nbr_max = DimIndexNbr::from(dim);
+                    let gen_dim_index_nbr_ts = |is_nullable_vec: &[&IsNullable]|{
+                        assert!(!is_nullable_vec.is_empty(), "c1a5939d");
+                        let content_ts_c85923bd = {
+                            let gen_index_nbr_ts = |index_c1128a3e: usize|format!("index_{index_c1128a3e}").parse::<Ts2>().expect("afbe7252");
+                            let gen_value_nbr_ts = |index_0abe6039: usize|format!("value{index_0abe6039}").parse::<Ts2>().expect("568d8eb6");
+                            let gen_for_in_ts = |
+                                index_ts: &dyn ToTokens,
+                                value_ts: &dyn ToTokens,
+                                enumerate_ts: &dyn ToTokens,
+                                content_ts_aaf03124: &dyn ToTokens,
+                            |quote!{
+                                for (#index_ts, #value_ts) in #enumerate_ts.0.into_iter().enumerate() {
+                                    #content_ts_aaf03124
+                                }
+                            };
+                            let gen_for_value_index_dot_zero_into_iter_enumerate_ts = |
+                                index_0082bcdf: usize,
+                                index_e81c6d28: usize,
+                                index_b7b230b2: usize,
+                                content_ts_d575a40c: &dyn ToTokens,
+                            |gen_for_in_ts(
+                                &gen_index_nbr_ts(index_0082bcdf),
+                                &gen_value_nbr_ts(index_e81c6d28),
+                                &gen_value_nbr_ts(index_b7b230b2),
+                                &content_ts_d575a40c
+                            );
+                            let gen_if_let_some_ts = |
+                                some_ts: &dyn ToTokens,
+                                equal_ts: &dyn ToTokens,
+                                content_ts_9292e3cf: &dyn ToTokens,
+                            |quote!{
+                                if let Some(#some_ts) = #equal_ts.0 {
+                                    #content_ts_9292e3cf
+                                }
+                            };
+                            let gen_if_let_some_equals_value_index_dot_zero_ts = |
+                                index_c4552aef: usize,
+                                index_9f1fbc9f: usize,
+                                content_ts_832b20d5: &dyn ToTokens,
+                            |gen_if_let_some_ts(
+                                &gen_value_nbr_ts(index_c4552aef),
+                                &gen_value_nbr_ts(index_9f1fbc9f),
+                                &content_ts_832b20d5
+                            );
+                            let gen_index = |start_index: usize, is_nullable_vec_41b82a0c: &[&IsNullable]| -> usize {
+                                start_index.checked_add(
+                                    is_nullable_vec_41b82a0c
+                                    .iter()
+                                    .filter(|el0| matches!(el0, IsNullable::True))
+                                    .count()
+                                ).expect("de4c4116")
+                            };
+                            let mut content_ts_4c106eea = {
+                                let content_ts_f1ffd3b2 = {
+                                    let value_index_ts = gen_value_nbr_ts(
+                                        gen_index(
+                                            is_nullable_vec.len().saturating_sub(1),
+                                            &once(is_nullable)
+                                            .chain(
+                                                is_nullable_vec
+                                                    .iter()
+                                                    .take(is_nullable_vec.len().saturating_sub(1))
+                                                    .copied(),
+                                            ).collect::<Vec<&IsNullable>>()
+                                        )
+                                    );
+                                    let to_nbr_starting_with_one_word_str = |dim_index_nbr: &DimIndexNbr| match dim_index_nbr {
+                                        DimIndexNbr::Zero => "One",
+                                        DimIndexNbr::One => "Two",
+                                        DimIndexNbr::Two => "Three",
+                                        DimIndexNbr::Three => "Four",
+                                    };
+                                    let dim_nbr_starting_with_one_equal_ts = format!("Dim{}Equal", to_nbr_starting_with_one_word_str(&dim_index_nbr_max)).parse::<Ts2>().expect("52fa34ac");
+                                    let pg_json_type_where_dim_nbr_starting_with_one_equal_ts = format!("PgJsonTypeWhereDim{}Equal", to_nbr_starting_with_one_word_str(&dim_index_nbr_max)).parse::<Ts2>().expect("15d769b0");
+                                    let where_ident_where_ucc_c994819b = SelfWhereUcc::from_tokens(&gen_ident_ts(&IsNullable::False, pattern));
+                                    let value_ident_table_type_ucc_0d9dce86 = SelfTableTypeUcc::from_tokens(&gen_ident_ts(
+                                        is_nullable_vec.last().expect("1221f6ec"),
+                                        &match dim_index_nbr_max {
+                                            DimIndexNbr::Zero => pattern.down_by_1().expect("1a47af86"),
+                                            DimIndexNbr::One => pattern.down_by_2().expect("d8260225"),
+                                            DimIndexNbr::Two => pattern.down_by_3().expect("473ac422"),
+                                            DimIndexNbr::Three => pattern.down_by_4().expect("6a143218"),
+                                        }
+                                    ));
+                                    let vec_content_ts = {
+                                        let content_ts_0dc5a500 = (
+                                            0i32..=match dim_index_nbr_max {
+                                                DimIndexNbr::Zero => 0i32,
+                                                DimIndexNbr::One => 1i32,
+                                                DimIndexNbr::Two => 2i32,
+                                                DimIndexNbr::Three => 3i32,
+                                            }
+                                        )
+                                        .map(|el0| {
+                                            let index_nbr_ts = format!("index_{el0}")
+                                                .parse::<Ts2>()
+                                                .expect("f0ce7e73");
+                                            quote! {
+                                                pg_crud_common::UnsignedPartOfI32::try_from(
+                                                    i32::try_from(#index_nbr_ts)
+                                                        .expect("5a1818e7")
+                                                ).expect("ad1ab73f")
+                                            }
+                                        }).collect::<Vec<Ts2>>();
+                                        quote! {#(#content_ts_0dc5a500),*}
+                                    };
+                                    quote! {
+                                        #where_ident_where_ucc_c994819b::#dim_nbr_starting_with_one_equal_ts(
+                                            where_filters::#pg_json_type_where_dim_nbr_starting_with_one_equal_ts {
+                                                logical_operator: #import_path::LogicalOperator::And,
+                                                dims: where_filters::BoundedVec::try_from(
+                                                    vec![#vec_content_ts]
+                                                ).expect("82cc0a3c"),
+                                                #ValueSc: #value_ident_table_type_ucc_0d9dce86::new(#value_index_ts.into()),
+                                            }
+                                        )
+                                    }
+                                };
+                                match is_nullable {
+                                    IsNullable::False => quote! {acc_049ff0b3.push(#content_ts_f1ffd3b2);},
+                                    IsNullable::True => quote! {
+                                        match #import_path::NotEmptyUniqueVec::try_new(vec![#content_ts_f1ffd3b2]) {
+                                            Ok(v_9328b66f) => {
+                                                acc_049ff0b3.push(#import_path::NullableJsonObjectPgTypeWhereFilter(Some(v_9328b66f)));
+                                            },
+                                            Err(er) => match er {
+                                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => (),
+                                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("2f5f648a")
+                                            }
+                                        }
+                                    },
+                                }
+                            };
+                            for (index_ef936914, _) in is_nullable_vec.iter().take(is_nullable_vec.len().saturating_sub(1)).enumerate() {
+                                let is_nullable_vec_e7e7f6f8 = is_nullable_vec
+                                .iter()
+                                .take(
+                                    is_nullable_vec
+                                        .len()
+                                        .saturating_sub(index_ef936914.checked_add(1).expect("75d5ed28")),
+                                )
+                                .copied()
+                                .collect::<Vec<&IsNullable>>();
+                                let is_nullable_vec_e7e7f6f8_len = is_nullable_vec_e7e7f6f8.len();
+                                let is_nullable_vec_e7e7f6f8_len_saturating_sub_one = is_nullable_vec_e7e7f6f8_len.saturating_sub(1);
+                                content_ts_4c106eea = {
+                                    let index_74ae6d77 = gen_index(
+                                        is_nullable_vec_e7e7f6f8_len_saturating_sub_one,
+                                        &once(is_nullable)
+                                        .chain(
+                                            is_nullable_vec_e7e7f6f8
+                                                .iter()
+                                                .take(is_nullable_vec_e7e7f6f8_len_saturating_sub_one)
+                                                .copied(),
+                                        ).collect::<Vec<&IsNullable>>()
+                                    );
+                                    let index_74ae6d77_incr_by_1 = index_74ae6d77.checked_add(1).expect("96e90e72");
+                                    match &is_nullable_vec_e7e7f6f8.last().expect("88548240") {
+                                        IsNullable::False => gen_for_value_index_dot_zero_into_iter_enumerate_ts(
+                                            is_nullable_vec_e7e7f6f8_len,
+                                            index_74ae6d77_incr_by_1,
+                                            index_74ae6d77,
+                                            &content_ts_4c106eea,
+                                        ),
+                                        IsNullable::True => gen_if_let_some_equals_value_index_dot_zero_ts(
+                                            index_74ae6d77_incr_by_1,
+                                            index_74ae6d77,
+                                            &gen_for_value_index_dot_zero_into_iter_enumerate_ts(
+                                                is_nullable_vec_e7e7f6f8_len,
+                                                index_74ae6d77.checked_add(2).expect("00da046c"),
+                                                index_74ae6d77_incr_by_1,
+                                                &content_ts_4c106eea,
+                                            )
+                                        )
+                                    }
+                                };
+                            }
+                            let create_dot_zero_ts = quote!{create.0};
+                            match &is_nullable {
+                                IsNullable::False => gen_for_in_ts(
+                                    &gen_index_nbr_ts(0),
+                                    &gen_value_nbr_ts(0),
+                                    &create_dot_zero_ts,
+                                    &content_ts_4c106eea
+                                ),
+                                IsNullable::True => gen_if_let_some_ts(
+                                    &gen_value_nbr_ts(0),
+                                    &create_dot_zero_ts,
+                                    &gen_for_value_index_dot_zero_into_iter_enumerate_ts(
+                                        0,
+                                        1,
+                                        0,
+                                        &content_ts_4c106eea
+                                    )
+                                )
+                            }
+                        };
+                        quote! {
+                            Some(#import_path::NotEmptyUniqueVec::try_new({
+                                let mut acc_049ff0b3 = Vec::new();
+                                #content_ts_c85923bd
+                                acc_049ff0b3
+                            }).expect("e99ecd08"))
+                        }
+                    };
+                    match &pattern {
+                        Pattern::Stdrt => quote!{#NoneTs},
+                        Pattern::ArrDim1 { dim1_is_nullable } => match dim_index_nbr_max {
+                            DimIndexNbr::Zero => gen_dim_index_nbr_ts(&[
+                                dim1_is_nullable,
+                            ]),
+                            DimIndexNbr::One | DimIndexNbr::Two | DimIndexNbr::Three => quote!{#NoneTs},
+                        },
+                        Pattern::ArrDim2 { dim1_is_nullable, dim2_is_nullable } => match dim_index_nbr_max {
+                            DimIndexNbr::Zero => gen_dim_index_nbr_ts(&[
+                                dim1_is_nullable,
+                            ]),
+                            DimIndexNbr::One => gen_dim_index_nbr_ts(&[
+                                dim1_is_nullable,
+                                dim2_is_nullable
+                            ]),
+                            DimIndexNbr::Two | DimIndexNbr::Three => quote!{#NoneTs},
+                        },
+                        Pattern::ArrDim3 {
+                            dim1_is_nullable,
+                            dim2_is_nullable,
+                            dim3_is_nullable,
+                        } => match dim_index_nbr_max {
+                            DimIndexNbr::Zero => gen_dim_index_nbr_ts(&[
+                                dim1_is_nullable,
+                            ]),
+                            DimIndexNbr::One => gen_dim_index_nbr_ts(&[
+                                dim1_is_nullable,
+                                dim2_is_nullable,
+                            ]),
+                            DimIndexNbr::Two => gen_dim_index_nbr_ts(&[
+                                dim1_is_nullable,
+                                dim2_is_nullable,
+                                dim3_is_nullable
+                            ]),
+                            DimIndexNbr::Three => quote!{#NoneTs},
+                        },
+                        Pattern::ArrDim4 {
+                            dim1_is_nullable,
+                            dim2_is_nullable,
+                            dim3_is_nullable,
+                            dim4_is_nullable,
+                        } => {
+                            match dim_index_nbr_max {
+                                DimIndexNbr::Zero => gen_dim_index_nbr_ts(&[
+                                    dim1_is_nullable
+                                ]),
+                                DimIndexNbr::One => gen_dim_index_nbr_ts(&[
+                                    dim1_is_nullable,
+                                    dim2_is_nullable,
+                                ]),
+                                DimIndexNbr::Two => gen_dim_index_nbr_ts(&[
+                                    dim1_is_nullable,
+                                    dim2_is_nullable,
+                                    dim3_is_nullable,
+                                ]),
+                                DimIndexNbr::Three => gen_dim_index_nbr_ts(&[
+                                    dim1_is_nullable,
+                                    dim2_is_nullable,
+                                    dim3_is_nullable,
+                                    dim4_is_nullable
+                                ])
+                            }
+                        }
+                    }
+                };
+                (
+                    gen_arr_dim_equal_ts(&Dim::One),
+                    gen_arr_dim_equal_ts(&Dim::Two),
+                    gen_arr_dim_equal_ts(&Dim::Three),
+                    gen_arr_dim_equal_ts(&Dim::Four)
+                )
+            };
             //todo maybe reuse LengthEqual and LengthGreaterThan
             let create_into_pg_json_type_opt_vec_where_length_equal_ts = {
                 let gen_ts = || {
@@ -3043,7 +3051,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 };
                 match &pattern {
-                    Pattern::Stdrt => none_ts.clone(),
+                    Pattern::Stdrt => quote!{#NoneTs},
                     Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. } => gen_ts(),
                 }
             };
@@ -3119,7 +3127,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 };
                 match &pattern {
-                    Pattern::Stdrt => none_ts.clone(),
+                    Pattern::Stdrt => quote!{#NoneTs},
                     Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. } => gen_ts(),
                 }
             };
@@ -3205,11 +3213,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     PgJsonType::F64AsJsonbNbr => float_64_greater_than_one_less_ts,
                     PgJsonType::BoolAsJsonbBoolean |
                     PgJsonType::StringAsJsonbString |
-                    PgJsonType::UuidUuidAsJsonbString => none_ts.clone(),
+                    PgJsonType::UuidUuidAsJsonbString => quote!{#NoneTs},
                 }
             }
             else {
-                none_ts.clone()
+                quote!{#NoneTs}
             };
             let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts = if matches!(&pattern, Pattern::Stdrt) &&
                 matches!(&is_nullable, IsNullable::False)
@@ -3283,11 +3291,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     PgJsonType::F64AsJsonbNbr => between_one_less_and_one_more_float_ts,
                     PgJsonType::BoolAsJsonbBoolean |
                     PgJsonType::StringAsJsonbString |
-                    PgJsonType::UuidUuidAsJsonbString => none_ts.clone()
+                    PgJsonType::UuidUuidAsJsonbString => quote!{#NoneTs}
                 }
             }
             else {
-                none_ts.clone()
+                quote!{#NoneTs}
             };
             let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts = if matches!(&pattern, Pattern::Stdrt) &&
                 matches!(&is_nullable, IsNullable::False)
@@ -3327,11 +3335,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     },
                     PgJsonType::BoolAsJsonbBoolean |
                     PgJsonType::StringAsJsonbString |
-                    PgJsonType::UuidUuidAsJsonbString => none_ts.clone()
+                    PgJsonType::UuidUuidAsJsonbString => quote!{#NoneTs}
                 }
             }
             else {
-                none_ts.clone()
+                quote!{#NoneTs}
             };
             let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts = if matches!(&pattern, Pattern::Stdrt) &&
                 matches!(&is_nullable, IsNullable::False)
@@ -3348,7 +3356,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     PgJsonType::F32AsJsonbNbr |
                     PgJsonType::F64AsJsonbNbr |
                     PgJsonType::BoolAsJsonbBoolean |
-                    PgJsonType::UuidUuidAsJsonbString => none_ts.clone(),
+                    PgJsonType::UuidUuidAsJsonbString => quote!{#NoneTs},
                     PgJsonType::StringAsJsonbString => quote!{
                         match #import_path::NotEmptyUniqueVec::try_new(vec![
                             #import_path::SingleOrMultiple::Single(
@@ -3371,7 +3379,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 }
             }
             else {
-                none_ts.clone()
+                quote!{#NoneTs}
             };
             //todo add contains_el_greater_than for dim 2,3,4
             let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts = match &pattern {
@@ -3447,17 +3455,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             PgJsonType::F64AsJsonbNbr => float_64_greater_than_one_less_ts,
                             PgJsonType::BoolAsJsonbBoolean |
                             PgJsonType::StringAsJsonbString |
-                            PgJsonType::UuidUuidAsJsonbString => none_ts.clone(),
+                            PgJsonType::UuidUuidAsJsonbString => quote!{#NoneTs},
                         }
                     }
                     else {
-                        none_ts.clone()
+                        quote!{#NoneTs}
                     }
                 },
                 Pattern::Stdrt |
                 Pattern::ArrDim2 {..} |
                 Pattern::ArrDim3 {..} |
-                Pattern::ArrDim4 {..} => none_ts.clone()
+                Pattern::ArrDim4 {..} => quote!{#NoneTs}
             };
             //todo add contains_el_regex for dim 2,3,4
             let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts = match &pattern {
@@ -3478,7 +3486,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             PgJsonType::F32AsJsonbNbr |
                             PgJsonType::F64AsJsonbNbr |
                             PgJsonType::BoolAsJsonbBoolean |
-                            PgJsonType::UuidUuidAsJsonbString => none_ts.clone(),
+                            PgJsonType::UuidUuidAsJsonbString => quote!{#NoneTs},
                             PgJsonType::StringAsJsonbString => quote!{
                                 match #import_path::NotEmptyUniqueVec::try_new(create.0.0.into_iter().map(|el_590fca71| {
                                     #import_path::SingleOrMultiple::Single(
@@ -3509,13 +3517,13 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         }
                     }
                     else {
-                        none_ts.clone()
+                        quote!{#NoneTs}
                     }
                 },
                 Pattern::Stdrt |
                 Pattern::ArrDim2 {..} |
                 Pattern::ArrDim3 {..} |
-                Pattern::ArrDim4 {..} => none_ts.clone()
+                Pattern::ArrDim4 {..} => quote!{#NoneTs}
             };
             gen_impl_pg_json_type_test_cases_for_ident_ts(
                 &quote! {#[cfg(feature = "test-utils")]},
