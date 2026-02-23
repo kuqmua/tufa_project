@@ -1,3 +1,4 @@
+use optimal_pack::OptimalPack;
 use serde::{Deserialize, Deserializer, Serialize, de::Error as SerdeEr};
 use server_port_common::{
     SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE,
@@ -15,7 +16,7 @@ impl Display for ServerPort {
         write!(f, "{}", self.0)
     }
 }
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, OptimalPack)]
 pub struct ServerPortEr {
     message: String,
     server_port_max: u16,

@@ -69,6 +69,7 @@ members = [
   "naming/naming_macros",
   "panic_location",
   "providers",
+  "optimal_pack",
 ]
 exclude = []
 

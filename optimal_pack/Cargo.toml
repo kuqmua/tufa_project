@@ -1,5 +1,5 @@
 [package]
-name = "server_port"
+name = "optimal_pack"
 version = "0.1.0"
 edition = "2024"
 description = "description"
@@ -10,12 +10,15 @@ keywords = ["keyword"]
 categories = ["category"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+proc-macro = true
 
 [dependencies]
-serde.workspace = true
-server_port_try_from_u16 = {path = "./server_port_try_from_u16"}
-server_port_common = {path = "./server_port_common"}
-optimal_pack = {path = "../../optimal_pack"}
+proc-macro2.workspace = true
+quote.workspace = true
+syn.workspace = true
+gen_quotes = {path = "../gen_quotes"}
+naming = {path = "../naming"}
 
 [lints]
 workspace = true
