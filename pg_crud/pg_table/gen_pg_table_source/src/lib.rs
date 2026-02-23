@@ -6145,7 +6145,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         gen_fields_named_without_primary_k_with_comma_ts(
                             &|syn_field_wrapper: &SynFieldWrapper| {
                                 let fi_b9ec9008 = &syn_field_wrapper.ident;
-                                if fi == fi_b9ec9008 {
+                                let ts = if fi == fi_b9ec9008 {
                                     let value_init_ts = gen_import_path_value_init_ts(&{
                                         let ft_0490079a = &syn_field_wrapper.type0;
                                         quote! {
@@ -6157,14 +6157,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             )
                                         }
                                     });
-                                    quote! {
-                                        #fi_b9ec9008: Some(#value_init_ts)
-                                    }
+                                    quote! {Some(#value_init_ts)}
                                 } else {
-                                    quote! {
-                                        #fi_b9ec9008: el_a6bc6b2f.#fi_b9ec9008
-                                    }
-                                }
+                                    quote! {el_a6bc6b2f.#fi_b9ec9008}
+                                };
+                                quote::quote! {#fi_b9ec9008: #ts}
                             },
                         );
                     let expected_read_many_ts = if is_fields_without_primary_k_len_greater_than_one
