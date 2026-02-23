@@ -269,7 +269,10 @@ mod tests {
             rust_or_clippy,
             &lints_vec_from_cargo_toml,
             &clippy_lints_from_docs,
-            &["disallowed_fields".to_owned()],
+            &[
+                "disallowed_fields".to_owned(),
+                "unnecessary_trailing_comma".to_owned(),
+            ],
         );
     }
     #[test]
