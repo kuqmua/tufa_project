@@ -4768,6 +4768,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &ReadIntoTableTypeSc,
                 &quote! {el_adcc8db3},
             );
+        let read_only_ids_el_937c5af3_primary_k_fi =
+            quote! {read_only_ids_el_937c5af3.#primary_k_fi};
         let (
             primary_k_ft_read_only_ids_into_read_el_fdc88812_primary_k_fi_ts,
             primary_k_ft_read_only_ids_into_read_el_43ab7fb5_primary_k_fi_ts,
@@ -4790,7 +4792,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 gen_read_only_ids_into_read_ts(
                     &quote! {read_only_ids_from_try_create_one.#primary_k_fi},
                 ),
-                gen_read_only_ids_into_read_ts(&quote! {read_only_ids_el_937c5af3.#primary_k_fi}),
+                gen_read_only_ids_into_read_ts(&read_only_ids_el_937c5af3_primary_k_fi),
                 gen_read_only_ids_into_read_ts(
                     &quote! {read_only_ids_returned_from_create_one.#primary_k_fi},
                 ),
@@ -4799,7 +4801,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let primary_k_ft_as_pg_type_update_as_pg_type_primary_k_read_only_ids_into_update_ts = {
             let method_call_ts = gen_primary_k_ft_as_pg_type_primary_k_method_call_ts(
                 &ReadOnlyIdsIntoUpdateSc,
-                &quote! {read_only_ids_el_937c5af3.#primary_k_fi},
+                &read_only_ids_el_937c5af3_primary_k_fi,
             );
             quote! {
                 <
@@ -4838,6 +4840,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     })
                 };
+            let ident_create_name_ts = quote! {ident_create};
+            let read_only_ids_returned_from_create_one_name_ts =
+                quote! {read_only_ids_returned_from_create_one};
             (
                 gen_fi_read_only_ids_merged_with_create_into_opt_value_read_ts(
                     &ReadOnlyIdsSc,
@@ -4846,17 +4851,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 ),
                 gen_fi_read_only_ids_merged_with_create_into_opt_value_read_ts(
                     &quote! {read_only_ids_from_try_create_one},
-                    &quote! {ident_create},
+                    &ident_create_name_ts,
                     &ShouldAddDotClone::False,
                 ),
                 gen_fi_read_only_ids_merged_with_create_into_opt_value_read_ts(
-                    &quote! {read_only_ids_returned_from_create_one},
+                    &read_only_ids_returned_from_create_one_name_ts,
                     &quote! {ident_create_default},
                     &ShouldAddDotClone::False,
                 ),
                 gen_fi_read_only_ids_merged_with_create_into_opt_value_read_ts(
-                    &quote! {read_only_ids_returned_from_create_one},
-                    &quote! {ident_create},
+                    &read_only_ids_returned_from_create_one_name_ts,
+                    &ident_create_name_ts,
                     &ShouldAddDotClone::True,
                 ),
             )
