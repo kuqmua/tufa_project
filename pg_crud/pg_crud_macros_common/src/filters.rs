@@ -35,11 +35,12 @@ use naming::{
     StrictlyToLeftOfRangeUcc, StrictlyToRightOfRangeUcc,
     param::{PgJsonTypeWhereSelfUcc, PgTypeWhereSelfUcc},
 };
+use optimal_pack::OptimalPack;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use strum_macros::{Display, EnumIter};
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Display, EnumIter, EnumExtension)]
+#[derive(Debug, Clone, Display, EnumIter, EnumExtension, OptimalPack)]
 pub enum PgTypeFilter {
     Equal { ident: Ts2 },
     DimOneEqual { ident: Ts2 },
@@ -218,7 +219,7 @@ impl PgFilter for PgTypeFilter {
     }
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Display, EnumIter, EnumExtension)]
+#[derive(Debug, Clone, Display, EnumIter, EnumExtension, OptimalPack)]
 pub enum PgJsonTypeFilter {
     Equal { ident: Ts2 },
     DimOneEqual { ident: Ts2 },

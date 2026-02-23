@@ -1,10 +1,11 @@
+use optimal_pack::OptimalPack;
 use serde_derive::{Deserialize, Serialize};
-#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize, OptimalPack)]
 pub struct Data {
     #[serde(rename = "entry", default)]
     pub entries: Vec<DataEl>,
 }
-#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize, OptimalPack)]
 pub struct DataEl {
     pub author: DataElAuthor,
     pub content: Option<String>,
@@ -15,7 +16,7 @@ pub struct DataEl {
     pub title: Option<String>,
     pub updated: Option<String>,
 }
-#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize, OptimalPack)]
 pub struct DataElAuthor {
     pub name: Option<String>,
     pub uri: Option<String>,

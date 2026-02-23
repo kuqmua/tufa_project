@@ -16,6 +16,7 @@ syn.workspace = true
 gen_quotes = {path = "../gen_quotes"}
 naming_macros = {path = "./naming_macros"}
 naming_common = {path = "./naming_common"}
+optimal_pack = {path = "../optimal_pack"}
 
 [lints]
 workspace = true

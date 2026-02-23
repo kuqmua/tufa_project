@@ -1,17 +1,18 @@
+use optimal_pack::OptimalPack;
 use serde_derive::{Deserialize, Serialize};
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize, OptimalPack)]
 pub struct Data {
     pub data: DataChildren,
 }
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize, OptimalPack)]
 pub struct DataChildren {
     pub children: Vec<DataChildrenEl>,
 }
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize, OptimalPack)]
 pub struct DataChildrenEl {
     pub data: DataChildrenElData,
 }
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize, OptimalPack)]
 pub struct DataChildrenElData {
     // media_embed ???
     // user_reports ???

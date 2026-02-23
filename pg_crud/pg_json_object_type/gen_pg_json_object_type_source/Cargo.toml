@@ -24,6 +24,7 @@ naming = {path = "../../../naming"}
 macros_helpers = {path = "../../../macros_helpers"}
 token_patterns = {path = "../../../token_patterns"}
 enum_extension_lib = {path = "../../../enum_extension_lib"}
+optimal_pack = {path = "../../../optimal_pack"}
 
 [lints]
 workspace = true

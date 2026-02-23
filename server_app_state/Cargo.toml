@@ -18,6 +18,7 @@ git_info = {path = "../git_info"}
 app_state = {path = "../app_state"}
 server_config = {path = "../server_config"}
 pg_crud = {path = "../pg_crud", features = ["test-utils"]}
+optimal_pack = {path = "../optimal_pack"}
 
 [lints]
 workspace = true

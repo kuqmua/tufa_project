@@ -1,6 +1,7 @@
 #[cfg(test)]
 mod tests {
     use macro_clippy_check_common::clippy_check;
+    use optimal_pack::OptimalPack;
     use proc_macro2::TokenStream as Ts2;
     use quote::quote;
     use token_patterns::AllowClippyArbitrarySourceItemOrdering;
@@ -32,8 +33,10 @@ itertools.workspace = true
 app_state = {path = "../../../app_state"}
 config_lib = {path = "../../../config_lib"}
 server_app_state = {path = "../../../server_app_state"}
-server_config = {path = "../../../server_config"}"#,
+server_config = {path = "../../../server_config"}
+optimal_pack = {path = "../../optimal_pack"}"#,
             &{
+                #[derive(OptimalPack)]
                 enum ShouldAddGenPgTablePrimaryK {
                     False,
                     True,
@@ -49,7 +52,7 @@ server_config = {path = "../../../server_config"}"#,
                             };
                         quote! {
                             #AllowClippyArbitrarySourceItemOrdering
-                            #[derive(Debug, Clone, Copy)]
+                            #[derive(Debug, Clone, Copy, optimal_pack::OptimalPack)]
                             #[pg_crud::gen_pg_table_config{{
                                 "create_many_write_into_file": "False",
                                 "create_one_write_into_file": "False",

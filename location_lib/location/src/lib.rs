@@ -4,6 +4,7 @@ use macros_helpers::{
     gen_serde_version_of_named_syn_vrt,
 };
 use naming::{IntoSerdeVersionSc, LocSc, ValueSc, WithSerdeUcc, param::SelfWithSerdeUcc};
+use optimal_pack::OptimalPack;
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -24,7 +25,7 @@ use token_patterns::StringTs;
     )
 )]
 pub fn location(input: Ts) -> Ts {
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, OptimalPack)]
     enum SuportedEnumVrt {
         Named,
         Unnamed,
@@ -87,7 +88,7 @@ pub fn location(input: Ts) -> Ts {
         };
     let gen_enum_ident_with_serde_ts = |ts: &dyn ToTokens| {
         quote! {
-            #[derive(Debug, thiserror::Error, serde::Serialize, serde::Deserialize)]
+            #[derive(Debug, thiserror::Error, serde::Serialize, serde::Deserialize, OptimalPack)]
             pub enum #ident_with_serde_ucc #maybe_generic_params_ts {
                 #ts
             }

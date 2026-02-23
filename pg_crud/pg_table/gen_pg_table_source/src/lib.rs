@@ -65,6 +65,7 @@ use naming::{
         UpdateQueryPartSelfSc,
     },
 };
+use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
     ColumnParamUnderscore, Dim, EqualOrEqualUsingFields, ImportPath, IncrParamUnderscore,
@@ -129,7 +130,7 @@ use token_patterns::{
 //* validate insert json field with json schema
 #[must_use]
 pub fn gen_pg_table(input: Ts2) -> Ts2 {
-    #[derive(Debug)]
+    #[derive(Debug, OptimalPack)]
     struct SynVrtWrapper {
         status_code: Option<StatusCode>,
         vrt: Variant,
@@ -159,9 +160,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         True,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(
-        Debug, Clone, Copy, AsRefStrEnumWithUnitFieldsToUccStr, AsRefStrEnumWithUnitFieldsToScStr,
-    )]
+    #[derive(Debug, Clone, Copy, AsRefStrEnumWithUnitFieldsToUccStr, AsRefStrEnumWithUnitFieldsToScStr, OptimalPack)]
     enum Operation {
         CreateMany,
         CreateOne,
@@ -303,7 +302,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(AsRefStrEnumWithUnitFieldsToScStr)]
+    #[derive(AsRefStrEnumWithUnitFieldsToScStr, OptimalPack)]
     enum OperationHttpMethod {
         Post,
         Patch,
@@ -319,7 +318,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         ReadOne,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, Display)]
+    #[derive(Debug, Display, OptimalPack)]
     enum GenPgTableAttr {
         CreateManyExtraErVrts,
         CreateOneExtraErVrts,
@@ -382,7 +381,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         Delete,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, Deserialize)]
+    #[derive(Debug, Deserialize, OptimalPack)]
     struct GenPgTableConfig {
         create_many_write_into_file: ShouldWriteTokenStreamIntoFile,
         create_one_write_into_file: ShouldWriteTokenStreamIntoFile,

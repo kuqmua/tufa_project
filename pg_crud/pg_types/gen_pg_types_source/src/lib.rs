@@ -29,6 +29,7 @@ use naming::{
         SelfTableTypeUcc, SelfUpdateForQueryUcc, SelfUpdateUcc, SelfWhereUcc,
     },
 };
+use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_common_and_macros_common::PgTypeGreaterThanVrt;
 use pg_crud_macros_common::{
@@ -69,7 +70,7 @@ use token_patterns::{
 #[must_use]
 pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, StrumDisplay)]
+    #[derive(Debug, StrumDisplay, OptimalPack)]
     enum RustTypeName {
         I16,
         I32,
@@ -125,7 +126,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, StrumDisplay)]
+    #[derive(Debug, StrumDisplay, OptimalPack)]
     enum PgTypeName {
         Int2,
         Int4,
@@ -187,9 +188,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(
-        Debug, Clone, PartialEq, Serialize, Deserialize, StrumDisplay, EnumIter, EnumExtension,
-    )]
+    #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StrumDisplay, EnumIter, EnumExtension, OptimalPack)]
     enum PgType {
         I16AsInt2,
         I32AsInt4,
@@ -369,9 +368,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     }
     // todo reuse it(move to pg_macros_common) if sqlx devs will add nested arr support
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(
-        Debug, Clone, PartialEq, Serialize, Deserialize, StrumDisplay, EnumIter, EnumExtension,
-    )]
+    #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StrumDisplay, EnumIter, EnumExtension, OptimalPack)]
     enum PgTypePattern {
         Stdrt,
         ArrDim1 { dim1_is_nullable: IsNullable },
@@ -401,7 +398,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, PartialEq, Serialize)]
+    #[derive(Debug, PartialEq, Serialize, OptimalPack)]
     struct PgTypeRecord {
         pg_type: PgType,
         is_nullable: IsNullable,
@@ -676,20 +673,20 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             }
         }
     }
-    #[derive(Debug, serde::Deserialize)]
+    #[derive(Debug, serde::Deserialize, OptimalPack)]
     enum GenPgTypesConfigVrt {
         All,
         Concrete(Vec<PgTypeRecord>),
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, serde::Deserialize)]
+    #[derive(Debug, serde::Deserialize, OptimalPack)]
     struct GenPgJsonTypesConfig {
         pg_table_columns_write_into_file: ShouldWriteTokenStreamIntoFile,
         whole_write_into_file: ShouldWriteTokenStreamIntoFile,
         vrt: GenPgTypesConfigVrt,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug)]
+    #[derive(Debug, OptimalPack)]
     enum PgTypeInitTryNew {
         StringAsText,
         SqlxTypesChronoNaiveTimeAsTime,
@@ -755,7 +752,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug)]
+    #[derive(Debug, OptimalPack)]
     enum PgTypeImplNewForDeserialize {
         SsqlxPgTypesPgIntervalAsInterval, //Ssqlx instead of Sqlx - just to fix clippy lint
         SqlxTypesChronoNaiveDateTimeAsTimestamp,
@@ -765,7 +762,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug)]
+    #[derive(Debug, OptimalPack)]
     enum PgTypeImplTryNewForDeserialize {
         StringAsText,
         SqlxTypesChronoNaiveTimeAsTime,
@@ -774,12 +771,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         SqlxPgTypesPgRangeI32AsInt4Range,
         SqlxPgTypesPgRangeI64AsInt8Range,
     }
-    #[derive(Debug)]
+    #[derive(Debug, OptimalPack)]
     enum PgTypeImplNewForDeserializeOrTryNewForDeserialize {
         NewForDeserialize(PgTypeImplNewForDeserialize),
         TryNewForDeserialize(PgTypeImplTryNewForDeserialize),
     }
-    #[derive(Debug)]
+    #[derive(Debug, OptimalPack)]
     enum PgTypeDeserialize {
         Derive,
         ImplNewForDeserializeOrTryNewForDeserialize(
@@ -899,7 +896,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     .fold(
         Vec::new(),
         |mut acc, el| {
-            #[derive(Clone)]
+            #[derive(Clone, OptimalPack)]
             struct PgTypeRecordHandle {
                 is_nullable: IsNullable,
                 pg_type_pattern: PgTypePattern,

@@ -22,6 +22,7 @@ macros_helpers = {path = "../../../macros_helpers"}
 naming = {path = "../../../naming"}
 token_patterns = {path = "../../../token_patterns"}
 pg_crud_macros_common = {path = "../../pg_crud_macros_common"}
+optimal_pack = {path = "../../../optimal_pack"}
 
 [lints]
 workspace = true

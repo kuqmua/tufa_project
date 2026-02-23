@@ -17,11 +17,12 @@ uuid.workspace = true
 thiserror.workspace = true
 location_lib = {path = "../../../location_lib"}
 pg_crud = {path = "../../../pg_crud", features = ["test-utils"]}
+optimal_pack = {path = "../../optimal_pack"}
 [features]
 test-utils = []"#,
             &{
                 let object_example_ts = quote!{
-                    #[derive(Debug, Clone, Copy)]
+                    #[derive(Debug, Clone, Copy, optimal_pack:OptimalPack)]
                     #[pg_crud::pg_json_object_type_config{
                         {
                             "pg_table_columns_write_into_pg_table_columns_using_pg_json_object_types": "False",

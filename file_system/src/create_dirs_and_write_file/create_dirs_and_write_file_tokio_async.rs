@@ -1,8 +1,9 @@
 use location_lib::{Location, loc, loc::Loc};
+use optimal_pack::OptimalPack;
 use std::{fs, io::Error as IoEr, path::Path};
 use thiserror::Error;
 use tokio::{fs::File, io::AsyncWriteExt};
-#[derive(Debug, Error, Location)]
+#[derive(Debug, Error, Location, OptimalPack)]
 pub enum CreateDirsAndWriteFileTokioAsyncEr {
     StdIoEr {
         #[eo_to_err_string]

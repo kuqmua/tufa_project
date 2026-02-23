@@ -20,6 +20,7 @@ token_patterns = {path = "../token_patterns"}
 gen_quotes = {path = "../gen_quotes"}
 naming = {path = "../naming"}
 gen_struct_or_enum_derive_ts_builder = {path = "./gen_struct_or_enum_derive_ts_builder"}
+optimal_pack = {path = "../optimal_pack"}
 
 [lints]
 workspace = true

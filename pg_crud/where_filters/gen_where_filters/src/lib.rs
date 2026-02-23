@@ -8,6 +8,7 @@ use naming::{
     ColumnSc, DimsIndexesSc, DimsSc, ErSc, IncrSc, PubSc, QuerySc, SelfSc, ValueSc,
     param::{PgJsonTypeWhereSelfUcc, PgTypeWhereSelfUcc},
 };
+use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
     ColumnParamUnderscore, ImportPath, IncrParamUnderscore, IsNeedToAddLogicalOperatorUnderscore,
@@ -24,7 +25,7 @@ use token_patterns::{
 };
 #[proc_macro]
 pub fn gen_where_filters(input_ts: Ts) -> Ts {
-    #[derive(Clone)]
+    #[derive(Clone, OptimalPack)]
     enum ShouldAddDeclOfStructIdentGeneric {
         False,
         True { maybe_extra_traits_ts: Option<Ts2> },
@@ -34,7 +35,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         PgType,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Clone)]
+    #[derive(Clone, OptimalPack)]
     enum PgTypePatternHandle {
         Stdrt,
         ArrDim1,
@@ -55,7 +56,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Clone)]
+    #[derive(Clone, OptimalPack)]
     enum DimNbr {
         One,
         Two,
@@ -103,7 +104,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, serde::Deserialize)]
+    #[derive(Debug, serde::Deserialize, OptimalPack)]
     struct GenWhereFiltersConfig {
         pg_types_write_into_file: ShouldWriteTokenStreamIntoFile,
         pg_json_types_write_into_file: ShouldWriteTokenStreamIntoFile,

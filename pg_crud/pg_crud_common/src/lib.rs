@@ -1,6 +1,7 @@
 use from_str::FromStr;
 use location_lib::{Location, ToErrString, loc, loc::Loc};
 use naming::{AscUcc, DescUcc, DisplayToScStr, DisplayToUccStr};
+use optimal_pack::OptimalPack;
 pub use pg_crud_common_and_macros_common::*;
 use schemars::JsonSchema;
 use serde::{Deserialize, Deserializer, Serialize};
@@ -297,21 +298,21 @@ pub trait PgTypeTestCases {
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, OptimalPack)]
 pub struct PgTypeGreaterThanTest<T: PgType> {
     pub vrt: PgTypeGreaterThanVrt,
     pub create: <T as PgType>::Create,
     pub greater_than: <T as PgType>::TableType,
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug)]
+#[derive(Debug, OptimalPack)]
 pub struct PgTypeLengthGreaterThanTest<T: PgType> {
     pub vrt: PgJsonTypeLengthGreaterThanVrt,
     pub create: <T as PgType>::Create,
     pub length_greater_than: UnsignedPartOfI32,
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug)]
+#[derive(Debug, OptimalPack)]
 pub struct PgJsonTypeLengthGreaterThanTest<T: PgJsonType> {
     pub vrt: PgJsonTypeLengthGreaterThanVrt,
     pub create: <T as PgJsonType>::Create,
@@ -431,7 +432,9 @@ pub trait PgTypeWhereFilter<'query_lifetime> {
     ) -> Result<String, QueryPartEr>;
 }
 //todo custom deserialization - must not contain more than one el
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema)]
+#[derive(
+    Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema, OptimalPack,
+)]
 pub struct NullableJsonObjectPgTypeWhereFilter<
     T: Debug
         + PartialEq
@@ -495,12 +498,12 @@ where
         ))]
     }
 }
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location, OptimalPack)]
 pub enum QueryPartEr {
     CheckedAdd { loc: Loc },
     WriteIntoBuffer { loc: Loc },
 }
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, OptimalPack)]
 pub struct PgTypeWhere<T> {
     logical_operator: LogicalOperator,
     value: NotEmptyUniqueVec<T>,
@@ -766,7 +769,9 @@ impl<T: Debug + PartialEq + Clone + AllEnumVrtsArrDefaultOptSomeVecOneEl> Defaul
         }
     }
 }
-#[derive(Debug, Default, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, FromStr)]
+#[derive(
+    Debug, Default, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, FromStr, OptimalPack,
+)]
 pub enum Order {
     #[serde(rename(serialize = "asc", deserialize = "asc"))]
     #[default]
@@ -797,12 +802,14 @@ impl Order {
         DisplayToUccStr::case(&self)
     }
 }
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, OptimalPack)]
 pub struct OrderBy<ColumnGeneric> {
     pub column: ColumnGeneric,
     pub order: Option<Order>,
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema)]
+#[derive(
+    Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema, OptimalPack,
+)]
 pub struct PaginationBase {
     limit: i64,
     offset: i64,
@@ -855,9 +862,11 @@ impl Default for PaginationBase {
         Self::new_unchecked(DEFAULT_PAGINATION_LIMIT, 0)
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, ToSchema, JsonSchema)]
+#[derive(
+    Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, ToSchema, JsonSchema, OptimalPack,
+)]
 pub struct PaginationStartsWithZero(PaginationBase);
-#[derive(Debug, Serialize, Deserialize, Error, Location)]
+#[derive(Debug, Serialize, Deserialize, Error, Location, OptimalPack)]
 pub enum PaginationStartsWithZeroTryNewEr {
     LimitIsLessThanOrEqualToZero {
         #[eo_to_err_string_serde]
@@ -1098,7 +1107,9 @@ impl DefaultOptSomeVecOneElMaxPageSize for PaginationStartsWithZero {
     }
 }
 //this needed coz serde Option<Opt<T>> #[serde(skip_serializing_if = "Option::is_none")] - if both opts: inner and parent is null then it skip - its not correct
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema)]
+#[derive(
+    Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema, OptimalPack,
+)]
 pub struct Value<T> {
     pub value: T,
 }
@@ -1106,7 +1117,7 @@ pub struct Value<T> {
 pub trait IsStringEmpty {
     fn is_string_empty(&self) -> bool;
 }
-#[derive(Debug, Serialize, Deserialize, Error, Location)]
+#[derive(Debug, Serialize, Deserialize, Error, Location, OptimalPack)]
 pub enum NotEmptyUniqueVecTryNewEr<T> {
     IsEmpty {
         loc: Loc,
@@ -1117,7 +1128,7 @@ pub enum NotEmptyUniqueVecTryNewEr<T> {
         loc: Loc,
     },
 }
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, OptimalPack)]
 pub struct NotEmptyUniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
     #[must_use]
@@ -1293,13 +1304,13 @@ where
         Ok(acc)
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, OptimalPack)]
 pub struct JsonFieldRights {
     can_create: bool,
     can_read: bool,
     can_update: bool,
 }
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, OptimalPack)]
 pub struct NonPrimaryKPgTypeReadOnlyIds(pub Value<Option<()>>);
 impl Decode<'_, Postgres> for NonPrimaryKPgTypeReadOnlyIds {
     fn decode(value: PgValueRef<'_>) -> Result<Self, BoxDynError> {
@@ -1322,7 +1333,7 @@ impl Default for NonPrimaryKPgTypeReadOnlyIds {
         Self(Value { value: None })
     }
 }
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, OptimalPack)]
 pub enum EqualOperator {
     Equal,
     IsNull,
@@ -1339,9 +1350,13 @@ impl EqualOperator {
 pub trait PgTypeEqualOperator {
     fn operator(&self) -> EqualOperator;
 }
-#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Serialize, JsonSchema)]
+#[derive(
+    Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Serialize, JsonSchema, OptimalPack,
+)]
 pub struct UnsignedPartOfI32(i32); //todo why exactly i32? maybe different types for pg type and pg json type
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location, JsonSchema)]
+#[derive(
+    Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location, JsonSchema, OptimalPack,
+)]
 pub enum UnsignedPartOfI32TryFromI32Er {
     LessThanZero {
         #[eo_to_err_string_serde]
@@ -1458,9 +1473,13 @@ impl DefaultOptSomeVecOneEl for UnsignedPartOfI32 {
         Self(0)
     }
 }
-#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Serialize, JsonSchema)]
+#[derive(
+    Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Serialize, JsonSchema, OptimalPack,
+)]
 pub struct NotZeroUnsignedPartOfI32(UnsignedPartOfI32);
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location, JsonSchema)]
+#[derive(
+    Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location, JsonSchema, OptimalPack,
+)]
 pub enum NotZeroUnsignedPartOfI32TryFromI32Er {
     IsZero {
         loc: Loc,
@@ -1585,7 +1604,9 @@ impl DefaultOptSomeVecOneEl for NotZeroUnsignedPartOfI32 {
         Self(DefaultOptSomeVecOneEl::default_opt_some_vec_one_el())
     }
 }
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema)]
+#[derive(
+    Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema, OptimalPack,
+)]
 pub enum SingleOrMultiple<T: Debug + PartialEq + Clone> {
     Multiple(NotEmptyUniqueVec<T>),
     Single(T),

@@ -1,5 +1,6 @@
 use location_lib::loc::Loc;
 use location_lib::{Location, loc};
+use optimal_pack::OptimalPack;
 use pg_crud_common::{
     DEFAULT_PAGINATION_LIMIT, DefaultOptSomeVecOneEl, DefaultOptSomeVecOneElMaxPageSize,
     PaginationBase, PgTypeWhereFilter, QueryPartEr,
@@ -11,9 +12,11 @@ use sqlx::{Postgres, postgres::PgArguments, query::Query};
 use std::fmt::Display;
 use thiserror::Error;
 use utoipa::ToSchema;
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, ToSchema, JsonSchema)]
+#[derive(
+    Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, ToSchema, JsonSchema, OptimalPack,
+)]
 pub struct PaginationStartsWithOne(PaginationBase);
-#[derive(Debug, Serialize, Deserialize, Error, Location)]
+#[derive(Debug, Serialize, Deserialize, Error, Location, OptimalPack)]
 pub enum PaginationStartsWithOneTryNewEr {
     LimitIsLessThanOrEqualToZero {
         #[eo_to_err_string_serde]

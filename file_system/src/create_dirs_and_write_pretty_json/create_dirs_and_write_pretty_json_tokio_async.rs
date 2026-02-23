@@ -1,8 +1,9 @@
 use location_lib::{Location, loc, loc::Loc};
+use optimal_pack::OptimalPack;
 use serde_json::{Error as SerdeJsonEr, Value as SerdeJsonValue, to_string_pretty};
 use std::path::Path;
 use thiserror::Error;
-#[derive(Debug, Error, Location)]
+#[derive(Debug, Error, Location, OptimalPack)]
 pub enum CreateDirsAndWritePrettyJsonTokioAsyncEr {
     SerdeJson {
         #[eo_to_err_string]

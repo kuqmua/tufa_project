@@ -1,6 +1,7 @@
+use optimal_pack::OptimalPack;
 #[allow(unused_qualifications)]
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjectType)]
+#[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjectType, OptimalPack)]
 #[pg_crud::pg_json_object_type_config{
     {
         "pg_table_columns_write_into_pg_table_columns_using_pg_json_object_types": "False",
@@ -845,7 +846,7 @@ pub struct Animal {
 }
 #[allow(unused_qualifications)]
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjectType)]
+#[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjectType, OptimalPack)]
 #[pg_crud::pg_json_object_type_config{
     {
         "pg_table_columns_write_into_pg_table_columns_using_pg_json_object_types": "False",
@@ -1008,7 +1009,7 @@ pub struct Doggie {
 }
 #[allow(unused_qualifications)]
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjectType)]
+#[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjectType, OptimalPack)]
 #[pg_crud::pg_json_object_type_config{
     {
         "pg_table_columns_write_into_pg_table_columns_using_pg_json_object_types": "False",

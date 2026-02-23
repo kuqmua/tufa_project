@@ -3,10 +3,11 @@ use config_lib::{
     GenGetterTraitsForStructFields, TryFromEnv,
     types::{SourcePlaceType, TracingLevel},
 };
+use optimal_pack::OptimalPack;
 use secrecy::SecretBox;
 use std::net::SocketAddr;
 use thiserror::Error;
-#[derive(Debug, TryFromEnv, GenGetterTraitsForStructFields)]
+#[derive(Debug, TryFromEnv, GenGetterTraitsForStructFields, OptimalPack)]
 pub struct Config {
     //todo maybe auto gen .env and docker-compose environment variables. and maybe write in directly into files
     pub database_url: SecretBox<String>,

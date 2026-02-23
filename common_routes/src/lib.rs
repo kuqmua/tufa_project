@@ -7,6 +7,7 @@ use axum::{
 };
 use constants::SLASH_SWAGGER_UI;
 use git_info::GetGitCommitLink;
+use optimal_pack::OptimalPack;
 use serde::Serialize;
 use std::sync::Arc;
 type DynArcCommonRoutesParamsSendSync = Arc<dyn CommonRoutesParams>;
@@ -18,7 +19,7 @@ pub fn common_routes(app_state_b9fc2d94: DynArcCommonRoutesParamsSendSync) -> Ro
             "/git_info",
             get(
                 async |State(app_state_76fb2013): State<DynArcCommonRoutesParamsSendSync>| {
-                    #[derive(Debug, Serialize)]
+                    #[derive(Debug, Serialize, OptimalPack)]
                     struct GitInfo {
                         commit: String,
                     }
@@ -34,7 +35,7 @@ pub fn common_routes(app_state_b9fc2d94: DynArcCommonRoutesParamsSendSync) -> Ro
         .with_state(Arc::<dyn CommonRoutesParams>::clone(&app_state_b9fc2d94))
         .fallback(
             async |uri: Uri, State(app_state_19103bd5): State<DynArcCommonRoutesParamsSendSync>| {
-                #[derive(Debug, Serialize)]
+                #[derive(Debug, Serialize, OptimalPack)]
                 struct NotFoundHandle {
                     commit: String,
                     message: String,

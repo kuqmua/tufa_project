@@ -1,19 +1,22 @@
+use convert_case::{Case, Casing};
 use gen_quotes::dq_ts;
-use naming::ToTokensToScStr;
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
-use quote::{quote, ToTokens};
+use quote::{ToTokens, quote};
 use syn::{Data, DeriveInput, Fields, Ident, parse};
 #[proc_macro_derive(OptimalPack)]
 pub fn optimal_pack(input_ts: Ts) -> Ts {
     let di: DeriveInput = parse(input_ts).expect("a1d306de");
     let ident = &di.ident;
     let ident_dq_ts = dq_ts(&ident);
-    let ident_test_optimal_pack = format!("{}_test_optimal_pack", ToTokensToScStr::case(ident))
-        .parse::<Ts2>()
-        .expect("63213aaa");
-    let gen_unnamed_ts = |first_ts: &dyn ToTokens, second_ts: &dyn ToTokens|quote!{(#first_ts, std::mem::align_of::<#second_ts>())};
-    let gen_fi = |i: usize|Ident::new(&format!("field_{i}"), ident.span());
+    let ident_test_optimal_pack = format!(
+        "{}_test_optimal_pack",
+        Casing::to_case(&ident.to_string(), Case::Snake)
+    )
+    .parse::<Ts2>()
+    .expect("63213aaa");
+    let gen_unnamed_ts = |first_ts: &dyn ToTokens, second_ts: &dyn ToTokens| quote! {(#first_ts, std::mem::align_of::<#second_ts>())};
+    let gen_fi = |i: usize| Ident::new(&format!("field_{i}"), ident.span());
     let ts = match &di.data {
         Data::Struct(data) => {
             let fields = match &data.fields {
@@ -23,13 +26,12 @@ pub fn optimal_pack(input_ts: Ts) -> Ts {
                     return Ts::new();
                 }
             };
-            let ts = fields.iter().enumerate().map(|(i, field)|gen_unnamed_ts(
-                &dq_ts(&field.ident.as_ref().map_or_else(
-                    ||gen_fi(i),
-                    Clone::clone,
-                )),
-                &field.ty
-            ));
+            let ts = fields.iter().enumerate().map(|(i, field)| {
+                gen_unnamed_ts(
+                    &dq_ts(&field.ident.as_ref().map_or_else(|| gen_fi(i), Clone::clone)),
+                    &field.ty,
+                )
+            });
             quote! {
                 let fields = [#(#ts),*];
                 for i in 1..fields.len() {
@@ -59,13 +61,12 @@ pub fn optimal_pack(input_ts: Ts) -> Ts {
                 if fields.is_empty() {
                     continue;
                 }
-                let fields_ts = fields.iter().enumerate().map(|(i, field)|gen_unnamed_ts(
-                    &dq_ts(&field.ident.as_ref().map_or_else(
-                        ||gen_fi(i),
-                        Clone::clone,
-                    )),
-                    &field.ty
-                ));
+                let fields_ts = fields.iter().enumerate().map(|(i, field)| {
+                    gen_unnamed_ts(
+                        &dq_ts(&field.ident.as_ref().map_or_else(|| gen_fi(i), Clone::clone)),
+                        &field.ty,
+                    )
+                });
                 vars_ts.push(quote! {{
                     let fields = [#(#fields_ts),*];
                     for i in 1..fields.len() {

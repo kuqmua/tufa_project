@@ -1,4 +1,5 @@
 use location_lib::{Location, loc, loc::Loc};
+use optimal_pack::OptimalPack;
 use pg_crud_common::{
     DefaultOptSomeVecOneEl, NotEmptyUniqueVecTryNewEr, PgTypeWhereFilter, QueryPartEr,
     incr_checked_add_one_returning_incr,
@@ -15,7 +16,9 @@ gen_where_filters::gen_where_filters!({
     "pg_json_types_write_into_file": "False",
     "whole_write_into_file": "False"
 });
-#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+#[derive(
+    Debug, Default, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema, OptimalPack,
+)]
 pub enum EncodeFormat {
     #[default]
     Base64,
@@ -37,7 +40,7 @@ impl DefaultOptSomeVecOneEl for EncodeFormat {
     }
 }
 //difference between NotEmptyUniqueVec and PgJsonTypeNotEmptyUniqueVec only in pg_crud_common::DefaultOptSomeVecOneEl impl with different generic requirement and PgTypeWhereFilter
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, OptimalPack)]
 pub struct PgJsonTypeNotEmptyUniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
     #[must_use]
@@ -218,7 +221,7 @@ where
         }
     }
 }
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, OptimalPack)]
 pub struct RegexRegex(pub Regex);
 // #[automatically_derived]
 // impl ::core::marker::StructuralPartialEq for RegexRegex {}
@@ -354,7 +357,7 @@ impl DefaultOptSomeVecOneEl for RegexRegex {
         Self(Regex::new("[a-z]+").expect("22a9eda5"))
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema, OptimalPack)]
 pub enum RegexCase {
     Insensitive,
     Sensitive,
@@ -374,7 +377,7 @@ impl RegexCase {
     }
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, JsonSchema, OptimalPack)]
 pub struct Between<T>
 where
     T: Type<Postgres> + for<'__> Encode<'__, Postgres>,
@@ -382,7 +385,7 @@ where
     start: T,
     end: T,
 }
-#[derive(Debug, Clone, Serialize, Deserialize, Error, Location)]
+#[derive(Debug, Clone, Serialize, Deserialize, Error, Location, OptimalPack)]
 pub enum BetweenTryNewEr<T> {
     StartMoreOrEqualToEnd {
         #[eo_to_err_string_serde]
@@ -627,7 +630,7 @@ impl<'lifetime, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lif
         Ok(format!("between ${start_incr} and ${end_incr}"))
     }
 }
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, OptimalPack)]
 pub struct PgTypeNotEmptyUniqueVec<T>(Vec<T>);
 #[allow(clippy::arbitrary_source_item_ordering)]
 impl<T: PartialEq + Clone> PgTypeNotEmptyUniqueVec<T> {
@@ -746,9 +749,11 @@ impl<T> From<PgTypeNotEmptyUniqueVec<T>> for Vec<T> {
         v.0
     }
 }
-#[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, Serialize, JsonSchema)]
+#[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, Serialize, JsonSchema, OptimalPack)]
 pub struct BoundedVec<T, const LENGTH: usize>(Vec<T>);
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location, JsonSchema)]
+#[derive(
+    Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location, JsonSchema, OptimalPack,
+)]
 pub enum BoundedVecTryNewEr {
     LengthIsNotCorrect {
         #[eo_to_err_string_serde]

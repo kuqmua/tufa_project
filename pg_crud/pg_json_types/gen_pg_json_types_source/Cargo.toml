@@ -24,6 +24,7 @@ panic_location = {path = "../../../panic_location"}
 macros_helpers = {path = "../../../macros_helpers"}
 naming = {path = "../../../naming"}
 token_patterns = {path = "../../../token_patterns"}
+optimal_pack = {path = "../../../optimal_pack"}
 
 [lints]
 workspace = true

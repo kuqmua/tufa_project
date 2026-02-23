@@ -1,8 +1,9 @@
 pub use naming::GITHUB_URL;
 use serde_derive::{Deserialize, Serialize};
+// use optimal_pack::OptimalPack;
 pub const PROJECT_GIT_INFO: ProjectGitInfo<'_> =
     compile_time_git_info::compile_time_project_git_info!();
-#[derive(Debug, Serialize, Deserialize, Clone, Hash, PartialEq, Eq, Default)]
+#[derive(Debug, Serialize, Deserialize, Clone, Hash, PartialEq, Eq, Default)] //todo , OptimalPack
 pub struct ProjectGitInfo<'commit_lifetime> {
     pub commit: &'commit_lifetime str,
 }

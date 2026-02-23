@@ -3,6 +3,7 @@ use axum::{Router, serve};
 use common_routes::common_routes;
 use git_info::PROJECT_GIT_INFO;
 use num_cpus::get;
+use optimal_pack::OptimalPack;
 use secrecy::ExposeSecret;
 use server_app_state::ServerAppState;
 use server_config::Config;
@@ -58,7 +59,7 @@ fn main() {
                     //todo partialy move to gen postresql crud impl (except git_info route)
                     // .merge(utoipa_swagger_ui::SwaggerUi::new(constants::SLASH_SWAGGER_UI).url("/api-docs/openapi.json", {
                     //         // er: needless use of `for_each`
-                    //         // #[derive(utoipa::OpenApi)]
+                    //         // #[derive(utoipa::OpenApi, OptimalPack)]
                     //     //     #[openapi(
                     //     //     paths(
                     //     //         server_table_example::server::routes::git_info::git_info,

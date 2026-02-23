@@ -19,6 +19,7 @@ use naming::{
         SelfUpdateUcc, SelfWhereUcc,
     },
 };
+use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, DimIndexNbr, ImportPath, IsNullable,
@@ -54,7 +55,7 @@ use token_patterns::{
 #[must_use]
 pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, Display)]
+    #[derive(Debug, Display, OptimalPack)]
     enum RustTypeName {
         I8,
         I16,
@@ -89,7 +90,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             }
         }
     }
-    #[derive(Debug)]
+    #[derive(Debug, OptimalPack)]
     enum PgJsonTypeName {
         Boolean,
         Nbr,
@@ -127,9 +128,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(
-        Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize, Display, EnumIter, EnumExtension,
-    )]
+    #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize, Display, EnumIter, EnumExtension, OptimalPack)]
     enum PgJsonType {
         I8AsJsonbNbr,
         I16AsJsonbNbr,
@@ -154,9 +153,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(
-        Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize, Display, EnumIter, EnumExtension,
-    )]
+    #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize, Display, EnumIter, EnumExtension, OptimalPack)]
     enum Pattern {
         Stdrt,
         ArrDim1 {
@@ -306,14 +303,14 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
+    #[derive(Debug, PartialEq, Eq, Hash, Serialize, Deserialize, OptimalPack)]
     struct Record {
         pg_json_type: PgJsonType,
         is_nullable: IsNullable,
         pattern: Pattern,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, Deserialize)]
+    #[derive(Debug, Deserialize, OptimalPack)]
     enum ConfigVrt {
         All,
         WithoutDims,
@@ -324,7 +321,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         Concrete(Vec<Record>),
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, Deserialize)]
+    #[derive(Debug, Deserialize, OptimalPack)]
     struct GenPgJsonTypesConfig {
         pg_table_columns_content_write_into_pg_table_columns_using_pg_json_types:
             ShouldWriteTokenStreamIntoFile,
@@ -459,7 +456,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         acc
     }.into_iter().fold(Vec::new(), |mut acc, el| {
         for el0 in {
-            #[derive(Clone)]
+            #[derive(Clone, OptimalPack)]
             struct RecordHandle {
                 is_nullable: IsNullable,
                 pattern: Pattern,
@@ -1157,7 +1154,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             IsNullable::False => gen_pg_type_where_ts(
                 &AllowClippyArbitrarySourceItemOrdering,
                 &{
-                    #[derive(Debug, Clone)]
+                    #[derive(Debug, Clone, OptimalPack)]
                     enum PgJsonTypeSpecific {
                         Bool,
                         Nbr,

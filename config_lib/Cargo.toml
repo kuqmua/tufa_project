@@ -23,6 +23,7 @@ enum_extension_lib = {path = "../enum_extension_lib"}
 try_from_env = {path = "./try_from_env"}
 gen_getter_traits_for_struct_fields = {path = "./gen_getter_traits_for_struct_fields"}
 impl_display_as_debug = {path = "../impl_display_as_debug"}
+optimal_pack = {path = "../optimal_pack"}
 
 [lints]
 workspace = true

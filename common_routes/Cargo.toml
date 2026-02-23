@@ -14,6 +14,7 @@ axum.workspace = true
 serde.workspace = true
 constants = {path = "../constants"}
 git_info = {path = "../git_info"}
+optimal_pack = {path = "../optimal_pack"}
 
 [lints]
 workspace = true

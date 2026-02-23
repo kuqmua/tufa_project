@@ -9,7 +9,7 @@ use std::{
     error::Error,
     fmt::{Display, Formatter, Result as FmtResult},
 };
-#[derive(Debug, Clone, Copy, Serialize)]
+#[derive(Debug, Clone, Copy, Serialize, OptimalPack)]
 pub struct ServerPort(u16);
 impl Display for ServerPort {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {

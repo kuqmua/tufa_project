@@ -48,7 +48,7 @@ pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
             let (ucc_struct_decl_ts, sc_struct_decl_ts) = {
                 let gen_struct_decl = |ts: &dyn ToTokens| {
                     quote! {
-                        #[derive(Debug)]
+                        #[derive(Debug, optimal_pack::OptimalPack)]
                         pub struct #ts;
                     }
                 };
@@ -189,7 +189,7 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 quote!{naming_common::#ts}
             };
             quote! {
-                #[derive(Debug)]
+                #[derive(Debug, optimal_pack::OptimalPack)]
                 pub struct #struct_ident_ts(String);
                 impl #struct_ident_ts {
                     fn wrap(v: &dyn std::fmt::Display) -> Self {

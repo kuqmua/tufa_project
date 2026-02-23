@@ -1,5 +1,6 @@
+use optimal_pack::OptimalPack;
 use teloxide::{Bot, prelude::Requester, repl, types::Message, utils::command::BotCommands};
-#[derive(BotCommands, Clone)]
+#[derive(BotCommands, Clone, OptimalPack)]
 #[command(
     rename_rule = "lowercase",
     description = "These commands are supported:"
