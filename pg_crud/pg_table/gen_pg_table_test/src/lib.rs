@@ -22,6 +22,7 @@ utoipa.workspace = true
 git_info = {path = "../../../git_info"}
 location_lib = {path = "../../../location_lib"}
 pg_crud = {path = "../../../pg_crud", features = ["test-utils"]}
+optimal_pack = {path = "../../../optimal_pack"}
 [dev-dependencies]
 num_cpus.workspace = true
 futures.workspace = true
@@ -33,8 +34,7 @@ itertools.workspace = true
 app_state = {path = "../../../app_state"}
 config_lib = {path = "../../../config_lib"}
 server_app_state = {path = "../../../server_app_state"}
-server_config = {path = "../../../server_config"}
-optimal_pack = {path = "../../../optimal_pack"}"#,
+server_config = {path = "../../../server_config"}"#,
             &{
                 #[derive(OptimalPack)]
                 enum ShouldAddGenPgTablePrimaryK {
