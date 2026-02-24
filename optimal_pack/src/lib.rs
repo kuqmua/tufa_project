@@ -1,7 +1,5 @@
-// use convert_case::{Case, Casing};
 use gen_quotes::dq_ts;
 use proc_macro::TokenStream as Ts;
-use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use syn::{Data, DeriveInput, Fields, GenericParam, Ident, Lifetime, parse, visit_mut::VisitMut};
 #[proc_macro_derive(OptimalPack)]
@@ -106,22 +104,6 @@ pub fn optimal_pack(input_ts: Ts) -> Ts {
     if has_type_params {
         return Ts::new();
     }
-    let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
-    let args_ts = {
-        let acc_ts: Vec<_> = generics
-            .params
-            .iter()
-            .map(|p| match p {
-                GenericParam::Lifetime(_) => quote! {'static},
-                GenericParam::Type(_) | GenericParam::Const(_) => panic!("faec15c0"),
-            })
-            .collect();
-        if acc_ts.is_empty() {
-            Ts2::new()
-        } else {
-            quote! {::<#(#acc_ts),*>}
-        }
-    };
     let generated = quote! {
         #[allow(unused_qualifications)]
         const _: () = {
