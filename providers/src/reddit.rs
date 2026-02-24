@@ -12,6 +12,7 @@ pub struct DataChildren {
 pub struct DataChildrenEl {
     pub data: DataChildrenElData,
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize, OptimalPack)]
 pub struct DataChildrenElData {
     // media_embed ???
@@ -29,37 +30,19 @@ pub struct DataChildrenElData {
     // mod_reports ???
     // media ???
     //////////
-    pub allow_live_comments: Option<bool>,
-    pub archived: Option<bool>,
     pub author: Option<String>,
     pub author_fullname: Option<String>,
     pub created: Option<f64>,
     pub created_utc: Option<f64>,
     pub domain: Option<String>,
     pub downs: Option<f64>,
-    pub hidden: Option<bool>,
     pub id: Option<String>,
-    pub is_crosspostable: Option<bool>,
-    pub is_meta: Option<bool>,
-    pub is_original_content: Option<bool>,
-    pub is_reddit_media_domain: Option<bool>,
-    pub is_self: Option<bool>,
-    pub is_video: Option<bool>,
     pub link: Option<String>,
-    pub locked: Option<bool>,
-    pub media_only: Option<bool>,
     pub name: Option<String>,
     pub num_comments: Option<u64>,
-    pub over_18: Option<bool>,
     pub permalink: Option<String>,
-    pub pinned: Option<bool>,
-    pub quarantine: Option<bool>,
-    pub saved: Option<bool>,
     pub score: Option<f64>,
     pub selftext: Option<String>,
-    pub send_replies: Option<bool>,
-    pub spoiler: Option<bool>,
-    pub stickied: Option<bool>,
     pub subreddit: Option<String>,
     pub subreddit_id: Option<String>,
     pub subreddit_subscribers: Option<f64>,
@@ -70,6 +53,24 @@ pub struct DataChildrenElData {
     pub upvote_ratio: Option<f64>,
     pub url: Option<String>,
     pub url_overridden_by_dest: Option<String>,
+    pub allow_live_comments: Option<bool>,
+    pub archived: Option<bool>,
+    pub hidden: Option<bool>,
+    pub is_crosspostable: Option<bool>,
+    pub is_meta: Option<bool>,
+    pub is_original_content: Option<bool>,
+    pub is_reddit_media_domain: Option<bool>,
+    pub is_self: Option<bool>,
+    pub is_video: Option<bool>,
+    pub locked: Option<bool>,
+    pub media_only: Option<bool>,
+    pub over_18: Option<bool>,
+    pub pinned: Option<bool>,
+    pub quarantine: Option<bool>,
+    pub saved: Option<bool>,
+    pub send_replies: Option<bool>,
+    pub spoiler: Option<bool>,
+    pub stickied: Option<bool>,
     pub visited: Option<bool>,
 }
 // "approved_at_utc": null,//dont think so
