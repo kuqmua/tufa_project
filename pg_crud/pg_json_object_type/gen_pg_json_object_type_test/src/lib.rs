@@ -22,7 +22,7 @@ optimal_pack = {path = "../../../optimal_pack"}
 test-utils = []"#,
             &{
                 let object_example_ts = quote!{
-                    #[derive(Debug, Clone, Copy, optimal_pack:OptimalPack)]
+                    #[derive(Debug, Clone, Copy, optimal_pack::OptimalPack)]
                     #[pg_crud::pg_json_object_type_config{
                         {
                             "pg_table_columns_write_into_pg_table_columns_using_pg_json_object_types": "False",
