@@ -160,7 +160,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         True,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, Clone, Copy, AsRefStrEnumWithUnitFieldsToUccStr, AsRefStrEnumWithUnitFieldsToScStr, OptimalPack)]
+    #[derive(
+        Debug,
+        Clone,
+        Copy,
+        AsRefStrEnumWithUnitFieldsToUccStr,
+        AsRefStrEnumWithUnitFieldsToScStr,
+        OptimalPack,
+    )]
     enum Operation {
         CreateMany,
         CreateOne,

@@ -128,7 +128,19 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize, Display, EnumIter, EnumExtension, OptimalPack)]
+    #[derive(
+        Debug,
+        Clone,
+        PartialEq,
+        Eq,
+        Hash,
+        Serialize,
+        Deserialize,
+        Display,
+        EnumIter,
+        EnumExtension,
+        OptimalPack,
+    )]
     enum PgJsonType {
         I8AsJsonbNbr,
         I16AsJsonbNbr,
@@ -153,7 +165,19 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize, Display, EnumIter, EnumExtension, OptimalPack)]
+    #[derive(
+        Debug,
+        Clone,
+        PartialEq,
+        Eq,
+        Hash,
+        Serialize,
+        Deserialize,
+        Display,
+        EnumIter,
+        EnumExtension,
+        OptimalPack,
+    )]
     enum Pattern {
         Stdrt,
         ArrDim1 {

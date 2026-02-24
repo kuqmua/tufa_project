@@ -188,7 +188,17 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StrumDisplay, EnumIter, EnumExtension, OptimalPack)]
+    #[derive(
+        Debug,
+        Clone,
+        PartialEq,
+        Serialize,
+        Deserialize,
+        StrumDisplay,
+        EnumIter,
+        EnumExtension,
+        OptimalPack,
+    )]
     enum PgType {
         I16AsInt2,
         I32AsInt4,
@@ -368,7 +378,17 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     }
     // todo reuse it(move to pg_macros_common) if sqlx devs will add nested arr support
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StrumDisplay, EnumIter, EnumExtension, OptimalPack)]
+    #[derive(
+        Debug,
+        Clone,
+        PartialEq,
+        Serialize,
+        Deserialize,
+        StrumDisplay,
+        EnumIter,
+        EnumExtension,
+        OptimalPack,
+    )]
     enum PgTypePattern {
         Stdrt,
         ArrDim1 { dim1_is_nullable: IsNullable },

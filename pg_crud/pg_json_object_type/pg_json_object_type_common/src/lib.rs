@@ -5,7 +5,7 @@ use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 use utoipa::ToSchema;
-#[derive(Debug, Serialize, Deserialize, Error, Location)]//todo , OptimalPack
+#[derive(Debug, Serialize, Deserialize, Error, Location)] //todo , OptimalPack
 pub enum UniqueVecTryNewEr<T> {
     NotUnique {
         #[eo_to_err_string_serde]

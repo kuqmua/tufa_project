@@ -70,7 +70,8 @@ pub enum IsStdrtNotNull {
     False,
     True,
 }
-#[derive(Debug,
+#[derive(
+    Debug,
     Default,
     Clone,
     Copy,
@@ -81,7 +82,9 @@ pub enum IsStdrtNotNull {
     Deserialize,
     Display,
     EnumIter,
-    EnumExtension, OptimalPack)]
+    EnumExtension,
+    OptimalPack,
+)]
 pub enum IsNullable {
     #[default]
     False,

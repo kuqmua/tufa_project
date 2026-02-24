@@ -3,7 +3,7 @@ use gen_quotes::dq_ts;
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
-use syn::{Data, DeriveInput, Fields, Ident, GenericParam, parse};
+use syn::{Data, DeriveInput, Fields, GenericParam, Ident, parse};
 #[proc_macro_derive(OptimalPack)]
 pub fn optimal_pack(input_ts: Ts) -> Ts {
     let di: DeriveInput = parse(input_ts).expect("a1d306de");
@@ -91,22 +91,25 @@ pub fn optimal_pack(input_ts: Ts) -> Ts {
         }
     };
     let generics = &di.generics;
-    let has_type_params = generics.params.iter().any(|p| matches!(p, GenericParam::Type(_) | GenericParam::Const(_)));
+    let has_type_params = generics
+        .params
+        .iter()
+        .any(|p| matches!(p, GenericParam::Type(_) | GenericParam::Const(_)));
     assert!(!has_type_params, "60b8c3a0");
     let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
     let args_ts = {
-        let acc_ts: Vec<_> = generics.params.iter().map(|p| {
-            match p {
+        let acc_ts: Vec<_> = generics
+            .params
+            .iter()
+            .map(|p| match p {
                 GenericParam::Lifetime(_) => quote! {'static},
-                GenericParam::Type(_) |
-                GenericParam::Const(_) => panic!("faec15c0"),
-            }
-        }).collect();
+                GenericParam::Type(_) | GenericParam::Const(_) => panic!("faec15c0"),
+            })
+            .collect();
         if acc_ts.is_empty() {
             Ts2::new()
-        }
-        else {
-            quote!{::<#(#acc_ts),*>}
+        } else {
+            quote! {::<#(#acc_ts),*>}
         }
     };
     let generated = quote! {
