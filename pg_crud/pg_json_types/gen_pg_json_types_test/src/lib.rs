@@ -18,7 +18,7 @@ location_lib = {path = "../../../location_lib"}
 pg_crud_common = {path = "../../pg_crud_common"}
 gen_pg_json_types_common = {path = "../gen_pg_json_types_common"}
 where_filters = {path = "../../where_filters"}
-optimal_pack = {path = "../../optimal_pack"}
+optimal_pack = {path = "../../../optimal_pack"}
 [dev-dependencies]
 uuid.workspace = true
 [features]

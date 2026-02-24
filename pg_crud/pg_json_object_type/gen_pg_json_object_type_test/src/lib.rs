@@ -17,7 +17,7 @@ uuid.workspace = true
 thiserror.workspace = true
 location_lib = {path = "../../../location_lib"}
 pg_crud = {path = "../../../pg_crud", features = ["test-utils"]}
-optimal_pack = {path = "../../optimal_pack"}
+optimal_pack = {path = "../../../optimal_pack"}
 [features]
 test-utils = []"#,
             &{

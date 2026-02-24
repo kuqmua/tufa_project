@@ -34,7 +34,7 @@ app_state = {path = "../../../app_state"}
 config_lib = {path = "../../../config_lib"}
 server_app_state = {path = "../../../server_app_state"}
 server_config = {path = "../../../server_config"}
-optimal_pack = {path = "../../optimal_pack"}"#,
+optimal_pack = {path = "../../../optimal_pack"}"#,
             &{
                 #[derive(OptimalPack)]
                 enum ShouldAddGenPgTablePrimaryK {
