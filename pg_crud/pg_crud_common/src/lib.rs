@@ -503,6 +503,7 @@ pub enum QueryPartEr {
     CheckedAdd { loc: Loc },
     WriteIntoBuffer { loc: Loc },
 }
+#[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
 pub struct PgTypeWhere<T> {
     value: NotEmptyUniqueVec<T>,
@@ -516,8 +517,8 @@ impl<T: PartialEq + Clone> PgTypeWhere<T> {
     #[must_use]
     pub const fn new(logical_operator: LogicalOperator, value: NotEmptyUniqueVec<T>) -> Self {
         Self {
-            logical_operator,
             value,
+            logical_operator,
         }
     }
     pub fn try_new(

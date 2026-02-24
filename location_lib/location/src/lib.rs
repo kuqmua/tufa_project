@@ -88,7 +88,7 @@ pub fn location(input: Ts) -> Ts {
         };
     let gen_enum_ident_with_serde_ts = |ts: &dyn ToTokens| {
         quote! {
-            #[derive(Debug, thiserror::Error, serde::Serialize, serde::Deserialize, OptimalPack)]
+            #[derive(Debug, thiserror::Error, serde::Serialize, serde::Deserialize, location_lib::OptimalPack)]
             pub enum #ident_with_serde_ucc #maybe_generic_params_ts {
                 #ts
             }

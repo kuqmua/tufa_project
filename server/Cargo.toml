@@ -30,7 +30,6 @@ common_routes = {path = "../common_routes"}
 server_app_state = {path = "../server_app_state"}
 server_config = {path = "../server_config"}
 server_table_example = {path = "../server_table_example"}
-optimal_pack = {path = "../optimal_pack"}
 
 [dev-dependencies]
 tokio.workspace = true

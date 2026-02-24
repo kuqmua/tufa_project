@@ -3,7 +3,6 @@ use axum::{Router, serve};
 use common_routes::common_routes;
 use git_info::PROJECT_GIT_INFO;
 use num_cpus::get;
-use optimal_pack::OptimalPack;
 use secrecy::ExposeSecret;
 use server_app_state::ServerAppState;
 use server_config::Config;

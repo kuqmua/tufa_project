@@ -66,12 +66,13 @@ impl ToErrString for DisplayStruct {
         format!("{self:?}")
     }
 }
+//todo rename fields
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Serialize, Deserialize, OptimalPack)]
 pub struct SerdeStruct {
     pub one: String,
-    pub two: bool,
     pub three: u32,
+    pub two: bool,
 }
 impl ToErrString for SerdeStruct {
     fn to_err_string(&self) -> String {

@@ -612,7 +612,7 @@ pub fn gen_pg_type_where_ts(
         });
         quote! {
             #attrs_ts
-            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize #should_derive_utoipa_to_schema #should_derive_schemars_json_schema, OptimalPack)]
+            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize #should_derive_utoipa_to_schema #should_derive_schemars_json_schema, optimal_pack::OptimalPack)]
             pub enum #ident {
                 #(#vrts_ts),*
             }

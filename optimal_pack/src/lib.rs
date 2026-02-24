@@ -3,7 +3,7 @@ use gen_quotes::dq_ts;
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
-use syn::{Data, DeriveInput, Fields, GenericParam, Ident, parse};
+use syn::{Data, DeriveInput, Fields, GenericParam, Ident, Lifetime, parse, visit_mut::VisitMut};
 #[proc_macro_derive(OptimalPack)]
 pub fn optimal_pack(input_ts: Ts) -> Ts {
     let di: DeriveInput = parse(input_ts).expect("a1d306de");
@@ -25,7 +25,15 @@ pub fn optimal_pack(input_ts: Ts) -> Ts {
                 return Ts::new();
             }
             let align_of_ts = fields.iter().map(|field| {
-                let ft = &field.ty;
+                struct ReplaceLifetimes;
+                impl VisitMut for ReplaceLifetimes {
+                    fn visit_lifetime_mut(&mut self, i: &mut Lifetime) {
+                        i.ident = Ident::new("static", i.ident.span());
+                    }
+                }
+                let mut ft = field.ty.clone();
+                let mut visitor = ReplaceLifetimes;
+                visitor.visit_type_mut(&mut ft);
                 quote!{align_of::<#ft>()}
             });
             let assertions_ts = fields.iter().enumerate().take(fields.len().checked_sub(1).expect("14b7aa69")).map(|(i, field)| {
@@ -115,12 +123,10 @@ pub fn optimal_pack(input_ts: Ts) -> Ts {
         }
     };
     let generated = quote! {
-        impl #impl_generics #ident #ty_generics #where_clause {
-            const _OPTIMAL_PACK_CHECK: () = {
-                #ts
-            };
-        }
-        const _: () = #ident #args_ts::_OPTIMAL_PACK_CHECK;
+        #[allow(unused_qualifications)]
+        const _: () = {
+            #ts
+        };
     };
     // if ident == "" {
     //     println!("{generated}");

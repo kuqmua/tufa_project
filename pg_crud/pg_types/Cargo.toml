@@ -20,6 +20,7 @@ pg_types_common = {path = "./pg_types_common"}
 pg_crud_common = {path = "../pg_crud_common", features = ["test-utils"]}
 location_lib = {path = "../../location_lib"}
 where_filters = {path = "../where_filters"}
+optimal_pack = {path = "../../optimal_pack"}
 
 [lints]
 workspace = true

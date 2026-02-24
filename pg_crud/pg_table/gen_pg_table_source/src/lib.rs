@@ -130,10 +130,11 @@ use token_patterns::{
 //* validate insert json field with json schema
 #[must_use]
 pub fn gen_pg_table(input: Ts2) -> Ts2 {
+    #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, OptimalPack)]
     struct SynVrtWrapper {
-        status_code: Option<StatusCode>,
         vrt: Variant,
+        status_code: Option<StatusCode>,
     }
     impl SynVrtWrapper {
         const fn get_opt_status_code(&self) -> Option<&StatusCode> {
