@@ -29,7 +29,7 @@ pub fn optimal_pack(input_ts: Ts) -> Ts {
                 let i_plus_one = i.checked_add(1).expect("941a5489");
                 let fi = &field.ident.as_ref().map_or_else(|| gen_fi(i), Clone::clone);
                 let fi_next = &fields.get(i_plus_one).expect("ae113a45").ident.as_ref().map_or_else(|| gen_fi(i_plus_one), Clone::clone);
-                let message_ts = dq_ts(&format!("In enum `{ident}` alignment of {fi} < alignment of {fi_next}"));
+                let message_ts = dq_ts(&format!("In struct `{ident}` alignment of {fi} < alignment of {fi_next}. This fields must be reordered for better memory alignment"));
                 quote!{
                     assert!(
                         ALIGNMENTS[#i] >= ALIGNMENTS[#i_plus_one],
