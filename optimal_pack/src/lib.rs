@@ -1,15 +1,15 @@
 // use convert_case::{Case, Casing};
 use gen_quotes::dq_ts;
 use proc_macro::TokenStream as Ts;
-// use proc_macro2::TokenStream as Ts2;
+use proc_macro2::TokenStream as Ts2;
 use quote::quote;
-use syn::{Data, DeriveInput, Fields, Ident, parse};
+use syn::{Data, DeriveInput, Fields, Ident, GenericParam, parse};
 #[proc_macro_derive(OptimalPack)]
 pub fn optimal_pack(input_ts: Ts) -> Ts {
     let di: DeriveInput = parse(input_ts).expect("a1d306de");
     let ident = &di.ident;
     // let ident_dq_ts = dq_ts(&ident);
-    // let gen_unnamed_ts = |first_ts: &dyn ToTokens, second_ts: &dyn ToTokens| quote! {(#first_ts, std::mem::align_of::<#second_ts>())};
+    // let gen_unnamed_ts = |first_ts: &dyn ToTokens, second_ts: &dyn ToTokens| quote! {(#first_ts, align_of::<#second_ts>())};
     let gen_fi = |i: usize| Ident::new(&format!("field_{i}"), ident.span());
     let ts = match &di.data {
         Data::Struct(data) => {
@@ -21,15 +21,18 @@ pub fn optimal_pack(input_ts: Ts) -> Ts {
                 }
             };
             let fields_len = fields.len();
+            if fields_len == 1 {
+                return Ts::new();
+            }
             let align_of_ts = fields.iter().map(|field| {
                 let ft = &field.ty;
-                quote!{std::mem::align_of::<#ft>()}
+                quote!{align_of::<#ft>()}
             });
             let assertions_ts = fields.iter().enumerate().take(fields.len().checked_sub(1).expect("14b7aa69")).map(|(i, field)| {
                 let i_plus_one = i.checked_add(1).expect("941a5489");
                 let fi = &field.ident.as_ref().map_or_else(|| gen_fi(i), Clone::clone);
                 let fi_next = &fields.get(i_plus_one).expect("ae113a45").ident.as_ref().map_or_else(|| gen_fi(i_plus_one), Clone::clone);
-                let message_ts = dq_ts(&format!("In struct `{ident}` std::mem::align_of field '{fi}' < std::mem::align_of field '{fi_next}'. Field '{fi_next}' must be placed before '{fi}' for better memory alignment"));
+                let message_ts = dq_ts(&format!("In struct `{ident}` align_of field '{fi}' < align_of field '{fi_next}'. Field '{fi_next}' must be placed before '{fi}' for better memory alignment"));
                 quote!{
                     assert!(
                         ALIGNMENTS[#i] >= ALIGNMENTS[#i_plus_one],
@@ -87,10 +90,32 @@ pub fn optimal_pack(input_ts: Ts) -> Ts {
             return Ts::new();
         }
     };
+    let generics = &di.generics;
+    let has_type_params = generics.params.iter().any(|p| matches!(p, GenericParam::Type(_) | GenericParam::Const(_)));
+    assert!(!has_type_params, "60b8c3a0");
+    let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
+    let args_ts = {
+        let acc_ts: Vec<_> = generics.params.iter().map(|p| {
+            match p {
+                GenericParam::Lifetime(_) => quote! {'static},
+                GenericParam::Type(_) |
+                GenericParam::Const(_) => panic!("faec15c0"),
+            }
+        }).collect();
+        if acc_ts.is_empty() {
+            Ts2::new()
+        }
+        else {
+            quote!{::<#(#acc_ts),*>}
+        }
+    };
     let generated = quote! {
-        const _: () = {
-            #ts
-        };
+        impl #impl_generics #ident #ty_generics #where_clause {
+            const _OPTIMAL_PACK_CHECK: () = {
+                #ts
+            };
+        }
+        const _: () = #ident #args_ts::_OPTIMAL_PACK_CHECK;
     };
     // if ident == "" {
     //     println!("{generated}");
