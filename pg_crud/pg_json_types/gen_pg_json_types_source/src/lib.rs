@@ -347,10 +347,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, Deserialize, OptimalPack)]
     struct GenPgJsonTypesConfig {
+        vrt: ConfigVrt,
         pg_table_columns_content_write_into_pg_table_columns_using_pg_json_types:
             ShouldWriteTokenStreamIntoFile,
         whole_content_write_into_gen_pg_json_types: ShouldWriteTokenStreamIntoFile,
-        vrt: ConfigVrt,
     }
     panic_location();
     let config = from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("1123f78f");

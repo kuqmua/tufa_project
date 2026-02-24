@@ -701,9 +701,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, serde::Deserialize, OptimalPack)]
     struct GenPgJsonTypesConfig {
+        vrt: GenPgTypesConfigVrt,
         pg_table_columns_write_into_file: ShouldWriteTokenStreamIntoFile,
         whole_write_into_file: ShouldWriteTokenStreamIntoFile,
-        vrt: GenPgTypesConfigVrt,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, OptimalPack)]

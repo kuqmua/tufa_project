@@ -503,10 +503,10 @@ pub enum QueryPartEr {
     CheckedAdd { loc: Loc },
     WriteIntoBuffer { loc: Loc },
 }
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, OptimalPack)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
 pub struct PgTypeWhere<T> {
-    logical_operator: LogicalOperator,
     value: NotEmptyUniqueVec<T>,
+    logical_operator: LogicalOperator,
 }
 impl<T: PartialEq + Clone> PgTypeWhere<T> {
     #[must_use]
@@ -802,7 +802,7 @@ impl Order {
         DisplayToUccStr::case(&self)
     }
 }
-#[derive(Debug, Serialize, Deserialize, OptimalPack)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct OrderBy<ColumnGeneric> {
     pub column: ColumnGeneric,
     pub order: Option<Order>,

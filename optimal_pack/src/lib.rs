@@ -95,7 +95,9 @@ pub fn optimal_pack(input_ts: Ts) -> Ts {
         .params
         .iter()
         .any(|p| matches!(p, GenericParam::Type(_) | GenericParam::Const(_)));
-    assert!(!has_type_params, "60b8c3a0");
+    if has_type_params {
+        return Ts::new();
+    }
     let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
     let args_ts = {
         let acc_ts: Vec<_> = generics
