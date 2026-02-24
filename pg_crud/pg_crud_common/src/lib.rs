@@ -298,24 +298,24 @@ pub trait PgTypeTestCases {
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, PartialEq, OptimalPack)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct PgTypeGreaterThanTest<T: PgType> {
-    pub vrt: PgTypeGreaterThanVrt,
-    pub create: <T as PgType>::Create,
     pub greater_than: <T as PgType>::TableType,
+    pub create: <T as PgType>::Create,
+    pub vrt: PgTypeGreaterThanVrt,
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, OptimalPack)]
+#[derive(Debug)]
 pub struct PgTypeLengthGreaterThanTest<T: PgType> {
-    pub vrt: PgJsonTypeLengthGreaterThanVrt,
     pub create: <T as PgType>::Create,
+    pub vrt: PgJsonTypeLengthGreaterThanVrt,
     pub length_greater_than: UnsignedPartOfI32,
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, OptimalPack)]
+#[derive(Debug)]
 pub struct PgJsonTypeLengthGreaterThanTest<T: PgJsonType> {
-    pub vrt: PgJsonTypeLengthGreaterThanVrt,
     pub create: <T as PgJsonType>::Create,
+    pub vrt: PgJsonTypeLengthGreaterThanVrt,
     pub length_greater_than: UnsignedPartOfI32,
 }
 #[allow(clippy::arbitrary_source_item_ordering)]

@@ -28,12 +28,11 @@ pub struct MacroOccurence {
 pub struct Loc {
     #[allow(clippy::arbitrary_source_item_ordering)]
     file: String,
-    line: u32,
-    column: u32,
     commit: String,
-    #[schema(value_type = StdTimeDuration)]
     duration: Duration,
     macro_occurence: Option<MacroOccurence>,
+    line: u32,
+    column: u32,
 }
 impl Loc {
     #[must_use]
