@@ -151,6 +151,7 @@ pub fn optimal_pack(input_ts: Ts) -> Ts {
     let generated = if has_type_params {
         quote! {
             #impl_check_ts
+            //todo
             // #[derive(Debug)]
             // pub struct MyStruct<T> {
             //     create: T,
