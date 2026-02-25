@@ -1,7 +1,8 @@
 use gen_quotes::dq_ts;
 use proc_macro::TokenStream as Ts;
 use quote::quote;
-use syn::{Data, DeriveInput, Fields, GenericParam, Ident, Lifetime, parse, visit_mut::VisitMut};
+use std::iter::repeat_n;
+use syn::{Data, DeriveInput, Fields, Ident, Lifetime, parse, visit_mut::VisitMut};
 #[proc_macro_derive(OptimalPack)]
 pub fn optimal_pack(input_ts: Ts) -> Ts {
     let di: DeriveInput = parse(input_ts).expect("a1d306de");
@@ -41,13 +42,13 @@ pub fn optimal_pack(input_ts: Ts) -> Ts {
                 let message_ts = dq_ts(&format!("In struct `{ident}` align_of field '{fi}' < align_of field '{fi_next}'. Field '{fi_next}' must be placed before '{fi}' for better memory alignment"));
                 quote!{
                     assert!(
-                        ALIGNMENTS[#i] >= ALIGNMENTS[#i_plus_one],
+                        alignments[#i] >= alignments[#i_plus_one],
                         #message_ts,
                     );
                 }
             });
             quote! {
-                const ALIGNMENTS: [usize; #fields_len] = [#(#align_of_ts),*];
+                let alignments: [usize; #fields_len] = [#(#align_of_ts),*];
                 #(#assertions_ts)*
             }
         }
@@ -97,18 +98,26 @@ pub fn optimal_pack(input_ts: Ts) -> Ts {
         }
     };
     let generics = &di.generics;
-    let has_type_params = generics
+    let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
+    let has_only_lifetimes = generics
         .params
         .iter()
-        .any(|p| matches!(p, GenericParam::Type(_) | GenericParam::Const(_)));
-    if has_type_params {
-        return Ts::new();
-    }
+        .all(|p| matches!(p, syn::GenericParam::Lifetime(_)));
+    let (impl_ts, ty_ts) = if has_only_lifetimes && !generics.params.is_empty() {
+        let lifetimes_count = generics.params.len();
+        let underscores = repeat_n(quote! {'_}, lifetimes_count);
+        let new_ty_generics = quote! {<#(#underscores),*>};
+        (quote! {}, new_ty_generics)
+    } else {
+        (quote! { #impl_generics }, quote! { #ty_generics })
+    };
     let generated = quote! {
         #[allow(unused_qualifications)]
-        const _: () = {
-            #ts
-        };
+        impl #impl_ts #ident #ty_ts #where_clause {
+            const _OPTIMAL_PACK_CHECK: () = {
+                #ts
+            };
+        }
     };
     // if ident == "" {
     //     println!("{generated}");

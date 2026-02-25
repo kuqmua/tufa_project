@@ -298,21 +298,21 @@ pub trait PgTypeTestCases {
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, OptimalPack)]
 pub struct PgTypeGreaterThanTest<T: PgType> {
     pub greater_than: <T as PgType>::TableType,
     pub create: <T as PgType>::Create,
     pub vrt: PgTypeGreaterThanVrt,
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug)]
+#[derive(Debug, OptimalPack)]
 pub struct PgTypeLengthGreaterThanTest<T: PgType> {
     pub create: <T as PgType>::Create,
     pub vrt: PgJsonTypeLengthGreaterThanVrt,
     pub length_greater_than: UnsignedPartOfI32,
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug)]
+#[derive(Debug, OptimalPack)]
 pub struct PgJsonTypeLengthGreaterThanTest<T: PgJsonType> {
     pub create: <T as PgJsonType>::Create,
     pub vrt: PgJsonTypeLengthGreaterThanVrt,
@@ -504,7 +504,7 @@ pub enum QueryPartEr {
     WriteIntoBuffer { loc: Loc },
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, OptimalPack)]
 pub struct PgTypeWhere<T> {
     value: NotEmptyUniqueVec<T>,
     logical_operator: LogicalOperator,
@@ -803,7 +803,7 @@ impl Order {
         DisplayToUccStr::case(&self)
     }
 }
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, OptimalPack)]
 pub struct OrderBy<ColumnGeneric> {
     pub column: ColumnGeneric,
     pub order: Option<Order>,
