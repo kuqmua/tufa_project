@@ -89,7 +89,7 @@ impl<T: PartialEq + Clone + Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
         &self,
         incr: &mut u64,
         _: &dyn Display,
-        _is_need_to_add_logical_operator: bool,
+        _is_need_to_add_operator: bool,
     ) -> Result<String, QueryPartEr> {
         let mut acc = String::default();
         for _ in self.to_vec() {
@@ -213,7 +213,7 @@ where
         &self,
         incr: &mut u64,
         _: &dyn Display,
-        _is_need_to_add_logical_operator: bool,
+        _is_need_to_add_operator: bool,
     ) -> Result<String, QueryPartEr> {
         match incr_checked_add_one_returning_incr(incr) {
             Ok(v) => Ok(format!("${v}")),
@@ -782,12 +782,12 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
         &self,
         incr: &mut u64,
         column: &dyn Display,
-        is_need_to_add_logical_operator: bool,
+        is_need_to_add_operator: bool,
     ) -> Result<String, QueryPartEr> {
         self.query_part(
             incr,
             column,
-            is_need_to_add_logical_operator,
+            is_need_to_add_operator,
             &PgTypeOrPgJsonType::PgJsonType,
             &Vrt::Normal,
         )
@@ -796,12 +796,12 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
         &self,
         incr: &mut u64,
         column: &dyn Display,
-        is_need_to_add_logical_operator: bool,
+        is_need_to_add_operator: bool,
     ) -> Result<String, QueryPartEr> {
         self.query_part(
             incr,
             column,
-            is_need_to_add_logical_operator,
+            is_need_to_add_operator,
             &PgTypeOrPgJsonType::PgJsonType,
             &Vrt::MinusOne,
         )
@@ -810,12 +810,12 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
         &self,
         incr: &mut u64,
         column: &dyn Display,
-        is_need_to_add_logical_operator: bool,
+        is_need_to_add_operator: bool,
     ) -> Result<String, QueryPartEr> {
         self.query_part(
             incr,
             column,
-            is_need_to_add_logical_operator,
+            is_need_to_add_operator,
             &PgTypeOrPgJsonType::PgType,
             &Vrt::Normal,
         )
@@ -824,12 +824,12 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
         &self,
         incr: &mut u64,
         column: &dyn Display,
-        is_need_to_add_logical_operator: bool,
+        is_need_to_add_operator: bool,
     ) -> Result<String, QueryPartEr> {
         self.query_part(
             incr,
             column,
-            is_need_to_add_logical_operator,
+            is_need_to_add_operator,
             &PgTypeOrPgJsonType::PgType,
             &Vrt::MinusOne,
         )
@@ -849,7 +849,7 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
         &self,
         incr: &mut u64,
         _: &dyn Display,
-        _is_need_to_add_logical_operator: bool,
+        _is_need_to_add_operator: bool,
         pg_type_or_pg_json_type: &PgTypeOrPgJsonType,
         vrt: &Vrt,
     ) -> Result<String, QueryPartEr> {

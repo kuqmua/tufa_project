@@ -11,7 +11,7 @@ use naming::{
 use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
-    ColumnParamUnderscore, ImportPath, IncrParamUnderscore, IsNeedToAddLogicalOperatorUnderscore,
+    ColumnParamUnderscore, ImportPath, IncrParamUnderscore, IsNeedToAddOperatorUnderscore,
     IsQueryBindMutable, PgJsonTypeFilter, PgTypeFilter, PgTypeOrPgJsonType,
     gen_impl_default_opt_some_vec_one_el_ts, impl_pg_type_where_filter_for_ident_ts,
 };
@@ -163,7 +163,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     &ident,
                     &maybe_decl_of_struct_ident_generic_ts,
                     &quote::quote! {{
-                        #maybe_pub_ts logical_operator: #import_path::LogicalOperator,
+                        #maybe_pub_ts operator: #import_path::Operator,
                         #struct_extra_fields_ts
                     }},
                 )
@@ -190,7 +190,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             },
             &quote! {
                 Self {
-                    logical_operator: #PgCrudCommonDefaultOptSomeVecOneElCall,
+                    operator: #PgCrudCommonDefaultOptSomeVecOneElCall,
                     #impl_default_opt_some_vec_one_el_extra_fields_ts
                 }
             },
@@ -201,7 +201,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
          should_add_decl_of_struct_ident_generic: &ShouldAddDeclOfStructIdentGeneric,
          ident: &dyn ToTokens,
          incr_param_underscore: &IncrParamUnderscore,
-         is_need_to_add_logical_operator_underscore: &IsNeedToAddLogicalOperatorUnderscore,
+         is_need_to_add_operator_underscore: &IsNeedToAddOperatorUnderscore,
          query_part_ts: &dyn ToTokens,
          is_query_bind_mutable: &IsQueryBindMutable,
          query_bind_ts: &dyn ToTokens| {
@@ -239,7 +239,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 },
                 incr_param_underscore,
                 &ColumnParamUnderscore::False,
-                is_need_to_add_logical_operator_underscore,
+                is_need_to_add_operator_underscore,
                 &query_part_ts,
                 is_query_bind_mutable,
                 &query_bind_ts,
@@ -322,10 +322,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             quote! {pub #DimsSc: BoundedVec<pg_crud_common::#kind_of_unsigned_part_of_i32, #vec_length_ts>}
         };
     let value_match_incr_checked_add_one_init_ts = gen_match_incr_checked_add_one_init_ts(&ValueSc);
-    let gen_ident_match_self_field_function_incr_column_is_need_to_add_logical_operator_init_ts =
+    let gen_ident_match_self_field_function_incr_column_is_need_to_add_operator_init_ts =
         |ident_ts: &dyn ToTokens, field_ts: &dyn ToTokens, function_ts: &dyn ToTokens| {
             quote! {
-                let #ident_ts = match self.#field_ts.#function_ts(#IncrSc, #ColumnSc, is_need_to_add_logical_operator) {
+                let #ident_ts = match self.#field_ts.#function_ts(#IncrSc, #ColumnSc, is_need_to_add_operator) {
                     Ok(v_0a22ee9a) => v_0a22ee9a,
                     Err(#ErSc) => {
                         return Err(#ErSc);
@@ -334,7 +334,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             }
         };
     let value_match_self_value_query_part_init_ts =
-        gen_ident_match_self_field_function_incr_column_is_need_to_add_logical_operator_init_ts(
+        gen_ident_match_self_field_function_incr_column_is_need_to_add_operator_init_ts(
             &ValueSc,
             &ValueSc,
             &quote! {query_part},
@@ -390,7 +390,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     PgTypeOrPgJsonType::PgJsonType => gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts(&dim_nbr),
                 },
                 dims_default_init_comma_ts.clone(),
-                gen_ident_match_self_field_function_incr_column_is_need_to_add_logical_operator_init_ts(
+                gen_ident_match_self_field_function_incr_column_is_need_to_add_operator_init_ts(
                     &DimsIesSc,
                     &DimsSc,
                     &match &pg_type_or_pg_json_type {
@@ -455,7 +455,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     #value_match_incr_checked_add_one_init_ts
                                     Ok(format!(
                                         #format_ts,
-                                        &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                        &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                         #ColumnSc,
                                         #maybe_extra_params_ts
                                         #ValueSc
@@ -505,7 +505,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 #value_match_self_value_query_part_init_ts
                                 Ok(format!(
                                     #format_ts,
-                                    &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                     #ColumnSc,
                                     #maybe_extra_params_ts
                                     #ValueSc
@@ -568,7 +568,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 };
                                 Ok(format!(
                                     #format_ts,
-                                    &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                     #ColumnSc,
                                     #maybe_extra_params_ts
                                     #ValueSc
@@ -617,7 +617,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 #value_match_incr_checked_add_one_init_ts
                                 Ok(format!(
                                     #format_ts,
-                                    &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                     #ColumnSc,
                                     #maybe_extra_params_ts
                                     #SelfSc.regex_case.postgreql_syntax(),
@@ -656,7 +656,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 #value_match_incr_checked_add_one_init_ts
                                 Ok(format!(
                                     #format_ts,
-                                    &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                     #ColumnSc,
                                     #maybe_extra_params_ts
                                     #ValueSc
@@ -700,7 +700,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     #maybe_dims_ies_init_ts
                                     Ok(format!(
                                         #format_ts,
-                                        &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                        &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                         #ColumnSc,
                                         #maybe_extra_params_ts
                                     ))
@@ -773,7 +773,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     #value_match_incr_checked_add_one_init_ts
                                     Ok(format!(
                                         #format_ts,
-                                        &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                        &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                         #ColumnSc,
                                         #maybe_extra_params_ts
                                         &#SelfSc.encode_format,
@@ -824,7 +824,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 dq_ts(&format!("{{}}(arr_length({{}}, 1) {operator} ${{}})"));
                             quote! {
                                 match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
-                                    Ok(v_f7988de8) => Ok(format!(#format_ts, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #ColumnSc, v_f7988de8)),
+                                    Ok(v_f7988de8) => Ok(format!(#format_ts, &self.operator.to_query_part(is_need_to_add_operator), #ColumnSc, v_f7988de8)),
                                     Err(#ErSc) => Err(#ErSc),
                                 }
                             }
@@ -880,8 +880,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(&dim_nbr),
                             dims_default_init_comma_ts.clone(),
                             {
-                                let dims_ies1_ts = gen_ident_match_self_field_function_incr_column_is_need_to_add_logical_operator_init_ts(&quote! {dims_ies1}, &DimsSc, &quote! {pg_type_query_part});
-                                let dims_ies2_ts = gen_ident_match_self_field_function_incr_column_is_need_to_add_logical_operator_init_ts(&quote! {dims_ies2}, &DimsSc, &quote! {pg_type_query_part});
+                                let dims_ies1_ts = gen_ident_match_self_field_function_incr_column_is_need_to_add_operator_init_ts(&quote! {dims_ies1}, &DimsSc, &quote! {pg_type_query_part});
+                                let dims_ies2_ts = gen_ident_match_self_field_function_incr_column_is_need_to_add_operator_init_ts(&quote! {dims_ies2}, &DimsSc, &quote! {pg_type_query_part});
                                 quote! {
                                     #dims_ies1_ts
                                     #dims_ies2_ts
@@ -925,7 +925,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 #value_match_incr_checked_add_one_init_ts
                                 Ok(format!(
                                     #format_ts,
-                                    &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                     #ColumnSc,
                                     #maybe_extra_params_ts
                                     #ValueSc
@@ -966,7 +966,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 let operator_query_str = operator.to_query_str();
                                 Ok(format!(
                                     "{}({} {})",
-                                    &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                     #ColumnSc,
                                     match operator {
                                         pg_crud_common::EqualOperator::Equal => {
@@ -1013,7 +1013,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 let operator_query_str = operator.to_query_str();
                                 Ok(format!(
                                     "{}({}{dims_ies} {})",
-                                    &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                     #ColumnSc,
                                     match operator {
                                         pg_crud_common::EqualOperator::Equal => {
@@ -1182,7 +1182,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 &should_add_decl_of_struct_ident_generic,
                 &ident,
                 &incr_param_underscore,
-                &IsNeedToAddLogicalOperatorUnderscore::False,
+                &IsNeedToAddOperatorUnderscore::False,
                 &query_part_ts,
                 &is_query_bind_mutable,
                 &query_bind_ts,
@@ -1247,7 +1247,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 #value_match_incr_checked_add_one_init_ts
                                 Ok(format!(
                                     #format_ts,
-                                    &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                     #ColumnSc,
                                     #maybe_extra_params_ts
                                     #ValueSc
@@ -1311,7 +1311,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #value_match_incr_checked_add_one_init_ts
                             Ok(format!(
                                 #format_ts,
-                                &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                 #ColumnSc,
                                 #maybe_extra_params_ts
                                 #ValueSc
@@ -1372,7 +1372,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 let value = match self.value.query_part(
                                     incr,
                                     column,
-                                    is_need_to_add_logical_operator
+                                    is_need_to_add_operator
                                 ) {
                                     Ok(v_cc8dda2f) => v_cc8dda2f,
                                     Err(er) => {
@@ -1391,7 +1391,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #ts
                             Ok(format!(
                                 #format_ts,
-                                &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                 #ColumnSc,
                                 #maybe_extra_params_ts
                                 #ValueSc
@@ -1445,13 +1445,13 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             "{{}}({{}}{} in ({{}}))",
                             pg_type_kind.format_argument()
                         ));
-                        let value_init_ts = gen_ident_match_self_field_function_incr_column_is_need_to_add_logical_operator_init_ts(&ValueSc, &ValueSc, &quote! {query_part_one_by_one});
+                        let value_init_ts = gen_ident_match_self_field_function_incr_column_is_need_to_add_operator_init_ts(&ValueSc, &ValueSc, &quote! {query_part_one_by_one});
                         quote! {
                             #maybe_dims_ies_init_ts
                             #value_init_ts
                             Ok(format!(
                                 #format_ts,
-                                &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                 #ColumnSc,
                                 #maybe_extra_params_ts
                                 #ValueSc
@@ -1486,7 +1486,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts(&dim_nbr),
                         dims_default_init_comma_ts.clone(),
                         {
-                            let dims_ies_init_ts = gen_ident_match_self_field_function_incr_column_is_need_to_add_logical_operator_init_ts(&DimsIesSc, &DimsSc, &quote! {pg_json_type_query_part_minus_one});
+                            let dims_ies_init_ts = gen_ident_match_self_field_function_incr_column_is_need_to_add_operator_init_ts(&DimsIesSc, &DimsSc, &quote! {pg_json_type_query_part_minus_one});
                             let last_dims_i_intialization_ts = gen_match_incr_checked_add_one_init_ts(&quote! {last_dims_i});
                             quote! {
                                 #dims_ies_init_ts
@@ -1524,7 +1524,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #value_match_incr_checked_add_one_init_ts
                             Ok(format!(
                                 #format_ts,
-                                &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                 #ColumnSc,
                                 #maybe_extra_params_ts
                                 #SelfSc.regex_case.postgreql_syntax(),
@@ -1570,7 +1570,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #value_match_incr_checked_add_one_init_ts
                             Ok(format!(
                                 #format_ts,
-                                &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                 #ColumnSc,
                                 #maybe_extra_params_ts
                                 #SelfSc.regex_case.postgreql_syntax(),
@@ -1616,7 +1616,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #value_match_incr_checked_add_one_init_ts
                             Ok(format!(
                                 #format_ts,
-                                &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                 #ColumnSc,
                                 #maybe_extra_params_ts
                                 #SelfSc.regex_case.postgreql_syntax(),
@@ -1660,7 +1660,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #value_match_self_value_query_part_init_ts
                             Ok(format!(
                                 #format_ts,
-                                &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                 #ColumnSc,
                                 #maybe_extra_params_ts
                                 #ValueSc
@@ -1703,7 +1703,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #value_match_self_value_query_part_init_ts
                             Ok(format!(
                                 #format_ts,
-                                &#SelfSc.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                 #ColumnSc,
                                 #maybe_extra_params_ts
                                 #ValueSc
@@ -1927,7 +1927,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 &should_add_decl_of_struct_ident_generic,
                 &ident,
                 &IncrParamUnderscore::False,
-                &IsNeedToAddLogicalOperatorUnderscore::False,
+                &IsNeedToAddOperatorUnderscore::False,
                 &query_part_ts,
                 &is_query_bind_mutable,
                 &query_bind_ts,

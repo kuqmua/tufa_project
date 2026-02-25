@@ -2706,7 +2706,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 let gen_equal_ts = |content_ts: &dyn ToTokens| {
                     quote! {
                         where_filters::PgJsonTypeWhereEqual {
-                            logical_operator: #import_path::LogicalOperator::Or,
+                            operator: #import_path::Operator::Or,
                             #ValueSc: #content_ts
                         }
                     }
@@ -2859,7 +2859,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     quote! {
                                         #where_ident_where_ucc_c994819b::#dim_nbr_starting_with_one_equal_ts(
                                             where_filters::#pg_json_type_where_dim_nbr_starting_with_one_equal_ts {
-                                                logical_operator: #import_path::LogicalOperator::And,
+                                                operator: #import_path::Operator::And,
                                                 dims: where_filters::BoundedVec::try_from(
                                                     vec![#vec_content_ts]
                                                 ).expect("82cc0a3c"),
@@ -3044,7 +3044,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 quote! {
                                     ::LengthEqual(
                                         where_filters::PgJsonTypeWhereLengthEqual {
-                                            logical_operator: #import_path::LogicalOperator::Or,
+                                            operator: #import_path::Operator::Or,
                                             #ValueSc: pg_crud_common::UnsignedPartOfI32::try_from(
                                                 i32::try_from(#content_ts.len()).expect("64d3424f")
                                             ).expect("081f4463"),
@@ -3099,7 +3099,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 quote! {
                                     ::LengthGreaterThan(
                                         where_filters::PgJsonTypeWhereLengthGreaterThan {
-                                            logical_operator: #import_path::LogicalOperator::Or,
+                                            operator: #import_path::Operator::Or,
                                             #ValueSc: if let Ok(v_762dae1f) = pg_crud_common::UnsignedPartOfI32::try_from(
                                                 if let Ok(v_9dca0200) = i32::try_from(
                                                     //todo temp code. make it better checking all cases
@@ -3191,7 +3191,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             &quote!{vec![
                                 #import_path::SingleOrMultiple::Single(#ident_where_ucc::GreaterThan(
                                     where_filters::PgJsonTypeWhereGreaterThan {
-                                        logical_operator: #import_path::LogicalOperator::Or,
+                                        operator: #import_path::Operator::Or,
                                         value: #ident_table_type_ucc(
                                             #ident_origin_ucc(v_7aa498e8)
                                         ),
@@ -3262,7 +3262,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     #import_path::SingleOrMultiple::Single(
                                         #ident_where_ucc::Between(
                                             where_filters::PgJsonTypeWhereBetween {
-                                                logical_operator: pg_crud_common::LogicalOperator::Or,
+                                                operator: pg_crud_common::Operator::Or,
                                                 value: v_cdde02cc,
                                             }
                                         )
@@ -3338,7 +3338,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             #import_path::SingleOrMultiple::Single(
                                 #ident_where_ucc::In(
                                     where_filters::PgJsonTypeWhereIn {
-                                        logical_operator: #import_path::LogicalOperator::Or,
+                                        operator: #import_path::Operator::Or,
                                         value: where_filters::PgJsonTypeNotEmptyUniqueVec::try_new(
                                             vec![#ident_table_type_ucc::new(#CreateSc.0.0)]
                                         ).expect("2737c0ed")
@@ -3380,7 +3380,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             #import_path::SingleOrMultiple::Single(
                                 #ident_where_ucc::Regex(
                                     where_filters::PgJsonTypeWhereRegex {
-                                        logical_operator: #import_path::LogicalOperator::Or,
+                                        operator: #import_path::Operator::Or,
                                         regex_case: where_filters::RegexCase::Sensitive,
                                         value: where_filters::RegexRegex(regex::Regex::new(&format!("^{}$", regex::escape(&#CreateSc.0.0))).expect("3814ff38")),
                                     }
@@ -3420,7 +3420,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                                     #import_path::SingleOrMultiple::Single(
                                                         #ident_where_ucc::ContainsElGreaterThan(
                                                             where_filters::PgJsonTypeWhereContainsElGreaterThan {
-                                                                logical_operator: #import_path::LogicalOperator::Or,
+                                                                operator: #import_path::Operator::Or,
                                                                 value: #ident_stdrt_not_null_table_type_ucc(
                                                                     #ident_stdrt_not_null_origin_ucc(v_0cd93c25)
                                                                 )
@@ -3506,7 +3506,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     #import_path::SingleOrMultiple::Single(
                                         #ident_where_ucc::ContainsElRegex(
                                             where_filters::PgJsonTypeWhereContainsElRegex {
-                                                logical_operator: #import_path::LogicalOperator::Or,
+                                                operator: #import_path::Operator::Or,
                                                 regex_case:
                                                     where_filters::RegexCase::Sensitive,
                                                 value: where_filters::RegexRegex(

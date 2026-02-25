@@ -10,13 +10,13 @@ use naming::{
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateIntoPgTypeOptVecWhereDimOneEqualSc,
     CreateQueryBindSc, CreateQueryPartSc, CreateSc, CreateTableColumnQueryPartSc, CreateUcc,
     DefaultOptSomeVecOneElMaxPageSizeSc, DefaultOptSomeVecOneElSc, DisplayPlusToTokens,
-    EqualOperatorUcc, FiSc, IncrSc, IsNeedToAddLogicalOperatorSc, IsPrimaryKSc,
-    JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc, MutSc, NormalizeSc, OptUcc,
-    OptUpdateSc, OptVecCreateSc, PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeEqualOperatorUcc,
-    PgTypeNotPrimaryKUcc, PgTypeOptVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc,
-    PgTypeWhereFilterUcc, PreviousReadMergedWithOptUpdateIntoReadSc, QueryBindSc, QueryPartErUcc,
-    QueryPartSc, QuerySc, ReadInnerIntoReadWithNewOrTryNewUnwrapedSc,
-    ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc, ReadInnerUcc, ReadOnlyIdsIntoOptValueReadInnerSc,
+    EqualOperatorUcc, FiSc, IncrSc, IsNeedToAddOperatorSc, IsPrimaryKSc, JsonbSetAccumulatorSc,
+    JsonbSetPathSc, JsonbSetTargetSc, MutSc, NormalizeSc, OptUcc, OptUpdateSc, OptVecCreateSc,
+    PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeEqualOperatorUcc, PgTypeNotPrimaryKUcc,
+    PgTypeOptVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc, PgTypeWhereFilterUcc,
+    PreviousReadMergedWithOptUpdateIntoReadSc, QueryBindSc, QueryPartErUcc, QueryPartSc, QuerySc,
+    ReadInnerIntoReadWithNewOrTryNewUnwrapedSc, ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc,
+    ReadInnerUcc, ReadOnlyIdsIntoOptValueReadInnerSc,
     ReadOnlyIdsMergedWithCreateIntoOptValueReadSc,
     ReadOnlyIdsMergedWithCreateIntoOptVecWhereEqualToJsonFieldSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereBetweenSc,
@@ -372,14 +372,14 @@ impl ToTokens for ColumnParamUnderscore {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum IsNeedToAddLogicalOperatorUnderscore {
+pub enum IsNeedToAddOperatorUnderscore {
     False,
     True,
 }
-impl ToTokens for IsNeedToAddLogicalOperatorUnderscore {
+impl ToTokens for IsNeedToAddOperatorUnderscore {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
-            Self::False => IsNeedToAddLogicalOperatorSc.to_tokens(tokens),
+            Self::False => IsNeedToAddOperatorSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
         }
     }
@@ -625,7 +625,7 @@ pub fn gen_pg_type_where_ts(
             &Ts2::new(),
             &IncrParamUnderscore::False,
             &ColumnParamUnderscore::False,
-            &IsNeedToAddLogicalOperatorUnderscore::False,
+            &IsNeedToAddOperatorUnderscore::False,
             &{
                 let vrts_ts = vrts.iter().map(|el| {
                     let el_ucc = el.ucc();
@@ -634,7 +634,7 @@ pub fn gen_pg_type_where_ts(
                             #ValueSc,
                             #IncrSc,
                             #ColumnSc,
-                            #IsNeedToAddLogicalOperatorSc,
+                            #IsNeedToAddOperatorSc,
                         )
                     }
                 });
@@ -970,7 +970,7 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
     ident_generic_ts: &dyn ToTokens,
     incr_param_underscore: &IncrParamUnderscore,
     column_param_underscore: &ColumnParamUnderscore,
-    is_need_to_add_logical_operator_underscore: &IsNeedToAddLogicalOperatorUnderscore,
+    is_need_to_add_operator_underscore: &IsNeedToAddOperatorUnderscore,
     query_part_ts: &dyn ToTokens,
     is_query_bind_mutable: &IsQueryBindMutable,
     query_bind_ts: &dyn ToTokens,
@@ -983,7 +983,7 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
                 &self,
                 #incr_param_underscore: &mut #U64,
                 #column_param_underscore: &dyn #StdFmtDisplay,
-                #is_need_to_add_logical_operator_underscore: #Bool
+                #is_need_to_add_operator_underscore: #Bool
             ) -> Result<#StringTs, #import_path::#QueryPartErUcc> {
                 #query_part_ts
             }

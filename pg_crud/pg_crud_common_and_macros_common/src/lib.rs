@@ -20,18 +20,18 @@ pub trait AllEnumVrtsArrDefaultOptSomeVecOneElMaxPageSize: Sized {
 #[derive(
     Debug, Default, Clone, Copy, Serialize, Deserialize, Eq, PartialEq, JsonSchema, OptimalPack,
 )]
-pub enum LogicalOperator {
+pub enum Operator {
     And,
     AndNot,
     #[default]
     Or,
     OrNot,
 }
-impl LogicalOperator {
+impl Operator {
     #[must_use]
-    pub fn to_query_part(&self, is_need_to_add_logical_operator: bool) -> String {
+    pub fn to_query_part(&self, is_need_to_add_operator: bool) -> String {
         let not_space = format!("{NotSc} ");
-        if is_need_to_add_logical_operator {
+        if is_need_to_add_operator {
             let and_space = format!("{AndSc} ");
             let or_space = format!("{OrSc} ");
             match *self {
@@ -48,17 +48,17 @@ impl LogicalOperator {
         }
     }
 }
-impl Display for LogicalOperator {
+impl Display for Operator {
     fn fmt(&self, f: &mut Formatter<'_>) -> StdFmtResult {
         write!(f, "{self:?}")
     }
 }
-impl DefaultOptSomeVecOneEl for LogicalOperator {
+impl DefaultOptSomeVecOneEl for Operator {
     fn default_opt_some_vec_one_el() -> Self {
         Self::default()
     }
 }
-impl ToTokens for LogicalOperator {
+impl ToTokens for Operator {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match *self {
             Self::And => quote! {And},
@@ -77,10 +77,10 @@ pub enum PgTypeGreaterThanVrt {
 }
 impl PgTypeGreaterThanVrt {
     #[must_use]
-    pub const fn logical_operator(&self) -> LogicalOperator {
+    pub const fn operator(&self) -> Operator {
         match *self {
-            Self::GreaterThan => LogicalOperator::Or,
-            Self::NotGreaterThan | Self::EqualNotGreaterThan => LogicalOperator::OrNot,
+            Self::GreaterThan => Operator::Or,
+            Self::NotGreaterThan | Self::EqualNotGreaterThan => Operator::OrNot,
         }
     }
 }
@@ -102,10 +102,10 @@ pub enum PgJsonTypeLengthGreaterThanVrt {
 }
 impl PgJsonTypeLengthGreaterThanVrt {
     #[must_use]
-    pub const fn logical_operator(&self) -> LogicalOperator {
+    pub const fn operator(&self) -> Operator {
         match *self {
-            Self::LengthGreaterThan => LogicalOperator::Or,
-            Self::NotLengthGreaterThan | Self::EqualNotLengthGreaterThan => LogicalOperator::OrNot,
+            Self::LengthGreaterThan => Operator::Or,
+            Self::NotLengthGreaterThan | Self::EqualNotLengthGreaterThan => Operator::OrNot,
         }
     }
 }

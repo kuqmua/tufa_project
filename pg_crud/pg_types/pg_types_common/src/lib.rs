@@ -236,10 +236,9 @@ impl<'lifetime> PgTypeWhereFilter<'lifetime> for PaginationStartsWithOne {
         &self,
         incr: &mut u64,
         column: &dyn Display,
-        is_need_to_add_logical_operator: bool,
+        is_need_to_add_operator: bool,
     ) -> Result<String, QueryPartEr> {
-        self.0
-            .query_part(incr, column, is_need_to_add_logical_operator)
+        self.0.query_part(incr, column, is_need_to_add_operator)
     }
 }
 impl DefaultOptSomeVecOneEl for PaginationStartsWithOne {

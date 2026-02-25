@@ -36,7 +36,7 @@ use pg_crud_macros_common::{
     ColumnParamUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrUnderscore,
     CreateQueryPartValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl,
     EqualOperatorHandle, ImportPath, IncrParamUnderscore, IsCreateQueryBindMutable,
-    IsNeedToAddLogicalOperatorUnderscore, IsNullable, IsPrimaryKUnderscore, IsQueryBindMutable,
+    IsNeedToAddOperatorUnderscore, IsNullable, IsPrimaryKUnderscore, IsQueryBindMutable,
     IsSelectOnlyUpdatedIdsQueryBindMutable, IsStdrtNotNull, IsUpdateQueryBindMutable, PgFilter,
     PgTypeFilter, ReadOrUpdate, SelectQueryPartValueUnderscore, ShouldDeriveSchemarsJsonSchema,
     ShouldDeriveUtoipaToSchema, UpdateQueryPartJsonbSetAccumulatorUnderscore,
@@ -4791,7 +4791,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     &Ts2::new(),
                     &IncrParamUnderscore::False,
                     &ColumnParamUnderscore::False,
-                    &IsNeedToAddLogicalOperatorUnderscore::True,
+                    &IsNeedToAddOperatorUnderscore::True,
                     &quote! {
                         match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
                             Ok(v_8da76391) => Ok(format!("({column} = ${v_8da76391})")),
@@ -6239,7 +6239,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 };
                 quote! {
                     #ident_where_ucc::#EqualUcc(where_filters::PgTypeWhereEqual {
-                        logical_operator: #import_path::LogicalOperator::Or,
+                        operator: #import_path::Operator::Or,
                         #ValueSc: #ident_table_type_ucc(#ts),
                     })
                 }
@@ -6269,7 +6269,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     acc_74c71d5d.push(
                                         #ident_where_ucc::DimOneEqual(
                                             where_filters::PgTypeWhereDimOneEqual {
-                                                logical_operator: #import_path::LogicalOperator::Or,
+                                                operator: #import_path::Operator::Or,
                                                 dims: where_filters::BoundedVec::try_from(
                                                     vec![
                                                         pg_crud_common::NotZeroUnsignedPartOfI32::try_from(
@@ -6576,7 +6576,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             };
                             quote! {Some(#ident_where_ucc::GreaterThan(
                                 where_filters::PgTypeWhereGreaterThan {
-                                    logical_operator: greater_than_vrt.logical_operator(),
+                                    operator: greater_than_vrt.operator(),
                                     #ValueSc: #ts,
                                 }
                             ))}
@@ -6588,7 +6588,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             };
                             quote! {
                                 #ts.map(|el_886032ca| #ident_where_ucc::GreaterThan(where_filters::PgTypeWhereGreaterThan {
-                                    logical_operator: greater_than_vrt.logical_operator(),
+                                    operator: greater_than_vrt.operator(),
                                     value: #ident_stdrt_not_null_table_type_ucc(el_886032ca),
                                 }))
                             }
