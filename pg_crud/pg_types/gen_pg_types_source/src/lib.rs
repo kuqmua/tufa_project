@@ -3672,10 +3672,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     };
                                     let ts = {
                                         let self_sqlx_pg_types_pg_range_ts = {
-                                            enum StartOrEnd {
-                                                End,
-                                                Start,
-                                            }
                                             let (start_ts, end_ts) = {
                                                 let gen_field_ts = |start_or_end: StartOrEnd|{
                                                     let name_ts = match start_or_end {
@@ -3775,50 +3771,47 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         };
                                         let try_new_convert_pg_range_int_ts = gen_self_match_try_new_ts(
                                             &quote! {sqlx::postgres::types::PgRange { #StartSc: start_9a8ef454, #EndSc: end_a14eb2b9 }},
-                                            &quote! {
-                                                #ident_stdrt_not_null_origin_try_new_er_ucc::#IncludedStartGreaterThanIncludedEndUcc {
-                                                    #StartSc,
-                                                    #EndSc,
-                                                    loc,
-                                                } => Err(#ident_stdrt_not_null_origin_try_new_for_deserialize_er_ucc::#IncludedStartGreaterThanIncludedEndUcc {
-                                                    #StartSc,
-                                                    #EndSc,
-                                                    loc,
-                                                }),
-                                                #ident_stdrt_not_null_origin_try_new_er_ucc::#IncludedStartGreaterThanExcludedEndUcc {
-                                                    #StartSc,
-                                                    #EndSc,
-                                                    loc,
-                                                } => Err(#ident_stdrt_not_null_origin_try_new_for_deserialize_er_ucc::#IncludedStartGreaterThanExcludedEndUcc {
-                                                    #StartSc,
-                                                    #EndSc,
-                                                    loc,
-                                                }),
-                                                #ident_stdrt_not_null_origin_try_new_er_ucc::#ExcludedStartGreaterThanIncludedEndUcc {
-                                                    #StartSc,
-                                                    #EndSc,
-                                                    loc,
-                                                } => Err(#ident_stdrt_not_null_origin_try_new_for_deserialize_er_ucc::#ExcludedStartGreaterThanIncludedEndUcc {
-                                                    #StartSc,
-                                                    #EndSc,
-                                                    loc,
-                                                }),
-                                                #ident_stdrt_not_null_origin_try_new_er_ucc::#ExcludedStartGreaterThanExcludedEndUcc {
-                                                    #StartSc,
-                                                    #EndSc,
-                                                    loc,
-                                                } => Err(#ident_stdrt_not_null_origin_try_new_for_deserialize_er_ucc::#ExcludedStartGreaterThanExcludedEndUcc {
-                                                    #StartSc,
-                                                    #EndSc,
-                                                    loc,
-                                                }),
-                                                #ident_stdrt_not_null_origin_try_new_er_ucc::#IncludedEndCannotBeMaxUcc {
-                                                    #EndSc,
-                                                    loc,
-                                                } => Err(#ident_stdrt_not_null_origin_try_new_for_deserialize_er_ucc::#IncludedEndCannotBeMaxUcc {
-                                                    #EndSc,
-                                                    loc,
-                                                }),
+                                            &{
+                                                let gen_match_ts = |name_ts: &dyn ToTokens, ts: &dyn ToTokens|quote! {
+                                                    #ident_stdrt_not_null_origin_try_new_er_ucc::#name_ts {
+                                                        loc,
+                                                        #ts
+                                                    } => Err(#ident_stdrt_not_null_origin_try_new_for_deserialize_er_ucc::#name_ts {
+                                                        loc,
+                                                        #ts
+                                                    }),
+                                                };
+                                                let (
+                                                    included_start_greater_than_included_end_ts,
+                                                    included_start_greater_than_excluded_end_ts,
+                                                    excluded_start_greater_than_included_end_ts,
+                                                    excluded_start_greater_than_excluded_end_ts,
+                                                ) = {
+                                                    let start_end_gen_match_ts = |name_ts: &dyn ToTokens|gen_match_ts(
+                                                        &name_ts,
+                                                        &quote!{
+                                                            #StartSc,
+                                                            #EndSc,
+                                                        }
+                                                    );
+                                                    (
+                                                        start_end_gen_match_ts(&IncludedStartGreaterThanIncludedEndUcc),
+                                                        start_end_gen_match_ts(&IncludedStartGreaterThanExcludedEndUcc),
+                                                        start_end_gen_match_ts(&ExcludedStartGreaterThanIncludedEndUcc),
+                                                        start_end_gen_match_ts(&ExcludedStartGreaterThanExcludedEndUcc),
+                                                    )
+                                                };
+                                                let included_end_cannot_be_max_ts = gen_match_ts(
+                                                    &IncludedEndCannotBeMaxUcc,
+                                                    &quote!{#EndSc,}
+                                                );
+                                                quote! {
+                                                    #included_start_greater_than_included_end_ts
+                                                    #included_start_greater_than_excluded_end_ts
+                                                    #excluded_start_greater_than_included_end_ts
+                                                    #excluded_start_greater_than_excluded_end_ts
+                                                    #included_end_cannot_be_max_ts
+                                                }
                                             },
                                         );
                                         match &pg_type_impl_try_new_for_deserialize {
