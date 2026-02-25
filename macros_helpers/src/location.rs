@@ -101,10 +101,11 @@ pub fn gen_serde_version_of_named_syn_vrt(v: &Variant) -> Ts2 {
     } else {
         panic!("79b0f231");
     };
-    let fields_idents_idents_with_serde_excluding_loc_ts = fields
-        .iter()
-        .filter(|el| *el.ident.as_ref().expect("3078fd99") != *LocSc.to_string())
-        .map(|el| {
+    let fields_with_serde_ts = fields.iter().map(|el| {
+        let el_c25b655e_ident = el.ident.as_ref().expect("438aa90e");
+        let ts = if *el_c25b655e_ident == *LocSc.to_string() {
+            quote! {#LocSc: location_lib::loc::Loc}
+        } else {
             let get_1_hashmap_arg = || {
                 let segments = if let Type::Path(syn_type_path) = &el.ty {
                     &syn_type_path.path.segments
@@ -131,7 +132,6 @@ pub fn gen_serde_version_of_named_syn_vrt(v: &Variant) -> Ts2 {
                 );
                 args.iter().nth(1).expect("f4e88416")
             };
-            let el_c25b655e_ident = el.ident.as_ref().expect("438aa90e");
             let el_type_ts = {
                 let el_type = &el.ty;
                 quote! {#el_type}
@@ -201,12 +201,13 @@ pub fn gen_serde_version_of_named_syn_vrt(v: &Variant) -> Ts2 {
                     }
                 }
             };
-            quote! {#el_c25b655e_ident: #el_type_with_serde_ts,}
-        });
+            quote! {#el_c25b655e_ident: #el_type_with_serde_ts}
+        };
+        quote! {#ts,}
+    });
     quote! {
         #el_ident {
-            #(#fields_idents_idents_with_serde_excluding_loc_ts)*
-            #LocSc: location_lib::loc::Loc,
+            #(#fields_with_serde_ts)*
         }
     }
 }

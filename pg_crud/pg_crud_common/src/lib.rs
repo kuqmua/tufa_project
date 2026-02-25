@@ -1360,9 +1360,9 @@ pub struct UnsignedPartOfI32(i32); //todo why exactly i32? maybe different types
 )]
 pub enum UnsignedPartOfI32TryFromI32Er {
     LessThanZero {
+        loc: Loc,
         #[eo_to_err_string_serde]
         value: i32,
-        loc: Loc,
     },
 }
 impl TryFrom<i32> for UnsignedPartOfI32 {

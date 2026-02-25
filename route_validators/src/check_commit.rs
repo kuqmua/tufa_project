@@ -18,9 +18,9 @@ pub enum CommitEr {
         loc: Loc,
     },
     CommitToStrConversion {
+        loc: Loc,
         #[eo_to_err_string]
         commit_to_str_conversion: ToStrError,
-        loc: Loc,
     },
     NoCommitHeader {
         #[eo_to_err_string_serde]
