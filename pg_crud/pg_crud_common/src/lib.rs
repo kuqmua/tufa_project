@@ -1284,11 +1284,11 @@ where
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartEr> {
         let mut acc = String::default();
-        for (index, v_953208ce) in self.0.iter().enumerate() {
+        for (i, v_953208ce) in self.0.iter().enumerate() {
             match v_953208ce.query_part(
                 incr,
                 column,
-                if index == 0 {
+                if i == 0 {
                     is_need_to_add_logical_operator
                 } else {
                     true

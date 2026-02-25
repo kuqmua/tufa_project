@@ -773,12 +773,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         |syn_vrt_wrapper: &SynVrtWrapper, file: &'static str, line: u32, column: u32| -> Ts2 {
             let vrt_ident = &syn_vrt_wrapper.vrt.ident;
             let fields_ts = if let Fields::Named(value) = &syn_vrt_wrapper.vrt.fields {
-                value.named.iter().enumerate().map(|(index, el)| {
+                value.named.iter().enumerate().map(|(i, el)| {
                     let fi = &el.ident;
                     if *fi.as_ref().expect("edbbd08a") == LocSc.to_string() {
                         gen_field_loc_new_ts(file, line, column)
                     } else {
-                        let er_incr_sc = ErSelfSc::from_display(&index);
+                        let er_incr_sc = ErSelfSc::from_display(&i);
                         quote! {#fi: #er_incr_sc}
                     }
                 })
@@ -1218,33 +1218,34 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &ColumnParamUnderscore::True,
                 &IsNeedToAddLogicalOperatorUnderscore::True,
                 &{
-                    let extra_params_modification_ts = fields.iter().enumerate().map(|(index, el)| {
-                    let fi = &el.ident;
-                    let fi_dq_ts = dq_ts(&fi);
-                    let maybe_is_first_push_to_extra_params_already_happend_true_ts = if index == fields_len_without_primary_k {
-                        Ts2::new()
-                    } else {
-                        quote! {is_first_push_to_extra_params_already_happend = true;}
-                    };
-                    quote! {
-                        if let Some(v_da0f0616) = &#ValueSc.#fi {
-                            match pg_crud::PgTypeWhereFilter::query_part(
-                                v_da0f0616,
-                                incr,
-                                &#fi_dq_ts,
-                                is_first_push_to_extra_params_already_happend,
-                            ) {
-                                Ok(v_9e3f8fdd) => {
-                                    #ExtraParamsSc.push_str(&v_9e3f8fdd);
-                                    #maybe_is_first_push_to_extra_params_already_happend_true_ts
-                                }
-                                Err(#Er0) => {
-                                    return Err(#Er0);
+                    let extra_params_modification_ts = fields.iter().enumerate().map(|(i, el)| {
+                        let fi = &el.ident;
+                        let fi_dq_ts = dq_ts(&fi);
+                        let maybe_is_first_push_to_extra_params_already_happend_true_ts =
+                            if i == fields_len_without_primary_k {
+                                Ts2::new()
+                            } else {
+                                quote! {is_first_push_to_extra_params_already_happend = true;}
+                            };
+                        quote! {
+                            if let Some(v_da0f0616) = &#ValueSc.#fi {
+                                match pg_crud::PgTypeWhereFilter::query_part(
+                                    v_da0f0616,
+                                    incr,
+                                    &#fi_dq_ts,
+                                    is_first_push_to_extra_params_already_happend,
+                                ) {
+                                    Ok(v_9e3f8fdd) => {
+                                        #ExtraParamsSc.push_str(&v_9e3f8fdd);
+                                        #maybe_is_first_push_to_extra_params_already_happend_true_ts
+                                    }
+                                    Err(#Er0) => {
+                                        return Err(#Er0);
+                                    }
                                 }
                             }
                         }
-                    }
-                });
+                    });
                     quote! {
                         Ok(match &self.0 {
                             Some(value) => {
@@ -6192,7 +6193,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     };
                     quote! {
-                        for (index_7f181188, read_only_ids_el_937c5af3) in gen_read_only_ids_els_8a1ef027(
+                        for (i_7f181188, read_only_ids_el_937c5af3) in gen_read_only_ids_els_8a1ef027(
                             &url,
                             &table_update_many,
                             #select_default_all_with_max_page_size_clone_ts,
@@ -6208,19 +6209,19 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     as
                                     pg_crud::PgTypeTestCases
                                 >::read_inner_into_update_with_new_or_try_new_unwraped({
-                                    let mut index_e0c50b3e: usize = 0;
+                                    let mut i_e0c50b3e: usize = 0;
                                     let mut opt_test_case = None;
                                     for el_76abae3a in <#ft as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimal_vec_read_inner(
                                         &read_only_ids_el_937c5af3.#fi.clone().expect("af7d979d")
                                     ) {
                                         let mut should_break = false;
                                         for el_72f5ad12 in el_76abae3a {
-                                            if index_e0c50b3e == index_7f181188 {
+                                            if i_e0c50b3e == i_7f181188 {
                                                 opt_test_case = Some(el_72f5ad12);
                                                 should_break = true;
                                                 break;
                                             }
-                                            index_e0c50b3e = index_e0c50b3e.checked_add(1).expect("0968dda6");
+                                            i_e0c50b3e = i_e0c50b3e.checked_add(1).expect("0968dda6");
                                         }
                                         if should_break {
                                             break;
@@ -6373,7 +6374,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         );
                     let value_init_ts = gen_import_path_value_init_ts(&primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3);
                     quote! {
-                        for (index_26824592, read_only_ids_el_937c5af3) in gen_read_only_ids_els_8a1ef027(
+                        for (i_26824592, read_only_ids_el_937c5af3) in gen_read_only_ids_els_8a1ef027(
                             &url,
                             &table_update_one,
                             #select_default_all_with_max_page_size_clone_ts,
@@ -6389,19 +6390,19 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     as
                                     pg_crud::PgTypeTestCases
                                 >::read_inner_into_update_with_new_or_try_new_unwraped({
-                                    let mut index_e0d2f9db: usize = 0;
+                                    let mut i_e0d2f9db: usize = 0;
                                     let mut opt_test_case = None;
                                     for el_3a9a65ee in <#ft as pg_crud::PgTypeTestCases>::read_only_ids_to_two_dimal_vec_read_inner(
                                         &read_only_ids_el_937c5af3.#fi.clone().expect("c4d98a71")
                                     ) {
                                         let mut should_break = false;
                                         for el_bb734c11 in el_3a9a65ee {
-                                            if index_e0d2f9db == index_26824592 {
+                                            if i_e0d2f9db == i_26824592 {
                                                 opt_test_case = Some(el_bb734c11);
                                                 should_break = true;
                                                 break;
                                             }
-                                            index_e0d2f9db = index_e0d2f9db.checked_add(1).expect("326274d1");
+                                            i_e0d2f9db = i_e0d2f9db.checked_add(1).expect("326274d1");
                                         }
                                         if should_break {
                                             break;

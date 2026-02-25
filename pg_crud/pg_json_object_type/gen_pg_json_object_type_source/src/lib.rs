@@ -173,7 +173,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
     }
     .into_iter()
     .enumerate()
-    .map(|(index, el)| {
+    .map(|(i, el)| {
         #[derive(Debug, Display, EnumIter, EnumExtension, OptimalPack)]
         enum IsStdrtWithId {
             False,
@@ -4848,7 +4848,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 dims: #import_path::BoundedVec::try_from(
                                                     vec![
                                                         #import_path::UnsignedPartOfI32::try_from(
-                                                            i32::try_from(index_47620dcf).expect("5341936f")
+                                                            i32::try_from(i_47620dcf).expect("5341936f")
                                                         ).expect("76906f3c")
                                                     ]
                                                 ).expect("8a624c70"),
@@ -4863,7 +4863,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         }
                                     };
                                     quote!{
-                                        for (index_47620dcf, (read_only_ids_420d38ca, create_76f032c1)) in #ReadOnlyIdsSc.0.#ValueSc.into_iter()
+                                        for (i_47620dcf, (read_only_ids_420d38ca, create_76f032c1)) in #ReadOnlyIdsSc.0.#ValueSc.into_iter()
                                             .zip(#CreateSc.0.into_iter())
                                             .enumerate()
                                         {
@@ -6989,7 +6989,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         };
         (
             {
-                let fi = format!("field_{index}").parse::<Ts2>().expect("7f9a06a5");
+                let fi = format!("field_{i}").parse::<Ts2>().expect("7f9a06a5");
                 quote! {
                     pub #fi: #ident,
                 }

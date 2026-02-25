@@ -987,7 +987,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     .collect::<Vec<(usize, PgTypeRecord)>>()
     .par_iter()
     //.into_iter() //just for console prints ordering
-    .map(|(index, el)| {
+    .map(|(i, el)| {
         enum PgTypeOrPgTypeTestCases {
             PgType,
             PgTypeTestCases,
@@ -1278,7 +1278,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 Four,
             }
             impl ParamNbr {
-                const fn get_index(&self) -> usize {
+                const fn get_i(&self) -> usize {
                     match &self {
                         Self::One => 0,
                         Self::Two => 1,
@@ -1286,8 +1286,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         Self::Four => 3,
                     }
                 }
-                fn get_vec_from_index_starting_with_zero(&self) -> Vec<usize> {
-                    (0..=self.get_index()).collect()
+                fn get_vec_from_i_starting_with_zero(&self) -> Vec<usize> {
+                    (0..=self.get_i()).collect()
                 }
             }
             let self_dot_zero_ts = quote! {#SelfSc.0};
@@ -1331,7 +1331,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 };
                 let gen_serde_state_init_ts = |param_nbr: &ParamNbr| {
                     let param_nbr_ts = {
-                        let value = param_nbr.get_vec_from_index_starting_with_zero().into_iter().map(|_| quote! {+ 1});
+                        let value = param_nbr.get_vec_from_i_starting_with_zero().into_iter().map(|_| quote! {+ 1});
                         quote! {#(#value)*}
                     };
                     quote! {
@@ -1588,12 +1588,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         };
                     }
                 };
-                let gen_field_index_ts = |index_52391f7d: usize| format!("f{index_52391f7d}").parse::<Ts2>().expect("a4e1a63f");
-                let gen_field_index_value_ts = |index_7ef2fc7d: usize| format!("f{index_7ef2fc7d}_value").parse::<Ts2>().expect("fa97be6c");
+                let gen_field_i_ts = |i_52391f7d: usize| format!("f{i_52391f7d}").parse::<Ts2>().expect("a4e1a63f");
+                let gen_field_i_value_ts = |i_7ef2fc7d: usize| format!("f{i_7ef2fc7d}_value").parse::<Ts2>().expect("fa97be6c");
                 let (enum_field_two_ts, enum_field_three_ts, enum_field_four_ts) = {
                     let gen_enum_field_ts = |param_nbr: &ParamNbr| {
                         let fields_ts = {
-                            let fields_ts = param_nbr.get_vec_from_index_starting_with_zero().into_iter().map(&gen_field_index_ts);
+                            let fields_ts = param_nbr.get_vec_from_i_starting_with_zero().into_iter().map(&gen_field_i_ts);
                             quote! {#(#fields_ts),*}
                         };
                         quote! {
@@ -1617,7 +1617,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     };
                     (gen_fn_expecting_ts(&struct_ident_dq_ts), gen_fn_expecting_ts(&tuple_struct_ident_dq_ts), gen_fn_expecting_ts(&quote! {"field identifier"}))
                 };
-                let field_0_value_ts = gen_field_index_value_ts(param_nbr_one.get_index());
+                let field_0_value_ts = gen_field_i_value_ts(param_nbr_one.get_i());
                 let gen_serde_private_ok_ts = |ts: &dyn ToTokens| {
                     quote! {Ok(#ts)}
                 };
@@ -1630,13 +1630,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 }};
                 let sqlx_types_mac_address_mac_address_ft_new_field_0_value_ts = quote! {#inner_type_stdrt_not_null_ts::#NewSc(#field_0_value_ts)};
                 let arr_u8_6_ts = quote! {[u8; 6]};
-                let gen_vec_field_index_ts = |length: usize|{
-                    let fields_ts = (1..=length).collect::<Vec<_>>().into_iter().enumerate().map(|(index_a8d5119e, _)| gen_field_index_value_ts(index_a8d5119e));
+                let gen_vec_field_i_ts = |length: usize|{
+                    let fields_ts = (1..=length).collect::<Vec<_>>().into_iter().enumerate().map(|(i_a8d5119e, _)| gen_field_i_value_ts(i_a8d5119e));
                     quote!{#(#fields_ts),*}
                 };
                 let (sqlx_types_chrono_naive_time_origin_try_new_for_deserialize, match_origin_try_new_for_deserialize_one_ts, match_origin_try_new_for_deserialize_two_ts, match_origin_try_new_for_deserialize_four_ts) = {
                     let gen_match_origin_try_new_for_deserialize_ts = |length: usize| {
-                        let fields_ts = gen_vec_field_index_ts(length);
+                        let fields_ts = gen_vec_field_i_ts(length);
                         quote! {
                             match #ident_stdrt_not_null_origin_ucc::#TryNewForDeserializeSc(#fields_ts) {
                                 Ok(v_e81dd4a5) => Ok(v_e81dd4a5),
@@ -1653,7 +1653,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 };
                 let (origin_new_for_deserialize_two_ts, origin_new_for_deserialize_three_ts) = {
                     let gen_origin_new_for_deserialize_ts = |length: usize| {
-                        let fields_ts = gen_vec_field_index_ts(length);
+                        let fields_ts = gen_vec_field_i_ts(length);
                         quote! {
                             Ok(#ident_stdrt_not_null_origin_ucc::new_for_deserialize(#fields_ts))
                         }
@@ -1683,12 +1683,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 };
                 let gen_fields_serde_de_seq_access_next_el_init_ts = |vec_ts: &[&dyn ToTokens]| {
                     let er_message_ts = gen_struct_ident_with_nbr_els_dq_ts(&ident_stdrt_not_null_origin_ucc, vec_ts.len());
-                    let fields_init_ts = vec_ts.iter().enumerate().map(|(index_70b4dabd, el0)| {
-                        let field_index_value_ts = gen_field_index_value_ts(index_70b4dabd);
-                        let index_usize_ts = format!("{index_70b4dabd}usize").parse::<Ts2>().expect("ce15e6bf");
+                    let fields_init_ts = vec_ts.iter().enumerate().map(|(i_70b4dabd, el0)| {
+                        let field_i_value_ts = gen_field_i_value_ts(i_70b4dabd);
+                        let i_usize_ts = format!("{i_70b4dabd}usize").parse::<Ts2>().expect("ce15e6bf");
                         quote! {
-                            let Some(#field_index_value_ts) = serde::de::SeqAccess::next_element::<#el0>(&mut __seq)? else {
-                                return Err(serde::de::Error::invalid_length(#index_usize_ts, &#er_message_ts));
+                            let Some(#field_i_value_ts) = serde::de::SeqAccess::next_element::<#el0>(&mut __seq)? else {
+                                return Err(serde::de::Error::invalid_length(#i_usize_ts, &#er_message_ts));
                             };
                         }
                     });
@@ -1836,10 +1836,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 let (fn_visit_u64_two_ts, fn_visit_u64_three_ts, fn_visit_u64_four_ts) = {
                     let gen_fn_visit_u64_ts = |param_nbr: &ParamNbr| {
                         let fields_ts = {
-                            param_nbr.get_vec_from_index_starting_with_zero().into_iter().map(|el0| {
-                                let index_vrt_ts = format!("{el0}u64").parse::<Ts2>().expect("5aee0393");
-                                let field_index_ts = gen_field_index_ts(el0);
-                                quote! {#index_vrt_ts => Ok(__Field::#field_index_ts)}
+                            param_nbr.get_vec_from_i_starting_with_zero().into_iter().map(|el0| {
+                                let i_vrt_ts = format!("{el0}u64").parse::<Ts2>().expect("5aee0393");
+                                let field_i_ts = gen_field_i_ts(el0);
+                                quote! {#i_vrt_ts => Ok(__Field::#field_i_ts)}
                             })
                         };
                         quote! {
@@ -1858,10 +1858,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 };
                 let (fn_visit_str_value_start_end_ts, fn_visit_str_value_hour_min_sec_micro_ts, fn_visit_str_value_hour_minute_second_microsecond_ts, fn_visit_str_value_date_time_ts, fn_visit_str_value_date_naive_time_ts, fn_visit_str_value_months_days_microseconds_ts) = {
                     let gen_fn_visit_str_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
-                        let fields_ts = vec_ts.iter().enumerate().map(|(index_e1c5acfd, el0)| {
+                        let fields_ts = vec_ts.iter().enumerate().map(|(i_e1c5acfd, el0)| {
                             let el0_dq_ts = dq_ts(&el0);
-                            let field_index_name_ts = gen_field_index_ts(index_e1c5acfd);
-                            quote! {#el0_dq_ts => Ok(__Field::#field_index_name_ts)}
+                            let field_i_name_ts = gen_field_i_ts(i_e1c5acfd);
+                            quote! {#el0_dq_ts => Ok(__Field::#field_i_name_ts)}
                         });
                         quote! {
                             fn visit_str<__E>(
@@ -1889,10 +1889,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 };
                 let (fn_visit_bytes_start_end_ts, fn_visit_bytes_hour_min_sec_micro_ts, fn_visit_bytes_hour_minute_second_microsecond_ts, fn_visit_bytes_date_time_ts, fn_visit_bytes_date_naive_time_ts, fn_visit_bytes_months_days_microseconds_ts) = {
                     let gen_fn_visit_bytes_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
-                        let fields_ts = vec_ts.iter().enumerate().map(|(index_545c3b1e, el0)| {
+                        let fields_ts = vec_ts.iter().enumerate().map(|(i_545c3b1e, el0)| {
                             let b_el0_dq_ts = format!("b{}", dq_str(&el0)).parse::<Ts2>().expect("c76c976b");
-                            let field_index_name_ts = gen_field_index_ts(index_545c3b1e);
-                            quote! {#b_el0_dq_ts => Ok(__Field::#field_index_name_ts)}
+                            let field_i_name_ts = gen_field_i_ts(i_545c3b1e);
+                            quote! {#b_el0_dq_ts => Ok(__Field::#field_i_name_ts)}
                         });
                         quote! {
                             fn visit_bytes<__E>(self, v: &[u8]) -> Result<Self::Value, __E>
@@ -1970,9 +1970,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         field_opt_none_init_sqlx_pg_types_pg_interval_ts,
                     ) = {
                         let gen_field_opt_none_init_ts = |vec_ts: &[&dyn ToTokens]| {
-                            let fields_init_ts = vec_ts.iter().enumerate().map(|(index_d9ee264a, el0)| {
-                                let field_index_name_ts = gen_field_index_ts(index_d9ee264a);
-                                quote! {let mut #field_index_name_ts: Option<#el0> = None;}
+                            let fields_init_ts = vec_ts.iter().enumerate().map(|(i_d9ee264a, el0)| {
+                                let field_i_name_ts = gen_field_i_ts(i_d9ee264a);
+                                quote! {let mut #field_i_name_ts: Option<#el0> = None;}
                             });
                             quote! {#(#fields_init_ts)*}
                         };
@@ -2002,16 +2002,16 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         while_some_next_k_field_sqlx_pg_types_pg_interval_ts,
                     ) = {
                         let gen_while_some_next_k_field_ts = |vec_ts: &[(&dyn Display, &dyn ToTokens)]| {
-                            let fields_init_ts = vec_ts.iter().enumerate().map(|(index_2b1736c7, el0)| {
+                            let fields_init_ts = vec_ts.iter().enumerate().map(|(i_2b1736c7, el0)| {
                                 let field_name_dq_ts = dq_str(&el0.0);
                                 let ft_ts = &el0.1;
-                                let field_index_name_ts = gen_field_index_ts(index_2b1736c7);
+                                let field_i_name_ts = gen_field_i_ts(i_2b1736c7);
                                 quote! {
-                                    __Field::#field_index_name_ts => {
-                                        if Option::is_some(&#field_index_name_ts) {
+                                    __Field::#field_i_name_ts => {
+                                        if Option::is_some(&#field_i_name_ts) {
                                             return Err(<__A::Error as serde::de::Error>::duplicate_field(#field_name_dq_ts));
                                         }
-                                        #field_index_name_ts = Some(serde::de::MapAccess::next_value::<#ft_ts>(&mut __map)?);
+                                        #field_i_name_ts = Some(serde::de::MapAccess::next_value::<#ft_ts>(&mut __map)?);
                                     }
                                 }
                             });
@@ -2044,12 +2044,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     };
                     let (match_field_init_hour_min_sec_micro_ts, match_field_init_start_end_ts, match_field_init_hour_minute_second_microsecond_ts, match_field_init_date_time_ts, match_field_init_date_naive_time_ts, match_field_init_months_days_microseconds_ts) = {
                         let gen_match_field_init_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
-                            let fields_init_ts = vec_ts.iter().enumerate().map(|(index_e1adef1a, el0)| {
+                            let fields_init_ts = vec_ts.iter().enumerate().map(|(i_e1adef1a, el0)| {
                                 let field_name_dq_ts = dq_str(&el0);
-                                let field_index_ts = gen_field_index_ts(index_e1adef1a);
-                                let field_index_value_ts = gen_field_index_value_ts(index_e1adef1a);
+                                let field_i_ts = gen_field_i_ts(i_e1adef1a);
+                                let field_i_value_ts = gen_field_i_value_ts(i_e1adef1a);
                                 quote! {
-                                    let #field_index_value_ts = match #field_index_ts {
+                                    let #field_i_value_ts = match #field_i_ts {
                                         Some(v_eeeb431b) => v_eeeb431b,
                                         None => serde::__private228::de::missing_field(#field_name_dq_ts)?,
                                     };
@@ -6265,7 +6265,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         quote! {
                             match #import_path::NotEmptyUniqueVec::try_new({
                                 let mut acc_74c71d5d = Vec::new();
-                                for (index_7702518c, el_081d735b) in #ts.into_iter().enumerate() {
+                                for (i_7702518c, el_081d735b) in #ts.into_iter().enumerate() {
                                     acc_74c71d5d.push(
                                         #ident_where_ucc::DimOneEqual(
                                             where_filters::PgTypeWhereDimOneEqual {
@@ -6273,7 +6273,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 dims: where_filters::BoundedVec::try_from(
                                                     vec![
                                                         pg_crud_common::NotZeroUnsignedPartOfI32::try_from(
-                                                            i32::try_from(index_7702518c.checked_add(1)?).expect("5954966c")
+                                                            i32::try_from(i_7702518c.checked_add(1)?).expect("5954966c")
                                                         ).expect("8d269b8f")
                                                     ]
                                                 ).expect("fe1e037f"),
@@ -6699,7 +6699,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         };
         (
             {
-                let fi = format!("column_{index}").parse::<Ts2>().expect("2e15af68");
+                let fi = format!("column_{i}").parse::<Ts2>().expect("2e15af68");
                 quote! {
                     pub #fi: pg_crud::pg_type:: #ident,
                 }

@@ -21,10 +21,9 @@ fn main() {
             .expect("c6dd3528")
             .lines()
             .filter_map(|el| {
-                el.find(path_space_equal_space).map(|index| {
+                el.find(path_space_equal_space).map(|el0| {
                     el.get(
-                        index
-                            .checked_add(path_space_equal_space.len())
+                        el0.checked_add(path_space_equal_space.len())
                             .expect("62d029a8")..,
                     )
                     .expect("dde185ef")

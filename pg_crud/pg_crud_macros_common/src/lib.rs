@@ -2069,25 +2069,22 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
     len: usize,
     gen_type_ts: &dyn Fn(&Ident, &Type) -> Ts2,
 ) -> Ts2 {
-    fn gen_underscore_underscore_field_index_str(index: usize) -> String {
-        format!("f{index}")
+    fn gen_underscore_underscore_field_i_str(i: usize) -> String {
+        format!("f{i}")
     }
-    fn gen_underscore_underscore_field_index_ts(index: usize) -> Ts2 {
-        gen_underscore_underscore_field_index_str(index)
+    fn gen_underscore_underscore_field_i_ts(i: usize) -> Ts2 {
+        gen_underscore_underscore_field_i_str(i)
             .parse::<Ts2>()
             .expect("ff7433a3")
     }
-    fn gen_underscore_underscore_field_index_handle_ts(index: usize) -> Ts2 {
-        format!(
-            "{}_handle",
-            gen_underscore_underscore_field_index_str(index)
-        )
-        .parse::<Ts2>()
-        .expect("09a0c518")
+    fn gen_underscore_underscore_field_i_handle_ts(i: usize) -> Ts2 {
+        format!("{}_handle", gen_underscore_underscore_field_i_str(i))
+            .parse::<Ts2>()
+            .expect("09a0c518")
     }
-    fn gen_fi_dq_serde_private_ok_field_ts(field_name_dq_ts: &dyn ToTokens, index: usize) -> Ts2 {
-        let field_index_ts = gen_underscore_underscore_field_index_ts(index);
-        quote! {#field_name_dq_ts => Ok(__Field::#field_index_ts)}
+    fn gen_fi_dq_serde_private_ok_field_ts(field_name_dq_ts: &dyn ToTokens, i: usize) -> Ts2 {
+        let field_i_ts = gen_underscore_underscore_field_i_ts(i);
+        quote! {#field_name_dq_ts => Ok(__Field::#field_i_ts)}
     }
     let vec_ident = vec_ident_type
         .iter()
@@ -2100,42 +2097,42 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         quote! {#(#field_enum_vrts_ts),*}
     };
     let visit_u64_value_enum_vrts_ts = {
-        let visit_u64_value_enum_vrts_ts = (0..len).map(|index| {
-            let index_u64_ts = {
-                let value = format!("{index}u64");
+        let visit_u64_value_enum_vrts_ts = (0..len).map(|i| {
+            let i_u64_ts = {
+                let value = format!("{i}u64");
                 value.parse::<Ts2>().expect("828ff7b4")
             };
-            let field_index_ts = gen_underscore_underscore_field_index_ts(index);
-            quote! {#index_u64_ts => Ok(__Field::#field_index_ts)}
+            let field_i_ts = gen_underscore_underscore_field_i_ts(i);
+            quote! {#i_u64_ts => Ok(__Field::#field_i_ts)}
         });
         quote! {#(#visit_u64_value_enum_vrts_ts),*}
     };
     let visit_str_value_enum_vrts_ts = {
-        let visit_str_value_enum_vrts_ts = vec_ident.iter().enumerate().map(|(index, el)| {
+        let visit_str_value_enum_vrts_ts = vec_ident.iter().enumerate().map(|(i, el)| {
             let field_name_dq_ts = dq_ts(&el);
-            gen_fi_dq_serde_private_ok_field_ts(&field_name_dq_ts, index)
+            gen_fi_dq_serde_private_ok_field_ts(&field_name_dq_ts, i)
         });
         quote! {#(#visit_str_value_enum_vrts_ts),*,}
     };
     let visit_bytes_value_enum_vrts_ts = {
-        let visit_bytes_value_enum_vrts_ts = vec_ident.iter().enumerate().map(|(index, el)| {
+        let visit_bytes_value_enum_vrts_ts = vec_ident.iter().enumerate().map(|(i, el)| {
             let b_field_name_dq_ts = {
                 let el_ident_dq_str = dq_str(&el.to_string());
                 let value = format!("b{el_ident_dq_str}");
                 value.parse::<Ts2>().expect("9e33625e")
             };
-            gen_fi_dq_serde_private_ok_field_ts(&b_field_name_dq_ts, index)
+            gen_fi_dq_serde_private_ok_field_ts(&b_field_name_dq_ts, i)
         });
         quote! {#(#visit_bytes_value_enum_vrts_ts),*,}
     };
     let struct_ident_dq_ts = gen_struct_ident_dq_ts(&ident);
     let visit_seq_fields_init_ts = {
-        let ts = vec_ident_type.iter().enumerate().map(|(index, (el_ident, el_type))| {
-            let field_index_handle_ts = gen_underscore_underscore_field_index_handle_ts(index);
+        let ts = vec_ident_type.iter().enumerate().map(|(i, (el_ident, el_type))| {
+            let field_i_handle_ts = gen_underscore_underscore_field_i_handle_ts(i);
             let type_ts = gen_type_ts(el_ident, el_type);
             let struct_ident_opts_with_dq_ts = dq_ts(&format!("struct {ident} with {len} els"));
             quote! {
-                let Some(#field_index_handle_ts) = serde::de::SeqAccess::next_element::<#type_ts>(&mut __seq)? else {
+                let Some(#field_i_handle_ts) = serde::de::SeqAccess::next_element::<#type_ts>(&mut __seq)? else {
                     return Err(serde::de::Error::invalid_length(0usize, &#struct_ident_opts_with_dq_ts));
                 };
             }
@@ -2143,18 +2140,18 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         quote! {#(#ts)*}
     };
     let match_try_new_in_deserialize_ts = gen_match_try_new_in_deserialize_ts(&ident, &{
-        let fields_ts = (0..len).map(gen_underscore_underscore_field_index_handle_ts);
+        let fields_ts = (0..len).map(gen_underscore_underscore_field_i_handle_ts);
         quote! {#(#fields_ts),*}
     });
     let visit_map_fields_init_ts = {
         let ts = vec_ident_type
             .iter()
             .enumerate()
-            .map(|(index, (el_ident, el_type))| {
+            .map(|(i, (el_ident, el_type))| {
                 let type_ts = gen_type_ts(el_ident, el_type);
-                let field_index_ts = gen_underscore_underscore_field_index_ts(index);
+                let field_i_ts = gen_underscore_underscore_field_i_ts(i);
                 quote! {
-                    let mut #field_index_ts: Option<#type_ts> = None;
+                    let mut #field_i_ts: Option<#type_ts> = None;
                 }
             });
         quote! {#(#ts)*}
@@ -2162,18 +2159,18 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
     let visit_map_match_vrts_ts =
         {
             let visit_map_match_vrts_ts = vec_ident_type.iter().enumerate().map(
-                |(index, (el_ident, el_type))| {
-                    let field_index_ts = gen_underscore_underscore_field_index_ts(index);
+                |(i, (el_ident, el_type))| {
+                    let field_i_ts = gen_underscore_underscore_field_i_ts(i);
                     let fi_dq_ts = dq_ts(&el_ident);
                     let type_ts = gen_type_ts(el_ident, el_type);
                     quote! {
-                        __Field::#field_index_ts => {
-                            if Option::is_some(&#field_index_ts) {
+                        __Field::#field_i_ts => {
+                            if Option::is_some(&#field_i_ts) {
                                 return Err(
                                     <__A::Error as serde::de::Error>::duplicate_field(#fi_dq_ts),
                                 );
                             }
-                            #field_index_ts = Some(
+                            #field_i_ts = Some(
                                 serde::de::MapAccess::next_value::<#type_ts>(&mut __map)?,
                             );
                         }
@@ -2183,12 +2180,12 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
             quote! {#(#visit_map_match_vrts_ts)*}
         };
     let visit_map_missing_fields_check_ts = {
-        let ts = vec_ident.iter().enumerate().map(|(index, el)| {
-            let field_index_ts = gen_underscore_underscore_field_index_ts(index);
-            let field_index_handle_ts = gen_underscore_underscore_field_index_handle_ts(index);
+        let ts = vec_ident.iter().enumerate().map(|(i, el)| {
+            let field_i_ts = gen_underscore_underscore_field_i_ts(i);
+            let field_i_handle_ts = gen_underscore_underscore_field_i_handle_ts(i);
             let fi_dq_ts = dq_ts(&el);
             quote! {
-                let #field_index_handle_ts = match #field_index_ts {
+                let #field_i_handle_ts = match #field_i_ts {
                     Some(v) => v,
                     None => {
                         serde::__private228::de::missing_field(#fi_dq_ts)?

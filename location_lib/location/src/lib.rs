@@ -265,9 +265,9 @@ pub fn location(input: Ts) -> Ts {
                         }
                     }
                 });
-                let loc_vrts_ts = data_enum.variants.iter().enumerate().map(|(index, el)| {
+                let loc_vrts_ts = data_enum.variants.iter().enumerate().map(|(i, el)| {
                     let el_ident = &el.ident;
-                    if index == 0 {
+                    if i == 0 {
                         quote! {
                             Self::#el_ident {
                                 #LocSc,

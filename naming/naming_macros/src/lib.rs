@@ -30,9 +30,9 @@ pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
             let phrase_part_sc_str =
                 el.iter()
                     .enumerate()
-                    .fold(String::new(), |mut acc, (index, el0)| {
+                    .fold(String::new(), |mut acc, (i, el0)| {
                         let el_sc_str = naming_common::AsRefStrToScStr::case(el0);
-                        if index == 0 {
+                        if i == 0 {
                             acc.push_str(&el_sc_str);
                         } else {
                             assert!(write!(acc, "_{el_sc_str}").is_ok(), "ef718915");

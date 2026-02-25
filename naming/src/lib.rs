@@ -671,7 +671,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["dim", "one", "adjacent", "with", "range"],
     ["dim", "one", "range", "length"],
     ["dims"],
-    ["dims", "indexes"],
+    ["dims", "ies"],
     ["object", "uuid", "equal"],
     ["length", "equal"],
     ["length", "greater", "than"],
