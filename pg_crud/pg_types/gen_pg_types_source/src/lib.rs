@@ -3072,37 +3072,37 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 let range_inner_type_ts = int_range_type_to_range_inner_type_ts(int_range_type);
                 quote! {
                     #IncludedStartGreaterThanIncludedEndUcc {
+                        loc: location_lib::loc::Loc,
                         #[eo_to_err_string_serde]
                         #StartSc: #range_inner_type_ts,
                         #[eo_to_err_string_serde]
                         #EndSc: #range_inner_type_ts,
-                        loc: location_lib::loc::Loc,
                     },
                     #IncludedStartGreaterThanExcludedEndUcc {
+                        loc: location_lib::loc::Loc,
                         #[eo_to_err_string_serde]
                         #StartSc: #range_inner_type_ts,
                         #[eo_to_err_string_serde]
                         #EndSc: #range_inner_type_ts,
-                        loc: location_lib::loc::Loc,
                     },
                     #ExcludedStartGreaterThanIncludedEndUcc {
+                        loc: location_lib::loc::Loc,
                         #[eo_to_err_string_serde]
                         #StartSc: #range_inner_type_ts,
                         #[eo_to_err_string_serde]
                         #EndSc: #range_inner_type_ts,
-                        loc: location_lib::loc::Loc,
                     },
                     #ExcludedStartGreaterThanExcludedEndUcc {
+                        loc: location_lib::loc::Loc,
                         #[eo_to_err_string_serde]
                         #StartSc: #range_inner_type_ts,
                         #[eo_to_err_string_serde]
                         #EndSc: #range_inner_type_ts,
-                        loc: location_lib::loc::Loc,
                     },
                     #IncludedEndCannotBeMaxUcc {
+                        loc: location_lib::loc::Loc,
                         #[eo_to_err_string_serde]
                         #EndSc: #range_inner_type_ts,
-                        loc: location_lib::loc::Loc,
                     },
                 }
             };
@@ -3235,6 +3235,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         PgTypeImplTryNewForDeserialize::StringAsText => &string_as_text_try_new_er_vrts_ts,
                                         PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => &quote! {
                                             #InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
+                                                loc: location_lib::loc::Loc,
                                                 #[eo_to_err_string_serde]
                                                 #HourSc: #U32,
                                                 #[eo_to_err_string_serde]
@@ -3243,23 +3244,22 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 #SecSc: #U32,
                                                 #[eo_to_err_string_serde]
                                                 #MicroSc: #U32,
-                                                loc: location_lib::loc::Loc,
                                             },
                                             #nanosecond_precision_is_not_supported_vrt_try_new_ts
                                         },
                                         PgTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => &quote! {
                                             #InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
+                                                loc: location_lib::loc::Loc,
+                                                #[eo_to_err_string_serde]
+                                                #ErSc: #StringTs,
+                                                #[eo_to_err_string_serde]
+                                                #MicrosecondSc: #U32,
                                                 #[eo_to_err_string_serde]
                                                 #HourSc: #U8,
                                                 #[eo_to_err_string_serde]
                                                 #MinuteSc: #U8,
                                                 #[eo_to_err_string_serde]
                                                 #SecondSc: #U8,
-                                                #[eo_to_err_string_serde]
-                                                #MicrosecondSc: #U32,
-                                                #[eo_to_err_string_serde]
-                                                #ErSc: #StringTs,
-                                                loc: location_lib::loc::Loc,
                                             },
                                             #nanosecond_precision_is_not_supported_vrt_try_new_ts
                                         },
