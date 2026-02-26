@@ -316,7 +316,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             quote! {pub #DimsSc: BoundedVec<pg_crud_common::#kind_of_unsigned_part_of_i32, #vec_length_ts>}
         };
     let value_match_incr_checked_add_one_init_ts = gen_match_incr_checked_add_one_init_ts(&ValueSc);
-    let gen_ident_match_self_field_function_incr_column_is_need_to_add_operator_init_ts =
+    let gen_ident_match_field_fn_ok_v_return_err_ts =
         |ident_ts: &dyn ToTokens, field_ts: &dyn ToTokens, function_ts: &dyn ToTokens| {
             quote! {
                 let #ident_ts = match self.#field_ts.#function_ts(#IncrSc, #ColumnSc, is_need_to_add_operator) {
@@ -328,11 +328,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             }
         };
     let value_match_self_value_query_part_init_ts =
-        gen_ident_match_self_field_function_incr_column_is_need_to_add_operator_init_ts(
-            &ValueSc,
-            &ValueSc,
-            &quote! {query_part},
-        );
+        gen_ident_match_field_fn_ok_v_return_err_ts(&ValueSc, &ValueSc, &quote! {query_part});
     let dims_default_init_ts = quote! {
         #DimsSc: #PgCrudCommonDefaultOptSomeVecOneElCall
     };
@@ -377,26 +373,43 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         |pg_type_pattern_handle: &PgTypePatternHandle,
          pg_type_or_pg_json_type: &PgTypeOrPgJsonType| {
             DimNbr::try_from(pg_type_pattern_handle).map_or_else(
-            |()| (Ts2::new(),Ts2::new(), Ts2::new(), PgTypeKind::Stdrt, Ts2::new(), Ts2::new()),
-            |dim_nbr| (
-                match &pg_type_or_pg_json_type {
-                    PgTypeOrPgJsonType::PgType => gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(&dim_nbr),
-                    PgTypeOrPgJsonType::PgJsonType => gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts(&dim_nbr),
+                |()| {
+                    (
+                        Ts2::new(),
+                        Ts2::new(),
+                        Ts2::new(),
+                        PgTypeKind::Stdrt,
+                        Ts2::new(),
+                        Ts2::new(),
+                    )
                 },
-                dims_default_init_comma_ts.clone(),
-                gen_ident_match_self_field_function_incr_column_is_need_to_add_operator_init_ts(
-                    &DimsIesSc,
-                    &DimsSc,
-                    &match &pg_type_or_pg_json_type {
-                        PgTypeOrPgJsonType::PgType => quote! {pg_type_query_part},
-                        PgTypeOrPgJsonType::PgJsonType => quote! {pg_json_type_query_part},
-                    },
-                ),
-                PgTypeKind::ArrDim,
-                dims_ies_comma_ts.clone(),
-                query_self_dims_query_bind_query_ts.clone(),
+                |dim_nbr| {
+                    (
+                        match &pg_type_or_pg_json_type {
+                            PgTypeOrPgJsonType::PgType => {
+                                gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(
+                                    &dim_nbr,
+                                )
+                            }
+                            PgTypeOrPgJsonType::PgJsonType => {
+                                gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts(&dim_nbr)
+                            }
+                        },
+                        dims_default_init_comma_ts.clone(),
+                        gen_ident_match_field_fn_ok_v_return_err_ts(
+                            &DimsIesSc,
+                            &DimsSc,
+                            &match &pg_type_or_pg_json_type {
+                                PgTypeOrPgJsonType::PgType => quote! {pg_type_query_part},
+                                PgTypeOrPgJsonType::PgJsonType => quote! {pg_json_type_query_part},
+                            },
+                        ),
+                        PgTypeKind::ArrDim,
+                        dims_ies_comma_ts.clone(),
+                        query_self_dims_query_bind_query_ts.clone(),
+                    )
+                },
             )
-        )
         };
     let pg_type_ts = {
         let gen_filters_ts = |filter: &PgTypeFilter| {
@@ -865,42 +878,64 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     };
                 let gen_range_length_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                     let (
-                        maybe_dims_decl_ts, maybe_dims_default_init_ts,
+                        maybe_dims_decl_ts,
+                        maybe_dims_default_init_ts,
                         maybe_dims_ies_init_ts,
                         pg_type_kind,
                         maybe_extra_params_ts,
-                        maybe_dims_query_bind_ts
+                        maybe_dims_query_bind_ts,
                     ) = DimNbr::try_from(pg_type_pattern_handle).map_or_else(
-                        |()| (Ts2::new(), Ts2::new(), Ts2::new(), PgTypeKind::Stdrt, quote! {#ColumnSc,}, Ts2::new()),
-                        |dim_nbr| (
-                            gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(&dim_nbr),
-                            dims_default_init_comma_ts.clone(),
-                            {
-                                let dims_ies1_ts = gen_ident_match_self_field_function_incr_column_is_need_to_add_operator_init_ts(&quote! {dims_ies1}, &DimsSc, &quote! {pg_type_query_part});
-                                let dims_ies2_ts = gen_ident_match_self_field_function_incr_column_is_need_to_add_operator_init_ts(&quote! {dims_ies2}, &DimsSc, &quote! {pg_type_query_part});
-                                quote! {
-                                    #dims_ies1_ts
-                                    #dims_ies2_ts
-                                }
-                            },
-                            PgTypeKind::ArrDim,
-                            quote! {
-                                dims_ies1,
-                                column,
-                                dims_ies2,
-                            },
-                            quote! {
-                                match #SelfSc.#DimsSc.clone().query_bind(#QuerySc) {
-                                    Ok(v_6cb14cdc) => {
-                                        #QuerySc = v_6cb14cdc;
-                                    },
-                                    Err(#ErSc) => {
-                                        return Err(#ErSc);
+                        |()| {
+                            (
+                                Ts2::new(),
+                                Ts2::new(),
+                                Ts2::new(),
+                                PgTypeKind::Stdrt,
+                                quote! {#ColumnSc,},
+                                Ts2::new(),
+                            )
+                        },
+                        |dim_nbr| {
+                            (
+                                gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(
+                                    &dim_nbr,
+                                ),
+                                dims_default_init_comma_ts.clone(),
+                                {
+                                    let (dims_ies1_ts, dims_ies2_ts) = {
+                                        let gen_ts = |ident_ts: &dyn ToTokens| {
+                                            gen_ident_match_field_fn_ok_v_return_err_ts(
+                                                &ident_ts,
+                                                &DimsSc,
+                                                &quote! {pg_type_query_part},
+                                            )
+                                        };
+                                        (gen_ts(&quote! {dims_ies1}), gen_ts(&quote! {dims_ies2}))
+                                    };
+                                    quote! {
+                                        #dims_ies1_ts
+                                        #dims_ies2_ts
                                     }
-                                }
-                                #query_self_dims_query_bind_query_ts
-                            },
-                        )
+                                },
+                                PgTypeKind::ArrDim,
+                                quote! {
+                                    dims_ies1,
+                                    column,
+                                    dims_ies2,
+                                },
+                                quote! {
+                                    match #SelfSc.#DimsSc.clone().query_bind(#QuerySc) {
+                                        Ok(v_6cb14cdc) => {
+                                            #QuerySc = v_6cb14cdc;
+                                        },
+                                        Err(#ErSc) => {
+                                            return Err(#ErSc);
+                                        }
+                                    }
+                                    #query_self_dims_query_bind_query_ts
+                                },
+                            )
+                        },
                     );
                     (
                         Generic::False,
@@ -1443,7 +1478,11 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             "{{}}({{}}{} in ({{}}))",
                             pg_type_kind.format_argument()
                         ));
-                        let value_init_ts = gen_ident_match_self_field_function_incr_column_is_need_to_add_operator_init_ts(&ValueSc, &ValueSc, &quote! {query_part_one_by_one});
+                        let value_init_ts = gen_ident_match_field_fn_ok_v_return_err_ts(
+                            &ValueSc,
+                            &ValueSc,
+                            &quote! {query_part_one_by_one},
+                        );
                         quote! {
                             #maybe_dims_ies_init_ts
                             #value_init_ts
@@ -1476,28 +1515,45 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     maybe_dims_decl_ts,
                     maybe_dims_default_init_ts,
                     maybe_dims_ies_init_ts,
-                    pg_type_kind, maybe_extra_params_ts,
-                    maybe_dims_query_bind_ts
+                    pg_type_kind,
+                    maybe_extra_params_ts,
+                    maybe_dims_query_bind_ts,
                 ) = DimNbr::try_from(pg_type_pattern_handle).map_or_else(
-                    |()| (Ts2::new(), Ts2::new(), Ts2::new(), PgTypeKind::Stdrt, Ts2::new(), Ts2::new()),
-                    |dim_nbr| (
-                        gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts(&dim_nbr),
-                        dims_default_init_comma_ts.clone(),
-                        {
-                            let dims_ies_init_ts = gen_ident_match_self_field_function_incr_column_is_need_to_add_operator_init_ts(&DimsIesSc, &DimsSc, &quote! {pg_json_type_query_part_minus_one});
-                            let last_dims_i_intialization_ts = gen_match_incr_checked_add_one_init_ts(&quote! {last_dims_i});
+                    |()| {
+                        (
+                            Ts2::new(),
+                            Ts2::new(),
+                            Ts2::new(),
+                            PgTypeKind::Stdrt,
+                            Ts2::new(),
+                            Ts2::new(),
+                        )
+                    },
+                    |dim_nbr| {
+                        (
+                            gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts(&dim_nbr),
+                            dims_default_init_comma_ts.clone(),
+                            {
+                                let dims_ies_init_ts = gen_ident_match_field_fn_ok_v_return_err_ts(
+                                    &DimsIesSc,
+                                    &DimsSc,
+                                    &quote! {pg_json_type_query_part_minus_one},
+                                );
+                                let last_dims_i_intialization_ts =
+                                    gen_match_incr_checked_add_one_init_ts(&quote! {last_dims_i});
+                                quote! {
+                                    #dims_ies_init_ts
+                                    #last_dims_i_intialization_ts
+                                }
+                            },
+                            PgTypeKind::ArrDim,
                             quote! {
-                                #dims_ies_init_ts
-                                #last_dims_i_intialization_ts
-                            }
-                        },
-                        PgTypeKind::ArrDim,
-                        quote! {
-                            last_dims_i,
-                            #DimsIesSc,
-                        },
-                        query_self_dims_query_bind_query_ts.clone(),
-                    )
+                                last_dims_i,
+                                #DimsIesSc,
+                            },
+                            query_self_dims_query_bind_query_ts.clone(),
+                        )
+                    },
                 );
                 (
                     generic_false.clone(),
