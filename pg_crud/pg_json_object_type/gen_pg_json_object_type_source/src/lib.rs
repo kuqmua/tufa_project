@@ -5611,7 +5611,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 #ident_read_ucc::new({
                                     assert_eq!(#ReadOnlyIdsSc.0.#ValueSc.len(), #CreateSc.0.len(), "90d33ddd");
                                     let mut acc_37909420 = Vec::new();
-                                    for (read_only_ids_225e2b76, create_3c660445) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
+                                    for (read_only_ids_225e2b76, create_3c660445) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0) {
                                         acc_37909420.push(#ident_with_id_stdrt_not_null_read_ucc::try_new(
                                             #id_param_ts,
                                             #(#params_ts),*
@@ -5710,7 +5710,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 #ident_table_type_ucc::new({
                                     assert_eq!(#ReadOnlyIdsSc.0.#ValueSc.len(), #CreateSc.0.len(), "7776a146");
                                     let mut acc_319e1fb1 = Vec::new();
-                                    for (read_only_ids_94b49496, create_24629087) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
+                                    for (read_only_ids_94b49496, create_24629087) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0) {
                                         acc_319e1fb1.push(#ident_with_id_stdrt_not_null_table_type_ucc::new(
                                             #id_param_ts,
                                             #(#params_ts),*
@@ -5784,7 +5784,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     operator: #import_path::Operator::And,
                                     #ValueSc: #ident_table_type_ucc::new({
                                         let mut acc_321b3fcd = Vec::new();
-                                        for (read_only_ids_ea32954c, create_3cbe8967) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
+                                        for (read_only_ids_ea32954c, create_3cbe8967) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0) {
                                             acc_321b3fcd.push(
                                                 #ident_with_id_stdrt_not_null_table_type_ucc::new(
                                                     #ident_ts_978daa48,
@@ -5887,7 +5887,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         operator: #import_path::Operator::And,
                                         #ValueSc: #ident_table_type_ucc::new({
                                             let mut acc_97ebf7d6 = Vec::new();
-                                            for (read_only_ids_319c9e78, create_00ae06d2) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
+                                            for (read_only_ids_319c9e78, create_00ae06d2) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0) {
                                                 acc_97ebf7d6.push(
                                                     #ident_with_id_stdrt_not_null_table_type_ucc::new(
                                                         #ident_ts_76fd9d28,
@@ -6182,7 +6182,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         };
                                         quote!{
                                             for (i_47620dcf, (read_only_ids_420d38ca, create_76f032c1)) in #ReadOnlyIdsSc.0.#ValueSc.into_iter()
-                                                .zip(#CreateSc.0.into_iter())
+                                                .zip(#CreateSc.0)
                                                 .enumerate()
                                             {
                                                 #ts_f0710cd9
@@ -6194,7 +6194,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     Dim::Three |
                                     Dim::Four => quote!{
                                         for (read_only_ids_420d38ca, create_76f032c1) in #ReadOnlyIdsSc.0.#ValueSc.into_iter()
-                                            .zip(#CreateSc.0.into_iter())
+                                            .zip(#CreateSc.0)
                                         {
                                             #ts_f0710cd9
                                         }
@@ -6708,7 +6708,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             quote! {
                                 match #import_path::NotEmptyUniqueVec::try_new({
                                     let mut acc_359c0b3f = Vec::new();
-                                    for (read_only_ids_629675e2, create_82796400) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
+                                    for (read_only_ids_629675e2, create_82796400) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0) {
                                         let and = #import_path::Operator::And;
                                         let #IdSc = #ident_where_ucc::ElId(
                                             #import_path::PgTypeWhere::try_new(

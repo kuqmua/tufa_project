@@ -6814,7 +6814,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     ) -> Vec<#ident_read_ucc> {
                         let mut acc_1debe8fb = Vec::new();
                         assert_eq!(read_only_ids_from_try_create_many.len(), ident_vec_create.len(), "88fb286c");
-                        for (read_only_ids, create) in read_only_ids_from_try_create_many.into_iter().zip(ident_vec_create.into_iter()) {
+                        for (read_only_ids, create) in read_only_ids_from_try_create_many.into_iter().zip(ident_vec_create) {
                             acc_1debe8fb.push(#ident_read_ucc {
                                 #primary_k_fi: <#primary_k_ft as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
                                     &read_only_ids.#primary_k_fi
