@@ -46,50 +46,48 @@ pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 .parse::<Ts2>()
                 .expect("0cc47b2e");
             let (ucc_struct_decl_ts, sc_struct_decl_ts) = {
-                let gen_struct_decl = |ts: &dyn ToTokens| {
+                let gen_ts = |ts: &dyn ToTokens| {
                     quote! {
                         #[derive(Debug, optimal_pack::OptimalPack)]
                         pub struct #ts;
                     }
                 };
                 (
-                    gen_struct_decl(&phrase_part_ucc_ucc_ts),
-                    gen_struct_decl(&phrase_part_sc_ucc_ts),
+                    gen_ts(&phrase_part_ucc_ucc_ts),
+                    gen_ts(&phrase_part_sc_ucc_ts),
                 )
             };
             let (impl_display_ucc_ts, impl_display_sc_ts) = {
-                let gen_impl_display_ts =
-                    |struct_name_ts: &dyn ToTokens, write_ts: &dyn ToTokens| {
-                        quote! {
-                            impl std::fmt::Display for #struct_name_ts {
-                                fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                                    write!(f, #write_ts)
-                                }
+                let gen_ts = |struct_name_ts: &dyn ToTokens, write_ts: &dyn ToTokens| {
+                    quote! {
+                        impl std::fmt::Display for #struct_name_ts {
+                            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                                write!(f, #write_ts)
                             }
                         }
-                    };
+                    }
+                };
                 (
-                    gen_impl_display_ts(&phrase_part_ucc_ucc_ts, &dq_ts(&phrase_part_ucc_str)),
-                    gen_impl_display_ts(&phrase_part_sc_ucc_ts, &dq_ts(&phrase_part_sc_str)),
+                    gen_ts(&phrase_part_ucc_ucc_ts, &dq_ts(&phrase_part_ucc_str)),
+                    gen_ts(&phrase_part_sc_ucc_ts, &dq_ts(&phrase_part_sc_str)),
                 )
             };
             let (impl_to_tokens_ucc_ts, impl_to_tokens_snake_ts) = {
-                let gen_impl_to_tokens_ts =
-                    |struct_name_ts: &dyn ToTokens, quote_ts: &dyn ToTokens| {
-                        quote! {
-                            impl ToTokens for #struct_name_ts {
-                                fn to_tokens(&self, tokens: &mut Ts2) {
-                                    quote!{#quote_ts}.to_tokens(tokens);
-                                }
+                let gen_ts = |struct_name_ts: &dyn ToTokens, quote_ts: &dyn ToTokens| {
+                    quote! {
+                        impl ToTokens for #struct_name_ts {
+                            fn to_tokens(&self, tokens: &mut Ts2) {
+                                quote!{#quote_ts}.to_tokens(tokens);
                             }
                         }
-                    };
+                    }
+                };
                 (
-                    gen_impl_to_tokens_ts(
+                    gen_ts(
                         &phrase_part_ucc_ucc_ts,
                         &phrase_part_ucc_str.parse::<Ts2>().expect("7cf3ffc0"),
                     ),
-                    gen_impl_to_tokens_ts(
+                    gen_ts(
                         &phrase_part_sc_ucc_ts,
                         &phrase_part_sc_str.parse::<Ts2>().expect("114a573a"),
                     ),

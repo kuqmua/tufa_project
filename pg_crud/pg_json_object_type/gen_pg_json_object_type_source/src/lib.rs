@@ -1353,7 +1353,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 impl_pg_crud_default_opt_some_vec_one_el_for_ident_select_ts,
                 impl_pg_crud_default_opt_some_vec_one_el_max_page_size_for_ident_select_ts
             ) = {
-                let gen_default_some_one_ts = |default_some_one_or_default_some_one_with_max_page_size: &DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
+                let gen_ts = |default_some_one_or_default_some_one_with_max_page_size: &DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
                     match &pattern {
                         Pattern::Stdrt => match &is_nullable {
                             IsNullable::False => match &default_some_one_or_default_some_one_with_max_page_size {
@@ -1401,12 +1401,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     gen_impl_pg_crud_default_opt_some_vec_one_el_ts(
                         &ident_select_ucc,
                         &Ts2::new(),
-                        &gen_default_some_one_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)
+                        &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)
                     ),
                     gen_impl_pg_crud_default_opt_some_vec_one_el_max_page_size_ts(
                         &ident_select_ucc,
                         &Ts2::new(),
-                        &gen_default_some_one_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)
+                        &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)
                     )
                 )
             };
@@ -1452,7 +1452,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     impl_pg_crud_all_vrts_default_opt_some_vec_one_el_for_ident_select_el_or_ident_with_id_stdrt_not_null_select_el_ts,
                     impl_pg_crud_all_vrts_default_opt_some_vec_one_el_for_ident_select_el_or_ident_with_id_stdrt_not_null_select_el_with_max_page_size_ts
                 ) = {
-                    let gen_default_some_one_ts = |default_some_one_or_default_some_one_with_max_page_size: &DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
+                    let gen_ts = |default_some_one_or_default_some_one_with_max_page_size: &DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
                         let vec_ts = {
                             let ts: &dyn ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
                                 DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudDefaultOptSomeVecOneElCall,
@@ -1470,11 +1470,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     (
                         gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_ts(
                             &ident_select_el_or_ident_with_id_select_el_ucc,
-                            &gen_default_some_one_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)
+                            &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)
                         ),
                         gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_max_page_size_ts(
                             &ident_select_el_or_ident_with_id_select_el_ucc,
-                            &gen_default_some_one_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)
+                            &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)
                         )
                     )
                 };
@@ -2062,7 +2062,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 False,
                                 True,
                             }
-                            let gen_fields_ts = |with_reference: &WithReference| {
+                            let gen_ts = |with_reference: &WithReference| {
                                 let maybe_reference_symbol_ts = match &with_reference {
                                     WithReference::False => Ts2::new(),
                                     WithReference::True => quote! {&},
@@ -2073,7 +2073,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 });
                                 quote! {#(#fields_ts),*}
                             };
-                            (gen_fields_ts(&WithReference::True), gen_fields_ts(&WithReference::False))
+                            (gen_ts(&WithReference::True), gen_ts(&WithReference::False))
                         };
                         let check_if_all_fields_are_none_ts = {
                             let vec_syn_field_19e98ce1_len = vec_syn_field_19e98ce1.len();
@@ -2502,16 +2502,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         let ident_with_id_arr_not_null_as_pg_json_type_update_for_query_ts = gen_type_as_pg_json_type_update_for_query_ts(&ident_with_id_arr_not_null_ucc);
         let ident_with_id_stdrt_not_null_update_el_ucc = &SelfUpdateElUcc::from_tokens(&ident_with_id_stdrt_not_null_ucc);
         let ident_with_id_stdrt_not_null_update_for_query_el_ucc = &SelfUpdateForQueryElUcc::from_tokens(&ident_with_id_stdrt_not_null_ucc);
-        let (gen_jsonb_set_target_sc, gen_jsonb_set_target_ts) = {
-            let gen_jsonb_set_target_ts = {
-                let format_ts = dq_ts(&format!("{{{JsonbSetTargetSc}}}->'{{v_12d082b5}}'"));
-                quote! {
-                    let #GenJsonbSetTargetSc = |v_12d082b5: &str|{
-                        format!(#format_ts)
-                    };
-                }
-            };
-            (GenJsonbSetTargetSc, gen_jsonb_set_target_ts)
+        let gen_jsonb_set_target_ts = {
+            let format_ts = dq_ts(&format!("{{{JsonbSetTargetSc}}}->'{{v_12d082b5}}'"));
+            quote! {
+                let #GenJsonbSetTargetSc = |v_12d082b5: &str|{
+                    format!(#format_ts)
+                };
+            }
         };
         let import_path_unique_vec_ident_with_id_stdrt_not_null_update_el_ts = quote!{
             #import_path::UniqueVec::<#ident_with_id_stdrt_not_null_update_el_ucc>
@@ -2684,7 +2681,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             Update,
                                             Delete
                                         }
-                                        let gen_uuid_as_pg_json_type_update_to_err_string_ts = |
+                                        let gen_ts = |
                                             update_or_delete: &UpdateOrDelete,
                                             el_ts: &dyn ToTokens,
                                         |{
@@ -2699,11 +2696,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             }
                                         };
                                         (
-                                            gen_uuid_as_pg_json_type_update_to_err_string_ts(
+                                            gen_ts(
                                                 &UpdateOrDelete::Update,
                                                 &quote!{el}
                                             ),
-                                            gen_uuid_as_pg_json_type_update_to_err_string_ts(
+                                            gen_ts(
                                                 &UpdateOrDelete::Delete,
                                                 &quote!{el}
                                             )
@@ -3933,7 +3930,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         match #ft_as_crud_pg_json_type_from_field_ts::#UpdateQueryPartSc(
                                             &v_3b3fae4c.#ValueSc,
                                             &#StdOptOptObjectAccSc,
-                                            &#gen_jsonb_set_target_sc(#fi_dq_ts),
+                                            &#GenJsonbSetTargetSc(#fi_dq_ts),
                                             #fi_dq_ts,
                                             #IncrSc,
                                         ) {
@@ -4689,56 +4686,1588 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             }
         };
         let self_pg_json_type_ts = quote!{#SelfUcc::#PgJsonTypeUcc};
-        let (impl_pg_json_type_test_cases_for_ident_ts, impl_pg_type_test_cases_for_ident_ts) = {
-            let gen_dim_equal_ts = |dim: &Dim|{
-                let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc = dim.read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc();
+        let impl_pg_json_type_test_cases_for_ident_ts = {
+            let opt_vec_create_ts = {
+                let ts = match &is_nullable {
+                    IsNullable::False => match &pattern {
+                        Pattern::Stdrt => {
+                            let ts = vec_syn_field.iter().map(|el0| {
+                                let fi = &el0.ident;
+                                let ft_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                                let params_ts = vec_syn_field.iter().map(|el_value| {
+                                    let fi_58f0ef7c = &el_value.ident;
+                                    if fi == fi_58f0ef7c {
+                                        quote! {el_37154498}
+                                    } else {
+                                        quote! {
+                                            #PgCrudDefaultOptSomeVecOneElCall
+                                        }
+                                    }
+                                });
+                                quote! {
+                                    if let Some(v_0296b347) = #ft_type_as_pg_json_type_test_cases_ts::#OptVecCreateSc() {
+                                        for el_37154498 in v_0296b347 {
+                                            let #ValueSc = #self_as_pg_json_type_create_ts::new(
+                                                #(#params_ts),*
+                                            );
+                                            if !acc_ccd79a32.contains(&#ValueSc) {
+                                                acc_ccd79a32.push(#ValueSc);
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                            quote! {#(#ts)*}
+                        },
+                        Pattern::Arr => {
+                            let ts = vec_syn_field.iter().map(|el0| {
+                                let fi = &el0.ident;
+                                let ft_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                                let (
+                                    opt_extra_params_ts,
+                                    params_ts
+                                ) = {
+                                    #[derive(Clone, OptimalPack)]
+                                    enum ShouldAddDotClone {
+                                        False,
+                                        True,
+                                    }
+                                    let gen_params_ts = |
+                                        should_add_dot_clone: ShouldAddDotClone,
+                                        el_ts: &dyn ToTokens,
+                                    |{
+                                        vec_syn_field.iter().map(|el_value| {
+                                            let fi_4fd46df4 = &el_value.ident;
+                                            if fi == fi_4fd46df4 {
+                                                let maybe_dot_clone_ts = match should_add_dot_clone.clone() {
+                                                    ShouldAddDotClone::False => Ts2::new(),
+                                                    ShouldAddDotClone::True => quote! { .clone() },
+                                                };
+                                                quote! {#el_ts #maybe_dot_clone_ts}
+                                            } else {
+                                                quote! {#PgCrudDefaultOptSomeVecOneElCall}
+                                            }
+                                        }).collect::<Vec<Ts2>>()
+                                    };
+                                    (
+                                        gen_params_ts(
+                                            ShouldAddDotClone::True,
+                                            &quote!{el_37154498}
+                                        ),
+                                        gen_params_ts(
+                                            ShouldAddDotClone::False,
+                                            &quote!{el_37154498}
+                                        )
+                                    )
+                                };
+                                quote! {
+                                    if let Some(vec_create) = #ft_type_as_pg_json_type_test_cases_ts::#OptVecCreateSc() {
+                                        let mut acc_6a886d56 = Vec::new();
+                                        let opt_extra = {
+                                            let mut opt_extra = None;
+                                            for el_37154498 in &vec_create {
+                                                if opt_extra.is_none() {
+                                                    let #ValueSc = #ident_with_id_stdrt_not_null_create_ucc::new(
+                                                        #(#opt_extra_params_ts),*
+                                                    );
+                                                    opt_extra = Some((
+                                                        #ident_create_ucc::new(vec![#ValueSc.clone()]),
+                                                        #ident_create_ucc::new(vec![#ValueSc.clone(), #ValueSc])
+                                                    ));
+                                                }
+                                                else {
+                                                    break;
+                                                }
+                                            }
+                                            opt_extra
+                                        };
+                                        let has_len_greater_than_one = vec_create.len() > 1;
+                                        for el_37154498 in vec_create {
+                                            acc_6a886d56.push(#ident_with_id_stdrt_not_null_create_ucc::new(
+                                                #(#params_ts),*
+                                            ));
+                                        }
+                                        {
+                                            let v_07c0c08c = #ident_create_ucc::new(acc_6a886d56);
+                                            if !acc_ccd79a32.contains(&v_07c0c08c) {
+                                                acc_ccd79a32.push(v_07c0c08c);
+                                            }
+                                        }
+                                        if let Some(v_f6686d5d) = opt_extra {
+                                            if has_len_greater_than_one {
+                                                let v_60116463 = v_f6686d5d.0;
+                                                if !acc_ccd79a32.contains(&v_60116463) {
+                                                    acc_ccd79a32.push(v_60116463);
+                                                }
+                                            }
+                                            else {
+                                                let v_7a843059 = v_f6686d5d.1;
+                                                if !acc_ccd79a32.contains(&v_7a843059) {
+                                                    acc_ccd79a32.push(v_7a843059);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                            quote! {#(#ts)*}
+                        },
+                    },
+                    IsNullable::True => {
+                        let (
+                            ident_not_null_as_pg_json_type_test_cases_ts_e690553a,
+                            ts
+                        ): (
+                            &dyn ToTokens,
+                            &dyn ToTokens
+                        ) = match &pattern {
+                            Pattern::Stdrt => (
+                                &ident_stdrt_not_null_as_pg_json_type_test_cases_ts,
+                                &Ts2::new()
+                            ),
+                            Pattern::Arr => (
+                                &ident_arr_not_null_as_pg_json_type_test_cases_ts,
+                                &quote!{.0}
+                            ),
+                        };
+                        quote! {
+                            if let Some(v_399e6a50) = #ident_not_null_as_pg_json_type_test_cases_ts_e690553a::#OptVecCreateSc() {
+                                for el in v_399e6a50 {
+                                    let #ValueSc = #self_as_pg_json_type_ts::Create::new(Some(el #ts));
+                                    if !acc_ccd79a32.contains(&#ValueSc) {
+                                        acc_ccd79a32.push(#ValueSc);
+                                    }
+                                }
+                            }
+                            {
+                                let #ValueSc = #self_as_pg_json_type_ts::Create::new(None);
+                                if !acc_ccd79a32.contains(&#ValueSc) {
+                                    acc_ccd79a32.push(#ValueSc);
+                                }
+                            }
+                        }
+                    }
+                };
+                quote!{Some({
+                    let mut acc_ccd79a32 = Vec::new();
+                    #ts
+                    acc_ccd79a32
+                })}
+            };
+            let read_only_ids_to_two_dimal_vec_read_inner_ts = match &pattern {
+                Pattern::Stdrt => match &is_nullable {
+                    IsNullable::False => {
+                        let fields_last_init_ts = {
+                            if vec_syn_field.len() == 1 {
+                                Ts2::new()
+                            }
+                            else {
+                                let ts = vec_syn_field.iter().map(|el0| {
+                                    let fi = &el0.ident;
+                                    let fi_last_sc = SelfLastSc::from_display(&fi);
+                                    let ft_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                                    quote! {
+                                        let mut #fi_last_sc = #ft_type_as_pg_json_type_test_cases_ts::#ReadOnlyIdsIntoOptValueReadInnerSc(
+                                            read_only_ids.0.value.#fi.clone()
+                                        );
+                                    }
+                                });
+                                quote!{#(#ts)*}
+                            }
+                        };
+                        let ts = vec_syn_field.iter().map(|el0| {
+                            let fi = &el0.ident;
+                            let fi_current_sc = SelfCurrentSc::from_display(&fi);
+                            let fi_last_sc = SelfLastSc::from_display(&fi);
+                            let maybe_fi_last_clone_from_fi_current = if vec_syn_field.len() == 1 {
+                                Ts2::new()
+                            }
+                            else {
+                                quote!{#fi_last_sc.clone_from(&#fi_current_sc);}
+                            };
+                            let fields_ts = vec_syn_field.iter().map(|el_value| {//todo rename
+                                let fi_84b52e71 = &el_value.ident;
+                                let fi_84b52e71_current_sc = SelfCurrentSc::from_display(&fi_84b52e71);
+                                let fi_84b52e71_last_sc = SelfLastSc::from_display(&fi_84b52e71);
+                                let ts: &dyn ToTokens = if fi == fi_84b52e71 {
+                                    &fi_84b52e71_current_sc
+                                } else {
+                                    &fi_84b52e71_last_sc
+                                };
+                                quote! {#fi_84b52e71: #ts.clone()}
+                            });
+                            let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                            let value_ts = wrap_into_value_init_ts(&quote!{el_2720df8a});
+                            quote! {
+                                for el_7bf83754 in #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(&#ReadOnlyIdsSc.0.value.#fi) {
+                                    for el_2720df8a in el_7bf83754 {
+                                        let #fi_current_sc = Some(#value_ts);
+                                        #maybe_fi_last_clone_from_fi_current
+                                        acc_ef081dc3.push(
+                                            vec![
+                                                #ident_stdrt_not_null_read_inner_ucc {
+                                                    #(#fields_ts),*
+                                                }
+                                            ]
+                                        );
+                                    }
+                                }
+                            }
+                        });
+                        quote! {
+                            let mut acc_ef081dc3 = Vec::new();
+                            #fields_last_init_ts
+                            #(#ts)*
+                            acc_ef081dc3
+                        }
+                    }
+                    IsNullable::True => {
+                        quote! {
+                            #ReadOnlyIdsSc.0.#ValueSc.as_ref().into_iter().flat_map(|v_5fa0668c| {
+                                #ident_stdrt_not_null_as_pg_json_type_test_cases_ts::
+                                    #ReadOnlyIdsToTwoDimalVecReadInnerSc(v_5fa0668c)
+                                    .into_iter()
+                                    .flat_map(|el0| {
+                                        el0.into_iter().map(|el1| vec![Some(el1)])
+                                    })
+                            })
+                            .chain(std::iter::once(vec![None]))
+                            .collect()
+                        }
+                    }
+                },
+                Pattern::Arr => match &is_nullable {
+                    IsNullable::False => {
+                        let ts = vec_syn_field.iter().map(|el0| {
+                            let fi = &el0.ident;
+                            let fields_ts = vec_syn_field.iter().map(|el_value| {
+                                let fi_dd46e0cb = &el_value.ident;
+                                if fi == fi_dd46e0cb {
+                                    let value_ts = wrap_into_value_init_ts(&quote!{el_18d1f553});
+                                    quote! {
+                                        #fi_dd46e0cb: Some(#value_ts)
+                                    }
+                                } else {
+                                    let ft_as_pg_json_type_test_cases_ts_64dc25bd = gen_type_as_pg_json_type_test_cases_ts(&el_value.type0);
+                                    quote! {
+                                        #fi_dd46e0cb: #ft_as_pg_json_type_test_cases_ts_64dc25bd::#ReadOnlyIdsIntoOptValueReadInnerSc(
+                                            el.0.#ValueSc.#fi_dd46e0cb.clone()
+                                        )
+                                    }
+                                }
+                            });
+                            let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                            let value_ts = wrap_into_value_init_ts(&quote!{el.0.#ValueSc.#IdSc.0.#ValueSc});
+                            quote! {
+                                for el_4b4da5aa in #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(
+                                    &el.0.#ValueSc.#fi.clone()
+                                ) {
+                                    for el_18d1f553 in el_4b4da5aa {
+                                        acc_00b3df88.push(
+                                            vec![
+                                                #ident_with_id_stdrt_not_null_read_inner_ucc {
+                                                    #IdSc: Some(#value_ts),
+                                                    #(#fields_ts),*
+                                                }
+                                            ]
+                                        );
+                                    }
+                                }
+                            }
+                        });
+                        quote! {
+                            #ReadOnlyIdsSc.0.#ValueSc.iter().map(|el|{
+                                let mut acc_00b3df88 = Vec::new();
+                                #(#ts)*
+                                acc_00b3df88
+                            })
+                            .collect()
+                        }
+                    }
+                    IsNullable::True => {
+                        quote! {
+                            let mut acc_fb5111f1 = Vec::new();
+                            if let Some(v_6ee5750e) = &#ReadOnlyIdsSc.0.#ValueSc {
+                                for el_4a5a4b09 in #ident_arr_not_null_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(v_6ee5750e) {
+                                    for el_264980ec in el_4a5a4b09 {
+                                        acc_fb5111f1.push(vec![Some(el_264980ec)]);
+                                    }
+                                }
+                            }
+                            acc_fb5111f1.push(vec![None]);
+                            acc_fb5111f1
+                        }
+                    }
+                },
+            };
+            let read_inner_into_read_with_new_or_try_new_unwraped_ts = match &pattern {
+                Pattern::Stdrt => match &is_nullable {
+                    IsNullable::False => {
+                        let self_el_as_pg_type_read_ts = gen_type_as_pg_type_subtype_ts(&self_pg_json_type_ts, &PgTypeSubtype::Read);
+                        let params_ts = vec_syn_field.iter().map(|el0| {
+                            let fi = &el0.ident;
+                            let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                            let value_ts = wrap_into_value_init_ts(&quote!{
+                                #ft_as_pg_json_type_test_cases_ts::#ReadInnerIntoReadWithNewOrTryNewUnwrapedSc(v_8ff65e09.#ValueSc)
+                            });
+                            quote! {#ValueSc.#fi.map(|v_8ff65e09|#value_ts)}
+                        });
+                        quote! {#self_el_as_pg_type_read_ts::try_new(#(#params_ts),*).expect("3aeeabba")}
+                    }
+                    IsNullable::True => {
+                        let self_el_as_pg_type_read_ts = gen_type_as_pg_type_subtype_ts(&self_pg_json_type_ts, &PgTypeSubtype::Read);
+                        quote! {
+                            #self_el_as_pg_type_read_ts::new(
+                                #ValueSc.map(#ident_stdrt_not_null_as_pg_json_type_test_cases_ts::#ReadInnerIntoReadWithNewOrTryNewUnwrapedSc)
+                            )
+                        }
+                    }
+                },
+                Pattern::Arr => match &is_nullable {
+                    IsNullable::False => {
+                        let ts = vec_syn_field_with_id.iter().map(|el0| {
+                            let fi = &el0.ident;
+                            let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                            let value_ts = wrap_into_value_init_ts(&quote!{
+                                #ft_as_pg_json_type_test_cases_ts::#ReadInnerIntoReadWithNewOrTryNewUnwrapedSc(v_3ac52220.#ValueSc)
+                            });
+                            quote! {#fi: el_ffed1bfc.#fi.map(|v_3ac52220|#value_ts)}
+                        });
+                        quote!{
+                            #ident_read_ucc::new(
+                                #ValueSc.into_iter().map(|el_ffed1bfc| #ident_with_id_stdrt_not_null_read_ucc {
+                                    #(#ts),*
+                                }).collect()
+                            )
+                        }
+                    }
+                    IsNullable::True => {
+                        let ts = vec_syn_field_with_id.iter().map(|el0| {
+                            let fi = &el0.ident;
+                            let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                            // let maybe_dot_clone_ts = if vec_syn_field.len() == 1 {
+                            //     Ts2::new()
+                            // }
+                            // else {
+                            //     quote!{.clone()}
+                            // };
+                            let value_ts = wrap_into_value_init_ts(&quote!{
+                                #ft_as_pg_json_type_test_cases_ts::#ReadInnerIntoReadWithNewOrTryNewUnwrapedSc(
+                                    el_5c1f7f63.#ValueSc
+                                    // #maybe_dot_clone_ts
+                                    .clone()
+                                )
+                            });
+                            quote! {
+                                #fi: el_ffed1bfc.#fi.as_ref().map(|el_5c1f7f63| #value_ts)
+                            }
+                        });
+                        let self_el_as_pg_type_read_ts = gen_type_as_pg_type_subtype_ts(&self_pg_json_type_ts, &PgTypeSubtype::Read);
+                        quote! {
+                            #self_el_as_pg_type_read_ts::new(
+                                #ValueSc.map(|v_189e3c07|
+                                    v_189e3c07
+                                    .into_iter()
+                                    .map(|el_ffed1bfc|#ident_with_id_stdrt_not_null_read_ucc {
+                                        #(#ts),*
+                                    }).collect()
+                                )
+                            )
+                        }
+                    }
+                },
+            };
+            let read_inner_into_update_with_new_or_try_new_unwraped_ts = match &is_nullable {
+                IsNullable::False => match &pattern {
+                    Pattern::Stdrt => {
+                        let self_el_as_pg_type_update_ts = gen_type_as_pg_type_subtype_ts(&self_pg_json_type_ts, &PgTypeSubtype::Update);
+                        let params_ts = vec_syn_field.iter().map(|el0| {
+                            let fi = &el0.ident;
+                            let fi_ucc = &ToTokensToUccTs::case_or_panic(&fi);
+                            let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                            let value_ts = wrap_into_value_init_ts(&quote!{
+                                #ft_as_pg_json_type_test_cases_ts::#ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc(el_23bdfe1e.#ValueSc)
+                            });
+                            quote! {
+                                acc_ebea163e.extend(#ValueSc.#fi.map(|el_23bdfe1e| {
+                                    #ident_stdrt_not_null_update_el_ucc::#fi_ucc(#value_ts)
+                                }));
+                            }
+                        });
+                        quote! {
+                            #self_el_as_pg_type_update_ts::new(
+                                #import_path::NotEmptyUniqueVec::try_new({
+                                    let mut acc_ebea163e = Vec::new();
+                                    #(#params_ts)*
+                                    acc_ebea163e
+                                }).expect("a06dbdc5")
+                            )
+                        }
+                    },
+                    Pattern::Arr => {
+                        let fields_ts = vec_syn_field.iter().map(|el0| {
+                            let fi = &el0.ident;
+                            quote! {#fi: el_ffed1bfc.#fi}
+                        });
+                        quote! {
+                            #ident_update_ucc::try_new(
+                                Vec::new(),
+                                #import_path_unique_vec_ident_with_id_stdrt_not_null_update_el_ts::try_new(
+                                    #ValueSc.into_iter().map(|el_ffed1bfc| #ident_with_id_stdrt_not_null_update_el_ucc {
+                                        #IdSc: #uuid_uuid_as_not_null_jsonb_string_update_ucc::new(el_ffed1bfc.#IdSc.clone().expect("f04a2c6d").#ValueSc),
+                                        fields: #ident_stdrt_not_null_as_pg_json_type_test_cases_ts::#ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc(
+                                            #ident_stdrt_not_null_read_inner_ucc {
+                                                #(#fields_ts),*
+                                            }
+                                        ),
+                                    })
+                                    .collect(),
+                                )
+                                .expect("ca51d559"),
+                                Vec::new(),
+                            )
+                            .expect("0449fe82")
+                        }
+                    }
+                },
+                IsNullable::True => {
+                    let ts = gen_type_as_pg_type_test_cases_ts(match &pattern {
+                        Pattern::Stdrt => &ident_stdrt_not_null_ucc,
+                        Pattern::Arr => &ident_with_id_arr_not_null_ucc,
+                    });
+                    let self_el_as_pg_type_update_ts = gen_type_as_pg_type_subtype_ts(&self_pg_json_type_ts, &PgTypeSubtype::Update);
+                    quote! {
+                        #self_el_as_pg_type_update_ts::new(
+                            #ValueSc.map(#ts::#ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc)
+                        )
+                    }
+                },
+            };
+            let read_only_ids_into_opt_value_read_inner_ts = match &pattern {
+                Pattern::Stdrt => match &is_nullable {
+                    IsNullable::False => gen_fields_read_only_ids_into_opt_value_read_inner_ts(&is_stdrt_with_id_false, &ValueSc),
+                    IsNullable::True => {
+                        let value_ts = wrap_into_value_init_ts(&quote!{
+                            #ValueSc.0.#ValueSc.and_then(|v_5d7e3961| match #ident_stdrt_not_null_as_pg_json_type_test_cases_ts::read_only_ids_into_opt_value_read_inner(
+                                v_5d7e3961
+                            ) {
+                                Some(v_cfca0099) => Some(v_cfca0099.#ValueSc),
+                                None => None,
+                            })
+                        });
+                        quote! {Some(#value_ts)}
+                    }
+                },
+                Pattern::Arr => match &is_nullable {
+                    IsNullable::False => {
+                        let value_ts = wrap_into_value_init_ts(&{
+                            let ts = vec_syn_field_with_id.iter().map(|el0| {
+                                let fi = &el0.ident;
+                                let ft = &el0.type0;
+                                let ft_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&ft);
+                                let ft_as_pg_json_type_read_ts = gen_type_as_pg_json_type_subtype_ts(&ft, &PgJsonTypeSubtype::Read);
+                                let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
+                                let value_ts = wrap_into_value_init_ts(&{
+                                    let default_but_opt_is_some_call_ts_a3f714b3 = gen_ident_as_default_but_opt_is_some_call_ts(
+                                        &ft_as_pg_json_type_read_ts
+                                    );
+                                    quote!{#ft_as_pg_json_type_ts::into_inner(#default_but_opt_is_some_call_ts_a3f714b3)}
+                                });
+                                quote! {
+                                    #fi: #ft_as_pg_json_type_test_cases_ts::read_only_ids_into_opt_value_read_inner(
+                                        el_6603f209.0.#ValueSc.#fi
+                                    ).map_or_else(|| Some(#value_ts), Some)
+                                }
+                            });
+                            quote!{
+                                #ValueSc.0.#ValueSc.into_iter().fold(Vec::new(), |mut acc_cf4743b1, el_6603f209| {
+                                    acc_cf4743b1.push(#ident_with_id_stdrt_not_null_read_inner_ucc {
+                                        #(#ts),*
+                                    });
+                                    acc_cf4743b1
+                                })
+                            }
+                        });
+                        quote! {Some(#value_ts)}
+                    }
+                    IsNullable::True => {
+                        let value_ts = wrap_into_value_init_ts(&quote!{
+                            #ValueSc.0.#ValueSc.and_then(|v_f816032d| match #ident_arr_not_null_as_pg_json_type_test_cases_ts::#ReadOnlyIdsIntoOptValueReadInnerSc(
+                                v_f816032d
+                            ) {
+                                Some(v_d0549423) => Some(v_d0549423.#ValueSc),
+                                None => None,
+                            })
+                        });
+                        quote! {Some(#value_ts)}
+                    }
+                },
+            };
+            let update_to_read_only_ids_ts = match &pattern {
+                Pattern::Stdrt => match &is_nullable {
+                    IsNullable::False => {
+                        let fields_init_ts = vec_syn_field.iter().map(|el0| {
+                            let fi = &el0.ident;
+                            quote! {let mut #fi = None;}
+                        });
+                        let match_ts = vec_syn_field.iter().map(|el0| {
+                            let fi = &el0.ident;
+                            let fi_ucc_ts = ToTokensToUccTs::case_or_panic(&fi);
+                            let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                            quote! {
+                                #ident_update_el_ucc::#fi_ucc_ts(v_0f4d677e) => {
+                                    #fi = Some(#ft_as_pg_json_type_test_cases_ts::#UpdateToReadOnlyIdsSc(&v_0f4d677e.#ValueSc));
+                                }
+                            }
+                        });
+                        let struct_fields_ts = vec_syn_field.iter().map(|el0| {
+                            let fi = &el0.ident;
+                            quote! {#fi: #fi.expect("106f16f2")}
+                        });
+                        let value_ts = wrap_into_value_init_ts(&quote!{
+                            #ident_read_only_ids_handle_ucc{
+                                #(#struct_fields_ts),*
+                            }
+                        });
+                        quote! {
+                            #(#fields_init_ts)*
+                            for el_b3974846 in #ValueSc.0.to_vec() {
+                                match el_b3974846 {
+                                    #(#match_ts),*
+                                }
+                            }
+                            #ident_read_only_ids_ucc(#value_ts)
+                        }
+                    }
+                    IsNullable::True => {
+                        let value_ts = wrap_into_value_init_ts(&{
+                            quote!{
+                                #ValueSc.0.as_ref().map(#ident_stdrt_not_null_as_pg_json_type_test_cases_ts::#UpdateToReadOnlyIdsSc)
+                            }
+                        });
+                        quote! {#ident_read_only_ids_ucc(#value_ts)}
+                    }
+                },
+                Pattern::Arr => match &is_nullable {
+                    IsNullable::False => {
+                        let value_ts = wrap_into_value_init_ts(&{
+                            let init_ts = vec_syn_field.iter().map(|el0| {
+                                let fi = &el0.ident;
+                                quote! {let mut #fi = None;}
+                            });
+                            let for_loop_ts = vec_syn_field.iter().map(|el0| {
+                                let fi = &el0.ident;
+                                let fi_ts = {
+                                    let fi_ucc_ts_fe80e842 = ToTokensToUccTs::case_or_panic(&fi);
+                                    quote!{
+                                        #ident_stdrt_not_null_update_el_ucc::#fi_ucc_ts_fe80e842(v_d2a6daf8) => {
+                                            #fi = Some(v_d2a6daf8.#ValueSc.clone());
+                                        },
+                                    }
+                                };
+                                //todo wtf
+                                let fields_without_ident_ts_11eab22a = if vec_syn_field.is_empty() {
+                                    Ts2::new()
+                                }
+                                else {
+                                    let ts_e0bf4e67 = vec_syn_field
+                                    .iter()
+                                    .filter(|el1| el1.ident != *fi)
+                                    .map(|el1| {
+                                        let el1_fi = &el1.ident;
+                                        let el1_fi_ucc_ts =
+                                            ToTokensToUccTs::case_or_panic(
+                                                &el1_fi,
+                                            );
+                                        quote! {
+                                            #ident_stdrt_not_null_update_el_ucc::#el1_fi_ucc_ts(_)
+                                        }
+                                    })
+                                    .fold(None, |acc_bbf653f7, el1| Some(match acc_bbf653f7 {
+                                        None => el1,
+                                        Some(v_5b375af0) => quote! { #v_5b375af0 | #el1 },
+                                    }));
+                                    ts_e0bf4e67.map_or_else(
+                                        Ts2::new,
+                                        |v_5c826b8c| quote!{#v_5c826b8c => (),}
+                                    )
+                                };
+                                quote! {
+                                    for el_da177c5a in el_4634bb8a.fields.0.to_vec() {
+                                        match &el_da177c5a {
+                                            #fi_ts
+                                            #fields_without_ident_ts_11eab22a
+                                        }
+                                    }
+                                }
+                            });
+                            let value_ts = wrap_into_value_init_ts(&{
+                                let uuid_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&uuid_uuid_as_not_null_jsonb_string_ts);
+                                let fields_ts = vec_syn_field.iter().map(|el0| {
+                                    let fi = &el0.ident;
+                                    let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                                    quote! {
+                                        #fi: #ft_as_pg_json_type_test_cases_ts::#UpdateToReadOnlyIdsSc(&#fi.expect("a3ec7cae"))
+                                    }
+                                });
+                                quote!{
+                                    #ident_with_id_stdrt_not_null_read_only_ids_handle_ucc {
+                                        #IdSc: #uuid_as_pg_json_type_test_cases_ts::#UpdateToReadOnlyIdsSc(&el_4634bb8a.#IdSc),
+                                        #(#fields_ts),*
+                                    }
+                                }
+                            });
+                            quote!{
+                                #ValueSc.#UpdateSc.to_vec().iter().map(|el_4634bb8a|{
+                                    #(#init_ts)*
+                                    #(#for_loop_ts)*
+                                    #ident_with_id_stdrt_not_null_read_only_ids_ucc(#value_ts)
+                                }).collect()
+                            }
+                        });
+                        quote! {#ident_read_only_ids_ucc(#value_ts)}
+                    }
+                    IsNullable::True => {
+                        let value_ts = wrap_into_value_init_ts(&quote!{
+                            #ValueSc.0.as_ref().map(#ident_arr_not_null_as_pg_json_type_test_cases_ts::#UpdateToReadOnlyIdsSc)
+                        });
+                        quote! {#ident_read_only_ids_ucc(#value_ts)}
+                    }
+                },
+            };
+            let read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts = {
+                let value_init_ts = gen_import_path_value_init_ts(&match &pattern {
+                    Pattern::Stdrt => match &is_nullable {
+                        IsNullable::False => {
+                            let params_ts = vec_syn_field.iter().map(|el0| {
+                                let fi = &el0.ident;
+                                let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                                quote! {
+                                    #ft_as_pg_json_type_test_cases_ts::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
+                                        &#ValueSc.0.#ValueSc.#fi
+                                    )
+                                }
+                            });
+                            quote! {
+                                #ident_read_ucc::try_new(
+                                    #(#params_ts),*
+                                ).expect("57820868")
+                            }
+                        }
+                        IsNullable::True => quote! {
+                            #ident_read_ucc::new(
+                                #ValueSc.0.#ValueSc.as_ref().and_then(|v_dfa7815e| match #ident_stdrt_not_null_as_pg_json_type_test_cases_ts::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
+                                    v_dfa7815e
+                                ) {
+                                    Some(v_02cef266) => Some(v_02cef266.#ValueSc),
+                                    None => None,
+                                })
+                            )
+                        }
+                    },
+                    Pattern::Arr => match &is_nullable {
+                        IsNullable::False => {
+                            let params_ts = vec_syn_field_with_id.iter().map(|el0| {
+                                let fi = &el0.ident;
+                                let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                                quote! {
+                                    #ft_as_pg_json_type_test_cases_ts::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
+                                        &el_629b1544.0.#ValueSc.#fi
+                                    )
+                                }
+                            });
+                            quote! {
+                                #ident_read_ucc::new({
+                                    let mut acc_5f587d35 = #ValueSc.0.#ValueSc.clone().into_iter().map(|el_629b1544|{
+                                        #ident_with_id_stdrt_not_null_read_ucc::try_new(
+                                            #(#params_ts),*
+                                        ).expect("8f6fb6b6")
+                                    }).collect::<Vec<#ident_with_id_stdrt_not_null_read_ucc>>();
+                                    acc_5f587d35.sort_by(|first, second| {
+                                        if let (Some(v_first), Some(v_second)) = (&first.id, &second.id) {
+                                            //maybe remove .clone - add .get by ref method
+                                            #import_path_pg_json_type_uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_ts::into_inner(
+                                                v_first.#ValueSc.clone()
+                                            )
+                                            .cmp(&#import_path_pg_json_type_uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_ts::into_inner(
+                                                v_second.#ValueSc.clone()
+                                            ))
+                                        }
+                                        else {
+                                            panic!("0bdf0f44");
+                                        }
+                                    });
+                                    acc_5f587d35
+                                })
+                            }
+                        }
+                        IsNullable::True => quote! {
+                            #ident_read_ucc::new(
+                                #ValueSc.0.#ValueSc.as_ref().and_then(|v_16ab4136| match #ident_arr_not_null_as_pg_json_type_test_cases_ts::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
+                                    v_16ab4136
+                                ) {
+                                    Some(v_71a66429) => Some(v_71a66429.#ValueSc.0),
+                                    None => None,
+                                })
+                            )
+                        }
+                    },
+                });
+                quote!{Some(#value_init_ts)}
+            };
+            let previous_read_merged_with_opt_update_into_read_ts = {
+                let fields_init_ts = vec_syn_field.iter().map(|el0| {
+                    let fi = &el0.ident;
+                    quote! {let mut #fi = None;}
+                });
+                let match_ts = vec_syn_field.iter().map(|el0| {
+                    let fi = &el0.ident;
+                    let fi_ucc_ts = ToTokensToUccTs::case_or_panic(&fi);
+                    quote! {
+                        #ident_stdrt_not_null_update_el_ucc::#fi_ucc_ts(#ValueSc) => {
+                            #fi = Some(#ValueSc.#ValueSc);
+                        }
+                    }
+                });
+                let gen_struct_init_ts = |function: &dyn Fn(&dyn ToTokens) -> Ts2|{//ts: &dyn ToTokens
+                    let ts = vec_syn_field.iter().map(|el0| {
+                        let fi = &el0.ident;
+                        let value_init_ts = gen_import_path_value_init_ts(&{
+                            let ts = function(&fi);
+                            let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                            quote!{
+                                #ft_as_pg_json_type_test_cases_ts::previous_read_merged_with_opt_update_into_read(
+                                    #ts,
+                                    #fi
+                                )
+                            }
+                        });
+                        quote! {#fi: Some(#value_init_ts)}
+                    });
+                    quote!{#(#ts),*}
+                };
+                let gen_opt_ts = |pattern_53bdff8d: &Pattern|{
+                    let ident_as_pg_json_type_test_cases_ts_53bdff8d = gen_type_as_pg_json_type_test_cases_ts(match &pattern_53bdff8d {
+                        Pattern::Stdrt => &ident_stdrt_not_null_ucc,
+                        Pattern::Arr => &ident_arr_not_null_ucc
+                    });
+                    quote! {
+                        match #OptUpdateSc {
+                            Some(v_fca601b5) => #ident_read_ucc(
+                                match v_fca601b5.0 {
+                                    Some(v_8d7747f1) => Some(
+                                        #ident_as_pg_json_type_test_cases_ts_53bdff8d::previous_read_merged_with_opt_update_into_read(
+                                            #ReadSc.0.unwrap_or_else(#default_but_opt_is_some_ts),
+                                            Some(v_8d7747f1),
+                                        )
+                                    ),
+                                    None => None,
+                                }
+                            ),
+                            None => #ReadSc,
+                        }
+                    }
+                };
+                match &is_nullable {
+                    IsNullable::False => match &pattern {
+                        Pattern::Stdrt => {
+                            let struct_init_ts = gen_struct_init_ts(&|ts: &dyn ToTokens|{
+                                quote!{
+                                    #ReadSc.#ts.expect("a2d26e36").#ValueSc
+                                }
+                            });
+                            quote!{
+                                match #OptUpdateSc {
+                                    Some(v_e5377436) => {
+                                        #(#fields_init_ts)*
+                                        for el_629b1544 in v_e5377436.0.into_vec() {
+                                            match el_629b1544 {
+                                                #(#match_ts),*
+                                            }
+                                        }
+                                        #ident_read_ucc {
+                                            #struct_init_ts
+                                        }
+                                    },
+                                    None => #ReadSc
+                                }
+                            }
+                        },
+                        Pattern::Arr => {
+                            let struct_init_ts = gen_struct_init_ts(&|ts: &dyn ToTokens|{
+                                quote!{
+                                    found_read_el.#ts.expect("2e8229f7").#ValueSc
+                                }
+                            });
+                            quote! {
+                                match #OptUpdateSc {
+                                    Some(v_47f5a20b) => #ident_read_ucc({
+                                        let mut acc_04a67ef2 = Vec::new();
+                                        for el_377d1bb4 in v_47f5a20b.#UpdateSc.into_vec() {
+                                            let mut opt_read_el = None;
+                                            for el in &#ReadSc.0 {
+                                                if *#uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_object_vec_el_id_ts::get_inner(&el_377d1bb4.#IdSc.clone().into())
+                                                ==
+                                                #uuid_uuid_as_not_null_jsonb_string_as_import_path_pg_json_type_ts::into_inner(
+                                                    el.#IdSc.clone().expect("df2413fe").#ValueSc
+                                                )
+                                                {
+                                                    opt_read_el = Some(el.clone());
+                                                    break;
+                                                }
+                                            }
+                                            let found_read_el = opt_read_el.expect("139882b9");
+                                            #(#fields_init_ts)*
+                                            for el_629b1544 in el_377d1bb4.fields.0.into_vec() {
+                                                match el_629b1544 {
+                                                    #(#match_ts),*
+                                                }
+                                            }
+                                            acc_04a67ef2.push(#ident_with_id_stdrt_not_null_read_ucc {
+                                                #IdSc: found_read_el.#IdSc,
+                                                #struct_init_ts
+                                            });
+                                        }
+                                        acc_04a67ef2
+                                    }),
+                                    None => #ReadSc
+                                }
+                            }
+                        },
+                    },
+                    IsNullable::True => gen_opt_ts(pattern)
+                }
+            };
+            let read_only_ids_merged_with_create_into_read_ts = {
+                let gen_nullable_ts = |ident_ts_3eb17505: &dyn ToTokens, ts: &dyn ToTokens|{
+                    let ident_as_pg_json_type_test_cases_ts_3eb17505 = gen_type_as_pg_json_type_test_cases_ts(&ident_ts_3eb17505);
+                    quote! {
+                        #ident_read_ucc::new(
+                            match (#ReadOnlyIdsSc.0.#ValueSc, #CreateSc.0) {
+                                (Some(read_only_ids_2b2ab8a1), Some(create_4a1adaa3)) => {
+                                    Some(
+                                        #ident_as_pg_json_type_test_cases_ts_3eb17505::#ReadOnlyIdsMergedWithCreateIntoOptValueReadSc(
+                                            read_only_ids_2b2ab8a1,
+                                            create_4a1adaa3
+                                        ).expect("56ac4450").#ValueSc #ts
+                                    )
+                                },
+                                (Some(_), None) => panic!("75be9ae0"),
+                                (None, Some(_)) => panic!("6a95d7ae"),
+                                (None, None) => None,
+                            }
+                        )
+                    }
+                };
+                match &pattern {
+                    Pattern::Stdrt => match &is_nullable {
+                        IsNullable::False => {
+                            let params_ts = vec_syn_field.iter().map(|el0| {
+                                let fi = &el0.ident;
+                                let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                                quote! {
+                                    #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoOptValueReadSc(
+                                        #ReadOnlyIdsSc.0.#ValueSc.#fi,
+                                        #CreateSc.#fi
+                                    )
+                                }
+                            });
+                            quote! {
+                                #ident_read_ucc::try_new(
+                                    #(#params_ts),*
+                                ).expect("52ad3994")
+                            }
+                        }
+                        IsNullable::True => gen_nullable_ts(
+                            &ident_stdrt_not_null_ucc,
+                            &Ts2::new()
+                        )
+                    },
+                    Pattern::Arr => match &is_nullable {
+                        IsNullable::False => {
+                            let gen_param_ts = |ft: &dyn ToTokens, fi: &dyn ToTokens, ts: &dyn ToTokens|{
+                                let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
+                                quote! {
+                                    #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoOptValueReadSc(
+                                        read_only_ids_225e2b76.0.#ValueSc.#fi,
+                                        #ts,
+                                    )
+                                }
+                            };
+                            let id_param_ts = gen_param_ts(
+                                &uuid_uuid_as_not_null_jsonb_string_ts,
+                                &IdSc,
+                                &default_but_opt_is_some_call_ts
+                            );
+                            let params_ts = vec_syn_field.iter().map(|el0|{
+                                let fi = &el0.ident;
+                                gen_param_ts(
+                                    &el0.type0,
+                                    &fi,
+                                    &quote! {create_3c660445.#fi}
+                                )
+                            });
+                            quote! {
+                                #ident_read_ucc::new({
+                                    assert_eq!(#ReadOnlyIdsSc.0.#ValueSc.len(), #CreateSc.0.len(), "90d33ddd");
+                                    let mut acc_37909420 = Vec::new();
+                                    for (read_only_ids_225e2b76, create_3c660445) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
+                                        acc_37909420.push(#ident_with_id_stdrt_not_null_read_ucc::try_new(
+                                            #id_param_ts,
+                                            #(#params_ts),*
+                                        ).expect("1330ac8d"));
+                                    }
+                                    acc_37909420
+                                })
+                            }
+                        }
+                        IsNullable::True => gen_nullable_ts(
+                            &ident_arr_not_null_ucc,
+                            &quote!{.0}
+                        )
+                    },
+                }
+            };
+            let read_only_ids_merged_with_create_into_opt_value_read_ts = {
+                let value_init_ts = gen_import_path_value_init_ts(&quote!{
+                    <#SelfUcc as #import_path::PgJsonTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoReadSc(
+                        #ReadOnlyIdsSc,
+                        #CreateSc
+                    )
+                });
+                quote!{Some(#value_init_ts)}
+            };
+            let read_only_ids_merged_with_create_into_table_type_ts = {
+                let gen_nullable_ts = |ident_ts_971139d7: &dyn ToTokens, ts: &dyn ToTokens|{
+                    let ident_as_pg_json_type_test_cases_ts_971139d7 = gen_type_as_pg_json_type_test_cases_ts(&ident_ts_971139d7);
+                    quote! {
+                        #ident_table_type_ucc::new(
+                            match (#ReadOnlyIdsSc.0.#ValueSc, #CreateSc.0) {
+                                (Some(read_only_ids_fb2ec2e4), Some(create_2f615d4f)) => {
+                                    Some(
+                                        #ident_as_pg_json_type_test_cases_ts_971139d7::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
+                                            read_only_ids_fb2ec2e4,
+                                            create_2f615d4f
+                                        ) #ts
+                                    )
+                                },
+                                (Some(_), None) => panic!("9349dcd5"),
+                                (None, Some(_)) => panic!("45f8e70a"),
+                                (None, None) => None,
+                            }
+                        )
+                    }
+                };
+                match &pattern {
+                    Pattern::Stdrt => match &is_nullable {
+                        IsNullable::False => {
+                            let params_ts = vec_syn_field.iter().map(|el0| {
+                                let fi = &el0.ident;
+                                let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                                quote! {
+                                    #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
+                                        #ReadOnlyIdsSc.0.#ValueSc.#fi,
+                                        #CreateSc.#fi
+                                    )
+                                }
+                            });
+                            quote! {
+                                #ident_table_type_ucc::new(
+                                    #(#params_ts),*
+                                )
+                            }
+                        }
+                        IsNullable::True => gen_nullable_ts(
+                            &ident_stdrt_not_null_ucc,
+                            &Ts2::new()
+                        )
+                    },
+                    Pattern::Arr => match &is_nullable {
+                        IsNullable::False => {
+                            let gen_param_ts = |ft: &dyn ToTokens, fi: &dyn ToTokens, ts: &dyn ToTokens|{
+                                let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
+                                quote! {
+                                    #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
+                                        read_only_ids_94b49496.0.#ValueSc.#fi,
+                                        #ts,
+                                    )
+                                }
+                            };
+                            let id_param_ts = gen_param_ts(
+                                &uuid_uuid_as_not_null_jsonb_string_ts,
+                                &IdSc,
+                                &default_but_opt_is_some_call_ts
+                            );
+                            let params_ts = vec_syn_field.iter().map(|el0|{
+                                let fi = &el0.ident;
+                                gen_param_ts(
+                                    &el0.type0,
+                                    &fi,
+                                    &quote! {create_24629087.#fi}
+                                )
+                            });
+                            quote! {
+                                #ident_table_type_ucc::new({
+                                    assert_eq!(#ReadOnlyIdsSc.0.#ValueSc.len(), #CreateSc.0.len(), "7776a146");
+                                    let mut acc_319e1fb1 = Vec::new();
+                                    for (read_only_ids_94b49496, create_24629087) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
+                                        acc_319e1fb1.push(#ident_with_id_stdrt_not_null_table_type_ucc::new(
+                                            #id_param_ts,
+                                            #(#params_ts),*
+                                        ));
+                                    }
+                                    acc_319e1fb1
+                                })
+                            }
+                        }
+                        IsNullable::True => gen_nullable_ts(
+                            &ident_arr_not_null_ucc,
+                            &quote!{.0}
+                        )
+                    },
+                }
+            };
+            let read_only_ids_merged_with_create_into_where_equal_ts = match &is_nullable {
+                IsNullable::False => match &pattern {
+                    Pattern::Stdrt => {
+                        let params_ts = vec_syn_field.iter().map(|el0| {
+                            let fi = &el0.ident;
+                            let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                            quote! {
+                                #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
+                                    #ReadOnlyIdsSc.0.#ValueSc.#fi,
+                                    #CreateSc.#fi
+                                )
+                            }
+                        });
+                        quote! {
+                            #ident_where_ucc::#EqualUcc(
+                                #import_path::PgJsonTypeWhereEqual {
+                                    operator: #import_path::Operator::Or,
+                                    #ValueSc: #ident_table_type_ucc::new(
+                                        #(#params_ts),*
+                                    )
+                                }
+                            )
+                        }
+                    },
+                    Pattern::Arr => {
+                        let gen_read_only_ids_merged_with_create_into_table_type_ts = |
+                            fi: &dyn ToTokens,
+                            ft: &dyn ToTokens,
+                            ts: &dyn ToTokens
+                        |{
+                            let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
+                            quote!{
+                                #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
+                                    read_only_ids_ea32954c.0.#ValueSc.#fi,
+                                    #ts
+                                )
+                            }
+                        };
+                        let ident_ts_978daa48 = gen_read_only_ids_merged_with_create_into_table_type_ts(
+                            &IdSc,
+                            &uuid_uuid_as_not_null_jsonb_string_ts,
+                            &default_but_opt_is_some_call_ts
+                        );
+                        let params_ts = vec_syn_field.iter().map(|el0| {
+                            let fi = &el0.ident;
+                            gen_read_only_ids_merged_with_create_into_table_type_ts(
+                                &fi,
+                                &el0.type0,
+                                &quote!{create_3cbe8967.#fi}
+                            )
+                        });
+                        quote! {
+                            #ident_where_ucc::#EqualUcc(
+                                #import_path::PgJsonTypeWhereEqual {
+                                    operator: #import_path::Operator::And,
+                                    #ValueSc: #ident_table_type_ucc::new({
+                                        let mut acc_321b3fcd = Vec::new();
+                                        for (read_only_ids_ea32954c, create_3cbe8967) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
+                                            acc_321b3fcd.push(
+                                                #ident_with_id_stdrt_not_null_table_type_ucc::new(
+                                                    #ident_ts_978daa48,
+                                                    #(#params_ts),*
+                                                )
+                                            );
+                                        }
+                                        acc_321b3fcd
+                                    })
+                                }
+                            )
+                        }
+                    }
+                },
+                IsNullable::True => {
+                    let ts = {
+                        let ident_ts_bdc5fdf7 = gen_type_as_pg_json_type_test_cases_ts(&gen_ident_ucc(&match &pattern {
+                            Pattern::Stdrt => IdentPattern::StdrtNotNullWithoutId,
+                            Pattern::Arr => IdentPattern::ArrNotNullWithId,
+                        }));
+                        quote!{
+                            vec![
+                                #ident_ts_bdc5fdf7::#ReadOnlyIdsMergedWithCreateIntoWhereEqualSc(
+                                    read_only_ids_ce30c0fe,
+                                    create_8fd81ed8
+                                )
+                            ]
+                        }
+                    };
+                    quote! {
+                        #import_path::NullableJsonObjectPgTypeWhereFilter(
+                            match (#ReadOnlyIdsSc.0.#ValueSc, #CreateSc.0) {
+                                (Some(read_only_ids_ce30c0fe), Some(create_8fd81ed8)) => match #import_path::NotEmptyUniqueVec::try_new(#ts) {
+                                    Ok(v_7a9cd49b) => Some(v_7a9cd49b),
+                                    Err(er) => match er {
+                                        #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
+                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("463769fc")
+                                    }
+                                },
+                                (Some(_), None) => panic!("1a2b314c"),
+                                (None, Some(_)) => panic!("9faea0f9"),
+                                (None, None) => None,
+                            }
+                        )
+                    }
+                },
+            };
+            let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts = {
+                let ts = match &is_nullable {
+                    IsNullable::False => match &pattern {
+                        Pattern::Stdrt => {
+                            let els_ts = vec_syn_field.iter().map(|el0| {
+                                let fi = &el0.ident;
+                                let fi_ucc_ts = ToTokensToUccTs::case_or_panic(&fi);
+                                let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                                quote! {
+                                    #ident_where_ucc::#fi_ucc_ts(
+                                        #import_path::PgTypeWhere::new(
+                                            #import_path::Operator::And,
+                                            #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc(
+                                                #ReadOnlyIdsSc.0.#ValueSc.#fi,
+                                                #CreateSc.#fi
+                                            )
+                                        )
+                                    )
+                                }
+                            });
+                            quote! {#(#els_ts),*}
+                        },
+                        Pattern::Arr => {
+                            let gen_read_only_ids_merged_with_create_into_table_type_ts = |
+                                fi: &dyn ToTokens,
+                                ft: &dyn ToTokens,
+                                ts: &dyn ToTokens
+                            |{
+                                let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
+                                quote!{
+                                    #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
+                                        read_only_ids_319c9e78.0.#ValueSc.#fi,
+                                        #ts
+                                    )
+                                }
+                            };
+                            let ident_ts_76fd9d28 = gen_read_only_ids_merged_with_create_into_table_type_ts(
+                                &IdSc,
+                                &uuid_uuid_as_not_null_jsonb_string_ts,
+                                &default_but_opt_is_some_call_ts
+                            );
+                            let params_ts = vec_syn_field.iter().map(|el0| {
+                                let fi = &el0.ident;
+                                gen_read_only_ids_merged_with_create_into_table_type_ts(
+                                    &fi,
+                                    &el0.type0,
+                                    &quote!{create_00ae06d2.#fi}
+                                )
+                            });
+                            quote! {
+                                #ident_where_ucc::#EqualUcc(
+                                    #import_path::PgJsonTypeWhereEqual {
+                                        operator: #import_path::Operator::And,
+                                        #ValueSc: #ident_table_type_ucc::new({
+                                            let mut acc_97ebf7d6 = Vec::new();
+                                            for (read_only_ids_319c9e78, create_00ae06d2) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
+                                                acc_97ebf7d6.push(
+                                                    #ident_with_id_stdrt_not_null_table_type_ucc::new(
+                                                        #ident_ts_76fd9d28,
+                                                        #(#params_ts),*
+                                                    )
+                                                );
+                                            }
+                                            acc_97ebf7d6
+                                        })
+                                    }
+                                )
+                            }
+                        }
+                    },
+                    IsNullable::True => {
+                        let ts = {
+                            let ident_ts_b9e61412 = gen_type_as_pg_json_type_test_cases_ts(&gen_ident_ucc(&match &pattern {
+                                Pattern::Stdrt => IdentPattern::StdrtNotNullWithoutId,
+                                Pattern::Arr => IdentPattern::ArrNotNullWithId,
+                            }));
+                            quote! {
+                                #ident_ts_b9e61412::#ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc(
+                                    read_only_ids_2898c440,
+                                    create_f1c4667c
+                                )
+                            }
+                        };
+                        quote! {
+                            #import_path::NullableJsonObjectPgTypeWhereFilter(
+                                match (#ReadOnlyIdsSc.0.#ValueSc, #CreateSc.0) {
+                                    (Some(read_only_ids_2898c440), Some(create_f1c4667c)) => Some(#ts),
+                                    (Some(_), None) => panic!("49e4c289"),
+                                    (None, Some(_)) => panic!("ad71caa2"),
+                                    (None, None) => None,
+                                }
+                            )
+                        }
+                    },
+                };
+                quote!{
+                    #import_path::NotEmptyUniqueVec::try_new(vec![
+                        #ts
+                    ]).expect("ba9c52c1")
+                }
+            };
+            let read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts = match &pattern {
+                Pattern::Stdrt => match &is_nullable {
+                    IsNullable::False => {
+                        let ts = vec_syn_field.iter().map(|el0| {
+                            let fi = &el0.ident;
+                            let fi_ucc = &ToTokensToUccTs::case_or_panic(&fi);
+                            let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                            quote! {
+                                for el_d830c061 in #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSc(
+                                    #ReadOnlyIdsSc.0.#ValueSc.#fi,
+                                    #CreateSc.#fi
+                                ).into_vec() {
+                                    acc_89ec072c.push(
+                                        #ident_where_ucc::#fi_ucc(
+                                            #import_path::PgTypeWhere::try_new(
+                                                #import_path::Operator::Or,
+                                                vec![el_d830c061],
+                                            )
+                                            .expect("0c6ccad1"),
+                                        )
+                                    );
+                                }
+                            }
+                        });
+                        quote!{
+                            #import_path::NotEmptyUniqueVec::try_new({
+                                let mut acc_89ec072c = Vec::new();
+                                #(#ts)*
+                                acc_89ec072c
+                            }).expect("9c50391c")
+                        }
+                    },
+                    IsNullable::True => quote!{
+                        #import_path::NotEmptyUniqueVec::try_new({
+                            let mut acc_12b6f16d = Vec::new();
+                            match (#ReadOnlyIdsSc.0.#ValueSc, #CreateSc.0) {
+                                (Some(read_only_ids_2f024927), Some(create_120c1dad)) => {
+                                    for el_a8b181a0 in #ident_stdrt_not_null_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSc(
+                                        read_only_ids_2f024927,
+                                        create_120c1dad
+                                    ).into_vec() {
+                                        match #import_path::NotEmptyUniqueVec::try_new(vec![el_a8b181a0]) {
+                                            Ok(v_8e72cfd7) => {
+                                                acc_12b6f16d.push(#import_path::NullableJsonObjectPgTypeWhereFilter(Some(v_8e72cfd7)));
+                                            },
+                                            Err(er) => match er {
+                                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => (),
+                                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("2a88b17f")
+                                            }
+                                        }
+                                    }
+                                },
+                                (Some(_), None) => panic!("b4507b4c"),
+                                (None, Some(_)) => panic!("8f458c1d"),
+                                (None, None) => {
+                                    acc_12b6f16d.push(#import_path::NullableJsonObjectPgTypeWhereFilter(None));
+                                },
+                            }
+                            acc_12b6f16d
+                        }).expect("7efc9aae")
+                    }
+                },
+                Pattern::Arr => quote!{
+                    #self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc(
+                        #ReadOnlyIdsSc,
+                        #CreateSc
+                    )
+                }
+            };
+            let (
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts,
+            ) = {
+                let gen_ts = |dim: &Dim|{
+                    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc = dim.read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc();
+                    let gen_nullable_ts = |ts: &dyn ToTokens|quote! {
+                        match #import_path::NotEmptyUniqueVec::try_new(
+                            match (#ReadOnlyIdsSc.0.#ValueSc, #CreateSc.0) {
+                                (Some(read_only_ids_cdcb6239), Some(create_fdd53941)) => match <
+                                    #ts
+                                    as
+                                    #import_path::PgJsonTypeTestCases
+                                >::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc(
+                                    read_only_ids_cdcb6239,
+                                    create_fdd53941
+                                ) {
+                                    Some(v_d6124e21) => {
+                                        let mut acc_bd78dc08 = Vec::new();
+                                        for el in v_d6124e21.clone().into_vec() {
+                                            match #import_path::NotEmptyUniqueVec::try_new(
+                                                vec![el]
+                                            ) {
+                                                Ok(v_7ed84f3b) => {
+                                                    acc_bd78dc08.push(
+                                                        #import_path::NullableJsonObjectPgTypeWhereFilter(Some(v_7ed84f3b))
+                                                    );
+                                                },
+                                                Err(er) => match er {
+                                                    #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => (),
+                                                    #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("23dca12f")
+                                                }
+                                            }
+                                        }
+                                        let v_e48110ec = #import_path::NullableJsonObjectPgTypeWhereFilter(Some(v_d6124e21));
+                                        if !acc_bd78dc08.contains(&v_e48110ec) {
+                                            acc_bd78dc08.push(v_e48110ec);
+                                        }
+                                        acc_bd78dc08
+                                    },
+                                    None => {
+                                        return None;
+                                    }
+                                },
+                                (Some(_), None) => panic!("6abeac7b"),
+                                (None, Some(_)) => panic!("a2761cd2"),
+                                (None, None) => vec![#import_path::NullableJsonObjectPgTypeWhereFilter(None)]
+                            }
+                        ) {
+                            Ok(v_55f2dc3d) => Some(v_55f2dc3d),
+                            Err(er) => match er {
+                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
+                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("88912e24")
+                            }
+                        }
+                    };
+                    match &pattern {
+                        Pattern::Stdrt => match &is_nullable {
+                            IsNullable::False => {
+                                let ts = vec_syn_field.iter().map(|el0| {
+                                    let fi = &el0.ident;
+                                    let fi_ucc = &ToTokensToUccTs::case_or_panic(&fi);
+                                    let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                                    quote! {
+                                        if let Some(v_2bbd2c96) = #ft_as_pg_json_type_test_cases_ts::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc(
+                                            #ReadOnlyIdsSc.0.#ValueSc.#fi,
+                                            #CreateSc.#fi
+                                        ) {
+                                            for el in v_2bbd2c96.clone().into_vec() {
+                                                acc_2fe1cca8.push(
+                                                    #ident_where_ucc::#fi_ucc(
+                                                        #import_path::PgTypeWhere::try_new(
+                                                            #import_path::Operator::And,
+                                                            vec![el]
+                                                        ).expect("9a25e058")
+                                                    )
+                                                );
+                                            }
+                                            let v_c45bab0d = #ident_where_ucc::#fi_ucc(
+                                                #import_path::PgTypeWhere::new(
+                                                    #import_path::Operator::And,
+                                                    v_2bbd2c96
+                                                )
+                                            );
+                                            if !acc_2fe1cca8.contains(&v_c45bab0d) {
+                                                acc_2fe1cca8.push(v_c45bab0d);
+                                            }
+                                        }
+                                    }
+                                });
+                                quote! {
+                                    match #import_path::NotEmptyUniqueVec::try_new({
+                                        let mut acc_2fe1cca8 = Vec::new();
+                                        #(#ts)*
+                                        acc_2fe1cca8
+                                    }) {
+                                        Ok(v_a5fa471d) => Some(v_a5fa471d),
+                                        Err(er) => match er {
+                                            #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
+                                            #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("89e719cf")
+                                        }
+                                    }
+                                }
+                            }
+                            IsNullable::True => gen_nullable_ts(&ident_stdrt_not_null_ucc)
+                        },
+                        Pattern::Arr => match &is_nullable {
+                            IsNullable::False => {
+                                let ts_f0710cd9 = {
+                                    let ts_57d244f8 = vec_syn_field.iter().map(|el0| {
+                                        let fi = &el0.ident;
+                                        let el_fi_ucc = ElSelfUcc::from_tokens(&fi);
+                                        let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                                        quote! {
+                                            if let Some(v_bf84026e) = #ft_as_pg_json_type_test_cases_ts::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc(
+                                                read_only_ids_420d38ca.0.#ValueSc.#fi.clone(),
+                                                create_76f032c1.#fi.clone()
+                                            ) {
+                                                for el in v_bf84026e.clone().into_vec() {
+                                                    let v_592e6b5f = #ident_where_ucc::#el_fi_ucc(
+                                                        #import_path::PgTypeWhere::try_new(
+                                                            #import_path::Operator::And,
+                                                            vec![el]
+                                                        ).expect("1f7ae335")
+                                                    );
+                                                    if !acc_dd377eb1.contains(&v_592e6b5f) {
+                                                        acc_dd377eb1.push(v_592e6b5f);
+                                                    }
+                                                }
+                                                let v_03205172 = #ident_where_ucc::#el_fi_ucc(
+                                                    #import_path::PgTypeWhere::new(
+                                                        #import_path::Operator::And,
+                                                        v_bf84026e
+                                                    )
+                                                );
+                                                if !acc_dd377eb1.contains(&v_03205172) {
+                                                    acc_dd377eb1.push(v_03205172);
+                                                }
+                                            }
+                                        }
+                                    });
+                                    quote!{#(#ts_57d244f8)*}
+                                };
+                                let ts_2cc4a40e = match &dim {
+                                    Dim::One => {
+                                        let dim_one_ts = {
+                                            let ts_91a09fe2 = vec_syn_field.iter().map(|el0| {
+                                                let fi = &el0.ident;
+                                                let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                                                quote! {
+                                                    #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
+                                                        read_only_ids_420d38ca.0.#ValueSc.#fi,
+                                                        create_76f032c1.#fi
+                                                    )
+                                                }
+                                            });
+                                            quote!{
+                                                acc_dd377eb1.push(#ident_where_ucc::DimOneEqual(#import_path::PgJsonTypeWhereDimOneEqual {
+                                                    operator: #import_path::Operator::And,
+                                                    dims: #import_path::BoundedVec::try_from(
+                                                        vec![
+                                                            #import_path::UnsignedPartOfI32::try_from(
+                                                                i32::try_from(i_47620dcf).expect("5341936f")
+                                                            ).expect("76906f3c")
+                                                        ]
+                                                    ).expect("8a624c70"),
+                                                    #ValueSc: #ident_with_id_stdrt_not_null_table_type_ucc::new(
+                                                        <#uuid_uuid_as_not_null_jsonb_string_ts as #import_path::PgJsonTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
+                                                            read_only_ids_420d38ca.0.#ValueSc.#IdSc,
+                                                            #PgCrudDefaultOptSomeVecOneElCall
+                                                        ),
+                                                        #(#ts_91a09fe2),*
+                                                    ),
+                                                }));
+                                            }
+                                        };
+                                        quote!{
+                                            for (i_47620dcf, (read_only_ids_420d38ca, create_76f032c1)) in #ReadOnlyIdsSc.0.#ValueSc.into_iter()
+                                                .zip(#CreateSc.0.into_iter())
+                                                .enumerate()
+                                            {
+                                                #ts_f0710cd9
+                                                #dim_one_ts
+                                            }
+                                        }
+                                    },
+                                    Dim::Two |
+                                    Dim::Three |
+                                    Dim::Four => quote!{
+                                        for (read_only_ids_420d38ca, create_76f032c1) in #ReadOnlyIdsSc.0.#ValueSc.into_iter()
+                                            .zip(#CreateSc.0.into_iter())
+                                        {
+                                            #ts_f0710cd9
+                                        }
+                                    },
+                                };
+                                quote! {
+                                    match #import_path::NotEmptyUniqueVec::try_new({
+                                        let mut acc_dd377eb1 = Vec::new();
+                                        #ts_2cc4a40e
+                                        acc_dd377eb1
+                                    }) {
+                                        Ok(v_dfac36e4) => Some(v_dfac36e4),
+                                        Err(er) => match er {
+                                            #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
+                                            #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("93390f1a")
+                                        },
+                                    }
+                                }
+                            }
+                            IsNullable::True => gen_nullable_ts(&ident_arr_not_null_ucc)
+                        },
+                    }
+                };
+                (
+                    gen_ts(&Dim::One),
+                    gen_ts(&Dim::Two),
+                    gen_ts(&Dim::Three),
+                    gen_ts(&Dim::Four)
+                )
+            };
+            let create_into_pg_json_type_opt_vec_where_length_equal_ts = {
                 let gen_nullable_ts = |ts: &dyn ToTokens|quote! {
                     match #import_path::NotEmptyUniqueVec::try_new(
-                        match (#ReadOnlyIdsSc.0.#ValueSc, #CreateSc.0) {
-                            (Some(read_only_ids_cdcb6239), Some(create_fdd53941)) => match <
+                        match #CreateSc.0 {
+                            Some(create_09a81dae) => match <
                                 #ts
                                 as
                                 #import_path::PgJsonTypeTestCases
-                            >::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc(
-                                read_only_ids_cdcb6239,
-                                create_fdd53941
-                            ) {
-                                Some(v_d6124e21) => {
-                                    let mut acc_bd78dc08 = Vec::new();
-                                    for el in v_d6124e21.clone().into_vec() {
-                                        match #import_path::NotEmptyUniqueVec::try_new(
-                                            vec![el]
-                                        ) {
-                                            Ok(v_7ed84f3b) => {
-                                                acc_bd78dc08.push(
-                                                    #import_path::NullableJsonObjectPgTypeWhereFilter(Some(v_7ed84f3b))
+                            >::#CreateIntoPgJsonTypeOptVecWhereLengthEqualSc(create_09a81dae) {
+                                Some(v_3680a4c9) => {
+                                    let mut acc_5c441d3a = Vec::new();
+                                    for el_a8b181a0 in v_3680a4c9.clone().into_vec() {
+                                        match #import_path::NotEmptyUniqueVec::try_new(vec![el_a8b181a0]) {
+                                            Ok(v_15097b27) => {
+                                                acc_5c441d3a.push(
+                                                    #import_path::NullableJsonObjectPgTypeWhereFilter(
+                                                        Some(v_15097b27)
+                                                    )
                                                 );
                                             },
                                             Err(er) => match er {
                                                 #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => (),
-                                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("23dca12f")
+                                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("6c4da72e")
                                             }
                                         }
                                     }
-                                    let v_e48110ec = #import_path::NullableJsonObjectPgTypeWhereFilter(Some(v_d6124e21));
-                                    if !acc_bd78dc08.contains(&v_e48110ec) {
-                                        acc_bd78dc08.push(v_e48110ec);
+                                    let v_84ea8e4c = #import_path::NullableJsonObjectPgTypeWhereFilter(Some(v_3680a4c9));
+                                    if !acc_5c441d3a.contains(&v_84ea8e4c) {
+                                        acc_5c441d3a.push(v_84ea8e4c);
                                     }
-                                    acc_bd78dc08
+                                    acc_5c441d3a
                                 },
                                 None => {
                                     return None;
                                 }
                             },
-                            (Some(_), None) => panic!("6abeac7b"),
-                            (None, Some(_)) => panic!("a2761cd2"),
-                            (None, None) => vec![#import_path::NullableJsonObjectPgTypeWhereFilter(None)]
+                            None => vec![#import_path::NullableJsonObjectPgTypeWhereFilter(None)],
                         }
                     ) {
-                        Ok(v_55f2dc3d) => Some(v_55f2dc3d),
+                        Ok(v_72dbefbc) => Some(v_72dbefbc),
                         Err(er) => match er {
                             #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
-                            #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("88912e24")
+                            #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("d41bcbca")
                         }
                     }
                 };
@@ -4750,43 +6279,42 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 let fi_ucc = &ToTokensToUccTs::case_or_panic(&fi);
                                 let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
                                 quote! {
-                                    if let Some(v_2bbd2c96) = #ft_as_pg_json_type_test_cases_ts::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc(
-                                        #ReadOnlyIdsSc.0.#ValueSc.#fi,
+                                    if let Some(v_927601a4) = #ft_as_pg_json_type_test_cases_ts::#CreateIntoPgJsonTypeOptVecWhereLengthEqualSc(
                                         #CreateSc.#fi
                                     ) {
-                                        for el in v_2bbd2c96.clone().into_vec() {
-                                            acc_2fe1cca8.push(
+                                        for el_194a660a in v_927601a4.clone().into_vec() {
+                                            acc_587bf907.push(
                                                 #ident_where_ucc::#fi_ucc(
                                                     #import_path::PgTypeWhere::try_new(
                                                         #import_path::Operator::And,
-                                                        vec![el]
-                                                    ).expect("9a25e058")
+                                                        vec![el_194a660a]
+                                                    ).expect("2f437949")
                                                 )
                                             );
                                         }
-                                        let v_c45bab0d = #ident_where_ucc::#fi_ucc(
+                                        let v_84ea8e4c = #ident_where_ucc::#fi_ucc(
                                             #import_path::PgTypeWhere::new(
                                                 #import_path::Operator::And,
-                                                v_2bbd2c96
+                                                v_927601a4
                                             )
                                         );
-                                        if !acc_2fe1cca8.contains(&v_c45bab0d) {
-                                            acc_2fe1cca8.push(v_c45bab0d);
+                                        if !acc_587bf907.contains(&v_84ea8e4c) {
+                                            acc_587bf907.push(v_84ea8e4c);
                                         }
                                     }
                                 }
                             });
                             quote! {
                                 match #import_path::NotEmptyUniqueVec::try_new({
-                                    let mut acc_2fe1cca8 = Vec::new();
+                                    let mut acc_587bf907 = Vec::new();
                                     #(#ts)*
-                                    acc_2fe1cca8
+                                    acc_587bf907
                                 }) {
-                                    Ok(v_a5fa471d) => Some(v_a5fa471d),
+                                    Ok(v_ea661a62) => Some(v_ea661a62),
                                     Err(er) => match er {
                                         #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
-                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("89e719cf")
-                                    }
+                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("7786dfd4")
+                                    },
                                 }
                             }
                         }
@@ -4794,104 +6322,58 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     },
                     Pattern::Arr => match &is_nullable {
                         IsNullable::False => {
-                            let ts_f0710cd9 = {
-                                let ts_57d244f8 = vec_syn_field.iter().map(|el0| {
-                                    let fi = &el0.ident;
-                                    let el_fi_ucc = ElSelfUcc::from_tokens(&fi);
-                                    let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                    quote! {
-                                        if let Some(v_bf84026e) = #ft_as_pg_json_type_test_cases_ts::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc(
-                                            read_only_ids_420d38ca.0.#ValueSc.#fi.clone(),
-                                            create_76f032c1.#fi.clone()
+                            let ts = vec_syn_field.iter().map(|el0| {
+                                let fi = &el0.ident;
+                                let el_fi_ucc = ElSelfUcc::from_tokens(&fi);
+                                let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                                quote! {
+                                    for create_e06a9fe2 in #CreateSc.0.clone() {
+                                        if let Some(v_ee015fcc) = #ft_as_pg_json_type_test_cases_ts::#CreateIntoPgJsonTypeOptVecWhereLengthEqualSc(
+                                            create_e06a9fe2.#fi
                                         ) {
-                                            for el in v_bf84026e.clone().into_vec() {
-                                                let v_592e6b5f = #ident_where_ucc::#el_fi_ucc(
+                                            for el in v_ee015fcc.clone().into_vec() {
+                                                let v_0ae29f5f = #ident_where_ucc::#el_fi_ucc(
                                                     #import_path::PgTypeWhere::try_new(
                                                         #import_path::Operator::And,
                                                         vec![el]
-                                                    ).expect("1f7ae335")
+                                                    )
+                                                    .expect("38ca88dc"),
                                                 );
-                                                if !acc_dd377eb1.contains(&v_592e6b5f) {
-                                                    acc_dd377eb1.push(v_592e6b5f);
+                                                if !acc_480d72e5.contains(&v_0ae29f5f) {
+                                                    acc_480d72e5.push(v_0ae29f5f);
                                                 }
                                             }
-                                            let v_03205172 = #ident_where_ucc::#el_fi_ucc(
+                                            let v_4e4cfda3 = #ident_where_ucc::#el_fi_ucc(
                                                 #import_path::PgTypeWhere::new(
                                                     #import_path::Operator::And,
-                                                    v_bf84026e
+                                                    v_ee015fcc
                                                 )
                                             );
-                                            if !acc_dd377eb1.contains(&v_03205172) {
-                                                acc_dd377eb1.push(v_03205172);
+                                            if !acc_480d72e5.contains(&v_4e4cfda3) {
+                                                acc_480d72e5.push(v_4e4cfda3);
                                             }
                                         }
                                     }
-                                });
-                                quote!{#(#ts_57d244f8)*}
-                            };
-                            let ts_2cc4a40e = match &dim {
-                                Dim::One => {
-                                    let dim_one_ts = {
-                                        let ts_91a09fe2 = vec_syn_field.iter().map(|el0| {
-                                            let fi = &el0.ident;
-                                            let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                            quote! {
-                                                #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
-                                                    read_only_ids_420d38ca.0.#ValueSc.#fi,
-                                                    create_76f032c1.#fi
-                                                )
-                                            }
-                                        });
-                                        quote!{
-                                            acc_dd377eb1.push(#ident_where_ucc::DimOneEqual(#import_path::PgJsonTypeWhereDimOneEqual {
-                                                operator: #import_path::Operator::And,
-                                                dims: #import_path::BoundedVec::try_from(
-                                                    vec![
-                                                        #import_path::UnsignedPartOfI32::try_from(
-                                                            i32::try_from(i_47620dcf).expect("5341936f")
-                                                        ).expect("76906f3c")
-                                                    ]
-                                                ).expect("8a624c70"),
-                                                #ValueSc: #ident_with_id_stdrt_not_null_table_type_ucc::new(
-                                                    <#uuid_uuid_as_not_null_jsonb_string_ts as #import_path::PgJsonTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
-                                                        read_only_ids_420d38ca.0.#ValueSc.#IdSc,
-                                                        #PgCrudDefaultOptSomeVecOneElCall
-                                                    ),
-                                                    #(#ts_91a09fe2),*
-                                                ),
-                                            }));
-                                        }
-                                    };
-                                    quote!{
-                                        for (i_47620dcf, (read_only_ids_420d38ca, create_76f032c1)) in #ReadOnlyIdsSc.0.#ValueSc.into_iter()
-                                            .zip(#CreateSc.0.into_iter())
-                                            .enumerate()
-                                        {
-                                            #ts_f0710cd9
-                                            #dim_one_ts
-                                        }
-                                    }
-                                },
-                                Dim::Two |
-                                Dim::Three |
-                                Dim::Four => quote!{
-                                    for (read_only_ids_420d38ca, create_76f032c1) in #ReadOnlyIdsSc.0.#ValueSc.into_iter()
-                                        .zip(#CreateSc.0.into_iter())
-                                    {
-                                        #ts_f0710cd9
-                                    }
-                                },
-                            };
+                                }
+                            });
                             quote! {
                                 match #import_path::NotEmptyUniqueVec::try_new({
-                                    let mut acc_dd377eb1 = Vec::new();
-                                    #ts_2cc4a40e
-                                    acc_dd377eb1
+                                    let mut acc_480d72e5 = Vec::new();
+                                    #(#ts)*
+                                    acc_480d72e5.push(#ident_where_ucc::LengthEqual(
+                                        #import_path::PgJsonTypeWhereLengthEqual {
+                                            operator: #import_path::Operator::And,
+                                            #ValueSc: #import_path::UnsignedPartOfI32::try_from(
+                                                i32::try_from(#CreateSc.0.len()).expect("1811faf7")
+                                            ).expect("a590f39b"),
+                                        }
+                                    ));
+                                    acc_480d72e5
                                 }) {
-                                    Ok(v_dfac36e4) => Some(v_dfac36e4),
+                                    Ok(v_cc01db9a) => Some(v_cc01db9a),
                                     Err(er) => match er {
                                         #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
-                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("93390f1a")
+                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("bad01dd0")
                                     },
                                 }
                             }
@@ -4900,2072 +6382,592 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     },
                 }
             };
-            (
-                {
-                    let opt_vec_create_ts = {
-                        let ts = match &is_nullable {
-                            IsNullable::False => match &pattern {
-                                Pattern::Stdrt => {
-                                    let ts = vec_syn_field.iter().map(|el0| {
-                                        let fi = &el0.ident;
-                                        let ft_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                        let params_ts = vec_syn_field.iter().map(|el_value| {
-                                            let fi_58f0ef7c = &el_value.ident;
-                                            if fi == fi_58f0ef7c {
-                                                quote! {el_37154498}
-                                            } else {
-                                                quote! {
-                                                    #PgCrudDefaultOptSomeVecOneElCall
-                                                }
-                                            }
-                                        });
-                                        quote! {
-                                            if let Some(v_0296b347) = #ft_type_as_pg_json_type_test_cases_ts::#OptVecCreateSc() {
-                                                for el_37154498 in v_0296b347 {
-                                                    let #ValueSc = #self_as_pg_json_type_create_ts::new(
-                                                        #(#params_ts),*
-                                                    );
-                                                    if !acc_ccd79a32.contains(&#ValueSc) {
-                                                        acc_ccd79a32.push(#ValueSc);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    });
-                                    quote! {#(#ts)*}
-                                },
-                                Pattern::Arr => {
-                                    let ts = vec_syn_field.iter().map(|el0| {
-                                        let fi = &el0.ident;
-                                        let ft_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                        let (
-                                            opt_extra_params_ts,
-                                            params_ts
-                                        ) = {
-                                            #[derive(Clone, OptimalPack)]
-                                            enum ShouldAddDotClone {
-                                                False,
-                                                True,
-                                            }
-                                            let gen_params_ts = |
-                                                should_add_dot_clone: ShouldAddDotClone,
-                                                el_ts: &dyn ToTokens,
-                                            |{
-                                                vec_syn_field.iter().map(|el_value| {
-                                                    let fi_4fd46df4 = &el_value.ident;
-                                                    if fi == fi_4fd46df4 {
-                                                        let maybe_dot_clone_ts = match should_add_dot_clone.clone() {
-                                                            ShouldAddDotClone::False => Ts2::new(),
-                                                            ShouldAddDotClone::True => quote! { .clone() },
-                                                        };
-                                                        quote! {#el_ts #maybe_dot_clone_ts}
-                                                    } else {
-                                                        quote! {#PgCrudDefaultOptSomeVecOneElCall}
-                                                    }
-                                                }).collect::<Vec<Ts2>>()
-                                            };
-                                            (
-                                                gen_params_ts(
-                                                    ShouldAddDotClone::True,
-                                                    &quote!{el_37154498}
-                                                ),
-                                                gen_params_ts(
-                                                    ShouldAddDotClone::False,
-                                                    &quote!{el_37154498}
-                                                )
-                                            )
-                                        };
-                                        quote! {
-                                            if let Some(vec_create) = #ft_type_as_pg_json_type_test_cases_ts::#OptVecCreateSc() {
-                                                let mut acc_6a886d56 = Vec::new();
-                                                let opt_extra = {
-                                                    let mut opt_extra = None;
-                                                    for el_37154498 in &vec_create {
-                                                        if opt_extra.is_none() {
-                                                            let #ValueSc = #ident_with_id_stdrt_not_null_create_ucc::new(
-                                                                #(#opt_extra_params_ts),*
-                                                            );
-                                                            opt_extra = Some((
-                                                                #ident_create_ucc::new(vec![#ValueSc.clone()]),
-                                                                #ident_create_ucc::new(vec![#ValueSc.clone(), #ValueSc])
-                                                            ));
-                                                        }
-                                                        else {
-                                                            break;
-                                                        }
-                                                    }
-                                                    opt_extra
-                                                };
-                                                let has_len_greater_than_one = vec_create.len() > 1;
-                                                for el_37154498 in vec_create {
-                                                    acc_6a886d56.push(#ident_with_id_stdrt_not_null_create_ucc::new(
-                                                        #(#params_ts),*
-                                                    ));
-                                                }
-                                                {
-                                                    let v_07c0c08c = #ident_create_ucc::new(acc_6a886d56);
-                                                    if !acc_ccd79a32.contains(&v_07c0c08c) {
-                                                        acc_ccd79a32.push(v_07c0c08c);
-                                                    }
-                                                }
-                                                if let Some(v_f6686d5d) = opt_extra {
-                                                    if has_len_greater_than_one {
-                                                        let v_60116463 = v_f6686d5d.0;
-                                                        if !acc_ccd79a32.contains(&v_60116463) {
-                                                            acc_ccd79a32.push(v_60116463);
-                                                        }
-                                                    }
-                                                    else {
-                                                        let v_7a843059 = v_f6686d5d.1;
-                                                        if !acc_ccd79a32.contains(&v_7a843059) {
-                                                            acc_ccd79a32.push(v_7a843059);
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    });
-                                    quote! {#(#ts)*}
-                                },
+            let create_into_pg_json_type_opt_vec_where_length_greater_than_ts = {
+                let gen_nullable_ts = |ts: &dyn ToTokens|quote! {
+                    #CreateSc.0.map_or_else(|| None, |create_612f2a61| <
+                        #ts
+                        as
+                        #import_path::PgJsonTypeTestCases
+                    >::create_into_pg_json_type_opt_vec_where_length_greater_than(create_612f2a61).map_or_else(
+                        || None,
+                        |v_1ea95b5d| match #import_path::NotEmptyUniqueVec::try_new({
+                            let mut acc_87f84b5c = Vec::new();
+                            for el_9bbf8527 in v_1ea95b5d.clone().into_vec() {
+                                match #import_path::NotEmptyUniqueVec::try_new(vec![el_9bbf8527]) {
+                                    Ok(v_1d0202fc) => {
+                                        acc_87f84b5c.push(#import_path::NullableJsonObjectPgTypeWhereFilter(Some(v_1d0202fc)));
+                                    }
+                                    Err(er) => match er {
+                                        #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty { .. } => (),
+                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique { .. } => panic!("bdb0a112"),
+                                    },
+                                }
+                            }
+                            let v_4e4cfda3 = #import_path::NullableJsonObjectPgTypeWhereFilter(Some(v_1ea95b5d));
+                            if !acc_87f84b5c.contains(&v_4e4cfda3) {
+                                acc_87f84b5c.push(v_4e4cfda3);
+                            }
+                            acc_87f84b5c
+                        }) {
+                            Ok(v_ea4ca151) => Some(v_ea4ca151),
+                            Err(er) => match er {
+                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty { .. } => None,
+                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique { .. } => panic!("c7ecc36f"),
                             },
-                            IsNullable::True => {
-                                let (
-                                    ident_not_null_as_pg_json_type_test_cases_ts_e690553a,
-                                    ts
-                                ): (
-                                    &dyn ToTokens,
-                                    &dyn ToTokens
-                                ) = match &pattern {
-                                    Pattern::Stdrt => (
-                                        &ident_stdrt_not_null_as_pg_json_type_test_cases_ts,
-                                        &Ts2::new()
-                                    ),
-                                    Pattern::Arr => (
-                                        &ident_arr_not_null_as_pg_json_type_test_cases_ts,
-                                        &quote!{.0}
-                                    ),
-                                };
-                                quote! {
-                                    if let Some(v_399e6a50) = #ident_not_null_as_pg_json_type_test_cases_ts_e690553a::#OptVecCreateSc() {
-                                        for el in v_399e6a50 {
-                                            let #ValueSc = #self_as_pg_json_type_ts::Create::new(Some(el #ts));
-                                            if !acc_ccd79a32.contains(&#ValueSc) {
-                                                acc_ccd79a32.push(#ValueSc);
-                                            }
-                                        }
-                                    }
-                                    {
-                                        let #ValueSc = #self_as_pg_json_type_ts::Create::new(None);
-                                        if !acc_ccd79a32.contains(&#ValueSc) {
-                                            acc_ccd79a32.push(#ValueSc);
-                                        }
-                                    }
-                                }
-                            }
-                        };
-                        quote!{Some({
-                            let mut acc_ccd79a32 = Vec::new();
-                            #ts
-                            acc_ccd79a32
-                        })}
-                    };
-                    let read_only_ids_to_two_dimal_vec_read_inner_ts = match &pattern {
-                        Pattern::Stdrt => match &is_nullable {
-                            IsNullable::False => {
-                                let fields_last_init_ts = {
-                                    if vec_syn_field.len() == 1 {
-                                        Ts2::new()
-                                    }
-                                    else {
-                                        let ts = vec_syn_field.iter().map(|el0| {
-                                            let fi = &el0.ident;
-                                            let fi_last_sc = SelfLastSc::from_display(&fi);
-                                            let ft_type_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                            quote! {
-                                                let mut #fi_last_sc = #ft_type_as_pg_json_type_test_cases_ts::#ReadOnlyIdsIntoOptValueReadInnerSc(
-                                                    read_only_ids.0.value.#fi.clone()
-                                                );
-                                            }
-                                        });
-                                        quote!{#(#ts)*}
-                                    }
-                                };
-                                let ts = vec_syn_field.iter().map(|el0| {
-                                    let fi = &el0.ident;
-                                    let fi_current_sc = SelfCurrentSc::from_display(&fi);
-                                    let fi_last_sc = SelfLastSc::from_display(&fi);
-                                    let maybe_fi_last_clone_from_fi_current = if vec_syn_field.len() == 1 {
-                                        Ts2::new()
-                                    }
-                                    else {
-                                        quote!{#fi_last_sc.clone_from(&#fi_current_sc);}
-                                    };
-                                    let fields_ts = vec_syn_field.iter().map(|el_value| {//todo rename
-                                        let fi_84b52e71 = &el_value.ident;
-                                        let fi_84b52e71_current_sc = SelfCurrentSc::from_display(&fi_84b52e71);
-                                        let fi_84b52e71_last_sc = SelfLastSc::from_display(&fi_84b52e71);
-                                        let ts: &dyn ToTokens = if fi == fi_84b52e71 {
-                                            &fi_84b52e71_current_sc
-                                        } else {
-                                            &fi_84b52e71_last_sc
-                                        };
-                                        quote! {#fi_84b52e71: #ts.clone()}
-                                    });
-                                    let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                    let value_ts = wrap_into_value_init_ts(&quote!{el_2720df8a});
-                                    quote! {
-                                        for el_7bf83754 in #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(&#ReadOnlyIdsSc.0.value.#fi) {
-                                            for el_2720df8a in el_7bf83754 {
-                                                let #fi_current_sc = Some(#value_ts);
-                                                #maybe_fi_last_clone_from_fi_current
-                                                acc_ef081dc3.push(
-                                                    vec![
-                                                        #ident_stdrt_not_null_read_inner_ucc {
-                                                            #(#fields_ts),*
-                                                        }
-                                                    ]
-                                                );
-                                            }
-                                        }
-                                    }
-                                });
-                                quote! {
-                                    let mut acc_ef081dc3 = Vec::new();
-                                    #fields_last_init_ts
-                                    #(#ts)*
-                                    acc_ef081dc3
-                                }
-                            }
-                            IsNullable::True => {
-                                quote! {
-                                    #ReadOnlyIdsSc.0.#ValueSc.as_ref().into_iter().flat_map(|v_5fa0668c| {
-                                        #ident_stdrt_not_null_as_pg_json_type_test_cases_ts::
-                                            #ReadOnlyIdsToTwoDimalVecReadInnerSc(v_5fa0668c)
-                                            .into_iter()
-                                            .flat_map(|el0| {
-                                                el0.into_iter().map(|el1| vec![Some(el1)])
-                                            })
-                                    })
-                                    .chain(std::iter::once(vec![None]))
-                                    .collect()
-                                }
-                            }
                         },
-                        Pattern::Arr => match &is_nullable {
-                            IsNullable::False => {
-                                let ts = vec_syn_field.iter().map(|el0| {
-                                    let fi = &el0.ident;
-                                    let fields_ts = vec_syn_field.iter().map(|el_value| {
-                                        let fi_dd46e0cb = &el_value.ident;
-                                        if fi == fi_dd46e0cb {
-                                            let value_ts = wrap_into_value_init_ts(&quote!{el_18d1f553});
-                                            quote! {
-                                                #fi_dd46e0cb: Some(#value_ts)
-                                            }
-                                        } else {
-                                            let ft_as_pg_json_type_test_cases_ts_64dc25bd = gen_type_as_pg_json_type_test_cases_ts(&el_value.type0);
-                                            quote! {
-                                                #fi_dd46e0cb: #ft_as_pg_json_type_test_cases_ts_64dc25bd::#ReadOnlyIdsIntoOptValueReadInnerSc(
-                                                    el.0.#ValueSc.#fi_dd46e0cb.clone()
-                                                )
-                                            }
-                                        }
-                                    });
-                                    let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                    let value_ts = wrap_into_value_init_ts(&quote!{el.0.#ValueSc.#IdSc.0.#ValueSc});
-                                    quote! {
-                                        for el_4b4da5aa in #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(
-                                            &el.0.#ValueSc.#fi.clone()
-                                        ) {
-                                            for el_18d1f553 in el_4b4da5aa {
-                                                acc_00b3df88.push(
-                                                    vec![
-                                                        #ident_with_id_stdrt_not_null_read_inner_ucc {
-                                                            #IdSc: Some(#value_ts),
-                                                            #(#fields_ts),*
-                                                        }
-                                                    ]
-                                                );
-                                            }
-                                        }
-                                    }
-                                });
-                                quote! {
-                                    #ReadOnlyIdsSc.0.#ValueSc.iter().map(|el|{
-                                        let mut acc_00b3df88 = Vec::new();
-                                        #(#ts)*
-                                        acc_00b3df88
-                                    })
-                                    .collect()
-                                }
-                            }
-                            IsNullable::True => {
-                                quote! {
-                                    let mut acc_fb5111f1 = Vec::new();
-                                    if let Some(v_6ee5750e) = &#ReadOnlyIdsSc.0.#ValueSc {
-                                        for el_4a5a4b09 in #ident_arr_not_null_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(v_6ee5750e) {
-                                            for el_264980ec in el_4a5a4b09 {
-                                                acc_fb5111f1.push(vec![Some(el_264980ec)]);
-                                            }
-                                        }
-                                    }
-                                    acc_fb5111f1.push(vec![None]);
-                                    acc_fb5111f1
-                                }
-                            }
-                        },
-                    };
-                    let read_inner_into_read_with_new_or_try_new_unwraped_ts = match &pattern {
-                        Pattern::Stdrt => match &is_nullable {
-                            IsNullable::False => {
-                                let self_el_as_pg_type_read_ts = gen_type_as_pg_type_subtype_ts(&self_pg_json_type_ts, &PgTypeSubtype::Read);
-                                let params_ts = vec_syn_field.iter().map(|el0| {
-                                    let fi = &el0.ident;
-                                    let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                    let value_ts = wrap_into_value_init_ts(&quote!{
-                                        #ft_as_pg_json_type_test_cases_ts::#ReadInnerIntoReadWithNewOrTryNewUnwrapedSc(v_8ff65e09.#ValueSc)
-                                    });
-                                    quote! {#ValueSc.#fi.map(|v_8ff65e09|#value_ts)}
-                                });
-                                quote! {#self_el_as_pg_type_read_ts::try_new(#(#params_ts),*).expect("3aeeabba")}
-                            }
-                            IsNullable::True => {
-                                let self_el_as_pg_type_read_ts = gen_type_as_pg_type_subtype_ts(&self_pg_json_type_ts, &PgTypeSubtype::Read);
-                                quote! {
-                                    #self_el_as_pg_type_read_ts::new(
-                                        #ValueSc.map(#ident_stdrt_not_null_as_pg_json_type_test_cases_ts::#ReadInnerIntoReadWithNewOrTryNewUnwrapedSc)
-                                    )
-                                }
-                            }
-                        },
-                        Pattern::Arr => match &is_nullable {
-                            IsNullable::False => {
-                                let ts = vec_syn_field_with_id.iter().map(|el0| {
-                                    let fi = &el0.ident;
-                                    let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                    let value_ts = wrap_into_value_init_ts(&quote!{
-                                        #ft_as_pg_json_type_test_cases_ts::#ReadInnerIntoReadWithNewOrTryNewUnwrapedSc(v_3ac52220.#ValueSc)
-                                    });
-                                    quote! {#fi: el_ffed1bfc.#fi.map(|v_3ac52220|#value_ts)}
-                                });
-                                quote!{
-                                    #ident_read_ucc::new(
-                                        #ValueSc.into_iter().map(|el_ffed1bfc| #ident_with_id_stdrt_not_null_read_ucc {
-                                            #(#ts),*
-                                        }).collect()
-                                    )
-                                }
-                            }
-                            IsNullable::True => {
-                                let ts = vec_syn_field_with_id.iter().map(|el0| {
-                                    let fi = &el0.ident;
-                                    let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                    // let maybe_dot_clone_ts = if vec_syn_field.len() == 1 {
-                                    //     Ts2::new()
-                                    // }
-                                    // else {
-                                    //     quote!{.clone()}
-                                    // };
-                                    let value_ts = wrap_into_value_init_ts(&quote!{
-                                        #ft_as_pg_json_type_test_cases_ts::#ReadInnerIntoReadWithNewOrTryNewUnwrapedSc(
-                                            el_5c1f7f63.#ValueSc
-                                            // #maybe_dot_clone_ts
-                                            .clone()
-                                        )
-                                    });
-                                    quote! {
-                                        #fi: el_ffed1bfc.#fi.as_ref().map(|el_5c1f7f63| #value_ts)
-                                    }
-                                });
-                                let self_el_as_pg_type_read_ts = gen_type_as_pg_type_subtype_ts(&self_pg_json_type_ts, &PgTypeSubtype::Read);
-                                quote! {
-                                    #self_el_as_pg_type_read_ts::new(
-                                        #ValueSc.map(|v_189e3c07|
-                                            v_189e3c07
-                                            .into_iter()
-                                            .map(|el_ffed1bfc|#ident_with_id_stdrt_not_null_read_ucc {
-                                                #(#ts),*
-                                            }).collect()
-                                        )
-                                    )
-                                }
-                            }
-                        },
-                    };
-                    let read_inner_into_update_with_new_or_try_new_unwraped_ts = match &is_nullable {
-                        IsNullable::False => match &pattern {
-                            Pattern::Stdrt => {
-                                let self_el_as_pg_type_update_ts = gen_type_as_pg_type_subtype_ts(&self_pg_json_type_ts, &PgTypeSubtype::Update);
-                                let params_ts = vec_syn_field.iter().map(|el0| {
-                                    let fi = &el0.ident;
-                                    let fi_ucc = &ToTokensToUccTs::case_or_panic(&fi);
-                                    let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                    let value_ts = wrap_into_value_init_ts(&quote!{
-                                        #ft_as_pg_json_type_test_cases_ts::#ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc(el_23bdfe1e.#ValueSc)
-                                    });
-                                    quote! {
-                                        acc_ebea163e.extend(#ValueSc.#fi.map(|el_23bdfe1e| {
-                                            #ident_stdrt_not_null_update_el_ucc::#fi_ucc(#value_ts)
-                                        }));
-                                    }
-                                });
-                                quote! {
-                                    #self_el_as_pg_type_update_ts::new(
-                                        #import_path::NotEmptyUniqueVec::try_new({
-                                            let mut acc_ebea163e = Vec::new();
-                                            #(#params_ts)*
-                                            acc_ebea163e
-                                        }).expect("a06dbdc5")
-                                    )
-                                }
-                            },
-                            Pattern::Arr => {
-                                let fields_ts = vec_syn_field.iter().map(|el0| {
-                                    let fi = &el0.ident;
-                                    quote! {#fi: el_ffed1bfc.#fi}
-                                });
-                                quote! {
-                                    #ident_update_ucc::try_new(
-                                        Vec::new(),
-                                        #import_path_unique_vec_ident_with_id_stdrt_not_null_update_el_ts::try_new(
-                                            #ValueSc.into_iter().map(|el_ffed1bfc| #ident_with_id_stdrt_not_null_update_el_ucc {
-                                                #IdSc: #uuid_uuid_as_not_null_jsonb_string_update_ucc::new(el_ffed1bfc.#IdSc.clone().expect("f04a2c6d").#ValueSc),
-                                                fields: #ident_stdrt_not_null_as_pg_json_type_test_cases_ts::#ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc(
-                                                    #ident_stdrt_not_null_read_inner_ucc {
-                                                        #(#fields_ts),*
-                                                    }
-                                                ),
-                                            })
-                                            .collect(),
-                                        )
-                                        .expect("ca51d559"),
-                                        Vec::new(),
-                                    )
-                                    .expect("0449fe82")
-                                }
-                            }
-                        },
-                        IsNullable::True => {
-                            let ts = gen_type_as_pg_type_test_cases_ts(match &pattern {
-                                Pattern::Stdrt => &ident_stdrt_not_null_ucc,
-                                Pattern::Arr => &ident_with_id_arr_not_null_ucc,
-                            });
-                            let self_el_as_pg_type_update_ts = gen_type_as_pg_type_subtype_ts(&self_pg_json_type_ts, &PgTypeSubtype::Update);
-                            quote! {
-                                #self_el_as_pg_type_update_ts::new(
-                                    #ValueSc.map(#ts::#ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc)
-                                )
-                            }
-                        },
-                    };
-                    let read_only_ids_into_opt_value_read_inner_ts = match &pattern {
-                        Pattern::Stdrt => match &is_nullable {
-                            IsNullable::False => gen_fields_read_only_ids_into_opt_value_read_inner_ts(&is_stdrt_with_id_false, &ValueSc),
-                            IsNullable::True => {
-                                let value_ts = wrap_into_value_init_ts(&quote!{
-                                    #ValueSc.0.#ValueSc.and_then(|v_5d7e3961| match #ident_stdrt_not_null_as_pg_json_type_test_cases_ts::read_only_ids_into_opt_value_read_inner(
-                                        v_5d7e3961
-                                    ) {
-                                        Some(v_cfca0099) => Some(v_cfca0099.#ValueSc),
-                                        None => None,
-                                    })
-                                });
-                                quote! {Some(#value_ts)}
-                            }
-                        },
-                        Pattern::Arr => match &is_nullable {
-                            IsNullable::False => {
-                                let value_ts = wrap_into_value_init_ts(&{
-                                    let ts = vec_syn_field_with_id.iter().map(|el0| {
-                                        let fi = &el0.ident;
-                                        let ft = &el0.type0;
-                                        let ft_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&ft);
-                                        let ft_as_pg_json_type_read_ts = gen_type_as_pg_json_type_subtype_ts(&ft, &PgJsonTypeSubtype::Read);
-                                        let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
-                                        let value_ts = wrap_into_value_init_ts(&{
-                                            let default_but_opt_is_some_call_ts_a3f714b3 = gen_ident_as_default_but_opt_is_some_call_ts(
-                                                &ft_as_pg_json_type_read_ts
-                                            );
-                                            quote!{#ft_as_pg_json_type_ts::into_inner(#default_but_opt_is_some_call_ts_a3f714b3)}
-                                        });
-                                        quote! {
-                                            #fi: #ft_as_pg_json_type_test_cases_ts::read_only_ids_into_opt_value_read_inner(
-                                                el_6603f209.0.#ValueSc.#fi
-                                            ).map_or_else(|| Some(#value_ts), Some)
-                                        }
-                                    });
-                                    quote!{
-                                        #ValueSc.0.#ValueSc.into_iter().fold(Vec::new(), |mut acc_cf4743b1, el_6603f209| {
-                                            acc_cf4743b1.push(#ident_with_id_stdrt_not_null_read_inner_ucc {
-                                                #(#ts),*
-                                            });
-                                            acc_cf4743b1
-                                        })
-                                    }
-                                });
-                                quote! {Some(#value_ts)}
-                            }
-                            IsNullable::True => {
-                                let value_ts = wrap_into_value_init_ts(&quote!{
-                                    #ValueSc.0.#ValueSc.and_then(|v_f816032d| match #ident_arr_not_null_as_pg_json_type_test_cases_ts::#ReadOnlyIdsIntoOptValueReadInnerSc(
-                                        v_f816032d
-                                    ) {
-                                        Some(v_d0549423) => Some(v_d0549423.#ValueSc),
-                                        None => None,
-                                    })
-                                });
-                                quote! {Some(#value_ts)}
-                            }
-                        },
-                    };
-                    let update_to_read_only_ids_ts = match &pattern {
-                        Pattern::Stdrt => match &is_nullable {
-                            IsNullable::False => {
-                                let fields_init_ts = vec_syn_field.iter().map(|el0| {
-                                    let fi = &el0.ident;
-                                    quote! {let mut #fi = None;}
-                                });
-                                let match_ts = vec_syn_field.iter().map(|el0| {
-                                    let fi = &el0.ident;
-                                    let fi_ucc_ts = ToTokensToUccTs::case_or_panic(&fi);
-                                    let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                    quote! {
-                                        #ident_update_el_ucc::#fi_ucc_ts(v_0f4d677e) => {
-                                            #fi = Some(#ft_as_pg_json_type_test_cases_ts::#UpdateToReadOnlyIdsSc(&v_0f4d677e.#ValueSc));
-                                        }
-                                    }
-                                });
-                                let struct_fields_ts = vec_syn_field.iter().map(|el0| {
-                                    let fi = &el0.ident;
-                                    quote! {#fi: #fi.expect("106f16f2")}
-                                });
-                                let value_ts = wrap_into_value_init_ts(&quote!{
-                                    #ident_read_only_ids_handle_ucc{
-                                        #(#struct_fields_ts),*
-                                    }
-                                });
-                                quote! {
-                                    #(#fields_init_ts)*
-                                    for el_b3974846 in #ValueSc.0.to_vec() {
-                                        match el_b3974846 {
-                                            #(#match_ts),*
-                                        }
-                                    }
-                                    #ident_read_only_ids_ucc(#value_ts)
-                                }
-                            }
-                            IsNullable::True => {
-                                let value_ts = wrap_into_value_init_ts(&{
-                                    quote!{
-                                        #ValueSc.0.as_ref().map(#ident_stdrt_not_null_as_pg_json_type_test_cases_ts::#UpdateToReadOnlyIdsSc)
-                                    }
-                                });
-                                quote! {#ident_read_only_ids_ucc(#value_ts)}
-                            }
-                        },
-                        Pattern::Arr => match &is_nullable {
-                            IsNullable::False => {
-                                let value_ts = wrap_into_value_init_ts(&{
-                                    let init_ts = vec_syn_field.iter().map(|el0| {
-                                        let fi = &el0.ident;
-                                        quote! {let mut #fi = None;}
-                                    });
-                                    let for_loop_ts = vec_syn_field.iter().map(|el0| {
-                                        let fi = &el0.ident;
-                                        let fi_ts = {
-                                            let fi_ucc_ts_fe80e842 = ToTokensToUccTs::case_or_panic(&fi);
-                                            quote!{
-                                                #ident_stdrt_not_null_update_el_ucc::#fi_ucc_ts_fe80e842(v_d2a6daf8) => {
-                                                    #fi = Some(v_d2a6daf8.#ValueSc.clone());
-                                                },
-                                            }
-                                        };
-                                        //todo wtf
-                                        let fields_without_ident_ts_11eab22a = if vec_syn_field.is_empty() {
-                                            Ts2::new()
-                                        }
-                                        else {
-                                            let ts_e0bf4e67 = vec_syn_field
-                                            .iter()
-                                            .filter(|el1| el1.ident != *fi)
-                                            .map(|el1| {
-                                                let el1_fi = &el1.ident;
-                                                let el1_fi_ucc_ts =
-                                                    ToTokensToUccTs::case_or_panic(
-                                                        &el1_fi,
-                                                    );
-                                                quote! {
-                                                    #ident_stdrt_not_null_update_el_ucc::#el1_fi_ucc_ts(_)
-                                                }
-                                            })
-                                            .fold(None, |acc_bbf653f7, el1| Some(match acc_bbf653f7 {
-                                                None => el1,
-                                                Some(v_5b375af0) => quote! { #v_5b375af0 | #el1 },
-                                            }));
-                                            ts_e0bf4e67.map_or_else(
-                                                Ts2::new,
-                                                |v_5c826b8c| quote!{#v_5c826b8c => (),}
-                                            )
-                                        };
-                                        quote! {
-                                            for el_da177c5a in el_4634bb8a.fields.0.to_vec() {
-                                                match &el_da177c5a {
-                                                    #fi_ts
-                                                    #fields_without_ident_ts_11eab22a
-                                                }
-                                            }
-                                        }
-                                    });
-                                    let value_ts = wrap_into_value_init_ts(&{
-                                        let uuid_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&uuid_uuid_as_not_null_jsonb_string_ts);
-                                        let fields_ts = vec_syn_field.iter().map(|el0| {
-                                            let fi = &el0.ident;
-                                            let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                            quote! {
-                                                #fi: #ft_as_pg_json_type_test_cases_ts::#UpdateToReadOnlyIdsSc(&#fi.expect("a3ec7cae"))
-                                            }
-                                        });
-                                        quote!{
-                                            #ident_with_id_stdrt_not_null_read_only_ids_handle_ucc {
-                                                #IdSc: #uuid_as_pg_json_type_test_cases_ts::#UpdateToReadOnlyIdsSc(&el_4634bb8a.#IdSc),
-                                                #(#fields_ts),*
-                                            }
-                                        }
-                                    });
-                                    quote!{
-                                        #ValueSc.#UpdateSc.to_vec().iter().map(|el_4634bb8a|{
-                                            #(#init_ts)*
-                                            #(#for_loop_ts)*
-                                            #ident_with_id_stdrt_not_null_read_only_ids_ucc(#value_ts)
-                                        }).collect()
-                                    }
-                                });
-                                quote! {#ident_read_only_ids_ucc(#value_ts)}
-                            }
-                            IsNullable::True => {
-                                let value_ts = wrap_into_value_init_ts(&quote!{
-                                    #ValueSc.0.as_ref().map(#ident_arr_not_null_as_pg_json_type_test_cases_ts::#UpdateToReadOnlyIdsSc)
-                                });
-                                quote! {#ident_read_only_ids_ucc(#value_ts)}
-                            }
-                        },
-                    };
-                    let read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts = {
-                        let value_init_ts = gen_import_path_value_init_ts(&match &pattern {
-                            Pattern::Stdrt => match &is_nullable {
-                                IsNullable::False => {
-                                    let params_ts = vec_syn_field.iter().map(|el0| {
-                                        let fi = &el0.ident;
-                                        let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                        quote! {
-                                            #ft_as_pg_json_type_test_cases_ts::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
-                                                &#ValueSc.0.#ValueSc.#fi
-                                            )
-                                        }
-                                    });
-                                    quote! {
-                                        #ident_read_ucc::try_new(
-                                            #(#params_ts),*
-                                        ).expect("57820868")
-                                    }
-                                }
-                                IsNullable::True => quote! {
-                                    #ident_read_ucc::new(
-                                        #ValueSc.0.#ValueSc.as_ref().and_then(|v_dfa7815e| match #ident_stdrt_not_null_as_pg_json_type_test_cases_ts::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
-                                            v_dfa7815e
-                                        ) {
-                                            Some(v_02cef266) => Some(v_02cef266.#ValueSc),
-                                            None => None,
-                                        })
-                                    )
-                                }
-                            },
-                            Pattern::Arr => match &is_nullable {
-                                IsNullable::False => {
-                                    let params_ts = vec_syn_field_with_id.iter().map(|el0| {
-                                        let fi = &el0.ident;
-                                        let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                        quote! {
-                                            #ft_as_pg_json_type_test_cases_ts::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
-                                                &el_629b1544.0.#ValueSc.#fi
-                                            )
-                                        }
-                                    });
-                                    quote! {
-                                        #ident_read_ucc::new({
-                                            let mut acc_5f587d35 = #ValueSc.0.#ValueSc.clone().into_iter().map(|el_629b1544|{
-                                                #ident_with_id_stdrt_not_null_read_ucc::try_new(
-                                                    #(#params_ts),*
-                                                ).expect("8f6fb6b6")
-                                            }).collect::<Vec<#ident_with_id_stdrt_not_null_read_ucc>>();
-                                            acc_5f587d35.sort_by(|first, second| {
-                                                if let (Some(v_first), Some(v_second)) = (&first.id, &second.id) {
-                                                    //maybe remove .clone - add .get by ref method
-                                                    #import_path_pg_json_type_uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_ts::into_inner(
-                                                        v_first.#ValueSc.clone()
-                                                    )
-                                                    .cmp(&#import_path_pg_json_type_uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_ts::into_inner(
-                                                        v_second.#ValueSc.clone()
-                                                    ))
-                                                }
-                                                else {
-                                                    panic!("0bdf0f44");
-                                                }
-                                            });
-                                            acc_5f587d35
-                                        })
-                                    }
-                                }
-                                IsNullable::True => quote! {
-                                    #ident_read_ucc::new(
-                                        #ValueSc.0.#ValueSc.as_ref().and_then(|v_16ab4136| match #ident_arr_not_null_as_pg_json_type_test_cases_ts::read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
-                                            v_16ab4136
-                                        ) {
-                                            Some(v_71a66429) => Some(v_71a66429.#ValueSc.0),
-                                            None => None,
-                                        })
-                                    )
-                                }
-                            },
-                        });
-                        quote!{Some(#value_init_ts)}
-                    };
-                    let previous_read_merged_with_opt_update_into_read_ts = {
-                        let fields_init_ts = vec_syn_field.iter().map(|el0| {
-                            let fi = &el0.ident;
-                            quote! {let mut #fi = None;}
-                        });
-                        let match_ts = vec_syn_field.iter().map(|el0| {
-                            let fi = &el0.ident;
-                            let fi_ucc_ts = ToTokensToUccTs::case_or_panic(&fi);
-                            quote! {
-                                #ident_stdrt_not_null_update_el_ucc::#fi_ucc_ts(#ValueSc) => {
-                                    #fi = Some(#ValueSc.#ValueSc);
-                                }
-                            }
-                        });
-                        let gen_struct_init_ts = |function: &dyn Fn(&dyn ToTokens) -> Ts2|{//ts: &dyn ToTokens
+                    ))
+                };
+                match &pattern {
+                    Pattern::Stdrt => match &is_nullable {
+                        IsNullable::False => {
                             let ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
-                                let value_init_ts = gen_import_path_value_init_ts(&{
-                                    let ts = function(&fi);
-                                    let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                    quote!{
-                                        #ft_as_pg_json_type_test_cases_ts::previous_read_merged_with_opt_update_into_read(
-                                            #ts,
-                                            #fi
-                                        )
-                                    }
-                                });
-                                quote! {#fi: Some(#value_init_ts)}
-                            });
-                            quote!{#(#ts),*}
-                        };
-                        let gen_opt_ts = |pattern_53bdff8d: &Pattern|{
-                            let ident_as_pg_json_type_test_cases_ts_53bdff8d = gen_type_as_pg_json_type_test_cases_ts(match &pattern_53bdff8d {
-                                Pattern::Stdrt => &ident_stdrt_not_null_ucc,
-                                Pattern::Arr => &ident_arr_not_null_ucc
-                            });
-                            quote! {
-                                match #OptUpdateSc {
-                                    Some(v_fca601b5) => #ident_read_ucc(
-                                        match v_fca601b5.0 {
-                                            Some(v_8d7747f1) => Some(
-                                                #ident_as_pg_json_type_test_cases_ts_53bdff8d::previous_read_merged_with_opt_update_into_read(
-                                                    #ReadSc.0.unwrap_or_else(#default_but_opt_is_some_ts),
-                                                    Some(v_8d7747f1),
-                                                )
-                                            ),
-                                            None => None,
-                                        }
-                                    ),
-                                    None => #ReadSc,
-                                }
-                            }
-                        };
-                        match &is_nullable {
-                            IsNullable::False => match &pattern {
-                                Pattern::Stdrt => {
-                                    let struct_init_ts = gen_struct_init_ts(&|ts: &dyn ToTokens|{
-                                        quote!{
-                                            #ReadSc.#ts.expect("a2d26e36").#ValueSc
-                                        }
-                                    });
-                                    quote!{
-                                        match #OptUpdateSc {
-                                            Some(v_e5377436) => {
-                                                #(#fields_init_ts)*
-                                                for el_629b1544 in v_e5377436.0.into_vec() {
-                                                    match el_629b1544 {
-                                                        #(#match_ts),*
-                                                    }
-                                                }
-                                                #ident_read_ucc {
-                                                    #struct_init_ts
-                                                }
-                                            },
-                                            None => #ReadSc
-                                        }
-                                    }
-                                },
-                                Pattern::Arr => {
-                                    let struct_init_ts = gen_struct_init_ts(&|ts: &dyn ToTokens|{
-                                        quote!{
-                                            found_read_el.#ts.expect("2e8229f7").#ValueSc
-                                        }
-                                    });
-                                    quote! {
-                                        match #OptUpdateSc {
-                                            Some(v_47f5a20b) => #ident_read_ucc({
-                                                let mut acc_04a67ef2 = Vec::new();
-                                                for el_377d1bb4 in v_47f5a20b.#UpdateSc.into_vec() {
-                                                    let mut opt_read_el = None;
-                                                    for el in &#ReadSc.0 {
-                                                        if *#uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_object_vec_el_id_ts::get_inner(&el_377d1bb4.#IdSc.clone().into())
-                                                        ==
-                                                        #uuid_uuid_as_not_null_jsonb_string_as_import_path_pg_json_type_ts::into_inner(
-                                                            el.#IdSc.clone().expect("df2413fe").#ValueSc
-                                                        )
-                                                        {
-                                                            opt_read_el = Some(el.clone());
-                                                            break;
-                                                        }
-                                                    }
-                                                    let found_read_el = opt_read_el.expect("139882b9");
-                                                    #(#fields_init_ts)*
-                                                    for el_629b1544 in el_377d1bb4.fields.0.into_vec() {
-                                                        match el_629b1544 {
-                                                            #(#match_ts),*
-                                                        }
-                                                    }
-                                                    acc_04a67ef2.push(#ident_with_id_stdrt_not_null_read_ucc {
-                                                        #IdSc: found_read_el.#IdSc,
-                                                        #struct_init_ts
-                                                    });
-                                                }
-                                                acc_04a67ef2
-                                            }),
-                                            None => #ReadSc
-                                        }
-                                    }
-                                },
-                            },
-                            IsNullable::True => gen_opt_ts(pattern)
-                        }
-                    };
-                    let read_only_ids_merged_with_create_into_read_ts = {
-                        let gen_nullable_ts = |ident_ts_3eb17505: &dyn ToTokens, ts: &dyn ToTokens|{
-                            let ident_as_pg_json_type_test_cases_ts_3eb17505 = gen_type_as_pg_json_type_test_cases_ts(&ident_ts_3eb17505);
-                            quote! {
-                                #ident_read_ucc::new(
-                                    match (#ReadOnlyIdsSc.0.#ValueSc, #CreateSc.0) {
-                                        (Some(read_only_ids_2b2ab8a1), Some(create_4a1adaa3)) => {
-                                            Some(
-                                                #ident_as_pg_json_type_test_cases_ts_3eb17505::#ReadOnlyIdsMergedWithCreateIntoOptValueReadSc(
-                                                    read_only_ids_2b2ab8a1,
-                                                    create_4a1adaa3
-                                                ).expect("56ac4450").#ValueSc #ts
-                                            )
-                                        },
-                                        (Some(_), None) => panic!("75be9ae0"),
-                                        (None, Some(_)) => panic!("6a95d7ae"),
-                                        (None, None) => None,
-                                    }
-                                )
-                            }
-                        };
-                        match &pattern {
-                            Pattern::Stdrt => match &is_nullable {
-                                IsNullable::False => {
-                                    let params_ts = vec_syn_field.iter().map(|el0| {
-                                        let fi = &el0.ident;
-                                        let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                        quote! {
-                                            #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoOptValueReadSc(
-                                                #ReadOnlyIdsSc.0.#ValueSc.#fi,
-                                                #CreateSc.#fi
-                                            )
-                                        }
-                                    });
-                                    quote! {
-                                        #ident_read_ucc::try_new(
-                                            #(#params_ts),*
-                                        ).expect("52ad3994")
-                                    }
-                                }
-                                IsNullable::True => gen_nullable_ts(
-                                    &ident_stdrt_not_null_ucc,
-                                    &Ts2::new()
-                                )
-                            },
-                            Pattern::Arr => match &is_nullable {
-                                IsNullable::False => {
-                                    let gen_param_ts = |ft: &dyn ToTokens, fi: &dyn ToTokens, ts: &dyn ToTokens|{
-                                        let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
-                                        quote! {
-                                            #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoOptValueReadSc(
-                                                read_only_ids_225e2b76.0.#ValueSc.#fi,
-                                                #ts,
-                                            )
-                                        }
-                                    };
-                                    let id_param_ts = gen_param_ts(
-                                        &uuid_uuid_as_not_null_jsonb_string_ts,
-                                        &IdSc,
-                                        &default_but_opt_is_some_call_ts
-                                    );
-                                    let params_ts = vec_syn_field.iter().map(|el0|{
-                                        let fi = &el0.ident;
-                                        gen_param_ts(
-                                            &el0.type0,
-                                            &fi,
-                                            &quote! {create_3c660445.#fi}
-                                        )
-                                    });
-                                    quote! {
-                                        #ident_read_ucc::new({
-                                            assert_eq!(#ReadOnlyIdsSc.0.#ValueSc.len(), #CreateSc.0.len(), "90d33ddd");
-                                            let mut acc_37909420 = Vec::new();
-                                            for (read_only_ids_225e2b76, create_3c660445) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
-                                                acc_37909420.push(#ident_with_id_stdrt_not_null_read_ucc::try_new(
-                                                    #id_param_ts,
-                                                    #(#params_ts),*
-                                                ).expect("1330ac8d"));
-                                            }
-                                            acc_37909420
-                                        })
-                                    }
-                                }
-                                IsNullable::True => gen_nullable_ts(
-                                    &ident_arr_not_null_ucc,
-                                    &quote!{.0}
-                                )
-                            },
-                        }
-                    };
-                    let read_only_ids_merged_with_create_into_opt_value_read_ts = {
-                        let value_init_ts = gen_import_path_value_init_ts(&quote!{
-                            <#SelfUcc as #import_path::PgJsonTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoReadSc(
-                                #ReadOnlyIdsSc,
-                                #CreateSc
-                            )
-                        });
-                        quote!{Some(#value_init_ts)}
-                    };
-                    let read_only_ids_merged_with_create_into_table_type_ts = {
-                        let gen_nullable_ts = |ident_ts_971139d7: &dyn ToTokens, ts: &dyn ToTokens|{
-                            let ident_as_pg_json_type_test_cases_ts_971139d7 = gen_type_as_pg_json_type_test_cases_ts(&ident_ts_971139d7);
-                            quote! {
-                                #ident_table_type_ucc::new(
-                                    match (#ReadOnlyIdsSc.0.#ValueSc, #CreateSc.0) {
-                                        (Some(read_only_ids_fb2ec2e4), Some(create_2f615d4f)) => {
-                                            Some(
-                                                #ident_as_pg_json_type_test_cases_ts_971139d7::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
-                                                    read_only_ids_fb2ec2e4,
-                                                    create_2f615d4f
-                                                ) #ts
-                                            )
-                                        },
-                                        (Some(_), None) => panic!("9349dcd5"),
-                                        (None, Some(_)) => panic!("45f8e70a"),
-                                        (None, None) => None,
-                                    }
-                                )
-                            }
-                        };
-                        match &pattern {
-                            Pattern::Stdrt => match &is_nullable {
-                                IsNullable::False => {
-                                    let params_ts = vec_syn_field.iter().map(|el0| {
-                                        let fi = &el0.ident;
-                                        let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                        quote! {
-                                            #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
-                                                #ReadOnlyIdsSc.0.#ValueSc.#fi,
-                                                #CreateSc.#fi
-                                            )
-                                        }
-                                    });
-                                    quote! {
-                                        #ident_table_type_ucc::new(
-                                            #(#params_ts),*
-                                        )
-                                    }
-                                }
-                                IsNullable::True => gen_nullable_ts(
-                                    &ident_stdrt_not_null_ucc,
-                                    &Ts2::new()
-                                )
-                            },
-                            Pattern::Arr => match &is_nullable {
-                                IsNullable::False => {
-                                    let gen_param_ts = |ft: &dyn ToTokens, fi: &dyn ToTokens, ts: &dyn ToTokens|{
-                                        let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
-                                        quote! {
-                                            #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
-                                                read_only_ids_94b49496.0.#ValueSc.#fi,
-                                                #ts,
-                                            )
-                                        }
-                                    };
-                                    let id_param_ts = gen_param_ts(
-                                        &uuid_uuid_as_not_null_jsonb_string_ts,
-                                        &IdSc,
-                                        &default_but_opt_is_some_call_ts
-                                    );
-                                    let params_ts = vec_syn_field.iter().map(|el0|{
-                                        let fi = &el0.ident;
-                                        gen_param_ts(
-                                            &el0.type0,
-                                            &fi,
-                                            &quote! {create_24629087.#fi}
-                                        )
-                                    });
-                                    quote! {
-                                        #ident_table_type_ucc::new({
-                                            assert_eq!(#ReadOnlyIdsSc.0.#ValueSc.len(), #CreateSc.0.len(), "7776a146");
-                                            let mut acc_319e1fb1 = Vec::new();
-                                            for (read_only_ids_94b49496, create_24629087) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
-                                                acc_319e1fb1.push(#ident_with_id_stdrt_not_null_table_type_ucc::new(
-                                                    #id_param_ts,
-                                                    #(#params_ts),*
-                                                ));
-                                            }
-                                            acc_319e1fb1
-                                        })
-                                    }
-                                }
-                                IsNullable::True => gen_nullable_ts(
-                                    &ident_arr_not_null_ucc,
-                                    &quote!{.0}
-                                )
-                            },
-                        }
-                    };
-                    let read_only_ids_merged_with_create_into_where_equal_ts = match &is_nullable {
-                        IsNullable::False => match &pattern {
-                            Pattern::Stdrt => {
-                                let params_ts = vec_syn_field.iter().map(|el0| {
-                                    let fi = &el0.ident;
-                                    let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                    quote! {
-                                        #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
-                                            #ReadOnlyIdsSc.0.#ValueSc.#fi,
-                                            #CreateSc.#fi
-                                        )
-                                    }
-                                });
+                                let fi_ucc = &ToTokensToUccTs::case_or_panic(&fi);
+                                let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
                                 quote! {
-                                    #ident_where_ucc::#EqualUcc(
-                                        #import_path::PgJsonTypeWhereEqual {
-                                            operator: #import_path::Operator::Or,
-                                            #ValueSc: #ident_table_type_ucc::new(
-                                                #(#params_ts),*
-                                            )
-                                        }
-                                    )
-                                }
-                            },
-                            Pattern::Arr => {
-                                let gen_read_only_ids_merged_with_create_into_table_type_ts = |
-                                    fi: &dyn ToTokens,
-                                    ft: &dyn ToTokens,
-                                    ts: &dyn ToTokens
-                                |{
-                                    let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
-                                    quote!{
-                                        #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
-                                            read_only_ids_ea32954c.0.#ValueSc.#fi,
-                                            #ts
-                                        )
-                                    }
-                                };
-                                let ident_ts_978daa48 = gen_read_only_ids_merged_with_create_into_table_type_ts(
-                                    &IdSc,
-                                    &uuid_uuid_as_not_null_jsonb_string_ts,
-                                    &default_but_opt_is_some_call_ts
-                                );
-                                let params_ts = vec_syn_field.iter().map(|el0| {
-                                    let fi = &el0.ident;
-                                    gen_read_only_ids_merged_with_create_into_table_type_ts(
-                                        &fi,
-                                        &el0.type0,
-                                        &quote!{create_3cbe8967.#fi}
-                                    )
-                                });
-                                quote! {
-                                    #ident_where_ucc::#EqualUcc(
-                                        #import_path::PgJsonTypeWhereEqual {
-                                            operator: #import_path::Operator::And,
-                                            #ValueSc: #ident_table_type_ucc::new({
-                                                let mut acc_321b3fcd = Vec::new();
-                                                for (read_only_ids_ea32954c, create_3cbe8967) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
-                                                    acc_321b3fcd.push(
-                                                        #ident_with_id_stdrt_not_null_table_type_ucc::new(
-                                                            #ident_ts_978daa48,
-                                                            #(#params_ts),*
-                                                        )
-                                                    );
-                                                }
-                                                acc_321b3fcd
-                                            })
-                                        }
-                                    )
-                                }
-                            }
-                        },
-                        IsNullable::True => {
-                            let ts = {
-                                let ident_ts_bdc5fdf7 = gen_type_as_pg_json_type_test_cases_ts(&gen_ident_ucc(&match &pattern {
-                                    Pattern::Stdrt => IdentPattern::StdrtNotNullWithoutId,
-                                    Pattern::Arr => IdentPattern::ArrNotNullWithId,
-                                }));
-                                quote!{
-                                    vec![
-                                        #ident_ts_bdc5fdf7::#ReadOnlyIdsMergedWithCreateIntoWhereEqualSc(
-                                            read_only_ids_ce30c0fe,
-                                            create_8fd81ed8
-                                        )
-                                    ]
-                                }
-                            };
-                            quote! {
-                                #import_path::NullableJsonObjectPgTypeWhereFilter(
-                                    match (#ReadOnlyIdsSc.0.#ValueSc, #CreateSc.0) {
-                                        (Some(read_only_ids_ce30c0fe), Some(create_8fd81ed8)) => match #import_path::NotEmptyUniqueVec::try_new(#ts) {
-                                            Ok(v_7a9cd49b) => Some(v_7a9cd49b),
-                                            Err(er) => match er {
-                                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
-                                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("463769fc")
-                                            }
-                                        },
-                                        (Some(_), None) => panic!("1a2b314c"),
-                                        (None, Some(_)) => panic!("9faea0f9"),
-                                        (None, None) => None,
-                                    }
-                                )
-                            }
-                        },
-                    };
-                    let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts = {
-                        let ts = match &is_nullable {
-                            IsNullable::False => match &pattern {
-                                Pattern::Stdrt => {
-                                    let els_ts = vec_syn_field.iter().map(|el0| {
-                                        let fi = &el0.ident;
-                                        let fi_ucc_ts = ToTokensToUccTs::case_or_panic(&fi);
-                                        let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                        quote! {
-                                            #ident_where_ucc::#fi_ucc_ts(
-                                                #import_path::PgTypeWhere::new(
-                                                    #import_path::Operator::And,
-                                                    #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc(
-                                                        #ReadOnlyIdsSc.0.#ValueSc.#fi,
-                                                        #CreateSc.#fi
-                                                    )
-                                                )
-                                            )
-                                        }
-                                    });
-                                    quote! {#(#els_ts),*}
-                                },
-                                Pattern::Arr => {
-                                    let gen_read_only_ids_merged_with_create_into_table_type_ts = |
-                                        fi: &dyn ToTokens,
-                                        ft: &dyn ToTokens,
-                                        ts: &dyn ToTokens
-                                    |{
-                                        let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
-                                        quote!{
-                                            #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
-                                                read_only_ids_319c9e78.0.#ValueSc.#fi,
-                                                #ts
-                                            )
-                                        }
-                                    };
-                                    let ident_ts_76fd9d28 = gen_read_only_ids_merged_with_create_into_table_type_ts(
-                                        &IdSc,
-                                        &uuid_uuid_as_not_null_jsonb_string_ts,
-                                        &default_but_opt_is_some_call_ts
-                                    );
-                                    let params_ts = vec_syn_field.iter().map(|el0| {
-                                        let fi = &el0.ident;
-                                        gen_read_only_ids_merged_with_create_into_table_type_ts(
-                                            &fi,
-                                            &el0.type0,
-                                            &quote!{create_00ae06d2.#fi}
-                                        )
-                                    });
-                                    quote! {
-                                        #ident_where_ucc::#EqualUcc(
-                                            #import_path::PgJsonTypeWhereEqual {
-                                                operator: #import_path::Operator::And,
-                                                #ValueSc: #ident_table_type_ucc::new({
-                                                    let mut acc_97ebf7d6 = Vec::new();
-                                                    for (read_only_ids_319c9e78, create_00ae06d2) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
-                                                        acc_97ebf7d6.push(
-                                                            #ident_with_id_stdrt_not_null_table_type_ucc::new(
-                                                                #ident_ts_76fd9d28,
-                                                                #(#params_ts),*
-                                                            )
-                                                        );
-                                                    }
-                                                    acc_97ebf7d6
-                                                })
-                                            }
-                                        )
-                                    }
-                                }
-                            },
-                            IsNullable::True => {
-                                let ts = {
-                                    let ident_ts_b9e61412 = gen_type_as_pg_json_type_test_cases_ts(&gen_ident_ucc(&match &pattern {
-                                        Pattern::Stdrt => IdentPattern::StdrtNotNullWithoutId,
-                                        Pattern::Arr => IdentPattern::ArrNotNullWithId,
-                                    }));
-                                    quote! {
-                                        #ident_ts_b9e61412::#ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc(
-                                            read_only_ids_2898c440,
-                                            create_f1c4667c
-                                        )
-                                    }
-                                };
-                                quote! {
-                                    #import_path::NullableJsonObjectPgTypeWhereFilter(
-                                        match (#ReadOnlyIdsSc.0.#ValueSc, #CreateSc.0) {
-                                            (Some(read_only_ids_2898c440), Some(create_f1c4667c)) => Some(#ts),
-                                            (Some(_), None) => panic!("49e4c289"),
-                                            (None, Some(_)) => panic!("ad71caa2"),
-                                            (None, None) => None,
-                                        }
-                                    )
-                                }
-                            },
-                        };
-                        quote!{
-                            #import_path::NotEmptyUniqueVec::try_new(vec![
-                                #ts
-                            ]).expect("ba9c52c1")
-                        }
-                    };
-                    let read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts = match &pattern {
-                        Pattern::Stdrt => match &is_nullable {
-                            IsNullable::False => {
-                                let ts = vec_syn_field.iter().map(|el0| {
-                                    let fi = &el0.ident;
-                                    let fi_ucc = &ToTokensToUccTs::case_or_panic(&fi);
-                                    let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                    quote! {
-                                        for el_d830c061 in #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSc(
-                                            #ReadOnlyIdsSc.0.#ValueSc.#fi,
-                                            #CreateSc.#fi
-                                        ).into_vec() {
-                                            acc_89ec072c.push(
+                                    if let Some(v_3432b965) = #ft_as_pg_json_type_test_cases_ts::#CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc(
+                                        #CreateSc.#fi
+                                    ) {
+                                        for el_9bbf8527 in v_3432b965.clone().into_vec() {
+                                            acc_f5866fb6.push(
                                                 #ident_where_ucc::#fi_ucc(
                                                     #import_path::PgTypeWhere::try_new(
-                                                        #import_path::Operator::Or,
-                                                        vec![el_d830c061],
-                                                    )
-                                                    .expect("0c6ccad1"),
+                                                        #import_path::Operator::And,
+                                                        vec![el_9bbf8527]
+                                                    ).expect("479db858")
                                                 )
                                             );
                                         }
-                                    }
-                                });
-                                quote!{
-                                    #import_path::NotEmptyUniqueVec::try_new({
-                                        let mut acc_89ec072c = Vec::new();
-                                        #(#ts)*
-                                        acc_89ec072c
-                                    }).expect("9c50391c")
-                                }
-                            },
-                            IsNullable::True => quote!{
-                                #import_path::NotEmptyUniqueVec::try_new({
-                                    let mut acc_12b6f16d = Vec::new();
-                                    match (#ReadOnlyIdsSc.0.#ValueSc, #CreateSc.0) {
-                                        (Some(read_only_ids_2f024927), Some(create_120c1dad)) => {
-                                            for el_a8b181a0 in #ident_stdrt_not_null_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSc(
-                                                read_only_ids_2f024927,
-                                                create_120c1dad
-                                            ).into_vec() {
-                                                match #import_path::NotEmptyUniqueVec::try_new(vec![el_a8b181a0]) {
-                                                    Ok(v_8e72cfd7) => {
-                                                        acc_12b6f16d.push(#import_path::NullableJsonObjectPgTypeWhereFilter(Some(v_8e72cfd7)));
-                                                    },
-                                                    Err(er) => match er {
-                                                        #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => (),
-                                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("2a88b17f")
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        (Some(_), None) => panic!("b4507b4c"),
-                                        (None, Some(_)) => panic!("8f458c1d"),
-                                        (None, None) => {
-                                            acc_12b6f16d.push(#import_path::NullableJsonObjectPgTypeWhereFilter(None));
-                                        },
-                                    }
-                                    acc_12b6f16d
-                                }).expect("7efc9aae")
-                            }
-                        },
-                        Pattern::Arr => quote!{
-                            #self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc(
-                                #ReadOnlyIdsSc,
-                                #CreateSc
-                            )
-                        }
-                    };
-                    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts = gen_dim_equal_ts(&Dim::One);
-                    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts = gen_dim_equal_ts(&Dim::Two);
-                    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts = gen_dim_equal_ts(&Dim::Three);
-                    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts = gen_dim_equal_ts(&Dim::Four);
-                    let create_into_pg_json_type_opt_vec_where_length_equal_ts = {
-                        let gen_nullable_ts = |ts: &dyn ToTokens|quote! {
-                            match #import_path::NotEmptyUniqueVec::try_new(
-                                match #CreateSc.0 {
-                                    Some(create_09a81dae) => match <
-                                        #ts
-                                        as
-                                        #import_path::PgJsonTypeTestCases
-                                    >::#CreateIntoPgJsonTypeOptVecWhereLengthEqualSc(create_09a81dae) {
-                                        Some(v_3680a4c9) => {
-                                            let mut acc_5c441d3a = Vec::new();
-                                            for el_a8b181a0 in v_3680a4c9.clone().into_vec() {
-                                                match #import_path::NotEmptyUniqueVec::try_new(vec![el_a8b181a0]) {
-                                                    Ok(v_15097b27) => {
-                                                        acc_5c441d3a.push(
-                                                            #import_path::NullableJsonObjectPgTypeWhereFilter(
-                                                                Some(v_15097b27)
-                                                            )
-                                                        );
-                                                    },
-                                                    Err(er) => match er {
-                                                        #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => (),
-                                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("6c4da72e")
-                                                    }
-                                                }
-                                            }
-                                            let v_84ea8e4c = #import_path::NullableJsonObjectPgTypeWhereFilter(Some(v_3680a4c9));
-                                            if !acc_5c441d3a.contains(&v_84ea8e4c) {
-                                                acc_5c441d3a.push(v_84ea8e4c);
-                                            }
-                                            acc_5c441d3a
-                                        },
-                                        None => {
-                                            return None;
-                                        }
-                                    },
-                                    None => vec![#import_path::NullableJsonObjectPgTypeWhereFilter(None)],
-                                }
-                            ) {
-                                Ok(v_72dbefbc) => Some(v_72dbefbc),
-                                Err(er) => match er {
-                                    #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
-                                    #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("d41bcbca")
-                                }
-                            }
-                        };
-                        match &pattern {
-                            Pattern::Stdrt => match &is_nullable {
-                                IsNullable::False => {
-                                    let ts = vec_syn_field.iter().map(|el0| {
-                                        let fi = &el0.ident;
-                                        let fi_ucc = &ToTokensToUccTs::case_or_panic(&fi);
-                                        let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                        quote! {
-                                            if let Some(v_927601a4) = #ft_as_pg_json_type_test_cases_ts::#CreateIntoPgJsonTypeOptVecWhereLengthEqualSc(
-                                                #CreateSc.#fi
-                                            ) {
-                                                for el_194a660a in v_927601a4.clone().into_vec() {
-                                                    acc_587bf907.push(
-                                                        #ident_where_ucc::#fi_ucc(
-                                                            #import_path::PgTypeWhere::try_new(
-                                                                #import_path::Operator::And,
-                                                                vec![el_194a660a]
-                                                            ).expect("2f437949")
-                                                        )
-                                                    );
-                                                }
-                                                let v_84ea8e4c = #ident_where_ucc::#fi_ucc(
-                                                    #import_path::PgTypeWhere::new(
-                                                        #import_path::Operator::And,
-                                                        v_927601a4
-                                                    )
-                                                );
-                                                if !acc_587bf907.contains(&v_84ea8e4c) {
-                                                    acc_587bf907.push(v_84ea8e4c);
-                                                }
-                                            }
-                                        }
-                                    });
-                                    quote! {
-                                        match #import_path::NotEmptyUniqueVec::try_new({
-                                            let mut acc_587bf907 = Vec::new();
-                                            #(#ts)*
-                                            acc_587bf907
-                                        }) {
-                                            Ok(v_ea661a62) => Some(v_ea661a62),
-                                            Err(er) => match er {
-                                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
-                                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("7786dfd4")
-                                            },
+                                        let el_4a00ab02 = #ident_where_ucc::#fi_ucc(
+                                            #import_path::PgTypeWhere::new(
+                                                #import_path::Operator::And,
+                                                v_3432b965
+                                            )
+                                        );
+                                        if !acc_f5866fb6.contains(&el_4a00ab02) {
+                                            acc_f5866fb6.push(el_4a00ab02);
                                         }
                                     }
                                 }
-                                IsNullable::True => gen_nullable_ts(&ident_stdrt_not_null_ucc)
-                            },
-                            Pattern::Arr => match &is_nullable {
-                                IsNullable::False => {
-                                    let ts = vec_syn_field.iter().map(|el0| {
-                                        let fi = &el0.ident;
-                                        let el_fi_ucc = ElSelfUcc::from_tokens(&fi);
-                                        let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                        quote! {
-                                            for create_e06a9fe2 in #CreateSc.0.clone() {
-                                                if let Some(v_ee015fcc) = #ft_as_pg_json_type_test_cases_ts::#CreateIntoPgJsonTypeOptVecWhereLengthEqualSc(
-                                                    create_e06a9fe2.#fi
-                                                ) {
-                                                    for el in v_ee015fcc.clone().into_vec() {
-                                                        let v_0ae29f5f = #ident_where_ucc::#el_fi_ucc(
-                                                            #import_path::PgTypeWhere::try_new(
-                                                                #import_path::Operator::And,
-                                                                vec![el]
-                                                            )
-                                                            .expect("38ca88dc"),
-                                                        );
-                                                        if !acc_480d72e5.contains(&v_0ae29f5f) {
-                                                            acc_480d72e5.push(v_0ae29f5f);
-                                                        }
-                                                    }
-                                                    let v_4e4cfda3 = #ident_where_ucc::#el_fi_ucc(
-                                                        #import_path::PgTypeWhere::new(
-                                                            #import_path::Operator::And,
-                                                            v_ee015fcc
-                                                        )
-                                                    );
-                                                    if !acc_480d72e5.contains(&v_4e4cfda3) {
-                                                        acc_480d72e5.push(v_4e4cfda3);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    });
-                                    quote! {
-                                        match #import_path::NotEmptyUniqueVec::try_new({
-                                            let mut acc_480d72e5 = Vec::new();
-                                            #(#ts)*
-                                            acc_480d72e5.push(#ident_where_ucc::LengthEqual(
-                                                #import_path::PgJsonTypeWhereLengthEqual {
-                                                    operator: #import_path::Operator::And,
-                                                    #ValueSc: #import_path::UnsignedPartOfI32::try_from(
-                                                        i32::try_from(#CreateSc.0.len()).expect("1811faf7")
-                                                    ).expect("a590f39b"),
-                                                }
-                                            ));
-                                            acc_480d72e5
-                                        }) {
-                                            Ok(v_cc01db9a) => Some(v_cc01db9a),
-                                            Err(er) => match er {
-                                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
-                                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("bad01dd0")
-                                            },
-                                        }
-                                    }
-                                }
-                                IsNullable::True => gen_nullable_ts(&ident_arr_not_null_ucc)
-                            },
-                        }
-                    };
-                    let create_into_pg_json_type_opt_vec_where_length_greater_than_ts = {
-                        let gen_nullable_ts = |ts: &dyn ToTokens|quote! {
-                            #CreateSc.0.map_or_else(|| None, |create_612f2a61| <
-                                #ts
-                                as
-                                #import_path::PgJsonTypeTestCases
-                            >::create_into_pg_json_type_opt_vec_where_length_greater_than(create_612f2a61).map_or_else(
-                                || None,
-                                |v_1ea95b5d| match #import_path::NotEmptyUniqueVec::try_new({
-                                    let mut acc_87f84b5c = Vec::new();
-                                    for el_9bbf8527 in v_1ea95b5d.clone().into_vec() {
-                                        match #import_path::NotEmptyUniqueVec::try_new(vec![el_9bbf8527]) {
-                                            Ok(v_1d0202fc) => {
-                                                acc_87f84b5c.push(#import_path::NullableJsonObjectPgTypeWhereFilter(Some(v_1d0202fc)));
-                                            }
-                                            Err(er) => match er {
-                                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty { .. } => (),
-                                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique { .. } => panic!("bdb0a112"),
-                                            },
-                                        }
-                                    }
-                                    let v_4e4cfda3 = #import_path::NullableJsonObjectPgTypeWhereFilter(Some(v_1ea95b5d));
-                                    if !acc_87f84b5c.contains(&v_4e4cfda3) {
-                                        acc_87f84b5c.push(v_4e4cfda3);
-                                    }
-                                    acc_87f84b5c
+                            });
+                            quote! {
+                                match #import_path::NotEmptyUniqueVec::try_new({
+                                    let mut acc_f5866fb6 = Vec::new();
+                                    #(#ts)*
+                                    acc_f5866fb6
                                 }) {
-                                    Ok(v_ea4ca151) => Some(v_ea4ca151),
+                                    Ok(v_c4c01cd9) => Some(v_c4c01cd9),
                                     Err(er) => match er {
-                                        #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty { .. } => None,
-                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique { .. } => panic!("c7ecc36f"),
+                                        #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
+                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("91d713b5")
                                     },
-                                },
-                            ))
-                        };
-                        match &pattern {
-                            Pattern::Stdrt => match &is_nullable {
-                                IsNullable::False => {
-                                    let ts = vec_syn_field.iter().map(|el0| {
-                                        let fi = &el0.ident;
-                                        let fi_ucc = &ToTokensToUccTs::case_or_panic(&fi);
-                                        let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                        quote! {
-                                            if let Some(v_3432b965) = #ft_as_pg_json_type_test_cases_ts::#CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc(
-                                                #CreateSc.#fi
-                                            ) {
-                                                for el_9bbf8527 in v_3432b965.clone().into_vec() {
-                                                    acc_f5866fb6.push(
-                                                        #ident_where_ucc::#fi_ucc(
-                                                            #import_path::PgTypeWhere::try_new(
-                                                                #import_path::Operator::And,
-                                                                vec![el_9bbf8527]
-                                                            ).expect("479db858")
-                                                        )
-                                                    );
-                                                }
-                                                let el_4a00ab02 = #ident_where_ucc::#fi_ucc(
-                                                    #import_path::PgTypeWhere::new(
-                                                        #import_path::Operator::And,
-                                                        v_3432b965
-                                                    )
-                                                );
-                                                if !acc_f5866fb6.contains(&el_4a00ab02) {
-                                                    acc_f5866fb6.push(el_4a00ab02);
-                                                }
-                                            }
-                                        }
-                                    });
-                                    quote! {
-                                        match #import_path::NotEmptyUniqueVec::try_new({
-                                            let mut acc_f5866fb6 = Vec::new();
-                                            #(#ts)*
-                                            acc_f5866fb6
-                                        }) {
-                                            Ok(v_c4c01cd9) => Some(v_c4c01cd9),
-                                            Err(er) => match er {
-                                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
-                                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("91d713b5")
-                                            },
-                                        }
-                                    }
                                 }
-                                IsNullable::True => gen_nullable_ts(&ident_stdrt_not_null_ucc)
-                            },
-                            Pattern::Arr => match &is_nullable {
-                                IsNullable::False => {
-                                    let ts = vec_syn_field.iter().map(|el0| {
-                                        let fi = &el0.ident;
-                                        let el_fi_ucc = ElSelfUcc::from_tokens(&fi);
-                                        let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
-                                        quote! {
-                                            for create_34a1e540 in #CreateSc.0.clone() {
-                                                if let Some(v_51fe384b) = #ft_as_pg_json_type_test_cases_ts::#CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc(
-                                                    create_34a1e540.#fi
-                                                ) {
-                                                    for el_4a00ab02 in v_51fe384b.clone().into_vec() {
-                                                        let el_938f8b34 = #ident_where_ucc::#el_fi_ucc(
-                                                            #import_path::PgTypeWhere::try_new(
-                                                                #import_path::Operator::And,
-                                                                vec![el_4a00ab02]
-                                                            )
-                                                            .expect("955c6c27"),
-                                                        );
-                                                        if !acc_acceb7eb.contains(&el_938f8b34) {
-                                                            acc_acceb7eb.push(el_938f8b34);
-                                                        }
-                                                    }
-                                                    let el_e17d9fba = #ident_where_ucc::#el_fi_ucc(
-                                                        #import_path::PgTypeWhere::new(
-                                                            #import_path::Operator::And,
-                                                            v_51fe384b
-                                                        )
-                                                    );
-                                                    if !acc_acceb7eb.contains(&el_e17d9fba) {
-                                                        acc_acceb7eb.push(el_e17d9fba);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    });
-                                    quote! {
-                                        match #import_path::NotEmptyUniqueVec::try_new({
-                                            let mut acc_acceb7eb = Vec::new();
-                                            #(#ts)*
-                                            acc_acceb7eb.push(#ident_where_ucc::LengthGreaterThan(
-                                                #import_path::PgJsonTypeWhereLengthGreaterThan {
-                                                    operator: #import_path::Operator::And,
-                                                    #ValueSc: #import_path::UnsignedPartOfI32::try_from(
-                                                        i32::try_from(
-                                                            #CreateSc.0.len().checked_sub(1).unwrap_or_else(|| {
-                                                                panic!("e411b8ca");
-                                                            })
-                                                        ).expect("1fbbd897")
-                                                    ).expect("0eb5d915"),
-                                                }
-                                            ));
-                                            acc_acceb7eb
-                                        }) {
-                                            Ok(v_a889de37) => Some(v_a889de37),
-                                            Err(er) => match er {
-                                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
-                                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("a9e99f81")
-                                            },
-                                        }
-                                    }
-                                }
-                                IsNullable::True => gen_nullable_ts(&ident_arr_not_null_ucc)
-                            },
+                            }
                         }
-                    };
-                    let (
-                        read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts,
-                        read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts,
-                        read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts,
-                        read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts,
-                        read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
-                        read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts
-                    ) = {
-                        let gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts = |method_name_ts: &dyn ToTokens|match &is_nullable {
-                            IsNullable::False => match &pattern {
-                                Pattern::Stdrt => {
-                                    let ts = vec_syn_field.iter().map(|el0| {
-                                        let fi = &el0.ident;
-                                        let ft = &el0.type0;
-                                        let fi_ucc = &ToTokensToUccTs::case_or_panic(&fi);
-                                        let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
-                                        quote! {
-                                            if let Some(v_a2900ac9) = #ft_as_pg_json_type_test_cases_ts::#method_name_ts(
-                                                #ReadOnlyIdsSc.0.#ValueSc.#fi,
-                                                #CreateSc.#fi
-                                            ) {
-                                                let and = #import_path::Operator::And;
-                                                for el_3e86d33d in v_a2900ac9.clone().into_vec() {
-                                                    match el_3e86d33d {
-                                                        #import_path::SingleOrMultiple::Multiple(multiple) => {
-                                                            acc_a94bd7fb.push(
-                                                                #import_path::SingleOrMultiple::Single(
-                                                                    #ident_where_ucc::#fi_ucc(#import_path::PgTypeWhere::new(
-                                                                        and,
-                                                                        multiple
-                                                                    ))
-                                                                )
-                                                            );
-                                                        },
-                                                        #import_path::SingleOrMultiple::Single(single) => {
-                                                            acc_a94bd7fb.push(
-                                                                #import_path::SingleOrMultiple::Single(
-                                                                    #ident_where_ucc::#fi_ucc(#import_path::PgTypeWhere::try_new(
-                                                                        and,
-                                                                        vec![single]
-                                                                    ).expect("2635ede5"))
-                                                                )
-                                                            );
-                                                        },
-                                                    }
-                                                }
-                                                let v_3e75a2f2 = #import_path::SingleOrMultiple::Single(
-                                                    #ident_where_ucc::#fi_ucc(#import_path::PgTypeWhere::try_new(
-                                                        and,
-                                                        v_a2900ac9.into_vec().into_iter().flat_map(|el_9efefcdc| match el_9efefcdc {
-                                                            #import_path::SingleOrMultiple::Multiple(multiple) => multiple.into_vec(),
-                                                            #import_path::SingleOrMultiple::Single(single) => {
-                                                                std::iter::once(single).collect()
-                                                            }
-                                                        })
-                                                        .fold(Vec::new(), |mut acc_be2a6606, el_7ae146ee| {
-                                                            if !acc_be2a6606.contains(&el_7ae146ee) {
-                                                                acc_be2a6606.push(el_7ae146ee);
-                                                            }
-                                                            acc_be2a6606
-                                                        })
-                                                    ).expect("e3e5b4ab"))
+                        IsNullable::True => gen_nullable_ts(&ident_stdrt_not_null_ucc)
+                    },
+                    Pattern::Arr => match &is_nullable {
+                        IsNullable::False => {
+                            let ts = vec_syn_field.iter().map(|el0| {
+                                let fi = &el0.ident;
+                                let el_fi_ucc = ElSelfUcc::from_tokens(&fi);
+                                let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
+                                quote! {
+                                    for create_34a1e540 in #CreateSc.0.clone() {
+                                        if let Some(v_51fe384b) = #ft_as_pg_json_type_test_cases_ts::#CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc(
+                                            create_34a1e540.#fi
+                                        ) {
+                                            for el_4a00ab02 in v_51fe384b.clone().into_vec() {
+                                                let el_938f8b34 = #ident_where_ucc::#el_fi_ucc(
+                                                    #import_path::PgTypeWhere::try_new(
+                                                        #import_path::Operator::And,
+                                                        vec![el_4a00ab02]
+                                                    )
+                                                    .expect("955c6c27"),
                                                 );
-                                                if !acc_a94bd7fb.contains(&v_3e75a2f2) {
-                                                    acc_a94bd7fb.push(v_3e75a2f2);
+                                                if !acc_acceb7eb.contains(&el_938f8b34) {
+                                                    acc_acceb7eb.push(el_938f8b34);
                                                 }
                                             }
-                                        }
-                                    });
-                                    quote! {
-                                        match #import_path::NotEmptyUniqueVec::try_new({
-                                            let mut acc_a94bd7fb = Vec::new();
-                                            #(#ts)*
-                                            acc_a94bd7fb
-                                        }) {
-                                            Ok(v_ebe930f0) => Some(v_ebe930f0),
-                                            Err(er) => match er {
-                                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
-                                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("b877e9c0")
+                                            let el_e17d9fba = #ident_where_ucc::#el_fi_ucc(
+                                                #import_path::PgTypeWhere::new(
+                                                    #import_path::Operator::And,
+                                                    v_51fe384b
+                                                )
+                                            );
+                                            if !acc_acceb7eb.contains(&el_e17d9fba) {
+                                                acc_acceb7eb.push(el_e17d9fba);
                                             }
                                         }
                                     }
-                                },
-                                Pattern::Arr => {
-                                    let init_ts = vec_syn_field.iter().map(|el0| {
-                                        let fi = &el0.ident;
-                                        let ft = &el0.type0;
-                                        let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
-                                        quote! {
-                                            let #fi = #ft_as_pg_json_type_test_cases_ts::#method_name_ts(
-                                                read_only_ids_629675e2.0.#ValueSc.#fi,
-                                                create_82796400.#fi
-                                            );
+                                }
+                            });
+                            quote! {
+                                match #import_path::NotEmptyUniqueVec::try_new({
+                                    let mut acc_acceb7eb = Vec::new();
+                                    #(#ts)*
+                                    acc_acceb7eb.push(#ident_where_ucc::LengthGreaterThan(
+                                        #import_path::PgJsonTypeWhereLengthGreaterThan {
+                                            operator: #import_path::Operator::And,
+                                            #ValueSc: #import_path::UnsignedPartOfI32::try_from(
+                                                i32::try_from(
+                                                    #CreateSc.0.len().checked_sub(1).unwrap_or_else(|| {
+                                                        panic!("e411b8ca");
+                                                    })
+                                                ).expect("1fbbd897")
+                                            ).expect("0eb5d915"),
                                         }
-                                    });
-                                    let if_some_ts = {
-                                        let (last, rest) = vec_syn_field.split_last().expect("a8e7b6d6");
-                                        let gen_fi_is_some_ts = |fi: &Ident|quote!{#fi.is_some()};
-                                        let rest_ts = rest.iter().map(|el0| {
-                                            let fi_is_some_ts = gen_fi_is_some_ts(&el0.ident);
-                                            quote!{#fi_is_some_ts || }
-                                        });
-                                        let last_ts = gen_fi_is_some_ts(&last.ident);
-                                        quote! {#(#rest_ts)* #last_ts}
-                                    };
-                                    let ts = vec_syn_field.iter().map(|el0| {
-                                        let fi = &el0.ident;
-                                        let el_fi_ucc = ElSelfUcc::from_tokens(&fi);
-                                        quote! {
-                                            if let Some(v_f190793e) = #fi {
-                                                for el_22ac4087 in v_f190793e.clone().into_vec() {
-                                                    let where_f8a4319c = #ident_where_ucc::#el_fi_ucc(
-                                                        match el_22ac4087 {
-                                                            #import_path::SingleOrMultiple::Multiple(multiple) => #import_path::PgTypeWhere::new(
+                                    ));
+                                    acc_acceb7eb
+                                }) {
+                                    Ok(v_a889de37) => Some(v_a889de37),
+                                    Err(er) => match er {
+                                        #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
+                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("a9e99f81")
+                                    },
+                                }
+                            }
+                        }
+                        IsNullable::True => gen_nullable_ts(&ident_arr_not_null_ucc)
+                    },
+                }
+            };
+            let (
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts
+            ) = {
+                let gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts = |method_name_ts: &dyn ToTokens|match &is_nullable {
+                    IsNullable::False => match &pattern {
+                        Pattern::Stdrt => {
+                            let ts = vec_syn_field.iter().map(|el0| {
+                                let fi = &el0.ident;
+                                let ft = &el0.type0;
+                                let fi_ucc = &ToTokensToUccTs::case_or_panic(&fi);
+                                let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
+                                quote! {
+                                    if let Some(v_a2900ac9) = #ft_as_pg_json_type_test_cases_ts::#method_name_ts(
+                                        #ReadOnlyIdsSc.0.#ValueSc.#fi,
+                                        #CreateSc.#fi
+                                    ) {
+                                        let and = #import_path::Operator::And;
+                                        for el_3e86d33d in v_a2900ac9.clone().into_vec() {
+                                            match el_3e86d33d {
+                                                #import_path::SingleOrMultiple::Multiple(multiple) => {
+                                                    acc_a94bd7fb.push(
+                                                        #import_path::SingleOrMultiple::Single(
+                                                            #ident_where_ucc::#fi_ucc(#import_path::PgTypeWhere::new(
                                                                 and,
-                                                                multiple.clone()
-                                                            ),
-                                                            #import_path::SingleOrMultiple::Single(single) => #import_path::PgTypeWhere::try_new(
+                                                                multiple
+                                                            ))
+                                                        )
+                                                    );
+                                                },
+                                                #import_path::SingleOrMultiple::Single(single) => {
+                                                    acc_a94bd7fb.push(
+                                                        #import_path::SingleOrMultiple::Single(
+                                                            #ident_where_ucc::#fi_ucc(#import_path::PgTypeWhere::try_new(
                                                                 and,
                                                                 vec![single]
-                                                            ).expect("2ed4dc5e"),
-                                                        }
+                                                            ).expect("2635ede5"))
+                                                        )
                                                     );
-                                                    all_fields_acc.push(where_f8a4319c.clone());
-                                                    match #import_path::NotEmptyUniqueVec::try_new(vec![
-                                                        #IdSc.clone(),
-                                                        where_f8a4319c
-                                                    ]) {
-                                                        Ok(v_fdd1b3eb) => {
-                                                            let multiple_where_with_id_f8a4319c = #import_path::SingleOrMultiple::Multiple(v_fdd1b3eb);
-                                                            if !acc_359c0b3f.contains(&multiple_where_with_id_f8a4319c) {
-                                                                acc_359c0b3f.push(multiple_where_with_id_f8a4319c);
-                                                            }
-                                                        },
-                                                        Err(er) => match er {
-                                                            #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => (),
-                                                            #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("f0e3d01b")
-                                                        }
-                                                    }
-                                                }
-                                                match #import_path::NotEmptyUniqueVec::try_new(
-                                                    v_f190793e.into_vec().into_iter().flat_map(|el| match el {
-                                                        #import_path::SingleOrMultiple::Multiple(multiple) => multiple.into_vec(),
-                                                        #import_path::SingleOrMultiple::Single(single) => {
-                                                            std::iter::once(single).collect()
-                                                        }
-                                                    })
-                                                    .fold(Vec::new(), |mut acc_01265629, el| {
-                                                        if !acc_01265629.contains(&el) {
-                                                            acc_01265629.push(el);
-                                                        }
-                                                        acc_01265629
-                                                    })
-                                                ) {
-                                                    Ok(v_a4000d70) => {
-                                                        let v_d6218307 = #ident_where_ucc::#el_fi_ucc(
-                                                            #import_path::PgTypeWhere::new(
-                                                                and,
-                                                                v_a4000d70
-                                                            )
-                                                        );
-                                                        if !all_fields_acc.contains(&v_d6218307) {
-                                                            all_fields_acc.push(v_d6218307);
-                                                        }
-                                                    },
-                                                    Err(er) => match er {
-                                                        #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => (),
-                                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("f8fcc434")
-                                                    }
-                                                }
+                                                },
                                             }
                                         }
-                                    });
-                                    quote! {
-                                        match #import_path::NotEmptyUniqueVec::try_new({
-                                            let mut acc_359c0b3f = Vec::new();
-                                            for (read_only_ids_629675e2, create_82796400) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
-                                                let and = #import_path::Operator::And;
-                                                let #IdSc = #ident_where_ucc::ElId(
-                                                    #import_path::PgTypeWhere::try_new(
-                                                        and,
-                                                        vec![
-                                                            #uuid_uuid_as_not_null_jsonb_string_where_ucc::Equal(#import_path::PgJsonTypeWhereEqual {
-                                                                operator: #import_path::Operator::Or,
-                                                                #ValueSc: #uuid_uuid_as_not_null_jsonb_string_table_type_ucc::new(
-                                                                    read_only_ids_629675e2.0.#ValueSc.#IdSc.0.#ValueSc
-                                                                ),
-                                                            })
-                                                        ],
-                                                    )
-                                                    .expect("31db8e1e"),
-                                                );
-                                                #(#init_ts)*
-                                                if #if_some_ts {
-                                                    let mut all_fields_acc = vec![];
-                                                    #(#ts)*
-                                                    match #import_path::NotEmptyUniqueVec::try_new({
-                                                        all_fields_acc.push(#IdSc);
-                                                        all_fields_acc
-                                                    }) {
-                                                        Ok(v_80199720) => {
-                                                            acc_359c0b3f.push(#import_path::SingleOrMultiple::Multiple(v_80199720));
-                                                        },
-                                                        Err(er) => match er {
-                                                            #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => (),
-                                                            #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("32a3da97")
-                                                        }
+                                        let v_3e75a2f2 = #import_path::SingleOrMultiple::Single(
+                                            #ident_where_ucc::#fi_ucc(#import_path::PgTypeWhere::try_new(
+                                                and,
+                                                v_a2900ac9.into_vec().into_iter().flat_map(|el_9efefcdc| match el_9efefcdc {
+                                                    #import_path::SingleOrMultiple::Multiple(multiple) => multiple.into_vec(),
+                                                    #import_path::SingleOrMultiple::Single(single) => {
+                                                        std::iter::once(single).collect()
                                                     }
-                                                }
-                                            }
-                                            acc_359c0b3f
-                                        }) {
-                                            Ok(v_752f0e8d) => Some(v_752f0e8d),
-                                            Err(er) => match er {
-                                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
-                                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("76542a11")
-                                            }
+                                                })
+                                                .fold(Vec::new(), |mut acc_be2a6606, el_7ae146ee| {
+                                                    if !acc_be2a6606.contains(&el_7ae146ee) {
+                                                        acc_be2a6606.push(el_7ae146ee);
+                                                    }
+                                                    acc_be2a6606
+                                                })
+                                            ).expect("e3e5b4ab"))
+                                        );
+                                        if !acc_a94bd7fb.contains(&v_3e75a2f2) {
+                                            acc_a94bd7fb.push(v_3e75a2f2);
                                         }
                                     }
                                 }
-                            },
-                            IsNullable::True => {
-                                let ident_ts_a8bc30fc = gen_type_as_pg_json_type_test_cases_ts(&gen_ident_ucc(&match &pattern {
-                                    Pattern::Stdrt => IdentPattern::StdrtNotNullWithoutId,
-                                    Pattern::Arr => IdentPattern::ArrNotNullWithId,
-                                }));
-                                quote! {
-                                    match (#ReadOnlyIdsSc.0.value, #CreateSc.0) {
-                                        (Some(read_only_ids_3e2e30c8), Some(create_79039a2f)) => #ident_ts_a8bc30fc::#method_name_ts(
-                                            read_only_ids_3e2e30c8,
-                                            create_79039a2f
-                                        ).map_or_else(|| None, |v_35662b3a| match #import_path::NotEmptyUniqueVec::try_new({
-                                            let mut acc_e0d72451 = vec![];
-                                            for el in v_35662b3a.into_vec() {
-                                                match el {
-                                                    #import_path::SingleOrMultiple::Multiple(multiple) => {
-                                                        acc_e0d72451.push(#import_path::SingleOrMultiple::Single(#import_path::NullableJsonObjectPgTypeWhereFilter(Some(multiple))));
-                                                    },
-                                                    #import_path::SingleOrMultiple::Single(single) => match #import_path::NotEmptyUniqueVec::try_new(vec![single]) {
-                                                        Ok(v_4ce6ecd3) => {
-                                                            acc_e0d72451.push(#import_path::SingleOrMultiple::Single(#import_path::NullableJsonObjectPgTypeWhereFilter(Some(v_4ce6ecd3))));
-                                                        }
-                                                        Err(er) => match er {
-                                                            #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty { .. } => (),
-                                                            #import_path::NotEmptyUniqueVecTryNewEr::NotUnique { .. } => panic!("626ffa77"),
-                                                        },
-                                                    },
-                                                }
-                                            }
-                                            acc_e0d72451
-                                        }) {
-                                            Ok(v_5d381053) => Some(v_5d381053),
-                                            Err(er) => match er {
-                                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty { .. } => None,
-                                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique { .. } => panic!("23a17416"),
-                                            },
-                                        }),
-                                        (Some(_), None) => panic!("994082bf"),
-                                        (None, Some(_)) => panic!("04f4d016"),
-                                        (None, None) => None,
+                            });
+                            quote! {
+                                match #import_path::NotEmptyUniqueVec::try_new({
+                                    let mut acc_a94bd7fb = Vec::new();
+                                    #(#ts)*
+                                    acc_a94bd7fb
+                                }) {
+                                    Ok(v_ebe930f0) => Some(v_ebe930f0),
+                                    Err(er) => match er {
+                                        #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
+                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("b877e9c0")
                                     }
                                 }
                             }
-                        };
-                        (
-                            gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
-                                &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereGreaterThanSc
-                            ),
-                            gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
-                                &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereBetweenSc
-                            ),
-                            gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
-                                &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereInSc
-                            ),
-                            gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
-                                &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereRegexSc
-                            ),
-                            gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
-                                &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc
-                            ),
-                            gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
-                                &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegexSc
-                            )
-                        )
-                    };
-                    gen_impl_pg_json_type_test_cases_for_ident_ts(
-                        &cfg_feature_test_utils,
-                        &import_path,
-                        &ident_read_inner_ucc,
-                        &ident,
-                        &opt_vec_create_ts,
-                        &read_only_ids_to_two_dimal_vec_read_inner_ts,
-                        &read_inner_into_read_with_new_or_try_new_unwraped_ts,
-                        &read_inner_into_update_with_new_or_try_new_unwraped_ts,
-                        &read_only_ids_into_opt_value_read_inner_ts,
-                        &update_to_read_only_ids_ts,
-                        &read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts,
-                        &previous_read_merged_with_opt_update_into_read_ts,
-                        &read_only_ids_merged_with_create_into_read_ts,
-                        &read_only_ids_merged_with_create_into_opt_value_read_ts,
-                        &read_only_ids_merged_with_create_into_table_type_ts,
-                        &read_only_ids_merged_with_create_into_where_equal_ts,
-                        &read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts,
-                        &read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts,
-                        &create_into_pg_json_type_opt_vec_where_length_equal_ts,
-                        &create_into_pg_json_type_opt_vec_where_length_greater_than_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts,
+                        },
+                        Pattern::Arr => {
+                            let init_ts = vec_syn_field.iter().map(|el0| {
+                                let fi = &el0.ident;
+                                let ft = &el0.type0;
+                                let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
+                                quote! {
+                                    let #fi = #ft_as_pg_json_type_test_cases_ts::#method_name_ts(
+                                        read_only_ids_629675e2.0.#ValueSc.#fi,
+                                        create_82796400.#fi
+                                    );
+                                }
+                            });
+                            let if_some_ts = {
+                                let (last, rest) = vec_syn_field.split_last().expect("a8e7b6d6");
+                                let gen_fi_is_some_ts = |fi: &Ident|quote!{#fi.is_some()};
+                                let rest_ts = rest.iter().map(|el0| {
+                                    let fi_is_some_ts = gen_fi_is_some_ts(&el0.ident);
+                                    quote!{#fi_is_some_ts || }
+                                });
+                                let last_ts = gen_fi_is_some_ts(&last.ident);
+                                quote! {#(#rest_ts)* #last_ts}
+                            };
+                            let ts = vec_syn_field.iter().map(|el0| {
+                                let fi = &el0.ident;
+                                let el_fi_ucc = ElSelfUcc::from_tokens(&fi);
+                                quote! {
+                                    if let Some(v_f190793e) = #fi {
+                                        for el_22ac4087 in v_f190793e.clone().into_vec() {
+                                            let where_f8a4319c = #ident_where_ucc::#el_fi_ucc(
+                                                match el_22ac4087 {
+                                                    #import_path::SingleOrMultiple::Multiple(multiple) => #import_path::PgTypeWhere::new(
+                                                        and,
+                                                        multiple.clone()
+                                                    ),
+                                                    #import_path::SingleOrMultiple::Single(single) => #import_path::PgTypeWhere::try_new(
+                                                        and,
+                                                        vec![single]
+                                                    ).expect("2ed4dc5e"),
+                                                }
+                                            );
+                                            all_fields_acc.push(where_f8a4319c.clone());
+                                            match #import_path::NotEmptyUniqueVec::try_new(vec![
+                                                #IdSc.clone(),
+                                                where_f8a4319c
+                                            ]) {
+                                                Ok(v_fdd1b3eb) => {
+                                                    let multiple_where_with_id_f8a4319c = #import_path::SingleOrMultiple::Multiple(v_fdd1b3eb);
+                                                    if !acc_359c0b3f.contains(&multiple_where_with_id_f8a4319c) {
+                                                        acc_359c0b3f.push(multiple_where_with_id_f8a4319c);
+                                                    }
+                                                },
+                                                Err(er) => match er {
+                                                    #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => (),
+                                                    #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("f0e3d01b")
+                                                }
+                                            }
+                                        }
+                                        match #import_path::NotEmptyUniqueVec::try_new(
+                                            v_f190793e.into_vec().into_iter().flat_map(|el| match el {
+                                                #import_path::SingleOrMultiple::Multiple(multiple) => multiple.into_vec(),
+                                                #import_path::SingleOrMultiple::Single(single) => {
+                                                    std::iter::once(single).collect()
+                                                }
+                                            })
+                                            .fold(Vec::new(), |mut acc_01265629, el| {
+                                                if !acc_01265629.contains(&el) {
+                                                    acc_01265629.push(el);
+                                                }
+                                                acc_01265629
+                                            })
+                                        ) {
+                                            Ok(v_a4000d70) => {
+                                                let v_d6218307 = #ident_where_ucc::#el_fi_ucc(
+                                                    #import_path::PgTypeWhere::new(
+                                                        and,
+                                                        v_a4000d70
+                                                    )
+                                                );
+                                                if !all_fields_acc.contains(&v_d6218307) {
+                                                    all_fields_acc.push(v_d6218307);
+                                                }
+                                            },
+                                            Err(er) => match er {
+                                                #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => (),
+                                                #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("f8fcc434")
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                            quote! {
+                                match #import_path::NotEmptyUniqueVec::try_new({
+                                    let mut acc_359c0b3f = Vec::new();
+                                    for (read_only_ids_629675e2, create_82796400) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0.into_iter()) {
+                                        let and = #import_path::Operator::And;
+                                        let #IdSc = #ident_where_ucc::ElId(
+                                            #import_path::PgTypeWhere::try_new(
+                                                and,
+                                                vec![
+                                                    #uuid_uuid_as_not_null_jsonb_string_where_ucc::Equal(#import_path::PgJsonTypeWhereEqual {
+                                                        operator: #import_path::Operator::Or,
+                                                        #ValueSc: #uuid_uuid_as_not_null_jsonb_string_table_type_ucc::new(
+                                                            read_only_ids_629675e2.0.#ValueSc.#IdSc.0.#ValueSc
+                                                        ),
+                                                    })
+                                                ],
+                                            )
+                                            .expect("31db8e1e"),
+                                        );
+                                        #(#init_ts)*
+                                        if #if_some_ts {
+                                            let mut all_fields_acc = vec![];
+                                            #(#ts)*
+                                            match #import_path::NotEmptyUniqueVec::try_new({
+                                                all_fields_acc.push(#IdSc);
+                                                all_fields_acc
+                                            }) {
+                                                Ok(v_80199720) => {
+                                                    acc_359c0b3f.push(#import_path::SingleOrMultiple::Multiple(v_80199720));
+                                                },
+                                                Err(er) => match er {
+                                                    #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => (),
+                                                    #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("32a3da97")
+                                                }
+                                            }
+                                        }
+                                    }
+                                    acc_359c0b3f
+                                }) {
+                                    Ok(v_752f0e8d) => Some(v_752f0e8d),
+                                    Err(er) => match er {
+                                        #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
+                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("76542a11")
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    IsNullable::True => {
+                        let ident_ts_a8bc30fc = gen_type_as_pg_json_type_test_cases_ts(&gen_ident_ucc(&match &pattern {
+                            Pattern::Stdrt => IdentPattern::StdrtNotNullWithoutId,
+                            Pattern::Arr => IdentPattern::ArrNotNullWithId,
+                        }));
+                        quote! {
+                            match (#ReadOnlyIdsSc.0.value, #CreateSc.0) {
+                                (Some(read_only_ids_3e2e30c8), Some(create_79039a2f)) => #ident_ts_a8bc30fc::#method_name_ts(
+                                    read_only_ids_3e2e30c8,
+                                    create_79039a2f
+                                ).map_or_else(|| None, |v_35662b3a| match #import_path::NotEmptyUniqueVec::try_new({
+                                    let mut acc_e0d72451 = vec![];
+                                    for el in v_35662b3a.into_vec() {
+                                        match el {
+                                            #import_path::SingleOrMultiple::Multiple(multiple) => {
+                                                acc_e0d72451.push(#import_path::SingleOrMultiple::Single(#import_path::NullableJsonObjectPgTypeWhereFilter(Some(multiple))));
+                                            },
+                                            #import_path::SingleOrMultiple::Single(single) => match #import_path::NotEmptyUniqueVec::try_new(vec![single]) {
+                                                Ok(v_4ce6ecd3) => {
+                                                    acc_e0d72451.push(#import_path::SingleOrMultiple::Single(#import_path::NullableJsonObjectPgTypeWhereFilter(Some(v_4ce6ecd3))));
+                                                }
+                                                Err(er) => match er {
+                                                    #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty { .. } => (),
+                                                    #import_path::NotEmptyUniqueVecTryNewEr::NotUnique { .. } => panic!("626ffa77"),
+                                                },
+                                            },
+                                        }
+                                    }
+                                    acc_e0d72451
+                                }) {
+                                    Ok(v_5d381053) => Some(v_5d381053),
+                                    Err(er) => match er {
+                                        #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty { .. } => None,
+                                        #import_path::NotEmptyUniqueVecTryNewEr::NotUnique { .. } => panic!("23a17416"),
+                                    },
+                                }),
+                                (Some(_), None) => panic!("994082bf"),
+                                (None, Some(_)) => panic!("04f4d016"),
+                                (None, None) => None,
+                            }
+                        }
+                    }
+                };
+                (
+                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
+                        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereGreaterThanSc
+                    ),
+                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
+                        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereBetweenSc
+                    ),
+                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
+                        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereInSc
+                    ),
+                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
+                        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereRegexSc
+                    ),
+                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
+                        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc
+                    ),
+                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
+                        &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegexSc
                     )
-                },
-                {
-                    let opt_vec_create_ts = quote! {#self_as_pg_json_type_test_cases_ts::#OptVecCreateSc()};
-                    let read_only_ids_to_two_dimal_vec_read_inner_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(#ReadOnlyIdsSc)};
-                    let read_inner_into_read_with_new_or_try_new_unwraped_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadInnerIntoReadWithNewOrTryNewUnwrapedSc(#ValueSc)};
-                    let read_inner_into_update_with_new_or_try_new_unwraped_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc(#ValueSc)};
-                    let update_to_read_only_ids_ts = quote! {#self_as_pg_json_type_test_cases_ts::#UpdateToReadOnlyIdsSc(#ValueSc)};
-                    let read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToOptValueReadDefaultOptSomeVecOneElSc(#ValueSc)};
-                    let previous_read_merged_with_opt_update_into_read_ts = quote! {#self_as_pg_json_type_test_cases_ts::#PreviousReadMergedWithOptUpdateIntoReadSc(#ReadSc, #OptUpdateSc)};
-                    let read_only_ids_merged_with_create_into_read_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoReadSc(
+                )
+            };
+            gen_impl_pg_json_type_test_cases_for_ident_ts(
+                &cfg_feature_test_utils,
+                &import_path,
+                &ident_read_inner_ucc,
+                &ident,
+                &opt_vec_create_ts,
+                &read_only_ids_to_two_dimal_vec_read_inner_ts,
+                &read_inner_into_read_with_new_or_try_new_unwraped_ts,
+                &read_inner_into_update_with_new_or_try_new_unwraped_ts,
+                &read_only_ids_into_opt_value_read_inner_ts,
+                &update_to_read_only_ids_ts,
+                &read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts,
+                &previous_read_merged_with_opt_update_into_read_ts,
+                &read_only_ids_merged_with_create_into_read_ts,
+                &read_only_ids_merged_with_create_into_opt_value_read_ts,
+                &read_only_ids_merged_with_create_into_table_type_ts,
+                &read_only_ids_merged_with_create_into_where_equal_ts,
+                &read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts,
+                &read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts,
+                &create_into_pg_json_type_opt_vec_where_length_equal_ts,
+                &create_into_pg_json_type_opt_vec_where_length_greater_than_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts,
+            )
+        };
+        let impl_pg_type_test_cases_for_ident_ts = {
+            let opt_vec_create_ts = quote! {#self_as_pg_json_type_test_cases_ts::#OptVecCreateSc()};
+            let read_only_ids_to_two_dimal_vec_read_inner_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(#ReadOnlyIdsSc)};
+            let read_inner_into_read_with_new_or_try_new_unwraped_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadInnerIntoReadWithNewOrTryNewUnwrapedSc(#ValueSc)};
+            let read_inner_into_update_with_new_or_try_new_unwraped_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc(#ValueSc)};
+            let update_to_read_only_ids_ts = quote! {#self_as_pg_json_type_test_cases_ts::#UpdateToReadOnlyIdsSc(#ValueSc)};
+            let read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToOptValueReadDefaultOptSomeVecOneElSc(#ValueSc)};
+            let previous_read_merged_with_opt_update_into_read_ts = quote! {#self_as_pg_json_type_test_cases_ts::#PreviousReadMergedWithOptUpdateIntoReadSc(#ReadSc, #OptUpdateSc)};
+            let read_only_ids_merged_with_create_into_read_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoReadSc(
+                #ReadOnlyIdsSc,
+                #CreateSc
+            )};
+            let read_only_ids_merged_with_create_into_opt_value_read_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoOptValueReadSc(
+                #ReadOnlyIdsSc,
+                #CreateSc
+            )};
+            let read_only_ids_merged_with_create_into_table_type_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
+                #ReadOnlyIdsSc,
+                #CreateSc
+            )};
+            let read_only_ids_merged_with_create_into_where_equal_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoWhereEqualSc(
+                #ReadOnlyIdsSc,
+                #CreateSc
+            )};
+            let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc(
+                #ReadOnlyIdsSc,
+                #CreateSc
+            )};
+            let read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts = quote!{Some(#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSc(
+                #ReadOnlyIdsSc,
+                #CreateSc
+            ))};
+            let create_into_pg_type_opt_vec_where_dim_one_equal_ts = &none_ts;
+            let pg_type_opt_vec_where_greater_than_test_ts = &none_ts;
+            let read_only_ids_merged_with_table_type_into_pg_type_opt_where_greater_than_ts = &none_ts;
+            let (
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
+                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts
+            ) = {
+                let gen_dim_equal_handle_ts = |dim: &Dim|{
+                    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc = dim.read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc();
+                    quote!{#self_as_pg_json_type_test_cases_ts::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc(
                         #ReadOnlyIdsSc,
                         #CreateSc
-                    )};
-                    let read_only_ids_merged_with_create_into_opt_value_read_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoOptValueReadSc(
-                        #ReadOnlyIdsSc,
-                        #CreateSc
-                    )};
-                    let read_only_ids_merged_with_create_into_table_type_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
-                        #ReadOnlyIdsSc,
-                        #CreateSc
-                    )};
-                    let read_only_ids_merged_with_create_into_where_equal_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoWhereEqualSc(
-                        #ReadOnlyIdsSc,
-                        #CreateSc
-                    )};
-                    let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc(
-                        #ReadOnlyIdsSc,
-                        #CreateSc
-                    )};
-                    let read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts = quote!{Some(#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSc(
-                        #ReadOnlyIdsSc,
-                        #CreateSc
-                    ))};
-                    let create_into_pg_type_opt_vec_where_dim_one_equal_ts = &none_ts;
-                    let pg_type_opt_vec_where_greater_than_test_ts = &none_ts;
-                    let read_only_ids_merged_with_table_type_into_pg_type_opt_where_greater_than_ts = &none_ts;
-                    let (
-                        read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
-                        read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
-                        read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
-                        read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts
-                    ) = {
-                        let gen_dim_equal_handle_ts = |dim: &Dim|{
-                            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc = dim.read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc();
-                            quote!{#self_as_pg_json_type_test_cases_ts::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc(
-                                #ReadOnlyIdsSc,
-                                #CreateSc
-                            )}
-                        };
-                        (
-                            gen_dim_equal_handle_ts(&Dim::One),
-                            gen_dim_equal_handle_ts(&Dim::Two),
-                            gen_dim_equal_handle_ts(&Dim::Three),
-                            gen_dim_equal_handle_ts(&Dim::Four)
-                        )
-                    };
-                    let create_into_pg_json_type_opt_vec_where_length_equal_ts = quote!{#self_as_pg_json_type_test_cases_ts::#CreateIntoPgJsonTypeOptVecWhereLengthEqualSc(
-                        #CreateSc
-                    )};
-                    let create_into_pg_json_type_opt_vec_where_length_greater_than_ts = quote!{#self_as_pg_json_type_test_cases_ts::#CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc(
-                        #CreateSc
-                    )};
-                    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts = quote!{#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereGreaterThanSc(
-                        #ReadOnlyIdsSc,
-                        #CreateSc
-                    )};
-                    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts = quote!{#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereBetweenSc(
-                        #ReadOnlyIdsSc,
-                        #CreateSc
-                    )};
-                    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts = quote!{#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereInSc(
-                        #ReadOnlyIdsSc,
-                        #CreateSc
-                    )};
-                    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts = quote!{#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereRegexSc(
-                        #ReadOnlyIdsSc,
-                        #CreateSc
-                    )};
-                    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts = quote!{#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc(
-                        #ReadOnlyIdsSc,
-                        #CreateSc
-                    )};
-                    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts = quote!{#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegexSc(
-                        #ReadOnlyIdsSc,
-                        #CreateSc
-                    )};
-                    gen_impl_pg_type_test_cases_for_ident_ts(
-                        &cfg_feature_test_utils,
-                        &import_path,
-                        &ident_read_inner_ucc,
-                        &ident,
-                        &opt_vec_create_ts,
-                        &read_only_ids_to_two_dimal_vec_read_inner_ts,
-                        &read_inner_into_read_with_new_or_try_new_unwraped_ts,
-                        &read_inner_into_update_with_new_or_try_new_unwraped_ts,
-                        &update_to_read_only_ids_ts,
-                        &read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts,
-                        &previous_read_merged_with_opt_update_into_read_ts,
-                        &read_only_ids_merged_with_create_into_read_ts,
-                        &read_only_ids_merged_with_create_into_opt_value_read_ts,
-                        &read_only_ids_merged_with_create_into_table_type_ts,
-                        &read_only_ids_merged_with_create_into_where_equal_ts,
-                        &read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts,
-                        &read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts,
-                        &create_into_pg_type_opt_vec_where_dim_one_equal_ts,
-                        &pg_type_opt_vec_where_greater_than_test_ts,
-                        &read_only_ids_merged_with_table_type_into_pg_type_opt_where_greater_than_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts,
-                        &create_into_pg_json_type_opt_vec_where_length_equal_ts,
-                        &create_into_pg_json_type_opt_vec_where_length_greater_than_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
-                        &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts,
-                    )
-                },
+                    )}
+                };
+                (
+                    gen_dim_equal_handle_ts(&Dim::One),
+                    gen_dim_equal_handle_ts(&Dim::Two),
+                    gen_dim_equal_handle_ts(&Dim::Three),
+                    gen_dim_equal_handle_ts(&Dim::Four)
+                )
+            };
+            let create_into_pg_json_type_opt_vec_where_length_equal_ts = quote!{#self_as_pg_json_type_test_cases_ts::#CreateIntoPgJsonTypeOptVecWhereLengthEqualSc(
+                #CreateSc
+            )};
+            let create_into_pg_json_type_opt_vec_where_length_greater_than_ts = quote!{#self_as_pg_json_type_test_cases_ts::#CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc(
+                #CreateSc
+            )};
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts = quote!{#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereGreaterThanSc(
+                #ReadOnlyIdsSc,
+                #CreateSc
+            )};
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts = quote!{#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereBetweenSc(
+                #ReadOnlyIdsSc,
+                #CreateSc
+            )};
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts = quote!{#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereInSc(
+                #ReadOnlyIdsSc,
+                #CreateSc
+            )};
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts = quote!{#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereRegexSc(
+                #ReadOnlyIdsSc,
+                #CreateSc
+            )};
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts = quote!{#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc(
+                #ReadOnlyIdsSc,
+                #CreateSc
+            )};
+            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts = quote!{#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegexSc(
+                #ReadOnlyIdsSc,
+                #CreateSc
+            )};
+            gen_impl_pg_type_test_cases_for_ident_ts(
+                &cfg_feature_test_utils,
+                &import_path,
+                &ident_read_inner_ucc,
+                &ident,
+                &opt_vec_create_ts,
+                &read_only_ids_to_two_dimal_vec_read_inner_ts,
+                &read_inner_into_read_with_new_or_try_new_unwraped_ts,
+                &read_inner_into_update_with_new_or_try_new_unwraped_ts,
+                &update_to_read_only_ids_ts,
+                &read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts,
+                &previous_read_merged_with_opt_update_into_read_ts,
+                &read_only_ids_merged_with_create_into_read_ts,
+                &read_only_ids_merged_with_create_into_opt_value_read_ts,
+                &read_only_ids_merged_with_create_into_table_type_ts,
+                &read_only_ids_merged_with_create_into_where_equal_ts,
+                &read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts,
+                &read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts,
+                &create_into_pg_type_opt_vec_where_dim_one_equal_ts,
+                &pg_type_opt_vec_where_greater_than_test_ts,
+                &read_only_ids_merged_with_table_type_into_pg_type_opt_where_greater_than_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts,
+                &create_into_pg_json_type_opt_vec_where_length_equal_ts,
+                &create_into_pg_json_type_opt_vec_where_length_greater_than_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
+                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts,
             )
         };
         let impl_pg_type_not_primary_k_for_ident_ts = gen_impl_pg_type_not_primary_k_for_ident_ts(&import_path, &ident);
