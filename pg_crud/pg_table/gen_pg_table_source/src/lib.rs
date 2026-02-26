@@ -5849,51 +5849,48 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts,
             ) = {
                 //todo if vec_create is empty then do different logic (for uuid). now uuid Tested using one default case
-                let gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts =
-                    |test_name: &str, dim: &Dim| {
-                        let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc = dim.read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc();
-                        gen_read_test_ts(
-                            test_name,
-                            &gen_opt_vec_create_call_unwrap_or_vec_ident_create_default_fi_clone_ts,
-                            &gen_ident_create_content_el_ts,
-                            &|el: &SynFieldWrapper| {
-                                let fi = &el.ident;
-                                let ft = &el.type0;
-                                let assert_eq_ts =
-                                    gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
-                                        &gen_fields_named_with_comma_ts(
-                                            &|el0: &SynFieldWrapper| {
-                                                let fi_fa2292e0 = &el0.ident;
-                                                if fi_fa2292e0 == primary_k_fi {
-                                                    some_primary_k_where_init_ts.clone()
-                                                } else if fi_fa2292e0 == fi {
-                                                    gen_some_pg_type_where_try_new_and_ts(
-                                                        &quote! {vec![el_3efa0bb4]},
-                                                    )
-                                                } else {
-                                                    none_ts.clone()
-                                                }
-                                            },
-                                        ),
-                                    );
-                                quote! {
-                                    if let Some(v_bb67b871) = <#ft as pg_crud::PgTypeTestCases>::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc(
-                                        read_only_ids_returned_from_create_one.#fi.clone().expect("2ed000a5"),
-                                        ident_create.#fi.clone()
-                                    ) {
-                                        for el_3efa0bb4 in v_bb67b871.into_vec() {
-                                            #assert_eq_ts
+                let gen_ts = |test_name: &str, dim: &Dim| {
+                    let fn_ts = dim.read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc();
+                    gen_read_test_ts(
+                        test_name,
+                        &gen_opt_vec_create_call_unwrap_or_vec_ident_create_default_fi_clone_ts,
+                        &gen_ident_create_content_el_ts,
+                        &|el: &SynFieldWrapper| {
+                            let fi = &el.ident;
+                            let ft = &el.type0;
+                            let assert_eq_ts =
+                                gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
+                                    &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
+                                        let fi0 = &el0.ident;
+                                        if fi0 == primary_k_fi {
+                                            some_primary_k_where_init_ts.clone()
+                                        } else if fi0 == fi {
+                                            gen_some_pg_type_where_try_new_and_ts(
+                                                &quote! {vec![el_3efa0bb4]},
+                                            )
+                                        } else {
+                                            none_ts.clone()
                                         }
+                                    }),
+                                );
+                            quote! {
+                                if let Some(v_bb67b871) = <#ft as pg_crud::PgTypeTestCases>::#fn_ts(
+                                    read_only_ids_returned_from_create_one.#fi.clone().expect("2ed000a5"),
+                                    ident_create.#fi.clone()
+                                ) {
+                                    for el_3efa0bb4 in v_bb67b871.into_vec() {
+                                        #assert_eq_ts
                                     }
                                 }
-                            },
-                        )
-                    };
+                            }
+                        },
+                    )
+                };
                 (
-                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_name, &Dim::One),
-                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_name, &Dim::Two),
-                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_name, &Dim::Three),
-                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts(table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_name, &Dim::Four),
+                    gen_ts(table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_name, &Dim::One),
+                    gen_ts(table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_name, &Dim::Two),
+                    gen_ts(table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_name, &Dim::Three),
+                    gen_ts(table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_name, &Dim::Four),
                 )
             };
             let create_into_pg_json_type_opt_vec_where_length_equal_ts = gen_read_test_ts(
