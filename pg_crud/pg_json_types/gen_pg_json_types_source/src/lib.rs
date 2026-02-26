@@ -2237,7 +2237,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     CreateForQuery,
                     UpdateForQuery,
                 }
-                let gen_query_bind_string_as_pg_text_ts = |create_for_query_or_update_for_query: &CreateForQueryOrUpdateForQuery| {
+                let gen_ts = |create_for_query_or_update_for_query: &CreateForQueryOrUpdateForQuery| {
                     let name_ts = format!(
                         "query_bind_string_as_pg_text_{}_for_query",
                         match &create_for_query_or_update_for_query {
@@ -2266,7 +2266,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         }
                     }
                 };
-                (gen_query_bind_string_as_pg_text_ts(&CreateForQueryOrUpdateForQuery::CreateForQuery), gen_query_bind_string_as_pg_text_ts(&CreateForQueryOrUpdateForQuery::UpdateForQuery))
+                (gen_ts(&CreateForQueryOrUpdateForQuery::CreateForQuery), gen_ts(&CreateForQueryOrUpdateForQuery::UpdateForQuery))
             };
             quote! {
                 #AllowClippyArbitrarySourceItemOrdering
@@ -2748,7 +2748,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
                 read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts
             ) = {
-                let gen_arr_dim_equal_ts = |dim: &Dim| {
+                let gen_ts = |dim: &Dim| {
                     let dim_i_nbr_max = DimIndexNbr::from(dim);
                     let gen_dim_i_nbr_ts = |is_nullable_vec: &[&IsNullable]|{
                         assert!(!is_nullable_vec.is_empty(), "c1a5939d");
@@ -3020,10 +3020,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 };
                 (
-                    gen_arr_dim_equal_ts(&Dim::One),
-                    gen_arr_dim_equal_ts(&Dim::Two),
-                    gen_arr_dim_equal_ts(&Dim::Three),
-                    gen_arr_dim_equal_ts(&Dim::Four)
+                    gen_ts(&Dim::One),
+                    gen_ts(&Dim::Two),
+                    gen_ts(&Dim::Three),
+                    gen_ts(&Dim::Four)
                 )
             };
             //todo maybe reuse LengthEqual and LengthGreaterThan
@@ -3186,7 +3186,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     float_32_greater_than_one_less_ts,
                     float_64_greater_than_one_less_ts,
                 ) = {
-                    let gen_greater_than_one_less_ts = |content_ts: &dyn ToTokens|{
+                    let gen_ts = |ts: &dyn ToTokens|{
                         let not_empty_unique_vec_try_new_match_ts = gen_not_empty_unique_vec_try_new_match_ts(
                             &quote!{vec![
                                 #import_path::SingleOrMultiple::Single(#ident_where_ucc::GreaterThan(
@@ -3204,20 +3204,20 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             &quote!{panic!("11287f54")},
                         );
                         quote!{
-                            let v_7aa498e8 = #content_ts?;
+                            let v_7aa498e8 = #ts?;
                             #not_empty_unique_vec_try_new_match_ts
                         }
                     };
                     let create_dot_zero_dot_zero_ts = quote!{create.0.0};
                     (
-                        gen_greater_than_one_less_ts(&gen_dot_checked_sub_one_ts(
+                        gen_ts(&gen_dot_checked_sub_one_ts(
                             &create_dot_zero_dot_zero_ts
                         )),
-                        gen_greater_than_one_less_ts(&gen_minus_one_is_finite_then_some_ts(
+                        gen_ts(&gen_minus_one_is_finite_then_some_ts(
                             F32OrF64::F32,
                             &create_dot_zero_dot_zero_ts
                         )),
-                        gen_greater_than_one_less_ts(&gen_minus_one_is_finite_then_some_ts(
+                        gen_ts(&gen_minus_one_is_finite_then_some_ts(
                             F32OrF64::F64,
                             &create_dot_zero_dot_zero_ts
                         )),
@@ -3249,7 +3249,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     between_one_less_and_one_more_int_ts,
                     between_one_less_and_one_more_float_ts
                 ) = {
-                    let gen_between_one_less_and_one_more_ts = |
+                    let gen_ts = |
                         less_ts: &dyn ToTokens,
                         more_ts: &dyn ToTokens
                     |quote!{
@@ -3283,20 +3283,20 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     };
                     (
                         {
-                            let gen_content_ts = |content_ts: &dyn ToTokens|quote!{create.0.0.#content_ts(1)};
-                            gen_between_one_less_and_one_more_ts(
-                                &gen_content_ts(&quote!{checked_sub}),
-                                &gen_content_ts(&quote!{checked_add})
+                            let gen_ts0 = |content_ts: &dyn ToTokens|quote!{create.0.0.#content_ts(1)};
+                            gen_ts(
+                                &gen_ts0(&quote!{checked_sub}),
+                                &gen_ts0(&quote!{checked_add})
                             )
                         },
                         {
-                            let gen_content_ts = |content_ts: &dyn ToTokens|quote!{{
+                            let gen_ts0 = |content_ts: &dyn ToTokens|quote!{{
                                 let value = create.0.0 #content_ts 1.0;
                                 value.is_finite().then_some(value)
                             }};
-                            gen_between_one_less_and_one_more_ts(
-                                &gen_content_ts(&quote!{-}),
-                                &gen_content_ts(&quote!{+})
+                            gen_ts(
+                                &gen_ts0(&quote!{-}),
+                                &gen_ts0(&quote!{+})
                             )
                         }
                     )
@@ -3409,7 +3409,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             float_32_greater_than_one_less_ts,
                             float_64_greater_than_one_less_ts,
                         ) = {
-                            let gen_greater_than_one_less_ts = |content_ts: &dyn ToTokens|gen_not_empty_unique_vec_try_new_match_ts(
+                            let gen_ts = |content_ts: &dyn ToTokens|gen_not_empty_unique_vec_try_new_match_ts(
                                 &quote!{{
                                     let mut acc_f95ec4f2 = vec![];
                                     for el_ba78af60 in create.0.0 {
@@ -3443,14 +3443,14 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             );
                             let el_dot_zero_ts = quote!{el_ba78af60.0};
                             (
-                                gen_greater_than_one_less_ts(&gen_dot_checked_sub_one_ts(
+                                gen_ts(&gen_dot_checked_sub_one_ts(
                                     &el_dot_zero_ts
                                 )),
-                                gen_greater_than_one_less_ts(&gen_minus_one_is_finite_then_some_ts(
+                                gen_ts(&gen_minus_one_is_finite_then_some_ts(
                                     F32OrF64::F32,
                                     &el_dot_zero_ts
                                 )),
-                                gen_greater_than_one_less_ts(&gen_minus_one_is_finite_then_some_ts(
+                                gen_ts(&gen_minus_one_is_finite_then_some_ts(
                                     F32OrF64::F64,
                                     &el_dot_zero_ts
                                 )),
