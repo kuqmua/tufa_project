@@ -4732,7 +4732,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         False,
                                         True,
                                     }
-                                    let gen_params_ts = |
+                                    let gen_ts = |
                                         should_add_dot_clone: ShouldAddDotClone,
                                         el_ts: &dyn ToTokens,
                                     |{
@@ -4750,11 +4750,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         }).collect::<Vec<Ts2>>()
                                     };
                                     (
-                                        gen_params_ts(
+                                        gen_ts(
                                             ShouldAddDotClone::True,
                                             &quote!{el_37154498}
                                         ),
-                                        gen_params_ts(
+                                        gen_ts(
                                             ShouldAddDotClone::False,
                                             &quote!{el_37154498}
                                         )
@@ -6540,7 +6540,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
                 read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts
             ) = {
-                let gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts = |method_name_ts: &dyn ToTokens|match &is_nullable {
+                let gen_ts = |method_name_ts: &dyn ToTokens|match &is_nullable {
                     IsNullable::False => match &pattern {
                         Pattern::Stdrt => {
                             let ts = vec_syn_field.iter().map(|el0| {
@@ -6797,22 +6797,22 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     }
                 };
                 (
-                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
+                    gen_ts(
                         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereGreaterThanSc
                     ),
-                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
+                    gen_ts(
                         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereBetweenSc
                     ),
-                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
+                    gen_ts(
                         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereInSc
                     ),
-                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
+                    gen_ts(
                         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereRegexSc
                     ),
-                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
+                    gen_ts(
                         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc
                     ),
-                    gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_filter_ts(
+                    gen_ts(
                         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegexSc
                     )
                 )
@@ -6891,18 +6891,18 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
                 read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts
             ) = {
-                let gen_dim_equal_handle_ts = |dim: &Dim|{
-                    let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc = dim.read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc();
-                    quote!{#self_as_pg_json_type_test_cases_ts::#read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc(
+                let gen_ts = |dim: &Dim|{
+                    let fn_ts = dim.read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc();
+                    quote!{#self_as_pg_json_type_test_cases_ts::#fn_ts(
                         #ReadOnlyIdsSc,
                         #CreateSc
                     )}
                 };
                 (
-                    gen_dim_equal_handle_ts(&Dim::One),
-                    gen_dim_equal_handle_ts(&Dim::Two),
-                    gen_dim_equal_handle_ts(&Dim::Three),
-                    gen_dim_equal_handle_ts(&Dim::Four)
+                    gen_ts(&Dim::One),
+                    gen_ts(&Dim::Two),
+                    gen_ts(&Dim::Three),
+                    gen_ts(&Dim::Four)
                 )
             };
             let create_into_pg_json_type_opt_vec_where_length_equal_ts = quote!{#self_as_pg_json_type_test_cases_ts::#CreateIntoPgJsonTypeOptVecWhereLengthEqualSc(
