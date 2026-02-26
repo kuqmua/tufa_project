@@ -67,7 +67,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
         })
         .collect::<Vec<El>>();
     let (make_pub_pub_enum_ts, pub_enum_derive_vec_ts) = {
-        fn gen_pun_enum_ts(ident: &dyn ToTokens) -> Ts2 {
+        fn gen_ts(ident: &dyn ToTokens) -> Ts2 {
             quote! {
                 #[derive(Debug, Clone, Copy, optimal_pack::OptimalPack)]
                 pub enum #ident {
@@ -77,54 +77,48 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
             }
         }
         (
-            gen_pun_enum_ts(&make_pub_ucc_ts),
-            el_vec
-                .iter()
-                .map(|el| gen_pun_enum_ts(&el.derive_trait_name_ucc)),
+            gen_ts(&make_pub_ucc_ts),
+            el_vec.iter().map(|el| gen_ts(&el.derive_trait_name_ucc)),
         )
     };
     let (make_pub_derive_trait_name_bool_ts, field_vec_ts) = {
-        fn gen_derive_trait_name_bool_ts(ident: &dyn ToTokens) -> Ts2 {
+        fn gen_ts(ident: &dyn ToTokens) -> Ts2 {
             quote! {#ident: bool,}
         }
         (
-            gen_derive_trait_name_bool_ts(&make_pub_sc_ts),
-            el_vec
-                .iter()
-                .map(|el| gen_derive_trait_name_bool_ts(&el.derive_trait_name_sc)),
+            gen_ts(&make_pub_sc_ts),
+            el_vec.iter().map(|el| gen_ts(&el.derive_trait_name_sc)),
         )
     };
     let (make_pub_derive_and_derive_if_ts, derive_and_derive_if_vec_ts) = {
-        (
+        let gen_ts = |first_name_ts: &dyn ToTokens,
+                      second_name_ts: &dyn ToTokens,
+                      condition_type_ts: &dyn ToTokens| {
             quote! {
-                pub const fn #make_pub_sc_ts(mut self) -> Self {
-                    self.#make_pub_sc_ts = true;
+                pub const fn #first_name_ts(mut self) -> Self {
+                    self.#first_name_ts = true;
                     self
                 }
-                pub const fn #make_pub_if_sc_ts(mut self, condition: #make_pub_ucc_ts) -> Self {
-                    if let #make_pub_ucc_ts::True = condition {
-                        self.#make_pub_sc_ts = true;
+                pub const fn #second_name_ts(mut self, condition: #condition_type_ts) -> Self {
+                    if let #condition_type_ts::True = condition {
+                        self.#first_name_ts = true;
                     }
                     self
                 }
+            }
+        };
+        (
+            gen_ts(&make_pub_sc_ts, &make_pub_if_sc_ts, &make_pub_ucc_ts),
+            {
+                let ts = el_vec.clone().into_iter().map(|el| {
+                    gen_ts(
+                        &el.derive_trait_name_sc,
+                        &el.derive_trait_name_if_sc,
+                        &el.derive_trait_name_ucc,
+                    )
+                });
+                quote! {#(#ts)*}
             },
-            el_vec.iter().map(|el|{
-                let derive_trait_name_ucc = &el.derive_trait_name_ucc;
-                let derive_trait_name_sc = &el.derive_trait_name_sc;
-                let derive_trait_name_if_sc = &el.derive_trait_name_if_sc;
-                quote!{
-                    pub const fn #derive_trait_name_sc(mut self) -> Self {
-                        self.#derive_trait_name_sc = true;
-                        self
-                    }
-                    pub const fn #derive_trait_name_if_sc(mut self, condition: #derive_trait_name_ucc) -> Self {
-                        if let #derive_trait_name_ucc::True = condition {
-                            self.#derive_trait_name_sc = true;
-                        }
-                        self
-                    }
-                }
-            })
         )
     };
     let if_self_derive_acc_push_vec_ts = el_vec.iter().map(|el| {
@@ -157,7 +151,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
                 Self::default()
             }
             #make_pub_derive_and_derive_if_ts
-            #(#derive_and_derive_if_vec_ts)*
+            #derive_and_derive_if_vec_ts
             fn build_handle(
                 self,
                 struct_or_enum: #struct_or_enum_ucc,
