@@ -43,13 +43,12 @@ server_config = {path = "../../../server_config"}"#,
                 }
                 let gen_table_example_ts =
                     |should_add_gen_pg_table_primary_k: ShouldAddGenPgTablePrimaryK| {
-                        let maybe_gen_pg_table_primary_k_ts =
-                            match should_add_gen_pg_table_primary_k {
-                                ShouldAddGenPgTablePrimaryK::False => Ts2::new(),
-                                ShouldAddGenPgTablePrimaryK::True => {
-                                    quote! {#[gen_pg_table_primary_k]}
-                                }
-                            };
+                        let mb_gen_pg_table_primary_k_ts = match should_add_gen_pg_table_primary_k {
+                            ShouldAddGenPgTablePrimaryK::False => Ts2::new(),
+                            ShouldAddGenPgTablePrimaryK::True => {
+                                quote! {#[gen_pg_table_primary_k]}
+                            }
+                        };
                         quote! {
                             #AllowClippyArbitrarySourceItemOrdering
                             #[derive(Debug, Clone, Copy, optimal_pack::OptimalPack)]
@@ -93,7 +92,7 @@ server_config = {path = "../../../server_config"}"#,
                             #[pg_crud::delete_one_extra_logic{}]
                             #[pg_crud::common_extra_logic{}]
                             pub struct TableExample {
-                                #maybe_gen_pg_table_primary_k_ts
+                                #mb_gen_pg_table_primary_k_ts
                                 pub primary_k_column:
                                     pg_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitByPg,
                                 pub column_0: pg_crud::I16AsNotNullInt2,

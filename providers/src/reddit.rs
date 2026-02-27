@@ -22,7 +22,7 @@ pub struct DataChildrenElData {
     // likes ??? null into what ???
     // banned_at_utc null into what ???
     // view_count ???
-    // preview ?? //maybe but without auth or something i cannot reach image links
+    // preview ?? //mb but without auth or something i cannot reach image links
     // mod_reason_by ???
     // removal_reason ???
     // report_reasons ???
@@ -104,15 +104,15 @@ pub struct DataChildrenElData {
 // "subreddit_type": "public",//dont think so
 // "ups": 1,//already
 // "total_awards_received": 0,//already
-// "media_embed": {},//maybe...
+// "media_embed": {},//mb...
 // "thumbnail_width": 140,//dont think so
 // "author_flair_template_id": null,//dont think so
 // "is_original_content": false,//already
-// "user_reports": [],//maybe...
+// "user_reports": [],//mb...
 // "secure_media": null,//dont think so
 // "is_reddit_media_domain": true,//already
 // "is_meta": false,//already
-// "category": null,//maybe...
+// "category": null,//mb...
 // "secure_media_embed": {},//dont think so
 // "link_flair_text": "Image",//dont think so
 // "can_mod_post": false,//dont think so
@@ -136,18 +136,18 @@ pub struct DataChildrenElData {
 // "author_flair_type": "text",//dont think so
 // "domain": "i.redd.it",//already
 // "allow_live_comments": false,//already
-// "selftext_html": null,//maybe
-// "likes": null,//maybe
+// "selftext_html": null,//mb
+// "likes": null,//mb
 // "suggested_sort": null,//dont think so
-// "banned_at_utc": null,//maybe
+// "banned_at_utc": null,//mb
 // "url_overridden_by_dest": "https://i.redd.it/so1xw3dpd9x61.png",//already
-// "view_count": null,//maybe
+// "view_count": null,//mb
 // "archived": false,//already
 // "no_follow": true,//dont think so
 // "is_crosspostable": true,//already
 // "pinned": false,//already
 // "over_18": false,//already
-// "preview": {//maybe but without auth or something i cannot reach image links
+// "preview": {//mb but without auth or something i cannot reach image links
 // "images": [
 // {
 // "source": {
@@ -201,19 +201,19 @@ pub struct DataChildrenElData {
 // "num_reports": null,//dont think so
 // "distinguished": null,//dont think so
 // "subreddit_id": "t5_2rk5q",//already
-// "mod_reason_by": null,//maybe
-// "removal_reason": null,//maybe
+// "mod_reason_by": null,//mb
+// "removal_reason": null,//mb
 // "link_flair_background_color": "",//dont think so
 // "id": "n5anff",//already
 // "is_robot_indexable": true,//dont think so
-// "report_reasons": null,//maybe
+// "report_reasons": null,//mb
 // "author": "mochr91",//already
 // "discussion_type": null,//dont think so
 // "num_comments": 0,//already
 // "send_replies": true,//already
 // "whitelist_status": "all_ads",//dont think so
-// "contest_mode": false,//maybe
-// "mod_reports": [],//maybe
+// "contest_mode": false,//mb
+// "mod_reports": [],//mb
 // "author_patreon_flair": false,//dont think so
 // "author_flair_text_color": null,//dont think so
 // "permalink": "/r/3Dprinting/comments/n5anff/experiment_load_coordinates_from_stl_binary_to/",//already
@@ -223,5 +223,5 @@ pub struct DataChildrenElData {
 // "subreddit_subscribers": 700555,//already
 // "created_utc": 1620201669,//already
 // "num_crossposts": 0,//dont think so
-// "media": null,//maybe
+// "media": null,//mb
 // "is_video": false//already

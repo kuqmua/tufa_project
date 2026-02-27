@@ -5,7 +5,7 @@ use macros_helpers::{
     gen_field_loc_new_ts, gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts,
     gen_impl_display_ts, gen_impl_pub_try_new_for_ident_ts, gen_impl_to_err_string_ts,
     gen_serde_version_of_named_syn_vrt, gen_simple_syn_punct, get_macro_attr_meta_list_ts,
-    loc_syn_field, maybe_write_ts_into_file,
+    loc_syn_field, mb_write_ts_into_file,
 };
 use naming::{
     AppStateSc, AsRefStrEnumWithUnitFieldsToScStr, AsRefStrEnumWithUnitFieldsToUccStr,
@@ -75,7 +75,7 @@ use pg_crud_macros_common::{
     gen_match_try_new_in_deserialize_ts, gen_opt_type_decl_ts,
     gen_query_part_er_write_into_buffer_ts, gen_return_err_query_part_er_write_into_buffer_ts,
     gen_value_init_ts, gen_vec_tokens_decl_ts, impl_pg_type_where_filter_for_ident_ts,
-    maybe_wrap_into_braces_ts,
+    mb_wrap_into_braces_ts,
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -102,24 +102,24 @@ use token_patterns::{
     PgCrudCommonDefaultOptSomeVecOneElMaxPageSizeCall, PgCrudDefaultOptSomeVecOneElCall, RefStr,
     SqlxAcquire, SqlxRow, StringTs, U8, U16, U32, U64,
 };
-//todo decide where to do er log (maybe add in some places)
+//todo decide where to do er log (mb add in some places)
 //todo gen route what will return columns of the table and their rust and postgersql types
 //todo created at and updated at fields + created by + updated by
 //todo attrs for activation generation crud methods(like gen create, update_one, delete_one)
 //todo authorization for returning concrete er or just minimal info(user role)
 //todo gen rules and roles
-//todo maybe add unnest sql types?
-//todo maybe add unnest to filter params if its arr ?
+//todo mb add unnest sql types?
+//todo mb add unnest to filter params if its arr ?
 //todo swagger ui https://github.com/juhaku/utoipa/blob/master/examples/todo-axum/src/main.rs
 //todo derive utoipa::ToSchema for what? original structs or with serialize deserialize?
 //todo need to add utoipa::ToSchema annotation #[schema(value_type = YourToSchemaTraitImplStruct)] for all fields
 //todo remove useless derives like useless serde::Serialize and Deserialize
-//todo maybe gen compisite type for user defined type https://docs.rs/sqlx/0.7.3/sqlx/pg/types/index.html#rust_decimal
+//todo mb gen compisite type for user defined type https://docs.rs/sqlx/0.7.3/sqlx/pg/types/index.html#rust_decimal
 //todo read again some interesting thoughts about sql as api https://habr.com/ru/companies/timeweb/articles/798937/
 //todo reexport all crates what logic depends on (from crates.io) (use of undeclared crate or module `time`)
 //todo add transaction isolation level (see pg docs)
 //todo check on pg max length value of type
-//todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its er? or maybe use select then update\delete?(rewrite query)
+//todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -mb its er? or mb use select then update\delete?(rewrite query)
 //todo pg json schema validation https://youtu.be/F6X60ln2VNc
 //todo gen json schema from rust type https://docs.rs/schemars/laTest/schemars/
 //todo support read table length
@@ -1221,7 +1221,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let extra_params_modification_ts = fields.iter().enumerate().map(|(i, el)| {
                         let fi = &el.ident;
                         let fi_dq_ts = dq_ts(&fi);
-                        let maybe_is_first_push_to_extra_params_already_happend_true_ts =
+                        let mb_is_first_push_to_extra_params_already_happend_true_ts =
                             if i == fields_len_without_primary_k {
                                 Ts2::new()
                             } else {
@@ -1237,7 +1237,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 ) {
                                     Ok(v_9e3f8fdd) => {
                                         #ExtraParamsSc.push_str(&v_9e3f8fdd);
-                                        #maybe_is_first_push_to_extra_params_already_happend_true_ts
+                                        #mb_is_first_push_to_extra_params_already_happend_true_ts
                                     }
                                     Err(#Er0) => {
                                         return Err(#Er0);
@@ -1771,7 +1771,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &{
                 let (left_ts, right_ts) = {
                     let gen_ts = |ts: &dyn ToTokens| {
-                        maybe_wrap_into_braces_ts(ts, fields_len_without_primary_k > 1)
+                        mb_wrap_into_braces_ts(ts, fields_len_without_primary_k > 1)
                     };
                     (
                         gen_ts(&gen_fields_named_without_primary_k_with_comma_ts(
@@ -3230,7 +3230,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #try_operation_ts
         }
     };
-    maybe_write_ts_into_file(
+    mb_write_ts_into_file(
         gen_pg_table_config.create_many_write_into_file,
         "gen_pg_table_create_many",
         &create_many_ts,
@@ -3370,7 +3370,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #try_operation_ts
         }
     };
-    maybe_write_ts_into_file(
+    mb_write_ts_into_file(
         gen_pg_table_config.create_one_write_into_file,
         "gen_pg_table_create_one",
         &create_one_ts,
@@ -3567,7 +3567,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &type_vrts_from_req_res_syn_vrts,
                 &vec_struct_opts_ident_ts,
                 &quote! {
-                    //todo maybe just #ValueSc ?
+                    //todo mb just #ValueSc ?
                     #ValueSc
                     .into_iter()
                     .fold(Vec::new(), |mut acc_4adf5a80, el_6a197212| {
@@ -3587,7 +3587,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #try_operation_ts
         }
     };
-    maybe_write_ts_into_file(
+    mb_write_ts_into_file(
         gen_pg_table_config.read_many_write_into_file,
         "gen_pg_table_read_many",
         &read_many_ts,
@@ -3729,7 +3729,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #try_operation_ts
         }
     };
-    maybe_write_ts_into_file(
+    mb_write_ts_into_file(
         gen_pg_table_config.read_one_write_into_file,
         "gen_pg_table_read_one",
         &read_one_ts,
@@ -4154,7 +4154,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #try_operation_ts
         }
     };
-    maybe_write_ts_into_file(
+    mb_write_ts_into_file(
         gen_pg_table_config.update_many_write_into_file,
         "gen_pg_table_update_many",
         &update_many_ts,
@@ -4396,7 +4396,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #try_operation_ts
         }
     };
-    maybe_write_ts_into_file(
+    mb_write_ts_into_file(
         gen_pg_table_config.update_one_write_into_file,
         "gen_pg_table_update_one",
         &update_one_ts,
@@ -4491,7 +4491,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #try_operation_ts
         }
     };
-    maybe_write_ts_into_file(
+    mb_write_ts_into_file(
         gen_pg_table_config.delete_many_write_into_file,
         "gen_pg_table_delete_many",
         &delete_many_ts,
@@ -4603,7 +4603,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #try_operation_ts
         }
     };
-    maybe_write_ts_into_file(
+    mb_write_ts_into_file(
         gen_pg_table_config.delete_one_write_into_file,
         "gen_pg_table_delete_one",
         &delete_one_ts,
@@ -4692,7 +4692,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let ident_update_one_params_ucc = gen_ident_operation_params_ucc(&Operation::UpdateOne);
         let config_path_ts = quote! {server_config::Config};
         let underscore_unused_ts = quote! {_unused};
-        //todo maybe remove it?\
+        //todo mb remove it?\
         let gen_some_pg_type_where_try_new_ts = |operator_ts: &dyn ToTokens, ts: &dyn ToTokens| {
             quote! {
                 Some(
@@ -4823,14 +4823,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 gen_fields_named_without_primary_k_with_comma_ts(&|el: &SynFieldWrapper| {
                     let fi_931fabfc = &el.ident;
                     let ft_714e077b = &el.type0;
-                    let maybe_dot_clone_ts = match &should_add_dot_clone {
+                    let mb_dot_clone_ts = match &should_add_dot_clone {
                         ShouldAddDotClone::False => Ts2::new(),
                         ShouldAddDotClone::True => quote! {.clone()},
                     };
                     quote! {
                         #fi_931fabfc: <#ft_714e077b as pg_crud::PgTypeTestCases>::read_only_ids_merged_with_create_into_opt_value_read(
-                            #read_only_ids_ts.#fi_931fabfc #maybe_dot_clone_ts.expect("f967434c"),
-                            #create_ts.#fi_931fabfc #maybe_dot_clone_ts
+                            #read_only_ids_ts.#fi_931fabfc #mb_dot_clone_ts.expect("f967434c"),
+                            #create_ts.#fi_931fabfc #mb_dot_clone_ts
                         )
                     }
                 })
@@ -5406,7 +5406,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let ts = add_create_one_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
                     quote! {
                         let ident_vec_create = std::iter::repeat_n(
-                            ident_create_default_cloned.clone(),//todo maybe remove
+                            ident_create_default_cloned.clone(),//todo mb remove
                             el_a636d084
                         ).collect::<Vec<#ident_create_ucc>>();
                         let read_only_ids_from_try_create_many = #ident::try_create_many_handle(
@@ -6056,8 +6056,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ft = &el.type0;
                     let is_fields_without_primary_k_len_greater_than_one =
                         fields_without_primary_k.len() > 1;
-                    let maybe_previous_read_ts = if is_fields_without_primary_k_len_greater_than_one
-                    {
+                    let mb_previous_read_ts = if is_fields_without_primary_k_len_greater_than_one {
                         quote! {
                             let previous_read = itertools::Itertools::sorted_by(
                                 gen_try_read_many_order_by_primary_k_with_big_pagination(
@@ -6180,7 +6179,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let url_cloned = url.clone();
                             let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
                             acc_9189f86e.push(futures::FutureExt::boxed(async move {
-                                #maybe_previous_read_ts
+                                #mb_previous_read_ts
                                 let update = <
                                     #ft
                                     as
@@ -6277,7 +6276,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 gen_fields_named_without_primary_k_without_comma_ts(&|el: &SynFieldWrapper| {
                     let fi = &el.ident;
                     let ft = &el.type0;
-                    let maybe_previous_read_ts = if fields_without_primary_k.len() > 1 {
+                    let mb_previous_read_ts = if fields_without_primary_k.len() > 1 {
                         quote! {
                             let previous_read = gen_ident_try_read_one_handle_primary_k(
                                 &url_cloned,
@@ -6361,7 +6360,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let url_cloned = url.clone();
                             let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
                             acc_9189f86e.push(futures::FutureExt::boxed(async move {
-                                #maybe_previous_read_ts
+                                #mb_previous_read_ts
                                 let update = <
                                     #ft
                                     as
@@ -6815,7 +6814,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     #gen_read_only_ids_els_ts_fe29ff70
                     tracing_subscriber::fmt::init();
                     tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("38823c21").block_on(async {
-                        //todo maybe refactor
+                        //todo mb refactor
                         let #ConfigSc = #config_path_ts {
                             service_socket_address: <config_lib::ServiceSocketAddress as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
                                 "127.0.0.1:8080".to_owned()
@@ -6956,7 +6955,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         }
     };
-    maybe_write_ts_into_file(
+    mb_write_ts_into_file(
         gen_pg_table_config.tests_write_into_file,
         "gen_pg_table_Tests",
         &ident_tests_ts,
@@ -6974,7 +6973,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         #ident_update_ts
         #ident_update_for_query_ts
     };
-    maybe_write_ts_into_file(
+    mb_write_ts_into_file(
         gen_pg_table_config.common_write_into_file,
         "gen_pg_table_common",
         &common_ts,
@@ -7008,7 +7007,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             pub use #ident_gen_pg_table_mod_sc::*;
         }
     };
-    maybe_write_ts_into_file(
+    mb_write_ts_into_file(
         gen_pg_table_config.whole_write_into_file,
         "gen_pg_table",
         &gend,

@@ -2,7 +2,7 @@ use convert_case::{Case, Casing};
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use std::fmt::Display;
-//todo maybe add another generic - trait casing. and ToUccString and others would implement it like .to_case::<UpperCamel>()
+//todo mb add another generic - trait casing. and ToUccString and others would implement it like .to_case::<UpperCamel>()
 pub trait AsRefStrToUccStr {
     fn case(&self) -> String;
 }

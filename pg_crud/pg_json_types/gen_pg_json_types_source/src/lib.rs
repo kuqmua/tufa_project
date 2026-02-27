@@ -3,7 +3,7 @@ use gen_quotes::dq_ts;
 use macros_helpers::{
     DeriveCopy, DeriveSchemarsJsonSchema, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
     StructOrEnumDeriveTsStreamBuilder, gen_impl_display_ts, gen_impl_from_ts,
-    gen_impl_to_err_string_ts, gen_pub_const_new_ts, gen_pub_new_ts, maybe_write_ts_into_file,
+    gen_impl_to_err_string_ts, gen_pub_const_new_ts, gen_pub_new_ts, mb_write_ts_into_file,
 };
 use naming::{
     ArrOfUcc, AsUcc, BooleanUcc, ColumnFieldSc, CreateForQueryUcc, CreateSc, EqualUcc, ErSc,
@@ -697,7 +697,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             &content_ts
         );
         let self_ident_origin_new_value_ts = quote! {Self(#ident_origin_ucc::new(#ValueSc))};
-        let maybe_const_fn = match &pattern {
+        let mb_const_fn = match &pattern {
             Pattern::Stdrt => match &is_nullable {
                 IsNullable::False => ConstFn::True,
                 IsNullable::True => ConstFn::False,
@@ -707,7 +707,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             Pattern::ArrDim3 { .. } |
             Pattern::ArrDim4 { .. } => ConstFn::False,
         };
-        let gen_pub_new_or_fn_new_ts = |const_new_ts: &dyn ToTokens, new_ts: &dyn ToTokens|match maybe_const_fn {
+        let gen_pub_new_or_fn_new_ts = |const_new_ts: &dyn ToTokens, new_ts: &dyn ToTokens|match mb_const_fn {
             ConstFn::False => gen_pub_fn_new_value_ident_read_inner_content_ts(
                 &new_ts
             ),
@@ -737,7 +737,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         let ident_create_for_query_ucc = SelfCreateForQueryUcc::from_tokens(&ident);
         let ident_update_ucc = SelfUpdateUcc::from_tokens(&ident);
         let ident_update_for_query_ucc = SelfUpdateForQueryUcc::from_tokens(&ident);
-        let maybe_derive_copy = match &pattern {
+        let mb_derive_copy = match &pattern {
             Pattern::Stdrt => match &pg_json_type {
                 PgJsonType::I8AsJsonbNbr |
                 PgJsonType::I16AsJsonbNbr |
@@ -767,7 +767,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
-                .derive_copy_if(maybe_derive_copy)
+                .derive_copy_if(mb_derive_copy)
                 .derive_partial_eq()
                 .derive_partial_ord()
                 .derive_serde_serialize()
@@ -887,7 +887,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             let impl_from_ident_create_for_ident_origin_ts = gen_impl_from_ts(&ident_create_ucc, &ident_origin_ucc, &quote! {#ValueSc.0});
             let impl_from_ident_update_for_ident_origin_ts = gen_impl_from_ts(&ident_update_ucc, &ident_origin_ucc, &quote! {#ValueSc.0});
             //todo
-            let maybe_impl_schemars_json_schema_for_ident_origin_ts = if matches!(&is_stdrt_not_null, IsStdrtNotNull::True) {
+            let mb_impl_schemars_json_schema_for_ident_origin_ts = if matches!(&is_stdrt_not_null, IsStdrtNotNull::True) {
                 match &pg_json_type {
                     PgJsonType::UuidUuidAsJsonbString => {
                         let ident_stdrt_not_null_origin_dq_ts = dq_ts(
@@ -936,7 +936,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             } else {
                 Ts2::new()
             };
-            let maybe_impl_is_string_empty_for_ident_origin_ts = if matches!(&is_stdrt_not_null, IsStdrtNotNull::True) {
+            let mb_impl_is_string_empty_for_ident_origin_ts = if matches!(&is_stdrt_not_null, IsStdrtNotNull::True) {
                 match &pg_json_type {
                     PgJsonType::I8AsJsonbNbr
                     | PgJsonType::I16AsJsonbNbr
@@ -997,8 +997,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 #impl_ident_origin_ts
                 #impl_from_ident_create_for_ident_origin_ts
                 #impl_from_ident_update_for_ident_origin_ts
-                #maybe_impl_schemars_json_schema_for_ident_origin_ts
-                #maybe_impl_is_string_empty_for_ident_origin_ts
+                #mb_impl_schemars_json_schema_for_ident_origin_ts
+                #mb_impl_is_string_empty_for_ident_origin_ts
                 #impl_display_for_ident_origin_ts
                 #impl_location_lib_to_err_string_for_ident_origin_ts
                 #impl_default_opt_some_vec_one_el_for_ident_origin_ts
@@ -1012,9 +1012,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
-                .derive_copy_if(maybe_derive_copy)
+                .derive_copy_if(mb_derive_copy)
                 .derive_partial_eq()
-                .derive_partial_ord()//maybe add it to the trait?
+                .derive_partial_ord()//mb add it to the trait?
                 .derive_serde_serialize()
                 .derive_serde_deserialize()
                 .derive_utoipa_to_schema()
@@ -1033,9 +1033,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             };
             let impl_default_opt_some_vec_one_el_for_ident_table_type_ts =
                 gen_impl_pg_crud_common_default_opt_some_vec_one_el_ts(&ident_table_type_ucc, &quote! {Self(#PgCrudCommonDefaultOptSomeVecOneElCall)});
-            //todo maybe add to trait?
+            //todo mb add to trait?
             let impl_sqlx_encode_sqlx_pg_for_ident_table_type_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_table_type_ucc, &quote! {&#SelfSc.0});
-            //todo maybe add to trait?
+            //todo mb add to trait?
             let impl_sqlx_type_for_ident_table_type_ts = gen_impl_sqlx_type_for_ident_ts(&ident_table_type_ucc, &gen_sqlx_types_json_type_decl_ts(&ident_read_inner_ucc));
             quote! {
                 #ident_table_type_ts
@@ -1050,7 +1050,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
-                .derive_copy_if(maybe_derive_copy)
+                .derive_copy_if(mb_derive_copy)
                 .derive_partial_eq()
                 .derive_serde_serialize()
                 .derive_serde_deserialize()
@@ -1081,7 +1081,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
-                .derive_copy_if(maybe_derive_copy)
+                .derive_copy_if(mb_derive_copy)
                 .derive_partial_eq()
                 .derive_serde_serialize()
                 .build_struct(
@@ -1099,7 +1099,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             let impl_sqlx_encode_sqlx_pg_for_ident_create_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_create_for_query_ucc, &quote! {sqlx::types::Json(&#SelfSc.0)});
             let impl_sqlx_type_for_ident_create_for_query_ts = gen_impl_sqlx_type_for_ident_ts(&ident_create_for_query_ucc, &ident_origin_ucc);
             let impl_from_ident_create_for_ident_create_for_query_ts = gen_impl_from_ts(&ident_create_ucc, &ident_create_for_query_ucc, &quote! {Self(#ValueSc.0)});
-            let maybe_impl_from_ident_update_for_ident_create_for_query_ts = if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
+            let mb_impl_from_ident_update_for_ident_create_for_query_ts = if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
                 gen_impl_from_ts(&ident_update_ucc, &ident_create_for_query_ucc, &quote! {Self(#ValueSc.0)})
             } else {
                 Ts2::new()
@@ -1110,7 +1110,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 #impl_sqlx_encode_sqlx_pg_for_ident_create_for_query_ts
                 #impl_sqlx_type_for_ident_create_for_query_ts
                 #impl_from_ident_create_for_ident_create_for_query_ts
-                #maybe_impl_from_ident_update_for_ident_create_for_query_ts
+                #mb_impl_from_ident_update_for_ident_create_for_query_ts
             }
         };
         let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
@@ -1571,12 +1571,12 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         };
         //exists because need to implement .into_inner() for fields (only for read subtype)
         let ident_read_ts = {
-            //todo maybe add some derive\impl to trait
+            //todo mb add some derive\impl to trait
             let ident_read_ts = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
-                .derive_copy_if(maybe_derive_copy)
+                .derive_copy_if(mb_derive_copy)
                 .derive_partial_eq()
                 .derive_partial_ord()
                 .derive_serde_serialize()
@@ -1721,23 +1721,23 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     IsNullable::True => &gen_opt_type_decl_ts(&ident_read_inner_stdrt_not_null_al_ts),
                 },
                 Pattern::ArrDim1 { dim1_is_nullable } => &{
-                    let dim1_type = dim1_is_nullable.maybe_opt_wrap(quote! {#ident_read_inner_stdrt_not_null_al_ts});
-                    is_nullable.maybe_opt_wrap(gen_vec_tokens_decl_ts(&dim1_type))
+                    let dim1_type = dim1_is_nullable.mb_opt_wrap(quote! {#ident_read_inner_stdrt_not_null_al_ts});
+                    is_nullable.mb_opt_wrap(gen_vec_tokens_decl_ts(&dim1_type))
                 },
                 Pattern::ArrDim2 { dim1_is_nullable, dim2_is_nullable } => &{
-                    let dim2_type = dim2_is_nullable.maybe_opt_wrap(quote! {#ident_read_inner_stdrt_not_null_al_ts});
-                    let dim1_type = dim1_is_nullable.maybe_opt_wrap(gen_vec_tokens_decl_ts(&dim2_type));
-                    is_nullable.maybe_opt_wrap(gen_vec_tokens_decl_ts(&dim1_type))
+                    let dim2_type = dim2_is_nullable.mb_opt_wrap(quote! {#ident_read_inner_stdrt_not_null_al_ts});
+                    let dim1_type = dim1_is_nullable.mb_opt_wrap(gen_vec_tokens_decl_ts(&dim2_type));
+                    is_nullable.mb_opt_wrap(gen_vec_tokens_decl_ts(&dim1_type))
                 },
                 Pattern::ArrDim3 {
                     dim1_is_nullable,
                     dim2_is_nullable,
                     dim3_is_nullable,
                 } => &{
-                    let dim3_type = dim3_is_nullable.maybe_opt_wrap(quote! {#ident_read_inner_stdrt_not_null_al_ts});
-                    let dim2_type = dim2_is_nullable.maybe_opt_wrap(gen_vec_tokens_decl_ts(&dim3_type));
-                    let dim1_type = dim1_is_nullable.maybe_opt_wrap(gen_vec_tokens_decl_ts(&dim2_type));
-                    is_nullable.maybe_opt_wrap(gen_vec_tokens_decl_ts(&dim1_type))
+                    let dim3_type = dim3_is_nullable.mb_opt_wrap(quote! {#ident_read_inner_stdrt_not_null_al_ts});
+                    let dim2_type = dim2_is_nullable.mb_opt_wrap(gen_vec_tokens_decl_ts(&dim3_type));
+                    let dim1_type = dim1_is_nullable.mb_opt_wrap(gen_vec_tokens_decl_ts(&dim2_type));
+                    is_nullable.mb_opt_wrap(gen_vec_tokens_decl_ts(&dim1_type))
                 },
                 Pattern::ArrDim4 {
                     dim1_is_nullable,
@@ -1745,11 +1745,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     dim3_is_nullable,
                     dim4_is_nullable,
                 } => &{
-                    let dim4_type = dim4_is_nullable.maybe_opt_wrap(quote! {#ident_read_inner_stdrt_not_null_al_ts});
-                    let dim3_type = dim3_is_nullable.maybe_opt_wrap(gen_vec_tokens_decl_ts(&dim4_type));
-                    let dim2_type = dim2_is_nullable.maybe_opt_wrap(gen_vec_tokens_decl_ts(&dim3_type));
-                    let dim1_type = dim1_is_nullable.maybe_opt_wrap(gen_vec_tokens_decl_ts(&dim2_type));
-                    is_nullable.maybe_opt_wrap(gen_vec_tokens_decl_ts(&dim1_type))
+                    let dim4_type = dim4_is_nullable.mb_opt_wrap(quote! {#ident_read_inner_stdrt_not_null_al_ts});
+                    let dim3_type = dim3_is_nullable.mb_opt_wrap(gen_vec_tokens_decl_ts(&dim4_type));
+                    let dim2_type = dim2_is_nullable.mb_opt_wrap(gen_vec_tokens_decl_ts(&dim3_type));
+                    let dim1_type = dim1_is_nullable.mb_opt_wrap(gen_vec_tokens_decl_ts(&dim2_type));
+                    is_nullable.mb_opt_wrap(gen_vec_tokens_decl_ts(&dim1_type))
                 },
             };
             let impl_from_ident_origin_for_ident_read_inner_ts = {
@@ -1786,7 +1786,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
-                .derive_copy_if(maybe_derive_copy)
+                .derive_copy_if(mb_derive_copy)
                 .derive_partial_eq()
                 .derive_serde_serialize()
                 .derive_serde_deserialize()
@@ -1823,7 +1823,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
-                .derive_copy_if(maybe_derive_copy)
+                .derive_copy_if(mb_derive_copy)
                 .derive_partial_eq()
                 .derive_serde_serialize()
                 .build_struct(
@@ -2023,7 +2023,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             IsNullable::True => format!("case when jsonb_typeof({column_field_fi})='null' then 'null'::jsonb else ({format_handle}) end"),
                         }
                     };
-                    let maybe_dims_start_end_init = ArrDim::try_from(pattern).ok().into_iter().flat_map(|arr_dim| {
+                    let mb_dims_start_end_init = ArrDim::try_from(pattern).ok().into_iter().flat_map(|arr_dim| {
                         (1..=arr_dim.to_usize()).map(|el0| {
                             let dim_nbr_start_ts =
                                 gen_dim_nbr_start_str(el0)
@@ -2048,7 +2048,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     });
                     let format_ts = dq_ts(&format!("jsonb_build_object('{{fi}}',jsonb_build_object('value',({format_handle})))"));
                     quote! {
-                        #(#maybe_dims_start_end_init)*
+                        #(#mb_dims_start_end_init)*
                         Ok(format!(#format_ts))
                     }
                 },
@@ -2231,7 +2231,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &select_only_created_or_updated_ids_query_bind_ts,
             )
         };
-        let maybe_impl_pg_json_type_object_vec_el_id_for_ident_origin_ts = if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
+        let mb_impl_pg_json_type_object_vec_el_id_for_ident_origin_ts = if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
             let (query_bind_string_as_pg_text_create_for_query_ts, query_bind_string_as_pg_text_update_for_query_ts) = {
                 enum CreateForQueryOrUpdateForQuery {
                     CreateForQuery,
@@ -2317,12 +2317,12 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             };
             let opt_vec_create_ts = {
                 let gen_some_acc_content_ts = |is_nullable_c964bb93: &IsNullable, ident_ts_dc0d5797: &dyn ToTokens| {
-                    let (new_content_ts, maybe_acc_push_none_ts) = match &is_nullable_c964bb93 {
+                    let (new_content_ts, mb_acc_push_none_ts) = match &is_nullable_c964bb93 {
                         IsNullable::False => (quote! {vec![el_88131059.0.into()]}, Ts2::new()),
                         IsNullable::True => (quote! {Some(el_88131059.0.into())}, quote! {acc_50e99088.push(<Self as #import_path::PgJsonType>::Create::new(#NoneTs));}),
                     };
-                    //todo check - maybe need to add something here
-                    let maybe_acc_push_long_vec_ts = match &is_nullable {
+                    //todo check - mb need to add something here
+                    let mb_acc_push_long_vec_ts = match &is_nullable {
                         IsNullable::False => quote! {
                             let mut acc_27624e5e = Vec::new();
                             for el_0dcb405a in v_8de026a4 {
@@ -2334,19 +2334,19 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         },
                         IsNullable::True => Ts2::new(),
                     };
-                    let maybe_dot_clone_ts = match &is_nullable {
+                    let mb_dot_clone_ts = match &is_nullable {
                         IsNullable::False => quote!{.clone()},
                         IsNullable::True => Ts2::new(),
                     };
                     quote! {Some({
                         let mut acc_50e99088 = Vec::new();
                         if let Some(v_8de026a4) = <#ident_ts_dc0d5797 as #import_path::PgJsonTypeTestCases>::#OptVecCreateSc() {
-                            for el_88131059 in v_8de026a4 #maybe_dot_clone_ts {
+                            for el_88131059 in v_8de026a4 #mb_dot_clone_ts {
                                 acc_50e99088.push(<Self as #import_path::PgJsonType>::Create::new(#new_content_ts));
                             }
-                            #maybe_acc_push_long_vec_ts
+                            #mb_acc_push_long_vec_ts
                         }
-                        #maybe_acc_push_none_ts
+                        #mb_acc_push_none_ts
                         acc_50e99088
                     })}
                 };
@@ -2474,7 +2474,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         };
                         quote! {acc_0a07db18.push(vec![#content_ts]);}
                     };
-                    let maybe_acc_push_vec_none_ts = match &is_nullable {
+                    let mb_acc_push_vec_none_ts = match &is_nullable {
                         IsNullable::False => Ts2::new(),
                         IsNullable::True => quote! {acc_0a07db18.push(vec![#NoneTs]);},
                     };
@@ -2490,7 +2490,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         #opt_extra_content_ts
                         #has_len_greater_than_one_content_ts
                         #acc_push_vec_content_ts
-                        #maybe_acc_push_vec_none_ts
+                        #mb_acc_push_vec_none_ts
                         if let Some(v_3de7fba4) = opt_extra {
                             if has_len_greater_than_one {
                                 acc_0a07db18.push(v_3de7fba4.0);
@@ -3026,7 +3026,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     gen_ts(&Dim::Four)
                 )
             };
-            //todo maybe reuse LengthEqual and LengthGreaterThan
+            //todo mb reuse LengthEqual and LengthGreaterThan
             let create_into_pg_json_type_opt_vec_where_length_equal_ts = match &pattern {
                 Pattern::Stdrt => quote!{#NoneTs},
                 Pattern::ArrDim1 { .. } |
@@ -3584,7 +3584,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             #ident_update_ts
             #ident_update_for_query_ts
             #impl_pg_json_type_for_ident_ts
-            #maybe_impl_pg_json_type_object_vec_el_id_for_ident_origin_ts
+            #mb_impl_pg_json_type_object_vec_el_id_for_ident_origin_ts
             #impl_pg_json_type_test_cases_for_ident_ts
         };
         (
@@ -3596,7 +3596,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         )
     })
     .collect::<(Vec<String>, Vec<String>)>();
-    maybe_write_ts_into_file(
+    mb_write_ts_into_file(
         config.pg_table_columns_content_write_into_pg_table_columns_using_pg_json_types,
         "pg_table_columns_using_pg_json_types",
         &{
@@ -3626,7 +3626,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             pub use #GenPgJsonTypesModSc::*;
         }
     };
-    maybe_write_ts_into_file(
+    mb_write_ts_into_file(
         config.whole_content_write_into_gen_pg_json_types,
         "gen_pg_json_types",
         &generated,

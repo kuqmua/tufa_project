@@ -257,7 +257,7 @@ fn gen_impl_trait_for_ident_ts(
 ) -> Ts2 {
     quote! {
         impl naming::#name_ts for #ident {
-            fn case(&self) -> #StringTs {//todo maybe write duplicate Trait with &str instead of String
+            fn case(&self) -> #StringTs {//todo mb write duplicate Trait with &str instead of String
                 match self {#(#vrts_matching_ts),*}
             }
         }

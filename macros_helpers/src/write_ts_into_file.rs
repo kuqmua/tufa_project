@@ -12,7 +12,7 @@ pub enum ShouldWriteTokenStreamIntoFile {
     False,
     True,
 }
-pub fn maybe_write_ts_into_file(
+pub fn mb_write_ts_into_file(
     should_write_ts_into_file: ShouldWriteTokenStreamIntoFile,
     file_name: &str,
     ts: &Ts2,

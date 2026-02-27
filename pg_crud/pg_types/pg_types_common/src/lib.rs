@@ -258,6 +258,6 @@ impl DefaultOptSomeVecOneElMaxPageSize for PaginationStartsWithOne {
     }
 }
 #[must_use]
-pub fn maybe_primary_k(v: bool) -> impl Display {
+pub fn mb_primary_k(v: bool) -> impl Display {
     if v { "primary key" } else { "" }
 }

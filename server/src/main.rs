@@ -127,7 +127,7 @@ fn main() {
                     //     //     ),
                     //     //     modifiers(&SecurityAddon),
                     //     //     tags((name = "server", description = "server api"))
-                    //     // )] //todo - this thing actually using builder pattern. maybe gen builder in GenPgTable then merge it together?
+                    //     // )] //todo - this thing actually using builder pattern. mb gen builder in GenPgTable then merge it together?
                     //     struct ApiDoc;
                     //     struct SecurityAddon;
                     //     impl utoipa::Modify for SecurityAddon {

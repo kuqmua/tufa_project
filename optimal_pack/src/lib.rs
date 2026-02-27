@@ -165,7 +165,7 @@ pub fn optimal_pack(input_ts: Ts) -> Ts {
             //         assert!(alignments[1usize] >= alignments[2usize], "2");
             //     };
             // }
-            // this is example for generic checks. instead of u8 must be concrete type. or maybe multiple generics
+            // this is example for generic checks. instead of u8 must be concrete type. or mb multiple generics
             // const _: () = #ident::<u8>::#const_name_ts;
             // fn main() {
             //     let my_struct_u8: MyStruct<u8> = MyStruct {

@@ -10,7 +10,7 @@ use thiserror::Error;
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, TryFromEnv, GenGetterTraitsForStructFields, OptimalPack)]
 pub struct Config {
-    //todo maybe auto gen .env and docker-compose environment variables. and maybe write in directly into files
+    //todo mb auto gen .env and docker-compose environment variables. and mb write in directly into files
     pub maximum_size_of_http_body_in_bytes: usize,
     pub database_url: SecretBox<String>,
     pub service_socket_address: SocketAddr,

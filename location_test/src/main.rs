@@ -60,7 +60,7 @@ pub struct DisplayStruct {
     pub display: String,
     pub something: bool,
 }
-//todo or maybe two different traits - display foreign type and convert into serializable and deserializable type
+//todo or mb two different traits - display foreign type and convert into serializable and deserializable type
 impl ToErrString for DisplayStruct {
     fn to_err_string(&self) -> String {
         format!("{self:?}")

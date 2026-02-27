@@ -95,7 +95,7 @@ pub enum PgTypeFilter {
     //BitVecPositionEqual,//currently deactivated
 }
 impl PgFilter for PgTypeFilter {
-    fn maybe_generic(&self) -> Option<Ts2> {
+    fn mb_generic(&self) -> Option<Ts2> {
         match &self {
             Self::Equal { ident }
             | Self::DimOneEqual { ident }
@@ -294,7 +294,7 @@ pub enum PgJsonTypeFilter {
     DimFourOverlapsWithArr { ident: Ts2 },
 }
 impl PgFilter for PgJsonTypeFilter {
-    fn maybe_generic(&self) -> Option<Ts2> {
+    fn mb_generic(&self) -> Option<Ts2> {
         match &self {
             Self::Equal { ident }
             | Self::DimOneEqual { ident }
@@ -448,7 +448,7 @@ impl PgFilter for PgJsonTypeFilter {
     }
 }
 pub trait PgFilter {
-    fn maybe_generic(&self) -> Option<Ts2>;
+    fn mb_generic(&self) -> Option<Ts2>;
     fn prefix_where_self_ucc(&self) -> Ts2;
     fn ucc(&self) -> &'static dyn DisplayPlusToTokens;
 }

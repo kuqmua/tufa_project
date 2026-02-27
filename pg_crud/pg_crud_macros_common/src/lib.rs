@@ -92,14 +92,14 @@ pub enum IsNullable {
 }
 impl IsNullable {
     #[must_use]
-    pub fn maybe_opt_wrap(&self, ts: Ts2) -> Ts2 {
+    pub fn mb_opt_wrap(&self, ts: Ts2) -> Ts2 {
         match &self {
             Self::False => ts,
             Self::True => quote! {Option<#ts>},
         }
     }
     #[must_use]
-    pub fn maybe_some_wrap(&self, ts: Ts2) -> Ts2 {
+    pub fn mb_some_wrap(&self, ts: Ts2) -> Ts2 {
         match &self {
             Self::False => ts,
             Self::True => quote! {Some(#ts)},
@@ -441,7 +441,7 @@ impl EqualOperatorHandle {
         quote! {#import_path::#EqualOperatorUcc::#ts}
     }
 }
-//todo maybe reuse with other structs
+//todo mb reuse with other structs
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy, OptimalPack)]
 pub enum Dim {
@@ -606,7 +606,7 @@ pub fn gen_pg_type_where_ts(
         let vrts_ts = vrts.iter().map(|el| {
             let el_ucc = el.ucc();
             let prefix_where_self_ucc = el.prefix_where_self_ucc();
-            let opt_type_ts: Option<Ts2> = el.maybe_generic();
+            let opt_type_ts: Option<Ts2> = el.mb_generic();
             let type_ts = opt_type_ts.map_or_else(Ts2::new, |v| quote! {<#v>});
             quote! {#el_ucc(where_filters::#prefix_where_self_ucc #type_ts)}
         });
@@ -757,7 +757,7 @@ pub fn gen_impl_pg_json_type_ts(
         quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
     let query_lifetime_pg_arguments_ts =
         quote! {sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>};
-    //todo maybe reexport sqlx?
+    //todo mb reexport sqlx?
     quote! {
         #AllowClippyArbitrarySourceItemOrdering
         impl #path_ts #PgJsonTypeUcc for #ident {
@@ -2359,7 +2359,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
 pub fn wrap_into_scopes_ts(ts: &dyn ToTokens) -> Ts2 {
     quote! {(#ts)}
 }
-pub fn maybe_wrap_into_braces_ts(ts: &dyn ToTokens, wrap: bool) -> Ts2 {
+pub fn mb_wrap_into_braces_ts(ts: &dyn ToTokens, wrap: bool) -> Ts2 {
     if wrap {
         wrap_into_scopes_ts(&ts)
     } else {

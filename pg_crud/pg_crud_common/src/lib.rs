@@ -109,7 +109,7 @@ pub trait PgJsonType {
         + AllEnumVrtsArrDefaultOptSomeVecOneEl
         + ToErrString;
     //todo impl get fields from read
-    //todo maybe add Decode trait here and Type
+    //todo mb add Decode trait here and Type
     type Read: ReadAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DefaultOptSomeVecOneEl;
     type ReadOnlyIds: ReadOnlyIdsAl;
     fn select_only_ids_query_part(column_field: &str) -> Result<String, QueryPartEr>;
@@ -457,7 +457,7 @@ where
     ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
         match self.0 {
             Some(v) => v.query_bind(query),
-            None => Ok(query), //todo maybe wrong
+            None => Ok(query), //todo mb wrong
         }
     }
     fn query_part(
@@ -1107,7 +1107,7 @@ impl DefaultOptSomeVecOneElMaxPageSize for PaginationStartsWithZero {
 pub struct Value<T> {
     pub value: T,
 }
-//todo ExactSizeIterator now is not a solution. er[E0658]: use of unstable library feature `exact_size_is_empty`. maybe rewrite it later
+//todo ExactSizeIterator now is not a solution. er[E0658]: use of unstable library feature `exact_size_is_empty`. mb rewrite it later
 pub trait IsStringEmpty {
     fn is_string_empty(&self) -> bool;
 }
@@ -1347,7 +1347,7 @@ pub trait PgTypeEqualOperator {
 #[derive(
     Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Serialize, JsonSchema, OptimalPack,
 )]
-pub struct UnsignedPartOfI32(i32); //todo why exactly i32? maybe different types for pg type and pg json type
+pub struct UnsignedPartOfI32(i32); //todo why exactly i32? mb different types for pg type and pg json type
 #[derive(
     Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location, JsonSchema, OptimalPack,
 )]

@@ -159,7 +159,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
                 generics_7d48c97a: &dyn #quote_to_tokens_ts,
                 ts: &dyn #quote_to_tokens_ts,
             ) -> Ts2 {
-                let maybe_pub_ts = self.#make_pub_sc_ts.then(|| quote::quote!{pub});
+                let mb_pub_ts = self.#make_pub_sc_ts.then(|| quote::quote!{pub});
                 let derive_ts = {
                     let mut acc_2a71375c = Vec::new();
                     #(#if_self_derive_acc_push_vec_ts)*
@@ -171,7 +171,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
                 };
                 // quote::quote! {
                 //     #[derive(#(#derive_ts),*)]
-                //     #maybe_pub_ts #struct_or_enum_ts #ident_d8cbb733 #ts
+                //     #mb_pub_ts #struct_or_enum_ts #ident_d8cbb733 #ts
                 // }
                 // this is cargo expand ouput coz double quote::quote!{quote::quote!{}}
                 {
@@ -217,7 +217,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
                             _s
                         },
                     );
-                    ::#quote_to_tokens_ts::to_tokens(&maybe_pub_ts, &mut _s);
+                    ::#quote_to_tokens_ts::to_tokens(&mb_pub_ts, &mut _s);
                     ::#quote_to_tokens_ts::to_tokens(&struct_or_enum_ts, &mut _s);
                     ::#quote_to_tokens_ts::to_tokens(&ident_d8cbb733, &mut _s);
                     ::#quote_to_tokens_ts::to_tokens(&generics_7d48c97a, &mut _s);
