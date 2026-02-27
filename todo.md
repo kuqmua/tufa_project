@@ -32,7 +32,6 @@
 * Const generic functions
 * Trait bounds on generic params for constant function
 
-
 # Development Tools
 
 ## Cargo Tools
