@@ -103,7 +103,7 @@ strum_macros = {version = "=0.27.2"}
 dotenv = {version = "=0.15.0"}
 time = {version = "=0.3.44", features = ["serde"]}
 quote = {version = "=1.0.42"}
-syn = {version = "=2.0.112", features = ["full", "visit", "extra-traits"] }
+syn = {version = "=2.0.112", features = ["full", "visit", "visit-mut", "extra-traits"] }
 proc-macro2 = {version = "=1.0.104"}
 utoipa = {version = "=4.1.0", features = ["axum_extras"]} #=5.4.0 contains path bug, update later
 schemars = {version = "=1.2.0"}
@@ -341,6 +341,7 @@ ambiguous_panic_imports = { level = "deny" }
 ambiguous_glob_imported_traits = { level = "deny" }
 ambiguous_import_visibilities = { level = "deny" }
 ambiguous_derive_helpers = { level = "deny" }
+internal_eq_trait_method_impls = { level = "deny" }
 
 [workspace.lints.clippy]
 absolute_paths = { level = "deny" }
