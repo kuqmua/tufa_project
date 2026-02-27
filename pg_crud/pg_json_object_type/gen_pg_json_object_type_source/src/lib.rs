@@ -3417,7 +3417,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         },
                     };
                     quote!{
-                        #[allow(clippy::single_call_fn)]//for some reason lint ignoring this function call in other struct trait methonds(arr not null)
+                        #[allow(clippy::single_call_fn)]//for some reason lint ignoring this fn call in other struct trait methonds(arr not null)
                         fn #SelectOnlyUpdatedIdsQueryPartSc(
                             &self,
                             column_field: &str,
@@ -5429,11 +5429,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         }
                     }
                 });
-                let gen_struct_init_ts = |function: &dyn Fn(&dyn ToTokens) -> Ts2|{//ts: &dyn ToTokens
+                let gen_struct_init_ts = |fn0: &dyn Fn(&dyn ToTokens) -> Ts2|{//ts: &dyn ToTokens
                     let ts = vec_syn_field.iter().map(|el0| {
                         let fi = &el0.ident;
                         let value_init_ts = gen_import_path_value_init_ts(&{
-                            let ts = function(&fi);
+                            let ts = fn0(&fi);
                             let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
                             quote!{
                                 #ft_as_pg_json_type_test_cases_ts::previous_read_merged_with_opt_update_into_read(

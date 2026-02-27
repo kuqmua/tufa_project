@@ -22,15 +22,15 @@ pub fn gen_getter_traits_for_struct_fields(input: Ts) -> Ts {
         let path_trait_ident = format!("app_state::Get{ucc_fi}")
             .parse::<Ts2>()
             .expect("8fb2cb27");
-        let function_name_ident = format!("get_{fi}").parse::<Ts2>().expect("a349efd0");
+        let fn_name_ident = format!("get_{fi}").parse::<Ts2>().expect("a349efd0");
         quote! {
             impl #path_trait_ident for #ident {
-                fn #function_name_ident (&self) -> &#ft {
+                fn #fn_name_ident (&self) -> &#ft {
                     &self.#fi
                 }
             }
             impl #path_trait_ident for &#ident {
-                fn #function_name_ident (&self) -> &#ft {
+                fn #fn_name_ident (&self) -> &#ft {
                     &self.#fi
                 }
             }

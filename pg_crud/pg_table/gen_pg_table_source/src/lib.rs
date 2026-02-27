@@ -547,22 +547,22 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let pub_select_pg_crud_not_empty_unique_vec_ident_select_ts = {
         quote! {pub #select_pg_crud_not_empty_unique_vec_ident_select_ts}
     };
-    let gen_fields_named_with_comma_ts = |function: &dyn Fn(&SynFieldWrapper) -> Ts2| -> Ts2 {
-        let fields_ts = fields.iter().map(function);
+    let gen_fields_named_with_comma_ts = |fn0: &dyn Fn(&SynFieldWrapper) -> Ts2| -> Ts2 {
+        let fields_ts = fields.iter().map(fn0);
         quote! {#(#fields_ts),*}
     };
-    let gen_fields_named_without_comma_ts = |function: &dyn Fn(&SynFieldWrapper) -> Ts2| -> Ts2 {
-        let fields_ts = fields.iter().map(function);
+    let gen_fields_named_without_comma_ts = |fn0: &dyn Fn(&SynFieldWrapper) -> Ts2| -> Ts2 {
+        let fields_ts = fields.iter().map(fn0);
         quote! {#(#fields_ts)*}
     };
     let gen_fields_named_without_primary_k_with_comma_ts =
-        |function: &dyn Fn(&SynFieldWrapper) -> Ts2| -> Ts2 {
-            let fields_ts = fields_without_primary_k.iter().map(function);
+        |fn0: &dyn Fn(&SynFieldWrapper) -> Ts2| -> Ts2 {
+            let fields_ts = fields_without_primary_k.iter().map(fn0);
             quote! {#(#fields_ts),*}
         };
     let gen_fields_named_without_primary_k_without_comma_ts =
-        |function: &dyn Fn(&SynFieldWrapper) -> Ts2| -> Ts2 {
-            let fields_ts = fields_without_primary_k.iter().map(function);
+        |fn0: &dyn Fn(&SynFieldWrapper) -> Ts2| -> Ts2 {
+            let fields_ts = fields_without_primary_k.iter().map(fn0);
             quote! {#(#fields_ts)*}
         };
     let none_ts = quote! {None};

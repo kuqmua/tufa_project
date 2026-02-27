@@ -317,9 +317,9 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         };
     let value_match_incr_checked_add_one_init_ts = gen_match_incr_checked_add_one_init_ts(&ValueSc);
     let gen_ident_match_field_fn_ok_v_return_err_ts =
-        |ident_ts: &dyn ToTokens, field_ts: &dyn ToTokens, function_ts: &dyn ToTokens| {
+        |ident_ts: &dyn ToTokens, field_ts: &dyn ToTokens, fn_ts: &dyn ToTokens| {
             quote! {
-                let #ident_ts = match self.#field_ts.#function_ts(#IncrSc, #ColumnSc, is_need_to_add_operator) {
+                let #ident_ts = match self.#field_ts.#fn_ts(#IncrSc, #ColumnSc, is_need_to_add_operator) {
                     Ok(v_0a22ee9a) => v_0a22ee9a,
                     Err(#ErSc) => {
                         return Err(#ErSc);
