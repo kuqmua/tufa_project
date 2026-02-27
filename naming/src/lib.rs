@@ -168,7 +168,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ],
     ["no", "payload", "fields"],
     ["no", "payload", "params"],
-    ["try", "extract", "value"],
+    ["try", "extract", "v"],
     ["endpoint", "location"],
     ["pg", "connection"],
     ["query", "string"],
@@ -570,7 +570,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["contains", "el"],
     ["equal", "second", "dim"],
     ["from", "calendar", "date"],
-    ["less", "than", "minimum", "pg", "value"],
+    ["less", "than", "minimum", "pg", "v"],
     ["year"],
     ["month"],
     ["day"],
@@ -709,13 +709,13 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["gen", "select", "query", "part"],
     ["update", "query", "part", "primary", "k"],
     [
-        "gen", "column", "queals", "value", "comma", "update", "one", "query", "part"
+        "gen", "column", "queals", "v", "comma", "update", "one", "query", "part"
     ],
     ["primary", "k", "query", "part"],
     ["columns"],
-    ["gen", "when", "column", "id", "then", "value"],
+    ["gen", "when", "column", "id", "then", "v"],
     [
-        "gen", "when", "column", "id", "then", "value", "update", "many", "query", "part"
+        "gen", "when", "column", "id", "then", "v", "update", "many", "query", "part"
     ],
     ["test", "cases"],
     ["contains", "null", "byte"],
@@ -770,7 +770,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ],
     ["gen", "el"],
     [
-        "some", "value", "primary", "k", "read", "returned", "from", "create", "one"
+        "some", "v", "primary", "k", "read", "returned", "from", "create", "one"
     ],
     ["primary", "k", "read", "returned", "from", "create", "one"],
     ["select", "primary", "k", "fi"],
@@ -784,7 +784,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["select", "only", "ids", "query", "part"],
     ["read", "only", "ids", "returned", "from", "create", "one"],
     [
-        "some", "value", "read", "only", "ids", "returned", "from", "create", "one"
+        "some", "v", "read", "only", "ids", "returned", "from", "create", "one"
     ],
     ["select", "only", "updated", "ids", "query", "part"],
     ["create", "update", "delete", "are", "empty"],
@@ -797,7 +797,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ],
     ["gen", "pg", "table", "primary", "k"],
     ["read", "new", "or", "try", "new", "unwraped", "for", "test"],
-    ["read", "only", "ids", "to", "opt", "value", "read", "inner"],
+    ["read", "only", "ids", "to", "opt", "v", "read", "inner"],
     ["try", "bind"],
     ["select", "only", "updated", "ids", "query", "bind"],
     ["create", "for", "query"],
@@ -805,8 +805,8 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
         "update", "new", "or", "try", "new", "unwraped", "for", "test"
     ],
     [
-        "read", "only", "ids", "to", "opt", "value", "read", "default", "opt", "some", "vec",
-        "one", "el"
+        "read", "only", "ids", "to", "opt", "v", "read", "default", "opt", "some", "vec", "one",
+        "el"
     ],
     [
         "read", "from", "previous", "read", "unwraped", "merged", "with", "update"
@@ -819,7 +819,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["read", "inner", "vec", "vec"],
     ["create", "vec"],
     [
-        "read", "only", "ids", "merged", "with", "create", "into", "opt", "value", "read"
+        "read", "only", "ids", "merged", "with", "create", "into", "opt", "v", "read"
     ],
     [
         "default", "opt", "some", "vec", "one", "el", "max", "page", "size"
@@ -849,9 +849,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     [
         "read", "only", "ids", "to", "two", "dimal", "vec", "of", "read", "inner"
     ],
-    [
-        "read", "only", "ids", "into", "opt", "value", "read", "inner"
-    ],
+    ["read", "only", "ids", "into", "opt", "v", "read", "inner"],
     [
         "previous", "read", "merged", "with", "opt", "update", "into", "read"
     ],

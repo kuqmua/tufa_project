@@ -208,7 +208,7 @@ pub trait PgTypeTestCases {
     fn update_to_read_only_ids(
         value: &<Self::PgType as PgType>::Update,
     ) -> <Self::PgType as PgType>::ReadOnlyIds;
-    fn read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
+    fn read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
         value: &<Self::PgType as PgType>::ReadOnlyIds,
     ) -> Option<V<<Self::PgType as PgType>::Read>>;
     fn previous_read_merged_with_opt_update_into_read(
@@ -219,7 +219,7 @@ pub trait PgTypeTestCases {
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> <Self::PgType as PgType>::Read;
-    fn read_only_ids_merged_with_create_into_opt_value_read(
+    fn read_only_ids_merged_with_create_into_opt_v_read(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> Option<V<<Self::PgType as PgType>::Read>>;
@@ -335,13 +335,13 @@ pub trait PgJsonTypeTestCases {
     fn read_inner_into_update_with_new_or_try_new_unwraped(
         value: <Self::PgJsonType as PgJsonType>::ReadInner,
     ) -> <Self::PgJsonType as PgJsonType>::Update;
-    fn read_only_ids_into_opt_value_read_inner(
+    fn read_only_ids_into_opt_v_read_inner(
         value: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
     ) -> Option<V<<Self::PgJsonType as PgJsonType>::ReadInner>>;
     fn update_to_read_only_ids(
         value: &<Self::PgJsonType as PgJsonType>::Update,
     ) -> <Self::PgJsonType as PgJsonType>::ReadOnlyIds;
-    fn read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
+    fn read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
         value: &<Self::PgJsonType as PgJsonType>::ReadOnlyIds,
     ) -> Option<V<<Self::PgJsonType as PgJsonType>::Read>>;
     fn previous_read_merged_with_opt_update_into_read(
@@ -352,7 +352,7 @@ pub trait PgJsonTypeTestCases {
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> <Self::PgJsonType as PgJsonType>::Read;
-    fn read_only_ids_merged_with_create_into_opt_value_read(
+    fn read_only_ids_merged_with_create_into_opt_v_read(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> Option<V<<Self::PgJsonType as PgJsonType>::Read>>;

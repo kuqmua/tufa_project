@@ -16,8 +16,7 @@ use naming::{
     PgTypeOptVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc, PgTypeWhereFilterUcc,
     PreviousReadMergedWithOptUpdateIntoReadSc, QueryBindSc, QueryPartErUcc, QueryPartSc, QuerySc,
     ReadInnerIntoReadWithNewOrTryNewUnwrapedSc, ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc,
-    ReadInnerUcc, ReadOnlyIdsIntoOptValueReadInnerSc,
-    ReadOnlyIdsMergedWithCreateIntoOptValueReadSc,
+    ReadInnerUcc, ReadOnlyIdsIntoOptVReadInnerSc, ReadOnlyIdsMergedWithCreateIntoOptVReadSc,
     ReadOnlyIdsMergedWithCreateIntoOptVecWhereEqualToJsonFieldSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereBetweenSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc,
@@ -1043,14 +1042,14 @@ pub fn gen_impl_pg_type_ts(
     is_primary_k_underscore: &IsPrimaryKUnderscore,
     create_table_column_query_part_ts: &dyn ToTokens,
     ident_create_ucc: &dyn ToTokens,
-    create_query_part_value_underscore: &CreateQueryPartValueUnderscore,
+    create_query_part_v_underscore: &CreateQueryPartValueUnderscore,
     create_query_part_incr_underscore: &CreateQueryPartIncrUnderscore,
     create_query_part_ts: &dyn ToTokens,
-    create_query_bind_value_underscore: &CreateQueryBindValueUnderscore,
+    create_query_bind_v_underscore: &CreateQueryBindValueUnderscore,
     is_create_query_bind_mutable: &IsCreateQueryBindMutable,
     create_query_bind_ts: &dyn ToTokens,
     ident_select_ucc: &dyn ToTokens,
-    select_query_part_value_underscore: &SelectQueryPartValueUnderscore,
+    select_query_part_v_underscore: &SelectQueryPartValueUnderscore,
     select_query_part_ts: &dyn ToTokens,
     ident_where_ucc: &dyn ToTokens,
     ident_read_ucc: &dyn ToTokens,
@@ -1061,7 +1060,7 @@ pub fn gen_impl_pg_type_ts(
     into_inner_ts: &dyn ToTokens,
     ident_update_ucc: &dyn ToTokens,
     ident_update_for_query_ucc: &dyn ToTokens,
-    update_query_part_value_underscore: &UpdateQueryPartValueUnderscore,
+    update_query_part_v_underscore: &UpdateQueryPartValueUnderscore,
     update_query_part_jsonb_set_accumulator_underscore: &UpdateQueryPartJsonbSetAccumulatorUnderscore,
     update_query_part_jsonb_set_target_underscore: &UpdateQueryPartJsonbSetTargetUnderscore,
     update_query_part_jsonb_set_path_underscore: &UpdateQueryPartJsonbSetPathUnderscore,
@@ -1083,13 +1082,13 @@ pub fn gen_impl_pg_type_ts(
             }
             type #CreateUcc = #ident_create_ucc;
             fn #CreateQueryPartSc(
-                #create_query_part_value_underscore: &Self::#CreateUcc,
+                #create_query_part_v_underscore: &Self::#CreateUcc,
                 #create_query_part_incr_underscore: &mut #U64
             ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                 #create_query_part_ts
             }
             fn #CreateQueryBindSc(
-                #create_query_bind_value_underscore: Self::#CreateUcc,
+                #create_query_bind_v_underscore: Self::#CreateUcc,
                 #is_create_query_bind_mutable #QuerySc: #query_pg_arguments_ts
             ) -> Result<
                 #query_pg_arguments_ts,
@@ -1099,7 +1098,7 @@ pub fn gen_impl_pg_type_ts(
             }
             type #SelectUcc = #ident_select_ucc;
             fn #SelectQueryPartSc(
-                #select_query_part_value_underscore: &Self::#SelectUcc,
+                #select_query_part_v_underscore: &Self::#SelectUcc,
                 #ColumnSc: #RefStr,
             ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                 #select_query_part_ts
@@ -1122,7 +1121,7 @@ pub fn gen_impl_pg_type_ts(
             type #UpdateUcc = #ident_update_ucc;
             type #UpdateForQueryUcc = #ident_update_for_query_ucc;
             fn #UpdateQueryPartSc(
-                #update_query_part_value_underscore: &Self::#UpdateForQueryUcc,
+                #update_query_part_v_underscore: &Self::#UpdateForQueryUcc,
                 #update_query_part_jsonb_set_accumulator_underscore: #RefStr,
                 #update_query_part_jsonb_set_target_underscore: #RefStr,
                 #update_query_part_jsonb_set_path_underscore: #RefStr,
@@ -1250,7 +1249,7 @@ fn gen_update_to_read_only_ids_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> 
         }
     }
 }
-fn gen_read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts(
+fn gen_read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
@@ -1289,13 +1288,13 @@ fn gen_read_only_ids_merged_with_create_into_read_ts(
         }
     }
 }
-fn gen_read_only_ids_merged_with_create_into_opt_value_read_ts(
+fn gen_read_only_ids_merged_with_create_into_opt_v_read_ts(
     import_path: ImportPath,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #ReadOnlyIdsMergedWithCreateIntoOptValueReadSc(
+        fn #ReadOnlyIdsMergedWithCreateIntoOptVReadSc(
             #ReadOnlyIdsSc: #path_ts::#ReadOnlyIdsUcc,
             #CreateSc: #path_ts::#CreateUcc
         ) -> Option<#import_path::#VUcc<#path_ts::#ReadUcc>> {
@@ -1579,10 +1578,10 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     read_inner_into_read_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
     read_inner_into_update_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
     update_to_read_only_ids_ts: &dyn ToTokens,
-    read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts: &dyn ToTokens,
+    read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts: &dyn ToTokens,
     previous_read_merged_with_opt_update_into_read_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_read_ts: &dyn ToTokens,
-    read_only_ids_merged_with_create_into_opt_value_read_ts: &dyn ToTokens,
+    read_only_ids_merged_with_create_into_opt_v_read_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_table_type_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_where_equal_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts: &dyn ToTokens,
@@ -1630,11 +1629,11 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         );
     let update_to_read_only_ids_ts_ee17b828 =
         gen_update_to_read_only_ids_ts(&self_pg_type_as_pg_type_ts, &update_to_read_only_ids_ts);
-    let read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts_18ef45e8 =
-        gen_read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts(
+    let read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts_18ef45e8 =
+        gen_read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts(
             *import_path,
             &self_pg_type_as_pg_type_ts,
-            &read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts,
+            &read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts,
         );
     let previous_read_merged_with_opt_update_into_read_ts_c48b8ede =
         gen_previous_read_merged_with_opt_update_into_read_ts(
@@ -1646,11 +1645,11 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             &self_pg_type_as_pg_type_ts,
             &read_only_ids_merged_with_create_into_read_ts,
         );
-    let read_only_ids_merged_with_create_into_opt_value_read_ts_8b7e9688 =
-        gen_read_only_ids_merged_with_create_into_opt_value_read_ts(
+    let read_only_ids_merged_with_create_into_opt_v_read_ts_8b7e9688 =
+        gen_read_only_ids_merged_with_create_into_opt_v_read_ts(
             *import_path,
             &self_pg_type_as_pg_type_ts,
-            &read_only_ids_merged_with_create_into_opt_value_read_ts,
+            &read_only_ids_merged_with_create_into_opt_v_read_ts,
         );
     let read_only_ids_merged_with_create_into_table_type_ts_f227db63 =
         gen_read_only_ids_merged_with_create_into_table_type_ts(
@@ -1770,10 +1769,10 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             #read_inner_into_read_with_new_or_try_new_unwraped_ts_affc58f5
             #read_inner_into_update_with_new_or_try_new_unwraped_ts_c38e6621
             #update_to_read_only_ids_ts_ee17b828
-            #read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts_18ef45e8
+            #read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts_18ef45e8
             #previous_read_merged_with_opt_update_into_read_ts_c48b8ede
             #read_only_ids_merged_with_create_into_read_ts_df48e4b7
-            #read_only_ids_merged_with_create_into_opt_value_read_ts_8b7e9688
+            #read_only_ids_merged_with_create_into_opt_v_read_ts_8b7e9688
             #read_only_ids_merged_with_create_into_table_type_ts_f227db63
             #read_only_ids_merged_with_create_into_where_equal_ts_dcde170f
             #read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts_076c6ebd
@@ -1823,12 +1822,12 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
     read_only_ids_to_two_dimal_vec_read_inner_ts: &dyn ToTokens,
     read_inner_into_read_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
     read_inner_into_update_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
-    read_only_ids_into_opt_value_read_inner_ts: &dyn ToTokens,
+    read_only_ids_into_opt_v_read_inner_ts: &dyn ToTokens,
     update_to_read_only_ids_ts: &dyn ToTokens,
-    read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts: &dyn ToTokens,
+    read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts: &dyn ToTokens,
     previous_read_merged_with_opt_update_into_read_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_read_ts: &dyn ToTokens,
-    read_only_ids_merged_with_create_into_opt_value_read_ts: &dyn ToTokens,
+    read_only_ids_merged_with_create_into_opt_v_read_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_table_type_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_where_equal_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts: &dyn ToTokens,
@@ -1878,11 +1877,11 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
         &self_pg_json_type_as_pg_json_type_ts,
         &update_to_read_only_ids_ts,
     );
-    let read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts_f5d1b395 =
-        gen_read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts(
+    let read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts_f5d1b395 =
+        gen_read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts(
             *import_path,
             &self_pg_json_type_as_pg_json_type_ts,
-            &read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts,
+            &read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts,
         );
     let previous_read_merged_with_opt_update_into_read_ts_ab0384b9 =
         gen_previous_read_merged_with_opt_update_into_read_ts(
@@ -1894,11 +1893,11 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
             &self_pg_json_type_as_pg_json_type_ts,
             &read_only_ids_merged_with_create_into_read_ts,
         );
-    let read_only_ids_merged_with_create_into_opt_value_read_ts_1f54e2bf =
-        gen_read_only_ids_merged_with_create_into_opt_value_read_ts(
+    let read_only_ids_merged_with_create_into_opt_v_read_ts_1f54e2bf =
+        gen_read_only_ids_merged_with_create_into_opt_v_read_ts(
             *import_path,
             &self_pg_json_type_as_pg_json_type_ts,
-            &read_only_ids_merged_with_create_into_opt_value_read_ts,
+            &read_only_ids_merged_with_create_into_opt_v_read_ts,
         );
     let read_only_ids_merged_with_create_into_table_type_ts_b605767e =
         gen_read_only_ids_merged_with_create_into_table_type_ts(
@@ -2013,16 +2012,16 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
             #read_only_ids_to_two_dimal_vec_read_inner_ts_da1a7cf8
             #read_inner_into_read_with_new_or_try_new_unwraped_ts_ccead2b6
             #read_inner_into_update_with_new_or_try_new_unwraped_ts_b45cde72
-            fn #ReadOnlyIdsIntoOptValueReadInnerSc(
+            fn #ReadOnlyIdsIntoOptVReadInnerSc(
                 #ValueSc: #self_pg_json_type_as_pg_json_type_ts::#ReadOnlyIdsUcc
             ) -> Option<#import_path::#VUcc<#self_pg_json_type_as_pg_json_type_ts::#ReadInnerUcc>> {
-                #read_only_ids_into_opt_value_read_inner_ts
+                #read_only_ids_into_opt_v_read_inner_ts
             }
             #update_to_read_only_ids_ts_d7e0cbf0
-            #read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts_f5d1b395
+            #read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts_f5d1b395
             #previous_read_merged_with_opt_update_into_read_ts_ab0384b9
             #read_only_ids_merged_with_create_into_read_ts_7df2fa10
-            #read_only_ids_merged_with_create_into_opt_value_read_ts_1f54e2bf
+            #read_only_ids_merged_with_create_into_opt_v_read_ts_1f54e2bf
             #read_only_ids_merged_with_create_into_table_type_ts_b605767e
             #read_only_ids_merged_with_create_into_where_equal_ts_1009eb88
             #read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts_876245c5
@@ -2096,8 +2095,8 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
             .collect::<Vec<Ts2>>();
         quote! {#(#field_enum_vrts_ts),*}
     };
-    let visit_u64_value_enum_vrts_ts = {
-        let visit_u64_value_enum_vrts_ts = (0..len).map(|i| {
+    let visit_u64_v_enum_vrts_ts = {
+        let visit_u64_v_enum_vrts_ts = (0..len).map(|i| {
             let i_u64_ts = {
                 let value = format!("{i}u64");
                 value.parse::<Ts2>().expect("828ff7b4")
@@ -2105,17 +2104,17 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
             let field_i_ts = gen_underscore_underscore_field_i_ts(i);
             quote! {#i_u64_ts => Ok(__Field::#field_i_ts)}
         });
-        quote! {#(#visit_u64_value_enum_vrts_ts),*}
+        quote! {#(#visit_u64_v_enum_vrts_ts),*}
     };
-    let visit_str_value_enum_vrts_ts = {
-        let visit_str_value_enum_vrts_ts = vec_ident.iter().enumerate().map(|(i, el)| {
+    let visit_str_v_enum_vrts_ts = {
+        let visit_str_v_enum_vrts_ts = vec_ident.iter().enumerate().map(|(i, el)| {
             let field_name_dq_ts = dq_ts(&el);
             gen_fi_dq_serde_private_ok_field_ts(&field_name_dq_ts, i)
         });
-        quote! {#(#visit_str_value_enum_vrts_ts),*,}
+        quote! {#(#visit_str_v_enum_vrts_ts),*,}
     };
-    let visit_bytes_value_enum_vrts_ts = {
-        let visit_bytes_value_enum_vrts_ts = vec_ident.iter().enumerate().map(|(i, el)| {
+    let visit_bytes_v_enum_vrts_ts = {
+        let visit_bytes_v_enum_vrts_ts = vec_ident.iter().enumerate().map(|(i, el)| {
             let b_field_name_dq_ts = {
                 let el_ident_dq_str = dq_str(&el.to_string());
                 let value = format!("b{el_ident_dq_str}");
@@ -2123,7 +2122,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
             };
             gen_fi_dq_serde_private_ok_field_ts(&b_field_name_dq_ts, i)
         });
-        quote! {#(#visit_bytes_value_enum_vrts_ts),*,}
+        quote! {#(#visit_bytes_v_enum_vrts_ts),*,}
     };
     let struct_ident_dq_ts = gen_struct_ident_dq_ts(&ident);
     let visit_seq_fields_init_ts = {
@@ -2243,7 +2242,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                             __E: _serde::de::Error,
                         {
                             match v {
-                                #visit_u64_value_enum_vrts_ts,
+                                #visit_u64_v_enum_vrts_ts,
                                 _ => Ok(__Field::__ignore),
                             }
                         }
@@ -2255,7 +2254,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                             __E: _serde::de::Error,
                         {
                             match v {
-                                #visit_str_value_enum_vrts_ts
+                                #visit_str_v_enum_vrts_ts
                                 _ => Ok(__Field::__ignore),
                             }
                         }
@@ -2267,7 +2266,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
                             __E: _serde::de::Error,
                         {
                             match v {
-                                #visit_bytes_value_enum_vrts_ts
+                                #visit_bytes_v_enum_vrts_ts
                                 _ => Ok(__Field::__ignore),
                             }
                         }
@@ -2366,7 +2365,7 @@ pub fn mb_wrap_into_braces_ts(ts: &dyn ToTokens, wrap: bool) -> Ts2 {
         quote! {#ts}
     }
 }
-pub fn gen_value_init_ts(import_path: &ImportPath, ts: &dyn ToTokens) -> Ts2 {
+pub fn gen_v_init_ts(import_path: &ImportPath, ts: &dyn ToTokens) -> Ts2 {
     quote! {#import_path::V { #ValueSc: #ts }}
 }
 pub fn impl_pg_type_equal_operator_for_ident_ts(

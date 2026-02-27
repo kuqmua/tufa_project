@@ -40,11 +40,11 @@ pub fn gen_read_one_query_string(table: &str, select_string: &str, where_string:
     format!("select {select_string} from {table} where {where_string}")
 }
 #[must_use]
-pub fn gen_column_queals_value_comma_update_one_query_part(column: &str, value: &str) -> String {
+pub fn gen_column_queals_v_comma_update_one_query_part(column: &str, value: &str) -> String {
     format!("{column} = {value},")
 }
 #[must_use]
-pub fn gen_when_column_id_then_value_update_many_query_part(
+pub fn gen_when_column_id_then_v_update_many_query_part(
     column: &str,
     id: &str,
     value: &str,

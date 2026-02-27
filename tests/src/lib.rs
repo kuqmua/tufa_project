@@ -35,7 +35,7 @@ mod tests {
         Expect,
         Panic,
     }
-    fn toml_value_from_from_cargo_toml_workspace() -> Value {
+    fn toml_v_from_from_cargo_toml_workspace() -> Value {
         let mut file = File::open("../Cargo.toml").expect("39a0d238");
         let mut acc = String::new();
         let _: usize = Read::read_to_string(&mut file, &mut acc).expect("2f5914f2");
@@ -43,9 +43,9 @@ mod tests {
         table.get("workspace").expect("f728192d").clone()
     }
     fn lints_vec_from_cargo_toml_workspace(rust_or_clippy: RustOrClippy) -> Vec<String> {
-        let workspace = toml_value_from_from_cargo_toml_workspace();
+        let workspace = toml_v_from_from_cargo_toml_workspace();
         let lints = workspace.get("lints").expect("82eaea37");
-        let toml_value_table = match lints.get(rust_or_clippy.name()).expect("dbd02f72").clone() {
+        let toml_v_table = match lints.get(rust_or_clippy.name()).expect("dbd02f72").clone() {
             Value::Table(v) => v,
             Value::String(_)
             | Value::Integer(_)
@@ -54,7 +54,7 @@ mod tests {
             | Value::Datetime(_)
             | Value::Array(_) => panic!("cae226cd"),
         };
-        toml_value_table.keys().cloned().collect::<Vec<String>>()
+        toml_v_table.keys().cloned().collect::<Vec<String>>()
     }
     fn compare_lints_vecs(
         rust_or_clippy: RustOrClippy,
@@ -278,7 +278,7 @@ mod tests {
     }
     #[test]
     fn check_workspace_dependencies_having_exact_version() {
-        for (_, v_5c36cb98) in match toml_value_from_from_cargo_toml_workspace()
+        for (_, v_5c36cb98) in match toml_v_from_from_cargo_toml_workspace()
             .get("dependencies")
             .expect("2376f58e")
             .clone()
