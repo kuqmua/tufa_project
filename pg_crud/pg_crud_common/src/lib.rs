@@ -506,7 +506,7 @@ pub enum QueryPartEr {
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, OptimalPack)]
 pub struct PgTypeWhere<T> {
-    value: NotEmptyUniqueVec<T>,
+    v: NotEmptyUniqueVec<T>,
     operator: Operator,
 }
 impl<T: PartialEq + Clone> PgTypeWhere<T> {
@@ -515,18 +515,12 @@ impl<T: PartialEq + Clone> PgTypeWhere<T> {
         &self.operator
     }
     #[must_use]
-    pub const fn new(operator: Operator, value: NotEmptyUniqueVec<T>) -> Self {
-        Self { value, operator }
+    pub const fn new(operator: Operator, v: NotEmptyUniqueVec<T>) -> Self {
+        Self { v, operator }
     }
-    pub fn try_new(
-        operator: Operator,
-        value: Vec<T>,
-    ) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
-        match NotEmptyUniqueVec::try_new(value) {
-            Ok(v_56f976af) => Ok(Self {
-                operator,
-                value: v_56f976af,
-            }),
+    pub fn try_new(operator: Operator, v: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
+        match NotEmptyUniqueVec::try_new(v) {
+            Ok(v0) => Ok(Self { operator, v: v0 }),
             Err(er) => Err(er),
         }
     }
@@ -573,7 +567,7 @@ const _: () = {
                 {
                     match v {
                         "operator" => Ok(__Field::f0),
-                        "value" => Ok(__Field::f1),
+                        "v" => Ok(__Field::f1),
                         _ => Ok(__Field::__ignore),
                     }
                 }
@@ -583,7 +577,7 @@ const _: () = {
                 {
                     match v {
                         b"operator" => Ok(__Field::f0),
-                        b"value" => Ok(__Field::f1),
+                        b"v" => Ok(__Field::f1),
                         _ => Ok(__Field::__ignore),
                     }
                 }
@@ -657,7 +651,7 @@ const _: () = {
                             __Field::f1 => {
                                 if Option::is_some(&f1) {
                                     return Err(
-                                        <__A::Error as _serde::de::Error>::duplicate_field("value"),
+                                        <__A::Error as _serde::de::Error>::duplicate_field("v"),
                                     );
                                 }
                                 f1 = Some(_serde::de::MapAccess::next_value::<Vec<T>>(&mut __map)?);
@@ -676,7 +670,7 @@ const _: () = {
                     };
                     let f1_value = match f1 {
                         Some(v) => v,
-                        None => _serde::__private228::de::missing_field("value")?,
+                        None => _serde::__private228::de::missing_field("v")?,
                     };
                     match PgTypeWhere::try_new(f0_value, f1_value) {
                         Ok(v) => Ok(v),
@@ -685,7 +679,7 @@ const _: () = {
                 }
             }
             #[doc(hidden)]
-            const FIELDS: &[&str] = &["operator", "value"];
+            const FIELDS: &[&str] = &["operator", "v"];
             Deserializer::deserialize_struct(
                 __deserializer,
                 "PgTypeWhere",
@@ -705,7 +699,7 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
         self,
         mut query: Query<'query_lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
-        for el in self.value.0 {
+        for el in self.v.0 {
             match PgTypeWhereFilter::query_bind(el, query) {
                 Ok(v) => {
                     query = v;
@@ -725,7 +719,7 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
     ) -> Result<String, QueryPartEr> {
         let mut acc = String::default();
         let mut is_need_to_add_operator_inner_handle = false;
-        for el in &self.value.0 {
+        for el in &self.v.0 {
             match PgTypeWhereFilter::query_part(
                 el,
                 incr,
@@ -757,7 +751,7 @@ impl<T: Debug + PartialEq + Clone + AllEnumVrtsArrDefaultOptSomeVecOneEl> Defaul
     fn default_opt_some_vec_one_el() -> Self {
         Self {
             operator: DefaultOptSomeVecOneEl::default_opt_some_vec_one_el(),
-            value: NotEmptyUniqueVec::try_new(
+            v: NotEmptyUniqueVec::try_new(
                 AllEnumVrtsArrDefaultOptSomeVecOneEl::all_vrts_default_opt_some_vec_one_el(),
             )
             .expect("a918b427"),
@@ -1719,6 +1713,6 @@ pub fn uuid_uuid_test_cases_vec() -> [Uuid; 1] {
     [Uuid::new_v4()]
 }
 #[must_use]
-pub fn wrap_into_jsonb_build_object(field: &str, value: &str) -> String {
-    format!("jsonb_build_object('{field}',{value})||")
+pub fn wrap_into_jsonb_build_object(field: &str, v: &str) -> String {
+    format!("jsonb_build_object('{field}',{v})||")
 }
