@@ -210,7 +210,7 @@ pub trait PgTypeTestCases {
     ) -> <Self::PgType as PgType>::ReadOnlyIds;
     fn read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
         value: &<Self::PgType as PgType>::ReadOnlyIds,
-    ) -> Option<Value<<Self::PgType as PgType>::Read>>;
+    ) -> Option<V<<Self::PgType as PgType>::Read>>;
     fn previous_read_merged_with_opt_update_into_read(
         read: <Self::PgType as PgType>::Read,
         opt_update: Option<<Self::PgType as PgType>::Update>,
@@ -222,7 +222,7 @@ pub trait PgTypeTestCases {
     fn read_only_ids_merged_with_create_into_opt_value_read(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
-    ) -> Option<Value<<Self::PgType as PgType>::Read>>;
+    ) -> Option<V<<Self::PgType as PgType>::Read>>;
     fn read_only_ids_merged_with_create_into_table_type(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
@@ -337,13 +337,13 @@ pub trait PgJsonTypeTestCases {
     ) -> <Self::PgJsonType as PgJsonType>::Update;
     fn read_only_ids_into_opt_value_read_inner(
         value: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
-    ) -> Option<Value<<Self::PgJsonType as PgJsonType>::ReadInner>>;
+    ) -> Option<V<<Self::PgJsonType as PgJsonType>::ReadInner>>;
     fn update_to_read_only_ids(
         value: &<Self::PgJsonType as PgJsonType>::Update,
     ) -> <Self::PgJsonType as PgJsonType>::ReadOnlyIds;
     fn read_only_ids_to_opt_value_read_default_opt_some_vec_one_el(
         value: &<Self::PgJsonType as PgJsonType>::ReadOnlyIds,
-    ) -> Option<Value<<Self::PgJsonType as PgJsonType>::Read>>;
+    ) -> Option<V<<Self::PgJsonType as PgJsonType>::Read>>;
     fn previous_read_merged_with_opt_update_into_read(
         read: <Self::PgJsonType as PgJsonType>::Read,
         opt_update: Option<<Self::PgJsonType as PgJsonType>::Update>,
@@ -355,7 +355,7 @@ pub trait PgJsonTypeTestCases {
     fn read_only_ids_merged_with_create_into_opt_value_read(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
-    ) -> Option<Value<<Self::PgJsonType as PgJsonType>::Read>>;
+    ) -> Option<V<<Self::PgJsonType as PgJsonType>::Read>>;
     fn read_only_ids_merged_with_create_into_table_type(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
@@ -1104,7 +1104,7 @@ impl DefaultOptSomeVecOneElMaxPageSize for PaginationStartsWithZero {
 #[derive(
     Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema, OptimalPack,
 )]
-pub struct Value<T> {
+pub struct V<T> {
     pub value: T,
 }
 //todo ExactSizeIterator now is not a solution. er[E0658]: use of unstable library feature `exact_size_is_empty`. mb rewrite it later
@@ -1305,7 +1305,7 @@ pub struct JsonFieldRights {
     can_update: bool,
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, OptimalPack)]
-pub struct NonPrimaryKPgTypeReadOnlyIds(pub Value<Option<()>>);
+pub struct NonPrimaryKPgTypeReadOnlyIds(pub V<Option<()>>);
 impl Decode<'_, Postgres> for NonPrimaryKPgTypeReadOnlyIds {
     fn decode(value: PgValueRef<'_>) -> Result<Self, BoxDynError> {
         match <Json<Self> as Decode<Postgres>>::decode(value) {
@@ -1324,7 +1324,7 @@ impl Type<Postgres> for NonPrimaryKPgTypeReadOnlyIds {
 }
 impl Default for NonPrimaryKPgTypeReadOnlyIds {
     fn default() -> Self {
-        Self(Value { value: None })
+        Self(V { value: None })
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]

@@ -39,7 +39,7 @@ use naming::{
     SelectOnlyCreatedIdsQueryPartSc, SelectOnlyIdsQueryPartSc, SelectOnlyUpdatedIdsQueryBindSc,
     SelectOnlyUpdatedIdsQueryPartSc, SelectQueryPartSc, SelectUcc, SelfUcc, TableTypeSc,
     TableTypeUcc, UpdateForQueryUcc, UpdateQueryBindSc, UpdateQueryPartSc, UpdateToReadOnlyIdsSc,
-    UpdateUcc, ValueSc, ValueUcc, WhereUcc,
+    UpdateUcc, VUcc, ValueSc, WhereUcc,
     param::{SelfCreateUcc, SelfSelectUcc, SelfWhereUcc},
 };
 use optimal_pack::OptimalPack;
@@ -1258,7 +1258,7 @@ fn gen_read_only_ids_to_opt_value_read_default_opt_some_vec_one_el_ts(
     quote! {
         fn #ReadOnlyIdsToOptValueReadDefaultOptSomeVecOneElSc(
             #ValueSc: &#path_ts::#ReadOnlyIdsUcc
-        ) -> Option<#import_path::#ValueUcc<#path_ts::#ReadUcc>> {
+        ) -> Option<#import_path::#VUcc<#path_ts::#ReadUcc>> {
             #ts
         }
     }
@@ -1298,7 +1298,7 @@ fn gen_read_only_ids_merged_with_create_into_opt_value_read_ts(
         fn #ReadOnlyIdsMergedWithCreateIntoOptValueReadSc(
             #ReadOnlyIdsSc: #path_ts::#ReadOnlyIdsUcc,
             #CreateSc: #path_ts::#CreateUcc
-        ) -> Option<#import_path::#ValueUcc<#path_ts::#ReadUcc>> {
+        ) -> Option<#import_path::#VUcc<#path_ts::#ReadUcc>> {
             #ts
         }
     }
@@ -2015,7 +2015,7 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
             #read_inner_into_update_with_new_or_try_new_unwraped_ts_b45cde72
             fn #ReadOnlyIdsIntoOptValueReadInnerSc(
                 #ValueSc: #self_pg_json_type_as_pg_json_type_ts::#ReadOnlyIdsUcc
-            ) -> Option<#import_path::#ValueUcc<#self_pg_json_type_as_pg_json_type_ts::#ReadInnerUcc>> {
+            ) -> Option<#import_path::#VUcc<#self_pg_json_type_as_pg_json_type_ts::#ReadInnerUcc>> {
                 #read_only_ids_into_opt_value_read_inner_ts
             }
             #update_to_read_only_ids_ts_d7e0cbf0
@@ -2367,7 +2367,7 @@ pub fn mb_wrap_into_braces_ts(ts: &dyn ToTokens, wrap: bool) -> Ts2 {
     }
 }
 pub fn gen_value_init_ts(import_path: &ImportPath, ts: &dyn ToTokens) -> Ts2 {
-    quote! {#import_path::Value { #ValueSc: #ts }}
+    quote! {#import_path::V { #ValueSc: #ts }}
 }
 pub fn impl_pg_type_equal_operator_for_ident_ts(
     import_path: &ImportPath,

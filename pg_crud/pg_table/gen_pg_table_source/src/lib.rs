@@ -50,7 +50,7 @@ use naming::{
     ToTokensToScStr, ToTokensToUccTs, TrueSc, TryBindSc, TryBindUcc, UpdateForQuerySc,
     UpdateForQueryUcc, UpdateForQueryVecSc, UpdateManyExtraErVrtsSc, UpdateManyExtraLogicSc,
     UpdateOneExtraErVrtsSc, UpdateOneExtraLogicSc, UpdateQueryBindSc, UpdateQueryPartPrimaryKSc,
-    UpdateQueryPartSc, UpdateSc, UpdateUcc, UrlSc, ValueSc, ValueUcc, WhereManySc, WhereUcc,
+    UpdateQueryPartSc, UpdateSc, UpdateUcc, UrlSc, VUcc, ValueSc, WhereManySc, WhereUcc,
     param::{
         ErSelfSc, IsSelfUpdateExistSc, SelfCreateUcc, SelfDeleteManyParamsUcc,
         SelfDeleteManyPayloadUcc, SelfDeleteOneErWithSerdeUcc, SelfDeleteOneParamsUcc,
@@ -939,7 +939,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let ident_read_ucc = SelfReadUcc::from_tokens(&ident);
     let gen_value_decl_ts = |ts: &dyn ToTokens| {
-        quote! {#PgCrudSc::#ValueUcc<#ts>}
+        quote! {#PgCrudSc::#VUcc<#ts>}
     };
     let gen_import_path_value_init_ts = |ts: &dyn ToTokens| gen_value_init_ts(&import_path, &ts);
     let gen_impl_pg_crud_default_opt_some_vec_one_el_for_tokens_no_lifetime_ts =
@@ -1527,7 +1527,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #primary_k_fi_string_dq_ts
                         ) {
                             Ok(v_dccdf117) => {
-                                #primary_k_fi = Some(#import_path::#ValueUcc { value: v_dccdf117});
+                                #primary_k_fi = Some(#import_path::#VUcc { value: v_dccdf117});
                             },
                             Err(#Er0) => {
                                 return Err(#Er0);
@@ -1551,7 +1551,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 #fi_string_dq_ts
                             ) {
                                 Ok(v_09b0fc09) => {
-                                    #fi = Some(#import_path::#ValueUcc { value: v_09b0fc09});
+                                    #fi = Some(#import_path::#VUcc { value: v_09b0fc09});
                                 },
                                 Err(#Er0) => {
                                     return Err(#Er0);
@@ -1716,7 +1716,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let ident_update_ts = {
         let gen_opt_value_ft_as_pg_type_update_ts = |syn_type: &Type| {
             let path_value_ts = {
-                let value = format!("{PgCrudSc}::{ValueUcc}");
+                let value = format!("{PgCrudSc}::{VUcc}");
                 value.parse::<Ts2>().expect("dbdbb7f2")
             };
             let syn_type_as_pg_type_update_ts = gen_as_pg_type_update_ts(&syn_type);
@@ -1827,7 +1827,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &|el: &SynFieldWrapper| {
                                 let fi = &el.ident;
                                 quote! {
-                                    #fi: Some(pg_crud::Value{
+                                    #fi: Some(pg_crud::V{
                                         #ValueSc: #PgCrudDefaultOptSomeVecOneElCall
                                     })
                                 }
@@ -1862,7 +1862,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let fi = &el.ident;
                         let opt_value_ft_as_pg_type_update_for_query_ts = {
                             let path_value_ts = {
-                                let value = format!("{PgCrudSc}::{ValueUcc}");
+                                let value = format!("{PgCrudSc}::{VUcc}");
                                 value.parse::<Ts2>().expect("2b09d4ae")
                             };
                             let syn_type_as_pg_type_update_for_query_ts = gen_as_pg_type_update_for_query_ts(&el.type0);
@@ -1906,7 +1906,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ft_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
                     quote! {
                         fn #update_query_part_fi_sc(
-                            #ValueSc: &pg_crud::Value<#ft_as_pg_crud_pg_type_pg_type_ts #UpdateForQueryUcc>,
+                            #ValueSc: &pg_crud::V<#ft_as_pg_crud_pg_type_pg_type_ts #UpdateForQueryUcc>,
                             #IncrSc: &mut u64
                         ) -> Result<#StringTs, #PgCrudSc::#QueryPartErUcc> {
                             match #ft_as_pg_crud_pg_type_pg_type_ts #UpdateQueryPartSc(

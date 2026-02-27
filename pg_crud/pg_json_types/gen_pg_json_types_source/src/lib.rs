@@ -1711,7 +1711,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     } else {
                         opt_unit_ts
                     };
-                    quote!{(pub #import_path::Value<#content_ts>);}
+                    quote!{(pub #import_path::V<#content_ts>);}
                 }
             );
         let ident_read_inner_ts = {

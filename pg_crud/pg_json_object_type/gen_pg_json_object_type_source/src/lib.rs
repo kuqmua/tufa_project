@@ -35,8 +35,8 @@ use naming::{
     SelectOnlyCreatedIdsQueryBindSc, SelectOnlyCreatedIdsQueryPartSc, SelectOnlyIdsQueryPartSc,
     SelectOnlyUpdatedIdsQueryBindSc, SelectOnlyUpdatedIdsQueryPartSc, SelectQueryPartPgTypeSc,
     SelectQueryPartSc, SelfSc, SelfUcc, StdOptOptObjectAccSc, ToTokensToUccTs, UpdateQueryBindSc,
-    UpdateQueryPartSc, UpdateSc, UpdateToReadOnlyIdsSc, UuidUuidAsNotNullJsonbStringUcc, ValueSc,
-    ValueUcc, VecOfUcc, WithIdUcc,
+    UpdateQueryPartSc, UpdateSc, UpdateToReadOnlyIdsSc, UuidUuidAsNotNullJsonbStringUcc, VUcc,
+    ValueSc, VecOfUcc, WithIdUcc,
     param::{
         ElSelfUcc, SelfCreateForQueryUcc, SelfCreateUcc, SelfCurrentSc,
         SelfGenPgJsonObjectTypeModSc, SelfLastSc, SelfReadInnerUcc, SelfReadOnlyIdsHandleUcc,
@@ -279,7 +279,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 #import_path::#DefaultOptSomeVecOneElUcc
             >::#DefaultOptSomeVecOneElSc
         };
-        let import_path_value_ts = quote!{#import_path::#ValueUcc};
+        let import_path_value_ts = quote!{#import_path::#VUcc};
         let wrap_into_value_decl_ts = |ident_ts: &dyn ToTokens|{
             quote!{#import_path_value_ts<#ident_ts>}
         };
