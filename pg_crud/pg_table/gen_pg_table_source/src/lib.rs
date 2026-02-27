@@ -22,8 +22,8 @@ use naming::{
     DeleteManyExtraLogicSc, DeleteOneExtraErVrtsSc, DeleteOneExtraLogicSc, DeserializeResUcc,
     DesirableUcc, DisplayPlusToTokens, DisplayToScStr, ElSc, EndpointLocationSc, ErSc,
     ExecutorAcquireSc, ExecutorSc, ExpectedResSc, ExtraParamsSc, FailedToGetResTextUcc, FalseSc,
-    FromHandleSc, FutureSc, GenColumnQuealsValueCommaUpdateOneQueryPartSc, GenPgTablePrimaryKSc,
-    GenSelectQueryPartSc, GenWhenColumnIdThenValueUpdateManyQueryPartSc,
+    FromHandleSc, FutureSc, GenColumnQuealsVCommaUpdateOneQueryPartSc, GenPgTablePrimaryKSc,
+    GenSelectQueryPartSc, GenWhenColumnIdThenVUpdateManyQueryPartSc,
     HeaderContentTypeApplicationJsonNotFoundUcc, HeadersSc, IdentCreateDefaultSc, IncrSc,
     IntoSerdeVersionSc, LocSc, NoFieldsProvidedUcc, NotUniqueFieldSc, NotUniqueFieldUcc,
     NotUniquePrimaryKSc, NotUniquePrimaryKUcc, OptVecCreateSc, OrderBySc, OrderByUcc, OrderSc,
@@ -3931,7 +3931,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 let update_query_part_fi_sc =
                                     UpdateQueryPartSelfSc::from_tokens(&fi);
                                 let gen_when_column_id_then_v_update_many_query_part_sc =
-                                    GenWhenColumnIdThenValueUpdateManyQueryPartSc;
+                                    GenWhenColumnIdThenVUpdateManyQueryPartSc;
                                 quote! {
                                     {
                                         let mut #is_fi_update_exists_sc = false;
@@ -4202,7 +4202,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     column!(),
                                 );
                                 let gen_column_queals_v_comma_update_one_query_part_sc =
-                                    GenColumnQuealsValueCommaUpdateOneQueryPartSc;
+                                    GenColumnQuealsVCommaUpdateOneQueryPartSc;
                                 let update_query_part_fi_sc =
                                     UpdateQueryPartSelfSc::from_tokens(&fi);
                                 quote! {

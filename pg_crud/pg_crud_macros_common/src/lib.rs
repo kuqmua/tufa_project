@@ -33,7 +33,7 @@ use naming::{
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
     ReadOnlyIdsMergedWithCreateIntoWhereEqualSc,
     ReadOnlyIdsMergedWithTableTypeIntoPgTypeOptWhereGreaterThanSc, ReadOnlyIdsSc,
-    ReadOnlyIdsToOptValueReadDefaultOptSomeVecOneElSc, ReadOnlyIdsToTwoDimalVecReadInnerSc,
+    ReadOnlyIdsToOptVReadDefaultOptSomeVecOneElSc, ReadOnlyIdsToTwoDimalVecReadInnerSc,
     ReadOnlyIdsUcc, ReadSc, ReadUcc, SelectOnlyCreatedIdsQueryBindSc,
     SelectOnlyCreatedIdsQueryPartSc, SelectOnlyIdsQueryPartSc, SelectOnlyUpdatedIdsQueryBindSc,
     SelectOnlyUpdatedIdsQueryPartSc, SelectQueryPartSc, SelectUcc, SelfUcc, TableTypeSc,
@@ -1255,7 +1255,7 @@ fn gen_read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts(
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #ReadOnlyIdsToOptValueReadDefaultOptSomeVecOneElSc(
+        fn #ReadOnlyIdsToOptVReadDefaultOptSomeVecOneElSc(
             #ValueSc: &#path_ts::#ReadOnlyIdsUcc
         ) -> Option<#import_path::#VUcc<#path_ts::#ReadUcc>> {
             #ts

@@ -31,7 +31,7 @@ use naming::{
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSc,
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
     ReadOnlyIdsMergedWithCreateIntoWhereEqualSc, ReadOnlyIdsSc,
-    ReadOnlyIdsToOptValueReadDefaultOptSomeVecOneElSc, ReadOnlyIdsToTwoDimalVecReadInnerSc, ReadSc,
+    ReadOnlyIdsToOptVReadDefaultOptSomeVecOneElSc, ReadOnlyIdsToTwoDimalVecReadInnerSc, ReadSc,
     SelectOnlyCreatedIdsQueryBindSc, SelectOnlyCreatedIdsQueryPartSc, SelectOnlyIdsQueryPartSc,
     SelectOnlyUpdatedIdsQueryBindSc, SelectOnlyUpdatedIdsQueryPartSc, SelectQueryPartPgTypeSc,
     SelectQueryPartSc, SelfSc, SelfUcc, StdOptOptObjectAccSc, ToTokensToUccTs, UpdateQueryBindSc,
@@ -6856,7 +6856,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let read_inner_into_read_with_new_or_try_new_unwraped_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadInnerIntoReadWithNewOrTryNewUnwrapedSc(#ValueSc)};
             let read_inner_into_update_with_new_or_try_new_unwraped_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc(#ValueSc)};
             let update_to_read_only_ids_ts = quote! {#self_as_pg_json_type_test_cases_ts::#UpdateToReadOnlyIdsSc(#ValueSc)};
-            let read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToOptValueReadDefaultOptSomeVecOneElSc(#ValueSc)};
+            let read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToOptVReadDefaultOptSomeVecOneElSc(#ValueSc)};
             let previous_read_merged_with_opt_update_into_read_ts = quote! {#self_as_pg_json_type_test_cases_ts::#PreviousReadMergedWithOptUpdateIntoReadSc(#ReadSc, #OptUpdateSc)};
             let read_only_ids_merged_with_create_into_read_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoReadSc(
                 #ReadOnlyIdsSc,
