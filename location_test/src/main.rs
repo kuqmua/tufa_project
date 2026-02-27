@@ -1,6 +1,6 @@
 // todo is there is no point to add extra info to enum like this
 // eo_location_field: {
-//     eo_display_with_serde_field: value
+//     eo_display_with_serde_field: v
 // }
 // https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/location_test/src/main.rs#L85 2024-05-06 09:17:23
 // impl display like this this
@@ -82,16 +82,16 @@ impl ToErrString for SerdeStruct {
 fn main() {
     let er = ErOne::Vrt {
         eo_display_field: DisplayStruct {
-            display: String::from("value"),
+            display: String::from("v"),
             something: true,
         },
         eo_serde: SerdeStruct {
-            one: String::from("value"),
+            one: String::from("v"),
             two: true,
             three: 42,
         },
         eo_location_field: ErTwo::Vrt {
-            eo_display_with_serde_field: String::from("value"),
+            eo_display_with_serde_field: String::from("v"),
             loc: loc!(),
         },
         eo_vec_display_field: vec![
@@ -106,7 +106,7 @@ fn main() {
         ],
         eo_vec_serde: vec![
             SerdeStruct {
-                one: String::from("value"),
+                one: String::from("v"),
                 two: true,
                 three: 42,
             },
@@ -118,7 +118,7 @@ fn main() {
         ],
         eo_vec_location_field: vec![
             ErUnnamedOne::Something(ErTwo::Vrt {
-                eo_display_with_serde_field: String::from("value"),
+                eo_display_with_serde_field: String::from("v"),
                 loc: loc!(),
             }),
             ErUnnamedOne::Something(ErTwo::Vrt {

@@ -84,7 +84,7 @@ impl SourcePlaceType {
                 Err(er) => {
                     let default = Self::default();
                     eprintln!(
-                        "using default SourcePlaceType::{default:#?} (<SourcePlaceType as FromStr>::from_str(&value): {er}) {fix_message}"
+                        "using default SourcePlaceType::{default:#?} (<SourcePlaceType as FromStr>::from_str(&v): {er}) {fix_message}"
                     );
                     default
                 }

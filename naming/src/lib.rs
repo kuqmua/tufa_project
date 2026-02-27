@@ -983,25 +983,26 @@ impl ToTokens for HashMapSc {
 pub trait DisplayPlusToTokens: Display + ToTokens {}
 impl<T> DisplayPlusToTokens for T where T: Display + ToTokens {}
 pub trait SwaggerUrlPathSelfQuotesStr {
-    fn swagger_url_path_self_quotes_str(&self, table_name_str: &str) -> String;
+    fn swagger_url_path_self_quotes_str(&self, v: &str) -> String;
 }
 impl<T> SwaggerUrlPathSelfQuotesStr for T
 where
     T: AsRefStrToScStr,
 {
-    fn swagger_url_path_self_quotes_str(&self, table_name_str: &str) -> String {
-        dq_str(&format!("/{}/{}", table_name_str, self.case(),))
+    fn swagger_url_path_self_quotes_str(&self, v: &str) -> String {
+        dq_str(&format!("/{}/{}", v, self.case(),))
     }
 }
 pub trait SwaggerUrlPathSelfQuotesTokenStream {
-    fn swagger_url_path_self_quotes_ts(&self, table_name_str: &str) -> Ts2;
+    fn swagger_url_path_self_quotes_ts(&self, v: &str) -> Ts2;
 }
 impl<T> SwaggerUrlPathSelfQuotesTokenStream for T
 where
     T: SwaggerUrlPathSelfQuotesStr,
 {
-    fn swagger_url_path_self_quotes_ts(&self, table_name_str: &str) -> Ts2 {
-        let value = self.swagger_url_path_self_quotes_str(table_name_str);
-        value.parse::<Ts2>().expect("f292686b")
+    fn swagger_url_path_self_quotes_ts(&self, v: &str) -> Ts2 {
+        self.swagger_url_path_self_quotes_str(v)
+            .parse::<Ts2>()
+            .expect("f292686b")
     }
 }

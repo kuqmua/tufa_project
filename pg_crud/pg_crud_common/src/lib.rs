@@ -53,40 +53,40 @@ pub trait PgType {
     type TableType: TableTypeAl;
     fn create_table_column_query_part(column: &dyn Display, _: bool) -> impl Display;
     type Create: CreateAl;
-    fn create_query_part(value: &Self::Create, incr: &mut u64) -> Result<String, QueryPartEr>;
+    fn create_query_part(v: &Self::Create, incr: &mut u64) -> Result<String, QueryPartEr>;
     fn create_query_bind(
-        value: Self::Create,
+        v: Self::Create,
         query: Query<'_, Postgres, PgArguments>,
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
     type Select: SelectAl;
-    fn select_query_part(value: &Self::Select, column: &str) -> Result<String, QueryPartEr>;
+    fn select_query_part(v: &Self::Select, column: &str) -> Result<String, QueryPartEr>;
     type Where: WhereAl;
     type Read: ReadAl + for<'__> Decode<'__, Postgres> + Type<Postgres>;
-    fn normalize(value: Self::Read) -> Self::Read;
+    fn normalize(v: Self::Read) -> Self::Read;
     type ReadOnlyIds: ReadOnlyIdsAl;
     fn select_only_ids_query_part(column: &str) -> Result<String, QueryPartEr>;
     type ReadInner: ReadInnerAl;
-    fn into_inner(value: Self::Read) -> Self::ReadInner;
+    fn into_inner(v: Self::Read) -> Self::ReadInner;
     type Update: UpdateAl;
     type UpdateForQuery: UpdateForQueryAl;
     fn update_query_part(
-        value: &Self::UpdateForQuery,
+        v: &Self::UpdateForQuery,
         jsonb_set_accumulator: &str,
         jsonb_set_target: &str,
         jsonb_set_path: &str,
         incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
     fn update_query_bind(
-        value: Self::UpdateForQuery,
+        v: Self::UpdateForQuery,
         query: Query<'_, Postgres, PgArguments>,
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
     fn select_only_updated_ids_query_part(
-        value: &Self::UpdateForQuery,
+        v: &Self::UpdateForQuery,
         column: &str,
         incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
     fn select_only_updated_ids_query_bind<'lifetime>(
-        value: &'lifetime Self::UpdateForQuery,
+        v: &'lifetime Self::UpdateForQuery,
         query: Query<'lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'lifetime, Postgres, PgArguments>, String>;
 }
@@ -97,7 +97,7 @@ pub trait PgJsonType {
     type CreateForQuery: CreateForQueryAl + From<Self::Create>;
     type Select: SelectAl + UtoipaToSchemaAndSchemarsJsonSchemaAl;
     fn select_query_part(
-        value: &Self::Select,
+        v: &Self::Select,
         fi: &str,
         column_field: &str,
         //todo remove this coz its used properly now
@@ -114,38 +114,38 @@ pub trait PgJsonType {
     type ReadOnlyIds: ReadOnlyIdsAl;
     fn select_only_ids_query_part(column_field: &str) -> Result<String, QueryPartEr>;
     type ReadInner: ReadInnerAl;
-    fn into_inner(value: Self::Read) -> Self::ReadInner;
+    fn into_inner(v: Self::Read) -> Self::ReadInner;
     type Update: UpdateAl + UtoipaToSchemaAndSchemarsJsonSchemaAl;
     type UpdateForQuery: UpdateForQueryAl + From<Self::Update>;
     fn update_query_part(
-        value: &Self::UpdateForQuery,
+        v: &Self::UpdateForQuery,
         jsonb_set_accumulator: &str,
         jsonb_set_target: &str,
         jsonb_set_path: &str,
         incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
     fn update_query_bind(
-        value: Self::UpdateForQuery,
+        v: Self::UpdateForQuery,
         query: Query<'_, Postgres, PgArguments>,
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
     fn select_only_updated_ids_query_part(
-        value: &Self::UpdateForQuery,
+        v: &Self::UpdateForQuery,
         fi: &str,
         column_field: &str,
         incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
     fn select_only_updated_ids_query_bind<'lifetime>(
-        value: &'lifetime Self::UpdateForQuery,
+        v: &'lifetime Self::UpdateForQuery,
         query: Query<'lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'lifetime, Postgres, PgArguments>, String>;
     fn select_only_created_ids_query_part(
-        value: &Self::CreateForQuery,
+        v: &Self::CreateForQuery,
         fi: &str,
         column_field: &str,
         incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
     fn select_only_created_ids_query_bind<'lifetime>(
-        value: &'lifetime Self::CreateForQuery,
+        v: &'lifetime Self::CreateForQuery,
         query: Query<'lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'lifetime, Postgres, PgArguments>, String>;
 }
@@ -154,16 +154,16 @@ pub trait PgTypePrimaryK {
     type PgType: PgType;
     type TableType: TableTypeAl + PartialOrd;
     fn read_only_ids_into_table_type(
-        value: <Self::PgType as PgType>::ReadOnlyIds,
+        v: <Self::PgType as PgType>::ReadOnlyIds,
     ) -> <Self::PgType as PgType>::TableType;
     fn read_only_ids_into_read(
-        value: <Self::PgType as PgType>::ReadOnlyIds,
+        v: <Self::PgType as PgType>::ReadOnlyIds,
     ) -> <Self::PgType as PgType>::Read;
     fn read_only_ids_into_update(
-        value: <Self::PgType as PgType>::ReadOnlyIds,
+        v: <Self::PgType as PgType>::ReadOnlyIds,
     ) -> <Self::PgType as PgType>::Update;
     fn read_into_table_type(
-        value: <Self::PgType as PgType>::Read,
+        v: <Self::PgType as PgType>::Read,
     ) -> <Self::PgType as PgType>::TableType;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
@@ -180,14 +180,14 @@ pub trait PgJsonTypeObjectVecElId {
     type Update: UpdateAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + ToErrString;
     type ReadInner: ReadInnerAl;
     fn query_bind_string_as_pg_text_create_for_query(
-        value: <Self::PgJsonType as PgJsonType>::CreateForQuery,
+        v: <Self::PgJsonType as PgJsonType>::CreateForQuery,
         query: Query<'_, Postgres, PgArguments>,
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
     fn query_bind_string_as_pg_text_update_for_query(
-        value: <Self::PgJsonType as PgJsonType>::UpdateForQuery,
+        v: <Self::PgJsonType as PgJsonType>::UpdateForQuery,
         query: Query<'_, Postgres, PgArguments>,
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
-    fn get_inner(value: &<Self::PgJsonType as PgJsonType>::CreateForQuery) -> &Self::ReadInner;
+    fn get_inner(v: &<Self::PgJsonType as PgJsonType>::CreateForQuery) -> &Self::ReadInner;
     fn incr_checked_add_one(incr: &mut u64) -> Result<u64, QueryPartEr>;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
@@ -200,16 +200,16 @@ pub trait PgTypeTestCases {
         read_only_ids: &<Self::PgType as PgType>::ReadOnlyIds,
     ) -> Vec<Vec<<Self::PgType as PgType>::ReadInner>>;
     fn read_inner_into_read_with_new_or_try_new_unwraped(
-        value: <Self::PgType as PgType>::ReadInner,
+        v: <Self::PgType as PgType>::ReadInner,
     ) -> <Self::PgType as PgType>::Read;
     fn read_inner_into_update_with_new_or_try_new_unwraped(
-        value: <Self::PgType as PgType>::ReadInner,
+        v: <Self::PgType as PgType>::ReadInner,
     ) -> <Self::PgType as PgType>::Update;
     fn update_to_read_only_ids(
-        value: &<Self::PgType as PgType>::Update,
+        v: &<Self::PgType as PgType>::Update,
     ) -> <Self::PgType as PgType>::ReadOnlyIds;
     fn read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
-        value: &<Self::PgType as PgType>::ReadOnlyIds,
+        v: &<Self::PgType as PgType>::ReadOnlyIds,
     ) -> Option<V<<Self::PgType as PgType>::Read>>;
     fn previous_read_merged_with_opt_update_into_read(
         read: <Self::PgType as PgType>::Read,
@@ -330,19 +330,19 @@ pub trait PgJsonTypeTestCases {
         read_only_ids: &<Self::PgJsonType as PgJsonType>::ReadOnlyIds,
     ) -> Vec<Vec<<Self::PgJsonType as PgJsonType>::ReadInner>>;
     fn read_inner_into_read_with_new_or_try_new_unwraped(
-        value: <Self::PgJsonType as PgJsonType>::ReadInner,
+        v: <Self::PgJsonType as PgJsonType>::ReadInner,
     ) -> <Self::PgJsonType as PgJsonType>::Read;
     fn read_inner_into_update_with_new_or_try_new_unwraped(
-        value: <Self::PgJsonType as PgJsonType>::ReadInner,
+        v: <Self::PgJsonType as PgJsonType>::ReadInner,
     ) -> <Self::PgJsonType as PgJsonType>::Update;
     fn read_only_ids_into_opt_v_read_inner(
-        value: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
+        v: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
     ) -> Option<V<<Self::PgJsonType as PgJsonType>::ReadInner>>;
     fn update_to_read_only_ids(
-        value: &<Self::PgJsonType as PgJsonType>::Update,
+        v: &<Self::PgJsonType as PgJsonType>::Update,
     ) -> <Self::PgJsonType as PgJsonType>::ReadOnlyIds;
     fn read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
-        value: &<Self::PgJsonType as PgJsonType>::ReadOnlyIds,
+        v: &<Self::PgJsonType as PgJsonType>::ReadOnlyIds,
     ) -> Option<V<<Self::PgJsonType as PgJsonType>::Read>>;
     fn previous_read_merged_with_opt_update_into_read(
         read: <Self::PgJsonType as PgJsonType>::Read,
