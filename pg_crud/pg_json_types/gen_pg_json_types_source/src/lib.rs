@@ -1863,7 +1863,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             } else {
-                quote! {Ok(gen_pg_json_types_common::fi_jsonb_build_object_value(fi))}
+                quote! {Ok(gen_pg_json_types_common::fi_jsonb_build_object_v(fi))}
             };
             let select_only_created_or_updated_ids_query_bind_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                 quote! {

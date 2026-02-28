@@ -1706,7 +1706,3 @@ pub fn string_test_cases_vec() -> [String; 12] {
 pub fn uuid_uuid_test_cases_vec() -> [Uuid; 1] {
     [Uuid::new_v4()]
 }
-#[must_use]
-pub fn wrap_into_jsonb_build_object(field: &str, v: &str) -> String {
-    format!("jsonb_build_object('{field}',{v})||")
-}
