@@ -1087,7 +1087,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 };
                 quote! {
                     #ident_or_ident_with_id_stdrt_not_null_select_el_ucc::#vrt_name_ts(v_3c8acf6a) => match #ft_as_crud_pg_json_type_from_field_ts::#SelectQueryPartSc(
-                        &v_3c8acf6a,
+                        v_3c8acf6a,
                         #fi_dq_ts,
                         #column_field_fi_ts,
                         #column_field_for_er_message_fi_ts,
