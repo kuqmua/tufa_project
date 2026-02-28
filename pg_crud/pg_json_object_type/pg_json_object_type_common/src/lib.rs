@@ -9,7 +9,7 @@ use utoipa::ToSchema;
 pub enum UniqueVecTryNewEr<T> {
     NotUnique {
         #[eo_to_err_string_serde]
-        value: T,
+        v: T,
         loc: Loc,
     },
 }
@@ -33,7 +33,7 @@ impl<T: PartialEq + Clone> UniqueVec<T> {
         for el in &v {
             if acc.contains(&el) {
                 return Err(UniqueVecTryNewEr::NotUnique {
-                    value: el.clone(),
+                    v: el.clone(),
                     loc: loc!(),
                 });
             }

@@ -685,15 +685,15 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             quote! {#content_ts}
         };
         let ident_read_inner_ucc = SelfReadInnerUcc::from_tokens(&ident);
-        let value_ident_read_inner_ts = quote! {#ValueSc: #ident_read_inner_ucc};
+        let v_ident_read_inner_ts = quote! {#ValueSc: #ident_read_inner_ucc};
         let gen_pub_fn_new_v_ident_read_inner_content_ts = |content_ts: &dyn ToTokens| gen_pub_new_ts(
             &MustUse,
-            &value_ident_read_inner_ts,
+            &v_ident_read_inner_ts,
             &content_ts
         );
         let gen_pub_const_fn_new_v_ident_read_inner_content_ts = |content_ts: &dyn ToTokens| gen_pub_const_new_ts(
             &MustUse,
-            &value_ident_read_inner_ts,
+            &v_ident_read_inner_ts,
             &content_ts
         );
         let self_ident_origin_new_v_ts = quote! {Self(#ident_origin_ucc::new(#ValueSc))};
@@ -800,10 +800,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     &{
                         let content_ts: &dyn ToTokens = {
                             let gen_ident_origin_6f054930 = |is_nullable_70fb22e6: &IsNullable, pattern_042c1c1d: &Pattern| {
-                                let value = gen_ident_origin_non_wrapping_6c0934a6(is_nullable_70fb22e6, pattern_042c1c1d);
+                                let v = gen_ident_origin_non_wrapping_6c0934a6(is_nullable_70fb22e6, pattern_042c1c1d);
                                 match &is_nullable {
-                                    IsNullable::False => gen_vec_tokens_decl_ts(&value),
-                                    IsNullable::True => gen_opt_type_decl_ts(&value),
+                                    IsNullable::False => gen_vec_tokens_decl_ts(&v),
+                                    IsNullable::True => gen_opt_type_decl_ts(&v),
                                 }
                             };
                             let gen_dims_ts = |dim1_is_nullable_a5c667cd: &IsNullable|{
@@ -835,7 +835,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 };
                 match &pattern {
                     Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => quote! {value},
+                        IsNullable::False => quote! {#ValueSc},
                         IsNullable::True => gen_v_map_type_new_ts(&ident_stdrt_not_null_origin_ucc),
                     },
                     Pattern::ArrDim1 { dim1_is_nullable } => gen_arr_dims_init_ts(&{
@@ -1233,8 +1233,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         }
                         Pattern::ArrDim1 { dim1_is_nullable } => {
                             let arr_dim1_inner_el_ident_table_type_ucc = {
-                                let value = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("21eaebaf")));
-                                quote! {#value}
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("21eaebaf")));
+                                quote! {#v}
                             };
                             let common_arr_dim1_pg_json_type_filters = {
                                 let mut vec = common_pg_json_type_filters;
@@ -1288,12 +1288,12 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         }
                         Pattern::ArrDim2 { dim1_is_nullable, dim2_is_nullable } => {
                             let arr_dim1_inner_el_ident_table_type_ucc = {
-                                let value = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("0c4491c4")));
-                                quote! {#value}
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("0c4491c4")));
+                                quote! {#v}
                             };
                             let arr_dim2_inner_el_ident_table_type_ucc = {
-                                let value = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim2_is_nullable, &pattern.down_by_2().expect("2d4ee5d4")));
-                                quote! {#value}
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim2_is_nullable, &pattern.down_by_2().expect("2d4ee5d4")));
+                                quote! {#v}
                             };
                             let common_arr_dim2_pg_json_type_filters = {
                                 let mut vec = common_pg_json_type_filters;
@@ -1362,16 +1362,16 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             dim3_is_nullable,
                         } => {
                             let arr_dim1_inner_el_ident_table_type_ucc = {
-                                let value = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("3450bef4")));
-                                quote! {#value}
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("3450bef4")));
+                                quote! {#v}
                             };
                             let arr_dim2_inner_el_ident_table_type_ucc = {
-                                let value = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim2_is_nullable, &pattern.down_by_2().expect("3c0d10f4")));
-                                quote! {#value}
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim2_is_nullable, &pattern.down_by_2().expect("3c0d10f4")));
+                                quote! {#v}
                             };
                             let arr_dim3_inner_el_ident_table_type_ucc = {
-                                let value = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim3_is_nullable, &pattern.down_by_3().expect("9aaf9e82")));
-                                quote! {#value}
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim3_is_nullable, &pattern.down_by_3().expect("9aaf9e82")));
+                                quote! {#v}
                             };
                             let common_arr_dim3_pg_json_type_filters = {
                                 let mut vec = common_pg_json_type_filters;
@@ -1452,20 +1452,20 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             dim4_is_nullable,
                         } => {
                             let arr_dim1_inner_el_ident_table_type_ucc = {
-                                let value = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("550d313b")));
-                                quote! {#value}
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("550d313b")));
+                                quote! {#v}
                             };
                             let arr_dim2_inner_el_ident_table_type_ucc = {
-                                let value = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim2_is_nullable, &pattern.down_by_2().expect("7bda1424")));
-                                quote! {#value}
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim2_is_nullable, &pattern.down_by_2().expect("7bda1424")));
+                                quote! {#v}
                             };
                             let arr_dim3_inner_el_ident_table_type_ucc = {
-                                let value = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim3_is_nullable, &pattern.down_by_3().expect("b43aa5bd")));
-                                quote! {#value}
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim3_is_nullable, &pattern.down_by_3().expect("b43aa5bd")));
+                                quote! {#v}
                             };
                             let arr_dim4_inner_el_ident_table_type_ucc = {
-                                let value = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim4_is_nullable, &pattern.down_by_4().expect("a246885a")));
-                                quote! {#value}
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim4_is_nullable, &pattern.down_by_4().expect("a246885a")));
+                                quote! {#v}
                             };
                             let common_arr_dim4_pg_json_type_filters = {
                                 let mut vec = common_pg_json_type_filters;
@@ -1753,18 +1753,18 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 },
             };
             let impl_from_ident_origin_for_ident_read_inner_ts = {
-                let value_dot_zero_ts = quote!{#ValueSc.0};
-                let nullable_ts = quote!{#value_dot_zero_ts.map(Into::into)};
+                let v_dot_zero_ts = quote!{#ValueSc.0};
+                let nullable_ts = quote!{#v_dot_zero_ts.map(Into::into)};
                 let into_inner_content_ts = match &pattern {
                     Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => value_dot_zero_ts,
+                        IsNullable::False => v_dot_zero_ts,
                         IsNullable::True => nullable_ts,
                     },
                     Pattern::ArrDim1 {..} |
                     Pattern::ArrDim2 {..} |
                     Pattern::ArrDim3 {..} |
                     Pattern::ArrDim4 {..} => match &is_nullable {
-                        IsNullable::False => quote!{#value_dot_zero_ts.into_iter().map(Into::into).collect()},
+                        IsNullable::False => quote!{#v_dot_zero_ts.into_iter().map(Into::into).collect()},
                         IsNullable::True => nullable_ts
                     },
                 };
@@ -1890,7 +1890,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &IsSelectQueryPartIsPgTypeUsed::False,
                 &{
                     let format_handle = {
-                        //last child dim value does not matter - null or type - works both good
+                        //last child dim v does not matter - null or type - works both good
                         let column_field_fi = format!("{{{ColumnFieldSc}}}->'{{fi}}'");
                         let format_handle = ArrDim::try_from(pattern).map_or_else(
                             |()| column_field_fi.clone(),
@@ -1956,7 +1956,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                         // Dim1 does not fit into pattern. its only for 2+ dims
                                         let gen_d_nbr_elem = |content: usize| format!("d{content}_elem");
                                         let gen_d_nbr_ord = |content: usize| format!("d{content}_elem");
-                                        let gen_dot_value = |content: &str| format!("{content}.value");
+                                        let gen_dot_v = |content: &str| format!("{content}.value");
                                         let gen_as_v_where = |
                                             first_content: &str,
                                             second_content: &str
@@ -1991,19 +1991,19 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                                     ],
                                                 }
                                                 .into_iter()
-                                                .fold(gen_dot_value(&gen_d_nbr_elem(usize_v_0ff8cf42)), |mut acc, is_nullable_0ff8cf42| {
+                                                .fold(gen_dot_v(&gen_d_nbr_elem(usize_v_0ff8cf42)), |mut acc, is_nullable_0ff8cf42| {
                                                     let usize_v_minus_one_0ff8cf42 = usize_v_0ff8cf42.checked_sub(one).expect("a35e873e");
-                                                    let d_usize_minus_one_elem_value = gen_dot_value(&gen_d_nbr_elem(usize_v_minus_one_0ff8cf42));
-                                                    let value = gen_jsonb_agg(
+                                                    let d_usize_minus_one_elem_v = gen_dot_v(&gen_d_nbr_elem(usize_v_minus_one_0ff8cf42));
+                                                    let v = gen_jsonb_agg(
                                                         &acc,
-                                                        &d_usize_minus_one_elem_value,
+                                                        &d_usize_minus_one_elem_v,
                                                         &gen_as_v_where(&gen_d_nbr_elem(usize_v_0ff8cf42), &gen_d_nbr_ord(usize_v_0ff8cf42)),
                                                         usize_v_0ff8cf42,
                                                     );
                                                     acc = match &is_nullable_0ff8cf42 {
-                                                        IsNullable::False => value,
+                                                        IsNullable::False => v,
                                                         IsNullable::True => {
-                                                            format!("case when jsonb_typeof({d_usize_minus_one_elem_value})='arr' then ({value}) else null end")
+                                                            format!("case when jsonb_typeof({d_usize_minus_one_elem_v})='arr' then ({v}) else null end")
                                                         }
                                                     };
                                                     usize_v_0ff8cf42 = usize_v_minus_one_0ff8cf42;
@@ -2046,10 +2046,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             }
                         })
                     });
-                    let format_ts = dq_ts(&format!("jsonb_build_object('{{fi}}',jsonb_build_object('value',({format_handle})))"));
+                    let ts = dq_ts(&format!("jsonb_build_object('{{fi}}',jsonb_build_object('value',({format_handle})))"));
                     quote! {
                         #(#mb_dims_start_end_init)*
-                        Ok(format!(#format_ts))
+                        Ok(format!(#ts))
                     }
                 },
                 &ident_where_ucc,
@@ -2068,10 +2068,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     let content_ts_0ff8cf42 = quote! {#VSc.0.0};
                     let gen_match_el_zero_ts = |
                         match_ts: &dyn ToTokens,
-                        value_ts: &dyn ToTokens,
+                        v_ts: &dyn ToTokens,
                         content_ts: &dyn ToTokens
                     | {
-                        quote! {#match_ts.map(|#value_ts| #value_ts.0 #content_ts)}
+                        quote! {#match_ts.map(|#v_ts| #v_ts.0 #content_ts)}
                     };
                     let gen_into_iter_map_el_collect_ts = |
                         el_ts: &dyn ToTokens,
@@ -2097,7 +2097,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     };
                     let gen_into_iter_map_el_collect_is_nullable_content_ts = |
                         el_ts: &dyn ToTokens,
-                        value_ts: &dyn ToTokens,
+                        v_ts: &dyn ToTokens,
                         is_nullable_d9400a66: &IsNullable,
                         content_ts_d9400a66: &dyn ToTokens
                     | {
@@ -2109,7 +2109,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             IsNullable::True => {
                                 let match_el_zero_ts = gen_match_el_zero_ts(
                                     &quote! {#el_ts.0},
-                                    &value_ts,
+                                    &v_ts,
                                     &content_ts_d9400a66
                                 );
                                 quote! {.into_iter().map(|#el_ts|#match_el_zero_ts).collect()}
@@ -2562,13 +2562,13 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 quote! {Some(#content_ts)}
             };
             let update_to_read_only_ids_ts = {
-                let value_init_ts = gen_import_path_v_init_ts(&if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
+                let ts = gen_import_path_v_init_ts(&if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                     let gen_iter_or_match_ts = |
                         is_nullable_1d9cc9dd: &IsNullable,
                         ident_ts_36d8e080: &dyn ToTokens,
                         update_is_nullable_69216aba: &IsNullable
                     | {
-                        let value_zero_zero_ts = quote! {#VSc.0.0};
+                        let v_zero_zero_ts = quote! {#VSc.0.0};
                         let content_ts = {
                             let ident_update_ts_7c40250a = SelfUpdateUcc::from_tokens(&ident_ts_36d8e080);
                             let content_ts = {
@@ -2588,10 +2588,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         };
                         match &is_nullable_1d9cc9dd {
                             IsNullable::False => quote! {
-                                #value_zero_zero_ts.iter().map(|el_aa999306|#content_ts).collect()
+                                #v_zero_zero_ts.iter().map(|el_aa999306|#content_ts).collect()
                             },
                             IsNullable::True => quote! {
-                                #value_zero_zero_ts.as_ref().map(|v_92de91cc| #content_ts)
+                                #v_zero_zero_ts.as_ref().map(|v_92de91cc| #content_ts)
                             },
                         }
                     };
@@ -2664,15 +2664,15 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 } else {
                     quote!{#NoneTs}
                 });
-                quote! {#ident_read_only_ids_ucc(#value_init_ts)}
+                quote! {#ident_read_only_ids_ucc(#ts)}
             };
             let read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts = {
-                let value_init_ts = gen_import_path_v_init_ts(&if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
+                let ts = gen_import_path_v_init_ts(&if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                     quote! {#ident_read_ucc::new(#VSc.0.#ValueSc.clone())}
                 } else {
                     quote! {#PgCrudCommonDefaultOptSomeVecOneElCall}
                 });
-                quote! {Some(#value_init_ts)}
+                quote! {Some(#ts)}
             };
             let previous_read_merged_with_opt_update_into_read_ts = quote! {
                 #OptUpdateSc.map_or(#ReadSc, |v_f6e37412| #ident_read_ucc(v_f6e37412.into()))
@@ -2686,13 +2686,13 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 quote! {#ident_read_ucc(#content_ts)}
             };
             let read_only_ids_merged_with_create_into_opt_v_read_ts = {
-                let value_init_ts = gen_import_path_v_init_ts(&quote! {
+                let ts = gen_import_path_v_init_ts(&quote! {
                     <Self as #import_path::PgJsonTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoReadSc(
                         #ReadOnlyIdsSc,
                         #CreateSc
                     )
                 });
-                quote! {Some(#value_init_ts)}
+                quote! {Some(#ts)}
             };
             let read_only_ids_merged_with_create_into_table_type_ts = {
                 let content_ts = if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
@@ -2757,11 +2757,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             let gen_v_nbr_ts = |i_0abe6039: usize|format!("value{i_0abe6039}").parse::<Ts2>().expect("568d8eb6");
                             let gen_for_in_ts = |
                                 i_ts: &dyn ToTokens,
-                                value_ts: &dyn ToTokens,
+                                v_ts: &dyn ToTokens,
                                 enumerate_ts: &dyn ToTokens,
                                 content_ts_aaf03124: &dyn ToTokens,
                             |quote!{
-                                for (#i_ts, #value_ts) in #enumerate_ts.0.into_iter().enumerate() {
+                                for (#i_ts, #v_ts) in #enumerate_ts.0.into_iter().enumerate() {
                                     #content_ts_aaf03124
                                 }
                             };
@@ -2804,7 +2804,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             };
                             let mut content_ts_4c106eea = {
                                 let content_ts_f1ffd3b2 = {
-                                    let value_i_ts = gen_v_nbr_ts(
+                                    let ts = gen_v_nbr_ts(
                                         gen_i(
                                             is_nullable_vec.len().saturating_sub(1),
                                             &once(is_nullable)
@@ -2825,7 +2825,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     let dim_nbr_starting_with_one_equal_ts = format!("Dim{}Equal", to_nbr_starting_with_one_word_str(&dim_i_nbr_max)).parse::<Ts2>().expect("52fa34ac");
                                     let pg_json_type_where_dim_nbr_starting_with_one_equal_ts = format!("PgJsonTypeWhereDim{}Equal", to_nbr_starting_with_one_word_str(&dim_i_nbr_max)).parse::<Ts2>().expect("15d769b0");
                                     let where_ident_where_ucc_c994819b = SelfWhereUcc::from_tokens(&gen_ident_ts(&IsNullable::False, pattern));
-                                    let value_ident_table_type_ucc_0d9dce86 = SelfTableTypeUcc::from_tokens(&gen_ident_ts(
+                                    let ident_table_type_ucc_0d9dce86 = SelfTableTypeUcc::from_tokens(&gen_ident_ts(
                                         is_nullable_vec.last().expect("1221f6ec"),
                                         &match dim_i_nbr_max {
                                             DimIndexNbr::Zero => pattern.down_by_1().expect("1a47af86"),
@@ -2863,7 +2863,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                                 dims: where_filters::BoundedVec::try_from(
                                                     vec![#vec_content_ts]
                                                 ).expect("82cc0a3c"),
-                                                #ValueSc: #value_ident_table_type_ucc_0d9dce86::new(#value_i_ts.into()),
+                                                #ValueSc: #ident_table_type_ucc_0d9dce86::new(#ts.into()),
                                             }
                                         )
                                     }
@@ -3167,17 +3167,17 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     F32OrF64::F64 => quote!{0.1f64}
                 };
                 quote!{{
-                    let value = #content_ts - #minus_ts;
+                    let #ValueSc = #content_ts - #minus_ts;
                     //The correct way to compare floating point nbrs is to define an allowed er margin
-                    if (#content_ts - value).abs() < #more_ts {
+                    if (#content_ts - #ValueSc).abs() < #more_ts {
                         None
                     }
                     else {
-                        value.is_finite().then_some(value)
+                        #ValueSc.is_finite().then_some(#ValueSc)
                     }
                 }}
             };
-            //todo additonal logic for Option<value> and el of arr? optal el of arr?
+            //todo additonal logic for Option<v> and el of arr? optal el of arr?
             let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts = if matches!(&pattern, Pattern::Stdrt) &&
                 matches!(&is_nullable, IsNullable::False)
             {
@@ -3192,7 +3192,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 #import_path::SingleOrMultiple::Single(#ident_where_ucc::GreaterThan(
                                     where_filters::PgJsonTypeWhereGreaterThan {
                                         operator: #import_path::Operator::Or,
-                                        value: #ident_table_type_ucc(
+                                        #ValueSc: #ident_table_type_ucc(
                                             #ident_origin_ucc(v_7aa498e8)
                                         ),
                                     }
@@ -3263,7 +3263,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                         #ident_where_ucc::Between(
                                             where_filters::PgJsonTypeWhereBetween {
                                                 operator: pg_crud_common::Operator::Or,
-                                                value: v_cdde02cc,
+                                                #ValueSc: v_cdde02cc,
                                             }
                                         )
                                     )
@@ -3291,8 +3291,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         },
                         {
                             let gen_ts0 = |content_ts: &dyn ToTokens|quote!{{
-                                let value = create.0.0 #content_ts 1.0;
-                                value.is_finite().then_some(value)
+                                let #ValueSc = create.0.0 #content_ts 1.0;
+                                #ValueSc.is_finite().then_some(#ValueSc)
                             }};
                             gen_ts(
                                 &gen_ts0(&quote!{-}),
@@ -3339,7 +3339,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 #ident_where_ucc::In(
                                     where_filters::PgJsonTypeWhereIn {
                                         operator: #import_path::Operator::Or,
-                                        value: where_filters::PgJsonTypeNotEmptyUniqueVec::try_new(
+                                        #ValueSc: where_filters::PgJsonTypeNotEmptyUniqueVec::try_new(
                                             vec![#ident_table_type_ucc::new(#CreateSc.0.0)]
                                         ).expect("2737c0ed")
                                     }
@@ -3382,7 +3382,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     where_filters::PgJsonTypeWhereRegex {
                                         operator: #import_path::Operator::Or,
                                         regex_case: where_filters::RegexCase::Sensitive,
-                                        value: where_filters::RegexRegex(regex::Regex::new(&format!("^{}$", regex::escape(&#CreateSc.0.0))).expect("3814ff38")),
+                                        #ValueSc: where_filters::RegexRegex(regex::Regex::new(&format!("^{}$", regex::escape(&#CreateSc.0.0))).expect("3814ff38")),
                                     }
                                 ),
                             )
@@ -3421,7 +3421,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                                         #ident_where_ucc::ContainsElGreaterThan(
                                                             where_filters::PgJsonTypeWhereContainsElGreaterThan {
                                                                 operator: #import_path::Operator::Or,
-                                                                value: #ident_stdrt_not_null_table_type_ucc(
+                                                                #ValueSc: #ident_stdrt_not_null_table_type_ucc(
                                                                     #ident_stdrt_not_null_origin_ucc(v_0cd93c25)
                                                                 )
                                                             }
@@ -3509,7 +3509,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                                 operator: #import_path::Operator::Or,
                                                 regex_case:
                                                     where_filters::RegexCase::Sensitive,
-                                                value: where_filters::RegexRegex(
+                                                #ValueSc: where_filters::RegexRegex(
                                                     regex::Regex::new(&format!(
                                                         "^{}$",
                                                         regex::escape(&el_590fca71.0)
