@@ -2233,40 +2233,40 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         };
         let mb_impl_pg_json_type_object_vec_el_id_for_ident_origin_ts = if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
             let (query_bind_string_as_pg_text_create_for_query_ts, query_bind_string_as_pg_text_update_for_query_ts) = {
-                enum CreateForQueryOrUpdateForQuery {
+                enum CreateOrUpdateForQuery {
                     CreateForQuery,
                     UpdateForQuery,
                 }
-                let gen_ts = |create_for_query_or_update_for_query: &CreateForQueryOrUpdateForQuery| {
+                let gen_ts = |create_or_update_for_query: &CreateOrUpdateForQuery| {
                     let name_ts = format!(
                         "query_bind_string_as_pg_text_{}_for_query",
-                        match &create_for_query_or_update_for_query {
-                            CreateForQueryOrUpdateForQuery::CreateForQuery => "create",
-                            CreateForQueryOrUpdateForQuery::UpdateForQuery => "update",
+                        match &create_or_update_for_query {
+                            CreateOrUpdateForQuery::CreateForQuery => "create",
+                            CreateOrUpdateForQuery::UpdateForQuery => "update",
                         }
                     )
                     .parse::<Ts2>()
                     .expect("f1bcde08");
-                    let type_ts: &dyn ToTokens = match &create_for_query_or_update_for_query {
-                        CreateForQueryOrUpdateForQuery::CreateForQuery => &CreateForQueryUcc,
-                        CreateForQueryOrUpdateForQuery::UpdateForQuery => &UpdateForQueryUcc,
+                    let type_ts: &dyn ToTokens = match &create_or_update_for_query {
+                        CreateOrUpdateForQuery::CreateForQuery => &CreateForQueryUcc,
+                        CreateOrUpdateForQuery::UpdateForQuery => &UpdateForQueryUcc,
                     };
                     quote! {
                         fn #name_ts(
-                            #ValueSc: <Self::PgJsonType as #import_path::PgJsonType>::#type_ts,
+                            #VSc: <Self::PgJsonType as #import_path::PgJsonType>::#type_ts,
                             mut #QuerySc: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
                         ) -> Result<
                             sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
                             #StringTs
                         > {
-                            if let Err(#ErSc) = #QuerySc.try_bind(#ValueSc.0.0.to_string()) {
+                            if let Err(#ErSc) = #QuerySc.try_bind(#VSc.0.0.to_string()) {
                                 return Err(#ErSc.to_string())
                             }
                             Ok(#QuerySc)
                         }
                     }
                 };
-                (gen_ts(&CreateForQueryOrUpdateForQuery::CreateForQuery), gen_ts(&CreateForQueryOrUpdateForQuery::UpdateForQuery))
+                (gen_ts(&CreateOrUpdateForQuery::CreateForQuery), gen_ts(&CreateOrUpdateForQuery::UpdateForQuery))
             };
             quote! {
                 #AllowClippyArbitrarySourceItemOrdering
