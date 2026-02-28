@@ -12,7 +12,7 @@ use naming::{
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
     ReadOnlyIdsMergedWithCreateIntoWhereEqualSc, ReadOnlyIdsSc,
     ReadOnlyIdsToTwoDimalVecReadInnerSc, ReadSc, SelfSc, SelfUcc, StringUcc, UpdateForQueryUcc,
-    UpdateUcc, ValueSc, VecOfUcc,
+    UpdateUcc, VSc, ValueSc, VecOfUcc,
     param::{
         JsonbSelfUcc, SelfCreateForQueryUcc, SelfCreateUcc, SelfOriginUcc, SelfReadInnerUcc,
         SelfReadOnlyIdsUcc, SelfReadUcc, SelfSelectUcc, SelfTableTypeUcc, SelfUpdateForQueryUcc,
@@ -1867,7 +1867,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             };
             let select_only_created_or_updated_ids_query_bind_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                 quote! {
-                    if let Err(#ErSc) = #QuerySc.try_bind(#ValueSc) {
+                    if let Err(#ErSc) = #QuerySc.try_bind(#VSc) {
                         return Err(#ErSc.to_string());
                     }
                     Ok(#QuerySc)
@@ -2041,8 +2041,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 .parse::<Ts2>()
                                 .expect("745c99b3");
                             quote! {
-                                let #dim_nbr_start_ts = #ValueSc.#dim_nbr_pagination_ts.start();
-                                let #dim_nbr_end_ts = #ValueSc.#dim_nbr_pagination_ts.end();
+                                let #dim_nbr_start_ts = #VSc.#dim_nbr_pagination_ts.start();
+                                let #dim_nbr_end_ts = #VSc.#dim_nbr_pagination_ts.end();
                             }
                         })
                     });
@@ -2065,7 +2065,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 },
                 &ident_read_inner_ucc,
                 &{
-                    let content_ts_0ff8cf42 = quote! {#ValueSc.0.0};
+                    let content_ts_0ff8cf42 = quote! {#VSc.0.0};
                     let gen_match_el_zero_ts = |
                         match_ts: &dyn ToTokens,
                         value_ts: &dyn ToTokens,
@@ -2210,7 +2210,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &IsUpdateQueryPartJsonbSetTargetUsed::False,
                 &IsUpdateQueryBindMutable::True,
                 &quote! {
-                    if let Err(er) = query.try_bind(#ValueSc) {
+                    if let Err(er) = query.try_bind(#VSc) {
                         return Err(er.to_string());
                     }
                     Ok(query)
@@ -2277,8 +2277,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     type #ReadInnerUcc = #ident_read_inner_ucc;
                     #query_bind_string_as_pg_text_create_for_query_ts
                     #query_bind_string_as_pg_text_update_for_query_ts
-                    fn get_inner(#ValueSc: &<Self::PgJsonType as #import_path::PgJsonType>::#CreateForQueryUcc) -> &Self::#ReadInnerUcc {
-                        &#ValueSc.0.0
+                    fn get_inner(#VSc: &<Self::PgJsonType as #import_path::PgJsonType>::#CreateForQueryUcc) -> &Self::#ReadInnerUcc {
+                        &#VSc.0.0
                     }
                     fn incr_checked_add_one(#IncrSc: &mut #U64) -> Result<#U64, #import_path::QueryPartEr> {
                         #import_path::incr_checked_add_one_returning_incr(#IncrSc)
@@ -2298,7 +2298,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 quote! {<#SelfUcc::#PgJsonTypeUcc
                     as
                     #pg_crud_macros_common_import_path_pg_crud_common::#PgJsonTypeUcc
-                >::#read_or_update_ucc::#NewSc(#ValueSc)}
+                >::#read_or_update_ucc::#NewSc(#VSc)}
             };
             let stdrt_not_null_test_cases_vec_name_ts = match &pg_json_type {
                 PgJsonType::I8AsJsonbNbr => quote! {i8_test_cases_vec},
@@ -2547,7 +2547,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             let read_inner_into_update_with_new_or_try_new_unwraped_ts = gen_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts(&ReadOrUpdate::Update);
             let read_only_ids_into_opt_v_read_inner_ts = {
                 let content_ts = gen_import_path_v_init_ts(&if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
-                    quote! {#ValueSc.0.#ValueSc}
+                    quote! {#VSc.0.#ValueSc}
                 } else {
                     quote! {
                         <Self as #import_path::PgJsonType>::into_inner(
@@ -2568,7 +2568,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         ident_ts_36d8e080: &dyn ToTokens,
                         update_is_nullable_69216aba: &IsNullable
                     | {
-                        let value_zero_zero_ts = quote! {#ValueSc.0.0};
+                        let value_zero_zero_ts = quote! {#VSc.0.0};
                         let content_ts = {
                             let ident_update_ts_7c40250a = SelfUpdateUcc::from_tokens(&ident_ts_36d8e080);
                             let content_ts = {
@@ -2597,7 +2597,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     };
                     match &pattern {
                         Pattern::Stdrt => match &is_nullable {
-                            IsNullable::False => quote! {#ValueSc.0.clone().into()},
+                            IsNullable::False => quote! {#VSc.0.clone().into()},
                             IsNullable::True => gen_iter_or_match_ts(
                                 is_nullable,
                                 &ident_not_null_ts,
@@ -2668,7 +2668,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             };
             let read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts = {
                 let value_init_ts = gen_import_path_v_init_ts(&if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
-                    quote! {#ident_read_ucc::new(#ValueSc.0.#ValueSc.clone())}
+                    quote! {#ident_read_ucc::new(#VSc.0.#ValueSc.clone())}
                 } else {
                     quote! {#PgCrudCommonDefaultOptSomeVecOneElCall}
                 });

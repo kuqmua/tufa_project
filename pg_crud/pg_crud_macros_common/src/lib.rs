@@ -38,7 +38,7 @@ use naming::{
     SelectOnlyCreatedIdsQueryPartSc, SelectOnlyIdsQueryPartSc, SelectOnlyUpdatedIdsQueryBindSc,
     SelectOnlyUpdatedIdsQueryPartSc, SelectQueryPartSc, SelectUcc, SelfUcc, TableTypeSc,
     TableTypeUcc, UpdateForQueryUcc, UpdateQueryBindSc, UpdateQueryPartSc, UpdateToReadOnlyIdsSc,
-    UpdateUcc, VUcc, ValueSc, WhereUcc,
+    UpdateUcc, VSc, VUcc, ValueSc, WhereUcc,
     param::{SelfCreateUcc, SelfSelectUcc, SelfWhereUcc},
 };
 use optimal_pack::OptimalPack;
@@ -234,7 +234,7 @@ impl ToTokens for IsSelectQueryPartSelfSelectUsed {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
-            Self::True => ValueSc.to_tokens(tokens),
+            Self::True => VSc.to_tokens(tokens),
         }
     }
 }
@@ -275,7 +275,7 @@ impl ToTokens for IsUpdateQueryPartSelfUpdateUsed {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
-            Self::True => ValueSc.to_tokens(tokens),
+            Self::True => VSc.to_tokens(tokens),
         }
     }
 }
@@ -496,7 +496,7 @@ pub enum CreateQueryPartValueUnderscore {
 impl ToTokens for CreateQueryPartValueUnderscore {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
-            Self::False => ValueSc.to_tokens(tokens),
+            Self::False => VSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
         }
     }
@@ -522,7 +522,7 @@ pub enum CreateQueryBindValueUnderscore {
 impl ToTokens for CreateQueryBindValueUnderscore {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
-            Self::False => ValueSc.to_tokens(tokens),
+            Self::False => VSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
         }
     }
@@ -535,7 +535,7 @@ pub enum SelectQueryPartValueUnderscore {
 impl ToTokens for SelectQueryPartValueUnderscore {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
-            Self::False => ValueSc.to_tokens(tokens),
+            Self::False => VSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
         }
     }
@@ -548,7 +548,7 @@ pub enum UpdateQueryPartValueUnderscore {
 impl ToTokens for UpdateQueryPartValueUnderscore {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
-            Self::False => ValueSc.to_tokens(tokens),
+            Self::False => VSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
         }
     }
@@ -782,7 +782,7 @@ pub fn gen_impl_pg_json_type_ts(
                 #select_only_ids_query_part_ts
             }
             type #ReadInnerUcc = #read_inner_type_ts;
-            fn into_inner(#ValueSc: Self::#ReadUcc) -> Self::#ReadInnerUcc {
+            fn into_inner(#VSc: Self::#ReadUcc) -> Self::#ReadInnerUcc {
                 #into_inner_ts
             }
             type #UpdateUcc = #update_type_ts;
@@ -797,13 +797,13 @@ pub fn gen_impl_pg_json_type_ts(
                 #update_query_part_ts
             }
             fn #UpdateQueryBindSc(
-                #ValueSc: Self::#UpdateForQueryUcc,
+                #VSc: Self::#UpdateForQueryUcc,
                 #is_update_query_bind_mutable #QuerySc: #query_pg_arguments_ts
             ) -> Result<#query_pg_arguments_ts, #StringTs> {
                 #update_query_bind_ts
             }
             fn #SelectOnlyUpdatedIdsQueryPartSc(
-                #ValueSc: &Self::#UpdateForQueryUcc,
+                #VSc: &Self::#UpdateForQueryUcc,
                 #FiSc: #RefStr,
                 #ColumnFieldSc: #RefStr,
                 #IncrSc: &mut #U64
@@ -811,13 +811,13 @@ pub fn gen_impl_pg_json_type_ts(
                 #select_only_updated_ids_query_part_ts
             }
             fn #SelectOnlyUpdatedIdsQueryBindSc<'lifetime>(
-                #ValueSc: &'lifetime Self::#UpdateForQueryUcc,
+                #VSc: &'lifetime Self::#UpdateForQueryUcc,
                 #is_select_only_updated_ids_query_bind_mutable #QuerySc: #query_lifetime_pg_arguments_ts
             ) -> Result<#query_lifetime_pg_arguments_ts, #StringTs> {
                 #select_only_updated_ids_query_bind_ts
             }
             fn #SelectOnlyCreatedIdsQueryPartSc(
-                #ValueSc: &Self::#CreateForQueryUcc,
+                #VSc: &Self::#CreateForQueryUcc,
                 #FiSc: #RefStr,
                 #ColumnFieldSc: #RefStr,
                 #IncrSc: &mut #U64
@@ -825,7 +825,7 @@ pub fn gen_impl_pg_json_type_ts(
                 #select_only_created_ids_query_part_ts
             }
             fn #SelectOnlyCreatedIdsQueryBindSc<'lifetime>(
-                #ValueSc: &'lifetime Self::#CreateForQueryUcc,
+                #VSc: &'lifetime Self::#CreateForQueryUcc,
                 #is_select_only_created_ids_query_bind_mutable #QuerySc: #query_lifetime_pg_arguments_ts
             ) -> Result<#query_lifetime_pg_arguments_ts, #StringTs> {
                 #select_only_created_ids_query_bind_ts
@@ -1105,7 +1105,7 @@ pub fn gen_impl_pg_type_ts(
             }
             type #WhereUcc = #ident_where_ucc;
             type #ReadUcc = #ident_read_ucc;
-            fn #NormalizeSc(#ValueSc: Self::#ReadUcc) -> Self::#ReadUcc {
+            fn #NormalizeSc(#VSc: Self::#ReadUcc) -> Self::#ReadUcc {
                 #normalize_ts
             }
             type #ReadOnlyIdsUcc = #read_only_ids_ts;
@@ -1115,7 +1115,7 @@ pub fn gen_impl_pg_type_ts(
                 #select_only_ids_query_part_ts
             }
             type #ReadInnerUcc = #ident_read_inner_ucc;
-            fn into_inner(#ValueSc: Self::#ReadUcc) -> Self::#ReadInnerUcc {
+            fn into_inner(#VSc: Self::#ReadUcc) -> Self::#ReadInnerUcc {
                 #into_inner_ts
             }
             type #UpdateUcc = #ident_update_ucc;
@@ -1130,7 +1130,7 @@ pub fn gen_impl_pg_type_ts(
                 #update_query_part_ts
             }
             fn #UpdateQueryBindSc(
-                #ValueSc: Self::#UpdateForQueryUcc,
+                #VSc: Self::#UpdateForQueryUcc,
                 #is_update_query_bind_mutable #QuerySc: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> Result<
                 sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
@@ -1139,14 +1139,14 @@ pub fn gen_impl_pg_type_ts(
                 #update_query_bind_ts
             }
             fn #SelectOnlyUpdatedIdsQueryPartSc(
-                #ValueSc: &Self::#UpdateForQueryUcc,
+                #VSc: &Self::#UpdateForQueryUcc,
                 #ColumnSc: #RefStr,
                 #IncrSc: &mut #U64,
             ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
                 #select_only_updated_ids_query_part_ts
             }
             fn #SelectOnlyUpdatedIdsQueryBindSc<'lifetime>(
-                #ValueSc: &'lifetime Self::#UpdateForQueryUcc,
+                #VSc: &'lifetime Self::#UpdateForQueryUcc,
                 #is_select_only_updated_ids_query_bind_mutable #QuerySc: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
                 #select_only_updated_ids_query_bind_ts
@@ -1223,7 +1223,7 @@ fn gen_read_inner_into_read_with_new_or_try_new_unwraped_ts(
 ) -> Ts2 {
     quote! {
         fn #ReadInnerIntoReadWithNewOrTryNewUnwrapedSc(
-            #ValueSc: #type_ts
+            #VSc: #type_ts
         ) -> #path_ts::#ReadUcc {
             #ts
         }
@@ -1235,7 +1235,7 @@ fn gen_read_inner_into_update_with_new_or_try_new_unwraped_ts(
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc(#ValueSc: #type_ts) -> #path_ts::#UpdateUcc {
+        fn #ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc(#VSc: #type_ts) -> #path_ts::#UpdateUcc {
             #ts
         }
     }
@@ -1243,7 +1243,7 @@ fn gen_read_inner_into_update_with_new_or_try_new_unwraped_ts(
 fn gen_update_to_read_only_ids_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
     quote! {
         fn #UpdateToReadOnlyIdsSc(
-            #ValueSc: &#path_ts::#UpdateUcc
+            #VSc: &#path_ts::#UpdateUcc
         ) -> #path_ts::#ReadOnlyIdsUcc {
             #ts
         }
@@ -1256,7 +1256,7 @@ fn gen_read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts(
 ) -> Ts2 {
     quote! {
         fn #ReadOnlyIdsToOptVReadDefaultOptSomeVecOneElSc(
-            #ValueSc: &#path_ts::#ReadOnlyIdsUcc
+            #VSc: &#path_ts::#ReadOnlyIdsUcc
         ) -> Option<#import_path::#VUcc<#path_ts::#ReadUcc>> {
             #ts
         }
@@ -2013,7 +2013,7 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
             #read_inner_into_read_with_new_or_try_new_unwraped_ts_ccead2b6
             #read_inner_into_update_with_new_or_try_new_unwraped_ts_b45cde72
             fn #ReadOnlyIdsIntoOptVReadInnerSc(
-                #ValueSc: #self_pg_json_type_as_pg_json_type_ts::#ReadOnlyIdsUcc
+                #VSc: #self_pg_json_type_as_pg_json_type_ts::#ReadOnlyIdsUcc
             ) -> Option<#import_path::#VUcc<#self_pg_json_type_as_pg_json_type_ts::#ReadInnerUcc>> {
                 #read_only_ids_into_opt_v_read_inner_ts
             }
@@ -2097,10 +2097,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
     };
     let visit_u64_v_enum_vrts_ts = {
         let visit_u64_v_enum_vrts_ts = (0..len).map(|i| {
-            let i_u64_ts = {
-                let value = format!("{i}u64");
-                value.parse::<Ts2>().expect("828ff7b4")
-            };
+            let i_u64_ts = format!("{i}u64").parse::<Ts2>().expect("828ff7b4");
             let field_i_ts = gen_underscore_underscore_field_i_ts(i);
             quote! {#i_u64_ts => Ok(__Field::#field_i_ts)}
         });
@@ -2115,11 +2112,9 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
     };
     let visit_bytes_v_enum_vrts_ts = {
         let visit_bytes_v_enum_vrts_ts = vec_ident.iter().enumerate().map(|(i, el)| {
-            let b_field_name_dq_ts = {
-                let el_ident_dq_str = dq_str(&el.to_string());
-                let value = format!("b{el_ident_dq_str}");
-                value.parse::<Ts2>().expect("9e33625e")
-            };
+            let b_field_name_dq_ts = format!("b{}", dq_str(&el.to_string()))
+                .parse::<Ts2>()
+                .expect("9e33625e");
             gen_fi_dq_serde_private_ok_field_ts(&b_field_name_dq_ts, i)
         });
         quote! {#(#visit_bytes_v_enum_vrts_ts),*,}

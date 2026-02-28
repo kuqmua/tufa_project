@@ -60,7 +60,7 @@ impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
             for el in &v {
                 if acc.contains(&el) {
                     return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
-                        value: el.clone(),
+                        v: el.clone(),
                         loc: loc!(),
                     });
                 }
@@ -643,7 +643,7 @@ impl<T: PartialEq + Clone> PgTypeNotEmptyUniqueVec<T> {
             for el in &v {
                 if acc.contains(&el) {
                     return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
-                        value: el.clone(),
+                        v: el.clone(),
                         loc: loc!(),
                     });
                 }

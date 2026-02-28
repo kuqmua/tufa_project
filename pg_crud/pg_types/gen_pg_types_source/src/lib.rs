@@ -22,7 +22,7 @@ use naming::{
     ReadOnlyIdsIntoUpdateSc, ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsSc,
     ReadOnlyIdsToTwoDimalVecReadInnerSc, ReadOnlyIdsUcc, ReadSc, ReadUcc, SecSc, SecondSc, SelfSc,
     SelfUcc, StartSc, StartUcc, TableTypeSc, TableTypeUcc, TimeSc, TimeUcc, ToErrStringSc,
-    TryNewForDeserializeSc, TryNewSc, UnboundedUcc, UpdateUcc, ValueSc, VecOfUcc,
+    TryNewForDeserializeSc, TryNewSc, UnboundedUcc, UpdateUcc, VSc, ValueSc, VecOfUcc,
     param::{
         SelfCreateUcc, SelfNotNullUcc, SelfOriginTryNewErUcc, SelfOriginTryNewForDeserializeErUcc,
         SelfOriginUcc, SelfReadInnerUcc, SelfReadOnlyIdsUcc, SelfReadUcc, SelfSelectUcc,
@@ -1210,7 +1210,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 Ok(#QuerySc)
             },
         };
-        let typical_query_bind_ts = gen_typical_query_bind_ts(&ValueSc);
+        let typical_query_bind_ts = gen_typical_query_bind_ts(&VSc);
         let ident_inner_type_ts = match &el.pg_type_pattern {
             PgTypePattern::Stdrt => match &is_nullable {
                 IsNullable::False => &inner_type_stdrt_not_null_ts,
@@ -5055,8 +5055,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 .parse::<Ts2>()
                                 .expect("6f2305ee");
                                 quote! {
-                                    #ValueSc.#dim_nbr_pagination_ts.start(),
-                                    #ValueSc.#dim_nbr_pagination_ts.end(),
+                                    #VSc.#dim_nbr_pagination_ts.start(),
+                                    #VSc.#dim_nbr_pagination_ts.end(),
                                 }
                             });
                             quote! {format!(
@@ -5077,7 +5077,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgTypePattern::Stdrt => match &is_nullable {
                             IsNullable::False => {
                                 Range::try_from(pg_type).as_ref().map_or_else(
-                                    |()| quote! {#ValueSc},
+                                    |()| quote! {#VSc},
                                     |range| {
                                         let gen_sqlx_pg_types_pg_range_ts = |start_ts: &dyn ToTokens, end_ts: &dyn ToTokens| {
                                             quote! {
@@ -5109,8 +5109,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         | {
                                             quote! {
                                                 #ident_stdrt_not_null_read_ucc(#ident_stdrt_not_null_origin_ucc(match (
-                                                    #ValueSc.0.0.#StartSc,
-                                                    #ValueSc.0.0.#EndSc
+                                                    #VSc.0.0.#StartSc,
+                                                    #VSc.0.0.#EndSc
                                                 ) {
                                                     (std::ops::Bound::#IncludedUcc(#StartSc), std::ops::Bound::#IncludedUcc(#EndSc)) => {
                                                         #included_included_ts
@@ -5226,7 +5226,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 )
                             }
                             IsNullable::True => gen_ident_read_ident_origin_ts(&quote! {
-                                #ValueSc.0.0.map(
+                                #VSc.0.0.map(
                                     |v_4561270e|
                                     <
                                         #ident_stdrt_not_null_ucc
@@ -5240,7 +5240,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         },
                         PgTypePattern::ArrDim1 { dim1_is_nullable } => match (&is_nullable, &dim1_is_nullable) {
                             (IsNullable::False, IsNullable::False) => gen_ident_read_ident_origin_ts(&quote! {
-                                #ValueSc.0.0.into_iter().map(|el|{
+                                #VSc.0.0.into_iter().map(|el|{
                                     #ident_stdrt_not_null_as_pg_type_ts::normalize(
                                         #ident_stdrt_not_null_read_ucc(el)
                                     ).0
@@ -5250,7 +5250,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 let ident_ts_e4c5a2a3 = gen_ident_ts(pg_type, &IsNullable::True, &PgTypePattern::Stdrt);
                                 let ident_arr_stdrt_nullable_read_ucc = SelfReadUcc::from_tokens(&ident_ts_e4c5a2a3);
                                 quote! {
-                                    #ValueSc.0.0.into_iter().map(|el|{
+                                    #VSc.0.0.into_iter().map(|el|{
                                         #ident_stdrt_nullable_as_pg_type_ts::normalize(
                                             #ident_arr_stdrt_nullable_read_ucc(el)
                                         ).0
@@ -5267,7 +5267,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 );
                                 let ident_arr_dim1_not_null_not_null_read_ucc = SelfReadUcc::from_tokens(&ident_arr_dim1_not_null_not_null_ucc);
                                 quote! {
-                                    #ValueSc.0.0.map(|v_b4d912fb|
+                                    #VSc.0.0.map(|v_b4d912fb|
                                         <
                                             #ident_arr_dim1_not_null_not_null_ucc
                                             as
@@ -5288,7 +5288,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 );
                                 let ident_arr_dim1_not_null_nullable_read_ucc = SelfReadUcc::from_tokens(&ident_arr_dim1_not_null_nullable_ucc);
                                 quote! {
-                                    #ValueSc.0.0.map(
+                                    #VSc.0.0.map(
                                         |v_dd042db2|
                                         <
                                             #ident_arr_dim1_not_null_nullable_ucc
@@ -5318,15 +5318,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             )
                         }
                     };
-                    let value_dot_zero_ts = quote! {#ValueSc.0};
-                    let value_dot_zero_dot_zero_ts = quote! {#value_dot_zero_ts.0};
+                    let v_dot_zero_ts = quote! {#VSc.0};
+                    let v_dot_zero_dot_zero_ts = quote! {#v_dot_zero_ts.0};
                     match &pg_type_pattern {
                         PgTypePattern::Stdrt => match &is_nullable {
                             IsNullable::False => {
                                 if range_try_from_pg_type_is_ok {
-                                    gen_pg_range_conversion_ts(&value_dot_zero_dot_zero_ts, &quote!{v_af65ccce})
+                                    gen_pg_range_conversion_ts(&v_dot_zero_dot_zero_ts, &quote!{v_af65ccce})
                                 } else {
-                                    value_dot_zero_dot_zero_ts
+                                    v_dot_zero_dot_zero_ts
                                 }
                             }
                             IsNullable::True => {
@@ -5335,7 +5335,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 } else {
                                     quote!{v_bd169d3b.0}
                                 };
-                                quote! {#value_dot_zero_dot_zero_ts.map(|v_bd169d3b| #ts)}
+                                quote! {#v_dot_zero_dot_zero_ts.map(|v_bd169d3b| #ts)}
                             }
                         },
                         PgTypePattern::ArrDim1 { dim1_is_nullable } => match (&is_nullable, &dim1_is_nullable) {
@@ -5346,7 +5346,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     quote! {el_f5e94f0c.0}
                                 };
                                 quote! {
-                                    #value_dot_zero_dot_zero_ts.into_iter().map(|el_f5e94f0c|#ts).collect()
+                                    #v_dot_zero_dot_zero_ts.into_iter().map(|el_f5e94f0c|#ts).collect()
                                 }
                             }
                             (IsNullable::False, IsNullable::True) => {
@@ -5356,7 +5356,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     quote!{v_e9a6bd41.0}
                                 };
                                 quote! {
-                                    #value_dot_zero_dot_zero_ts.into_iter().map(|el_236259fc|
+                                    #v_dot_zero_dot_zero_ts.into_iter().map(|el_236259fc|
                                         el_236259fc.0.map(|v_e9a6bd41| #ts)
                                     ).collect()
                                 }
@@ -5368,7 +5368,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     quote! {el_b37be63e.0}
                                 };
                                 quote! {
-                                    #value_dot_zero_dot_zero_ts.map(|v_47fb2e43|
+                                    #v_dot_zero_dot_zero_ts.map(|v_47fb2e43|
                                         v_47fb2e43.0.into_iter().map(|el_b37be63e|#ts).collect()
                                     )
                                 }
@@ -5380,7 +5380,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     quote!{v_e5c5f65c.0}
                                 };
                                 quote! {
-                                    #value_dot_zero_dot_zero_ts.map(|v_b1a259c4| v_b1a259c4.0.into_iter().map(|el_19a7e6d0|
+                                    #v_dot_zero_dot_zero_ts.map(|v_b1a259c4| v_b1a259c4.0.into_iter().map(|el_19a7e6d0|
                                         el_19a7e6d0.0.map(|v_e5c5f65c| #ts)
                                     ).collect())
                                 }
@@ -5410,9 +5410,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let gen_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts = |read_or_update: &ReadOrUpdate| {
                 let read_or_update_ucc = read_or_update.ucc();
                 let ts = if pg_type_init_try_new_try_from_pg_type.is_ok() {
-                    quote! {#TryNewSc(#ValueSc).expect("69477d2f")}
+                    quote! {#TryNewSc(#VSc).expect("69477d2f")}
                 } else {
-                    quote! {#NewSc(#ValueSc)}
+                    quote! {#NewSc(#VSc)}
                 };
                 quote! {<#SelfUcc::#PgTypeUcc
                     as
@@ -6157,7 +6157,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let read_inner_into_update_with_new_or_try_new_unwraped_ts = gen_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts(&ReadOrUpdate::Update);
             let update_to_read_only_ids_ts = if matches!(&is_not_null_stdrt_can_be_primary_k, IsNotNullStdrtCanBePrimaryK::True) {
                 quote! {
-                    #ident_read_only_ids_ucc(#ident_read_ucc(#ValueSc.0 #mb_dot_clone_ts))//todo its not correct. must be only for primary k but it for all types what van be primary k
+                    #ident_read_only_ids_ucc(#ident_read_ucc(#VSc.0 #mb_dot_clone_ts))//todo its not correct. must be only for primary k but it for all types what van be primary k
                 }
             } else {
                 let value_init_ts = gen_import_path_v_init_ts(&none_ts);
@@ -6169,7 +6169,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 //todo that is not correct for arr of generated by pg primary ks but mb just need to remove this vrts and thats it?
                 let value_init_ts = gen_import_path_v_init_ts(&{
                     let ts: &dyn ToTokens = if matches!(&is_not_null_stdrt_can_be_primary_k, IsNotNullStdrtCanBePrimaryK::True) {
-                        &quote! {#ValueSc.0 #mb_dot_clone_ts}
+                        &quote! {#VSc.0 #mb_dot_clone_ts}
                     } else {
                         &PgCrudCommonDefaultOptSomeVecOneElCall
                     };
@@ -6178,7 +6178,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 quote! {Some(#value_init_ts)}
             };
             let previous_read_merged_with_opt_update_into_read_ts = quote! {
-                #OptUpdateSc.map_or(#ReadSc, |#ValueSc| #ident_read_ucc(#ValueSc.0))
+                #OptUpdateSc.map_or(#ReadSc, |#VSc| #ident_read_ucc(#VSc.0))
             };
             let read_only_ids_merged_with_create_into_read_ts = {
                 let ts = if matches!(&is_not_null_stdrt_can_be_primary_k, IsNotNullStdrtCanBePrimaryK::True) {
@@ -6630,25 +6630,25 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             )
         };
         let mb_impl_pg_type_primary_k_for_ident_stdrt_not_null_if_can_be_primary_k_ts = if matches!(&is_not_null_stdrt_can_be_primary_k, IsNotNullStdrtCanBePrimaryK::True) {
-            let value_as_read_only_ids_ts = quote! {#ValueSc: #self_as_pg_type_ts::#ReadOnlyIdsUcc};
+            let v_as_read_only_ids_ts = quote! {#VSc: #self_as_pg_type_ts::#ReadOnlyIdsUcc};
             quote! {
                 #AllowClippyArbitrarySourceItemOrdering
                 impl #import_path::#PgTypePrimaryKUcc for #ident_stdrt_not_null_ucc {
                     type #PgTypeUcc = Self;
                     type #TableTypeUcc = #ident_stdrt_not_null_table_type_ucc;
-                    fn #ReadOnlyIdsIntoTableTypeSc(#value_as_read_only_ids_ts) -> #self_as_pg_type_ts::#TableTypeUcc {
-                        #ident_table_type_ucc(#ValueSc.0.0)
+                    fn #ReadOnlyIdsIntoTableTypeSc(#v_as_read_only_ids_ts) -> #self_as_pg_type_ts::#TableTypeUcc {
+                        #ident_table_type_ucc(#VSc.0.0)
                     }
-                    fn #ReadOnlyIdsIntoReadSc(#value_as_read_only_ids_ts) -> #self_as_pg_type_ts::#ReadUcc {
-                        #ValueSc.0
+                    fn #ReadOnlyIdsIntoReadSc(#v_as_read_only_ids_ts) -> #self_as_pg_type_ts::#ReadUcc {
+                        #VSc.0
                     }
-                    fn #ReadOnlyIdsIntoUpdateSc(#value_as_read_only_ids_ts) -> #self_as_pg_type_ts::#UpdateUcc {
-                        #ident_update_ucc(#ValueSc.0.0)
+                    fn #ReadOnlyIdsIntoUpdateSc(#v_as_read_only_ids_ts) -> #self_as_pg_type_ts::#UpdateUcc {
+                        #ident_update_ucc(#VSc.0.0)
                     }
                     fn #ReadIntoTableTypeSc(
-                        #ValueSc: #self_as_pg_type_ts::#ReadUcc
+                        #VSc: #self_as_pg_type_ts::#ReadUcc
                     ) -> #self_as_pg_type_ts::#TableTypeUcc {
-                        #ident_table_type_ucc(#ValueSc.0)
+                        #ident_table_type_ucc(#VSc.0)
                     }
                 }
             }

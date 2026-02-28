@@ -664,15 +664,15 @@ const _: () = {
                             }
                         }
                     }
-                    let f0_value = match f0 {
+                    let f0_v = match f0 {
                         Some(v) => v,
                         None => _serde::__private228::de::missing_field("operator")?,
                     };
-                    let f1_value = match f1 {
+                    let f1_v = match f1 {
                         Some(v) => v,
                         None => _serde::__private228::de::missing_field("v")?,
                     };
-                    match PgTypeWhere::try_new(f0_value, f1_value) {
+                    match PgTypeWhere::try_new(f0_v, f1_v) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -1039,15 +1039,15 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
                         }
                     }
                 }
-                let f0_value = match f0 {
+                let f0_v = match f0 {
                     Some(v) => v,
                     None => serde::__private228::de::missing_field("limit")?,
                 };
-                let f1_value = match f1 {
+                let f1_v = match f1 {
                     Some(v) => v,
                     None => serde::__private228::de::missing_field("offset")?,
                 };
-                match PaginationStartsWithZero::try_new(f0_value, f1_value) {
+                match PaginationStartsWithZero::try_new(f0_v, f1_v) {
                     Ok(v) => Ok(v),
                     Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                 }
@@ -1112,7 +1112,7 @@ pub enum NotEmptyUniqueVecTryNewEr<T> {
     },
     NotUnique {
         #[eo_to_err_string_serde]
-        value: T,
+        v: T,
         loc: Loc,
     },
 }
@@ -1136,7 +1136,7 @@ impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
             for el in &v {
                 if acc.contains(&el) {
                     return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
-                        value: el.clone(),
+                        v: el.clone(),
                         loc: loc!(),
                     });
                 }
@@ -1349,7 +1349,7 @@ pub enum UnsignedPartOfI32TryFromI32Er {
     LessThanZero {
         loc: Loc,
         #[eo_to_err_string_serde]
-        value: i32,
+        v: i32,
     },
 }
 impl TryFrom<i32> for UnsignedPartOfI32 {
@@ -1358,10 +1358,7 @@ impl TryFrom<i32> for UnsignedPartOfI32 {
         if v >= 0 {
             Ok(Self(v))
         } else {
-            Err(Self::Error::LessThanZero {
-                value: v,
-                loc: loc!(),
-            })
+            Err(Self::Error::LessThanZero { v, loc: loc!() })
         }
     }
 }
@@ -1474,7 +1471,7 @@ pub enum NotZeroUnsignedPartOfI32TryFromI32Er {
     },
     UnsignedPartOfI32TryFromI32Er {
         #[eo_location]
-        value: UnsignedPartOfI32TryFromI32Er,
+        v: UnsignedPartOfI32TryFromI32Er,
         loc: Loc,
     },
 }
@@ -1489,10 +1486,7 @@ impl TryFrom<i32> for NotZeroUnsignedPartOfI32 {
                     Ok(Self(v0))
                 }
             }
-            Err(er) => Err(Self::Error::UnsignedPartOfI32TryFromI32Er {
-                value: er,
-                loc: loc!(),
-            }),
+            Err(er) => Err(Self::Error::UnsignedPartOfI32TryFromI32Er { v: er, loc: loc!() }),
         }
     }
 }
