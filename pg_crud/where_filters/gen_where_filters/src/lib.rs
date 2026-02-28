@@ -118,12 +118,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     let t_annotation_generic_ts = quote! {<#t_ts>};
     let proc_macro2_ts_new = Ts2::new();
     let pub_v_t_ts = quote! {pub #ValueSc: T};
-    let unsigned_part_of_i32_ts = quote! {pg_crud_common::UnsignedPartOfI32};
-    let not_zero_unsigned_part_of_i32_ts = quote! {pg_crud_common::NotZeroUnsignedPartOfI32};
-    let value_not_zero_unsigned_part_of_i32_decl_ts =
-        quote! {#ValueSc: #not_zero_unsigned_part_of_i32_ts};
-    let pub_v_not_zero_unsigned_part_of_i32_decl_ts =
-        quote! {pub #value_not_zero_unsigned_part_of_i32_decl_ts};
+    let unsigned_part_of_i32_ts = quote! {#import_path::UnsignedPartOfI32};
+    let not_zero_unsigned_part_of_i32_ts = quote! {#import_path::NotZeroUnsignedPartOfI32};
     let value_default_opt_some_vec_one_el_ts = quote! {
         #ValueSc: #PgCrudCommonDefaultOptSomeVecOneElCall
     };
@@ -270,7 +266,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     };
     let gen_match_incr_checked_add_one_init_ts = |ident_ts: &dyn ToTokens| {
         quote! {
-            let #ident_ts = match pg_crud_common::incr_checked_add_one_returning_incr(#IncrSc) {
+            let #ident_ts = match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
                 Ok(v_25d59e01) => v_25d59e01,
                 Err(#ErSc) => {
                     return Err(#ErSc);
@@ -311,7 +307,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     let pg_type_pattern_handle_arr_dim4 = PgTypePatternHandle::ArrDim4;
     let gen_pub_dims_bounded_vec_ts =
         |vec_length_ts: &dyn ToTokens, kind_of_unsigned_part_of_i32: &KindOfUnsignedPartOfI32| {
-            quote! {pub #DimsSc: BoundedVec<pg_crud_common::#kind_of_unsigned_part_of_i32, #vec_length_ts>}
+            quote! {pub #DimsSc: BoundedVec<#import_path::#kind_of_unsigned_part_of_i32, #vec_length_ts>}
         };
     let value_match_incr_checked_add_one_init_ts = gen_match_incr_checked_add_one_init_ts(&ValueSc);
     let gen_ident_match_field_fn_ok_v_return_err_ts =
@@ -558,7 +554,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 let #ValueSc = {
                                     let mut acc_14596a52 = String::default();
                                     for _ in #SelfSc.#ValueSc.to_vec() {
-                                        match pg_crud_common::incr_checked_add_one_returning_incr(#IncrSc) {
+                                        match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
                                             Ok(v_daedba9c) => {
                                                 #if_write_is_err_ts
                                             },
@@ -817,6 +813,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 let gen_adjacent_with_range_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                     gen_a2ca84d5_ts(pg_type_pattern_handle, &"-|-")
                 };
+                let pub_v_not_zero_unsigned_part_of_i32_decl_ts =
+                    quote! {pub #ValueSc: #not_zero_unsigned_part_of_i32_ts};
                 let gen_length_filter_pattern_ts = |operator: &dyn Display| {
                     (
                         generic_false.clone(),
@@ -978,7 +976,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         (
                             Generic::True {
                                 mb_extra_traits_ts: Some(
-                                    quote! {#sqlx_type_pg_encode_ts + pg_crud_common::PgTypeEqualOperator},
+                                    quote! {#sqlx_type_pg_encode_ts + #import_path::PgTypeEqualOperator},
                                 ),
                             },
                             gen_mb_dims_decl_pub_v_t_ts(&mb_dims_decl_ts),
@@ -986,25 +984,25 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             IncrParamUnderscore::False,
                             quote! {
                                 #mb_dims_ies_init_ts
-                                let operator = <T as pg_crud_common::PgTypeEqualOperator>::operator(&#SelfSc.#ValueSc);
+                                let operator = <T as #import_path::PgTypeEqualOperator>::operator(&#SelfSc.#ValueSc);
                                 let operator_query_str = operator.to_query_str();
                                 Ok(format!(
                                     "{}({} {})",
                                     &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                     #ColumnSc,
                                     match operator {
-                                        pg_crud_common::EqualOperator::Equal => {
+                                        #import_path::EqualOperator::Equal => {
                                             #value_match_incr_checked_add_one_init_ts
                                             format!("{operator_query_str} ${value}")
                                         },
-                                        pg_crud_common::EqualOperator::IsNull => operator_query_str.to_owned(),
+                                        #import_path::EqualOperator::IsNull => operator_query_str.to_owned(),
                                     }
                                 ))
                             },
                             is_query_bind_mutable_true,
                             quote! {
                                 #mb_dims_query_bind_ts
-                                if let pg_crud_common::EqualOperator::Equal = &<T as pg_crud_common::PgTypeEqualOperator>::operator(&#SelfSc.#ValueSc) {
+                                if let #import_path::EqualOperator::Equal = &<T as #import_path::PgTypeEqualOperator>::operator(&#SelfSc.#ValueSc) {
                                     #if_let_err_query_try_bind_self_v_ts
                                 }
                                 Ok(#QuerySc)
@@ -1023,7 +1021,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         (
                             Generic::True {
                                 mb_extra_traits_ts: Some(
-                                    quote! {#sqlx_type_pg_encode_ts + pg_crud_common::PgTypeEqualOperator},
+                                    quote! {#sqlx_type_pg_encode_ts + #import_path::PgTypeEqualOperator},
                                 ),
                             },
                             gen_mb_dims_decl_pub_v_t_ts(&mb_dims_decl_ts),
@@ -1031,25 +1029,25 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             IncrParamUnderscore::False,
                             quote! {
                                 #mb_dims_ies_init_ts
-                                let operator = <T as pg_crud_common::PgTypeEqualOperator>::operator(&#SelfSc.#ValueSc);
+                                let operator = <T as #import_path::PgTypeEqualOperator>::operator(&#SelfSc.#ValueSc);
                                 let operator_query_str = operator.to_query_str();
                                 Ok(format!(
                                     "{}({}{dims_ies} {})",
                                     &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                     #ColumnSc,
                                     match operator {
-                                        pg_crud_common::EqualOperator::Equal => {
+                                        #import_path::EqualOperator::Equal => {
                                             #value_match_incr_checked_add_one_init_ts
                                             format!("{operator_query_str} ${value}")
                                         }
-                                        pg_crud_common::EqualOperator::IsNull => operator_query_str.to_owned(),
+                                        #import_path::EqualOperator::IsNull => operator_query_str.to_owned(),
                                     }
                                 ))
                             },
                             is_query_bind_mutable_true,
                             quote! {
                                 #mb_dims_query_bind_ts
-                                if let pg_crud_common::EqualOperator::Equal = &<T as pg_crud_common::PgTypeEqualOperator>::operator(
+                                if let #import_path::EqualOperator::Equal = &<T as #import_path::PgTypeEqualOperator>::operator(
                                     &#SelfSc.#ValueSc
                                 ) {
                                     #if_let_err_query_try_bind_self_v_ts

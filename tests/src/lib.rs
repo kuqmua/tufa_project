@@ -291,7 +291,7 @@ mod tests {
             | Value::Datetime(_)
             | Value::Array(_) => panic!("e117fa5a"),
         } {
-            let value_table = match v_5c36cb98 {
+            let v_table = match v_5c36cb98 {
                 Value::Table(v_31495eb6) => v_31495eb6,
                 Value::String(_)
                 | Value::Integer(_)
@@ -300,7 +300,7 @@ mod tests {
                 | Value::Datetime(_)
                 | Value::Array(_) => panic!("cb693a3f"),
             };
-            let value_table_len = value_table.len();
+            let v_table_len = v_table.len();
             let check_version =
                 |v_df993c3d: &Table| match v_df993c3d.get("version").expect("d5b2b269").clone() {
                     Value::String(version_string) => {
@@ -336,15 +336,15 @@ mod tests {
                         panic!("38ba32e9")
                     }
                 };
-            if value_table_len == 1 {
-                check_version(&value_table);
-            } else if value_table_len == 2 {
-                check_version(&value_table);
-                check_features(&value_table);
-            } else if value_table_len == 3 {
-                check_version(&value_table);
-                check_features(&value_table);
-                match value_table.get("default-features").expect("847a138f") {
+            if v_table_len == 1 {
+                check_version(&v_table);
+            } else if v_table_len == 2 {
+                check_version(&v_table);
+                check_features(&v_table);
+            } else if v_table_len == 3 {
+                check_version(&v_table);
+                check_features(&v_table);
+                match v_table.get("default-features").expect("847a138f") {
                     &Value::Boolean(_) => (),
                     &Value::String(_)
                     | &Value::Table(_)
@@ -354,7 +354,7 @@ mod tests {
                     | &Value::Array(_) => panic!("b320164b"),
                 }
             } else {
-                panic!("f1139378 {value_table:#?}")
+                panic!("f1139378 {v_table:#?}")
             }
         }
     }

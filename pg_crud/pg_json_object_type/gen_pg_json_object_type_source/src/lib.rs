@@ -2809,7 +2809,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         let ident_update_dq_ts = dq_ts(&ident_update_ucc);
                         let match_try_new_in_deserialize_ts = gen_match_try_new_in_deserialize_ts(
                             &ident_update_ucc,
-                            &quote! {f0_value, f1_value, f2_value}
+                            &quote! {f0_v, f1_v, f2_v}
                         );
                         quote! {
                             #[allow(clippy::absolute_paths)]
@@ -2892,9 +2892,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         where
                                             __A: serde::de::SeqAccess<'de>,
                                         {
-                                            let f0_value = serde::de::SeqAccess::next_element::<#vec_ident_with_id_stdrt_not_null_create_ts>(&mut __seq)?.unwrap_or_default();
-                                            let f1_value = serde::de::SeqAccess::next_element::<#import_path_unique_vec_ident_with_id_stdrt_not_null_update_el_ts>(&mut __seq)?.unwrap_or_default();
-                                            let f2_value = serde::de::SeqAccess::next_element::<#vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts>(&mut __seq)?.unwrap_or_default();
+                                            let f0_v = serde::de::SeqAccess::next_element::<#vec_ident_with_id_stdrt_not_null_create_ts>(&mut __seq)?.unwrap_or_default();
+                                            let f1_v = serde::de::SeqAccess::next_element::<#import_path_unique_vec_ident_with_id_stdrt_not_null_update_el_ts>(&mut __seq)?.unwrap_or_default();
+                                            let f2_v = serde::de::SeqAccess::next_element::<#vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts>(&mut __seq)?.unwrap_or_default();
                                             #match_try_new_in_deserialize_ts
                                         }
                                         #[inline]
@@ -2930,9 +2930,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                     }
                                                 }
                                             }
-                                            let f0_value = f0.unwrap_or_default();
-                                            let f1_value = f1.unwrap_or_default();
-                                            let f2_value = f2.unwrap_or_default();
+                                            let f0_v = f0.unwrap_or_default();
+                                            let f1_v = f1.unwrap_or_default();
+                                            let f2_v = f2.unwrap_or_default();
                                             #match_try_new_in_deserialize_ts
                                         }
                                     }
