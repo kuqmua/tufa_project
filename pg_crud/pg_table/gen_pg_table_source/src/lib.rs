@@ -243,8 +243,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             SelfPayloadExampleSc::from_display(&self)
         }
         fn self_handle_sc_ts(self) -> Ts2 {
-            let value = SelfHandleSc::from_tokens(&self.self_sc_ts());
-            quote! {#value}
+            let v = SelfHandleSc::from_tokens(&self.self_sc_ts());
+            quote! {#v}
         }
         fn self_sc_str(self) -> String {
             AsRefStrToScStr::case(&self.to_string())
@@ -253,12 +253,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             AsRefStrToScTs::case_or_panic(&self.to_string())
         }
         fn try_self_handle_sc_ts(self) -> Ts2 {
-            let value = TrySelfHandleSc::from_tokens(&self.self_sc_ts());
-            quote! {#value}
+            let v = TrySelfHandleSc::from_tokens(&self.self_sc_ts());
+            quote! {#v}
         }
         fn try_self_sc_ts(self) -> Ts2 {
-            let value = TrySelfSc::from_tokens(&self.self_sc_ts());
-            quote! {#value}
+            let v = TrySelfSc::from_tokens(&self.self_sc_ts());
+            quote! {#v}
         }
     }
     impl Display for Operation {
@@ -349,30 +349,32 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     }
     impl GenPgTableAttr {
         fn gen_path_to_attr(self) -> String {
-            let value = match self {
-                Self::CreateManyExtraErVrts => CreateManyExtraErVrtsSc.to_string(),
-                Self::CreateOneExtraErVrts => CreateOneExtraErVrtsSc.to_string(),
-                Self::ReadManyExtraErVrts => ReadManyExtraErVrtsSc.to_string(),
-                Self::ReadOneExtraErVrts => ReadOneExtraErVrtsSc.to_string(),
-                Self::UpdateManyExtraErVrts => UpdateManyExtraErVrtsSc.to_string(),
-                Self::UpdateOneExtraErVrts => UpdateOneExtraErVrtsSc.to_string(),
-                Self::DeleteManyExtraErVrts => DeleteManyExtraErVrtsSc.to_string(),
-                Self::DeleteOneExtraErVrts => DeleteOneExtraErVrtsSc.to_string(),
-                Self::CommonExtraErVrts => CommonExtraErVrtsSc.to_string(),
-                Self::CreateManyExtraLogic => CreateManyExtraLogicSc.to_string(),
-                Self::CreateOneExtraLogic => CreateOneExtraLogicSc.to_string(),
-                Self::ReadManyExtraLogic => ReadManyExtraLogicSc.to_string(),
-                Self::ReadOneExtraLogic => ReadOneExtraLogicSc.to_string(),
-                Self::UpdateManyExtraLogic => UpdateManyExtraLogicSc.to_string(),
-                Self::UpdateOneExtraLogic => UpdateOneExtraLogicSc.to_string(),
-                Self::DeleteManyExtraLogic => DeleteManyExtraLogicSc.to_string(),
-                Self::DeleteOneExtraLogic => DeleteOneExtraLogicSc.to_string(),
-                Self::CommonExtraLogic => CommonExtraLogicSc.to_string(),
-            };
-            format!("{PgCrudSc}::{value}")
+            format!(
+                "{PgCrudSc}::{}",
+                match self {
+                    Self::CreateManyExtraErVrts => CreateManyExtraErVrtsSc.to_string(),
+                    Self::CreateOneExtraErVrts => CreateOneExtraErVrtsSc.to_string(),
+                    Self::ReadManyExtraErVrts => ReadManyExtraErVrtsSc.to_string(),
+                    Self::ReadOneExtraErVrts => ReadOneExtraErVrtsSc.to_string(),
+                    Self::UpdateManyExtraErVrts => UpdateManyExtraErVrtsSc.to_string(),
+                    Self::UpdateOneExtraErVrts => UpdateOneExtraErVrtsSc.to_string(),
+                    Self::DeleteManyExtraErVrts => DeleteManyExtraErVrtsSc.to_string(),
+                    Self::DeleteOneExtraErVrts => DeleteOneExtraErVrtsSc.to_string(),
+                    Self::CommonExtraErVrts => CommonExtraErVrtsSc.to_string(),
+                    Self::CreateManyExtraLogic => CreateManyExtraLogicSc.to_string(),
+                    Self::CreateOneExtraLogic => CreateOneExtraLogicSc.to_string(),
+                    Self::ReadManyExtraLogic => ReadManyExtraLogicSc.to_string(),
+                    Self::ReadOneExtraLogic => ReadOneExtraLogicSc.to_string(),
+                    Self::UpdateManyExtraLogic => UpdateManyExtraLogicSc.to_string(),
+                    Self::UpdateOneExtraLogic => UpdateOneExtraLogicSc.to_string(),
+                    Self::DeleteManyExtraLogic => DeleteManyExtraLogicSc.to_string(),
+                    Self::DeleteOneExtraLogic => DeleteOneExtraLogicSc.to_string(),
+                    Self::CommonExtraLogic => CommonExtraLogicSc.to_string(),
+                }
+            )
         }
     }
-    enum ShouldWrapIntoValue {
+    enum ShouldWrapIntoV {
         False,
         True,
     }
@@ -772,8 +774,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let gen_init_ts =
         |syn_vrt_wrapper: &SynVrtWrapper, file: &'static str, line: u32, column: u32| -> Ts2 {
             let vrt_ident = &syn_vrt_wrapper.vrt.ident;
-            let fields_ts = if let Fields::Named(value) = &syn_vrt_wrapper.vrt.fields {
-                value.named.iter().enumerate().map(|(i, el)| {
+            let fields_ts = if let Fields::Named(v) = &syn_vrt_wrapper.vrt.fields {
+                v.named.iter().enumerate().map(|(i, el)| {
                     let fi = &el.ident;
                     if *fi.as_ref().expect("edbbd08a") == LocSc.to_string() {
                         gen_field_loc_new_ts(file, line, column)
@@ -827,11 +829,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             vrt: Variant {
                 attrs: {
                     let mut attrs = Vec::new();
-                    if let Some(value) = status_code.as_ref() {
+                    if let Some(v) = status_code.as_ref() {
                         let mut segments = Punctuated::new();
                         segments.push(PathSegment {
                             ident: Ident::new(
-                                &AsRefStrToScStr::case(value),
+                                &AsRefStrToScStr::case(v),
                                 proc_macro2::Span::call_site(),
                             ),
                             arguments: PathArguments::None,
@@ -854,7 +856,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 fields: Fields::Named(FieldsNamed {
                     brace_token: Brace::default(),
                     named: {
-                        let mut handle =
+                        let mut acc =
                             fields_cd1fd715
                                 .into_iter()
                                 .fold(Punctuated::new(), |mut acc, el| {
@@ -868,15 +870,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             meta: Meta::Path(Path {
                                                 leading_colon: None,
                                                 segments: {
-                                                    let mut handle = Punctuated::new();
-                                                    handle.push(PathSegment {
+                                                    let mut acc0 = Punctuated::new();
+                                                    acc0.push(PathSegment {
                                                         ident: Ident::new(
                                                             AttrIdentStr::attr_ident_str(&el.0),
                                                             proc_macro2::Span::call_site(),
                                                         ),
                                                         arguments: PathArguments::None,
                                                     });
-                                                    handle
+                                                    acc0
                                                 },
                                             }),
                                         }],
@@ -902,8 +904,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     });
                                     acc
                                 });
-                        handle.push_value(loc_syn_field());
-                        handle
+                        acc.push_value(loc_syn_field());
+                        acc
                     },
                 }),
                 discriminant: None,
@@ -1248,7 +1250,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     });
                     quote! {
                         Ok(match &self.0 {
-                            Some(value) => {
+                            Some(#ValueSc) => {
                                 let mut #ExtraParamsSc = #StringTs::from("where");
                                 let mut is_first_push_to_extra_params_already_happend = false;
                                 #(#extra_params_modification_ts)*
@@ -1523,11 +1525,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #primary_k_ft_as_pg_type_read_ucc,
                             #RefStr
                         >(
-                            value,
+                            #ValueSc,
                             #primary_k_fi_string_dq_ts
                         ) {
                             Ok(v_dccdf117) => {
-                                #primary_k_fi = Some(#import_path::#VUcc { value: v_dccdf117});
+                                #primary_k_fi = Some(#import_path::#VUcc { #ValueSc: v_dccdf117});
                             },
                             Err(#Er0) => {
                                 return Err(#Er0);
@@ -1547,11 +1549,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 #el_syn_field_ty_as_pg_type_read_ts,
                                 #RefStr
                             >(
-                                value,
+                                #ValueSc,
                                 #fi_string_dq_ts
                             ) {
                                 Ok(v_09b0fc09) => {
-                                    #fi = Some(#import_path::#VUcc { value: v_09b0fc09});
+                                    #fi = Some(#import_path::#VUcc { #ValueSc: v_09b0fc09});
                                 },
                                 Err(#Er0) => {
                                     return Err(#Er0);
@@ -1715,10 +1717,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let ident_update_for_query_ucc = SelfUpdateForQueryUcc::from_tokens(&ident);
     let ident_update_ts = {
         let gen_opt_v_ft_as_pg_type_update_ts = |syn_type: &Type| {
-            let path_v_ts = {
-                let value = format!("{PgCrudSc}::{VUcc}");
-                value.parse::<Ts2>().expect("dbdbb7f2")
-            };
+            let path_v_ts = format!("{PgCrudSc}::{VUcc}")
+                .parse::<Ts2>()
+                .expect("dbdbb7f2");
             let syn_type_as_pg_type_update_ts = gen_as_pg_type_update_ts(&syn_type);
             gen_opt_type_decl_ts(&quote! {#path_v_ts<#syn_type_as_pg_type_update_ts>})
         };
@@ -1861,10 +1862,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let fields_named_without_primary_k_ts = gen_fields_named_without_primary_k_with_comma_ts(&|el: &SynFieldWrapper| -> Ts2 {
                         let fi = &el.ident;
                         let opt_v_ft_as_pg_type_update_for_query_ts = {
-                            let path_v_ts = {
-                                let value = format!("{PgCrudSc}::{VUcc}");
-                                value.parse::<Ts2>().expect("2b09d4ae")
-                            };
+                            let path_v_ts = format!("{PgCrudSc}::{VUcc}").parse::<Ts2>().expect("2b09d4ae");
                             let syn_type_as_pg_type_update_for_query_ts = gen_as_pg_type_update_for_query_ts(&el.type0);
                             gen_opt_type_decl_ts(&quote! {#path_v_ts<#syn_type_as_pg_type_update_for_query_ts>})
                         };
@@ -1975,16 +1973,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     gen_fields_named_without_primary_k_with_comma_ts(
                         &|el: &SynFieldWrapper| -> Ts2 {
                             let fi = &el.ident;
-                            let value_init_ts = gen_import_path_v_init_ts(&{
+                            let ts = gen_import_path_v_init_ts(&{
                                 let ft_as_pg_type_update_for_query_ts =
                                     gen_as_pg_type_update_for_query_ts(&el.type0);
-                                quote! {
-                                     #ft_as_pg_type_update_for_query_ts::from(v_0e64c53a.#ValueSc)
-                                }
+                                quote! {#ft_as_pg_type_update_for_query_ts::from(v_0e64c53a.#ValueSc)}
                             });
-                            quote! {
-                                #fi: value.#fi.map(|v_0e64c53a| #value_init_ts)
-                            }
+                            quote! {#fi: #ValueSc.#fi.map(|v_0e64c53a| #ts)}
                         },
                     );
                 quote! {
@@ -2268,20 +2262,20 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             };
         }
     };
-    let gen_fetch_ts = |executor_name_ts: &dyn ToTokens,
-                        value_handle_ts: &dyn ToTokens,
-                        try_next_er_init_ts: &dyn ToTokens,
-                        should_wrap_into_value: &ShouldWrapIntoValue| {
+    let gen_fetch_ts = |fetch_ts: &dyn ToTokens,
+                        some_ts: &dyn ToTokens,
+                        er_ts: &dyn ToTokens,
+                        should_wrap_into_v: &ShouldWrapIntoV| {
         let ts = quote! {
-            let mut #RowsSc = #BindedQuerySc.fetch(#executor_name_ts.as_mut());
+            let mut #RowsSc = #BindedQuerySc.fetch(#fetch_ts.as_mut());
             let mut acc_d16ac269 = Vec::new();
             while let Some(v_d9cc2c36) = match #PgCrudSc::TryStreamExt::try_next(&mut #RowsSc).await {
                 Ok(v_19f3d6e1) => match v_19f3d6e1 {
-                    Some(v_b27d7d79) => #value_handle_ts,
+                    Some(v_b27d7d79) => #some_ts,
                     None => None,
                 },
                 Err(#Er0) => {
-                    #try_next_er_init_ts
+                    #er_ts
                 }
             }
             {
@@ -2289,21 +2283,19 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
             acc_d16ac269
         };
-        match should_wrap_into_value {
-            ShouldWrapIntoValue::False => ts,
-            ShouldWrapIntoValue::True => wrap_into_v_ts(&ts),
+        match should_wrap_into_v {
+            ShouldWrapIntoV::False => ts,
+            ShouldWrapIntoV::True => wrap_into_v_ts(&ts),
         }
     };
-    let gen_fetch_one_ts = |executor_name_ts: &dyn ToTokens,
-                            value_handle_ts: &dyn ToTokens,
-                            fetch_one_er_init_ts: &dyn ToTokens| {
+    let gen_fetch_one_ts = |fetch_ts: &dyn ToTokens, ok_ts: &dyn ToTokens, er_ts: &dyn ToTokens| {
         quote! {
-            match #BindedQuerySc.fetch_one(#executor_name_ts.as_mut()).await {
+            match #BindedQuerySc.fetch_one(#fetch_ts.as_mut()).await {
                 Ok(v_b27d7d79) => {
-                    #value_handle_ts
+                    #ok_ts
                 },
                 Err(#Er0) => {
-                    #fetch_one_er_init_ts
+                    #er_ts
                 }
             }
         }
@@ -2635,19 +2627,19 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let headers = parts.headers;
                 if !matches!(
                     headers.get(http::header::CONTENT_TYPE),
-                    Some(value) if value == http::header::HeaderValue::from_static("application/json")
+                    Some(v_e3f6eecd) if v_e3f6eecd == http::header::HeaderValue::from_static("application/json")
                 ) {
                     #header_content_type_application_json_not_found_syn_vrt_wrapper_er_init_eprintln_res_creation_ts
                 }
                 //todo
                 // match axum::body::HttpBody::size_hint(&#BodySc).exact() {
-                //     Some(value) => {
+                //     Some(v) => {
                 //         println!(
-                //             "HttpBody::size_hint {value} byte or {} kilobyte or {} megabyte",
-                //             value
+                //             "HttpBody::size_hint {v} byte or {} kilobyte or {} megabyte",
+                //             v
                 //                 .checked_div(1024)
                 //                 .expect("111fd01a"),
-                //             value
+                //             v
                 //                 .checked_div(1_048_576)
                 //                 .expect("efbe0db4"), //(1024*1024)
                 //         );
@@ -2987,7 +2979,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     line!(),
                     column!(),
                 ),
-                &ShouldWrapIntoValue::True,
+                &ShouldWrapIntoV::True,
             )
         };
     let gen_create_update_delete_one_fetch_ts =
@@ -3038,13 +3030,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let incr_init_ts = quote! {let mut #IncrSc: u64 = 0;};
     let column_names = {
-        let mut value = fields.iter().fold(String::default(), |mut acc, el| {
-            assert!(write!(acc, "{}", &el.ident).is_ok(), "b9fe50dc");
-            acc.push(',');
-            acc
+        let mut acc = fields.iter().fold(String::default(), |mut acc0, el| {
+            assert!(write!(acc0, "{}", &el.ident).is_ok(), "b9fe50dc");
+            acc0.push(',');
+            acc0
         });
-        let _: Option<char> = value.pop();
-        value
+        let _: Option<char> = acc.pop();
+        acc
     };
     let column_names_dq_ts = dq_ts(&column_names);
     let gen_select_only_ids_query_part_ts = |operation: &Operation| {
@@ -3536,7 +3528,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             line!(),
                             column!(),
                         ),
-                        &ShouldWrapIntoValue::False,
+                        &ShouldWrapIntoV::False,
                     );
                     quote! {{
                         #fetch_ts
@@ -3558,9 +3550,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let try_operation_ts = {
             let try_operation_er_ts = gen_ident_try_operation_er_ts(&operation, &{
-                let mut value = common_http_req_syn_vrts.clone();
-                value.push(not_unique_field_syn_vrt_wrapper.get_syn_vrt().clone());
-                value
+                let mut acc = common_http_req_syn_vrts.clone();
+                acc.push(not_unique_field_syn_vrt_wrapper.get_syn_vrt().clone());
+                acc
             });
             impl_ident_vec_ts.push(gen_try_operation_ts(
                 &operation,
@@ -3708,9 +3700,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let try_operation_ts = {
             let try_operation_er_ts = gen_ident_try_operation_er_ts(&operation, &{
-                let mut value = common_http_req_syn_vrts.clone();
-                value.push(not_unique_field_syn_vrt_wrapper.get_syn_vrt().clone());
-                value
+                let mut acc = common_http_req_syn_vrts.clone();
+                acc.push(not_unique_field_syn_vrt_wrapper.get_syn_vrt().clone());
+                acc
             });
             impl_ident_vec_ts.push(gen_try_operation_ts(
                 &operation,
@@ -4869,14 +4861,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let common_read_only_ids_returned_from_create_one_ts = {
             let primary_k_read_ts = quote! {primary_k_read};
             let primary_k_read_clone_ts = quote! {primary_k_read.clone()};
-            let value_init_ts = gen_import_path_v_init_ts(&primary_k_read_clone_ts);
+            let ts = gen_import_path_v_init_ts(&primary_k_read_clone_ts);
             quote! {
                 let #CommonReadOnlyIdsReturnedFromCreateOneSc = {
                     let read_only_ids_from_try_create_one = gen_read_only_ids_from_try_create_one_default(&#UrlSc, &table_init).await;
                     let primary_k_read = #primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts;
                     assert_eq!(
                         #ident_read_ucc {
-                            #primary_k_fi: Some(#value_init_ts),
+                            #primary_k_fi: Some(#ts),
                             #fields_none_init_ts
                         },
                         gen_ident_try_read_one_handle_primary_k(
@@ -5051,11 +5043,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &|syn_field_wrapper: &SynFieldWrapper| {
                         let fi_5bea122e = &syn_field_wrapper.ident;
                         let ft_f7f832df = &syn_field_wrapper.type0;
-                        let value_init_ts =
-                            gen_import_path_v_init_ts(&PgCrudDefaultOptSomeVecOneElCall);
+                        let ts = gen_import_path_v_init_ts(&PgCrudDefaultOptSomeVecOneElCall);
                         quote! {
                             #fi_5bea122e: el_f108da5a.#fi_5bea122e.as_ref().map_or_else(
-                                || Some(#value_init_ts),
+                                || Some(#ts),
                                 <#ft_f7f832df as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el
                             )
                         }
@@ -5284,7 +5275,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ft = &el.type0;
                     let ident_create_ts_f75e4ef0 =
                         gen_ident_create_content_el_id_ts(fi, &quote! {el_7632d698});
-                    let value_init_ts = gen_import_path_v_init_ts(&primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts);
+                    let ts = gen_import_path_v_init_ts(&primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts);
                     quote! {
                         for el_7632d698 in <#ft as pg_crud::PgTypeTestCases>::#OptVecCreateSc().unwrap_or(Vec::new()) {
                             let table_create_one_cloned = table_create_one.clone();
@@ -5301,7 +5292,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 ).await;
                                 assert_eq!(
                                     #ident_read_ucc {
-                                        #primary_k_fi: Some(#value_init_ts),
+                                        #primary_k_fi: Some(#ts),
                                         #fi_read_only_ids_merged_with_create_into_opt_v_read_read_only_ids_from_try_create_one_ident_create_ts
                                     },
                                     gen_ident_try_read_one_handle_primary_k(
@@ -6069,7 +6060,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                     #primary_k_ft_as_pg_type_where_ts::Equal(
                                                         pg_crud::PgTypeWhereEqual {
                                                             operator: pg_crud::Operator::Or,
-                                                            value: #primary_k_ft_table_type_ts::new(
+                                                            #ValueSc: #primary_k_ft_table_type_ts::new(
                                                                 #primary_k_ft_as_pg_type_ts into_inner(
                                                                     #primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3
                                                                 )
@@ -6116,10 +6107,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &|syn_field_wrapper: &SynFieldWrapper| {
                                 let fi_f56e8e3f = &syn_field_wrapper.ident;
                                 if fi == fi_f56e8e3f {
-                                    let value_init_ts = gen_import_path_v_init_ts(&quote! {
-                                        #UpdateSc.clone()
-                                    });
-                                    quote! {Some(#value_init_ts)}
+                                    let ts = gen_import_path_v_init_ts(&quote! {#UpdateSc.clone()});
+                                    quote! {Some(#ts)}
                                 } else {
                                     none_ts.clone()
                                 }
@@ -6130,7 +6119,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &|syn_field_wrapper: &SynFieldWrapper| {
                                 let fi_b9ec9008 = &syn_field_wrapper.ident;
                                 let ts = if fi == fi_b9ec9008 {
-                                    let value_init_ts = gen_import_path_v_init_ts(&{
+                                    let ts0 = gen_import_path_v_init_ts(&{
                                         let ft_0490079a = &syn_field_wrapper.type0;
                                         quote! {
                                             <#ft_0490079a as pg_crud::PgTypeTestCases>::previous_read_merged_with_opt_update_into_read(
@@ -6141,7 +6130,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             )
                                         }
                                     });
-                                    quote! {Some(#value_init_ts)}
+                                    quote! {Some(#ts0)}
                                 } else {
                                     quote! {el_a6bc6b2f.#fi_b9ec9008}
                                 };
@@ -6150,19 +6139,19 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         );
                     let expected_read_many_ts = if is_fields_without_primary_k_len_greater_than_one
                     {
-                        let value_init_ts = gen_import_path_v_init_ts(&primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3);
+                        let ts = gen_import_path_v_init_ts(&primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3);
                         quote! {
                             previous_read.into_iter().map(|el_a6bc6b2f| #ident_read_ucc {
-                                #primary_k_fi: Some(#value_init_ts),
+                                #primary_k_fi: Some(#ts),
                                 #ident_read_fields_init_without_primary_k_after_update_one_ts
                             }).collect::<Vec<#ident_read_ucc>>()
                         }
                     } else {
-                        let value_init_ts = gen_import_path_v_init_ts(&primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3);
+                        let ts = gen_import_path_v_init_ts(&primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3);
                         quote! {
                             vec![
                                 #ident_read_ucc {
-                                    #primary_k_fi: Some(#value_init_ts),
+                                    #primary_k_fi: Some(#ts),
                                     #ident_read_fields_init_without_primary_k_after_update_one_ts
                                 }
                             ]
@@ -6308,9 +6297,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &|el0: &SynFieldWrapper| {
                                 let fi_6ea8afd1 = &el0.ident;
                                 if fi == fi_6ea8afd1 {
-                                    let value_init_ts =
-                                        gen_import_path_v_init_ts(&quote! {#UpdateSc.clone()});
-                                    quote! {Some(#value_init_ts)}
+                                    let ts = gen_import_path_v_init_ts(&quote! {#UpdateSc.clone()});
+                                    quote! {Some(#ts)}
                                 } else {
                                     none_ts.clone()
                                 }
@@ -6322,7 +6310,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 let fi_8c7d4975 = &el0.ident;
                                 let ft_09e184c3 = &el0.type0;
                                 if fi == fi_8c7d4975 {
-                                    let value_init_ts = gen_import_path_v_init_ts(&quote! {
+                                    let ts_0ec756e2 = gen_import_path_v_init_ts(&quote! {
                                         <
                                             #ft_09e184c3
                                             as
@@ -6338,17 +6326,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             Some(#UpdateSc.clone())
                                         )
                                     });
-                                    quote! {
-                                        #fi_8c7d4975: Some(#value_init_ts)
-                                    }
+                                    quote! {#fi_8c7d4975: Some(#ts_0ec756e2)}
                                 } else {
-                                    quote! {
-                                        #fi_8c7d4975: previous_read.#fi_8c7d4975
-                                    }
+                                    quote! {#fi_8c7d4975: previous_read.#fi_8c7d4975}
                                 }
                             },
                         );
-                    let value_init_ts = gen_import_path_v_init_ts(&primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3);
+                    let ts = gen_import_path_v_init_ts(&primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3);
                     quote! {
                         for (i_26824592, read_only_ids_el_937c5af3) in gen_read_only_ids_els_8a1ef027(
                             &url,
@@ -6405,7 +6389,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 );
                                 assert_eq!(
                                     #ident_read_ucc {
-                                        #primary_k_fi: Some(#value_init_ts),
+                                        #primary_k_fi: Some(#ts),
                                         #ident_read_fields_init_without_primary_k_after_update_one_ts
                                     },
                                     gen_ident_try_read_one_handle_primary_k(
@@ -6438,7 +6422,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 std::iter::repeat_with(|| #primary_k_ft_as_pg_type_where_ts::Equal(
                                                     pg_crud::PgTypeWhereEqual {
                                                         operator: pg_crud::Operator::Or,
-                                                        value: #primary_k_ft_table_type_ts::new(
+                                                        #ValueSc: #primary_k_ft_table_type_ts::new(
                                                             uuid::Uuid::new_v4()
                                                         )
                                                     }
@@ -6564,7 +6548,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let delete_one_tests_ts = {
-            let value_init_ts = gen_import_path_v_init_ts(&primary_k_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_k_fi_ts);
+            let ts = gen_import_path_v_init_ts(&primary_k_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_k_fi_ts);
             quote! {
                 acc_9189f86e.push({
                     let table_delete_one_cloned = table_delete_one.clone();
@@ -6596,7 +6580,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let read_only_ids_returned_from_create_one = gen_read_only_ids_from_try_create_one_default(&url, &table_delete_one_cloned).await;
                         assert_eq!(
                             #ident_read_ucc {
-                                #primary_k_fi: Some(#value_init_ts),
+                                #primary_k_fi: Some(#ts),
                                 #fi_read_only_ids_merged_with_create_into_opt_v_read_read_only_ids_returned_from_create_one_create_ts
                             },
                             gen_ident_try_read_one_handle_primary_k(
@@ -6659,7 +6643,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #import_path::Operator::Or,
                             vec_read_only_ids.iter().map(|el_9530b728| #primary_k_ft_where_ts::Equal(#import_path::PgTypeWhereEqual {
                                 operator: #import_path::Operator::Or,
-                                value: #primary_k_ft_table_type_ts::new(
+                                #ValueSc: #primary_k_ft_table_type_ts::new(
                                     #primary_k_ft_as_pg_type_ts into_inner(
                                         <#primary_k_ft as #import_path::PgTypePrimaryK>::read_only_ids_into_read(
                                             el_9530b728.#primary_k_fi
@@ -6845,9 +6829,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let #UrlSc = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&#ConfigSc));
                         let table = #ident_dq_ts;
                         let add_table_postfix = |postfix: &str|{
-                            let value = format!("{table}_{postfix}");
-                            assert!(value.len() <= 63, "77f9bfb7");
-                            value
+                            let v = format!("{table}_{postfix}");
+                            assert!(v.len() <= 63, "77f9bfb7");
+                            v
                         };
                         let table_init = add_table_postfix("init");
                         let table_create_many = add_table_postfix("create_many");
@@ -6889,7 +6873,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         };
                         drop_all_test_tables().await;
                         #ident::prepare_extensions(&#PgPoolSc).await.expect("0633ff48");
-                        //do not make it concurrent. would be pg er: "duplicate k value violates unique constraint \"pg_class_relname_nsp_index\""
+                        //do not make it concurrent. would be pg er: "duplicate k v violates unique constraint \"pg_class_relname_nsp_index\""
                         for el_dac43b91 in table_names {
                             #ident::prepare_pg_table(
                                 &#PgPoolSc,

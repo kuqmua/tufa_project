@@ -120,7 +120,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     let pub_v_t_ts = quote! {pub #ValueSc: T};
     let unsigned_part_of_i32_ts = quote! {#import_path::UnsignedPartOfI32};
     let not_zero_unsigned_part_of_i32_ts = quote! {#import_path::NotZeroUnsignedPartOfI32};
-    let value_default_opt_some_vec_one_el_ts = quote! {
+    let v_default_opt_some_vec_one_el_ts = quote! {
         #ValueSc: #PgCrudCommonDefaultOptSomeVecOneElCall
     };
     let gen_struct_ts = |filter_init_with_try_new_result_is_ok: bool,
@@ -207,12 +207,12 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 let send_and_lifetime_ts = quote! {Send + 'lifetime};
                                 let serde_serialize_ts = quote! {serde::Serialize};
                                 let ts = match (&filter_type, &mb_extra_traits_ts) {
-                                    (FilterType::PgType, Some(value)) => {
-                                        &quote! {#value + #send_and_lifetime_ts}
+                                    (FilterType::PgType, Some(v)) => {
+                                        &quote! {#v + #send_and_lifetime_ts}
                                     }
                                     (FilterType::PgType, None) => &send_and_lifetime_ts,
-                                    (FilterType::PgJsonType, Some(value)) => {
-                                        &quote! {#value + #serde_serialize_ts + #send_and_lifetime_ts}
+                                    (FilterType::PgJsonType, Some(v)) => {
+                                        &quote! {#v + #serde_serialize_ts + #send_and_lifetime_ts}
                                     }
                                     (FilterType::PgJsonType, None) => {
                                         &quote! {#serde_serialize_ts + #send_and_lifetime_ts}
@@ -239,11 +239,11 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         };
     let regex_case_and_v_decl_ts = quote! {
         pub regex_case: RegexCase,
-        pub value: RegexRegex
+        pub #ValueSc: RegexRegex
     };
     let regex_case_and_v_default_init_ts = quote! {
         regex_case: #PgCrudCommonDefaultOptSomeVecOneElCall,
-        #value_default_opt_some_vec_one_el_ts
+        #v_default_opt_some_vec_one_el_ts
     };
     let if_let_err_query_try_bind_self_v_to_string_ts = quote! {
         if let Err(#ErSc) = #QuerySc.try_bind(#SelfSc.#ValueSc.to_string()) {
@@ -264,16 +264,6 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     let generic_true_none = Generic::True {
         mb_extra_traits_ts: None,
     };
-    let gen_match_incr_checked_add_one_init_ts = |ident_ts: &dyn ToTokens| {
-        quote! {
-            let #ident_ts = match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
-                Ok(v_25d59e01) => v_25d59e01,
-                Err(#ErSc) => {
-                    return Err(#ErSc);
-                },
-            };
-        }
-    };
     let generic_true_debug_partial_eq_clone = Generic::True {
         mb_extra_traits_ts: Some(quote! {std::fmt::Debug + PartialEq + Clone}),
     };
@@ -287,8 +277,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             + for<'__> sqlx::Encode<'__, sqlx::Postgres>
         }),
     };
-    let value_between_t_ts = quote! {#ValueSc: Between<T>};
-    let pub_v_between_t_ts = quote! {pub #value_between_t_ts};
+    let pub_v_between_t_ts = quote! {pub #ValueSc: Between<T>};
     let query_self_v_query_bind_ts = quote! {
         match #SelfSc.#ValueSc.query_bind(#QuerySc) {
             Ok(v_f6d31bdd) => {
@@ -309,7 +298,17 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         |vec_length_ts: &dyn ToTokens, kind_of_unsigned_part_of_i32: &KindOfUnsignedPartOfI32| {
             quote! {pub #DimsSc: BoundedVec<#import_path::#kind_of_unsigned_part_of_i32, #vec_length_ts>}
         };
-    let value_match_incr_checked_add_one_init_ts = gen_match_incr_checked_add_one_init_ts(&ValueSc);
+    let gen_match_incr_checked_add_one_init_ts = |ident_ts: &dyn ToTokens| {
+        quote! {
+            let #ident_ts = match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
+                Ok(v_25d59e01) => v_25d59e01,
+                Err(#ErSc) => {
+                    return Err(#ErSc);
+                },
+            };
+        }
+    };
+    let v_match_incr_checked_add_one_init_ts = gen_match_incr_checked_add_one_init_ts(&ValueSc);
     let gen_ident_match_field_fn_ok_v_return_err_ts =
         |ident_ts: &dyn ToTokens, field_ts: &dyn ToTokens, fn_ts: &dyn ToTokens| {
             quote! {
@@ -321,7 +320,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 };
             }
         };
-    let value_match_self_v_query_part_init_ts =
+    let v_match_self_v_query_part_init_ts =
         gen_ident_match_field_fn_ok_v_return_err_ts(&ValueSc, &ValueSc, &quote! {query_part});
     let dims_default_init_ts = quote! {
         #DimsSc: #PgCrudCommonDefaultOptSomeVecOneElCall
@@ -347,7 +346,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     let gen_mb_dims_default_init_v_default_ts = |mb_dims_default_init_ts: &dyn ToTokens| {
         quote! {
             #mb_dims_default_init_ts
-            #value_default_opt_some_vec_one_el_ts
+            #v_default_opt_some_vec_one_el_ts
         }
     };
     let is_query_bind_mutable_true = IsQueryBindMutable::True;
@@ -449,7 +448,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 let format_ts = dq_ts(&gen_format_handle_str(&pg_type_kind));
                                 quote! {
                                     #mb_dims_ies_init_ts
-                                    #value_match_incr_checked_add_one_init_ts
+                                    #v_match_incr_checked_add_one_init_ts
                                     Ok(format!(
                                         #format_ts,
                                         &#SelfSc.operator.to_query_part(is_need_to_add_operator),
@@ -502,7 +501,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             ));
                             quote! {
                                 #mb_dims_ies_init_ts
-                                #value_match_self_v_query_part_init_ts
+                                #v_match_self_v_query_part_init_ts
                                 Ok(format!(
                                     #format_ts,
                                     &#SelfSc.operator.to_query_part(is_need_to_add_operator),
@@ -614,7 +613,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             ));
                             quote! {
                                 #mb_dims_ies_init_ts
-                                #value_match_incr_checked_add_one_init_ts
+                                #v_match_incr_checked_add_one_init_ts
                                 Ok(format!(
                                     #format_ts,
                                     &#SelfSc.operator.to_query_part(is_need_to_add_operator),
@@ -653,7 +652,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             ));
                             quote! {
                                 #mb_dims_ies_init_ts
-                                #value_match_incr_checked_add_one_init_ts
+                                #v_match_incr_checked_add_one_init_ts
                                 Ok(format!(
                                     #format_ts,
                                     &#SelfSc.operator.to_query_part(is_need_to_add_operator),
@@ -770,7 +769,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 ));
                                 quote! {
                                     #mb_dims_ies_init_ts
-                                    #value_match_incr_checked_add_one_init_ts
+                                    #v_match_incr_checked_add_one_init_ts
                                     Ok(format!(
                                         #format_ts,
                                         &#SelfSc.operator.to_query_part(is_need_to_add_operator),
@@ -819,7 +818,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     (
                         generic_false.clone(),
                         pub_v_not_zero_unsigned_part_of_i32_decl_ts.clone(),
-                        value_default_opt_some_vec_one_el_ts.clone(),
+                        v_default_opt_some_vec_one_el_ts.clone(),
                         IncrParamUnderscore::False,
                         {
                             let format_ts =
@@ -946,7 +945,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             ));
                             quote! {
                                 #mb_dims_ies_init_ts
-                                #value_match_incr_checked_add_one_init_ts
+                                #v_match_incr_checked_add_one_init_ts
                                 Ok(format!(
                                     #format_ts,
                                     &#SelfSc.operator.to_query_part(is_need_to_add_operator),
@@ -992,7 +991,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     #ColumnSc,
                                     match operator {
                                         #import_path::EqualOperator::Equal => {
-                                            #value_match_incr_checked_add_one_init_ts
+                                            #v_match_incr_checked_add_one_init_ts
                                             format!("{operator_query_str} ${value}")
                                         },
                                         #import_path::EqualOperator::IsNull => operator_query_str.to_owned(),
@@ -1037,7 +1036,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     #ColumnSc,
                                     match operator {
                                         #import_path::EqualOperator::Equal => {
-                                            #value_match_incr_checked_add_one_init_ts
+                                            #v_match_incr_checked_add_one_init_ts
                                             format!("{operator_query_str} ${value}")
                                         }
                                         #import_path::EqualOperator::IsNull => operator_query_str.to_owned(),
@@ -1253,13 +1252,13 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                         quote! {
                             #mb_dims_default_init_ts
-                            #value_default_opt_some_vec_one_el_ts
+                            #v_default_opt_some_vec_one_el_ts
                         },
                         {
                             let format_ts = dq_ts(&gen_format_handle_str(&pg_type_kind));
                             quote! {
                                 #mb_dims_ies_init_ts
-                                #value_match_incr_checked_add_one_init_ts
+                                #v_match_incr_checked_add_one_init_ts
                                 Ok(format!(
                                     #format_ts,
                                     &#SelfSc.operator.to_query_part(is_need_to_add_operator),
@@ -1323,7 +1322,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         ));
                         quote! {
                             #mb_dims_ies_init_ts
-                            #value_match_incr_checked_add_one_init_ts
+                            #v_match_incr_checked_add_one_init_ts
                             Ok(format!(
                                 #format_ts,
                                 &#SelfSc.operator.to_query_part(is_need_to_add_operator),
@@ -1384,7 +1383,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     {
                         let ts: &dyn ToTokens = match pg_type_pattern_handle {
                             PgTypePatternHandle::Stdrt => &quote! {
-                                let value = match self.value.query_part(
+                                let #ValueSc = match self.#ValueSc.query_part(
                                     incr,
                                     column,
                                     is_need_to_add_operator
@@ -1398,9 +1397,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             PgTypePatternHandle::ArrDim1
                             | PgTypePatternHandle::ArrDim2
                             | PgTypePatternHandle::ArrDim3
-                            | PgTypePatternHandle::ArrDim4 => {
-                                &value_match_incr_checked_add_one_init_ts
-                            }
+                            | PgTypePatternHandle::ArrDim4 => &v_match_incr_checked_add_one_init_ts,
                         };
                         let format_ts = dq_ts(&format!(
                             "{{}}({{}}{} {{}})",
@@ -1465,14 +1462,14 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             "{{}}({{}}{} in ({{}}))",
                             pg_type_kind.format_argument()
                         ));
-                        let value_init_ts = gen_ident_match_field_fn_ok_v_return_err_ts(
+                        let v_init_ts = gen_ident_match_field_fn_ok_v_return_err_ts(
                             &ValueSc,
                             &ValueSc,
                             &quote! {query_part_one_by_one},
                         );
                         quote! {
                             #mb_dims_ies_init_ts
-                            #value_init_ts
+                            #v_init_ts
                             Ok(format!(
                                 #format_ts,
                                 &#SelfSc.operator.to_query_part(is_need_to_add_operator),
@@ -1562,7 +1559,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         ));
                         quote! {
                             #mb_dims_ies_init_ts
-                            #value_match_incr_checked_add_one_init_ts
+                            #v_match_incr_checked_add_one_init_ts
                             Ok(format!(
                                 #format_ts,
                                 &#SelfSc.operator.to_query_part(is_need_to_add_operator),
@@ -1608,7 +1605,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         ));
                         quote! {
                             #mb_dims_ies_init_ts
-                            #value_match_incr_checked_add_one_init_ts
+                            #v_match_incr_checked_add_one_init_ts
                             Ok(format!(
                                 #format_ts,
                                 &#SelfSc.operator.to_query_part(is_need_to_add_operator),
@@ -1654,7 +1651,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         ));
                         quote! {
                             #mb_dims_ies_init_ts
-                            #value_match_incr_checked_add_one_init_ts
+                            #v_match_incr_checked_add_one_init_ts
                             Ok(format!(
                                 #format_ts,
                                 &#SelfSc.operator.to_query_part(is_need_to_add_operator),
@@ -1689,7 +1686,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                     quote! {
                         #mb_dims_default_init_ts
-                        #value_default_opt_some_vec_one_el_ts
+                        #v_default_opt_some_vec_one_el_ts
                     },
                     {
                         let format_ts = dq_ts(&format!(
@@ -1698,7 +1695,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         ));
                         quote! {
                             #mb_dims_ies_init_ts
-                            #value_match_self_v_query_part_init_ts
+                            #v_match_self_v_query_part_init_ts
                             Ok(format!(
                                 #format_ts,
                                 &#SelfSc.operator.to_query_part(is_need_to_add_operator),
@@ -1732,7 +1729,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                     quote! {
                         #mb_dims_default_init_ts
-                        #value_default_opt_some_vec_one_el_ts
+                        #v_default_opt_some_vec_one_el_ts
                     },
                     {
                         let format_ts = dq_ts(&format!(
@@ -1741,7 +1738,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         ));
                         quote! {
                             #mb_dims_ies_init_ts
-                            #value_match_self_v_query_part_init_ts
+                            #v_match_self_v_query_part_init_ts
                             Ok(format!(
                                 #format_ts,
                                 &#SelfSc.operator.to_query_part(is_need_to_add_operator),
