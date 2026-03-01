@@ -686,7 +686,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             quote! {#content_ts}
         };
         let ident_read_inner_ucc = SelfReadInnerUcc::from_tokens(&ident);
-        let v_ident_read_inner_ts = quote! {#ValueSc: #ident_read_inner_ucc};
+        let v_ident_read_inner_ts = quote! {#VSc: #ident_read_inner_ucc};
         let gen_pub_fn_new_v_ident_read_inner_content_ts = |content_ts: &dyn ToTokens| gen_pub_new_ts(
             &MustUse,
             &v_ident_read_inner_ts,
@@ -697,7 +697,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             &v_ident_read_inner_ts,
             &content_ts
         );
-        let self_ident_origin_new_v_ts = quote! {Self(#ident_origin_ucc::new(#ValueSc))};
+        let self_ident_origin_new_v_ts = quote! {Self(#ident_origin_ucc::new(#VSc))};
         let mb_const_fn = match &pattern {
             Pattern::Stdrt => match &is_nullable {
                 IsNullable::False => ConstFn::True,
@@ -829,14 +829,14 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 );
             let ident_origin_impl_new_self_content_ts = {
-                let gen_v_map_type_new_ts = |type_ts: &dyn ToTokens| quote! {#ValueSc.map(#type_ts::#NewSc)};
+                let gen_v_map_type_new_ts = |type_ts: &dyn ToTokens| quote! {#VSc.map(#type_ts::#NewSc)};
                 let gen_arr_dims_init_ts = |type_ts: &dyn ToTokens| match &is_nullable {
-                    IsNullable::False => quote! {#ValueSc.into_iter().map(#type_ts::#NewSc).collect()},
+                    IsNullable::False => quote! {#VSc.into_iter().map(#type_ts::#NewSc).collect()},
                     IsNullable::True => gen_v_map_type_new_ts(&type_ts),
                 };
                 match &pattern {
                     Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => quote! {#ValueSc},
+                        IsNullable::False => quote! {#VSc},
                         IsNullable::True => gen_v_map_type_new_ts(&ident_stdrt_not_null_origin_ucc),
                     },
                     Pattern::ArrDim1 { dim1_is_nullable } => gen_arr_dims_init_ts(&{
