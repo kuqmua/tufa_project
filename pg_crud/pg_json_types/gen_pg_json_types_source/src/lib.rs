@@ -3173,13 +3173,13 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     F32OrF64::F64 => quote!{0.1f64}
                 };
                 quote!{{
-                    let #ValueSc = #content_ts - #minus_ts;
+                    let #VSc = #content_ts - #minus_ts;
                     //The correct way to compare floating point nbrs is to define an allowed er margin
-                    if (#content_ts - #ValueSc).abs() < #more_ts {
+                    if (#content_ts - #VSc).abs() < #more_ts {
                         None
                     }
                     else {
-                        #ValueSc.is_finite().then_some(#ValueSc)
+                        #VSc.is_finite().then_some(#VSc)
                     }
                 }}
             };
@@ -3297,8 +3297,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         },
                         {
                             let gen_ts0 = |content_ts: &dyn ToTokens|quote!{{
-                                let #ValueSc = create.0.0 #content_ts 1.0;
-                                #ValueSc.is_finite().then_some(#ValueSc)
+                                let #VSc = create.0.0 #content_ts 1.0;
+                                #VSc.is_finite().then_some(#VSc)
                             }};
                             gen_ts(
                                 &gen_ts0(&quote!{-}),

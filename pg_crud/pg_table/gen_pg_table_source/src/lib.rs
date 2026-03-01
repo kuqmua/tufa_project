@@ -1230,7 +1230,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 quote! {is_first_push_to_extra_params_already_happend = true;}
                             };
                         quote! {
-                            if let Some(v_da0f0616) = &#ValueSc.#fi {
+                            if let Some(v_da0f0616) = &#VSc.#fi {
                                 match pg_crud::PgTypeWhereFilter::query_part(
                                     v_da0f0616,
                                     incr,
@@ -1250,7 +1250,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     });
                     quote! {
                         Ok(match &self.0 {
-                            Some(#ValueSc) => {
+                            Some(#VSc) => {
                                 let mut #ExtraParamsSc = #StringTs::from("where");
                                 let mut is_first_push_to_extra_params_already_happend = false;
                                 #(#extra_params_modification_ts)*

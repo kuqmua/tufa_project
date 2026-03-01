@@ -3510,7 +3510,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         PgTypeInitTryNew::StringAsText => quote! {
                                             if #VSc.find('\0').is_some() {
                                                 Err(#ident_stdrt_not_null_origin_try_new_er_ucc::#ContainsNullByteUcc {
-                                                    #VSc: #VSc,
+                                                    #VSc,
                                                     loc: location_lib::loc!(),
                                                 })
                                             } else {
