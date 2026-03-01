@@ -1525,7 +1525,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #primary_k_ft_as_pg_type_read_ucc,
                             #RefStr
                         >(
-                            #ValueSc,
+                            #VSc,
                             #primary_k_fi_string_dq_ts
                         ) {
                             Ok(v_dccdf117) => {
@@ -1549,7 +1549,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 #el_syn_field_ty_as_pg_type_read_ts,
                                 #RefStr
                             >(
-                                #ValueSc,
+                                #VSc,
                                 #fi_string_dq_ts
                             ) {
                                 Ok(v_09b0fc09) => {
@@ -1565,7 +1565,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let fields_init_ts = &fields.iter().map(|el| &el.ident).collect::<Vec<&Ident>>();
                 quote! {
                     fn #try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_sc(
-                        #ValueSc: &sqlx::postgres::PgRow,
+                        #VSc: &sqlx::postgres::PgRow,
                         #select_borrow_pg_crud_not_empty_unique_vec_ident_select_ts
                     ) -> Result<Self, sqlx::Error> {
                         #decl_primary_k_ts
@@ -1890,25 +1890,25 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             "",
                             #IncrSc,
                         ) {
-                            Ok(#ValueSc) => Ok(#ValueSc),
+                            Ok(#VSc) => Ok(#VSc),
                             Err(#Er0) => Err(#Er0)
                         }
                     }
                 }
             };
-            let update_query_part_fields_ts = gen_fields_named_without_primary_k_without_comma_ts(
-                &|el: &SynFieldWrapper| {
+            let update_query_part_fields_ts =
+                gen_fields_named_without_primary_k_without_comma_ts(&|el: &SynFieldWrapper| {
                     let fi = &el.ident;
                     let fi_dq_ts = dq_ts(&fi);
                     let update_query_part_fi_sc = UpdateQueryPartSelfSc::from_tokens(&fi);
                     let ft_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
                     quote! {
                         fn #update_query_part_fi_sc(
-                            #ValueSc: &pg_crud::V<#ft_as_pg_crud_pg_type_pg_type_ts #UpdateForQueryUcc>,
+                            #VSc: &pg_crud::V<#ft_as_pg_crud_pg_type_pg_type_ts #UpdateForQueryUcc>,
                             #IncrSc: &mut u64
                         ) -> Result<#StringTs, #PgCrudSc::#QueryPartErUcc> {
                             match #ft_as_pg_crud_pg_type_pg_type_ts #UpdateQueryPartSc(
-                                &#ValueSc.#ValueSc,
+                                &#VSc.#ValueSc,
                                 #fi_dq_ts,
                                 #fi_dq_ts,
                                 "",
@@ -1919,8 +1919,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             }
                         }
                     }
-                },
-            );
+                });
             let select_only_updated_ids_query_part_ts = {
                 let primary_k_ts = {
                     let primary_k_fi_dq_ts = dq_ts(&primary_k_fi);
