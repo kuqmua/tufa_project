@@ -21,6 +21,7 @@ use naming::{
 };
 use optimal_pack::OptimalPack;
 use panic_location::panic_location;
+use pg_crud_macros_common::gen_jsonb_build_object;
 use pg_crud_macros_common::{
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, DimIndexNbr, ImportPath, IsNullable,
     IsQueryBindMutable, IsSelectOnlyCreatedIdsQueryBindMutable,
@@ -1856,9 +1857,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             let gen_dim_nbr_start_str = |dims_nbr: usize| format!("{}_start", gen_dim_nbr_str(dims_nbr));
             let gen_dim_nbr_end_str = |dims_nbr: usize| format!("{}_end", gen_dim_nbr_str(dims_nbr));
             let select_only_created_or_updated_ids_query_part_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
+                let dq_ts0 = dq_ts(&format!("'{{fi}}',{},", gen_jsonb_build_object(&"'value',${v_f06128be}")));
                 quote! {
                     match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
-                        Ok(v_f06128be) => Ok(format!("'{fi}',jsonb_build_object('value',${v_f06128be}),")),
+                        Ok(v_f06128be) => Ok(format!(#dq_ts0)),
                         Err(#ErSc) => Err(#ErSc),
                     }
                 }
@@ -2046,10 +2048,12 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             }
                         })
                     });
-                    let ts = dq_ts(&format!("jsonb_build_object('{{fi}}',jsonb_build_object('value',({format_handle})))"));
+                    let dq_ts0 = dq_ts(
+                        &gen_jsonb_build_object(&format!("'{{fi}}',{}", gen_jsonb_build_object(&format!("'value',({format_handle})"))))
+                    );
                     quote! {
                         #(#mb_dims_start_end_init)*
-                        Ok(format!(#ts))
+                        Ok(format!(#dq_ts0))
                     }
                 },
                 &ident_where_ucc,
@@ -2057,9 +2061,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &ident_read_only_ids_ucc,
                 &{
                     let content_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
-                        quote! {format!("jsonb_build_object('value',{column_field})")}
+                        let dq_ts0 = dq_ts(&gen_jsonb_build_object(&"'value',{column_field}"));
+                        quote! {format!(#dq_ts0)}
                     } else {
-                        quote! {"jsonb_build_object('value','null'::jsonb)".to_owned()}
+                        let dq_ts0 = dq_ts(&gen_jsonb_build_object(&"'value','null'::jsonb"));
+                        quote! {#dq_ts0.to_owned()}
                     };
                     quote! {Ok(#content_ts)}
                 },

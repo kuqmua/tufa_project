@@ -10,6 +10,7 @@ keywords = ["keyword"]
 categories = ["category"]
 
 [dependencies]
+pg_crud_macros_common = {path = "../../pg_crud_macros_common"}
 
 [lints]
 workspace = true

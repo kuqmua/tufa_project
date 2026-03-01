@@ -47,6 +47,7 @@ use naming::{
 };
 use optimal_pack::OptimalPack;
 use panic_location::panic_location;
+use pg_crud_macros_common::gen_jsonb_build_object;
 use pg_crud_macros_common::{
     ColumnParamUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrUnderscore,
     CreateQueryPartValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, ImportPath,
@@ -3159,7 +3160,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     let fi_dq_ts = dq_ts(&fi);
                                     let ft_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el0.type0);
                                     let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
-                                        &quote!{acc_8e628eaf, "jsonb_build_object({v_c3ae3be4})||"},
+                                        &{
+                                            let dq_ts0 = dq_ts(&format!("{}||", gen_jsonb_build_object(&"{v_c3ae3be4}")));
+                                            quote!{acc_8e628eaf,#dq_ts0}
+                                        },
                                         &return_err_query_part_er_write_into_buffer_ts
                                     );
                                     quote! {
@@ -3200,7 +3204,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     let fi_dq_ts = dq_ts(&fi);
                                     let ft_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el0.type0);
                                     let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
-                                        &quote!{acc_f7537df2, "jsonb_build_object({value})||"},
+                                        &{
+                                            let dq_ts0 = dq_ts(&format!("{}||", gen_jsonb_build_object(&"{value}")));
+                                            quote!{acc_f7537df2, #dq_ts0}
+                                        },
                                         &return_err_query_part_er_write_into_buffer_ts
                                     );
                                     quote! {
@@ -3222,6 +3229,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         }
                                     }
                                 });
+                                let dq_ts0 = dq_ts(&gen_jsonb_build_object(&"'value',{acc_f7537df2}"));
                                 quote!{
                                     Ok(match &self.0 {
                                         Some(v_9570957e) => {
@@ -3233,7 +3241,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             }
                                             let _: Option<char> = acc_f7537df2.pop();
                                             let _: Option<char> = acc_f7537df2.pop();
-                                            format!("jsonb_build_object('value',{acc_f7537df2})")
+                                            format!(#dq_ts0)
                                         },
                                         None => "'null'::jsonb".to_owned()//todo mb reuse
                                     })
@@ -3248,7 +3256,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     let fi_dq_ts = dq_ts(&fi);
                                     let ft_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el0.type0);
                                     let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
-                                        &quote!{acc_892857b1, "jsonb_build_object({v_33d3b52e})||"},
+                                        &{
+                                            let dq_ts0 = dq_ts(&format!("{}||", gen_jsonb_build_object(&"{v_33d3b52e}")));
+                                            quote!{acc_892857b1, #dq_ts0}
+                                        },
                                         &return_err_query_part_er_write_into_buffer_ts
                                     );
                                     quote! {
@@ -3273,7 +3284,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     let fi_dq_ts = dq_ts(&fi);
                                     let ft_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el0.type0);
                                     let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
-                                        &quote!{acc_57cd0744, "jsonb_build_object({value})||"},
+                                        &{
+                                            let dq_ts0 = dq_ts(&format!("{}||", gen_jsonb_build_object(&"{value}")));
+                                            quote!{acc_57cd0744, #dq_ts0}
+                                        },
                                         &return_err_query_part_er_write_into_buffer_ts
                                     );
                                     quote! {
@@ -3294,7 +3308,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 });
                                 let if_write_is_err_curly_braces_0_ts = gen_if_write_is_err_curly_braces_ts(
-                                    &quote!{acc_892857b1, "jsonb_build_object({value})||"},
+                                    &{
+                                        let dq_ts0 = dq_ts(&format!("{}||", gen_jsonb_build_object(&"{value}")));
+                                        quote!{acc_892857b1, #dq_ts0}
+                                    },
                                     &return_err_query_part_er_write_into_buffer_ts
                                 );
                                 let if_write_is_err_curly_braces_1_ts = gen_if_write_is_err_curly_braces_ts(
@@ -3309,6 +3326,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     &quote!{acc_d497e8a5, "${v_b52c3fe1},"},
                                     &return_err_query_part_er_write_into_buffer_ts
                                 );
+                                let dq_ts0 = dq_ts(&gen_jsonb_build_object(&"'value',{acc_57cd0744}"));
                                 quote!{
                                     Ok(format!(
                                         "(select jsonb_agg({}) from jsonb_array_elements({}) as elem where elem->>'id' in ({}))",
@@ -3345,7 +3363,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             }
                                             let _: Option<char> = acc_57cd0744.pop();
                                             let _: Option<char> = acc_57cd0744.pop();
-                                            format!("jsonb_build_object('value',{acc_57cd0744})")
+                                            format!(#dq_ts0)
                                         },
                                         column_field,
                                         {
@@ -3376,23 +3394,26 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     ))
                                 }
                             },
-                            IsNullable::True => quote!{
-                                Ok(match &self.0 {
-                                    Some(v_bc509c9a) => format!(
-                                        "jsonb_build_object('value',{})",
-                                        match #ident_arr_not_null_update_for_query_ucc::#SelectOnlyUpdatedIdsQueryPartSc(
-                                            v_bc509c9a,
-                                            column_field,
-                                            #IncrSc
-                                        ) {
-                                            Ok(v_1e016751) => v_1e016751,
-                                            Err(#ErSc) => {
-                                                return Err(#ErSc);
+                            IsNullable::True => {
+                                let dq_ts0 = dq_ts(&gen_jsonb_build_object(&"'value',{}"));
+                                quote!{
+                                    Ok(match &self.0 {
+                                        Some(v_bc509c9a) => format!(
+                                            #dq_ts0,
+                                            match #ident_arr_not_null_update_for_query_ucc::#SelectOnlyUpdatedIdsQueryPartSc(
+                                                v_bc509c9a,
+                                                column_field,
+                                                #IncrSc
+                                            ) {
+                                                Ok(v_1e016751) => v_1e016751,
+                                                Err(#ErSc) => {
+                                                    return Err(#ErSc);
+                                                }
                                             }
-                                        }
-                                    ),
-                                    None => "'null'::jsonb".to_owned(),
-                                })
+                                        ),
+                                        None => "'null'::jsonb".to_owned(),
+                                    })
+                                }
                             },
                         },
                     };
@@ -3680,28 +3701,36 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 &IsSelectQueryPartIsPgTypeUsed::True,
                 &match &pattern {
                     Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => quote! {
-                            match #VSc.#SelectQueryPartSc(
-                                &if is_pg_type {
-                                    column_field.to_owned()
-                                } else {
-                                    format!("{column_field}->'{fi}'")
-                                },
-                                &format!("{column_field_for_er_message}.{fi}"),
-                            ) {
-                                Ok(v_156121ad) => Ok(
-                                    if is_pg_type {
-                                        v_156121ad
+                        IsNullable::False => {
+                            let dq_ts0 = dq_ts(&gen_jsonb_build_object(&format!("'{{fi}}',{}", gen_jsonb_build_object(&"'value',{v_156121ad}"))));
+                            quote! {
+                                match #VSc.#SelectQueryPartSc(
+                                    &if is_pg_type {
+                                        column_field.to_owned()
                                     } else {
-                                        format!("jsonb_build_object('{fi}',jsonb_build_object('value',{v_156121ad}))")
-                                    }
-                                ),
-                                Err(#ErSc) => Err(#ErSc)
+                                        format!("{column_field}->'{fi}'")
+                                    },
+                                    &format!("{column_field_for_er_message}.{fi}"),
+                                ) {
+                                    Ok(v_156121ad) => Ok(
+                                        if is_pg_type {
+                                            v_156121ad
+                                        } else {
+                                            format!(#dq_ts0)
+                                        }
+                                    ),
+                                    Err(#ErSc) => Err(#ErSc)
+                                }
                             }
                         },
                         IsNullable::True => {
                             let ident_stdrt_not_null_as_pg_json_type_select_as_default_but_opt_is_some_ts = gen_ident_as_default_but_opt_is_some_ts(
                                 &ident_stdrt_not_null_as_pg_json_type_select_ts
+                            );
+                            let dq_ts0 = dq_ts(
+                                &gen_jsonb_build_object(
+                                    &format!("'{{fi}}',{}", gen_jsonb_build_object(&"'value',case when jsonb_typeof({column_field_fi}) = 'null' then 'null'::jsonb else ({v_1f8de96a}) end"))
+                                )
                             );
                             quote! {
                                 let column_field_fi = format!("{column_field}->'{fi}'");
@@ -3717,7 +3746,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     true
                                 ) {
                                     Ok(v_1f8de96a) => Ok(
-                                        format!("jsonb_build_object('{fi}',jsonb_build_object('value',case when jsonb_typeof({column_field_fi}) = 'null' then 'null'::jsonb else ({v_1f8de96a}) end))")
+                                        format!(#dq_ts0)
                                     ),
                                     Err(#ErSc) => Err(#ErSc)
                                 }
@@ -3737,9 +3766,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     &v_dq_ts,
                                 )
                             };
-                            let format_ts = dq_ts(&format!(
-                                "jsonb_build_object('{{fi}}',jsonb_build_object('value',case when (jsonb_array_length({{column_field}}->'{{fi}}') = 0) then '[]'::jsonb else (select jsonb_agg(({{{ident_with_id_stdrt_not_null_select_sc}}})) from jsonb_array_elements((select {{column_field}}->'{{fi}}')) with ordinality where ordinality between {{dim1_start}} and {{dim1_end}}) end ))"
-                            ));
+                            let format_ts = dq_ts(
+                                &gen_jsonb_build_object(
+                                    &format!("'{{fi}}',{}", gen_jsonb_build_object(
+                                        &format!("'value',case when (jsonb_array_length({{column_field}}->'{{fi}}') = 0) then '[]'::jsonb else (select jsonb_agg(({{{ident_with_id_stdrt_not_null_select_sc}}})) from jsonb_array_elements((select {{column_field}}->'{{fi}}')) with ordinality where ordinality between {{dim1_start}} and {{dim1_end}}) end "
+                                    )))
+                                )
+                            );
                             quote! {
                                 let #ident_with_id_stdrt_not_null_select_sc = {
                                     let mut #acc_41dea548_ts = #StringTs::default();
@@ -3755,7 +3788,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         }
                         IsNullable::True => {
                             let format_ts = dq_ts(
-                                &"case when jsonb_typeof({column_field}->'{fi}') = 'null' then jsonb_build_object('{fi}',jsonb_build_object('value','null'::jsonb)) else ({v_d7bbd03c}) end"
+                                &format!(
+                                    "case when jsonb_typeof({{column_field}}->'{{fi}}') = 'null' then {} else ({{v_d7bbd03c}}) end",
+                                    gen_jsonb_build_object(&format!(
+                                        "'{{fi}}',{}",
+                                        gen_jsonb_build_object(&"'value','null'::jsonb")
+                                    ))
+                                )
                             );
                             let ident_with_id_arr_not_null_as_pg_json_type_select_as_default_but_opt_is_some_ts = gen_ident_as_default_but_opt_is_some_ts(
                                 &ident_with_id_arr_not_null_as_pg_json_type_select_ts
@@ -3791,7 +3830,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     Pattern::Arr => &is_stdrt_with_id_true
                                 }).iter().map(|el0| {
                                     let fi = &el0.ident;
-                                    let format_ts = dq_ts(&format!("jsonb_build_object('{fi}',{{}})||"));
+                                    let format_ts = dq_ts(
+                                        &format!("{}||", gen_jsonb_build_object(&format!("'{fi}',{{}}")))
+                                    );
                                     let ft_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el0.type0);
                                     let ts = match &pattern {
                                         Pattern::Stdrt => {
@@ -3814,19 +3855,20 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         &return_err_query_part_er_write_into_buffer_ts
                                     )
                                 });
+                                let dq_ts0 = dq_ts(&gen_jsonb_build_object(&"'value',{acc_2912b128}"));
                                 quote! {{
                                     let mut acc_2912b128 = #StringTs::default();
                                     #(#acc_push_ts)*
                                     let _: Option<char> = acc_2912b128.pop();
                                     let _: Option<char> = acc_2912b128.pop();
-                                    format!("jsonb_build_object('value',{acc_2912b128})")
+                                    format!(#dq_ts0)
                                 }}
                             };
                             match &pattern {
                                 Pattern::Stdrt => ts,
                                 Pattern::Arr => {
                                     let format_ts = dq_ts(
-                                        &format!("jsonb_build_object('value',(select jsonb_agg({{}}) from jsonb_array_elements({{{ColumnFieldSc}}}) as elem))")
+                                        &gen_jsonb_build_object(&format!("'value',(select jsonb_agg({{}}) from jsonb_array_elements({{{ColumnFieldSc}}}) as elem)"))
                                     );
                                     quote! {format!(#format_ts, #ts)}
                                 },
@@ -3840,7 +3882,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             Pattern::Arr => &ident_with_id_arr_not_null_as_pg_json_type_ts,
                         };
                         let case_null_format_ts = dq_ts(
-                            &format!("jsonb_build_object('value',case when jsonb_typeof({{{ColumnFieldSc}}})='null' then 'null'::jsonb else {{v_21000130}} end)")
+                            &gen_jsonb_build_object(&format!("'value',case when jsonb_typeof({{{ColumnFieldSc}}})='null' then 'null'::jsonb else {{v_21000130}} end"))
                         );
                         quote! {
                             match #ts::#SelectOnlyIdsQueryPartSc(#ColumnFieldSc) {
@@ -4085,13 +4127,16 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         },
                     },
                 },
-                &quote!{
-                    match #VSc.#SelectOnlyUpdatedIdsQueryPartSc(
-                        &format!("{column_field}->'{fi}'"),
-                        #IncrSc
-                    ) {
-                        Ok(v_e137951b) => Ok(format!("'{fi}',jsonb_build_object('value',{v_e137951b}),")),
-                        Err(#ErSc) => Err(#ErSc)
+                &{
+                    let dq_ts0 = dq_ts(&format!("'{{fi}}',{},", gen_jsonb_build_object(&"'value',{v_e137951b}")));
+                    quote!{
+                        match #VSc.#SelectOnlyUpdatedIdsQueryPartSc(
+                            &format!("{column_field}->'{fi}'"),
+                            #IncrSc
+                        ) {
+                            Ok(v_e137951b) => Ok(format!(#dq_ts0)),
+                            Err(#ErSc) => Err(#ErSc)
+                        }
                     }
                 },
                 &IsSelectOnlyUpdatedIdsQueryBindMutable::True,
@@ -4243,7 +4288,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     &format!("{{{ColumnFieldSc}}}->'{fi}'")
                                 );
                                 let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
-                                    &quote!{acc_0fe559fa, "jsonb_build_object({v_cddc8a0a})||"},
+                                    &{
+                                        let dq_ts0 = dq_ts(&format!("{}||", gen_jsonb_build_object(&"{v_cddc8a0a}")));
+                                        quote!{acc_0fe559fa, #dq_ts0}
+                                    },
                                     &return_err_query_part_er_write_into_buffer_ts
                                 );
                                 quote! {
@@ -4263,9 +4311,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                             });
+                            let dq_ts0 = dq_ts(&format!("'{{fi}}',{},", gen_jsonb_build_object(&"'value',{}")));
                             quote!{
                                 Ok(format!(
-                                    "'{fi}',jsonb_build_object('value',{}),",
+                                    #dq_ts0,
                                     {
                                         let mut acc_0fe559fa = #StringTs::new();
                                         #(#ts)*
@@ -4285,7 +4334,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     &format!("{{{ColumnFieldSc}}}->'{fi}'")
                                 );
                                 let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
-                                    &quote!{acc_0e9170a3, "jsonb_build_object({v_93015133})||"},
+                                    &{
+                                        let dq_ts0 = dq_ts(&format!("{}||", gen_jsonb_build_object(&"{v_93015133}")));
+                                        quote!{acc_0e9170a3, #dq_ts0}
+                                    },
                                     &return_err_query_part_er_write_into_buffer_ts
                                 );
                                 quote! {
@@ -4305,12 +4357,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                             });
+                            let dq_ts0 = dq_ts(&format!("'{{fi}}'{},", gen_jsonb_build_object(&"'value',{}")));
+                            let dq_ts1 = dq_ts(&gen_jsonb_build_object(&"'value',{}"));
                             quote!{
                                 Ok(format!(
-                                    "'{fi}',jsonb_build_object('value',{}),",
+                                    #dq_ts0,
                                     match &#VSc.0 {
                                         Some(v_90219286) => format!(
-                                            "jsonb_build_object('value',{})",
+                                            #dq_ts1,
                                             {
                                                 let mut acc_0e9170a3 = #StringTs::new();
                                                 #(#ts)*
@@ -4332,7 +4386,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 let ft_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el0.type0);
                                 let fi_dq_ts = &dq_ts(&fi);
                                 let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
-                                    &quote!{acc_0f2b92d0, "jsonb_build_object({v_6d76c065})||"},
+                                    &{
+                                        let dq_ts0 = dq_ts(&format!("{}||", gen_jsonb_build_object(&"{v_6d76c065}")));
+                                        quote!{acc_0f2b92d0, #dq_ts0}
+                                    },
                                     &return_err_query_part_er_write_into_buffer_ts
                                 );
                                 quote! {
@@ -4356,9 +4413,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 &quote!{acc_44b1f772, "${v_73b58d3a},"},
                                 &return_err_query_part_er_write_into_buffer_ts
                             );
+                            let dq_ts0 = dq_ts(&format!("'{{fi}}',{},", gen_jsonb_build_object(&"'value',(select jsonb_agg({}) from jsonb_array_elements({}) as elem where elem->>'id' in ({}))")));
+                            let dq_ts1 = dq_ts(&gen_jsonb_build_object(&"'value',{acc_0f2b92d0}"));
                             quote!{
                                 Ok(format!(
-                                    "'{fi}',jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({}) as elem where elem->>'id' in ({}))),",
+                                    #dq_ts0,
                                     {
                                         let mut acc_0f2b92d0 = #StringTs::new();
                                         for el in &#VSc.0 {
@@ -4366,7 +4425,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         }
                                         let _: Option<char> = acc_0f2b92d0.pop();
                                         let _: Option<char> = acc_0f2b92d0.pop();
-                                        format!("jsonb_build_object('value',{acc_0f2b92d0})")
+                                        format!(#dq_ts1)
                                     },
                                     &format!("{column_field}->'{fi}'"),
                                     {
@@ -4393,7 +4452,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 let ft_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el0.type0);
                                 let fi_dq_ts = &dq_ts(&fi);
                                 let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
-                                    &quote!{acc_1a91bdc7, "jsonb_build_object({v_d49fe9d8})||"},
+                                    &{
+                                        let dq_ts0 = dq_ts(&format!("{}||", gen_jsonb_build_object(&"{v_d49fe9d8}")));
+                                        quote!{acc_1a91bdc7, #dq_ts0}
+                                    },
                                     &return_err_query_part_er_write_into_buffer_ts
                                 );
                                 quote! {
@@ -4417,12 +4479,15 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 &quote!{acc_857ce631, "${v_7f11bec0},"},
                                 &return_err_query_part_er_write_into_buffer_ts
                             );
+                            let dq_ts0 = dq_ts(&format!("'{{fi}}',{},", gen_jsonb_build_object(&"'value',{}")));
+                            let dq_ts1 = dq_ts(&gen_jsonb_build_object(&"'value',(select jsonb_agg({}) from jsonb_array_elements({}) as elem where elem->>'id' in ({}))"));
+                            let dq_ts2 = dq_ts(&gen_jsonb_build_object(&"'value',{acc_1a91bdc7}"));
                             quote!{
                                 Ok(format!(
-                                    "'{fi}',jsonb_build_object('value',{}),",
+                                    #dq_ts0,
                                     match &#VSc.0 {
                                         Some(v_3c415c92) => format!(
-                                            "jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({}) as elem where elem->>'id' in ({})))",
+                                            #dq_ts1,
                                             {
                                                 let mut acc_1a91bdc7 = #StringTs::new();
                                                 for el_9bdcd847 in &v_3c415c92.0 {
@@ -4430,7 +4495,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 }
                                                 let _: Option<char> = acc_1a91bdc7.pop();
                                                 let _: Option<char> = acc_1a91bdc7.pop();
-                                                format!("jsonb_build_object('value',{acc_1a91bdc7})")
+                                                format!(#dq_ts2)
                                             },
                                             &format!("{column_field}->'{fi}'"),
                                             {
@@ -4651,13 +4716,16 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     #VSc,
                     #QuerySc
                 )},
-                &quote!{
-                    match #VSc.#SelectOnlyUpdatedIdsQueryPartSc(
-                        #ColumnSc,
-                        #IncrSc
-                    ) {
-                        Ok(v_f0787243) => Ok(format!("jsonb_build_object('value',{v_f0787243}) as {column},")),
-                        Err(#ErSc) => Err(#ErSc)
+                &{
+                    let dq_ts0 = dq_ts(&format!("{} as {{column}},", gen_jsonb_build_object(&"'value',{v_f0787243}")));
+                    quote!{
+                        match #VSc.#SelectOnlyUpdatedIdsQueryPartSc(
+                            #ColumnSc,
+                            #IncrSc
+                        ) {
+                            Ok(v_f0787243) => Ok(format!(#dq_ts0)),
+                            Err(#ErSc) => Err(#ErSc)
+                        }
                     }
                 },
                 &IsSelectOnlyUpdatedIdsQueryBindMutable::False,
