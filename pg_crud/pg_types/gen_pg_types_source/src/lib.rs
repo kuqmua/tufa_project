@@ -1366,8 +1366,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 &start_or_end_ts,
                                 &quote! {
                                     &match self.0.#start_or_end_ts {
-                                        std::ops::Bound::Included(#ValueSc) => std::ops::Bound::Included(#ident_ts_ba0919c4::#TryNewSc(#ValueSc).map_err(_serde::ser::Error::custom)?),
-                                        std::ops::Bound::Excluded(#ValueSc) => std::ops::Bound::Excluded(#ident_ts_ba0919c4::#TryNewSc(#ValueSc).map_err(_serde::ser::Error::custom)?),
+                                        std::ops::Bound::Included(v_7d755c7c) => std::ops::Bound::Included(#ident_ts_ba0919c4::#TryNewSc(v_7d755c7c).map_err(_serde::ser::Error::custom)?),
+                                        std::ops::Bound::Excluded(v_cfbe64e9) => std::ops::Bound::Excluded(#ident_ts_ba0919c4::#TryNewSc(v_cfbe64e9).map_err(_serde::ser::Error::custom)?),
                                         std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                     }
                                 },
@@ -3103,14 +3103,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &NanosecondPrecisionIsNotSupportedUcc,
                 &quote!{
                     #[eo_to_err_string_serde]
-                    #ValueSc: #StringTs,
+                    #VSc: #StringTs,
                 }
             );
             let sqlx_types_chrono_naive_date_as_date_try_new_er_vrts_ts = gen_loc_var_ts(
                 &EarlierDateNotSupportedUcc,
                 &quote!{
                     #[eo_to_err_string_serde]
-                    #ValueSc: #StringTs,
+                    #VSc: #StringTs,
                     #[eo_to_err_string_serde]
                     #EarliestSupportedDateSc: #StringTs,
                 }
@@ -3119,7 +3119,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &ContainsNullByteUcc,
                 &quote!{
                     #[eo_to_err_string_serde]
-                    #ValueSc: #ident_inner_type_ts,
+                    #VSc: #ident_inner_type_ts,
                 }
             );
             let mb_pub_enum_ident_stdrt_not_null_origin_try_new_er_ts = if matches!(&is_stdrt_not_null, IsStdrtNotNull::True)
@@ -3510,7 +3510,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         PgTypeInitTryNew::StringAsText => quote! {
                                             if #ValueSc.find('\0').is_some() {
                                                 Err(#ident_stdrt_not_null_origin_try_new_er_ucc::#ContainsNullByteUcc {
-                                                    #ValueSc,
+                                                    #VSc: #ValueSc,
                                                     loc: location_lib::loc!(),
                                                 })
                                             } else {
@@ -3520,7 +3520,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         PgTypeInitTryNew::SqlxTypesChronoNaiveTimeAsTime => quote! {
                                             if <#inner_type_stdrt_not_null_ts as chrono::Timelike>::nanosecond(&#ValueSc).checked_rem(1000).expect("7c8b4e12") != 0 {
                                                 return Err(#ident_stdrt_not_null_origin_try_new_er_ucc::#NanosecondPrecisionIsNotSupportedUcc {
-                                                    #ValueSc: #ValueSc.to_string(),
+                                                    #VSc: #ValueSc.to_string(),
                                                     loc: location_lib::loc!(),
                                                 });
                                             }
@@ -3529,7 +3529,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         PgTypeInitTryNew::SqlxTypesTimeTimeAsTime => quote! {
                                             if #ValueSc.nanosecond().checked_rem(1000).expect("ce47524f") != 0 {
                                                 return Err(#ident_stdrt_not_null_origin_try_new_er_ucc::#NanosecondPrecisionIsNotSupportedUcc {
-                                                    #ValueSc: #ValueSc.to_string(),
+                                                    #VSc: #ValueSc.to_string(),
                                                     loc: location_lib::loc!(),
                                                 });
                                             }
@@ -3542,7 +3542,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             }
                                             else {
                                                 Err(#ident_stdrt_not_null_origin_try_new_er_ucc::#EarlierDateNotSupportedUcc {
-                                                    #ValueSc: #ValueSc.to_string(),
+                                                    #VSc: #ValueSc.to_string(),
                                                     #EarliestSupportedDateSc: #EarliestSupportedDateSc.to_string(),
                                                     loc: location_lib::loc!(),
                                                 })
@@ -3804,7 +3804,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             PgTypeImplTryNewForDeserialize::StringAsText => {
                                                 let vrt_ts = quote! {
                                                     #ContainsNullByteUcc {
-                                                        #ValueSc,
+                                                        #VSc,
                                                         loc,
                                                     }
                                                 };
@@ -3826,7 +3826,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                         Some(v_b143b9e1) => {
                                                             if <#inner_type_stdrt_not_null_ts as chrono::Timelike>::nanosecond(&v_b143b9e1).checked_rem(1000).expect("c0514180") != 0 {
                                                                 return Err(#ident_stdrt_not_null_origin_try_new_for_deserialize_er_ucc::#NanosecondPrecisionIsNotSupportedUcc {
-                                                                    #ValueSc: v_b143b9e1.to_string(),
+                                                                    #VSc: v_b143b9e1.to_string(),
                                                                     loc: location_lib::loc!(),
                                                                 });
                                                             }
@@ -3853,7 +3853,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                         Ok(v_9932d535) => {
                                                             if v_9932d535.nanosecond().checked_rem(1000).expect("0def33ce") != 0 {
                                                                 return Err(#ident_stdrt_not_null_origin_try_new_for_deserialize_er_ucc::#NanosecondPrecisionIsNotSupportedUcc {
-                                                                    #ValueSc: v_9932d535.to_string(),
+                                                                    #VSc: v_9932d535.to_string(),
                                                                     loc: location_lib::loc!(),
                                                                 });
                                                             }
@@ -3874,11 +3874,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 &quote!{v_356f2a0b},
                                                 &quote! {
                                                     #ident_stdrt_not_null_origin_try_new_er_ucc::#EarlierDateNotSupportedUcc {
-                                                        #ValueSc,
+                                                        #VSc,
                                                         #EarliestSupportedDateSc,
                                                         loc,
                                                     } => Err(#ident_stdrt_not_null_origin_try_new_for_deserialize_er_ucc::#EarlierDateNotSupportedUcc {
-                                                        #ValueSc,
+                                                        #VSc,
                                                         #EarliestSupportedDateSc,
                                                         loc,
                                                     }),
