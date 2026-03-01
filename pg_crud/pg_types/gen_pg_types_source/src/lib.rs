@@ -6213,7 +6213,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 quote! {
                     #ident_where_ucc::#EqualUcc(where_filters::PgTypeWhereEqual {
                         operator: #import_path::Operator::Or,
-                        #ValueSc: #ident_table_type_ucc(#ts),
+                        #VSc: #ident_table_type_ucc(#ts),
                     })
                 }
             };
@@ -6250,7 +6250,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                         ).expect("8d269b8f")
                                                     ]
                                                 ).expect("fe1e037f"),
-                                                #ValueSc: #ident_stdrt_is_nullable_table_type_ucc(el_081d735b),
+                                                #VSc: #ident_stdrt_is_nullable_table_type_ucc(el_081d735b),
                                             }
                                         )
                                     );
@@ -6550,7 +6550,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             quote! {Some(#ident_where_ucc::GreaterThan(
                                 where_filters::PgTypeWhereGreaterThan {
                                     operator: greater_than_vrt.operator(),
-                                    #ValueSc: #ts,
+                                    #VSc: #ts,
                                 }
                             ))}
                         }
@@ -6562,7 +6562,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             quote! {
                                 #ts.map(|el_886032ca| #ident_where_ucc::GreaterThan(where_filters::PgTypeWhereGreaterThan {
                                     operator: greater_than_vrt.operator(),
-                                    #ValueSc: #ident_stdrt_not_null_table_type_ucc(el_886032ca),
+                                    #VSc: #ident_stdrt_not_null_table_type_ucc(el_886032ca),
                                 }))
                             }
                         }

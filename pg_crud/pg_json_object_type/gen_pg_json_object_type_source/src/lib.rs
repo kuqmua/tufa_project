@@ -469,7 +469,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             quote!{
                                 #ident_with_id_stdrt_not_null_where_ucc::#EqualUcc(pg_crud::PgJsonTypeWhereEqual {
                                     operator: pg_crud::Operator::Or,
-                                    #ValueSc: #ident_with_id_stdrt_not_null_table_type_ucc::new(
+                                    #VSc: #ident_with_id_stdrt_not_null_table_type_ucc::new(
                                         #ident_ts_e06846af,
                                         #(#ts),*
                                     ),
@@ -5792,7 +5792,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             #ident_where_ucc::#EqualUcc(
                                 #import_path::PgJsonTypeWhereEqual {
                                     operator: #import_path::Operator::Or,
-                                    #ValueSc: #ident_table_type_ucc::new(
+                                    #VSc: #ident_table_type_ucc::new(
                                         #(#params_ts),*
                                     )
                                 }
@@ -5830,7 +5830,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             #ident_where_ucc::#EqualUcc(
                                 #import_path::PgJsonTypeWhereEqual {
                                     operator: #import_path::Operator::And,
-                                    #ValueSc: #ident_table_type_ucc::new({
+                                    #VSc: #ident_table_type_ucc::new({
                                         let mut acc_321b3fcd = Vec::new();
                                         for (read_only_ids_ea32954c, create_3cbe8967) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0) {
                                             acc_321b3fcd.push(
@@ -5933,7 +5933,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 #ident_where_ucc::#EqualUcc(
                                     #import_path::PgJsonTypeWhereEqual {
                                         operator: #import_path::Operator::And,
-                                        #ValueSc: #ident_table_type_ucc::new({
+                                        #VSc: #ident_table_type_ucc::new({
                                             let mut acc_97ebf7d6 = Vec::new();
                                             for (read_only_ids_319c9e78, create_00ae06d2) in #ReadOnlyIdsSc.0.#ValueSc.into_iter().zip(#CreateSc.0) {
                                                 acc_97ebf7d6.push(
@@ -6218,7 +6218,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                             ).expect("76906f3c")
                                                         ]
                                                     ).expect("8a624c70"),
-                                                    #ValueSc: #ident_with_id_stdrt_not_null_table_type_ucc::new(
+                                                    #VSc: #ident_with_id_stdrt_not_null_table_type_ucc::new(
                                                         <#uuid_uuid_as_not_null_jsonb_string_ts as #import_path::PgJsonTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
                                                             read_only_ids_420d38ca.0.#ValueSc.#IdSc,
                                                             #PgCrudDefaultOptSomeVecOneElCall
@@ -6411,7 +6411,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     acc_480d72e5.push(#ident_where_ucc::LengthEqual(
                                         #import_path::PgJsonTypeWhereLengthEqual {
                                             operator: #import_path::Operator::And,
-                                            #ValueSc: #import_path::UnsignedPartOfI32::try_from(
+                                            #VSc: #import_path::UnsignedPartOfI32::try_from(
                                                 i32::try_from(#CreateSc.0.len()).expect("1811faf7")
                                             ).expect("a590f39b"),
                                         }
@@ -6557,7 +6557,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     acc_acceb7eb.push(#ident_where_ucc::LengthGreaterThan(
                                         #import_path::PgJsonTypeWhereLengthGreaterThan {
                                             operator: #import_path::Operator::And,
-                                            #ValueSc: #import_path::UnsignedPartOfI32::try_from(
+                                            #VSc: #import_path::UnsignedPartOfI32::try_from(
                                                 i32::try_from(
                                                     #CreateSc.0.len().checked_sub(1).unwrap_or_else(|| {
                                                         panic!("e411b8ca");
@@ -6764,7 +6764,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 vec![
                                                     #uuid_uuid_as_not_null_jsonb_string_where_ucc::Equal(#import_path::PgJsonTypeWhereEqual {
                                                         operator: #import_path::Operator::Or,
-                                                        #ValueSc: #uuid_uuid_as_not_null_jsonb_string_table_type_ucc::new(
+                                                        #VSc: #uuid_uuid_as_not_null_jsonb_string_table_type_ucc::new(
                                                             read_only_ids_629675e2.0.#ValueSc.#IdSc.0.#ValueSc
                                                         ),
                                                     })
