@@ -2393,3 +2393,7 @@ pub fn gen_return_err_query_part_er_write_into_buffer_ts(import_path: ImportPath
 pub fn gen_jsonb_build_object(v: &dyn Display) -> String {
     format!("jsonb_build_object({v})")
 }
+#[must_use]
+pub fn gen_jsonb_build_object_value(v: &dyn Display) -> String {
+    gen_jsonb_build_object(&format!("'value',{v}"))
+}

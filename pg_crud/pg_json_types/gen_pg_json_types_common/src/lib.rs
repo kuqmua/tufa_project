@@ -1,6 +1,6 @@
-use pg_crud_macros_common::gen_jsonb_build_object;
+use pg_crud_macros_common::gen_jsonb_build_object_value;
 #[must_use]
 pub fn fi_jsonb_build_object_v(fi: &str) -> String {
-    let v = gen_jsonb_build_object(&"'value','null'::jsonb");
+    let v = gen_jsonb_build_object_value(&"'null'::jsonb");
     format!("'{fi}',{v},")
 }
