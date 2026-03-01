@@ -624,7 +624,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         );
         let ident_as_pg_json_type_table_type_ts = gen_type_as_pg_json_type_subtype_ts(&ident, &pg_json_type_subtype_table_type);
         let self_v_ts = quote! {Self(#ValueSc)};
-        let pg_type_where_filter_query_bind_v_query_ts = quote!{#import_path::PgTypeWhereFilter::query_bind(#ValueSc, #QuerySc)};
+        let pg_type_where_filter_query_bind_v_query_ts = quote!{#import_path::PgTypeWhereFilter::query_bind(#VSc, #QuerySc)};
         let ident_table_type_ucc = SelfTableTypeUcc::from_tokens(&ident);
         let ident_create_ucc = SelfCreateUcc::from_tokens(&ident);
         let ident_arr_not_null_update_for_query_ucc = SelfUpdateForQueryUcc::from_tokens(&ident_arr_not_null_ucc);
@@ -1590,7 +1590,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     )
                 };
                 let equal_vrt_query_bind_ts = quote!{
-                    #SelfUcc::#EqualUcc(#ValueSc) => #pg_type_where_filter_query_bind_v_query_ts
+                    #SelfUcc::#EqualUcc(#VSc) => #pg_type_where_filter_query_bind_v_query_ts
                 };
                 let mb_ident_where_ts = {
                     let gen_ident_where_wrapper_ts = |ts: &dyn ToTokens| gen_ident_where_ts(
@@ -1677,7 +1677,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 let gen_where_filter_query_bind_fields_content_stdrt_not_null_ts = |is_stdrt_with_id: &IsStdrtWithId| {
                     let query_bind_vrts_ts = get_vec_syn_field(is_stdrt_with_id).iter().map(|el0| {
                         let fi_ucc_ts = AsRefStrToUccTs::case_or_panic(&el0.ident.to_string());
-                        quote! {Self::#fi_ucc_ts(#ValueSc) => #pg_type_where_filter_query_bind_v_query_ts}
+                        quote! {Self::#fi_ucc_ts(#VSc) => #pg_type_where_filter_query_bind_v_query_ts}
                     });
                     quote! {#(#query_bind_vrts_ts),*}
                 };
@@ -1790,18 +1790,18 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 let el_filters_ts = vec_syn_field_with_id.iter().map(|el0| {
                                     let fi = &el0.ident;
                                     let el_fi_ucc = ElSelfUcc::from_tokens(&fi);
-                                    quote! {Self::#el_fi_ucc(#ValueSc) => #pg_type_where_filter_query_bind_v_query_ts}
+                                    quote! {Self::#el_fi_ucc(#VSc) => #pg_type_where_filter_query_bind_v_query_ts}
                                 });
                                 quote! {
                                     match self {
-                                        Self::Equal(#ValueSc) => #pg_type_where_filter_query_bind_v_query_ts,
-                                        Self::DimOneEqual(#ValueSc) => #pg_type_where_filter_query_bind_v_query_ts,
-                                        Self::LengthEqual(#ValueSc) => #pg_type_where_filter_query_bind_v_query_ts,
-                                        Self::LengthGreaterThan(#ValueSc) => #pg_type_where_filter_query_bind_v_query_ts,
-                                        Self::In(#ValueSc) => #pg_type_where_filter_query_bind_v_query_ts,
-                                        Self::DimOneIn(#ValueSc) => #pg_type_where_filter_query_bind_v_query_ts,
-                                        Self::ContainsAllElsOfArr(#ValueSc) => #pg_type_where_filter_query_bind_v_query_ts,
-                                        Self::OverlapsWithArr(#ValueSc) => #pg_type_where_filter_query_bind_v_query_ts,
+                                        Self::Equal(#VSc) => #pg_type_where_filter_query_bind_v_query_ts,
+                                        Self::DimOneEqual(#VSc) => #pg_type_where_filter_query_bind_v_query_ts,
+                                        Self::LengthEqual(#VSc) => #pg_type_where_filter_query_bind_v_query_ts,
+                                        Self::LengthGreaterThan(#VSc) => #pg_type_where_filter_query_bind_v_query_ts,
+                                        Self::In(#VSc) => #pg_type_where_filter_query_bind_v_query_ts,
+                                        Self::DimOneIn(#VSc) => #pg_type_where_filter_query_bind_v_query_ts,
+                                        Self::ContainsAllElsOfArr(#VSc) => #pg_type_where_filter_query_bind_v_query_ts,
+                                        Self::OverlapsWithArr(#VSc) => #pg_type_where_filter_query_bind_v_query_ts,
                                         #(#el_filters_ts),*
                                     }
                                 }
@@ -3287,7 +3287,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     let ft_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el0.type0);
                                     let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
                                         &{
-                                            let dq_ts0 = gen_jsonb_build_object_or_dq_ts(&"{value}");
+                                            let dq_ts0 = gen_jsonb_build_object_or_dq_ts(&"{v}");
                                             quote!{acc_57cd0744, #dq_ts0}
                                         },
                                         &return_err_query_part_er_write_into_buffer_ts
@@ -3299,8 +3299,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             "elem",
                                             #IncrSc
                                         ) {
-                                            Ok(mut #ValueSc) => {
-                                                let _: Option<char> = #ValueSc.pop();
+                                            Ok(mut #VSc) => {
+                                                let _: Option<char> = #VSc.pop();
                                                 #if_write_is_err_curly_braces_ts
                                             },
                                             Err(#ErSc) => {

@@ -629,8 +629,8 @@ pub fn gen_pg_type_where_ts(
                 let vrts_ts = vrts.iter().map(|el| {
                     let el_ucc = el.ucc();
                     quote! {
-                        Self::#el_ucc(#ValueSc) => pg_crud_common::PgTypeWhereFilter::query_part(
-                            #ValueSc,
+                        Self::#el_ucc(#VSc) => pg_crud_common::PgTypeWhereFilter::query_part(
+                            #VSc,
                             #IncrSc,
                             #ColumnSc,
                             #IsNeedToAddOperatorSc,
@@ -648,8 +648,8 @@ pub fn gen_pg_type_where_ts(
                 let vrts_ts = vrts.iter().map(|el| {
                     let el_ucc = el.ucc();
                     quote! {
-                        Self::#el_ucc(#ValueSc) => pg_crud_common::PgTypeWhereFilter::query_bind(
-                            #ValueSc,
+                        Self::#el_ucc(#VSc) => pg_crud_common::PgTypeWhereFilter::query_bind(
+                            #VSc,
                             #QuerySc
                         )
                     }

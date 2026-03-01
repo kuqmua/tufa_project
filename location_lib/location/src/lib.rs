@@ -3,7 +3,7 @@ use macros_helpers::{
     LocationFieldAttr, gen_if_write_is_err_ts, gen_impl_display_ts, gen_impl_to_err_string_ts,
     gen_serde_version_of_named_syn_vrt,
 };
-use naming::{IntoSerdeVersionSc, LocSc, ValueSc, WithSerdeUcc, param::SelfWithSerdeUcc};
+use naming::{IntoSerdeVersionSc, LocSc, VSc, WithSerdeUcc, param::SelfWithSerdeUcc};
 use optimal_pack::OptimalPack;
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
@@ -211,11 +211,11 @@ pub fn location(input: Ts) -> Ts {
                                 }
                             }
                             LocationFieldAttr::EoHashMapKStringVToErrString | LocationFieldAttr::EoHashMapKStringVToErrStringSerde => {
-                                let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {k}: {}", &location_lib::ToErrString::to_err_string(#ValueSc)}, &quote! {panic!("d030580a");});
+                                let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {k}: {}", &location_lib::ToErrString::to_err_string(#VSc)}, &quote! {panic!("d030580a");});
                                 quote! {
                                     #el0_ident.iter().fold(
                                         #StringTs::new(),
-                                        |mut acc_06473093, (k, #ValueSc)| {
+                                        |mut acc_06473093, (k, #VSc)| {
                                             #if_write_is_err_ts
                                             acc_06473093
                                         }
@@ -229,7 +229,7 @@ pub fn location(input: Ts) -> Ts {
                                         quote! {
                                             acc_a47e1ba7,
                                             "\n {k}: {}",
-                                            #ValueSc.to_string().lines().fold(
+                                            #VSc.to_string().lines().fold(
                                                 #StringTs::new(),
                                                 |mut acc_addfc699, el_8b8f577e| {
                                                     #if_write_is_err_ts
@@ -243,7 +243,7 @@ pub fn location(input: Ts) -> Ts {
                                 quote! {
                                     #el0_ident.iter().fold(
                                         #StringTs::new(),
-                                        |mut acc_a47e1ba7, (k, #ValueSc)| {
+                                        |mut acc_a47e1ba7, (k, #VSc)| {
                                             #if_write_is_err_ts
                                             acc_a47e1ba7
                                         }
