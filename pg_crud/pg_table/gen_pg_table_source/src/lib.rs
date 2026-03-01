@@ -533,7 +533,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
     let gen_from_handle_ts = |ident_ts: &dyn ToTokens, ts: &dyn ToTokens| {
         quote! {
-            fn #FromHandleSc(#ValueSc: #ident_ts) -> Self {
+            fn #FromHandleSc(#VSc: #ident_ts) -> Self {
                 #ts
             }
         }
@@ -1978,12 +1978,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     gen_as_pg_type_update_for_query_ts(&el.type0);
                                 quote! {#ft_as_pg_type_update_for_query_ts::from(v_0e64c53a.#ValueSc)}
                             });
-                            quote! {#fi: #ValueSc.#fi.map(|v_0e64c53a| #ts)}
+                            quote! {#fi: #VSc.#fi.map(|v_0e64c53a| #ts)}
                         },
                     );
                 quote! {
                     Self {
-                        #primary_k_fi: #primary_k_ft_as_pg_type_update_for_query_ts::from(#ValueSc.#primary_k_fi),
+                        #primary_k_fi: #primary_k_ft_as_pg_type_update_for_query_ts::from(#VSc.#primary_k_fi),
                         #fields_named_without_primary_k_ts
                     }
                 }
@@ -2442,7 +2442,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     });
                     quote! {
-                        match #ValueSc.#IntoSerdeVersionSc() {
+                        match #VSc.#IntoSerdeVersionSc() {
                             #(#vrts_ts),*
                         }
                     }
