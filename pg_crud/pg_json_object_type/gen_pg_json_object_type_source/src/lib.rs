@@ -623,7 +623,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             &quote! {format!("{self:?}")}
         );
         let ident_as_pg_json_type_table_type_ts = gen_type_as_pg_json_type_subtype_ts(&ident, &pg_json_type_subtype_table_type);
-        let self_v_ts = quote! {Self(#ValueSc)};
+        let self_v_ts = quote! {Self(#VSc)};
         let pg_type_where_filter_query_bind_v_query_ts = quote!{#import_path::PgTypeWhereFilter::query_bind(#VSc, #QuerySc)};
         let ident_table_type_ucc = SelfTableTypeUcc::from_tokens(&ident);
         let ident_create_ucc = SelfCreateUcc::from_tokens(&ident);
@@ -717,7 +717,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let impl_pub_new_for_ident_table_type_or_ident_create_ts = {
                 let params_ts = {
                     let gen_wrap_into_v_param_ts = |type_ts: &dyn ToTokens| {
-                        quote! {#ValueSc: #type_ts}
+                        quote! {#VSc: #type_ts}
                     };
                     match &pattern {
                         Pattern::Stdrt => match &is_nullable {
@@ -741,7 +741,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         IsNullable::False => self_v_ts.clone(),
                         IsNullable::True => {
                             let ident_arr_not_null_with_id_postfix_ucc = gen_tokens_table_type_or_create_ts(&gen_ident_ucc(&IdentPattern::ArrNotNullWithId));
-                            quote! {Self(#ValueSc.map(#ident_arr_not_null_with_id_postfix_ucc::new))}
+                            quote! {Self(#VSc.map(#ident_arr_not_null_with_id_postfix_ucc::new))}
                         }
                     },
                 };
@@ -1039,7 +1039,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             &quote! {Ok(v.0)}
         );
         let gen_v_type_ts = |type_ts: &dyn ToTokens| {
-            quote! {#ValueSc: #type_ts}
+            quote! {#VSc: #type_ts}
         };
         let gen_pub_const_new_v_type_content_self_v_ts = |ts: &dyn ToTokens|gen_pub_const_new_ts(
             &MustUse,
@@ -1201,7 +1201,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         Pattern::Stdrt => match &is_nullable {
                             IsNullable::False => self_v_ts.clone(),
                             IsNullable::True => quote! {
-                                Self(#ValueSc.map(#ident_stdrt_not_null_as_pg_json_type_select_ts::new))
+                                Self(#VSc.map(#ident_stdrt_not_null_as_pg_json_type_select_ts::new))
                             },
                         },
                         Pattern::Arr => match &is_nullable {
@@ -1582,8 +1582,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 };
                 let equal_vrt_ident_ts = quote! {#EqualUcc(#import_path::PgJsonTypeWhereEqual<#ident_as_pg_json_type_table_type_ts>)};
                 let equal_vrt_query_part_ts = quote!{
-                    #SelfUcc::#EqualUcc(#ValueSc) => #import_path::PgTypeWhereFilter::query_part(
-                        #ValueSc,
+                    #SelfUcc::#EqualUcc(v_6781c7e3) => #import_path::PgTypeWhereFilter::query_part(
+                        v_6781c7e3,
                         #IncrSc,
                         &#ColumnSc,
                         is_need_to_add_operator
@@ -1734,9 +1734,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     let el_fi_ucc = ElSelfUcc::from_tokens(&fi);
                                     let fi_dq_ts = dq_ts(&fi);
                                     quote! {
-                                        Self::#el_fi_ucc(#ValueSc) => gen_el_query(
-                                            #ValueSc.get_operator(),
-                                            #ValueSc,
+                                        Self::#el_fi_ucc(v_5ff7ccdf) => gen_el_query(
+                                            v_5ff7ccdf.get_operator(),
+                                            v_5ff7ccdf,
                                             #fi_dq_ts
                                         )
                                     }
@@ -1751,8 +1751,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     quote!{#ContainsAllElsOfArrUcc},
                                     quote!{#OverlapsWithArrUcc}
                                 ].into_iter().map(|el_ts|quote!{
-                                    Self::#el_ts(#ValueSc) => #import_path::PgTypeWhereFilter::#QueryPartSc(
-                                        #ValueSc,
+                                    Self::#el_ts(v_df049001) => #import_path::PgTypeWhereFilter::#QueryPartSc(
+                                        v_df049001,
                                         #IncrSc,
                                         #ColumnSc,
                                         #IsNeedToAddOperatorSc
@@ -1761,13 +1761,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 quote! {
                                     let mut gen_el_query = |
                                         operator: &#import_path::Operator,
-                                        #ValueSc: &dyn #import_path::PgTypeWhereFilter<'_>,
+                                        v_637adcbd: &dyn #import_path::PgTypeWhereFilter<'_>,
                                         field: &str
                                     | -> Result<#StringTs, #import_path_query_part_er_ts> {
                                         let operator_query_part = operator.to_query_part(is_need_to_add_operator);
                                         let elem = "elem";
                                         let v_9696ee60 = match #import_path::PgTypeWhereFilter::#QueryPartSc(
-                                            #ValueSc,
+                                            v_637adcbd,
                                             #IncrSc,
                                             &format!("{elem}->'{field}'"),
                                             false
@@ -1872,8 +1872,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             quote!{
                                 match &self {
                                     #fields_ts,
-                                    Self::#EqualUcc(#ValueSc) => pg_crud::PgTypeWhereFilter::query_part(
-                                        #ValueSc,
+                                    Self::#EqualUcc(v_31e7fe47) => pg_crud::PgTypeWhereFilter::query_part(
+                                        v_31e7fe47,
                                         #IncrSc,
                                         &#ColumnSc,
                                         is_need_to_add_operator
@@ -1887,7 +1887,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             quote!{
                                 match self {
                                     #fields_ts,
-                                    Self::#EqualUcc(#ValueSc) => pg_crud::PgTypeWhereFilter::query_bind(#ValueSc, #QuerySc),//todo mb reuse? vrt generation
+                                    Self::#EqualUcc(v_45b5a7f0) => pg_crud::PgTypeWhereFilter::query_bind(v_45b5a7f0, #QuerySc),//todo mb reuse? vrt generation
                                 }
                             }
                         },
@@ -2141,7 +2141,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         &vec_ident_with_id_stdrt_not_null_read_ts
                                     )
                                 ),
-                                &quote! {Self(#ValueSc.map(#ident_with_id_arr_not_null_as_pg_json_type_read_ts::new))},
+                                &quote! {Self(#VSc.map(#ident_with_id_arr_not_null_as_pg_json_type_read_ts::new))},
                             ),
                         },
                     }
@@ -3169,9 +3169,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         &return_err_query_part_er_write_into_buffer_ts
                                     );
                                     quote! {
-                                        #ident_stdrt_not_null_update_for_query_el_ucc::#fi_ucc(#ValueSc) => {
+                                        #ident_stdrt_not_null_update_for_query_el_ucc::#fi_ucc(v_939e13d6) => {
                                             match #ft_as_pg_json_type_ts::#SelectOnlyUpdatedIdsQueryPartSc(
-                                                &#ValueSc.#ValueSc,
+                                                &v_939e13d6.#ValueSc,
                                                 #fi_dq_ts,
                                                 column_field,
                                                 #IncrSc
@@ -3207,7 +3207,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     let ft_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el0.type0);
                                     let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
                                         &{
-                                            let dq_ts0 = gen_jsonb_build_object_or_dq_ts(&"{value}");
+                                            let dq_ts0 = gen_jsonb_build_object_or_dq_ts(&"{v_a9da8905}");
                                             quote!{acc_f7537df2, #dq_ts0}
                                         },
                                         &return_err_query_part_er_write_into_buffer_ts
@@ -3221,8 +3221,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             column_field,
                                             #IncrSc
                                         ) {
-                                            Ok(mut #ValueSc) => {
-                                                let _: Option<char> = #ValueSc.pop();
+                                            Ok(mut v_a9da8905) => {
+                                                let _: Option<char> = v_a9da8905.pop();
                                                 #if_write_is_err_curly_braces_ts
                                             }
                                             Err(#ErSc) => {
@@ -3265,8 +3265,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         &return_err_query_part_er_write_into_buffer_ts
                                     );
                                     quote! {
-                                        #ident_stdrt_not_null_update_for_query_el_ucc::#fi_ucc(#ValueSc) => match #ft_as_pg_json_type_ts::#SelectOnlyUpdatedIdsQueryPartSc(
-                                            &#ValueSc.#ValueSc,
+                                        #ident_stdrt_not_null_update_for_query_el_ucc::#fi_ucc(v_40a8d7a1) => match #ft_as_pg_json_type_ts::#SelectOnlyUpdatedIdsQueryPartSc(
+                                            &v_40a8d7a1.#ValueSc,
                                             #fi_dq_ts,
                                             "elem",
                                             #IncrSc
@@ -3287,7 +3287,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     let ft_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&el0.type0);
                                     let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
                                         &{
-                                            let dq_ts0 = gen_jsonb_build_object_or_dq_ts(&"{v}");
+                                            let dq_ts0 = gen_jsonb_build_object_or_dq_ts(&"{v_549a93c8}");
                                             quote!{acc_57cd0744, #dq_ts0}
                                         },
                                         &return_err_query_part_er_write_into_buffer_ts
@@ -3299,8 +3299,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             "elem",
                                             #IncrSc
                                         ) {
-                                            Ok(mut #VSc) => {
-                                                let _: Option<char> = #VSc.pop();
+                                            Ok(mut v_549a93c8) => {
+                                                let _: Option<char> = v_549a93c8.pop();
                                                 #if_write_is_err_curly_braces_ts
                                             },
                                             Err(#ErSc) => {
@@ -3311,7 +3311,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 });
                                 let if_write_is_err_curly_braces_0_ts = gen_if_write_is_err_curly_braces_ts(
                                     &{
-                                        let dq_ts0 = gen_jsonb_build_object_or_dq_ts(&"{value}");
+                                        let dq_ts0 = gen_jsonb_build_object_or_dq_ts(&"{v_6bac798d}");
                                         quote!{acc_892857b1, #dq_ts0}
                                     },
                                     &return_err_query_part_er_write_into_buffer_ts
@@ -3343,8 +3343,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                     "elem",
                                                     #IncrSc
                                                 ) {
-                                                    Ok(mut #ValueSc) => {
-                                                        let _: Option<char> = #ValueSc.pop();
+                                                    Ok(mut v_6bac798d) => {
+                                                        let _: Option<char> = v_6bac798d.pop();
                                                         #if_write_is_err_curly_braces_0_ts
                                                     }
                                                     Err(#ErSc) => {
@@ -5472,8 +5472,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     let fi = &el0.ident;
                     let fi_ucc_ts = ToTokensToUccTs::case_or_panic(&fi);
                     quote! {
-                        #ident_stdrt_not_null_update_el_ucc::#fi_ucc_ts(#ValueSc) => {
-                            #fi = Some(#ValueSc.#ValueSc);
+                        #ident_stdrt_not_null_update_el_ucc::#fi_ucc_ts(v_730a4dde) => {
+                            #fi = Some(v_730a4dde.#ValueSc);
                         }
                     }
                 });
