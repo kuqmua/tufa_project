@@ -2394,6 +2394,6 @@ pub fn gen_jsonb_build_object(v: &dyn Display) -> String {
     format!("jsonb_build_object({v})")
 }
 #[must_use]
-pub fn gen_jsonb_build_object_value(v: &dyn Display) -> String {
+pub fn gen_jsonb_build_object_v(v: &dyn Display) -> String {
     gen_jsonb_build_object(&format!("'value',{v}"))
 }

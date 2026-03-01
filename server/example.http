@@ -52,29 +52,29 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "where_many": {
     # "primary_k_column": {
     #   "operator": "Or",
-    #   "value": [
+    #   "v": [
     #     {
     #       "Equal": {
     #         "operator": "Or",
-    #         "value": "00000000-0000-0000-0000-000000000000"
+    #         "v": "00000000-0000-0000-0000-000000000000"
     #       }
     #     },
     #     {
     #       "Regex": {
     #         "operator": "Or",
     #         "regex_case": "Sensitive",
-    #         "value": ""
+    #         "v": ""
     #       }
     #     }
     #   ]
     # },
     "column_156": {
       "operator": "Or",
-      "value": [
+      "v": [
         {
           "Equal": {
             "operator": "Or",
-            "value": [
+            "v": [
               {
                 "id": "ddebfc99-7ee4-433f-8c14-4a81d788f12e",
                 "field_0": 20,
@@ -90,7 +90,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         #     "dims": [
         #       0
         #     ],
-        #     "value": {
+        #     "v": {
         #       "id": "ea95f2af-197b-4498-9557-eb9c73771ff5",
         #       "field_0": 0,
         #       "field_1": 0
@@ -100,19 +100,19 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         # {
         #   "LengthEqual": {
         #     "operator": "Or",
-        #     "value": 0
+        #     "v": 0
         #   }
         # },
         # {
         #   "LengthGreaterThan": {
         #     "operator": "Or",
-        #     "value": 0
+        #     "v": 0
         #   }
         # },
         # {
         #   "In": {
         #     "operator": "Or",
-        #     "value": [
+        #     "v": [
         #       [
         #         {
         #           "id": "fdc13d97-9a82-4d45-9bfe-4fd2c0831c41",
@@ -129,7 +129,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         #     "dims": [
         #       0
         #     ],
-        #     "value": [
+        #     "v": [
         #       {
         #         "id": "756495cd-8203-4de0-b6fd-cc309808daab",
         #         "field_0": 0,
@@ -141,7 +141,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         # {
         #   "ContainsAllElsOfArr": {
         #     "operator": "Or",
-        #     "value": [
+        #     "v": [
         #       {
         #         "id": "726cef86-c75c-49fa-8642-f061c4600da7",
         #         "field_0": 0,
@@ -153,7 +153,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         # {
         #   "OverlapsWithArr": {
         #     "operator": "Or",
-        #     "value": [
+        #     "v": [
         #       {
         #         "id": "251725a2-24c1-44ec-8b05-6b4788624346",
         #         "field_0": 0,
@@ -165,17 +165,17 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         # {
         #   "ElId": {
         #     "operator": "Or",
-        #     "value": [
+        #     "v": [
         #       {
         #         "Equal": {
         #           "operator": "Or",
-        #           "value": "34835253-aa80-428c-bed7-4bd90c454cda"
+        #           "v": "34835253-aa80-428c-bed7-4bd90c454cda"
         #         }
         #       },
         #       {
         #         "In": {
         #           "operator": "Or",
-        #           "value": [
+        #           "v": [
         #             "c6861d7b-8901-4e63-9371-6be1926ab58b"
         #           ]
         #         }
@@ -184,7 +184,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         #         "Regex": {
         #           "operator": "Or",
         #           "regex_case": "Sensitive",
-        #           "value": ""
+        #           "v": ""
         #         }
         #       }
         #     ]
@@ -193,17 +193,17 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         # {
         #   "ElField0": {
         #     "operator": "Or",
-        #     "value": [
+        #     "v": [
         #       {
         #         "Equal": {
         #           "operator": "Or",
-        #           "value": 0
+        #           "v": 0
         #         }
         #       },
         #       {
         #         "In": {
         #           "operator": "Or",
-        #           "value": [
+        #           "v": [
         #             0
         #           ]
         #         }
@@ -211,13 +211,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         #       {
         #         "GreaterThan": {
         #           "operator": "Or",
-        #           "value": 0
+        #           "v": 0
         #         }
         #       },
         #       {
         #         "Between": {
         #           "operator": "Or",
-        #           "value": {
+        #           "v": {
         #             "start": 0,
         #             "end": 0
         #           }
@@ -229,18 +229,18 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         # {
         #   "ElField1": {
         #     "operator": "Or",
-        #     "value": [
+        #     "v": [
         #       [
         #         {
         #           "Equal": {
         #             "operator": "Or",
-        #             "value": 0
+        #             "v": 0
         #           }
         #         },
         #         {
         #           "In": {
         #             "operator": "Or",
-        #             "value": [
+        #             "v": [
         #               0
         #             ]
         #           }
@@ -248,13 +248,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         #         {
         #           "GreaterThan": {
         #             "operator": "Or",
-        #             "value": 0
+        #             "v": 0
         #           }
         #         },
         #         {
         #           "Between": {
         #             "operator": "Or",
-        #             "value": {
+        #             "v": {
         #               "start": 0,
         #               "end": 0
         #             }
@@ -333,16 +333,16 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
   {
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 10,
     "column_0": {
-      "value": 10
+      "v": 10
     },
     "animal_as_not_null_jsonb_object": {
-      "value": [
+      "v": [
         {
           "field_0": {
-            "value": [
+            "v": [
               {
                 "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-                  "value": 0
+                  "v": 0
                 }
               }
             ]
@@ -350,7 +350,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
         },
         {
           "field_1": {
-            "value": {
+            "v": {
               "create": [
                 {
                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
@@ -362,7 +362,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
                   "fields": [
                     {
                       "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-                        "value": 0
+                        "v": 0
                       }
                     }
                   ]
@@ -376,10 +376,10 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
         },
         {
           "field_2": {
-            "value": [
+            "v": [
               {
                 "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-                  "value": 0
+                  "v": 0
                 }
               }
             ]
@@ -387,7 +387,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
         },
         {
           "field_3": {
-            "value": {
+            "v": {
               "create": [
                 {
                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
@@ -399,7 +399,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
                   "fields": [
                     {
                       "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-                        "value": 0
+                        "v": 0
                       }
                     }
                   ]
@@ -417,16 +417,16 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
   {
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 11,
     "column_0": {
-      "value": 10
+      "v": 10
     },
     "animal_as_not_null_jsonb_object": {
-      "value": [
+      "v": [
         {
           "field_0": {
-            "value": [
+            "v": [
               {
                 "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-                  "value": 0
+                  "v": 0
                 }
               }
             ]
@@ -434,7 +434,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
         },
         {
           "field_1": {
-            "value": {
+            "v": {
               "create": [
                 {
                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
@@ -446,7 +446,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
                   "fields": [
                     {
                       "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-                        "value": 0
+                        "v": 0
                       }
                     }
                   ]
@@ -460,10 +460,10 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
         },
         {
           "field_2": {
-            "value": [
+            "v": [
               {
                 "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-                  "value": 0
+                  "v": 0
                 }
               }
             ]
@@ -471,7 +471,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
         },
         {
           "field_3": {
-            "value": {
+            "v": {
               "create": [
                 {
                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
@@ -483,7 +483,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
                   "fields": [
                     {
                       "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-                        "value": 0
+                        "v": 0
                       }
                     }
                   ]
@@ -515,17 +515,17 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 {
   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 200,
   "column_0": {
-    "value": 78
+    "v": 78
   }
   ,
   "animal_as_not_null_jsonb_object": {
-    "value": [
+    "v": [
       {
         "field_0": {
-          "value": [
+          "v": [
             {
               "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-                "value": 77
+                "v": 77
               }
             }
           ]
@@ -534,7 +534,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
       ,
       {
         "field_1": {
-          "value": {
+          "v": {
             "create": [
               {
                 "column_113f3662_35a2_4a7a_9326_03bbd441815f": 88
@@ -546,7 +546,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
               #   "fields": [
               #     {
               #       "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-              #         "value": 0
+              #         "v": 0
               #       }
               #     }
               #   ]
@@ -561,10 +561,10 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
       # ,
       # {
       #   "field_2": {
-      #     "value": [
+      #     "v": [
       #       {
       #         "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-      #           "value": 0
+      #           "v": 0
       #         }
       #       }
       #     ]
@@ -572,7 +572,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
       # },
       # {
       #   "field_3": {
-      #     "value": {
+      #     "v": {
       #       "create": [
       #         {
       #           "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
@@ -584,7 +584,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
       #           "fields": [
       #             {
       #               "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-      #                 "value": 0
+      #                 "v": 0
       #               }
       #             }
       #           ]
@@ -616,24 +616,24 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
   "where_many": {
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
       "operator": "Or",
-      "value": [
+      "v": [
         # {
         #   "Equal": {
         #     "operator": "Or",
-        #     "value": 0
+        #     "v": 0
         #   }
         # },
         {
           "GreaterThan": {
             "operator": "Or",
-            "value": 5
+            "v": 5
           }
         }
         # ,
         # {
         #   "Between": {
         #     "operator": "Or",
-        #     "value": {
+        #     "v": {
         #       "start": 0,
         #       "end": 0
         #     }
@@ -642,7 +642,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
         # {
         #   "In": {
         #     "operator": "Or",
-        #     "value": [
+        #     "v": [
         #       0
         #     ]
         #   }
@@ -652,23 +652,23 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     # ,
     # "column_0": {
     #   "operator": "Or",
-    #   "value": [
+    #   "v": [
     #     {
     #       "Equal": {
     #         "operator": "Or",
-    #         "value": 0
+    #         "v": 0
     #       }
     #     },
     #     {
     #       "GreaterThan": {
     #         "operator": "Or",
-    #         "value": 0
+    #         "v": 0
     #       }
     #     },
     #     {
     #       "Between": {
     #         "operator": "Or",
-    #         "value": {
+    #         "v": {
     #           "start": 0,
     #           "end": 0
     #         }
@@ -677,7 +677,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #     {
     #       "In": {
     #         "operator": "Or",
-    #         "value": [
+    #         "v": [
     #           0
     #         ]
     #       }
@@ -686,25 +686,25 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     # },
     # "animal_as_not_null_jsonb_object": {
     #   "operator": "Or",
-    #   "value": [
+    #   "v": [
     #     {
     #       "Field0": {
     #         "operator": "Or",
-    #         "value": [
+    #         "v": [
     #           {
     #             "Column113F366235A24A7A932603Bbd441815F": {
     #               "operator": "Or",
-    #               "value": [
+    #               "v": [
     #                 {
     #                   "Equal": {
     #                     "operator": "Or",
-    #                     "value": 0
+    #                     "v": 0
     #                   }
     #                 },
     #                 {
     #                   "In": {
     #                     "operator": "Or",
-    #                     "value": [
+    #                     "v": [
     #                       0
     #                     ]
     #                   }
@@ -712,13 +712,13 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #                 {
     #                   "GreaterThan": {
     #                     "operator": "Or",
-    #                     "value": 0
+    #                     "v": 0
     #                   }
     #                 },
     #                 {
     #                   "Between": {
     #                     "operator": "Or",
-    #                     "value": {
+    #                     "v": {
     #                       "start": 0,
     #                       "end": 0
     #                     }
@@ -733,11 +733,11 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #     {
     #       "Field1": {
     #         "operator": "Or",
-    #         "value": [
+    #         "v": [
     #           {
     #             "Equal": {
     #               "operator": "Or",
-    #               "value": [
+    #               "v": [
     #                 {
     #                   "id": "58e967c6-53c6-4bf1-b033-c33e8c5e0aae",
     #                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
@@ -751,7 +751,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #               "dims": [
     #                 0
     #               ],
-    #               "value": {
+    #               "v": {
     #                 "id": "b3f8d3fc-f6cf-4484-8de8-0017b8d8b14c",
     #                 "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
     #               }
@@ -760,19 +760,19 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #           {
     #             "LengthEqual": {
     #               "operator": "Or",
-    #               "value": 0
+    #               "v": 0
     #             }
     #           },
     #           {
     #             "LengthGreaterThan": {
     #               "operator": "Or",
-    #               "value": 0
+    #               "v": 0
     #             }
     #           },
     #           {
     #             "In": {
     #               "operator": "Or",
-    #               "value": [
+    #               "v": [
     #                 [
     #                   {
     #                     "id": "dcd80011-e3a0-4b6f-8127-3c5fa57052b1",
@@ -788,7 +788,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #               "dims": [
     #                 0
     #               ],
-    #               "value": [
+    #               "v": [
     #                 {
     #                   "id": "78cad082-5c25-46db-9f0a-b2885c0f2bc8",
     #                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
@@ -799,7 +799,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #           {
     #             "ContainsAllElsOfArr": {
     #               "operator": "Or",
-    #               "value": [
+    #               "v": [
     #                 {
     #                   "id": "2be276d3-4499-4852-aae2-518891a62e1c",
     #                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
@@ -810,7 +810,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #           {
     #             "OverlapsWithArr": {
     #               "operator": "Or",
-    #               "value": [
+    #               "v": [
     #                 {
     #                   "id": "10c50cb8-2e3d-492b-8196-05d3b75bff6d",
     #                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
@@ -821,17 +821,17 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #           {
     #             "ElId": {
     #               "operator": "Or",
-    #               "value": [
+    #               "v": [
     #                 {
     #                   "Equal": {
     #                     "operator": "Or",
-    #                     "value": "6d286cd4-b5bd-49bb-a67e-da203455f925"
+    #                     "v": "6d286cd4-b5bd-49bb-a67e-da203455f925"
     #                   }
     #                 },
     #                 {
     #                   "In": {
     #                     "operator": "Or",
-    #                     "value": [
+    #                     "v": [
     #                       "a29dd080-0044-46ea-9a1b-048f0aef9328"
     #                     ]
     #                   }
@@ -840,7 +840,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #                   "Regex": {
     #                     "operator": "Or",
     #                     "regex_case": "Sensitive",
-    #                     "value": ""
+    #                     "v": ""
     #                   }
     #                 }
     #               ]
@@ -849,17 +849,17 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #           {
     #             "ElColumn113F366235A24A7A932603Bbd441815F": {
     #               "operator": "Or",
-    #               "value": [
+    #               "v": [
     #                 {
     #                   "Equal": {
     #                     "operator": "Or",
-    #                     "value": 0
+    #                     "v": 0
     #                   }
     #                 },
     #                 {
     #                   "In": {
     #                     "operator": "Or",
-    #                     "value": [
+    #                     "v": [
     #                       0
     #                     ]
     #                   }
@@ -867,13 +867,13 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #                 {
     #                   "GreaterThan": {
     #                     "operator": "Or",
-    #                     "value": 0
+    #                     "v": 0
     #                   }
     #                 },
     #                 {
     #                   "Between": {
     #                     "operator": "Or",
-    #                     "value": {
+    #                     "v": {
     #                       "start": 0,
     #                       "end": 0
     #                     }
@@ -888,22 +888,22 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #     {
     #       "Field2": {
     #         "operator": "Or",
-    #         "value": [
+    #         "v": [
     #           [
     #             {
     #               "Column113F366235A24A7A932603Bbd441815F": {
     #                 "operator": "Or",
-    #                 "value": [
+    #                 "v": [
     #                   {
     #                     "Equal": {
     #                       "operator": "Or",
-    #                       "value": 0
+    #                       "v": 0
     #                     }
     #                   },
     #                   {
     #                     "In": {
     #                       "operator": "Or",
-    #                       "value": [
+    #                       "v": [
     #                         0
     #                       ]
     #                     }
@@ -911,13 +911,13 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #                   {
     #                     "GreaterThan": {
     #                       "operator": "Or",
-    #                       "value": 0
+    #                       "v": 0
     #                     }
     #                   },
     #                   {
     #                     "Between": {
     #                       "operator": "Or",
-    #                       "value": {
+    #                       "v": {
     #                         "start": 0,
     #                         "end": 0
     #                       }
@@ -933,12 +933,12 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #     {
     #       "Field3": {
     #         "operator": "Or",
-    #         "value": [
+    #         "v": [
     #           [
     #             {
     #               "Equal": {
     #                 "operator": "Or",
-    #                 "value": [
+    #                 "v": [
     #                   {
     #                     "id": "6fcf641f-0f8f-4c18-aa97-fa1e97b223fa",
     #                     "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
@@ -952,7 +952,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #                 "dims": [
     #                   0
     #                 ],
-    #                 "value": {
+    #                 "v": {
     #                   "id": "48b0eea0-6f36-4c38-8e1f-7d6cf38ebb8b",
     #                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
     #                 }
@@ -961,19 +961,19 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #             {
     #               "LengthEqual": {
     #                 "operator": "Or",
-    #                 "value": 0
+    #                 "v": 0
     #               }
     #             },
     #             {
     #               "LengthGreaterThan": {
     #                 "operator": "Or",
-    #                 "value": 0
+    #                 "v": 0
     #               }
     #             },
     #             {
     #               "In": {
     #                 "operator": "Or",
-    #                 "value": [
+    #                 "v": [
     #                   [
     #                     {
     #                       "id": "fd5856b1-3560-4887-8a34-2f7d4c817651",
@@ -989,7 +989,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #                 "dims": [
     #                   0
     #                 ],
-    #                 "value": [
+    #                 "v": [
     #                   {
     #                     "id": "fb8cce63-a377-4bf2-86f9-d908b24d6320",
     #                     "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
@@ -1000,7 +1000,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #             {
     #               "ContainsAllElsOfArr": {
     #                 "operator": "Or",
-    #                 "value": [
+    #                 "v": [
     #                   {
     #                     "id": "e06778ca-0ba1-4ef1-a304-08b24a8f69e0",
     #                     "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
@@ -1011,7 +1011,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #             {
     #               "OverlapsWithArr": {
     #                 "operator": "Or",
-    #                 "value": [
+    #                 "v": [
     #                   {
     #                     "id": "27e824e3-4a37-49ee-b462-136d3fcb3c22",
     #                     "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
@@ -1022,17 +1022,17 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #             {
     #               "ElId": {
     #                 "operator": "Or",
-    #                 "value": [
+    #                 "v": [
     #                   {
     #                     "Equal": {
     #                       "operator": "Or",
-    #                       "value": "129347fa-7d63-4650-b97c-ea0afe842a95"
+    #                       "v": "129347fa-7d63-4650-b97c-ea0afe842a95"
     #                     }
     #                   },
     #                   {
     #                     "In": {
     #                       "operator": "Or",
-    #                       "value": [
+    #                       "v": [
     #                         "edd1df5c-92c8-464b-9ee7-ef06a374aaf7"
     #                       ]
     #                     }
@@ -1041,7 +1041,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #                     "Regex": {
     #                       "operator": "Or",
     #                       "regex_case": "Sensitive",
-    #                       "value": ""
+    #                       "v": ""
     #                     }
     #                   }
     #                 ]
@@ -1050,17 +1050,17 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #             {
     #               "ElColumn113F366235A24A7A932603Bbd441815F": {
     #                 "operator": "Or",
-    #                 "value": [
+    #                 "v": [
     #                   {
     #                     "Equal": {
     #                       "operator": "Or",
-    #                       "value": 0
+    #                       "v": 0
     #                     }
     #                   },
     #                   {
     #                     "In": {
     #                       "operator": "Or",
-    #                       "value": [
+    #                       "v": [
     #                         0
     #                       ]
     #                     }
@@ -1068,13 +1068,13 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #                   {
     #                     "GreaterThan": {
     #                       "operator": "Or",
-    #                       "value": 0
+    #                       "v": 0
     #                     }
     #                   },
     #                   {
     #                     "Between": {
     #                       "operator": "Or",
-    #                       "value": {
+    #                       "v": {
     #                         "start": 0,
     #                         "end": 0
     #                       }
