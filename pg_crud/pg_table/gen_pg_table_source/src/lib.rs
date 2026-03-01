@@ -2256,7 +2256,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
     let wrap_into_v_ts = |ts: &dyn ToTokens| {
         quote! {
-            let #ValueSc = {
+            let #VSc = {
                 #ts
             };
         }
@@ -2350,7 +2350,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #pg_transaction_begin_ts
             #ts
             #pg_transaction_commit_ts
-            #ValueSc
+            #VSc
         }
     };
     let gen_location_vrt_ts = |er_vrt: &Variant| -> Ts2 {
@@ -2692,7 +2692,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let wraped_into_axum_res_ts = wrap_into_axum_res_ts(
             &{
                 let ident_operation_res_vrts_ucc = gen_ident_operation_res_vrts_ucc(operation);
-                quote! {#ident_operation_res_vrts_ucc::#DesirableUcc(#ValueSc)}
+                quote! {#ident_operation_res_vrts_ucc::#DesirableUcc(#VSc)}
             },
             &operation.desirable_status_code().to_http_status_code_ts(),
             &ShouldAddReturn::False,
@@ -2714,7 +2714,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     #binded_query_ts
                 };
                 #acquire_pool_and_connection_ts
-                let #ValueSc = {
+                let #VSc = {
                     #pg_logic_ts
                 };
                 #wraped_into_axum_res_ts
@@ -2753,179 +2753,177 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             };
         }
     };
-    let gen_try_operation_ts =
-        |operation: &Operation,
-         type_vrts_from_req_res_syn_vrts: &[Variant],
-         result_ok_type_ts: &dyn ToTokens,
-         desirable_from_or_try_from_desirable_with_serde_ts: &dyn ToTokens| {
-            let try_operation_sc_ts = operation.try_self_sc_ts();
-            let try_operation_handle_sc_ts = operation.try_self_handle_sc_ts();
-            let ident_try_operation_er_ucc = gen_ident_try_operation_er_ucc(operation);
-            let ident_operation_params_ucc = gen_ident_operation_params_ucc(operation);
-            let payload_ts = {
-                let serde_json_to_string_syn_vrt_init_ts = gen_init_ts(
-                    &serde_json_to_string_syn_vrt_wrapper,
-                    file!(),
-                    line!(),
-                    column!(),
-                );
-                quote! {
-                    let #PayloadSc = {
-                        match serde_json::to_string(&#ParamsSc.#PayloadSc) {
-                            Ok(v_1772a83e) => v_1772a83e,
-                            Err(#Er0) => {
-                                return Err(#ident_try_operation_er_ucc::#serde_json_to_string_syn_vrt_init_ts);
-                            }
-                        }
-                    };
-                }
-            };
-            let url_ts = {
-                let format_ts = dq_ts(&format!(
-                    "{{endpoint_location}}/{{table}}/{}",
-                    operation.self_sc_str()
-                ));
-                quote! {let #UrlSc = format!(#format_ts);}
-            };
-            let future_ts = {
-                let operation_http_method_sc_ts =
-                    AsRefStrToScTs::case_or_panic(&operation.http_method());
-                let commit_header_addition_ts = quote! {
-                    .header(
-                        &"commit".to_owned(),
-                        git_info::PROJECT_GIT_INFO.commit,
-                    )
-                };
-                let application_json_dq_ts = dq_ts(&"application/json");
-                let content_type_application_json_header_addition_ts = quote! {
-                    .header(reqwest::header::CONTENT_TYPE, #application_json_dq_ts)
-                };
-                quote! {
-                    let #FutureSc = reqwest::Client::new()
-                        .#operation_http_method_sc_ts(&#UrlSc)
-                        #commit_header_addition_ts
-                        #content_type_application_json_header_addition_ts
-                        .#BodySc(#PayloadSc)
-                        .send();
-                }
-            };
-            let res_ts = {
-                let reqwest_syn_vrt_init_ts =
-                    gen_init_ts(&reqwest_syn_vrt_wrapper, file!(), line!(), column!());
-                quote! {
-                    let #ResSc = match #FutureSc.await {
-                        Ok(v_180559e9) => v_180559e9,
-                        Err(#Er0) => {
-                            return Err(#ident_try_operation_er_ucc::#reqwest_syn_vrt_init_ts);
-                        }
-                    };
-                }
-            };
-            let er_0_res_status_ts = quote! {
-                let #Er0 = #ResSc.status();
-            };
-            let headers_ts = quote! {
-                let #Er1 = #ResSc.headers().clone();
-            };
-            let res_text_ts = {
-                let failed_to_get_res_text_syn_vrt_init_ts = gen_init_ts(
-                    &failed_to_get_res_text_syn_vrt_wrapper,
-                    file!(),
-                    line!(),
-                    column!(),
-                );
-                quote! {
-                    let #Er2 = match #ResSc.text().await {
-                        Ok(v_6a62b2b9) => v_6a62b2b9,
-                        Err(#Er2) => {
-                            return Err(#ident_try_operation_er_ucc::#failed_to_get_res_text_syn_vrt_init_ts);
-                        }
-                    };
-                }
-            };
-            let ident_operation_res_vrts_ucc = gen_ident_operation_res_vrts_ucc(operation);
-            let expected_res_ts = {
-                let deserialize_res_syn_vrt_init_ts = gen_init_ts(
-                    &deserialize_res_syn_vrt_wrapper,
-                    file!(),
-                    line!(),
-                    column!(),
-                );
-                quote! {
-                    let #ExpectedResSc = match serde_json::from_str::<#ident_operation_res_vrts_ucc>(&#Er2) {
-                        Ok(v_563d2a75) => v_563d2a75,
-                        Err(#Er3) => {
-                            return Err(#ident_try_operation_er_ucc::#deserialize_res_syn_vrt_init_ts);
-                        }
-                    };
-                }
-            };
-            let try_operation_logic_er_with_serde_ucc =
-                gen_ident_operation_er_with_serde_ucc(operation);
-            let operation_er_with_serde_sc = &operation.operation_er_with_serde_sc();
-            let try_operation_logic_er_with_serde_ts = {
-                let try_operation_logic_res_vrts_to_try_operation_logic_er_with_serde = type_vrts_from_req_res_syn_vrts.iter().map(|el| {
-                let vrt_ident = &el.ident;
-                let fields_idents_ts = if let Fields::Named(fields_named) = &el.fields {
-                    let fields_idents = fields_named.named.iter().map(|field| &field.ident);
-                    quote! {#(#fields_idents),*}
-                } else {
-                    panic!("8dcafc1c");
-                };
-                quote! {
-                    #ident_operation_res_vrts_ucc::#vrt_ident {
-                        #fields_idents_ts
-                    } => #try_operation_logic_er_with_serde_ucc::#vrt_ident { #fields_idents_ts }
-                }
-            });
-                quote! {
-                    let #operation_er_with_serde_sc = match #ExpectedResSc {
-                        #ident_operation_res_vrts_ucc::#DesirableUcc(#ValueSc) => {
-                            return Ok(#desirable_from_or_try_from_desirable_with_serde_ts);
-                        },
-                        #(#try_operation_logic_res_vrts_to_try_operation_logic_er_with_serde),*
-                    };
-                }
-            };
-            let return_er_ts = {
-                let field_loc_new_6ac7b78e_ts = gen_field_loc_new_ts(file!(), line!(), column!());
-                quote! {
-                    Err(#ident_try_operation_er_ucc::#try_operation_logic_er_with_serde_ucc {
-                        #operation_er_with_serde_sc,
-                        #field_loc_new_6ac7b78e_ts,
-                    })
-                }
-            };
+    let gen_try_operation_ts = |operation: &Operation,
+                                type_vrts_from_req_res_syn_vrts: &[Variant],
+                                result_ok_type_ts: &dyn ToTokens| {
+        let try_operation_sc_ts = operation.try_self_sc_ts();
+        let try_operation_handle_sc_ts = operation.try_self_handle_sc_ts();
+        let ident_try_operation_er_ucc = gen_ident_try_operation_er_ucc(operation);
+        let ident_operation_params_ucc = gen_ident_operation_params_ucc(operation);
+        let payload_ts = {
+            let serde_json_to_string_syn_vrt_init_ts = gen_init_ts(
+                &serde_json_to_string_syn_vrt_wrapper,
+                file!(),
+                line!(),
+                column!(),
+            );
             quote! {
-                #[allow(clippy::single_call_fn)]
-                async fn #try_operation_handle_sc_ts(
-                    #EndpointLocationSc: #RefStr,
-                    #ParamsSc: #ident_operation_params_ucc,
-                    #TableSc: &str,
-                ) -> Result<#result_ok_type_ts, #ident_try_operation_er_ucc> {
-                    #payload_ts
-                    #url_ts
-                    #future_ts
-                    #res_ts
-                    #er_0_res_status_ts
-                    #headers_ts
-                    #res_text_ts
-                    #expected_res_ts
-                    #try_operation_logic_er_with_serde_ts
-                    #return_er_ts
-                }
-                pub async fn #try_operation_sc_ts(
-                    #EndpointLocationSc: #RefStr,
-                    #ParamsSc: #ident_operation_params_ucc
-                ) -> Result<#result_ok_type_ts, #ident_try_operation_er_ucc> {
-                    Self::#try_operation_handle_sc_ts(
-                        #EndpointLocationSc,
-                        #ParamsSc,
-                        #self_table_name_call_ts
-                    ).await
-                }
+                let #PayloadSc = {
+                    match serde_json::to_string(&#ParamsSc.#PayloadSc) {
+                        Ok(v_1772a83e) => v_1772a83e,
+                        Err(#Er0) => {
+                            return Err(#ident_try_operation_er_ucc::#serde_json_to_string_syn_vrt_init_ts);
+                        }
+                    }
+                };
             }
         };
+        let url_ts = {
+            let format_ts = dq_ts(&format!(
+                "{{endpoint_location}}/{{table}}/{}",
+                operation.self_sc_str()
+            ));
+            quote! {let #UrlSc = format!(#format_ts);}
+        };
+        let future_ts = {
+            let operation_http_method_sc_ts =
+                AsRefStrToScTs::case_or_panic(&operation.http_method());
+            let commit_header_addition_ts = quote! {
+                .header(
+                    &"commit".to_owned(),
+                    git_info::PROJECT_GIT_INFO.commit,
+                )
+            };
+            let application_json_dq_ts = dq_ts(&"application/json");
+            let content_type_application_json_header_addition_ts = quote! {
+                .header(reqwest::header::CONTENT_TYPE, #application_json_dq_ts)
+            };
+            quote! {
+                let #FutureSc = reqwest::Client::new()
+                    .#operation_http_method_sc_ts(&#UrlSc)
+                    #commit_header_addition_ts
+                    #content_type_application_json_header_addition_ts
+                    .#BodySc(#PayloadSc)
+                    .send();
+            }
+        };
+        let res_ts = {
+            let reqwest_syn_vrt_init_ts =
+                gen_init_ts(&reqwest_syn_vrt_wrapper, file!(), line!(), column!());
+            quote! {
+                let #ResSc = match #FutureSc.await {
+                    Ok(v_180559e9) => v_180559e9,
+                    Err(#Er0) => {
+                        return Err(#ident_try_operation_er_ucc::#reqwest_syn_vrt_init_ts);
+                    }
+                };
+            }
+        };
+        let er_0_res_status_ts = quote! {
+            let #Er0 = #ResSc.status();
+        };
+        let headers_ts = quote! {
+            let #Er1 = #ResSc.headers().clone();
+        };
+        let res_text_ts = {
+            let failed_to_get_res_text_syn_vrt_init_ts = gen_init_ts(
+                &failed_to_get_res_text_syn_vrt_wrapper,
+                file!(),
+                line!(),
+                column!(),
+            );
+            quote! {
+                let #Er2 = match #ResSc.text().await {
+                    Ok(v_6a62b2b9) => v_6a62b2b9,
+                    Err(#Er2) => {
+                        return Err(#ident_try_operation_er_ucc::#failed_to_get_res_text_syn_vrt_init_ts);
+                    }
+                };
+            }
+        };
+        let ident_operation_res_vrts_ucc = gen_ident_operation_res_vrts_ucc(operation);
+        let expected_res_ts = {
+            let deserialize_res_syn_vrt_init_ts = gen_init_ts(
+                &deserialize_res_syn_vrt_wrapper,
+                file!(),
+                line!(),
+                column!(),
+            );
+            quote! {
+                let #ExpectedResSc = match serde_json::from_str::<#ident_operation_res_vrts_ucc>(&#Er2) {
+                    Ok(v_563d2a75) => v_563d2a75,
+                    Err(#Er3) => {
+                        return Err(#ident_try_operation_er_ucc::#deserialize_res_syn_vrt_init_ts);
+                    }
+                };
+            }
+        };
+        let try_operation_logic_er_with_serde_ucc =
+            gen_ident_operation_er_with_serde_ucc(operation);
+        let operation_er_with_serde_sc = &operation.operation_er_with_serde_sc();
+        let try_operation_logic_er_with_serde_ts = {
+            let try_operation_logic_res_vrts_to_try_operation_logic_er_with_serde = type_vrts_from_req_res_syn_vrts.iter().map(|el| {
+                    let vrt_ident = &el.ident;
+                    let fields_idents_ts = if let Fields::Named(fields_named) = &el.fields {
+                        let fields_idents = fields_named.named.iter().map(|field| &field.ident);
+                        quote! {#(#fields_idents),*}
+                    } else {
+                        panic!("8dcafc1c");
+                    };
+                    quote! {
+                        #ident_operation_res_vrts_ucc::#vrt_ident {
+                            #fields_idents_ts
+                        } => #try_operation_logic_er_with_serde_ucc::#vrt_ident { #fields_idents_ts }
+                    }
+                });
+            quote! {
+                let #operation_er_with_serde_sc = match #ExpectedResSc {
+                    #ident_operation_res_vrts_ucc::#DesirableUcc(#VSc) => {
+                        return Ok(#VSc);
+                    },
+                    #(#try_operation_logic_res_vrts_to_try_operation_logic_er_with_serde),*
+                };
+            }
+        };
+        let return_er_ts = {
+            let field_loc_new_6ac7b78e_ts = gen_field_loc_new_ts(file!(), line!(), column!());
+            quote! {
+                Err(#ident_try_operation_er_ucc::#try_operation_logic_er_with_serde_ucc {
+                    #operation_er_with_serde_sc,
+                    #field_loc_new_6ac7b78e_ts,
+                })
+            }
+        };
+        quote! {
+            #[allow(clippy::single_call_fn)]
+            async fn #try_operation_handle_sc_ts(
+                #EndpointLocationSc: #RefStr,
+                #ParamsSc: #ident_operation_params_ucc,
+                #TableSc: &str,
+            ) -> Result<#result_ok_type_ts, #ident_try_operation_er_ucc> {
+                #payload_ts
+                #url_ts
+                #future_ts
+                #res_ts
+                #er_0_res_status_ts
+                #headers_ts
+                #res_text_ts
+                #expected_res_ts
+                #try_operation_logic_er_with_serde_ts
+                #return_er_ts
+            }
+            pub async fn #try_operation_sc_ts(
+                #EndpointLocationSc: #RefStr,
+                #ParamsSc: #ident_operation_params_ucc
+            ) -> Result<#result_ok_type_ts, #ident_try_operation_er_ucc> {
+                Self::#try_operation_handle_sc_ts(
+                    #EndpointLocationSc,
+                    #ParamsSc,
+                    #self_table_name_call_ts
+                ).await
+            }
+        }
+    };
     let gen_match_ident_read_only_ids_as_from_row_from_row_ts = |ts: &dyn ToTokens| {
         quote! {
             match <#ident_read_only_ids_ucc as sqlx::FromRow<'_, sqlx::postgres::PgRow>>::from_row(&v_b27d7d79) {
@@ -3208,7 +3206,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &operation,
                 &type_vrts_from_req_res_syn_vrts,
                 &vec_ident_read_only_ids_ts,
-                &ValueSc,
             ));
             quote! {
                 #try_operation_er_ts
@@ -3348,7 +3345,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &operation,
                 &type_vrts_from_req_res_syn_vrts,
                 &ident_read_only_ids_ucc,
-                &ValueSc,
             ));
             quote! {
                 #try_operation_er_ts
@@ -3557,15 +3553,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &operation,
                 &type_vrts_from_req_res_syn_vrts,
                 &vec_struct_opts_ident_ts,
-                &quote! {
-                    //todo mb just #ValueSc ?
-                    #ValueSc
-                    .into_iter()
-                    .fold(Vec::new(), |mut acc_4adf5a80, el_6a197212| {
-                        acc_4adf5a80.push(el_6a197212);
-                        acc_4adf5a80
-                    })
-                },
             ));
             quote! {
                 #try_operation_er_ts
@@ -3707,7 +3694,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &operation,
                 &type_vrts_from_req_res_syn_vrts,
                 &ident_read_ucc,
-                &ValueSc,
             ));
             quote! {
                 #try_operation_er_ts
@@ -3775,11 +3761,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 );
             let impl_pub_try_new_for_ident_operation_payload_ts = gen_impl_pub_try_new_for_ident_ts(
                 &gen_ident_operation_payload_ucc(&operation),
-                &quote! {#ValueSc: #vec_ident_update_ts},
+                &quote! {#VSc: #vec_ident_update_ts},
                 &ident_operation_payload_try_new_er_ucc,
                 &quote! {
                     let mut acc_6bf275fc = Vec::new();
-                    for el_35facc3a in &#ValueSc {
+                    for el_35facc3a in &#VSc {
                         if acc_6bf275fc.contains(&&el_35facc3a.#primary_k_fi) {
                             return Err(#ident_operation_payload_try_new_er_ucc::#NotUniquePrimaryKUcc {
                                 #NotUniquePrimaryKSc: el_35facc3a.#primary_k_fi,
@@ -3788,7 +3774,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                         acc_6bf275fc.push(&el_35facc3a.#primary_k_fi);
                     }
-                    Ok(Self(#ValueSc))
+                    Ok(Self(#VSc))
                 },
             );
             let impl_serde_deserialize_for_ident_update_many_payload_ts = {
@@ -4132,7 +4118,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &operation,
                 &type_vrts_from_req_res_syn_vrts,
                 &vec_ident_read_only_ids_ts,
-                &ValueSc,
             ));
             quote! {
                 #try_operation_er_ts
@@ -4374,7 +4359,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &operation,
                 &type_vrts_from_req_res_syn_vrts,
                 &ident_read_only_ids_ucc,
-                &ValueSc,
             ));
             quote! {
                 #try_operation_er_ts
@@ -4469,7 +4453,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &operation,
                 &type_vrts_from_req_res_syn_vrts,
                 &vec_primary_k_ft_read_ts,
-                &ValueSc,
             ));
             quote! {
                 #try_operation_er_ts
@@ -4581,7 +4564,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &operation,
                 &type_vrts_from_req_res_syn_vrts,
                 &primary_k_ft_as_pg_type_read_ucc,
-                &ValueSc,
             ));
             quote! {
                 #try_operation_er_ts
