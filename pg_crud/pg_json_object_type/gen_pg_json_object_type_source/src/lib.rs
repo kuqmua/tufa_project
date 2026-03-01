@@ -925,7 +925,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &el0.type0,
                         &PgJsonTypeSubtype::CreateForQuery
                     );
-                    quote! {#fi: #type_as_pg_json_type_subtype_crate_for_query_ts::from(#ValueSc.#fi)}
+                    quote! {#fi: #type_as_pg_json_type_subtype_crate_for_query_ts::from(#VSc.#fi)}
                 });
                 quote! {#(#ts),*}
             };
@@ -972,7 +972,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             IsNullable::False => match &pattern {
                                 Pattern::Stdrt => quote! {{#impl_from_stdrt_not_null_without_id_ts}},
                                 Pattern::Arr => quote!{(
-                                    #ValueSc.0.into_iter().map(#ident_with_id_stdrt_not_null_create_for_query_ucc::from).collect()
+                                    #VSc.0.into_iter().map(#ident_with_id_stdrt_not_null_create_for_query_ucc::from).collect()
                                 )},
                             },
                             IsNullable::True => {
@@ -980,7 +980,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     Pattern::Stdrt => &ident_stdrt_not_null_as_pg_json_type_create_for_query_ts,
                                     Pattern::Arr => &ident_arr_not_null_as_pg_json_type_create_for_query_ts,
                                 };
-                                quote!{(#ValueSc.0.map(#ts::from))}
+                                quote!{(#VSc.0.map(#ts::from))}
                             },
                         };
                         quote! {Self #ts}
@@ -3442,13 +3442,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 &match &is_nullable {
                     IsNullable::False => match &pattern {
                         Pattern::Stdrt => quote!{
-                            Self(#import_path::NotEmptyUniqueVec::from_t1_impl_from_t2(#ValueSc.0))
+                            Self(#import_path::NotEmptyUniqueVec::from_t1_impl_from_t2(#VSc.0))
                         },
                         Pattern::Arr => quote!{
                             Self {
-                                #CreateSc: #ValueSc.#CreateSc.into_iter().map(#ident_with_id_stdrt_not_null_create_for_query_ucc::from).collect(),
-                                #UpdateSc: #import_path::UniqueVec::from_t1_impl_from_t2(#ValueSc.#UpdateSc),
-                                #DeleteSc: #ValueSc.#DeleteSc.into_iter().map(Into::into).collect(),
+                                #CreateSc: #VSc.#CreateSc.into_iter().map(#ident_with_id_stdrt_not_null_create_for_query_ucc::from).collect(),
+                                #UpdateSc: #import_path::UniqueVec::from_t1_impl_from_t2(#VSc.#UpdateSc),
+                                #DeleteSc: #VSc.#DeleteSc.into_iter().map(Into::into).collect(),
                             }
                         }
                     },
@@ -3457,7 +3457,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             Pattern::Stdrt => &ident_stdrt_not_null_as_import_path_pg_json_type_ts,
                             Pattern::Arr => &ident_arr_not_null_as_import_path_pg_json_type_ts
                         };
-                        quote!{Self(#ValueSc.0.map(#ts::UpdateForQuery::from))}
+                        quote!{Self(#VSc.0.map(#ts::UpdateForQuery::from))}
                     }
                 }
             );
@@ -3505,7 +3505,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             }
                         });
                         quote!{
-                            match #ValueSc {
+                            match #VSc {
                                 #(#vrts_ts),*
                             }
                         }
@@ -3542,10 +3542,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &ident_with_id_stdrt_not_null_update_for_query_el_ucc,
                     &quote! {Self {
                         #IdSc: #uuid_uuid_as_not_null_jsonb_string_as_import_path_pg_json_type_ts::UpdateForQuery::from(
-                            #ValueSc.#IdSc
+                            #VSc.#IdSc
                         ),
                         fields: #ident_stdrt_not_null_as_import_path_pg_json_type_ts::UpdateForQuery::from(
-                            #ValueSc.fields
+                            #VSc.fields
                         ),
                     }}
                 );

@@ -885,8 +885,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let impl_from_ident_create_for_ident_origin_ts = gen_impl_from_ts(&ident_create_ucc, &ident_origin_ucc, &quote! {#ValueSc.0});
-            let impl_from_ident_update_for_ident_origin_ts = gen_impl_from_ts(&ident_update_ucc, &ident_origin_ucc, &quote! {#ValueSc.0});
+            let impl_from_ident_create_for_ident_origin_ts = gen_impl_from_ts(&ident_create_ucc, &ident_origin_ucc, &quote! {#VSc.0});
+            let impl_from_ident_update_for_ident_origin_ts = gen_impl_from_ts(&ident_update_ucc, &ident_origin_ucc, &quote! {#VSc.0});
             //todo
             let mb_impl_schemars_json_schema_for_ident_origin_ts = if matches!(&is_stdrt_not_null, IsStdrtNotNull::True) {
                 match &pg_json_type {
@@ -1099,9 +1099,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             };
             let impl_sqlx_encode_sqlx_pg_for_ident_create_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_create_for_query_ucc, &quote! {sqlx::types::Json(&#SelfSc.0)});
             let impl_sqlx_type_for_ident_create_for_query_ts = gen_impl_sqlx_type_for_ident_ts(&ident_create_for_query_ucc, &ident_origin_ucc);
-            let impl_from_ident_create_for_ident_create_for_query_ts = gen_impl_from_ts(&ident_create_ucc, &ident_create_for_query_ucc, &quote! {Self(#ValueSc.0)});
+            let impl_from_ident_create_for_ident_create_for_query_ts = gen_impl_from_ts(&ident_create_ucc, &ident_create_for_query_ucc, &quote! {Self(#VSc.0)});
             let mb_impl_from_ident_update_for_ident_create_for_query_ts = if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
-                gen_impl_from_ts(&ident_update_ucc, &ident_create_for_query_ucc, &quote! {Self(#ValueSc.0)})
+                gen_impl_from_ts(&ident_update_ucc, &ident_create_for_query_ucc, &quote! {Self(#VSc.0)})
             } else {
                 Ts2::new()
             };
@@ -1839,7 +1839,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let impl_from_ident_update_for_ident_update_for_query_ts = gen_impl_from_ts(&ident_update_ucc, &ident_update_for_query_ucc, &quote! {Self(#ValueSc.0)});
+            let impl_from_ident_update_for_ident_update_for_query_ts = gen_impl_from_ts(&ident_update_ucc, &ident_update_for_query_ucc, &quote! {Self(#VSc.0)});
             //its only for primitive json types
             let impl_sqlx_encode_sqlx_pg_for_ident_update_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_update_for_query_ucc, &quote! {sqlx::types::Json(&#SelfSc.0)});
             let impl_sqlx_type_for_ident_update_for_query_ts = gen_impl_sqlx_type_for_ident_ts(&ident_update_for_query_ucc, &ident_origin_ucc);

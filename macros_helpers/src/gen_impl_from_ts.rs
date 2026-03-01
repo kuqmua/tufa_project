@@ -1,4 +1,4 @@
-use naming::ValueSc;
+use naming::VSc;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 pub fn gen_impl_from_ts(
@@ -8,7 +8,7 @@ pub fn gen_impl_from_ts(
 ) -> Ts2 {
     quote! {
         impl From<#from_type_ts> for #for_type_ts {
-            fn from(#ValueSc: #from_type_ts) -> Self {
+            fn from(#VSc: #from_type_ts) -> Self {
                 #ts
             }
         }
