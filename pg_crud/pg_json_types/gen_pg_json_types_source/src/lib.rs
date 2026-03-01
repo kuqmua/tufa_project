@@ -1753,30 +1753,27 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     is_nullable.mb_opt_wrap(gen_vec_tokens_decl_ts(&dim1_type))
                 },
             };
-            let impl_from_ident_origin_for_ident_read_inner_ts = {
-                let v_dot_zero_ts = quote!{#ValueSc.0};
-                let nullable_ts = quote!{#v_dot_zero_ts.map(Into::into)};
-                let into_inner_content_ts = match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => v_dot_zero_ts,
-                        IsNullable::True => nullable_ts,
-                    },
-                    Pattern::ArrDim1 {..} |
-                    Pattern::ArrDim2 {..} |
-                    Pattern::ArrDim3 {..} |
-                    Pattern::ArrDim4 {..} => match &is_nullable {
-                        IsNullable::False => quote!{#v_dot_zero_ts.into_iter().map(Into::into).collect()},
-                        IsNullable::True => nullable_ts
-                    },
-                };
-                quote! {
-                    impl From<#ident_origin_ucc> for #ident_read_inner_ucc {
-                        fn from(#ValueSc: #ident_origin_ucc) -> Self {
-                            #into_inner_content_ts
-                        }
+            let impl_from_ident_origin_for_ident_read_inner_ts = gen_impl_from_ts(
+                &ident_origin_ucc,
+                &ident_read_inner_ucc,
+                &{
+                    let v_dot_zero_ts = quote!{#VSc.0};
+                    let nullable_ts = quote!{#v_dot_zero_ts.map(Into::into)};
+                    match &pattern {
+                        Pattern::Stdrt => match &is_nullable {
+                            IsNullable::False => v_dot_zero_ts,
+                            IsNullable::True => nullable_ts,
+                        },
+                        Pattern::ArrDim1 {..} |
+                        Pattern::ArrDim2 {..} |
+                        Pattern::ArrDim3 {..} |
+                        Pattern::ArrDim4 {..} => match &is_nullable {
+                            IsNullable::False => quote!{#v_dot_zero_ts.into_iter().map(Into::into).collect()},
+                            IsNullable::True => nullable_ts
+                        },
                     }
-                }
-            };
+                },
+            );
             quote! {
                 pub type #ident_read_inner_ucc = #type_ts;
                 #impl_from_ident_origin_for_ident_read_inner_ts

@@ -3907,8 +3907,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let impl_from_ident_origin_for_ident_inner_type_ts = {
-                let ts = {
+            let impl_from_ident_origin_for_ident_inner_type_ts = gen_impl_from_ts(
+                &ident_origin_ucc,
+                &ident_inner_type_ts,
+                &{
                     let v_dot_zero = quote! {#VSc.0};
                     let gen_match_ts = |
                         match_ts: &dyn ToTokens,
@@ -3949,15 +3951,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                     }
-                };
-                quote! {
-                    impl From<#ident_origin_ucc> for #ident_inner_type_ts {
-                        fn from(#VSc: #ident_origin_ucc) -> Self {
-                            #ts
-                        }
-                    }
                 }
-            };
+            );
             let mb_impl_is_string_empty_for_ident_origin_ts = if matches!(&is_stdrt_not_null, IsStdrtNotNull::True) {
                 match &is_nullable {
                     IsNullable::False => match &pg_type {
