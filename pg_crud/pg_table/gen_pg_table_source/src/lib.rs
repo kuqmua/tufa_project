@@ -5543,13 +5543,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         .unwrap_or_else(|| vec![ident_create_default.#fi.clone()])
                     }
                 };
-            let gen_pg_type_opt_vec_where_greater_than_test_unwrap_or_else_vec_call_ts =
-                |_: &Ident, ft: &Type| {
-                    quote! {
-                        <#ft as #import_path::PgTypeTestCases>::#PgTypeOptVecWhereGreaterThanTestSc()
-                        .map_or_else(Vec::new, Into::into)
-                    }
-                };
             let gen_read_test_ts =
                 |test_name: &str,
                  gen_method_call_ts: &dyn Fn(&Ident, &Type) -> Ts2,
@@ -5649,150 +5642,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     })
                 };
-            // let gen_delete_and_verify_test_data_ts = |read_only_ids_returned_from_create_one_ts: Ts2| {
-            //     quote! {
-            //         let read_only_ids_from_try_delete_many = itertools::Itertools::sorted(
-            //             #ident::try_delete_many_handle(
-            //                 &url_cloned,
-            //                 #ident_delete_many_params_ucc {
-            //                     payload: #ident_delete_many_payload_ucc {
-            //                         where_many: #opt_ident_where_many_ucc(Some(
-            //                             #ident_where_many_ucc {
-            //                                 #primary_k_fi: Some(
-            //                                     gen_pg_type_where_try_new_primary_k(
-            //                                         pg_crud::Operator::Or,
-            //                                         vec![
-            //                                             #primary_k_ft_where_ts::Equal(
-            //                                                 pg_crud::PgTypeWhereEqual {
-            //                                                     operator: pg_crud::Operator::Or,
-            //                                                     #VSc: #primary_k_ft_table_type_ts::new(
-            //                                                         <#primary_k_ft as pg_crud::PgType>::into_inner(
-            //                                                             #primary_k_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_k_fi_ts
-            //                                                         )
-            //                                                     )
-            //                                                 }
-            //                                             )
-            //                                         ]
-            //                                     )
-            //                                 ),
-            //                                 #opt_ident_where_many_ts_dc1232c7
-            //                             }
-            //                         )),
-            //                     },
-            //                 },
-            //                 &table_7e35b1ce
-            //             )
-            //             .await
-            //             .expect("338bcf89")
-            //             .into_iter()
-            //         ).collect::<Vec<<#primary_k_ft as pg_crud::PgType>::Read>>();
-            //         assert_eq!(
-            //             read_only_ids_from_try_delete_many,
-            //             vec![#read_only_ids_returned_from_create_one_ts],
-            //             "9fc29fa5"
-            //         );
-            //         assert!(
-            //             gen_try_read_many_order_by_primary_k_with_big_pagination(
-            //                 &url_cloned,
-            //                 gen_ident_where_many_pripery_k_others_none(
-            //                     Some(
-            //                         gen_pg_type_where_try_new_primary_k(
-            //                             pg_crud::Operator::Or,
-            //                             vec![
-            //                                 #primary_k_ft_where_ts::Equal(pg_crud::PgTypeWhereEqual {
-            //                                     operator: pg_crud::Operator::Or,
-            //                                     #VSc: #primary_k_ft_table_type_ts::new(
-            //                                         <#primary_k_ft as pg_crud::PgType>::into_inner(
-            //                                             #primary_k_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_k_fi_ts
-            //                                         )
-            //                                     )
-            //                                 })
-            //                             ]
-            //                         )
-            //                     )
-            //                 ),
-            //                 #select_default_all_with_max_page_size_cloned_clone_ts,
-            //                 &table_7e35b1ce
-            //             ).await
-            //             .expect("1817b67a")
-            //             .is_empty(),
-            //             "38187925"
-            //         );
-            //     }
-            // };
-            // let gen_pg_type_opt_vec_where_greater_than_test_unwrap_or_else_vec_call_ts =
-            //     |_: &Ident, ft: &Type| {
-            //         quote! {
-            //             <#ft as #import_path::PgTypeTestCases>::#PgTypeOptVecWhereGreaterThanTestSc()
-            //             .map_or_else(Vec::new, Into::into)
-            //         }
-            //     };
-            // let gen_some_pg_type_where_try_new_and_ts_with_vec_ts = |item_ts: &dyn ToTokens| {
-            //     gen_some_pg_type_where_try_new_and_ts(&quote! {vec![#item_ts]})
-            // };
-            // let gen_where_clause_for_field_with_some_primary_k_ts =
-            //     |fi: &Ident,
-            //      fi_to_check: &Ident,
-            //      ft: &Type,
-            //      some_primary_k_where_init_ts: &dyn ToTokens,
-            //      gen_method_ts: &dyn Fn(&Ident, &Type) -> Ts2| {
-            //         gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
-            //             let fi0 = &el0.ident;
-            //             if fi0 == primary_k_fi {
-            //                 quote! {#some_primary_k_where_init_ts}
-            //             } else if fi0 == fi_to_check {
-            //                 let method_ts = gen_method_ts(fi, ft);
-            //                 gen_some_pg_type_where_try_new_and_ts_with_vec_ts(&method_ts)
-            //             } else {
-            //                 none_ts.clone()
-            //             }
-            //         })
-            //     };
-            // let gen_if_let_some_for_vec_ts =
-            //     |opt_value_ts: &dyn ToTokens, item_ident: &Ident, body_ts: &dyn ToTokens| {
-            //         quote! {
-            //             if let Some(#item_ident) = #opt_value_ts {
-            //                 for #item_ident in #item_ident.into_vec() {
-            //                     #body_ts
-            //                 }
-            //             }
-            //         }
-            //     };
-            // let gen_read_test_ts =
-            //     |test_name: &str,
-            //      gen_method_call_ts: &dyn Fn(&Ident, &Type) -> Ts2,
-            //      gen_create_ts: &dyn Fn(&Ident) -> Ts2,
-            //      gen_ts: &dyn Fn(&SynFieldWrapper) -> Ts2| {
-            //         gen_fields_named_without_primary_k_without_comma_ts(&|el: &SynFieldWrapper| {
-            //             let fi = &el.ident;
-            //             let ft = &el.type0;
-            //             let method_call_ts = gen_method_call_ts(fi, ft);
-            //             let table_test_name_fi_ts = gen_table_test_name_fi_ts(test_name, fi);
-            //             let ident_create_ts_013035e1 = gen_create_ts(fi);
-            //             let ts = gen_ts(el);
-            //             quote! {
-            //                 for #ElSc in #method_call_ts {
-            //                     let table_7e35b1ce = #table_test_name_fi_ts.clone();
-            //                     let url_cloned = url.clone();
-            //                     let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
-            //                     acc_9189f86e.push(futures::FutureExt::boxed(async move {
-            //                         let ident_create = #ident_create_ucc {
-            //                             #ident_create_ts_013035e1
-            //                         };
-            //                         let read_only_ids_returned_from_create_one = gen_read_only_ids_from_try_create_one(
-            //                             &url_cloned,
-            //                             ident_create.clone(),
-            //                             &table_7e35b1ce
-            //                         ).await;
-            //                         #ts
-            //                         // (gen_delete_and_verify_test_data_ts)(quote! {
-            //                         //     #primary_k_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_k_fi_ts
-            //                         // })
-            //                     }));
-            //                 }
-            //             }
-            //         })
-            //     };
             let some_primary_k_where_init_ts = quote! {
                 Some(
                     gen_pg_type_where_try_new_primary_k(
@@ -5940,7 +5789,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             );
             let read_only_ids_merged_with_table_type_into_pg_type_opt_where_greater_than_ts = gen_read_test_ts(
                 table_read_only_ids_merged_with_table_type_into_pg_type_opt_where_greater_than_name,
-                &gen_pg_type_opt_vec_where_greater_than_test_unwrap_or_else_vec_call_ts,
+                &|_: &Ident, ft: &Type| {
+                    quote! {
+                        <#ft as #import_path::PgTypeTestCases>::#PgTypeOptVecWhereGreaterThanTestSc()
+                        .map_or_else(Vec::new, Into::into)
+                    }
+                },
                 &|fi: &Ident| {
                     gen_ident_create_ts(
                         fi,
