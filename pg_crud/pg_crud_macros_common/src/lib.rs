@@ -2361,7 +2361,7 @@ pub fn mb_wrap_into_braces_ts(ts: &dyn ToTokens, wrap: bool) -> Ts2 {
     }
 }
 pub fn gen_v_init_ts(import_path: &ImportPath, ts: &dyn ToTokens) -> Ts2 {
-    quote! {#import_path::V { #ValueSc: #ts }}
+    quote! {#import_path::V { #VSc: #ts }}
 }
 pub fn impl_pg_type_equal_operator_for_ident_ts(
     import_path: &ImportPath,
@@ -2395,5 +2395,5 @@ pub fn gen_jsonb_build_object(v: &dyn Display) -> String {
 }
 #[must_use]
 pub fn gen_jsonb_build_object_v(v: &dyn Display) -> String {
-    gen_jsonb_build_object(&format!("'value',{v}"))
+    gen_jsonb_build_object(&format!("'v',{v}"))
 }

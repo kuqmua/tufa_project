@@ -50,7 +50,7 @@ use naming::{
     ToTokensToScStr, ToTokensToUccTs, TrueSc, TryBindSc, TryBindUcc, UpdateForQuerySc,
     UpdateForQueryUcc, UpdateForQueryVecSc, UpdateManyExtraErVrtsSc, UpdateManyExtraLogicSc,
     UpdateOneExtraErVrtsSc, UpdateOneExtraLogicSc, UpdateQueryBindSc, UpdateQueryPartPrimaryKSc,
-    UpdateQueryPartSc, UpdateSc, UpdateUcc, UrlSc, VSc, VUcc, ValueSc, WhereManySc, WhereUcc,
+    UpdateQueryPartSc, UpdateSc, UpdateUcc, UrlSc, VSc, VUcc, WhereManySc, WhereUcc,
     param::{
         ErSelfSc, IsSelfUpdateExistSc, SelfCreateUcc, SelfDeleteManyParamsUcc,
         SelfDeleteManyPayloadUcc, SelfDeleteOneErWithSerdeUcc, SelfDeleteOneParamsUcc,
@@ -1529,7 +1529,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #primary_k_fi_string_dq_ts
                         ) {
                             Ok(v_dccdf117) => {
-                                #primary_k_fi = Some(#import_path::#VUcc { #ValueSc: v_dccdf117});
+                                #primary_k_fi = Some(#import_path::#VUcc { #VSc: v_dccdf117});
                             },
                             Err(#Er0) => {
                                 return Err(#Er0);
@@ -1553,7 +1553,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 #fi_string_dq_ts
                             ) {
                                 Ok(v_09b0fc09) => {
-                                    #fi = Some(#import_path::#VUcc { #ValueSc: v_09b0fc09});
+                                    #fi = Some(#import_path::#VUcc { #VSc: v_09b0fc09});
                                 },
                                 Err(#Er0) => {
                                     return Err(#Er0);
@@ -1829,7 +1829,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 let fi = &el.ident;
                                 quote! {
                                     #fi: Some(pg_crud::V{
-                                        #ValueSc: #PgCrudDefaultOptSomeVecOneElCall
+                                        #VSc: #PgCrudDefaultOptSomeVecOneElCall
                                     })
                                 }
                             },
@@ -1908,7 +1908,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #IncrSc: &mut u64
                         ) -> Result<#StringTs, #PgCrudSc::#QueryPartErUcc> {
                             match #ft_as_pg_crud_pg_type_pg_type_ts #UpdateQueryPartSc(
-                                &#VSc.#ValueSc,
+                                &#VSc.#VSc,
                                 #fi_dq_ts,
                                 #fi_dq_ts,
                                 "",
@@ -1943,7 +1943,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     quote! {
                         if let Some(v_90f79b11) = &self.#fi {
                             acc_88c91f52.push_str(&match #ft_as_pg_crud_pg_type_pg_type_ts #SelectOnlyUpdatedIdsQueryPartSc(
-                                &v_90f79b11.#ValueSc,
+                                &v_90f79b11.#VSc,
                                 #fi_dq_ts,
                                 incr,
                             ){
@@ -1975,7 +1975,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let ts = gen_import_path_v_init_ts(&{
                                 let ft_as_pg_type_update_for_query_ts =
                                     gen_as_pg_type_update_for_query_ts(&el.type0);
-                                quote! {#ft_as_pg_type_update_for_query_ts::from(v_0e64c53a.#ValueSc)}
+                                quote! {#ft_as_pg_type_update_for_query_ts::from(v_0e64c53a.#VSc)}
                             });
                             quote! {#fi: #VSc.#fi.map(|v_0e64c53a| #ts)}
                         },
@@ -4031,7 +4031,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 #pg_syn_vrt_er_init_eprintln_res_creation_ts
                                             }
                                             match #as_pg_crud_pg_type_pg_type_ts #UpdateQueryBindSc(
-                                                v_2edaa480.#ValueSc.clone(),
+                                                v_2edaa480.#VSc.clone(),
                                                 #QuerySc,
                                             ) {
                                                 Ok(v_600e67dc) => {
@@ -4070,7 +4070,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     for el_a1660ed1 in &#UpdateForQueryVecSc {
                                         if let Some(v_47030ac2) = &el_a1660ed1.#fi {
                                             match #as_pg_crud_pg_type_pg_type_ts select_only_updated_ids_query_bind(
-                                                &v_47030ac2.#ValueSc,
+                                                &v_47030ac2.#VSc,
                                                 #QuerySc
                                             ) {
                                                 Ok(v_c5b79b95) => {
@@ -4250,7 +4250,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 quote! {
                                     if let Some(v_ed87c152) = &#UpdateForQuerySc.#fi {
                                         match #as_pg_crud_pg_type_pg_type_ts #UpdateQueryBindSc(
-                                            v_ed87c152.#ValueSc.clone(),//todo is there a way to remove .clone here?
+                                            v_ed87c152.#VSc.clone(),//todo is there a way to remove .clone here?
                                             #QuerySc
                                         ) {
                                             Ok(v_c3c1b857) => {
@@ -4285,7 +4285,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 quote! {
                                     if let Some(v_b2902425) = &#UpdateForQuerySc.#fi {
                                         match #as_pg_crud_pg_type_pg_type_ts select_only_updated_ids_query_bind(
-                                            &v_b2902425.#ValueSc,
+                                            &v_b2902425.#VSc,
                                             #QuerySc
                                         ) {
                                             Ok(v_cc6145f8) => {
@@ -5074,7 +5074,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 }
                             }),
                             |first, second| match (&first.#primary_k_fi, &second.#primary_k_fi) {
-                                (Some(first_handle), Some(second_handle)) => first_handle.#ValueSc.cmp(&second_handle.#ValueSc),
+                                (Some(first_handle), Some(second_handle)) => first_handle.#VSc.cmp(&second_handle.#VSc),
                                 _ => panic!("0f1d45ed"),
                             }
                         ).collect::<Vec<#ident_read_ucc>>(),
@@ -5105,7 +5105,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             .expect("097d5e7d")
                             .into_iter(),
                             |first, second| match (&first.#primary_k_fi, &second.#primary_k_fi) {
-                                (Some(first_handle), Some(second_handle)) => first_handle.#ValueSc.cmp(&second_handle.#ValueSc),
+                                (Some(first_handle), Some(second_handle)) => first_handle.#VSc.cmp(&second_handle.#VSc),
                                 _ => panic!("51e477ea"),
                             }
                         )
@@ -6060,7 +6060,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 .into_iter(),
                                 |first, second| {
                                     match (&first.#primary_k_fi, &second.#primary_k_fi) {
-                                        (Some(first_handle), Some(second_handle)) => first_handle.#ValueSc.cmp(&second_handle.#ValueSc),
+                                        (Some(first_handle), Some(second_handle)) => first_handle.#VSc.cmp(&second_handle.#VSc),
                                         _ => panic!("99ba9dc3"),
                                     }
                                 }
@@ -6106,7 +6106,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             <#ft_0490079a as pg_crud::PgTypeTestCases>::previous_read_merged_with_opt_update_into_read(
                                                 <#ft_0490079a as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
                                                     &read_only_ids_el_937c5af3.#fi_b9ec9008.clone().expect("96213542")
-                                                ).expect("bf0d6f55").#ValueSc,
+                                                ).expect("bf0d6f55").#VSc,
                                                 Some(#UpdateSc.clone())
                                             )
                                         }
@@ -6229,7 +6229,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         .expect("25c561e2")
                                         .into_iter(),
                                         |first, second| match (&first.#primary_k_fi, &second.#primary_k_fi) {
-                                            (Some(first_handle), Some(second_handle)) => first_handle.#ValueSc.cmp(&second_handle.#ValueSc),
+                                            (Some(first_handle), Some(second_handle)) => first_handle.#VSc.cmp(&second_handle.#VSc),
                                             _ => panic!("3c827ad6"),
                                         }
                                     ).collect::<Vec<#ident_read_ucc>>(),
@@ -6303,7 +6303,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 pg_crud::PgTypeTestCases
                                             >::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
                                                 &read_only_ids_el_937c5af3.#fi_8c7d4975.clone().expect("4f19d0d2")
-                                            ).expect("c7685b19").#ValueSc,
+                                            ).expect("c7685b19").#VSc,
                                             Some(#UpdateSc.clone())
                                         )
                                     });
@@ -6480,7 +6480,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 read_only_ids_from_try_create_many.iter().map(|el_ba0f6b1c|
                                     <#primary_k_ft as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
                                         &el_ba0f6b1c.#primary_k_fi
-                                    ).expect("3ee5ee86").#ValueSc
+                                    ).expect("3ee5ee86").#VSc
                                 ).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>()
                             },
                             "db5e88a6"
@@ -6769,7 +6769,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                         acc_1debe8fb.sort_by(|first, second| {
                             if let (Some(first_handle), Some(second_handle)) = (&first.#primary_k_fi, &second.#primary_k_fi) {
-                                first_handle.#ValueSc.cmp(&second_handle.#ValueSc)
+                                first_handle.#VSc.cmp(&second_handle.#VSc)
                             } else {
                                 panic!("d760ffa3");
                             }

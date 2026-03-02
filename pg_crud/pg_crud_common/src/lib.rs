@@ -1099,7 +1099,7 @@ impl DefaultOptSomeVecOneElMaxPageSize for PaginationStartsWithZero {
     Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema, OptimalPack,
 )]
 pub struct V<T> {
-    pub value: T,
+    pub v: T,
 }
 //todo ExactSizeIterator now is not a solution. er[E0658]: use of unstable library feature `exact_size_is_empty`. mb rewrite it later
 pub trait IsStringEmpty {
@@ -1318,7 +1318,7 @@ impl Type<Postgres> for NonPrimaryKPgTypeReadOnlyIds {
 }
 impl Default for NonPrimaryKPgTypeReadOnlyIds {
     fn default() -> Self {
-        Self(V { value: None })
+        Self(V { v: None })
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]

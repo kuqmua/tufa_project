@@ -12,7 +12,7 @@ use naming::{
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
     ReadOnlyIdsMergedWithCreateIntoWhereEqualSc, ReadOnlyIdsSc,
     ReadOnlyIdsToTwoDimalVecReadInnerSc, ReadSc, SelfSc, SelfUcc, StringUcc, UpdateForQueryUcc,
-    UpdateUcc, VSc, ValueSc, VecOfUcc,
+    UpdateUcc, VSc, VecOfUcc,
     param::{
         JsonbSelfUcc, SelfCreateForQueryUcc, SelfCreateUcc, SelfOriginUcc, SelfReadInnerUcc,
         SelfReadOnlyIdsUcc, SelfReadUcc, SelfSelectUcc, SelfTableTypeUcc, SelfUpdateForQueryUcc,
@@ -2550,7 +2550,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             let read_inner_into_update_with_new_or_try_new_unwraped_ts = gen_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts(&ReadOrUpdate::Update);
             let read_only_ids_into_opt_v_read_inner_ts = {
                 let content_ts = gen_import_path_v_init_ts(&if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
-                    quote! {#VSc.0.#ValueSc}
+                    quote! {#VSc.0.#VSc}
                 } else {
                     quote! {
                         <Self as #import_path::PgJsonType>::into_inner(
@@ -2586,7 +2586,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                     #ident_ts_36d8e080
                                     as
                                     #import_path::PgJsonTypeTestCases
-                                >::update_to_read_only_ids(&#content_ts).0.#ValueSc
+                                >::update_to_read_only_ids(&#content_ts).0.#VSc
                             }
                         };
                         match &is_nullable_1d9cc9dd {
@@ -2671,7 +2671,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             };
             let read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts = {
                 let ts = gen_import_path_v_init_ts(&if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
-                    quote! {#ident_read_ucc::new(#VSc.0.#ValueSc.clone())}
+                    quote! {#ident_read_ucc::new(#VSc.0.#VSc.clone())}
                 } else {
                     quote! {#PgCrudCommonDefaultOptSomeVecOneElCall}
                 });
@@ -2682,7 +2682,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             };
             let read_only_ids_merged_with_create_into_read_ts = {
                 let content_ts = if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
-                    quote! {#ident_origin_ucc::new(#ReadOnlyIdsSc.0.#ValueSc)}
+                    quote! {#ident_origin_ucc::new(#ReadOnlyIdsSc.0.#VSc)}
                 } else {
                     quote! {#CreateSc.into()}
                 };
@@ -2699,7 +2699,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             };
             let read_only_ids_merged_with_create_into_table_type_ts = {
                 let content_ts = if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
-                    quote! {#ident_origin_ucc::new(#ReadOnlyIdsSc.0.#ValueSc)}
+                    quote! {#ident_origin_ucc::new(#ReadOnlyIdsSc.0.#VSc)}
                 } else {
                     quote! {#CreateSc.into()}
                 };
