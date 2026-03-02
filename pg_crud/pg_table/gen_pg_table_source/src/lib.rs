@@ -5162,6 +5162,55 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ident_create_ts_910fa600 =
                         gen_ident_create_content_el_id_ts(fi, &quote! {el_03a4f4ee});
                     let ft_opt_vec_create_or_vec_ts = gen_ft_opt_vec_create_or_vec_ts(ft);
+                    let assert_eq_ts_0 = gen_assert_eq_ts(
+                        &quote! {
+                            gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create(
+                                read_only_ids_from_try_create_many.clone(),
+                                ident_vec_create.clone()
+                            )
+                        },
+                        &quote! {
+                            gen_try_read_many_order_by_primary_k_with_big_pagination(
+                                &url_cloned,
+                                gen_ident_where_many_pripery_k_others_none(
+                                    Some(
+                                        gen_pg_type_where_try_new_primary_k(
+                                            pg_crud::Operator::Or,
+                                            {
+                                                let mut acc_1381c719 = Vec::new();
+                                                for el_bf356906 in &read_only_ids_from_try_create_many {
+                                                    acc_1381c719.push(#primary_k_ft_as_pg_type_where_ts::Equal(pg_crud::PgTypeWhereEqual {
+                                                        operator: pg_crud::Operator::Or,
+                                                        //todo must use trait type instead
+                                                        #VSc: #primary_k_ft_table_type_ts::new(<#primary_k_ft as pg_crud::PgType>::into_inner(
+                                                            #primary_k_ft_read_only_ids_into_read_el_bf356906_primary_k_fi_ts
+                                                        )),
+                                                    }));
+                                                }
+                                                acc_1381c719
+                                            }
+                                        )
+                                    )
+                                ),
+                                #select_default_all_with_max_page_size_cloned_clone_ts,
+                                &table_create_many_cloned
+                            ).await.expect("bdb72341")
+                        },
+                        &quote! {"d19bbbf6"},
+                    );
+                    let assert_eq_ts_1 = gen_assert_eq_ts(
+                        &quote! {read_only_ids_from_try_delete_many},
+                        &quote! {
+                            itertools::Itertools::sorted(
+                                read_only_ids_from_try_create_many
+                                .into_iter()
+                                .map(|el_80a93892| {
+                                    #primary_k_ft_read_only_ids_into_read_el_80a93892_primary_k_fi_ts
+                                })
+                            ).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>()
+                        },
+                        &quote! {"f58f5572"},
+                    );
                     quote! {
                         for el_fce0969c in #ft_opt_vec_create_or_vec_ts
                             .chunks(10)
@@ -5187,38 +5236,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     },
                                     &table_create_many_cloned.clone()
                                 ).await.expect("5eecedc4");
-                                assert_eq!(
-                                    gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create(
-                                        read_only_ids_from_try_create_many.clone(),
-                                        ident_vec_create.clone()
-                                    ),
-                                    gen_try_read_many_order_by_primary_k_with_big_pagination(
-                                        &url_cloned,
-                                        gen_ident_where_many_pripery_k_others_none(
-                                            Some(
-                                                gen_pg_type_where_try_new_primary_k(
-                                                    pg_crud::Operator::Or,
-                                                    {
-                                                        let mut acc_1381c719 = Vec::new();
-                                                        for el_bf356906 in &read_only_ids_from_try_create_many {
-                                                            acc_1381c719.push(#primary_k_ft_as_pg_type_where_ts::Equal(pg_crud::PgTypeWhereEqual {
-                                                                operator: pg_crud::Operator::Or,
-                                                                //todo must use trait type instead
-                                                                #VSc: #primary_k_ft_table_type_ts::new(<#primary_k_ft as pg_crud::PgType>::into_inner(
-                                                                    #primary_k_ft_read_only_ids_into_read_el_bf356906_primary_k_fi_ts
-                                                                )),
-                                                            }));
-                                                        }
-                                                        acc_1381c719
-                                                    }
-                                                )
-                                            )
-                                        ),
-                                        #select_default_all_with_max_page_size_cloned_clone_ts,
-                                        &table_create_many_cloned
-                                    ).await.expect("bdb72341"),
-                                    "d19bbbf6"
-                                );
+                                #assert_eq_ts_0
                                 let read_only_ids_from_try_delete_many = itertools::Itertools::sorted(
                                     #ident::try_delete_many_handle(
                                         &url_cloned,
@@ -5241,17 +5259,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     .expect("716e470e")
                                     .into_iter()
                                 ).collect::<Vec<<#primary_k_ft as pg_crud::PgType>::Read>>();
-                                assert_eq!(
-                                    read_only_ids_from_try_delete_many,
-                                    itertools::Itertools::sorted(
-                                        read_only_ids_from_try_create_many
-                                        .into_iter()
-                                        .map(|el_80a93892| {
-                                            #primary_k_ft_read_only_ids_into_read_el_80a93892_primary_k_fi_ts
-                                        })
-                                    ).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>(),
-                                    "f58f5572"
-                                );
+                                #assert_eq_ts_1
                                 assert!(
                                     gen_try_read_many_order_by_primary_k_with_big_pagination(
                                         &url_cloned,
@@ -5297,6 +5305,36 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         gen_ident_create_content_el_id_ts(fi, &quote! {el_7632d698});
                     let ts = gen_import_path_v_init_ts(&primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts);
                     let ft_opt_vec_create_or_vec_ts = gen_ft_opt_vec_create_or_vec_ts(ft);
+                    let assert_eq_ts_0 = gen_assert_eq_ts(
+                        &quote! {
+                            #ident_read_ucc {
+                                #primary_k_fi: Some(#ts),
+                                #fi_read_only_ids_merged_with_create_into_opt_v_read_read_only_ids_from_try_create_one_ident_create_ts
+                            }
+                        },
+                        &quote! {
+                            gen_ident_try_read_one_handle_primary_k(
+                                &url_cloned,
+                                #primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts,
+                                #select_default_all_with_max_page_size_cloned_clone_ts,
+                                &table_create_one_cloned
+                            )
+                            .await
+                            .expect("f8e1cb88")
+                        },
+                        &quote! {"5f2adbed"},
+                    );
+                    let assert_eq_ts_1 = gen_assert_eq_ts(
+                        &quote! {
+                            gen_try_delete_one_handle(
+                                &url_cloned,
+                                #primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts,
+                                &table_create_one_cloned
+                            ).await.expect("20d5a40a")
+                        },
+                        &quote! {#primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts},
+                        &quote! {"4f563faf"},
+                    );
                     quote! {
                         for el_7632d698 in #ft_opt_vec_create_or_vec_ts {
                             let table_create_one_cloned = table_create_one.clone();
@@ -5311,30 +5349,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     ident_create.clone(),
                                     &table_create_one_cloned
                                 ).await;
-                                assert_eq!(
-                                    #ident_read_ucc {
-                                        #primary_k_fi: Some(#ts),
-                                        #fi_read_only_ids_merged_with_create_into_opt_v_read_read_only_ids_from_try_create_one_ident_create_ts
-                                    },
-                                    gen_ident_try_read_one_handle_primary_k(
-                                        &url_cloned,
-                                        #primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts,
-                                        #select_default_all_with_max_page_size_cloned_clone_ts,
-                                        &table_create_one_cloned
-                                    )
-                                    .await
-                                    .expect("f8e1cb88"),
-                                    "5f2adbed"
-                                );
-                                assert_eq!(
-                                    gen_try_delete_one_handle(
-                                        &url_cloned,
-                                        #primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts,
-                                        &table_create_one_cloned
-                                    ).await.expect("20d5a40a"),
-                                    #primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts,
-                                    "4f563faf"
-                                );
+                                #assert_eq_ts_0
+                                #assert_eq_ts_1
                                 gen_check_no_rows_returned_from_ident_try_read_one_handle_primary_k(
                                     &url_cloned,
                                     #primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts,
