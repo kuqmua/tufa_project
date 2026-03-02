@@ -4662,7 +4662,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     });
     let ident_tests_ts = {
         fn gen_assert_eq_ts(ts0: &dyn ToTokens, ts1: &dyn ToTokens, ts2: &dyn ToTokens) -> Ts2 {
-            quote! {assert_eq!(#ts0,#ts1,#ts2)}
+            quote! {assert_eq!(#ts0,#ts1,#ts2);}
         }
         let ident_tests_sc = SelfTestsSc::from_display(&ident);
         let ident_dq_ts = dq_ts(&DisplayToScStr::case(&ident));
@@ -4889,8 +4889,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let #CommonReadOnlyIdsReturnedFromCreateOneSc = {
                     let read_only_ids_from_try_create_one = gen_read_only_ids_from_try_create_one_default(&#UrlSc, &table_init).await;
                     let primary_k_read = #primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts;
-                    #assert_eq_ts_0;
-                    #assert_eq_ts_1;
+                    #assert_eq_ts_0
+                    #assert_eq_ts_1
                     gen_check_no_rows_returned_from_ident_try_read_one_handle_primary_k(
                         &url,
                         #primary_k_read_ts,
@@ -5139,7 +5139,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     .into_iter()
                     .flatten()
                     .collect::<Vec<#ident_read_only_ids_ucc>>();
-                    #assert_eq_ts;
+                    #assert_eq_ts
                     read_only_ids_els_efeed554
                 }
             }
