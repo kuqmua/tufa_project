@@ -5119,8 +5119,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             }
         };
+        let gen_ft_opt_vec_create_ts = |ft: &Type| {
+            quote! {<#ft as pg_crud::PgTypeTestCases>::#OptVecCreateSc()}
+        };
         let gen_ft_opt_vec_create_or_vec_ts = |ft: &Type| {
-            quote! {<#ft as pg_crud::PgTypeTestCases>::#OptVecCreateSc().unwrap_or(Vec::new())}
+            let ts = gen_ft_opt_vec_create_ts(ft);
+            quote! {#ts.unwrap_or(Vec::new())}
         };
         let gen_ident_ft_opt_vec_create_or_vec_ts =
             |_: &Ident, ft: &Type| gen_ft_opt_vec_create_or_vec_ts(ft);
@@ -5530,10 +5534,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         );
                     }
                 };
-            let gen_opt_vec_create_call_unwrap_or_vec_ident_create_default_fi_clone_ts =
+            let gen_fi_ft_opt_vec_create_filter_not_empty_or_vec_fi_default_ts =
                 |fi: &Ident, ft: &Type| {
+                    let ts = gen_ft_opt_vec_create_ts(ft);
                     quote! {
-                        <#ft as pg_crud::PgTypeTestCases>::#OptVecCreateSc()
+                        #ts
                         .filter(|el_bba28182| !el_bba28182.is_empty())
                         .unwrap_or_else(|| vec![ident_create_default.#fi.clone()])
                     }
@@ -5715,14 +5720,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             //         );
             //     }
             // };
-            // let gen_opt_vec_create_call_unwrap_or_vec_ident_create_default_fi_clone_ts =
-            //     |fi: &Ident, ft: &Type| {
-            //         quote! {
-            //             <#ft as pg_crud::PgTypeTestCases>::#OptVecCreateSc()
-            //             .filter(|el_bba28182| !el_bba28182.is_empty())
-            //             .unwrap_or_else(|| vec![ident_create_default.#fi.clone()])
-            //         }
-            //     };
             // let gen_pg_type_opt_vec_where_greater_than_test_unwrap_or_else_vec_call_ts =
             //     |_: &Ident, ft: &Type| {
             //         quote! {
@@ -5994,7 +5991,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let fn_ts = dim.read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc();
                     gen_read_test_ts(
                         test_name,
-                        &gen_opt_vec_create_call_unwrap_or_vec_ident_create_default_fi_clone_ts,
+                        &gen_fi_ft_opt_vec_create_filter_not_empty_or_vec_fi_default_ts,
                         &gen_ident_create_content_el_ts,
                         &|el: &SynFieldWrapper| {
                             let fi = &el.ident;
@@ -6044,7 +6041,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             };
             let create_into_pg_json_type_opt_vec_where_length_equal_ts = gen_read_test_ts(
                 table_create_into_pg_json_type_opt_vec_where_length_equal_name,
-                &gen_opt_vec_create_call_unwrap_or_vec_ident_create_default_fi_clone_ts,
+                &gen_fi_ft_opt_vec_create_filter_not_empty_or_vec_fi_default_ts,
                 &gen_ident_create_content_el_ts,
                 &|el: &SynFieldWrapper| {
                     let fi = &el.ident;
@@ -6081,7 +6078,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             );
             let create_into_pg_json_type_opt_vec_where_length_greater_than_ts = gen_read_test_ts(
                 table_create_into_pg_json_type_opt_vec_where_length_greater_than_name,
-                &gen_opt_vec_create_call_unwrap_or_vec_ident_create_default_fi_clone_ts,
+                &gen_fi_ft_opt_vec_create_filter_not_empty_or_vec_fi_default_ts,
                 &gen_ident_create_content_el_ts,
                 &|el: &SynFieldWrapper| {
                     let fi = &el.ident;
@@ -6127,7 +6124,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let gen_ts = |table_name: &str, method_ts: &dyn ToTokens| {
                     gen_read_test_ts(
                         table_name,
-                        &gen_opt_vec_create_call_unwrap_or_vec_ident_create_default_fi_clone_ts,
+                        &gen_fi_ft_opt_vec_create_filter_not_empty_or_vec_fi_default_ts,
                         &gen_ident_create_content_el_ts,
                         &|el: &SynFieldWrapper| {
                             let fi = &el.ident;
