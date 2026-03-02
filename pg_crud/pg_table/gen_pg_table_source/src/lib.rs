@@ -60,9 +60,8 @@ use naming::{
         SelfTableTypeUcc, SelfTestsSc, SelfTryDeleteOneErUcc, SelfTryReadOneErUcc,
         SelfUpdateForQueryUcc, SelfUpdateManyParamsUcc, SelfUpdateManyPayloadUcc,
         SelfUpdateTryNewErUcc, SelfUpdateUcc, SelfWhereManyTryNewErUcc, SelfWhereManyUcc,
-        SelfWhereUcc, StdOptOptSelfWhereManyUcc,
-        TryFromSqlxPgPgRowWithNotEmptyUniqueVecSelfSelectSc, TrySelfHandleSc, TrySelfSc,
-        UpdateQueryPartSelfSc,
+        StdOptOptSelfWhereManyUcc, TryFromSqlxPgPgRowWithNotEmptyUniqueVecSelfSelectSc,
+        TrySelfHandleSc, TrySelfSc, UpdateQueryPartSelfSc,
     },
 };
 use optimal_pack::OptimalPack;
@@ -486,7 +485,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let fields_len = fields.len();
     let fields_len_without_primary_k = fields_without_primary_k.len();
     let primary_k_ft = &primary_k_field.type0;
-    let primary_k_ft_where_ts = SelfWhereUcc::from_type_last_segment(&primary_k_field.type0);
     //todo must remove this and use trait type instead
     let primary_k_ft_table_type_ts =
         SelfTableTypeUcc::from_type_last_segment(&primary_k_field.type0);
@@ -5086,7 +5084,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 Some(
                                     gen_pg_type_where_try_new_primary_k(
                                         pg_crud::Operator::Or,
-                                        read_only_ids_els_efeed554.iter().map(|el_43ab7fb5| #primary_k_ft_where_ts::Equal(
+                                        read_only_ids_els_efeed554.iter().map(|el_43ab7fb5| #primary_k_ft_as_pg_type_where_ts::Equal(
                                             pg_crud::PgTypeWhereEqual {
                                                 operator: pg_crud::Operator::Or,
                                                 #VSc: #primary_k_ft_table_type_ts::new(
@@ -5232,7 +5230,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             {
                                                 let mut acc_87ea12c9 = Vec::new();
                                                 for el_a37bca54 in &read_only_ids_from_try_delete_many {
-                                                    acc_87ea12c9.push(#primary_k_ft_where_ts::Equal(pg_crud::PgTypeWhereEqual {
+                                                    acc_87ea12c9.push(#primary_k_ft_as_pg_type_where_ts::Equal(pg_crud::PgTypeWhereEqual {
                                                         operator: pg_crud::Operator::Or,
                                                         #VSc: #primary_k_ft_table_type_ts::new(
                                                             <#primary_k_ft as pg_crud::PgType>::into_inner(el_a37bca54.clone())
@@ -5461,7 +5459,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             gen_pg_type_where_try_new_primary_k(
                                                 pg_crud::Operator::Or,
                                                 read_only_ids_from_try_create_many.iter().map(|el_adf2b4c4| {
-                                                    #primary_k_ft_where_ts::Equal(
+                                                    #primary_k_ft_as_pg_type_where_ts::Equal(
                                                         pg_crud::PgTypeWhereEqual {
                                                             operator: pg_crud::Operator::Or,
                                                             #VSc: #primary_k_ft_table_type_ts::new(
@@ -5505,7 +5503,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 pg_crud::Operator::Or,
                                                 read_only_ids_from_try_delete_many
                                                 .iter()
-                                                .map(|el_1e9c87ce| #primary_k_ft_where_ts::Equal(
+                                                .map(|el_1e9c87ce| #primary_k_ft_as_pg_type_where_ts::Equal(
                                                     pg_crud::PgTypeWhereEqual {
                                                         operator: pg_crud::Operator::Or,
                                                         #VSc: #primary_k_ft_table_type_ts::new(
@@ -5635,7 +5633,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             gen_pg_type_where_try_new_primary_k(
                                                 pg_crud::Operator::Or,
                                                 vec![
-                                                    #primary_k_ft_where_ts::Equal(pg_crud::PgTypeWhereEqual {
+                                                    #primary_k_ft_as_pg_type_where_ts::Equal(pg_crud::PgTypeWhereEqual {
                                                         operator: pg_crud::Operator::Or,
                                                         #VSc: #primary_k_ft_table_type_ts::new(
                                                             <#primary_k_ft as pg_crud::PgType>::into_inner(
@@ -5681,7 +5679,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                                 gen_pg_type_where_try_new_primary_k(
                                                                     pg_crud::Operator::Or,
                                                                     vec![
-                                                                        #primary_k_ft_where_ts::Equal(
+                                                                        #primary_k_ft_as_pg_type_where_ts::Equal(
                                                                             pg_crud::PgTypeWhereEqual {
                                                                                 operator: pg_crud::Operator::Or,
                                                                                 #VSc: #primary_k_ft_table_type_ts::new(
@@ -6291,7 +6289,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             gen_pg_type_where_try_new_primary_k(
                                                 pg_crud::Operator::Or,
                                                 vec![
-                                                    #primary_k_ft_where_ts::Equal(
+                                                    #primary_k_ft_as_pg_type_where_ts::Equal(
                                                         pg_crud::PgTypeWhereEqual {
                                                             operator: pg_crud::Operator::Or,
                                                             #VSc: #primary_k_ft_table_type_ts::new(
@@ -6771,7 +6769,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                     fn gen_pg_type_where_try_new_primary_k(
                         operator: #import_path::Operator,
-                        vec: Vec<#primary_k_ft_where_ts>
+                        vec: Vec<#primary_k_ft_as_pg_type_where_ts>
                     ) -> #import_path::PgTypeWhere<#primary_k_ft_as_pg_type_where_ts> {
                         #gen_pg_type_where_try_new_primary_k_ts
                     }
@@ -6780,7 +6778,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     ) -> #import_path::PgTypeWhere<#primary_k_ft_as_pg_type_where_ts> {
                         gen_pg_type_where_try_new_primary_k(
                             #import_path::Operator::Or,
-                            vec_read_only_ids.iter().map(|el_9530b728| #primary_k_ft_where_ts::Equal(#import_path::PgTypeWhereEqual {
+                            vec_read_only_ids.iter().map(|el_9530b728| #primary_k_ft_as_pg_type_where_ts::Equal(#import_path::PgTypeWhereEqual {
                                 operator: #import_path::Operator::Or,
                                 #VSc: #primary_k_ft_table_type_ts::new(
                                     #primary_k_ft_as_pg_type_ts into_inner(
