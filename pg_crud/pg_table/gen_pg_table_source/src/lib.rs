@@ -1137,6 +1137,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }},
             );
         let impl_pub_try_new_for_ident_where_many_ts = gen_impl_pub_try_new_for_ident_ts(
+            &Ts2::new(),
             &ident_where_many_ucc,
             &fields_decl_ts,
             &ident_where_many_try_new_er_ucc,
@@ -1766,6 +1767,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }},
             );
         let impl_pub_try_new_for_ident_update_ts = gen_impl_pub_try_new_for_ident_ts(
+            &quote! {#[allow(clippy::redundant_pattern_matching)]}, //todo check if 1 then different logic
             &ident_update_ucc,
             &fields_decl_ts,
             &ident_update_try_new_er_ucc,
@@ -3760,6 +3762,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }},
                 );
             let impl_pub_try_new_for_ident_operation_payload_ts = gen_impl_pub_try_new_for_ident_ts(
+                &Ts2::new(),
                 &gen_ident_operation_payload_ucc(&operation),
                 &quote! {#VSc: #vec_ident_update_ts},
                 &ident_operation_payload_try_new_er_ucc,

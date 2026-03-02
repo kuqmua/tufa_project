@@ -2435,6 +2435,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let gen_pub_const_new_or_pub_try_new_ts = |ident_d755cf8f: &dyn ToTokens| {
             let pub_fn_new_or_try_new_ts = if pg_type_init_try_new_try_from_pg_type.is_ok() {
                 &gen_pub_try_new_ts(
+                    &Ts2::new(),
                     &v_ident_inner_type_ts,
                     &ident_stdrt_not_null_origin_try_new_er_ucc,
                     &quote! {

@@ -2052,6 +2052,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     IsStdrtWithId::True => &ident_with_id_stdrt_not_null_read_try_from_er_ucc,
                 };
                 gen_pub_try_new_ts(
+                    &Ts2::new(),
                     &gen_ident_or_ident_with_id_read_or_read_inner_fields_decl_ts(
                         is_stdrt_with_id,
                         &ReadWithOrWithoutAnnotationOrInner::WithoutSerdeOptIsNoneAnnotation
@@ -2640,6 +2641,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     ),
                     Pattern::Arr => match &is_nullable {
                         IsNullable::False => gen_pub_try_new_ts(
+                            &Ts2::new(),
                             &gen_create_update_delete_fields_ts_ffcbdaf0(&ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::False),
                             &ident_update_try_new_er_ucc,
                             &{
