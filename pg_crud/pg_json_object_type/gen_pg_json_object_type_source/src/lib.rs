@@ -31,7 +31,7 @@ use naming::{
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSc,
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
     ReadOnlyIdsMergedWithCreateIntoWhereEqualSc, ReadOnlyIdsSc,
-    ReadOnlyIdsToOptVReadDefaultOptSomeVecOneElSc, ReadOnlyIdsToTwoDimalVecReadInnerSc, ReadSc,
+    ReadOnlyIdsToOptVReadDefaultOptSomeVecOneElSc, ReadOnlyIdsToTwoDimsVecReadInnerSc, ReadSc,
     SelectOnlyCreatedIdsQueryBindSc, SelectOnlyCreatedIdsQueryPartSc, SelectOnlyIdsQueryPartSc,
     SelectOnlyUpdatedIdsQueryBindSc, SelectOnlyUpdatedIdsQueryPartSc, SelectQueryPartPgTypeSc,
     SelectQueryPartSc, SelfSc, SelfUcc, StdOptOptObjectAccSc, ToTokensToUccTs, UpdateQueryBindSc,
@@ -4910,7 +4910,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     acc_ccd79a32
                 })}
             };
-            let read_only_ids_to_two_dimal_vec_read_inner_ts = match &pattern {
+            let read_only_ids_to_two_dims_vec_read_inner_ts = match &pattern {
                 Pattern::Stdrt => match &is_nullable {
                     IsNullable::False => {
                         let fields_last_init_ts = {
@@ -4955,7 +4955,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
                             let ts0 = wrap_into_v_init_ts(&quote!{el_2720df8a});
                             quote! {
-                                for el_7bf83754 in #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(&#ReadOnlyIdsSc.0.#VSc.#fi) {
+                                for el_7bf83754 in #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToTwoDimsVecReadInnerSc(&#ReadOnlyIdsSc.0.#VSc.#fi) {
                                     for el_2720df8a in el_7bf83754 {
                                         let #fi_current_sc = Some(#ts0);
                                         #mb_fi_last_clone_from_fi_current
@@ -4981,7 +4981,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         quote! {
                             #ReadOnlyIdsSc.0.#VSc.as_ref().into_iter().flat_map(|v_5fa0668c| {
                                 #ident_stdrt_not_null_as_pg_json_type_test_cases_ts::
-                                    #ReadOnlyIdsToTwoDimalVecReadInnerSc(v_5fa0668c)
+                                    #ReadOnlyIdsToTwoDimsVecReadInnerSc(v_5fa0668c)
                                     .into_iter()
                                     .flat_map(|el0| {
                                         el0.into_iter().map(|el1| vec![Some(el1)])
@@ -5015,7 +5015,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
                             let ts0 = wrap_into_v_init_ts(&quote!{el.0.#VSc.#IdSc.0.#VSc});
                             quote! {
-                                for el_4b4da5aa in #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(
+                                for el_4b4da5aa in #ft_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToTwoDimsVecReadInnerSc(
                                     &el.0.#VSc.#fi.clone()
                                 ) {
                                     for el_18d1f553 in el_4b4da5aa {
@@ -5044,7 +5044,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         quote! {
                             let mut acc_fb5111f1 = Vec::new();
                             if let Some(v_6ee5750e) = &#ReadOnlyIdsSc.0.#VSc {
-                                for el_4a5a4b09 in #ident_arr_not_null_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(v_6ee5750e) {
+                                for el_4a5a4b09 in #ident_arr_not_null_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToTwoDimsVecReadInnerSc(v_6ee5750e) {
                                     for el_264980ec in el_4a5a4b09 {
                                         acc_fb5111f1.push(vec![Some(el_264980ec)]);
                                     }
@@ -6873,7 +6873,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 &ident_read_inner_ucc,
                 &ident,
                 &opt_vec_create_ts,
-                &read_only_ids_to_two_dimal_vec_read_inner_ts,
+                &read_only_ids_to_two_dims_vec_read_inner_ts,
                 &read_inner_into_read_with_new_or_try_new_unwraped_ts,
                 &read_inner_into_update_with_new_or_try_new_unwraped_ts,
                 &read_only_ids_into_opt_v_read_inner_ts,
@@ -6902,7 +6902,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         };
         let impl_pg_type_test_cases_for_ident_ts = {
             let opt_vec_create_ts = quote! {#self_as_pg_json_type_test_cases_ts::#OptVecCreateSc()};
-            let read_only_ids_to_two_dimal_vec_read_inner_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(#ReadOnlyIdsSc)};
+            let read_only_ids_to_two_dims_vec_read_inner_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToTwoDimsVecReadInnerSc(#ReadOnlyIdsSc)};
             let read_inner_into_read_with_new_or_try_new_unwraped_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadInnerIntoReadWithNewOrTryNewUnwrapedSc(#VSc)};
             let read_inner_into_update_with_new_or_try_new_unwraped_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc(#VSc)};
             let update_to_read_only_ids_ts = quote! {#self_as_pg_json_type_test_cases_ts::#UpdateToReadOnlyIdsSc(#VSc)};
@@ -6991,7 +6991,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 &ident_read_inner_ucc,
                 &ident,
                 &opt_vec_create_ts,
-                &read_only_ids_to_two_dimal_vec_read_inner_ts,
+                &read_only_ids_to_two_dims_vec_read_inner_ts,
                 &read_inner_into_read_with_new_or_try_new_unwraped_ts,
                 &read_inner_into_update_with_new_or_try_new_unwraped_ts,
                 &update_to_read_only_ids_ts,

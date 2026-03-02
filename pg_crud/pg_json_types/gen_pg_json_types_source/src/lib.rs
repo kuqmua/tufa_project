@@ -10,9 +10,8 @@ use naming::{
     GenPgJsonTypesModSc, IncrSc, JsonbSetAccumulatorSc, NbrUcc, NewSc, OptUpdateSc, OptVecCreateSc,
     PgJsonTypeUcc, QuerySc, ReadInnerUcc, ReadOnlyIdsMergedWithCreateIntoReadSc,
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
-    ReadOnlyIdsMergedWithCreateIntoWhereEqualSc, ReadOnlyIdsSc,
-    ReadOnlyIdsToTwoDimalVecReadInnerSc, ReadSc, SelfSc, SelfUcc, StringUcc, UpdateForQueryUcc,
-    UpdateUcc, VSc, VecOfUcc,
+    ReadOnlyIdsMergedWithCreateIntoWhereEqualSc, ReadOnlyIdsSc, ReadOnlyIdsToTwoDimsVecReadInnerSc,
+    ReadSc, SelfSc, SelfUcc, StringUcc, UpdateForQueryUcc, UpdateUcc, VSc, VecOfUcc,
     param::{
         JsonbSelfUcc, SelfCreateForQueryUcc, SelfCreateUcc, SelfOriginUcc, SelfReadInnerUcc,
         SelfReadOnlyIdsUcc, SelfReadUcc, SelfSelectUcc, SelfTableTypeUcc, SelfUpdateForQueryUcc,
@@ -2407,16 +2406,16 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     PgJsonType::UuidUuidAsJsonbString => quote! {None},
                 }
             };
-            let read_only_ids_to_two_dimal_vec_read_inner_ts = {
+            let read_only_ids_to_two_dims_vec_read_inner_ts = {
                 let (has_len_greater_than_one_ts, has_len_greater_than_one_for_for_ts) = {
                     let gen_ts = |content_ts: &dyn ToTokens| {
                         quote! {let has_len_greater_than_one = #content_ts;}
                     };
                     (
-                        gen_ts(&quote! {read_only_ids_to_two_dimal_vec_read_inner.len() > 1}),
+                        gen_ts(&quote! {read_only_ids_to_two_dims_vec_read_inner.len() > 1}),
                         gen_ts(&quote! {{
                             let mut has_len_greater_than_one = false;
-                            for el_4a00ab02 in &read_only_ids_to_two_dimal_vec_read_inner {
+                            for el_4a00ab02 in &read_only_ids_to_two_dims_vec_read_inner {
                                 if el_4a00ab02.len() > 1 {
                                     has_len_greater_than_one = true;
                                     break;
@@ -2442,7 +2441,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         quote! {
                             let opt_extra = {
                                 let mut opt_extra = None;
-                                for el_c4f9bf8f in &read_only_ids_to_two_dimal_vec_read_inner {
+                                for el_c4f9bf8f in &read_only_ids_to_two_dims_vec_read_inner {
                                     if opt_extra.is_some() {
                                         break;
                                     }
@@ -2463,7 +2462,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         let content_ts = {
                             let inner_content_ts = quote! {{
                                 let mut acc_6cd5b60a = Vec::new();
-                                for el_640f58e8 in read_only_ids_to_two_dimal_vec_read_inner {
+                                for el_640f58e8 in read_only_ids_to_two_dims_vec_read_inner {
                                     for el_d251d1f6 in el_640f58e8 {
                                         acc_6cd5b60a.push(el_d251d1f6);
                                     }
@@ -2483,11 +2482,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     };
                     quote! {
                         let mut acc_0a07db18 = Vec::new();
-                        let read_only_ids_to_two_dimal_vec_read_inner = <
+                        let read_only_ids_to_two_dims_vec_read_inner = <
                             #ident_ts_416231d8
                             as
                             #import_path::PgJsonTypeTestCases
-                        >::#ReadOnlyIdsToTwoDimalVecReadInnerSc(
+                        >::#ReadOnlyIdsToTwoDimsVecReadInnerSc(
                             &#ident_read_only_ids_ucc_1d31038d(read_only_ids.0.clone())
                         );
                         #opt_extra_content_ts
@@ -2510,7 +2509,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         IsNullable::False => quote! {vec![#import_path::#stdrt_not_null_test_cases_vec_name_ts().into()]},
                         IsNullable::True => quote! {
                             let mut acc_97242d4d = Vec::new();
-                            for el_8f3646f9 in <#ident_stdrt_not_null_ucc as #import_path::PgJsonTypeTestCases>::#ReadOnlyIdsToTwoDimalVecReadInnerSc(&#ident_read_only_ids_stdrt_not_null_ucc(read_only_ids.0.clone())) {
+                            for el_8f3646f9 in <#ident_stdrt_not_null_ucc as #import_path::PgJsonTypeTestCases>::#ReadOnlyIdsToTwoDimsVecReadInnerSc(&#ident_read_only_ids_stdrt_not_null_ucc(read_only_ids.0.clone())) {
                                 for el_35a4dba9 in el_8f3646f9 {
                                     acc_97242d4d.push(vec![Some(el_35a4dba9)]);
                                 }
@@ -3549,7 +3548,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &ident_read_inner_ucc,
                 &ident,
                 &opt_vec_create_ts,
-                &read_only_ids_to_two_dimal_vec_read_inner_ts,
+                &read_only_ids_to_two_dims_vec_read_inner_ts,
                 &read_inner_into_read_with_new_or_try_new_unwraped_ts,
                 &read_inner_into_update_with_new_or_try_new_unwraped_ts,
                 &read_only_ids_into_opt_v_read_inner_ts,

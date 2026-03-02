@@ -20,7 +20,7 @@ use naming::{
     PgTypePrimaryKUcc, PgTypeUcc, PositiveLessTypicalSc, PositiveMoreTypicalSc, QuerySc,
     ReadIntoTableTypeSc, ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeSc,
     ReadOnlyIdsIntoUpdateSc, ReadOnlyIdsMergedWithCreateIntoReadSc, ReadOnlyIdsSc,
-    ReadOnlyIdsToTwoDimalVecReadInnerSc, ReadOnlyIdsUcc, ReadSc, ReadUcc, SecSc, SecondSc, SelfSc,
+    ReadOnlyIdsToTwoDimsVecReadInnerSc, ReadOnlyIdsUcc, ReadSc, ReadUcc, SecSc, SecondSc, SelfSc,
     SelfUcc, StartSc, StartUcc, TableTypeSc, TableTypeUcc, TimeSc, TimeUcc, ToErrStringSc,
     TryNewForDeserializeSc, TryNewSc, UnboundedUcc, UpdateUcc, VSc, VecOfUcc,
     param::{
@@ -5408,7 +5408,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #import_path::#PgTypeUcc>::#read_or_update_ucc:: #ts}
             };
             let gen_stdrt_not_null_test_case_handle_ts = |is_need_to_use_into: &IsNeedToUseInto| {
-                let gen_range_read_only_ids_to_two_dimal_vec_read_inner_ts =
+                let gen_range_read_only_ids_to_two_dims_vec_read_inner_ts =
                     |min_ts: &dyn ToTokens, negative_less_typical_ts: &dyn ToTokens, negative_more_typical_ts: &dyn ToTokens, near_zero_ts: &dyn ToTokens, positive_less_typical_ts: &dyn ToTokens, positive_more_typical_ts: &dyn ToTokens, max_ts: &dyn ToTokens| {
                         enum Bnd<'lifetime> {
                             Excl(&'lifetime dyn ToTokens),
@@ -5488,9 +5488,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             vec![#(#ts_08778f0f),*]
                         }}
                     };
-                let gen_int_pgrange_read_only_ids_to_two_dimal_vec_read_inner_ts = |int_range_type: &IntRangeType| {
+                let gen_int_pgrange_read_only_ids_to_two_dims_vec_read_inner_ts = |int_range_type: &IntRangeType| {
                     let range_inner_type_ts = int_range_type_to_range_inner_type_ts(int_range_type);
-                    gen_range_read_only_ids_to_two_dimal_vec_read_inner_ts(&quote! {#range_inner_type_ts::MIN}, &quote! {-20}, &quote! {-10}, &quote! {0}, &quote! {10}, &quote! {20}, &quote! {#range_inner_type_ts::MAX - 1})
+                    gen_range_read_only_ids_to_two_dims_vec_read_inner_ts(&quote! {#range_inner_type_ts::MIN}, &quote! {-20}, &quote! {-10}, &quote! {0}, &quote! {10}, &quote! {20}, &quote! {#range_inner_type_ts::MAX - 1})
                 };
                 let empty_vec_ts = quote! {Vec::new()};
                 let gen_ident_stdrt_not_null_fn_ts = |
@@ -5769,9 +5769,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         sqlx::types::mac_address::MacAddress::#NewSc([0x01, 0x00, 0x5E, 0x00, 0x00, 0xFB]), // Multicast address
                         sqlx::types::mac_address::MacAddress::#NewSc([0xDE, 0xAD, 0xBE, 0xEF, 0xCA, 0xFE]), // Random valid MAC
                     ]},
-                    PgType::SqlxPgTypesPgRangeI32AsInt4Range => gen_int_pgrange_read_only_ids_to_two_dimal_vec_read_inner_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
-                    PgType::SqlxPgTypesPgRangeI64AsInt8Range => gen_int_pgrange_read_only_ids_to_two_dimal_vec_read_inner_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
-                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => gen_range_read_only_ids_to_two_dimal_vec_read_inner_ts(
+                    PgType::SqlxPgTypesPgRangeI32AsInt4Range => gen_int_pgrange_read_only_ids_to_two_dims_vec_read_inner_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
+                    PgType::SqlxPgTypesPgRangeI64AsInt8Range => gen_int_pgrange_read_only_ids_to_two_dims_vec_read_inner_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => gen_range_read_only_ids_to_two_dims_vec_read_inner_ts(
                         &ident_sqlx_types_chrono_naive_date_min_ts,
                         &ident_sqlx_types_chrono_naive_date_negative_less_typical_ts,
                         &ident_sqlx_types_chrono_naive_date_negative_more_typical_ts,
@@ -5780,7 +5780,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         &ident_sqlx_types_chrono_naive_date_positive_more_typical_ts,
                         &ident_sqlx_types_chrono_naive_date_max_pred_opt_expect_ts
                     ),
-                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => gen_range_read_only_ids_to_two_dimal_vec_read_inner_ts(
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => gen_range_read_only_ids_to_two_dims_vec_read_inner_ts(
                         &sqlx_types_chrono_naive_date_time_min_ts,
                         &sqlx_types_chrono_naive_date_time_negative_less_typical_ts,
                         &sqlx_types_chrono_naive_date_time_negative_more_typical_ts,
@@ -5789,7 +5789,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         &sqlx_types_chrono_naive_date_time_positive_more_typical_ts,
                         &sqlx_types_chrono_naive_date_time_max_ts,
                     ),
-                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => gen_range_read_only_ids_to_two_dimal_vec_read_inner_ts(
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => gen_range_read_only_ids_to_two_dims_vec_read_inner_ts(
                         &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_min_ts,
                         &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_negative_less_typical_ts,
                         &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_negative_more_typical_ts,
@@ -5936,7 +5936,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     ),
                 }
             };
-            let read_only_ids_to_two_dimal_vec_read_inner_ts = {
+            let read_only_ids_to_two_dims_vec_read_inner_ts = {
                 let gen_star_or_dot_clone_ts = |ts|match &pg_type {
                     PgType::I16AsInt2 |
                     PgType::I32AsInt4 |
@@ -5972,7 +5972,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             quote! {vec![{#ts}]}
                         }
                         IsNullable::True => quote! {
-                            #ident_stdrt_not_null_as_pg_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(#ReadOnlyIdsSc)
+                            #ident_stdrt_not_null_as_pg_type_test_cases_ts::#ReadOnlyIdsToTwoDimsVecReadInnerSc(#ReadOnlyIdsSc)
                             .into_iter()
                             .flat_map(|el0| el0.into_iter().map(|el1| vec![Some(el1)]))
                             .chain(std::iter::once(vec![None]))
@@ -5985,10 +5985,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 let el_d27d1981_ts = gen_star_or_dot_clone_ts(&quote!{el_d27d1981});
                                 quote! {
                                     let mut acc_abf96c9f = Vec::new();
-                                    let read_only_ids_to_two_dimal_vec_read_inner = #ident_stdrt_not_null_as_pg_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(#ReadOnlyIdsSc);
+                                    let read_only_ids_to_two_dims_vec_read_inner = #ident_stdrt_not_null_as_pg_type_test_cases_ts::#ReadOnlyIdsToTwoDimsVecReadInnerSc(#ReadOnlyIdsSc);
                                     let opt_extra = {
                                         let mut opt_extra = None;
-                                        for el_cb3f4b45 in &read_only_ids_to_two_dimal_vec_read_inner {
+                                        for el_cb3f4b45 in &read_only_ids_to_two_dims_vec_read_inner {
                                             if opt_extra.is_some() {
                                                 break;
                                             }
@@ -6008,7 +6008,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     };
                                     let has_len_greater_than_one = {
                                         let mut has_len_greater_than_one = false;
-                                        for el_89e74982 in &read_only_ids_to_two_dimal_vec_read_inner {
+                                        for el_89e74982 in &read_only_ids_to_two_dims_vec_read_inner {
                                             if el_89e74982.len() > 1 {
                                                 has_len_greater_than_one = true;
                                                 break;
@@ -6016,7 +6016,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         }
                                         has_len_greater_than_one
                                     };
-                                    for el_cb836246 in read_only_ids_to_two_dimal_vec_read_inner {
+                                    for el_cb836246 in read_only_ids_to_two_dims_vec_read_inner {
                                         acc_abf96c9f.push(vec![el_cb836246]);
                                     }
                                     if let Some(v_e22f9ad2) = opt_extra {
@@ -6034,10 +6034,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 let el_6b831e7c_ts = gen_star_or_dot_clone_ts(&quote!{el_6b831e7c});
                                 quote! {
                                     let mut acc_68eba82f = Vec::new();
-                                    let read_only_ids_to_two_dimal_vec_read_inner = #ident_stdrt_nullable_as_pg_type_test_cases_ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(#ReadOnlyIdsSc);
+                                    let read_only_ids_to_two_dims_vec_read_inner = #ident_stdrt_nullable_as_pg_type_test_cases_ts::#ReadOnlyIdsToTwoDimsVecReadInnerSc(#ReadOnlyIdsSc);
                                     let opt_extra = {
                                         let mut opt_extra = None;
-                                        for el_b04183c6 in &read_only_ids_to_two_dimal_vec_read_inner {
+                                        for el_b04183c6 in &read_only_ids_to_two_dims_vec_read_inner {
                                             if opt_extra.is_some() {
                                                 break;
                                             }
@@ -6055,9 +6055,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         }
                                         opt_extra
                                     };
-                                    let has_len_greater_than_one = read_only_ids_to_two_dimal_vec_read_inner.len() > 1;
+                                    let has_len_greater_than_one = read_only_ids_to_two_dims_vec_read_inner.len() > 1;
                                     acc_68eba82f.push(vec![
-                                        read_only_ids_to_two_dimal_vec_read_inner
+                                        read_only_ids_to_two_dims_vec_read_inner
                                         .into_iter()
                                         .flat_map(IntoIterator::into_iter)
                                         .collect()
@@ -6082,10 +6082,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             let el_31abc64a_ts = gen_star_or_dot_clone_ts(&quote!{el_31abc64a});
                             quote! {
                                 let mut acc_5f7f59ac = Vec::new();
-                                let read_only_ids_to_two_dimal_vec_read_inner = #ts::#ReadOnlyIdsToTwoDimalVecReadInnerSc(#ReadOnlyIdsSc);
+                                let read_only_ids_to_two_dims_vec_read_inner = #ts::#ReadOnlyIdsToTwoDimsVecReadInnerSc(#ReadOnlyIdsSc);
                                 let opt_extra = {
                                     let mut opt_extra = None;
-                                    for el_12a259ab in &read_only_ids_to_two_dimal_vec_read_inner {
+                                    for el_12a259ab in &read_only_ids_to_two_dims_vec_read_inner {
                                         if opt_extra.is_some() {
                                             break;
                                         }
@@ -6110,7 +6110,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 };
                                 let has_len_greater_than_one = {
                                     let mut has_len_greater_than_one = false;
-                                    for el_a177c6a3 in &read_only_ids_to_two_dimal_vec_read_inner {
+                                    for el_a177c6a3 in &read_only_ids_to_two_dims_vec_read_inner {
                                         for el_aa72f570 in el_a177c6a3 {
                                             if el_aa72f570.len() > 1 {
                                                 has_len_greater_than_one = true;
@@ -6121,7 +6121,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     has_len_greater_than_one
                                 };
                                 acc_5f7f59ac.push(vec![Some(
-                                    read_only_ids_to_two_dimal_vec_read_inner
+                                    read_only_ids_to_two_dims_vec_read_inner
                                     .into_iter()
                                     .flatten()
                                     .flatten()
@@ -6589,7 +6589,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &ident_inner_type_ts,
                 &ident,
                 &opt_vec_create_ts,
-                &read_only_ids_to_two_dimal_vec_read_inner_ts,
+                &read_only_ids_to_two_dims_vec_read_inner_ts,
                 &read_inner_into_read_with_new_or_try_new_unwraped_ts,
                 &read_inner_into_update_with_new_or_try_new_unwraped_ts,
                 &update_to_read_only_ids_ts,
