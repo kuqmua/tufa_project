@@ -4855,7 +4855,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let primary_k_read_ts = quote! {primary_k_read};
             let primary_k_read_clone_ts = quote! {primary_k_read.clone()};
             let ts = gen_import_path_v_init_ts(&primary_k_read_clone_ts);
-            let assert_eq_ts_0 = gen_assert_eq_ts(
+            let assert_eq_ts_4f6bbe8a = gen_assert_eq_ts(
                 &quote! {
                     #ident_read_ucc {
                         #primary_k_fi: Some(#ts),
@@ -4874,7 +4874,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 },
                 &quote! {"3d9f2ec0"},
             );
-            let assert_eq_ts_1 = gen_assert_eq_ts(
+            let assert_eq_ts_947d2096 = gen_assert_eq_ts(
                 &quote! {
                     gen_try_delete_one_handle(
                         &url,
@@ -4889,8 +4889,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let #CommonReadOnlyIdsReturnedFromCreateOneSc = {
                     let read_only_ids_from_try_create_one = gen_read_only_ids_from_try_create_one_default(&#UrlSc, &table_init).await;
                     let primary_k_read = #primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts;
-                    #assert_eq_ts_0
-                    #assert_eq_ts_1
+                    #assert_eq_ts_4f6bbe8a
+                    #assert_eq_ts_947d2096
                     gen_check_no_rows_returned_from_ident_try_read_one_handle_primary_k(
                         &url,
                         #primary_k_read_ts,
@@ -5056,7 +5056,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     },
                 );
-            let assert_eq_ts = gen_assert_eq_ts(
+            let assert_eq_ts_d7cc4bd8 = gen_assert_eq_ts(
                 &quote! {
                     itertools::Itertools::sorted_by(
                         read_only_ids_els_efeed554.iter().map(|el_f108da5a| {
@@ -5139,7 +5139,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     .into_iter()
                     .flatten()
                     .collect::<Vec<#ident_read_only_ids_ucc>>();
-                    #assert_eq_ts
+                    #assert_eq_ts_d7cc4bd8
                     read_only_ids_els_efeed554
                 }
             }
@@ -5162,7 +5162,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ident_create_ts_910fa600 =
                         gen_ident_create_content_el_id_ts(fi, &quote! {el_03a4f4ee});
                     let ft_opt_vec_create_or_vec_ts = gen_ft_opt_vec_create_or_vec_ts(ft);
-                    let assert_eq_ts_0 = gen_assert_eq_ts(
+                    let assert_eq_ts_b47328e3 = gen_assert_eq_ts(
                         &quote! {
                             gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create(
                                 read_only_ids_from_try_create_many.clone(),
@@ -5198,7 +5198,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         },
                         &quote! {"d19bbbf6"},
                     );
-                    let assert_eq_ts_1 = gen_assert_eq_ts(
+                    let assert_eq_ts_78d9a1bd = gen_assert_eq_ts(
                         &quote! {read_only_ids_from_try_delete_many},
                         &quote! {
                             itertools::Itertools::sorted(
@@ -5236,7 +5236,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     },
                                     &table_create_many_cloned.clone()
                                 ).await.expect("5eecedc4");
-                                #assert_eq_ts_0
+                                #assert_eq_ts_b47328e3
                                 let read_only_ids_from_try_delete_many = itertools::Itertools::sorted(
                                     #ident::try_delete_many_handle(
                                         &url_cloned,
@@ -5259,7 +5259,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     .expect("716e470e")
                                     .into_iter()
                                 ).collect::<Vec<<#primary_k_ft as pg_crud::PgType>::Read>>();
-                                #assert_eq_ts_1
+                                #assert_eq_ts_78d9a1bd
                                 assert!(
                                     gen_try_read_many_order_by_primary_k_with_big_pagination(
                                         &url_cloned,
@@ -5305,7 +5305,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         gen_ident_create_content_el_id_ts(fi, &quote! {el_7632d698});
                     let ts = gen_import_path_v_init_ts(&primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts);
                     let ft_opt_vec_create_or_vec_ts = gen_ft_opt_vec_create_or_vec_ts(ft);
-                    let assert_eq_ts_0 = gen_assert_eq_ts(
+                    let assert_eq_ts_e2916686 = gen_assert_eq_ts(
                         &quote! {
                             #ident_read_ucc {
                                 #primary_k_fi: Some(#ts),
@@ -5324,7 +5324,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         },
                         &quote! {"5f2adbed"},
                     );
-                    let assert_eq_ts_1 = gen_assert_eq_ts(
+                    let assert_eq_ts_f5d5140f = gen_assert_eq_ts(
                         &quote! {
                             gen_try_delete_one_handle(
                                 &url_cloned,
@@ -5349,8 +5349,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     ident_create.clone(),
                                     &table_create_one_cloned
                                 ).await;
-                                #assert_eq_ts_0
-                                #assert_eq_ts_1
+                                #assert_eq_ts_e2916686
+                                #assert_eq_ts_f5d5140f
                                 gen_check_no_rows_returned_from_ident_try_read_one_handle_primary_k(
                                     &url_cloned,
                                     #primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts,
@@ -5432,23 +5432,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             };
             let test_read_many_by_equal_to_created_primary_ks_ts = {
                 let ts = add_create_one_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
-                    quote! {
-                        let ident_vec_create = std::iter::repeat_n(
-                            ident_create_default_cloned.clone(),//todo mb remove
-                            el_a636d084
-                        ).collect::<Vec<#ident_create_ucc>>();
-                        let read_only_ids_from_try_create_many = #ident::try_create_many_handle(
-                            &url_cloned,
-                            #ident_create_many_params_ucc {
-                                payload: #ident_create_many_payload_ucc(ident_vec_create.clone())
-                            },
-                            &table_7e35b1ce
-                        ).await.expect("d775179f");
-                        assert_eq!(
+                    let assert_eq_ts_03eaa791 = gen_assert_eq_ts(
+                        &quote! {
                             gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create(
                                 read_only_ids_from_try_create_many.clone(),
                                 ident_vec_create.clone()
-                            ),
+                            )
+                        },
+                        &quote! {
                             gen_try_read_many_order_by_primary_k_with_big_pagination(
                                 &url_cloned,
                                 gen_ident_where_many_pripery_k_others_none(
@@ -5472,9 +5463,37 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 ),
                                 select_default_all_with_max_page_size_cloned.clone(),
                                 &table_7e35b1ce
-                            ).await.expect("b8efe770"),
-                            "er 3b2cf1f5-2c4e-4908-ba66-f4af84fe0893"
-                        );
+                            ).await.expect("b8efe770")
+                        },
+                        &quote! {"er 3b2cf1f5-2c4e-4908-ba66-f4af84fe0893"},
+                    );
+                    let assert_eq_ts_10f06d56 = gen_assert_eq_ts(
+                        &quote! {read_only_ids_from_try_delete_many},
+                        &quote! {
+                            itertools::Itertools::sorted(
+                                read_only_ids_from_try_create_many
+                                .into_iter()
+                                .map(|el_fdc88812| {
+                                    #primary_k_ft_read_only_ids_into_read_el_fdc88812_primary_k_fi_ts
+                                }).collect::<Vec<<#primary_k_ft as pg_crud::PgType>::Read>>()
+                                .into_iter()
+                            ).collect::<Vec<<#primary_k_ft as pg_crud::PgType>::Read>>()
+                        },
+                        &quote! {"ebbbea6e"},
+                    );
+                    quote! {
+                        let ident_vec_create = std::iter::repeat_n(
+                            ident_create_default_cloned.clone(),//todo mb remove
+                            el_a636d084
+                        ).collect::<Vec<#ident_create_ucc>>();
+                        let read_only_ids_from_try_create_many = #ident::try_create_many_handle(
+                            &url_cloned,
+                            #ident_create_many_params_ucc {
+                                payload: #ident_create_many_payload_ucc(ident_vec_create.clone())
+                            },
+                            &table_7e35b1ce
+                        ).await.expect("d775179f");
+                        #assert_eq_ts_03eaa791
                         let read_only_ids_from_try_delete_many = itertools::Itertools::sorted(
                             #ident::try_delete_many_handle(
                                 &url_cloned,
@@ -5494,18 +5513,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             .expect("d5c23a9d")
                             .into_iter()
                         ).collect::<Vec<<#primary_k_ft as pg_crud::PgType>::Read>>();
-                        assert_eq!(
-                            read_only_ids_from_try_delete_many,
-                            itertools::Itertools::sorted(
-                                read_only_ids_from_try_create_many
-                                .into_iter()
-                                .map(|el_fdc88812| {
-                                    #primary_k_ft_read_only_ids_into_read_el_fdc88812_primary_k_fi_ts
-                                }).collect::<Vec<<#primary_k_ft as pg_crud::PgType>::Read>>()
-                                .into_iter()
-                            ).collect::<Vec<<#primary_k_ft as pg_crud::PgType>::Read>>(),
-                            "ebbbea6e"
-                        );
+                        #assert_eq_ts_10f06d56
                         assert!(
                             gen_try_read_many_order_by_primary_k_with_big_pagination(
                                 &url_cloned,
@@ -5552,29 +5560,29 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             };
             let gen_read_only_ids_merged_with_create_into_where_assert_eq_ts =
                 |ident_where_many_try_new_params_ts: &dyn ToTokens| {
-                    quote! {
-                        assert_eq!(
-                            vec![
-                                #ident_read_ucc {
-                                    #primary_k_fi: <
-                                        #primary_k_ft
-                                        as
-                                        pg_crud::PgTypeTestCases
-                                    >::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
-                                        &read_only_ids_returned_from_create_one.#primary_k_fi
-                                    ),
-                                    #fi_read_only_ids_merged_with_create_into_opt_v_read_read_only_ids_returned_from_create_one_clone_ident_create_clone_ts
-                                }
-                            ],
+                    gen_assert_eq_ts(
+                        &quote! {vec![
+                            #ident_read_ucc {
+                                #primary_k_fi: <
+                                    #primary_k_ft
+                                    as
+                                    pg_crud::PgTypeTestCases
+                                >::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                                    &read_only_ids_returned_from_create_one.#primary_k_fi
+                                ),
+                                #fi_read_only_ids_merged_with_create_into_opt_v_read_read_only_ids_returned_from_create_one_clone_ident_create_clone_ts
+                            }
+                        ]},
+                        &quote! {
                             gen_try_read_many_order_by_primary_k_with_big_pagination(
                                 &url_cloned,
                                 #ident_where_many_ucc::try_new(#ident_where_many_try_new_params_ts).expect("83c2d430"),
                                 #select_default_all_with_max_page_size_cloned_clone_ts,
                                 &table_7e35b1ce
-                            ).await.expect("c3e316c0"),
-                            "ee8d232d"
-                        );
-                    }
+                            ).await.expect("c3e316c0")
+                        },
+                        &quote! {"ee8d232d"},
+                    )
                 };
             let gen_fi_ft_opt_vec_create_filter_not_empty_or_vec_fi_default_ts =
                 |fi: &Ident, ft: &Type| {
@@ -5597,6 +5605,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let table_test_name_fi_ts = gen_table_test_name_fi_ts(test_name, fi);
                         let ident_create_ts_013035e1 = gen_create_ts(fi);
                         let ts = gen_ts(el);
+                        let assert_eq_ts_b444d33d = gen_assert_eq_ts(
+                            &quote! {read_only_ids_from_try_delete_many},
+                            &quote! {vec![#primary_k_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_k_fi_ts]},
+                            &quote! {"9fc29fa5"},
+                        );
                         quote! {
                             for #ElSc in #method_call_ts {
                                 let table_7e35b1ce = #table_test_name_fi_ts.clone();
@@ -5647,11 +5660,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         .expect("338bcf89")
                                         .into_iter()
                                     ).collect::<Vec<<#primary_k_ft as pg_crud::PgType>::Read>>();
-                                    assert_eq!(
-                                        read_only_ids_from_try_delete_many,
-                                        vec![#primary_k_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_k_fi_ts],
-                                        "9fc29fa5"
-                                    );
+                                    #assert_eq_ts_b444d33d
                                     assert!(
                                         gen_try_read_many_order_by_primary_k_with_big_pagination(
                                             &url_cloned,
@@ -6229,6 +6238,68 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             ]
                         }
                     };
+                    let assert_eq_ts_b61aac03 = gen_assert_eq_ts(
+                        &quote! {vec![
+                            #ident_read_only_ids_ucc {
+                                #primary_k_fi: read_only_ids_el_937c5af3.#primary_k_fi,
+                                #ident_read_only_ids_upper_fields_init_without_primary_k_ts
+                            }
+                        ]},
+                        &quote! {
+                            #ident::try_update_many_handle(
+                                &url_cloned,
+                                #ident_update_many_params_ucc {
+                                    payload: #ident_update_many_payload_ucc::try_new(vec![
+                                        #ident_update_ucc::try_new(
+                                            #primary_k_ft_as_pg_type_update_as_pg_type_primary_k_read_only_ids_into_update_ts,
+                                            #ident_update_params_init_without_primary_k_ts
+                                        ).expect("42dc87b3")
+                                    ]).expect("69e1bd8a")
+                                },
+                                &table_update_many_cloned
+                            ).await.expect("d2de0bd6")
+                        },
+                        &quote! {"34bfb3c7"},
+                    );
+                    let assert_eq_ts_10783673 = gen_assert_eq_ts(
+                        &quote! {{#expected_read_many_ts}},
+                        &quote! {
+                            itertools::Itertools::sorted_by(
+                                gen_try_read_many_order_by_primary_k_with_big_pagination(
+                                    &url_cloned,
+                                    gen_ident_where_many_pripery_k_others_none(
+                                        Some(
+                                            gen_pg_type_where_try_new_primary_k(
+                                                pg_crud::Operator::Or,
+                                                vec![
+                                                    #primary_k_ft_where_ts::Equal(
+                                                        pg_crud::PgTypeWhereEqual {
+                                                            operator: pg_crud::Operator::Or,
+                                                            #VSc: #primary_k_ft_table_type_ts::new(
+                                                                <#primary_k_ft as pg_crud::PgType>::into_inner(
+                                                                    #primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3
+                                                                )
+                                                            ),
+                                                        }
+                                                    )
+                                                ]
+                                            )
+                                        )
+                                    ),
+                                    select_default_all_with_max_page_size_cloned,
+                                    &table_update_many_cloned
+                                )
+                                .await
+                                .expect("25c561e2")
+                                .into_iter(),
+                                |first, second| match (&first.#primary_k_fi, &second.#primary_k_fi) {
+                                    (Some(first_handle), Some(second_handle)) => first_handle.#VSc.cmp(&second_handle.#VSc),
+                                    _ => panic!("3c827ad6"),
+                                }
+                            ).collect::<Vec<#ident_read_ucc>>()
+                        },
+                        &quote! {"ae2a2da5"},
+                    );
                     quote! {
                         for (i_7f181188, read_only_ids_el_937c5af3) in gen_read_only_ids_els_8a1ef027(
                             &url,
@@ -6266,66 +6337,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     }
                                     opt_test_case.expect("769983ba")
                                 });
-                                assert_eq!(
-                                    vec![
-                                        #ident_read_only_ids_ucc {
-                                            #primary_k_fi: read_only_ids_el_937c5af3.#primary_k_fi,
-                                            #ident_read_only_ids_upper_fields_init_without_primary_k_ts
-                                        }
-                                    ],
-                                    #ident::try_update_many_handle(
-                                        &url_cloned,
-                                        #ident_update_many_params_ucc {
-                                            payload: #ident_update_many_payload_ucc::try_new(vec![
-                                                #ident_update_ucc::try_new(
-                                                    #primary_k_ft_as_pg_type_update_as_pg_type_primary_k_read_only_ids_into_update_ts,
-                                                    #ident_update_params_init_without_primary_k_ts
-                                                ).expect("42dc87b3")
-                                            ]).expect("69e1bd8a")
-                                        },
-                                        &table_update_many_cloned
-                                    ).await.expect("d2de0bd6"),
-                                    "34bfb3c7"
-                                );
-                                assert_eq!(
-                                    {
-                                        #expected_read_many_ts
-                                    },
-                                    itertools::Itertools::sorted_by(
-                                        gen_try_read_many_order_by_primary_k_with_big_pagination(
-                                            &url_cloned,
-                                            gen_ident_where_many_pripery_k_others_none(
-                                                Some(
-                                                    gen_pg_type_where_try_new_primary_k(
-                                                        pg_crud::Operator::Or,
-                                                        vec![
-                                                            #primary_k_ft_where_ts::Equal(
-                                                                pg_crud::PgTypeWhereEqual {
-                                                                    operator: pg_crud::Operator::Or,
-                                                                    #VSc: #primary_k_ft_table_type_ts::new(
-                                                                        <#primary_k_ft as pg_crud::PgType>::into_inner(
-                                                                            #primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3
-                                                                        )
-                                                                    ),
-                                                                }
-                                                            )
-                                                        ]
-                                                    )
-                                                )
-                                            ),
-                                            select_default_all_with_max_page_size_cloned,
-                                            &table_update_many_cloned
-                                        )
-                                        .await
-                                        .expect("25c561e2")
-                                        .into_iter(),
-                                        |first, second| match (&first.#primary_k_fi, &second.#primary_k_fi) {
-                                            (Some(first_handle), Some(second_handle)) => first_handle.#VSc.cmp(&second_handle.#VSc),
-                                            _ => panic!("3c827ad6"),
-                                        }
-                                    ).collect::<Vec<#ident_read_ucc>>(),
-                                    "ae2a2da5"
-                                );
+                                #assert_eq_ts_b61aac03
+                                #assert_eq_ts_10783673
                             }));
                         }
                     }
@@ -6406,6 +6419,41 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             },
                         );
                     let ts = gen_import_path_v_init_ts(&primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3);
+                    let assert_eq_ts_0ba29fe7 = gen_assert_eq_ts(
+                        &quote! {#ident_read_only_ids_ucc {
+                            #primary_k_fi: read_only_ids_el_937c5af3.#primary_k_fi,
+                            #ident_read_only_ids_upper_fields_init_without_primary_k_ts
+                        }},
+                        &quote! {
+                            #ident::try_update_one_handle(
+                                &url_cloned,
+                                #ident_update_one_params_ucc {
+                                    payload: #ident_update_ucc::try_new(
+                                        #primary_k_ft_as_pg_type_update_as_pg_type_primary_k_read_only_ids_into_update_ts,
+                                        #ident_update_params_init_without_primary_k_ts
+                                    ).expect("0e5d65a5")//todo add column ident
+                                },
+                                &table_update_one_cloned
+                            ).await.expect("4d755542")
+                        },
+                        &quote! {"564de31c"},
+                    );
+                    let assert_eq_ts_35a86616 = gen_assert_eq_ts(
+                        &quote! {#ident_read_ucc {
+                            #primary_k_fi: Some(#ts),
+                            #ident_read_fields_init_without_primary_k_after_update_one_ts
+                        }},
+                        &quote! {
+                            gen_ident_try_read_one_handle_primary_k(
+                                &url_cloned,
+                                #primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3,
+                                select_default_all_with_max_page_size_cloned,
+                                &table_update_one_cloned
+                            )
+                            .await.expect("75894c76")
+                        },
+                        &quote! {"d5dec823"},
+                    );
                     quote! {
                         for (i_26824592, read_only_ids_el_937c5af3) in gen_read_only_ids_els_8a1ef027(
                             &url,
@@ -6443,37 +6491,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     }
                                     opt_test_case.expect("bd79056e")
                                 });
-                                assert_eq!(
-                                    #ident_read_only_ids_ucc {
-                                        #primary_k_fi: read_only_ids_el_937c5af3.#primary_k_fi,
-                                        #ident_read_only_ids_upper_fields_init_without_primary_k_ts
-                                    },
-                                    #ident::try_update_one_handle(
-                                        &url_cloned,
-                                        #ident_update_one_params_ucc {
-                                            payload: #ident_update_ucc::try_new(
-                                                #primary_k_ft_as_pg_type_update_as_pg_type_primary_k_read_only_ids_into_update_ts,
-                                                #ident_update_params_init_without_primary_k_ts
-                                            ).expect("0e5d65a5")//todo add column ident
-                                        },
-                                        &table_update_one_cloned
-                                    ).await.expect("4d755542"),
-                                    "564de31c"
-                                );
-                                assert_eq!(
-                                    #ident_read_ucc {
-                                        #primary_k_fi: Some(#ts),
-                                        #ident_read_fields_init_without_primary_k_after_update_one_ts
-                                    },
-                                    gen_ident_try_read_one_handle_primary_k(
-                                        &url_cloned,
-                                        #primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3,
-                                        select_default_all_with_max_page_size_cloned,
-                                        &table_update_one_cloned
-                                    )
-                                    .await.expect("75894c76"),
-                                    "d5dec823"
-                                );
+                                #assert_eq_ts_0ba29fe7
+                                #assert_eq_ts_35a86616
                             }));
                         }
                     }
@@ -6534,6 +6553,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &ReadOnlyIdsIntoTableTypeSc,
                             &quote! {el_3bb88958.#primary_k_fi},
                         );
+                    let assert_eq_ts_ea7edbc4 = gen_assert_eq_ts(
+                        &quote!{read_only_ids_from_try_delete_many},
+                        &quote!{{
+                            read_only_ids_from_try_create_many.iter().map(|el_ba0f6b1c|
+                                <#primary_k_ft as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                                    &el_ba0f6b1c.#primary_k_fi
+                                ).expect("3ee5ee86").#VSc
+                            ).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>()
+                        }},
+                        &quote!{"db5e88a6"}
+                    );
                     quote! {
                         let read_only_ids_from_try_create_many = #ident::try_create_many_handle(
                             &url_cloned,
@@ -6566,17 +6596,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             },
                             &table_7e35b1ce
                         ).await.expect("b80b91b8");
-                        assert_eq!(
-                            read_only_ids_from_try_delete_many,
-                            {
-                                read_only_ids_from_try_create_many.iter().map(|el_ba0f6b1c|
-                                    <#primary_k_ft as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
-                                        &el_ba0f6b1c.#primary_k_fi
-                                    ).expect("3ee5ee86").#VSc
-                                ).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>()
-                            },
-                            "db5e88a6"
-                        );
+                        #assert_eq_ts_ea7edbc4
                         assert!(
                             gen_try_read_many_order_by_primary_k_with_big_pagination(
                                 &url_cloned,
@@ -6622,6 +6642,33 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let delete_one_tests_ts = {
             let ts = gen_import_path_v_init_ts(&primary_k_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_k_fi_ts);
+            let assert_eq_ts_6322435c = gen_assert_eq_ts(
+                &quote! {#ident_read_ucc {
+                    #primary_k_fi: Some(#ts),
+                    #fi_read_only_ids_merged_with_create_into_opt_v_read_read_only_ids_returned_from_create_one_create_ts
+                }},
+                &quote! {
+                    gen_ident_try_read_one_handle_primary_k(
+                        &url,
+                        #primary_k_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_k_fi_ts,
+                        #select_default_all_with_max_page_size_cloned_clone_ts,
+                        &table_delete_one_cloned
+                    )
+                    .await.expect("c8c44c89")
+                },
+                &quote! {"86ef08ae"},
+            );
+            let assert_eq_ts_8812d778 = gen_assert_eq_ts(
+                &quote! {
+                    gen_try_delete_one_handle(
+                        &url,
+                        #primary_k_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_k_fi_ts,
+                        &table_delete_one_cloned
+                    ).await.expect("7e1d1a70")
+                },
+                &quote! {#primary_k_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_k_fi_ts},
+                &quote! {"99f81971"},
+            );
             quote! {
                 acc_9189f86e.push({
                     let table_delete_one_cloned = table_delete_one.clone();
@@ -6651,29 +6698,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             panic!("9be62f9f")
                         }
                         let read_only_ids_returned_from_create_one = gen_read_only_ids_from_try_create_one_default(&url, &table_delete_one_cloned).await;
-                        assert_eq!(
-                            #ident_read_ucc {
-                                #primary_k_fi: Some(#ts),
-                                #fi_read_only_ids_merged_with_create_into_opt_v_read_read_only_ids_returned_from_create_one_create_ts
-                            },
-                            gen_ident_try_read_one_handle_primary_k(
-                                &url,
-                                #primary_k_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_k_fi_ts,
-                                #select_default_all_with_max_page_size_cloned_clone_ts,
-                                &table_delete_one_cloned
-                            )
-                            .await.expect("c8c44c89"),
-                            "86ef08ae"
-                        );
-                        assert_eq!(
-                            gen_try_delete_one_handle(
-                                &url,
-                                #primary_k_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_k_fi_ts,
-                                &table_delete_one_cloned
-                            ).await.expect("7e1d1a70"),
-                            #primary_k_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_k_fi_ts,
-                            "99f81971"
-                        );
+                        #assert_eq_ts_6322435c
+                        #assert_eq_ts_8812d778
                         gen_check_no_rows_returned_from_ident_try_read_one_handle_primary_k(
                             &url,
                             #primary_k_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_k_fi_ts,
@@ -6684,13 +6710,23 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 });
             }
         };
+        let assert_eq_ts_9addc33d = gen_assert_eq_ts(
+            &quote! {std::mem::size_of::<#ident>()},
+            &quote! {0},
+            &quote! {"e8eed4b3"},
+        );
+        let assert_eq_ts_7ac0df1c = gen_assert_eq_ts(
+            &quote! {read_only_ids_from_try_create_many.len()},
+            &quote! {ident_vec_create.len()},
+            &quote! {"88fb286c"},
+        );
         quote! {
             #[cfg(test)]
             mod #ident_tests_sc {
                 use super::*;
                 #[test]
                 fn size_of() {
-                    assert_eq!(std::mem::size_of::<#ident>(), 0);
+                    #assert_eq_ts_9addc33d
                 }
                 #[test]
                 fn crud() {
@@ -6850,7 +6886,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         ident_vec_create: Vec<#ident_create_ucc>
                     ) -> Vec<#ident_read_ucc> {
                         let mut acc_1debe8fb = Vec::new();
-                        assert_eq!(read_only_ids_from_try_create_many.len(), ident_vec_create.len(), "88fb286c");
+                        #assert_eq_ts_7ac0df1c
                         for (read_only_ids, create) in read_only_ids_from_try_create_many.into_iter().zip(ident_vec_create) {
                             acc_1debe8fb.push(#ident_read_ucc {
                                 #primary_k_fi: <#primary_k_ft as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
