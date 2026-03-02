@@ -4848,6 +4848,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             });
         let select_default_all_with_max_page_size_clone_ts =
             quote! {select_default_all_with_max_page_size.clone()};
+        fn gen_assert_eq_ts(ts0: &dyn ToTokens, ts1: &dyn ToTokens, ts2: &dyn ToTokens) -> Ts2 {
+            quote! {assert_eq!(#ts0,#ts1,#ts2)}
+        };
         let common_read_only_ids_returned_from_create_one_ts = {
             let primary_k_read_ts = quote! {primary_k_read};
             let primary_k_read_clone_ts = quote! {primary_k_read.clone()};
