@@ -4973,7 +4973,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let mb_constraint_part = match &pg_type_pattern {
                         PgTypePattern::Stdrt => String::new(),
                         PgTypePattern::ArrDim1 { dim1_is_nullable } => match &dim1_is_nullable {
-                            IsNullable::False => ",check (arr_position({column},null) is null)".to_owned(),
+                            IsNullable::False => ",check (array_position({column},null) is null)".to_owned(),
                             IsNullable::True => String::new(),
                         },
                     };
