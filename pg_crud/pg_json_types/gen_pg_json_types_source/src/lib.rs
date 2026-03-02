@@ -2787,6 +2787,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 if let Some(#some_ts) = #equal_ts.0 {
                                     #content_ts_9292e3cf
                                 }
+                                else {
+                                    return None;//todo to fix it - should rewrite logic
+                                }
                             };
                             let gen_if_let_some_equals_v_i_dot_zero_ts = |
                                 i_c4552aef: usize,
