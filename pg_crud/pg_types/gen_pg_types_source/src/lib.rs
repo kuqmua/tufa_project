@@ -4926,7 +4926,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let select_only_ids_and_select_only_updated_ids_query_common_ts = {
                 let format_ts = dq_ts(&{
                     let column_comma = "{column},";
-                    if matches!(&is_not_null_stdrt_can_be_primary_k, IsNotNullStdrtCanBePrimaryK::True) { column_comma.to_owned() } else { format!("'{{{{\\\"value\\\": null}}}}'::jsonb as {column_comma}") }
+                    if matches!(&is_not_null_stdrt_can_be_primary_k, IsNotNullStdrtCanBePrimaryK::True) { column_comma.to_owned() } else { format!("'{{{{\\\"v\\\": null}}}}'::jsonb as {column_comma}") }
                 });
                 quote! {Ok(format!(#format_ts))}
             };

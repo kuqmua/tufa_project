@@ -2757,7 +2757,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         assert!(!is_nullable_vec.is_empty(), "c1a5939d");
                         let content_ts_c85923bd = {
                             let gen_i_nbr_ts = |i_c1128a3e: usize|format!("i_{i_c1128a3e}").parse::<Ts2>().expect("afbe7252");
-                            let gen_v_nbr_ts = |i_0abe6039: usize|format!("value{i_0abe6039}").parse::<Ts2>().expect("568d8eb6");
+                            let gen_v_nbr_ts = |i_0abe6039: usize|format!("v{i_0abe6039}").parse::<Ts2>().expect("568d8eb6");
                             let gen_for_in_ts = |
                                 i_ts: &dyn ToTokens,
                                 v_ts: &dyn ToTokens,
