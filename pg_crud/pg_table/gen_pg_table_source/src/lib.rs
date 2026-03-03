@@ -2890,11 +2890,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let return_er_ts = {
-            let field_loc_new_6ac7b78e_ts = gen_field_loc_new_ts(file!(), line!(), column!());
+            let ts_6ac7b78e = gen_field_loc_new_ts(file!(), line!(), column!());
             quote! {
                 Err(#ident_try_operation_er_ucc::#try_operation_logic_er_with_serde_ucc {
                     #operation_er_with_serde_sc,
-                    #field_loc_new_6ac7b78e_ts,
+                    #ts_6ac7b78e,
                 })
             }
         };
@@ -4819,17 +4819,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                           create_ts: &dyn ToTokens,
                           should_add_dot_clone: &ShouldAddDotClone| {
                 gen_fields_named_without_primary_k_with_comma_ts(&|el: &SynFieldWrapper| {
-                    let fi_931fabfc = &el.ident;
-                    let ft_714e077b = &el.type0;
+                    let fi = &el.ident;
                     let mb_dot_clone_ts = match &should_add_dot_clone {
                         ShouldAddDotClone::False => Ts2::new(),
                         ShouldAddDotClone::True => quote! {.clone()},
                     };
-                    let ft_ts = gen_as_pg_type_test_cases_path_ts(&ft_714e077b);
+                    let ft_ts = gen_as_pg_type_test_cases_path_ts(&el.type0);
                     quote! {
-                        #fi_931fabfc: #ft_ts read_only_ids_merged_with_create_into_opt_v_read(
-                            #read_only_ids_ts.#fi_931fabfc #mb_dot_clone_ts.expect("f967434c"),
-                            #create_ts.#fi_931fabfc #mb_dot_clone_ts
+                        #fi: #ft_ts read_only_ids_merged_with_create_into_opt_v_read(
+                            #read_only_ids_ts.#fi #mb_dot_clone_ts.expect("f967434c"),
+                            #create_ts.#fi #mb_dot_clone_ts
                         )
                     }
                 })
@@ -4858,10 +4857,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let opt_ident_where_many_ts_dc1232c7 =
             gen_fields_named_without_primary_k_with_comma_ts(&|el: &SynFieldWrapper| {
-                let fi_edb35ef4 = &el.ident;
-                quote! {
-                    #fi_edb35ef4: None
-                }
+                let fi = &el.ident;
+                quote! {#fi: None}
             });
         let select_default_all_with_max_page_size_clone_ts =
             quote! {select_default_all_with_max_page_size.clone()};
@@ -5027,12 +5024,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let ident_create_defaults_for_column_read_only_ids_to_two_dims_vec_read_inner_ts =
                     gen_fields_named_without_primary_k_without_comma_ts(
                         &|el0: &SynFieldWrapper| {
-                            let fi_10070b70 = &el0.ident;
-                            let ft_b33f54a9 = &el0.type0;
-                            if fi == fi_10070b70 {
-                                let ft_ts = gen_as_pg_type_test_cases_path_ts(&ft_b33f54a9);
+                            let fi0 = &el0.ident;
+                            let ft0 = &el0.type0;
+                            if fi == fi0 {
+                                let ft_ts = gen_as_pg_type_test_cases_path_ts(&ft0);
                                 quote! {
-                                    if let Some(v_a5f7e6cd) = &common_read_only_ids_returned_from_create_one.#fi_10070b70 {
+                                    if let Some(v_a5f7e6cd) = &common_read_only_ids_returned_from_create_one.#fi0 {
                                         for el_b3522b7d in #ft_ts read_only_ids_to_two_dims_vec_read_inner(v_a5f7e6cd) {
                                             for _ in el_b3522b7d {
                                                 acc_458cda9e.push(ident_create_default.clone());
@@ -6084,8 +6081,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ident_update_params_init_without_primary_k_ts =
                         gen_fields_named_without_primary_k_with_comma_ts(
                             &|syn_field_wrapper: &SynFieldWrapper| {
-                                let fi_f56e8e3f = &syn_field_wrapper.ident;
-                                if fi == fi_f56e8e3f {
+                                let fi0 = &syn_field_wrapper.ident;
+                                if fi == fi0 {
                                     let ts = gen_import_path_v_init_ts(&quote! {#UpdateSc.clone()});
                                     quote! {Some(#ts)}
                                 } else {
@@ -6245,8 +6242,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ident_update_params_init_without_primary_k_ts =
                         gen_fields_named_without_primary_k_with_comma_ts(
                             &|el0: &SynFieldWrapper| {
-                                let fi_6ea8afd1 = &el0.ident;
-                                if fi == fi_6ea8afd1 {
+                                let fi0 = &el0.ident;
+                                if fi == fi0 {
                                     let ts = gen_import_path_v_init_ts(&quote! {#UpdateSc.clone()});
                                     quote! {Some(#ts)}
                                 } else {
@@ -6257,30 +6254,30 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ident_read_fields_init_without_primary_k_after_update_one_ts =
                         gen_fields_named_without_primary_k_with_comma_ts(
                             &|el0: &SynFieldWrapper| {
-                                let fi_8c7d4975 = &el0.ident;
-                                let ft_09e184c3 = &el0.type0;
-                                let ts = if fi == fi_8c7d4975 {
+                                let fi0 = &el0.ident;
+                                let ft0 = &el0.type0;
+                                let ts = if fi == fi0 {
                                     let ts_0ec756e2 = gen_import_path_v_init_ts(&quote! {
                                         <
-                                            #ft_09e184c3
+                                            #ft0
                                             as
                                             pg_crud::PgTypeTestCases
                                         >::previous_read_merged_with_opt_update_into_read(
                                             <
-                                                #ft_09e184c3
+                                                #ft0
                                                 as
                                                 pg_crud::PgTypeTestCases
                                             >::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
-                                                &read_only_ids_el_937c5af3.#fi_8c7d4975.clone().expect("4f19d0d2")
+                                                &read_only_ids_el_937c5af3.#fi0.clone().expect("4f19d0d2")
                                             ).expect("c7685b19").#VSc,
                                             Some(#UpdateSc.clone())
                                         )
                                     });
                                     quote! {Some(#ts_0ec756e2)}
                                 } else {
-                                    quote! {previous_read.#fi_8c7d4975}
+                                    quote! {previous_read.#fi0}
                                 };
-                                quote! {#fi_8c7d4975: #ts}
+                                quote! {#fi0: #ts}
                             },
                         );
                     let ts_a903994d =
