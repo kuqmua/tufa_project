@@ -5707,6 +5707,18 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     )
                 )
             };
+            let gen_ts_ccbfdac5 = |fi: &Ident, ts: &dyn ToTokens| {
+                gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
+                    let fi0 = &el0.ident;
+                    if primary_k_fi == fi0 {
+                        some_primary_k_where_init_ts.clone()
+                    } else if fi0 == fi {
+                        gen_some_pg_type_where_try_new_and_ts(&ts)
+                    } else {
+                        none_ts.clone()
+                    }
+                })
+            };
             let (
                 read_only_ids_merged_with_create_into_where_equal_ts,
                 read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts,
@@ -5728,9 +5740,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         } else if fi0 == fi {
                                             let method_ts = {
                                                 let method_ts: &dyn ToTokens = match &equal_or_equal_using_fields {
-                                            EqualOrEqualUsingFields::Equal => &ReadOnlyIdsMergedWithCreateIntoWhereEqualSc,
-                                            EqualOrEqualUsingFields::EqualUsingFields => &ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc
-                                        };
+                                                    EqualOrEqualUsingFields::Equal => &ReadOnlyIdsMergedWithCreateIntoWhereEqualSc,
+                                                    EqualOrEqualUsingFields::EqualUsingFields => &ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc
+                                                };
                                                 quote! {
                                                     <#ft_5f626ae9 as pg_crud::PgTypeTestCases>::#method_ts(
                                                         read_only_ids_returned_from_create_one.#fi0.clone().expect("11c3740b"),
@@ -5765,18 +5777,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     gen_ts(table_read_only_ids_merged_with_create_into_where_equal_name, &EqualOrEqualUsingFields::Equal),
                     gen_ts(table_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_name, &EqualOrEqualUsingFields::EqualUsingFields),
                 )
-            };
-            let gen_ts_ccbfdac5 = |fi: &Ident, ts: &dyn ToTokens| {
-                gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
-                    let fi0 = &el0.ident;
-                    if primary_k_fi == fi0 {
-                        some_primary_k_where_init_ts.clone()
-                    } else if fi0 == fi {
-                        gen_some_pg_type_where_try_new_and_ts(&ts)
-                    } else {
-                        none_ts.clone()
-                    }
-                })
             };
             let read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts = gen_read_test_ts(table_read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_name, &gen_ident_ft_opt_vec_create_or_vec_ts, &gen_ident_create_content_el_ts, &|el: &SynFieldWrapper| {
                 let fi = &el.ident;
