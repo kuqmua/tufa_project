@@ -488,12 +488,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     //todo must remove this and use trait type instead
     let primary_k_ft_table_type_ts =
         SelfTableTypeUcc::from_type_last_segment(&primary_k_field.type0);
-    let gen_as_pg_type_ts = |ft: &dyn ToTokens| {
-        quote! {<#ft as pg_crud::PgType>::}
+    let gen_as_pg_type_ts = |ts: &dyn ToTokens| {
+        quote! {<#ts as pg_crud::PgType>}
     };
-    let primary_k_ft_as_pg_type_ts = gen_as_pg_type_ts(&primary_k_ft);
+    let gen_as_pg_type_path_ts = |ts: &dyn ToTokens| {
+        let ts0 = gen_as_pg_type_ts(ts);
+        quote! {#ts0::}
+    };
+    let pk_as_pg_type_ts = quote! {<#primary_k_ft as pg_crud::PgType>};
+    let primary_k_ft_as_pg_type_ts = gen_as_pg_type_path_ts(&primary_k_ft);
     let gen_as_pg_type_tokens_ts = |ft: &dyn ToTokens, tokens: &dyn ToTokens| {
-        let as_pg_type_ts = gen_as_pg_type_ts(&ft);
+        let as_pg_type_ts = gen_as_pg_type_path_ts(&ft);
         quote! {#as_pg_type_ts #tokens}
     };
     let gen_ft_as_pg_type_test_cases_ts = |ft: &dyn ToTokens| {
@@ -572,7 +577,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let fields_ts = fields_without_primary_k.iter().map(fn0);
             quote! {#(#fields_ts)*}
         };
-    let pk_as_pg_type_ts = quote! {<#primary_k_ft as pg_crud::PgType>};
     let none_ts = quote! {None};
     let fields_named_with_comma_none_ts =
         gen_fields_named_with_comma_ts(&|_: &SynFieldWrapper| -> Ts2 { none_ts.clone() });
@@ -650,7 +654,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let is_primary_k_ts: &dyn ToTokens =
                             if is_primary_k { &TrueSc } else { &FalseSc };
                         let fi_dq_ts = dq_ts(&fi);
-                        let ft_pg_type_ts = gen_as_pg_type_ts(&ft);
+                        let ft_pg_type_ts = gen_as_pg_type_path_ts(&ft);
                         quote! {
                             #ft_pg_type_ts #CreateTableColumnQueryPartSc(&#fi_dq_ts, #is_primary_k_ts)
                         }
@@ -708,7 +712,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let fi_ucc_ts = ToTokensToUccTs::case_or_panic(&el.ident);
                 let init_ts = {
                     let fi_string_dq_ts = dq_ts(&el.ident);
-                    let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
+                    let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
                     quote! {
                         => match #as_pg_crud_pg_type_pg_type_ts #SelectQueryPartSc(
                             #ColumnSc,
@@ -987,7 +991,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let fn_create_query_part_ts = {
                 let gen_match_as_pg_crud_pg_type_pg_type_create_query_part_ts =
                     |ft: &Type, ts: &dyn ToTokens| {
-                        let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&ft);
+                        let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&ft);
                         let if_write_is_err_ts = gen_if_write_is_err_ts(
                             &quote! {acc_a097110b, "{v_c3f0b59a},"},
                             &return_err_query_part_er_write_into_buffer_ts,
@@ -1030,7 +1034,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let fn_create_query_bind_ts = {
                 let gen_query_as_pg_crud_pg_type_pg_type_create_query_bind_ts =
                     |ft: &Type, ts: &dyn ToTokens| {
-                        let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&ft);
+                        let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&ft);
                         quote! {
                             match #as_pg_crud_pg_type_pg_type_ts #CreateQueryBindSc(
                                 #ts,
@@ -1907,7 +1911,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let fi = &el.ident;
                     let fi_dq_ts = dq_ts(&fi);
                     let update_query_part_fi_sc = UpdateQueryPartSelfSc::from_tokens(&fi);
-                    let ft_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
+                    let ft_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
                     quote! {
                         fn #update_query_part_fi_sc(
                             #VSc: &pg_crud::V<#ft_as_pg_crud_pg_type_pg_type_ts #UpdateForQueryUcc>,
@@ -1945,7 +1949,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let ts = fields_without_primary_k.iter().map(|el: &SynFieldWrapper| {
                     let fi = &el.ident;
                     let fi_dq_ts = dq_ts(&fi);
-                    let ft_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
+                    let ft_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
                     quote! {
                         if let Some(v_90f79b11) = &self.#fi {
                             acc_88c91f52.push_str(&match #ft_as_pg_crud_pg_type_pg_type_ts #SelectOnlyUpdatedIdsQueryPartSc(
@@ -3046,7 +3050,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let select_only_ids_query_part_init_ts = fields.iter().map(|el: &SynFieldWrapper| {
             let fi = &el.ident;
             let fi_dq_ts = dq_ts(&fi);
-            let ft_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
+            let ft_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
             let ts_00878df8 = gen_operation_er_init_eprintln_res_creation_ts(
                 operation,
                 &query_part_syn_vrt_wrapper,
@@ -4029,7 +4033,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         gen_fields_named_without_primary_k_without_comma_ts(
                             &|el: &SynFieldWrapper| {
                                 let fi = &el.ident;
-                                let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
+                                let as_pg_crud_pg_type_pg_type_ts =
+                                    gen_as_pg_type_path_ts(&el.type0);
                                 quote! {
                                     for el_4b24f8f0 in &#UpdateForQueryVecSc {
                                         if let Some(v_2edaa480) = &el_4b24f8f0.#fi {
@@ -4072,7 +4077,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         gen_fields_named_without_primary_k_without_comma_ts(
                             &|el: &SynFieldWrapper| {
                                 let fi = &el.ident;
-                                let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
+                                let as_pg_crud_pg_type_pg_type_ts =
+                                    gen_as_pg_type_path_ts(&el.type0);
                                 quote! {
                                     for el_a1660ed1 in &#UpdateForQueryVecSc {
                                         if let Some(v_47030ac2) = &el_a1660ed1.#fi {
@@ -4253,7 +4259,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         gen_fields_named_without_primary_k_without_comma_ts(
                             &|el: &SynFieldWrapper| {
                                 let fi = &el.ident;
-                                let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
+                                let as_pg_crud_pg_type_pg_type_ts =
+                                    gen_as_pg_type_path_ts(&el.type0);
                                 quote! {
                                     if let Some(v_ed87c152) = &#UpdateForQuerySc.#fi {
                                         match #as_pg_crud_pg_type_pg_type_ts #UpdateQueryBindSc(
@@ -4288,7 +4295,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         gen_fields_named_without_primary_k_without_comma_ts(
                             &|el: &SynFieldWrapper| {
                                 let fi = &el.ident;
-                                let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_ts(&el.type0);
+                                let as_pg_crud_pg_type_pg_type_ts =
+                                    gen_as_pg_type_path_ts(&el.type0);
                                 quote! {
                                     if let Some(v_b2902425) = &#UpdateForQuerySc.#fi {
                                         match #as_pg_crud_pg_type_pg_type_ts select_only_updated_ids_query_bind(
