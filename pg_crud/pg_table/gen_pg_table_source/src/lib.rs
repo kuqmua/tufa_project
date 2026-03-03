@@ -5160,8 +5160,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let gen_ft_opt_vec_create_ts = |ft: &Type| {
-            let ft_ts = gen_ft_as_pg_type_test_cases_ts(ft);
-            quote! {#ft_ts #OptVecCreateSc()}
+            let ts = gen_ft_as_pg_type_test_cases_ts(ft);
+            quote! {#ts #OptVecCreateSc()}
         };
         let gen_ft_opt_vec_create_or_vec_ts = |ft: &Type| {
             let ts = gen_ft_opt_vec_create_ts(ft);
@@ -5176,39 +5176,39 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             }
         };
-        let vec_primary_k_sorted_read_ts = quote! {
-            itertools::Itertools::sorted(
-                read_only_ids_from_try_create_many
-                .into_iter()
-                .map(|el_fdc88812| {
-                    #primary_k_ft_read_only_ids_into_read_el_fdc88812_primary_k_fi_ts
-                })
-            ).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>()
+        let gen_vec_primary_k_sorted_read_ts = |ts: &dyn ToTokens| {
+            quote! {itertools::Itertools::sorted(#ts).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>()}
         };
+        let vec_primary_k_sorted_read_ts = gen_vec_primary_k_sorted_read_ts(&quote! {
+            read_only_ids_from_try_create_many
+            .into_iter()
+            .map(|el_fdc88812| {
+                #primary_k_ft_read_only_ids_into_read_el_fdc88812_primary_k_fi_ts
+            })
+        });
         let gen_read_only_ids_from_try_delete_many_sorted_pk_ts =
             |table_ts: &dyn ToTokens, some_ts: &dyn ToTokens| {
-                quote! {
-                    let read_only_ids_from_try_delete_many = itertools::Itertools::sorted(
-                        #ident::try_delete_many_handle(
-                            &url_cloned,
-                            #ident_delete_many_params_ucc {
-                                //todo rewrite it using new\try_new?
-                                payload: #ident_delete_many_payload_ucc {
-                                    where_many: #opt_ident_where_many_ucc(Some(
-                                        #ident_where_many_ucc {
-                                            #primary_k_fi: Some(#some_ts),
-                                            #opt_ident_where_many_ts_dc1232c7
-                                        }
-                                    ))
-                                }
-                            },
-                            &#table_ts
-                        )
-                        .await
-                        .expect("716e470e")
-                        .into_iter()
-                    ).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>();
-                }
+                let ts = gen_vec_primary_k_sorted_read_ts(&quote! {
+                    #ident::try_delete_many_handle(
+                        &url_cloned,
+                        #ident_delete_many_params_ucc {
+                            //todo rewrite it using new\try_new?
+                            payload: #ident_delete_many_payload_ucc {
+                                where_many: #opt_ident_where_many_ucc(Some(
+                                    #ident_where_many_ucc {
+                                        #primary_k_fi: Some(#some_ts),
+                                        #opt_ident_where_many_ts_dc1232c7
+                                    }
+                                ))
+                            }
+                        },
+                        &#table_ts
+                    )
+                    .await
+                    .expect("716e470e")
+                    .into_iter()
+                });
+                quote! {let read_only_ids_from_try_delete_many = #ts;}
             };
         let create_many_tests_ts = {
             let create_many_tests_ts = gen_fields_named_without_primary_k_without_comma_ts(
