@@ -5528,11 +5528,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     gen_assert_eq_ts(
                         &quote! {vec![
                             #ident_read_ucc {
-                                #primary_k_fi: <
-                                    #primary_k_ft
-                                    as
-                                    pg_crud::PgTypeTestCases
-                                >::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                                #primary_k_fi: #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
                                     &read_only_ids_returned_from_create_one.#primary_k_fi
                                 ),
                                 #fi_read_only_ids_merged_with_create_into_opt_v_read_read_only_ids_returned_from_create_one_clone_ident_create_clone_ts
@@ -5992,12 +5988,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let gen_read_inner_into_update_ts =
             |fi: &dyn ToTokens, ft: &dyn ToTokens, ft_ts: &dyn ToTokens, i_ts: &dyn ToTokens| {
+                let ts = gen_as_pg_type_test_cases_path_ts(&ft);
                 quote! {
-                    let update = <
-                        #ft
-                        as
-                        pg_crud::PgTypeTestCases
-                    >::read_inner_into_update_with_new_or_try_new_unwraped({
+                    let update = #ts read_inner_into_update_with_new_or_try_new_unwraped({
                         let mut i_e0d2f9db: usize = 0;
                         let mut opt_test_case = None;
                         for el_3a9a65ee in #ft_ts read_only_ids_to_two_dims_vec_read_inner(
@@ -6257,21 +6250,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 let fi0 = &el0.ident;
                                 let ft0 = &el0.type0;
                                 let ts = if fi == fi0 {
-                                    let ts_0ec756e2 = gen_import_path_v_init_ts(&quote! {
-                                        <
-                                            #ft0
-                                            as
-                                            pg_crud::PgTypeTestCases
-                                        >::previous_read_merged_with_opt_update_into_read(
-                                            <
-                                                #ft0
-                                                as
-                                                pg_crud::PgTypeTestCases
-                                            >::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
-                                                &read_only_ids_el_937c5af3.#fi0.clone().expect("4f19d0d2")
-                                            ).expect("c7685b19").#VSc,
-                                            Some(#UpdateSc.clone())
-                                        )
+                                    let ts_0ec756e2 = gen_import_path_v_init_ts(&{
+                                        let ts0 = gen_as_pg_type_test_cases_path_ts(&ft);
+                                        quote! {
+                                            #ts0 previous_read_merged_with_opt_update_into_read(
+                                                #ts0 read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                                                    &read_only_ids_el_937c5af3.#fi0.clone().expect("4f19d0d2")
+                                                ).expect("c7685b19").#VSc,
+                                                Some(#UpdateSc.clone())
+                                            )
+                                        }
                                     });
                                     quote! {Some(#ts_0ec756e2)}
                                 } else {
