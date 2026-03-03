@@ -495,7 +495,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let ts0 = gen_as_pg_type_ts(ts);
         quote! {#ts0::}
     };
-    let pk_as_pg_type_ts = quote! {<#primary_k_ft as pg_crud::PgType>};
+    let pk_as_pg_type_ts = gen_as_pg_type_ts(&primary_k_ft);
     let primary_k_ft_as_pg_type_ts = gen_as_pg_type_path_ts(&primary_k_ft);
     let gen_as_pg_type_tokens_ts = |ft: &dyn ToTokens, tokens: &dyn ToTokens| {
         let as_pg_type_ts = gen_as_pg_type_path_ts(&ft);
@@ -4923,19 +4923,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let gen_ident_create_ts = |fi: &Ident, ts: &dyn ToTokens| {
             gen_fields_named_without_primary_k_with_comma_ts(&|el: &SynFieldWrapper| {
-                let fi_42fe57c8 = &el.ident;
-                let ft_f3d6c5c7 = &el.type0;
-                if fi == fi_42fe57c8 {
-                    quote! {
-                        #fi_42fe57c8: #ts
-                    }
+                let fi0 = &el.ident;
+                let ft0 = &el.type0;
+                let ts0 = if fi == fi0 {
+                    quote! {#ts}
                 } else {
-                    quote! {
-                        #fi_42fe57c8: <
-                            <#ft_f3d6c5c7 as pg_crud::PgType>::Create as pg_crud::DefaultOptSomeVecOneEl
-                        >::default_opt_some_vec_one_el()
-                    }
-                }
+                    let ts1 = gen_as_pg_type_path_ts(&ft0);
+                    quote! {<
+                        #ts1 Create as pg_crud::DefaultOptSomeVecOneEl
+                    >::default_opt_some_vec_one_el()}
+                };
+                quote! {#fi0: #ts0}
             })
         };
         let gen_ident_create_content_el_id_ts =
@@ -6051,11 +6049,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &|syn_field_wrapper: &SynFieldWrapper| {
                                 let fi_867b4800 = &syn_field_wrapper.ident;
                                 let ft_42b4a146 = &syn_field_wrapper.type0;
-                                if fi == fi_867b4800 {
-                                    quote! {#fi_867b4800: Some(<#ft_42b4a146 as pg_crud::PgTypeTestCases>::update_to_read_only_ids(&update))}
+                                let ts = if fi == fi_867b4800 {
+                                    quote! {Some(<#ft_42b4a146 as pg_crud::PgTypeTestCases>::update_to_read_only_ids(&update))}
                                 } else {
-                                    quote! {#fi_867b4800: None}
-                                }
+                                    quote! {None}
+                                };
+                                quote! {#fi_867b4800: #ts}
                             },
                         );
                     let ident_update_params_init_without_primary_k_ts =
@@ -6230,11 +6229,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &|el0: &SynFieldWrapper| {
                                 let fi_6b82a8d0 = &el0.ident;
                                 let ft_ad043276 = &el0.type0;
-                                if fi == fi_6b82a8d0 {
-                                    quote! {#fi_6b82a8d0: Some(<#ft_ad043276 as pg_crud::PgTypeTestCases>::update_to_read_only_ids(&update))}
+                                let ts = if fi == fi_6b82a8d0 {
+                                    quote! {Some(<#ft_ad043276 as pg_crud::PgTypeTestCases>::update_to_read_only_ids(&update))}
                                 } else {
-                                    quote! {#fi_6b82a8d0: None}
-                                }
+                                    quote! {None}
+                                };
+                                quote! {#fi_6b82a8d0: None}
                             },
                         );
                     let ident_update_params_init_without_primary_k_ts =
@@ -6254,7 +6254,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &|el0: &SynFieldWrapper| {
                                 let fi_8c7d4975 = &el0.ident;
                                 let ft_09e184c3 = &el0.type0;
-                                if fi == fi_8c7d4975 {
+                                let ts = if fi == fi_8c7d4975 {
                                     let ts_0ec756e2 = gen_import_path_v_init_ts(&quote! {
                                         <
                                             #ft_09e184c3
@@ -6271,10 +6271,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             Some(#UpdateSc.clone())
                                         )
                                     });
-                                    quote! {#fi_8c7d4975: Some(#ts_0ec756e2)}
+                                    quote! {Some(#ts_0ec756e2)}
                                 } else {
-                                    quote! {#fi_8c7d4975: previous_read.#fi_8c7d4975}
-                                }
+                                    quote! {previous_read.#fi_8c7d4975}
+                                };
+                                quote! {#fi_8c7d4975: #ts}
                             },
                         );
                     let assert_eq_ts_0ba29fe7 = gen_assert_eq_ts(
