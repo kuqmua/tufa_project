@@ -495,12 +495,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let ts0 = gen_as_pg_type_ts(ts);
         quote! {#ts0::}
     };
-    let primary_k_ft_as_pg_type_read_ucc = {
-        let ts = gen_as_pg_type_path_ts(&primary_k_ft);
-        quote! {#ts #ReadUcc}
-    };
-    let pk_as_pg_type_ts = gen_as_pg_type_ts(&primary_k_ft);
     let primary_k_ft_as_pg_type_ts = gen_as_pg_type_path_ts(&primary_k_ft);
+    let primary_k_ft_as_pg_type_read_ucc = quote! {#primary_k_ft_as_pg_type_ts #ReadUcc};
+    let pk_as_pg_type_ts = gen_as_pg_type_ts(&primary_k_ft);
     let gen_as_pg_type_tokens_ts = |ts: &dyn ToTokens, tokens: &dyn ToTokens| {
         let as_pg_type_ts = gen_as_pg_type_path_ts(&ts);
         quote! {#as_pg_type_ts #tokens}
@@ -508,6 +505,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let gen_as_pg_type_test_cases_ts = |ts: &dyn ToTokens| {
         quote! {<#ts as pg_crud::PgTypeTestCases>::}
     };
+    let pk_as_pg_type_test_cases_path_ts = gen_as_pg_type_test_cases_ts(&primary_k_ft);
     let gen_as_pg_type_create_ts = |ts: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ts, &CreateUcc);
     let gen_as_pg_type_select_ts = |ts: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ts, &SelectUcc);
     let primary_k_ft_as_pg_type_select_ts = gen_as_pg_type_select_ts(&primary_k_ft);
@@ -5075,9 +5073,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     itertools::Itertools::sorted_by(
                         read_only_ids_els_efeed554.iter().map(|el_f108da5a| {
                             #ident_read_ucc {
-                                #primary_k_fi: <
-                                    #primary_k_ft as pg_crud::PgTypeTestCases
-                                >::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                                #primary_k_fi: #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
                                     &el_f108da5a.#primary_k_fi
                                 ),
                                 #ident_read_fields_init_without_primary_k_ts
@@ -5647,7 +5643,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     gen_pg_type_where_try_new_primary_k(
                         pg_crud::Operator::And,
                         vec![
-                            <#primary_k_ft as pg_crud::PgTypeTestCases>::read_only_ids_merged_with_create_into_where_equal(
+                            #pk_as_pg_type_test_cases_path_ts read_only_ids_merged_with_create_into_where_equal(
                                 read_only_ids_returned_from_create_one.#primary_k_fi,
                                 #PgCrudDefaultOptSomeVecOneElCall
                             )
@@ -6405,7 +6401,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &quote!{read_only_ids_from_try_delete_many},
                             &quote!{{
                                 read_only_ids_from_try_create_many.iter().map(|el_ba0f6b1c|
-                                    <#primary_k_ft as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                                    #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
                                         &el_ba0f6b1c.#primary_k_fi
                                     ).expect("3ee5ee86").#VSc
                                 ).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>()
@@ -6737,7 +6733,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #assert_eq_ts_7ac0df1c
                         for (read_only_ids, create) in read_only_ids_from_try_create_many.into_iter().zip(ident_vec_create) {
                             acc_1debe8fb.push(#ident_read_ucc {
-                                #primary_k_fi: <#primary_k_ft as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                                #primary_k_fi: #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
                                     &read_only_ids.#primary_k_fi
                                 ),
                                 #fi_read_only_ids_merged_with_create_into_opt_v_read_read_only_ids_and_create_ts
