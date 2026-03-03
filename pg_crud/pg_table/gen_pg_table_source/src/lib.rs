@@ -4777,9 +4777,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             quote! {read_only_ids_el_937c5af3.#primary_k_fi};
         let (
             primary_k_ft_read_only_ids_into_read_el_43ab7fb5_primary_k_fi_ts,
-            primary_k_ft_read_only_ids_into_read_el_bf356906_primary_k_fi_ts,
-            primary_k_ft_read_only_ids_into_read_el_fdc88812_primary_k_fi_ts,
-            primary_k_ft_read_only_ids_into_read_el_adf2b4c4_primary_k_fi_ts,
             primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts,
             primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3,
             primary_k_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_k_fi_ts,
@@ -4789,13 +4786,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             };
             (
                 gen_ts(&quote! {el_43ab7fb5.#primary_k_fi}),
-                gen_ts(&quote! {el_bf356906.#primary_k_fi}),
-                gen_ts(&quote! {el_fdc88812.#primary_k_fi}),
-                gen_ts(&quote! {el_adf2b4c4.#primary_k_fi}),
                 gen_ts(&quote! {read_only_ids_from_try_create_one.#primary_k_fi}),
                 gen_ts(&read_only_ids_el_937c5af3_primary_k_fi),
                 gen_ts(&quote! {read_only_ids_returned_from_create_one.#primary_k_fi}),
             )
+        };
+        let ts_ffb964de = {
+            let ts = gen_primary_k_where_equal_into_inner_ts(
+                &primary_k_ft_read_only_ids_into_read_el_43ab7fb5_primary_k_fi_ts,
+            );
+            quote! {.iter().map(|el_43ab7fb5| #ts).collect()}
         };
         let primary_k_ft_as_pg_type_update_as_pg_type_primary_k_read_only_ids_into_update_ts = {
             let method_call_ts = gen_primary_k_ft_as_pg_type_primary_k_method_call_ts(
@@ -5094,35 +5094,30 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     ).collect::<Vec<#ident_read_ucc>>()
                 },
-                &{
-                    let ts_99781733 = gen_primary_k_where_equal_into_inner_ts(
-                        &primary_k_ft_read_only_ids_into_read_el_43ab7fb5_primary_k_fi_ts,
-                    );
-                    quote! {
-                        itertools::Itertools::sorted_by(
-                            gen_try_read_many_order_by_primary_k_with_big_pagination(
-                                url,
-                                gen_ident_where_many_pripery_k_others_none(
-                                    Some(
-                                        gen_pg_type_where_try_new_primary_k(
-                                            pg_crud::Operator::Or,
-                                            read_only_ids_els_efeed554.iter().map(|el_43ab7fb5| #ts_99781733).collect()
-                                        )
+                &quote! {
+                    itertools::Itertools::sorted_by(
+                        gen_try_read_many_order_by_primary_k_with_big_pagination(
+                            url,
+                            gen_ident_where_many_pripery_k_others_none(
+                                Some(
+                                    gen_pg_type_where_try_new_primary_k(
+                                        pg_crud::Operator::Or,
+                                        read_only_ids_els_efeed554 #ts_ffb964de
                                     )
-                                ),
-                                #select_default_all_with_max_page_size_clone_ts,
-                                table_9c259e1c
-                            )
-                            .await
-                            .expect("097d5e7d")
-                            .into_iter(),
-                            |first, second| match (&first.#primary_k_fi, &second.#primary_k_fi) {
-                                (Some(first_handle), Some(second_handle)) => first_handle.#VSc.cmp(&second_handle.#VSc),
-                                _ => panic!("51e477ea"),
-                            }
+                                )
+                            ),
+                            #select_default_all_with_max_page_size_clone_ts,
+                            table_9c259e1c
                         )
-                        .collect::<Vec<#ident_read_ucc>>()
-                    }
+                        .await
+                        .expect("097d5e7d")
+                        .into_iter(),
+                        |first, second| match (&first.#primary_k_fi, &second.#primary_k_fi) {
+                            (Some(first_handle), Some(second_handle)) => first_handle.#VSc.cmp(&second_handle.#VSc),
+                            _ => panic!("51e477ea"),
+                        }
+                    )
+                    .collect::<Vec<#ident_read_ucc>>()
                 },
                 &quote! {"50198a7f"},
             );
@@ -5182,8 +5177,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let vec_primary_k_sorted_read_ts = gen_vec_primary_k_sorted_read_ts(&quote! {
             read_only_ids_from_try_create_many
             .into_iter()
-            .map(|el_fdc88812| {
-                #primary_k_ft_read_only_ids_into_read_el_fdc88812_primary_k_fi_ts
+            .map(|el_43ab7fb5| {
+                #primary_k_ft_read_only_ids_into_read_el_43ab7fb5_primary_k_fi_ts
             })
         });
         let gen_read_only_ids_from_try_delete_many_sorted_pk_ts =
@@ -5225,31 +5220,20 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 ident_vec_create.clone()
                             )
                         },
-                        &{
-                            let ts = gen_primary_k_where_equal_into_inner_ts(
-                                &primary_k_ft_read_only_ids_into_read_el_bf356906_primary_k_fi_ts,
-                            );
-                            quote! {
-                                gen_try_read_many_order_by_primary_k_with_big_pagination(
-                                    &url_cloned,
-                                    gen_ident_where_many_pripery_k_others_none(
-                                        Some(
-                                            gen_pg_type_where_try_new_primary_k(
-                                                pg_crud::Operator::Or,
-                                                {
-                                                    let mut acc_1381c719 = Vec::new();
-                                                    for el_bf356906 in &read_only_ids_from_try_create_many {
-                                                        acc_1381c719.push(#ts);
-                                                    }
-                                                    acc_1381c719
-                                                }
-                                            )
+                        &quote! {
+                            gen_try_read_many_order_by_primary_k_with_big_pagination(
+                                &url_cloned,
+                                gen_ident_where_many_pripery_k_others_none(
+                                    Some(
+                                        gen_pg_type_where_try_new_primary_k(
+                                            pg_crud::Operator::Or,
+                                            read_only_ids_from_try_create_many #ts_ffb964de
                                         )
-                                    ),
-                                    #select_default_all_with_max_page_size_cloned_clone_ts,
-                                    &table_create_many_cloned
-                                ).await.expect("bdb72341")
-                            }
+                                    )
+                                ),
+                                #select_default_all_with_max_page_size_cloned_clone_ts,
+                                &table_create_many_cloned
+                            ).await.expect("bdb72341")
                         },
                         &quote! {"d19bbbf6"},
                     );
@@ -5468,25 +5452,20 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     ident_vec_create.clone()
                                 )
                             },
-                            &{
-                                let ts = gen_primary_k_where_equal_into_inner_ts(
-                                    &primary_k_ft_read_only_ids_into_read_el_adf2b4c4_primary_k_fi_ts
-                                );
-                                quote! {
-                                    gen_try_read_many_order_by_primary_k_with_big_pagination(
-                                        &url_cloned,
-                                        gen_ident_where_many_pripery_k_others_none(
-                                            Some(
-                                                gen_pg_type_where_try_new_primary_k(
-                                                    pg_crud::Operator::Or,
-                                                    read_only_ids_from_try_create_many.iter().map(|el_adf2b4c4| #ts).collect()
-                                                )
+                            &quote! {
+                                gen_try_read_many_order_by_primary_k_with_big_pagination(
+                                    &url_cloned,
+                                    gen_ident_where_many_pripery_k_others_none(
+                                        Some(
+                                            gen_pg_type_where_try_new_primary_k(
+                                                pg_crud::Operator::Or,
+                                                read_only_ids_from_try_create_many #ts_ffb964de
                                             )
-                                        ),
-                                        select_default_all_with_max_page_size_cloned.clone(),
-                                        &table_7e35b1ce
-                                    ).await.expect("b8efe770")
-                                }
+                                        )
+                                    ),
+                                    select_default_all_with_max_page_size_cloned.clone(),
+                                    &table_7e35b1ce
+                                ).await.expect("b8efe770")
                             },
                             &quote! {"er 3b2cf1f5-2c4e-4908-ba66-f4af84fe0893"},
                         );
