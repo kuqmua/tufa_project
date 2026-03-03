@@ -5766,20 +5766,25 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     gen_ts(table_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_name, &EqualOrEqualUsingFields::EqualUsingFields),
                 )
             };
+            let gen_ts_ccbfdac5 = |fi: &Ident, ts: &dyn ToTokens| {
+                gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
+                    let fi0 = &el0.ident;
+                    if primary_k_fi == fi0 {
+                        some_primary_k_where_init_ts.clone()
+                    } else if fi0 == fi {
+                        gen_some_pg_type_where_try_new_and_ts(&ts)
+                    } else {
+                        none_ts.clone()
+                    }
+                })
+            };
             let read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts = gen_read_test_ts(table_read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_name, &gen_ident_ft_opt_vec_create_or_vec_ts, &gen_ident_create_content_el_ts, &|el: &SynFieldWrapper| {
                 let fi = &el.ident;
                 let ft = &el.type0;
                 let ft_ts = gen_ft_as_pg_type_test_cases_ts(ft);
-                let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(&gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
-                    let fi_4557eb3f = &el0.ident;
-                    if fi_4557eb3f == primary_k_fi {
-                        some_primary_k_where_init_ts.clone()
-                    } else if fi_4557eb3f == fi {
-                        gen_some_pg_type_where_try_new_and_ts(&quote! {vec![el_48a3d976]})
-                    } else {
-                        none_ts.clone()
-                    }
-                }));
+                let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
+                    &gen_ts_ccbfdac5(fi, &quote! {vec![el_48a3d976]})
+                );
                 quote! {
                     if let Some(v_d5cd3c70) = #ft_ts #ReadOnlyIdsMergedWithCreateIntoOptVecWhereEqualToJsonFieldSc(
                         read_only_ids_returned_from_create_one.#fi.clone().expect("65cef584"),
@@ -5800,23 +5805,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ft = &el.type0;
                     let ft_ts = gen_ft_as_pg_type_test_cases_ts(ft);
                     let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
-                        // &gen_where_clause_for_field_with_some_primary_k_ts(fi, fi, ft, &some_primary_k_where_init_ts, &|_, ft_closure| {
-                        //     quote! {
-                        //         <#ft_closure as pg_crud::PgTypeTestCases>::#CreateIntoPgTypeOptVecWhereDimOneEqualSc(
-                        //             ident_create.#fi.clone()
-                        //         ).map_or_else(Vec::new, Into::into)
-                        //     }
-                        // }),
-                        &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
-                            let fi_65c48d59 = &el0.ident;
-                            if primary_k_fi == fi_65c48d59 {
-                                some_primary_k_where_init_ts.clone()
-                            } else if fi_65c48d59 == fi {
-                                gen_some_pg_type_where_try_new_and_ts(&quote! {vec![el_39d1fb5d]})
-                            } else {
-                                none_ts.clone()
-                            }
-                        }),
+                        &gen_ts_ccbfdac5(fi, &quote! {vec![el_39d1fb5d]}),
                     );
                     quote! {
                         if let Some(v_b02d763d) = #ft_ts #CreateIntoPgTypeOptVecWhereDimOneEqualSc(
@@ -5847,16 +5836,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let fi = &el.ident;
                     let ft = &el.type0;
                     let ft_ts = gen_ft_as_pg_type_test_cases_ts(ft);
-                    let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(&gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
-                        let fi_79ff8c6e = &el0.ident;
-                        if fi_79ff8c6e == primary_k_fi {
-                            some_primary_k_where_init_ts.clone()
-                        } else if fi_79ff8c6e == fi {
-                            gen_some_pg_type_where_try_new_and_ts(&quote! {vec![v_60baba1f]})
-                        } else {
-                            none_ts.clone()
-                        }
-                    }));
+                    let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
+                        &gen_ts_ccbfdac5(fi,&quote!{vec![v_60baba1f]})
+                    );
                     quote! {
                         if let Some(v_60baba1f) = #ft_ts #ReadOnlyIdsMergedWithTableTypeIntoPgTypeOptWhereGreaterThanSc(
                             #ElSc.vrt,
@@ -5887,26 +5869,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let ft_ts = gen_ft_as_pg_type_test_cases_ts(ft);
                             let assert_eq_ts =
                                 gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
-                                    // &gen_where_clause_for_field_with_some_primary_k_ts(fi, fi, ft, &some_primary_k_where_init_ts, &|_, ft_closure| {
-                                    //     quote! {
-                                    //         <#ft_closure as pg_crud::PgTypeTestCases>::#fn_ts(
-                                    //             read_only_ids_returned_from_create_one.#fi.clone().expect("2ed000a5"),
-                                    //             ident_create.#fi.clone()
-                                    //         ).map_or_else(Vec::new, Into::into)
-                                    //     }
-                                    // }),
-                                    &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
-                                        let fi0 = &el0.ident;
-                                        if fi0 == primary_k_fi {
-                                            some_primary_k_where_init_ts.clone()
-                                        } else if fi0 == fi {
-                                            gen_some_pg_type_where_try_new_and_ts(
-                                                &quote! {vec![el_3efa0bb4]},
-                                            )
-                                        } else {
-                                            none_ts.clone()
-                                        }
-                                    }),
+                                    &gen_ts_ccbfdac5(fi, &quote! {vec![el_3efa0bb4]}),
                                 );
                             quote! {
                                 if let Some(v_bb67b871) = #ft_ts #fn_ts(
@@ -5937,16 +5900,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ft = &el.type0;
                     let ft_ts = gen_ft_as_pg_type_test_cases_ts(ft);
                     let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
-                        &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
-                            let fi_bffc985c = &el0.ident;
-                            if fi_bffc985c == primary_k_fi {
-                                some_primary_k_where_init_ts.clone()
-                            } else if fi_bffc985c == fi {
-                                gen_some_pg_type_where_try_new_and_ts(&quote! {vec![el_c09ef321]})
-                            } else {
-                                none_ts.clone()
-                            }
-                        }),
+                        &gen_ts_ccbfdac5(fi, &quote! {vec![el_c09ef321]}),
                     );
                     quote! {
                         if let Some(v_f825e068) = #ft_ts #CreateIntoPgJsonTypeOptVecWhereLengthEqualSc(
@@ -5968,23 +5922,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ft = &el.type0;
                     let ft_ts = gen_ft_as_pg_type_test_cases_ts(ft);
                     let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
-                        // &gen_where_clause_for_field_with_some_primary_k_ts(fi, fi, ft, &some_primary_k_where_init_ts, &|_, ft_closure| {
-                        //     quote! {
-                        //         <#ft_closure as pg_crud::PgTypeTestCases>::#CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc(
-                        //             ident_create.#fi.clone()
-                        //         ).map_or_else(Vec::new, Into::into)
-                        //     }
-                        // }),
-                        &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
-                            let fi_9464d51b = &el0.ident;
-                            if fi_9464d51b == primary_k_fi {
-                                some_primary_k_where_init_ts.clone()
-                            } else if fi_9464d51b == fi {
-                                gen_some_pg_type_where_try_new_and_ts(&quote! {vec![el_527b546b]})
-                            } else {
-                                none_ts.clone()
-                            }
-                        }),
+                        &gen_ts_ccbfdac5(fi, &quote! {vec![el_527b546b]}),
                     );
                     quote! {
                         if let Some(v_cd4aa374) = #ft_ts #CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc(
@@ -6016,32 +5954,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let ft_ts = gen_ft_as_pg_type_test_cases_ts(ft);
                             let assert_eq_ts =
                                 gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
-                                    // &gen_where_clause_for_field_with_some_primary_k_ts(
-                                    //     fi,
-                                    //     fi,
-                                    //     ft,
-                                    //     &some_primary_k_where_init_ts,
-                                    //     &|_, ft_closure| quote! {
-                                    //         <#ft_closure as pg_crud::PgTypeTestCases>::#method_ts(
-                                    //             read_only_ids_returned_from_create_one.#fi.clone().expect("df01c8ac"),
-                                    //             ident_create.#fi.clone()
-                                    //         ).map_or_else(Vec::new, Into::into)
-                                    //     }),
-                                    &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
-                                        let fi_6b16d591 = &el0.ident;
-                                        if fi_6b16d591 == primary_k_fi {
-                                            some_primary_k_where_init_ts.clone()
-                                        } else if fi_6b16d591 == fi {
-                                            gen_some_pg_type_where_try_new_and_ts(
-                                                &quote! {match el_feacc53b {
-                                                    #import_path::SingleOrMultiple::Multiple(multiple) => multiple.into_vec().into_iter().collect(),
-                                                    #import_path::SingleOrMultiple::Single(single) => std::iter::once(single).collect(),
-                                                }},
-                                            )
-                                        } else {
-                                            none_ts.clone()
-                                        }
-                                    }),
+                                    &gen_ts_ccbfdac5(
+                                        fi,
+                                        &quote! {match el_feacc53b {
+                                            #import_path::SingleOrMultiple::Multiple(multiple) => multiple.into_vec().into_iter().collect(),
+                                            #import_path::SingleOrMultiple::Single(single) => std::iter::once(single).collect(),
+                                        }},
+                                    ),
                                 );
                             quote! {
                                 if let Some(v_0b85c066) = #ft_ts #method_ts(
