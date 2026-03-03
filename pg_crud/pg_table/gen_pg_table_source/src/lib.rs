@@ -6234,7 +6234,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 } else {
                                     quote! {None}
                                 };
-                                quote! {#fi_6b82a8d0: None}
+                                quote! {#fi_6b82a8d0: #ts}
                             },
                         );
                     let ident_update_params_init_without_primary_k_ts =
