@@ -6120,6 +6120,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 })
             });
         };
+        let gen_ident_read_init_ts = |ts: &dyn ToTokens| {
+            let ts0 = gen_import_path_v_init_ts(
+                &primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3,
+            );
+            quote! {#ident_read_ucc {
+                #primary_k_fi: Some(#ts0),
+                #ts
+            }}
+        };
         let update_many_tests_ts = {
             //todo add Test for trying to update empty vec
             let update_many_only_one_column_tests_ts =
@@ -6211,24 +6220,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 quote::quote! {#fi_b9ec9008: #ts}
                             },
                         );
-                    let expected_read_many_ts = if is_fields_without_primary_k_len_greater_than_one
-                    {
-                        let ts = gen_import_path_v_init_ts(&primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3);
-                        quote! {
-                            previous_read.into_iter().map(|el_a6bc6b2f| #ident_read_ucc {
-                                #primary_k_fi: Some(#ts),
-                                #ident_read_fields_init_without_primary_k_after_update_one_ts
-                            }).collect::<Vec<#ident_read_ucc>>()
-                        }
-                    } else {
-                        let ts = gen_import_path_v_init_ts(&primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3);
-                        quote! {
-                            vec![
-                                #ident_read_ucc {
-                                    #primary_k_fi: Some(#ts),
-                                    #ident_read_fields_init_without_primary_k_after_update_one_ts
-                                }
-                            ]
+                    let expected_read_many_ts = {
+                        let ts = gen_ident_read_init_ts(
+                            &ident_read_fields_init_without_primary_k_after_update_one_ts,
+                        );
+                        if is_fields_without_primary_k_len_greater_than_one {
+                            quote! {previous_read.into_iter().map(|el_a6bc6b2f|#ts).collect::<Vec<#ident_read_ucc>>()}
+                        } else {
+                            quote! {vec![#ts]}
                         }
                     };
                     let assert_eq_ts_b61aac03 = gen_assert_eq_ts(
@@ -6405,7 +6404,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 }
                             },
                         );
-                    let ts = gen_import_path_v_init_ts(&primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3);
                     let assert_eq_ts_0ba29fe7 = gen_assert_eq_ts(
                         &quote! {#ident_read_only_ids_ucc {
                             #primary_k_fi: read_only_ids_el_937c5af3.#primary_k_fi,
@@ -6426,10 +6424,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote! {"564de31c"},
                     );
                     let assert_eq_ts_35a86616 = gen_assert_eq_ts(
-                        &quote! {#ident_read_ucc {
-                            #primary_k_fi: Some(#ts),
-                            #ident_read_fields_init_without_primary_k_after_update_one_ts
-                        }},
+                        &gen_ident_read_init_ts(
+                            &ident_read_fields_init_without_primary_k_after_update_one_ts,
+                        ),
                         &quote! {
                             gen_ident_try_read_one_handle_primary_k(
                                 &url_cloned,
