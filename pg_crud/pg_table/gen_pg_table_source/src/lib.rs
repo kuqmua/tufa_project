@@ -4675,15 +4675,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 )
             }
         };
-        let primary_k_where_equal_uuid_new_v_ts = gen_primary_k_where_equal_ts(
-            &quote! {#primary_k_ft_table_type_ts::new(uuid::Uuid::new_v4())},
-        );
+        let gen_primary_k_where_equal_new_ts = |ts0: &dyn ToTokens| {
+            gen_primary_k_where_equal_ts(&quote! {#primary_k_ft_table_type_ts::new(#ts0)})
+        };
+        let primary_k_where_equal_uuid_new_v_ts =
+            gen_primary_k_where_equal_new_ts(&quote! {uuid::Uuid::new_v4()});
         let gen_primary_k_where_equal_into_inner_ts = |ts0: &dyn ToTokens| {
-            gen_primary_k_where_equal_ts(&quote! {
-                #primary_k_ft_table_type_ts::new(
-                    <#primary_k_ft as pg_crud::PgType>::into_inner(#ts0)
-                )
-            })
+            gen_primary_k_where_equal_new_ts(
+                &quote! {<#primary_k_ft as pg_crud::PgType>::into_inner(#ts0)},
+            )
         };
         let ident_tests_sc = SelfTestsSc::from_display(&ident);
         let ident_dq_ts = dq_ts(&DisplayToScStr::case(&ident));
@@ -5098,7 +5098,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 },
                 &{
                     let ts_99781733 = gen_primary_k_where_equal_into_inner_ts(
-                        &primary_k_ft_read_only_ids_into_read_el_43ab7fb5_primary_k_fi_ts
+                        &primary_k_ft_read_only_ids_into_read_el_43ab7fb5_primary_k_fi_ts,
                     );
                     quote! {
                         itertools::Itertools::sorted_by(
@@ -5236,9 +5236,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     );
                     let assert_ts_56d830a6 = gen_assert_ts(
                         &{
-                            let ts = gen_primary_k_where_equal_into_inner_ts(&quote! {
-                                el_a37bca54.clone()
-                            });
+                            let ts = gen_primary_k_where_equal_into_inner_ts(
+                                &quote! {el_a37bca54.clone()},
+                            );
                             quote! {
                                 gen_try_read_many_order_by_primary_k_with_big_pagination(
                                     &url_cloned,
@@ -5497,9 +5497,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         );
                         let assert_ts_a5027b61 = gen_assert_ts(
                             &{
-                                let ts = gen_primary_k_where_equal_into_inner_ts(&quote!{
-                                    el_1e9c87ce.clone()
-                                });
+                                let ts = gen_primary_k_where_equal_into_inner_ts(&quote!{el_1e9c87ce.clone()});
                                 quote!{
                                     gen_try_read_many_order_by_primary_k_with_big_pagination(
                                         &url_cloned,
@@ -6132,16 +6130,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let is_fields_without_primary_k_len_greater_than_one =
                         fields_without_primary_k.len() > 1;
                     let mb_previous_read_ts = if is_fields_without_primary_k_len_greater_than_one {
-                        // let ts = gen_primary_k_where_equal_into_inner_ts(
-                        //     &primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3
-                        // );
-                        let ts = gen_primary_k_where_equal_ts(&quote! {
-                            #primary_k_ft_table_type_ts::new(
-                                #primary_k_ft_as_pg_type_ts into_inner(
-                                    #primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3
-                                )
-                            )
-                        });
+                        let ts = gen_primary_k_where_equal_into_inner_ts(
+                            &primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3
+                        );
                         quote! {
                             let previous_read = itertools::Itertools::sorted_by(
                                 gen_try_read_many_order_by_primary_k_with_big_pagination(
