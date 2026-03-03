@@ -4776,10 +4776,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let read_only_ids_el_937c5af3_primary_k_fi =
             quote! {read_only_ids_el_937c5af3.#primary_k_fi};
         let (
-            primary_k_ft_read_only_ids_into_read_el_fdc88812_primary_k_fi_ts,
             primary_k_ft_read_only_ids_into_read_el_43ab7fb5_primary_k_fi_ts,
             primary_k_ft_read_only_ids_into_read_el_bf356906_primary_k_fi_ts,
-            primary_k_ft_read_only_ids_into_read_el_80a93892_primary_k_fi_ts,
+            primary_k_ft_read_only_ids_into_read_el_fdc88812_primary_k_fi_ts,
             primary_k_ft_read_only_ids_into_read_el_adf2b4c4_primary_k_fi_ts,
             primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts,
             primary_k_ft_read_only_is_into_read_read_only_ids_el_primary_k_fi_ts_937c5af3,
@@ -4789,10 +4788,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 gen_primary_k_ft_as_pg_type_primary_k_method_call_ts(&ReadOnlyIdsIntoReadSc, &ts)
             };
             (
-                gen_ts(&quote! {el_fdc88812.#primary_k_fi}),
                 gen_ts(&quote! {el_43ab7fb5.#primary_k_fi}),
                 gen_ts(&quote! {el_bf356906.#primary_k_fi}),
-                gen_ts(&quote! {el_80a93892.#primary_k_fi}),
+                gen_ts(&quote! {el_fdc88812.#primary_k_fi}),
                 gen_ts(&quote! {el_adf2b4c4.#primary_k_fi}),
                 gen_ts(&quote! {read_only_ids_from_try_create_one.#primary_k_fi}),
                 gen_ts(&read_only_ids_el_937c5af3_primary_k_fi),
@@ -5178,6 +5176,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             }
         };
+        let vec_primary_k_sorted_read_ts = quote! {
+            itertools::Itertools::sorted(
+                read_only_ids_from_try_create_many
+                .into_iter()
+                .map(|el_fdc88812| {
+                    #primary_k_ft_read_only_ids_into_read_el_fdc88812_primary_k_fi_ts
+                })
+            ).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>()
+        };
         let gen_read_only_ids_from_try_delete_many_sorted_pk_ts =
             |table_ts: &dyn ToTokens, some_ts: &dyn ToTokens| {
                 quote! {
@@ -5248,15 +5255,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     );
                     let assert_eq_ts_78d9a1bd = gen_assert_eq_ts(
                         &quote! {read_only_ids_from_try_delete_many},
-                        &quote! {
-                            itertools::Itertools::sorted(
-                                read_only_ids_from_try_create_many
-                                .into_iter()
-                                .map(|el_80a93892| {
-                                    #primary_k_ft_read_only_ids_into_read_el_80a93892_primary_k_fi_ts
-                                })
-                            ).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>()
-                        },
+                        &vec_primary_k_sorted_read_ts,
                         &quote! {"f58f5572"},
                     );
                     let assert_ts_56d830a6 = gen_assert_ts(
@@ -5493,16 +5492,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         );
                         let assert_eq_ts_10f06d56 = gen_assert_eq_ts(
                             &quote! {read_only_ids_from_try_delete_many},
-                            &quote! {
-                                itertools::Itertools::sorted(
-                                    read_only_ids_from_try_create_many
-                                    .into_iter()
-                                    .map(|el_fdc88812| {
-                                        #primary_k_ft_read_only_ids_into_read_el_fdc88812_primary_k_fi_ts
-                                    }).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>()
-                                    .into_iter()
-                                ).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>()
-                            },
+                            &vec_primary_k_sorted_read_ts,
                             &quote! {"ebbbea6e"},
                         );
                         let assert_ts_a5027b61 = gen_assert_ts(
