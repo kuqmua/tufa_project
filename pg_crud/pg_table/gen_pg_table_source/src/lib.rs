@@ -5312,7 +5312,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     .await
                                     .expect("716e470e")
                                     .into_iter()
-                                ).collect::<Vec<<#primary_k_ft as pg_crud::PgType>::Read>>();
+                                ).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>();
                                 #assert_eq_ts_78d9a1bd
                                 #assert_ts_56d830a6
                             }));
@@ -5489,9 +5489,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     .into_iter()
                                     .map(|el_fdc88812| {
                                         #primary_k_ft_read_only_ids_into_read_el_fdc88812_primary_k_fi_ts
-                                    }).collect::<Vec<<#primary_k_ft as pg_crud::PgType>::Read>>()
+                                    }).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>()
                                     .into_iter()
-                                ).collect::<Vec<<#primary_k_ft as pg_crud::PgType>::Read>>()
+                                ).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>()
                             },
                             &quote! {"ebbbea6e"},
                         );
@@ -5552,7 +5552,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 .await
                                 .expect("d5c23a9d")
                                 .into_iter()
-                            ).collect::<Vec<<#primary_k_ft as pg_crud::PgType>::Read>>();
+                            ).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>();
                             #assert_eq_ts_10f06d56
                             #assert_ts_a5027b61
                         }
@@ -5686,7 +5686,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         .await
                                         .expect("338bcf89")
                                         .into_iter()
-                                    ).collect::<Vec<<#primary_k_ft as pg_crud::PgType>::Read>>();
+                                    ).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>();
                                     #assert_eq_ts_b444d33d
                                     #assert_ts_87ec2ac1
                                 }));
