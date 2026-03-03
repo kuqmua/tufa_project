@@ -489,41 +489,37 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let primary_k_ft_table_type_ts =
         SelfTableTypeUcc::from_type_last_segment(&primary_k_field.type0);
     let gen_as_pg_type_ts = |ts: &dyn ToTokens| {
-        quote! {<#ts as pg_crud::PgType>}
+        quote! {<#ts as pg_crud::#PgTypeUcc>}
     };
     let gen_as_pg_type_path_ts = |ts: &dyn ToTokens| {
         let ts0 = gen_as_pg_type_ts(ts);
         quote! {#ts0::}
     };
+    let primary_k_ft_as_pg_type_read_ucc = {
+        let ts = gen_as_pg_type_path_ts(&primary_k_ft);
+        quote! {#ts #ReadUcc}
+    };
     let pk_as_pg_type_ts = gen_as_pg_type_ts(&primary_k_ft);
     let primary_k_ft_as_pg_type_ts = gen_as_pg_type_path_ts(&primary_k_ft);
-    let gen_as_pg_type_tokens_ts = |ft: &dyn ToTokens, tokens: &dyn ToTokens| {
-        let as_pg_type_ts = gen_as_pg_type_path_ts(&ft);
+    let gen_as_pg_type_tokens_ts = |ts: &dyn ToTokens, tokens: &dyn ToTokens| {
+        let as_pg_type_ts = gen_as_pg_type_path_ts(&ts);
         quote! {#as_pg_type_ts #tokens}
     };
-    let gen_ft_as_pg_type_test_cases_ts = |ft: &dyn ToTokens| {
-        quote! {<#ft as pg_crud::PgTypeTestCases>::}
+    let gen_as_pg_type_test_cases_ts = |ts: &dyn ToTokens| {
+        quote! {<#ts as pg_crud::PgTypeTestCases>::}
     };
-    // let gen_as_pg_type_test_cases_fn_ts = |ft: &dyn ToTokens, tokens: &dyn ToTokens| {
-    //     let ft_ts = gen_ft_as_pg_type_test_cases_ts(&ft);
-    //     quote! {#ts #tokens}
-    // };
-    // let gen_as_pg_type_table_type_ts = |ft: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ft, &TableTypeUcc);
-    // let primary_k_ft_as_pg_type_table_type_ts = gen_as_pg_type_table_type_ts(&primary_k_ft);
-    let gen_as_pg_type_create_ts = |ft: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ft, &CreateUcc);
-    let gen_as_pg_type_select_ts = |ft: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ft, &SelectUcc);
+    let gen_as_pg_type_create_ts = |ts: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ts, &CreateUcc);
+    let gen_as_pg_type_select_ts = |ts: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ts, &SelectUcc);
     let primary_k_ft_as_pg_type_select_ts = gen_as_pg_type_select_ts(&primary_k_ft);
-    let gen_as_pg_type_where_ts = |ft: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ft, &WhereUcc);
+    let gen_as_pg_type_where_ts = |ts: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ts, &WhereUcc);
     let primary_k_ft_as_pg_type_where_ts = gen_as_pg_type_where_ts(&primary_k_ft);
-    let gen_as_pg_type_read_ts = |ft: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ft, &ReadUcc);
+    let gen_as_pg_type_read_ts = |ts: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ts, &ReadUcc);
     let gen_as_pg_type_read_only_ids_ts =
-        |ft: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ft, &ReadOnlyIdsUcc);
+        |ts: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ts, &ReadOnlyIdsUcc);
     let primary_k_ft_as_pg_type_read_ts = gen_as_pg_type_read_ts(&primary_k_ft);
-    let gen_as_pg_type_update_ts = |ft: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ft, &UpdateUcc);
+    let gen_as_pg_type_update_ts = |ts: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ts, &UpdateUcc);
     let gen_as_pg_type_update_for_query_ts =
-        |ft: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ft, &UpdateForQueryUcc);
-    let primary_k_ft_as_pg_type_read_ucc =
-        quote! {<#primary_k_ft as pg_crud::#PgTypeUcc>::#ReadUcc};
+        |ts: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ts, &UpdateForQueryUcc);
     let ident_read_only_ids_ucc = SelfReadOnlyIdsUcc::from_tokens(&ident);
     let ident_delete_many_params_ucc = SelfDeleteManyParamsUcc::from_tokens(&ident);
     let ident_delete_many_payload_ucc = SelfDeleteManyPayloadUcc::from_tokens(&ident);
@@ -4831,7 +4827,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         ShouldAddDotClone::False => Ts2::new(),
                         ShouldAddDotClone::True => quote! {.clone()},
                     };
-                    let ft_ts = gen_ft_as_pg_type_test_cases_ts(&ft_714e077b);
+                    let ft_ts = gen_as_pg_type_test_cases_ts(&ft_714e077b);
                     quote! {
                         #fi_931fabfc: #ft_ts read_only_ids_merged_with_create_into_opt_v_read(
                             #read_only_ids_ts.#fi_931fabfc #mb_dot_clone_ts.expect("f967434c"),
@@ -5036,7 +5032,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let fi_10070b70 = &el0.ident;
                             let ft_b33f54a9 = &el0.type0;
                             if fi == fi_10070b70 {
-                                let ft_ts = gen_ft_as_pg_type_test_cases_ts(&ft_b33f54a9);
+                                let ft_ts = gen_as_pg_type_test_cases_ts(&ft_b33f54a9);
                                 quote! {
                                     if let Some(v_a5f7e6cd) = &common_read_only_ids_returned_from_create_one.#fi_10070b70 {
                                         for el_b3522b7d in #ft_ts read_only_ids_to_two_dims_vec_read_inner(v_a5f7e6cd) {
@@ -5154,7 +5150,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let gen_ft_opt_vec_create_ts = |ft: &Type| {
-            let ts = gen_ft_as_pg_type_test_cases_ts(ft);
+            let ts = gen_as_pg_type_test_cases_ts(ft);
             quote! {#ts #OptVecCreateSc()}
         };
         let gen_ft_opt_vec_create_or_vec_ts = |ft: &Type| {
@@ -5733,7 +5729,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts = gen_read_test_ts(table_read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_name, &gen_ident_ft_opt_vec_create_or_vec_ts, &gen_ident_create_content_el_ts, &|el: &SynFieldWrapper| {
                 let fi = &el.ident;
                 let ft = &el.type0;
-                let ft_ts = gen_ft_as_pg_type_test_cases_ts(ft);
+                let ft_ts = gen_as_pg_type_test_cases_ts(ft);
                 let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
                     &gen_ts_ccbfdac5(fi, &quote! {vec![el_48a3d976]})
                 );
@@ -5755,7 +5751,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &|el: &SynFieldWrapper| {
                     let fi = &el.ident;
                     let ft = &el.type0;
-                    let ft_ts = gen_ft_as_pg_type_test_cases_ts(ft);
+                    let ft_ts = gen_as_pg_type_test_cases_ts(ft);
                     let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
                         &gen_ts_ccbfdac5(fi, &quote! {vec![el_39d1fb5d]}),
                     );
@@ -5787,7 +5783,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &|el: &SynFieldWrapper| {
                     let fi = &el.ident;
                     let ft = &el.type0;
-                    let ft_ts = gen_ft_as_pg_type_test_cases_ts(ft);
+                    let ft_ts = gen_as_pg_type_test_cases_ts(ft);
                     let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
                         &gen_ts_ccbfdac5(fi,&quote!{vec![v_60baba1f]})
                     );
@@ -5818,7 +5814,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &|el: &SynFieldWrapper| {
                             let fi = &el.ident;
                             let ft = &el.type0;
-                            let ft_ts = gen_ft_as_pg_type_test_cases_ts(ft);
+                            let ft_ts = gen_as_pg_type_test_cases_ts(ft);
                             let assert_eq_ts =
                                 gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
                                     &gen_ts_ccbfdac5(fi, &quote! {vec![el_3efa0bb4]}),
@@ -5850,7 +5846,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &|el: &SynFieldWrapper| {
                     let fi = &el.ident;
                     let ft = &el.type0;
-                    let ft_ts = gen_ft_as_pg_type_test_cases_ts(ft);
+                    let ft_ts = gen_as_pg_type_test_cases_ts(ft);
                     let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
                         &gen_ts_ccbfdac5(fi, &quote! {vec![el_c09ef321]}),
                     );
@@ -5872,7 +5868,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &|el: &SynFieldWrapper| {
                     let fi = &el.ident;
                     let ft = &el.type0;
-                    let ft_ts = gen_ft_as_pg_type_test_cases_ts(ft);
+                    let ft_ts = gen_as_pg_type_test_cases_ts(ft);
                     let assert_eq_ts = gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
                         &gen_ts_ccbfdac5(fi, &quote! {vec![el_527b546b]}),
                     );
@@ -5903,7 +5899,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &|el: &SynFieldWrapper| {
                             let fi = &el.ident;
                             let ft = &el.type0;
-                            let ft_ts = gen_ft_as_pg_type_test_cases_ts(ft);
+                            let ft_ts = gen_as_pg_type_test_cases_ts(ft);
                             let assert_eq_ts =
                                 gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
                                     &gen_ts_ccbfdac5(
@@ -6006,7 +6002,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 gen_fields_named_without_primary_k_without_comma_ts(&|el: &SynFieldWrapper| {
                     let fi = &el.ident;
                     let ft = &el.type0;
-                    let ft_ts = gen_ft_as_pg_type_test_cases_ts(ft);
+                    let ft_ts = gen_as_pg_type_test_cases_ts(ft);
                     let is_fields_without_primary_k_len_greater_than_one =
                         fields_without_primary_k.len() > 1;
                     let mb_previous_read_ts = if is_fields_without_primary_k_len_greater_than_one {
@@ -6208,7 +6204,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 gen_fields_named_without_primary_k_without_comma_ts(&|el: &SynFieldWrapper| {
                     let fi = &el.ident;
                     let ft = &el.type0;
-                    let ft_ts = gen_ft_as_pg_type_test_cases_ts(ft);
+                    let ft_ts = gen_as_pg_type_test_cases_ts(ft);
                     let mb_previous_read_ts = if fields_without_primary_k.len() > 1 {
                         quote! {
                             let previous_read = gen_ident_try_read_one_handle_primary_k(
