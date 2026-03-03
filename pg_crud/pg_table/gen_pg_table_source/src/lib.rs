@@ -572,6 +572,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let fields_ts = fields_without_primary_k.iter().map(fn0);
             quote! {#(#fields_ts)*}
         };
+    let pk_as_pg_type_ts = quote! {<#primary_k_ft as pg_crud::PgType>};
     let none_ts = quote! {None};
     let fields_named_with_comma_none_ts =
         gen_fields_named_with_comma_ts(&|_: &SynFieldWrapper| -> Ts2 { none_ts.clone() });
@@ -1929,7 +1930,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let primary_k_ts = {
                     let primary_k_fi_dq_ts = dq_ts(&primary_k_fi);
                     quote! {
-                        acc_88c91f52.push_str(&match <#primary_k_ft as pg_crud::PgType>::#SelectOnlyUpdatedIdsQueryPartSc(
+                        acc_88c91f52.push_str(&match #pk_as_pg_type_ts::#SelectOnlyUpdatedIdsQueryPartSc(
                             &self.#primary_k_fi,
                             #primary_k_fi_dq_ts,
                             incr,
@@ -4681,9 +4682,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let primary_k_where_equal_uuid_new_v_ts =
             gen_primary_k_where_equal_new_ts(&quote! {uuid::Uuid::new_v4()});
         let gen_primary_k_where_equal_into_inner_ts = |ts0: &dyn ToTokens| {
-            gen_primary_k_where_equal_new_ts(
-                &quote! {<#primary_k_ft as pg_crud::PgType>::into_inner(#ts0)},
-            )
+            gen_primary_k_where_equal_new_ts(&quote! {#pk_as_pg_type_ts::into_inner(#ts0)})
         };
         let ident_tests_sc = SelfTestsSc::from_display(&ident);
         let ident_dq_ts = dq_ts(&DisplayToScStr::case(&ident));
@@ -4802,13 +4801,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &ReadOnlyIdsIntoUpdateSc,
                 &read_only_ids_el_937c5af3_primary_k_fi,
             );
-            quote! {
-                <
-                    #primary_k_ft
-                    as
-                    pg_crud::PgType
-                >::Update::from(#method_call_ts)
-            }
+            quote! {#pk_as_pg_type_ts::Update::from(#method_call_ts)}
         };
         let (
             fi_read_only_ids_merged_with_create_into_opt_v_read_read_only_ids_and_create_ts,
