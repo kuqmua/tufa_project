@@ -5992,6 +5992,36 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #ts
             }}
         };
+        let gen_read_inner_into_update_ts =
+            |fi: &dyn ToTokens, ft: &dyn ToTokens, ft_ts: &dyn ToTokens, i_ts: &dyn ToTokens| {
+                quote! {
+                    let update = <
+                        #ft
+                        as
+                        pg_crud::PgTypeTestCases
+                    >::read_inner_into_update_with_new_or_try_new_unwraped({
+                        let mut i_e0d2f9db: usize = 0;
+                        let mut opt_test_case = None;
+                        for el_3a9a65ee in #ft_ts read_only_ids_to_two_dims_vec_read_inner(
+                            &read_only_ids_el_937c5af3.#fi.clone().expect("c4d98a71")
+                        ) {
+                            let mut should_break = false;
+                            for el_bb734c11 in el_3a9a65ee {
+                                if i_e0d2f9db == #i_ts {
+                                    opt_test_case = Some(el_bb734c11);
+                                    should_break = true;
+                                    break;
+                                }
+                                i_e0d2f9db = i_e0d2f9db.checked_add(1).expect("326274d1");
+                            }
+                            if should_break {
+                                break;
+                            }
+                        }
+                        opt_test_case.expect("bd79056e")
+                    });
+                }
+            };
         let update_many_tests_ts = {
             //todo add Test for trying to update empty vec
             let update_many_only_one_column_tests_ts =
@@ -6094,6 +6124,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             quote! {vec![#ts]}
                         }
                     };
+                    let ts_b13210d0 =
+                        gen_read_inner_into_update_ts(&fi, &ft, &ft_ts, &quote! {i_7f181188});
                     let assert_eq_ts_b61aac03 = gen_assert_eq_ts(
                         &quote! {vec![
                             #ident_read_only_ids_ucc {
@@ -6162,31 +6194,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
                             acc_9189f86e.push(futures::FutureExt::boxed(async move {
                                 #mb_previous_read_ts
-                                let update = <
-                                    #ft
-                                    as
-                                    pg_crud::PgTypeTestCases
-                                >::read_inner_into_update_with_new_or_try_new_unwraped({
-                                    let mut i_e0c50b3e: usize = 0;
-                                    let mut opt_test_case = None;
-                                    for el_76abae3a in #ft_ts read_only_ids_to_two_dims_vec_read_inner(
-                                        &read_only_ids_el_937c5af3.#fi.clone().expect("af7d979d")
-                                    ) {
-                                        let mut should_break = false;
-                                        for el_72f5ad12 in el_76abae3a {
-                                            if i_e0c50b3e == i_7f181188 {
-                                                opt_test_case = Some(el_72f5ad12);
-                                                should_break = true;
-                                                break;
-                                            }
-                                            i_e0c50b3e = i_e0c50b3e.checked_add(1).expect("0968dda6");
-                                        }
-                                        if should_break {
-                                            break;
-                                        }
-                                    }
-                                    opt_test_case.expect("769983ba")
-                                });
+                                #ts_b13210d0
                                 #assert_eq_ts_b61aac03
                                 #assert_eq_ts_10783673
                             }));
@@ -6270,6 +6278,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 quote! {#fi_8c7d4975: #ts}
                             },
                         );
+                    let ts_a903994d =
+                        gen_read_inner_into_update_ts(&fi, &ft, &ft_ts, &quote! {i_26824592});
                     let assert_eq_ts_0ba29fe7 = gen_assert_eq_ts(
                         &quote! {#ident_read_only_ids_ucc {
                             #primary_k_fi: read_only_ids_el_937c5af3.#primary_k_fi,
@@ -6316,31 +6326,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
                             acc_9189f86e.push(futures::FutureExt::boxed(async move {
                                 #mb_previous_read_ts
-                                let update = <
-                                    #ft
-                                    as
-                                    pg_crud::PgTypeTestCases
-                                >::read_inner_into_update_with_new_or_try_new_unwraped({
-                                    let mut i_e0d2f9db: usize = 0;
-                                    let mut opt_test_case = None;
-                                    for el_3a9a65ee in #ft_ts read_only_ids_to_two_dims_vec_read_inner(
-                                        &read_only_ids_el_937c5af3.#fi.clone().expect("c4d98a71")
-                                    ) {
-                                        let mut should_break = false;
-                                        for el_bb734c11 in el_3a9a65ee {
-                                            if i_e0d2f9db == i_26824592 {
-                                                opt_test_case = Some(el_bb734c11);
-                                                should_break = true;
-                                                break;
-                                            }
-                                            i_e0d2f9db = i_e0d2f9db.checked_add(1).expect("326274d1");
-                                        }
-                                        if should_break {
-                                            break;
-                                        }
-                                    }
-                                    opt_test_case.expect("bd79056e")
-                                });
+                                #ts_a903994d
                                 #assert_eq_ts_0ba29fe7
                                 #assert_eq_ts_35a86616
                             }));
