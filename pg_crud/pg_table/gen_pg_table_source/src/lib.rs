@@ -5178,6 +5178,31 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             }
         };
+        let gen_read_only_ids_from_try_delete_many_sorted_pk_ts =
+            |table_ts: &dyn ToTokens, some_ts: &dyn ToTokens| {
+                quote! {
+                    let read_only_ids_from_try_delete_many = itertools::Itertools::sorted(
+                        #ident::try_delete_many_handle(
+                            &url_cloned,
+                            #ident_delete_many_params_ucc {
+                                //todo rewrite it using new\try_new?
+                                payload: #ident_delete_many_payload_ucc {
+                                    where_many: #opt_ident_where_many_ucc(Some(
+                                        #ident_where_many_ucc {
+                                            #primary_k_fi: Some(#some_ts),
+                                            #opt_ident_where_many_ts_dc1232c7
+                                        }
+                                    ))
+                                }
+                            },
+                            &#table_ts
+                        )
+                        .await
+                        .expect("716e470e")
+                        .into_iter()
+                    ).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>();
+                }
+            };
         let create_many_tests_ts = {
             let create_many_tests_ts = gen_fields_named_without_primary_k_without_comma_ts(
                 &|el: &SynFieldWrapper| {
@@ -5265,6 +5290,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         },
                         &quote! {"4e88679a"},
                     );
+                    let ts_08a18039 = gen_read_only_ids_from_try_delete_many_sorted_pk_ts(
+                        &quote! {table_create_many_cloned},
+                        &quote! {
+                            gen_pg_type_where_try_new_or_primary_ks(&read_only_ids_from_try_create_many)
+                        },
+                    );
                     quote! {
                         for el_fce0969c in #ft_opt_vec_create_or_vec_ts
                             .chunks(10)
@@ -5291,28 +5322,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     &table_create_many_cloned.clone()
                                 ).await.expect("5eecedc4");
                                 #assert_eq_ts_b47328e3
-                                let read_only_ids_from_try_delete_many = itertools::Itertools::sorted(
-                                    #ident::try_delete_many_handle(
-                                        &url_cloned,
-                                        #ident_delete_many_params_ucc {
-                                            //todo rewrite it using new\try_new?
-                                            payload: #ident_delete_many_payload_ucc {
-                                                where_many: #opt_ident_where_many_ucc(Some(
-                                                    #ident_where_many_ucc {
-                                                        #primary_k_fi: Some(gen_pg_type_where_try_new_or_primary_ks(
-                                                            &read_only_ids_from_try_create_many
-                                                        )),
-                                                        #opt_ident_where_many_ts_dc1232c7
-                                                    }
-                                                ))
-                                            }
-                                        },
-                                        &table_create_many_cloned
-                                    )
-                                    .await
-                                    .expect("716e470e")
-                                    .into_iter()
-                                ).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>();
+                                #ts_08a18039
                                 #assert_eq_ts_78d9a1bd
                                 #assert_ts_56d830a6
                             }));
@@ -5521,6 +5531,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             },
                             &quote!{"d79c0af3"}
                         );
+                        let ts_83ae6884 = gen_read_only_ids_from_try_delete_many_sorted_pk_ts(
+                            &quote!{table_7e35b1ce},
+                            &quote!{
+                                gen_pg_type_where_try_new_or_primary_ks(&read_only_ids_from_try_create_many)
+                            }
+                        );
                         quote! {
                             let ident_vec_create = std::iter::repeat_n(
                                 ident_create_default_cloned.clone(),//todo mb remove
@@ -5534,25 +5550,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 &table_7e35b1ce
                             ).await.expect("d775179f");
                             #assert_eq_ts_03eaa791
-                            let read_only_ids_from_try_delete_many = itertools::Itertools::sorted(
-                                #ident::try_delete_many_handle(
-                                    &url_cloned,
-                                    #ident_delete_many_params_ucc {
-                                        payload: #ident_delete_many_payload_ucc {
-                                            where_many: #opt_ident_where_many_ucc(Some(
-                                                #ident_where_many_ucc {
-                                                    #primary_k_fi: Some(gen_pg_type_where_try_new_or_primary_ks(&read_only_ids_from_try_create_many)),
-                                                    #opt_ident_where_many_ts_dc1232c7
-                                                }
-                                            )),
-                                        },
-                                    },
-                                    &table_7e35b1ce
-                                )
-                                .await
-                                .expect("d5c23a9d")
-                                .into_iter()
-                            ).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>();
+                            #ts_83ae6884
                             #assert_eq_ts_10f06d56
                             #assert_ts_a5027b61
                         }
@@ -5648,6 +5646,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let ts_490b2aa3 = gen_primary_k_where_equal_into_inner_ts(
                             &primary_k_ft_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_k_fi_ts
                         );
+                        let ts_7a8c2dcc = gen_read_only_ids_from_try_delete_many_sorted_pk_ts(
+                            &quote! {table_7e35b1ce},
+                            &quote! {
+                                gen_pg_type_where_try_new_primary_k(
+                                    pg_crud::Operator::Or,
+                                    vec![#ts_490b2aa3]
+                                )
+                            },
+                        );
                         quote! {
                             for #ElSc in #method_call_ts {
                                 let table_7e35b1ce = #table_test_name_fi_ts.clone();
@@ -5663,30 +5670,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         &table_7e35b1ce
                                     ).await;
                                     #ts
-                                    let read_only_ids_from_try_delete_many = itertools::Itertools::sorted(
-                                        #ident::try_delete_many_handle(
-                                            &url_cloned,
-                                            #ident_delete_many_params_ucc {
-                                                payload: #ident_delete_many_payload_ucc {
-                                                    where_many: #opt_ident_where_many_ucc(Some(
-                                                        #ident_where_many_ucc {
-                                                            #primary_k_fi: Some(
-                                                                gen_pg_type_where_try_new_primary_k(
-                                                                    pg_crud::Operator::Or,
-                                                                    vec![#ts_490b2aa3]
-                                                                )
-                                                            ),
-                                                            #opt_ident_where_many_ts_dc1232c7
-                                                        }
-                                                    )),
-                                                },
-                                            },
-                                            &table_7e35b1ce
-                                        )
-                                        .await
-                                        .expect("338bcf89")
-                                        .into_iter()
-                                    ).collect::<Vec<#primary_k_ft_as_pg_type_read_ts>>();
+                                    #ts_7a8c2dcc
                                     #assert_eq_ts_b444d33d
                                     #assert_ts_87ec2ac1
                                 }));
