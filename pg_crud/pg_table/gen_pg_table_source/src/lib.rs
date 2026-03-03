@@ -5057,13 +5057,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let ident_read_fields_init_without_primary_k_ts =
                 gen_fields_named_without_primary_k_with_comma_ts(
                     &|syn_field_wrapper: &SynFieldWrapper| {
-                        let fi_5bea122e = &syn_field_wrapper.ident;
-                        let ft_f7f832df = &syn_field_wrapper.type0;
+                        let fi = &syn_field_wrapper.ident;
+                        let ft = &syn_field_wrapper.type0;
                         let ts = gen_import_path_v_init_ts(&PgCrudDefaultOptSomeVecOneElCall);
                         quote! {
-                            #fi_5bea122e: el_f108da5a.#fi_5bea122e.as_ref().map_or_else(
+                            #fi: el_f108da5a.#fi.as_ref().map_or_else(
                                 || Some(#ts),
-                                <#ft_f7f832df as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el
+                                <#ft as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el
                             )
                         }
                     },
@@ -5678,7 +5678,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 gen_read_only_ids_merged_with_create_into_where_assert_eq_ts(
                                     &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
                                         let fi0 = &el0.ident;
-                                        let ft_5f626ae9 = &el0.type0;
+                                        let ft0 = &el0.type0;
                                         if fi0 == primary_k_fi {
                                             some_primary_k_where_init_ts.clone()
                                         } else if fi0 == fi {
@@ -5688,7 +5688,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                     EqualOrEqualUsingFields::EqualUsingFields => &ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc
                                                 };
                                                 quote! {
-                                                    <#ft_5f626ae9 as pg_crud::PgTypeTestCases>::#method_ts(
+                                                    <#ft0 as pg_crud::PgTypeTestCases>::#method_ts(
                                                         read_only_ids_returned_from_create_one.#fi0.clone().expect("11c3740b"),
                                                         ident_create.#fi0.clone()
                                                     )
@@ -6069,14 +6069,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ident_read_only_ids_upper_fields_init_without_primary_k_ts =
                         gen_fields_named_without_primary_k_with_comma_ts(
                             &|syn_field_wrapper: &SynFieldWrapper| {
-                                let fi_867b4800 = &syn_field_wrapper.ident;
-                                let ft_42b4a146 = &syn_field_wrapper.type0;
-                                let ts = if fi == fi_867b4800 {
-                                    quote! {Some(<#ft_42b4a146 as pg_crud::PgTypeTestCases>::update_to_read_only_ids(&update))}
+                                let fi0 = &syn_field_wrapper.ident;
+                                let ft0 = &syn_field_wrapper.type0;
+                                let ts = if fi == fi0 {
+                                    quote! {Some(<#ft0 as pg_crud::PgTypeTestCases>::update_to_read_only_ids(&update))}
                                 } else {
                                     quote! {None}
                                 };
-                                quote! {#fi_867b4800: #ts}
+                                quote! {#fi0: #ts}
                             },
                         );
                     let ident_update_params_init_without_primary_k_ts =
@@ -6094,14 +6094,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ident_read_fields_init_without_primary_k_after_update_one_ts =
                         gen_fields_named_without_primary_k_with_comma_ts(
                             &|syn_field_wrapper: &SynFieldWrapper| {
-                                let fi_b9ec9008 = &syn_field_wrapper.ident;
-                                let ts = if fi == fi_b9ec9008 {
+                                let fi0 = &syn_field_wrapper.ident;
+                                let ts = if fi == fi0 {
                                     let ts0 = gen_import_path_v_init_ts(&{
-                                        let ft_0490079a = &syn_field_wrapper.type0;
+                                        let ft0 = &syn_field_wrapper.type0;
                                         quote! {
-                                            <#ft_0490079a as pg_crud::PgTypeTestCases>::previous_read_merged_with_opt_update_into_read(
-                                                <#ft_0490079a as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
-                                                    &read_only_ids_el_937c5af3.#fi_b9ec9008.clone().expect("96213542")
+                                            <#ft0 as pg_crud::PgTypeTestCases>::previous_read_merged_with_opt_update_into_read(
+                                                <#ft0 as pg_crud::PgTypeTestCases>::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                                                    &read_only_ids_el_937c5af3.#fi0.clone().expect("96213542")
                                                 ).expect("bf0d6f55").#VSc,
                                                 Some(#UpdateSc.clone())
                                             )
@@ -6109,9 +6109,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     });
                                     quote! {Some(#ts0)}
                                 } else {
-                                    quote! {el_a6bc6b2f.#fi_b9ec9008}
+                                    quote! {el_a6bc6b2f.#fi0}
                                 };
-                                quote::quote! {#fi_b9ec9008: #ts}
+                                quote::quote! {#fi0: #ts}
                             },
                         );
                     let expected_read_many_ts = {
@@ -6227,14 +6227,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ident_read_only_ids_upper_fields_init_without_primary_k_ts =
                         gen_fields_named_without_primary_k_with_comma_ts(
                             &|el0: &SynFieldWrapper| {
-                                let fi_6b82a8d0 = &el0.ident;
-                                let ft_ad043276 = &el0.type0;
-                                let ts = if fi == fi_6b82a8d0 {
-                                    quote! {Some(<#ft_ad043276 as pg_crud::PgTypeTestCases>::update_to_read_only_ids(&update))}
+                                let fi0 = &el0.ident;
+                                let ft0 = &el0.type0;
+                                let ts = if fi == fi0 {
+                                    quote! {Some(<#ft0 as pg_crud::PgTypeTestCases>::update_to_read_only_ids(&update))}
                                 } else {
                                     quote! {None}
                                 };
-                                quote! {#fi_6b82a8d0: #ts}
+                                quote! {#fi0: #ts}
                             },
                         );
                     let ident_update_params_init_without_primary_k_ts =
