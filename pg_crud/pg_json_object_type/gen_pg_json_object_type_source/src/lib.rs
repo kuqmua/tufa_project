@@ -269,21 +269,16 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             #import::#DefaultOptSomeVecOneElUcc::#DefaultOptSomeVecOneElSc
         };
         let default_but_opt_is_some_call_ts = quote!{#default_but_opt_is_some_ts()};
-        let gen_ident_as_default_but_opt_is_some_call_ts = |ident_ts: &dyn ToTokens|{
-            quote!{
-                <#ident_ts as #import::#DefaultOptSomeVecOneElUcc>::#DefaultOptSomeVecOneElSc()
-            }
+        let gen_ident_as_default_but_opt_is_some_ts = |ts: &dyn ToTokens|quote!{
+            <#ts as #import::#DefaultOptSomeVecOneElUcc>::#DefaultOptSomeVecOneElSc
         };
-        let gen_ident_as_default_but_opt_is_some_ts = |ident_ts_2e6aba01: &dyn ToTokens|quote!{
-            <
-                #ident_ts_2e6aba01
-                as
-                #import::#DefaultOptSomeVecOneElUcc
-            >::#DefaultOptSomeVecOneElSc
+        let gen_ident_as_default_but_opt_is_some_call_ts = |ts: &dyn ToTokens|{
+            let ts0 = gen_ident_as_default_but_opt_is_some_ts(ts);
+            quote!{#ts0()}
         };
         let import_v_ts = quote!{#import::#VUcc};
-        let wrap_into_v_decl_ts = |ident_ts: &dyn ToTokens|{
-            quote!{#import_v_ts<#ident_ts>}
+        let wrap_into_v_decl_ts = |ts: &dyn ToTokens|{
+            quote!{#import_v_ts<#ts>}
         };
         let wrap_into_v_init_ts = |ts: &dyn ToTokens|{
             quote!{#import_v_ts { #VSc: #ts }}
@@ -340,8 +335,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         let gen_type_as_import_ts = |first_type_ts: &dyn ToTokens, second_type_ts: &dyn ToTokens|{
             quote! {<#first_type_ts as #import::#second_type_ts>}
         };
-        let gen_type_as_pg_json_type_ts = |type_ts: &dyn ToTokens| {
-            gen_type_as_import_ts(&type_ts, &PgJsonTypeUcc)
+        let gen_type_as_pg_json_type_ts = |ts: &dyn ToTokens| {
+            gen_type_as_import_ts(&ts, &PgJsonTypeUcc)
         };
         let ident_as_import_pg_json_type_ts = gen_type_as_pg_json_type_ts(&ident);
         let ident_stdrt_not_null_as_import_pg_json_type_ts = gen_type_as_pg_json_type_ts(&ident_stdrt_not_null_ucc);
@@ -399,14 +394,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 IsStdrtWithId::True => &vec_syn_field_with_id,
             }
         };
-        let gen_type_as_pg_type_ts = |type_ts: &dyn ToTokens| {
-            gen_type_as_import_ts(&type_ts, &PgTypeUcc)
+        let gen_type_as_pg_type_ts = |ts: &dyn ToTokens| {
+            gen_type_as_import_ts(&ts, &PgTypeUcc)
         };
-        let gen_type_as_pg_json_type_test_cases_ts = |type_ts: &dyn ToTokens| {
-            gen_type_as_import_ts(&type_ts, &PgJsonTypeTestCasesUcc)
+        let gen_type_as_pg_json_type_test_cases_ts = |ts: &dyn ToTokens| {
+            gen_type_as_import_ts(&ts, &PgJsonTypeTestCasesUcc)
         };
-        let gen_type_as_pg_type_test_cases_ts = |type_ts: &dyn ToTokens| {
-            gen_type_as_import_ts(&type_ts, &PgTypeTestCasesUcc)
+        let gen_type_as_pg_type_test_cases_ts = |ts: &dyn ToTokens| {
+            gen_type_as_import_ts(&ts, &PgTypeTestCasesUcc)
         };
         let self_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&SelfUcc);
         let ident_stdrt_not_null_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(
@@ -421,13 +416,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         let ident_with_id_stdrt_not_null_read_only_ids_ucc = SelfReadOnlyIdsUcc::from_tokens(&ident_with_id_stdrt_not_null_ucc);
         let ident_with_id_stdrt_not_null_where_ucc = SelfWhereUcc::from_tokens(&ident_with_id_stdrt_not_null_ucc);
         let ident_ts = {
-            let gen_struct_ident_ts = |ident_2c1c6b9c: &dyn ToTokens| StructOrEnumDeriveTsStreamBuilder::new()
+            let gen_struct_ident_ts = |ts: &dyn ToTokens| StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
                 .derive_copy()
                 .build_struct(
-                    &ident_2c1c6b9c,
+                    &ts,
                     &Ts2::new(),
                     &quote!{;}
                 );
@@ -616,9 +611,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         | gen_type_as_pg_json_type_ts(
             &syn_field_wrapper.type0
         );
-        let gen_gen_impl_location_lib_to_err_string_wrapper_ts = |ident_ts_f6440ce9: &dyn ToTokens| gen_impl_to_err_string_ts(
+        let gen_gen_impl_location_lib_to_err_string_wrapper_ts = |ts: &dyn ToTokens| gen_impl_to_err_string_ts(
             &Ts2::new(),
-            &ident_ts_f6440ce9,
+            &ts,
             &Ts2::new(),
             &quote! {format!("{self:?}")}
         );
@@ -716,8 +711,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             };
             let impl_pub_new_for_ident_table_type_or_ident_create_ts = {
                 let params_ts = {
-                    let gen_wrap_into_v_param_ts = |type_ts: &dyn ToTokens| {
-                        quote! {#VSc: #type_ts}
+                    let gen_wrap_into_v_param_ts = |ts: &dyn ToTokens| {
+                        quote! {#VSc: #ts}
                     };
                     match &pattern {
                         Pattern::Stdrt => match &is_nullable {
@@ -850,13 +845,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 #ident_table_type_common_ts
             }
         };
-        let gen_type_as_pg_json_type_create_ts = |type_ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&type_ts, &pg_json_type_subtype_create);
-        let gen_type_as_pg_json_type_create_for_query_ts = |type_ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&type_ts, &pg_json_type_subtype_create_for_query);
+        let gen_type_as_pg_json_type_create_ts = |ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&ts, &pg_json_type_subtype_create);
+        let gen_type_as_pg_json_type_create_for_query_ts = |ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&ts, &pg_json_type_subtype_create_for_query);
         let ident_create_ts = {
             let ident_create_common_ts = gen_ident_table_type_or_ident_create_common_ts(&PgJsonTypeSubtypeTableTypeOrCreate::Create);
-            let gen_impl_display_for_ident_create_ts = |ident_ts_39851a31: &dyn ToTokens| gen_impl_display_ts(
+            let gen_impl_display_for_ident_create_ts = |ts: &dyn ToTokens| gen_impl_display_ts(
                 &Ts2::new(),
-                &ident_ts_39851a31,
+                &ts,
                 &Ts2::new(),
                 &quote! {write!(f, "{self:?}")}
             );
@@ -1029,25 +1024,25 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 #mb_ident_with_id_stdrt_not_null_create_for_query_ts
             }
         };
-        let gen_sqlx_types_json_type_decl_wrapper_ts = |ident_ts_dff2e4a1: &dyn ToTokens| gen_impl_sqlx_type_for_ident_ts(
-            &ident_ts_dff2e4a1,
+        let gen_sqlx_types_json_type_decl_wrapper_ts = |ts: &dyn ToTokens| gen_impl_sqlx_type_for_ident_ts(
+            &ts,
             &gen_sqlx_types_json_type_decl_ts(&SelfUcc)
         );
-        let gen_impl_sqlx_decode_sqlx_pg_for_ident_wrapper_ts = |ident_ts_65e11453: &dyn ToTokens| gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
-            &ident_ts_65e11453,
+        let gen_impl_sqlx_decode_sqlx_pg_for_ident_wrapper_ts = |ts: &dyn ToTokens| gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
+            &ts,
             &gen_sqlx_types_json_type_decl_ts(&SelfUcc),
             &quote! {Ok(v.0)}
         );
-        let gen_v_type_ts = |type_ts: &dyn ToTokens| {
-            quote! {#VSc: #type_ts}
+        let gen_v_type_ts = |ts: &dyn ToTokens| {
+            quote! {#VSc: #ts}
         };
         let gen_pub_const_new_v_type_content_self_v_ts = |ts: &dyn ToTokens|gen_pub_const_new_ts(
             &MustUse,
             &gen_v_type_ts(&ts),
             &self_v_ts
         );
-        let gen_unique_vec_wrapper_ts = |type_ts: &dyn ToTokens| {
-            quote! {#import::NotEmptyUniqueVec<#type_ts>}
+        let gen_unique_vec_wrapper_ts = |ts: &dyn ToTokens| {
+            quote! {#import::NotEmptyUniqueVec<#ts>}
         };
         let self_some_pg_crud_default_opt_some_vec_one_el_call_ts = quote! {
             Self(Some(#PgCrudDefaultOptSomeVecOneElCall))
@@ -1055,8 +1050,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         let self_some_pg_crud_default_opt_some_vec_one_el_max_page_size_call_ts = quote! {
             Self(Some(#PgCrudDefaultOptSomeVecOneElMaxPageSizeCall))
         };
-        let gen_type_as_pg_json_type_update_ts = |type_ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&type_ts, &pg_json_type_subtype_update);
-        let gen_type_as_pg_json_type_update_for_query_ts = |type_ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&type_ts, &pg_json_type_subtype_update_for_query);
+        let gen_type_as_pg_json_type_update_ts = |ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&ts, &pg_json_type_subtype_update);
+        let gen_type_as_pg_json_type_update_for_query_ts = |ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&ts, &pg_json_type_subtype_update_for_query);
         let self_as_pg_json_type_ts = gen_type_as_pg_json_type_ts(&SelfUcc);
         let self_as_pg_json_type_update_ts = gen_type_as_pg_json_type_update_ts(&SelfUcc);
         let self_as_pg_json_type_create_for_query_ts = gen_type_as_pg_json_type_create_for_query_ts(&SelfUcc);
@@ -1064,7 +1059,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         let pg_crud_path_pg_json_type_uuid_uuid_update_for_query_ts = gen_type_as_pg_json_type_update_for_query_ts(&uuid_uuid_as_not_null_jsonb_string_ts);
         let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
         let ident_with_id_stdrt_not_null_select_ucc = SelfSelectUcc::from_tokens(&ident_with_id_stdrt_not_null_ucc);
-        let gen_type_as_pg_json_type_select_ts = |type_ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&type_ts, &pg_json_type_subtype_select);
+        let gen_type_as_pg_json_type_select_ts = |ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&ts, &pg_json_type_subtype_select);
         let ident_stdrt_not_null_as_pg_json_type_select_ts = gen_type_as_pg_json_type_select_ts(&ident_stdrt_not_null_ucc);
         let ident_with_id_arr_not_null_as_pg_json_type_select_ts = gen_type_as_pg_json_type_select_ts(&ident_with_id_arr_not_null_ucc);
         let ident_with_id_stdrt_not_null_select_sc = SelfSelectSc::from_tokens(&ident_with_id_stdrt_not_null_ucc);
@@ -1932,8 +1927,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         let gen_fi_dq_ts = |v: &SynFieldWrapper| {
             dq_ts(&v.ident)
         };
-        let gen_type_as_pg_json_type_read_ts = |type_ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&type_ts, &pg_json_type_subtype_read);
-        let gen_type_as_pg_json_type_read_inner_ts = |type_ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&type_ts, &pg_json_type_subtype_read_inner);
+        let gen_type_as_pg_json_type_read_ts = |ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&ts, &pg_json_type_subtype_read);
+        let gen_type_as_pg_json_type_read_inner_ts = |ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&ts, &pg_json_type_subtype_read_inner);
         let gen_ident_or_ident_with_id_read_or_read_inner_fields_decl_ts = |
             is_stdrt_with_id: &IsStdrtWithId,
             read_with_or_without_annotation_or_inner: &ReadWithOrWithoutAnnotationOrInner
@@ -2019,7 +2014,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 };
                 gen_ident_read_ts(&ident_read_ucc, &ts, derive_serde_deserialize)
             };
-            let gen_ident_read_try_from_er_ts = |ident_ts_df27c0c4: &dyn ToTokens|StructOrEnumDeriveTsStreamBuilder::new()
+            let gen_ident_read_try_from_er_ts = |ts: &dyn ToTokens|StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_serde_serialize()
@@ -2027,7 +2022,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 .derive_thiserror_error()
                 .derive_location_lib_location()
                 .build_enum(
-                    &ident_ts_df27c0c4,
+                    &ts,
                     &Ts2::new(),
                     &quote!{{
                         #AllFieldsAreNoneUcc {
@@ -2274,16 +2269,16 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             });
             quote! {{#(#ts),*}}
         };
-        let gen_impl_sqlx_decode_ts = |ident_ts_caa12b2f: &dyn ToTokens|{
+        let gen_impl_sqlx_decode_ts = |ts: &dyn ToTokens|{
             gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
-                &ident_ts_caa12b2f,
+                &ts,
                 &quote!{sqlx::types::Json<Self>},
                 &quote!{Ok(v.0)}
             )
         };
-        let gen_impl_sqlx_type_ts = |ident_ts_58d92fbf: &dyn ToTokens|{
+        let gen_impl_sqlx_type_ts = |ts: &dyn ToTokens|{
             gen_impl_sqlx_type_for_ident_ts(
-                &ident_ts_58d92fbf,
+                &ts,
                 &quote!{sqlx::types::Json<Self>}
             )
         };
@@ -2539,8 +2534,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 )
             };
             let ident_update_ts = {
-                let gen_opt_ident_type_ts = |ident_ts_dee7d090: &dyn ToTokens| wrap_into_scopes_dot_comma_ts(
-                    &gen_opt_type_decl_ts(&ident_ts_dee7d090)
+                let gen_opt_ident_type_ts = |ts: &dyn ToTokens| wrap_into_scopes_dot_comma_ts(
+                    &gen_opt_type_decl_ts(&ts)
                 );
                 let (
                     derive_serde_deserialize,
@@ -3105,8 +3100,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &ts
                     )
                 };
-                let gen_opt_ident_type_ts = |ident_ts_5a4646ae: &dyn ToTokens| wrap_into_scopes_dot_comma_ts(
-                    &gen_opt_type_decl_ts(&ident_ts_5a4646ae)
+                let gen_opt_ident_type_ts = |ts: &dyn ToTokens| wrap_into_scopes_dot_comma_ts(
+                    &gen_opt_type_decl_ts(&ts)
                 );
                 let gen_ident_update_for_query_stdrt_not_null_ts = |is_stdrt_with_id: &IsStdrtWithId| {
                     gen_unique_vec_wrapper_ts(match &is_stdrt_with_id {
@@ -3591,7 +3586,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     }
                 }
             };
-            let gen_update_delete_create_arr_ts = |format_ts: &dyn ToTokens|{
+            let gen_update_delete_create_arr_ts = |ts: &dyn ToTokens|{
                 let if_write_is_err_ts = gen_if_write_is_err_ts(
                     &quote!{acc_2e2ad041, "{v_8333f8f4}"},
                     &return_err_query_part_er_write_into_buffer_ts
@@ -3680,7 +3675,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     } else {
                         format!(" || jsonb_build_arr({create_query_part_acc})")
                     };
-                    Ok (format!(#format_ts))
+                    Ok (format!(#ts))
                 }
             };
             let gen_update_query_part_arr_not_null_ts = |pg_type_or_pg_json_type: &PgTypeOrPgJsonType|{
@@ -6590,16 +6585,16 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
                 read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts
             ) = {
-                let gen_ts = |method_name_ts: &dyn ToTokens|match &is_nullable {
+                let gen_ts = |ts: &dyn ToTokens|match &is_nullable {
                     IsNullable::False => match &pattern {
                         Pattern::Stdrt => {
-                            let ts = vec_syn_field.iter().map(|el0| {
+                            let ts0 = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let ft = &el0.type0;
                                 let fi_ucc = &ToTokensToUccTs::case_or_panic(&fi);
                                 let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
                                 quote! {
-                                    if let Some(v_a2900ac9) = #ft_as_pg_json_type_test_cases_ts::#method_name_ts(
+                                    if let Some(v_a2900ac9) = #ft_as_pg_json_type_test_cases_ts::#ts(
                                         #ReadOnlyIdsSc.0.#VSc.#fi,
                                         #CreateSc.#fi
                                     ) {
@@ -6654,7 +6649,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             quote! {
                                 match #import::NotEmptyUniqueVec::try_new({
                                     let mut acc_a94bd7fb = Vec::new();
-                                    #(#ts)*
+                                    #(#ts0)*
                                     acc_a94bd7fb
                                 }) {
                                     Ok(v_ebe930f0) => Some(v_ebe930f0),
@@ -6671,7 +6666,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 let ft = &el0.type0;
                                 let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
                                 quote! {
-                                    let #fi = #ft_as_pg_json_type_test_cases_ts::#method_name_ts(
+                                    let #fi = #ft_as_pg_json_type_test_cases_ts::#ts(
                                         read_only_ids_629675e2.0.#VSc.#fi,
                                         create_82796400.#fi
                                     );
@@ -6687,7 +6682,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 let last_ts = gen_fi_is_some_ts(&last.ident);
                                 quote! {#(#rest_ts)* #last_ts}
                             };
-                            let ts = vec_syn_field.iter().map(|el0| {
+                            let ts0 = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let el_fi_ucc = ElSelfUcc::from_tokens(&fi);
                                 quote! {
@@ -6777,7 +6772,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         #(#init_ts)*
                                         if #if_some_ts {
                                             let mut all_fields_acc = vec![];
-                                            #(#ts)*
+                                            #(#ts0)*
                                             match #import::NotEmptyUniqueVec::try_new({
                                                 all_fields_acc.push(#IdSc);
                                                 all_fields_acc
@@ -6810,7 +6805,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         }));
                         quote! {
                             match (#ReadOnlyIdsSc.0.#VSc, #CreateSc.0) {
-                                (Some(read_only_ids_3e2e30c8), Some(create_79039a2f)) => #ident_ts_a8bc30fc::#method_name_ts(
+                                (Some(read_only_ids_3e2e30c8), Some(create_79039a2f)) => #ident_ts_a8bc30fc::#ts(
                                     read_only_ids_3e2e30c8,
                                     create_79039a2f
                                 ).map_or_else(|| None, |v_35662b3a| match #import::NotEmptyUniqueVec::try_new({

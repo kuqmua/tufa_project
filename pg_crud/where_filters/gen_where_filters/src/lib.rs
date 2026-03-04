@@ -162,9 +162,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             )
     };
     let gen_impl_default_opt_some_vec_one_el_ts =
-        |generic: &Generic,
-         ident: &dyn ToTokens,
-         impl_default_opt_some_vec_one_el_extra_fields_ts: &dyn ToTokens| {
+        |generic: &Generic, ident: &dyn ToTokens, ts: &dyn ToTokens| {
             gen_impl_default_opt_some_vec_one_el_ts(
             &match &generic {
                 Generic::False => Ts2::new(),
@@ -184,7 +182,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             &quote! {
                 Self {
                     operator: #PgCrudCommonDefaultOptSomeVecOneElCall,
-                    #impl_default_opt_some_vec_one_el_extra_fields_ts
+                    #ts
                 }
             },
         )
@@ -298,9 +296,9 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         |vec_length_ts: &dyn ToTokens, kind_of_unsigned_part_of_i32: &KindOfUnsignedPartOfI32| {
             quote! {pub #DimsSc: BoundedVec<#import::#kind_of_unsigned_part_of_i32, #vec_length_ts>}
         };
-    let gen_match_incr_checked_add_one_init_ts = |ident_ts: &dyn ToTokens| {
+    let gen_match_incr_checked_add_one_init_ts = |ts: &dyn ToTokens| {
         quote! {
-            let #ident_ts = match #import::incr_checked_add_one_returning_incr(#IncrSc) {
+            let #ts = match #import::incr_checked_add_one_returning_incr(#IncrSc) {
                 Ok(v_25d59e01) => v_25d59e01,
                 Err(#ErSc) => {
                     return Err(#ErSc);
@@ -337,15 +335,15 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         }
     };
     let dims_ies_comma_ts = quote! {#DimsIesSc,};
-    let gen_mb_dims_decl_pub_v_t_ts = |mb_dims_decl_ts: &dyn ToTokens| {
+    let gen_mb_dims_decl_pub_v_t_ts = |ts: &dyn ToTokens| {
         quote! {
-            #mb_dims_decl_ts
+            #ts
             #pub_v_t_ts
         }
     };
-    let gen_mb_dims_default_init_v_default_ts = |mb_dims_default_init_ts: &dyn ToTokens| {
+    let gen_mb_dims_default_init_v_default_ts = |ts: &dyn ToTokens| {
         quote! {
-            #mb_dims_default_init_ts
+            #ts
             #v_default_opt_some_vec_one_el_ts
         }
     };
@@ -895,9 +893,9 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 dims_default_init_comma_ts.clone(),
                                 {
                                     let (dims_ies1_ts, dims_ies2_ts) = {
-                                        let gen_ts = |ident_ts: &dyn ToTokens| {
+                                        let gen_ts = |ts: &dyn ToTokens| {
                                             gen_ident_match_field_fn_ok_v_return_err_ts(
-                                                &ident_ts,
+                                                &ts,
                                                 &DimsSc,
                                                 &quote! {pg_type_query_part},
                                             )
