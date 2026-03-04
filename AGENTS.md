@@ -1,208 +1,250 @@
 # AGENTS.md
 
-## 🧭 Project Overview
+# ✅ WHAT AGENT MUST DO
 
-This repository is a Rust workspace consisting of multiple crates.
-The primary goals of this project are:
+## Workspace Discipline
 
-* Maintain strict type safety
-* Keep compile times reasonable
-* Preserve clean module boundaries
-* Avoid unnecessary abstractions
-* Ensure deterministic builds
+* Keep workspace compiling at all times.
+* Run checks before completing any task.
+* Respect crate boundaries.
+* Use path dependencies for internal crates.
+* Keep dependency graph acyclic.
+* Place shared logic in a dedicated shared crate.
+* Keep Cargo.toml files clean and minimal.
+* Use workspace-level dependency versions when possible.
+* Maintain deterministic builds.
 
-Agents working on this repository must follow the rules below.
+## Cargo & Tooling
 
----
+* Run `cargo fmt --all`.
+* Run `cargo check --workspace`.
+* Run `cargo test --features test-utils -- --nocapture --workspace`.
+* Run `cargo clippy --all-targets --all-features -D warnings`.
+* Fix all warnings before completion.
+* Ensure new features compile with `--all-features`.
+* Ensure no feature flag breaks compilation.
 
-# 🏗 Workspace Structure Rules
+## Dependencies
 
-## 1. Crate Organization
+* Add dependencies only when necessary.
+* Disable default features unless required.
+* Prefer minimal dependency trees.
+* Avoid multiple crates solving the same problem.
+* Prefer std over external crates.
+* Justify any heavy dependency.
+* Keep versions consistent across workspace.
 
-* Each logical domain must live in its own crate.
-* Avoid cyclic dependencies between crates.
-* Macros must live in a separate `proc-macro` crate.
+## Code Style
 
-## 2. Dependency Policy
+* Follow Rust idioms strictly.
+* Use snake_case for functions and variables.
+* Use UpperCamelCase for types.
+* Use SCREAMING_SNAKE_CASE for constants.
+* Keep functions small and focused.
+* Prefer early returns over deep nesting.
+* Avoid overly clever code.
+* Prefer readability over micro-optimizations.
 
-* Avoid adding new external dependencies unless absolutely necessary.
-* Prefer `std` over external crates.
-* If adding a dependency:
+## Ownership & Memory
 
-  * Ensure it is actively maintained.
-  * Avoid large transitive dependency trees.
-  * Disable default features when possible.
-* Never duplicate functionality already available in the workspace.
-
----
-
-# 🧠 Code Design Principles
-
-## 3. Ownership & Lifetimes
-
-* Prefer explicit lifetimes when required for clarity.
 * Avoid unnecessary cloning.
-* Avoid `Arc<Mutex<T>>` unless concurrency truly requires it.
-* Prefer interior mutability only when justified.
+* Prefer borrowing over owning when possible.
+* Avoid Arc unless cross-thread sharing is required.
+* Avoid Rc in multithreaded contexts.
+* Avoid Mutex unless interior mutability is required.
+* Prefer immutable data structures.
+* Avoid leaking memory via static state.
 
-## 4. Error Handling
+## Error Handling
 
-* Do not use `unwrap()`
-* Do not use `expect()` unless inside `proc-macro` crate.
-* Prefer `thiserror` for domain errors.
-* Do not use `anyhow` only at application boundaries.
-* Errors must be meaningful and typed.
+* Never use unwrap() in production code.
+* Never use expect() in production code, unless if it a 'proc-macro' crate.
+* Return typed errors.
+* Use thiserror for domain errors.
+* Do not use anyhow.
+* Propagate errors properly.
+* Provide meaningful error messages.
 
-## 5. Traits & Generics
+## Async
 
-* Avoid over-generic APIs.
-* Use trait bounds explicitly.
-* Avoid blanket trait implementations unless well justified.
-* Prefer concrete types over `dyn Trait` unless dynamic dispatch is required.
+* Use one async runtime across workspace.
+* Do not mix runtimes.
+* Avoid blocking calls in async code.
+* Use spawn_blocking for CPU-heavy tasks.
+* Avoid unnecessary async functions.
+* Prefer structured concurrency.
+* Ensure Send + Sync correctness.
 
----
+## Traits & Generics
 
-# 🧪 Testing Rules
+* Avoid unnecessary generics.
+* Prefer concrete types internally.
+* Keep trait bounds explicit.
+* Avoid overly complex trait hierarchies.
+* Avoid blanket implementations unless necessary.
+* Avoid trait objects unless dynamic dispatch is required.
 
-## 6. Unit Tests
+## Modules & Files
 
-* Every public function must have at least one test.
-* Use `#[cfg(test)]` modules.
-* Avoid integration tests when a unit test is sufficient.
+* Keep files under 10000 lines when possible.
+* Avoid deep module nesting.
+* Group related logic logically.
+* Avoid god-modules.
+* Keep public API minimal.
+* Hide internal implementation details.
 
-## 7. Integration Tests
+## Testing
 
-* Integration tests belong in `/tests`.
-* Do not duplicate logic.
-* Do not duplicate logic from unit tests.
-* Use test helpers from a dedicated test-support crate.
+* Add unit tests for public logic.
+* Cover edge cases.
+* Cover error paths.
+* Avoid duplicating test logic.
+* Use test helpers for repeated setup.
+* Keep tests deterministic.
+* Avoid sleeping in tests.
+* Avoid network access in tests.
 
----
-
-# 🚀 Build & Tooling
-
-## 8. Formatting & Linting
-
-Agents must run:
-
-```
-cargo fmt --all
-cargo clippy --all-targets --all-features -- -D warnings
-```
-
-No PR should introduce new warnings.
-
-## 9. CI Requirements
-
-Before completing a task, ensure:
-
-```
-cargo check --workspace
-cargo clippy --workspace --all-targets --all-features
-cargo test --features test-utils
-```
-
-All commands must pass.
-
----
-
-# 🗂 Module & File Conventions
-
-## 10. Module Layout
-
-* Avoid files larger than 10000 lines.
-* Split large modules logically.
-* Do not create deep module nesting (>3 levels) without justification.
-
-## 11. Naming Conventions
-
-* Types: `UpperCamelCase`
-* Functions: `snake_case`
-* Constants: `SCREAMING_SNAKE_CASE`
-* Traits: adjective or capability-based naming (`Serializable`, `Executable`)
-
----
-
-# ⚡ Performance Guidelines
+## Performance
 
 * Avoid unnecessary heap allocations.
-* Prefer iterators over intermediate `Vec` allocations.
+* Prefer iterators over temporary Vec.
+* Avoid repeated allocations in loops.
 * Avoid cloning large structures.
 * Benchmark before optimizing.
-* Use `#[inline]` only when profiling justifies it.
+* Optimize only measurable bottlenecks.
 
----
+## Unsafe
 
-# 🧩 Async & Concurrency
+* Do not write unsafe code.
+* Do not use unsafe code.
+* Do not use unsafe functions and methods.
+* Never introduce UB.
 
-* Use `tokio` runtime consistently across workspace.
-* Do not mix async runtimes.
-* Avoid blocking calls inside async functions.
-* Use `spawn_blocking` when necessary.
-* Prefer structured concurrency patterns.
+## Public API
 
----
-
-# 🔐 Unsafe Code Policy
-
-* Unsafe code is forbidden.
-
----
-
-# 🧼 Refactoring Rules
-
-Agents must:
-
-* Preserve public API unless explicitly asked to change it.
-* Avoid large refactors unless requested.
-* Keep diffs minimal.
-* Maintain backward compatibility.
-
----
-
-# 📦 Public API Guidelines
-
-* All public items must not have rustdoc comments.
+* Document all public items.
+* Keep API stable unless instructed otherwise.
+* Avoid breaking changes.
 * Avoid leaking internal types.
-* Prefer explicit return types over `impl Trait` in public APIs.
-* Keep API surface minimal.
+* Use explicit return types.
+* Avoid exposing generic complexity publicly.
+
+## Refactoring
+
+* Preserve behavior unless asked to change it.
+* Keep diffs minimal.
+* Avoid mass renaming without reason.
+* Do not reformat unrelated files.
+* Avoid changing public API silently.
+
+## Git Hygiene
+
+* Make one logical change per commit.
+* Write meaningful commit messages.
+* Do not mix formatting with logic changes.
+* Keep commits reviewable.
+
+## Documentation
+
+* Keep README accurate.
+* Do not add comments documentation in code.
+* Add rustdoc examples where useful.
+* Ensure examples compile.
 
 ---
 
-# 🧭 Git & Commit Rules
+# ❌ WHAT AGENT MUST NOT DO
 
-* One logical change per commit.
-* Do not mix formatting-only changes with logic changes.
-* Commit messages must follow:
+## Architecture Violations
 
-```
-<crate>: short description
+* Do not introduce cyclic dependencies.
+* Do not merge unrelated crates.
+* Do not collapse boundaries between layers.
+* Do not create hidden coupling.
 
-Optional longer explanation.
-```
+## Code Quality Violations
+
+* Do not introduce warnings.
+* Do not silence clippy without justification.
+* Do not add TODO without instruction.
+* Do not leave commented dead code.
+* Do not commit debug prints unless if they will be removed after debug.
+
+## Safety Violations
+
+* Do not introduce unwrap() in library code.
+* Do not introduce expect() in library code unless if its 'proc-macro' crate or test.
+* Do not introduce panic!() in library code unless if its 'proc-macro' crate or test.
+* Do not introduce unwrap() inside quote!{} block.
+* Do not introduce expect() inside quote!{} unless if it is a part of generated test by macro.
+* Do not introduce panic!() inside quote!{} unless if it is a part of generated test by macro.
+* Do not ignore Result.
+* Do not swallow errors.
+* Do not use unsafe.
+* Do not assume Send/Sync without proof.
+
+## Dependency Violations
+
+* Do not add heavy frameworks casually.
+* Do not duplicate functionality.
+* Do not add unused dependencies.
+* Do not use outdated crates.
+
+## Performance Violations
+
+* Do not allocate in hot paths unnecessarily.
+* Do not clone blindly.
+* Do not block async executors.
+* Do not hold locks across await.
+
+## Async Violations
+
+* Do not mix async runtimes.
+* Do not call blocking IO in async.
+* Do not use async when not needed.
+* Do not ignore cancellation safety.
+
+## Testing Violations
+
+* Do not rely on external services in tests.
+* Do not use flaky time-based tests.
+* Do not leave failing tests.
+* Do not skip tests silently.
+
+## API Violations
+
+* Do not expose internal modules publicly.
+* Do not change signatures without instruction.
+* Do not widen trait bounds unnecessarily.
+* Do not leak generics to users.
+
+## Refactor Violations
+
+* Do not refactor entire workspace without request.
+* Do not reformat whole repo unnecessarily.
+* Do not rename public items casually.
+* Do not change semantics silently.
+
+## Git Violations
+
+* Do not squash unrelated changes.
+* Do not commit broken code.
+* Do not include generated artifacts.
+* Do not modify Cargo.lock unless required.
 
 ---
 
-# 🚫 What Agents Must NOT Do
+# 🏁 Completion Checklist
 
-* Do not introduce hidden global state.
-* Do not silently change behavior.
-* Do not weaken type safety.
-* Do not introduce panics.
-* Do not bypass lints.
+Before finishing:
 
----
-
-# 🏁 Completion Criteria
-
-A task is complete only if:
-
-* Code compiles for the entire workspace.
+* Workspace compiles.
 * Tests pass.
-* Clippy passes with no warnings.
-* Formatting is applied.
-* No TODOs are left unless explicitly allowed.
+* Clippy passes with zero warnings.
+* Formatting applied.
+* No unwrap in production code.
+* No unused imports.
+* No debug prints.
+* No TODOs left unintentionally.
 
----
-
-End of AGENTS.md
+End of file.
