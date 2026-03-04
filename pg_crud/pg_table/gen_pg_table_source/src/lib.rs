@@ -2691,7 +2691,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let #QueryStringSc = #query_string_ts;
                 // println!("{}", #QueryStringSc);
                 let #BindedQuerySc = {
+                    let mut #QuerySc = #sqlx_query_sqlx_pg_ts(&#QueryStringSc);
                     #binded_query_ts
+                    #QuerySc
                 };
                 #acquire_pool_and_connection_ts
                 let #VSc = {
@@ -3147,7 +3149,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             column!(),
                         );
                     quote! {
-                        let mut #QuerySc = sqlx::query::<sqlx::Postgres>(&#QueryStringSc);
                         for el_7f862135 in #ParamsSc.#PayloadSc.0 {
                             match el_7f862135.#CreateQueryBindSc(#QuerySc) {
                                 Ok(v_011a3eb4) => {
@@ -3158,7 +3159,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 }
                             }
                         }
-                        #QuerySc
                     }
                 };
                 let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
@@ -3260,7 +3260,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             column!(),
                         );
                     quote! {
-                        let mut #QuerySc = #sqlx_query_sqlx_pg_ts(&#QueryStringSc);
                         match #ParamsSc.#PayloadSc.#CreateQueryBindSc(#QuerySc) {
                             Ok(v_06f852cd) => {
                                 #QuerySc = v_06f852cd;
@@ -3269,11 +3268,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 #pg_syn_vrt_er_init_eprintln_res_creation_ts
                             }
                         }
-                        #QuerySc
                     }
                 };
                 let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
                     &operation,
+                    //todo maybe reuse
                     // &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Create)
                     &{
                         let operation_34462e2a =
@@ -3473,7 +3472,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             column!(),
                         );
                     quote! {
-                        let mut #QuerySc = #sqlx_query_sqlx_pg_ts(&#QueryStringSc);
                         #query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts
                         match #pg_crud_pg_type_where_filter_query_bind_ts(
                             #ParamsSc.#PayloadSc.pagination,
@@ -3486,7 +3484,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 #pg_syn_vrt_er_init_eprintln_res_creation_ts
                             }
                         }
-                        #QuerySc
                     }
                 };
                 let pg_logic_ts = {
@@ -3619,30 +3616,23 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     )}
                 };
                 let binded_query_ts = {
-                    let binded_query_modifications_ts = {
-                        let pg_syn_vrt_er_init_eprintln_res_creation_ts =
-                            gen_operation_er_init_eprintln_res_creation_ts(
-                                &operation,
-                                &try_bind_syn_vrt_wrapper,
-                                file!(),
-                                line!(),
-                                column!(),
-                            );
-                        quote! {
-                            match #pg_crud_pg_type_where_filter_query_bind_ts(#ParamsSc.#PayloadSc.#pk_fi, #QuerySc) {
-                                Ok(v_80ee6983) => {
-                                    #QuerySc = v_80ee6983;
-                                },
-                                Err(#Er0) => {
-                                    #pg_syn_vrt_er_init_eprintln_res_creation_ts
-                                }
+                    let pg_syn_vrt_er_init_eprintln_res_creation_ts =
+                        gen_operation_er_init_eprintln_res_creation_ts(
+                            &operation,
+                            &try_bind_syn_vrt_wrapper,
+                            file!(),
+                            line!(),
+                            column!(),
+                        );
+                    quote! {
+                        match #pg_crud_pg_type_where_filter_query_bind_ts(#ParamsSc.#PayloadSc.#pk_fi, #QuerySc) {
+                            Ok(v_80ee6983) => {
+                                #QuerySc = v_80ee6983;
+                            },
+                            Err(#Er0) => {
+                                #pg_syn_vrt_er_init_eprintln_res_creation_ts
                             }
                         }
-                    };
-                    quote! {
-                        let mut #QuerySc = #sqlx_query_sqlx_pg_ts(&#QueryStringSc);
-                        #binded_query_modifications_ts
-                        #QuerySc
                     }
                 };
                 let pg_logic_ts = gen_fetch_one_ts(
@@ -4057,11 +4047,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             }
                         });
                     quote! {
-                        let mut #QuerySc = #sqlx_query_sqlx_pg_ts(&#QueryStringSc);
                         #fields_named_without_pk_update_assignment_ts
                         #pk_update_assignment_ts
                         #binded_query_select_only_updated_ids_query_bind_ts
-                        #QuerySc
                     }
                 };
                 let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
@@ -4262,11 +4250,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             }
                         });
                     quote! {
-                        let mut #QuerySc = #sqlx_query_sqlx_pg_ts(&#QueryStringSc);
                         #binded_query_modifications_ts
                         #binded_query_pk_modification_ts
                         #binded_query_select_only_updated_ids_query_bind_ts
-                        #QuerySc
                     }
                 };
                 let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
@@ -4382,14 +4368,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         Self::#PkSc(),
                     )}
                 };
-                let binded_query_ts = {
-                    let query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts = gen_query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts(&operation);
-                    quote! {
-                        let mut #QuerySc = #sqlx_query_sqlx_pg_ts(&#QueryStringSc);
-                        #query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts
-                        #QuerySc
-                    }
-                };
+                let binded_query_ts =
+                    gen_query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts(
+                        &operation,
+                    );
                 let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
                     &operation,
                     &gen_create_update_delete_many_fetch_ts(&CreateOrUpdateOrDeleteMany::Delete),
@@ -4486,7 +4468,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         column!(),
                     );
                     quote! {
-                        let mut #QuerySc = #sqlx_query_sqlx_pg_ts(&#QueryStringSc);
                         match pg_crud::PgTypeWhereFilter::query_bind(
                             #ParamsSc.#PayloadSc.#pk_fi,
                             #QuerySc
@@ -4498,7 +4479,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 #ts_1319f705
                             }
                         }
-                        #QuerySc
                     }
                 };
                 let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
