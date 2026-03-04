@@ -1,6 +1,6 @@
 # AGENTS.md
 
-# ✅ WHAT AGENT MUST DO
+# WHAT AGENT MUST DO
 
 ## Workspace Discipline
 
@@ -141,7 +141,7 @@
 
 ---
 
-# ❌ WHAT AGENT MUST NOT DO
+# WHAT AGENT MUST NOT DO
 
 ## Architecture Violations
 
@@ -221,7 +221,7 @@
 
 ---
 
-# 🏁 Completion Checklist
+# Completion Checklist
 
 Before finishing:
 
