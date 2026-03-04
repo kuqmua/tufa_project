@@ -148,8 +148,7 @@
 ## Documentation
 
 * Keep README accurate.
-* Do not add comments documentation in code.
-* Add rustdoc examples where useful.
+* Do not add documentation in the code.
 * Ensure examples compile.
 
 ---
